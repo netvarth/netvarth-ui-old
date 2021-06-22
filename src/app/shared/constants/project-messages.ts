@@ -171,6 +171,7 @@ export const Messages = {
   'CUSTOMER_SEARCH_UNAVAILABLE': 'This [customer] doesnt exist',
   'PROVIDER_CUSTOMER_CREATED': 'New [customer] created',
   'TELE_NOT_SUPPORTED': 'is not supported on this device.',
+  'WATSAPP_NOT_SUPPORTED': ' Note : WhatsApp is not supported on this device.',
   'SENDING_MEET_DETAILS': 'Send the meeting details to your phone or tablet where',
   'IS_AVAILABLE': 'is available to you',
   'PHONE_OR_TAB': 'instructions to your phone/tablet where',

@@ -111,6 +111,7 @@ import { VirtualFieldsModule } from './ynw_consumer/components/virtualfields/vir
 import { BusinessPageHomeComponent } from './shared/components/business-page-home/business-page-home.component';
 import { MeetRoomComponent } from './shared/components/meet-room/meet-room.component';
 import { MeetRoomModule } from './shared/components/meet-room/meet-room.module';
+import { VideoCallSharedComponent } from './business/modules/video-call/video-call.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -147,7 +148,8 @@ export function init_app(globalService: GlobalService) {
     MeetingRoomComponent,
     CommunicationComponent,
     ListRecordingsDialogComponent,
-    BusinessPageHomeComponent
+    BusinessPageHomeComponent,
+    VideoCallSharedComponent
   ],
   entryComponents: [
     SignUpComponent,
@@ -165,7 +167,8 @@ export function init_app(globalService: GlobalService) {
     UpdateProfilePopupComponent,
     AddAddressComponent,
     ListRecordingsDialogComponent,
-    MeetRoomComponent
+    MeetRoomComponent,
+    
   ],
   imports: [
     CapitalizeFirstPipeModule,

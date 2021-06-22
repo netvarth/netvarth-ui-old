@@ -83,14 +83,14 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
         this.activated_route.params.subscribe(params => {
             // this.custId = params.custId;
             this.Id = params.id;
-            console.log(this.Id)
+            // console.log(this.Id)
            this.checkId = this.Id.startsWith("p");
-            console.log(this.checkId)
+            // console.log(this.checkId)
 
         })
         this.activated_route.queryParams.subscribe(qparams => {
             this.custId = qparams.custId;
-            console.log(this.custId);
+            // console.log(this.custId);
         })
     }
     updateRecordingFlag(event) {
@@ -259,7 +259,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
      */
     disconnect() {
         this.twilioService.disconnect();
-        console.log(this.custId)
+        // console.log(this.custId)
         // let type = this.type;
         // if (this.type === 'wl') {
         //     type = 'checkin'

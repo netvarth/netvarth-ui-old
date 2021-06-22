@@ -555,29 +555,23 @@ export class AppointmentActionsComponent implements OnInit {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
-    gotoMeet() {
+    gotoSecureVideo() {
         this.dialogRef.close();
         const customerDetails = this.appt.appmtFor[0];
         const customerId = customerDetails.id;
-        this.provider_services.meetReady(customerId).subscribe(data => {
-            this.meet_data = data;
-                this.providerMeetingUrl = this.meet_data.providerMeetingUrl;
-                  // this.subs.sink = observableInterval(this.refreshTime * 500).subscribe(() => {
-                //     this.getMeetingStatus();
-                // });
-                const retcheckarr = this.providerMeetingUrl.split('/');
-                this.id = retcheckarr[4]
-                const navigationExtras: NavigationExtras = {
-                    queryParams: { custId: customerId }
-                };
-                 // const path = 'meet/' + this.id ;
-                // window.open(path, '_blank');
-                this.router.navigate(['meet', this.id], navigationExtras);
-        },
-            error => {
-                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            });
+        const whtasappNum = this.appt.virtualService.WhatsApp;
+        console.log(whtasappNum)
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                id : customerId,
+                phoneNum : whtasappNum,
+                type: 'secure_video'
+            }
+        };
+        this.router.navigate(['provider', 'secure-video'], navigationExtras);
     }
+   
+    
     startVoiceCall() {
         this.closeDialog();
         const customerDetails = this.appt.appmtFor[0];
