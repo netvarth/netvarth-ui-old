@@ -179,13 +179,15 @@
                     <div class="card p0">
                       <mat-accordion class="report">
                         <mat-expansion-panel  [expanded]="true">
-                            <mat-expansion-panel-header [routerLink]="['/provider/settings/pos/coupons/report']" [queryParams]="{ from:'reports' }">
+                            <mat-expansion-panel-header >
                                 <mat-panel-title class="report_title">
                                    Reimbursements 
-                                   
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
-                     
+                            <ng-container>
+                              <div  >
+                                <a [routerLink]="['/provider/settings/pos/coupons/report']" [queryParams]="{ from:'reports' }">List of Reimbursements</a>
+                              </div></ng-container>
                         </mat-expansion-panel>
                     </mat-accordion>
                     </div>
