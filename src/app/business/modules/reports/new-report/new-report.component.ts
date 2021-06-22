@@ -468,14 +468,15 @@ user_users;
 
         break;
       }
-      case 'user':{
-        console.log(res);
-        if (res === '' || res === undefined || res=== 'All') {
+ 
+      case 'user': {
+        if (res === 'All') {
           this.user = 'All';
+          this.user_id = 0;
         } else {
-          this.user = res.split(',').length + ' users selected';
-          this.user_chosen = res.replace(/,\s*$/, '');
+          this.user = res.split(',').length - 1 + ' users selected';
           this.user_id = res.replace(/,\s*$/, '');
+
 
         }
 
