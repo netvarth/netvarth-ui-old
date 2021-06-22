@@ -13762,3 +13762,6 @@ app-showuploadfile .mat-dialog-content {
 .text-left {
   text-align: left;
 }
+.mat-input-element {
+  box-sizing: inherit !important;
+}
