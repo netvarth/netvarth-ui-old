@@ -222,7 +222,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.messages = data;
-          this.sortMessages();
           this.scrollDone = true;
           this.setMessages();
           this.loading = false;
