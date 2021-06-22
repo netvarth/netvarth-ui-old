@@ -20,6 +20,7 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { NotifierService } from 'angular-notifier';
+import { Howl } from 'howler';
 
 @Component({
   selector: 'app-header',
@@ -261,12 +262,21 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       this.reloadHandler();
     });
     let i = 3;
-    console.log(i);
     while (i > 0) {
-      console.log(i);
       this.notifier.notify('success', 'Good evening, you lovely person!');
+      var sound = new Howl({
+        src: ['assets/notification/juntos.mp3']
+      });
+      sound.play();
       i--;
     }
+  }
+  showNotification(type: string, message: string): void {
+    this.notifier.notify(type, message);  
+    var sound = new Howl({
+      src: ['assets/notification/juntos.mp3']
+    });
+    sound.play();
   }
   ngOnDestroy() {
     if (this.cronHandle) {
