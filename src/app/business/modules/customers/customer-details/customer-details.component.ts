@@ -74,6 +74,7 @@ export class CustomerDetailComponent implements OnInit {
     todayvisitDetails: any = [];
     futurevisitDetails: any = [];
     historyvisitDetails: any = [];
+    historyOrdervisitDetails: any = [];
     ordervisitDetails: any = [];
     todayordervisitDetails: any = [];
     futureordervisitDetails: any = [];
@@ -97,9 +98,12 @@ export class CustomerDetailComponent implements OnInit {
     futureVisitDetailsArray: any = [];
     todayorderVisitDetailsArray: any = [];
     futureorderVisitDetailsArray: any = [];
+    historyorderVisitDetailsArray: any = [];
+    historyVisitDetailsArray: any = [];
     showMoreFuture = false;
     showMoreToday = false;
     showMoreHistory = false;
+    showMoreOrderHistory = false;
     showMoreorderFuture = false;
     showMoreorderToday = false;
     selectedDetailsforMsg: any = [];
@@ -295,7 +299,8 @@ export class CustomerDetailComponent implements OnInit {
         this.loading = true;
         this.provider_services.getCustomerHistoryVisit(this.customerId).subscribe(
             (data: any) => {
-                this.historyvisitDetails = data;
+                this.historyVisitDetailsArray = data;
+                this.historyvisitDetails = this.historyVisitDetailsArray.slice(0, 5);
                 this.loading = false;
             }
         );
@@ -309,6 +314,8 @@ export class CustomerDetailComponent implements OnInit {
                 this.todayordervisitDetails = this.todayorderVisitDetailsArray.slice(0, 5);
                 this.futureorderVisitDetailsArray = data.futureOrders;
                 this.futureordervisitDetails = this.futureorderVisitDetailsArray.slice(0, 5);
+                this.historyorderVisitDetailsArray = data.historyOrders;
+                this.historyOrdervisitDetails = this.historyorderVisitDetailsArray.slice(0, 5);
                 this.loading = false;
             }
         );
@@ -473,6 +480,9 @@ export class CustomerDetailComponent implements OnInit {
         } else if (type === 'future') {
             this.futurevisitDetails = this.futureVisitDetailsArray;
             this.showMoreFuture = true;
+        } else {
+            this.historyvisitDetails = this.historyVisitDetailsArray;
+            this.showMoreHistory = true;
         }
     }
     showLess(type) {
@@ -482,6 +492,9 @@ export class CustomerDetailComponent implements OnInit {
         } else if (type === 'future') {
             this.futurevisitDetails = this.futureVisitDetailsArray.slice(0, 5);
             this.showMoreFuture = false;
+        } else {
+            this.historyvisitDetails = this.historyVisitDetailsArray.slice(0, 5);
+            this.showMoreHistory = false;
         }
     }
     showorderMore(type) {
@@ -491,6 +504,9 @@ export class CustomerDetailComponent implements OnInit {
         } else if (type === 'future') {
             this.futureordervisitDetails = this.futureorderVisitDetailsArray;
             this.showMoreorderFuture = true;
+        } else {
+            this.historyOrdervisitDetails = this.historyorderVisitDetailsArray;
+            this.showMoreOrderHistory = true;
         }
     }
     showorderLess(type) {
@@ -500,6 +516,9 @@ export class CustomerDetailComponent implements OnInit {
         } else if (type === 'future') {
             this.futureordervisitDetails = this.futureorderVisitDetailsArray.slice(0, 5);
             this.showMoreorderFuture = false;
+        } else {
+            this.historyOrdervisitDetails = this.historyorderVisitDetailsArray.slice(0, 5);
+            this.showMoreOrderHistory = false;
         }
     }
     getSingleTime(slot) {
@@ -535,8 +554,12 @@ export class CustomerDetailComponent implements OnInit {
                 this.showMore('future');
             } else if (event.heading === 'Todays Order') {
                 this.showorderMore('today');
-            } else {
+            } else if (event.heading === 'Future Order') {
                 this.showorderMore('future');
+            } else if (event.heading === 'Order History') {
+                this.showorderMore('history');
+            } else {
+                this.showMore('history');
             }
         } else if (event.type === 'less') {
             if (event.heading === 'Today') {
@@ -545,8 +568,12 @@ export class CustomerDetailComponent implements OnInit {
                 this.showLess('future');
             } else if (event.heading === 'Todays Order') {
                 this.showorderLess('today');
-            } else {
+            } else if (event.heading === 'Future Order') {
                 this.showorderLess('future');
+            } else if (event.heading === 'Order History') {
+                this.showorderLess('history');
+            } else {
+                this.showLess('history');
             }
         }
     }

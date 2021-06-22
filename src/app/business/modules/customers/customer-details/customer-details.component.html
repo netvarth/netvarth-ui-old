@@ -9,7 +9,7 @@
     </div>
 </section>
 
-<section *ngIf="viewCustomer && customerAction === '' && !showMoreHistory">
+<section *ngIf="viewCustomer && customerAction === ''">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
             <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -26,14 +26,14 @@
         </h5>
     </div>
 </section>
-<section *ngIf="showMoreHistory && customerAction === ''">
+<!-- <section *ngIf="showMoreHistory && customerAction === ''">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
             <span class="fa fa-arrow-left pointer-cursor" (click)="showHistory()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             History
         </h5>
     </div>
-</section>
+</section> -->
 <!-- <section>
     <div class="content loc-list p-checkin ynw-common-form-nm">
         <div class="col-md-12 no-padding-small ">
@@ -685,9 +685,11 @@
     <div class="clearfix"></div>
 </section> -->
 
+
+
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
 <section class="content" *ngIf="viewCustomer">
-    <div class="row" *ngIf="!showMoreHistory">
+    <div class="row">
         <div class="col-lg-8">
             <div class="card card-custom gutter-b wave-success p-0 booking-details mgn-bt-20">
                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 p-0 padding-20px border details-hgt">
@@ -753,7 +755,7 @@
             </app-provider-inbox-list>
         </div>
     </div>
-    <div class="row mgn-up-20" *ngIf="!showMoreHistory">
+    <div class="row mgn-up-20">
         <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12"
             *ngIf="customer[0].questionnaire && customer[0].questionnaire.questionAnswers && customer[0].questionnaire.questionAnswers.length > 0">
             <div class="card card-custom">
@@ -772,14 +774,14 @@
             </div>
         </div>
     </div>
-    <div class="row records-sec mgn-up-20" *ngIf="!showMoreHistory">
-        <div class="rece-act disp-flex"
+    <div class="row records-sec mgn-up-20">
+        <!-- <div class="rece-act disp-flex"
             *ngIf="todayVisitDetailsArray.length > 0 || futureVisitDetailsArray.length > 0 || futureorderVisitDetailsArray.length > 0 || todayorderVisitDetailsArray.length > 0 || historyvisitDetails.length > 0 || (ordervisitDetails.historyOrders && ordervisitDetails.historyOrders.length > 0)">
             <h5 class="no-margin">Recent activity</h5>
             <span class="customer-action-btn pointer-cursor mgn-lt-auto"
                 *ngIf="historyvisitDetails.length > 0 || ordervisitDetails.historyOrders && ordervisitDetails.historyOrders.length > 0"
                 (click)="showHistory()">History</span>
-        </div>
+        </div> -->
         <app-records-datagrid [records]="todayvisitDetails" [heading]="'Today'" [source]="'customer-waitlist'"
             [timeType]="1" [count]="todayVisitDetailsArray.length" [showMore]="showMoreToday"
             (actionPerformed)="actionPerformed($event)" *ngIf="todayVisitDetailsArray.length > 0">
@@ -796,16 +798,16 @@
             [count]="futureorderVisitDetailsArray.length" [showMore]="showMoreorderFuture" [timeType]="2"
             (actionPerformed)="actionPerformed($event)" *ngIf="futureorderVisitDetailsArray.length > 0">
         </app-records-datagrid>
-    </div>
-    <ng-container *ngIf="showMoreHistory">
         <app-records-datagrid [records]="historyvisitDetails" [heading]="'History'" [source]="'customer-waitlist'"
-            [timeType]="3" (actionPerformed)="actionPerformed($event)" *ngIf="historyvisitDetails.length > 0">
+            [count]="historyVisitDetailsArray.length" [showMore]="showMoreHistory" [timeType]="3"
+            (actionPerformed)="actionPerformed($event)" *ngIf="historyVisitDetailsArray.length > 0">
         </app-records-datagrid>
-        <app-records-datagrid [records]="ordervisitDetails.historyOrders" [heading]="'Order History'"
-            [source]="'customer-order'" [timeType]="3" (actionPerformed)="actionPerformed($event)"
-            *ngIf="ordervisitDetails.historyOrders && ordervisitDetails.historyOrders.length > 0">
+        <app-records-datagrid [records]="historyOrdervisitDetails" [heading]="'Order History'"
+            [source]="'customer-order'" [count]="historyorderVisitDetailsArray.length" [showMore]="showMoreOrderHistory"
+            [timeType]="3" (actionPerformed)="actionPerformed($event)" *ngIf="historyorderVisitDetailsArray.length > 0">
         </app-records-datagrid>
-    </ng-container>
-    <app-records-datagrid [consumerId]="customer[0].id" [heading]="'Bill'" [source]="'customer-bill'" [records]="consumerBills">
-    </app-records-datagrid>
+        <app-records-datagrid [consumerId]="customer[0].id" [heading]="'Bill'" [source]="'customer-bill'"
+            [records]="consumerBills">
+        </app-records-datagrid>
+    </div>
 </section>

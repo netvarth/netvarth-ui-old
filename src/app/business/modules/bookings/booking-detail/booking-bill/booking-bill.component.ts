@@ -43,7 +43,7 @@ export class BookingBillComponent implements OnInit {
       }
     }
   }
-  getWaitlistBill() {
+  getWaitlistBill(type?) {
     this.loading = true;
     let uid;
     if (this.bookingType == 'appointment') {
@@ -61,46 +61,21 @@ export class BookingBillComponent implements OnInit {
             this.refund_value = Math.abs(this.bill_data.amountDue);
           }
           this.loading = false;
+          if (type) {
+            if (this.bookingType == 'appointment') {
+              this.router.navigate(['provider', 'bill', uid], { queryParams: { source: 'appt' } });
+            } else {
+              this.router.navigate(['provider', 'bill', uid]);
+            }
+          }
         },
         error => {
           if (error.status === 422) {
             this.bill_data = [];
           }
           this.loading = false;
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
-  }
-  viewBillPage() {
-    let uid;
-    if (this.bookingType == 'appointment') {
-      uid = this.waitlist_data.uid;
-    }
-    else if (this.bookingType == 'checkin') {
-      uid = this.waitlist_data.ynwUuid;
-    }
-    this.getBill(uid);
-  }
-  getBill(uid) {
-    if (this.bookingType == 'appointment') {
-      this.provider_services.getWaitlistBill(uid)
-        .subscribe(
-          data => {
-            this.router.navigate(['provider', 'bill', uid], { queryParams: { source: 'appt' } });
-          },
-          error => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }
-        );
-    } else if (this.bookingType == 'checkin') {
-      this.provider_services.getWaitlistBill(uid)
-        .subscribe(
-          data => {
-            this.router.navigate(['provider', 'bill', uid]);
-          },
-          error => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }
-        );
-    }
   }
   paymentlink() {
     let uid;

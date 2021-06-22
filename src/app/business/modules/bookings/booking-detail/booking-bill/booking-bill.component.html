@@ -2,7 +2,7 @@
     <div class="card billing-card">
         <div class="card-header bg-transparent">
             <div>Billing</div>
-            <i *ngIf="!checkDisable()" (click)="viewBillPage()" class="fa fa-external-link pointer-cursor"
+            <i *ngIf="!checkDisable()" (click)="getWaitlistBill('view')" class="fa fa-external-link pointer-cursor"
                 aria-hidden="true"></i>
         </div>
         <div *ngIf="loading">
@@ -125,7 +125,7 @@
             </div>
             <div class="card-footer bg-transparent">
                 <div class="actions">
-                    <button (click)="viewBillPage()" class="btn view-bill-btn" [disabled]="checkDisable()">View
+                    <button (click)="getWaitlistBill('view')" class="btn view-bill-btn" [disabled]="checkDisable()">View
                         Bill</button>
                     <button
                         *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline"
