@@ -100,6 +100,10 @@ export class AppointmentActionsComponent implements OnInit {
     meet_data: any;
     id: any;
     providerMeetingUrl: any;
+    active_user: any;
+    isUserdisable;
+    userid: any;
+    user_arr: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -133,7 +137,9 @@ export class AppointmentActionsComponent implements OnInit {
         this.domain = user.sector;
         this.subdomain = user.subSector;
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-
+        this.active_user = user.userType;
+        console.log(this.active_user)
+        this.userid = user.id;
         this.subscription = this.galleryService.getMessage().subscribe(input => {
             if (input && input.uuid) {
                 this.shared_services.addProviderAppointmentAttachment(input.uuid, input.value)
@@ -149,6 +155,24 @@ export class AppointmentActionsComponent implements OnInit {
                     );
             }
         });
+        if (this.accountType === 'BRANCH') {
+            this.getUser();
+        }
+    }
+    getUser() {
+        if(this.userid){
+            this.provider_services.getUser(this.userid)
+            .subscribe((data: any) => {
+              this.user_arr = data;
+              if( this.user_arr.status === 'ACTIVE'){
+                  this.isUserdisable = true
+              } else{
+                  this.isUserdisable = false
+              }
+            }
+            , error => {
+          });
+        }   
     }
     ngOnDestroy() {
         if (this.subscription) {
@@ -951,5 +975,44 @@ export class AppointmentActionsComponent implements OnInit {
     }
     changeWaitlistStatusAction() {
         this.action = 'status';
+    }
+    assignMyself() {
+        let msg = '';
+        msg = 'Are you sure you want to assign this appointment to yourself ?';
+        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': msg,
+                'type': 'yes/no'
+            }
+        });
+        dialogrefd.afterClosed().subscribe(result => {
+            console.log("Result:",result)
+            console.log(this.appt.uid)
+                console.log(this.userid)
+            if (result) {
+                console.log(this.appt.uid)
+                console.log(this.userid)
+                const post_data = {
+                    'uid': this.appt.uid,
+                    'provider': {
+                        'id': this.userid
+                    },
+                };
+                console.log(post_data)
+                this.provider_services.updateUserAppointment(post_data)
+                    .subscribe(
+                        data => {
+                            this.dialogRef.close('reload');
+                        },
+                        error => {
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.dialogRef.close('reload');
+                        }
+                    );
+            }
+        });
     }
 }
