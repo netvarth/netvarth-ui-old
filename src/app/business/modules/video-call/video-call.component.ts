@@ -17,7 +17,7 @@ import { WordProcessor } from '../../../shared/services/word-processor.service';
 @Component({
   selector: 'app-video-call',
   templateUrl: './video-call.component.html',
-  styleUrls: ['./video-call.component.scss']
+  styleUrls: ['./video-call.component.css']
 })
 export class VideoCallSharedComponent implements OnInit, OnDestroy {
   businessDetails: any;
