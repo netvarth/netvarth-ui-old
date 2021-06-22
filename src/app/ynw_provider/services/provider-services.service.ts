@@ -2130,4 +2130,8 @@ export class ProviderServices {
     const url = 'provider/waitlist/questionnaire/upload/status/' + uid;
     return this.servicemeta.httpPut(url, data);
   }
+  getProviderBills(filter) {
+    const url = 'provider/bill';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
 }

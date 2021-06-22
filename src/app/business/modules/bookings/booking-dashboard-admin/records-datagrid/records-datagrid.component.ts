@@ -18,6 +18,7 @@ export class RecordsDatagridComponent implements OnInit {
   @Input() timeType;
   @Input() count;
   @Input() showMore;
+  @Input() consumerId;
   @Output() actionPerformed = new EventEmitter<any>();
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   waitlistModes = {

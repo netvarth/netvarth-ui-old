@@ -44,11 +44,11 @@
                             <div class="customer-detail-box col-sm-12 col-md-12 col-lg-12" *ngIf="!showMoreHistory">
                                 <span class="customer-action-btn pointer-cursor"
                                     (click)="showCustomerAction()">Actions</span> &nbsp; -->
-                                <!-- <span class="customer-action-btn pointer-cursor" 
+<!-- <span class="customer-action-btn pointer-cursor" 
                                      (click)="gotoMeet()">Initiate Video Call</span><br> -->
 
 
-                                <!-- <div>{{customer_label | capitalizeFirst}} ID: <span
+<!-- <div>{{customer_label | capitalizeFirst}} ID: <span
                                         class="cust-detail">{{customer[0].jaldeeId}} </span>
                                 </div>
                                 <div class="cust-detail">{{customer[0].firstName}} {{customer[0].lastName}}</div>
@@ -72,12 +72,12 @@
                                         [source]="'customer-details'" [type]="'details'" [customerDetails]="customer">
                                     </app-questionnaire>
                                 </div> -->
-                                <!-- <div class="cs-btn bt1 btn-grn txt-trans-none" style="float: right;" *ngIf="showStartBt"
+<!-- <div class="cs-btn bt1 btn-grn txt-trans-none" style="float: right;" *ngIf="showStartBt"
                                 (click)="goMeetProvider()">Start Chat</div><br>
                                 <div class="cs-btn bt1 btn-orange txt-trans-none" style="float: right;" *ngIf="showRejoinBt"
                                 (click)="goMeetProvider()">Rejoin</div><br>
                                 <div class="cs-btn bt1 btn-red txt-trans-none" style="float: right;" *ngIf="showEndBt">End</div><br> -->
-                            <!-- </div>
+<!-- </div>
 
                             <div *ngIf="!showMoreHistory">
                                 <div class="rece-act mgn-bt-20 mgn-lt-10">Recent activity
@@ -685,7 +685,7 @@
     <div class="clearfix"></div>
 </section> -->
 
-
+<app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
 <section class="content" *ngIf="viewCustomer">
     <div class="row" *ngIf="!showMoreHistory">
         <div class="col-lg-8">
@@ -806,4 +806,6 @@
             *ngIf="ordervisitDetails.historyOrders && ordervisitDetails.historyOrders.length > 0">
         </app-records-datagrid>
     </ng-container>
+    <app-records-datagrid [consumerId]="customer[0].id" [heading]="'Bill'" [source]="'customer-bill'" [records]="consumerBills">
+    </app-records-datagrid>
 </section>

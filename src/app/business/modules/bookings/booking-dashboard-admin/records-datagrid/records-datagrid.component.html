@@ -214,6 +214,21 @@
                                         </ng-container>
                                     </td>
                                 </ng-container>
+
+                                <ng-container *ngIf="source == 'customer-bill'">
+                                    <td>
+                                        {{record.billPaymentStatus}}
+                                    </td>
+                                    <td>
+                                        {{record.billPaymentStatus}}
+                                    </td>
+                                    <td>
+                                        <span class="rupee-font">
+                                            {{record.netTotal |
+                                            currency:'&#8377;' }}</span>
+                                    </td>
+                                </ng-container>
+
                             </tr>
                             <div *ngIf="!loading && records.length == 0">
                                 No {{heading}}

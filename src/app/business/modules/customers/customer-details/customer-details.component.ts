@@ -115,6 +115,7 @@ export class CustomerDetailComponent implements OnInit {
     meetingStatus: string;
     showEndBt: boolean;
     showRejoinBt: boolean;
+    consumerBills: any = [];
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -159,6 +160,7 @@ export class CustomerDetailComponent implements OnInit {
                             this.getCustomers(this.customerId).then(
                                 (customer) => {
                                     this.customer = customer;
+                                    this.getConsumerBills();
                                     this.customerName = this.customer[0].firstName;
                                     this.viewCustomer = true;
                                     this.loading = false;
@@ -547,5 +549,11 @@ export class CustomerDetailComponent implements OnInit {
                 this.showorderLess('future');
             }
         }
+    }
+    getConsumerBills() {
+        const filter = { 'providerConsumer-eq': this.customer[0].id };
+        this.provider_services.getProviderBills(filter).subscribe(data => {
+            this.consumerBills = data;
+        })
     }
 }
