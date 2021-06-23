@@ -261,20 +261,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
       this.reloadHandler();
     });
-
-    let i = 3;
-    while (i > 0) {
-      this.notifier.notify('success', 'Good evening, you lovely person!');
-      var sound = new Howl({
-        src: ['assets/notification/juntos.mp3']
-      });
-      sound.play();
-      i--;
-    }
-
   }
 
-
+  
   showNotification(type: string, message: string): void {
     this.notifier.notify(type, message);
     var sound = new Howl({
