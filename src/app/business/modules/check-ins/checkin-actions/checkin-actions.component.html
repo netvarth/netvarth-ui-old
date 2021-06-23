@@ -230,13 +230,13 @@
                 <div class="icon-text">Labels</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor"  (click)="gotoSecureVideo()" *ngIf="!data.multiSelection">
+        <div class="action-box pointer-cursor"  (click)="gotoSecureVideo()" *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked'">
             <div class="action-box-sub">
                 <span class="jvideo-icon"></span>
                 <div class="icon-text">Video Call</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" (click)="startVoiceCall()" *ngIf="!data.multiSelection">
+        <div class="action-box pointer-cursor" (click)="startVoiceCall()" *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked'">
             <div class="action-box-sub">
                 <span class="phon-icon"></span>
                 <div class="icon-text">Voice Call</div>

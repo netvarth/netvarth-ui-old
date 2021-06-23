@@ -384,6 +384,16 @@ mat-dialog-content .actiondiv .confirm-button:hover {
   padding-top : 30px !important;  
   padding-left: 5px;
 }
+.video{
+  color: #1e4079 !important;
+  padding-top : 12px !important;  
+  padding-left: 5px;
+}
+@media  (max-width: 750px)  {
+  .video {
+    padding-left: 5px;
+  }
+}
 .telegrm{
   padding-top : 1px !important;  
 }
@@ -397,32 +407,55 @@ mat-dialog-content .actiondiv .confirm-button:hover {
       display: none !important;
   }
 }
+@media  (max-width: 750px)  {
+  .wtsapvide-icon {
+    width: 50px !important;
+  }
+}
 .wtsapvid-icon {
   width: 50px !important;
 }
 
 .whsp-style{
-  padding-left: 5px;
+  padding-left: 8px;
     padding-top: 15px;
     color: green;
+    font-size: 25px;
+}
+@media  (max-width: 750px)  {
+  .whsp-style {
+    padding-left: 8px;
+    padding-top: .5px;
+    color: green;
     font-size: 20px;
+  }
 }
 .whsp-head{
-  padding-left: 5px;
-    padding-top: 15px;
+  padding-left: 15px;
+    padding-top: 10px;
 }
 .video-style{
   padding-left: 8px;
     padding-top: 15px;
     color: #1e4079;
+    font-size: 25px;
+}
+@media  (max-width: 750px)  {
+  .video-style {
+    padding-left: 8px;
+    padding-top: .5px;
+    color: #1e4079;
     font-size: 20px;
+  }
 }
 .video-head{
   padding-left: 8px;
+  padding-top: 10px;
 }
 .custom-red {
   color: red !important;
   font-weight: 700 !important;
+  padding-left: 3px !important;
 }
 .inl-blk {
   display: inline-block !important;
@@ -450,18 +483,14 @@ textarea {
   height:30px;
   padding-bottom: 10px;
 }
-.meet-icon, .wtsapvid-icon {
-  width: 20px !important;
-}
+
 .zoom-icon {
   width: 30px !important;
 }
 .wtsapaud-icon {
   width: 35px !important;
 }
-.wtsapvid-icon {
-  width: 35px !important;
-}
+
 .phon-icon {
   width: 25px !important;
 }
@@ -477,9 +506,7 @@ textarea {
 .strtaudio .wtsapaud-icon {
   width: 18px !important;
 }
-.strtaudio .wtsapvid-icon {
-  width: 18px !important;
-}
+
 
 
 .ln-hgt-30 {
@@ -535,15 +562,6 @@ textarea {
 .video-wdth {
   width: 25px !important;
 }
-@media only screen and (max-width: 400px) {
-  .video-wdth {
-      width: 20px !important;
-  }
-}
-
-
-
-
 .action-buttons-container {
   display: flex !important;
   flex-direction: row !important;
@@ -784,9 +802,8 @@ textarea {
   margin-right: -5px !important;
 }
 
-.body-card .start-button i.jvideo-icon {
-  width: 25px !important;
-  margin-top: -5px !important;
+.jvideo-icon {
+  width: 55px !important;
 }
 
 .body-card .relaunch-end-buttons .end-button {
@@ -883,5 +900,47 @@ textarea {
 }
 .text-left {
   text-align: left !important;
+}
+.startBt{
+  padding-left: 5px !important;
+  padding-top: 1px !important;
+}
+@media  (max-width: 750px)  {
+  .startBt {
+    padding-left: 5px !important;
+    padding-top: 1px !important;
+  }
+}
+@media only screen and (max-width: 767px){
+.consumer-dash .wtsapvid-icon, .consumer-dash .zoom-icon {
+    width: 50px !important;
+}
+}
+
+.ribbon-new {
+  /* width: 100px; */
+  /* width: fit-content; */
+  height: 30px;
+  line-height: 30px;
+  padding-left: 16px;
+  padding-right: 10px;
+  left: 0px;
+  top: 10px;
+  background: darkred;
+  color: white;
+  /* transform: translateY(0);
+  transition: transform 1000ms; */
+  float:right !important;
+  right: -1em;
+  border-width: 0.99em 1em 1em 3em;
+  border-color: #f5c84d transparent #f5c84d #f5c84d;
+  box-shadow: 0 8px 6px -6px #00000085;
+}
+.split-ln-brd {
+  border: 1px;
+  border-style: dotted;
+}
+.pad-15 {
+  padding:15px;
 }
 
