@@ -19,18 +19,26 @@
 
 
 
-<div style="text-align: center;">
-  <div mat-dialog-content class="msg">
-    <span>
+<div style="text-align: center;" >
+  <div mat-dialog-content class="col-md-12">
+    <div class="col-md-12">
+      <div class="col-md-4">
+        <img height="130" width="130" src="./assets/images/voiceCall.png" alt="Basic Plus">
+      </div>&nbsp;
+      <div class="col-md-8 msg">
+        <span>You will receive a call soon</span>
+      </div>
+  </div>
+    <!-- <span>
       You will receive a call soon
     
-    </span>
+    </span> -->
    
   </div><br>
   <!-- Start Meeting -->
   <div mat-dialog-actions class="modal-dialog-bt" >
    
-    <button tabindex="2" mat-dialog-close class="cs-btn bt1" (click)="onClick()">OK</button>
+    <button tabindex="2" mat-dialog-close class="cs-btn bt1" (click)="onClick()">CLOSE</button>
   </div>
   <br>
   <br>
