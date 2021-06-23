@@ -806,8 +806,8 @@
             [source]="'customer-order'" [count]="historyorderVisitDetailsArray.length" [showMore]="showMoreOrderHistory"
             [timeType]="3" (actionPerformed)="actionPerformed($event)" *ngIf="historyorderVisitDetailsArray.length > 0">
         </app-records-datagrid>
-        <app-records-datagrid [consumerId]="customer[0].id" [heading]="'Bill'" [source]="'customer-bill'"
-            [records]="consumerBills">
+        <app-records-datagrid *ngIf="consumerBills.length > 0" [consumerId]="customer[0].id" [heading]="'Bill'"
+            [source]="'customer-bill'" [records]="consumerBills">
         </app-records-datagrid>
     </div>
 </section>

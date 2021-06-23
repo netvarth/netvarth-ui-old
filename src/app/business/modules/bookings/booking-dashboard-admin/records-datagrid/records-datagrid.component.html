@@ -216,7 +216,7 @@
                                 </ng-container>
                                 <ng-container *ngIf="source == 'customer-bill'">
                                     <td>
-                                        10/02/2021
+                                        {{record.createdDate | date : newDateFormat}}
                                     </td>
                                     <td>
                                         <span class="rupee-font">

@@ -94,7 +94,12 @@ export class RecordsDatagridComponent implements OnInit {
       const type = (this.source === 'appt') ? 'appointment' : 'checkin';
       this.router.navigate(['provider', 'bookings', uid], { queryParams: { timetype: 0, type: type } });
     } else if (this.source == 'customer-bill') {
-      //  this.router.navigate(['provider', 'bill', record.uuid], { queryParams: { source: 'appt' } });
+      let source;
+      if (record.type === 'Appointment') {
+        source = 'appt';
+      } else if (record.type === 'Order') {
+        source = 'order';
+      }
       this.router.navigate(['provider', 'bill', record.uuid]);
     } else {
       this.actionPerformed.emit({ record: record, type: type, timeType: this.timeType, source: this.source, heading: this.heading });
