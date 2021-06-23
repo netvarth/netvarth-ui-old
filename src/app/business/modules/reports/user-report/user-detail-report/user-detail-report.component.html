@@ -81,7 +81,7 @@
               </div> 
   
        
-              <div class="box">
+              <div class="box" *ngIf="userStats.length > 0">
   
                 <div class="box-body table-container table-responsive mat-elevation-z8">
           
@@ -114,6 +114,9 @@
   
                 </div>
               </div> 
+              <div *ngIf="userStats.length===0"style="text-align:center">
+              <b> No Records Found</b>
+            </div>
             </ng-container>
   
             <!-- <div *ngIf="report.reportContent.data.length===0" style="text-align:center">
