@@ -16,6 +16,7 @@ import { LocalStorageService } from '../../../../app/shared/services/local-stora
 
 
 
+
 @Component({
   selector: 'app-virtualfields',
   templateUrl: './virtualfields.component.html',
@@ -70,6 +71,7 @@ export class VirtualFieldsComponent implements OnInit {
   serviceDetails: any;
   provider: any;
   languageSelected: any = [];
+  iseditLanguage=false;
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
@@ -283,6 +285,7 @@ export class VirtualFieldsComponent implements OnInit {
     this.virtualForm.controls['preferredLanguage'].setValue([]);
     this.virtualForm.controls['pincode'].setValue('');
     this.virtualForm.controls['location'].setValue('');
+    this.lngknown='yes';
     if(this.customer_data.userProfile.email){
     this.virtualForm.patchValue({ email:  this.customer_data.userProfile.email});
     }else{
@@ -397,6 +400,7 @@ export class VirtualFieldsComponent implements OnInit {
     this.dialogRef.close();
   }
   editLanguage() {
+    this.iseditLanguage=true;
     console.log(this.virtualForm.get('preferredLanguage').value);
     this.languageSelected = this.virtualForm.get('preferredLanguage').value.slice();
     console.log(this.languageSelected);
@@ -424,6 +428,7 @@ export class VirtualFieldsComponent implements OnInit {
       this.virtualForm.get('preferredLanguage').setValue(['English']);
       this.hideLanguages = true;
       this.languageSelected = [];
+      this.iseditLanguage=false;
     }
   else{
     this.virtualForm.patchValue({ 'preferredLanguage': this.languageSelected });

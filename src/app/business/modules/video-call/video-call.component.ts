@@ -81,6 +81,7 @@ export class VideoCallSharedComponent implements OnInit, OnDestroy {
   is_ios: boolean;
   is_web = false;
   notSupported: any;
+  videocredits: ArrayBuffer;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -167,6 +168,7 @@ export class VideoCallSharedComponent implements OnInit, OnDestroy {
       this.is_web = true;
   }
   this.notSupported = this.wordProcessor.getProjectMesssages('WATSAPP_NOT_SUPPORTED');
+  this.getJaldeeVideoCredits();
   }
 
   ngOnDestroy() {
@@ -229,5 +231,14 @@ amReady() {
 //  this.starting =  'https://wa.me/91' + this.phoneNum
 //  console.log(this.starting)
   // this.dialogRef.close();
+}
+getJaldeeVideoCredits() {
+  this.provider_services.getJaldeeVideoRecording()
+  .subscribe(
+    (data) => {
+      console.log(data)
+     this.videocredits = data;
+    }
+  );
 }
 }
