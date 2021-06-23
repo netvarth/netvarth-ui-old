@@ -16,6 +16,7 @@ import { LocalStorageService } from '../../../../app/shared/services/local-stora
 
 
 
+
 @Component({
   selector: 'app-virtualfields',
   templateUrl: './virtualfields.component.html',
@@ -283,6 +284,7 @@ export class VirtualFieldsComponent implements OnInit {
     this.virtualForm.controls['preferredLanguage'].setValue([]);
     this.virtualForm.controls['pincode'].setValue('');
     this.virtualForm.controls['location'].setValue('');
+    this.lngknown='yes';
     if(this.customer_data.userProfile.email){
     this.virtualForm.patchValue({ email:  this.customer_data.userProfile.email});
     }else{
