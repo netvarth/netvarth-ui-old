@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
@@ -7,7 +7,6 @@ import { CheckinDetailsSendComponent } from '../../../check-ins/checkin-details-
 import { LocateCustomerComponent } from '../../../check-ins/locate-customer/locate-customer.component';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { projectConstants } from '../../../../../app.component';
-import * as moment from 'moment';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
@@ -15,6 +14,13 @@ import { CheckinActionsComponent } from '../../../check-ins/checkin-actions/chec
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { AppointmentActionsComponent } from '../../../appointments/appointment-actions/appointment-actions.component';
 import { Subscription } from 'rxjs';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { GalleryImportComponent } from '../../../../../shared/modules/gallery/import/gallery-import.component';
+import { Messages } from '../../../../../shared/constants/project-messages';
+import { GalleryService } from '../../../../../shared/modules/gallery/galery-service';
+import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { DateFormatPipe } from '../../../../../shared/pipes/date-format/date-format.pipe';
 
 @Component({
     selector: 'app-service-actions',
@@ -32,6 +38,7 @@ export class ServiceActionsComponent implements OnInit {
     showSendDetails = false;
     showStart = false;
     showTeleserviceStart = false;
+    showComplete = false;
     showMsg = false;
     board_count;
     pos = false;
@@ -39,31 +46,22 @@ export class ServiceActionsComponent implements OnInit {
     showAttachment = false;
     showCall;
     showmrrx = false;
+    showAssign = false;
     trackDetail: any = [];
     customerMsg;
-    action = '';
-    activeDate;
-    checkin_date;
-    pastDate;
-    today;
-    location_id;
-    serv_id;
-    accountid;
-    queuejson: any = [];
-    queueQryExecuted = false;
-    sel_queue_id;
-    sel_queue_waitingmins;
-    sel_queue_servicetime = '';
-    sel_queue_name;
-    sel_queue_timecaption;
-    sel_queue_indx;
-    sel_queue_det;
-    sel_queue_personaahead = 0;
-    calc_mode;
-    availableDates: any = [];
     newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
     subscription: Subscription;
-    constructor(
+    gallerySubscription: Subscription;
+    active_user;
+    customer_label: any;
+    provider_label: any;
+    qr_value;
+    path = projectConstants.PATH;
+    showQR = false;
+    elementType = 'url';
+    isUserdisable = false;
+    @ViewChild('closebutton') closebutton;
+    constructor(private groupService: GroupStorageService,
         private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
         private provider_shared_functions: ProviderSharedFuctions,
@@ -72,18 +70,49 @@ export class ServiceActionsComponent implements OnInit {
         private snackbarService: SnackbarService,
         public shared_services: SharedServices,
         private dateTimeProcessor: DateTimeProcessor,
-        private sharedFunctions: SharedFunctions
+        private sharedFunctions: SharedFunctions,
+        private wordProcessor: WordProcessor,
+        private galleryService: GalleryService,
+        public dateformat: DateFormatPipe
     ) {
         this.activated_route.queryParams.subscribe(params => {
             this.bookingType = params.type;
             this.timeType = JSON.parse(params.timetype);
         });
         this.subscription = this.sharedFunctions.getMessage().subscribe((message) => {
-            console.log(message.type);
             switch (message.type) {
                 case 'statuschange':
                     this.setActions();
                     break;
+            }
+        });
+        this.gallerySubscription = this.galleryService.getMessage().subscribe(input => {
+            if (input && input.uuid) {
+                if (this.bookingType === 'checkin') {
+                    this.shared_services.addProviderWaitlistAttachment(input.uuid, input.value)
+                        .subscribe(
+                            () => {
+                                this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
+                                this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
+                            },
+                            error => {
+                                this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+                                this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
+                            }
+                        );
+                } else {
+                    this.shared_services.addProviderAppointmentAttachment(input.uuid, input.value)
+                        .subscribe(
+                            () => {
+                                this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
+                                this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
+                            },
+                            error => {
+                                this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+                                this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
+                            }
+                        );
+                }
             }
         });
     }
@@ -91,31 +120,22 @@ export class ServiceActionsComponent implements OnInit {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
+        if (this.gallerySubscription) {
+            this.gallerySubscription.unsubscribe();
+        }
     }
     ngOnInit(): void {
+        this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.setActions();
-        if (this.waitlist_data) {
-            if (this.bookingType === 'checkin') {
-                this.location_id = this.waitlist_data.queue.location.id;
-            } else {
-                this.location_id = this.waitlist_data.location.id;
-            }
-            this.serv_id = this.waitlist_data.service.id;
-            this.accountid = this.waitlist_data.providerAccount.id;
-            if (this.timeType === 3) {
-                this.pastDate = this.waitlist_data.date;
-                this.checkin_date = moment(this.today, 'YYYY-MM-DD HH:mm').format();
-            } else {
-                this.checkin_date = this.waitlist_data.date;
-            }
-        }
     }
     setActions() {
         if (this.bookingType === 'checkin') {
             if (this.timeType !== 3 && this.waitlist_data.waitlistStatus !== 'done' && this.waitlist_data.waitlistStatus !== 'checkedIn' && this.waitlist_data.waitlistStatus !== 'blocked') {
                 this.showUndo = true;
             }
-            if (this.timeType === 1 && this.waitlist_data.waitlistStatus === 'checkedIn' && !this.waitlist_data.virtualService) {
+            if (this.timeType === 1 && this.waitlist_data.waitlistStatus === 'checkedIn' && Object.keys(this.waitlist_data.virtualService).length === 0 && this.waitlist_data.virtualService.constructor === Object) {
                 this.showArrived = true;
             }
             if (this.waitlist_data.waitlistStatus === 'arrived' || this.waitlist_data.waitlistStatus === 'checkedIn') {
@@ -133,6 +153,9 @@ export class ServiceActionsComponent implements OnInit {
             if ((this.waitlist_data.waitlistStatus === 'arrived' || this.waitlist_data.waitlistStatus === 'checkedIn') && this.timeType !== 2 && (!this.waitlist_data.virtualService)) {
                 this.showStart = true;
             }
+            if ((this.waitlist_data.waitlistStatus == 'started' || this.waitlist_data.waitlistStatus == 'arrived' || this.waitlist_data.waitlistStatus == 'checkedIn') && this.timeType !== 2) {
+                this.showComplete = true;
+            }
             if ((this.timeType === 1 || this.timeType === 3) && this.waitlist_data.virtualService && (this.waitlist_data.waitlistStatus === 'arrived' || this.waitlist_data.waitlistStatus === 'checkedIn' || this.waitlist_data.waitlistStatus === 'started')) {
                 this.showTeleserviceStart = true;
             }
@@ -145,10 +168,14 @@ export class ServiceActionsComponent implements OnInit {
             if (this.timeType !== 2 && this.waitlist_data.waitlistStatus !== 'cancelled' && this.waitlist_data.waitlistStatus !== 'blocked') {
                 this.showmrrx = true;
             }
-            if ((this.waitlist_data.waitlistingFor[0].phoneNo && this.waitlist_data.waitlistingFor[0].phoneNo !== 'null') || this.waitlist_data.waitlistingFor[0].email) {
+            if (this.waitlist_data.waitlistStatus !== 'blocked' && (this.waitlist_data.waitlistingFor[0].phoneNo && this.waitlist_data.waitlistingFor[0].phoneNo !== 'null') || this.waitlist_data.waitlistingFor[0].email) {
                 this.showAttachment = true;
             }
-        } else if (this.bookingType === 'appointment') {
+            if (this.active_user.accountType == 'BRANCH' && (this.waitlist_data.waitlistStatus === 'arrived' || this.waitlist_data.waitlistStatus === 'checkedIn')) {
+                this.showAssign = true;
+                this.getUser();
+            }
+        } else {
             if (this.timeType !== 3 && this.waitlist_data.apptStatus !== 'Completed' && this.waitlist_data.apptStatus !== 'Confirmed' && this.waitlist_data.apptStatus !== 'blocked') {
                 this.showUndo = true;
             }
@@ -170,6 +197,9 @@ export class ServiceActionsComponent implements OnInit {
             if ((this.waitlist_data.apptStatus === 'Arrived' || this.waitlist_data.apptStatus === 'Confirmed') && this.timeType !== 2 && (!this.waitlist_data.virtualService)) {
                 this.showStart = true;
             }
+            if ((this.waitlist_data.apptStatus == 'Started' || this.waitlist_data.apptStatus == 'Arrived' || this.waitlist_data.apptStatus == 'Confirmed') && this.timeType !== 2) {
+                this.showComplete = true;
+            }
             if ((this.timeType === 1 || this.timeType === 3) && this.waitlist_data.virtualService && (this.waitlist_data.apptStatus === 'Arrived' || this.waitlist_data.apptStatus === 'Confirmed' || this.waitlist_data.apptStatus === 'Started')) {
                 this.showTeleserviceStart = true;
             }
@@ -185,6 +215,10 @@ export class ServiceActionsComponent implements OnInit {
             if (this.waitlist_data.providerConsumer.email || this.waitlist_data.providerConsumer.phoneNo) {
                 this.showAttachment = true;
             }
+            if (this.active_user.accountType == 'BRANCH' && (this.waitlist_data.apptStatus === 'Arrived' || this.waitlist_data.apptStatus === 'Confirmed')) {
+                this.showAssign = true;
+                this.getUser();
+            }
         }
     }
     callingWaitlist() {
@@ -194,15 +228,28 @@ export class ServiceActionsComponent implements OnInit {
                 () => {
 
                 });
+        } else {
+            this.callingAppt();
         }
     }
     changeWaitlistStatus(action) {
         if (this.bookingType == 'checkin') {
-            if (action !== 'CANCEL') {
-            }
             this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, action);
         } else if (this.bookingType == 'appointment') {
-            if (action !== 'Rejected') {
+            if (action === 'STARTED') {
+                action = 'Started';
+            }
+            if (action === 'CANCEL') {
+                action = 'Cancelled';
+            }
+            if (action === 'REPORT') {
+                action = 'Arrived';
+            }
+            if (action === 'DONE') {
+                action = 'Completed';
+            }
+            if (action === 'CHECK_IN') {
+                action = 'Confirmed';
             }
             this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, action, 'appt');
         }
@@ -234,34 +281,55 @@ export class ServiceActionsComponent implements OnInit {
             disableClose: true,
             data: {
                 qdata: this.waitlist_data,
-                uuid: this.waitlist_data.ynwUuid,
-                chekintype: 'Waitlist'
+                uuid: (this.bookingType == 'checkin') ? this.waitlist_data.ynwUuid : this.waitlist_data.uid,
+                chekintype: (this.bookingType == 'checkin') ? 'Waitlist' : 'appointment'
             }
         });
         smsdialogRef.afterClosed().subscribe(result => {
         });
     }
-
     locateCustomer() {
-        this.provider_services.getCustomerTrackStatus(this.waitlist_data.ynwUuid).subscribe(data => {
-            this.trackDetail = data;
-            this.customerMsg = this.locateCustomerMsg(this.trackDetail);
-            const locateCustomerdialogRef = this.dialog.open(LocateCustomerComponent, {
-                width: '40%',
-                panelClass: ['popup-class', 'locatecustomer-class', 'commonpopupmainclass'],
-                disableClose: true,
-                data: {
-                    message: this.customerMsg
-                }
-            });
-            locateCustomerdialogRef.afterClosed().subscribe(result => {
-                if (result === 'reloadlist') {
-                }
-            });
-        },
-            error => {
-                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            });
+        if (this.bookingType == 'checkin') {
+            this.provider_services.getCustomerTrackStatus(this.waitlist_data.ynwUuid).subscribe(data => {
+                this.trackDetail = data;
+                this.customerMsg = this.locateCustomerMsg(this.trackDetail);
+                const locateCustomerdialogRef = this.dialog.open(LocateCustomerComponent, {
+                    width: '40%',
+                    panelClass: ['popup-class', 'locatecustomer-class', 'commonpopupmainclass'],
+                    disableClose: true,
+                    data: {
+                        message: this.customerMsg
+                    }
+                });
+                locateCustomerdialogRef.afterClosed().subscribe(result => {
+                    if (result === 'reloadlist') {
+                    }
+                });
+            },
+                error => {
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+        } else {
+            this.provider_services.getCustomerTrackStatusforAppointment(this.waitlist_data.uid).subscribe(data => {
+                this.trackDetail = data;
+                this.customerMsg = this.locateCustomerMsg(this.trackDetail);
+                const locateCustomerdialogRef = this.dialog.open(LocateCustomerComponent, {
+                    width: '40%',
+                    panelClass: ['popup-class', 'locatecustomer-class', 'commonpopupmainclass'],
+                    disableClose: true,
+                    data: {
+                        message: this.customerMsg
+                    }
+                });
+                locateCustomerdialogRef.afterClosed().subscribe(result => {
+                    if (result === 'reloadlist') {
+                    }
+                });
+            },
+                error => {
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+        }
     }
     locateCustomerMsg(details) {
         if (details && details.jaldeeDistance) {
@@ -274,7 +342,6 @@ export class ServiceActionsComponent implements OnInit {
             return this.provider_shared_functions.getLiveTrackMessage(distance, unit, hours, minutes, mode);
         }
     }
-
     unBlockAppt() {
         this.provider_services.deleteAppointmentBlock(this.waitlist_data.uid)
             .subscribe(
@@ -386,61 +453,6 @@ export class ServiceActionsComponent implements OnInit {
             this.sharedFunctions.sendMessage({ type: 'statuschange' });
         });
     }
-    changeSlot() {
-        this.action = 'slotChange';
-        this.activeDate = this.checkin_date;
-        this.getQueuesbyLocationandServiceId(this.location_id, this.serv_id, this.checkin_date, this.accountid);
-        this.getQueuesbyLocationandServiceIdavailability(this.location_id, this.serv_id, this.accountid);
-    }
-
-    getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
-        this.queuejson = [];
-        this.queueQryExecuted = false;
-        if (locid && servid) {
-            this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
-                .subscribe(data => {
-                    this.queuejson = data;
-                    this.queueQryExecuted = true;
-                    if (this.queuejson.length > 0) {
-                        let selindx = 0;
-                        for (let i = 0; i < this.queuejson.length; i++) {
-                            if (this.queuejson[i]['queueWaitingTime'] !== undefined) {
-                                selindx = i;
-                            }
-                        }
-                        this.sel_queue_id = this.queuejson[selindx].id;
-                        this.sel_queue_indx = selindx;
-                        this.sel_queue_waitingmins = this.dateTimeProcessor.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
-                        this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
-                        this.sel_queue_name = this.queuejson[selindx].name;
-                        this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
-                        this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
-
-                    } else {
-                        this.sel_queue_indx = -1;
-                        this.sel_queue_id = 0;
-                        this.sel_queue_waitingmins = 0;
-                        this.sel_queue_servicetime = '';
-                        this.sel_queue_name = '';
-                        this.sel_queue_timecaption = '';
-                        this.sel_queue_personaahead = 0;
-                    }
-                });
-        }
-    }
-    getQueuesbyLocationandServiceIdavailability(locid, servid, accountid) {
-        const _this = this;
-        if (locid && servid && accountid) {
-            _this.shared_services.getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid)
-                .subscribe((data: any) => {
-                    const availables = data.filter(obj => obj.isAvailable);
-                    const availDates = availables.map(function (a) { return a.date; });
-                    _this.availableDates = availDates.filter(function (elem, index, self) {
-                        return index === self.indexOf(elem);
-                    });
-                });
-        }
-    }
     unBlockWaitlist() {
         this.provider_services.deleteWaitlistBlock(this.waitlist_data.ynwUuid)
             .subscribe(
@@ -450,5 +462,257 @@ export class ServiceActionsComponent implements OnInit {
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
+    }
+    sendimages() {
+        const galleryDialog = this.dialog.open(GalleryImportComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+                source_id: 'attachment',
+                uid: (this.bookingType === 'checkin') ? this.waitlist_data.ynwUuid : this.waitlist_data.uid
+            }
+        });
+        galleryDialog.afterClosed().subscribe(result => {
+        })
+    }
+    printCheckin() {
+        if (this.bookingType == 'checkin') {
+            this.qrCodegeneration(this.waitlist_data);
+            const bprof = this.groupService.getitemFromGroupStorage('ynwbp');
+            const bname = bprof.bn;
+            const fname = (this.waitlist_data.waitlistingFor[0].firstName) ? this.waitlist_data.waitlistingFor[0].firstName : '';
+            const lname = (this.waitlist_data.waitlistingFor[0].lastName) ? this.waitlist_data.waitlistingFor[0].lastName : '';
+            setTimeout(() => {
+                const printContent = document.getElementById('print-section');
+                const params = [
+                    'height=' + screen.height,
+                    'width=' + screen.width,
+                    'fullscreen=yes'
+                ].join(',');
+                const printWindow = window.open('', '', params);
+                let checkin_html = '';
+                checkin_html += '<table style="width:100%;"><thead>';
+                checkin_html += '<tr><td colspan="3" style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">' + this.dateformat.transformToDIsplayFormat(this.waitlist_data.date) + '<br/>';
+                if (this.waitlist_data.token) {
+                    checkin_html += 'Token# <span style="font-weight:bold">' + this.waitlist_data.token + '</span>';
+                }
+                checkin_html += '</td></tr>';
+                checkin_html += '<tr><td colspan="3" style="text-align:center">' + bname.charAt(0).toUpperCase() + bname.substring(1) + '</td></tr>';
+                checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.waitlist_data.queue.location.place + '</td></tr>';
+                checkin_html += '</thead><tbody>';
+                if (fname !== '' || lname !== '') {
+                    checkin_html += '<tr><td width="48%" align="right">' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + '</td><td>:</td><td>' + fname + ' ' + lname + '</td></tr>';
+                } else {
+                    checkin_html += '<tr><td width="48%" align="right">' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + ' Id </td><td>:</td><td>' + this.waitlist_data.consumer.jaldeeId + '</td></tr>';
+                }
+                if (this.waitlist_data.service && this.waitlist_data.service.deptName) {
+                    checkin_html += '<tr><td width="48%" align="right">Department</td><td>:</td><td>' + this.waitlist_data.service.deptName + '</td></tr>';
+                }
+                checkin_html += '<tr><td width="48%" align="right">Service</td><td>:</td><td>' + this.waitlist_data.service.name + '</td></tr>';
+                if (this.waitlist_data.provider && this.waitlist_data.provider.firstName && this.waitlist_data.provider.lastName) {
+                    checkin_html += '<tr><td width="48%" align="right">' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + '</td><td>:</td><td>' + this.waitlist_data.provider.firstName.charAt(0).toUpperCase() + this.waitlist_data.provider.firstName.substring(1) + ' ' + this.waitlist_data.provider.lastName + '</td></tr>';
+                }
+                checkin_html += '<tr><td width="48%" align="right">Queue</td><td>:</td><td>' + this.waitlist_data.queue.name + ' [' + this.waitlist_data.queue.queueStartTime + ' - ' + this.waitlist_data.queue.queueEndTime + ']' + '</td></tr>';
+                checkin_html += '<tr><td colspan="3" align="center">' + printContent.innerHTML + '</td></tr>';
+                checkin_html += '<tr><td colspan="3" align="center">Scan to know your status or log on to ' + this.qr_value + '</td></tr>';
+                checkin_html += '</tbody></table>';
+                printWindow.document.write('<html><head><title></title>');
+                printWindow.document.write('</head><body>');
+                printWindow.document.write(checkin_html);
+                printWindow.document.write('</body></html>');
+                printWindow.moveTo(0, 0);
+                printWindow.print();
+            });
+        } else {
+            this.printAppt();
+        }
+    }
+    printAppt() {
+        const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
+        let bname = '';
+        if (bdetails) {
+            bname = bdetails.bn || '';
+        }
+        const fname = (this.waitlist_data.appmtFor[0].firstName) ? this.waitlist_data.appmtFor[0].firstName : '';
+        const lname = (this.waitlist_data.appmtFor[0].lastName) ? this.waitlist_data.appmtFor[0].lastName : '';
+        const _this = this;
+        _this.qrCodegeneration(this.waitlist_data);
+        setTimeout(() => {
+            const printContent = document.getElementById('print-section');
+            const params = [
+                'height=' + screen.height,
+                'width=' + screen.width,
+                'fullscreen=yes'
+            ].join(',');
+            const printWindow = window.open('', '', params);
+            let checkin_html = '';
+            checkin_html += '<table style="width:100%;"><thead>';
+            checkin_html += '<tr><td colspan="3" style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">' + this.dateformat.transformToDIsplayFormat(this.waitlist_data.appmtDate) + '<br/>';
+            if (this.waitlist_data.batchId) {
+                checkin_html += 'Batch <span style="font-weight:bold">' + this.waitlist_data.batchId + '</span>';
+            } else {
+                checkin_html += 'Appointment Time <span style="font-weight:bold">' + this.getSingleTime(this.waitlist_data.appmtTime) + '</span>';
+            }
+            checkin_html += '</td></tr>';
+            checkin_html += '<tr><td colspan="3" style="text-align:center">' + bname.charAt(0).toUpperCase() + bname.substring(1) + '</td></tr>';
+            checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.waitlist_data.location.place + '</td></tr>';
+            checkin_html += '</thead><tbody>';
+            if (fname !== '' || lname !== '') {
+                checkin_html += '<tr><td width="48%" align="right">' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + '</td><td>:</td><td>' + fname + ' ' + lname + '</td></tr>';
+            } else {
+                checkin_html += '<tr><td width="48%" align="right">' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + ' Id </td><td>:</td><td>' + this.waitlist_data.providerConsumer.jaldeeId + '</td></tr>';
+            }
+            if (this.waitlist_data.service && this.waitlist_data.service.deptName) {
+                checkin_html += '<tr><td width="48%" align="right">Department</td><td>:</td><td>' + this.waitlist_data.service.deptName + '</td></tr>';
+            }
+            checkin_html += '<tr><td width="48%" align="right">Service</td><td>:</td><td>' + this.waitlist_data.service.name + '</td></tr>';
+            if (this.waitlist_data.provider && this.waitlist_data.provider.firstName && this.waitlist_data.provider.lastName) {
+                checkin_html += '<tr><td width="48%" align="right">' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + '</td><td>:</td><td>' + this.waitlist_data.provider.firstName.charAt(0).toUpperCase() + this.waitlist_data.provider.firstName.substring(1) + ' ' + this.waitlist_data.provider.lastName + '</td></tr>';
+            }
+            checkin_html += '<tr><td width="48%" align="right">schedule</td><td>:</td><td>' + this.waitlist_data.schedule.name + ' [' + this.waitlist_data.schedule.apptSchedule.timeSlots[0].sTime + ' - ' + this.waitlist_data.schedule.apptSchedule.timeSlots[0].eTime + ']' + '</td></tr>';
+            checkin_html += '<tr><td colspan="3" align="center">' + printContent.innerHTML + '</td></tr>';
+            checkin_html += '<tr><td colspan="3" align="center">Scan to know your status or log on to ' + this.qr_value + '</td></tr>';
+            checkin_html += '</tbody></table>';
+            printWindow.document.write('<html><head><title></title>');
+            printWindow.document.write('</head><body >');
+            printWindow.document.write(checkin_html);
+            printWindow.document.write('</body></html>');
+            _this.showQR = false;
+            printWindow.moveTo(0, 0);
+            printWindow.print();
+        });
+    }
+    getSingleTime(slot) {
+        const slots = slot.split('-');
+        return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
+    }
+    qrCodegeneration(valuetogenerate) {
+        this.qr_value = this.path + 'status/' + valuetogenerate.checkinEncId;
+        this.showQR = true;
+    }
+    changeWaitlistservice() {
+        if (this.bookingType == 'checkin') {
+            this.router.navigate(['provider', 'check-ins', this.waitlist_data.ynwUuid, 'user'], { queryParams: { source: 'checkin' } });
+        } else {
+            this.router.navigate(['provider', 'check-ins', this.waitlist_data.uid, 'user'], { queryParams: { source: 'appt' } });
+        }
+    }
+    removeProvider() {
+        let msg = '';
+        msg = 'Do you want to remove this ' + this.provider_label + '?';
+        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': msg,
+                'type': 'yes/no'
+            }
+        });
+        dialogrefd.afterClosed().subscribe(result => {
+            if (result) {
+                if (this.bookingType == 'checkin') {
+                    const post_data = {
+                        'ynwUuid': this.waitlist_data.ynwUuid,
+                        'provider': {
+                            'id': this.waitlist_data.provider.id
+                        },
+                    };
+                    this.provider_services.unassignUserWaitlist(post_data)
+                        .subscribe(
+                            data => {
+                                this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                                this.closebutton.nativeElement.click();
+                            },
+                            error => {
+                                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            }
+                        );
+                } else {
+                    const post_data = {
+                        'uid': this.waitlist_data.uid,
+                        'provider': {
+                            'id': this.waitlist_data.provider.id
+                        },
+                    };
+                    this.provider_services.unassignUserAppointment(post_data)
+                        .subscribe(
+                            data => {
+                                this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                                this.closebutton.nativeElement.click();
+                            },
+                            error => {
+                                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            }
+                        );
+                }
+            }
+        });
+    }
+    assignMyself() {
+        let msg = '';
+        msg = 'Are you sure you want to assign this token to yourself ?';
+        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': msg,
+                'type': 'yes/no'
+            }
+        });
+        dialogrefd.afterClosed().subscribe(result => {
+            if (result) {
+                if (this.bookingType == 'checkin') {
+                    const post_data = {
+                        'ynwUuid': this.waitlist_data.ynwUuid,
+                        'provider': {
+                            'id': this.active_user.id
+                        },
+                    };
+                    this.provider_services.updateUserWaitlist(post_data)
+                        .subscribe(
+                            data => {
+                                this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                                this.closebutton.nativeElement.click();
+                            },
+                            error => {
+                                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            }
+                        );
+                } else {
+                    const post_data = {
+                        'uid': this.waitlist_data.uid,
+                        'provider': {
+                            'id': this.active_user.id
+                        },
+                    };
+                    this.provider_services.updateUserAppointment(post_data)
+                        .subscribe(
+                            data => {
+                                this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                                this.closebutton.nativeElement.click();
+                            },
+                            error => {
+                                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            }
+                        );
+                }
+            }
+        });
+    }
+    getUser() {
+        if (this.active_user.id) {
+            this.provider_services.getUser(this.active_user.id)
+                .subscribe((data: any) => {
+                    if (data.status === 'ACTIVE') {
+                        this.isUserdisable = true
+                    } else {
+                        this.isUserdisable = false
+                    }
+                }, error => {
+                });
+        }
     }
 }

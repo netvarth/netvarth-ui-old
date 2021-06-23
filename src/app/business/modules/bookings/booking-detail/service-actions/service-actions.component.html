@@ -21,7 +21,7 @@
         {{waitlist_data.apptStatus | capitalizeFirst}}
       </div>
     </div>
-    <div *ngIf="bookingType === 'checkin'" class="card-toolbar col-12 col-sm-5 col-lg-5 p-0 disp-grid">
+    <div class="card-toolbar col-12 col-sm-5 col-lg-5 p-0 disp-grid">
       <div *ngIf="showStart" class="action-buttons-container">
         <button type="button" class="start-service-btn btn mb-2 btn-block" (click)="changeWaitlistStatus('STARTED')">
           Start
@@ -51,29 +51,36 @@
       </div>
       <div class="action-buttons-container">
         <a *ngIf="showCall" class="btn mb-2 action-button" (click)="callingWaitlist()">
-          <i class="fa fa-stop"></i>Stop
+          <ng-container *ngIf="waitlist_data.callingStatus">
+            <i class="fa fa-stop"></i>Stop
+          </ng-container>
+          <ng-container *ngIf="!waitlist_data.callingStatus">
+            <i class="fa fa-stop"></i>Alert
+          </ng-container>
         </a>
         <a *ngIf="waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived'"
           class="btn mb-2 action-button" (click)="witlistRescheduleActionClicked()">
           <i class="fa fa-repeat"></i>Reschedule
         </a>
+        <a *ngIf="waitlist_data.apptStatus == 'Confirmed' || waitlist_data.apptStatus == 'Arrived'"
+          class="btn mb-2 action-button" (click)="apptRescheduleActionClicked()">
+          <i class="fa fa-repeat"></i>Reschedule
+        </a>
         <a *ngIf="showCancel" class="btn mb-2 action-button" (click)="changeWaitlistStatus('CANCEL')">
           <i class="fa fa-times-circle-o"></i>Cancel
         </a>
-      </div>
-      <div class="action-buttons-container">
         <a *ngIf="waitlist_data.waitlistStatus==='blocked'" class="btn mb-2 action-button" (click)="unBlockWaitlist()">
+          <i class="fa fa-unlock-alt"></i>Unblock
+        </a>
+        <a *ngIf="waitlist_data.apptStatus==='blocked'" class="btn mb-2 action-button" (click)="unBlockAppt()">
           <i class="fa fa-unlock-alt"></i>Unblock
         </a>
         <a *ngIf="showArrived" class="btn mb-2 action-button" (click)="changeWaitlistStatus('REPORT')">
           <i class="fa fa-map-marker"></i>Mark as arrived
         </a>
-        <a *ngIf="waitlist_data.waitlistStatus == 'started'" class="btn mb-2 action-button"
-          (click)="changeWaitlistStatus('DONE')">
+        <a *ngIf="showComplete" class="btn mb-2 action-button" (click)="changeWaitlistStatus('DONE')">
           <i class="fa fa-check"></i>Complete
         </a>
-      </div>
-      <div class="action-buttons-container">
         <a *ngIf="showUndo" class="btn mb-2 action-button" (click)="changeWaitlistStatus('CHECK_IN')">
           <i class="fa fa-exchange"></i>Status change
         </a>
@@ -83,67 +90,56 @@
         <a *ngIf="trackStatus" class="btn mb-2 action-button" (click)="locateCustomer()">
           <i class="fa fa-question-circle"></i>Where is my customer
         </a>
+        <a *ngIf="timeType !== 3" class="btn mb-2 action-button" (click)="printCheckin()">
+          <i class="fa fa-print" aria-hidden="true"></i>Print
+        </a>
+        <a *ngIf="showAttachment" class="btn mb-2 action-button" (click)="sendimages()">
+          <i class="fa fa-paperclip" aria-hidden="true"></i>Send Attachments
+        </a>
+        <a *ngIf="showAssign" class="btn mb-2 action-button" data-toggle="modal" data-target="#exampleModalCenter">
+          <i class="fa fa-paperclip" aria-hidden="true"></i>Assign
+        </a>
       </div>
     </div>
-    <div *ngIf="bookingType === 'appointment'" class="card-toolbar col-12 col-sm-5 col-lg-5 p-0 disp-grid">
-      <div *ngIf="showStart" class="action-buttons-container">
-        <button type="button" class="start-service-btn btn mb-2 btn-block" (click)="changeWaitlistStatus('Started')">
-          Start
-        </button>
-      </div>
-      <div *ngIf="showTeleserviceStart" class="action-buttons-container">
-        <button type="button" class="start-service-btn btn mb-2 btn-block" (click)="showCallingModes(waitlist_data)">
+  </div>
+</div>
+<div class="dashqr" *ngIf="showQR">
+  <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value">
+  </ngx-qrcode>
+</div>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body" *ngIf="waitlist_data">
+        <div class="action-box pointer-cursor"
+          *ngIf="active_user && active_user.userType == 1 && !waitlist_data.provider && (bookingType == 'checkin' && waitlist_data.queue.provider.id === 0 || bookingType == 'appointment' && waitlist_data.schedule.provider.id === 0) && isUserdisable"
+          (click)="assignMyself()">
           <div class="action-box-sub">
-            <span class="meet-icon"
-              *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></span>
-            <span class="zoom-icon"
-              *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'Zoom'"></span>
-            <span class="phon-icon"
-              *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'Phone'"></span>
-            <span class="wtsapaud-icon"
-              *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist_data.service.virtualServiceType === 'audioService'"></span>
-            <span class="wtsapvid-icon"
-              *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp' && waitlist_data.service.virtualServiceType === 'videoService'"></span>
-            <span class="icon-text">
-              {{waitlist_data.apptStatus == 'Started' ? 'Resume' : 'Start'}} Service
-            </span>
+            <span class="doctor-change-icon"></span>
+            <div class="icon-text">Assign Myself</div>
           </div>
-        </button>
+        </div>
+        <div class="action-box pointer-cursor"
+          *ngIf="bookingType == 'checkin' && waitlist_data.queue.provider.id === 0 || bookingType == 'appointment' && waitlist_data.schedule.provider.id === 0"
+          (click)="changeWaitlistservice()">
+          <div class="action-box-sub">
+            <span class="doctor-change-icon"></span>
+            <div *ngIf="waitlist_data.provider" class="icon-text">Change {{provider_label | capitalizeFirst}}</div>
+            <div *ngIf="!waitlist_data.provider" class="icon-text">Assign {{provider_label | capitalizeFirst}}</div>
+          </div>
+        </div>
+        <div class="action-box pointer-cursor"
+          *ngIf="(bookingType == 'checkin' && waitlist_data.queue.provider.id === 0 || bookingType == 'appointment' && waitlist_data.schedule.provider.id === 0) && waitlist_data.provider"
+          (click)="removeProvider()">
+          <div class="action-box-sub">
+            <span class="doctor-change-icon"></span>
+            <div class="icon-text">Unassign {{provider_label | capitalizeFirst}}</div>
+          </div>
+        </div>
       </div>
-      <div class="action-buttons-container">
-        <a *ngIf="showCall" class="btn mb-2 action-button" (click)="callingAppt()">
-          <i class="fa fa-stop"></i>Stop
-        </a>
-        <a *ngIf="waitlist_data.apptStatus == 'Confirmed' || waitlist_data.apptStatus == 'Arrived'"
-          class="btn mb-2 action-button" (click)="apptRescheduleActionClicked()">
-          <i class="fa fa-repeat"></i>Reschedule
-        </a>
-        <a *ngIf="showCancel" class="btn mb-2 action-button" (click)="changeWaitlistStatus('Cancelled')">
-          <i class="fa fa-times-circle-o"></i>Cancel
-        </a>
-      </div>
-      <div class="action-buttons-container">
-        <a *ngIf="waitlist_data.apptStatus==='blocked'" class="btn mb-2 action-button" (click)="unBlockAppt()">
-          <i class="fa fa-unlock-alt"></i>Unblock
-        </a>
-        <a *ngIf="showArrived" class="btn mb-2 action-button" (click)="changeWaitlistStatus('Arrived')">
-          <i class="fa fa-map-marker"></i>Mark as arrived
-        </a>
-        <a *ngIf="waitlist_data.apptStatus == 'Started'" class="btn mb-2 action-button"
-          (click)="changeWaitlistStatus('Completed')">
-          <i class="fa fa-check"></i>Complete
-        </a>
-      </div>
-      <div class="action-buttons-container">
-        <a *ngIf="showUndo" class="btn mb-2 action-button" (click)="changeWaitlistStatus('Confirmed')">
-          <i class="fa fa-exchange"></i>Status change
-        </a>
-        <a *ngIf="showSendDetails" class="btn mb-2 action-button" (click)="smsApptmnt()">
-          <i class="fa fa-share-square-o"></i>Share booking info
-        </a>
-        <a *ngIf="trackStatus" class="btn mb-2 action-button" (click)="locateApptCustomer()">
-          <i class="fa fa-question-circle"></i>Where is my customer
-        </a>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal" #closebutton>Cancel</button>
       </div>
     </div>
   </div>

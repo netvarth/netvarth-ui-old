@@ -4,6 +4,7 @@ import { CalendarDateFormatter, CalendarEvent, CalendarView } from 'angular-cale
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { startOfDay, addHours, isSameMonth, isSameDay, addMinutes } from 'date-fns';
 import { CustomDateFormatter } from './custom-date-formatter.provider';
+import { Router } from '@angular/router';
 
 const colors: any = {
   red: {
@@ -38,10 +39,10 @@ export class CalendarComponent implements OnInit {
   viewDate: Date = new Date();
   events: CalendarEvent[] = [];
   activeDayIsOpen: boolean = true;
-
   waitlists: any = [];
   appts: any = [];
-  constructor(
+  loading = true;
+  constructor(private router: Router,
     private provider_services: ProviderServices) { }
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -60,6 +61,8 @@ export class CalendarComponent implements OnInit {
   handleEvent(action: string, event: CalendarEvent): void {
     alert(action);
     console.log(event);
+    this.router.navigate(['provider', 'bookings', 'uid'], { queryParams: { timetype: 0, type: 'appointment' } });
+
   }
 
   setView(view: CalendarView) {
@@ -95,6 +98,10 @@ export class CalendarComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.appts = data;
+          this.appts.map((obj) => {
+            obj.type = 0;
+            return obj;
+          });
           console.log(this.appts);
           this.getFutureAppts();
         });
@@ -108,15 +115,6 @@ export class CalendarComponent implements OnInit {
         (data: any) => {
           this.waitlists = this.waitlists.concat(data);
           console.log(this.waitlists);
-          // for (let waitlist of this.waitlists) {
-          //   this.events.push({
-          //     start: addHours(addMinutes(startOfDay(new Date(waitlist.appmtDate)), this.getSingleTime(waitlist.appmtTime, 'start', 'minute')), this.getSingleTime(waitlist.appmtTime, 'start', 'hour')),
-          //     end: addHours(addMinutes(startOfDay(new Date(waitlist.appmtDate)), this.getSingleTime(waitlist.appmtTime, 'end', 'minute')), this.getSingleTime(waitlist.appmtTime, 'end', 'hour')),
-          //     title: waitlist.apptStatus,
-          //     color: colors.yellow
-          //   })
-          // }
-          // console.log(this.events);
         });
   }
   getFutureAppts() {
@@ -126,6 +124,10 @@ export class CalendarComponent implements OnInit {
     this.provider_services.getFutureAppointments(filter)
       .subscribe(
         (data: any) => {
+          data.map((obj) => {
+            obj.type = 1;
+            return obj;
+          });
           this.appts = this.appts.concat(data);
           console.log(this.appts);
           for (let appt of this.appts) {
@@ -133,9 +135,15 @@ export class CalendarComponent implements OnInit {
               start: addHours(addMinutes(startOfDay(new Date(appt.appmtDate)), this.getSingleTime(appt.appmtTime, 'start', 'minute')), this.getSingleTime(appt.appmtTime, 'start', 'hour')),
               end: addHours(addMinutes(startOfDay(new Date(appt.appmtDate)), this.getSingleTime(appt.appmtTime, 'end', 'minute')), this.getSingleTime(appt.appmtTime, 'end', 'hour')),
               title: appt.apptStatus,
-              color: colors.yellow
+              color: colors.yellow,
+              meta: {
+                uid: appt.uid,
+                type: 0
+              }
             })
           }
+          this.loading = false;
+          // this.setView(CalendarView.Month);
           console.log(this.events);
         });
   }

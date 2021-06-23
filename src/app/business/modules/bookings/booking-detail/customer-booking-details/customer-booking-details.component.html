@@ -21,6 +21,11 @@
           <i class="fa fa-id-card-o icon"></i>
           <span class="value">Booking Id: {{waitlist_data.checkinEncId}}</span>
         </div>
+        <div class="jaldee-id" *ngIf="waitlist_data.provider">
+          <i class="fa fa-id-card-o icon"></i>
+          <span class="value">{{provider_label | capitalizeFirst}}:   {{(waitlist_data.provider.businessName) ? waitlist_data.provider.businessName : waitlist_data.provider.firstName
+            + ' ' + waitlist_data.provider.lastName}}</span>
+        </div>
         <div class="contact-no" *ngIf="waitlist_data.waitlistPhoneNumber">
           <i class="fa fa-mobile icon"></i>
           <span class="value">{{waitlist_data.countryCode}} {{waitlist_data.waitlistPhoneNumber}}</span>
@@ -83,6 +88,11 @@
         <div class="jaldee-id">
           <i class="fa fa-id-card-o icon"></i>
           <span class="value">Booking Id: {{waitlist_data.appointmentEncId}}</span>
+        </div>
+        <div class="jaldee-id" *ngIf="waitlist_data.provider">
+          <i class="fa fa-id-card-o icon"></i>
+          <span class="value">{{provider_label | capitalizeFirst}}:   {{(waitlist_data.provider.businessName) ? waitlist_data.provider.businessName : waitlist_data.provider.firstName
+            + ' ' + waitlist_data.provider.lastName}}</span>
         </div>
         <div class="contact-no" *ngIf="waitlist_data.phoneNumber">
           <i class="fa fa-mobile icon"></i>

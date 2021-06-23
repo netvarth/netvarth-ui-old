@@ -9,6 +9,7 @@ import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-servi
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Subscription } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-booking-detail',
@@ -45,7 +46,7 @@ export class BookingDetailComponent implements OnInit {
   pos;
   height;
   subscription: Subscription;
-  constructor(
+  constructor(private locationobj: Location,
     private groupService: GroupStorageService,
     private provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
@@ -322,5 +323,8 @@ export class BookingDetailComponent implements OnInit {
   }
   getHeight(event) {
     this.height = event;
+  }
+  goBack() {
+    this.locationobj.back();
   }
 }

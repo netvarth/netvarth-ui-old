@@ -188,6 +188,17 @@
     color: inherit !important;
     vertical-align: baseline !important;
 }
-.gutter-b {
-    height: 180px !important;
+@media (min-width: 991px) {
+    .gutter-b {
+        height: 220px !important;
+    }
 }
+.action-box {
+    width: 150px;
+    height: 100px;
+    margin: 15px;
+    text-align: center;
+    float: left;
+    display: table;
+    box-shadow: 10px 10px 15px 0px #cccccc9c;
+  }

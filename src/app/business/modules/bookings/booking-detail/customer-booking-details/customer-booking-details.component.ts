@@ -24,6 +24,7 @@ export class CustomerBookingDetailsComponent implements OnInit {
   };
   @ViewChild('details') elementView: ElementRef;
   addedHeight;
+  provider_label;
   constructor(
     private provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
@@ -39,6 +40,7 @@ export class CustomerBookingDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
   }
   savePrivateNote() {
     if (this.privateNote.trim() === '') {

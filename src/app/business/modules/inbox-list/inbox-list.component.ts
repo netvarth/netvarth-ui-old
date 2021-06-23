@@ -186,7 +186,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
     if (this.source) {
       this.small_device_display = true;
-      this.msgHeight = this.msgHeightTemp = 400;
+      this.msgHeight = this.msgHeightTemp = 440;
       this.showChat = true;
     }
   }
@@ -206,7 +206,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
       if (enuiryMsgs && enuiryMsgs.length > 0) {
         this.shared_functions.sendMessage({ ttype: 'enquiryCount' });
       }
-      this.router.navigate(['provider', 'inbox']);
+      if (!this.source) {
+        this.router.navigate(['provider', 'inbox']);
+      }
     });
   }
   getInboxUnreadCnt() {
