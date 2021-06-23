@@ -71,6 +71,7 @@ export class VirtualFieldsComponent implements OnInit {
   serviceDetails: any;
   provider: any;
   languageSelected: any = [];
+  iseditLanguage=false;
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
@@ -399,6 +400,7 @@ export class VirtualFieldsComponent implements OnInit {
     this.dialogRef.close();
   }
   editLanguage() {
+    this.iseditLanguage=true;
     console.log(this.virtualForm.get('preferredLanguage').value);
     this.languageSelected = this.virtualForm.get('preferredLanguage').value.slice();
     console.log(this.languageSelected);
@@ -426,6 +428,7 @@ export class VirtualFieldsComponent implements OnInit {
       this.virtualForm.get('preferredLanguage').setValue(['English']);
       this.hideLanguages = true;
       this.languageSelected = [];
+      this.iseditLanguage=false;
     }
   else{
     this.virtualForm.patchValue({ 'preferredLanguage': this.languageSelected });
