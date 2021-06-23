@@ -1,7 +1,7 @@
 <!-- <section [ngClass]="{'container': curtype=='consumer'}">
     <app-breadcrumb [breadcrumbs]="breadcrumbs" (performAction)="performActions($event)" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section> -->
-<section *ngIf="curtype=='consumer'" class="container no-padding myaccount no-padding-small">
+<section *ngIf="curtype=='consumer'" class="container no-padding myaccount no-padding-small consumer-profile">
     <div class="content p0 see-pages cons-members">
 
         <div class="panel panel-default">
@@ -144,12 +144,60 @@
                                     <div class="cardright">
                                         <div class="grayouter">
                                             <div class="form-group">
-                                                <label class="col-form-label">{{phone_no_cap}}</label>
+                                                <label class="col-form-label">Phone #</label>
                                                 <span>{{countryCode}}</span><span> {{phonenoHolder}}</span>
                                                 <ul class="info-lst">
                                                     <li>{{edit_phone_no_cap}}</li>
                                                 </ul>
                                             </div>
+                                            <div class="col-xs-12 no-padding optional">
+                                                    <label><i class="fa fa-whatsapp" style="color:green"></i> Whatsapp #</label>
+                                                    <div class="disp-flex">
+                                                        <div class="form-group no-margin">
+                                                            <input type="text" (keypress)="isNumeric($event)" matInput
+                                                                class="form-control input-group-text" id="countryCode_whtsap"
+                                                                placeholder="" formControlName="countryCode_whtsap" autocomplete="off"
+                                                                maxlength="5" style="width:60px">
+                                                        </div>
+                                                        <div class="form-group width-100">
+                                                            <input type="text" (keypress)="isNumeric($event)" matInput
+                                                                class="form-control text-width" id="whatsappnumber" formControlName="whatsappnumber"
+                                                                autocomplete="off">
+                                                            <app-field-error-display
+                                                                [displayError]="fed_service.isFieldValid(editProfileForm,'whatsappnumber')" [errorMsgs]="fed_service.getErrorMessage(editProfileForm,'whatsappnumber',
+                                                            {
+                                                            'minlength' : 'Enter a 10 digit whatsapp number',
+                                                            'maxlength' : 'Enter a 10 digit whatsapp number',
+                                                            'pattern' : 'Enter a 10 digit whatsapp number'
+                                                            })">
+                                                            </app-field-error-display>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class=" col-xs-12 no-padding optional">
+                                                        <label><i class="fa fa-telegram" style="color:#29b6f6;"></i> Telegram #</label>
+                                                        <div class="disp-flex">
+                                                            <div class="form-group no-margin">
+                                                                <input type="text" (keypress)="isNumeric($event)" matInput
+                                                                    class="form-control input-group-text" id="countryCode_telegram"
+                                                                    placeholder="" formControlName="countryCode_telegram"
+                                                                    autocomplete="off" maxlength="5" style="width:60px">
+                                                            </div>
+                                                            <div class="form-group width-100">
+                                                                <input type="text" (keypress)="isNumeric($event)" matInput
+                                                                    class="form-control text-width" id="telegramnumber" formControlName="telegramnumber"
+                                                                    autocomplete="off" >
+                                                                <app-field-error-display
+                                                                    [displayError]="fed_service.isFieldValid(editProfileForm,'telegramnumber')" [errorMsgs]="fed_service.getErrorMessage(editProfileForm,'telegramnumber',
+                                                                {
+                                                                'minlength' : 'Enter a 10 digit telegram number',
+                                                                'maxlength' : 'Enter a 10 digit telegram number',
+                                                                'pattern' : 'Enter a 10 digit telegram number'
+                                                                })">
+                                                                </app-field-error-display>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                         </div>
                                     </div>
                                 </div>

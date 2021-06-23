@@ -330,9 +330,16 @@
                                                                                         <input
                                                                                             style="font-size: larger;"
                                                                                             type="text"
-                                                                                            placeholder="donor name"
+                                                                                            placeholder="First name"
                                                                                             class="form-control phonenum"
-                                                                                            [(ngModel)]="donor" />
+                                                                                            [(ngModel)]="donorfirst" />
+                                                                                        
+                                                                                            <input
+                                                                                            style="font-size: larger; margin-top: 10px;"
+                                                                                            type="text"
+                                                                                            placeholder="Last name"
+                                                                                            class="form-control phonenum"
+                                                                                            [(ngModel)]="donorlast" />
                                                                                         <button (click)="addDonor()"
                                                                                             class="btn bt3 btn-default coupon-apply-btn"
                                                                                             type="button">Ok</button>
@@ -341,8 +348,15 @@
                                                                                             *ngIf="donorerror != null"
                                                                                             errorMsg={{donorerror}}>
                                                                                         </app-field-error-display>
+                                                                                        <app-field-error-display
+                                                                                            [displayError]="true"
+                                                                                            *ngIf="donorlasterror != null"
+                                                                                            errorMsg={{donorlasterror}}>
+                                                                                        </app-field-error-display>
                                                                                     </label>
                                                                                 </div>
+
+                                                                                
                                                                             </div>
                                                                         </div>
                                                                         <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"

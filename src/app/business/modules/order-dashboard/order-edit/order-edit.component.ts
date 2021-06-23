@@ -290,7 +290,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
   }
   getOrderItems() {
-
+console.log(this.orders);
     this.orderSummary = [];
     this.orders.forEach(item => {
       let consumerNote = '';
@@ -310,7 +310,8 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     this.providerservice.updateOrder(post_data)
     .pipe(takeUntil(this.onDestroy$))
       .subscribe(data => {
-        if(this.orderDetails && this.orderDetails.orderItem){
+        console.log(this.orderDetails);
+        if(this.orderDetails && this.orderDetails.orderItem && this.orderDetails.catalog.orderType !== 'SHOPPINGLIST'){
         this.updateOrderItems().then(res => {
           this.placeOrderDisabled = false;
           this.snackbarService.openSnackBar('Your Order updated successfully');
@@ -335,8 +336,11 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       );
   }
   updateOrderItems() {
+    console.log('úpdate');
     const items = this.getOrderItems();
     const orderId = this.orderDetails.uid;
+    console.log(items);
+    console.log(orderId);
     const _this = this;
     return new Promise(function (resolve, reject) {
       _this.providerservice.updateOrderItems(orderId, items)
@@ -382,18 +386,14 @@ export class OrderEditComponent implements OnInit, OnDestroy {
           const itemId = item.id;
           const orderItem = this.catalogItems.find(i => i.item.itemId === itemId);
           const itemObject = orderItem.item;
-          console.log(itemqty);
          // this.orderList = [];
           for (let i = 0; i < itemqty; i++) {
             this.orderList.push({ 'item': itemObject });
           }
 
         }
-        console.log(this.orderList);
         this.orders = [...new Map(this.orderList.map(Item => [Item.item['itemId'], Item])).values()];
       this.orderCount = this.orders.length;
-      console.log(this.orders);
-      console.log(this.orderCount);
       }  
       if (this.orderDetails && this.orderDetails.shoppingList) {
         this.image_list_popup = [];
@@ -428,7 +428,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       this.sel_checkindate = this.orderDetails.orderDate;
       // this.getAvailabilityByDate(this.sel_checkindate);
       this.nextAvailableTime = this.orderDetails.timeSlot.sTime + ' - ' + this.orderDetails.timeSlot.eTime;
-      console.log(this.nextAvailableTime);
+      //console.log(this.nextAvailableTime);
       this.loading = false;
     });
   }
@@ -542,7 +542,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     if (qty === 0) {
       this.removeItemFromCart(item);
     }
-    console.log(qty);
+   // console.log(qty);
     return qty;
   }
 
@@ -913,7 +913,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.onDestroy$))
       .subscribe((data: any) => {
         this.store_availables  = data.filter(obj => obj.isAvailable);
-        console.log(this.store_availables);
+       // console.log(this.store_availables);
         this.getAvailabilityByDate(this.sel_checkindate);
         const availDates = this.store_availables .map(function (a) { return a.date; });
         _this.storeAvailableDates = availDates.filter(function (elem, index, self) {
@@ -928,7 +928,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((data: any) => {
         this.home_availables = data.filter(obj => obj.isAvailable);
-        console.log(this.home_availables);
+        //console.log(this.home_availables);
         this.getAvailabilityByDate(this.sel_checkindate);
         const availDates =  this.home_availables.map(function (a) { return a.date; });
         _this.homeAvailableDates = availDates.filter(function (elem, index, self) {
@@ -973,14 +973,11 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   //   }
   // }
   getAvailabilityByDate(date) { 
-    console.log(date);
-    console.log(this.storeAvailableDates);
-    console.log(this.store_availables);
-    console.log(this.choose_type);
+   
     this.sel_checkindate = date;
     const cday = new Date(this.sel_checkindate);
     const currentday = (cday.getDay() + 1);
-    console.log(currentday);
+    //console.log(currentday);
     if (this.choose_type === 'store') {
       const storeIntervals = (this.catalog_details.pickUp.pickUpSchedule.repeatIntervals).map(Number);
       const last_date = moment().add(30, 'days');
@@ -990,11 +987,11 @@ export class OrderEditComponent implements OnInit, OnDestroy {
         this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
         this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
         this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
-        console.log('greater than 30');
+      //  console.log('greater than 30');
       } 
       else if ((storeIntervals.includes(currentday)) && (date < thirty_date)) {  
-        console.log('less than 30'); 
-        console.log(this.store_availables);
+       // console.log('less than 30'); 
+       // console.log(this.store_availables);
         const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
         const availability  = this.store_availables.filter(obj => obj.date ===  sel_check_date);          
         if(availability.length > 0){
@@ -1013,17 +1010,15 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     else {
       const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
       const last_date = moment().add(30, 'days');
-      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();         
-      console.log(homeIntervals);
-      console.log(JSON.stringify(homeIntervals));
+      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format(); 
       if (homeIntervals.includes(currentday) && (date > thirty_date))  {
         this.isfutureAvailableTime = true;
         this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
         this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
         this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
-        console.log('greater than 30');
+       // console.log('greater than 30');
       } else if( homeIntervals.includes(currentday) && (date < thirty_date)) {   
-        console.log(this.home_availables);
+       // console.log(this.home_availables);
         const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
         const availability  = this.home_availables.filter(obj => obj.date ===  sel_check_date);          
         if(availability.length > 0){

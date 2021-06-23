@@ -206,7 +206,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     origin: string;
     pGateway: any;
     donorerror = null;
+    donorlasterror = null;
     donor = '';
+    donorfirst;
+    donorlast;
     phoneNumber;
     separateDialCode = true;
     SearchCountryField = SearchCountryField;
@@ -371,13 +374,17 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             });
     }
     addDonor() {
-        const dnr = this.donor.trim();
-        if (dnr === '') {
-            this.donorerror = 'Please enter the donor name';
+        const dnrFirst = this.donorfirst.trim();
+        const dnrLast = this.donorlast.trim();
+        if (dnrFirst === '') {
+            this.donorerror = 'Please enter the first name';
+            return;
+        } else if(dnrLast === '') {
+            this.donorlasterror = 'Please enter the last name';
             return;
         } else {
-            this.donorFirstName = dnr;
-            this.donorLastName = ''; 
+            this.donorFirstName = dnrFirst;
+            this.donorLastName = dnrLast; 
             this.closebutton.nativeElement.click();
             this.action = '';
             this.donorName = this.donor.trim();

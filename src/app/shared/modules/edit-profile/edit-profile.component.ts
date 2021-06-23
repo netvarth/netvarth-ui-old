@@ -16,7 +16,7 @@ import { SnackbarService } from '../../services/snackbar.service';
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
-  // styleUrls: ['./home.component.scss']
+  styleUrls: ['./edit-profile.component.css']
 })
 export class EditProfileComponent implements OnInit {
 
@@ -87,9 +87,14 @@ export class EditProfileComponent implements OnInit {
       gender: [''],
       dob: [''],
       email: [''],
-      email1: ['']
+      email1: [''],
+      countryCode_whtsap:[''],
+      countryCode_telegram:[''],
+      whatsappnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
+      telegramnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
     });
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
+    console.log(this.curtype);
     this.getProfile(this.curtype);
     // const tday = new Date();
     const month = (this.tday.getMonth() + 1);
@@ -109,7 +114,7 @@ export class EditProfileComponent implements OnInit {
         data => {
           this.loading = false;
           if (typ === 'consumer') {
-            this.editProfileForm.setValue({
+            this.editProfileForm.patchValue({
               first_name: data['userProfile']['firstName'] || null,
               last_name: data['userProfile']['lastName'] || null,
               gender: data['userProfile']['gender'] || null,
@@ -118,10 +123,23 @@ export class EditProfileComponent implements OnInit {
               email1: data['userProfile']['email'] || ''
             });
             this.phonenoHolder = data['userProfile']['primaryMobileNo'] || '';
+            console.log(this.phonenoHolder);
             this.countryCode = data['userProfile']['countryCode'] || '';
+            if(data['userProfile']['whatsAppNum']){
+              this.editProfileForm.patchValue({
+              countryCode_whtsap:data['userProfile']['whatsAppNum']['countryCode'],
+              whatsappnumber:data['userProfile']['whatsAppNum']['number'],
+              });
+            }
+            if(data['userProfile']['telegramNum']){
+              this.editProfileForm.patchValue({
+              countryCode_telegram:data['userProfile']['telegramNum']['countryCode'],
+              telegramnumber:data['userProfile']['telegramNum']['number'],
+              });
+            }
           } else if (typ === 'provider') {
             this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
-            this.editProfileForm.setValue({
+            this.editProfileForm.patchValue({
               first_name: data['basicInfo']['firstName'] || null,
               last_name: data['basicInfo']['lastName'] || null,
               gender: data['basicInfo']['gender'] || null,
@@ -187,6 +205,26 @@ export class EditProfileComponent implements OnInit {
           'gender': (sub_data.gender!=='')?sub_data.gender:null || null,
           'email': sub_data.email || ''
         };
+        if (sub_data.whatsappnumber !== '' && sub_data.whatsappnumber !== undefined && sub_data.countryCode_whtsap !== '' && sub_data.countryCode_whtsap !== undefined) {
+          const whatsup = {}
+          if (sub_data.countryCode_whtsap.startsWith('+')) {
+            whatsup["countryCode"] = sub_data.countryCode_whtsap
+          } else {
+            whatsup["countryCode"] = '+' + sub_data.countryCode_whtsap
+          }
+          whatsup["number"] = sub_data.whatsappnumber
+          post_data['whatsAppNum'] = whatsup;
+        }
+        if (sub_data.telegramnumber !== '' && sub_data.telegramnumber !== undefined && sub_data.countryCode_telegram !== '' || sub_data.countryCode_telegram !== undefined) {
+          const telegram = {}
+          if (sub_data.countryCode_telegram.startsWith('+')) {
+            telegram["countryCode"] = sub_data.countryCode_telegram
+          } else {
+            telegram["countryCode"] = '+' + sub_data.countryCode_telegram
+          }
+          telegram["number"] = sub_data.telegramnumber
+          post_data['telegramNum'] = telegram;
+        }
         passtyp = 'consumer';
       } else if (this.curtype === 'provider') {
         post_data = {
@@ -234,7 +272,12 @@ export class EditProfileComponent implements OnInit {
     }
     return true;
   }
-
+  isNumeric(evt) {
+    return this.shared_functions.isNumeric(evt);
+  }
+  isNumericSign(evt) {
+    return this.shared_functions.isNumericSign(evt);
+  }
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
