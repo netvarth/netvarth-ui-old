@@ -100,7 +100,7 @@ export class RecordsDatagridComponent implements OnInit {
       } else if (record.type === 'Order') {
         source = 'order';
       }
-      this.router.navigate(['provider', 'bill', record.uuid]);
+      this.router.navigate(['provider', 'bill', record.uuid], { queryParams: { source: source } });
     } else {
       this.actionPerformed.emit({ record: record, type: type, timeType: this.timeType, source: this.source, heading: this.heading });
     }

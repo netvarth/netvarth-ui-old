@@ -688,7 +688,7 @@
 
 
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-<section class="content" *ngIf="viewCustomer">
+<section class="content" *ngIf="!loading && viewCustomer">
     <div class="row">
         <div class="col-lg-8">
             <div class="card card-custom gutter-b wave-success p-0 booking-details mgn-bt-20">
