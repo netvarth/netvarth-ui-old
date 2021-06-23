@@ -31,8 +31,12 @@
                                                 <!-- Name of the -->
                                                 Provider</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td class="name-line-ht">{{appointment.provider.businessName}},
+                                            <!-- <td class="name-line-ht">{{appointment.provider.businessName}},
                                                 {{appointment.providerAccount?.businessName}}
+                                            </td> -->
+                                             <td class="name-line-ht"> {{(appointment.provider.businessName) ? appointment.provider.businessName : appointment.provider.firstName +
+                                                    ' ' + appointment.provider.lastName}},
+                                            {{appointment.providerAccount?.businessName}}
                                             </td>
                                         </tr>
                                         <tr>
