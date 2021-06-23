@@ -276,6 +276,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.donorName = this.donor = this.customer_data.firstName + ' ' + this.customer_data.lastName;
         this.donorFirstName = this.customer_data.firstName;
         this.donorLastName = this.customer_data.lastName;
+        this.donorfirst = this.customer_data.firstName;
+        this.donorlast = this.customer_data.lastName;
         this.main_heading = this.checkinLabel; // 'Check-in';
         this.maxsize = 1;
         this.step = 1;
@@ -387,7 +389,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             this.donorLastName = dnrLast; 
             this.closebutton.nativeElement.click();
             this.action = '';
-            this.donorName = this.donor.trim();
+            this.donorName = dnrFirst + ' ' + dnrLast;
+            // this.donorName = this.donor.trim();
         }
     }
     addPhone() {
