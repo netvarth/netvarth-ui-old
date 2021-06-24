@@ -1653,7 +1653,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   showCommunicate(provid) {
     this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class'],
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
       disableClose: true,
       data: {
         caption: 'Enquiry',
@@ -2981,7 +2981,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   qrCodegeneraterOnlineID(accEncUid) {
     this.qrdialogRef = this.dialog.open(QRCodeGeneratordetailComponent, {
       width: '40%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
+      panelClass: ['popup-class', 'commonpopupmainclass', 'specialclass'],
       disableClose: true,
       data: {
         accencUid: accEncUid,
