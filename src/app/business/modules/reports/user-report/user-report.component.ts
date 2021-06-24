@@ -24,7 +24,7 @@ export class UserReportComponent implements OnInit {
   showReport=true;
   userDetails:any=[];
   public user_dataSource = new MatTableDataSource<any>([]);
-  displayedColumns = ['id', 'name', 'user', 'status'];
+  displayedColumns = ['name', 'user', 'status'];
   user_data_loading=true;
   fromDate: any;
   toDate: any;
