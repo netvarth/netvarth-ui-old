@@ -138,5 +138,5 @@ td {
 }
 .operations-row .table-responsive {
     overflow: auto !important;
-    height: 345px;
+    max-height: 345px;
 }

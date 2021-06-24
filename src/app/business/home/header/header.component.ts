@@ -19,8 +19,6 @@ import { GroupStorageService } from '../../../shared/services/group-storage.serv
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
-import { NotifierService } from 'angular-notifier';
-import { Howl } from 'howler';
 
 @Component({
   selector: 'app-header',
@@ -64,7 +62,6 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   locName;
   active_user;
   account_type;
-  private notifier: NotifierService;
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
     private sessionStorageService: SessionStorageService,
@@ -79,9 +76,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     private titleService: Title,
     public dialog: MatDialog,
     private provider_dataStorage: ProviderDataStorageService,
-    private readonly joyrideService: JoyrideService,
-     notifierService: NotifierService) {
-      this.notifier = notifierService;
+    private readonly joyrideService: JoyrideService) {
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
     this.waitlist_label = this.wordProcessor.getTerminologyTerm('waitlist');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
@@ -262,17 +257,6 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       this.reloadHandler();
     });
   }
-
-  
-  showNotification(type: string, message: string): void {
-    this.notifier.notify(type, message);
-    var sound = new Howl({
-      src: ['assets/notification/juntos.mp3']
-    });
-    sound.play();
-  }
-
-
   ngOnDestroy() {
     if (this.cronHandle) {
       this.cronHandle.unsubscribe();

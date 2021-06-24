@@ -1339,11 +1339,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
             .subscribe(
               (data: any) => {
                 const apptOldList = this.appt_list;
-                console.log('apptOldList', apptOldList);
                 this.appt_list = data;
-                console.log('appt_list', this.appt_list);
                 const newAppts = this.appt_list.filter(o1 => !apptOldList.some(o2 => o1.uid === o2.uid));
-                console.log('newAppts', newAppts);
                 if (source) {
                   for (const appt of newAppts) {
                     this.notifier.notify('success', 'New Booking ' + appt.appmtFor[0].firstName);
@@ -1433,11 +1430,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           .subscribe(
             data => {
               const apptOldList = this.futureAppt_list;
-              console.log('apptOldList', apptOldList);
               this.futureAppt_list = data;
-              console.log('futureAppt_list', this.futureAppt_list);
               const newAppts = this.futureAppt_list.filter(o1 => !apptOldList.some(o2 => o1.uid === o2.uid));
-              console.log('newAppts', newAppts);
               if (source) {
                 for (const appt of newAppts) {
                   this.notifier.notify('success', 'New Booking ' + appt.appmtFor[0].firstName);
