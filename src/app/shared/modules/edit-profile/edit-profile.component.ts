@@ -78,6 +78,7 @@ export class EditProfileComponent implements OnInit {
   goBack () {
     this.location.back();
   }
+
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
