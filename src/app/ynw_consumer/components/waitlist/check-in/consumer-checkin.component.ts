@@ -699,6 +699,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         emaildialogRef.afterClosed().subscribe(result => {
             if (result!== '' && result!==undefined) {
                 this.payEmail = result;
+                this.confirmcheckin(type);
             }
 
         });

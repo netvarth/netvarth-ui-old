@@ -304,6 +304,7 @@ export class DisplayboardsComponent implements OnInit {
     deleteDisplayboardLayout(layout) {
         this.provider_services.deleteDisplayboardAppointment(layout.id).subscribe(
             () => {
+                this.getLicenseUsage();
                 this.getDisplayboardLayouts();
             }
         );
@@ -409,5 +410,5 @@ export class DisplayboardsComponent implements OnInit {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
-    }
+        }
 }

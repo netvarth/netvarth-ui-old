@@ -344,7 +344,9 @@
                                                                             *ngIf="sel_ser_det.virtualServiceType === 'audioService'"></i>
                                                                         <i class="fa wtsapvid-icon" style="width: 20px;"
                                                                             *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
-                                                                        <span
+                                                                        <span *ngIf="type === 'waitlistreschedule'"
+                                                                            class="phonevallabel">&nbsp;+{{callingModes}}</span>
+                                                                        <span *ngIf="type != 'waitlistreschedule'"
                                                                             class="phonevallabel">&nbsp;{{whatsappCountryCode}} {{newWhatsapp}}</span><a
                                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
