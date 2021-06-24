@@ -310,8 +310,8 @@
                     </div>
                 </div>
             </div> -->
-            <app-records-datagrid [source]="'waitlist'"
-                [heading]="(waitlistMgrSettings && waitlistMgrSettings.showTokenId) ? 'Tokens' : 'Check-ins'">
+            <app-records-datagrid [source]="'views'" [records]="views"
+                [heading]="'Views'">
             </app-records-datagrid>
         </div>
     </div>

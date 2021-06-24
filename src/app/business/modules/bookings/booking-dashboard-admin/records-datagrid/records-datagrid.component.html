@@ -48,35 +48,6 @@
                                             {{record.waitlist.amountPaid |
                                             currency:'&#8377;' }} Paid</span>
                                     </td>
-                                    <!-- <td>
-                                        <button mat-icon-button [matMenuTriggerFor]="visitMenu"
-                                            (click)="stopprop($event)">
-                                            <mat-icon>more_vert</mat-icon>
-                                        </button>
-                                        <mat-menu #visitMenu="matMenu">
-                                            <button class="recent"
-                                                *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
-                                                mat-menu-item (click)="actionClick(record)">
-                                                <i class="medicalrecord-icon"></i>
-                                                MedicalRecord
-                                            </button>
-                                            <button class="recent"
-                                                *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
-                                                mat-menu-item (click)="actionClick(record)">
-                                                <i class="mr-rx-icon"></i>
-                                                Prescription
-                                            </button>
-                                            <button mat-menu-item (click)="actionClick(record)">
-                                                <i class="comm-history-icon"></i>
-                                                Communication history
-                                            </button>
-                                            <button *ngIf="record.waitlist.consumerNote" mat-menu-item
-                                                (click)="actionClick(record)">
-                                                <i class="customernote-icon"></i>
-                                                {{customer_label | capitalizeFirst}} note
-                                            </button>
-                                        </mat-menu>
-                                    </td> -->
                                 </ng-container>
                                 <ng-container *ngIf="source == 'customer-waitlist' && record.appointmnet">
                                     <td class="consumer-appthistory">
@@ -107,35 +78,6 @@
                                             {{record.appointmnet.amountPaid |
                                             currency:'&#8377;' }} Paid</span>
                                     </td>
-                                    <!-- <td>
-                                        <button mat-icon-button [matMenuTriggerFor]="visitMenu"
-                                            (click)="stopprop($event)">
-                                            <mat-icon>more_vert</mat-icon>
-                                        </button>
-                                        <mat-menu #visitMenu="matMenu">
-                                            <button class="recent"
-                                                *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
-                                                mat-menu-item (click)="actionClick(record)">
-                                                <i class="medicalrecord-icon"></i>
-                                                MedicalRecord
-                                            </button>
-                                            <button class="recent"
-                                                *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
-                                                mat-menu-item (click)="actionClick(record)">
-                                                <i class="mr-rx-icon"></i>
-                                                Prescription
-                                            </button>
-                                            <button mat-menu-item (click)="actionClick(record)">
-                                                <i class="comm-history-icon"></i>
-                                                Communication history
-                                            </button>
-                                            <button *ngIf="record.appointmnet.consumerNote" mat-menu-item
-                                                (click)="actionClick(record)">
-                                                <i class="customernote-icon"></i>
-                                                {{customer_label | capitalizeFirst}} note
-                                            </button>
-                                        </mat-menu>
-                                    </td> -->
                                 </ng-container>
                                 <ng-container *ngIf="source == 'customer-order'">
                                     <td class="consumer-appthistory"> <i *ngIf="record.storePickup"
@@ -165,19 +107,6 @@
                                     <td><span class="rupee-font" *ngIf="record.totalAmountPaid > 0">
                                             {{record.totalAmountPaid |
                                             currency:'&#8377;' }} Paid</span> </td>
-                                    <!-- <td>
-                                        <button mat-icon-button [matMenuTriggerFor]="visitMenu"
-                                            (click)="stopprop($event)">
-                                            <mat-icon>more_vert</mat-icon>
-                                        </button>
-                                        <mat-menu #visitMenu="matMenu">
-
-                                            <button mat-menu-item (click)="actionClick(record)">
-                                                <i class="comm-history-icon"></i>
-                                                Communication history
-                                            </button>
-                                        </mat-menu>
-                                    </td> -->
                                 </ng-container>
                                 <ng-container *ngIf="source == 'waitlist' || source == 'appt'">
                                     <td>
@@ -225,6 +154,17 @@
                                     </td>
                                     <td>
                                         {{record.billPaymentStatus}}
+                                    </td>
+                                </ng-container>
+                                <ng-container *ngIf="source == 'views'">
+                                    <td class="table-img">
+                                        <img [src]="getViewImg(record)">
+                                    </td>
+                                    <td>
+                                        <ng-container *ngIf="record.userType">{{(record.businessName) ?
+                                            record.businessName : record.firstName + ' ' + record.lastName}}
+                                        </ng-container>
+                                        <ng-container *ngIf="!record.userType">{{record.name}}</ng-container>
                                     </td>
                                 </ng-container>
                             </tr>

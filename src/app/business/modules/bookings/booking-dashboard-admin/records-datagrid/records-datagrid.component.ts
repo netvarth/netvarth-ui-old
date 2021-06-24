@@ -101,8 +101,16 @@ export class RecordsDatagridComponent implements OnInit {
         source = 'order';
       }
       this.router.navigate(['provider', 'bill', record.uuid], { queryParams: { source: source } });
+    } else if (this.source == 'views') {
+
     } else {
       this.actionPerformed.emit({ record: record, type: type, timeType: this.timeType, source: this.source, heading: this.heading });
     }
+  }
+  getViewImg(record) {
+    if (record.userType && record.profilePicture) {
+      return record.profilePicture.url;
+    }
+    return 'assets/images/Asset1@300x(1).png';
   }
 }

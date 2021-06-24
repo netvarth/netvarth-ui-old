@@ -127,3 +127,16 @@ td {
 .showLinks a {
     color: #1e4079;
 }
+.table-img img {
+    border-radius: 10px !important;
+    height: 33px !important;
+    width: 33px !important;
+    background: #fff !important;
+    position: inherit !important;
+    border: 1px solid rgba(52, 73, 94, 0.44) !important;
+    padding: 2px !important;
+}
+.operations-row .table-responsive {
+    overflow: auto !important;
+    height: 345px;
+}

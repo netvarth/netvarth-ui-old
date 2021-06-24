@@ -368,7 +368,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     private dateTimeProcessor: DateTimeProcessor,
     private titleService: Title,
     notifierService: NotifierService) {
-     this.notifier = notifierService;
+    this.notifier = notifierService;
     this.titleService.setTitle('Jaldee Business - Appointments');
     this.onResize();
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -1339,20 +1339,20 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
             .subscribe(
               (data: any) => {
                 const apptOldList = this.appt_list;
-                console.log('apptOldList' + apptOldList);
+                console.log('apptOldList', apptOldList);
                 this.appt_list = data;
-                console.log('appt_list' + this.appt_list);
+                console.log('appt_list', this.appt_list);
                 const newAppts = this.appt_list.filter(o1 => !apptOldList.some(o2 => o1.uid === o2.uid));
-                console.log('newAppts' + newAppts);
+                console.log('newAppts', newAppts);
                 if (source) {
-                for (const appt of newAppts) {
-                  this.notifier.notify('success', appt.appmtFor[0].firstName);
-                  var sound = new Howl({
-                    src: ['assets/notification/juntos.mp3']
-                  });
-                  sound.play();
+                  for (const appt of newAppts) {
+                    this.notifier.notify('success', 'New Booking ' + appt.appmtFor[0].firstName);
+                    var sound = new Howl({
+                      src: ['assets/notification/juntos.mp3']
+                    });
+                    sound.play();
+                  }
                 }
-              }
                 this.todayAppointments = this.shared_functions.groupBy(this.appt_list, 'apptStatus');
                 if (this.filterapplied === true) {
                   this.noFilter = false;
@@ -1432,24 +1432,21 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.provider_services.getFutureAppointments(Mfilter)
           .subscribe(
             data => {
-
-              
               const apptOldList = this.futureAppt_list;
-              console.log('apptOldList' + apptOldList);
+              console.log('apptOldList', apptOldList);
               this.futureAppt_list = data;
-              console.log('futureAppt_list' + this.futureAppt_list);
+              console.log('futureAppt_list', this.futureAppt_list);
               const newAppts = this.futureAppt_list.filter(o1 => !apptOldList.some(o2 => o1.uid === o2.uid));
-              console.log('newAppts' + newAppts);
+              console.log('newAppts', newAppts);
               if (source) {
-              for (const appt of newAppts) {
-                this.notifier.notify('success', appt.appmtFor[0].firstName);
-                var sound = new Howl({
-                  src: ['assets/notification/juntos.mp3']
-                });
-                sound.play();
+                for (const appt of newAppts) {
+                  this.notifier.notify('success', 'New Booking ' + appt.appmtFor[0].firstName);
+                  var sound = new Howl({
+                    src: ['assets/notification/juntos.mp3']
+                  });
+                  sound.play();
+                }
               }
-            }
-              
               this.futureAppointments = this.shared_functions.groupBy(data, 'apptStatus');
               if (this.filterapplied === true) {
                 this.noFilter = false;
