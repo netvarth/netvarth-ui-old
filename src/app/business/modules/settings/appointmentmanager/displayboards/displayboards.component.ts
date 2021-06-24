@@ -410,5 +410,5 @@ export class DisplayboardsComponent implements OnInit {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
-    }
+        }
 }

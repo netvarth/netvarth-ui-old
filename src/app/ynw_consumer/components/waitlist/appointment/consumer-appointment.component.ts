@@ -1333,7 +1333,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
         }
     }
-
     // gets3curl() {
 
     //     this.retval = this.sharedFunctionobj.getS3Url()
