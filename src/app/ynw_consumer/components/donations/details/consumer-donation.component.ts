@@ -387,8 +387,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         } else {
             this.donorFirstName = dnrFirst;
             this.donorLastName = dnrLast; 
+            setTimeout(() => {
+                this.action = '';
+            }, 500);
             this.closebutton.nativeElement.click();
-            this.action = '';
             this.donorName = dnrFirst + ' ' + dnrLast;
             // this.donorName = this.donor.trim();
         }
@@ -417,8 +419,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             this.consumerPhoneNo = this.selected_phone;
             this.userPhone = this.selected_phone;
             this.edit = true; 
+            setTimeout(() => {
+                this.action = '';
+            }, 500);
             this.closebutton.nativeElement.click();
-            this.action = '';
         }
     }
     editPhone() {
@@ -648,8 +652,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                             () => {
                                 this.getProfile();
                                 // this.hideFilterSidebar();
+                                setTimeout(() => {
+                                    this.action = '';
+                                }, 500);
                                 this.closebutton.nativeElement.click();
-                                this.action = '';
                             },
                             error => {
                                 this.api_error = error.error;
@@ -1155,5 +1161,9 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             });
         }
+    }
+    resetErrors() {
+        this.donorerror = null;
+        this.donorlasterror = null;
     }
 }
