@@ -268,7 +268,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         let fieldValue = '';
         if (field.name === 'waitlistingFor' || field.name === 'appmtFor') {
             let lastname = '';
-            if (checkin[field.name][0].lastName) {
+            if (checkin[field.name][0].firstName && checkin[field.name][0].lastName) {
                 const lastName = checkin[field.name][0].lastName;
                 const nameLength = lastName.length;
                 const encryptedName = [];
@@ -278,6 +278,9 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                 for (let i = 0; i < nameLength; i++) {
                     lastname += encryptedName[i];
                 }
+            }
+            if (!checkin[field.name][0].firstName && checkin[field.name][0].lastName) {
+                lastname = checkin[field.name][0].lastName;
             }
             fieldValue = (checkin[field.name][0].firstName) ? checkin[field.name][0].firstName : '' + ' ' + lastname;
             if (!checkin[field.name][0].firstName && lastname === '') {
