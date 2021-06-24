@@ -609,7 +609,7 @@
                         <div *ngIf="payAdvance === 'FIXED'">
                           <div class="form-group">
                             <label>Advance amount *</label>
-                            <input type="text" class="form-control1 form-control-solid form-control-lg"
+                            <input type="number" class="form-control1 form-control-solid form-control-lg"
                               (keypress)="isNumeric($event)" (keyup)="isvalid($event)" id="advancePayment"
                               placeholder="Advance Amount " formControlName="advancePayment" autocomplete="off" />
                           </div>

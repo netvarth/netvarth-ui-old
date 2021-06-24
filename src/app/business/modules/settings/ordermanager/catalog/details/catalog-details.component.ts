@@ -270,7 +270,6 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         this.no_of_grids = Math.round(divident / divider);
     }
     ngOnInit() {
-
     }
     ngOnDestroy() {
         this.subscriptions.unsubscribe();

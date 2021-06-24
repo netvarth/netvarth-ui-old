@@ -1166,6 +1166,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     deleteTempImage(index) {
         this.selectedMessage.files.splice(index, 1);
         this.selectedMessage.base64.splice(index, 1);
+        this.selectedMessage.caption.splice(index, 1);
         this.imgCaptions[index] = '';
         this.fileInput.nativeElement.value = '';
     }
