@@ -202,7 +202,7 @@
                               placeholder="End Date" formControlName="enddate" /> -->
                               <div class="disp-flex">
                               <input class="form-control1" matInput [matDatepicker]="picker1" (dateChange)="compareDate($event.value,1)"
-                            placeholder="End Date" formControlName="enddate" readonly>
+                            placeholder="End Date" formControlName="enddate" [min]="minDate" readonly>
                           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                           <mat-datepicker #picker1></mat-datepicker></div>
                           <!-- </div> -->
@@ -697,7 +697,7 @@
                                     formControlName="enddatestore" /> -->
                                     <div class="disp-flex">
                                     <input class="form-control1" matInput [matDatepicker]="picker3" (dateChange)="compareDatestore($event.value,1)"
-                                placeholder="End Date" formControlName="enddatestore" readonly>
+                                placeholder="End Date" formControlName="enddatestore" [min]="minDate" readonly>
                               <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                               <mat-datepicker #picker3></mat-datepicker></div>
                                 <!-- </div> -->
@@ -780,7 +780,7 @@
                                     formControlName="enddatehome" /> -->
                                     <div class="disp-flex">
                                     <input matInput class="form-control1" [matDatepicker]="picker5" (dateChange)="compareDatehome($event.value,1)"
-                                placeholder="End Date" formControlName="enddatehome" readonly>
+                                placeholder="End Date" formControlName="enddatehome" [min]="minDate" readonly>
                               <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
                               <mat-datepicker #picker5></mat-datepicker></div>
                                 <!-- </div> -->
