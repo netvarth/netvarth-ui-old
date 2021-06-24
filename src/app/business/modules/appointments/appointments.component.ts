@@ -22,6 +22,8 @@ import { LocalStorageService } from '../../../shared/services/local-storage.serv
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { Title } from '@angular/platform-browser';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
+import { NotifierService } from 'angular-notifier';
+import { Howl } from 'howler';
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html',
@@ -349,6 +351,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   endmaxday = new Date();
   statusChangeClicked = false;
   activeUser: any;
+  private notifier: NotifierService;
+  futureAppt_list: any = [];
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -362,7 +366,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
     private dateTimeProcessor: DateTimeProcessor,
-    private titleService: Title) {
+    private titleService: Title,
+    notifierService: NotifierService) {
+     this.notifier = notifierService;
     this.titleService.setTitle('Jaldee Business - Appointments');
     this.onResize();
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -555,12 +561,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   refresh() {
-    if (this.time_type === 1) {
-      this.getTodayAppointments();
-    }
-    if (this.time_type === 2) {
-      this.getFutureAppointments();
-    }
+    // if (this.time_type === 1) {
+      this.getTodayAppointments('refresh');
+    // }
+    // if (this.time_type === 2) {
+      this.getFutureAppointments('refresh');
+    // }
   }
   isQueueSelected(qId) {
     if (this.selQIds.indexOf(qId) !== -1) {
@@ -1295,7 +1301,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.apptStartedSingleSelection = false;
     this.apptStartedMultiSelection = false;
   }
-  getTodayAppointments() {
+  getTodayAppointments(source?) {
     const Mfilter = this.setFilterForApi();
     if (this.selected_location && this.selected_location.id) {
       Mfilter['location-eq'] = this.selected_location.id;
@@ -1332,7 +1338,21 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.provider_services.getTodayAppointments(Mfilter)
             .subscribe(
               (data: any) => {
+                const apptOldList = this.appt_list;
+                console.log('apptOldList' + apptOldList);
                 this.appt_list = data;
+                console.log('appt_list' + this.appt_list);
+                const newAppts = this.appt_list.filter(o1 => !apptOldList.some(o2 => o1.uid === o2.uid));
+                console.log('newAppts' + newAppts);
+                if (source) {
+                for (const appt of newAppts) {
+                  this.notifier.notify('success', appt.appmtFor[0].firstName);
+                  var sound = new Howl({
+                    src: ['assets/notification/juntos.mp3']
+                  });
+                  sound.play();
+                }
+              }
                 this.todayAppointments = this.shared_functions.groupBy(this.appt_list, 'apptStatus');
                 if (this.filterapplied === true) {
                   this.noFilter = false;
@@ -1379,7 +1399,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.filter.future_appt_date = moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD');
     }
   }
-  getFutureAppointments() {
+  getFutureAppointments(source?) {
     this.resetCheckList();
     if (this.groupService.getitemFromGroupStorage('appt_future_selQ')) {
       this.selQIds = this.groupService.getitemFromGroupStorage('appt_future_selQ');
@@ -1412,6 +1432,24 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.provider_services.getFutureAppointments(Mfilter)
           .subscribe(
             data => {
+
+              
+              const apptOldList = this.futureAppt_list;
+              console.log('apptOldList' + apptOldList);
+              this.futureAppt_list = data;
+              console.log('futureAppt_list' + this.futureAppt_list);
+              const newAppts = this.futureAppt_list.filter(o1 => !apptOldList.some(o2 => o1.uid === o2.uid));
+              console.log('newAppts' + newAppts);
+              if (source) {
+              for (const appt of newAppts) {
+                this.notifier.notify('success', appt.appmtFor[0].firstName);
+                var sound = new Howl({
+                  src: ['assets/notification/juntos.mp3']
+                });
+                sound.play();
+              }
+            }
+              
               this.futureAppointments = this.shared_functions.groupBy(data, 'apptStatus');
               if (this.filterapplied === true) {
                 this.noFilter = false;

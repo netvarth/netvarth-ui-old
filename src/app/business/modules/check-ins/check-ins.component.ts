@@ -1448,7 +1448,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             .subscribe(
               (data: any) => {
                 _this.appt_list = [];
+                const apptOldList = _this.appt_list;
+                console.log(apptOldList);
                 _this.appt_list = data;
+                console.log(_this.appt_list);
+                const newAppts = _this.appt_list.filter(o1 => !apptOldList.some(o2 => o1.uid === o2.uid));
+                console.log(newAppts);
                 _this.todayAppointments = _this.shared_functions.groupBy(_this.appt_list, 'waitlistStatus');
                 if (_this.filterapplied === true) {
                   _this.noFilter = false;

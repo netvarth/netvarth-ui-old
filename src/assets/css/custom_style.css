@@ -7389,7 +7389,7 @@ board-box {
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px rgb(0 0 0 / 30%);
   box-shadow: inset 0 0 6px rgb(0 0 0 / 30%);
-  background-color: #7e7e7e;
+  background-color: #7e7e7e00;
 }
 
 ::-webkit-scrollbar-thumb:hover {
