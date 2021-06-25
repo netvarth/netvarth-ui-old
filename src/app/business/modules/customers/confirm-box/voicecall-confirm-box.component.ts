@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+// import { Location } from '@angular/common';
 // import { Messages } from 'src/app/shared/constants/project-messages';
 
 @Component({
@@ -14,6 +15,7 @@ export class VoicecallConfirmBoxComponent {
   cancel_btn_cap = 'NO';
 
   constructor(public dialogRef: MatDialogRef<VoicecallConfirmBoxComponent>,
+    // private location: Location,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     if (this.data.type) {
       // this.ok_btn_cap = Messages.YES_BTN;

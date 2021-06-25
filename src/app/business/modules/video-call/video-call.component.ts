@@ -125,7 +125,6 @@ export class VideoCallSharedComponent implements OnInit, OnDestroy {
       divider = divident / 1;
     }
     this.no_of_grids = Math.round(divident / divider);
-
   }
   getCustomers(customerId) {
     const filter = { 'id-eq': customerId };
@@ -134,6 +133,7 @@ export class VideoCallSharedComponent implements OnInit, OnDestroy {
         data => {
           // console.log(data)
           this.customer = data;
+          console.log(this.customer[0].phoneNo);
         },
         () => {
         }

@@ -22,6 +22,8 @@ import { CustomerActionsComponent } from './customer-actions/customer-actions.co
 import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
 import { CustomerDetailComponent } from './customer-details/customer-details.component';
 import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
+import { VoicecallConfirmBoxComponent } from './confirm-box/voicecall-confirm-box.component';
+import { VoiceConfirmComponent } from './video-confirm/voice-confirm.component';
 import { BookingMedicalRecordsModule } from '../bookings/booking-detail/booking-medical-records/booking-medical-records.module';
 import { BookingPrerscriptionModule } from '../bookings/booking-detail/booking-prescriptions/booking-prescriptions.module';
 import { InboxListModule } from '../inbox-list/inbox-list.module';
@@ -60,7 +62,9 @@ import { RecordsDatagridModule } from '../bookings/booking-dashboard-admin/recor
         CustomerActionsComponent
     ],
     entryComponents: [
-        CustomerActionsComponent
+        CustomerActionsComponent,
+        VoicecallConfirmBoxComponent,
+        VoiceConfirmComponent
     ],
     exports: [CustomersListComponent, MedicalrecordModule]
 })

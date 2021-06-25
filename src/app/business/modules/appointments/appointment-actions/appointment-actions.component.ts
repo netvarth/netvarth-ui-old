@@ -24,8 +24,7 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { ListRecordingsDialogComponent } from '../../../../shared/components/list-recordings-dialog/list-recordings-dialog.component';
 import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
-import { VoicecallConfirmBoxComponent } from '../../customers/confirm-box/voicecall-confirm-box.component';
-import { Location } from '@angular/common';
+import { VoiceConfirmComponent } from '../../customers/video-confirm/voice-confirm.component';
 
 @Component({
     selector: 'app-appointment-actions',
@@ -115,7 +114,6 @@ export class AppointmentActionsComponent implements OnInit {
         private dateTimeProcessor: DateTimeProcessor,
         private provider_shared_functions: ProviderSharedFuctions,
         public shared_services: SharedServices,
-        private location: Location,
         public dialogRef: MatDialogRef<AppointmentActionsComponent>) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
@@ -576,36 +574,41 @@ export class AppointmentActionsComponent implements OnInit {
         };
         this.router.navigate(['provider', 'secure-video'], navigationExtras);
     }
-   
-    
     startVoiceCall() {
         this.closeDialog();
-        const customerDetails = this.appt.appmtFor[0];
-        const customerId = customerDetails.id;
-        this.provider_services.voiceCallReady(customerId).subscribe(data => {
-            this.voiceCallConfirm()
-        },
-            error => {
-                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            });
+        this.voiceCallConfirmed()
+        
+        // this.provider_services.voiceCallReady(customerId).subscribe(data => {
+        //     this.voiceCallConfirm()
+        // },
+        //     error => {
+        //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //     });
     }
-    voiceCallConfirm() {
-        const dialogref = this.dialog.open(VoicecallConfirmBoxComponent, {
-          width: '50%',
+    voiceCallConfirmed() {
+        // const customerDetails = this.appt;
+        const customerId =  this.appt.appmtFor[0].id;
+        const num = this.appt.countryCode + ' ' + this.appt.phoneNumber;
+        // const customerId = customerDetails[0].id;
+        const dialogref = this.dialog.open(VoiceConfirmComponent, {
+          width: '60%',
+          height: '30%',
           panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
           disableClose: true,
           data: {
-            // profile: this.profile
+            customerId: customerId,
+            customer : num,
           }
         });
         dialogref.afterClosed().subscribe(
           result => {
-            this.location.back();
+            this.closeDialog();
             // if (result) {
             // }
           }
         );
       }
+
       closeDialog() {
         this.dialogRef.close();
     }
