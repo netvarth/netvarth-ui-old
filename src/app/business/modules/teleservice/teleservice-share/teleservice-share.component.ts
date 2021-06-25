@@ -226,7 +226,6 @@ export class TeleServiceShareComponent implements OnInit {
       this.disableButton = false;
       return;
     }
-   
     if(this.providerView){
       const post_data = {
         medium: {

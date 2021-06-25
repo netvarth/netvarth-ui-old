@@ -820,6 +820,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 }
             });
     }
+    
     showStep(step) {
         if (step === 5 && this.labelsList.length === 0) {
             this.snackbarService.openSnackBar('Select atleast one field from the list', { 'panelClass': 'snackbarerror' });
