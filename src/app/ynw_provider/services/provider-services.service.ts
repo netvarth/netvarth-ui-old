@@ -223,8 +223,8 @@ export class ProviderServices {
   addHoliday(data) {
     return this.servicemeta.httpPost('provider/settings/nonBusinessDays/holiday', data);
   }
-  Holidaywaitlist(id) {
-    return this.servicemeta.httpPut('provider/settings/nonBusinessDays/holiday/mark/' + id);
+  Holidaywaitlist(status,id) {
+    return this.servicemeta.httpPut('provider/settings/nonBusinessDays/holiday/mark/' + status + '/' + id);
   }
   userHolidaywaitlist(id) {
     return this.servicemeta.httpPut('provider/vacation/mark/' + id);
