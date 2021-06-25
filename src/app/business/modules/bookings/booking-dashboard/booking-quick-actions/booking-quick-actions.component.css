@@ -164,3 +164,23 @@
 .card.card-custom.card-stretch.card-stretch-half.gutter-b {
     height: 400px !important;
 }
+.selectedAction .symbol-label {
+    background: #00008b2b !important;
+}
+.fade {
+    opacity: 1 !important;
+}
+.modal-footer .btn {
+    margin: 0px 5px !important;
+}
+.container-quick-actions a {
+    color: #305084 !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    width: 85px !important;
+    text-align: right !important;
+    float: right !important;
+    height: 20px !important;
+    line-height: 20px !important;
+}

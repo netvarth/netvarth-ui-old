@@ -46,7 +46,7 @@ export class CalendarComponent implements OnInit {
     private provider_services: ProviderServices) { }
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     console.log(date);
-    console.log(events);
+    console.log(new Date());
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -144,7 +144,6 @@ export class CalendarComponent implements OnInit {
             })
           }
           this.loading = false;
-          // this.setView(CalendarView.Month);
           console.log(this.events);
         });
   }

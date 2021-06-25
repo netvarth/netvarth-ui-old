@@ -1,76 +1,22 @@
 <div class="card card-custom container-quick-actions card-stretch card-stretch-half  gutter-b">
-    <div class="heading">Quick Actions</div>
-    <mat-grid-list cols="3" rowHeight="150px" [gutterSize]="'10px'">
-        <mat-grid-tile>
-            <div class="symbol symbol-40 new_svg symbol-light-info" (click)="apptClicked()">
+    <div class="heading">Quick Actions
+        <a data-toggle="modal" data-target="#exampleModalCenter">Edit</a>
+    </div>
+    <mat-grid-list cols="3" rowHeight="150px" [gutterSize]="'10px'" *ngIf="!loading">
+        <mat-grid-tile *ngFor="let action of selectedActions">
+            <div class="symbol symbol-40 new_svg symbol-light-info" (click)="actionClicked(action.name)">
                 <span class="symbol-label">
-                    <span class="appt-icon">
+                    <span class="{{action.class}}">
                     </span>
                 </span>
             </div>
             <mat-grid-tile-footer>
-                <div class="font-size-xs text-dark-50 wrap_it font-weight-bolder">New Appointment</div>
+                <div class="font-size-xs text-dark-50 wrap_it font-weight-bolder">{{action.displayName}}</div>
             </mat-grid-tile-footer>
         </mat-grid-tile>
         <mat-grid-tile>
-            <div class="symbol symbol-40 new_svg symbol-light-info" (click)="checkinClicked()">
-                <span class="symbol-label">
-                    <span [class.token-icon]="showToken" [class.chckn-icon]="!showToken">
-                    </span>
-                </span>
-            </div>
-            <mat-grid-tile-footer>
-                <div class="font-size-xs text-dark-50 wrap_it font-weight-bolder">New {{(showToken) ? 'Token' :
-                    'Check-in'}}</div>
-            </mat-grid-tile-footer>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <div class="symbol symbol-40 new_svg symbol-light-info">
-                <span class="symbol-label">
-                    <span class="svg-icon svg-icon-primary new_svg">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                            height="24px" viewBox="0 0 24 24" version="1.1">
-                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                <polygon points="0 0 24 0 24 24 0 24" />
-                                <path
-                                    d="M5.85714286,2 L13.7364114,2 C14.0910962,2 14.4343066,2.12568431 14.7051108,2.35473959 L19.4686994,6.3839416 C19.8056532,6.66894833 20,7.08787823 20,7.52920201 L20,20.0833333 C20,21.8738751 19.9795521,22 18.1428571,22 L5.85714286,22 C4.02044787,22 4,21.8738751 4,20.0833333 L4,3.91666667 C4,2.12612489 4.02044787,2 5.85714286,2 Z"
-                                    fill="#000000" fill-rule="nonzero" opacity="0.3" />
-                                <rect fill="#000000" x="6" y="11" width="9" height="2" rx="1" />
-                                <rect fill="#000000" x="6" y="15" width="5" height="2" rx="1" />
-                            </g>
-                        </svg>
-                    </span>
-                </span>
-            </div>
-            <mat-grid-tile-footer>
-                <div class="font-size-xs text-dark-50 wrap_it font-weight-bolder">My Notes</div>
-            </mat-grid-tile-footer>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <div class="symbol symbol-40 new_svg symbol-light-info">
-                <span class="symbol-label">
-                    <span class="svg-icon svg-icon-primary new_svg"><svg xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24"
-                            version="1.1">
-                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                <rect x="0" y="0" width="24" height="24" />
-                                <path
-                                    d="M5,3 L6,3 C6.55228475,3 7,3.44771525 7,4 L7,20 C7,20.5522847 6.55228475,21 6,21 L5,21 C4.44771525,21 4,20.5522847 4,20 L4,4 C4,3.44771525 4.44771525,3 5,3 Z M10,3 L11,3 C11.5522847,3 12,3.44771525 12,4 L12,20 C12,20.5522847 11.5522847,21 11,21 L10,21 C9.44771525,21 9,20.5522847 9,20 L9,4 C9,3.44771525 9.44771525,3 10,3 Z"
-                                    fill="#000000" />
-                                <rect fill="#000000" opacity="0.3"
-                                    transform="translate(17.825568, 11.945519) rotate(-19.000000) translate(-17.825568, -11.945519) "
-                                    x="16.3255682" y="2.94551858" width="3" height="18" rx="1" />
-                            </g>
-                        </svg>
-                    </span>
-                </span>
-            </div>
-            <mat-grid-tile-footer>
-                <div class="font-size-xs text-dark-50 wrap_it font-weight-bolder">Reports</div>
-            </mat-grid-tile-footer>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <div class="symbol symbol-40 new_svg symbol-light-success" (click)="showShortcuts()">
+            <div class="symbol symbol-40 new_svg symbol-light-success" data-toggle="modal"
+                data-target="#exampleModalCenter" (click)="addShortcutClicked()">
                 <span class="symbol-label">
                     <span class="svg-icon svg-icon-success new_svg"><svg xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24"
@@ -90,4 +36,32 @@
             </mat-grid-tile-footer>
         </mat-grid-tile>
     </mat-grid-list>
+</div>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body container-quick-actions">
+                <mat-grid-list cols="3" rowHeight="150px" [gutterSize]="'10px'">
+                    <mat-grid-tile *ngFor="let action of quickActions" [class.selectedAction]="isSelected(action)">
+                        <div class="symbol symbol-40 new_svg symbol-light-info" (click)="selectAction(action)">
+                            <span class="symbol-label">
+                                <span class="{{action.class}}">
+                                </span>
+                            </span>
+                        </div>
+                        <mat-grid-tile-footer>
+                            <div class="font-size-xs text-dark-50 wrap_it font-weight-bolder">{{action.displayName}}
+                            </div>
+                        </mat-grid-tile-footer>
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal"
+                    #closebutton>Cancel</button>
+                <button type="button" class="btn btn-primary font-weight-bold hf-btn" (click)="addActions()">Ok</button>
+            </div>
+        </div>
+    </div>
 </div>
