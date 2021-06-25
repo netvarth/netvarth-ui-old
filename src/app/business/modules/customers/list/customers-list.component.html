@@ -270,12 +270,12 @@
                       <button mat-flat-button class="prof_btn hide_th" (click)="viewCustomer(customer)">Details</button>
                       <i class="text-dark-50 flaticon-profile-1 hidden_th" (click)="viewCustomer(customer)"></i>
                     </td> -->
-                      <td *ngIf="!showCustomers">
+                      <td *ngIf="!showCustomers" class="pr-0 text-right">
                       <button mat-flat-button class="prof_btn" (click)="stopprop($event); showCustomerAction(customer)">Actions</button>
                       <!-- <button mat-flat-button class="prof_btn hide_th" (click)="stopprop($event); showCustomerAction()">Actions</button>
                       <i class="text-dark-50 flaticon-profile-1 hidden_th" (click)="viewCustomer(customer)"></i> -->
                     </td>
-                    <td class="pr-0 text-right" *ngIf="!showCustomers">
+                    <!-- <td class="pr-0 text-right" *ngIf="!showCustomers">
                       <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event);">
                         <mat-icon>more_horiz</mat-icon>
                       </button>
@@ -318,7 +318,7 @@
                           Prescription
                         </button>
                       </mat-menu>
-                    </td>
+                    </td> -->
                   </tr>
                 </tbody>
               </table>
