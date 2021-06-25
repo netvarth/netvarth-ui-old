@@ -25,7 +25,7 @@
                     <div class="card-body p-0">
                         <div class="col-sm-9 col-xs-12 col-lg-9 col-md-9 p-0">
 
-                            <div class="stats-item head-card">
+                            <div class="stats-item head-card"  *ngIf="customer && customer.length > 0">
                                 <h5 class="user-names">
                                     {{customer[0].firstName | capitalizeFirst}} {{customer[0].lastName |
                                     capitalizeFirst}}
@@ -63,7 +63,7 @@
                                     <i class="fa fa-language icon"></i>
                                     <span class="sub-texts">{{customer[0].preferredLanguage}}</span>
                                 </div>
-                                <div class="location-place" *ngIf="customer[0].bookingLocation">
+                                <div class="location-place" *ngIf="customer[0].bookingLocation && (customer[0].bookingLocation | json) != '{}'">
                                     <i class="fa fa-map-marker icon"></i>
                                     <span class="sub-texts">{{customer[0].bookingLocation.localArea}},
                                         {{customer[0].bookingLocation.district}}</span>

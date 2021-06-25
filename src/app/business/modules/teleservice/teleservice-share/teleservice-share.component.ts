@@ -43,6 +43,7 @@ export class TeleServiceShareComponent implements OnInit {
     { value: '1 Hour', viewValue: '1 Hour' }
   ];
   api_success = null;
+  api_error = null;
   providerView = false;
   cancel_btn_cap = Messages.CANCEL_BTN;
   send_btn_cap = Messages.SEND_BTN;
@@ -217,8 +218,14 @@ export class TeleServiceShareComponent implements OnInit {
   }
   // Mass communication
   sendMessage() {
+    this.api_error = '';
     console.log(this.providerView);
     this.disableButton = true;
+    if(!this.msg_to_user){
+      this.api_error = 'Please enter your messsage';
+      this.disableButton = false;
+      return;
+    }
    
     if(this.providerView){
       const post_data = {
