@@ -9,8 +9,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
-import { VoicecallConfirmBoxComponent } from '../../customers/confirm-box/voicecall-confirm-box.component';
-import { Location } from '@angular/common';
+import { VoiceConfirmComponent } from '../../customers/video-confirm/voice-confirm.component';
 
 @Component({
   selector: 'app-order-actions',
@@ -55,7 +54,6 @@ export class OrderActionsComponent implements OnInit {
     private snackbarService: SnackbarService,
     private dialog: MatDialog,
     private provider_shared_functions: ProviderSharedFuctions,
-    private location: Location,
 ) { }
 
   ngOnInit() {
@@ -63,6 +61,7 @@ export class OrderActionsComponent implements OnInit {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     console.log(this.customer_label);
     this.orderDetails = this.data.selectedOrder;
+    console.log(this.orderDetails)
     if(this.data.type){
       this.timeType = this.data.type;
     }
@@ -440,32 +439,39 @@ gotoSecureVideo() {
   this.router.navigate(['provider', 'secure-video'], navigationExtras);
 }
 startVoiceCall() {
-    this.closeDialog();
-    const customerId = this.orderDetails.orderFor.id
-    this.provider_services.voiceCallReady(customerId).subscribe(data => {
-        this.voiceCallConfirm()
-    },
-        error => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        });
+  this.closeDialog();
+  this.voiceCallConfirmed()
+  
+  // this.provider_services.voiceCallReady(customerId).subscribe(data => {
+  //     this.voiceCallConfirm()
+  // },
+  //     error => {
+  //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //     });
 }
-voiceCallConfirm() {
-    const dialogref = this.dialog.open(VoicecallConfirmBoxComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        // profile: this.profile
-      }
-    });
-    dialogref.afterClosed().subscribe(
-      result => {
-        this.location.back();
-        // if (result) {
-        // }
-      }
-    );
-  }
+voiceCallConfirmed() {
+  const customerId =  this.orderDetails.orderFor.id;
+  const num = this.orderDetails.countryCode + ' ' + this.orderDetails.phoneNumber;
+  
+  // const customerId = customerDetails[0].id;
+  const dialogref = this.dialog.open(VoiceConfirmComponent, {
+    width: '60%',
+    height: '30%',
+    panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+    disableClose: true,
+    data: {
+      customerId: customerId,
+      customer : num,
+    }
+  });
+  dialogref.afterClosed().subscribe(
+    result => {
+      this.closeDialog();
+      // if (result) {
+      // }
+    }
+  );
+}
   closeDialog() {
     this.dialogRef.close();
 }
