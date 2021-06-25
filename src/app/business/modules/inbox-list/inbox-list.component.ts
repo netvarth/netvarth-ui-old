@@ -482,7 +482,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   customerSelection(msgs) {
     this.custId = msgs.value[0].accountId;
-    // this.getCustomers();
+    console.log(this.custId)
+    this.getCustomers();
     this.type = 'all';
     this.message = '';
     this.replyMsg = null;
@@ -502,28 +503,24 @@ export class InboxListComponent implements OnInit, OnDestroy {
       this.scrollToElement();
     }, 100);
   }
-  // getCustomers() {
-  //     const _this = this;
-  //     const filter = { 'jaldeeConsumer-eq': this.custId };
-  //         _this.provider_services.getProviderCustomers(filter)
-  //             .subscribe(
-  //                 data => {
-  //                     this.cust =data;
-  //                     this.id = this.cust.id;
-  //                     console.log(this.id)
-  //                 },
-  //                 () => {
+  getCustomers() {
+      const _this = this;
+      const filter = { 'jaldeeConsumer-eq': this.custId };
+          _this.provider_services.getProviderCustomers(filter)
+              .subscribe(
+                  data => {
+                      this.cust = data;
+                      this.id = this.cust[0].id;
+                  },
+                  () => {
                       
-  //                 }
-  //             );
+                  }
+              );
       
-  // }
-  // gotoCustmer(){
-  //   alert(this.id)
-  //   console.log(this.id)
-  //   // this.router.navigate(['/provider/customers/' + customer.id]);
-  //   // this.router.navigate(['/provider/customers/' + this.id]);
-  // }
+  }
+  gotoCustmer(){
+    this.router.navigate(['/provider/customers/' + this.id]);
+  }
   getUnreadCount(messages) {
     const unreadMsgs = messages.filter(msg => !msg.read && msg.messagestatus === 'in');
     return unreadMsgs.length;
@@ -593,7 +590,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   userSelection(user) {
     this.selectedUser = user;
-    console.log(this.selectedUser)
     this.selectedCustomer = '';
     this.selectedUserMessages = [];
     this.replyMsg = null;
