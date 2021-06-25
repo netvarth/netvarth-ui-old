@@ -1,5 +1,6 @@
 import { Injectable, ElementRef, Renderer2, RendererFactory2 } from '@angular/core';
 import * as Video from 'twilio-video';
+import { MediaService } from './media-service';
 @Injectable({
     providedIn: 'any'
 })
@@ -7,7 +8,6 @@ export class TwilioService {
     remoteVideo: ElementRef;
     localVideo: ElementRef;
     previewContainer: ElementRef;
-    // previewing = false;
     microphone = true;
     video = true;
     preview = true;
@@ -25,94 +25,88 @@ export class TwilioService {
     activeRoom;
     previewTracksClone;
     btnClicked = false;
-    constructor(public rendererFactory: RendererFactory2) {
+    constructor(public rendererFactory: RendererFactory2, public mediaService: MediaService) {
         this.renderer = rendererFactory.createRenderer(null, null);
     }
     /**
      * Function to returns all the available video inputs also set two camera devices into variables cam1Device and cam2Device
      * @returns videoDevices - video devices available in the system
      */
-    loadDevices() {
-        const _this = this;
-        return new Promise(function (resolve, reject) {
-            let counter = 0;
-            navigator.mediaDevices.enumerateDevices().then(devices => {
-                const videoDevices = [];
-                let count = devices.length;
-
-                if (count > 0) {
-                    devices.forEach(device => {
-                        if (device.kind === 'videoinput') {
-                            if (counter === 0) {
-                                _this.cam1Device = device.deviceId;
-                                _this.selectedVideoId = device.deviceId;
-                            }
-                            if (counter === 1) {
-                                _this.cam2Device = device.deviceId;
-                            }
-                            videoDevices.push(device);
-                            counter++;
-                        }
-                        count--;
-                        if (count === 0) {
-                            resolve(videoDevices);
-                        }
-                    });
-                } else {
-                    reject([]);
-                }
-            });
-        })
-    }
+    // loadDevices() {
+    //     const _this = this;
+    //     return new Promise(function (resolve, reject) {
+    //         let counter = 0;
+    //         navigator.mediaDevices.enumerateDevices().then(devices => {
+    //             const videoDevices = [];
+    //             let count = devices.length;
+    //             if (count > 0) {
+    //                 devices.forEach(device => {
+    //                     if (device.kind === 'videoinput') {
+    //                         if (counter === 0) {
+    //                             _this.cam1Device = device.deviceId;
+    //                             _this.selectedVideoId = device.deviceId;
+    //                         }
+    //                         if (counter === 1) {
+    //                             _this.cam2Device = device.deviceId;
+    //                         }
+    //                         videoDevices.push(device);
+    //                         counter++;
+    //                     }
+    //                     count--;
+    //                     if (count === 0) {
+    //                         resolve(videoDevices);
+    //                     }
+    //                 });
+    //             } else {
+    //                 reject([]);
+    //             }
+    //         });
+    //     })
+    // }
     /**
      * Method for Preview Camera before entering to the meeting room
     */
-    previewMedia() {
-        this.preview = true;
-        const _this = this;
-        _this.video = false;
-        _this.microphone =false;
-        _this.loadDevices().then(
-            (videoDevices: any) => {
-                // console.log("Video Devices");
-                // console.log(videoDevices);
-                _this.camDeviceCount = videoDevices.length;
-                if (_this.camDeviceCount > 0) {
-                    _this.selectedVideoId = _this.cam1Device;
-                    _this.video= true;                    
-                    Video.createLocalTracks({
-                        audio: true,
-                        video: { deviceId: _this.selectedVideoId }
-                    }).then(localTracks => {
-                        _this.previewTracks = localTracks;
-                        _this.previewTracksClone = localTracks.slice();
-                        // console.log("Preview Tracks");
-                        console.log(_this.previewTracks);
-                        // console.log(_this.previewTracksClone);
-                        localTracks.forEach(localTrack => {
-                            // console.log(localTrack);
-                            if (localTrack.kind === 'audio'){
-                                this.microphone= true;
-                            }
-                            _this.addPreviewTrackToDom(localTrack);
-                        })
-                    }, (error)=> {
-                        console.log(error);
-                    });
-                }
-            }
-        );
-    }
+    // previewMedia() {
+    //     this.preview = true;
+    //     const _this = this;
+    //     _this.video = false;
+    //     _this.microphone =false;
+    //     _this.loadDevices().then(
+    //         (videoDevices: any) => {
+    //             _this.camDeviceCount = videoDevices.length;
+    //             if (_this.camDeviceCount > 0) {
+    //                 _this.selectedVideoId = _this.cam1Device;
+    //                 _this.video= true;                    
+    //                 Video.createLocalTracks({
+    //                     audio: true,
+    //                     video: { deviceId: _this.selectedVideoId }
+    //                 }).then(localTracks => {
+    //                     _this.previewTracks = localTracks;
+    //                     _this.previewTracksClone = localTracks.slice();
+    //                     console.log(_this.previewTracks);
+    //                     localTracks.forEach(localTrack => {
+    //                         if (localTrack.kind === 'audio'){
+    //                             this.microphone= true;
+    //                         }
+    //                         _this.addPreviewTrackToDom(localTrack);
+    //                     })
+    //                 }, (error)=> {
+    //                     console.log("Hi");
+
+                        
+
+    //                     console.log(error);
+    //                 });
+    //             }
+    //         }
+    //     );
+    // }
 
     unmuteVideo() {
         const _this = this;
         _this.previewTracks.forEach(localTrack => {
             if(localTrack.kind === 'video') {
-                // localTrack.enable();
-                // console.log("Unmute Video");
-                // console.log(localTrack);
                  _this.previewTracksClone.push(localTrack);
-                //  console.log(_this.previewTracksClone);
                 _this.addPreviewTrackToDom(localTrack);
             }
             
@@ -124,11 +118,7 @@ export class TwilioService {
         _this.previewTracks.forEach(localTrack => {
             if(localTrack.kind === 'video') {
                 _this.previewTracksClone.splice(this.previewTracksClone.indexOf(localTrack), 1);
-                // console.log("muteVideo Video");
-                // console.log(localTrack);
-                // console.log(_this.previewTracksClone);
                 _this.removePreviewTrackToDom(localTrack);
-                // console.log(_this.previewTracksClone);
             }
         });
         this.video = false;
@@ -147,32 +137,18 @@ export class TwilioService {
         const _this = this;
         _this.previewTracks.forEach(localTrack => {
             if(localTrack.kind === 'audio') {
-                // localTrack.disable();
                 _this.previewTracksClone.splice(this.previewTracksClone.indexOf(localTrack), 1);
-                // console.log("unmuteAudio");
-                // console.log(localTrack);
-                // console.log(_this.previewTracksClone);
             }
         });
-        // this.activeRoom.localParticipant.audioTracks.forEach(function (audioTrack) {
-        //     audioTrack.track.disable();
-        // });
         this.microphone = false;
     }
     unmuteAudio() {
         const _this = this;
         _this.previewTracks.forEach(localTrack => {
             if(localTrack.kind === 'audio') {
-                // localTrack.enable();
-                // console.log("unmuteAudio");
-                // console.log(localTrack);
                  _this.previewTracksClone.push(localTrack);
-                //  console.log(_this.previewTracksClone);
             }
         });
-        // this.activeRoom.localParticipant.audioTracks.forEach(function (audioTrack) {
-        //     audioTrack.track.enable();
-        // });
         this.microphone = true;
     }
     addPreviewTrackToDom(previewTrack) {
@@ -184,9 +160,6 @@ export class TwilioService {
 
     enableVideo() {
         const _this= this;
-        // this.activeRoom.localParticipant.videoTracks.forEach(function (videoTrack) {
-        //     videoTrack.track.enable();
-        // });
         Video.createLocalVideoTrack({
             deviceId: { exact: _this.selectedVideoId }
         }).then(function (localVideoTrack) {
@@ -208,10 +181,6 @@ export class TwilioService {
                 }
             }
         });
-
-        // this.activeRoom.localParticipant.videoTracks.forEach(function (videoTrack) {
-        //     videoTrack.track.disable();
-        // });
         this.video = false;
     }
     mute() {
@@ -228,7 +197,6 @@ export class TwilioService {
     }
     switchCamera(mode?) {
         const _this = this;
-        // console.log(mode);
         if (_this.selectedVideoId === _this.cam1Device) {
             _this.selectedVideoId = _this.cam2Device;
         } else {
@@ -254,15 +222,18 @@ export class TwilioService {
         });
     }
 
-    connectToRoom(accessToken, options): void {
+    connectToRoom(accessToken, options, tracks?): void {
         const _this = this;
         console.log("In Connect Room");
-        console.log(_this.previewTracks);
-        // console.log(_this.previewTracksClone);
+        console.log(tracks);
+        if(tracks) {
+            _this.previewTracks = tracks;
+            _this.previewTracksClone = tracks.slice();
+        }
         if (_this.previewTracks) {
             options['tracks'] = _this.previewTracks;
         }      
-        
+        console.log(_this.previewTracks);
         Video.connect(accessToken, options).then(
             (room: any) => {
                 _this.preview = false;
@@ -287,7 +258,6 @@ export class TwilioService {
                 console.log(track);
                 const element = track.attach();
                 _this.renderer.data.id = track.sid;
-                // this.renderer.setStyle(element, 'height', 'auto');
                 _this.renderer.addClass(element, 'rem-video');
                 _this.renderer.appendChild(container, element);
             }
@@ -401,17 +371,7 @@ export class TwilioService {
                     remoteElement.removeChild(remoteElement.firstChild);
                 }
             }
-
-            // if (_this.previewTracks) {
-            //     _this.previewTracks.forEach(function (track) {
-            //         track.stop();
-            //     });
-            // }                        
-            // _this.detachParticipantTracks(room.localParticipant, room, _this);
             _this.participantsCount = room.participants.size;
-            // if(room.participants && room.participants.size > 0) {
-            //     room.participants.forEach(_this.detachParticipantTracks);
-            // }
             _this.disconnect();
         });
     }

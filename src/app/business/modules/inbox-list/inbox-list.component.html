@@ -1,7 +1,13 @@
 <section class="" *ngIf="!source">
-    <div class="title-gb no-padding">
+    <div class="title-gb no-padding" *ngIf="isMessage">
         <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
             Messages
+            <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
+        </div>
+    </div>
+    <div class="title-gb no-padding" *ngIf="isEnquiry">
+        <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
+            Enquiries
             <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
         </div>
     </div>

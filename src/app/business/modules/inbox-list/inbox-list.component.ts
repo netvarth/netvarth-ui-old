@@ -84,8 +84,14 @@ export class InboxListComponent implements OnInit, OnDestroy {
   replyMsg;
   showReply = false;
   msgTypes = projectConstantsLocal.INBOX_MSG_TYPES;
+  isCustomer;
+  isEnquiry = false;
+  isMessage = true;
   @ViewChildren('outmsgId') outmsgIds: QueryList<ElementRef>;
   @ViewChildren('inmsgId') inmsgId: QueryList<ElementRef>;
+  id: any;
+  cust: any = [];
+  custId: any;
   @Input() customer;
   @Input() provider;
   @Input() source;
@@ -124,6 +130,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
     this.cacheavoider = dd;
     this.userDet = this.selectedUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.isCustomer = this.qParams.customer;
     if (this.qParams.customer && this.qParams.provider) {
       if (this.userDet.accountType === 'BRANCH') {
         this.selectedCustomer = this.qParams.customer + '=' + this.qParams.provider;
@@ -258,6 +265,17 @@ export class InboxListComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.messages = data;
+          if(this.isCustomer){
+            this.isEnquiry = true;
+            this.isMessage = false;
+            this.messages  = this.messages.filter(msg => msg.messageType === 'ENQUIRY');
+          } 
+          else{
+            this.isMessage = true;
+            this.isEnquiry = false;
+            this.messages  = this.messages.filter(msg => msg.messageType !== 'ENQUIRY');
+          
+          }
           this.scrollDone = true;
           this.setMessages();
           this.loading = false;
@@ -427,6 +445,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       }
     }
   }
+   
   filesSelected(event) {
     const input = event.target.files;
     if (input) {
@@ -512,6 +531,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }, 100);
   }
   customerSelection(msgs) {
+    this.custId = msgs.value[0].accountId;
+    // this.getCustomers();
     this.type = 'all';
     this.message = '';
     this.replyMsg = null;
@@ -531,6 +552,28 @@ export class InboxListComponent implements OnInit, OnDestroy {
       this.scrollToElement();
     }, 100);
   }
+  // getCustomers() {
+  //     const _this = this;
+  //     const filter = { 'jaldeeConsumer-eq': this.custId };
+  //         _this.provider_services.getProviderCustomers(filter)
+  //             .subscribe(
+  //                 data => {
+  //                     this.cust =data;
+  //                     this.id = this.cust.id;
+  //                     console.log(this.id)
+  //                 },
+  //                 () => {
+                      
+  //                 }
+  //             );
+      
+  // }
+  // gotoCustmer(){
+  //   alert(this.id)
+  //   console.log(this.id)
+  //   // this.router.navigate(['/provider/customers/' + customer.id]);
+  //   // this.router.navigate(['/provider/customers/' + this.id]);
+  // }
   getUnreadCount(messages) {
     const unreadMsgs = messages.filter(msg => !msg.read && msg.messagestatus === 'in');
     return unreadMsgs.length;
@@ -550,7 +593,13 @@ export class InboxListComponent implements OnInit, OnDestroy {
       const dataToSend: FormData = new FormData();
       let post_data = {};
       post_data['msg'] = this.message;
-      post_data['messageType'] = 'CHAT';
+      if(this.isCustomer){
+        post_data['messageType'] = 'ENQUIRY';
+      }
+      else{
+        post_data['messageType'] = 'CHAT';
+      }
+      
       if (this.replyMsg) {
         post_data['replyMessageId'] = this.replyMsg.messageId;
       }
@@ -594,6 +643,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   userSelection(user) {
     this.selectedUser = user;
+    console.log(this.selectedUser)
     this.selectedCustomer = '';
     this.selectedUserMessages = [];
     this.replyMsg = null;
