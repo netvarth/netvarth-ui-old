@@ -588,9 +588,11 @@ export class AppointmentComponent implements OnInit {
         this.otherThirdParty = '';
         this.heading = 'New Appointment';
         this.waitlist_for = [];
+        console.log('this.customer_data', this.customer_data)
         if (this.thirdParty === '') {
             this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
         }
+        console.log('this.server_date', this.server_date)
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         this.today = new Date(this.today);
         this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -629,6 +631,7 @@ export class AppointmentComponent implements OnInit {
                 this.getBussinessProfileApi()
                     .then(
                         (data: any) => {
+                            console.log('data', data)
                             this.account_id = data.id;
                             this.accountType = data.accountType;
                             this.domain = data.serviceSector.domain;

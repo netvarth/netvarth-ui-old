@@ -5,6 +5,7 @@ import { projectConstants } from '../../../../../app.component';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { Router } from '@angular/router';
+import { interval as observableInterval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-records-datagrid',
@@ -36,12 +37,30 @@ export class RecordsDatagridComponent implements OnInit {
   };
   check_in_statuses = projectConstants.CHECK_IN_STATUSES;
   loading = false;
+  cronHandle: Subscription;
+  refreshTime = projectConstants.INBOX_REFRESH_TIME;
   constructor(private dateTimeProcessor: DateTimeProcessor,
     private wordProcessor: WordProcessor,
     private provider_services: ProviderServices,
     private router: Router) { }
 
   ngOnInit(): void {
+    if (this.source == 'waitlist') {
+      this.getTodayWatilists();
+    }
+    if (this.source == 'appt') {
+      this.getTodayAppts();
+    }
+    this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
+      this.refresh();
+    });
+  }
+  ngOnDestroy() {
+    if (this.cronHandle) {
+      this.cronHandle.unsubscribe();
+    }
+  }
+  refresh() {
     if (this.source == 'waitlist') {
       this.getTodayWatilists();
     }

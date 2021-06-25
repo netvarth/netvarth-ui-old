@@ -35,16 +35,17 @@ export class BookingBillComponent implements OnInit {
     this.getPaymentSettings();
     if (this.bookingType === 'checkin') {
       if (this.pos && this.waitlist_data.waitlistStatus !== 'blocked' && (this.waitlist_data.waitlistStatus !== 'cancelled' || (this.waitlist_data.waitlistStatus === 'cancelled' && this.waitlist_data.paymentStatus !== 'NotPaid'))) {
+        this.loading = true;
         this.getWaitlistBill();
       }
     } else {
       if (this.pos && this.waitlist_data.apptStatus !== 'blocked' && ((this.waitlist_data.apptStatus !== 'Cancelled' && this.waitlist_data.apptStatus !== 'Rejected') || ((this.waitlist_data.apptStatus === 'Cancelled' || this.waitlist_data.apptStatus === 'Rejected') && this.waitlist_data.paymentStatus !== 'NotPaid'))) {
+        this.loading = true;
         this.getWaitlistBill();
       }
     }
   }
   getWaitlistBill(type?) {
-    this.loading = true;
     let uid;
     if (this.bookingType == 'appointment') {
       uid = this.waitlist_data.uid;

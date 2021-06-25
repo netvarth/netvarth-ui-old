@@ -45,6 +45,8 @@ export class CalendarComponent implements OnInit {
   constructor(private router: Router,
     private provider_services: ProviderServices) { }
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    console.log(date);
+    console.log(events);
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -59,10 +61,9 @@ export class CalendarComponent implements OnInit {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    alert(action);
+    console.log(action);
     console.log(event);
-    this.router.navigate(['provider', 'bookings', 'uid'], { queryParams: { timetype: 0, type: 'appointment' } });
-
+    this.router.navigate(['provider', 'bookings', event.meta.uid], { queryParams: { timetype: event.meta.timeType, type: 'appointment' } });
   }
 
   setView(view: CalendarView) {
@@ -99,7 +100,7 @@ export class CalendarComponent implements OnInit {
         (data: any) => {
           this.appts = data;
           this.appts.map((obj) => {
-            obj.type = 0;
+            obj.type = 1;
             return obj;
           });
           console.log(this.appts);
@@ -125,7 +126,7 @@ export class CalendarComponent implements OnInit {
       .subscribe(
         (data: any) => {
           data.map((obj) => {
-            obj.type = 1;
+            obj.type = 2;
             return obj;
           });
           this.appts = this.appts.concat(data);
@@ -134,11 +135,11 @@ export class CalendarComponent implements OnInit {
             this.events.push({
               start: addHours(addMinutes(startOfDay(new Date(appt.appmtDate)), this.getSingleTime(appt.appmtTime, 'start', 'minute')), this.getSingleTime(appt.appmtTime, 'start', 'hour')),
               end: addHours(addMinutes(startOfDay(new Date(appt.appmtDate)), this.getSingleTime(appt.appmtTime, 'end', 'minute')), this.getSingleTime(appt.appmtTime, 'end', 'hour')),
-              title: appt.apptStatus,
-              color: colors.yellow,
+              title: appt.appmtFor[0].firstName + ' ' + appt.appmtFor[0].lastName,
+              color: colors.blue,
               meta: {
                 uid: appt.uid,
-                type: 0
+                timeType: appt.type
               }
             })
           }

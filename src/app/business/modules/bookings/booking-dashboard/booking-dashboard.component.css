@@ -113,3 +113,14 @@
     margin-bottom: 8px !important;
     height: 18px !important;
 }
+.book-stats {
+    padding: 0 10px !important;
+}
+@media (max-width: 767px) {
+    .dashboard-content .pl-0 {
+        padding-left: 12.5px !important;
+    }
+    .dashboard-content .pr-0 {
+        padding-right: 12.5px !important;
+    }
+}

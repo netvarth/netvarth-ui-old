@@ -31,4 +31,7 @@ export class BookingQuickActionsComponent implements OnInit {
     this.router.navigate(['provider', 'check-ins', 'add'],
     { queryParams: { waitlistMode: 'WALK_IN_CHECKIN' } });
   }
+  showShortcuts() {
+    
+  }
 }

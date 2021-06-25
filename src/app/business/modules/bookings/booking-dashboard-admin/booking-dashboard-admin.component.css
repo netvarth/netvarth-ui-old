@@ -10,7 +10,7 @@
     flex-wrap: wrap !important;
     justify-content: flex-start !important;
     align-items: center !important;
-    padding: 12.5px !important;
+    padding: 0 12.5px !important;
 }
 
 .title-row .title-head {

@@ -103,9 +103,17 @@
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
 }
-
+@media (max-width: 767px) {
+    .container-upcoming-bookings {
+        border-top-right-radius: 8px !important;
+        border-bottom-right-radius: 8px !important;
+    }
+    .container-upcoming-bookings .card-body {
+        border-right: none !important;
+    }
+}
 .container-upcoming-bookings > .card-body:nth-child(2) {
-    border-right: 1px solid #cacaca !important;
+    border-right: 1px solid #cacaca;
 }
 
 .container-upcoming-bookings .heading {
@@ -147,4 +155,7 @@
     font-size: 14px !important;
     text-transform: uppercase !important;
     font-weight: 700 !important;
+}
+.card.card-custom.card-stretch.card-stretch-half.gutter-b {
+    height: 400px !important;
 }
