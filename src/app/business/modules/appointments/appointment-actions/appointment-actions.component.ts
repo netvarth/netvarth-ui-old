@@ -558,8 +558,10 @@ export class AppointmentActionsComponent implements OnInit {
         this.dialogRef.close();
         const customerDetails = this.appt.appmtFor[0];
         const customerId = customerDetails.id;
-        const whtasappNum = this.appt.virtualService.WhatsApp;
-        console.log(whtasappNum)
+        let whtasappNum;
+        if(this.appt && this.appt.virtualService && this.appt.virtualService.WhatsApp){
+         whtasappNum = this.appt.virtualService.WhatsApp;
+        }
         const navigationExtras: NavigationExtras = {
             queryParams: {
                 id : customerId,
