@@ -13787,3 +13787,6 @@ app-showuploadfile .mat-dialog-content {
 .mat-input-element {
   box-sizing: inherit !important;
 }
+.first-title {
+  font-size: .85rem !important;
+}
