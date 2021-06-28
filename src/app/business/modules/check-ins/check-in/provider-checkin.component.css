@@ -1,0 +1,8 @@
+.mob-container {
+    max-width: 320px !important;
+}
+
+.mob-container input {
+    height:35px !important;
+    border-left: 1px solid #ccc !important;
+}

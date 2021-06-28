@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { MatSelectSearchComponent } from './mat-select-search.component';
 
@@ -6,7 +6,7 @@ describe('MatSelectSearchComponent', () => {
   let component: MatSelectSearchComponent;
   let fixture: ComponentFixture<MatSelectSearchComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ MatSelectSearchComponent ]
     })

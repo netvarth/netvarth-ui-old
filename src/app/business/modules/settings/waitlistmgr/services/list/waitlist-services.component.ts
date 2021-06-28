@@ -14,7 +14,8 @@ import { DateTimeProcessor } from '../../../../../../shared/services/datetime-pr
 
 @Component({
     selector: 'app-waitlist-services',
-    templateUrl: './waitlist-services.component.html'
+    templateUrl: './waitlist-services.component.html',
+    styleUrls: ['./waitlist-services.component.css']
 })
 export class WaitlistServicesComponent implements OnInit, OnDestroy {
     add_new_serv_cap = Messages.SER_ADD_NEW_SER_CAP;

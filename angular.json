@@ -11,7 +11,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": true,
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -47,7 +46,13 @@
               "src/assets/third-party/Admin-LTE/js/app.js"
             ],
             "allowedCommonJsDependencies": ["crypto-js","ngx-owl-carousel","@ks89/angular-modal-gallery","underscore","file-saver","twilio-video","xlsx","qrcode",
-              "@ckeditor/ckeditor5-build-decoupled-document","speak-tts"]
+              "@ckeditor/ckeditor5-build-decoupled-document","speak-tts"],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -60,9 +65,7 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -72,8 +75,16 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ]
+            },
+            "local": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -83,6 +94,9 @@
           "configurations": {
             "production": {
               "browserTarget": "v7-you-never-wait:build:production"
+            },
+            "local": {
+              "browserTarget": "v7-you-never-wait:build:local"
             }
           }
         },

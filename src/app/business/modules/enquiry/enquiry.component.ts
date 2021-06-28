@@ -16,6 +16,7 @@ export class EnquiryComponent implements OnInit {
 
   messages: any = [];
   enquiries: any = [];
+  enq: any = [];
   users: any = [];
   userDet: any = [];
   loading = true;
@@ -52,7 +53,9 @@ export class EnquiryComponent implements OnInit {
           this.messages = data;
           this.sortMessages();
           const inbox = this.generateCustomInbox(this.messages);
-          this.enquiries = inbox.filter(msg => !msg.read && msg.msgType === 'ENQUIRY');
+          this.enquiries = inbox.filter(msg => msg.msgType === 'ENQUIRY');
+          this.enq = inbox.filter(msg => !msg.read && msg.msgType === 'ENQUIRY');
+          console.log(this.enq)
           this.loading = false;
         });
   }

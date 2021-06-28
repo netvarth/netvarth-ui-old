@@ -21,6 +21,8 @@ import { CustomerActionsComponent } from './customer-actions/customer-actions.co
 import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
 import { CustomerDetailComponent } from './customer-details/customer-details.component';
 import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
+import { VoicecallConfirmBoxComponent } from './confirm-box/voicecall-confirm-box.component';
+import { VoiceConfirmComponent } from './video-confirm/voice-confirm.component';
 
 
 @NgModule({
@@ -50,7 +52,9 @@ import { QuestionnaireModule } from '../../../shared/components/questionnaire/qu
         CustomerActionsComponent
     ],
     entryComponents: [
-        CustomerActionsComponent
+        CustomerActionsComponent,
+        VoicecallConfirmBoxComponent,
+        VoiceConfirmComponent
     ],
     exports: [CustomersListComponent, MedicalrecordModule]
 })

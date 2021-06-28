@@ -75,6 +75,9 @@ import { ConsumerAuthService } from './shared/services/consumer-auth-service';
 import { ListRecordingsDialogComponent } from './shared/components/list-recordings-dialog/list-recordings-dialog.component';
 import { MeetRoomComponent } from './shared/components/meet-room/meet-room.component';
 import { MeetRoomModule } from './shared/components/meet-room/meet-room.module';
+import { MediaService } from './shared/services/media-service';
+import { RequestDialogComponent } from './business/shared/meeting-room/request-dialog/request-dialog.component';
+import { VideoCallSharedComponent } from './business/modules/video-call/video-call.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -92,7 +95,9 @@ export function init_app(globalService: GlobalService) {
     VoicecallDetailsSendComponent,
     MeetingRoomComponent,
     CommunicationComponent,
-    ListRecordingsDialogComponent
+    ListRecordingsDialogComponent,
+    RequestDialogComponent,
+    VideoCallSharedComponent
   ],
   entryComponents: [
     ConfirmBoxComponent,
@@ -101,7 +106,8 @@ export function init_app(globalService: GlobalService) {
     RequestForComponent,
     ForceDialogComponent,
     ListRecordingsDialogComponent,
-    MeetRoomComponent
+    MeetRoomComponent,
+    RequestDialogComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,
@@ -172,6 +178,7 @@ export function init_app(globalService: GlobalService) {
     LivetrackService,
     TeleBookingService,
     BookingService,
+    MediaService,
     Title,
     CommonDataStorageService,
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },

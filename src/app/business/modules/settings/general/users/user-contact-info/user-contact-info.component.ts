@@ -47,8 +47,15 @@ no_of_grids = 2;
         if (user.profilePicture) {
             const proImage = user.profilePicture;
             return proImage.url;
-        } else {
-            return './assets/images/avatar5.png';
+        } 
+        else if(this.users_list.gender ==='male'){
+            return './assets/images/Asset1@300x.png';
+        }
+        else if(this.users_list.gender ==='female'){
+            return './assets/images/Asset2@300x.png';
+        }
+        else{
+            return './assets/images/Asset1@300x(1).png'; 
         }
     }
 }

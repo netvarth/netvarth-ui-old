@@ -16,8 +16,7 @@
                 </div>
                 <div class="card p0" *ngIf="!api_loading">
                     <div class="copy locd">
-
-                        <div class="lbl col-sm-12 col-md-8 col-lg-7">
+                        <div class="lbl col-sm-12 col-md-8 col-lg-7 no-padding-small">
                             <form *ngIf="action=='add' || action === 'edit' && amForm" [formGroup]="amForm" novalidate
                                 (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()"
                                 class="ynw-common-form-nm">
@@ -282,7 +281,7 @@
                             </div>
                         </div>
 
-                        <div class="lbr col-sm-12 col-md-4 col-lg-5 bg-white">
+                        <div class="lbr col-sm-12 col-md-4 col-lg-5 bg-white no-padding-small">
                             <div class="cr1">
                                 <div class="no-dta" *ngIf="!haveMainImg && !mainImage">
                                     <div class="col-sm-12 col-md-12 col-lg-12 mgn-bt-20">
