@@ -1,5 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+import { MatDialogModule } from "@angular/material/dialog";
 import { TwilioService } from "../../../shared/services/twilio-service";
 import { MeetingRoomComponent } from "./meeting-room.component";
 
@@ -8,7 +9,8 @@ import { MeetingRoomComponent } from "./meeting-room.component";
         MeetingRoomComponent
     ],
     imports: [
-        CommonModule
+        CommonModule,
+        MatDialogModule
     ],
     exports: [
         MeetingRoomComponent

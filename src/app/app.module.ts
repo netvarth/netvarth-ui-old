@@ -79,6 +79,9 @@ import { Device } from '@ionic-native/device/ngx';
 import { NotificationDialogComponent } from './shared/components/notification-dialog/notification-dialog.component';
 import { MeetRoomComponent } from './shared/components/meet-room/meet-room.component';
 import { MeetRoomModule } from './shared/components/meet-room/meet-room.module';
+import { MediaService } from './shared/services/media-service';
+import { RequestDialogComponent } from './business/shared/meeting-room/request-dialog/request-dialog.component';
+import { VideoCallSharedComponent } from './business/modules/video-call/video-call.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -97,7 +100,9 @@ export function init_app(globalService: GlobalService) {
     MeetingRoomComponent,
     CommunicationComponent,
     ListRecordingsDialogComponent,
-    NotificationDialogComponent
+    NotificationDialogComponent,
+    RequestDialogComponent,
+    VideoCallSharedComponent
   ],
   entryComponents: [
     ConfirmBoxComponent,
@@ -107,7 +112,8 @@ export function init_app(globalService: GlobalService) {
     ForceDialogComponent,
     ListRecordingsDialogComponent,
     NotificationDialogComponent,
-    MeetRoomComponent
+    MeetRoomComponent,
+    RequestDialogComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,

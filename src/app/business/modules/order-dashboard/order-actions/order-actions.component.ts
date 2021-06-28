@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
@@ -9,6 +9,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { VoiceConfirmComponent } from '../../customers/video-confirm/voice-confirm.component';
 
 @Component({
   selector: 'app-order-actions',
@@ -42,6 +43,9 @@ export class OrderActionsComponent implements OnInit {
   status: any = projectConstantsLocal.ORDER_STATUS_FILTER;
   showApply = false;
   cancelorderDialog: any;
+  meet_data: any;
+  id: any;
+  providerMeetingUrl: any;
   constructor(public dialogRef: MatDialogRef<OrderActionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public router: Router, public provider_services: ProviderServices,
@@ -57,6 +61,7 @@ export class OrderActionsComponent implements OnInit {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     console.log(this.customer_label);
     this.orderDetails = this.data.selectedOrder;
+    console.log(this.orderDetails)
     if(this.data.type){
       this.timeType = this.data.type;
     }
@@ -419,4 +424,55 @@ addConsumerInboxMessage() {
     return stat;
     
   }
+
+gotoSecureVideo() {
+  this.closeDialog();
+  const customerId = this.orderDetails.orderFor.id
+    // const whtasappNum = this.orderDetails.virtualService.WhatsApp;
+  const navigationExtras: NavigationExtras = {
+      queryParams: {
+          id : customerId,
+          // phoneNum : whtasappNum,
+          type: 'secure_video'
+      }
+  };
+  this.router.navigate(['provider', 'secure-video'], navigationExtras);
+}
+startVoiceCall() {
+  this.closeDialog();
+  this.voiceCallConfirmed()
+  
+  // this.provider_services.voiceCallReady(customerId).subscribe(data => {
+  //     this.voiceCallConfirm()
+  // },
+  //     error => {
+  //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //     });
+}
+voiceCallConfirmed() {
+  const customerId =  this.orderDetails.orderFor.id;
+  const num = this.orderDetails.countryCode + ' ' + this.orderDetails.phoneNumber;
+  
+  // const customerId = customerDetails[0].id;
+  const dialogref = this.dialog.open(VoiceConfirmComponent, {
+    width: '60%',
+    height: '30%',
+    panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+    disableClose: true,
+    data: {
+      customerId: customerId,
+      customer : num,
+    }
+  });
+  dialogref.afterClosed().subscribe(
+    result => {
+      this.closeDialog();
+      // if (result) {
+      // }
+    }
+  );
+}
+  closeDialog() {
+    this.dialogRef.close();
+}
 }

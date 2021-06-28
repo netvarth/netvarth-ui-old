@@ -7,8 +7,9 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
-import { VoicecallConfirmBoxComponent } from '../confirm-box/voicecall-confirm-box.component';
-import { Location } from '@angular/common';
+// import { VoicecallConfirmBoxComponent } from '../confirm-box/voicecall-confirm-box.component';
+// import { Location } from '@angular/common';
+import { VoiceConfirmComponent } from '../video-confirm/voice-confirm.component';
 
 @Component({
     selector: 'app-customer-actions',
@@ -33,7 +34,7 @@ export class CustomerActionsComponent implements OnInit {
         private snackbarService: SnackbarService,
         private groupService: GroupStorageService,
         private router: Router,
-        private location: Location,
+        // private location: Location,
         public dialog: MatDialog, private provider_shared_functions: ProviderSharedFuctions,
         public dialogRef: MatDialogRef<CustomerActionsComponent>) {
     }
@@ -101,52 +102,48 @@ export class CustomerActionsComponent implements OnInit {
         const bookingId = 0;
         this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'list'], { queryParams: { 'calledfrom': 'list' } });
     }
-    gotoMeet() {
+    gotoSecureVideo() {
         this.closeDialog();
         const customerDetails = this.customerDetails;
         const customerId = customerDetails[0].id;
-        this.provider_services.meetReady(customerId).subscribe(data => {
-            this.meet_data = data;
-                this.providerMeetingUrl = this.meet_data.providerMeetingUrl;
-                  // this.subs.sink = observableInterval(this.refreshTime * 500).subscribe(() => {
-                //     this.getMeetingStatus();
-                // });
-                const retcheckarr = this.providerMeetingUrl.split('/');
-                this.id = retcheckarr[4]
-                const navigationExtras: NavigationExtras = {
-                    queryParams: { custId: customerId }
-                };
-                 // const path = 'meet/' + this.id ;
-                // window.open(path, '_blank');
-                this.router.navigate(['meet', this.id], navigationExtras);
-        },
-            error => {
-                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            });
+        // const phoneNum = customerDetails[0].phoneNo;
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                id : customerId,
+                // phoneNum : phoneNum,
+                type: 'secure_video'
+            }
+        };
+        this.router.navigate(['provider', 'secure-video'], navigationExtras);
     }
     startVoiceCall() {
         this.closeDialog();
-        const customerDetails = this.customerDetails;
-        const customerId = customerDetails[0].id;
-        this.provider_services.voiceCallReady(customerId).subscribe(data => {
-            this.voiceCallConfirm()
-        },
-            error => {
-                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            });
+        this.voiceCallConfirmed()
+        
+        // this.provider_services.voiceCallReady(customerId).subscribe(data => {
+        //     this.voiceCallConfirm()
+        // },
+        //     error => {
+        //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //     });
     }
-    voiceCallConfirm() {
-        const dialogref = this.dialog.open(VoicecallConfirmBoxComponent, {
-          width: '50%',
+    voiceCallConfirmed() {
+         const customerId =  this.customerDetails[0].id
+        const num = this.customerDetails[0].countryCode + ' ' + this.customerDetails[0].phoneNo;
+        // const customerId = customerDetails[0].id;
+        const dialogref = this.dialog.open(VoiceConfirmComponent, {
+          width: '60%',
+          height: '30%',
           panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
           disableClose: true,
           data: {
-            // profile: this.profile
+            customerId: customerId,
+            customer : num,
           }
         });
         dialogref.afterClosed().subscribe(
           result => {
-            this.location.back();
+            this.closeDialog();
             // if (result) {
             // }
           }

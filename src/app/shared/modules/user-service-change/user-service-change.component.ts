@@ -423,14 +423,14 @@ export class UserServiceChnageComponent implements OnInit {
     if (user.profilePicture) {
       const proImage = user.profilePicture;
       return proImage.url;
-    } else if(user.gender === 'female'){
-      return './assets/images/unnamed.png';
+    } else if(user.gender === 'male'){
+      return './assets/images/Asset1@300x.png';
     }
-    else if(user.gender === 'male'){
-      return './assets/images/avatar5.png';
+    else if(user.gender === 'female'){
+      return './assets/images/Asset2@300x.png';
     }
     else{
-      return './assets/images/avatar5.png';
+      return './assets/images/Asset1@300x(1).png';
     }
   }
   showMoreorLess(event, index, type) {
@@ -624,3 +624,4 @@ export class UserServiceChnageComponent implements OnInit {
     });
 }
 }
+

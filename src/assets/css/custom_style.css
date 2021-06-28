@@ -13243,6 +13243,13 @@ color: #fff !important;
   width: 46px;
   margin-top: -14px;
 }
+.ico-voice {
+  content: url(../images/teleservice/audio.svg);
+  position: absolute;
+  padding-right: 5px;
+  width: 46px;
+  margin-top: -14px;
+}
 .ico_que {
   content: url(../images/addons/Queues-services.svg);
   position: absolute;
@@ -13751,4 +13758,36 @@ padding-left: 15px !important;
 }
 app-showuploadfile .mat-dialog-content {
   max-height: 80vh !important;
+}
+.text-left {
+  text-align: left;
+}
+.mat-input-element {
+  box-sizing: inherit !important;
+}
+#remoteImg {
+  width:100%;
+  height:100%;
+}
+#remoteImg img{
+  vertical-align: middle;
+  color: #fff !important;
+}
+#remoteImg .avatar-cont {
+  vertical-align: middle;
+  width: 100% !important;
+  height: 100px !important;
+}
+.avatar-text {
+  padding: 10px !important;
+  color: #fff !important;
+}
+.avatar-img {
+  background-image: url("../../assets/images/avatar5.png");
+  background-size: cover;
+width: 150px;
+height: 150px;
+display: inline-block;
+vertical-align: middle;
+margin-top: 200px;
 }

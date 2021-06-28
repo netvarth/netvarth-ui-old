@@ -1,0 +1,24 @@
+h1.mat-dialog-title, .head {
+    font-size: 1.3rem !important;
+}
+
+.text-content {
+    font-size: 1.25rem !important;
+    line-height: 1.5 !important;
+    letter-spacing: .1px !important;
+    text-align: justify !important;
+}
+
+.text-container {
+    padding:25px !important;
+    font-size: 1.25rem !important;
+}
+.text-container div {
+    font-size: 1rem !important;
+    color: rgba(0,0,0,0.541) !important;
+}
+
+a.dismiss-action {
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+}
