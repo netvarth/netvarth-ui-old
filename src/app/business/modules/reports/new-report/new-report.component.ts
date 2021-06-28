@@ -555,7 +555,6 @@ user_users;
           'service': this.payment_service_id,
           'schedule': this.payment_schedule_id,
           'providerOwnConsumerId': this.payment_customerId,
-          'donationName':this.payment_donationName,
           'donationEmail':this.payment_donationEmail,
           'donationPhone':this.payment_donationPhone,
 
@@ -592,9 +591,7 @@ user_users;
         if (this.payment_amount === undefined) {
           delete this.filterparams.amount;
         }
-        if(this.payment_donationName===''||this.payment_donationName===undefined){
-          delete this.filterparams.payment_donationName;
-        }
+      
         if(this.payment_donationEmail===''||this.payment_donationEmail===undefined){
           delete this.filterparams.payment_donationEmail;
         }
@@ -616,6 +613,10 @@ user_users;
         }
         if (this.pay_confirm_num) {
           filter['transactionEncId-like'] = 'confirmationNo::' + this.pay_confirm_num;
+        }
+        if(this.payment_donationName!==''||this.payment_donationName!==undefined){
+         // delete this.filterparams.payment_donationName;
+         filter['donationName-like']=this.payment_donationName;
         }
         const request_payload: any = {};
         request_payload.reportType = this.report_type.toUpperCase();
@@ -753,16 +754,7 @@ user_users;
           'donorPhoneNumber':this.donation_donorPhoneNumber
 
         };
-        if(this.donation_donorFirstName!==''&&this.donation_donorFirstName!==undefined){
-          donorName='firstName ::'+this.donation_donorFirstName;
-          if(this.donation_donorLastName!==''&& this.donation_donorLastName!==undefined){
-            donorName= donorName+',lastName::'+this.donation_donorLastName;
-          }
-        }
-        if(this.donation_donorFirstName===''||this.donation_donorFirstName===undefined &&this.donation_donorLastName!==''&& this.donation_donorLastName!==undefined ){
-          donorName='lastName::'+this.donation_donorLastName;
-        }
-        this.filterparams['donor']=donorName;
+  
         if (this.donation_service === 'All') {
           delete this.filterparams.service;
         }
@@ -772,10 +764,7 @@ user_users;
         if(this.donation_donorPhoneNumber ==''){
           delete this.filterparams.donorPhoneNumber;
         }
-        if(this.filterparams['donor']==''||this.filterparams['donor']==undefined ){
-         console.log('delete dontion'+this.donation_donorFirstName);
-          delete this.filterparams.donor;
-        }
+       
 
         const filter = {};
         for (const key in this.filterparams) {
@@ -788,6 +777,24 @@ user_users;
           filter['date-ge'] = this.dateformat.transformTofilterDate(this.donation_startDate);
           filter['date-le'] = this.dateformat.transformTofilterDate(this.donation_endDate);
         }
+        if(this.donation_donorFirstName!==''&&this.donation_donorFirstName!==undefined){
+          donorName='firstName::'+this.donation_donorFirstName;
+          if(this.donation_donorLastName!==''&& this.donation_donorLastName!==undefined){
+            donorName= donorName+',lastName::'+this.donation_donorLastName;
+          }
+        }
+        if(this.donation_donorFirstName===''||this.donation_donorFirstName===undefined &&this.donation_donorLastName!==''&& this.donation_donorLastName!==undefined ){
+          donorName='lastName::'+this.donation_donorLastName;
+        }
+        this.filterparams['donor']=donorName;
+        if(this.filterparams['donor']==''||this.filterparams['donor']==undefined ){
+          console.log('delete dontion'+this.donation_donorFirstName);
+           delete filter['donor'];
+         }else{
+          filter['donor-like']=donorName;
+          delete filter['donor'];
+         }
+
         const request_payload: any = {};
         request_payload.reportType = this.report_type.toUpperCase();
         request_payload.reportDateCategory = this.donation_timePeriod;
