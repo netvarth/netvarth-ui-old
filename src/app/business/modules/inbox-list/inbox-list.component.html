@@ -1,7 +1,14 @@
 <section class="">
-    <div class="title-gb no-padding">
-        <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
+    <div class="card title-gb" *ngIf="isCustomer">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="gotoEnquiry()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {{(!isCustomer) ? 'Messages' : 'Enquiries'}}
+            <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
+        </h5>
+    </div>
+    <div class="title-gb no-padding" *ngIf="!isCustomer">
+        <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
+            Messages
             <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
         </div>
     </div>
@@ -64,7 +71,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="d-flex flex-column align-items-end">
-                                                        <span *ngIf="userWithMsgCount > 1 && selectedUser.userType !== 'PROVIDER'"
+                                                        <span
+                                                            *ngIf="userWithMsgCount > 1 && selectedUser.userType !== 'PROVIDER'"
                                                             class="text-muted font-weight-bold font-size-sm">{{getUserName('provider',
                                                             user.value)}}</span>
                                                         <span class="label label-sm label-success"
@@ -124,7 +132,8 @@
                                                 <i (click)="showChatSection()"
                                                     class="fa fa-arrow-left pointer-cursor d-md-none"></i>
                                             </div>
-                                            <div class="text-dark-75 font-weight-bold font-size-h5" (click)="gotoCustmer()">
+                                            <div class="text-dark-75 font-weight-bold font-size-h5"
+                                                (click)="gotoCustmer()">
                                                 {{getUserName('customer')}}</div>
                                         </div>
                                     </div>
