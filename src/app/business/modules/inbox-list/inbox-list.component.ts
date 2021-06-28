@@ -272,8 +272,10 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.onResize();
     if (this.selectedCustomer !== '') {
       this.selectedUserMessages = this.groupedMsgs[this.selectedCustomer];
+      console.log(this.custId);
       if (!this.custId) {
         this.custId = this.selectedUserMessages[0].accountId;
+        console.log(this.custId);
         this.getCustomers();
       }
       if (this.small_device_display) {
@@ -480,6 +482,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   customerSelection(msgs) {
     this.custId = msgs.value[0].accountId;
+    console.log(this.custId);
     this.getCustomers();
     this.type = 'all';
     this.message = '';
@@ -501,19 +504,23 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }, 100);
   }
   getCustomers() {
+    console.log(this.custId);
     const filter = { 'jaldeeConsumer-eq': this.custId };
     this.provider_services.getProviderCustomers(filter)
       .subscribe(
         data => {
           this.cust = data;
           this.id = this.cust[0].id;
+          console.log(this.id);
         },
         () => {
         }
       );
   }
   gotoCustmer() {
+    if (this.id) {
     this.router.navigate(['/provider/customers/' + this.id]);
+    }
   }
   getUnreadCount(messages) {
     const unreadMsgs = messages.filter(msg => !msg.read && msg.messagestatus === 'in');
