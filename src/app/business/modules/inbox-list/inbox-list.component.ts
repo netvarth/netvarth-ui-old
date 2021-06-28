@@ -272,6 +272,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.onResize();
     if (this.selectedCustomer !== '') {
       this.selectedUserMessages = this.groupedMsgs[this.selectedCustomer];
+      console.log(this.selectedUserMessages);
       console.log(this.custId);
       if (!this.custId) {
         this.custId = this.selectedUserMessages[0].accountId;
@@ -505,6 +506,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   getCustomers() {
     console.log(this.custId);
+    this.id = null;
     const filter = { 'jaldeeConsumer-eq': this.custId };
     this.provider_services.getProviderCustomers(filter)
       .subscribe(
@@ -519,7 +521,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   gotoCustmer() {
     if (this.id) {
-    this.router.navigate(['/provider/customers/' + this.id]);
+      this.router.navigate(['/provider/customers/' + this.id]);
     }
   }
   getUnreadCount(messages) {

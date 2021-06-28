@@ -57,7 +57,8 @@ export class EnquiryComponent implements OnInit {
           this.messages = data;
           this.sortMessages();
           const inbox = this.generateCustomInbox(this.messages);
-          this.enquiries = inbox.filter(msg => msg.msgType === 'ENQUIRY' && !msg.replyMessageId && msg.messagestatus === 'in');
+          console.log(inbox);
+          this.enquiries = inbox.filter(msg => msg.msgType === 'ENQUIRY' && !msg.replyMsgId && msg.messagestatus === 'in');
           const enq = this.enquiries.filter(msg => !msg.read);
           this.enquiryUnreadCount = (enq) ? enq.length : 0;
           this.loading = false;
@@ -75,22 +76,22 @@ export class EnquiryComponent implements OnInit {
     let providerId;
     let providerName;
     for (const message of messages) {
-      if (this.searchUserById(message.receiver.id).length > 0 || message.receiver.id === 0) {
+      if (this.searchUserById(message.receiver.id).length > 0 || message.receiver.id === 0 || message.receiver.id === this.userDet.id) {
         accountId = message.owner.id;
         senderName = message.owner.name;
         providerId = message.receiver.id;
-        if (message.receiver.id === 0) {
+        if (message.receiver.id === 0 || message.receiver.id === this.userDet.id) {
           providerName = message.accountName;
         } else {
           providerName = (this.searchUserById(message.receiver.id)[0].businessName) ? this.searchUserById(message.receiver.id)[0].businessName : this.searchUserById(message.receiver.id)[0].firstName + ' ' + this.searchUserById(message.receiver.id)[0].lastName;
         }
         messageStatus = 'in';
-      } else if (this.searchUserById(message.owner.id).length > 0 || message.owner.id === 0) {
+      } else if (this.searchUserById(message.owner.id).length > 0 || message.owner.id === 0 || message.owner.id === this.userDet.id) {
         accountId = message.receiver.id;
         providerId = message.owner.id;
         senderName = message.receiver.name;
         messageStatus = 'out';
-        if (message.owner.id === 0) {
+        if (message.owner.id === 0 || message.owner.id === this.userDet.id) {
           providerName = message.accountName;
         } else {
           providerName = (this.searchUserById(message.owner.id)[0].businessName) ? this.searchUserById(message.owner.id)[0].businessName : this.searchUserById(message.owner.id)[0].firstName + ' ' + this.searchUserById(message.owner.id)[0].lastName;
