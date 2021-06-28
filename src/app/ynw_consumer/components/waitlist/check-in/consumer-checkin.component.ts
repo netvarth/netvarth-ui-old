@@ -787,7 +787,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
             // }
             if (this.virtualInfo) {
-                console.log(this.virtualInfo);
+                // console.log(this.virtualInfo);
                 // const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
                 // const formattedDate = moment(momentDate).format("YYYY-MM-DD");
                 // console.log(formattedDate);
@@ -812,6 +812,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 }
                 const bookingLocation = {};
                 bookingLocation['pincode'] = this.virtualInfo.pincode;
+               bookingLocation['district']=this.virtualInfo.location;
+               bookingLocation['state']=this.virtualInfo.state;
                 this.waitlist_for[0]['bookingLocation'] = bookingLocation;
                 if (this.virtualInfo.gender !== '') {
                     this.waitlist_for[0]['gender'] = this.virtualInfo.gender;
