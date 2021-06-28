@@ -83,8 +83,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
   showReply = false;
   msgTypes = projectConstantsLocal.INBOX_MSG_TYPES;
   isCustomer;
-  isEnquiry = false;
-  isMessage = true;
   @ViewChildren('outmsgId') outmsgIds: QueryList<ElementRef>;
   @ViewChildren('inmsgId') inmsgId: QueryList<ElementRef>;
   id: any;
@@ -230,15 +228,10 @@ export class InboxListComponent implements OnInit, OnDestroy {
         data => {
           this.messages = data;
           if(this.isCustomer){
-            this.isEnquiry = true;
-            this.isMessage = false;
             this.messages  = this.messages.filter(msg => msg.messageType === 'ENQUIRY');
           } 
           else{
-            this.isMessage = true;
-            this.isEnquiry = false;
             this.messages  = this.messages.filter(msg => msg.messageType !== 'ENQUIRY');
-          
           }
           this.scrollDone = true;
           this.setMessages();

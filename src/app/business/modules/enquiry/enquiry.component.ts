@@ -16,11 +16,11 @@ export class EnquiryComponent implements OnInit {
 
   messages: any = [];
   enquiries: any = [];
-  enq: any = [];
   users: any = [];
   userDet: any = [];
   loading = true;
   newTimeDateFormat = projectConstantsLocal.DATE_FORMAT_WITH_TIME;
+  enquiryUnreadCount;
   constructor(private shared_functions: SharedFunctions,
     private inbox_services: InboxServices,
     private groupService: GroupStorageService,
@@ -53,9 +53,9 @@ export class EnquiryComponent implements OnInit {
           this.messages = data;
           this.sortMessages();
           const inbox = this.generateCustomInbox(this.messages);
-          this.enquiries = inbox.filter(msg => msg.msgType === 'ENQUIRY');
-          this.enq = inbox.filter(msg => !msg.read && msg.msgType === 'ENQUIRY');
-          console.log(this.enq)
+          this.enquiries = inbox.filter(msg => msg.msgType === 'ENQUIRY' && !msg.replyMessageId && msg.messagestatus === 'in');
+          const enq = this.enquiries.filter(msg => !msg.read);
+          this.enquiryUnreadCount = enq.length;
           this.loading = false;
         });
   }
