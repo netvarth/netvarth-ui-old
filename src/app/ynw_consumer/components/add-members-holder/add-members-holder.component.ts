@@ -14,7 +14,7 @@ import { SubSink } from 'subsink';
 })
 
 export class AddMembersHolderComponent implements OnInit,OnDestroy {
-  family_member_cap = Messages.FAMILY_MEMBERS;
+  family_member_cap = Messages.FAMILY_MEMBER;
   cancel_btn_cap = Messages.CANCEL_BTN;
   save_btn_cap = Messages.SAVE_BTN;
   update_btn_cap = Messages.UPDATE_BTN;
@@ -44,18 +44,15 @@ export class AddMembersHolderComponent implements OnInit,OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: any) {
 
     if (data.type === 'edit') {
-      console.log(data);
       this.addmemberobj.fname = data.member.userProfile.firstName || '';
       this.addmemberobj.lname = data.member.userProfile.lastName || '';
       this.addmemberobj.mobile = data.member.userProfile.primaryMobileNo || '';
       this.addmemberobj.gender = data.member.userProfile.gender || '';
       this.addmemberobj.dob = data.member.userProfile.dob || '';
-      console.log('dgfdgdfg');
       if (data.member.userProfile.whatsAppNum  && data.member.userProfile.whatsAppNum !== undefined ) {
-        console.log('insideeeeee');
+
         const whatsup = {}
         if (data.member.userProfile.whatsAppNum.countryCode.startsWith('+')) {
-          console.log('insideeeeee countrycode');
           whatsup["countryCode"] = data.member.userProfile.whatsAppNum.countryCode
         } else {
           whatsup["countryCode"] = '+' + data.member.userProfile.whatsAppNum.countryCode
@@ -73,7 +70,6 @@ export class AddMembersHolderComponent implements OnInit,OnDestroy {
         telegram["number"] = data.member.userProfile.telegramNum.number
         this.addmemberobj['telegramNum'] = telegram;
       }
-      console.log(this.addmemberobj);
     }
   }
 

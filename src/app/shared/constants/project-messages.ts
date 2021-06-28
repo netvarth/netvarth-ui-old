@@ -324,6 +324,7 @@ export const Messages = {
 
   // Family Member
   'FAMILY_MEMBERS': 'Family Members',
+  'FAMILY_MEMBER':'Family Member',
   'MEMBER_CAPTION': 'Member',
   'PHONE_DIGIT_VAL_MSG': 'Enter a 10 digit mobile number',
   'PHONE_NUM_VAL_MSG': 'Mobile number should have only numbers',
