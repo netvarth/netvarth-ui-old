@@ -227,7 +227,22 @@ export class BranchUserDetailComponent implements OnInit {
                 } else if (subdomain.subDomain === this.subsector) {
                     this.selectedsubDomain.push(subdomain);
                 }
-            }
+            } else if (this.sector === 'educationalInstitution') {
+                if (this.subsector === 'educationalTrainingInstitute') {
+                    if (subdomain.subDomain === 'educationalTrainingInstitute') {
+                        this.selectedsubDomain.push(subdomain);
+                    }
+                }else if (this.subsector === 'schools') {
+                    if (subdomain.subDomain === 'schools') {
+                        this.selectedsubDomain.push(subdomain);
+                    }
+                }else if (this.subsector === 'colleges') {
+                    if (subdomain.subDomain === 'colleges') {
+                        this.selectedsubDomain.push(subdomain);
+                    }
+                }
+                
+              }
         }
     }
     createForm() {
