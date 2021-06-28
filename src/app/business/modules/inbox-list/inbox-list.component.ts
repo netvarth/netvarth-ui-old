@@ -179,8 +179,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
       }
       if (this.isCustomer) {
         this.router.navigate(['provider', 'enquiry', 'chat']);
-      } else {
-        this.router.navigate(['provider', 'inbox']);
       }
     });
   }
@@ -231,11 +229,10 @@ export class InboxListComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.messages = data;
-          if(this.isCustomer){
-            this.messages  = this.messages.filter(msg => msg.messageType === 'ENQUIRY');
-          } 
-          else{
-            this.messages  = this.messages.filter(msg => msg.messageType !== 'ENQUIRY');
+          if (this.isCustomer) {
+            this.messages = this.messages.filter(msg => msg.messageType === 'ENQUIRY');
+          } else {
+            this.messages = this.messages.filter(msg => msg.messageType !== 'ENQUIRY');
           }
           this.scrollDone = true;
           this.setMessages();
@@ -406,7 +403,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       }
     }
   }
-   
+
   filesSelected(event) {
     const input = event.target.files;
     if (input) {
@@ -479,7 +476,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   customerSelection(msgs) {
     this.custId = msgs.value[0].accountId;
-    console.log(this.custId)
     this.getCustomers();
     this.type = 'all';
     this.message = '';
@@ -501,21 +497,18 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }, 100);
   }
   getCustomers() {
-      const _this = this;
-      const filter = { 'jaldeeConsumer-eq': this.custId };
-          _this.provider_services.getProviderCustomers(filter)
-              .subscribe(
-                  data => {
-                      this.cust = data;
-                      this.id = this.cust[0].id;
-                  },
-                  () => {
-                      
-                  }
-              );
-      
+    const filter = { 'jaldeeConsumer-eq': this.custId };
+    this.provider_services.getProviderCustomers(filter)
+      .subscribe(
+        data => {
+          this.cust = data;
+          this.id = this.cust[0].id;
+        },
+        () => {
+        }
+      );
   }
-  gotoCustmer(){
+  gotoCustmer() {
     this.router.navigate(['/provider/customers/' + this.id]);
   }
   getUnreadCount(messages) {
@@ -537,13 +530,13 @@ export class InboxListComponent implements OnInit, OnDestroy {
       const dataToSend: FormData = new FormData();
       let post_data = {};
       post_data['msg'] = this.message;
-      if(this.isCustomer){
+      if (this.isCustomer) {
         post_data['messageType'] = 'ENQUIRY';
       }
-      else{
+      else {
         post_data['messageType'] = 'CHAT';
       }
-      
+
       if (this.replyMsg) {
         post_data['replyMessageId'] = this.replyMsg.messageId;
       }
