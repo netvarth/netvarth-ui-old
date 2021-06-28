@@ -36,24 +36,26 @@
                     <div class="mgn-up-50 mgn-bt-20 centeralign col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                         <!-- <h1 *ngIf="!loading">Ready To Start ?</h1> -->
                         <h1 *ngIf="loading">Getting Ready...</h1>
+                        <h1 *ngIf="!loading && twilioService.loading">Redirecting ...</h1>
                     </div>
-                    <div class="video_blinking text-center mgn-bt-20" *ngIf="!loading">
+                    <div class="video_blinking text-center mgn-bt-20" *ngIf="loading && !twilioService.loading">
                         {{status}}
                     </div>
-                    <div class="text-center mgn-bt-20" *ngIf="loading">
+                    <div class="text-center mgn-bt-20" *ngIf="loading && !twilioService.loading">
                         You will be able to join in just a moment
                     </div>
                     <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                    <app-common-innerloading-spinner *ngIf="!loading && twilioService.loading"></app-common-innerloading-spinner>
                     <div class="centeralign join-vid-btn mgn-bt-20 col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding"
                         *ngIf="!loading">
                         <button [disabled]="!consumerReady || btnClicked" (click)="!btnClicked && consumerReady && joinRoom()">Start Sharing Video
                         </button>
                         <!-- <button (click)="joinRoom()">Start Sharing Video
                         </button>  -->
-                        <button class="mgn-lt-5" (click)="disconnect()">Exit</button>
+                        <button class="mgn-lt-5" [disabled]="btnClicked" (click)="!btnClicked && disconnect()">Exit</button>
                         <br><br>
                         <div class="pt-0" *ngIf="showRecording">
-                            <mat-checkbox class="rec-check" [(ngModel)]="recordingFlag"
+                            <mat-checkbox class="rec-check" [(ngModel)]="recordingFlag" [disabled]="btnClicked"
                                 (change)="updateRecordingFlag( $event)">Record this video consultation</mat-checkbox>
                         </div>
                     </div>

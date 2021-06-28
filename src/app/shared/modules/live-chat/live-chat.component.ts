@@ -66,28 +66,30 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         private dialog: MatDialog,
         private mediaService: MediaService
     ) {
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.renderer = rendererFactory.createRenderer(null, null);
-        console.log(this.renderer);
+        const _this = this;
+        _this.twilioService.loading = false;
+        _this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        _this.renderer = rendererFactory.createRenderer(null, null);
+        console.log(_this.renderer);
         // window.addEventListener('unload', () => {
         //     this.disconnect();
         // });
-        this.subs.sink = this.activateroute.queryParams.subscribe(
+        _this.subs.sink = _this.activateroute.queryParams.subscribe(
             (qParams) => {
                 if (qParams['src']) {
-                    this.source = qParams['src'];
+                    _this.source = qParams['src'];
                 }
                 if (qParams['account']) {
-                    this.account = qParams['account'];
+                    _this.account = qParams['account'];
                 }
             }
         )
-        this.subs.sink = this.activateroute.params.subscribe(
+        _this.subs.sink = _this.activateroute.params.subscribe(
             (params) => {
-                this.uuid = params['id'];
-                this.type = this.uuid.substring((this.uuid.lastIndexOf('_') + 1), this.uuid.length);
-                this.getTeleBooking(this.uuid, this.type, this.account);
-                this.twilioService.preview= true;
+                _this.uuid = params['id'];
+                _this.type = _this.uuid.substring((_this.uuid.lastIndexOf('_') + 1), _this.uuid.length);
+                _this.getTeleBooking(_this.uuid, _this.type, _this.account);
+                _this.twilioService.preview= true;
             }
         );
     }
@@ -170,6 +172,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         _this.renderer.appendChild(_this.previewContainer.nativeElement, element);
     }
     generateType(media) {
+        const _this = this;
         let mode = '';
         return new Promise((resolve, reject) => {
             if (media['audioDevices'].length === 0 && media['videoDevices'].length === 0) {
@@ -182,9 +185,9 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
                 mode = 'sys-cam';
                 resolve(mode);
             } else {
-                this.getVideoStatus().then(
+                _this.getVideoStatus().then(
                     (videoStatus) => {
-                        this.getAudioStatus().then(
+                        _this.getAudioStatus().then(
                             (audioStatus) => {
                                 if (!audioStatus && !videoStatus) {
                                     mode = 'b-both';
@@ -242,21 +245,21 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         // this.twilioService.previewContainer = this.previewContainer;
         // this.twilioService.previewMedia();
 
-        this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
-            this.isProviderReady();
+        _this.cronHandle = observableInterval(_this.refreshTime * 500).subscribe(() => {
+            _this.isProviderReady();
         });
-        this.cd.detectChanges();
-        this.mediaService.getMediaDevices().then(
+        _this.cd.detectChanges();
+        _this.mediaService.getMediaDevices().then(
             (media: any) => {
-                this.media = media;
+                _this.media = media;
                 
                 if (media['videoDevices'].length > 0) {
-                    this.twilioService.camDeviceCount = media['videoDevices'].length;
+                    _this.twilioService.camDeviceCount = media['videoDevices'].length;
 
-                    this.twilioService.cam1Device = media['videoDevices'][0].deviceId;
+                    _this.twilioService.cam1Device = media['videoDevices'][0].deviceId;
                     _this.twilioService.selectedVideoId = media['videoDevices'][0].deviceId;
                     if (media['videoDevices'].length > 1) {
-                        this.twilioService.cam2Device = media['videoDevices'][1].deviceId;
+                        _this.twilioService.cam2Device = media['videoDevices'][1].deviceId;
                     }
                 }
                 console.log("System Media Devices");
@@ -265,13 +268,13 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
                     (mode) => {
                         console.log(mode);
                         if (mode !== 'none') {
-                            this.openRequestDialog(mode);
+                            _this.openRequestDialog(mode);
                         }
                     }
                 )
             }
         ).catch(error => {
-            this.openRequestDialog('both');
+            _this.openRequestDialog('both');
         });
     }
     /**
@@ -299,10 +302,10 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
                     _this.loading = false;
                     _this.providerReady = false;
                     _this.meetObj = null;
-                    if (this.booking.userName) {
-                        _this.status = 'Waiting for "' + this.booking.userName + '" to start';
+                    if (_this.booking.userName) {
+                        _this.status = 'Waiting for "' + _this.booking.userName + '" to start';
                     } else {
-                        _this.status = 'Waiting for "' + this.booking.businessName + '" to start'
+                        _this.status = 'Waiting for "' + _this.booking.businessName + '" to start'
                     }
 
                 }
@@ -347,7 +350,12 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
      */
     disconnect() {
         const _this = this;
+        _this.twilioService.loading = true;
+        _this.btnClicked = true;
         _this.twilioService.disconnect();
+        _this.previewTracks.forEach(track => {
+            _this.removePreviewTrackToDom(track, track.kind);
+        })
         if (_this.source && _this.source == 'room') {
             setTimeout(() => {
                 _this.location.back();
@@ -360,9 +368,10 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
      * Method to start the video
      */
     connect(tokenObj) {
+        const _this = this;
         // console.log(tokenObj.tokenId);
         // this.twilioService.cameraMode = 'user';
-        this.twilioService.connectToRoom(tokenObj.tokenId, {
+        _this.twilioService.connectToRoom(tokenObj.tokenId, {
 
             name: tokenObj.roomName,
             audio: true,
@@ -384,7 +393,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
             maxAudioBitrate: 16000,
             preferredVideoCodecs: [{ codec: 'VP8', simulcast: true }],
             networkQuality: { local: 1, remote: 1 }
-        });
+        }, [_this.audioTrack, _this.videoTrack]);
     }
     /**
      * Mute Local Audio
@@ -421,19 +430,22 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
      */
     joinRoom() {
         // console.log(this.meetObj);
-        this.btnClicked = true;
-        this.twilioService.localVideo = this.localVideo;
-        this.twilioService.remoteVideo = this.remoteVideo;
-        this.connect(this.meetObj);
+        const _this = this;
+        _this.btnClicked = true;
+        _this.loading = true;
+        _this.twilioService.localVideo = _this.localVideo;
+        _this.twilioService.remoteVideo = _this.remoteVideo;
+        _this.twilioService.loading = true;
+        _this.connect(this.meetObj);
     }
     unmuteVideo() {
         const _this = this;
         console.log("unmuteVideo");
         // this.twilioService.unmuteVideo();
-        this.getVideoStatus().then(
+        _this.getVideoStatus().then(
             (videoStatus) => {
                 if (!videoStatus) {
-                    this.openRequestDialog('b-cam');
+                    _this.openRequestDialog('b-cam');
                 } else {
                     _this.twilioService.video = true;
                 }
@@ -481,12 +493,13 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
      * called when the page destroyed
      */
     ngOnDestroy() {
-        if (this.cronHandle) {
-            this.cronHandle.unsubscribe();
+        const _this = this;
+        if (_this.cronHandle) {
+            _this.cronHandle.unsubscribe();
         }
-        this.subs.unsubscribe();
-        this.previewTracks.forEach(track=>{
-            this.removePreviewTrackToDom(track, track.kind);
+        _this.subs.unsubscribe();
+        _this.previewTracks.forEach(track=>{
+            _this.removePreviewTrackToDom(track, track.kind);
         })
         // if (this.twilioService.previewTracks) {
         //     this.disconnect();

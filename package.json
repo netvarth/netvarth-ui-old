@@ -14,7 +14,7 @@
     "compodoc": "compodoc -p tsconfig.json",
     "dev-build": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng",
     "local-serve": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng serve -c=local",
-    "build-prod": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng build --prod"
+    "build-prod": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng build --configuration production"
   },
   "private": true,
   "dependencies": {

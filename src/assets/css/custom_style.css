@@ -13765,3 +13765,29 @@ app-showuploadfile .mat-dialog-content {
 .mat-input-element {
   box-sizing: inherit !important;
 }
+#remoteImg {
+  width:100%;
+  height:100%;
+}
+#remoteImg img{
+  vertical-align: middle;
+  color: #fff !important;
+}
+#remoteImg .avatar-cont {
+  vertical-align: middle;
+  width: 100% !important;
+  height: 100px !important;
+}
+.avatar-text {
+  padding: 10px !important;
+  color: #fff !important;
+}
+.avatar-img {
+  background-image: url("../../assets/images/avatar5.png");
+  background-size: cover;
+width: 150px;
+height: 150px;
+display: inline-block;
+vertical-align: middle;
+margin-top: 200px;
+}

@@ -60,21 +60,23 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
         private dialog: MatDialog,
         private teleService: TeleBookingService,
         private mediaService: MediaService) {
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.titleService.setTitle('Jaldee Business - Video');
-        this.renderer = rendererFactory.createRenderer(null, null);
-        console.log(this.renderer);
-        this.subs.sink = this.activateroute.params.subscribe(
+        const _this = this;
+        _this.twilioService.loading = false;
+        _this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        _this.titleService.setTitle('Jaldee Business - Video');
+        _this.renderer = rendererFactory.createRenderer(null, null);
+        console.log(_this.renderer);
+        _this.subs.sink = _this.activateroute.params.subscribe(
             (params) => {
-                this.uuid = params['id'];
-                this.type = this.uuid.substring((this.uuid.lastIndexOf('_') + 1), this.uuid.length);
-                this.getTeleBooking(this.uuid, this.type);
-                this.twilioService.preview= true;
+                _this.uuid = params['id'];
+                _this.type = _this.uuid.substring((_this.uuid.lastIndexOf('_') + 1), _this.uuid.length);
+                _this.getTeleBooking(_this.uuid, _this.type);
+                _this.twilioService.preview = true;
             }
         )
-        this.getRecordingStatus().then(
+        _this.getRecordingStatus().then(
             (recordStatus: boolean) => {
-                this.recordingFlag = recordStatus;
+                _this.recordingFlag = recordStatus;
             }
         );
     }
@@ -105,8 +107,9 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
         // });
     }
     getRecordingStatus() {
+        const _this = this;
         return new Promise((resolve, reject) => {
-            this.subs.sink = this.meetService.getJaldeeVideoSettings().subscribe(
+            _this.subs.sink = _this.meetService.getJaldeeVideoSettings().subscribe(
                 (data: any) => {
                     resolve(data.videoRecording);
                 }, (error) => {
@@ -150,7 +153,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
         const _this = this;
         const post_data = {
             uuid: _this.uuid,
-            recordingFlag: this.recordingFlag,
+            recordingFlag: _this.recordingFlag,
 
         };
 
@@ -184,25 +187,25 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         const _this = this;
         console.log("ngAfterViewInit");
-        this.cd.detectChanges();
-        this.subs.sink = observableInterval(this.refreshTime * 500).subscribe(() => {
-            this.isConsumerReady();
+        _this.cd.detectChanges();
+        _this.subs.sink = observableInterval(_this.refreshTime * 500).subscribe(() => {
+            _this.isConsumerReady();
         });
         // this.twilioService.previewContainer = this.previewContainer;
         // this.twilioService.previewMedia();
 
         // this.sharedServices.callHealth("UI Heath Message").subscribe();
-        this.mediaService.getMediaDevices().then(
+        _this.mediaService.getMediaDevices().then(
             (media: any) => {
-                this.media = media;
-                
-                if (media['videoDevices'].length > 0) {
-                    this.twilioService.camDeviceCount = media['videoDevices'].length;
+                _this.media = media;
 
-                    this.twilioService.cam1Device = media['videoDevices'][0].deviceId;
+                if (media['videoDevices'].length > 0) {
+                    _this.twilioService.camDeviceCount = media['videoDevices'].length;
+
+                    _this.twilioService.cam1Device = media['videoDevices'][0].deviceId;
                     _this.twilioService.selectedVideoId = media['videoDevices'][0].deviceId;
                     if (media['videoDevices'].length > 1) {
-                        this.twilioService.cam2Device = media['videoDevices'][1].deviceId;
+                        _this.twilioService.cam2Device = media['videoDevices'][1].deviceId;
                     }
                 }
                 console.log("System Media Devices");
@@ -211,13 +214,13 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
                     (mode) => {
                         console.log(mode);
                         if (mode !== 'none') {
-                            this.openRequestDialog(mode);
+                            _this.openRequestDialog(mode);
                         }
                     }
                 )
             }
         ).catch(error => {
-            this.openRequestDialog('both');
+            _this.openRequestDialog('both');
         });
 
     }
@@ -274,6 +277,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
         _this.renderer.appendChild(_this.previewContainer.nativeElement, element);
     }
     generateType(media) {
+        const _this = this;
         let mode = '';
         return new Promise((resolve, reject) => {
             if (media['audioDevices'].length === 0 && media['videoDevices'].length === 0) {
@@ -286,9 +290,9 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
                 mode = 'sys-cam';
                 resolve(mode);
             } else {
-                this.getVideoStatus().then(
+                _this.getVideoStatus().then(
                     (videoStatus) => {
-                        this.getAudioStatus().then(
+                        _this.getAudioStatus().then(
                             (audioStatus) => {
                                 if (!audioStatus && !videoStatus) {
                                     mode = 'b-both';
@@ -343,32 +347,36 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
      * invokes when the page destroys
      */
     ngOnDestroy() {
-        this.subs.unsubscribe();
-        this.previewTracks.forEach(track=>{
-            this.removePreviewTrackToDom(track, track.kind);
+        const _this = this;
+        _this.subs.unsubscribe();
+        _this.previewTracks.forEach(track => {
+            _this.removePreviewTrackToDom(track, track.kind);
         })
     }
     /**
      * Method to exit from a meeting
      */
     disconnect() {
-        this.twilioService.disconnect();
+        const _this = this;
+        _this.twilioService.loading = true;
+        _this.btnClicked = true;
+        _this.twilioService.disconnect();
 
-        this.previewTracks.forEach(track=>{
-            this.removePreviewTrackToDom(track, track.kind);
+        _this.previewTracks.forEach(track => {
+            _this.removePreviewTrackToDom(track, track.kind);
         })
 
-        let type = this.type;
-        if (this.type === 'wl') {
+        let type = _this.type;
+        if (_this.type === 'wl') {
             type = 'checkin'
         }
         const navigationExtras: NavigationExtras = {
             queryParams: {
-                waiting_id: this.uuid,
+                waiting_id: _this.uuid,
                 type: type
             }
         };
-        this.router.navigate(['provider', 'telehealth'], navigationExtras);
+        _this.router.navigate(['provider', 'telehealth'], navigationExtras);
     }
 
     /**
@@ -382,19 +390,19 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
         pass_ob['name'] = _this.booking.businessName;
         pass_ob['typeOfMsg'] = 'single';
         pass_ob['uuid'] = _this.booking.id;
-        if (this.type === 'appt') {
+        if (_this.type === 'appt') {
             pass_ob['appt'] = _this.type;
-        } else if (this.type === 'orders') {
-            pass_ob['orders'] = this.type;
+        } else if (_this.type === 'orders') {
+            pass_ob['orders'] = _this.type;
         }
-        this.chatDialog = this.dialog.open(AddInboxMessagesComponent, {
+        _this.chatDialog = this.dialog.open(AddInboxMessagesComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass', 'popup-class'],
             disableClose: true,
             autoFocus: true,
             data: pass_ob
         });
-        this.chatDialog.afterClosed().subscribe(result => {
+        _this.chatDialog.afterClosed().subscribe(result => {
             if (result === 'reloadlist') {
             }
         });
@@ -403,11 +411,14 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
      * Method to connect to a room
      */
     joinRoom() {
-        this.btnClicked = true;
-        if (this.consumerReady) {
-            this.twilioService.localVideo = this.localVideo;
-            this.twilioService.remoteVideo = this.remoteVideo;
-            this.connect(this.meetObj);
+        const _this = this;
+        _this.btnClicked = true;
+        _this.loading = true;
+        if (_this.consumerReady) {
+            _this.twilioService.localVideo = _this.localVideo;
+            _this.twilioService.remoteVideo = _this.remoteVideo;
+            _this.twilioService.loading = true;
+            _this.connect(_this.meetObj);
         }
     }
     /**
@@ -415,8 +426,10 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
      * @param tokenObj Token object which hold the key and room name
      */
     connect(tokenObj) {
+        const _this =this;
+
         console.log("Token Id:" + tokenObj.tokenId);
-        this.twilioService.connectToRoom(tokenObj.tokenId, {
+        _this.twilioService.connectToRoom(tokenObj.tokenId, {
             name: tokenObj.roomName,
             audio: true,
             video: { height: '100%', frameRate: 24, width: '100%', facingMode: 'user' },
@@ -436,16 +449,27 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
             maxAudioBitrate: 16000,
             preferredVideoCodecs: [{ codec: 'VP8', simulcast: true }],
             networkQuality: { local: 1, remote: 1 }
-        }, [this.audioTrack,this.videoTrack]);
+        }, [_this.audioTrack, _this.videoTrack])
+        // .then(
+        //     () => {
+
+        //     }
+        // ).catch((error)=> {
+        //     _this.btnClicked= false;
+        //     _this.loading = false;
+        //     _this.twilioService.loading = false;
+        //     // console.log(error);
+        // }
+        // );
     }
     unmuteVideo() {
         const _this = this;
         console.log("unmuteVideo");
         // this.twilioService.unmuteVideo();
-        this.getVideoStatus().then(
+        _this.getVideoStatus().then(
             (videoStatus) => {
                 if (!videoStatus) {
-                    this.openRequestDialog('b-cam');
+                    _this.openRequestDialog('b-cam');
                 } else {
                     _this.twilioService.video = true;
                 }
@@ -460,7 +484,6 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
         this.removePreviewTrackToDom(this.videoTrack, 'video');
         this.previewTracks.splice(this.previewTracks.indexOf(this.videoTrack), 1);
         this.twilioService.video = false;
-
     }
     muteAudio() {
         console.log("muteAudio");

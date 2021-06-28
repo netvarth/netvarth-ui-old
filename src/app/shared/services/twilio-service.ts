@@ -25,6 +25,7 @@ export class TwilioService {
     activeRoom;
     previewTracksClone;
     btnClicked = false;
+    loading = false;
     constructor(public rendererFactory: RendererFactory2, public mediaService: MediaService) {
         this.renderer = rendererFactory.createRenderer(null, null);
     }
@@ -222,7 +223,8 @@ export class TwilioService {
         });
     }
 
-    connectToRoom(accessToken, options, tracks?): void {
+    connectToRoom(accessToken, options, tracks?) {
+        // return new Promise(function (resolve, reject) {
         const _this = this;
         console.log("In Connect Room");
         console.log(tracks);
@@ -237,6 +239,7 @@ export class TwilioService {
         Video.connect(accessToken, options).then(
             (room: any) => {
                 _this.preview = false;
+                this.loading= false;
                 _this.activeRoom = room;
                 if (options['video']) {
                     if (!_this.localVideo.nativeElement.querySelector('video')) {
@@ -246,8 +249,11 @@ export class TwilioService {
                 }
                 this.btnClicked = false;
                 _this.roomJoined(room);
+            }, (error) => {
+                // reject(error);
             }
         );
+        // });
     }
     // Attach the Tracks to the DOM.
     attachTracks(tracks, container, room) {
@@ -332,12 +338,20 @@ export class TwilioService {
             console.log(participant.identity + ' added track: ' + track.kind);
             // var previewContainer = document.getElementById('remoteVideo');
             _this.attachTracks([track], _this.remoteVideo.nativeElement, room);
+            console.log('tracksubscribed');
+            if(track.kind === 'video') {
+                _this.removeRemoteParticipantDetails(_this.remoteVideo.nativeElement);
+            } 
         });
 
         // When a Participant removes a Track, detach it from the DOM.
         room.on('trackUnsubscribed', function (track, trackPublication, participant) {
             console.log(participant.identity + ' removed track: ' + track.kind);
             _this.detachTracks([track]);
+            console.log('trackUnsubscribed');
+            if(track.kind === 'video') {
+                _this.addRemoteParticipantDetails(_this.remoteVideo.nativeElement, participant);
+            }
         });
 
         // When a Participant leaves the Room, detach its Tracks.
@@ -346,6 +360,7 @@ export class TwilioService {
             _this.detachParticipantTracks(participant, room, _this);
             _this.participantsCount = room.participants.size;
             console.log("disConnected:" + room.participants.size);
+            _this.removeRemoteParticipantDetails(_this.remoteVideo.nativeElement);
         });
 
         // Once the LocalParticipant leaves the room, detach the Tracks
@@ -375,26 +390,56 @@ export class TwilioService {
             _this.disconnect();
         });
     }
+    removeRemoteParticipantDetails(container) {
+        const div = document.getElementById('remoteImg');
+        if(div) {
+            this.renderer.removeChild(container, div);
+        }
+    }
+    addRemoteParticipantDetails(container, participant) {
+        const div = document.createElement('div');
+        div.setAttribute('id','remoteImg');
+        const div1 = document.createElement('div');
+        div1.setAttribute('class', 'avatar-img');
+        div.appendChild(div1);
+        
+        const div2 = document.createElement('div');
+        div2.setAttribute('class', 'avatar-text');
+
+        const contentDiv = document.createTextNode(participant.identity);
+        div2.appendChild(contentDiv);
+        div.appendChild(div2);
+        // const image = document.createElement('image');
+        // image.setAttribute('class', '');
+        // image.setAttribute('alt', participant.identity);
+        // div1.appendChild(image);
+        
+        this.renderer.appendChild(container, div);
+    }
     disconnect() {
-        if (this.previewTracks) {
-            this.previewTracks.forEach(localTrack => {
+        const _this = this;
+        if (_this.previewTracks) {
+            _this.previewTracks.forEach(localTrack => {
                 localTrack.stop();
             });
         }
-        this.previewTracks = null;
-        if (this.activeRoom && this.activeRoom.localParticipant && this.activeRoom.localParticipant.localTracks) {
-            this.activeRoom.localParticipant.localTracks.forEach(localTrack => {
+        _this.previewTracks = null;
+        if (_this.activeRoom && _this.activeRoom.localParticipant && _this.activeRoom.localParticipant.localTracks) {
+            _this.activeRoom.localParticipant.localTracks.forEach(localTrack => {
                 localTrack.stop();
             });
         }
-        if (this.activeRoom && this.activeRoom !== null) {
-            this.activeRoom.disconnect();
-            this.activeRoom = null;
-            this.cam1Device = null;
-            this.cam2Device = null;
-            this.selectedVideoId = null;    
+        if (_this.activeRoom && _this.activeRoom !== null) {
+            _this.activeRoom.disconnect();
+            _this.activeRoom = null;
+            _this.cam1Device = null;
+            _this.cam2Device = null;
+            _this.selectedVideoId = null;    
         }
-        this.video = true;
-        this.microphone = true;
+        _this.video = true;
+        _this.microphone = true;
+        if (_this.remoteVideo) {
+            _this.removeRemoteParticipantDetails(_this.remoteVideo.nativeElement);
+        } 
     }
 }
