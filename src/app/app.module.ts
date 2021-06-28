@@ -187,6 +187,7 @@ export function init_app(globalService: GlobalService) {
     LivetrackService,
     TeleBookingService,
     BookingService,
+    MediaService,
     Title,
     CommonDataStorageService,
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },
