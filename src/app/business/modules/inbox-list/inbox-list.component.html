@@ -22,9 +22,9 @@
                         <div class="d-flex flex-row minhgt-60" *ngIf="messages.length==0">
                             <div class="no-msg-section">
                                 <div class="nomsg-img mgn-bt-20"></div>
-                                Start messaging to {{customer_label}}s
+                                Click here to access your
                                 <button mat-flat-button class="font-size-xs normal-btn mgn-lt-10"
-                                    (click)="gotoCustomers()"> Go to {{customer_label}}s </button>
+                                    (click)="gotoCustomers()">{{customer_label}}s list</button>
                             </div>
                         </div>
                         <div class="d-flex flex-row" *ngIf="messages.length>0">
