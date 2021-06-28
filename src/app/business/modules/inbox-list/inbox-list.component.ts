@@ -272,6 +272,10 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.onResize();
     if (this.selectedCustomer !== '') {
       this.selectedUserMessages = this.groupedMsgs[this.selectedCustomer];
+      if (!this.custId) {
+      this.custId = this.selectedUserMessages[0].accountId;
+      this.getCustomers();
+      }
       if (this.small_device_display) {
         this.showChat = true;
       }
