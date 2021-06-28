@@ -209,6 +209,7 @@ export const projectConstantsLocal = {
     veterinaryPetcare: { iconClass: 'veterinary_icon' },
     retailStores: { iconClass: 'retailstores_icon' },
     otherMiscellaneous: { iconClass: 'other_icon' },
+    educationalInstitution: { iconClass: 'education_icon' },
 
   },
   DOMAIN_SERVICES_HINT: {
@@ -1025,7 +1026,7 @@ export const projectConstantsLocal = {
     ALERT: 'Alert',
     BOOKINGS: 'Bookings'
   },
-  // UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/ui/scale/config/"
-  UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/ui/prod/config/"
+  UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/ui/scale/config/"
+  // UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/ui/prod/config/"
 };
 
