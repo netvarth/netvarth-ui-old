@@ -177,7 +177,11 @@ export class InboxListComponent implements OnInit, OnDestroy {
       if (enuiryMsgs && enuiryMsgs.length > 0) {
         this.shared_functions.sendMessage({ ttype: 'enquiryCount' });
       }
-      this.router.navigate(['provider', 'inbox']);
+      if (this.isCustomer) {
+        this.router.navigate(['provider', 'enquiry', 'chat']);
+      } else {
+        this.router.navigate(['provider', 'inbox']);
+      }
     });
   }
   getInboxUnreadCnt() {

@@ -138,7 +138,7 @@ export class EnquiryComponent implements OnInit {
     return retdate;
   }
   gotoInbox(msg) {
-    this.router.navigate(['provider/inbox'], { queryParams: { customer: msg.accountId, provider: msg.providerId } });
+    this.router.navigate(['provider/enquiry/chat'], { queryParams: { customer: msg.accountId, provider: msg.providerId } });
   }
   sortMessages() {
     this.messages.sort(function (message1, message2) {
