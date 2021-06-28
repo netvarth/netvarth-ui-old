@@ -6,6 +6,7 @@ import { ProviderServices } from '../../../ynw_provider/services/provider-servic
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { Router } from '@angular/router';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-enquiry',
@@ -21,11 +22,13 @@ export class EnquiryComponent implements OnInit {
   loading = true;
   newTimeDateFormat = projectConstantsLocal.DATE_FORMAT_WITH_TIME;
   enquiryUnreadCount;
+  customer_label;
   constructor(private shared_functions: SharedFunctions,
     private inbox_services: InboxServices,
     private groupService: GroupStorageService,
     private provider_services: ProviderServices,
     private dateTimeProcessor: DateTimeProcessor,
+    public wordProcessor: WordProcessor,
     private router: Router) { }
   ngOnInit(): void {
     this.userDet = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -34,6 +37,7 @@ export class EnquiryComponent implements OnInit {
     } else {
       this.getInboxMessages();
     }
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
   getUsers() {
     const filter = {};
@@ -95,7 +99,7 @@ export class EnquiryComponent implements OnInit {
       const inboxData = {
         accountId: accountId,
         timeStamp: message.timeStamp,
-        accountName: senderName,
+        accountName: (senderName && senderName.trim() !== '') ? senderName : this.customer_label,
         service: message.service,
         msg: message.msg,
         providerId: providerId,
