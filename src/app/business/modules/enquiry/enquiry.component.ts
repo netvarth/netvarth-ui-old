@@ -55,7 +55,7 @@ export class EnquiryComponent implements OnInit {
           const inbox = this.generateCustomInbox(this.messages);
           this.enquiries = inbox.filter(msg => msg.msgType === 'ENQUIRY' && !msg.replyMessageId && msg.messagestatus === 'in');
           const enq = this.enquiries.filter(msg => !msg.read);
-          this.enquiryUnreadCount = enq.length;
+          this.enquiryUnreadCount = (enq) ? enq.length : 0;
           this.loading = false;
         });
   }
