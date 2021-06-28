@@ -12,14 +12,14 @@
   <!--begin::Entry-->
   <div class="d-flex flex-column-fluid">
     <!--begin::Container-->
-    <div class=" container ">
+    <div class=" container no-padding-small">
       <div class="card card-custom">
         <div class="card-body p-0">
           <!--begin: Wizard-->
           <div class="wizard wizard-3">
             <!--begin: Wizard Nav-->
             <div class="wizard-nav" style="display: block!important">
-              <div class="wizard-steps px-8 py-8 px-lg-15 py-lg-3">
+              <div class="wizard-steps col-xs-12 no-padding-small">
                 <!--begin::Wizard Step 1 Nav-->
                 <div class="wizard-step" [class.tab-selected]="step>=1">
                   <div class="wizard-label">
@@ -60,7 +60,7 @@
             <!--end: Wizard Nav-->
 
             <!--begin: Wizard Body-->
-            <div class="row  py-10 px-8 py-lg-12 px-lg-10">
+            <div class="row  col-xs-12 no-padding-small">
               <div class="col-xl-12 col-xxl-7">
                 <!--begin: Wizard Form-->
                 <form [formGroup]="couponForm" novalidate (ngSubmit)="onSubmit()" (keyup)="resetApiErrors()"
@@ -108,7 +108,7 @@
                         <!--begin::Input-->
                         <div class="form-group">
                           <label>Calculation Type <span
-                            class="red">*</span>&nbsp;&nbsp;</label>
+                            class="red">*</span>&nbsp;&nbsp;</label><br/>
                           <mat-radio-group formControlName="calculationType" (change)="handleCalculationType($event)">
                             <mat-radio-button value="Fixed">Fixed</mat-radio-button>&nbsp;&nbsp;
                             <mat-radio-button value="Percentage">Percentage</mat-radio-button>
@@ -216,14 +216,14 @@
                       </div>
                   
                     </div>
-                    <div class="row">
+                    <div class="row days">
                       <div class="col-xl-12">
                         <div class="form-group">
                           <label>Applicable Days <span
                             class="red">*</span></label><br>
-                          <span *ngFor="let wday of weekdays; index as i">
-                            <mat-checkbox  *ngIf="i>0" (change)="handleDaychange(i)"
-                              [checked]="check_existsinweek_array(selday_arr,i) >= 0">{{wday}}
+                          <span *ngFor="let wday of weekdays | keyvalue:keepOriginalOrder">
+                            <mat-checkbox (change)="handleDaychange(wday.value)"
+                              [checked]="check_existsinweek_array(selday_arr,wday.value) >= 0">{{wday.key}}
                             </mat-checkbox>&nbsp;&nbsp;
                           </span>
                           <app-field-error-display [displayError]=weekdayError
@@ -268,7 +268,7 @@
                     <div class="row">
                       <div class="col-xl-6 col-lg-6 col-md-6">
                         <div class="form-group">
-                          <label class="rupee-font">Minimum Bill Amount(₹) *</label>
+                          <label class="rupee-font">Minimum Bill Amount(₹) <span class="red">*</span></label>
                           <input type="text" (keypress)="isNumeric($event)"  min="0" max="1000000" (keyup)="isvalid($event)" class="form-control1 form-control-solid form-control-lg" id="minBillAmount"
                             placeholder="Enter minimum bill amount" formControlName="minBillAmount" />
                             <app-field-error-display [displayError]=minbillamountError
@@ -296,7 +296,8 @@
                   <!--begin: Wizard Step 3-->
                   <div class="pb-5" *ngIf="step==3">
 
-                    <h4 class="mb-10 font-weight-bold text-dark">Apply this coupon to</h4>
+                    <h4 class="mb-10 font-weight-bold text-dark">Apply this coupon to <span
+                      class="red">*</span></h4>
                     <div formGroupName="couponRules">
                       <div formGroupName="policies">
                         <div class="row">
@@ -504,14 +505,15 @@
                     <div class="row">
                       <div class="col-xl-6">
                         <div class="form-group">
-                          <mat-form-field appearance="fill">
-                            <label>Booking Channel</label>
+                          <!-- <mat-form-field> -->
+                            <label>Booking Channel <span
+                              class="red">*</span></label>
                             <mat-select placeholder="Booking channel" formControlName="bookingChannel" [multiple]="true">
                               <mat-option *ngFor=" let mode of bookingMode" [value]="mode.value">
                                 {{mode.displayName}}
                               </mat-option>
                             </mat-select>
-                          </mat-form-field>
+                          <!-- </mat-form-field> -->
                         </div>
                       </div>
                     </div>

@@ -58,3 +58,7 @@
 .enq-box:hover {
     border-left: 5px solid darkblue;
 }
+.disabled-group {
+    background: #a9f7d4 !important;
+    /* cursor: not-allowed !important; */
+   }

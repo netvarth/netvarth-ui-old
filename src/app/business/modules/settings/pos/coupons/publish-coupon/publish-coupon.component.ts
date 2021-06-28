@@ -39,7 +39,8 @@ export class PublishCouponComponent implements OnInit, OnDestroy {
   departmentdialogRef: any;
   itemdialogRef: any;
   servicedialogRef: any;
-  weekdays = projectConstantsLocal.myweekdaysSchedule;
+  weekdays = projectConstantsLocal.weekdaysShort;
+  public keepOriginalOrder = (a, b) => a.key;
   selday_arr: any=[];
   selallweekdays: boolean;
   bookingMode = projectConstantsLocal.BOOKING_MODE;

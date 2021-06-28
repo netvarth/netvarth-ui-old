@@ -64,6 +64,7 @@ export class HolidayDetailsComponent implements OnInit {
   holiday: any;
   selectedDate;
   confirm_data: any;
+  passtrue;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -266,10 +267,21 @@ export class HolidayDetailsComponent implements OnInit {
       let status = 0;
       status = result;
       if (status === 1) {
-        this.provider_services.Holidaywaitlist(this.confirm_data.holidayId)
+        this.passtrue = true;
+        this.provider_services.Holidaywaitlist(this.passtrue,this.confirm_data.holidayId)
           .subscribe(
             () => {
                    },
+            error => {
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }
+          );
+      }else {
+        this.passtrue = false;
+        this.provider_services.Holidaywaitlist(this.passtrue,this.confirm_data.holidayId)
+          .subscribe(
+            () => {
+                  },
             error => {
               this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
@@ -310,7 +322,18 @@ export class HolidayDetailsComponent implements OnInit {
             let status = 0;
             status = result;
             if (status === 1) {
-              this.provider_services.Holidaywaitlist(this.confirm_data.holidayId)
+              this.passtrue = true;
+              this.provider_services.Holidaywaitlist(this.passtrue,this.confirm_data.holidayId)
+                .subscribe(
+                  () => {
+                        },
+                  error => {
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                  }
+                );
+            }else {
+              this.passtrue = false;
+              this.provider_services.Holidaywaitlist(this.passtrue,this.confirm_data.holidayId)
                 .subscribe(
                   () => {
                         },

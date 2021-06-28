@@ -835,14 +835,20 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 }
             });
     }
+    
     showStep(step) {
         if (step === 5 && this.labelsList.length === 0) {
+            this.snackbarService.openSnackBar('Select atleast one field from the list', { 'panelClass': 'snackbarerror' });
+        } else if(step === 3 && this.deptIds.length === 0 && this.userIds.length === 0 && this.serviceIds.length === 0 && this.qIds.length === 0){
+            this.snackbarService.openSnackBar('Select atleast one field from the list', { 'panelClass': 'snackbarerror' });
+        } else if(step === 4 && this.selectedWtlstList.length === 0){
             this.snackbarService.openSnackBar('Select atleast one field from the list', { 'panelClass': 'snackbarerror' });
         } else if (this.boardDisplayname === '') {
             this.snackbarService.openSnackBar('Please enter the name', { 'panelClass': 'snackbarerror' });
         } else {
             this.step = step;
         }
+        
     }
     waitlistSelection(status) {
         const indx = this.selectedWtlstList.indexOf(status);

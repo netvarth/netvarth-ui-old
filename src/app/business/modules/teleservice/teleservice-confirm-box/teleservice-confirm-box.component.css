@@ -13,3 +13,6 @@
 .txt-color{
   color: rgb(60 141 188) !important;
 }
+.mat-dialog-actions.actionbtns button{
+  padding: 10px 25px 10px 25px !important;
+}

@@ -7,7 +7,8 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 
 @Component({
   selector: 'app-provider-waitlist-checkin-consumer-note',
-  templateUrl: './provider-waitlist-checkin-consumer-note.component.html'
+  templateUrl: './provider-waitlist-checkin-consumer-note.component.html',
+  styleUrls: ['./provider-waitlist-checkin-consumer-note.component.css']
 })
 
 export class ProviderWaitlistCheckInConsumerNoteComponent implements OnInit {

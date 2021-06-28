@@ -328,11 +328,18 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     //   return moreOptions;
     // }
     handle_waitliststatus(event) {
+        console.log(this.qSystem);
+        let type = ''
+        if(this.qSystem === 'token'){
+            type = 'token';
+        } else {
+            type = 'check-in';
+        }
         const is_check = (event.checked) ? 'Enable' : 'Disable';
         this.provider_services.setAcceptOnlineCheckin(is_check)
             .subscribe(
                 () => {
-                    this.snackbarService.openSnackBar('Same day online check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Same day online ' + type + ' ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
                     this.getWaitlistMgr();
                     this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
                 },
@@ -344,11 +351,17 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     }
 
     handleFuturewaitlist(event) {
+        let type = ''
+        if(this.qSystem === 'token'){
+            type = 'token';
+        } else {
+            type = 'check-in';
+        }
         const is_check = (event.checked) ? 'Enable' : 'Disable';
         this.provider_services.setFutureCheckinStatus(is_check)
             .subscribe(
                 () => {
-                    this.snackbarService.openSnackBar('Future check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Future ' + type + ' ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
                     this.getWaitlistMgr();
                     this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
                 },

@@ -82,8 +82,14 @@ export class InboxListComponent implements OnInit, OnDestroy {
   replyMsg;
   showReply = false;
   msgTypes = projectConstantsLocal.INBOX_MSG_TYPES;
+  isCustomer;
+  isEnquiry = false;
+  isMessage = true;
   @ViewChildren('outmsgId') outmsgIds: QueryList<ElementRef>;
   @ViewChildren('inmsgId') inmsgId: QueryList<ElementRef>;
+  id: any;
+  cust: any = [];
+  custId: any;
   constructor(
     private inbox_services: InboxServices,
     private provider_services: ProviderServices,
@@ -105,6 +111,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
     this.cacheavoider = dd;
     this.userDet = this.selectedUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.isCustomer = this.qParams.customer;
     if (this.qParams.customer && this.qParams.provider) {
       if (this.userDet.accountType === 'BRANCH') {
         this.selectedCustomer = this.qParams.customer + '=' + this.qParams.provider;
@@ -222,6 +229,17 @@ export class InboxListComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.messages = data;
+          if(this.isCustomer){
+            this.isEnquiry = true;
+            this.isMessage = false;
+            this.messages  = this.messages.filter(msg => msg.messageType === 'ENQUIRY');
+          } 
+          else{
+            this.isMessage = true;
+            this.isEnquiry = false;
+            this.messages  = this.messages.filter(msg => msg.messageType !== 'ENQUIRY');
+          
+          }
           this.scrollDone = true;
           this.setMessages();
           this.loading = false;
@@ -289,22 +307,22 @@ export class InboxListComponent implements OnInit, OnDestroy {
     let providerId;
     let providerName;
     for (const message of messages) {
-      if (this.searchUserById(message.receiver.id).length > 0 || message.receiver.id === 0) {
+      if (this.searchUserById(message.receiver.id).length > 0 || message.receiver.id === 0 || message.receiver.id === this.userDet.id) {
         accountId = message.owner.id;
         senderName = message.owner.name;
         providerId = message.receiver.id;
-        if (message.receiver.id === 0) {
+        if (message.receiver.id === 0 || message.receiver.id === this.userDet.id) {
           providerName = message.accountName;
         } else {
           providerName = (this.searchUserById(message.receiver.id)[0].businessName) ? this.searchUserById(message.receiver.id)[0].businessName : this.searchUserById(message.receiver.id)[0].firstName + ' ' + this.searchUserById(message.receiver.id)[0].lastName;
         }
         messageStatus = 'in';
-      } else if (this.searchUserById(message.owner.id).length > 0 || message.owner.id === 0) {
+      } else if (this.searchUserById(message.owner.id).length > 0 || message.owner.id === 0 || message.owner.id === this.userDet.id) {
         accountId = message.receiver.id;
         providerId = message.owner.id;
         senderName = message.receiver.name;
         messageStatus = 'out';
-        if (message.owner.id === 0) {
+        if (message.owner.id === 0 || message.owner.id === this.userDet.id) {
           providerName = message.accountName;
         } else {
           providerName = (this.searchUserById(message.owner.id)[0].businessName) ? this.searchUserById(message.owner.id)[0].businessName : this.searchUserById(message.owner.id)[0].firstName + ' ' + this.searchUserById(message.owner.id)[0].lastName;
@@ -313,7 +331,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       const inboxData = {
         accountId: accountId,
         timeStamp: message.timeStamp,
-        accountName: (senderName) ? senderName : this.customer_label,
+        accountName: (senderName && senderName.trim() !== '') ? senderName : this.customer_label,
         service: message.service,
         msg: message.msg,
         providerId: providerId,
@@ -338,9 +356,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   sortMessages() {
     this.messages.sort(function (message1, message2) {
-      if (message1.timeStamp < message2.timeStamp) {
+      if (message1.timeStamp > message2.timeStamp) {
         return 11;
-      } else if (message1.timeStamp > message2.timeStamp) {
+      } else if (message1.timeStamp < message2.timeStamp) {
         return -1;
       } else {
         return 0;
@@ -391,6 +409,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       }
     }
   }
+   
   filesSelected(event) {
     const input = event.target.files;
     if (input) {
@@ -462,6 +481,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.selectedMessage.caption.splice(i, 1);
   }
   customerSelection(msgs) {
+    this.custId = msgs.value[0].accountId;
+    console.log(this.custId)
+    this.getCustomers();
     this.type = 'all';
     this.message = '';
     this.replyMsg = null;
@@ -480,6 +502,24 @@ export class InboxListComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.scrollToElement();
     }, 100);
+  }
+  getCustomers() {
+      const _this = this;
+      const filter = { 'jaldeeConsumer-eq': this.custId };
+          _this.provider_services.getProviderCustomers(filter)
+              .subscribe(
+                  data => {
+                      this.cust = data;
+                      this.id = this.cust[0].id;
+                  },
+                  () => {
+                      
+                  }
+              );
+      
+  }
+  gotoCustmer(){
+    this.router.navigate(['/provider/customers/' + this.id]);
   }
   getUnreadCount(messages) {
     const unreadMsgs = messages.filter(msg => !msg.read && msg.messagestatus === 'in');
@@ -500,7 +540,13 @@ export class InboxListComponent implements OnInit, OnDestroy {
       const dataToSend: FormData = new FormData();
       let post_data = {};
       post_data['msg'] = this.message;
-      post_data['messageType'] = 'CHAT';
+      if(this.isCustomer){
+        post_data['messageType'] = 'ENQUIRY';
+      }
+      else{
+        post_data['messageType'] = 'CHAT';
+      }
+      
       if (this.replyMsg) {
         post_data['replyMessageId'] = this.replyMsg.messageId;
       }

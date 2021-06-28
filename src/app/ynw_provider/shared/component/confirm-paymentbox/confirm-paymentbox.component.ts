@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 @Component({
   selector: 'app-confirm-paymentbox',
   templateUrl: './confirm-paymentbox.component.html',
-  // styleUrls: ['./home.component.scss']
+  styleUrls: ['./confirm-paymentbox.component.css']
 })
 
 
