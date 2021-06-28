@@ -14,7 +14,7 @@
                 <div class="font-size-xs text-dark-50 wrap_it font-weight-bolder">{{action.displayName}}</div>
             </mat-grid-tile-footer>
         </mat-grid-tile>
-        <mat-grid-tile>
+        <mat-grid-tile *ngIf="selectedActions.length < 6">
             <div class="symbol symbol-40 new_svg symbol-light-success" data-toggle="modal"
                 data-target="#exampleModalCenter" (click)="addShortcutClicked()">
                 <span class="symbol-label">

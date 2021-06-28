@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 import { CalendarDateFormatter, CalendarEvent, CalendarView } from 'angular-calendar';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { startOfDay, addHours, isSameMonth, isSameDay, addMinutes } from 'date-fns';
 import { CustomDateFormatter } from './custom-date-formatter.provider';
 import { Router } from '@angular/router';
+import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
 
 const colors: any = {
   red: {
@@ -39,11 +38,9 @@ export class CalendarComponent implements OnInit {
   viewDate: Date = new Date();
   events: CalendarEvent[] = [];
   activeDayIsOpen: boolean = true;
-  waitlists: any = [];
-  appts: any = [];
-  loading = true;
+  @Input() waitlists;
   constructor(private router: Router,
-    private provider_services: ProviderServices) { }
+    private dateTimeProcessor: DateTimeProcessor) { }
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     console.log(date);
     console.log(new Date());
@@ -75,79 +72,24 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.getTodayWatilists();
-    this.getTodayAppts();
-  }
+    console.log(this.waitlists);
+    if (this.waitlists) {
+      for (let appt of this.waitlists) {
+        this.events.push({
+          start: addHours(addMinutes(startOfDay(new Date(appt.appmtDate)), this.getTime(appt.appmtTime, 'start', 'minute')), this.getTime(appt.appmtTime, 'start', 'hour')),
+          end: addHours(addMinutes(startOfDay(new Date(appt.appmtDate)), this.getTime(appt.appmtTime, 'end', 'minute')), this.getTime(appt.appmtTime, 'end', 'hour')),
+          title: '<div class="first-title">' + appt.appmtFor[0].firstName + ' ' + appt.appmtFor[0].lastName + '</div><div>' + this.getSingleTime(appt.appmtTime) + '</div>',
+          color: colors.red,
+          meta: {
+            uid: appt.uid,
+            timeType: appt.type
+          },
+        })
+      }
+    }
 
-  getTodayWatilists() {
-    const filter = {
-      'waitlistStatus-eq': 'checkedIn,arrived'
-    };
-    this.provider_services.getTodayWaitlist(filter)
-      .subscribe(
-        (data: any) => {
-          this.waitlists = data;
-          console.log(this.waitlists);
-          this.getFutureWatilists();
-        });
   }
-  getTodayAppts() {
-    const filter = {
-      'apptStatus-eq': 'Confirmed,Arrived'
-    };
-    this.provider_services.getTodayAppointments(filter)
-      .subscribe(
-        (data: any) => {
-          this.appts = data;
-          this.appts.map((obj) => {
-            obj.type = 1;
-            return obj;
-          });
-          console.log(this.appts);
-          this.getFutureAppts();
-        });
-  }
-  getFutureWatilists() {
-    const filter = {
-      'waitlistStatus-eq': 'checkedIn,arrived'
-    };
-    this.provider_services.getFutureWaitlist(filter)
-      .subscribe(
-        (data: any) => {
-          this.waitlists = this.waitlists.concat(data);
-          console.log(this.waitlists);
-        });
-  }
-  getFutureAppts() {
-    const filter = {
-      'apptStatus-eq': 'Confirmed,Arrived'
-    };
-    this.provider_services.getFutureAppointments(filter)
-      .subscribe(
-        (data: any) => {
-          data.map((obj) => {
-            obj.type = 2;
-            return obj;
-          });
-          this.appts = this.appts.concat(data);
-          console.log(this.appts);
-          for (let appt of this.appts) {
-            this.events.push({
-              start: addHours(addMinutes(startOfDay(new Date(appt.appmtDate)), this.getSingleTime(appt.appmtTime, 'start', 'minute')), this.getSingleTime(appt.appmtTime, 'start', 'hour')),
-              end: addHours(addMinutes(startOfDay(new Date(appt.appmtDate)), this.getSingleTime(appt.appmtTime, 'end', 'minute')), this.getSingleTime(appt.appmtTime, 'end', 'hour')),
-              title: appt.appmtFor[0].firstName + ' ' + appt.appmtFor[0].lastName,
-              color: colors.blue,
-              meta: {
-                uid: appt.uid,
-                timeType: appt.type
-              }
-            })
-          }
-          this.loading = false;
-          console.log(this.events);
-        });
-  }
-  getSingleTime(slot, type, time) {
+  getTime(slot, type, time) {
     const slots = slot.split('-');
     let dTime;
     if (type === 'start') {
@@ -160,5 +102,9 @@ export class CalendarComponent implements OnInit {
     } else {
       return dTime[1];
     }
+  }
+  getSingleTime(slot) {
+    const slots = slot.split('-');
+    return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
 }

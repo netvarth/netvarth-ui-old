@@ -197,3 +197,6 @@ h3 {
 ::ng-deep .cal-week-view .cal-time-label-column {
   width: 100px !important;
 }
+::ng-deep .cal-week-view .cal-time-events .cal-event {
+  line-height: initial !important;
+}
