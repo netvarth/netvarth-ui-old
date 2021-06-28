@@ -223,6 +223,7 @@ export const projectConstantsLocal = {
     veterinaryPetcare: { helphint: 'In-person consultation, Video consultation, Pet training' },
     retailStores: { helphint: 'Pickup, Home delivery' },
     otherMiscellaneous: { helphint: 'Add your services here' },
+    educationalInstitution: { helphint: 'Add your services here' },
   },
   SUBDOMAIN_ICONS: {
     physiciansSurgeons: { help: 'single doctor facility', iconClass: 'allopathy_doc' },
