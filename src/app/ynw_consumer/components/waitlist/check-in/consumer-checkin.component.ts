@@ -787,11 +787,19 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
             // }
             if (this.virtualInfo) {
-                // console.log(this.virtualInfo);
+                console.log(this.virtualInfo);
                 // const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
                 // const formattedDate = moment(momentDate).format("YYYY-MM-DD");
                 // console.log(formattedDate);
                 // this.waitlist_for[0]['dob'] = formattedDate;
+                this.waitlist_for[0]['whatsAppNum']={
+                    'countryCode': this.virtualInfo.countryCode_whtsap,
+                    'number': this.virtualInfo.whatsappnumber
+                }
+                this.waitlist_for[0]['telegramNum']={
+                    'countryCode': this.virtualInfo.countryCode_telegram,
+                    'number': this.virtualInfo.telegramnumber
+                }
                 this.waitlist_for[0]['age'] = this.virtualInfo.age;
                 if (this.virtualInfo.islanguage === 'yes') {
                     let langs = [];
