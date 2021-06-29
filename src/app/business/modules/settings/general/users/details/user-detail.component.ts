@@ -300,6 +300,11 @@ export class BranchUserDetailComponent implements OnInit {
                                     this.type = 'Staff Member';
                                 }
                             }
+                            if (this.sector === 'educationalInstitution') {
+                                if (this.type === 'PROVIDER') {
+                                    this.type = 'Mentor';
+                                }
+                            }
                             // this.createForm();
                             this.updateForm();
                         }
