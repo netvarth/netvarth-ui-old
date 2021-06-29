@@ -480,7 +480,20 @@ export class BranchUsersComponent implements OnInit {
             }
         } else if (this.user.sector === 'retailStores') {
             subDomain = 'groceryShops';
-        }
+        } else if (this.user.sector === 'educationalInstitution') {
+            if (this.user.subSector === 'educationalTrainingInstitute') {
+              subDomain = 'educationalTrainingInstitute';
+            } else if (this.user.subSector === 'schools') {
+                subDomain = 'schools';
+             } else if (this.user.subSector === 'colleges') {
+                subDomain = 'colleges';
+             } 
+            //  else if (this.user.subSector === 'dentalHosp') {
+            //   subDomain = 'dentists';
+            // } else if (this.user.subSector === 'alternateMedicineHosp') {
+            //   subDomain = 'alternateMedicinePractitioners';
+            // }
+          }
         this.provider_services.getSpecializations(this.user.sector, subDomain)
             .subscribe(data => {
                 this.specialization_arr = data;

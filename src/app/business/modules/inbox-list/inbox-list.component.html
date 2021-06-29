@@ -1,13 +1,14 @@
 <section class="">
-    <div class="title-gb no-padding" *ngIf="isMessage">
+    <div class="card title-gb" *ngIf="isCustomer">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="gotoEnquiry()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {{(!isCustomer) ? 'Messages' : 'Enquiries'}}
+            <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
+        </h5>
+    </div>
+    <div class="title-gb no-padding" *ngIf="!isCustomer">
         <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
             Messages
-            <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
-        </div>
-    </div>
-    <div class="title-gb no-padding" *ngIf="isEnquiry">
-        <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
-            Enquiries
             <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
         </div>
     </div>
@@ -22,9 +23,9 @@
                         <div class="d-flex flex-row minhgt-60" *ngIf="messages.length==0">
                             <div class="no-msg-section">
                                 <div class="nomsg-img mgn-bt-20"></div>
-                                Start messaging to {{customer_label}}s
+                                Click here to access your
                                 <button mat-flat-button class="font-size-xs normal-btn mgn-lt-10"
-                                    (click)="gotoCustomers()"> Go to {{customer_label}}s </button>
+                                    (click)="gotoCustomers()">{{customer_label}}s list</button>
                             </div>
                         </div>
                         <div class="d-flex flex-row" *ngIf="messages.length>0">
@@ -70,7 +71,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="d-flex flex-column align-items-end">
-                                                        <span *ngIf="userWithMsgCount > 1 && selectedUser.userType !== 'PROVIDER'"
+                                                        <span
+                                                            *ngIf="userWithMsgCount > 1 && selectedUser.userType !== 'PROVIDER'"
                                                             class="text-muted font-weight-bold font-size-sm">{{getUserName('provider',
                                                             user.value)}}</span>
                                                         <span class="label label-sm label-success"
@@ -130,7 +132,8 @@
                                                 <i (click)="showChatSection()"
                                                     class="fa fa-arrow-left pointer-cursor d-md-none"></i>
                                             </div>
-                                            <div class="text-dark-75 font-weight-bold font-size-h5" (click)="gotoCustmer()">
+                                            <div class="text-dark-75 font-weight-bold font-size-h5"
+                                                (click)="gotoCustmer()" [class.pointer-cursor]="id">
                                                 {{getUserName('customer')}}</div>
                                         </div>
                                     </div>
@@ -144,7 +147,7 @@
                                                         <div>
                                                             <span
                                                                 class="text-muted font-size-sm">{{formatDateDisplay(msg.timeStamp)}}</span>
-                                                            <span
+                                                            <span *ngIf="!isCustomer"
                                                                 class="greenc font-size-sm mgn-lt-5">{{getMsgType(msg)}}</span>
                                                         </div>
                                                     </div>
@@ -184,7 +187,7 @@
                                                     class="d-flex flex-column mb-5 align-items-end">
                                                     <div class="d-flex align-items-center">
                                                         <div>
-                                                            <span
+                                                            <span *ngIf="!isCustomer"
                                                                 class="greenc font-size-sm mgn-rt-5">{{getMsgType(msg)}}</span>
                                                             <span
                                                                 class="text-muted font-size-sm">{{formatDateDisplay(msg.timeStamp)}}</span>

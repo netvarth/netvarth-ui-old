@@ -62,6 +62,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   locName;
   active_user;
   account_type;
+  enquiryCount;
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
     private sessionStorageService: SessionStorageService,
@@ -77,6 +78,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private provider_dataStorage: ProviderDataStorageService,
     private readonly joyrideService: JoyrideService) {
+      this.getEnquiryCount();
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
     this.waitlist_label = this.wordProcessor.getTerminologyTerm('waitlist');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
@@ -105,7 +107,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
           // this.getAlertCount();
           break;
         case 'messageCount':
-          this.inboxUnreadCnt = message.unreadCount;
+          this.inboxUnreadCnt = message.unreadCount - this.enquiryCount;
           this.inboxCntFetched = message.messageFetched;
           break;
         case 'showmenu':
@@ -232,6 +234,12 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
         this.blogo = bdetails.logo || './assets/images/img-null.svg';
       }
     }
+  }
+  getEnquiryCount() {
+    const providerId = 0;
+    this.provider_services.getProviderUnreadCount('ENQUIRY', providerId).subscribe(data => {
+      this.enquiryCount = data;
+    });
   }
   getUserDetails() {
     this.provider_services.getUser(this.userData.id)

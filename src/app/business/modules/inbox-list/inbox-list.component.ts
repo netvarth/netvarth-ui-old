@@ -83,8 +83,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
   showReply = false;
   msgTypes = projectConstantsLocal.INBOX_MSG_TYPES;
   isCustomer;
-  isEnquiry = false;
-  isMessage = true;
   @ViewChildren('outmsgId') outmsgIds: QueryList<ElementRef>;
   @ViewChildren('inmsgId') inmsgId: QueryList<ElementRef>;
   id: any;
@@ -179,7 +177,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
       if (enuiryMsgs && enuiryMsgs.length > 0) {
         this.shared_functions.sendMessage({ ttype: 'enquiryCount' });
       }
-      this.router.navigate(['provider', 'inbox']);
+      if (this.isCustomer) {
+        this.router.navigate(['provider', 'enquiry', 'chat']);
+      }
     });
   }
   getInboxUnreadCnt() {
@@ -229,16 +229,10 @@ export class InboxListComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.messages = data;
-          if(this.isCustomer){
-            this.isEnquiry = true;
-            this.isMessage = false;
-            this.messages  = this.messages.filter(msg => msg.messageType === 'ENQUIRY');
-          } 
-          else{
-            this.isMessage = true;
-            this.isEnquiry = false;
-            this.messages  = this.messages.filter(msg => msg.messageType !== 'ENQUIRY');
-          
+          if (this.isCustomer) {
+            this.messages = this.messages.filter(msg => msg.messageType === 'ENQUIRY');
+          } else {
+            this.messages = this.messages.filter(msg => msg.messageType !== 'ENQUIRY');
           }
           this.scrollDone = true;
           this.setMessages();
@@ -278,6 +272,13 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.onResize();
     if (this.selectedCustomer !== '') {
       this.selectedUserMessages = this.groupedMsgs[this.selectedCustomer];
+      console.log(this.selectedUserMessages);
+      console.log(this.custId);
+      if (!this.custId) {
+        this.custId = this.selectedUserMessages[0].accountId;
+        console.log(this.custId);
+        this.getCustomers();
+      }
       if (this.small_device_display) {
         this.showChat = true;
       }
@@ -409,7 +410,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       }
     }
   }
-   
+
   filesSelected(event) {
     const input = event.target.files;
     if (input) {
@@ -482,7 +483,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   customerSelection(msgs) {
     this.custId = msgs.value[0].accountId;
-    console.log(this.custId)
+    console.log(this.custId);
     this.getCustomers();
     this.type = 'all';
     this.message = '';
@@ -504,22 +505,24 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }, 100);
   }
   getCustomers() {
-      const _this = this;
-      const filter = { 'jaldeeConsumer-eq': this.custId };
-          _this.provider_services.getProviderCustomers(filter)
-              .subscribe(
-                  data => {
-                      this.cust = data;
-                      this.id = this.cust[0].id;
-                  },
-                  () => {
-                      
-                  }
-              );
-      
+    console.log(this.custId);
+    this.id = null;
+    const filter = { 'jaldeeConsumer-eq': this.custId };
+    this.provider_services.getProviderCustomers(filter)
+      .subscribe(
+        data => {
+          this.cust = data;
+          this.id = this.cust[0].id;
+          console.log(this.id);
+        },
+        () => {
+        }
+      );
   }
-  gotoCustmer(){
-    this.router.navigate(['/provider/customers/' + this.id]);
+  gotoCustmer() {
+    if (this.id) {
+      this.router.navigate(['/provider/customers/' + this.id]);
+    }
   }
   getUnreadCount(messages) {
     const unreadMsgs = messages.filter(msg => !msg.read && msg.messagestatus === 'in');
@@ -540,13 +543,13 @@ export class InboxListComponent implements OnInit, OnDestroy {
       const dataToSend: FormData = new FormData();
       let post_data = {};
       post_data['msg'] = this.message;
-      if(this.isCustomer){
+      if (this.isCustomer) {
         post_data['messageType'] = 'ENQUIRY';
       }
-      else{
+      else {
         post_data['messageType'] = 'CHAT';
       }
-      
+
       if (this.replyMsg) {
         post_data['replyMessageId'] = this.replyMsg.messageId;
       }
@@ -668,5 +671,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
     } else {
       return 'pdf';
     }
+  }
+  gotoEnquiry() {
+    this.router.navigate(['/provider/enquiry']);
   }
 }

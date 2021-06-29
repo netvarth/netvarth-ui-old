@@ -249,9 +249,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   locateCustomerdialogRef;
   trackDetail: any = [];
   customerMsg = '';
-  delayTooltip = this.wordProcessor.getProjectMesssages('ADJUSTDELAY_TOOPTIP');
-  filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
-  cloudTooltip = this.wordProcessor.getProjectMesssages('CLOUDICON_TOOPTIP');
   tooltipcls = projectConstants.TOOLTIP_CLS;
   qr_value;
   path = projectConstants.PATH;
@@ -350,6 +347,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   endmaxday = new Date();
   statusChangeClicked = false;
   activeUser: any;
+  delayTooltip = '';
+  filtericonTooltip = '';
+  cloudTooltip = '';
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -366,6 +366,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     private titleService: Title) {
     this.titleService.setTitle('Jaldee Business - Appointments');
     this.onResize();
+    this.delayTooltip = this.wordProcessor.getProjectMesssages('ADJUSTDELAY_TOOPTIP');
+    this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
+    this.cloudTooltip = this.wordProcessor.getProjectMesssages('CLOUDICON_TOOPTIP');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.arrived_label = this.wordProcessor.getTerminologyTerm('arrived');

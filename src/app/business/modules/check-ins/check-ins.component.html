@@ -1097,7 +1097,7 @@
                           [class.stopcall-btn]="checkin.callingStatus"
                           *ngIf="!small_device_display && board_count > 0 && time_type == 1 && !checkin.virtualService && (checkin.waitlistStatus === 'checkedIn' || checkin.waitlistStatus === 'arrived')"
                           (click)="stopprop($event);callingWaitlist(checkin)" [matTooltipClass]="tooltipcls"
-                          [matTooltip]="'Call'">
+                          [matTooltip]="'Alert'">
                           <i class="dashboardcallstop-icon" *ngIf="checkin.callingStatus"></i> <span
                             *ngIf="!small_device_display && checkin.callingStatus">&nbsp; Stop
                           </span>
