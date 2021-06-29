@@ -94,17 +94,12 @@
 }
 
 .container-booking-feeds {
-    margin-left: 6.25px;
     width: auto !important;
     height: 400px !important;
     overflow: auto !important;
     border-radius: 8px !important;
 }
-@media (max-width: 767px) {
-    .container-booking-feeds {
-        margin-left: 0px !important;
-    }
-}
+
 .container-booking-feeds .card-body {
     overflow: auto !important;
     padding-right: 10px !important;

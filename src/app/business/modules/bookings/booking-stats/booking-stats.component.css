@@ -4,11 +4,15 @@
     flex-wrap: wrap !important;
     justify-content: flex-start !important;
     align-items: flex-start !important;
-    padding: 12.5px 7.5px 0;
+    padding: 12.5px 0;
 }
 
 .summary-row .column {
     width: 25% !important;
+}
+
+.mgn-5 {
+    margin: 5px !important;
 }
 
 @media (max-width: 1200px) {
@@ -42,8 +46,6 @@
 }
 
 .summary-row .column .card {
-    margin: 0 5px 12.5px !important;
-    /* padding: 10px !important; */
     width: auto !important;
     background: #fff !important;
     min-height: 160px !important;

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 
@@ -13,12 +14,15 @@ export class BookingDashboardAdminComponent implements OnInit {
   active_user;
   users: any = [];
   bills: any = [];
+  provider_label = '';
   constructor(private provider_services: ProviderServices,
-    private groupService: GroupStorageService) { }
+    private groupService: GroupStorageService,
+    private wordProcessor: WordProcessor) { }
 
   ngOnInit(): void {
     this.getProviderSettings();
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.getViews();
     if (this.active_user.accountType === 'BRANCH') {
       this.getUsers();

@@ -18,6 +18,7 @@ import { BookingDetailComponent } from './booking-detail.component';
   declarations: [BookingDetailComponent],
   imports: [
     CommonModule,
+    BookingDetailRoutingModule,
     MatGridListModule,
     ServiceActionModule,
     CustomerBookingDetailsModule,
@@ -28,9 +29,9 @@ import { BookingDetailComponent } from './booking-detail.component';
     BookingBillModule,
     QuestionnaireModule,
     InboxListModule,
-    BookingPrivateNotesModule,
-    BookingDetailRoutingModule
-  ]
+    BookingPrivateNotesModule
+  ],
+  exports: [BookingDetailComponent]
 })
 export class BookingDetailModule {
 }

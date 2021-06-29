@@ -13,7 +13,7 @@
             </app-records-datagrid>
         </div>
         <div class="column" *ngIf="users && users.length > 0">
-            <app-records-datagrid [source]="'providers'" [records]="users" [heading]="'Doctors'">
+            <app-records-datagrid [source]="'providers'" [records]="users" [heading]="provider_label + 's'">
             </app-records-datagrid>
         </div>
         <div class="column" *ngIf="views && views.length > 0">

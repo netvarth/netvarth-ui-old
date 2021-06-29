@@ -135,7 +135,7 @@ td {
 }
 .operations-row .table-responsive {
     overflow: auto !important;
-    max-height: 317px !important;
+    height: 300px !important;
 }
 .card-header {
     padding: 8px 10px !important;

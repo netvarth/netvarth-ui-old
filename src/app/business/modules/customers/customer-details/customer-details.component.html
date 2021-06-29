@@ -782,46 +782,45 @@
                 *ngIf="historyvisitDetails.length > 0 || ordervisitDetails.historyOrders && ordervisitDetails.historyOrders.length > 0"
                 (click)="showHistory()">History</span>
         </div> -->
-        <div class="column">
-        <app-records-datagrid [records]="todayvisitDetails" [heading]="'Today'" [source]="'customer-waitlist'"
-            [timeType]="1" [count]="todayVisitDetailsArray.length" [showMore]="showMoreToday"
-            (actionPerformed)="actionPerformed($event)" *ngIf="todayVisitDetailsArray.length > 0">
-        </app-records-datagrid>
-    </div>
-    <div class="column">
-        <app-records-datagrid [records]="futurevisitDetails" [heading]="'Future'" [source]="'customer-waitlist'"
-            [timeType]="2" [count]="futureVisitDetailsArray.length" [showMore]="showMoreFuture"
-            (actionPerformed)="actionPerformed($event)" *ngIf="futureVisitDetailsArray.length > 0">
-        </app-records-datagrid>
-    </div>
-    <div class="column">
-        <app-records-datagrid [records]="todayordervisitDetails" [heading]="'Todays Order'" [source]="'customer-order'"
-            [count]="todayorderVisitDetailsArray.length" [showMore]="showMoreorderToday" [timeType]="1"
-            (actionPerformed)="actionPerformed($event)" *ngIf="todayorderVisitDetailsArray.length > 0">
-        </app-records-datagrid>
-    </div>
-    <div class="column">
-        <app-records-datagrid [records]="futureordervisitDetails" [heading]="'Future Order'" [source]="'customer-order'"
-            [count]="futureorderVisitDetailsArray.length" [showMore]="showMoreorderFuture" [timeType]="2"
-            (actionPerformed)="actionPerformed($event)" *ngIf="futureorderVisitDetailsArray.length > 0">
-        </app-records-datagrid>
-    </div>
-    <div class="column">
-        <app-records-datagrid [records]="historyvisitDetails" [heading]="'History'" [source]="'customer-waitlist'"
-            [count]="historyVisitDetailsArray.length" [showMore]="showMoreHistory" [timeType]="3"
-            (actionPerformed)="actionPerformed($event)" *ngIf="historyVisitDetailsArray.length > 0">
-        </app-records-datagrid>
-    </div>
-    <div class="column">
-        <app-records-datagrid [records]="historyOrdervisitDetails" [heading]="'Order History'"
-            [source]="'customer-order'" [count]="historyorderVisitDetailsArray.length" [showMore]="showMoreOrderHistory"
-            [timeType]="3" (actionPerformed)="actionPerformed($event)" *ngIf="historyorderVisitDetailsArray.length > 0">
-        </app-records-datagrid>
-    </div>
-    <div class="column">
-        <app-records-datagrid *ngIf="consumerBills.length > 0" [heading]="'Bill'" [source]="'bill'"
-            [records]="consumerBills">
-        </app-records-datagrid>
-    </div>
+        <div class="column" *ngIf="todayVisitDetailsArray.length > 0">
+            <app-records-datagrid [records]="todayvisitDetails" [heading]="'Today'" [source]="'customer-waitlist'"
+                [timeType]="1" [count]="todayVisitDetailsArray.length" [showMore]="showMoreToday"
+                (actionPerformed)="actionPerformed($event)">
+            </app-records-datagrid>
+        </div>
+        <div class="column" *ngIf="futureVisitDetailsArray.length > 0">
+            <app-records-datagrid [records]="futurevisitDetails" [heading]="'Future'" [source]="'customer-waitlist'"
+                [timeType]="2" [count]="futureVisitDetailsArray.length" [showMore]="showMoreFuture"
+                (actionPerformed)="actionPerformed($event)">
+            </app-records-datagrid>
+        </div>
+        <div class="column" *ngIf="todayorderVisitDetailsArray.length > 0">
+            <app-records-datagrid [records]="todayordervisitDetails" [heading]="'Todays Order'"
+                [source]="'customer-order'" [count]="todayorderVisitDetailsArray.length" [showMore]="showMoreorderToday"
+                [timeType]="1" (actionPerformed)="actionPerformed($event)">
+            </app-records-datagrid>
+        </div>
+        <div class="column" *ngIf="futureorderVisitDetailsArray.length > 0">
+            <app-records-datagrid [records]="futureordervisitDetails" [heading]="'Future Order'"
+                [source]="'customer-order'" [count]="futureorderVisitDetailsArray.length"
+                [showMore]="showMoreorderFuture" [timeType]="2" (actionPerformed)="actionPerformed($event)">
+            </app-records-datagrid>
+        </div>
+        <div class="column" *ngIf="historyVisitDetailsArray.length > 0">
+            <app-records-datagrid [records]="historyvisitDetails" [heading]="'History'" [source]="'customer-waitlist'"
+                [count]="historyVisitDetailsArray.length" [showMore]="showMoreHistory" [timeType]="3"
+                (actionPerformed)="actionPerformed($event)">
+            </app-records-datagrid>
+        </div>
+        <div class="column" *ngIf="historyorderVisitDetailsArray.length > 0">
+            <app-records-datagrid [records]="historyOrdervisitDetails" [heading]="'Order History'"
+                [source]="'customer-order'" [count]="historyorderVisitDetailsArray.length"
+                [showMore]="showMoreOrderHistory" [timeType]="3" (actionPerformed)="actionPerformed($event)">
+            </app-records-datagrid>
+        </div>
+        <div class="column" *ngIf="consumerBills.length > 0">
+            <app-records-datagrid [heading]="'Bill'" [source]="'bill'" [records]="consumerBills">
+            </app-records-datagrid>
+        </div>
     </div>
 </section>
