@@ -358,4 +358,8 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         age = age.split(',');
         return age[0];
     }
+    getScheduleIndex(id) {
+        // const filterSchedule = this.activeSchedules.filter(sch => sch.id === id);
+        // return this.activeSchedules.indexOf(filterSchedule[0]);
+      }
 }
