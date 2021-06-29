@@ -648,8 +648,10 @@ export class CheckinActionsComponent implements OnInit {
         this.dialogRef.close();
         const customerDetails = this.checkin.waitlistingFor[0];
         const customerId = customerDetails.id;
-        const whtasappNum = this.checkin.virtualService.WhatsApp;
-        console.log(whtasappNum)
+        let whtasappNum;
+        if(this.checkin && this.checkin.virtualService && this.checkin.virtualService.WhatsApp){
+         whtasappNum = this.checkin.virtualService.WhatsApp;
+        }
         const navigationExtras: NavigationExtras = {
             queryParams: {
                 id : customerId,

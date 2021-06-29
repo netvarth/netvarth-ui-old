@@ -92,7 +92,7 @@
   <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
   </app-form-success-display>
   </form>
-  <div id="sharerxview" hidden *ngIf="!signature_loading">
+  <div id="sharerxview" hidden  *ngIf="!signature_loading">
       <div class="shareview" style="width: 190mm; height: 260mm">
           <div style="height:35mm; border-bottom: 1px solid #ddd;">
               <div style="width: 35mm;height: 35mm; float: left;"><img alt="" [src]="showimg()" style="width: 100px;
@@ -126,6 +126,9 @@
                       <td *ngIf="customerDetail.age && !customerDetail.dob"><label>Age:&nbsp;</label>
                           <span *ngIf="customerDetail.age">{{customerDetail.age}}</span>
                       </td>
+                      <td *ngIf="!customerDetail.age && !customerDetail.dob"><label>Dob:&nbsp;</label>
+                        <span *ngIf="!customerDetail.dob">..........</span>
+                    </td>
                   </tr>
                   <tr>
                       <td >&nbsp;</td>

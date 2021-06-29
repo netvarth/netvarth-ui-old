@@ -52,7 +52,7 @@ export class ProvidersignupComponent implements OnInit {
   activeSubDomainIndex;
   subDomainList = [];
   subdomainSettings = projectConstants.SUBDOMAIN_ICONS;
-  domainSettings = projectConstants.DOMAIN_ICONS;
+  domainSettings = projectConstantsLocal.DOMAIN_ICONS;
   phonenumber;
   first_name;
   last_name;
