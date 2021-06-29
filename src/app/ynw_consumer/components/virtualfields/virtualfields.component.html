@@ -131,6 +131,15 @@
                         </mat-radio-group>
                     </div>
                 </div>
+                <div class="form-group "  *ngIf="countryCode!=='+91'">
+                    <label class="col-form-label" for="lastName">Location <span class="red">*</span></label>
+                    <input placeholder="Enter your location" class="form-control" formControlName="location">
+                </div>
+                <div class="form-group"  *ngIf="countryCode!=='+91'">
+                    <label class="col-form-label" for="firstName"> Residing State<span class="red">*</span></label>
+                    <input placeholder="Enter your state" class="form-control" formControlName="state">
+                </div>
+             
                 <!-- Signin Password -->
                 <div class="form-group" id="plng" *ngIf="lngknown==='yes'">
                     <!-- <mat-form-field> -->

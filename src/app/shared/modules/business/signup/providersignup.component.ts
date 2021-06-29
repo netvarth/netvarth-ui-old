@@ -51,7 +51,7 @@ export class ProvidersignupComponent implements OnInit {
   activeSubDomainIndex;
   subDomainList = [];
   subdomainSettings = projectConstants.SUBDOMAIN_ICONS;
-  domainSettings = projectConstants.DOMAIN_ICONS;
+  domainSettings = projectConstantsLocal.DOMAIN_ICONS;
   phonenumber;
   first_name;
   last_name;
@@ -144,6 +144,7 @@ export class ProvidersignupComponent implements OnInit {
     healthCare: 'assets/images/home/HealthCare.jpg',
     retailStores: 'assets/images/home/supermarket-01.png',
     otherMiscellaneous: '',
+    educationalInstitution: 'assets/images/home/Education-01.png',
     jaldee_qMgr: '',
     jaldee_appDesktop: 'assets/images/home/available-app.png',
     jaldee_playstore: 'assets/images/home/app_btn1.png',

@@ -541,6 +541,8 @@ export class UserServiceChnageComponent implements OnInit {
   }
   getSpecializations() {
     let subDomain;
+    console.log(this.user.sector);
+    console.log(this.user.subSector);
     if (this.user.sector === 'healthCare') {
       if (this.user.subSector === 'hospital') {
         subDomain = 'physiciansSurgeons';
@@ -559,6 +561,19 @@ export class UserServiceChnageComponent implements OnInit {
       }
     } else if (this.user.sector === 'retailStores') {
       subDomain = 'groceryShops';
+    } 
+    else if (this.user.sector === 'educationalInstitution') {
+      if (this.user.subSector === 'educationalTrainingInstitute') {
+        subDomain = 'educationalTrainingInstitute';
+      } else if (this.user.subSector === 'schools') {
+         subDomain = 'schools';
+      } 
+      else if (this.user.subSector === 'colleges') {
+        subDomain = 'colleges';
+     } 
+      //else if (this.user.subSector === 'alternateMedicineHosp') {
+      //   subDomain = 'alternateMedicinePractitioners';
+      // }
     }
     this.provider_services.getSpecializations(this.user.sector, subDomain)
       .subscribe(data => {

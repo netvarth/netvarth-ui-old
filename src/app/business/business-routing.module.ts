@@ -49,6 +49,7 @@ const routes: Routes = [
       { path: 'orders', loadChildren: () => import('./modules/order-dashboard/order-dashboard.module').then(m => m.OrderDashboardModule) },
       { path: 'donations', loadChildren: () => import('./modules/donations/donations.module').then(m => m.DonationsModule) },
       { path: 'enquiry', component: EnquiryComponent },
+      { path: 'enquiry/chat', loadChildren: () => import('./modules/inbox-list/inbox-list.module').then(m => m.InboxListModule) },
       { path: 'secure-video', component: VideoCallSharedComponent },
     ]
   }

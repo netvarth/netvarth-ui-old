@@ -17,6 +17,7 @@ import { LocalStorageService } from '../../../../app/shared/services/local-stora
 
 
 
+
 @Component({
   selector: 'app-virtualfields',
   templateUrl: './virtualfields.component.html',
@@ -129,6 +130,7 @@ export class VirtualFieldsComponent implements OnInit {
     this.getActiveUserInfo().then(data => {
       this.customer_data = data;
       this.countryCode = this.customer_data.userProfile.countryCode;
+
       this.mandatoryEmail = this.customer_data.userProfile.email;
       this.createForm();
       this.getFamilyMembers();
@@ -256,6 +258,12 @@ export class VirtualFieldsComponent implements OnInit {
     if (memberObj.bookingLocation && memberObj.bookingLocation.pincode) {
       this.virtualForm.patchValue({ pincode: memberObj.bookingLocation.pincode });
     }
+    if (memberObj.bookingLocation && memberObj.bookingLocation.district) {
+      this.virtualForm.patchValue({ location: memberObj.bookingLocation.district });
+    }
+    if (memberObj.bookingLocation && memberObj.bookingLocation.state) {
+      this.virtualForm.patchValue({ state: memberObj.bookingLocation.state });
+    }
     if (memberObj.userProfile && memberObj.userProfile.whatsAppNum) {
       this.virtualForm.patchValue({ whatsappnumber: memberObj.userProfile.whatsAppNum.number });
       this.virtualForm.patchValue({ countryCode_whtsap: memberObj.userProfile.whatsAppNum.countryCode });
@@ -285,6 +293,7 @@ export class VirtualFieldsComponent implements OnInit {
     this.virtualForm.controls['preferredLanguage'].setValue([]);
     this.virtualForm.controls['pincode'].setValue('');
     this.virtualForm.controls['location'].setValue('');
+    this.virtualForm.controls['state'].setValue('');
     this.lngknown='yes';
     if(this.customer_data.userProfile.email){
     this.virtualForm.patchValue({ email:  this.customer_data.userProfile.email});
@@ -339,6 +348,12 @@ export class VirtualFieldsComponent implements OnInit {
     if (customer.userProfile && customer.userProfile.pinCode) {
       this.virtualForm.patchValue({ pincode: customer.userProfile.pinCode });
     }
+    if (customer.userProfile && customer.userProfile.district) {
+      this.virtualForm.patchValue({ location: customer.userProfile.district });
+    }
+    if (customer.userProfile && customer.userProfile.state) {
+      this.virtualForm.patchValue({ state: customer.userProfile.state });
+    }
     if (customer.userProfile && customer.userProfile.whatsAppNum) {
       this.virtualForm.patchValue({ whatsappnumber: customer.userProfile.whatsAppNum.number });
       this.virtualForm.patchValue({ countryCode_whtsap: customer.userProfile.whatsAppNum.countryCode });
@@ -376,7 +391,9 @@ export class VirtualFieldsComponent implements OnInit {
       preferredLanguage: [[], Validators.compose([Validators.required])],
       islanguage: ['', Validators.compose([Validators.required])],
       gender: ['', Validators.compose([Validators.required])],
-      location: ['', Validators.compose([Validators.required])]
+      location: ['', Validators.compose([Validators.required])],
+      state:[''],
+      country:['']
     });
 
     this.virtualForm.patchValue({ islanguage: 'yes' });
@@ -488,6 +505,12 @@ export class VirtualFieldsComponent implements OnInit {
         console.log(isinvalid);
       }
     }
+    if (this.countryCode !== '+91') {
+      if (this.virtualForm.get('location').value === ''||this.virtualForm.get('state').value==='') {
+        isinvalid = true;
+        
+      }
+    }
     if (this.virtualForm.get('gender').value === '') {
       isinvalid = true;
       console.log(isinvalid);
@@ -571,7 +594,7 @@ console.log(isinvalid);
     if (this.validateFields() === true) {
       this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
     } else  {
-  
+      console.log('success inisde');
       if (this.is_parent) {
         this.updateParentInfo(formdata).then(
           (result) => {
@@ -627,6 +650,7 @@ console.log(isinvalid);
 
   }
   updateParentInfo(formdata) {
+
     const _this = this;
     const firstName = _this.customer_data.userProfile.firstName
     const lastName = _this.customer_data.userProfile.lastName;
@@ -666,6 +690,13 @@ console.log(isinvalid);
       } else {
         userObj['preferredLanguages'] = formdata.preferredLanguage;
       }
+      userObj['bookingLocation']= {}
+      if (_this.countryCode!=='+91'&&formdata.location!=='') {
+        userObj['bookingLocation']['district'] = formdata.location;
+      }
+      if (_this.countryCode!=='+91'&&formdata.state ) {
+        userObj['bookingLocation']['state'] = formdata.state;
+      }
       _this.lStorageService.setitemonLocalStorage('userId', _this.customer_data.id);
       _this.sharedServices.updateProfile(userObj, 'consumer').subscribe(
         () => {
@@ -680,6 +711,7 @@ console.log(isinvalid);
   }
 
   updateMemberInfo(formdata) {
+    console.log(formdata);
     const _this = this;;
     const firstName = _this.chosen_person.userProfile.firstName;
     const lastName = _this.chosen_person.userProfile.lastName;
@@ -696,7 +728,6 @@ console.log(isinvalid);
       whatsup["number"] = formdata.whatsappnumber
       memberInfo.userProfile['whatsAppNum'] = whatsup;
     }
-    console.log(formdata.countryCode_telegram);
     if (formdata.telegramnumber !== '' && formdata.telegramnumber !== undefined && formdata.countryCode_telegram !== '' || formdata.countryCode_telegram !== undefined) {
       const telegram = {}
       if (formdata.countryCode_telegram.startsWith('+')) {
@@ -725,10 +756,11 @@ console.log(isinvalid);
     } else {
       memberInfo['preferredLanguages'] = formdata.preferredLanguage;
     }
-
-    if (formdata.location.State && formdata.location.Name) {
-      memberInfo.bookingLocation['state'] = formdata.location.State;
-      memberInfo.bookingLocation['city'] = formdata.location.Name
+    if (this.countryCode!=='+91'&&formdata.location && formdata.location!=='') {
+      memberInfo['bookingLocation']['district'] = formdata.location;
+    }
+    if (this.countryCode!=='+91'&&formdata.state ) {
+      memberInfo['bookingLocation']['state'] = formdata.state;
     }
     this.lStorageService.setitemonLocalStorage('userId', formdata.serviceFor);
     return new Promise(function (resolve, reject) {
@@ -787,9 +819,11 @@ console.log(isinvalid);
       memberInfo['preferredLanguages'] = formdata.preferredLanguage;
     }
 
-    if (formdata.location.State && formdata.location.Name) {
-      memberInfo['bookingLocation']['state'] = formdata.location.State;
-      memberInfo['bookingLocation']['city'] = formdata.location.Name
+    if (this.countryCode!=='+91'&&formdata.location && formdata.location!=='') {
+      memberInfo['bookingLocation']['district'] = formdata.location;
+    }
+    if (this.countryCode!=='+91'&&formdata.state ) {
+      memberInfo['bookingLocation']['state'] = formdata.state;
     }
     return new Promise(function (resolve, reject) {
       _this.sharedServices.addMembers(memberInfo).subscribe(
@@ -807,7 +841,6 @@ console.log(isinvalid);
   }
   onChange(event) {
     this.lngknown = event.value
-    console.log(this.lngknown);
     if (this.lngknown === 'yes') {
       this.virtualForm.get('preferredLanguage').setValue(['English']);
     }
