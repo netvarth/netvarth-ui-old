@@ -261,7 +261,10 @@ export const projectConstantsLocal = {
     poojari: { help: '', iconClass: 'veterinarydoctor_doc' },
     bank: { help: '', iconClass: 'veterinarydoctor_doc' },
     nbfc: { help: '', iconClass: 'veterinarydoctor_doc' },
-    insurance: { help: '', iconClass: 'veterinarydoctor_doc' }
+    insurance: { help: '', iconClass: 'veterinarydoctor_doc' },
+    educationalTrainingInstitute: { help: '', iconClass: 'veterinarydoctor_doc' },
+    schools: { help: '', iconClass: 'veterinarydoctor_doc' },
+    colleges: { help: '', iconClass: 'veterinarydoctor_doc' }
   },
   SOCIAL_MEDIA: [
     { key: 'facebook', iconClass: 'socicon-facebook text-danger', iconImg: 'facebook.png', displayName: 'Facebook' },
