@@ -812,8 +812,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 }
                 const bookingLocation = {};
                 bookingLocation['pincode'] = this.virtualInfo.pincode;
+                if(this.virtualInfo.pincode===''){
                bookingLocation['district']=this.virtualInfo.location;
                bookingLocation['state']=this.virtualInfo.state;
+                }
+          
                 this.waitlist_for[0]['bookingLocation'] = bookingLocation;
                 if (this.virtualInfo.gender !== '') {
                     this.waitlist_for[0]['gender'] = this.virtualInfo.gender;
