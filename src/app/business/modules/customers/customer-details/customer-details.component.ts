@@ -282,16 +282,16 @@ export class CustomerDetailComponent implements OnInit {
     getCustomerTodayVisit() {
         this.provider_services.getCustomerTodayVisit(this.customerId).subscribe(
             (data: any) => {
-                this.todayVisitDetailsArray = data;
-                this.todayvisitDetails = this.todayVisitDetailsArray.slice(0, 5);
+                this.todayVisitDetailsArray = this.todayvisitDetails = data;
+                // this.todayvisitDetails = this.todayVisitDetailsArray.slice(0, 5);
             }
         );
     }
     getCustomerFutureVisit() {
         this.provider_services.getCustomerFutureVisit(this.customerId).subscribe(
             (data: any) => {
-                this.futureVisitDetailsArray = data;
-                this.futurevisitDetails = this.futureVisitDetailsArray.slice(0, 5);
+                this.futureVisitDetailsArray = this.futurevisitDetails = data;
+                // this.futurevisitDetails = this.futureVisitDetailsArray.slice(0, 5);
             }
         );
     }
@@ -299,8 +299,8 @@ export class CustomerDetailComponent implements OnInit {
         this.loading = true;
         this.provider_services.getCustomerHistoryVisit(this.customerId).subscribe(
             (data: any) => {
-                this.historyVisitDetailsArray = data;
-                this.historyvisitDetails = this.historyVisitDetailsArray.slice(0, 5);
+                this.historyVisitDetailsArray = this.historyvisitDetails = data;
+                // this.historyvisitDetails = this.historyVisitDetailsArray.slice(0, 5);
                 this.loading = false;
             }
         );
@@ -310,12 +310,12 @@ export class CustomerDetailComponent implements OnInit {
         this.provider_services.getCustomerOrderVisit(this.customerId).subscribe(
             (data: any) => {
                 this.ordervisitDetails = data;
-                this.todayorderVisitDetailsArray = data.todayOrders;
-                this.todayordervisitDetails = this.todayorderVisitDetailsArray.slice(0, 5);
-                this.futureorderVisitDetailsArray = data.futureOrders;
-                this.futureordervisitDetails = this.futureorderVisitDetailsArray.slice(0, 5);
-                this.historyorderVisitDetailsArray = data.historyOrders;
-                this.historyOrdervisitDetails = this.historyorderVisitDetailsArray.slice(0, 5);
+                this.todayorderVisitDetailsArray = this.todayordervisitDetails = data.todayOrders;
+                // this.todayordervisitDetails = this.todayorderVisitDetailsArray.slice(0, 5);
+                this.futureorderVisitDetailsArray = this.futureordervisitDetails = data.futureOrders;
+                // this.futureordervisitDetails = this.futureorderVisitDetailsArray.slice(0, 5);
+                this.historyorderVisitDetailsArray = this.historyOrdervisitDetails = data.historyOrders;
+                // this.historyOrdervisitDetails = this.historyorderVisitDetailsArray.slice(0, 5);
                 this.loading = false;
             }
         );

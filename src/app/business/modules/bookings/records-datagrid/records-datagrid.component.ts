@@ -139,7 +139,7 @@ export class RecordsDatagridComponent implements OnInit {
       this.router.navigate(['provider', 'bookings', 'appointments']);
     } else if (this.source == 'waitlist') {
       this.router.navigate(['provider', 'bookings', 'checkins']);
-    } else if (this.source == 'users') {
+    } else if (this.source == 'providers') {
       this.router.navigate(['provider', 'settings', 'general', 'users']);
     }
   }
