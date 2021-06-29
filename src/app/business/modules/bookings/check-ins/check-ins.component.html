@@ -1,3 +1,13 @@
-<app-records-datagrid [source]="'waitlist'"
-    [heading]="(waitlistMgrSettings && waitlistMgrSettings.showTokenId) ? 'Tokens' : 'Check-ins'">
-</app-records-datagrid>
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            {{(waitlistMgrSettings && waitlistMgrSettings.showTokenId) ? 'Tokens' : 'Check-ins'}}
+        </h5>
+    </div>
+</section>
+<section class="content p-4">
+    <div>
+        <app-records-datagrid [source]="'waitlist-dashboard'" [records]="todayWaitlists">
+        </app-records-datagrid>
+    </div>
+</section>

@@ -35,7 +35,9 @@ export class MedicalrecordListComponent implements OnInit {
 
 
   ngOnInit() {
+    if (this.patientId !== 'all') {
     this.getPatientDetails();
+    }
     this.getPatientMedicalRecords();
   }
 
@@ -52,7 +54,11 @@ export class MedicalrecordListComponent implements OnInit {
         });
   }
   getPatientMedicalRecords() {
-    this.provider_services.getPatientMedicalRecords(this.patientId)
+    const filter = {};
+    if (this.patientId !== 'all') {
+      filter['patientId-eq'] = this.patientId;
+    }
+    this.provider_services.GetMedicalRecordList(filter)
       .subscribe((data: any) => {
         this.mr_dataSource = data;
         this.mrList = data.length;

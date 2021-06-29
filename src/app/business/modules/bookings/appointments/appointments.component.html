@@ -1,1 +1,16 @@
-<app-records-datagrid [source]="'appt'" [heading]="'Appointments'"></app-records-datagrid>
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            Appointments
+        </h5>
+    </div>
+</section>
+<section class="content p-4">
+    <div>
+        <app-records-datagrid [source]="'appt-dashboard'" [records]="todayAppts">
+        </app-records-datagrid>
+    </div>
+    <div>
+        <app-calendar [waitlists]="newAppts"></app-calendar>
+    </div>
+</section>

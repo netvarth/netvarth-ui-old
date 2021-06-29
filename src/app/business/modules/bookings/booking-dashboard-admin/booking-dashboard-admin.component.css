@@ -219,9 +219,9 @@
 }
 
 .column {
-    width: 49% !important;
+    width: 50% !important;
     display: inline-block;
-    margin: 2px;
+    padding: 2px;
 }
 
 @media (max-width: 767px) {

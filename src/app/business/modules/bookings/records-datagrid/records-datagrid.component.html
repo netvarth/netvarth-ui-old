@@ -1,10 +1,10 @@
-<div class="operations-row">
+<div class="operations-row" [class.bord-class]="source != 'waitlist-dashboard' && source != 'appt-dashboard'">
     <div class="column operations-column">
         <div class="card">
             <!-- <div class="header">
                 <h2>{{heading}}</h2>
             </div> -->
-            <div class="card-header">
+            <div class="card-header" *ngIf="heading">
                 <div>{{heading}}</div>
                 <i (click)="gotoFullView()" class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
             </div>
@@ -112,18 +112,21 @@
                                             {{record.totalAmountPaid |
                                             currency:'&#8377;' }} Paid</span> </td>
                                 </ng-container>
-                                <ng-container *ngIf="source == 'waitlist' || source == 'appt'">
+                                <ng-container
+                                    *ngIf="source == 'waitlist' || source == 'appt' || source == 'waitlist-dashboard' || source == 'appt-dashboard'">
                                     <td>
-                                        <ng-container *ngIf="source == 'waitlist'"> {{record.token}}</ng-container>
-                                        <ng-container *ngIf="source == 'appt'">{{getSingleTime(record.appmtTime)}}
+                                        <ng-container *ngIf="source == 'waitlist' || source == 'waitlist-dashboard'">
+                                            {{record.token}}</ng-container>
+                                        <ng-container *ngIf="source == 'appt' || source == 'appt-dashboard'">
+                                            {{getSingleTime(record.appmtTime)}}
                                         </ng-container>
                                     </td>
                                     <td>
-                                        <ng-container *ngIf="source == 'waitlist'">
+                                        <ng-container *ngIf="source == 'waitlist' || source == 'waitlist-dashboard'">
                                             {{record.waitlistingFor[0].firstName}}
                                             {{record.waitlistingFor[0].lastName}}
                                         </ng-container>
-                                        <ng-container *ngIf="source == 'appt'">
+                                        <ng-container *ngIf="source == 'appt' || source == 'appt-dashboard'">
                                             {{record.appmtFor[0].firstName}}
                                             {{record.appmtFor[0].lastName}}
                                         </ng-container>
@@ -139,10 +142,10 @@
                                         {{record.service.name}}
                                     </td>
                                     <td>
-                                        <ng-container *ngIf="source == 'waitlist'">
+                                        <ng-container *ngIf="source == 'waitlist' || source == 'waitlist-dashboard'">
                                             {{check_in_statuses[getStatusLabel(record.waitlistStatus)]}}
                                         </ng-container>
-                                        <ng-container *ngIf="source == 'appt'">
+                                        <ng-container *ngIf="source == 'appt' || source == 'appt-dashboard'">
                                             {{check_in_statuses[getStatusLabel(record.apptStatus)]}}
                                         </ng-container>
                                     </td>
@@ -160,22 +163,35 @@
                                         {{record.billPaymentStatus}}
                                     </td>
                                 </ng-container>
-                                <ng-container *ngIf="source == 'views' || source == 'providers'">
+                                <ng-container *ngIf="source == 'providers'">
                                     <td class="table-img">
                                         <img [src]="getViewImg(record)">
                                     </td>
                                     <td>
-                                        <ng-container *ngIf="source == 'providers'">{{(record.businessName) ?
-                                            record.businessName : record.firstName + ' ' + record.lastName}}
-                                        </ng-container>
-                                        <ng-container *ngIf="source == 'views'">{{record.name}}</ng-container>
+                                        {{(record.businessName) ?
+                                        record.businessName : record.firstName + ' ' + record.lastName}}
+                                    </td>
+                                </ng-container>
+                                <ng-container *ngIf="source == 'customers'">
+                                    <td>
+                                        <div class="user-name">
+                                            <div class="user-short">
+                                                {{getUserShort(record)}}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <ng-container *ngIf="record.firstName || record.lastName">
+                                            {{record.firstName}} {{record.lastName}}</ng-container>
+                                        <ng-container *ngIf="!record.firstName && !record.lastName && record.jaldeeId">
+                                            {{customer_label | capitalizeFirst}} id: {{record.jaldeeId}}</ng-container>
                                     </td>
                                 </ng-container>
                             </tr>
                             <!-- <div *ngIf="!loading && records.length == 0">
                                 No {{heading}}
                             </div> -->
-                            <app-common-innerloading-spinner *ngIf="loading"> </app-common-innerloading-spinner>
+                            <!-- <app-common-innerloading-spinner *ngIf="loading"> </app-common-innerloading-spinner> -->
                         </tbody>
                     </table>
                     <!-- <div class="showLinks mgn-bt-10" *ngIf="count && count > 5">

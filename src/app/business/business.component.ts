@@ -52,34 +52,34 @@ export class BusinessComponent implements OnInit {
         this._navigationInterceptor(event);
       }
     );
-    router.navigate(['provider', 'bookings']);
-    // this.evnt = router.events.subscribe(event => {
-    //   if (event instanceof NavigationEnd) {
-    //     if (this.shared_functions.isBusinessOwner()) {
-    //       this.shared_functions.getGlobalSettings()
-    //         .then(
-    //           (settings: any) => {
-    //             if (router.url === '\/provider') {
-    //               setTimeout(() => {
-    //                 if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
-    //                   if (settings.waitlist) {
-    //                     router.navigate(['provider', 'check-ins']);
-    //                   } else if (settings.appointment) {
-    //                     router.navigate(['provider', 'appointments']);
-    //                   } else if (settings.order) {
-    //                     router.navigate(['provider', 'orders']);
-    //                   } else {
-    //                     router.navigate(['provider', 'settings']);
-    //                   }
-    //                 } else {
-    //                   router.navigate(['provider', 'settings']);
-    //                 }
-    //               }, 500);
-    //             }
-    //           });
-    //     }
-    //   }
-    // });
+    this.evnt = router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (this.shared_functions.isBusinessOwner()) {
+          // this.shared_functions.getGlobalSettings()
+          //   .then(
+          //     (settings: any) => {
+          if (router.url === '\/provider') {
+            router.navigate(['provider', 'bookings']);
+            // setTimeout(() => {
+            //   if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
+            //     if (settings.waitlist) {
+            //       router.navigate(['provider', 'check-ins']);
+            //     } else if (settings.appointment) {
+            //       router.navigate(['provider', 'appointments']);
+            //     } else if (settings.order) {
+            //       router.navigate(['provider', 'orders']);
+            //     } else {
+            //       router.navigate(['provider', 'settings']);
+            //     }
+            //   } else {
+            //     router.navigate(['provider', 'settings']);
+            //   }
+            // }, 500);
+          }
+          // });
+        }
+      }
+    });
 
     this.route.data.subscribe((data) => {
       if (data.terminologies) {
@@ -163,7 +163,7 @@ export class BusinessComponent implements OnInit {
         if (!this.contactInfo.primaryEmail) {
           this.getProfile();
         }
-      } 
+      }
     );
   }
   updateEmailPopup() {

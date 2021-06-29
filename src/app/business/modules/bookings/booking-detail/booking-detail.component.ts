@@ -55,11 +55,9 @@ export class BookingDetailComponent implements OnInit {
     private jaldeeTimeService: JaldeeTimeService,
     private sharedFunctions: SharedFunctions
   ) {
-    this.activated_route.params.subscribe(params => {
-      this.waitlist_id = params.id;
-    });
     this.activated_route.queryParams.subscribe(params => {
       this.bookingType = params.type;
+      this.waitlist_id = params.uid;
     });
 
     this.subscription = this.sharedFunctions.getMessage().subscribe((message) => {

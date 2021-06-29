@@ -200,3 +200,9 @@ h3 {
 ::ng-deep .cal-week-view .cal-time-events .cal-event {
   line-height: initial !important;
 }
+::ng-deep .cal-month-view .cal-open-day-events .cal-event {
+  margin-right: 5px !important;
+}
+::ng-deep .cal-month-view .cal-drag-active {
+  display: flex !important;
+}

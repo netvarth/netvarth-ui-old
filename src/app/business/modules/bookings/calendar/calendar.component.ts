@@ -4,6 +4,7 @@ import { startOfDay, addHours, isSameMonth, isSameDay, addMinutes } from 'date-f
 import { CustomDateFormatter } from './custom-date-formatter.provider';
 import { Router } from '@angular/router';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 const colors: any = {
   red: {
@@ -39,8 +40,12 @@ export class CalendarComponent implements OnInit {
   events: CalendarEvent[] = [];
   activeDayIsOpen: boolean = true;
   @Input() waitlists;
+  customer_label = '';
   constructor(private router: Router,
-    private dateTimeProcessor: DateTimeProcessor) { }
+    private dateTimeProcessor: DateTimeProcessor,
+    private wordProcessor: WordProcessor) {
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+  }
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     console.log(date);
     console.log(new Date());
@@ -75,10 +80,16 @@ export class CalendarComponent implements OnInit {
     console.log(this.waitlists);
     if (this.waitlists) {
       for (let appt of this.waitlists) {
+        let name;
+        if (appt.appmtFor[0].firstName || appt.appmtFor[0].lastName) {
+          name = appt.appmtFor[0].firstName + ' ' + appt.appmtFor[0].lastName;
+        } else {
+          name = this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + ' id: ' + appt.appmtFor[0].memberJaldeeId;
+        }
         this.events.push({
           start: addHours(addMinutes(startOfDay(new Date(appt.appmtDate)), this.getTime(appt.appmtTime, 'start', 'minute')), this.getTime(appt.appmtTime, 'start', 'hour')),
           end: addHours(addMinutes(startOfDay(new Date(appt.appmtDate)), this.getTime(appt.appmtTime, 'end', 'minute')), this.getTime(appt.appmtTime, 'end', 'hour')),
-          title: '<div class="first-title">' + appt.appmtFor[0].firstName + ' ' + appt.appmtFor[0].lastName + '</div><div>' + this.getSingleTime(appt.appmtTime) + '</div>',
+          title: '<div class="first-title">' + name + '</div><div>' + this.getSingleTime(appt.appmtTime) + '</div>',
           color: colors.red,
           meta: {
             uid: appt.uid,

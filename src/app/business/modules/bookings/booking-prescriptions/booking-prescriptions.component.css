@@ -17,6 +17,7 @@
     justify-content: space-between !important;
     align-items: center !important;
     min-height: auto !important;
+    border-bottom: 1.75px solid #d0d0d0 !important;
 }
 
 .card.data-card .card-header i {

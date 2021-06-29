@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 
 @Component({
@@ -9,30 +9,32 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 })
 export class BookingMedicalRecordsComponent implements OnInit {
   @Input() customerId;
+  @Input() providerId;
   @Input() waitlist_data;
+  @Input() source;
   mrList: any = [];
-  loading = true;
+  loading = false;
   constructor(private provider_services: ProviderServices,
     private router: Router) { }
 
   ngOnInit(): void {
-    if (this.customerId || (this.waitlist_data && this.waitlist_data.waitlistStatus && this.waitlist_data.waitlistStatus !== 'blocked') || (this.waitlist_data && this.waitlist_data.apptStatus && this.waitlist_data.apptStatus !== 'blocked')) {
-      this.getPatientMedicalRecords();
-    } else {
+    if (this.providerId || this.source || this.customerId || (this.waitlist_data && this.waitlist_data.waitlistStatus && this.waitlist_data.waitlistStatus !== 'blocked') || (this.waitlist_data && this.waitlist_data.apptStatus && this.waitlist_data.apptStatus !== 'blocked')) {
       this.getMedicalRecords();
     }
   }
-  getPatientMedicalRecords() {
-    this.provider_services.getPatientMedicalRecords(this.customerId)
-      .subscribe((data: any) => {
-        this.mrList = data;
-        this.loading = false;
-      });
-  }
   getMedicalRecords() {
-    this.provider_services.GetMedicalRecordList()
+    this.loading = true;
+    const filter = {};
+    if (this.customerId) {
+      filter['patientId-eq'] = this.customerId;
+    }
+    if (this.providerId) {
+      filter['provider-eq'] = this.providerId;
+    }
+    this.provider_services.GetMedicalRecordList(filter)
       .subscribe((data: any) => {
         this.mrList = data;
+        console.log('mr', this.mrList)
         this.loading = false;
       });
   }
@@ -49,6 +51,14 @@ export class BookingMedicalRecordsComponent implements OnInit {
     // this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'clinicalnotes']);
   }
   gotoMrList() {
-    this.router.navigate(['provider', 'customers', this.customerId, 'FOLLOWUP', 0, 'medicalrecord', 0, 'list'], { queryParams: { 'calledfrom': 'list' } });
+    const qparams = { 'calledfrom': 'list' };
+    if (this.providerId) {
+      qparams['providerId'] = this.providerId
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: qparams
+    };
+    const id = (this.customerId) ? this.customerId : 'all';
+    this.router.navigate(['provider', 'customers', id, 'FOLLOWUP', 0, 'medicalrecord', 0, 'list'], navigationExtras);
   }
 }
