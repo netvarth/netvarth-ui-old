@@ -55,11 +55,12 @@ export class MenuComponent implements OnInit, OnDestroy {
     private provider_dataStorage: ProviderDataStorageService,
     private titleService: Title
   ) {
+    this.getEnquiryCount();
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
       switch (message.ttype) {
         case 'messageCount':
-          this.inboxUnreadCnt = message.unreadCount;
+          this.inboxUnreadCnt = message.unreadCount - this.enquiryCount;
           this.inboxCntFetched = message.messageFetched;
           break;
         case 'alertCount':
@@ -132,6 +133,7 @@ export class MenuComponent implements OnInit, OnDestroy {
       }
       this.getBusinessdetFromLocalstorage();
     });
+    
   }
   getBusinessdetFromLocalstorage() {
     const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');

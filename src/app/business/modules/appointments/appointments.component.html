@@ -679,10 +679,10 @@
                         <a class="statusText btn-play pointer-cursor call-btn" [class.stopcall-btn]="appt.callingStatus"
                           *ngIf="!small_device_display && board_count > 0 && !appt.virtualService &&time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
                           (click)="stopprop($event);callingAppt(appt)" [matTooltipClass]="tooltipcls"
-                          [matTooltip]="'Call'">
+                          [matTooltip]="'Alert'">
                           <i class="dashboardcallstop-icon" *ngIf="appt.callingStatus"></i> <span
                             *ngIf="appt.callingStatus">&nbsp; Stop</span>
-                          <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
+                          <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i> 
                           <span *ngIf="!appt.callingStatus">
                             &nbsp;Alert</span>
                         </a>
@@ -970,7 +970,7 @@
                             [class.stopcall-btn]="apptByTimeSlot[appt.time][0].callingStatus"
                             *ngIf="!small_device_display && board_count > 0 && !apptByTimeSlot[appt.time][0].virtualService && (apptByTimeSlot[appt.time][0].apptStatus === 'Confirmed' || apptByTimeSlot[appt.time][0].apptStatus === 'Arrived')"
                             (click)="stopprop($event);callingAppt(apptByTimeSlot[appt.time][0])"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Alert'">
                             <i class="dashboardcallstop-icon" *ngIf="apptByTimeSlot[appt.time][0].callingStatus"></i>
                             <span *ngIf="apptByTimeSlot[appt.time][0].callingStatus">&nbsp; Stop</span>
                             <i class="dashboardcall-icon" *ngIf="!apptByTimeSlot[appt.time][0].callingStatus"></i>
@@ -1009,15 +1009,15 @@
                             <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                               *ngIf="apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'WhatsApp' && apptByTimeSlot[appt.time][0].service.virtualServiceType === 'videoService'"></i>
                             <span
-                              *ngIf="apptByTimeSlot[appt.time][0].service.serviceType === 'virtualService' && (apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+                              *ngIf="apptByTimeSlot[appt.time][0].virtualService && (apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'GoogleMeet' || apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                             <span
-                              *ngIf="!small_device_display && appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
-                              {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
+                              *ngIf="!small_device_display && apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode !== 'Phone' && apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
+                              {{apptByTimeSlot[appt.time][0].apptStatus === 'Started'? 'Resume':'Start'}}
                             </span>
                             <span
-                              *ngIf="appt.service.virtualCallingModes[0].callingMode == 'Phone' || appt.service.virtualCallingModes[0].callingMode == 'WhatsApp'">
-                              {{appt.apptStatus === 'Started'? 'Resume': 'Call +' +
-                              appt.virtualService[appt.service.virtualCallingModes[0].callingMode] }}
+                              *ngIf="apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'Phone' || apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                              {{apptByTimeSlot[appt.time][0].apptStatus === 'Started'? 'Resume': 'Call +' +
+                              apptByTimeSlot[appt.time][0].virtualService[apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode] }}
                             </span>
                           </a>
                           <a class="statusText btn-play pointer-cursor done-btn"
@@ -1186,7 +1186,7 @@
                         <a class="statusText btn-play pointer-cursor call-btn" [class.stopcall-btn]="appt.callingStatus"
                           *ngIf="!small_device_display && board_count > 0 && !appt.virtualService &&time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
                           (click)="stopprop($event);callingAppt(appt)" [matTooltipClass]="tooltipcls"
-                          [matTooltip]="'Call'">
+                          [matTooltip]="'Alert'">
                           <i class="dashboardcallstop-icon" *ngIf="appt.callingStatus"></i> <span
                             *ngIf="appt.callingStatus">&nbsp; Stop</span>
                           <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
@@ -1224,7 +1224,7 @@
                           <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
                           <span
-                            *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+                            *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                           <span
                             *ngIf="!small_device_display && appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
                             {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
@@ -1715,7 +1715,7 @@
                       <a class="statusText btn-play pointer-cursor call-btn" [class.stopcall-btn]="appt.callingStatus"
                         *ngIf="!small_device_display && board_count > 0 && !appt.virtualService &&time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
                         (click)="stopprop($event);callingAppt(appt)" [matTooltipClass]="tooltipcls"
-                        [matTooltip]="'Call'">
+                        [matTooltip]="'Alert'">
                         <i class="dashboardcallstop-icon" *ngIf="appt.callingStatus"></i> <span
                           *ngIf="appt.callingStatus">&nbsp; Stop</span>
                         <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
@@ -1747,7 +1747,7 @@
                         <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
                         <span
-                          *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+                          *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                         <span
                           *ngIf="!small_device_display && appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
                           {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
@@ -2334,7 +2334,7 @@
                       <a class="statusText btn-play pointer-cursor call-btn" [class.stopcall-btn]="appt.callingStatus"
                         *ngIf="!small_device_display && board_count > 0 && !appt.virtualService &&time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
                         (click)="stopprop($event);callingAppt(appt)" [matTooltipClass]="tooltipcls"
-                        [matTooltip]="'Call'">
+                        [matTooltip]="'Alert'">
                         <i class="dashboardcallstop-icon" *ngIf="appt.callingStatus"></i> <span
                           *ngIf="appt.callingStatus">&nbsp; Stop</span>
                         <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
@@ -2366,7 +2366,7 @@
                         <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
                         <span
-                          *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+                          *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                         <span
                           *ngIf="!small_device_display && appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
                           {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
