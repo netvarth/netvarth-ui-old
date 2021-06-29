@@ -1009,15 +1009,15 @@
                             <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                               *ngIf="apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'WhatsApp' && apptByTimeSlot[appt.time][0].service.virtualServiceType === 'videoService'"></i>
                             <span
-                              *ngIf="apptByTimeSlot[appt.time][0].service.serviceType === 'virtualService' && (apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+                              *ngIf="apptByTimeSlot[appt.time][0].virtualService && (apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'GoogleMeet' || apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                             <span
-                              *ngIf="!small_device_display && appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
-                              {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
+                              *ngIf="!small_device_display && apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode !== 'Phone' && apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
+                              {{apptByTimeSlot[appt.time][0].apptStatus === 'Started'? 'Resume':'Start'}}
                             </span>
                             <span
-                              *ngIf="appt.service.virtualCallingModes[0].callingMode == 'Phone' || appt.service.virtualCallingModes[0].callingMode == 'WhatsApp'">
-                              {{appt.apptStatus === 'Started'? 'Resume': 'Call +' +
-                              appt.virtualService[appt.service.virtualCallingModes[0].callingMode] }}
+                              *ngIf="apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'Phone' || apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                              {{apptByTimeSlot[appt.time][0].apptStatus === 'Started'? 'Resume': 'Call +' +
+                              apptByTimeSlot[appt.time][0].virtualService[apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode] }}
                             </span>
                           </a>
                           <a class="statusText btn-play pointer-cursor done-btn"
@@ -1224,7 +1224,7 @@
                           <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
                           <span
-                            *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+                            *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                           <span
                             *ngIf="!small_device_display && appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
                             {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
@@ -1747,7 +1747,7 @@
                         <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
                         <span
-                          *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+                          *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                         <span
                           *ngIf="!small_device_display && appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
                           {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
@@ -2366,7 +2366,7 @@
                         <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
                         <span
-                          *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+                          *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                         <span
                           *ngIf="!small_device_display && appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
                           {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
