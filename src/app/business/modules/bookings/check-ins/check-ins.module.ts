@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CheckinsComponent } from './check-ins.component';
-import { RecordsDatagridModule } from '../booking-dashboard-admin/records-datagrid/records-datagrid.module';
+import { RecordsDatagridModule } from '../records-datagrid/records-datagrid.module';
+import { CheckinsRoutingModule } from './check-ins.routing.module';
 
 @NgModule({
   declarations: [CheckinsComponent],
   imports: [
     CommonModule,
-    RecordsDatagridModule
+    RecordsDatagridModule,
+    CheckinsRoutingModule
   ],
   exports: [CheckinsComponent]
 })

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BookingsRoutingModule } from '../../bookings.routing.module';
-import {MatGridListModule} from '@angular/material/grid-list';
-import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
+import { BookingsRoutingModule } from '../bookings.routing.module';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { BookingPrescriptionsComponent } from './booking-prescriptions.component';
 
 
@@ -13,10 +13,9 @@ import { BookingPrescriptionsComponent } from './booking-prescriptions.component
     CommonModule,
     BookingsRoutingModule,
     MatGridListModule,
-    CapitalizeFirstPipeModule,
-
+    CapitalizeFirstPipeModule
   ],
-  exports:[BookingPrescriptionsComponent]
+  exports: [BookingPrescriptionsComponent]
 
 })
 export class BookingPrerscriptionModule {

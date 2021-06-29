@@ -12,16 +12,27 @@ export class BookingDashboardComponent implements OnInit {
   loading = true;
   appts: any = [];
   bname;
+  views: any = [];
+  bills: any = [];
+  userData;
   constructor(private provider_services: ProviderServices,
     private groupService: GroupStorageService) { }
 
   ngOnInit(): void {
+    const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
+    this.userData = this.groupService.getitemFromGroupStorage('ynw-user');
+    console.log('this.userData', this.userData);
+    if (bdetails) {
+      if (this.userData.accountType === 'BRANCH' && this.userData.userType !== 2) {
+        this.bname = this.userData.userName || 'User';
+      } else {
+        this.bname = bdetails.bn || 'User';
+      }
+    }
     this.getTodayAppts();
     this.getProviderSettings();
-    const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
-    if (bdetails) {
-      this.bname = bdetails.userName || '';
-    }
+    this.getProviderBills();
+    this.getViews();
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
@@ -60,5 +71,19 @@ export class BookingDashboardComponent implements OnInit {
           console.log(this.appts);
           this.loading = false;
         });
+  }
+  getViews() {
+    this.provider_services.getCustomViewList().subscribe(data => {
+      this.views = data;
+    });
+  }
+  getProviderBills() {
+    let filter = {};
+    if (this.userData.accountType === 'BRANCH') {
+      filter = { 'provider-eq': this.userData.id };
+    }
+    this.provider_services.getProviderBills(filter).subscribe(data => {
+      this.bills = data;
+    })
   }
 }

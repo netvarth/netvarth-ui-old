@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 
 @Component({
   selector: 'app-booking-medical-records',
@@ -19,11 +19,18 @@ export class BookingMedicalRecordsComponent implements OnInit {
     if (this.customerId || (this.waitlist_data && this.waitlist_data.waitlistStatus && this.waitlist_data.waitlistStatus !== 'blocked') || (this.waitlist_data && this.waitlist_data.apptStatus && this.waitlist_data.apptStatus !== 'blocked')) {
       this.getPatientMedicalRecords();
     } else {
-      this.loading = false;
+      this.getMedicalRecords();
     }
   }
   getPatientMedicalRecords() {
     this.provider_services.getPatientMedicalRecords(this.customerId)
+      .subscribe((data: any) => {
+        this.mrList = data;
+        this.loading = false;
+      });
+  }
+  getMedicalRecords() {
+    this.provider_services.GetMedicalRecordList()
       .subscribe((data: any) => {
         this.mrList = data;
         this.loading = false;

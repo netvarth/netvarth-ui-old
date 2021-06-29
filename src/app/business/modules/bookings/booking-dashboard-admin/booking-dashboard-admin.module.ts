@@ -5,9 +5,12 @@ import { BookingDashboardAdminComponent } from './booking-dashboard-admin.compon
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { BookingStatsModule } from './booking-stats/booking-stats.module';
-import { RecordsDatagridModule } from './records-datagrid/records-datagrid.module';
+import { BookingStatsModule } from '../booking-stats/booking-stats.module';
+import { RecordsDatagridModule } from '../records-datagrid/records-datagrid.module';
 import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
+import { BookingDocumentsModule } from '../booking-documents/booking-documents.module';
+import { BookingMedicalRecordsModule } from '../booking-medical-records/booking-medical-records.module';
+import { BookingPrerscriptionModule } from '../booking-prescriptions/booking-prescriptions.module';
 
 @NgModule({
   declarations: [BookingDashboardAdminComponent],
@@ -19,7 +22,10 @@ import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner
     MatIconModule,
     BookingStatsModule,
     RecordsDatagridModule,
-    LoadingSpinnerModule
+    LoadingSpinnerModule,
+    BookingPrerscriptionModule,
+    BookingMedicalRecordsModule,
+    BookingDocumentsModule
   ],
   exports: [BookingDashboardAdminComponent]
 })

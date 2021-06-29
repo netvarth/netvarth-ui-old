@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { WordProcessor } from '../../../../../shared/services/word-processor.service';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 
 @Component({
   selector: 'app-booking-stats',

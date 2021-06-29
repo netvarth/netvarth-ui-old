@@ -24,10 +24,10 @@ import { CustomerDetailComponent } from './customer-details/customer-details.com
 import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
 import { VoicecallConfirmBoxComponent } from './confirm-box/voicecall-confirm-box.component';
 import { VoiceConfirmComponent } from './video-confirm/voice-confirm.component';
-import { BookingMedicalRecordsModule } from '../bookings/booking-detail/booking-medical-records/booking-medical-records.module';
-import { BookingPrerscriptionModule } from '../bookings/booking-detail/booking-prescriptions/booking-prescriptions.module';
+import { BookingMedicalRecordsModule } from '../bookings/booking-medical-records/booking-medical-records.module';
+import { BookingPrerscriptionModule } from '../bookings/booking-prescriptions/booking-prescriptions.module';
 import { InboxListModule } from '../inbox-list/inbox-list.module';
-import { RecordsDatagridModule } from '../bookings/booking-dashboard-admin/records-datagrid/records-datagrid.module';
+import { RecordsDatagridModule } from '../bookings/records-datagrid/records-datagrid.module';
 
 
 @NgModule({

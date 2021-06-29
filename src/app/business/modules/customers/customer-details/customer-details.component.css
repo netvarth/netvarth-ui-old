@@ -119,9 +119,6 @@
 .padding-20px {
   padding: 20px !important;
 }
-.border {
-    border: 1.75px solid #d0d0d0 !important;
-}
 .user-img img {
   width: 100px;
   height: 100px;
@@ -135,4 +132,7 @@
 }
 .records-sec .rece-act {
   padding: 0 15px;
+}
+.records-sec .column {
+  padding: 10px;
 }

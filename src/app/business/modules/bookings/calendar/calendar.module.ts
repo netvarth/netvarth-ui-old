@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BookingsRoutingModule } from '../../bookings.routing.module';
-import {MatGridListModule} from '@angular/material/grid-list';
-import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
+import { BookingsRoutingModule } from '../bookings.routing.module';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { CalendarComponent } from './calendar.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -21,7 +21,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     })
 
   ],
-  exports:[CalendarComponent]
+  exports: [CalendarComponent]
 })
 export class BookingCalendarModule {
 }

@@ -3,7 +3,7 @@ import { CalendarDateFormatter, CalendarEvent, CalendarView } from 'angular-cale
 import { startOfDay, addHours, isSameMonth, isSameDay, addMinutes } from 'date-fns';
 import { CustomDateFormatter } from './custom-date-formatter.provider';
 import { Router } from '@angular/router';
-import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 const colors: any = {
   red: {
@@ -30,7 +30,7 @@ const colors: any = {
       useClass: CustomDateFormatter
     }
   ],
-  styleUrls: ['./calendar.component.css', '../../../../../../assets/plugins/custom/fullcalendar/fullcalendar.bundle.css']
+  styleUrls: ['./calendar.component.css', '../../../../../assets/plugins/custom/fullcalendar/fullcalendar.bundle.css']
 })
 export class CalendarComponent implements OnInit {
   view: CalendarView = CalendarView.Month;

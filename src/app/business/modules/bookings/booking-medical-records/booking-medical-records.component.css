@@ -2,6 +2,8 @@
     box-shadow: none !important;
     border-radius: 0 !important;
     padding: 0 !important;
+    border: 1.75px solid #d0d0d0 !important;
+    border-radius: 10px !important;
 }
 
 .card.data-card .card-header {

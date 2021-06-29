@@ -739,12 +739,12 @@
                 </div>
             </div>
             <div class="cards-div">
-                <div class="col-xl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 no-padding mgn-bt-20 border"
+                <div class="col-xl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 no-padding mgn-bt-20"
                     *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
                     <app-booking-medical-records [customerId]="customer[0].id">
                     </app-booking-medical-records>
                 </div>
-                <div class="col-xl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 no-padding mgn-bt-20 border"
+                <div class="col-xl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 no-padding mgn-bt-20"
                     *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
                     <app-booking-prescriptions></app-booking-prescriptions>
                 </div>
@@ -755,9 +755,9 @@
             </app-provider-inbox-list>
         </div>
     </div>
-    <div class="row mgn-up-20">
-        <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12"
-            *ngIf="customer[0].questionnaire && customer[0].questionnaire.questionAnswers && customer[0].questionnaire.questionAnswers.length > 0">
+    <div class="row mgn-up-20"
+        *ngIf="customer[0].questionnaire && customer[0].questionnaire.questionAnswers && customer[0].questionnaire.questionAnswers.length > 0">
+        <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card card-custom">
                 <div class="card-header">
                     <div class="card-title">
@@ -774,7 +774,7 @@
             </div>
         </div>
     </div>
-    <div class="row records-sec mgn-up-20">
+    <div class="row records-sec mgn-up-10">
         <!-- <div class="rece-act disp-flex"
             *ngIf="todayVisitDetailsArray.length > 0 || futureVisitDetailsArray.length > 0 || futureorderVisitDetailsArray.length > 0 || todayorderVisitDetailsArray.length > 0 || historyvisitDetails.length > 0 || (ordervisitDetails.historyOrders && ordervisitDetails.historyOrders.length > 0)">
             <h5 class="no-margin">Recent activity</h5>
@@ -782,32 +782,46 @@
                 *ngIf="historyvisitDetails.length > 0 || ordervisitDetails.historyOrders && ordervisitDetails.historyOrders.length > 0"
                 (click)="showHistory()">History</span>
         </div> -->
+        <div class="column">
         <app-records-datagrid [records]="todayvisitDetails" [heading]="'Today'" [source]="'customer-waitlist'"
             [timeType]="1" [count]="todayVisitDetailsArray.length" [showMore]="showMoreToday"
             (actionPerformed)="actionPerformed($event)" *ngIf="todayVisitDetailsArray.length > 0">
         </app-records-datagrid>
+    </div>
+    <div class="column">
         <app-records-datagrid [records]="futurevisitDetails" [heading]="'Future'" [source]="'customer-waitlist'"
             [timeType]="2" [count]="futureVisitDetailsArray.length" [showMore]="showMoreFuture"
             (actionPerformed)="actionPerformed($event)" *ngIf="futureVisitDetailsArray.length > 0">
         </app-records-datagrid>
+    </div>
+    <div class="column">
         <app-records-datagrid [records]="todayordervisitDetails" [heading]="'Todays Order'" [source]="'customer-order'"
             [count]="todayorderVisitDetailsArray.length" [showMore]="showMoreorderToday" [timeType]="1"
             (actionPerformed)="actionPerformed($event)" *ngIf="todayorderVisitDetailsArray.length > 0">
         </app-records-datagrid>
+    </div>
+    <div class="column">
         <app-records-datagrid [records]="futureordervisitDetails" [heading]="'Future Order'" [source]="'customer-order'"
             [count]="futureorderVisitDetailsArray.length" [showMore]="showMoreorderFuture" [timeType]="2"
             (actionPerformed)="actionPerformed($event)" *ngIf="futureorderVisitDetailsArray.length > 0">
         </app-records-datagrid>
+    </div>
+    <div class="column">
         <app-records-datagrid [records]="historyvisitDetails" [heading]="'History'" [source]="'customer-waitlist'"
             [count]="historyVisitDetailsArray.length" [showMore]="showMoreHistory" [timeType]="3"
             (actionPerformed)="actionPerformed($event)" *ngIf="historyVisitDetailsArray.length > 0">
         </app-records-datagrid>
+    </div>
+    <div class="column">
         <app-records-datagrid [records]="historyOrdervisitDetails" [heading]="'Order History'"
             [source]="'customer-order'" [count]="historyorderVisitDetailsArray.length" [showMore]="showMoreOrderHistory"
             [timeType]="3" (actionPerformed)="actionPerformed($event)" *ngIf="historyorderVisitDetailsArray.length > 0">
         </app-records-datagrid>
-        <app-records-datagrid *ngIf="consumerBills.length > 0" [consumerId]="customer[0].id" [heading]="'Bill'"
-            [source]="'customer-bill'" [records]="consumerBills">
+    </div>
+    <div class="column">
+        <app-records-datagrid *ngIf="consumerBills.length > 0" [heading]="'Bill'" [source]="'bill'"
+            [records]="consumerBills">
         </app-records-datagrid>
+    </div>
     </div>
 </section>

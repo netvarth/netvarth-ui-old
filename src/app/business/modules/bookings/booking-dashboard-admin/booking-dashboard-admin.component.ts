@@ -12,6 +12,7 @@ export class BookingDashboardAdminComponent implements OnInit {
   views: any = [];
   active_user;
   users: any = [];
+  bills: any = [];
   constructor(private provider_services: ProviderServices,
     private groupService: GroupStorageService) { }
 
@@ -19,6 +20,10 @@ export class BookingDashboardAdminComponent implements OnInit {
     this.getProviderSettings();
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getViews();
+    if (this.active_user.accountType === 'BRANCH') {
+      this.getUsers();
+    }
+    this.getConsumerBills();
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
@@ -31,20 +36,17 @@ export class BookingDashboardAdminComponent implements OnInit {
     apiFilter['userType-eq'] = 'PROVIDER';
     this.provider_services.getUsers(apiFilter).subscribe(data => {
       this.users = data;
-      if (this.active_user.adminPrivilege) {
-        for (let i = 0; i < this.users.length; i++) {
-          this.views.push(this.users[i]);
-        }
-      }
-      console.log('view', this.views);
+      console.log(this.users);
     });
   }
   getViews() {
     this.provider_services.getCustomViewList().subscribe(data => {
       this.views = data;
-      if (this.active_user.accountType === 'BRANCH') {
-        this.getUsers();
-      }
     });
+  }
+  getConsumerBills() {
+    this.provider_services.getProviderBills().subscribe(data => {
+      this.bills = data;
+    })
   }
 }

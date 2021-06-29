@@ -1,8 +1,12 @@
 <div class="operations-row">
     <div class="column operations-column">
         <div class="card">
-            <div class="header">
+            <!-- <div class="header">
                 <h2>{{heading}}</h2>
+            </div> -->
+            <div class="card-header">
+                <div>{{heading}}</div>
+                <i (click)="gotoFullView()" class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
             </div>
             <div class="tableBody">
                 <div class="table-responsive">
@@ -143,7 +147,7 @@
                                         </ng-container>
                                     </td>
                                 </ng-container>
-                                <ng-container *ngIf="source == 'customer-bill'">
+                                <ng-container *ngIf="source == 'bill'">
                                     <td>
                                         {{record.createdDate | date : newDateFormat}}
                                     </td>
@@ -156,7 +160,7 @@
                                         {{record.billPaymentStatus}}
                                     </td>
                                 </ng-container>
-                                <ng-container *ngIf="source == 'views'">
+                                <ng-container *ngIf="source == 'views' || source == 'users'">
                                     <td class="table-img">
                                         <img [src]="getViewImg(record)">
                                     </td>
@@ -168,9 +172,9 @@
                                     </td>
                                 </ng-container>
                             </tr>
-                            <div *ngIf="!loading && records.length == 0">
+                            <!-- <div *ngIf="!loading && records.length == 0">
                                 No {{heading}}
-                            </div>
+                            </div> -->
                             <app-common-innerloading-spinner *ngIf="loading"> </app-common-innerloading-spinner>
                         </tbody>
                     </table>

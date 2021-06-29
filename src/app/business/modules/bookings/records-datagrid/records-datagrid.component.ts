@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
-import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
-import { projectConstants } from '../../../../../app.component';
-import { WordProcessor } from '../../../../../shared/services/word-processor.service';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../app.component';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Router } from '@angular/router';
 import { interval as observableInterval, Subscription } from 'rxjs';
 
@@ -19,7 +19,6 @@ export class RecordsDatagridComponent implements OnInit {
   @Input() timeType;
   @Input() count;
   @Input() showMore;
-  @Input() consumerId;
   @Output() actionPerformed = new EventEmitter<any>();
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   waitlistModes = {
@@ -45,6 +44,7 @@ export class RecordsDatagridComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
+    console.log(this.source, this.records);
     if (this.source == 'waitlist') {
       this.getTodayWatilists();
     }
@@ -90,6 +90,7 @@ export class RecordsDatagridComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.records = data;
+          console.log(this.records);
           this.loading = false;
         });
   }
@@ -104,6 +105,7 @@ export class RecordsDatagridComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.records = data;
+          console.log(this.records);
           this.loading = false;
         });
   }
@@ -112,7 +114,7 @@ export class RecordsDatagridComponent implements OnInit {
       const uid = (this.source === 'appt') ? record.uid : record.ynwUuid;
       const type = (this.source === 'appt') ? 'appointment' : 'checkin';
       this.router.navigate(['provider', 'bookings', uid], { queryParams: { timetype: 1, type: type } });
-    } else if (this.source == 'customer-bill') {
+    } else if (this.source == 'bill') {
       let source;
       if (record.type === 'Appointment') {
         source = 'appt';
@@ -131,5 +133,14 @@ export class RecordsDatagridComponent implements OnInit {
       return record.profilePicture.url;
     }
     return 'assets/images/Asset1@300x(1).png';
+  }
+  gotoFullView() {
+    if (this.source == 'appt') {
+      this.router.navigate(['provider', 'bookings', 'appointments']);
+    } else if (this.source == 'waitlist') {
+      this.router.navigate(['provider', 'bookings', 'checkins']);
+    } else if (this.source == 'users') {
+      this.router.navigate(['provider', 'settings', 'general', 'users']);
+    }
   }
 }
