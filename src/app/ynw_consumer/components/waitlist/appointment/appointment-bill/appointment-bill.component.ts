@@ -634,16 +634,19 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
             bill_html += '</table>';
             bill_html += '	</td></tr>';
         }
-        for (const providerCoupon of this.bill_data.providerCoupon) {
+        if (this.bill_data.providerCoupon) {
+       // for (const providerCoupon of this.bill_data.providerCoupon) {
+        for (const [key, value] of Object.entries(this.bill_data.providerCoupon)) {
             bill_html += '	<tr><td>';
             bill_html += '<table width="100%" style="color:#000000; font-size:10pt;  font-family:Ubuntu, Arial,sans-serif; padding-bottom:5px">';
             bill_html += '	<tr style="color:#aaa">';
-            bill_html += '<td width="70%" style="text-align:right">' + providerCoupon.name + '</td>';
-            bill_html += '<td width="30%" style="text-align:right">(-) &#x20b9;' + parseFloat(providerCoupon.couponValue).toFixed(2) + '</td>';
+            bill_html += '<td width="70%" style="text-align:right">' + key + '</td>';
+            bill_html += '<td width="30%" style="text-align:right">(-) &#x20b9;' + parseFloat(value['value']).toFixed(2) + '</td>';
             bill_html += '	</tr>                                                                           ';
             bill_html += '</table>';
             bill_html += '	</td></tr>';
         }
+    }
         if (this.bill_data.jCoupon) {
             for (const [key, value] of Object.entries(this.bill_data.jCoupon)) {
                 bill_html += '	<tr><td>';
