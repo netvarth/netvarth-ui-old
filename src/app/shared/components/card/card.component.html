@@ -425,7 +425,7 @@
                 
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
                     *ngIf="item.type=='checkin-dashboard' && !waitlist.waitlistingFor[0].firstName && !waitlist.waitlistingFor[0].lastName">
-                    {{customer_label | capitalizeFirst}} id:&nbsp; {{waitlist.consumer.jaldeeId}}</div>
+                    {{customer_label | capitalizeFirst}} id:&nbsp; {{waitlist.providerConsumer.jaldeeId}}</div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item" *ngIf="time_type == 3 && waitlist.waitlistStatus">
                     <span class="started_status_clr" *ngIf="waitlist.waitlistStatus == 'started' || waitlist.waitlistStatus == 'arrived'">
                         {{waitlist.waitlistStatus | capitalizeFirst}}
@@ -590,7 +590,7 @@
                 
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
                     *ngIf="item.type=='appointment-dashboard' && !appointment.appmtFor[0].firstName && !appointment.appmtFor[0].lastName">
-                    {{customer_label | capitalizeFirst}} id:&nbsp; {{waitlist.consumer.jaldeeId}}</div>
+                    {{customer_label | capitalizeFirst}} id:&nbsp; {{appointment.providerConsumer.jaldeeId}}</div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item" *ngIf="time_type == 3 && appointment.apptStatus">
                     <span class="started_status_clr" *ngIf="appointment.apptStatus == 'started' || appointment.apptStatus == 'arrived'">
                         {{appointment.apptStatus | capitalizeFirst}}
