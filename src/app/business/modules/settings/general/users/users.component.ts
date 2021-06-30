@@ -151,7 +151,10 @@ export class BranchUsersComponent implements OnInit {
         }
         if (this.domain === 'finance') {
             this.userTypesFormfill = [{name: 'ASSISTANT',displayName: 'Assistant'}, {name: 'PROVIDER',displayName: 'Staff Member'},{name: 'ADMIN',displayName: 'Admin'}];
-        }        
+        }  
+        if (this.domain === 'educationalInstitution') {
+            this.userTypesFormfill = [{name: 'ASSISTANT',displayName: 'Assistant'}, {name: 'PROVIDER',displayName: 'Mentor'},{name: 'ADMIN',displayName: 'Admin'}];
+        }      
     }
 
     addBranchSP() {

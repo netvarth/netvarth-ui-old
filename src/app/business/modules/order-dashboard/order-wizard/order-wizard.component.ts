@@ -228,7 +228,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
               if(!this.catalogExpired){
                 this.step = 2;
                 }else{
-                  this.snackbarService.openSnackBar('Your Catalog is not valid for now, It  might be disabled/Not applicable for today/expired ,please update to proceed', { 'panelClass': 'snackbarerror' });
+                  this.snackbarService.openSnackBar('Catalog is not valid. Update the status or validity of the catalog to proceed', { 'panelClass': 'snackbarerror' });
                 }
             
           
