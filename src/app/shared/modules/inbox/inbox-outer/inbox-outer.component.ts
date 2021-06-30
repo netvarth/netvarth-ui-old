@@ -67,6 +67,7 @@ export class InboxOuterComponent implements OnInit {
   @ViewChildren('outmsgId') outmsgIds: QueryList<ElementRef>;
   @ViewChildren('inmsgId') inmsgId: QueryList<ElementRef>;
   customId: any;
+  isCustomer: any;
   constructor(private inbox_services: InboxServices,
     public shared_functions: SharedFunctions,
     private groupService: GroupStorageService,
@@ -212,10 +213,15 @@ export class InboxOuterComponent implements OnInit {
       };
       const dataToSend: FormData = new FormData();
       post_data['msg'] = post_data.communicationMessage;
-      post_data['messageType'] = 'CHAT';
-      if (this.replyMsg) {
+      if (this.replyMsg && this.isCustomer) {
+        post_data['messageType'] = 'ENQUIRY';
         post_data['replyMessageId'] = this.replyMsg.messageId;
       }
+      else{
+        post_data['messageType'] = 'CHAT';
+        post_data['replyMessageId'] = this.replyMsg.messageId;
+      }
+
       const captions = {};
       let i = 0;
       if (this.selectedMessage) {
@@ -352,6 +358,14 @@ export class InboxOuterComponent implements OnInit {
     this.selectedMessage.caption.splice(i, 1);
   }
   replytoMsg(msg) {
+    switch (msg.messageType) {
+      case 'ENQUIRY':
+        this.isCustomer = true;
+        break;
+      default:
+        this.isCustomer = false;
+        break;
+    }
     this.replyMsg = msg;
   }
   closeReply() {
