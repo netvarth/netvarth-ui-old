@@ -259,7 +259,7 @@ export class VirtualFieldsComponent implements OnInit {
       this.virtualForm.patchValue({ pincode: memberObj.bookingLocation.pincode });
     }
     if (memberObj.bookingLocation && memberObj.bookingLocation.district) {
-      this.virtualForm.patchValue({ location: memberObj.bookingLocation.district });
+      this.virtualForm.patchValue({ localarea: memberObj.bookingLocation.district });
     }
     if (memberObj.bookingLocation && memberObj.bookingLocation.state) {
       this.virtualForm.patchValue({ state: memberObj.bookingLocation.state });
@@ -292,7 +292,7 @@ export class VirtualFieldsComponent implements OnInit {
     this.virtualForm.controls['islanguage'].setValue('yes');
     this.virtualForm.controls['preferredLanguage'].setValue([]);
     this.virtualForm.controls['pincode'].setValue('');
-    this.virtualForm.controls['location'].setValue('');
+    this.virtualForm.controls['localarea'].setValue('');
     this.virtualForm.controls['state'].setValue('');
     this.lngknown='yes';
     if(this.customer_data.userProfile.email){
@@ -348,8 +348,8 @@ export class VirtualFieldsComponent implements OnInit {
     if (customer.userProfile && customer.userProfile.pinCode) {
       this.virtualForm.patchValue({ pincode: customer.userProfile.pinCode });
     }
-    if (customer.userProfile && customer.userProfile.district) {
-      this.virtualForm.patchValue({ location: customer.userProfile.district });
+    if (customer.userProfile && customer.userProfile.city) {
+      this.virtualForm.patchValue({ localarea: customer.userProfile.city });
     }
     if (customer.userProfile && customer.userProfile.state) {
       this.virtualForm.patchValue({ state: customer.userProfile.state });
@@ -392,6 +392,7 @@ export class VirtualFieldsComponent implements OnInit {
       islanguage: ['', Validators.compose([Validators.required])],
       gender: ['', Validators.compose([Validators.required])],
       location: ['', Validators.compose([Validators.required])],
+      localarea:[''],
       state:[''],
       country:['']
     });
@@ -506,7 +507,7 @@ export class VirtualFieldsComponent implements OnInit {
       }
     }
     if (this.countryCode !== '+91') {
-      if (this.virtualForm.get('location').value === ''||this.virtualForm.get('state').value==='') {
+      if (this.virtualForm.get('localarea').value === ''||this.virtualForm.get('state').value==='') {
         isinvalid = true;
         
       }
@@ -691,11 +692,13 @@ console.log(isinvalid);
         userObj['preferredLanguages'] = formdata.preferredLanguage;
       }
       userObj['bookingLocation']= {}
-      if (_this.countryCode!=='+91'&&formdata.location!=='') {
-        userObj['bookingLocation']['district'] = formdata.location;
+      if (_this.countryCode!=='+91'&&formdata.localarea!=='') {
+        userObj['bookingLocation']['district'] = formdata.localarea;
+        userObj['city']=formdata.localarea;
       }
       if (_this.countryCode!=='+91'&&formdata.state ) {
         userObj['bookingLocation']['state'] = formdata.state;
+        userObj['state'] = formdata.state;
       }
       _this.lStorageService.setitemonLocalStorage('userId', _this.customer_data.id);
       _this.sharedServices.updateProfile(userObj, 'consumer').subscribe(
@@ -756,8 +759,8 @@ console.log(isinvalid);
     } else {
       memberInfo['preferredLanguages'] = formdata.preferredLanguage;
     }
-    if (this.countryCode!=='+91'&&formdata.location && formdata.location!=='') {
-      memberInfo['bookingLocation']['district'] = formdata.location;
+    if (this.countryCode!=='+91'&&formdata.localarea && formdata.localarea!=='') {
+      memberInfo['bookingLocation']['district'] = formdata.localarea;
     }
     if (this.countryCode!=='+91'&&formdata.state ) {
       memberInfo['bookingLocation']['state'] = formdata.state;
@@ -819,8 +822,8 @@ console.log(isinvalid);
       memberInfo['preferredLanguages'] = formdata.preferredLanguage;
     }
 
-    if (this.countryCode!=='+91'&&formdata.location && formdata.location!=='') {
-      memberInfo['bookingLocation']['district'] = formdata.location;
+    if (this.countryCode!=='+91'&&formdata.localarea && formdata.localarea!=='') {
+      memberInfo['bookingLocation']['district'] = formdata.localarea;
     }
     if (this.countryCode!=='+91'&&formdata.state ) {
       memberInfo['bookingLocation']['state'] = formdata.state;
