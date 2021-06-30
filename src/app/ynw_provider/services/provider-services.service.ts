@@ -1065,6 +1065,14 @@ export class ProviderServices {
     const url = 'provider/waitlist/update';
     return this.servicemeta.httpPut(url, post_data);
   }
+  // updateTeamWaitlist(post_data) {
+  //   const url = 'provider/waitlist/assignTeam';
+  //   return this.servicemeta.httpPut(url, post_data);
+  // }
+  // updateTeamAppointment(post_data) {
+  //   const url = 'provider/appointment/assignTeam';
+  //   return this.servicemeta.httpPut(url, post_data);
+  // }
   updateUserAppointment(post_data) {
     const url = 'provider/appointment/update';
     return this.servicemeta.httpPut(url, post_data);
@@ -1956,6 +1964,26 @@ export class ProviderServices {
     const url = 'provider/customers/group';
     return this.servicemeta.httpPost(url, data);
   }
+  createTeamGroup(data) {
+    const url = 'provider/user/team';
+    return this.servicemeta.httpPost(url, data);
+  } 
+  getTeamGroup() {
+    const url = 'provider/user/team';
+    return this.servicemeta.httpGet(url);
+  }
+  updateTeamGroup(data ,id) {
+    const url = 'provider/user/team/'  + id;;
+    return this.servicemeta.httpPut(url, data);
+  }
+  updateTeamWaitlist(post_data) {
+    const url = 'provider/waitlist/assignTeam';
+    return this.servicemeta.httpPut(url, post_data);
+  }
+  updateTeamAppointment(post_data) {
+    const url = 'provider/appointment/assignTeam';
+    return this.servicemeta.httpPut(url, post_data);
+  }
   updateCustomerGroup(data) {
     const url = 'provider/customers/group';
     return this.servicemeta.httpPut(url, data);
@@ -1971,6 +1999,19 @@ export class ProviderServices {
   updateCustomerGroupStatus(id, status) {
     const url = 'provider/customers/group/' + id + '/' + status;
     return this.servicemeta.httpPut(url);
+  }
+
+  updateTeamStatus(id, status) {
+    const url = 'provider/user/team/' + id + '/' + status;
+    return this.servicemeta.httpPut(url);
+  }
+  updateTeamMembers(data) {
+    const url = 'provider/user/updateTeam';
+    return this.servicemeta.httpPut(url,data);
+  }
+  assignLocationToUsers(data) {
+    const url = 'provider/user/updateBusinessLoc';
+    return this.servicemeta.httpPut(url,data);
   }
   addCustomerToGroup(name, data) {
     const url = 'provider/customers/group/' + name;

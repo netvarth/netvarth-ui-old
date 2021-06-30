@@ -15,13 +15,178 @@
               <button type="button" class="btn btn mb-2 action-button  btn-primary action-button-add"> <i
                       class="fa fa-plus"></i>User </button>
           </a>
+          <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
+              class="navbar-item-color bold pointer-cursor pull-right">
+              <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add"
+              data-toggle="modal" data-target="#exampleModalCenter">
+              <i class="fa fa-plus"></i>Create Team</button>
+          </a> 
+          <a  *ngIf="selectedGroup == 'all'" [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
+            class="navbar-item-color bold pointer-cursor pull-right">
+            <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add"
+            (click)="addlocation()">
+            <i class="fa fa-plus"></i>Assign Locations</button>
+          </a>
       </h5>
   </div>
 </section>
-<section class="app-branchusers-component">
-  <div class="content loc-list">
-      <div class="col-md-12 no-padding-small">
+
+<section class="app-branchusers-component customersList">
+
+   <!-- ***start Model for add Teams***** -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body" *ngIf="!showAddCustomerHint">
+          <div class="form-group">
+            <label for="exampleInputPassword1">Team Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control1" id="exampleInputPassword1" placeholder="Group Name"
+              [(ngModel)]="teamName" autocomplete="off" />
+          </div>
+          <div class="form-group mb-1">
+              <label for="exampleTextarea1">Size</label>
+              <textarea class="form-control1" id="exampleTextarea1" rows="4" [(ngModel)]="size"></textarea>
+          </div>
+          <div class="form-group mb-1">
+            <label for="exampleTextarea">Description</label>
+            <textarea class="form-control1" id="exampleTextarea" rows="4" [(ngModel)]="teamDescription"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer"  *ngIf="!showAddCustomerHint" >
+          <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal"
+            #closebutton>Cancel</button>
+          <button type="button" class="btn btn-primary font-weight-bold" 
+          (click)="customerGroupAction()">{{(teamEdit) ? 'Update' : 'Create'}}</button>
+        </div>
+        <div class="modal-body" *ngIf="showAddCustomerHint">
+          <div class="pad-10">
+            Do you want to add the users now?
+          </div>
+        </div>
+        <div class="modal-footer" *ngIf="showAddCustomerHint">
+          <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal"
+            #closebutton (click)="resetGroupFields();showCustomerHint()">Not Now</button>
+          <button type="button" class="btn btn-primary font-weight-bold"
+            (click)="showCustomerstoAdd('close')">Add Now</button>
+        </div>
+        <div class="error-section" *ngIf="apiError !== ''">
+            {{apiError}}
+          </div>
+      </div>
+    </div>
+    </div>
+      <!-- *** close Model for add Teams***** -->
+
+      <!-- *** start Model for add ASSIGN LOCATIONS***** -->
+    <div class="modal fade" id="exampleModalCenterlocation" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+           <div class="modal-content">
+              <div class="modal-body">
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Select Locations<span class="text-danger">*</span></label>
+                  </div>
+                  <label *ngFor="let loc of loc_list" class="checkbox checkbox-outline checkbox-outline-2x checkbox-primary mt-4 fnt-p8">
+											<input type="checkbox" name="Checkboxes16"  (change)="getLocIdsUserIds(loc,   loc.id ,$event)">
+											<span style="margin-right: 0.75rem;"></span> 
+                       {{loc.place | capitalizeFirst}} {{loc.address | capitalizeFirst}}
+                       <a [href]="loc.googleMapUrl" target="_blank" class="icon-location" matTooltip="Click to navigate"></a>
+                       <br>
+									</label>
+                </div>
+                <div class="modal-footer"  *ngIf="!showAddCustomerHint" >
+                  <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal"
+                    #closebutton>Cancel</button>
+                  <button type="button" class="btn btn-primary font-weight-bold" 
+                  (click)="assignLocationToUsers()">{{(teamEdit) ? 'Update' : 'Save'}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- *** CLOSE Model for add ASSIGN LOCATIONS***** -->
+    <div class="card" *ngIf="teamLoaded">
+      <app-common-innerloading-spinner></app-common-innerloading-spinner>
+    </div>
+
+    <!-- *** showing left side team names and content***** -->
+    <div class="col-lg-4" *ngIf="!teamLoaded && groups.length > 0">
+      <div class="card card-custom card-stretch gutter-b pitch_blu">
+        <div class="card grp_label mb-2 pointer-cursor" (click)="customerGroupSelection('all')"
+          [ngClass]="{'highlight': selectedGroup == 'all'}">All Users</div>
+        <button mat-flat-button class="font-size-xs add_btn mgn-bt-10" data-toggle="modal"
+          data-target="#exampleModalCenter">Create Team</button>
+        <div class="card grp_label mb-2" *ngFor="let group of groups"
+          (click)="group.status=='ACTIVE' && customerGroupSelection(group)"
+          [ngClass]="{'highlight': selectedGroup.id==group.id}" 
+          [class.disabled-group]="group.status=='INACTIVE'"
+          [class.pointer-cursor]="group.status=='ACTIVE'">  
+          <div class="max-hgt-20">
+            <span class="pull-left group-name">{{group.name}}</span>
+            <span class="pull-right mgn-m-up-10">
+              <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event);">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button type="button" mat-menu-item data-toggle="modal" data-target="#exampleModalCenter"
+                  (click)="editGroup(group)">
+                  <i class="icon-edit chkin-mobic"></i>
+                  Edit
+                </button>
+                <button type="button" mat-menu-item (click)="changeGroupStatus(group)">
+                  <i *ngIf="group.status=='INACTIVE'" class="icon-enable phone-in-icon"></i>
+                  <i *ngIf="group.status=='ACTIVE'" class="icon-disable phone-in-icon"></i>
+                  {{(group.status==='ACTIVE') ? 'Disable' : 'Enable'}}
+                </button>
+              </mat-menu>
+            </span>
+          </div>
+          <div class="selected_customers">{{group.description}}</div>
+        </div>
+      </div>
+   </div>
+  <!-- *** close left side team names and content***** -->
+
+
+  <div>
+      <div class="col-lg-8" [class.col-lg-12]="groups.length==0" *ngIf="!teamLoaded" >            
           <div class="card p0 w-dta">
+            <!-- *** start show group name right side and add buttons and cancel buttons*** -->
+             <div class="p-3">
+                  <h3 class="align-items-start flex-column">
+                    <span class="card-label font-1 font-weight-bolder text-dark"
+                      *ngIf="selectedGroup == 'all' && groups.length > 0">All
+                      Users</span> <span class="card-label font-1 font-weight-bolder text-dark">
+                      </span>
+                    <span class="card-label font-1 font-weight-bolder text-dark"
+                      *ngIf="selectedGroup !== 'all'">{{selectedGroup.name}}</span>
+                    <div class="sel-group-desc">{{selectedGroup.description}}</div>
+                  </h3>
+             </div>
+             <div class="col-sm-12 col-lg-8 col-xs-12 col-md-12 mb-4">
+                   <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
+                   *ngIf="selectedGroup !== 'all' && !showUsers">
+                   Add Users</button>
+                   
+                   <button mat-flat-button class="font-size-xs add_btn mgn-lt-10 cancel_btn" (click)="cancelAdd()"
+                  *ngIf="selectedGroup !== 'all'  && showUsers"><i class="fa fa-times mgn-rt-5" aria-hidden="true"></i>
+                   Cancel</button>
+        
+                  <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="addCustomerToGroup()"
+                  *ngIf="selectedGroup !== 'all'  && showUsers &&  this.userIds.length > 0">
+                  Add</button>
+
+                  <button mat-flat-button class="font-size-xs add_btn mgn-lt-10 cancel_btn" (click)="locationclose()"
+                  *ngIf="addlocationcheck"><i class="fa fa-times mgn-rt-5" aria-hidden="true"></i>
+                  Cancel</button>
+                  
+                  <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" 
+                  *ngIf="addlocationcheck && this.userIds.length > 0" data-toggle="modal" data-target="#exampleModalCenterlocation">
+                  Assign Locations</button>
+             </div>            
+            <!-- *** close show group name right side and add buttons and cancel buttons*** -->
+
+             <!-- ***Apply  filter code***** -->
               <aside class="filterSidebar filter-sidebar user-filter" *ngIf="filter_sidebar">
                   <section class="sidebar filter-container" id="filterContainer" style="overflow:auto" 
                       [ngStyle]="{'height.vh': 90, 'margin-top.px': filterapplied === true ? 95 : 44}">
@@ -293,6 +458,9 @@
                       </button>
                   </div>
               </aside>
+              <!-- *** close Apply filter code***** -->
+
+              <!-- *** start users details code ***** -->
               <section class="customersList">
                   <div class="row p-3">
                       <div class="col-lg-12">
@@ -319,10 +487,17 @@
                                               <tbody>
                                                   <tr class="row_data border-bottom pointer-cursor waitlist-box"
                                                       *ngFor="let service of users_list | orderBy: order; let i = index;"
-                                                      (click)="selectedRow(i,service)"
+                                               
                                                       [class.disabled-group]="service.status=='INACTIVE'">
+                                                      <!-- (click)="selectedRow(i,service)" -->
                                                       <td class="">
                                                           <div class="disp-flex">
+                                                              <div class="pr-3 check-box"   *ngIf="showcheckbox">
+                                                                  <span class="symbol-label">
+                                                                    <!-- <input type="checkbox" name="Checkboxes4" [checked]="checkSelection(service)"> -->
+                                                                    <input type="checkbox" name="Checkboxes4"  (change)="getUserIds(service, service.id , $event)">
+                                                                  </span>
+                                                                </div>
                                                               <div class='user-img'>
                                                                   <img [src]="getUserImg(service)" />
                                                               </div>
@@ -462,6 +637,7 @@
                       </div>
                   </div>
               </section>
+              <!-- *** close  users details code ***** -->
           </div>
       </div>
       <div class="clearfix"></div>

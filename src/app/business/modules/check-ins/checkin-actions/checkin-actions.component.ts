@@ -530,6 +530,10 @@ export class CheckinActionsComponent implements OnInit {
         this.dialogRef.close();
         this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid, 'user'], { queryParams: { source: 'checkin' } });
     }
+    assignteam() {
+        this.dialogRef.close();
+        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid, 'team'], { queryParams: { source: 'checkin' } });
+    }
     removeProvider() {
         // this.dialogRef.close();
         let msg = '';
