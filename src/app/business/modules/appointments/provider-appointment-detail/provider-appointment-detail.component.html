@@ -38,7 +38,7 @@
                 </div>
               </h2>
               <!-- Content -->
-              <div class="mgn-up-10 stats-item">
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.appmtFor[0].firstName || waitlist_data.appmtFor[0].lastName">
                 <span class="itemHead">Booking For</span>
                 <span class="itemVal">{{waitlist_data.appmtFor[0].firstName | capitalizeFirst}}
                   {{waitlist_data.appmtFor[0].lastName | capitalizeFirst}}</span>

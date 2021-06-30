@@ -27,6 +27,7 @@ export class InboxOuterComponent implements OnInit {
   loading = false;
   message = '';
   selectedProvider = '';
+  accId = '';
   selectedProviderName = '';
   selectedMessage = {
     files: [],
@@ -76,6 +77,7 @@ export class InboxOuterComponent implements OnInit {
       this.activaterouterobj.queryParams.subscribe(qparams => {
         if (qparams.accountId) {
           this.selectedProvider = qparams.accountId;
+          this.accId = qparams.accountId;
           this.customId = qparams.customId;
           this.showChat =true;
         }
