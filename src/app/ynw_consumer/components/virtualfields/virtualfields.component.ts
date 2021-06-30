@@ -33,7 +33,7 @@ export class VirtualFieldsComponent implements OnInit {
   consumer_label: any;
   disableButton;
   loading = false;
-  submitbtndisabled=false;
+  submitbtndisabled = false;
   languages = [
     "Hindi",
     "Kannada",
@@ -70,7 +70,8 @@ export class VirtualFieldsComponent implements OnInit {
   countryCode: any;
   serviceDetails: any;
   provider: any;
-  languageSelected: any=[];
+  languageSelected: any = [];
+  iseditLanguage=false;
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
@@ -78,26 +79,26 @@ export class VirtualFieldsComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     private s3Processor: S3UrlProcessor,
     private sharedServices: SharedServices,
-     private shared_functions:SharedFunctions,
+    private shared_functions: SharedFunctions,
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
   ) {
-   // this.months = projectConstantsLocal.MONTH;
-    for (let i = 1; i <= 31; i++) {
-      if (i < 10) {
-        this.allDates.push('0' + i);
-      } else {
-        this.allDates.push(i);
-      }
-    }
-    // for (let i = 1; i <= 12; i++) {
-    //   this.months.push(i);
+    // this.months = projectConstantsLocal.MONTH;
+    // for (let i = 1; i <= 31; i++) {
+    //   if (i < 10) {
+    //     this.allDates.push('0' + i);
+    //   } else {
+    //     this.allDates.push(i);
+    //   }
     // }
-    for (let i = 1900; i <= 2021; i++) {
-      this.years.push(i);
-    }
-    this.dates = this.allDates;
+    // // for (let i = 1; i <= 12; i++) {
+    // //   this.months.push(i);
+    // // }
+    // for (let i = 1900; i <= 2021; i++) {
+    //   this.years.push(i);
+    // }
+    // this.dates = this.allDates;
     if (dialogData) {
       if (dialogData.consumer) {
         this.dialogData = this.s3Processor.getJson(dialogData.consumer);
@@ -107,26 +108,29 @@ export class VirtualFieldsComponent implements OnInit {
       if (dialogData.theme) {
         this.theme = dialogData.theme;
       }
-      if(dialogData.service){
-        this.serviceDetails=dialogData.service;
+      if (dialogData.service) {
+        this.serviceDetails = dialogData.service;
         console.log(this.serviceDetails);
       }
-      if(dialogData.businessDetails){
-        if(dialogData.businessDetails.businessName){
-          this.provider=dialogData.businessDetails.businessName;
-        }else if(dialogData.businessDetails.businessName){
-          this.provider=dialogData.businessDetails.businessUserName ;
+      if (dialogData.businessDetails) {
+        if (dialogData.businessDetails.businessName) {
+          this.provider = dialogData.businessDetails.businessName;
+        } else if (dialogData.businessDetails.businessName) {
+          this.provider = dialogData.businessDetails.businessUserName
         }
       }
 
     }
     this.age = this.lStorageService.getitemfromLocalStorage('age');
-    this.userId=this.lStorageService.getitemfromLocalStorage('userId');
+    this.userId = this.lStorageService.getitemfromLocalStorage('userId');
     this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
+    console.log(this.consumer_label);
     this.getActiveUserInfo().then(data => {
       this.customer_data = data;
-     this.countryCode=this.customer_data.userProfile.countryCode;
-      this.mandatoryEmail=this.customer_data.userProfile.email;
+      this.countryCode = this.customer_data.userProfile.countryCode;
+
+      this.mandatoryEmail = this.customer_data.userProfile.email;
       this.createForm();
       this.getFamilyMembers();
     });
@@ -137,10 +141,10 @@ export class VirtualFieldsComponent implements OnInit {
   }
   isNumeric(evt) {
     return this.shared_functions.isNumeric(evt);
-}
-isNumericSign(evt) {
-  return this.shared_functions.isNumericSign(evt);
-}
+  }
+  isNumericSign(evt) {
+    return this.shared_functions.isNumericSign(evt);
+  }
   ngOnInit(): void {
 
 
@@ -183,12 +187,14 @@ isNumericSign(evt) {
   }
   onServiceForChange(event) {
     this.serviceFormReset();
+    console.log(event);
     this.is_parent = true;
     if (event !== 'new_member') {
       const chosen_Object = this.familymembers.filter(memberObj => memberObj.user === event);
       if (chosen_Object.length !== 0) {
         this.is_parent = false;
         this.chosen_person = chosen_Object[0]
+        console.log(this.chosen_person);
         this.setMemberDetails(chosen_Object[0]);
       } else {
         this.chosen_person = this.customer_data
@@ -197,25 +203,9 @@ isNumericSign(evt) {
     } else {
       this.is_parent = false;
       this.chosen_person = 'new_member'
-  
+
     }
 
-  }
-  checkMainMemberEmailId() {
-    let isemail=false;
-    if(this.mandatoryEmail==='' && this.virtualForm.get('email').value===''){
-      isemail=false;
-    }else if(this.mandatoryEmail==='' &&this.virtualForm.get('email').value!==''){
-      this.updateParentInfo(this.virtualForm.value).then(
-        (result) => {
-          isemail=true;
-          this.getActiveUserInfo();
-        });
-    }else{
-      isemail=true;
-    }
-    console.log(isemail);
-    return isemail;
   }
 
   setMemberDetails(memberObj) {
@@ -231,21 +221,18 @@ isNumericSign(evt) {
     //   this.virtualForm.patchValue({ month:'mm' });
     //   this.virtualForm.patchValue({ year: 'yyyy' });
     // }
-    if(memberObj.userProfile.age){
+    if (memberObj.userProfile.age) {
       this.virtualForm.patchValue({ age: memberObj.userProfile.age });
-    }if(memberObj.userProfile.id===this.userId&&this.age){
+    } if (memberObj.userProfile.id === this.userId && this.age) {
       this.virtualForm.patchValue({ age: this.age });
     }
     if (memberObj.userProfile && memberObj.userProfile.gender) {
       this.virtualForm.patchValue({ gender: memberObj.userProfile.gender });
     }
-     //else {
-    //   this.virtualForm.patchValue({ gender: 'male' });
-    // }
     if (memberObj.userProfile && memberObj.userProfile.email) {
       this.virtualForm.patchValue({ email: memberObj.userProfile.email });
-    }else{
-      this.virtualForm.patchValue({ email: this.customer_data.userProfile.email  });
+    } else {
+      this.virtualForm.patchValue({ email: this.customer_data.userProfile.email });
     }
     if (memberObj.preferredLanguages && memberObj.preferredLanguages !== null) {
       const preferredLanguage = this.s3Processor.getJson(memberObj.preferredLanguages);
@@ -270,17 +257,23 @@ isNumericSign(evt) {
     if (memberObj.bookingLocation && memberObj.bookingLocation.pincode) {
       this.virtualForm.patchValue({ pincode: memberObj.bookingLocation.pincode });
     }
+    if (memberObj.bookingLocation && memberObj.bookingLocation.district) {
+      this.virtualForm.patchValue({ localarea: memberObj.bookingLocation.district });
+    }
+    if (memberObj.bookingLocation && memberObj.bookingLocation.state) {
+      this.virtualForm.patchValue({ state: memberObj.bookingLocation.state });
+    }
     if (memberObj.userProfile && memberObj.userProfile.whatsAppNum) {
       this.virtualForm.patchValue({ whatsappnumber: memberObj.userProfile.whatsAppNum.number });
       this.virtualForm.patchValue({ countryCode_whtsap: memberObj.userProfile.whatsAppNum.countryCode });
-    }else{
-      this.virtualForm.patchValue({ whatsappnumber:this.customer_data.userProfile.primaryMobileNo });
+    } else {
+      this.virtualForm.patchValue({ whatsappnumber: this.customer_data.userProfile.primaryMobileNo });
       this.virtualForm.patchValue({ countryCode_whtsap: this.customer_data.userProfile.countryCode });
     }
     if (memberObj.userProfile && memberObj.userProfile.telegramNum) {
       this.virtualForm.patchValue({ telegramnumber: memberObj.userProfile.telegramNum.number });
       this.virtualForm.patchValue({ countryCode_telegram: memberObj.userProfile.telegramNum.countryCode });
-    }else{
+    } else {
       this.virtualForm.patchValue({ telegramnumber: this.customer_data.userProfile.primaryMobileNo });
       this.virtualForm.patchValue({ countryCode_telegram: this.customer_data.userProfile.countryCode })
     }
@@ -298,19 +291,21 @@ isNumericSign(evt) {
     this.virtualForm.controls['islanguage'].setValue('yes');
     this.virtualForm.controls['preferredLanguage'].setValue([]);
     this.virtualForm.controls['pincode'].setValue('');
-    this.virtualForm.controls['location'].setValue('');
+    this.virtualForm.controls['localarea'].setValue('');
+    this.virtualForm.controls['state'].setValue('');
+    this.lngknown='yes';
     if(this.customer_data.userProfile.email){
-      this.virtualForm.patchValue({ email:  this.customer_data.userProfile.email});
-      }else{
-        this.virtualForm.patchValue({ email: ''}); 
-      }
+    this.virtualForm.patchValue({ email:  this.customer_data.userProfile.email});
+    }else{
+      this.virtualForm.patchValue({ email: ''}); 
+    }
     this.virtualForm.patchValue({ whatsappnumber: this.customer_data.userProfile.primaryMobileNo });
-    this.virtualForm.patchValue({ telegramnumber: this.customer_data.userProfile.primaryMobileNo  });
+    this.virtualForm.patchValue({ telegramnumber: this.customer_data.userProfile.primaryMobileNo });
   }
   setparentDetails(customer) {
-  
 
-    
+
+
     // if (customer.userProfile && customer.userProfile.dob!==undefined) {
 
     //   const dob = customer.userProfile.dob.split('-');
@@ -323,25 +318,23 @@ isNumericSign(evt) {
     //   this.virtualForm.patchValue({ month: 'mm' });
     //   this.virtualForm.patchValue({ year: 'yyyy' });
     // }
-    if(customer.userProfile.age){
+    if (customer.userProfile.age) {
       this.virtualForm.patchValue({ age: customer.userProfile.age });
     }
-     if(customer.userProfile.id===this.userId&&this.age){
-        this.virtualForm.patchValue({ age: this.age });
-      }
-    
-   
+    if (customer.userProfile.id === this.userId && this.age) {
+      this.virtualForm.patchValue({ age: this.age });
+    }
+
+
     if (customer.userProfile && customer.userProfile.gender) {
       this.virtualForm.patchValue({ gender: customer.userProfile.gender });
     }
-    //  else {
-    //   this.virtualForm.patchValue({ gender: 'male' });
-    // }
     if (customer.userProfile && customer.userProfile.email) {
       this.virtualForm.patchValue({ email: customer.userProfile.email });
     }
     if (customer.userProfile.preferredLanguages && customer.userProfile.preferredLanguages !== null) {
       const preferredLanguage = this.s3Processor.getJson(customer.userProfile.preferredLanguages);
+      console.log(preferredLanguage);
       if (preferredLanguage !== null && preferredLanguage.length > 0) {
         let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
         this.virtualForm.patchValue({ islanguage: defaultEnglish });
@@ -354,11 +347,17 @@ isNumericSign(evt) {
     if (customer.userProfile && customer.userProfile.pinCode) {
       this.virtualForm.patchValue({ pincode: customer.userProfile.pinCode });
     }
+    if (customer.userProfile && customer.userProfile.district) {
+      this.virtualForm.patchValue({ localarea: customer.userProfile.district });
+    }
+    if (customer.userProfile && customer.userProfile.state) {
+      this.virtualForm.patchValue({ state: customer.userProfile.state });
+    }
     if (customer.userProfile && customer.userProfile.whatsAppNum) {
       this.virtualForm.patchValue({ whatsappnumber: customer.userProfile.whatsAppNum.number });
       this.virtualForm.patchValue({ countryCode_whtsap: customer.userProfile.whatsAppNum.countryCode });
-      
-    }else{
+
+    } else {
       this.virtualForm.patchValue({ whatsappnumber: customer.userProfile.primaryMobileNo });
       this.virtualForm.patchValue({ countryCode_whtsap: customer.userProfile.countryCode });
     }
@@ -366,7 +365,7 @@ isNumericSign(evt) {
       this.virtualForm.patchValue({ telegramnumber: customer.userProfile.telegramNum.number });
       this.virtualForm.patchValue({ countryCode_telegram: customer.userProfile.telegramNum.countryCode });
     }
-    else{
+    else {
       this.virtualForm.patchValue({ telegramnumber: customer.userProfile.primaryMobileNo });
       this.virtualForm.patchValue({ countryCode_telegram: customer.userProfile.countryCode });
     }
@@ -377,23 +376,26 @@ isNumericSign(evt) {
       firstName: [''],
       lastName: [''],
       serviceFor: ['', Validators.compose([Validators.required])],
-      countryCode_whtsap:[this.countryCode],
-      countryCode_telegram:[this.countryCode],
+      countryCode_whtsap: [this.countryCode],
+      countryCode_telegram: [this.countryCode],
       // dob: ['', Validators.compose([Validators.required])],
       // date: [''],
       // month: [''],
       // year: [''],
-      age:['', Validators.compose([Validators.required,Validators.min(0),Validators.max(150)])],
+      age: ['', Validators.compose([Validators.required, Validators.min(0), Validators.max(150)])],
       pincode: ['', Validators.compose([Validators.required])],
-      email: ['', Validators.compose([ Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
+      email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
       whatsappnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
       telegramnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
       preferredLanguage: [[], Validators.compose([Validators.required])],
       islanguage: ['', Validators.compose([Validators.required])],
       gender: ['', Validators.compose([Validators.required])],
-      location: ['', Validators.compose([Validators.required])]
+      location: ['', Validators.compose([Validators.required])],
+      localarea:[''],
+      state:[''],
+      country:['']
     });
-   // this.virtualForm.patchValue({ gender: 'male' });
+
     this.virtualForm.patchValue({ islanguage: 'yes' });
     // this.virtualForm.patchValue({ date: 'dd' });
     // this.virtualForm.patchValue({ month:'mm' });
@@ -415,12 +417,14 @@ isNumericSign(evt) {
     this.dialogRef.close();
   }
   editLanguage() {
+    this.iseditLanguage=true;
     console.log(this.virtualForm.get('preferredLanguage').value);
     this.languageSelected = this.virtualForm.get('preferredLanguage').value.slice();
     console.log(this.languageSelected);
     this.hideLanguages = false;
   }
   updateForm() {
+    console.log(this.dialogData.type);
     if (this.dialogData.type && this.dialogData.type === 'member') {
       this.details = this.dialogData.consumer
     } else {
@@ -429,11 +433,21 @@ isNumericSign(evt) {
     if (this.details.parent) {
       this.setMemberDetails(this.details);
     } else {
+      console.log(this.details);
       this.setparentDetails(this.details);
+
     }
 
   }
   saveLanguages() {
+    console.log('save languages');
+    if (this.lngknown === 'yes') {
+      this.virtualForm.get('preferredLanguage').setValue(['English']);
+      this.hideLanguages = true;
+      this.languageSelected = [];
+      this.iseditLanguage=false;
+    }
+  else{
     this.virtualForm.patchValue({ 'preferredLanguage': this.languageSelected });
     if (this.virtualForm.get('preferredLanguage').value.length === 0) {
       this.snackbarService.openSnackBar('Please select one', { 'panelClass': 'snackbarerror' });
@@ -444,6 +458,7 @@ isNumericSign(evt) {
     // let elmnt = document.getElementById("plng");
     // elmnt.scrollIntoView()
   }
+}
   cancelLanguageSelection() {
     if (this.virtualForm.get('preferredLanguage').value.length == 0) {
       this.virtualForm.get('preferredLanguage').setValue(['English']);
@@ -484,32 +499,43 @@ isNumericSign(evt) {
   }
   validateFields() {
     let isinvalid = false;
-    if(this.countryCode==='+91'){
+    if (this.countryCode === '+91') {
       if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
         isinvalid = true;
+        console.log(isinvalid);
       }
     }
-    if(this.virtualForm.get('gender').value===''){
+    if (this.countryCode !== '+91') {
+      if (this.virtualForm.get('localarea').value === ''||this.virtualForm.get('state').value==='') {
+        isinvalid = true;
+        
+      }
+    }
+    if (this.virtualForm.get('gender').value === '') {
       isinvalid = true;
+      console.log(isinvalid);
     }
     if (this.virtualForm.get('age').value === '') {
       isinvalid = true;
+      console.log(isinvalid);
     }
-    // if (this.virtualForm.get('dob').value === '') {
-    //   isinvalid = true;
-    // }
+
     if (this.virtualForm.get('islanguage').value === 'no') {
       if (this.virtualForm.get('preferredLanguage').value.length === 0) {
         isinvalid = true;
+        console.log(isinvalid);
       }
     }
+   
     if (this.virtualForm.get('serviceFor').value === 'new_member') {
 
       if (this.virtualForm.get('firstName').value == '') {
         isinvalid = true;
+        console.log(isinvalid);
       }
       if (this.virtualForm.get('lastName').value == '') {
         isinvalid = true;
+        console.log(isinvalid);
       }
     }
     // if (this.virtualForm.get('date').value === 'dd') {
@@ -521,7 +547,7 @@ isNumericSign(evt) {
     // if (this.virtualForm.get('year').value === 'yyyy') {
     //   isinvalid = true;
     // }
-
+console.log(isinvalid);
     return isinvalid;
   }
 
@@ -560,28 +586,26 @@ isNumericSign(evt) {
   }
 
   onSubmit(formdata) {
-    this.submitbtndisabled=true;
-    formdata['phoneno']=this.customer_data.userProfile.primaryMobileNo;
-    if(this.virtualForm.controls.email.invalid){
-      return false;
-    }
+    this.submitbtndisabled = true;
+    formdata['phoneno'] = this.customer_data.userProfile.primaryMobileNo;
+     if(this.virtualForm.controls.email.invalid){
+       return false;
+     }
     if (this.validateFields() === true) {
-      this.snackbarService.openSnackBar('Please fill all required fields', { 'panelClass': 'snackbarerror' });
-    } else {
-      // const dob = this.virtualForm.get('year').value + '-' + this.virtualForm.get('month').value + '-' + this.virtualForm.get('date').value;
-
-      // formdata['dob'] = dob;
+      this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
+    } else  {
+      console.log('success inisde');
       if (this.is_parent) {
         this.updateParentInfo(formdata).then(
           (result) => {
             if (result !== false) {
               this.lStorageService.setitemonLocalStorage('age', formdata.age);
-              this.submitbtndisabled=false;
+              this.submitbtndisabled = false;
               this.dialogRef.close(formdata);
             }
           },
           (error) => {
-            this.submitbtndisabled=false;
+            this.submitbtndisabled = false;
             return false;
           }
         );
@@ -591,39 +615,42 @@ isNumericSign(evt) {
             if (data !== false) {
               this.lStorageService.setitemonLocalStorage('age', formdata.age);
               formdata['newMemberId'] = data;
-              this.submitbtndisabled=false;
+              this.submitbtndisabled = false;
               this.dialogRef.close(formdata);
             }
           },
             () => {
-              this.submitbtndisabled=false;
+              this.submitbtndisabled = false;
               return false;
             })
         } else {
           this.updateMemberInfo(formdata).then(
             (data) => {
               if (data !== false) {
-                this.submitbtndisabled=false;
+                this.submitbtndisabled = false;
                 this.lStorageService.setitemonLocalStorage('age', formdata.age);
                 this.dialogRef.close(formdata);
               }
             },
             () => {
-              this.submitbtndisabled=false;
+              this.submitbtndisabled = false;
               return false;
             }
           );
         }
 
 
-      }
+      
+    
 
     }
+  }
 
 
 
   }
   updateParentInfo(formdata) {
+
     const _this = this;
     const firstName = _this.customer_data.userProfile.firstName
     const lastName = _this.customer_data.userProfile.lastName;
@@ -663,6 +690,13 @@ isNumericSign(evt) {
       } else {
         userObj['preferredLanguages'] = formdata.preferredLanguage;
       }
+      userObj['bookingLocation']= {}
+      if (_this.countryCode!=='+91'&&formdata.localarea!=='') {
+        userObj['bookingLocation']['district'] = formdata.localarea;
+      }
+      if (_this.countryCode!=='+91'&&formdata.state ) {
+        userObj['bookingLocation']['state'] = formdata.state;
+      }
       _this.lStorageService.setitemonLocalStorage('userId', _this.customer_data.id);
       _this.sharedServices.updateProfile(userObj, 'consumer').subscribe(
         () => {
@@ -677,6 +711,7 @@ isNumericSign(evt) {
   }
 
   updateMemberInfo(formdata) {
+    console.log(formdata);
     const _this = this;;
     const firstName = _this.chosen_person.userProfile.firstName;
     const lastName = _this.chosen_person.userProfile.lastName;
@@ -721,10 +756,11 @@ isNumericSign(evt) {
     } else {
       memberInfo['preferredLanguages'] = formdata.preferredLanguage;
     }
-
-    if (formdata.location.State && formdata.location.Name) {
-      memberInfo.bookingLocation['state'] = formdata.location.State;
-      memberInfo.bookingLocation['city'] = formdata.location.Name
+    if (this.countryCode!=='+91'&&formdata.localarea && formdata.localarea!=='') {
+      memberInfo['bookingLocation']['district'] = formdata.localarea;
+    }
+    if (this.countryCode!=='+91'&&formdata.state ) {
+      memberInfo['bookingLocation']['state'] = formdata.state;
     }
     this.lStorageService.setitemonLocalStorage('userId', formdata.serviceFor);
     return new Promise(function (resolve, reject) {
@@ -783,9 +819,11 @@ isNumericSign(evt) {
       memberInfo['preferredLanguages'] = formdata.preferredLanguage;
     }
 
-    if (formdata.location.State && formdata.location.Name) {
-      memberInfo['bookingLocation']['state'] = formdata.location.State;
-      memberInfo['bookingLocation']['city'] = formdata.location.Name
+    if (this.countryCode!=='+91'&&formdata.localarea && formdata.localarea!=='') {
+      memberInfo['bookingLocation']['district'] = formdata.localarea;
+    }
+    if (this.countryCode!=='+91'&&formdata.state ) {
+      memberInfo['bookingLocation']['state'] = formdata.state;
     }
     return new Promise(function (resolve, reject) {
       _this.sharedServices.addMembers(memberInfo).subscribe(
