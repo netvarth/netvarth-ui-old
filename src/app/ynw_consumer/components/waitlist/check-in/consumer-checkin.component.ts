@@ -1294,6 +1294,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.selectedMessage.files.splice(i, 1);
         this.selectedMessage.base64.splice(i, 1);
         this.selectedMessage.caption.splice(i, 1);
+        this.imgCaptions[i] = '';
     }
     consumerNoteAndFileSave(uuids) {
         const dataToSend: FormData = new FormData();
