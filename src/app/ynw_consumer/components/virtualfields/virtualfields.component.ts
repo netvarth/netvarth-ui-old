@@ -347,8 +347,8 @@ export class VirtualFieldsComponent implements OnInit {
     if (customer.userProfile && customer.userProfile.pinCode) {
       this.virtualForm.patchValue({ pincode: customer.userProfile.pinCode });
     }
-    if (customer.userProfile && customer.userProfile.district) {
-      this.virtualForm.patchValue({ localarea: customer.userProfile.district });
+    if (customer.userProfile && customer.userProfile.city) {
+      this.virtualForm.patchValue({ localarea: customer.userProfile.city });
     }
     if (customer.userProfile && customer.userProfile.state) {
       this.virtualForm.patchValue({ state: customer.userProfile.state });
@@ -693,9 +693,11 @@ console.log(isinvalid);
       userObj['bookingLocation']= {}
       if (_this.countryCode!=='+91'&&formdata.localarea!=='') {
         userObj['bookingLocation']['district'] = formdata.localarea;
+        userObj['city']=formdata.localarea;
       }
       if (_this.countryCode!=='+91'&&formdata.state ) {
         userObj['bookingLocation']['state'] = formdata.state;
+        userObj['state'] = formdata.state;
       }
       _this.lStorageService.setitemonLocalStorage('userId', _this.customer_data.id);
       _this.sharedServices.updateProfile(userObj, 'consumer').subscribe(
