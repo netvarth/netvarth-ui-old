@@ -3,14 +3,13 @@
   padding-left: 5px;
   padding-right: 5px;
   padding-bottom: 5px;
+  border: 1.75px solid #d0d0d0 !important;
 }
-
 .container-calendar {
   border-radius: 8px !important;
   overflow: hidden !important;
   padding: 20px !important;
 }
-
 h3 {
   color: #515151 !important;
   font-family: "Roboto", sans-serif !important;
@@ -19,25 +18,21 @@ h3 {
   height: 34px;
   line-height: 34px;
 }
-
 .custom-left-btn {
   border-top-left-radius: 5px !important;
   border-bottom-left-radius: 5px !important;
   border-right: 0 !important;
 }
-
 .custom-right-btn {
   border-top-right-radius: 5px !important;
   border-bottom-right-radius: 5px !important;
   border-left: 0 !important;
 }
-
 .custom-middle-btn {
   border-left: 0 !important;
   border-right: 0 !important;
   border-radius: 0 !important;
 }
-
 .btn-blue {
   color: white !important;
   font-weight: 400 !important;
@@ -45,46 +40,38 @@ h3 {
   background-color: #1E4079 !important;
   border: 1px solid #1E4079 !important;
 }
-
 .btn-blue:hover,
 .btn-blue:active,
 .btn-blue:focus {
   background-color: #1B3A6C !important;
   border: 1px solid #1B3A6C !important;
 }
-
 .custom-left-btn.btn-blue {
   border-right: 0 !important;
 }
-
 .custom-right-btn.btn-blue {
   border-left: 0 !important;
 }
-
 .custom-middle-btn.btn-blue {
   border-left: 0 !important;
   border-right: 0 !important;
 }
-
 .custom-left-btn.btn-blue:hover,
 .custom-left-btn.btn-blue:active,
 .custom-left-btn.btn-blue:focus {
   border-right: 0 !important;
 }
-
 .custom-right-btn.btn-blue:hover,
 .custom-right-btn.btn-blue:active,
 .custom-right-btn.btn-blue:focus {
   border-left: 0 !important;
 }
-
 .custom-middle-btn.btn-blue:hover,
 .custom-middle-btn.btn-blue:active,
 .custom-middle-btn.btn-blue:focus {
   border-left: 0 !important;
   border-right: 0 !important;
 }
-
 .btn-white {
   border: 1px solid #9d9d9d !important;
   color: #515151 !important;
@@ -92,46 +79,38 @@ h3 {
   font-family: "Roboto", sans-serif !important;
   background-color: #ffffff !important;
 }
-
 .btn-white:hover,
 .btn-white:focus,
 .btn-white:active {
   background-color: #f9f9f9 !important;
   border: 1px solid #9d9d9d !important;
 }
-
 .custom-left-btn.btn-white {
   border-right: 0 !important;
 }
-
 .custom-right-btn.btn-white {
   border-left: 0 !important;
 }
-
 .custom-middle-btn.btn-white {
   border-left: 0 !important;
   border-right: 0 !important;
 }
-
 .custom-left-btn.btn-white:hover,
 .custom-left-btn.btn-white:active,
 .custom-left-btn.btn-white:focus {
   border-right: 0 !important;
 }
-
 .custom-right-btn.btn-white:hover,
 .custom-right-btn.btn-white:active,
 .custom-right-btn.btn-white:focus {
   border-left: 0 !important;
 }
-
 .custom-middle-btn.btn-white:hover,
 .custom-middle-btn.btn-white:active,
 .custom-middle-btn.btn-white:focus {
   border-left: 0 !important;
   border-right: 0 !important;
 }
-
 .btn-blue.active {
   border: 1px solid #9d9d9d !important;
   color: #515151 !important;
@@ -139,46 +118,38 @@ h3 {
   font-family: "Roboto", sans-serif !important;
   background-color: #ffffff !important;
 }
-
 .btn-blue.active:hover,
 .btn-blue.active:active,
 .btn-blue.active:focus {
   background-color: #f9f9f9 !important;
   border: 1px solid #9d9d9d !important;
 }
-
 .custom-left-btn.btn-blue.active {
   border-right: 0 !important;
 }
-
 .custom-right-btn.btn-blue.active {
   border-left: 0 !important;
 }
-
 .custom-middle-btn.btn-blue.active {
   border-left: 0 !important;
   border-right: 0 !important;
 }
-
 .custom-left-btn.btn-blue.active:hover,
 .custom-left-btn.btn-blue.active:active,
 .custom-left-btn.btn-blue.active:focus {
   border-right: 0 !important;
 }
-
 .custom-right-btn.btn-blue.active:hover,
 .custom-right-btn.btn-blue.active:active,
 .custom-right-btn.btn-blue.active:focus {
   border-left: 0 !important;
 }
-
 .custom-middle-btn.btn-blue.active:hover,
 .custom-middle-btn.btn-blue.active:active,
 .custom-middle-btn.btn-blue.active:focus {
   border-left: 0 !important;
   border-right: 0 !important;
 }
-
 ::ng-deep .container-calendar mwl-calendar-month-view mwl-calendar-month-view-header .cal-cell-row.cal-header .cal-cell,
 ::ng-deep .container-calendar mwl-calendar-week-view mwl-calendar-week-view-header .cal-day-headers .cal-header,
 ::ng-deep .container-calendar mwl-calendar-week-view mwl-calendar-week-view-hour-segment .cal-hour-segment .cal-time,
@@ -187,7 +158,6 @@ h3 {
   font-weight: 500 !important;
   color: #515151 !important;
 }
-
 .container-calendar .row {
   padding-top: 20px !important;
 }
@@ -203,6 +173,14 @@ h3 {
 ::ng-deep .cal-month-view .cal-open-day-events .cal-event {
   margin-right: 5px !important;
 }
-::ng-deep .cal-month-view .cal-drag-active {
+::ng-deep .cal-month-view .cal-open-day-events div {
   display: flex !important;
+}
+::ng-deep .cal-month-view .cal-events {
+  display: none !important;
+}
+::ng-deep .calender-name {
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
 }

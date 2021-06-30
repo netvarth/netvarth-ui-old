@@ -4,7 +4,6 @@
       <h3 class="service-name">
         <i *ngIf="waitlist_data.service.serviceType === 'virtualService'"></i>
         {{waitlist_data.service.name}}
-        <!-- <i class="fa fa-question-circle-o" aria-hidden="true"></i> -->
       </h3>
       <div *ngIf="bookingType === 'checkin'" class="service-status" [ngClass]="{'custom-color-red': waitlist_data.waitlistStatus == 'failed' || waitlist_data.waitlistStatus == 'cancelled', 
                     'custom-color-green': waitlist_data.waitlistStatus == 'started' || waitlist_data.waitlistStatus == 'done', 
@@ -139,7 +138,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal" #closebutton>Cancel</button>
+        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal"
+          #closebutton>Cancel</button>
       </div>
     </div>
   </div>

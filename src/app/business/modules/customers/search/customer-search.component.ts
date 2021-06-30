@@ -596,7 +596,7 @@ export class CustomerSearchComponent implements OnInit {
     }
     createNew() {
         const filter = {
-            'source': 'clist',
+            'source': this.source,
             'id': 'add'
         }
         if (this.group) {
@@ -718,7 +718,7 @@ export class CustomerSearchComponent implements OnInit {
                         if (mode === 'phone') {
                             filter['phone'] = form_data.search_input;
                         }
-                        filter['source'] = 'clist';
+                        // filter['source'] = 'clist';
                         filter['id'] = 'add';
                         filter['type'] = 'create';
                         if (this.group) {

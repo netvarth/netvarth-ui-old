@@ -13,6 +13,7 @@ import { InboxListModule } from '../../inbox-list/inbox-list.module';
 import { BookingPrivateNotesModule } from './booking-private-notes/booking-private-notes.module';
 import { BookingDetailRoutingModule } from './booking-detail.routing.module';
 import { BookingDetailComponent } from './booking-detail.component';
+import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 
 @NgModule({
   declarations: [BookingDetailComponent],
@@ -29,7 +30,8 @@ import { BookingDetailComponent } from './booking-detail.component';
     BookingBillModule,
     QuestionnaireModule,
     InboxListModule,
-    BookingPrivateNotesModule
+    BookingPrivateNotesModule,
+    CapitalizeFirstPipeModule
   ],
   exports: [BookingDetailComponent]
 })

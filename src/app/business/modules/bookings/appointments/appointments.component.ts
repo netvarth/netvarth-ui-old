@@ -11,7 +11,12 @@ export class AppointmentsComponent implements OnInit {
   providerId;
   todayAppts: any = [];
   futureAppts: any = [];
-  newAppts: any = [];
+  historyAppts: any = [];
+  totalAppts: any = [];
+  selectedType = 'list';
+  timeType = 1;
+  apptToList: any = [];
+  loading = true;
   constructor(private activated_route: ActivatedRoute,
     private provider_services: ProviderServices) {
     this.activated_route.queryParams.subscribe(params => {
@@ -38,6 +43,7 @@ export class AppointmentsComponent implements OnInit {
             obj.type = 1;
             return obj;
           });
+          this.totalAppts = this.apptToList = this.todayAppts;
           this.getFutureAppts(filter);
         });
   }
@@ -50,7 +56,39 @@ export class AppointmentsComponent implements OnInit {
             obj.type = 2;
             return obj;
           });
-          this.newAppts = this.todayAppts.concat(this.futureAppts);
+          this.totalAppts = this.totalAppts.concat(this.futureAppts);
+          this.getHistoryAppts();
         });
+  }
+  getHistoryAppts() {
+    const api_filter = { 'apptStatus-neq': 'prepaymentPending,failed' };
+    if (this.providerId) {
+      api_filter['provider-eq'] = this.providerId;
+    }
+    this.provider_services.getHistoryAppointments(api_filter)
+      .subscribe(
+        data => {
+          this.historyAppts = data;
+          this.historyAppts.map((obj) => {
+            obj.type = 3;
+            return obj;
+          });
+          this.totalAppts = this.totalAppts.concat(this.historyAppts);
+          console.log('this.totalAppts', this.totalAppts);
+          this.loading = false;
+        });
+  }
+  selectViewType(view) {
+    this.selectedType = view;
+  }
+  handleApptSelectionType(type) {
+    this.timeType = type;
+    if (this.timeType === 1) {
+      this.apptToList = this.todayAppts;
+    } else if (this.timeType === 2) {
+      this.apptToList = this.futureAppts;
+    } else {
+      this.apptToList = this.historyAppts;
+    }
   }
 }

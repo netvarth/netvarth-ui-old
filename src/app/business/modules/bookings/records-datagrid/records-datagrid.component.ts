@@ -15,7 +15,6 @@ export class RecordsDatagridComponent implements OnInit {
   @Input() heading;
   @Input() source;
   @Input() timeType;
-  @Input() count;
   @Input() showMore;
   @Output() actionPerformed = new EventEmitter<any>();
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
@@ -35,6 +34,7 @@ export class RecordsDatagridComponent implements OnInit {
   check_in_statuses = projectConstants.CHECK_IN_STATUSES;
   providerId;
   customer_label;
+  provider_label;
   constructor(private dateTimeProcessor: DateTimeProcessor,
     private wordProcessor: WordProcessor,
     private router: Router,
@@ -44,6 +44,7 @@ export class RecordsDatagridComponent implements OnInit {
       this.providerId = params.userid;
     });
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
   }
 
   ngOnInit(): void {
@@ -61,9 +62,9 @@ export class RecordsDatagridComponent implements OnInit {
     return label_status;
   }
   actionClick(type, record?) {
-    if (this.source == 'waitlist' || this.source === 'appt') {
-      const uid = (this.source === 'appt') ? record.uid : record.ynwUuid;
-      const waitlisttype = (this.source === 'appt') ? 'appointment' : 'checkin';
+    if (this.source == 'waitlist' || this.source === 'appt' || this.source === 'appt-dashboard' || this.source === 'waitlist-dashboard') {
+      const uid = (this.source === 'appt' || this.source === 'appt-dashboard') ? record.uid : record.ynwUuid;
+      const waitlisttype = (this.source === 'appt' || this.source === 'appt-dashboard') ? 'appointment' : 'checkin';
       this.router.navigate(['provider', 'bookings', 'details'], { queryParams: { uid: uid, timetype: 1, type: waitlisttype } });
     } else if (this.source == 'bill') {
       let source;
@@ -110,5 +111,12 @@ export class RecordsDatagridComponent implements OnInit {
       nameShort = this.customer_label.charAt(0);
     }
     return nameShort.toUpperCase();
+  }
+  gotoAdd() {
+    if (this.source == 'customers') {
+      this.router.navigate(['provider/customers/find'], { queryParams: { source: 'bookings' }});
+    } else if (this.source == 'providers') {
+      this.router.navigate(['provider/settings/general/users/add']);
+    }
   }
 }

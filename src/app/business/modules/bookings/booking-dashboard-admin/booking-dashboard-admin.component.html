@@ -5,20 +5,20 @@
     <app-booking-stats [source]="'admin'" [waitlistMgrSettings]="waitlistMgrSettings" [newApptsCount]="newAppts.length"
         [newWitlistCount]="newWaitlists.length"></app-booking-stats>
     <div class="appointments-and-doctors-row">
-        <div class="column" *ngIf="todayAppts && todayAppts.length > 0">
-            <app-records-datagrid [source]="'appt'" [heading]="'Appointments'" [records]="todayAppts">
+        <div class="column">
+            <app-records-datagrid [source]="'appt'" [heading]="'Appointments'" [records]="todayAppts" [timeType]="1">
             </app-records-datagrid>
         </div>
-        <div class="column" *ngIf="todayWaitlists && todayWaitlists.length > 0">
+        <div class="column">
             <app-records-datagrid [source]="'waitlist'" [records]="todayWaitlists"
-                [heading]="(waitlistMgrSettings && waitlistMgrSettings.showTokenId) ? 'Tokens' : 'Check-ins'">
+                [heading]="(waitlistMgrSettings && waitlistMgrSettings.showTokenId) ? 'Tokens' : 'Check-ins'" [timeType]="1">
             </app-records-datagrid>
         </div>
-        <div class="column" *ngIf="users && users.length > 0">
+        <div class="column">
             <app-records-datagrid [source]="'providers'" [records]="users" [heading]="provider_label + 's'">
             </app-records-datagrid>
         </div>
-        <div class="column" *ngIf="customers && customers.length > 0">
+        <div class="column">
             <app-records-datagrid [source]="'customers'" [records]="customers" [heading]="customer_label + 's'">
             </app-records-datagrid>
         </div>

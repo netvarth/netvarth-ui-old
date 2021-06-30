@@ -133,6 +133,46 @@
 .records-sec .rece-act {
   padding: 0 15px;
 }
+.records-sec {
+  padding: 0 10px;
+}
 .records-sec .column {
-  padding: 10px;
+  width: 50% !important;
+  float: left;
+  padding: 2px;
+}
+
+@media (max-width: 767px) {
+  .records-sec .column {
+      width: 100% !important;
+  }
+}
+@media only screen and (min-width: 576px) {
+  .no-padding-big {
+    padding: 0 !important;
+  }
+}
+.qnr-hgt {
+  overflow: auto !important;
+  height: 317px !important;
+  padding: 10px 0;
+}
+.card-header {
+  padding: 8px 10px !important;
+  border-radius: calc(0.5rem - 1px) calc(0.5rem - 1px) 0 0 !important;
+  border-bottom: 1.75px solid #d0d0d0 !important;
+  font-size: 13px !important;
+  text-transform: uppercase !important;
+  color: #395789 !important;
+  font-weight: 700 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+.records-sec .card {
+  border-radius: 10px !important;
+  border: 1.75px solid #d0d0d0 !important;
+  box-shadow: 0 0 10px 0 rgb(183 192 206 / 20%) !important;
+  padding: 0px !important;
 }

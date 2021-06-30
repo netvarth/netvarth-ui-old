@@ -619,6 +619,8 @@ export class CustomerCreateComponent implements OnInit {
         }
       };
       this.router.navigate(['provider', 'orders', 'order-wizard'], navigationExtras);
+    } else if (this.source === 'bookings') {
+      this.router.navigate(['provider', 'bookings']);
     } else {
       this.router.navigate(['provider', 'customers'], { queryParams: { selectedGroup: this.group, customerId: data } });
     }

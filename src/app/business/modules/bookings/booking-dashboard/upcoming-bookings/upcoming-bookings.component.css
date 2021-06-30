@@ -7,12 +7,6 @@
 .clr_white {
     color: white !important;
 }
-.clr_peacock {
-    color: #1e4079 !important;
-}
-.mtn_40 {
-    margin-top: -45px !important;
-}
 .btn_action {
     background: white !important;
     color: #1e4079 !important;
@@ -23,79 +17,9 @@
     color: white !important;
     border-radius: 20px !important; 
 }
-.card-spacer2 {
-    padding: 1rem 2.25rem !important;
-}
-.bg-light-yelow {
-    background: #f9e2a794 !important;
-}
-.ht_40 {
-    min-height: 40px !important;
-}
-.bdr_book {
-    border: 1px solid grey;
-    border-radius: 5px;
-}
-.card_head {
-    padding: 1rem 1.25rem !important;
-    margin-bottom: 0;
-    border-bottom: 1px solid #7e82a2 !important;
-    min-height: 40px !important;
-}
-.ext-link {
-    font-size: 20px !important;
-    margin-top: 10px;
-}
-.fl_right {
-    float: right;
-}
-.scroll_horiz {
-    display: flex;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    white-space: nowrap;
-}
-.bdr_green {
-    border: 1px solid green !important;
-}
-.bdr_gray {
-    border: 1px solid #808080b8 !important;
-}
-.scroll_horiz::-webkit-scrollbar {
-    width: 5px !important;
-}
-.fill_screen {
-    height: 100vh !important;
-}
-.mat-grid-tile {
-    /* background: #1e40792e; */
-    box-shadow: 10px 10px 15px 0px #cccccc9c;
-}
-.new_svg .symbol-label {
-    height: 70px !important;
-    width: 70px !important;
-    cursor: pointer !important;
-}
-.new_svg svg {
-    height: 3rem !important;
-    width: 5rem !important;
-}
-.mat-grid-tile .mat-grid-tile-footer {
-    height: 30px !important;
-    color: #1e4079 !important;
-    background: none !important;
-}
-.wrap_it {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    margin-right: auto !important;
-    margin-left: auto !important;
-}
 .spinner {
     top: 30%;
 }
-
 .container-upcoming-bookings {
     border-top-left-radius: 8px !important;
     overflow: hidden !important;
@@ -115,41 +39,35 @@
 .container-upcoming-bookings > .card-body:nth-child(2) {
     border-right: 1px solid #cacaca;
 }
-
 .container-upcoming-bookings .heading {
     font-family: "Roboto", sans-serif !important;
     font-weight: 300 !important;
     font-size: 18px !important;
 }
-
 .container-upcoming-bookings .symbol-label {
     border-radius: 50% !important;
     height: 60px !important;
     width: 60px !important;
     background-color: #f1b51c !important;
 }
-
 .container-upcoming-bookings .ser-name {
     font-weight: 400 !important;
     font-family: "Roboto", sans-serif !important;
     text-transform: capitalize !important;
     font-size: 18px !important;
 }
-
 .container-upcoming-bookings .cons-name {
     font-weight: 300 !important;
     font-family: "Roboto", sans-serif !important;
     text-transform: capitalize !important;
     font-size: 18px !important;
 }
-
 .container-upcoming-bookings .timings {
     font-family: "Roboto", sans-serif !important;
     font-weight: 400 !important;
     font-size: 15px !important;
     text-align: center !important;
 }
-
 .container-upcoming-bookings .action-btn {
     font-family: "Roboto", sans-serif !important;
     font-size: 14px !important;

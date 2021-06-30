@@ -17,6 +17,7 @@ import { SnackbarService } from '../../../../../../shared/services/snackbar.serv
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { UserConfirmBoxComponent } from '../confirm-box/user-confirm-box.component';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
+import { Location } from '@angular/common';
 @Component({
     'selector': 'app-branchuser-detail',
     'templateUrl': './user-detail.component.html',
@@ -117,7 +118,8 @@ export class BranchUserDetailComponent implements OnInit {
         private lStorageService: LocalStorageService,
         private groupService: GroupStorageService,
         private wordProcessor: WordProcessor,
-        private snackbarService: SnackbarService
+        private snackbarService: SnackbarService,
+        private location: Location
     ) {
         this.activated_route.queryParams.subscribe(data => {
             this.actionparam = data;
@@ -615,7 +617,8 @@ export class BranchUserDetailComponent implements OnInit {
         });
         dialogref.afterClosed().subscribe(
           result => {
-            this.router.navigate(['provider', 'settings', 'general', 'users']);
+            // this.router.navigate(['provider', 'settings', 'general', 'users']);
+            this.location.back();
             // if (result) {
             // }
           }

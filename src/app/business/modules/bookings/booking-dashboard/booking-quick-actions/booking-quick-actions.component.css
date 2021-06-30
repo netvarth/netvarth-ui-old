@@ -1,74 +1,4 @@
-.adjust_ht {
-    max-height: 50%;
-}
-.bg_peacok {
-    background: #1e4079;
-}
-.clr_white {
-    color: white !important;
-}
-.clr_peacock {
-    color: #1e4079 !important;
-}
-.mtn_40 {
-    margin-top: -45px !important;
-}
-.btn_action {
-    background: white !important;
-    color: #1e4079 !important;
-    border-radius: 20px !important; 
-}
-.btn_action2 {
-    background: #1e4079 !important;
-    color: white !important;
-    border-radius: 20px !important; 
-}
-.card-spacer2 {
-    padding: 1rem 2.25rem !important;
-}
-.bg-light-yelow {
-    background: #f9e2a794 !important;
-}
-.ht_40 {
-    min-height: 40px !important;
-}
-.bdr_book {
-    border: 1px solid grey;
-    border-radius: 5px;
-}
-.card_head {
-    padding: 1rem 1.25rem !important;
-    margin-bottom: 0;
-    border-bottom: 1px solid #7e82a2 !important;
-    min-height: 40px !important;
-}
-.ext-link {
-    font-size: 20px !important;
-    margin-top: 10px;
-}
-.fl_right {
-    float: right;
-}
-.scroll_horiz {
-    display: flex;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    white-space: nowrap;
-}
-.bdr_green {
-    border: 1px solid green !important;
-}
-.bdr_gray {
-    border: 1px solid #808080b8 !important;
-}
-.scroll_horiz::-webkit-scrollbar {
-    width: 5px !important;
-}
-.fill_screen {
-    height: 100vh !important;
-}
 .mat-grid-tile {
-    /* background: #1e40792e; */
     box-shadow: 10px 10px 15px 0px #cccccc9c;
 }
 .new_svg .symbol-label {
@@ -92,28 +22,24 @@
     margin-right: auto !important;
     margin-left: auto !important;
 }
-
 .appt-icon {
     content: url(../../../../../../assets/images/myjaldee/Appoinment-01.svg);
     position: relative;
     padding-right: 1px;
     width: 45px;
-  }
-  
-  .chckn-icon {
+}
+.chckn-icon {
     content: url(../../../../../../assets/images/myjaldee/Checkin-01.svg);
     position: relative;
     padding-right: 1px;
     width: 45px;
-  }
-  
-  .token-icon {
+}
+.token-icon {
     content: url(../../../../../../assets/images/myjaldee/token-01.svg);
     position: relative;
     padding-right: 1px;
     width: 45px;
-  }
-
+}
 .container-quick-actions {
     margin-top: 26px;
     border-top-right-radius: 8px !important;
@@ -132,29 +58,24 @@
 .container-quick-actions mat-grid-tile {
     box-shadow: none !important;
 }
-
 .container-quick-actions mat-grid-tile {
     box-shadow: none !important;
 }
-
 .container-quick-actions mat-grid-tile mat-grid-tile-footer {
     padding: 0 !important;
 }
-
 .container-quick-actions .heading {
     font-family: "Roboto", sans-serif !important;
     font-weight: 400 !important;
     font-size: 18px !important;
     color: #1E4079 !important;
 }
-
 .container-quick-actions mat-grid-tile mat-grid-tile-footer div {
     font-family: "Roboto", sans-serif !important;
     font-weight: 400 !important;
     font-size: 16px !important;
     color: #1E4079 !important;
 }
-
 .container-quick-actions .symbol-label {
     background: white !important;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;

@@ -10,9 +10,12 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 export class CheckinsComponent implements OnInit {
   todayWaitlists: any = [];
   futureWaitlists: any = [];
-  newWaitlists: any = [];
+  historyWaitlists: any = [];
   providerId;
   waitlistMgrSettings;
+  timeType = 1;
+  waitlistToList: any = [];
+  loading = true;
   constructor(private activated_route: ActivatedRoute,
     private provider_services: ProviderServices) {
     this.activated_route.queryParams.subscribe(params => {
@@ -42,7 +45,6 @@ export class CheckinsComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.todayWaitlists = data;
-          console.log(this.todayWaitlists);
           this.getFutureWatilists(filter);
         });
   }
@@ -51,15 +53,29 @@ export class CheckinsComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.futureWaitlists = data;
-          console.log(this.futureWaitlists);
-          this.newWaitlists = this.todayWaitlists.concat(this.futureWaitlists);
+          this.getHistoryWaitlists();
         });
   }
   getHistoryWaitlists() {
     const api_filter = { 'waitlistStatus-neq': 'prepaymentPending,failed' };
+    if (this.providerId) {
+      api_filter['provider-eq'] = this.providerId;
+    }
     this.provider_services.getHistoryWaitlist(api_filter)
       .subscribe(
         data => {
+          this.historyWaitlists = data;
+          this.loading = false;
         });
+  }
+  handleWaitlistType(type) {
+    this.timeType = type;
+    if (this.timeType === 1) {
+      this.waitlistToList = this.todayWaitlists;
+    } else if (this.timeType === 2) {
+      this.waitlistToList = this.futureWaitlists;
+    } else {
+      this.waitlistToList = this.historyWaitlists;
+    }
   }
 }

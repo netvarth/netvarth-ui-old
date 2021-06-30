@@ -1,64 +1,19 @@
-.fa-dot-circle-o {
-    font-weight: 100;
-    font-size: 0.8rem;
-    color: #11ba11;
-}
-.text-success {
-    color: green !important;
-}
-.lh-1 {
-    line-height: 0.8 !important;
-}
 .disp-grid {
     display: grid  !important;
-}
-.btn-start {
-    background: green;
-    color: white;
-}
-.font-p8 {
-    font-size: 0.8rem !important;
-}
-.round-10 {
-    border-radius: 10px;
 }
 .fade {
     opacity: 4 !important;
 }
-.bdr_adjust {
-    min-height: 30px;
-    border-bottom: 1px solid #80808030 !important;
-}
-.bder_grey {
-    border-bottom: 1px solid #80808052 !important;
-}
-.min-ht-60 {
-    min-height: 60px !important;
-}
-.font-1rem {
-    font-size: 1rem !important;
-}
-.stretch_card {
-    height: 100%;
-}
-.start-video-btn {
-    background: green !important;
-    color: white !important;
-}
-
 .card.card-custom {
     box-shadow: 5px 3px 10px rgb(0 0 0 / 20%) !important;
 }
-
 .card.card-custom .card-body {
     display: flex !important;
     align-items: flex-start !important;
     justify-content: space-between !important;
     flex-direction: row !important;
-
     flex-wrap: wrap !important;
 }
-
 .card.card-custom .card-body .card-title {
     display: flex !important;
     flex-direction: column !important;
@@ -66,57 +21,47 @@
     align-items: flex-start !important;
     margin-bottom: 0 !important;
 }
-
 @media (max-width: 575px) {
     .card.card-custom .card-body .card-title {
         padding: 0 2.5px !important;
         margin-bottom: 25px !important;
     }
 }
-
 .card.card-custom .card-body .card-title .service-name {
     color: #717171 !important;
     font-weight: 700 !important;
     text-transform: capitalize !important;
 }
-
 .card.card-custom .card-body .card-title .service-name i.fa.fa-question-circle-o {
     font-family: 'FontAwesome' !important;
     font-weight: 500 !important;
     color: #bebebe !important;
     font-size: 1.4rem !important;
 }
-
 .card.card-custom .card-body .card-title .service-status {
     font-weight: 500 !important;
     font-size: 16px !important;
     text-transform: uppercase !important;
-
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
     justify-content: flex-start !important;
 }
-
 .card.card-custom .card-body .card-title .service-status i.fa.fa-circle {
     font-size: 12px !important;
     font-weight: 700 !important;
     color: inherit !important;
     margin-right: 5px !important;
 }
-
 .custom-color-yellow {
     color: #fdac3e !important;
 }
-
 .custom-color-green {
     color: #58b74b !important;
 }
-
 .custom-color-red {
     color: rgb(219, 13, 13) !important;
 }
-
 .card-toolbar button.start-service-btn {
     color: white !important;
     background-color: #32ba2c !important;
@@ -131,17 +76,14 @@
     padding-left: 5px !important;
     padding-right: 5px !important;
 }
-
 .card-toolbar button.start-service-btn:hover {
     background-color: #168611 !important;
 }
-
 .card-toolbar button.start-service-btn div {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
 }
-
 .card-toolbar button.start-service-btn div span.meet-icon,
 .card-toolbar button.start-service-btn div span.zoom-icon,
 .card-toolbar button.start-service-btn div span.wtsapaud-icon,
@@ -150,7 +92,6 @@
     position: static !important;
     margin-right: 5px !important;
 }
-
 .card.card-custom .card-body .card-toolbar .action-buttons-container {
     display: flex !important;
     flex-direction: row !important;
@@ -158,7 +99,6 @@
     justify-content: space-between !important;
     flex-wrap: wrap !important;
 }
-
 .card.card-custom .card-body .card-toolbar .action-buttons-container .action-button {
     color: #1E4079 !important;
     background-color: white !important;
@@ -174,13 +114,11 @@
     flex: 1 1 auto !important;
     white-space: normal !important;
 }
-
 .card.card-custom .card-body .card-toolbar .action-buttons-container .action-button:hover {
     color: white !important;
     background: #1E4079 !important;
     font-weight: 500 !important;
 }
-
 .card.card-custom .card-body .card-toolbar .action-buttons-container .action-button i.fa {
     font-family: 'FontAwesome' !important;
     font-weight: 500 !important;
@@ -201,4 +139,4 @@
     float: left;
     display: table;
     box-shadow: 10px 10px 15px 0px #cccccc9c;
-  }
+}

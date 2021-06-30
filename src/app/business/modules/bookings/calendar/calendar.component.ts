@@ -65,7 +65,7 @@ export class CalendarComponent implements OnInit {
   handleEvent(action: string, event: CalendarEvent): void {
     console.log(action);
     console.log(event);
-    this.router.navigate(['provider', 'bookings', event.meta.uid], { queryParams: { timetype: event.meta.timeType, type: 'appointment' } });
+    this.router.navigate(['provider', 'bookings', 'details'], { queryParams: { uid: event.meta.uid, timetype: event.meta.timeType, type: 'appointment' } });
   }
 
   setView(view: CalendarView) {
@@ -77,7 +77,7 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.waitlists);
+    console.log('cal waitlists', this.waitlists);
     if (this.waitlists) {
       for (let appt of this.waitlists) {
         let name;
@@ -89,7 +89,7 @@ export class CalendarComponent implements OnInit {
         this.events.push({
           start: addHours(addMinutes(startOfDay(new Date(appt.appmtDate)), this.getTime(appt.appmtTime, 'start', 'minute')), this.getTime(appt.appmtTime, 'start', 'hour')),
           end: addHours(addMinutes(startOfDay(new Date(appt.appmtDate)), this.getTime(appt.appmtTime, 'end', 'minute')), this.getTime(appt.appmtTime, 'end', 'hour')),
-          title: '<div class="first-title">' + name + '</div><div>' + this.getSingleTime(appt.appmtTime) + '</div>',
+          title: '<div class="calender-name">' + name + '</div><div>' + this.getSingleTime(appt.appmtTime) + '</div>',
           color: colors.red,
           meta: {
             uid: appt.uid,

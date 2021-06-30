@@ -6,8 +6,26 @@
     </div>
 </section>
 <section class="content p-4">
-    <div>
-        <app-records-datagrid [source]="'waitlist-dashboard'" [records]="todayWaitlists">
-        </app-records-datagrid>
+    <app-common-innerloading-spinner *ngIf="loading"> </app-common-innerloading-spinner>
+    <div class="" *ngIf="!loading">
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+            <div class="pull-left">
+                <mat-select class="selecttype" [(ngModel)]="timeType">
+                    <mat-option [value]="1" (click)="handleWaitlistType(1)">
+                        Today
+                    </mat-option>
+                    <mat-option [value]="2" (click)="handleWaitlistType(2)">
+                        Future
+                    </mat-option>
+                    <mat-option [value]="3" (click)="handleWaitlistType(3)">
+                        History
+                    </mat-option>
+                </mat-select>
+            </div>
+        </div>
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-20">
+            <app-records-datagrid [source]="'waitlist-dashboard'" [records]="waitlistToList" [timeType]="timeType">
+            </app-records-datagrid>
+        </div>
     </div>
 </section>

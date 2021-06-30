@@ -28,15 +28,15 @@
     </div>
     <div class="appointments-and-doctors-row">
         <div class="column">
-            <app-records-datagrid [source]="'appt'" [heading]="'Appointments'" [records]="todayAppts">
+            <app-records-datagrid [source]="'appt'" [heading]="'Appointments'" [records]="todayAppts" [timeType]="1">
             </app-records-datagrid>
         </div>
         <div class="column">
-            <app-records-datagrid [source]="'waitlist'" [records]="todayWaitlists"
+            <app-records-datagrid [source]="'waitlist'" [records]="todayWaitlists" [timeType]="1"
                 [heading]="(waitlistMgrSettings && waitlistMgrSettings.showTokenId) ? 'Tokens' : 'Check-ins'">
             </app-records-datagrid>
         </div>
-        <div class="column" *ngIf="customers && customers.length > 0">
+        <div class="column">
             <app-records-datagrid [source]="'customers'" [records]="customers" [heading]="customer_label + 's'">
             </app-records-datagrid>
         </div>

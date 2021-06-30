@@ -1,0 +1,12 @@
+.viewtypes i {
+    color: #334b99;
+    padding: 5px;
+    border-radius: 5px;
+}
+.selectedView {
+    background: #334b99 !important;
+    color: white !important;
+}
+.selecttype {
+    width: 100px !important;
+}

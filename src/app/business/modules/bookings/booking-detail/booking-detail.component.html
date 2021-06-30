@@ -12,56 +12,46 @@
         <app-common-innerloading-spinner> </app-common-innerloading-spinner>
       </div>
       <app-service-actions *ngIf="!api_loading" [waitlist_data]="waitlist_data"></app-service-actions>
-      <div class="card card-custom gutter-b wave-success p-0 booking-details">
+      <div class="card card-custom mgn-bt-5 wave-success p-0 booking-details">
         <app-customer-booking-details *ngIf="!api_loading" [waitlist_data]="waitlist_data"
           (getHeight)="getHeight($event)">
         </app-customer-booking-details>
       </div>
     </div>
-    <div class="col-lg-4 no-padding gutter-b"
+    <div class="col-lg-4 no-padding-big mgn-bt-5"
       *ngIf="(waitlist_data && waitlist_data.waitlistStatus && waitlist_data.waitlistStatus!=='blocked') || (waitlist_data && waitlist_data.apptStatus && waitlist_data.apptStatus!=='blocked')">
       <app-provider-inbox-list [customer]="customer" [provider]="provider" [source]="'details'" [height]="height">
       </app-provider-inbox-list>
     </div>
   </div>
-  <div class="row" *ngIf="!api_loading">
-    <div class="col-lg-7 gutter-b">
-      <div class="cards-div">
-        <div class="col-xl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding mgn-bt-5"
-          *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
-          <app-booking-medical-records [customerId]="customerId" [waitlist_data]="waitlist_data">
-          </app-booking-medical-records>
-        </div>
-        <div class="col-xl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding mgn-bt-5"
-          *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
-          <app-booking-prescriptions></app-booking-prescriptions>
-        </div>
-        <div class="col-xl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding mgn-bt-5">
-          <app-booking-private-notes [uuid]="uuid" [waitlist_data]="waitlist_data" [bookingType]="bookingType">
-          </app-booking-private-notes>
-        </div>
-        <div class="col-xl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding mgn-bt-5">
-          <app-booking-documents></app-booking-documents>
-        </div>
-      </div>
+  <div class="appointments-and-doctors-row" *ngIf="!api_loading">
+    <div class="column"
+      *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
+      <app-booking-medical-records [customerId]="customerId" [waitlist_data]="waitlist_data">
+      </app-booking-medical-records>
     </div>
-    <div class="col-lg-5">
-      <app-booking-bill *ngIf="!api_loading" [waitlist_data]="waitlist_data" [bookingType]="bookingType" [pos]="pos">
+    <div class="column"
+      *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
+      <app-booking-prescriptions></app-booking-prescriptions>
+    </div>
+    <div class="column">
+      <app-booking-bill [waitlist_data]="waitlist_data" [bookingType]="bookingType" [pos]="pos">
       </app-booking-bill>
     </div>
-  </div>
-  <div class="row" *ngIf="!api_loading">
-    <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12"
+    <div class="column">
+      <app-booking-private-notes [uuid]="uuid" [waitlist_data]="waitlist_data" [bookingType]="bookingType">
+      </app-booking-private-notes>
+    </div>
+    <div class="column">
+      <app-booking-documents></app-booking-documents>
+    </div>
+    <div class="column"
       *ngIf="waitlist_data.questionnaire && waitlist_data.questionnaire.questionAnswers && waitlist_data.questionnaire.questionAnswers.length > 0">
-      <div class="card card-custom">
+      <div class="card">
         <div class="card-header">
-          <div class="card-title">
-            <h3 class="card-label">
-              Questionnaire
-            </h3>
-          </div>
+          <div>{{customer_label | capitalizeFirst}} info</div>
         </div>
-        <div class="questionnaire-section">
+        <div class="qnr-hgt">
           <app-questionnaire [source]="source" [uuid]="uuid" [type]="'details'"></app-questionnaire>
         </div>
       </div>

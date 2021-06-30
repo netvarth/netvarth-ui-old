@@ -10,6 +10,15 @@
             </div>
             <div class="tableBody">
                 <div class="table-responsive">
+                    <div class="inner-card add-record rounded-sm pointer-cursor" (click)="gotoAdd()"
+                        *ngIf="source == 'providers' || source == 'customers'">
+                        <a class="inner-card-heading">
+                            Add {{(source == 'providers') ? provider_label : customer_label}}
+                        </a>
+                        <div class="inner-card-text">
+                            Diagnosis, Alergies, Prescription, etc.
+                        </div>
+                    </div>
                     <table class="table table-hover">
                         <tbody>
                             <tr class="pointer-cursor" *ngFor="let record of records"
@@ -112,23 +121,20 @@
                                             {{record.totalAmountPaid |
                                             currency:'&#8377;' }} Paid</span> </td>
                                 </ng-container>
-                                <ng-container
-                                    *ngIf="source == 'waitlist' || source == 'appt' || source == 'waitlist-dashboard' || source == 'appt-dashboard'">
+                                <ng-container *ngIf="source == 'waitlist' || source == 'waitlist-dashboard'">
                                     <td>
-                                        <ng-container *ngIf="source == 'waitlist' || source == 'waitlist-dashboard'">
-                                            {{record.token}}</ng-container>
-                                        <ng-container *ngIf="source == 'appt' || source == 'appt-dashboard'">
-                                            {{getSingleTime(record.appmtTime)}}
-                                        </ng-container>
+                                        {{record.token}}
                                     </td>
                                     <td>
-                                        <ng-container *ngIf="source == 'waitlist' || source == 'waitlist-dashboard'">
+                                        <ng-container
+                                            *ngIf="record.waitlistingFor[0].firstName || record.waitlistingFor[0].lastName">
                                             {{record.waitlistingFor[0].firstName}}
                                             {{record.waitlistingFor[0].lastName}}
                                         </ng-container>
-                                        <ng-container *ngIf="source == 'appt' || source == 'appt-dashboard'">
-                                            {{record.appmtFor[0].firstName}}
-                                            {{record.appmtFor[0].lastName}}
+                                        <ng-container
+                                            *ngIf="!record.waitlistingFor[0].firstName && !record.waitlistingFor[0].lastName && record.waitlistingFor[0].memberJaldeeId">
+                                            {{customer_label | capitalizeFirst}} id:
+                                            {{record.appmtFor[0].memberJaldeeId}}
                                         </ng-container>
                                     </td>
                                     <td>
@@ -139,15 +145,64 @@
                                         </ng-container>
                                     </td>
                                     <td>
+                                        <i *ngIf="record.service.serviceType === 'virtualService' && record.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                                            class="fa meet-icon"></i>
+                                        <i *ngIf="record.service.serviceType === 'virtualService' && record.service.virtualCallingModes[0].callingMode === 'Zoom'"
+                                            class="fa zoom-icon"></i>
+                                        <i *ngIf="record.service.serviceType === 'virtualService' && record.service.virtualCallingModes[0].callingMode === 'VideoCall'"
+                                            class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"></i>
+                                        <i *ngIf="record.service.serviceType === 'virtualService' && record.service.virtualCallingModes[0].callingMode === 'Phone'"
+                                            class="fa phon-icon"></i>
+                                        <i *ngIf="record.service.serviceType === 'virtualService' && record.service.virtualCallingModes[0].callingMode === 'WhatsApp' && record.service.virtualServiceType === 'audioService'"
+                                            class="fa wtsapaud-icon"></i>
+                                        <i *ngIf="record.service.serviceType === 'virtualService' && record.service.virtualCallingModes[0].callingMode === 'WhatsApp' && record.service.virtualServiceType === 'videoService'"
+                                            class="fa wtsapvid-icon"></i>
                                         {{record.service.name}}
                                     </td>
                                     <td>
-                                        <ng-container *ngIf="source == 'waitlist' || source == 'waitlist-dashboard'">
-                                            {{check_in_statuses[getStatusLabel(record.waitlistStatus)]}}
+                                        {{check_in_statuses[getStatusLabel(record.waitlistStatus)]}}
+                                    </td>
+                                </ng-container>
+                                <ng-container *ngIf="source == 'appt' || source == 'appt-dashboard'">
+                                    <td>
+                                        {{getSingleTime(record.appmtTime)}}
+                                    </td>
+                                    <td>
+                                        <ng-container
+                                            *ngIf="record.appmtFor[0].firstName || record.appmtFor[0].lastName">
+                                            {{record.appmtFor[0].firstName}}
+                                            {{record.appmtFor[0].lastName}}
                                         </ng-container>
-                                        <ng-container *ngIf="source == 'appt' || source == 'appt-dashboard'">
-                                            {{check_in_statuses[getStatusLabel(record.apptStatus)]}}
+                                        <ng-container
+                                            *ngIf="!record.appmtFor[0].firstName && !record.appmtFor[0].lastName && record.appmtFor[0].memberJaldeeId">
+                                            {{customer_label | capitalizeFirst}} id:
+                                            {{record.appmtFor[0].memberJaldeeId}}
                                         </ng-container>
+                                    </td>
+                                    <td>
+                                        <ng-container *ngIf="record.provider">
+                                            {{(record.provider.businessName) ? record.provider.businessName :
+                                            record.provider.firstName +
+                                            ' ' + record.provider.lastName}}
+                                        </ng-container>
+                                    </td>
+                                    <td>
+                                        <i *ngIf="record.service.serviceType === 'virtualService' && record.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                                            class="fa meet-icon"></i>
+                                        <i *ngIf="record.service.serviceType === 'virtualService' && record.service.virtualCallingModes[0].callingMode === 'Zoom'"
+                                            class="fa zoom-icon"></i>
+                                        <i *ngIf="record.service.serviceType === 'virtualService' && record.service.virtualCallingModes[0].callingMode === 'VideoCall'"
+                                            class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"></i>
+                                        <i *ngIf="record.service.serviceType === 'virtualService' && record.service.virtualCallingModes[0].callingMode === 'Phone'"
+                                            class="fa phon-icon"></i>
+                                        <i *ngIf="record.service.serviceType === 'virtualService' && record.service.virtualCallingModes[0].callingMode === 'WhatsApp' && record.service.virtualServiceType === 'audioService'"
+                                            class="fa wtsapaud-icon"></i>
+                                        <i *ngIf="record.service.serviceType === 'virtualService' && record.service.virtualCallingModes[0].callingMode === 'WhatsApp' && record.service.virtualServiceType === 'videoService'"
+                                            class="fa wtsapvid-icon"></i>
+                                        {{record.service.name}}
+                                    </td>
+                                    <td>
+                                        {{check_in_statuses[getStatusLabel(record.apptStatus)]}}
                                     </td>
                                 </ng-container>
                                 <ng-container *ngIf="source == 'bill'">
@@ -188,16 +243,12 @@
                                     </td>
                                 </ng-container>
                             </tr>
-                            <!-- <div *ngIf="!loading && records.length == 0">
+                            <div class="no-record" *ngIf="records.length == 0">
                                 No {{heading}}
-                            </div> -->
+                            </div>
                             <!-- <app-common-innerloading-spinner *ngIf="loading"> </app-common-innerloading-spinner> -->
                         </tbody>
                     </table>
-                    <!-- <div class="showLinks mgn-bt-10" *ngIf="count && count > 5">
-                        <a *ngIf="!showMore" (click)="actionClick('more')">Show more</a>
-                        <a *ngIf="showMore" (click)="actionClick('less')">Show less</a>
-                    </div> -->
                 </div>
             </div>
         </div>

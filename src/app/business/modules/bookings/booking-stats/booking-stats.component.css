@@ -6,45 +6,37 @@
     align-items: flex-start !important;
     padding: 12.5px 0;
 }
-
 .summary-row .column {
     width: 25% !important;
 }
-
 .mgn-5 {
     margin: 5px !important;
 }
-
 @media (max-width: 1200px) {
     .summary-row .column {
         width: 33% !important;
     }
 }
-
 @media (max-width: 991px) {
     .summary-row .column {
         width: 33% !important;
     }
 }
-
 @media (max-width: 767px) {
     .summary-row .column {
         width: 50% !important;
     }
 }
-
 @media (max-width: 576px) {
     .summary-row .column {
         width: 50% !important;
     }
 }
-
 @media (max-width: 450px) {
     .summary-row .column {
         width: 100% !important;
     }
 }
-
 .summary-row .column .card {
     width: auto !important;
     background: #fff !important;
@@ -61,31 +53,26 @@
     flex-direction: column !important;
     padding: 0 !important;
 }
-
 @media(max-width: 1200px) {
     .summary-row .column .card {
         min-height: 170px !important;
     }
 }
-
 @media(max-width: 991px) {
     .summary-row .column .card {
         min-height: 160px !important;
     }
 }
-
 @media(max-width: 767px) {
     .summary-row .column .card {
         min-height: 170px !important;
     }
 }
-
 @media(max-width: 576px) {
     .summary-row .column .card {
         min-height: 140px !important;
     }
 }
-
 @media(max-width: 450px) {
     .summary-row .column .card {
         min-height: 150px !important;
@@ -94,7 +81,6 @@
         margin-right: auto !important;
     }
 }
-
 .summary-row .column .card svg {
     position: absolute !important;
     width: 100% !important;
@@ -102,12 +88,10 @@
     bottom: 0 !important;
     right: 0 !important;
 }
-
 .summary-row .column .card i.icon {
     vertical-align: middle !important;
     font-size: 35px !important;
 }
-
 .summary-row .column .card .data {
     padding: 0 25px !important;
     display: flex;
@@ -116,7 +100,6 @@
     justify-content: space-between;
     width: calc(100%);
 }
-
 .summary-row .column .card .head {
     font-weight: 500 !important;
     line-height: 1.2 !important;
@@ -125,7 +108,6 @@
     text-align: right !important;
     margin: 25px 25px 0.5rem !important;
 }
-
 .summary-row .column .card .data .text-val {
     font-size: 1.75rem !important;
     margin-bottom: 0 !important;
@@ -136,13 +118,11 @@
     font-family: "Roboto", sans-serif !important;
     text-align: right !important;
 }
-
 .summary-row .column .card .head .inc-dec {
     font-size: 0.8rem !important;
     vertical-align: super !important;
     font-weight: 400 !important;
 }
-
 .summary-row .column .card .data .text-val i.fa.fa-inr {
     font-size: 1.54rem !important;
     padding-right: 2px !important;

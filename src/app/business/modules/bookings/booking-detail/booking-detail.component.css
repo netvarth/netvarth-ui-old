@@ -1,54 +1,4 @@
-.fa-dot-circle-o {
-    font-weight: 100;
-    font-size: 0.8rem;
-    color: #11ba11;
-}
-.text-success {
-    color: green !important;
-}
-.lh-1 {
-    line-height: 0.8 !important;
-}
-.disp-grid {
-    display: grid  !important;
-}
-.btn-start {
-    background: green;
-    color: white;
-}
-.font-p8 {
-    font-size: 0.8rem !important;
-}
-.round-10 {
-    border-radius: 10px;
-}
-.fade {
-    opacity: 4 !important;
-}
-.bdr_adjust {
-    min-height: 30px;
-    border-bottom: 1px solid #80808030 !important;
-}
-.bder_grey {
-    border-bottom: 1px solid #80808052 !important;
-}
-.min-ht-60 {
-    min-height: 60px !important;
-}
-.font-1rem {
-    font-size: 1rem !important;
-}
-.stretch_card {
-    height: 100%;
-}
-
-.data-card {
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    padding: 0 !important;
-}
-
-.card.data-card .card-header {
+.card-header {
     padding: 8px 10px !important;
     border-radius: 0 !important;
     border-bottom: 1.75px solid #d0d0d0 !important;
@@ -61,21 +11,38 @@
     align-items: center !important;
     min-height: auto !important;
 }
-
 .card.data-card .card-header i {
     color: #395789 !important;
     font-family: 'FontAwesome' !important;
     font-size: 13px !important;
     font-weight: 700 !important;
 }
-
-.questionnaire-section {
-    height: 300px;
-    overflow-y: scroll;
-    overflow-x: hidden;
+.appointments-and-doctors-row .card {
+    border-radius: 10px !important;
+    border: 1.75px solid #d0d0d0 !important;
+    box-shadow: 0 0 10px 0 rgb(183 192 206 / 20%) !important;
+    padding: 0px !important;
 }
-
 .booking-details {
     border: 1.75px solid #d0d0d0 !important;
 }
- 
+@media only screen and (min-width: 576px) {
+    .no-padding-big {
+      padding: 0 !important;
+    }
+}
+.column {
+    width: 33.3% !important;
+    display: inline-block;
+    padding: 2px;
+}
+@media (max-width: 767px) {
+    .column {
+        width: 100% !important;
+    }
+}
+.qnr-hgt {
+    overflow: auto !important;
+    height: 317px !important;
+    padding: 10px;
+}
