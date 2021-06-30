@@ -29,6 +29,7 @@ export class UserReportComponent implements OnInit {
   fromDate: any;
   toDate: any;
   date: any;
+  userData: any=[];
   constructor(private router: Router,
     private report_data_service: ReportDataService,
     private activatedRoute: ActivatedRoute,
@@ -67,6 +68,7 @@ export class UserReportComponent implements OnInit {
     this.provider_services.generateUserInfoReport(this.params.filter)
     .subscribe((data:any) => {
        this.user_dataSource=data;
+       this.userData=data;
        this.user_data_loading=false;
       },
       error => {
