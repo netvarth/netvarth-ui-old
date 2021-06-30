@@ -227,7 +227,7 @@
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding">
                                                             <div
-                                                                class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding">
+                                                                class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding" *ngIf="sel_ser_det.serviceType!=='virtualService'">
                                                                 Booking
                                                                 For <a *ngIf="type !== 'reschedule'"
                                                                     class="pointer-cursor changeitem mgn-lt-10 pull-right mgn-rt-20"
@@ -236,6 +236,11 @@
                                                                     data-target="#exampleModalCenter">Change
                                                                 </a>
                                                             </div>
+                                                            <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"
+                                                            *ngIf="sel_ser_det.serviceType==='virtualService'">
+                                                            Booking
+                                                            For 
+                                                        </div>
                                                             <div class="clearfix"></div>
                                                             <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
                                                                 <div class="card-body no-padding">
@@ -245,6 +250,19 @@
                                                                         {{waitlist_for[0].lastName |
                                                                         capitalizeFirst}}
                                                                     </h6>
+                                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
+                                                                        Contact Information
+                                                                        <a *ngIf="type !== 'reschedule'&& sel_ser_det.serviceType==='virtualService'"
+                                                                        class="change-button changeitem pointer-cursor mgn-lt-5 pull-right"
+                                                                        data-toggle="modal"
+                                                                        data-target="#exampleModalCenter"
+                                                                        (click)="handleSideScreen('members')">Change
+                                                                    </a>
+                                                                            <!-- <div class="mode-hint mgn-bt-5">
+                                                                                The provider will contact you in this
+                                                                                number
+                                                                            </div>  -->
+                                                                        </div>
                                                                     <div class="contact-section">
                                                                         <i class="fa fa-mobile "></i>
                                                                         <ng-container
@@ -283,10 +301,10 @@
                                                                             class="mgn-lt-10 phonevallabel">{{whatsappCountryCode}} {{newWhatsapp}}</span><a
                                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
-                                                                        <div class="mode-hint mgn-bt-5">
+                                                                        <!-- <div class="mode-hint mgn-bt-5">
                                                                             The provider will contact
                                                                             you in this number
-                                                                        </div>
+                                                                        </div> -->
                                                                     </div>
                                                                     <div class=""
                                                                         *ngIf="userData && userData.userProfile && userData.userProfile.email">
@@ -644,7 +662,7 @@
                                                             class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-20">
                                                             <div class="pull-left"> Booking for
                                                             </div>
-                                                            <a class="lnk pointer-cursoraction mgn-lt-20"
+                                                            <a class="lnk pointer-cursoraction mgn-lt-20" *ngIf="sel_ser_det.serviceType !== 'virtualService'"
                                                                 (click)="addMember()"><i class="fa fa-user-plus"></i>
                                                                 {{add_member_cap}}</a>
                                                         </div>
@@ -652,7 +670,7 @@
                                                             <ng-container *ngIf="action==='members'">
                                                                 <div class="member-outer">
                                                                     <div class="member-list mgn-up-10">
-                                                                        <ul class="member-ul">
+                                                                        <ul class="member-ul" *ngIf="sel_ser_det.serviceType !== 'virtualService'">
                                                                             <mat-radio-group>
                                                                                 <li *ngFor="let memb of familymembers"
                                                                                     class="members">
@@ -671,6 +689,14 @@
                                                                             </mat-radio-group>
                                                                         </ul>
                                                                     </div>
+                                                                    <ng-container
+                                                                    *ngIf="sel_ser_det.serviceType === 'virtualService'">
+                                                                    <div class="card-title service mgn-bt-10"
+                                                                        *ngFor="let member of waitlist_for">
+                                                                        {{member.firstName | capitalizeFirst}}
+                                                                        {{member.lastName | capitalizeFirst}}
+                                                                    </div>
+                                                                </ng-container>
                                                                 </div>
                                                                 <div class="grey">
                                                                     <div class="serv-head">
