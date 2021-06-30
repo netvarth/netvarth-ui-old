@@ -485,13 +485,13 @@ export class BranchUserDetailComponent implements OnInit {
                 });
         } else {
             console.log(post_data1);
-            // this.provider_services.createUser(post_data1).subscribe(() => {
-            //     this.userAddConfirm()
+            this.provider_services.createUser(post_data1).subscribe(() => {
+                this.userAddConfirm()
               
-            // },
-            //     error => {
-            //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            //     });
+            },
+                error => {
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
                 
         }
     }
