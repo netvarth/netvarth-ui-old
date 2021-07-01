@@ -146,7 +146,7 @@ export class ProvidersignupComponent implements OnInit {
     retailStores: 'assets/images/home/supermarket-01.png',
     otherMiscellaneous: '',
     educationalInstitution: 'assets/images/home/Education-01.svg',
-    sportsAndEntertainement: 'assets/images/home/Sports domain-01.svg',
+    sportsAndEntertainement: 'assets/images/home/Sportsdomain-01.svg',
     jaldee_qMgr: '',
     jaldee_appDesktop: 'assets/images/home/available-app.png',
     jaldee_playstore: 'assets/images/home/app_btn1.png',
