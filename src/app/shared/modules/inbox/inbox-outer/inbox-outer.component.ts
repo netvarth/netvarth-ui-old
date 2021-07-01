@@ -67,7 +67,6 @@ export class InboxOuterComponent implements OnInit {
   @ViewChildren('outmsgId') outmsgIds: QueryList<ElementRef>;
   @ViewChildren('inmsgId') inmsgId: QueryList<ElementRef>;
   customId: any;
-  isCustomer: any;
   constructor(private inbox_services: InboxServices,
     public shared_functions: SharedFunctions,
     private groupService: GroupStorageService,
@@ -75,15 +74,15 @@ export class InboxOuterComponent implements OnInit {
     public shared_services: SharedServices,
     private dateTimeProcessor: DateTimeProcessor,
     private activaterouterobj: ActivatedRoute) {
-      this.activaterouterobj.queryParams.subscribe(qparams => {
-        if (qparams.accountId) {
-          this.selectedProvider = qparams.accountId;
-          this.accId = qparams.accountId;
-          this.customId = qparams.customId;
-          this.showChat =true;
-        }
-      });
-     }
+    this.activaterouterobj.queryParams.subscribe(qparams => {
+      if (qparams.accountId) {
+        this.selectedProvider = qparams.accountId;
+        this.accId = qparams.accountId;
+        this.customId = qparams.customId;
+        this.showChat = true;
+      }
+    });
+  }
   ngOnInit() {
     this.onResize();
     this.loading = true;
@@ -109,7 +108,6 @@ export class InboxOuterComponent implements OnInit {
   }
   getInboxMessages() {
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
-    // alert(this.accountId);
     this.inbox_services.getInbox(usertype)
       .subscribe(
         data => {
@@ -117,10 +115,8 @@ export class InboxOuterComponent implements OnInit {
           this.scrollDone = true;
           this.sortMessages();
           this.groupedMsgs = this.shared_functions.groupBy(this.messages, 'accountId');
-          console.log(this.groupedMsgs);
           if (this.selectedProvider !== '') {
             this.selectedUserMessages = this.groupedMsgs[this.selectedProvider];
-            console.log(this.selectedUserMessages);
             const unreadMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.owner.id !== this.userDet.id);
             if (unreadMsgs.length > 0) {
               const ids = unreadMsgs.map(msg => msg.messageId);
@@ -213,15 +209,13 @@ export class InboxOuterComponent implements OnInit {
       };
       const dataToSend: FormData = new FormData();
       post_data['msg'] = post_data.communicationMessage;
-      if (this.replyMsg && this.isCustomer) {
-        post_data['messageType'] = 'ENQUIRY';
+      post_data['messageType'] = 'CHAT';
+      if (this.replyMsg) {
         post_data['replyMessageId'] = this.replyMsg.messageId;
+        if (this.replyMsg.messageType === 'ENQUIRY') {
+          post_data['messageType'] = 'ENQUIRY';
+        }
       }
-      else{
-        post_data['messageType'] = 'CHAT';
-        post_data['replyMessageId'] = this.replyMsg.messageId;
-      }
-
       const captions = {};
       let i = 0;
       if (this.selectedMessage) {
@@ -358,14 +352,6 @@ export class InboxOuterComponent implements OnInit {
     this.selectedMessage.caption.splice(i, 1);
   }
   replytoMsg(msg) {
-    switch (msg.messageType) {
-      case 'ENQUIRY':
-        this.isCustomer = true;
-        break;
-      default:
-        this.isCustomer = false;
-        break;
-    }
     this.replyMsg = msg;
   }
   closeReply() {
@@ -416,4 +402,3 @@ export class InboxOuterComponent implements OnInit {
     }
   }
 }
-
