@@ -298,10 +298,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.customId = params.customId;
                     this.businessId = this.account_id;
                 }
-                // if(params.virtual_info){
-                //     this.virtualInfo=JSON.parse(params.virtual_info);
-                //     console.log(this.virtualInfo);
-                // }
+                if(params.virtual_info){
+                    this.virtualInfo=JSON.parse(params.virtual_info);
+                    console.log(this.virtualInfo);
+                }
             });
     }
     ngOnDestroy(): void {
@@ -505,6 +505,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
 
         } if (this.virtualInfo && this.virtualInfo.serviceFor) {
+            console.log('inisdee');
             this.consumerType = 'member';
             this.waitlist_for = [];
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor);
@@ -793,7 +794,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             'consumerNote': this.consumerNote,
             'countryCode': this.countryCode,
             'phoneNumber': phNumber,
-            'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
+            //'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'coupons': this.selected_coupons
         };
         if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
@@ -814,6 +815,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
             }
             if (this.virtualInfo) {
+                if(!this.waitlist_for[0]['apptTime']){
+                this.waitlist_for[0]['apptTime']= this.selectedApptTime['time']
+                }
                 // console.log(this.virtualInfo);
                 // const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
                 // const formattedDate = moment(momentDate).format("YYYY-MM-DD");
@@ -855,6 +859,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
 
         }
+        post_Data['appmtFor'] = JSON.parse(JSON.stringify(this.waitlist_for));
         console.log('post_data' + JSON.stringify(post_Data));
         console.log(type);
         if (!this.is_wtsap_empty) {
