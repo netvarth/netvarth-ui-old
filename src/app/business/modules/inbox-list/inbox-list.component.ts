@@ -273,10 +273,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     if (this.selectedCustomer !== '') {
       this.selectedUserMessages = this.groupedMsgs[this.selectedCustomer];
       if (!this.customerId) {
-        console.log(this.selectedUserMessages);
-        console.log(this.customers);
         const customerDetails = this.customers.filter(customer => customer.jaldeeConsumer === this.selectedUserMessages[0].accountId);
-        console.log('customerDetails', customerDetails);
         if (customerDetails[0]) {
           this.customerId = customerDetails[0].id;
         }
@@ -492,9 +489,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.selectedMessage.caption.splice(i, 1);
   }
   customerSelection(msgs) {
-    console.log(this.customers);
     const customerDetails = this.customers.filter(customer => customer.jaldeeConsumer === msgs.value[0].accountId);
-    console.log('customerDetails', customerDetails);
     if (customerDetails[0]) {
       this.customerId = customerDetails[0].id;
     }
