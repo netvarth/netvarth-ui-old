@@ -210,6 +210,7 @@ export const projectConstantsLocal = {
     retailStores: { iconClass: 'retailstores_icon' },
     otherMiscellaneous: { iconClass: 'other_icon' },
     educationalInstitution: { iconClass: 'education_icon' },
+    sportsAndEntertainement: { iconClass: 'sports_icon'}
 
   },
   DOMAIN_SERVICES_HINT: {
