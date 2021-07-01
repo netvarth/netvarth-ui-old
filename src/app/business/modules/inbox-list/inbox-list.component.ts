@@ -179,9 +179,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
       if (enuiryMsgs && enuiryMsgs.length > 0) {
         this.shared_functions.sendMessage({ ttype: 'enquiryCount' });
       }
-      if (this.isCustomer) {
-        this.router.navigate(['provider', 'enquiry', 'chat']);
-      }
     });
   }
   getInboxUnreadCnt() {
@@ -275,20 +272,22 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.onResize();
     if (this.selectedCustomer !== '') {
       this.selectedUserMessages = this.groupedMsgs[this.selectedCustomer];
-      if (this.messageId) {
-        if (typeof (this.messageId) === 'string') {
-          this.messageId = JSON.parse(this.messageId);
-          const selectedMsg = this.selectedUserMessages.filter(msg => msg.messageId === this.messageId);
-          this.messageId = (selectedMsg[0].replyMsgId) ? selectedMsg[0].replyMsgId : this.messageId;
-        }
-        this.selectedUserMessages = this.selectedUserMessages.filter(msg => msg.messageId === this.messageId || msg.replyMsgId === this.messageId);
-      }
       if (!this.customerId) {
         console.log(this.selectedUserMessages);
         console.log(this.customers);
         const customerDetails = this.customers.filter(customer => customer.jaldeeConsumer === this.selectedUserMessages[0].accountId);
         console.log('customerDetails', customerDetails);
-        this.customerId = customerDetails[0].id;
+        if (customerDetails[0]) {
+          this.customerId = customerDetails[0].id;
+        }
+      }
+      if (this.messageId) {
+        if (typeof (this.messageId) === 'string') {
+          this.messageId = JSON.parse(this.messageId);
+          const selectedMsg = this.selectedUserMessages.filter(msg => msg.messageId === this.messageId);
+          this.messageId = (selectedMsg[0] && selectedMsg[0].replyMsgId) ? selectedMsg[0].replyMsgId : this.messageId;
+        }
+        this.selectedUserMessages = this.selectedUserMessages.filter(msg => msg.messageId === this.messageId || msg.replyMsgId === this.messageId);
       }
       if (this.small_device_display) {
         this.showChat = true;
@@ -496,7 +495,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
     console.log(this.customers);
     const customerDetails = this.customers.filter(customer => customer.jaldeeConsumer === msgs.value[0].accountId);
     console.log('customerDetails', customerDetails);
-    this.customerId = customerDetails[0].id;
+    if (customerDetails[0]) {
+      this.customerId = customerDetails[0].id;
+    }
     this.type = 'all';
     this.message = '';
     this.replyMsg = null;
