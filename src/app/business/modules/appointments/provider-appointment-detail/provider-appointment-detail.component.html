@@ -38,7 +38,7 @@
                 </div>
               </h2>
               <!-- Content -->
-              <div class="mgn-up-10 stats-item">
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.appmtFor[0].firstName || waitlist_data.appmtFor[0].lastName">
                 <span class="itemHead">Booking For</span>
                 <span class="itemVal">{{waitlist_data.appmtFor[0].firstName | capitalizeFirst}}
                   {{waitlist_data.appmtFor[0].lastName | capitalizeFirst}}</span>
@@ -47,10 +47,26 @@
                 <span class="itemHead">Booking id</span>
                 <span class="itemVal">{{waitlist_data.appointmentEncId}}</span>
               </div>
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.appmtFor[0].bookingLocation">
+                <span class="itemHead">Location</span>
+                <span class="itemVal">
+                  {{waitlist_data.appmtFor[0].bookingLocation.district}},
+                  {{waitlist_data.appmtFor[0].bookingLocation.state}}</span>
+              </div>
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.appmtFor[0].preferredLanguage">
+                <span class="itemHead">Language</span>
+                <span class="itemVal">{{waitlist_data.appmtFor[0].preferredLanguage}}</span>
+              </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.phoneNumber">
-                <span class="itemHead">Phone No</span>
+                <span class="itemHead">Phone #</span>
                 <span class="itemVal">{{waitlist_data.countryCode}} {{waitlist_data.phoneNumber}}</span>
               </div>
+              <div class="mgn-up-10 stats-item"
+              *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+              <span class="itemHead">WhatsApp #</span>
+              <span class="itemVal">+
+                {{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
+            </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.appmtFor[0].memberJaldeeId">
                 <span class="itemHead">{{customer_label | capitalizeFirst}} id</span>
                 <span class="itemVal">{{waitlist_data.appmtFor[0].memberJaldeeId}}</span>
@@ -75,14 +91,14 @@
               <!-- Status,Date,Time bar -->
               <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stat-bar">
                 <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item pl0"
-                  *ngIf="(waitlist_data.service.serviceType === 'virtualService' && waitlist_data.apptStatus !== 'Arrived')">
+                  *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] && (waitlist_data.service.serviceType === 'virtualService' && waitlist_data.apptStatus !== 'Arrived')">
                   <span class="status-label">STATUS</span>
                   <span>
                     {{check_in_statuses[waitlist_data.apptStatus | capitalizeFirst]}}
                   </span>
                 </div>
                 <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item pl0"
-                  *ngIf="(waitlist_data.service.serviceType !== 'virtualService')">
+                  *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] && (waitlist_data.service.serviceType !== 'virtualService')">
                   <span class="status-label">STATUS</span>
                   <span>
                     {{check_in_statuses[waitlist_data.apptStatus | capitalizeFirst]}}

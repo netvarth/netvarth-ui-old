@@ -1,0 +1,10 @@
+.pad-rt-5 {
+    padding-right: 5px !important;
+}
+
+.qservices .content.loc-list .card .copy .mbt {
+    right: 0;
+    position: relative;
+    top: 0px;
+    z-index: 51;
+}

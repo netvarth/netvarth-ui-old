@@ -144,12 +144,20 @@ export class BranchUserDetailComponent implements OnInit {
         this.subsector = user.subSector;
         this.isadminPrivilege = user.adminPrivilege;
         this.sector = user.sector;
+        console.log(bConfig);
         console.log(this.sector);
         console.log(this.subsector);
-        if (this.sector !== 'healthCare') {
-            this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'ASSISTANT' }, { value: 'PROVIDER', name: 'Provider' }, { value: 'ADMIN', name: 'ADMIN' }];
+        if (this.sector !== 'healthCare' && this.sector !== 'finance') {
+            this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: 'Provider' }, { value: 'ADMIN', name: 'Admin' }];
+        }
+        if (this.sector === 'finance') {
+            this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: 'Staff Member' }, { value: 'ADMIN', name: 'Admin' }];
+        }
+        if (this.sector === 'educationalInstitution') {
+            this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: 'MENTOR' }, { value: 'ADMIN', name: 'Admin' }];
         }
         if (bConfig && bConfig.bdata) {
+            console.log("");
             for (let i = 0; i < bConfig.bdata.length; i++) {
                 if (user.sector === bConfig.bdata[i].domain) {
                     for (let j = 0; j < bConfig.bdata[i].subDomains.length; j++) {
@@ -175,6 +183,7 @@ export class BranchUserDetailComponent implements OnInit {
                 );
         }
         this.selectedsubDomain = [];
+        console.log(this.subDomains);
         for (const subdomain of this.subDomains) {
             if (this.sector === 'healthCare') {
                 if (this.subsector === 'hospital') {
@@ -193,19 +202,21 @@ export class BranchUserDetailComponent implements OnInit {
             } else if (this.sector === 'personalCare') {
                 if (subdomain.subDomain === this.subsector) {
                     this.selectedsubDomain.push(subdomain);
-                } else if (subdomain.subDomain === this.subsector) {
-                    this.selectedsubDomain.push(subdomain);
-                } else if (subdomain.subDomain === this.subsector) {
-                    this.selectedsubDomain.push(subdomain);
                 }
+                //  else if (subdomain.subDomain === this.subsector) {
+                //     this.selectedsubDomain.push(subdomain);
+                // } else if (subdomain.subDomain === this.subsector) {
+                //     this.selectedsubDomain.push(subdomain);
+                // }
             } else if (this.sector === 'finance') {
                 if (subdomain.subDomain === this.subsector) {
                     this.selectedsubDomain.push(subdomain);
-                } else if (subdomain.subDomain === this.subsector) {
-                    this.selectedsubDomain.push(subdomain);
-                } else if (subdomain.subDomain === this.subsector) {
-                    this.selectedsubDomain.push(subdomain);
-                }
+                } 
+                // else if (subdomain.subDomain === this.subsector) {
+                //     this.selectedsubDomain.push(subdomain);
+                // } else if (subdomain.subDomain === this.subsector) {
+                //     this.selectedsubDomain.push(subdomain);
+                // }
             } else if (this.sector === 'veterinaryPetcare') {
                 if (this.subsector === 'veterinaryhospital') {
                     if (subdomain.subDomain === 'veterinarydoctor') {
@@ -216,22 +227,38 @@ export class BranchUserDetailComponent implements OnInit {
             else if (this.sector === 'retailStores') {
                 if (subdomain.subDomain === this.subsector) {
                     this.selectedsubDomain.push(subdomain);
-                } else if (subdomain.subDomain === this.subsector) {
-                    this.selectedsubDomain.push(subdomain);
-                } else if (subdomain.subDomain === this.subsector) {
-                    this.selectedsubDomain.push(subdomain);
+                } 
+                // else if (subdomain.subDomain === this.subsector) {
+                //     this.selectedsubDomain.push(subdomain);
+                // } else if (subdomain.subDomain === this.subsector) {
+                //     this.selectedsubDomain.push(subdomain);
+                // }
+            } else if (this.sector === 'educationalInstitution') {
+                if (this.subsector === 'educationalTrainingInstitute') {
+                    if (subdomain.subDomain === 'educationalTrainingInstitute') {
+                        this.selectedsubDomain.push(subdomain);
+                    }
+                }else if (this.subsector === 'schools') {
+                    if (subdomain.subDomain === 'schools') {
+                        this.selectedsubDomain.push(subdomain);
+                    }
+                }else if (this.subsector === 'colleges') {
+                    if (subdomain.subDomain === 'colleges') {
+                        this.selectedsubDomain.push(subdomain);
+                    }
                 }
-            }
+                
+              }
         }
     }
     createForm() {
         this.userForm = this.fb.group({
             first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
             last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
-            gender: ['male'],
+            gender: [''],
             // phonenumber: new FormControl(undefined),
             countryCode: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)])],
-            phonenumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
+            phonenumber: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
             dob: [''],
             email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
             countryCode_whatsapp: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)])],
@@ -272,6 +299,16 @@ export class BranchUserDetailComponent implements OnInit {
                             if (this.sector === 'healthCare') {
                                 if (this.type === 'PROVIDER') {
                                     this.type = 'DOCTOR';
+                                }
+                            }
+                            if (this.sector === 'finance') {
+                                if (this.type === 'PROVIDER') {
+                                    this.type = 'Staff Member';
+                                }
+                            }
+                            if (this.sector === 'educationalInstitution') {
+                                if (this.type === 'PROVIDER') {
+                                    this.type = 'Mentor';
                                 }
                             }
                             // this.createForm();
@@ -429,6 +466,7 @@ export class BranchUserDetailComponent implements OnInit {
         if (input.selectedUserType === 'PROVIDER') {
             post_data1['deptId'] = input.selectedDepartment;
             // post_data1['subdomain'] = input.selectedSubDomain;
+            console.log(this.selectedsubDomain);
             post_data1['subdomain'] = this.selectedsubDomain[0].id || 0;
         }
         if (input.selectedUserType !== 'ADMIN') {
@@ -448,7 +486,6 @@ export class BranchUserDetailComponent implements OnInit {
         } else {
             console.log(post_data1);
             this.provider_services.createUser(post_data1).subscribe(() => {
-                // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('USER_ADDED'), { 'panelclass': 'snackbarerror' });
                 this.userAddConfirm()
               
             },
@@ -563,7 +600,7 @@ export class BranchUserDetailComponent implements OnInit {
             .subscribe(
                 data => {
                     this.locationDetails = data;
-                    this.locations = this.locationDetails[0].PostOffice;
+                    // this.locations = this.locationDetails[0].PostOffice;
                     this.showloc = true;
                     this.editloc = false;
                 },

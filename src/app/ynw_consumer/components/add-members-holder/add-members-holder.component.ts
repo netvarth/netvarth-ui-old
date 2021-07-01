@@ -14,7 +14,7 @@ import { SubSink } from 'subsink';
 })
 
 export class AddMembersHolderComponent implements OnInit,OnDestroy {
-  family_member_cap = Messages.FAMILY_MEMBERS;
+  family_member_cap = Messages.FAMILY_MEMBER;
   cancel_btn_cap = Messages.CANCEL_BTN;
   save_btn_cap = Messages.SAVE_BTN;
   update_btn_cap = Messages.UPDATE_BTN;
@@ -23,7 +23,7 @@ export class AddMembersHolderComponent implements OnInit,OnDestroy {
   api_success = null;
   member_list: any = [];
   disableButton = false;
-  addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
+  addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' ,'whatsAppNum' :{},'telegramNum':{},'email':''};
   breadcrumbs_init = [
     {
       // title: Messages.DASHBOARD_TITLE,
@@ -42,12 +42,34 @@ export class AddMembersHolderComponent implements OnInit,OnDestroy {
     public shared_functions: SharedFunctions,
     private wordProcessor: WordProcessor,
     @Inject(MAT_DIALOG_DATA) public data: any) {
+
     if (data.type === 'edit') {
       this.addmemberobj.fname = data.member.userProfile.firstName || '';
       this.addmemberobj.lname = data.member.userProfile.lastName || '';
       this.addmemberobj.mobile = data.member.userProfile.primaryMobileNo || '';
       this.addmemberobj.gender = data.member.userProfile.gender || '';
       this.addmemberobj.dob = data.member.userProfile.dob || '';
+      if (data.member.userProfile.whatsAppNum  && data.member.userProfile.whatsAppNum !== undefined ) {
+
+        const whatsup = {}
+        if (data.member.userProfile.whatsAppNum.countryCode.startsWith('+')) {
+          whatsup["countryCode"] = data.member.userProfile.whatsAppNum.countryCode
+        } else {
+          whatsup["countryCode"] = '+' + data.member.userProfile.whatsAppNum.countryCode
+        }
+        whatsup["number"] = data.member.userProfile.whatsAppNum.number
+        this.addmemberobj['whatsAppNum'] = whatsup;
+      }
+      if (data.member.userProfile.telegramNum  && data.member.userProfile.telegramNum !== undefined ) {
+        const telegram = {}
+        if (data.member.userProfile.telegramNum.countryCode.startsWith('+')) {
+          telegram["countryCode"] = data.member.userProfile.telegramNum.countryCode
+        } else {
+          telegram["countryCode"] = '+' + data.member.userProfile.telegramNum.countryCode
+        }
+        telegram["number"] = data.member.userProfile.telegramNum.number
+        this.addmemberobj['telegramNum'] = telegram;
+      }
     }
   }
 
@@ -57,14 +79,26 @@ ngOnDestroy(){
   this.subs.unsubscribe();
 }
   handleReturnDetails(obj) {
+    console.log(obj);
     this.resetApi();
     this.addmemberobj.fname = obj.fname || '';
     this.addmemberobj.lname = obj.lname || '';
     this.addmemberobj.mobile = obj.mobile || '';
     this.addmemberobj.gender = obj.gender || '';
     this.addmemberobj.dob = obj.dob || '';
+    const whatsappObj={};
+    whatsappObj['countryCode']=obj.countryCode_whtsap;
+    whatsappObj['number']=obj.whatsappnumber;
+    this.addmemberobj.whatsAppNum=whatsappObj;
+    const telegramObj={};
+    telegramObj['countryCode']=obj.countryCode_telegram;
+    telegramObj['number']=obj.telegramnumber;
+
+    this.addmemberobj.telegramNum=telegramObj;
+    this.addmemberobj.email=obj.email;
   }
   handleSaveMember() {
+    console.log(this.addmemberobj);
     this.disableButton = true;
     this.resetApi();
     let derror = '';
@@ -84,6 +118,25 @@ ngOnDestroy(){
     if (this.addmemberobj.fname.trim() === '') {
       derror = 'Please enter the first name';
     }
+
+    if(this.addmemberobj.telegramNum['countryCode']==''&&this.addmemberobj.telegramNum['countryCode']==undefined &&this.addmemberobj.telegramNum['number']==''&&this.addmemberobj.telegramNum['number']==undefined ){
+    if(this.addmemberobj.telegramNum['countryCode']==''||this.addmemberobj.telegramNum['countryCode']==undefined){
+      derror = 'Enter valid telegram country code';  
+    }
+    if(this.addmemberobj.telegramNum['number']==''||this.addmemberobj.telegramNum['number']==undefined){
+      derror = 'Enter valid telegram number';  
+    }
+  }
+   
+    if(this.addmemberobj.whatsAppNum['countryCode']==''&&this.addmemberobj.whatsAppNum['countryCode']==undefined &&this.addmemberobj.whatsAppNum['number']==''&&this.addmemberobj.whatsAppNum['number']==undefined ){
+      if(this.addmemberobj.whatsAppNum['number']==''||this.addmemberobj.whatsAppNum['number']==undefined){
+        derror = 'Enter valid whatsapp number';  
+      }
+      if(this.addmemberobj.whatsAppNum['countryCode']==''||this.addmemberobj.whatsAppNum['countryCode']==undefined){
+        derror = 'Enter valid whatsapp country code';  
+      }
+    }
+    
 
     if (derror === '') {
       if (this.addmemberobj.mobile !== '') {
@@ -118,6 +171,16 @@ ngOnDestroy(){
       if (this.addmemberobj.dob !== '') {
         post_data.userProfile['dob'] = this.addmemberobj.dob;
       }
+      if(this.addmemberobj.whatsAppNum){
+        post_data.userProfile['whatsAppNum'] = this.addmemberobj.whatsAppNum;
+      }
+      if(this.addmemberobj.telegramNum){
+        post_data.userProfile['telegramNum'] = this.addmemberobj.telegramNum;
+      }
+      if(this.addmemberobj.email){
+        post_data.userProfile['email'] = this.addmemberobj.email;
+      }
+      console.log(post_data);
       if (this.data.type === 'add') {
         this.subs.sink=this.shared_services.addMembers(post_data)
           .subscribe(() => {

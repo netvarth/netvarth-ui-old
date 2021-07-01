@@ -53,6 +53,12 @@ export class DonationMgrComponent implements OnInit {
   }
 
   handle_Donations(event) {
+    if(this.domain === 'finance'){
+    let error = 'Donations are disabled for this account.  Please contact Jaldee support @ +91 8880125000'
+    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    this.getDonationStatus();
+  }
+    else {
     const is_Donation = (event.checked) ? 'Enable' : 'Disable';
     this.provider_services.setDonations(is_Donation)
       .subscribe(
@@ -65,6 +71,7 @@ export class DonationMgrComponent implements OnInit {
           this.getDonationStatus();
         }
       );
+    }
   }
   getDonationStatus() {
     this.provider_services.getGlobalSettings().subscribe(

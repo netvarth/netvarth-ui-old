@@ -206,7 +206,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     origin: string;
     pGateway: any;
     donorerror = null;
+    donorlasterror = null;
     donor = '';
+    donorfirst;
+    donorlast;
     phoneNumber;
     separateDialCode = true;
     SearchCountryField = SearchCountryField;
@@ -273,6 +276,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.donorName = this.donor = this.customer_data.firstName + ' ' + this.customer_data.lastName;
         this.donorFirstName = this.customer_data.firstName;
         this.donorLastName = this.customer_data.lastName;
+        this.donorfirst = this.customer_data.firstName;
+        this.donorlast = this.customer_data.lastName;
         this.main_heading = this.checkinLabel; // 'Check-in';
         this.maxsize = 1;
         this.step = 1;
@@ -371,16 +376,23 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             });
     }
     addDonor() {
-        const dnr = this.donor.trim();
-        if (dnr === '') {
-            this.donorerror = 'Please enter the donor name';
+        const dnrFirst = this.donorfirst.trim();
+        const dnrLast = this.donorlast.trim();
+        if (dnrFirst === '') {
+            this.donorerror = 'Please enter the first name';
+            return;
+        } else if(dnrLast === '') {
+            this.donorlasterror = 'Please enter the last name';
             return;
         } else {
-            this.donorFirstName = dnr;
-            this.donorLastName = ''; 
+            this.donorFirstName = dnrFirst;
+            this.donorLastName = dnrLast; 
+            setTimeout(() => {
+                this.action = '';
+            }, 500);
             this.closebutton.nativeElement.click();
-            this.action = '';
-            this.donorName = this.donor.trim();
+            this.donorName = dnrFirst + ' ' + dnrLast;
+            // this.donorName = this.donor.trim();
         }
     }
     addPhone() {
@@ -407,8 +419,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             this.consumerPhoneNo = this.selected_phone;
             this.userPhone = this.selected_phone;
             this.edit = true; 
+            setTimeout(() => {
+                this.action = '';
+            }, 500);
             this.closebutton.nativeElement.click();
-            this.action = '';
         }
     }
     editPhone() {
@@ -545,7 +559,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.addCustomerDonation(post_Data, this.account_id)
             .subscribe(data => {
                 this.uid = data['uid'];
-                if (this.questionAnswers && this.questionAnswers.answers && this.questionAnswers.answers.answerLine && this.questionAnswers.answers.answerLine.length > 0) {
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.submitQuestionnaire(this.uid, post_Data, paymentWay);
                 } else {
                     this.consumerPayment(this.uid, post_Data, paymentWay);
@@ -638,8 +652,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                             () => {
                                 this.getProfile();
                                 // this.hideFilterSidebar();
+                                setTimeout(() => {
+                                    this.action = '';
+                                }, 500);
                                 this.closebutton.nativeElement.click();
-                                this.action = '';
                             },
                             error => {
                                 this.api_error = error.error;
@@ -667,8 +683,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         if (this.action === '') {
             this.location.back();
         } else {
+            setTimeout(() => {
+                this.action = '';
+            }, 500);
             this.closebutton.nativeElement.click();
-            this.action = '';
         }
     }
     handleGoBack(cstep) {
@@ -1143,5 +1161,9 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             });
         }
+    }
+    resetErrors() {
+        this.donorerror = null;
+        this.donorlasterror = null;
     }
 }

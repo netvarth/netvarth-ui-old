@@ -25,6 +25,7 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { ListRecordingsDialogComponent } from '../../../../shared/components/list-recordings-dialog/list-recordings-dialog.component';
 import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { VoiceConfirmComponent } from '../../customers/video-confirm/voice-confirm.component';
 
 
 @Component({
@@ -111,6 +112,9 @@ export class CheckinActionsComponent implements OnInit {
     check_in_statuses = projectConstants.CHECK_IN_STATUSES;
     user_arr: any;
     isUserdisable;
+    meet_data: any;
+    id: any;
+    providerMeetingUrl: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -584,10 +588,10 @@ export class CheckinActionsComponent implements OnInit {
     }
     setActions() {
         this.apiloading = false;
-        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn' && this.checkin.waitlistStatus !== 'blocked' && !this.data.teleservice) {
+        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn' && this.checkin.waitlistStatus !== 'blocked' && !this.data.teleservice && this.checkin.paymentStatus !== 'FullyRefunded') {
             this.showUndo = true;
         }
-        if (this.data.timetype === 1 && this.checkin.waitlistStatus === 'checkedIn' && Object.keys(this.checkin.virtualService).length === 0 && this.checkin.virtualService.constructor === Object && !this.data.teleservice) {
+        if (this.data.timetype === 1 && this.checkin.waitlistStatus === 'checkedIn' && this.checkin.waitlistMode !== 'WALK_IN_CHECKIN' && Object.keys(this.checkin.virtualService).length === 0 && this.checkin.virtualService.constructor === Object && !this.data.teleservice) {
             this.showArrived = true;
         }
         if ((this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') && !this.data.teleservice) {
@@ -636,6 +640,60 @@ export class CheckinActionsComponent implements OnInit {
             }
             this.loading = false;
         });
+    }
+    gotoSecureVideo() {
+        this.dialogRef.close();
+        const customerDetails = this.checkin.waitlistingFor[0];
+        const customerId = customerDetails.id;
+        let whtasappNum;
+        if(this.checkin && this.checkin.virtualService && this.checkin.virtualService.WhatsApp){
+         whtasappNum = this.checkin.virtualService.WhatsApp;
+        }
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                id : customerId,
+                phoneNum : whtasappNum,
+                type: 'secure_video'
+            }
+        };
+        this.router.navigate(['provider', 'secure-video'], navigationExtras);
+    }
+   
+    startVoiceCall() {
+        this.closeDialog();
+        this.voiceCallConfirmed()
+        
+        // this.provider_services.voiceCallReady(customerId).subscribe(data => {
+        //     this.voiceCallConfirm()
+        // },
+        //     error => {
+        //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //     });
+    }
+    voiceCallConfirmed() {
+        const customerId =  this.checkin.waitlistingFor[0].id;
+        const num = this.checkin.countryCode + ' ' + this.checkin.waitlistPhoneNumber;
+        // const customerId = customerDetails[0].id;
+        const dialogref = this.dialog.open(VoiceConfirmComponent, {
+          width: '60%',
+          height: '30%',
+          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+          disableClose: true,
+          data: {
+            customerId: customerId,
+            customer : num,
+          }
+        });
+        dialogref.afterClosed().subscribe(
+          result => {
+            this.closeDialog();
+            // if (result) {
+            // }
+          }
+        );
+      }
+    closeDialog() {
+        this.dialogRef.close();
     }
     deleteLabel() {
         // this.provider_services.deleteLabelfromCheckin(checkinId, label).subscribe(data => {

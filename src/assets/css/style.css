@@ -376,7 +376,6 @@
     -webkit-border-radius: 50px;
     border-radius: 50px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     color: #00aef2;
     cursor: pointer;
 }
@@ -528,8 +527,6 @@
 .p-checkin .mainouter .prepay-outer {
     margin-bottom: 0;
     margin-top: 15px;
-    /*padding-top: 15px;
-        border-top: 1px dashed $cc-ash;*/
 }
 
 .p-checkin .mainouter .prepay-outer .prepay-dur-pr {
@@ -541,8 +538,6 @@
     -webkit-border-radius: 10px;
     border-radius: 10px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
-    /*@include top-to-bottom(#f8f8f8, #fff);*/
 }
 
 .p-checkin .mainouter .prepay-outer .prepay-dur-pr .prepay-amt {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Messages } from '../../../../../../shared/constants/project-messages';
@@ -75,6 +75,7 @@ export class CustomViewComponent implements OnInit {
     serviceScheduleCount;
     serviceQCount;
     account_type;
+    back_type: any;
 
     constructor(public shared_functions: SharedFunctions,
         private router: Router,
@@ -95,7 +96,12 @@ export class CustomViewComponent implements OnInit {
             this.getAccountQs();
             this.getAppointmentSchedules();
             this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+            if (qparams.type) {
+                this.back_type = qparams.type;
+                console.log(this.back_type)
+             }
         });
+       
     }
     ngOnInit() {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -732,7 +738,13 @@ export class CustomViewComponent implements OnInit {
             this.provider_services.updateCustomView(this.viewId, customViewInput).subscribe(
                 (data) => {
                     this.snackbarService.openSnackBar('Custom  View Updated Successfully', { 'panelclass': 'snackbarerror' });
-                    this.router.navigate(['provider', 'settings', 'general', 'customview']);
+                    const navigationExtras: NavigationExtras = {
+                        queryParams: {
+                          type: this.back_type
+                        }
+                      };
+                    this.router.navigate(['provider', 'settings', 'general', 'customview'],navigationExtras);
+                    // this.router.navigate(['provider', 'settings', 'general', 'customview']);
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -742,7 +754,13 @@ export class CustomViewComponent implements OnInit {
             this.provider_services.createCustomView(customViewInput).subscribe(
                 (data) => {
                     this.snackbarService.openSnackBar('Custom  View Created Successfully', { 'panelclass': 'snackbarerror' });
-                    this.router.navigate(['provider', 'settings', 'general', 'customview']);
+                    const navigationExtras: NavigationExtras = {
+                        queryParams: {
+                          type: this.back_type
+                        }
+                      };
+                    this.router.navigate(['provider', 'settings', 'general', 'customview'],navigationExtras);
+                    // this.router.navigate(['provider', 'settings', 'general', 'customview']);
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -758,10 +776,20 @@ export class CustomViewComponent implements OnInit {
             });
     }
     onCancel() {
-        this.router.navigate(['provider', 'settings', 'general', 'customview']);
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+              type: this.back_type
+            }
+          };
+        this.router.navigate(['provider', 'settings', 'general', 'customview'],navigationExtras);
     }
     redirecToGeneral() {
-        this.router.navigate(['provider', 'settings', 'general', 'customview']);
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+              type: this.back_type
+            }
+          };
+        this.router.navigate(['provider', 'settings', 'general', 'customview'],navigationExtras);
     }
     gotoAppt() {
         this.router.navigate(['/provider/settings/appointmentmanager']);

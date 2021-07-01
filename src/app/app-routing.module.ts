@@ -16,7 +16,7 @@ import { CheckoutSharedComponent } from './shared/components/checkout/checkout.c
 import { ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
 import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
 import { BusinessPageHomeComponent } from './shared/components/business-page-home/business-page-home.component';
-import { MeetRoomComponent } from './ynw_consumer/components/meet-room/meet-room.component';
+import { MeetRoomComponent } from './shared/components/meet-room/meet-room.component';
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent },
     {
@@ -29,7 +29,7 @@ const routes: Routes = [
     },
     { path: '', component: HomeComponent, canActivate: [AuthGuardHome] },
     { path: 'business', loadChildren: () => import('./shared/modules/business/home/phome.module').then(m => m.PhomeModule) },
-    { path: 'home', redirectTo: '', pathMatch: 'full', canActivate: [AuthGuardHome] },
+    { path: 'home', redirectTo: '', pathMatch: 'full' },
     { path: 'logout', component: LogoutComponent },
     { path: 'not-found', loadChildren: () => import('./shared/modules/not-found/not-found.module').then(m => m.NotFoundModule) },
     { path: 'searchdetail', loadChildren: () => import('./shared/components/search-detail/search-detail.module').then(m => m.SearchDetailModule) },
@@ -59,8 +59,8 @@ const routes: Routes = [
 
 @NgModule({
     imports: [RouterModule.forRoot(routes, {
-        // preloadingStrategy: PreloadAllModules
-    })],
+    relativeLinkResolution: 'legacy'
+})],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }

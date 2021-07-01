@@ -173,13 +173,14 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                             <mat-form-field>
                                                     <input type="text" (keypress)="isNumeric($event)" matInput
                                                         class="form-control text-width" id="phonenumber"
-                                                        placeholder="Enter Mobile # " formControlName="phonenumber"
-                                                        autocomplete="off" >
+                                                        placeholder="Enter Mobile # * " formControlName="phonenumber"
+                                                        autocomplete="off"  maxlength="15">
                                             </mat-form-field>
                                             <app-field-error-display
                                                 [displayError]="fed_service.isFieldValid(userForm,'phonenumber')"
                                                 [errorMsgs]="fed_service.getErrorMessage(userForm,'phonenumber',
                                                     {
+                                                    'required' : 'Phone number is required',
                                                     'pattern' : 'Enter number only'
                                                     })">
                                             </app-field-error-display>
@@ -369,7 +370,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                                         <input type="text" (keypress)="isNumeric($event)" matInput
                                                             class="form-control text-width" id="whatsappumber"
                                                             placeholder="Enter whatsapp # " formControlName="whatsappumber"
-                                                            autocomplete="off">
+                                                            autocomplete="off" maxlength="15">
                                                 </mat-form-field>
                                                 <app-field-error-display
                                                     [displayError]="fed_service.isFieldValid(userForm,'whatsappumber')"
@@ -400,7 +401,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                                     <input type="text" (keypress)="isNumeric($event)" matInput
                                                         class="form-control text-width" id="telegramnumber"
                                                         placeholder="Enter Telegram # " formControlName="telegramnumber"
-                                                        autocomplete="off">
+                                                        autocomplete="off" maxlength="15">
                                             </mat-form-field>
                                             <app-field-error-display
                                                 [displayError]="fed_service.isFieldValid(userForm,'telegramnumber')"
@@ -450,9 +451,14 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                          
                                         </div>   
                                         <div *ngIf="showloc">
-                                            <div *ngFor="let locationDetails of locations; let idx = index">
+                                            <!-- <div *ngFor="let locationDetails of locations; let idx = index">
                                                 <mat-radio-button [checked]="idx === 0">
                                                 {{locationDetails.Name}},&nbsp;{{locationDetails.Block}},&nbsp;{{locationDetails.Region}},&nbsp;{{locationDetails.State}}
+                                                </mat-radio-button>
+                                            </div> -->
+                                            <div>
+                                                <mat-radio-button checked="checked" >
+                                                {{locationDetails.District}},&nbsp;{{locationDetails.State}}
                                                 </mat-radio-button>
                                             </div>
                                         </div>

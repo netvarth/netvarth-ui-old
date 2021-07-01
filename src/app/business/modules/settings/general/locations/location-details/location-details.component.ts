@@ -616,6 +616,9 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
   }
   handlelocationfind(val) {
     this.locationType = val;
+    console.log(this.locationFind);
+    const type = this.locationFind;
+    console.log(type);
     this.locationFind = '';
     if (val === 'googleMap') {
         const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
@@ -628,7 +631,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
         });
         dialogrefd.afterClosed().subscribe(result => {
           if (result==0) {
-            this.locationFind = 'GOOGLEMAP';
+            this.locationFind = type;
           }
           else {
             this.locationFind = 'GOOGLEMAP';
@@ -650,7 +653,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
         });
         dialogrefd.afterClosed().subscribe(result => {
           if (result==0) {
-            this.locationFind = 'GOOGLEMAP';
+            this.locationFind = type;
           }
           else {
             this.locationFind = 'AUTODETECT';
@@ -670,7 +673,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
         });
         dialogrefd.afterClosed().subscribe(result => {
           if (result==0) {
-            this.locationFind = 'GOOGLEMAP';
+            this.locationFind = type;
           }
           else {
             this.locationFind = 'MANUAL';

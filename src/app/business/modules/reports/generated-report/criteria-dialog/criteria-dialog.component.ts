@@ -30,6 +30,7 @@ export class CriteriaDialogComponent implements OnInit {
   ngOnInit() {
     this.time_period = projectConstantsLocal.REPORT_TIMEPERIOD;
     this.report_criteria_ip = this.report_data_service.getReportCriteriaInput();
+    console.log(this.report_criteria_ip);
     if (this.data.content) {
       this.for_view = true;
     } else {
@@ -40,29 +41,31 @@ export class CriteriaDialogComponent implements OnInit {
 
   saveCriteria() {
 
+    
     this.api_success = false;
     this.api_error = false;
     if (this.criteria_name && this.criteria_name.trim() !== '') {
-      if (/^[A-Za-z0-9\s@]*$/.test(this.criteria_name) !== true) {
-        this.api_error = true;
-        this.api_error_msg = 'Only letters numbers and spacess allowed';
-      } else {
+      // if (/^[A-Za-z0-9\s@]*$/.test(this.criteria_name) !== true) {
+      //   this.api_error = true;
+      //   this.api_error_msg = 'Only letters numbers and spacess allowed';
+      // } else {
 
-        this.provider_services.saveReportCriteria(this.criteria_name, this.report_criteria_ip).subscribe(data => {
-          this.api_success = true;
-          this.api_success_msg = 'Report saved successfully';
-          setTimeout(() => {
-            this.dialogRef.close();
-          }, 2000);
-        },
-          error => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          });
-      }
-    } else {
-      this.api_error = true;
-      this.api_error_msg = 'Please enter the report name';
+      this.report_criteria_ip['reportName'] = this.criteria_name;
+          this.provider_services.saveReportCriteria(this.report_criteria_ip).subscribe(data => {
+        this.api_success = true;
+        this.api_success_msg = 'Report saved successfully';
+        setTimeout(() => {
+          this.dialogRef.close();
+        }, 2000);
+      },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
     }
+    // } else {
+    //   this.api_error = true;
+    //   this.api_error_msg = 'Please enter the report name';
+    // }
   }
   getReportDateCategoryName(name) {
     const timePeriodObject = this.time_period.find(x => x.value === name);

@@ -1,7 +1,7 @@
 <section class="">
     <div class="title-gb no-padding">
         <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
-            Enquiry ({{enquiries.length}})
+            Enquiries ({{enquiryUnreadCount}})
         </div>
     </div>
 </section>
@@ -12,7 +12,7 @@
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                 <div class="enquiry-section col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding-small"
                     *ngIf="!loading && enquiries.length > 0">
-                    <div class="enq-box" *ngFor="let enquiry of enquiries" (click)="gotoInbox(enquiry)">
+                    <div class="enq-box" *ngFor="let enquiry of enquiries" (click)="gotoInbox(enquiry)" [class.disabled-group]="!enquiry.read">
                         <div class="user-name">
                             {{getUser(enquiry.accountName)}}
                         </div>

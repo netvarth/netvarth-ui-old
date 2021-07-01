@@ -158,3 +158,6 @@
 margin-right: 30px;
 width: 200px;
 }
+.displayblock {
+  display: block !important;
+}

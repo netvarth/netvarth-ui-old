@@ -41,8 +41,8 @@ export class CreateItemPopupComponent implements OnInit,OnDestroy {
     taxable_cap = Messages.TAXABLE_CAP;
     holdtaxable = false;
     taxpercentage = 0;
-    haveMainImg = false;
-    mainImage = false;
+   // haveMainImg = false;
+   // mainImage = false;
     selectedMessageMain = {
       files: [],
       base64: [],
@@ -204,16 +204,18 @@ addItem(post_data) {
             (data) => {
                 if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0) {
                     this.saveImages(data);
+                } else {
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ITEM_CREATED'));
+                    this.api_loading = false;
+                    this.dialogRef.close();
                 }
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ITEM_CREATED'));
-                this.api_loading = false;
-                this.dialogRef.close();
+                
 
-                if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0) {
+                // if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0) {
                   
-                } else if (this.selectedMessage.files.length == 0 || this.selectedMessageMain.files.length == 0) {
+                // } else if (this.selectedMessage.files.length == 0 || this.selectedMessageMain.files.length == 0) {
                    
-                }
+                // }
             },
             error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -323,14 +325,14 @@ itemimageSelect(event, type?) {
               reader.readAsDataURL(file);
           }
       }
-      if (this.itmId && (this.selectedMessageMain.files.length > 0 || this.selectedMessage.files.length > 0)) {
-          this.saveImages(this.itmId);
-      } else {
-          this.api_loading = false;
-          if (type) {
-              this.mainImage = true;
-          }
-      }
+    //   if (this.itmId && (this.selectedMessageMain.files.length > 0 || this.selectedMessage.files.length > 0)) {
+    //       this.saveImages(this.itmId);
+    //   } else {
+    //       this.api_loading = false;
+    //       if (type) {
+    //           this.mainImage = true;
+    //       }
+    //   }
   }
 }
 saveImages(id, routeTo?) {
@@ -375,7 +377,9 @@ saveImages(id, routeTo?) {
         };
         this.image_list_popup = [];
         this.mainimage_list_popup = [];
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ITEM_CREATED'));
         this.api_loading = false;
+        this.dialogRef.close();
     },
         error => {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -410,7 +414,7 @@ loadImages(imagelist) {
     if (imagelist.length > 0) {
         for (let i = 0; i < imagelist.length; i++) {
             if (imagelist[i].displayImage) {
-                this.haveMainImg = true;
+               // this.haveMainImg = true;
                 const imgobj = new Image(
                     i,
                     { // modal
@@ -463,7 +467,7 @@ deleteTempItemImage(img, index, type?) {
                           this.mainimage_list_popup = [];
                           this.selectedMessageMain.files.splice(index, 1);
                           this.selectedMessageMain.base64.splice(index, 1);
-                          this.haveMainImg = false;
+                          //this.haveMainImg = false;
                       } else {
                           this.image_list_popup.splice(index, 1);
                           this.selectedMessage.files.splice(index, 1);
@@ -476,11 +480,12 @@ deleteTempItemImage(img, index, type?) {
           }
       });
   } else {
-      this.mainImage = false;
+     // this.mainImage = false;
       if (type) {
           this.mainimage_list_popup = [];
           this.selectedMessageMain.files.splice(index, 1);
           this.selectedMessageMain.base64.splice(index, 1);
+         // this.haveMainImg = false;
       } else {
           this.image_list_popup.splice(index, 1);
           this.selectedMessage.files.splice(index, 1);

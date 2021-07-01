@@ -16,6 +16,8 @@ import { LocalStorageService } from '../../../../app/shared/services/local-stora
 
 
 
+
+
 @Component({
   selector: 'app-virtualfields',
   templateUrl: './virtualfields.component.html',
@@ -70,6 +72,7 @@ export class VirtualFieldsComponent implements OnInit {
   serviceDetails: any;
   provider: any;
   languageSelected: any = [];
+  iseditLanguage=false;
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
@@ -127,6 +130,7 @@ export class VirtualFieldsComponent implements OnInit {
     this.getActiveUserInfo().then(data => {
       this.customer_data = data;
       this.countryCode = this.customer_data.userProfile.countryCode;
+
       this.mandatoryEmail = this.customer_data.userProfile.email;
       this.createForm();
       this.getFamilyMembers();
@@ -254,6 +258,12 @@ export class VirtualFieldsComponent implements OnInit {
     if (memberObj.bookingLocation && memberObj.bookingLocation.pincode) {
       this.virtualForm.patchValue({ pincode: memberObj.bookingLocation.pincode });
     }
+    if (memberObj.bookingLocation && memberObj.bookingLocation.district) {
+      this.virtualForm.patchValue({ localarea: memberObj.bookingLocation.district });
+    }
+    if (memberObj.bookingLocation && memberObj.bookingLocation.state) {
+      this.virtualForm.patchValue({ state: memberObj.bookingLocation.state });
+    }
     if (memberObj.userProfile && memberObj.userProfile.whatsAppNum) {
       this.virtualForm.patchValue({ whatsappnumber: memberObj.userProfile.whatsAppNum.number });
       this.virtualForm.patchValue({ countryCode_whtsap: memberObj.userProfile.whatsAppNum.countryCode });
@@ -282,8 +292,14 @@ export class VirtualFieldsComponent implements OnInit {
     this.virtualForm.controls['islanguage'].setValue('yes');
     this.virtualForm.controls['preferredLanguage'].setValue([]);
     this.virtualForm.controls['pincode'].setValue('');
-    this.virtualForm.controls['location'].setValue('');
-    this.virtualForm.patchValue({ email: '' });
+    this.virtualForm.controls['localarea'].setValue('');
+    this.virtualForm.controls['state'].setValue('');
+    this.lngknown='yes';
+    if(this.customer_data.userProfile.email){
+    this.virtualForm.patchValue({ email:  this.customer_data.userProfile.email});
+    }else{
+      this.virtualForm.patchValue({ email: ''}); 
+    }
     this.virtualForm.patchValue({ whatsappnumber: this.customer_data.userProfile.primaryMobileNo });
     this.virtualForm.patchValue({ telegramnumber: this.customer_data.userProfile.primaryMobileNo });
   }
@@ -332,6 +348,12 @@ export class VirtualFieldsComponent implements OnInit {
     if (customer.userProfile && customer.userProfile.pinCode) {
       this.virtualForm.patchValue({ pincode: customer.userProfile.pinCode });
     }
+    if (customer.userProfile && customer.userProfile.city) {
+      this.virtualForm.patchValue({ localarea: customer.userProfile.city });
+    }
+    if (customer.userProfile && customer.userProfile.state) {
+      this.virtualForm.patchValue({ state: customer.userProfile.state });
+    }
     if (customer.userProfile && customer.userProfile.whatsAppNum) {
       this.virtualForm.patchValue({ whatsappnumber: customer.userProfile.whatsAppNum.number });
       this.virtualForm.patchValue({ countryCode_whtsap: customer.userProfile.whatsAppNum.countryCode });
@@ -369,7 +391,10 @@ export class VirtualFieldsComponent implements OnInit {
       preferredLanguage: [[], Validators.compose([Validators.required])],
       islanguage: ['', Validators.compose([Validators.required])],
       gender: ['', Validators.compose([Validators.required])],
-      location: ['', Validators.compose([Validators.required])]
+      location: ['', Validators.compose([Validators.required])],
+      localarea:[''],
+      state:[''],
+      country:['']
     });
 
     this.virtualForm.patchValue({ islanguage: 'yes' });
@@ -393,6 +418,7 @@ export class VirtualFieldsComponent implements OnInit {
     this.dialogRef.close();
   }
   editLanguage() {
+    this.iseditLanguage=true;
     console.log(this.virtualForm.get('preferredLanguage').value);
     this.languageSelected = this.virtualForm.get('preferredLanguage').value.slice();
     console.log(this.languageSelected);
@@ -415,6 +441,14 @@ export class VirtualFieldsComponent implements OnInit {
 
   }
   saveLanguages() {
+    console.log('save languages');
+    if (this.lngknown === 'yes') {
+      this.virtualForm.get('preferredLanguage').setValue(['English']);
+      this.hideLanguages = true;
+      this.languageSelected = [];
+      this.iseditLanguage=false;
+    }
+  else{
     this.virtualForm.patchValue({ 'preferredLanguage': this.languageSelected });
     if (this.virtualForm.get('preferredLanguage').value.length === 0) {
       this.snackbarService.openSnackBar('Please select one', { 'panelClass': 'snackbarerror' });
@@ -425,6 +459,7 @@ export class VirtualFieldsComponent implements OnInit {
     // let elmnt = document.getElementById("plng");
     // elmnt.scrollIntoView()
   }
+}
   cancelLanguageSelection() {
     if (this.virtualForm.get('preferredLanguage').value.length == 0) {
       this.virtualForm.get('preferredLanguage').setValue(['English']);
@@ -468,29 +503,40 @@ export class VirtualFieldsComponent implements OnInit {
     if (this.countryCode === '+91') {
       if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
         isinvalid = true;
+        console.log(isinvalid);
+      }
+    }
+    if (this.countryCode !== '+91') {
+      if (this.virtualForm.get('localarea').value === ''||this.virtualForm.get('state').value==='') {
+        isinvalid = true;
+        
       }
     }
     if (this.virtualForm.get('gender').value === '') {
       isinvalid = true;
+      console.log(isinvalid);
     }
     if (this.virtualForm.get('age').value === '') {
       isinvalid = true;
+      console.log(isinvalid);
     }
-    // if (this.virtualForm.get('dob').value === '') {
-    //   isinvalid = true;
-    // }
+
     if (this.virtualForm.get('islanguage').value === 'no') {
       if (this.virtualForm.get('preferredLanguage').value.length === 0) {
         isinvalid = true;
+        console.log(isinvalid);
       }
     }
+   
     if (this.virtualForm.get('serviceFor').value === 'new_member') {
 
       if (this.virtualForm.get('firstName').value == '') {
         isinvalid = true;
+        console.log(isinvalid);
       }
       if (this.virtualForm.get('lastName').value == '') {
         isinvalid = true;
+        console.log(isinvalid);
       }
     }
     // if (this.virtualForm.get('date').value === 'dd') {
@@ -502,7 +548,7 @@ export class VirtualFieldsComponent implements OnInit {
     // if (this.virtualForm.get('year').value === 'yyyy') {
     //   isinvalid = true;
     // }
-
+console.log(isinvalid);
     return isinvalid;
   }
 
@@ -543,12 +589,13 @@ export class VirtualFieldsComponent implements OnInit {
   onSubmit(formdata) {
     this.submitbtndisabled = true;
     formdata['phoneno'] = this.customer_data.userProfile.primaryMobileNo;
+     if(this.virtualForm.controls.email.invalid){
+       return false;
+     }
     if (this.validateFields() === true) {
-      this.snackbarService.openSnackBar('Please fill all required fields', { 'panelClass': 'snackbarerror' });
-    } else {
-      // const dob = this.virtualForm.get('year').value + '-' + this.virtualForm.get('month').value + '-' + this.virtualForm.get('date').value;
-
-      // formdata['dob'] = dob;
+      this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
+    } else  {
+      console.log('success inisde');
       if (this.is_parent) {
         this.updateParentInfo(formdata).then(
           (result) => {
@@ -594,21 +641,24 @@ export class VirtualFieldsComponent implements OnInit {
         }
 
 
-      }
+      
+    
 
     }
+  }
 
 
 
   }
   updateParentInfo(formdata) {
+
     const _this = this;
     const firstName = _this.customer_data.userProfile.firstName
     const lastName = _this.customer_data.userProfile.lastName;
     return new Promise(function (resolve, reject) {
       const userObj = {};
       userObj['id'] = _this.customer_data.id;
-      if (formdata.whatsappnumber !== '') {
+      if (formdata.whatsappnumber !== '' && formdata.whatsappnumber !== undefined && formdata.countryCode_whtsap !== '' && formdata.countryCode_whtsap !== undefined) {
         const whatsup = {}
         if (formdata.countryCode_whtsap.startsWith('+')) {
           whatsup["countryCode"] = formdata.countryCode_whtsap
@@ -618,7 +668,7 @@ export class VirtualFieldsComponent implements OnInit {
         whatsup["number"] = formdata.whatsappnumber
         userObj['whatsAppNum'] = whatsup;
       }
-      if (formdata.telegramnumber !== '') {
+      if (formdata.telegramnumber !== '' && formdata.telegramnumber !== undefined && formdata.countryCode_telegram !== '' || formdata.countryCode_telegram !== undefined) {
         const telegram = {}
         if (formdata.countryCode_telegram.startsWith('+')) {
           telegram["countryCode"] = formdata.countryCode_telegram
@@ -641,6 +691,15 @@ export class VirtualFieldsComponent implements OnInit {
       } else {
         userObj['preferredLanguages'] = formdata.preferredLanguage;
       }
+      userObj['bookingLocation']= {}
+      if (_this.countryCode!=='+91'&&formdata.localarea!=='') {
+        userObj['bookingLocation']['district'] = formdata.localarea;
+        userObj['city']=formdata.localarea;
+      }
+      if (_this.countryCode!=='+91'&&formdata.state ) {
+        userObj['bookingLocation']['state'] = formdata.state;
+        userObj['state'] = formdata.state;
+      }
       _this.lStorageService.setitemonLocalStorage('userId', _this.customer_data.id);
       _this.sharedServices.updateProfile(userObj, 'consumer').subscribe(
         () => {
@@ -655,12 +714,14 @@ export class VirtualFieldsComponent implements OnInit {
   }
 
   updateMemberInfo(formdata) {
+    console.log(formdata);
     const _this = this;;
     const firstName = _this.chosen_person.userProfile.firstName;
     const lastName = _this.chosen_person.userProfile.lastName;
     let memberInfo: any = {};
     memberInfo.userProfile = {}
-    if (formdata.whatsappnumber !== '') {
+    console.log(formdata.whatsappnumber);
+    if (formdata.whatsappnumber !== '' && formdata.whatsappnumber !== undefined && formdata.countryCode_whtsap !== '' && formdata.countryCode_whtsap !== undefined) {
       const whatsup = {}
       if (formdata.countryCode_whtsap.startsWith('+')) {
         whatsup["countryCode"] = formdata.countryCode_whtsap
@@ -670,7 +731,7 @@ export class VirtualFieldsComponent implements OnInit {
       whatsup["number"] = formdata.whatsappnumber
       memberInfo.userProfile['whatsAppNum'] = whatsup;
     }
-    if (formdata.telegramnumber !== '') {
+    if (formdata.telegramnumber !== '' && formdata.telegramnumber !== undefined && formdata.countryCode_telegram !== '' || formdata.countryCode_telegram !== undefined) {
       const telegram = {}
       if (formdata.countryCode_telegram.startsWith('+')) {
         telegram["countryCode"] = formdata.countryCode_telegram
@@ -679,6 +740,7 @@ export class VirtualFieldsComponent implements OnInit {
       }
       telegram["number"] = formdata.telegramnumber
       memberInfo.userProfile['telegramNum'] = telegram;
+
     }
     if (formdata.email !== '') {
       memberInfo['userProfile']['email'] = formdata.email
@@ -697,10 +759,11 @@ export class VirtualFieldsComponent implements OnInit {
     } else {
       memberInfo['preferredLanguages'] = formdata.preferredLanguage;
     }
-
-    if (formdata.location.State && formdata.location.Name) {
-      memberInfo.bookingLocation['state'] = formdata.location.State;
-      memberInfo.bookingLocation['city'] = formdata.location.Name
+    if (this.countryCode!=='+91'&&formdata.localarea && formdata.localarea!=='') {
+      memberInfo['bookingLocation']['district'] = formdata.localarea;
+    }
+    if (this.countryCode!=='+91'&&formdata.state ) {
+      memberInfo['bookingLocation']['state'] = formdata.state;
     }
     this.lStorageService.setitemonLocalStorage('userId', formdata.serviceFor);
     return new Promise(function (resolve, reject) {
@@ -721,7 +784,7 @@ export class VirtualFieldsComponent implements OnInit {
     const _this = this;
     const memberInfo = {};
     memberInfo['userProfile'] = {}
-    if (formdata.whatsappnumber !== '') {
+    if (formdata.whatsappnumber !== '' && formdata.whatsappnumber !== undefined && formdata.countryCode_whtsap !== '' && formdata.countryCode_whtsap !== undefined) {
       const whatsup = {}
       if (formdata.countryCode_whtsap.startsWith('+')) {
         whatsup["countryCode"] = formdata.countryCode_whtsap
@@ -731,7 +794,7 @@ export class VirtualFieldsComponent implements OnInit {
       whatsup["number"] = formdata.whatsappumber
       memberInfo['userProfile']['whatsAppNum'] = whatsup;
     }
-    if (formdata.telegramnumber !== '') {
+    if (formdata.telegramnumber !== '' && formdata.telegramnumber !== undefined && formdata.countryCode_telegram !== '' || formdata.countryCode_telegram !== undefined) {
       const telegram = {}
       if (formdata.countryCode_telegram.startsWith('+')) {
         telegram["countryCode"] = formdata.countryCode_telegram
@@ -759,9 +822,11 @@ export class VirtualFieldsComponent implements OnInit {
       memberInfo['preferredLanguages'] = formdata.preferredLanguage;
     }
 
-    if (formdata.location.State && formdata.location.Name) {
-      memberInfo['bookingLocation']['state'] = formdata.location.State;
-      memberInfo['bookingLocation']['city'] = formdata.location.Name
+    if (this.countryCode!=='+91'&&formdata.localarea && formdata.localarea!=='') {
+      memberInfo['bookingLocation']['district'] = formdata.localarea;
+    }
+    if (this.countryCode!=='+91'&&formdata.state ) {
+      memberInfo['bookingLocation']['state'] = formdata.state;
     }
     return new Promise(function (resolve, reject) {
       _this.sharedServices.addMembers(memberInfo).subscribe(

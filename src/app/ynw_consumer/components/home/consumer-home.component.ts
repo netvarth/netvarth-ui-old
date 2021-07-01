@@ -2192,9 +2192,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             const caption = communications[comIndex].caption;
             const description = communications[comIndex].s3path;
             const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-            if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+            // if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+            //   imagePath = communications[comIndex].s3path;
+            // }
+            if (new RegExp(this.imageAllowed.join("|")).test(thumbPathExt.toUpperCase())) {
               imagePath = communications[comIndex].s3path;
-            }
+          }
             const imgobj = new Image(
               count,
               {
@@ -2226,9 +2229,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             const description = communications[comIndex].s3path;
             const caption = communications[comIndex].caption;
             const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-            if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+            // if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+            //   imagePath = communications[comIndex].s3path;
+            // }
+            if (new RegExp(this.imageAllowed.join("|")).test(thumbPathExt.toUpperCase())) {
               imagePath = communications[comIndex].s3path;
-            }
+          }
             const imgobj = new Image(
               count,
               {

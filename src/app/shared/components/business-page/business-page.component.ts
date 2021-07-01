@@ -306,6 +306,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   terms = false;
   privacy = false;
   pwaIOShint: boolean;
+  iosConfig = false;
 
 
   constructor(
@@ -393,7 +394,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.loc_details = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
     this.jdnTooltip = this.wordProcessor.getProjectMesssages('JDN_TOOPTIP');
-
+   
     const isMobile = {
       Android: function () {
         return navigator.userAgent.match(/Android/i);
@@ -481,7 +482,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                   _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
                     (uiconfig: any) => {
                       if (uiconfig['iosApp'] && uiconfig['iosApp']['icon-180']) {
-                        document.getElementById('apple_touch_icon').setAttribute('href', uiconfig['iosApp']['icon-180']['src']);
+                        this.iosConfig = true;
+                        document.getElementById('apple_touch_icon').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['icon-180']['src']);
+                        console.log(uiconfig['iosApp']['icon-180']['src']);
                       }
                       if (uiconfig['terms']) {
                         this.terms = true;
@@ -549,6 +552,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+    this.customAppIOSPopup.nativeElement.style.display = 'none';
     // const appPopupDisplayed = this.lStorageService.getitemfromLocalStorage('a_dsp');
     // if (!appPopupDisplayed && this.provider_id !== 152877) {
     //   this.popUp.nativeElement.style.display = 'block';
@@ -820,16 +824,26 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.accountId = this.businessjson.id;
       this.businessName = this.businessjson.businessName;
       this.popupforCustomApp.nativeElement.style.display = 'none';
-      const path = projectConstantsLocal.UIS3PATH + this.provider_id + '/manifest.json';
+      this.customAppIOSPopup.nativeElement.style.display = 'none';
+      //       // Detects if device is on iOS 
+
+      if(this.iosConfig) {
+        const isIOS = () => {
+          const userAgent = window.navigator.userAgent.toLowerCase();
+          return /iphone|ipad|ipod/.test( userAgent );
+        }
+        const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);
+        // Checks if should display install popup notification:
+        if (isIOS() && !isInStandaloneMode()) {
+          this.customAppIOSPopup.nativeElement.style.display = 'block';
+        }
+      }      
       // const path = this.customAppSerice.getManifest(res, projectConstantsLocal.UIS3PATH + this.provider_id, projectConstants.PATH);
       if (this.accountProperties) {
+        const path = projectConstantsLocal.UIS3PATH + this.provider_id + '/manifest.json';
         document.getElementById('dynamic_manifest_url').setAttribute('href', path);
         this.btnInstallApp = document.getElementById("btnInstallCustomApp");
       }
-
-
-
-
       // if (this.businessjson.serviceSector.name !== 'healthCare') {
       //   this.service_cap = 'Services';
       // }
@@ -1653,7 +1667,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   showCommunicate(provid) {
     this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class'],
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
       disableClose: true,
       data: {
         caption: 'Enquiry',
@@ -1833,16 +1847,15 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
           if (_this.userType === 'consumer') {
 
-            // Added by Manikandan for collecting fields
-            // if (service.serviceType === 'virtualService') {
-            //   _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-            //     _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.nextAvailableDate, 'appt', service, consumerdata);
-            //   });
+            if (service.serviceType === 'virtualService') {
+              _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+                _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.nextAvailableDate, 'appt', service, consumerdata);
+              });
 
-            // }
-            // else {
+            }
+            else {
             _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
-            // }
+            }
           }
         } else {
           const passParam = { callback: 'appointment', current_provider: current_provider };
@@ -2843,9 +2856,16 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   checkout() {
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
+      let blogoUrl;
+      if (this.businessjson.logo) {
+        blogoUrl = this.businessjson.logo.url;
+      } else {
+        blogoUrl = '';
+      }
       const businessObject = {
         'bname': this.businessjson.businessName,
-        'blocation': this.locationjson[0].place
+        'blocation': this.locationjson[0].place,
+        'logo': blogoUrl
       };
       this.lStorageService.setitemonLocalStorage('order', this.orderList);
       this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
@@ -2974,7 +2994,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   qrCodegeneraterOnlineID(accEncUid) {
     this.qrdialogRef = this.dialog.open(QRCodeGeneratordetailComponent, {
       width: '40%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
+      panelClass: ['popup-class', 'commonpopupmainclass', 'specialclass'],
       disableClose: true,
       data: {
         accencUid: accEncUid,

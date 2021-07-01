@@ -6,7 +6,7 @@ import { Messages } from '../../../../shared/constants/project-messages';
 @Component({
   selector: 'app-confirm-box',
   templateUrl: './confirm-box.component.html',
-  // styleUrls: ['./home.component.scss']
+  styleUrls: ['./confirm-box.component.css']
 })
 
 

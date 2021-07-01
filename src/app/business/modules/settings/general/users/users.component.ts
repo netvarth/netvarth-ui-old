@@ -80,7 +80,7 @@ export class BranchUsersComponent implements OnInit {
         },
         {
             name: 'PROVIDER',
-            displayName: 'Doctor'
+            displayName: 'Provider'
         },
         {
             name: 'ADMIN',
@@ -146,6 +146,15 @@ export class BranchUsersComponent implements OnInit {
         this.getLicenseUsage();
         this.getSpokenLanguages();
         this.getSpecializations();
+         if (this.domain === 'healthCare') {
+           this.userTypesFormfill = [{name: 'ASSISTANT',displayName: 'Assistant'}, {name: 'PROVIDER',displayName: 'Doctor'},{name: 'ADMIN',displayName: 'Admin'}];
+        }
+        if (this.domain === 'finance') {
+            this.userTypesFormfill = [{name: 'ASSISTANT',displayName: 'Assistant'}, {name: 'PROVIDER',displayName: 'Staff Member'},{name: 'ADMIN',displayName: 'Admin'}];
+        }  
+        if (this.domain === 'educationalInstitution') {
+            this.userTypesFormfill = [{name: 'ASSISTANT',displayName: 'Assistant'}, {name: 'PROVIDER',displayName: 'Mentor'},{name: 'ADMIN',displayName: 'Admin'}];
+        }      
     }
 
     addBranchSP() {
@@ -273,8 +282,14 @@ export class BranchUsersComponent implements OnInit {
         if (user.profilePicture) {
             const proImage = user.profilePicture;
             return proImage.url;
-        } else {
-            return '../../.././assets/images/avatar5.png';
+        } else if(user.gender ==='male'){
+            return '../../.././assets/images/Asset1@300x.png';
+        }
+        else if(user.gender ==='female'){
+            return '../../.././assets/images/Asset2@300x.png';
+        }
+        else{
+            return '../../.././assets/images/Asset1@300x(1).png'; 
         }
     }
     performActions(action) {
@@ -419,7 +434,6 @@ export class BranchUsersComponent implements OnInit {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.getUsers();
                 });
-
     }
     redirecToGeneral() {
         this.routerobj.navigate(['provider', 'settings', 'general']);
@@ -460,16 +474,43 @@ export class BranchUsersComponent implements OnInit {
                 subDomain = 'alternateMedicinePractitioners';
             }
         } else if (this.user.sector === 'personalCare') {
-            subDomain = 'beautyCare';
+            if(this.user.subSector === 'beautyCare'){
+              subDomain = 'beautyCare';
+            } else if(this.user.subSector === 'personalFitness'){
+              subDomain = 'personalFitness';
+            }else if(this.user.subSector === 'massageCenters'){
+              subDomain = 'massageCenters';
+            }
+          
         } else if (this.user.sector === 'finance') {
+          if(this.user.subSector === 'bank'){
             subDomain = 'bank';
-        } else if (this.user.sector === 'veterinaryPetcare') {
+          } else if(this.user.subSector === 'nbfc'){
+            subDomain = 'nbfc';
+          }else if(this.user.subSector === 'insurance'){
+            subDomain = 'insurance';
+          }
+        }else if (this.user.sector === 'veterinaryPetcare') {
             if (this.user.subSector === 'veterinaryhospital') {
                 subDomain = 'veterinarydoctor';
             }
         } else if (this.user.sector === 'retailStores') {
-            subDomain = 'groceryShops';
-        }
+            if(this.user.subSector === 'groceryShops'){
+                subDomain = 'groceryShops';
+              } else if(this.user.subSector === 'supermarket'){
+                subDomain = 'supermarket';
+              }else if(this.user.subSector === 'hypermarket'){
+                subDomain = 'hypermarket';
+              }
+        } else if (this.user.sector === 'educationalInstitution') {
+            if (this.user.subSector === 'educationalTrainingInstitute') {
+              subDomain = 'educationalTrainingInstitute';
+            } else if (this.user.subSector === 'schools') {
+                subDomain = 'schools';
+             } else if (this.user.subSector === 'colleges') {
+                subDomain = 'colleges';
+             } 
+          }
         this.provider_services.getSpecializations(this.user.sector, subDomain)
             .subscribe(data => {
                 this.specialization_arr = data;
@@ -560,4 +601,12 @@ export class BranchUsersComponent implements OnInit {
           }
         });
     }
+    // getproider() {
+    //     if(this.domain === 'finance'){
+    //         return 'Staff Member';
+    //     } else{
+    //         return this.provider_label;
+    //     }
+    // }
 }
+

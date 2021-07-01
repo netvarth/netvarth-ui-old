@@ -5,7 +5,7 @@ export const Messages = {
   'OTP_SENT_LABEL': 'Enter the OTP sent to [your_mobile]',
   'PROFILE_UPDATE': 'Profile has been updated successfully',
   'EMAIL_ADDED': 'Email added successfully',
-  'PASSWORD_MISMATCH': 'Password and Re-entered Password do not match',
+  'PASSWORD_MISMATCH': 'Entered passwords does not match',
   'EMAIL_MISMATCH': 'Email and Re-entered Email do not match',
   'PASSWORD_CHANGED': 'Password has been changed successfully',
   'EMAIL_VERIFIED': 'Your email has been verified',
@@ -171,6 +171,7 @@ export const Messages = {
   'CUSTOMER_SEARCH_UNAVAILABLE': 'This [customer] doesnt exist',
   'PROVIDER_CUSTOMER_CREATED': 'New [customer] created',
   'TELE_NOT_SUPPORTED': 'is not supported on this device.',
+  'WATSAPP_NOT_SUPPORTED': ' Note : WhatsApp is not supported on this device.',
   'SENDING_MEET_DETAILS': 'Send the meeting details to your phone or tablet where',
   'IS_AVAILABLE': 'is available to you',
   'PHONE_OR_TAB': 'instructions to your phone/tablet where',
@@ -323,6 +324,7 @@ export const Messages = {
 
   // Family Member
   'FAMILY_MEMBERS': 'Family Members',
+  'FAMILY_MEMBER':'Family Member',
   'MEMBER_CAPTION': 'Member',
   'PHONE_DIGIT_VAL_MSG': 'Enter a 10 digit mobile number',
   'PHONE_NUM_VAL_MSG': 'Mobile number should have only numbers',

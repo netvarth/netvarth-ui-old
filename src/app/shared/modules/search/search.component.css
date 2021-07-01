@@ -163,18 +163,21 @@
   /* display: inline-block !important; */
   width: 50% !important;
   padding: 15px 5px;
+  float: left;
 }
 
 .tp-srch .domain-box {
   /* display: inline-block !important; */
   width: 25% !important;
   padding: 15px 5px;
+  float: left;
 }
 
 .tp-srch .location-box {
   /* display: inline-block !important; */
   width: 25% !important;
   padding: 15px 5px;
+  float: left;
 }
 
 .tp-srch .button-box {

@@ -262,7 +262,7 @@
             <div class="col-md-6">
               <label class="form-control-label">Display Image</label>
               <div class="cr1">
-                <div class="no-dta pl-0" *ngIf="!haveMainImg && !mainImage">
+                <div class="no-dta pl-0" *ngIf="this.selectedMessageMain.files.length == 0">
                   <div class="col-sm-12 col-md-12 col-lg-12 mgn-bt-20 pl-0">
                     <div class="addorderitem mx-0" (click)="imagefile.click()">
                       <p class="addorderitemp1"><a class="pointer-cursor"><input #imagefile

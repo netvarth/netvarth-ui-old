@@ -319,10 +319,10 @@ export class DonationsComponent implements OnInit {
   setFilterForApi() {
     const api_filter = {};
     if (this.filter.first_name !== '') {
-      api_filter['donor-eq'] = 'firstName::' + this.filter.first_name;
+      api_filter['donor-like'] = 'firstName::' + this.filter.first_name;
     }
     if (this.filter.last_name !== '') {
-      api_filter['donor-eq'] = 'lastName::' + this.filter.last_name;
+      api_filter['donor-like'] = 'lastName::' + this.filter.last_name;
     }
     if (this.filter.date != null) {
       api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.date);

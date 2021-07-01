@@ -699,10 +699,6 @@
   
 /* Filter Code Ends */
 
-#selectViewModal.modal.fade.in {
-    display: flex !important;
-}
-
 #selectViewModal .modal-dialog {
     max-width: calc(100% - 20px) !important;
     max-height: calc(100% - 20px) !important;
@@ -767,6 +763,7 @@
     max-width: -webkit-fill-available !important;
     align-items: flex-start !important;
     justify-content: flex-start !important;
+    width: auto !important;
 }
 
 #selectViewModal .modal-body ul.menu.dd-menu li {
@@ -869,4 +866,16 @@
 #selectViewModal .modal-footer li button.btn.close-btn:hover {
     color: #3d3d3d !important;
     background-color: #C9C9C9 !important;
+}
+.user-txt-clr {
+    color: #3E234B;
+}
+.user-tr-backclr {
+    background: #f0ecf6;
+}
+.waitlist-box {
+    margin: 10px 0px;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 4px 0 rgb(0 0 0 / 25%);
+    border: 1px solid #eee;
 }

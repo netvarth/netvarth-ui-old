@@ -7,6 +7,9 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
+// import { VoicecallConfirmBoxComponent } from '../confirm-box/voicecall-confirm-box.component';
+// import { Location } from '@angular/common';
+import { VoiceConfirmComponent } from '../video-confirm/voice-confirm.component';
 
 @Component({
     selector: 'app-customer-actions',
@@ -24,10 +27,14 @@ export class CustomerActionsComponent implements OnInit {
     showApply = false;
     labelsforRemove: any = [];
     labelMap = {};
+    meet_data: any;
+    id: any;
+    providerMeetingUrl: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private provider_services: ProviderServices,
         private snackbarService: SnackbarService,
         private groupService: GroupStorageService,
         private router: Router,
+        // private location: Location,
         public dialog: MatDialog, private provider_shared_functions: ProviderSharedFuctions,
         public dialogRef: MatDialogRef<CustomerActionsComponent>) {
     }
@@ -95,6 +102,53 @@ export class CustomerActionsComponent implements OnInit {
         const bookingId = 0;
         this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'list'], { queryParams: { 'calledfrom': 'list' } });
     }
+    gotoSecureVideo() {
+        this.closeDialog();
+        const customerDetails = this.customerDetails;
+        const customerId = customerDetails[0].id;
+        // const phoneNum = customerDetails[0].phoneNo;
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                id : customerId,
+                // phoneNum : phoneNum,
+                type: 'secure_video'
+            }
+        };
+        this.router.navigate(['provider', 'secure-video'], navigationExtras);
+    }
+    startVoiceCall() {
+        this.closeDialog();
+        this.voiceCallConfirmed()
+        
+        // this.provider_services.voiceCallReady(customerId).subscribe(data => {
+        //     this.voiceCallConfirm()
+        // },
+        //     error => {
+        //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //     });
+    }
+    voiceCallConfirmed() {
+         const customerId =  this.customerDetails[0].id
+        const num = this.customerDetails[0].countryCode + ' ' + this.customerDetails[0].phoneNo;
+        // const customerId = customerDetails[0].id;
+        const dialogref = this.dialog.open(VoiceConfirmComponent, {
+          width: '60%',
+          height: '30%',
+          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+          disableClose: true,
+          data: {
+            customerId: customerId,
+            customer : num,
+          }
+        });
+        dialogref.afterClosed().subscribe(
+          result => {
+            this.closeDialog();
+            // if (result) {
+            // }
+          }
+        );
+      }
     editCustomer() {
         this.closeDialog();
         const navigationExtras: NavigationExtras = {

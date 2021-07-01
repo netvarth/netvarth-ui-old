@@ -284,10 +284,10 @@ export class UserServiceChnageComponent implements OnInit {
   setServiceDataSource(result) {
     const service_list: any = [];
     result.forEach(serviceObj => {
-      let userName = '';
+      let businessName = '';
       let languages;
       let specialization;
-      userName = (serviceObj.businessName) ? serviceObj.businessName : serviceObj.firstName + ' ' + serviceObj.lastName;
+      businessName = (serviceObj.businessName) ? serviceObj.businessName : serviceObj.firstName + ' ' + serviceObj.lastName;
       if (serviceObj.preferredLanguages) {
         languages = JSON.parse(serviceObj.preferredLanguages);
         for (var i = 0; i < languages.length; i++) {
@@ -309,7 +309,8 @@ export class UserServiceChnageComponent implements OnInit {
       service_list.push(
         {
           'id': serviceObj.id,
-          'Username': userName,
+          'businessName': businessName,
+          'gender': serviceObj.gender,
           'userType': serviceObj.userType,
           'status': serviceObj.status,
           'mobileNo': serviceObj.mobileNo,
@@ -324,6 +325,11 @@ export class UserServiceChnageComponent implements OnInit {
           'whatsAppNum': (serviceObj.whatsAppNum) ? serviceObj.whatsAppNum  : '', 
           'telegramNum': (serviceObj.telegramNum) ? serviceObj.telegramNum  : '', 
           'countryCode':  serviceObj.countryCode || '',
+          'firstName': serviceObj.firstName,
+          'lastName': serviceObj.lastName,
+          'email': serviceObj.email || ''
+ 
+          // serviceObj.firstName + ' ' + serviceObj.lastName;
 
 
         });
@@ -333,9 +339,9 @@ export class UserServiceChnageComponent implements OnInit {
   updateUser() {
     let msg = '';
     if (this.selectedUser.isAvailable) {
-      msg = 'Do you want to assign this ' + this.customer_label + ' to ' + this.selectedUser.Username + '?';
+      msg = 'Do you want to assign this ' + this.customer_label + ' to ' + this.selectedUser.businessName + '?';
     } else {
-      msg = this.selectedUser.Username + ' seems to be unavailable now. Assign anyway ? ';
+      msg = this.selectedUser.businessName + ' seems to be unavailable now. Assign anyway ? ';
     }
     const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
@@ -366,7 +372,6 @@ export class UserServiceChnageComponent implements OnInit {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
               }
             );
-
         }
         else {
           const post_data = {
@@ -418,9 +423,15 @@ export class UserServiceChnageComponent implements OnInit {
     if (user.profilePicture) {
       const proImage = user.profilePicture;
       return proImage.url;
-    } else {
-      return '../../.././assets/images/avatar5.png';
-    }
+    } else if(user.gender ==='male'){
+      return '../../.././assets/images/Asset1@300x.png';
+  }
+  else if(user.gender ==='female'){
+      return '../../.././assets/images/Asset2@300x.png';
+  }
+  else{
+      return '../../.././assets/images/Asset1@300x(1).png'; 
+  }
   }
   showMoreorLess(event, index, type) {
     event.stopPropagation();
@@ -530,6 +541,8 @@ export class UserServiceChnageComponent implements OnInit {
   }
   getSpecializations() {
     let subDomain;
+    console.log(this.user.sector);
+    console.log(this.user.subSector);
     if (this.user.sector === 'healthCare') {
       if (this.user.subSector === 'hospital') {
         subDomain = 'physiciansSurgeons';
@@ -539,15 +552,44 @@ export class UserServiceChnageComponent implements OnInit {
         subDomain = 'alternateMedicinePractitioners';
       }
     } else if (this.user.sector === 'personalCare') {
-      subDomain = 'beautyCare';
+        if(this.user.subSector === 'beautyCare'){
+          subDomain = 'beautyCare';
+        } else if(this.user.subSector === 'personalFitness'){
+          subDomain = 'personalFitness';
+        }else if(this.user.subSector === 'massageCenters'){
+          subDomain = 'massageCenters';
+        }
+      
     } else if (this.user.sector === 'finance') {
-      subDomain = 'bank';
+      if(this.user.subSector === 'bank'){
+        subDomain = 'bank';
+      } else if(this.user.subSector === 'nbfc'){
+        subDomain = 'nbfc';
+      }else if(this.user.subSector === 'insurance'){
+        subDomain = 'insurance';
+      }
     } else if (this.user.sector === 'veterinaryPetcare') {
       if (this.user.subSector === 'veterinaryhospital') {
         subDomain = 'veterinarydoctor';
       }
     } else if (this.user.sector === 'retailStores') {
-      subDomain = 'groceryShops';
+      if(this.user.subSector === 'groceryShops'){
+        subDomain = 'groceryShops';
+      } else if(this.user.subSector === 'supermarket'){
+        subDomain = 'supermarket';
+      }else if(this.user.subSector === 'hypermarket'){
+        subDomain = 'hypermarket';
+      }
+    } 
+    else if (this.user.sector === 'educationalInstitution') {
+      if (this.user.subSector === 'educationalTrainingInstitute') {
+        subDomain = 'educationalTrainingInstitute';
+      } else if (this.user.subSector === 'schools') {
+         subDomain = 'schools';
+      } 
+      else if (this.user.subSector === 'colleges') {
+        subDomain = 'colleges';
+     }
     }
     this.provider_services.getSpecializations(this.user.sector, subDomain)
       .subscribe(data => {
@@ -613,3 +655,4 @@ export class UserServiceChnageComponent implements OnInit {
     });
 }
 }
+

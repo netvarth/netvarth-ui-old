@@ -96,6 +96,7 @@
                         <label class="col-form-label" for="lastName">Age(in years)<span class="red">*</span></label><br>
                         <input type="text" min="1" max="150" class="form-control vt_dt no-padding mgn-up-5"
                             formControlName="age" style="width:50%" (keypress)=isNumeric($event)>
+                            <div style="display: flex; justify-content: space-between;">
                             <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'age') "
                             [errorMsgs]="fed_service.getErrorMessage(virtualForm,'age',
                   {
@@ -106,6 +107,7 @@
                   })">
                         </app-field-error-display>
                     </div>
+                    </div>
                       
                
                 
@@ -114,7 +116,7 @@
                     <!-- <mat-form-field> -->
                     <label for="pincode" class="col-form-label">Residing Pincode  in India <span class="red">*</span></label>
                     <input type="text" placeholder="xxxxxx" class="form-control vt_dt no-padding mgn-up-5" id="location"
-                        formControlName="pincode" (keyup)="showLocations($event)" style="width:50%">
+                        formControlName="pincode" (keypress)="isNumeric($event)" (keyup)="showLocations($event)" style="width:50%">
                     <!-- </mat-form-field> -->
                     <div style="display: flex; justify-content: space-between;">
                         <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'pincode')"
@@ -129,8 +131,17 @@
                         </mat-radio-group>
                     </div>
                 </div>
+                <div class="form-group "  *ngIf="countryCode!=='+91'">
+                    <label class="col-form-label" for="lastName">Location <span class="red">*</span></label>
+                    <input placeholder="Enter your location" class="form-control" formControlName="localarea">
+                </div>
+                <div class="form-group"  *ngIf="countryCode!=='+91'">
+                    <label class="col-form-label" for="firstName"> Residing State<span class="red">*</span></label>
+                    <input placeholder="Enter your state" class="form-control" formControlName="state">
+                </div>
+             
                 <!-- Signin Password -->
-                <div class="form-group" id="plng">
+                <div class="form-group" id="plng" *ngIf="lngknown==='yes'">
                     <!-- <mat-form-field> -->
                     <label class="col-form-label" for="v">Select your preferred language <span
                             class="red">*</span></label>
@@ -159,10 +170,28 @@
                             style="font-size: large;"></i></span>
                 </div>
             </div>
-            <div *ngIf="!hideLanguages && lngknown=='no'" class="form-group">
-                <div class="form-group" *ngIf="lngknown==='no'">
+            <div *ngIf="!hideLanguages" class="form-group">
+                    <div class="form-group" id="plng" *ngIf="iseditLanguage">
+                            <!-- <mat-form-field> -->
+                            <label class="col-form-label" for="v">Select your preferred language <span
+                                    class="red">*</span></label>
+                            <br />
+                            <mat-radio-group aria-label="Select an option" (change)="onChange($event)" class="mgn-up-5"
+                                formControlName="islanguage">
+                                <mat-radio-button value="yes">English</mat-radio-button>
+                                <mat-radio-button value="no">Other Languages</mat-radio-button>
+                            </mat-radio-group>
+                            <!-- </mat-form-field> -->
+                            <div style="display: flex; justify-content: space-between;">
+                                <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'islanguage') "
+                                    errorMsg="please choose one">
+                                </app-field-error-display>
+                            </div>
+                        </div>
+                <div class="form-group">
                     <!-- <mat-form-field> -->
-                    <label class="col-form-label" for="preferredLanguage">Choose your preferred languages
+                      
+                    <label  *ngIf="lngknown==='no'"class="col-form-label" for="preferredLanguage">Choose your preferred languages
                         <span class="red">*</span></label>
                     <!-- <mat-form-field>
                     <mat-select multiple  class="select-box" id="preferredLanguage" formControlName="preferredLanguage">
@@ -172,7 +201,7 @@
                         </mat-select>
                 </mat-form-field> -->
                     <div class="form-group">
-                        <div class="languagesouter" *ngIf="languages.length >0">
+                        <div class="languagesouter" *ngIf="languages.length >0 && lngknown==='no'">
                             <div *ngFor="let lang of languages">
                                 <mat-checkbox style="padding-left: 10px;" (change)="langSel(lang)"
                                     [checked]="checklangExists(lang)">{{lang}}</mat-checkbox>
@@ -232,7 +261,7 @@
                         <div class="form-group width-100">
                             <input type="text" (keypress)="isNumeric($event)" matInput
                                 class="form-control text-width" id="whatsappnumber" formControlName="whatsappnumber"
-                                autocomplete="off" maxlength="10">
+                                autocomplete="off">
                             <app-field-error-display
                                 [displayError]="fed_service.isFieldValid(virtualForm,'whatsappnumber')" [errorMsgs]="fed_service.getErrorMessage(virtualForm,'whatsappnumber',
                             {
@@ -268,7 +297,7 @@
                         <div class="form-group width-100">
                             <input type="text" (keypress)="isNumeric($event)" matInput
                                 class="form-control text-width" id="telegramnumber" formControlName="telegramnumber"
-                                autocomplete="off" maxlength="10">
+                                autocomplete="off" >
                             <app-field-error-display
                                 [displayError]="fed_service.isFieldValid(virtualForm,'telegramnumber')" [errorMsgs]="fed_service.getErrorMessage(virtualForm,'telegramnumber',
                             {

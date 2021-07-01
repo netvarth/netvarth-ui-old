@@ -12,7 +12,7 @@ export class userContactInfoComponent implements OnInit {
 
 users_list: any = [];
 screenWidth = window.innerWidth;
-no_of_grids = 3;
+no_of_grids = 2;
     constructor(
         public dialogRef: MatDialogRef<userContactInfoComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
@@ -28,8 +28,8 @@ no_of_grids = 3;
     @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
-    if (this.screenWidth < 375) {
-      this.no_of_grids = 2;
+    if (this.screenWidth < 450) {
+      this.no_of_grids = 1;
     }
   }
     getLanguages(languages) {
@@ -47,8 +47,15 @@ no_of_grids = 3;
         if (user.profilePicture) {
             const proImage = user.profilePicture;
             return proImage.url;
-        } else {
-            return '../../../.././assets/images/avatar5.png';
+        } 
+        else if(this.users_list.gender ==='male'){
+            return '../../../.././assets/images/Asset1@300x.png';
+        }
+        else if(this.users_list.gender ==='female'){
+            return '../../../.././assets/images/Asset2@300x.png';
+        }
+        else{
+            return '../../../.././assets/images/Asset1@300x(1).png'; 
         }
     }
 }

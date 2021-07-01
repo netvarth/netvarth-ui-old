@@ -40,6 +40,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     actions: string;
     todayDate;
     waitlist;
+    appointment;
     newTimeDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
     customer_label = '';
     selectedUser;
@@ -56,6 +57,12 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     }
 
     ngOnInit() {
+        console.log(this.item)
+        console.log(this.type)
+        if(this.type == 'appointment-dashboard'){
+            this.appointment = this.item;
+            console.log(this.appointment)
+        }
         if (this.type) {
             this.item.type = this.type;
         }
@@ -351,4 +358,8 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         age = age.split(',');
         return age[0];
     }
+    getScheduleIndex(id) {
+        // const filterSchedule = this.activeSchedules.filter(sch => sch.id === id);
+        // return this.activeSchedules.indexOf(filterSchedule[0]);
+      }
 }

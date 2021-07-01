@@ -1505,6 +1505,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       event.base64,
       this.imageChangedEvent.target.files[0].name,
     );
+    console.log(this.fileToReturn);
     return this.fileToReturn;
   }
   imageLoaded() {
@@ -1537,8 +1538,10 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.success_error = null;
     this.error_list = [];
     this.error_msg = '';
+    console.log(file);
     if (file) {
         this.success_error = this.sharedfunctionobj.imageValidation(file);
+        console.log(this.success_error);
         if (this.success_error === true) {
             const reader = new FileReader();
             this.item_pic.files = file;
@@ -1548,7 +1551,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
                 this.item_pic.base64 = e.target['result'];
             };
             reader.readAsDataURL(fileobj);
-            if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
+           // if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
                 // generating the data to be submitted to change the logo
                 const submit_data: FormData = new FormData();
                 submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
@@ -1568,7 +1571,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
                     console.log('propic');
                     this.uploadLogo(submit_data);
                 }
-            }
+          //  }
         } else {
             this.error_list.push(this.success_error);
             if (this.error_list[0].type) {

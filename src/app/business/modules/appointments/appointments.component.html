@@ -556,8 +556,8 @@
                       </td> -->
                     </tr>
                   </tbody>
-                  <tbody *ngIf="startedAppts.length > 0 && (activeSchedules.length > 0 || activeUser)">
-                    <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
+                  <tbody *ngIf="startedAppts.length > 0 && (activeSchedules.length > 0 || activeUser) && !small_device_display">
+                    <tr class="pointer-cursor" [class.user-tr-backclr]="appt.provider" (click)="goCheckinDetail(appt)"
                       *ngFor="let appt of startedAppts, let i=index">
                       <td class="chkWth" *ngIf="startedAppts.length > 1">
                         <input *ngIf="appt.providerConsumer" [checked]="startedChkAppointments[i]" type="checkbox"
@@ -579,6 +579,19 @@
                           [class.pointer-cursor]="appt.apptStatus!=='blocked'"
                           [class.pointer-auto]="appt.apptStatus=='blocked'">{{appt.appmtFor[0].firstName}}
                           {{appt.appmtFor[0].lastName}}
+                          <div class="bold" *ngIf="appt.appmtFor[0].bookingLocation">
+                            <span *ngIf="appt.appmtFor[0].bookingLocation.district">{{appt.appmtFor[0].bookingLocation.district}},</span> 
+                           <span *ngIf="appt.appmtFor[0].bookingLocation.state">{{appt.appmtFor[0].bookingLocation.state}}</span></div>
+                          <div class="location">
+                            <span *ngIf="appt.appmtFor[0].age">&nbsp;</span>
+                            <span *ngIf="appt.appmtFor[0].age">{{getAge(appt.appmtFor[0].age)}} yrs</span>
+                            <span *ngIf="appt.appmtFor[0].age">,</span>
+                            <span *ngIf="appt.appmtFor[0].gender">&nbsp;</span>
+                            <span *ngIf="appt.appmtFor[0].gender">{{appt.appmtFor[0].gender | capitalizeFirst}}</span>
+                            <span *ngIf="appt.appmtFor[0].preferredLanguage && (appt.appmtFor[0].gender || appt.appmtFor[0].age)">,</span>
+                            <span *ngIf="appt.appmtFor[0].preferredLanguage">&nbsp;</span>
+                            <span *ngIf="appt.appmtFor[0].preferredLanguage">{{appt.appmtFor[0].preferredLanguage}}</span>
+                            </div>
                           <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">Blocked</div>
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
@@ -587,8 +600,10 @@
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
-                        <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
-                          {{appt.provider.firstName}}&nbsp;{{appt.provider.lastName}}
+                        <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
+                          {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName +
+                            ' ' + appt.provider.lastName}}
+                          <!-- {{appt.provider.firstName}}&nbsp;{{appt.provider.lastName}} -->
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
@@ -664,10 +679,10 @@
                         <a class="statusText btn-play pointer-cursor call-btn" [class.stopcall-btn]="appt.callingStatus"
                           *ngIf="!small_device_display && board_count > 0 && !appt.virtualService &&time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
                           (click)="stopprop($event);callingAppt(appt)" [matTooltipClass]="tooltipcls"
-                          [matTooltip]="'Call'">
+                          [matTooltip]="'Alert'">
                           <i class="dashboardcallstop-icon" *ngIf="appt.callingStatus"></i> <span
                             *ngIf="appt.callingStatus">&nbsp; Stop</span>
-                          <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
+                          <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i> 
                           <span *ngIf="!appt.callingStatus">
                             &nbsp;Alert</span>
                         </a>
@@ -732,6 +747,25 @@
                       </td>
                     </tr>
                   </tbody>
+
+                  <tbody
+                    *ngIf="startedAppts.length > 0 && (activeSchedules.length > 0 || activeUser) && small_device_display">
+                    <div [class.user-tr-backclr]="appt.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
+                      *ngFor="let appt of startedAppts, let i=index">
+                      <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="startedAppts.length > 1">
+                       
+                        <input *ngIf="appt.providerConsumer" [checked]="startedChkAppointments[i]" type="checkbox"
+                          class="pull-left" (click)="stopprop($event)"
+                          (change)="chkStartedAptHistoryClicked(i, appt)" />
+                      </div>
+                      <app-card [item]="appt" [type]="'appointment-dashboard'" [time_type]="time_type"
+                        [checkins]="startedAppts" (actionPerformed)="cardClicked($event)" [allLabels]="allLabels"
+                        [statusAction]="'started'">
+                      </app-card>
+                    </div>
+                  </tbody>
+
+
                 </table>
               </div>
               <div class="">
@@ -936,7 +970,7 @@
                             [class.stopcall-btn]="apptByTimeSlot[appt.time][0].callingStatus"
                             *ngIf="!small_device_display && board_count > 0 && !apptByTimeSlot[appt.time][0].virtualService && (apptByTimeSlot[appt.time][0].apptStatus === 'Confirmed' || apptByTimeSlot[appt.time][0].apptStatus === 'Arrived')"
                             (click)="stopprop($event);callingAppt(apptByTimeSlot[appt.time][0])"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Alert'">
                             <i class="dashboardcallstop-icon" *ngIf="apptByTimeSlot[appt.time][0].callingStatus"></i>
                             <span *ngIf="apptByTimeSlot[appt.time][0].callingStatus">&nbsp; Stop</span>
                             <i class="dashboardcall-icon" *ngIf="!apptByTimeSlot[appt.time][0].callingStatus"></i>
@@ -975,15 +1009,15 @@
                             <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                               *ngIf="apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'WhatsApp' && apptByTimeSlot[appt.time][0].service.virtualServiceType === 'videoService'"></i>
                             <span
-                              *ngIf="apptByTimeSlot[appt.time][0].service.serviceType === 'virtualService' && (apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+                              *ngIf="apptByTimeSlot[appt.time][0].virtualService && (apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'GoogleMeet' || apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                             <span
-                              *ngIf="!small_device_display && appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
-                              {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
+                              *ngIf="!small_device_display && apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode !== 'Phone' && apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
+                              {{apptByTimeSlot[appt.time][0].apptStatus === 'Started'? 'Resume':'Start'}}
                             </span>
                             <span
-                              *ngIf="appt.service.virtualCallingModes[0].callingMode == 'Phone' || appt.service.virtualCallingModes[0].callingMode == 'WhatsApp'">
-                              {{appt.apptStatus === 'Started'? 'Resume': 'Call +' +
-                              appt.virtualService[appt.service.virtualCallingModes[0].callingMode] }}
+                              *ngIf="apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'Phone' || apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                              {{apptByTimeSlot[appt.time][0].apptStatus === 'Started'? 'Resume': 'Call +' +
+                              apptByTimeSlot[appt.time][0].virtualService[apptByTimeSlot[appt.time][0].service.virtualCallingModes[0].callingMode] }}
                             </span>
                           </a>
                           <a class="statusText btn-play pointer-cursor done-btn"
@@ -1031,8 +1065,8 @@
                     </tr>
                   </tbody>
                   <tbody
-                    *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser) && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked'))">
-                    <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
+                    *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser) && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked')) && !small_device_display">
+                    <tr class="pointer-cursor" [class.user-tr-backclr]="appt.provider" (click)="goCheckinDetail(appt)"
                       *ngFor="let appt of check_in_filtered_list, let i=index">
                       <td class="chkWth" *ngIf="showSelectAll()">
                         <input *ngIf="appt.providerConsumer" [checked]="chkAppointments[i]" type="checkbox"
@@ -1053,6 +1087,19 @@
                           [class.pointer-cursor]="appt.apptStatus!=='blocked'"
                           [class.pointer-auto]="appt.apptStatus=='blocked'">{{appt.appmtFor[0].firstName}}
                           {{appt.appmtFor[0].lastName}}
+                          <div class="bold" *ngIf="appt.appmtFor[0].bookingLocation">
+                            <span *ngIf="appt.appmtFor[0].bookingLocation.district">{{appt.appmtFor[0].bookingLocation.district}},</span> 
+                            <span *ngIf="appt.appmtFor[0].bookingLocation.state">{{appt.appmtFor[0].bookingLocation.state}}</span></div>
+                          <div class="location">
+                            <span *ngIf="appt.appmtFor[0].age">&nbsp;</span>
+                            <span *ngIf="appt.appmtFor[0].age">{{getAge(appt.appmtFor[0].age)}} yrs</span>
+                            <span *ngIf="appt.appmtFor[0].age">,</span>
+                            <span *ngIf="appt.appmtFor[0].gender">&nbsp;</span>
+                            <span *ngIf="appt.appmtFor[0].gender">{{appt.appmtFor[0].gender | capitalizeFirst}}</span>
+                            <span *ngIf="appt.appmtFor[0].preferredLanguage && (appt.appmtFor[0].gender || appt.appmtFor[0].age)">,</span>
+                            <span *ngIf="appt.appmtFor[0].preferredLanguage">&nbsp;</span>
+                            <span *ngIf="appt.appmtFor[0].preferredLanguage">{{appt.appmtFor[0].preferredLanguage}}</span>
+                            </div>
                           <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">Blocked</div>
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
@@ -1061,8 +1108,9 @@
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
-                        <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
-                          {{appt.provider.firstName}}&nbsp;{{appt.provider.lastName}}
+                        <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
+                          {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName +
+                            ' ' + appt.provider.lastName}}
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
@@ -1138,7 +1186,7 @@
                         <a class="statusText btn-play pointer-cursor call-btn" [class.stopcall-btn]="appt.callingStatus"
                           *ngIf="!small_device_display && board_count > 0 && !appt.virtualService &&time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
                           (click)="stopprop($event);callingAppt(appt)" [matTooltipClass]="tooltipcls"
-                          [matTooltip]="'Call'">
+                          [matTooltip]="'Alert'">
                           <i class="dashboardcallstop-icon" *ngIf="appt.callingStatus"></i> <span
                             *ngIf="appt.callingStatus">&nbsp; Stop</span>
                           <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
@@ -1176,7 +1224,7 @@
                           <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
                           <span
-                            *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+                            *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                           <span
                             *ngIf="!small_device_display && appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
                             {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
@@ -1213,6 +1261,24 @@
                       </td>
                     </tr>
                   </tbody>
+
+
+                  <tbody
+                    *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser) && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked')) && small_device_display">
+                    <div [class.user-tr-backclr]="appt.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
+                      *ngFor="let appt of check_in_filtered_list, let i=index">
+                      <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="showSelectAll()">
+                        <input *ngIf="appt.providerConsumer" [checked]="chkAppointments[i]" type="checkbox" class="pull-left"
+                         (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
+                      </div>
+                      <app-card [item]="appt" [type]="'appointment-dashboard'" [time_type]="time_type"
+                        [checkins]="check_in_filtered_list" (actionPerformed)="cardClicked($event)"
+                        [allLabels]="allLabels" [statusAction]="statusAction">
+                      </app-card>
+                    </div>
+                  </tbody>
+
+
                 </table>
               </div>
             </div>
@@ -1529,8 +1595,8 @@
                     </td> -->
                   </tr>
                 </tbody>
-                <tbody *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser)">
-                  <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
+                <tbody *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser) && !small_device_display">
+                  <tr class="pointer-cursor" [class.user-tr-backclr]="appt.provider" (click)="goCheckinDetail(appt)"
                     *ngFor="let appt of check_in_filtered_list, let i=index">
                     <td class="chkWth" *ngIf="showSelectAll()">
                       <input [checked]="chkAppointments[i]" type="checkbox" *ngIf="appt.providerConsumer"
@@ -1550,6 +1616,19 @@
                         [class.pointer-cursor]="appt.apptStatus!=='blocked'"
                         [class.pointer-auto]="appt.apptStatus=='blocked'">{{appt.appmtFor[0].firstName}}
                         {{appt.appmtFor[0].lastName}}
+                        <div class="bold" *ngIf="appt.appmtFor[0].bookingLocation">
+                          <span *ngIf="appt.appmtFor[0].bookingLocation.district">{{appt.appmtFor[0].bookingLocation.district}},</span> 
+                           <span *ngIf="appt.appmtFor[0].bookingLocation.state">{{appt.appmtFor[0].bookingLocation.state}}</span></div>
+                        <div class="location">
+                          <span *ngIf="appt.appmtFor[0].age">&nbsp;</span>
+                          <span *ngIf="appt.appmtFor[0].age">{{getAge(appt.appmtFor[0].age)}} yrs</span>
+                          <span *ngIf="appt.appmtFor[0].age">,</span>
+                          <span *ngIf="appt.appmtFor[0].gender">&nbsp;</span>
+                          <span *ngIf="appt.appmtFor[0].gender">{{appt.appmtFor[0].gender | capitalizeFirst}}</span>
+                          <span *ngIf="appt.appmtFor[0].preferredLanguage && (appt.appmtFor[0].gender || appt.appmtFor[0].age)">,</span>
+                          <span *ngIf="appt.appmtFor[0].preferredLanguage">&nbsp;</span>
+                          <span *ngIf="appt.appmtFor[0].preferredLanguage">{{appt.appmtFor[0].preferredLanguage}}</span>
+                          </div>
                         <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">Blocked</div>
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
@@ -1558,8 +1637,9 @@
                         {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                     </td>
                     <td class="title td-two">
-                      <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
-                        {{appt.provider.firstName}}&nbsp;{{appt.provider.lastName}}
+                      <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
+                        {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName +
+                          ' ' + appt.provider.lastName}}
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
@@ -1635,7 +1715,7 @@
                       <a class="statusText btn-play pointer-cursor call-btn" [class.stopcall-btn]="appt.callingStatus"
                         *ngIf="!small_device_display && board_count > 0 && !appt.virtualService &&time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
                         (click)="stopprop($event);callingAppt(appt)" [matTooltipClass]="tooltipcls"
-                        [matTooltip]="'Call'">
+                        [matTooltip]="'Alert'">
                         <i class="dashboardcallstop-icon" *ngIf="appt.callingStatus"></i> <span
                           *ngIf="appt.callingStatus">&nbsp; Stop</span>
                         <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
@@ -1667,7 +1747,7 @@
                         <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
                         <span
-                          *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+                          *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                         <span
                           *ngIf="!small_device_display && appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
                           {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
@@ -1709,6 +1789,23 @@
                     </td>
                   </tr>
                 </tbody>
+
+                <tbody
+                  *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser) && small_device_display">
+                  <div [class.user-tr-backclr]="appt.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
+                    *ngFor="let appt of check_in_filtered_list, let i=index">
+                    <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="showSelectAll()">
+                      <input [checked]="chkAppointments[i]" type="checkbox" *ngIf="appt.providerConsumer"
+                      class="pull-left" (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
+                    </div>
+                    <app-card [item]="appt" [type]="'appointment-dashboard'" [time_type]="time_type"
+                      [checkins]="check_in_filtered_list" (actionPerformed)="cardClicked($event)"
+                      [allLabels]="allLabels" [statusAction]="statusAction">
+                    </app-card>
+                  </div>
+                </tbody>
+
+
               </table>
             </div>
           </mat-tab>
@@ -2114,8 +2211,8 @@
                     </td>
                   </tr>
                 </tbody>
-                <tbody *ngIf="check_in_filtered_list.length > 0">
-                  <tr class="pointer-cursor" (click)="goCheckinDetail(appt)"
+                <tbody *ngIf="check_in_filtered_list.length > 0 && !small_device_display">
+                  <tr class="pointer-cursor" [class.user-tr-backclr]="appt.provider" (click)="goCheckinDetail(appt)"
                     *ngFor="let appt of check_in_filtered_list, let i=index">
                     <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
                       <input *ngIf="appt.providerConsumer" [checked]="chkAppointments[i]" type="checkbox"
@@ -2135,6 +2232,19 @@
                         [class.pointer-cursor]="appt.apptStatus!=='blocked'"
                         [class.pointer-auto]="appt.apptStatus=='blocked'">{{appt.appmtFor[0].firstName}}
                         {{appt.appmtFor[0].lastName}}
+                        <div class="bold" *ngIf="appt.appmtFor[0].bookingLocation">
+                          <span *ngIf="appt.appmtFor[0].bookingLocation.district">{{appt.appmtFor[0].bookingLocation.district}},</span> 
+                          <span *ngIf="appt.appmtFor[0].bookingLocation.state">{{appt.appmtFor[0].bookingLocation.state}}</span></div>
+                        <div class="location">
+                          <span *ngIf="appt.appmtFor[0].age">&nbsp;</span>
+                          <span *ngIf="appt.appmtFor[0].age">{{getAge(appt.appmtFor[0].age)}} yrs</span>
+                          <span *ngIf="appt.appmtFor[0].age">,</span>
+                          <span *ngIf="appt.appmtFor[0].gender">&nbsp;</span>
+                          <span *ngIf="appt.appmtFor[0].gender">{{appt.appmtFor[0].gender | capitalizeFirst}}</span>
+                          <span *ngIf="appt.appmtFor[0].preferredLanguage && (appt.appmtFor[0].gender || appt.appmtFor[0].age)">,</span>
+                          <span *ngIf="appt.appmtFor[0].preferredLanguage">&nbsp;</span>
+                          <span *ngIf="appt.appmtFor[0].preferredLanguage">{{appt.appmtFor[0].preferredLanguage}}</span>
+                          </div>
                         <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">Blocked</div>
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
@@ -2143,8 +2253,9 @@
                         {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                     </td>
                     <td class="title td-two">
-                      <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
-                        {{appt.provider.firstName}}&nbsp;{{appt.provider.lastName}}
+                      <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
+                        {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName +
+                          ' ' + appt.provider.lastName}}
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
@@ -2223,7 +2334,7 @@
                       <a class="statusText btn-play pointer-cursor call-btn" [class.stopcall-btn]="appt.callingStatus"
                         *ngIf="!small_device_display && board_count > 0 && !appt.virtualService &&time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
                         (click)="stopprop($event);callingAppt(appt)" [matTooltipClass]="tooltipcls"
-                        [matTooltip]="'Call'">
+                        [matTooltip]="'Alert'">
                         <i class="dashboardcallstop-icon" *ngIf="appt.callingStatus"></i> <span
                           *ngIf="appt.callingStatus">&nbsp; Stop</span>
                         <i class="dashboardcall-icon" *ngIf="!appt.callingStatus"></i>
@@ -2255,7 +2366,7 @@
                         <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
                         <span
-                          *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
+                          *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
                         <span
                           *ngIf="!small_device_display && appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
                           {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
@@ -2290,6 +2401,20 @@
                       </span>
                     </td>
                   </tr>
+                </tbody>
+                <tbody
+                  *ngIf="check_in_filtered_list.length > 0 && small_device_display">
+                  <div [class.user-tr-backclr]="appt.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
+                    *ngFor="let appt of check_in_filtered_list, let i=index">
+                    <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="check_in_filtered_list.length > 1">
+                      <input *ngIf="appt.providerConsumer" [checked]="chkAppointments[i]" type="checkbox"
+                      class="ckbx pull-left" (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
+                    </div>
+                    <app-card [item]="appt" [type]="'appointment-dashboard'" [time_type]="time_type"
+                      [checkins]="check_in_filtered_list" (actionPerformed)="cardClicked($event)"
+                      [allLabels]="allLabels" [statusAction]="statusAction">
+                    </app-card>
+                  </div>
                 </tbody>
                 <tfoot>
                   <tr>

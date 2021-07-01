@@ -6,9 +6,11 @@
     <div class="content comn-cls loc-list">
         <div class="col-md-12 no-padding-small"> -->
 <!-- <div class="row"> -->
+        <div class="content displayboard loc-list">
 <div class="col-md-12 no-padding" *ngIf="!api_loading">
     <div class="card no-padding display-board">
         <div class="copy">
+                <div class="col-md-12 no-padding">
             <div class="col-md-12 no-padding">
                 <ul class="nav jd-custom-nav stat-brd-qset">
                     <li class="dropdown notifications-menu pull-right">
@@ -36,11 +38,13 @@
 
                 </ul>
             </div>
-            <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="board_list.length == 0">
+            <div class="col-md-12" *ngIf="board_list.length == 0">
+                    <div class="row">
                 <div class="no-dta">
                     <p> QBoard query not found</p>
                     <span class="cs-btn bt3" (click)="addQSet()">Add it now</span>
                 </div>
+            </div>
             </div>
             <div class="col-md-12 pt10 qset" *ngFor="let board of board_list">
                 <span class="mbt">
@@ -72,7 +76,8 @@
         </div>
     </div>
 </div>
-<!-- </div> -->
+</div>
+ </div>
 <!-- </div>
         </div>
     </section> -->

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { projectConstants } from '../../../app.component';
 import { RequestForComponent } from '../request-for/request-for.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
 import * as moment from 'moment';
@@ -86,12 +86,14 @@ export class ProviderReimburseReportComponent implements OnInit {
   allPayStatusSelected = false;
   statusMultiCtrl: any = [];  
   maxday = new Date();
+  navigationFrom: any;
   constructor(private dialog: MatDialog, private router: Router,
     public dateformat: DateFormatPipe,
     private provider_servicesobj: ProviderServices,
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
-    private dateTimeProcessor: DateTimeProcessor) {
+    private dateTimeProcessor: DateTimeProcessor,
+    private activatedRoute:ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -99,6 +101,11 @@ export class ProviderReimburseReportComponent implements OnInit {
     this.resetFilter();
     this.getCouponReport();
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
+    this.activatedRoute.queryParams.subscribe(params=>{
+      if(params.from){
+        this.navigationFrom=params.from;
+      }
+    })
   }
   getJSONfromString(jsonString) {
     return JSON.parse(jsonString);
@@ -385,6 +392,10 @@ export class ProviderReimburseReportComponent implements OnInit {
     this.filter_sidebar = false;
   }
   redirecToJaldeeBilling() {
+    if(this.navigationFrom==='reports'){
+      this.router.navigate(['provider', 'reports']);
+    }else{
     this.router.navigate(['provider', 'settings', 'pos', 'coupon']);
+    }
   }
 }

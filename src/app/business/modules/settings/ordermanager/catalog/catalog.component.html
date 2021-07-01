@@ -69,7 +69,7 @@
                                                           <button type="button" (click)="dochangeStatus(catalog)"
                                                               mat-menu-item>
                                                               <i *ngIf="catalog.catalogStatus=='INACTIVE' || !catalog.catalogStatus"
-                                                                  class="icon-enable"></i>
+                                                                ></i>
                                                               <i *ngIf="catalog.catalogStatus=='ACTIVE'"
                                                                   class="icon-disable"></i>
                                                               {{(catalog.catalogStatus=='ACTIVE') ? 'Disable' :'Enable'}}
@@ -84,10 +84,10 @@
                                                   <span class="mbt-mobile-show">
                                                       <button class="editcls" type="button"
                                                           (click)="editCatalog(catalog)">{{edit_btn}}</button>
-                                                      <button class="status tel-serv-flex" type="button"
+                                                      <button class="status tel-serv-flex" type="button" style="color:blue;"
                                                           (click)="dochangeStatus(catalog)">
                                                           <i *ngIf="catalog.catalogStatus=='INACTIVE' || !catalog.catalogStatus"
-                                                              class="icon-enable icon-disable1"></i>
+                                                             ></i>
                                                           <i *ngIf="catalog.catalogStatus=='ACTIVE'" class="icon-disable icon-disable1"></i>
                                                           {{(catalog.catalogStatus=='ACTIVE') ? 'Disable' :'Enable'}}</button>
                                                       <!-- <button class="deletecls" type="button"
