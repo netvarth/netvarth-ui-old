@@ -11,6 +11,9 @@ import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner
 import { BookingDocumentsModule } from '../booking-documents/booking-documents.module';
 import { BookingMedicalRecordsModule } from '../booking-medical-records/booking-medical-records.module';
 import { BookingPrerscriptionModule } from '../booking-prescriptions/booking-prescriptions.module';
+import { UpcomingBookingsModule } from '../booking-dashboard/upcoming-bookings/upcoming-bookings.module';
+import { BooingQuickActionsModule } from '../booking-dashboard/booking-quick-actions/booking-quick-actions.module';
+import { BookingFeedsModule } from '../booking-dashboard/booking-feeds/booking-feeds.module';
 
 @NgModule({
   declarations: [BookingDashboardAdminComponent],
@@ -25,7 +28,10 @@ import { BookingPrerscriptionModule } from '../booking-prescriptions/booking-pre
     LoadingSpinnerModule,
     BookingPrerscriptionModule,
     BookingMedicalRecordsModule,
-    BookingDocumentsModule
+    BookingDocumentsModule,
+    UpcomingBookingsModule,
+    BooingQuickActionsModule,
+    BookingFeedsModule
   ],
   exports: [BookingDashboardAdminComponent]
 })

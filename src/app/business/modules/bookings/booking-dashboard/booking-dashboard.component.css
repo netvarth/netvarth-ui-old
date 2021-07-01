@@ -24,7 +24,7 @@
     height: 18px !important;
 }
 .book-stats {
-    padding: 0 10px !important;
+    padding: 0 20px !important;
 }
 @media (max-width: 767px) {
     .dashboard-content .pl-0 {
@@ -37,10 +37,13 @@
 .column {
     width: 50% !important;
     float: left;
-    padding: 2px;
+    padding: 10px;
 }
 @media (max-width: 767px) {
     .column {
         width: 100% !important;
     }
+}
+.subheader .container-fluid {
+    padding: 0 25px !important;
 }

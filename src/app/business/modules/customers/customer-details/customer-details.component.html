@@ -689,7 +689,7 @@
 
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
 <section class="content" *ngIf="!loading && viewCustomer">
-    <div class="row">
+    <div class="row main-sec">
         <div class="col-lg-8 col-md-8">
             <div class="card card-custom gutter-b wave-success p-0 booking-details mgn-bt-20">
                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 p-0 padding-20px border details-hgt">
@@ -739,18 +739,18 @@
                 </div>
             </div>
             <div class="cards-div">
-                <div class="col-xl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding mgn-bt-5"
+                <div class="col-xl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding mgn-bt-20"
                     *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
                     <app-booking-medical-records [customerId]="customer[0].id">
                     </app-booking-medical-records>
                 </div>
-                <div class="col-xl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding mgn-bt-5"
+                <div class="col-xl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding mgn-bt-20"
                     *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
                     <app-booking-prescriptions></app-booking-prescriptions>
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-md-4 gutter-b no-padding-big">
+        <div class="col-lg-4 col-md-4 no-padding-big mgn-bt-10">
             <app-provider-inbox-list [customer]="customer[0].jaldeeConsumer" [provider]="0" [source]="'details'">
             </app-provider-inbox-list>
         </div>

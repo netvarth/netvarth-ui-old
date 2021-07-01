@@ -139,7 +139,7 @@
 .records-sec .column {
   width: 50% !important;
   float: left;
-  padding: 2px;
+  padding: 10px;
 }
 
 @media (max-width: 767px) {
@@ -175,4 +175,7 @@
   border: 1.75px solid #d0d0d0 !important;
   box-shadow: 0 0 10px 0 rgb(183 192 206 / 20%) !important;
   padding: 0px !important;
+}
+.main-sec {
+  padding: 0 7px !important;
 }

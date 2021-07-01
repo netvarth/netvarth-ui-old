@@ -6,7 +6,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 @Component({
   selector: 'app-booking-dashboard-admin',
   templateUrl: './booking-dashboard-admin.component.html',
-  styleUrls: ['./booking-dashboard-admin.component.css']
+  styleUrls: ['./booking-dashboard-admin.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 export class BookingDashboardAdminComponent implements OnInit {
   waitlistMgrSettings;

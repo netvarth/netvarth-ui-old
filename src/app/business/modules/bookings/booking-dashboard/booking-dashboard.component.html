@@ -1,5 +1,5 @@
-<div class="subheader header-container subheader-solid " id="kt_subheader">
-    <div class="container-fluid d-flex flex-wrap flex-sm-nowrap pad-10">
+<div class="subheader header-container subheader-solid">
+    <div class="container-fluid d-flex flex-wrap flex-sm-nowrap">
         <div class="d-flex flex-column flex-wrap mr-2">
             <h1 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
                 <b>Good Morning</b>, {{bname}}!
@@ -15,14 +15,14 @@
         [newApptsCount]="newAppts.length" [newWitlistCount]="newWaitlists.length"></app-booking-stats>
 </div>
 <div class="row pt-0 px-6 pb-6 dashboard-content">
-    <div class="col-lg-6 col-xxl-6 pr-0 col-md-6 no-padding">
+    <div class="col-lg-4 col-xxl-5 pr-0 col-md-4">
         <div class="col-xs-12 px-0 section-title">Overview</div>
         <app-upcoming-bookings [nextWaitlists]="todayWaitlists" [nextAppts]="todayAppts"></app-upcoming-bookings>
     </div>
-    <div class="col-lg-6 col-xxl-6 pl-0 col-md-6 no-padding">
+    <div class="col-lg-4 col-xxl-3 pl-0 col-md-4">
         <app-booking-quick-actions></app-booking-quick-actions>
     </div>
-    <div class="col-lg-6 col-xxl-6 pl-0 col-md-6">
+    <div class="col-lg-4 col-xxl-4 col-md-4 mgn-bt-15">
         <div class="col-xs-12 px-0 section-title">Feed</div>
         <app-booking-feeds></app-booking-feeds>
     </div>

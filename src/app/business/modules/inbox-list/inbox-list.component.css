@@ -276,6 +276,7 @@ textarea {
     min-height: 545px;
     box-shadow: none !important;
     padding: 0 !important;
+    border-radius: 10px !important;
 }
 .details-opacity {
     opacity: 0.5;

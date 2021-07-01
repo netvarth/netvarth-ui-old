@@ -100,14 +100,14 @@ export class RecordsDatagridComponent implements OnInit {
     }
   }
   getUserShort(record) {
-    let nameShort;
+    let nameShort = '';
     if (record.firstName) {
       nameShort = record.firstName.charAt(0);
     }
     if (record.lastName) {
       nameShort = nameShort + record.lastName.charAt(0);
     }
-    if (!nameShort) {
+    if (nameShort === '') {
       nameShort = this.customer_label.charAt(0);
     }
     return nameShort.toUpperCase();
