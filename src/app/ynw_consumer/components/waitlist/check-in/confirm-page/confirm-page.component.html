@@ -57,7 +57,7 @@
                                         <div class="disp-flex" style="margin-bottom: 5px !important;">
                                             <span class="billing-head">Service</span>
                                             <span style="line-height: normal !important;">:&nbsp;</span>
-                                            <span class="billing-value">
+                                            <span class="billing-value" style="display: inline;">
                                                 <span class="service-icon contact-section" style="display: inline-block !important;"
                                                     *ngIf="wtlst.service && wtlst.service.serviceType == 'virtualService'">
                                                     <i class="fa phon-icon"
@@ -138,7 +138,7 @@
                                     <div class="containerAppt textcenter" style="padding-bottom: 10px !important;">
                                         <div class="mgn-up-10 no-mgn-bt bold" style="font-size: 14px !important;">Booking Id</div>
                                         <div class="mgn-up-10 no-mgn-bt bold" style="font-size: 1.3rem !important;">{{wtlst.checkinEncId}}</div>
-                                        <div class="mgn-bt-5" style="font-size: 1.7rem !important; margin-top: 5px !important; margin-bottom: 5px !important;">
+                                        <div *ngIf="wtlst.token" class="mgn-bt-5" style="font-size: 1.7rem !important; margin-top: 5px !important; margin-bottom: 5px !important;">
                                             Token No: {{wtlst.token}}
                                         </div>
                                     </div>
