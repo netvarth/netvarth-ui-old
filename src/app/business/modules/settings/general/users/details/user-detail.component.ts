@@ -258,7 +258,7 @@ export class BranchUserDetailComponent implements OnInit {
             gender: [''],
             // phonenumber: new FormControl(undefined),
             countryCode: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)])],
-            phonenumber: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
+            phonenumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
             dob: [''],
             email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
             countryCode_whatsapp: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)])],
