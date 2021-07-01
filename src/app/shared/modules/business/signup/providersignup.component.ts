@@ -50,6 +50,7 @@ export class ProvidersignupComponent implements OnInit {
   activeDomainIndex;
   activeSubDomainIndex;
   subDomainList = [];
+  domainList = [];
   subdomainSettings = projectConstants.SUBDOMAIN_ICONS;
   domainSettings = projectConstantsLocal.DOMAIN_ICONS;
   phonenumber;
@@ -206,7 +207,9 @@ export class ProvidersignupComponent implements OnInit {
     this.shared_services.bussinessDomains()
       .subscribe(
         data => {
-          this.business_domains = data;
+          const bDomains = data;
+          this.business_domains = this.shared_functions.sortByKey(bDomains, 'order' );
+          console.log(this.business_domains)
           if (this.claimDetails && this.claimDetails.sector) {
             const filteredList = this.business_domains.filter(domain => domain.domain === this.claimDetails.sector.toString());
             this.selectedDomain = filteredList[0];
@@ -217,12 +220,23 @@ export class ProvidersignupComponent implements OnInit {
           this.domainIndex[0] = false;
           // this.subdomainlist = this.selectedDomain.subDomains;
           // this.getPackages();
-          // this.setDomain(0);
+          // this.setDomain();
         },
         () => {
         }
       );
   }
+  // setDomain() { 
+  //   this.domainList = [];
+  //    const domains_sortbyorder = this.shared_functions.sortByKey(this.business_domains, 'order');
+  //    domains_sortbyorder.forEach(() => {
+  //   this.domainList.push();
+  //    });
+  //    console.log(this.domainList)
+  //     this.business_domains = this.domainList;
+  //     console.log(this.business_domains);
+
+  // }
 
   // getDomainIndex(domainname) {
   //   for (let i = 0; i < this.business_domains.length; i++) {
