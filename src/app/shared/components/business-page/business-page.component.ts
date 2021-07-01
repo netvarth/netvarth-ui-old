@@ -1847,16 +1847,15 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
           if (_this.userType === 'consumer') {
 
-            // Added by Manikandan for collecting fields
-            // if (service.serviceType === 'virtualService') {
-            //   _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-            //     _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.nextAvailableDate, 'appt', service, consumerdata);
-            //   });
+            if (service.serviceType === 'virtualService') {
+              _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+                _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.nextAvailableDate, 'appt', service, consumerdata);
+              });
 
-            // }
-            // else {
+            }
+            else {
             _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
-            // }
+            }
           }
         } else {
           const passParam = { callback: 'appointment', current_provider: current_provider };
