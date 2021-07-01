@@ -272,7 +272,6 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.orderstatus = data.enableOrder;
     });
   }
-
   minimizeSideBar() {
     this.minimizeMenu = !this.minimizeMenu;
     this.shared_functions.sendMessage({ ttype: 'smallMenu', value: this.minimizeMenu });

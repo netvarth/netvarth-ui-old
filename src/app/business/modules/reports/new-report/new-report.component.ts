@@ -540,7 +540,6 @@ user_users;
     }
   }
   generateReport(reportType) {
-
     if (reportType === 'payment') {
       if(this.payment_donationEmail){
         const curemail = this.payment_donationEmail.trim();
