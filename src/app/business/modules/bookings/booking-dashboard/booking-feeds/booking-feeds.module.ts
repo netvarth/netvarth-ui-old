@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BookingsRoutingModule } from '../../bookings.routing.module';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
 import { BookingFeedsComponent } from './booking-feeds.component';
 
@@ -13,10 +13,9 @@ import { BookingFeedsComponent } from './booking-feeds.component';
     CommonModule,
     BookingsRoutingModule,
     MatGridListModule,
-    CapitalizeFirstPipeModule,
-
+    CapitalizeFirstPipeModule
   ],
-  exports:[BookingFeedsComponent]
+  exports: [BookingFeedsComponent]
 })
 export class BookingFeedsModule {
 }

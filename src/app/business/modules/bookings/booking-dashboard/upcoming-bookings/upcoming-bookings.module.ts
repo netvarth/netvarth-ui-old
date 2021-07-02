@@ -13,8 +13,7 @@ import { UpcomingBookingsComponent } from './upcoming-bookings.component';
     CommonModule,
     BookingsRoutingModule,
     MatGridListModule,
-    CapitalizeFirstPipeModule,
-
+    CapitalizeFirstPipeModule
   ],
   exports:[UpcomingBookingsComponent]
 })
