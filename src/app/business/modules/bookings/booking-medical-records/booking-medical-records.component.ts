@@ -34,7 +34,6 @@ export class BookingMedicalRecordsComponent implements OnInit {
     this.provider_services.GetMedicalRecordList(filter)
       .subscribe((data: any) => {
         this.mrList = data;
-        console.log('mr', this.mrList)
         this.loading = false;
       });
   }

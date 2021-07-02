@@ -57,7 +57,6 @@ export class BookingBillComponent implements OnInit {
       .subscribe(
         data => {
           this.bill_data = data;
-          console.log(this.bill_data);
           if (this.bill_data.amountDue < 0) {
             this.refund_value = Math.abs(this.bill_data.amountDue);
           }

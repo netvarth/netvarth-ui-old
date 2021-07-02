@@ -46,7 +46,6 @@ export class BookingDetailComponent implements OnInit {
     });
 
     this.subscription = this.sharedFunctions.getMessage().subscribe((message) => {
-      console.log(message.type);
       switch (message.type) {
         case 'statuschange':
           this.api_loading = true;
@@ -95,7 +94,6 @@ export class BookingDetailComponent implements OnInit {
               this.provider = this.waitlist_data.provider.id;
             }
           }
-          console.log(this.waitlist_data)
           this.api_loading = false;
         },
         error => {

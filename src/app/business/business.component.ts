@@ -138,23 +138,27 @@ export class BusinessComponent implements OnInit {
       .subscribe(
         (data: any) => {
           const waitlistOldList = this.newWaitlists;
-          this.shared_functions.sendMessage({ ttype: 'todayWl', data: data });
+          const newTodayAppts = this.newWaitlists.filter(o1 => !waitlistOldList.some(o2 => o1.ynwUuid === o2.ynwUuid));
+          if (newTodayAppts.length > 0) {
+            this.shared_functions.sendMessage({ ttype: 'todayWl', data: newTodayAppts });
+          }
           this.newWaitlists = data;
           this.provider_services.getFutureWaitlist(filter)
             .subscribe(
               data => {
-                this.shared_functions.sendMessage({ ttype: 'futureWl', data: data });
                 this.newWaitlists = this.newWaitlists.concat(data);
-                if (source) {
-                  const newAppts = this.newWaitlists.filter(o1 => !waitlistOldList.some(o2 => o1.ynwUuid === o2.ynwUuid));
-                  if (newAppts.length > 0) {
-                    const msg = (this.waitlistMgrSettings && this.waitlistMgrSettings.showTokenId) ? 'You have new token' : 'You have new check-in'
-                    this.notifier.notify('success', (newAppts.length > 1) ? msg + 's' : msg);
-                    var sound = new Howl({
-                      src: ['assets/notification/juntos.mp3']
-                    });
-                    sound.play();
-                  }
+                const newFutureAppts = this.newWaitlists.filter(o1 => !waitlistOldList.some(o2 => o1.ynwUuid === o2.ynwUuid));
+                if (newFutureAppts.length > 0) {
+                  this.shared_functions.sendMessage({ ttype: 'futureWl', data: newFutureAppts });
+                }
+                const newAppts = newTodayAppts.concat(newFutureAppts);
+                if (newAppts.length > 0 && source) {
+                  const msg = (this.waitlistMgrSettings && this.waitlistMgrSettings.showTokenId) ? 'You have new token' : 'You have new check-in'
+                  this.notifier.notify('success', (newAppts.length > 1) ? msg + 's' : msg);
+                  var sound = new Howl({
+                    src: ['assets/notification/juntos.mp3']
+                  });
+                  sound.play();
                 }
               });
         });

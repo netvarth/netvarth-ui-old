@@ -1,9 +1,6 @@
 <div class="operations-row" [class.bord-class]="source != 'waitlist-dashboard' && source != 'appt-dashboard'">
     <div class="column operations-column">
         <div class="card">
-            <!-- <div class="header">
-                <h2>{{heading}}</h2>
-            </div> -->
             <div class="card-header" *ngIf="heading">
                 <div>{{heading}}</div>
                 <i (click)="gotoFullView()" class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>

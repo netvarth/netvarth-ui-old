@@ -40,7 +40,6 @@ export class RecordsDatagridComponent implements OnInit {
     private router: Router,
     private activated_route: ActivatedRoute) {
     this.activated_route.params.subscribe(params => {
-      console.log(params);
       this.providerId = params.userid;
     });
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -48,14 +47,10 @@ export class RecordsDatagridComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.source, this.records);
   }
   getSingleTime(slot) {
     const slots = slot.split('-');
     return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
-  }
-  stopprop(event) {
-    event.stopPropagation();
   }
   getStatusLabel(status) {
     const label_status = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm(status));
@@ -114,7 +109,7 @@ export class RecordsDatagridComponent implements OnInit {
   }
   gotoAdd() {
     if (this.source == 'customers') {
-      this.router.navigate(['provider/customers/find'], { queryParams: { source: 'bookings' }});
+      this.router.navigate(['provider/customers/find'], { queryParams: { source: 'bookings' } });
     } else if (this.source == 'providers') {
       this.router.navigate(['provider/settings/general/users/add']);
     }

@@ -30,17 +30,15 @@ export class CheckinsComponent implements OnInit {
       }
     });
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
-      if (message.ttype === 'todayWl') {
-        this.todayWaitlists = message.data;
-        if (this.providerId) {
-          this.todayWaitlists = this.todayWaitlists.filter(waitlist => waitlist.provider && waitlist.provider.id === this.providerId);
-        }
-      }
-      if (message.ttype === 'futureWl') {
-        this.futureWaitlists = message.data;
-        if (this.providerId) {
-          this.futureWaitlists = this.futureWaitlists.filter(waitlist => waitlist.provider && waitlist.provider.id === this.providerId);
-        }
+      switch (message.ttype) {
+        case 'todayWl':
+          console.log(message.data);
+          this.todayWaitlists = this.todayWaitlists.concat(message.data);
+          break;
+        case 'futureWl':
+          console.log(message.data);
+          this.futureWaitlists = this.futureWaitlists.concat(message.data);
+          break;
       }
       this.handleWaitlistType(this.timeType);
     });
@@ -52,7 +50,14 @@ export class CheckinsComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getProviderSettings();
-    this.getTodayWatilists();
+    this.getTodayWatilists().then(data => {
+      this.getFutureWatilists().then(data => {
+        this.getHistoryWaitlists().then(data => {
+          this.handleWaitlistType(this.timeType);
+          this.loading = false;
+        });
+      });
+    });
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
@@ -60,39 +65,47 @@ export class CheckinsComponent implements OnInit {
         this.waitlistMgrSettings = data;
       });
   }
-  getTodayWatilists() {
+  setFilters() {
     const filter = {
-      'waitlistStatus-eq': 'checkedIn,arrived'
+      'waitlistStatus-neq': 'prepaymentPending,failed'
     };
     if (this.providerId) {
       filter['provider-eq'] = this.providerId;
     }
-    this.provider_services.getTodayWaitlist(filter)
-      .subscribe(
-        (data: any) => {
-          this.todayWaitlists = data;
-          this.getFutureWatilists(filter);
-        });
+    return filter;
   }
-  getFutureWatilists(filter) {
-    this.provider_services.getFutureWaitlist(filter)
-      .subscribe(
-        (data: any) => {
-          this.futureWaitlists = data;
-          this.getHistoryWaitlists();
-        });
+  getTodayWatilists() {
+    return new Promise((resolve) => {
+      const filter = this.setFilters();
+      this.provider_services.getTodayWaitlist(filter)
+        .subscribe(
+          (data: any) => {
+            this.todayWaitlists = data;
+            resolve(data);
+          });
+    });
+  }
+  getFutureWatilists() {
+    return new Promise((resolve) => {
+      const filter = this.setFilters();
+      this.provider_services.getFutureWaitlist(filter)
+        .subscribe(
+          (data: any) => {
+            this.futureWaitlists = data;
+            resolve(data);
+          });
+    });
   }
   getHistoryWaitlists() {
-    const api_filter = { 'waitlistStatus-neq': 'prepaymentPending,failed' };
-    if (this.providerId) {
-      api_filter['provider-eq'] = this.providerId;
-    }
-    this.provider_services.getHistoryWaitlist(api_filter)
-      .subscribe(
-        data => {
-          this.historyWaitlists = data;
-          this.loading = false;
-        });
+    return new Promise((resolve) => {
+      const filter = this.setFilters();
+      this.provider_services.getHistoryWaitlist(filter)
+        .subscribe(
+          data => {
+            this.historyWaitlists = data;
+            resolve(data);
+          });
+    });
   }
   handleWaitlistType(type) {
     this.timeType = type;

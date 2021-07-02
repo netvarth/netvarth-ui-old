@@ -39,34 +39,20 @@ export class BookingDashboardComponent implements OnInit {
       }
     });
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
-      if (message.ttype === 'todayWl') {
-        this.todayWaitlists = message.data;
-        if (this.providerId) {
-          this.todayWaitlists = this.todayWaitlists.filter(waitlist => waitlist.provider && waitlist.provider.id === this.providerId);
-        }
+      switch (message.ttype) {
+        case 'todayWl':
+          this.todayWaitlists = this.todayWaitlists.concat(message.data);
+          break;
+        case 'futureWl':
+          this.futureWaitlists = this.futureWaitlists.concat(message.data);
+          break;
+        case 'todayAppt':
+          this.todayWaitlists = this.todayWaitlists.concat(message.data);
+          break;
+        case 'futureAppt':
+          this.futureWaitlists = this.futureWaitlists.concat(message.data);
+          break;
       }
-      if (message.ttype === 'futureWl') {
-        this.futureWaitlists = message.data;
-        if (this.providerId) {
-          this.futureWaitlists = this.futureWaitlists.filter(waitlist => waitlist.provider && waitlist.provider.id === this.providerId);
-        }
-      }
-      if (message.ttype === 'todayAppt') {
-        this.todayAppts = message.data;
-        if (this.providerId) {
-          this.todayAppts = this.todayAppts.filter(waitlist => waitlist.provider && waitlist.provider.id === this.providerId);
-        }
-      }
-      if (message.ttype === 'futureAppt') {
-        this.futureAppts = message.data;
-        if (this.providerId) {
-          this.futureAppts = this.futureAppts.filter(waitlist => waitlist.provider && waitlist.provider.id === this.providerId);
-        }
-      }
-      this.newWaitlists = [];
-      this.newAppts = [];
-      this.newWaitlists = this.todayWaitlists.concat(this.futureWaitlists);
-      this.newAppts = this.todayAppts.concat(this.futureAppts);
     });
   }
   ngOnDestroy() {
@@ -85,8 +71,17 @@ export class BookingDashboardComponent implements OnInit {
         this.bname = bdetails.bn || 'User';
       }
     }
-    this.getTodayAppts();
-    this.getTodayWatilists();
+    this.getTodayWatilists().then(data => {
+      this.getFutureWatilists().then(data => {
+        this.getTodayAppts().then(data => {
+          this.getFutureAppts().then(data => {
+
+            this.newWaitlists = this.todayWaitlists.concat(this.futureWaitlists);
+            this.newAppts = this.todayAppts.concat(this.futureAppts);
+          });
+        });
+      });
+    });
     this.getProviderSettings();
     this.getProviderBills();
     this.getCustomers();
@@ -105,59 +100,63 @@ export class BookingDashboardComponent implements OnInit {
         this.waitlistMgrSettings = data;
       });
   }
-
-  getTodayAppts() {
+  setApptFilters() {
     const filter = {
-      'apptStatus-eq': 'Confirmed,Arrived'
+      'apptStatus-neq': 'prepaymentPending,failed'
     };
-    if (this.providerId) {
-      filter['provider-eq'] = this.providerId;
-    }
-    this.provider_services.getTodayAppointments(filter)
-      .subscribe(
-        (data: any) => {
-          this.todayAppts = data;
-          this.todayAppts.map((obj) => {
-            obj.type = 1;
-            return obj;
-          });
-          this.getFutureAppts(filter);
-        });
+    return filter;
   }
-  getFutureAppts(filter) {
-    this.provider_services.getFutureAppointments(filter)
-      .subscribe(
-        (data: any) => {
-          this.futureAppts = data;
-          this.futureAppts.map((obj) => {
-            obj.type = 2;
-            return obj;
+  getTodayAppts() {
+    return new Promise((resolve) => {
+      const filter = this.setApptFilters();
+      this.provider_services.getTodayAppointments(filter)
+        .subscribe(
+          (data: any) => {
+            this.todayAppts = data;
+            resolve(data);
           });
-          this.newAppts = this.todayAppts.concat(this.futureAppts);
-        });
+    });
+  }
+  getFutureAppts() {
+    return new Promise((resolve) => {
+      const filter = this.setApptFilters();
+      this.provider_services.getFutureAppointments(filter)
+        .subscribe(
+          (data: any) => {
+            this.futureAppts = data;
+            resolve(data);
+          });
+    });
+  }
+  setWaitlistFilters() {
+    const filter = {
+      'waitlistStatus-neq': 'prepaymentPending,failed'
+    };
+    return filter;
   }
   getTodayWatilists() {
-    const filter = {
-      'waitlistStatus-eq': 'checkedIn,arrived'
-    };
-    if (this.providerId) {
-      filter['provider-eq'] = this.providerId;
-    }
-    this.provider_services.getTodayWaitlist(filter)
-      .subscribe(
-        (data: any) => {
-          this.todayWaitlists = data;
-          this.getFutureWatilists(filter);
-        });
+    return new Promise((resolve) => {
+      const filter = this.setWaitlistFilters();
+      this.provider_services.getTodayWaitlist(filter)
+        .subscribe(
+          (data: any) => {
+            this.todayWaitlists = data;
+            resolve(data);
+          });
+    });
   }
-  getFutureWatilists(filter) {
-    this.provider_services.getFutureWaitlist(filter)
-      .subscribe(
-        (data: any) => {
-          this.futureWaitlists = data;
-          this.newWaitlists = this.todayWaitlists.concat(this.futureWaitlists);
-        });
+  getFutureWatilists() {
+    return new Promise((resolve) => {
+      const filter = this.setWaitlistFilters();
+      this.provider_services.getFutureWaitlist(filter)
+        .subscribe(
+          (data: any) => {
+            this.futureWaitlists = data;
+            resolve(data);
+          });
+    });
   }
+
   getProviderBills() {
     let filter = {};
     if (this.providerId) {

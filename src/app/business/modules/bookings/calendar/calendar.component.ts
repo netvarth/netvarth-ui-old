@@ -47,8 +47,6 @@ export class CalendarComponent implements OnInit {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    console.log(date);
-    console.log(new Date());
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -63,8 +61,6 @@ export class CalendarComponent implements OnInit {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    console.log(action);
-    console.log(event);
     this.router.navigate(['provider', 'bookings', 'details'], { queryParams: { uid: event.meta.uid, timetype: event.meta.timeType, type: 'appointment' } });
   }
 
@@ -77,7 +73,6 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('cal waitlists', this.waitlists);
     if (this.waitlists) {
       for (let appt of this.waitlists) {
         let name;
@@ -98,7 +93,6 @@ export class CalendarComponent implements OnInit {
         })
       }
     }
-
   }
   getTime(slot, type, time) {
     const slots = slot.split('-');

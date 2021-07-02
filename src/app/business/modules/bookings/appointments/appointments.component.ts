@@ -31,22 +31,17 @@ export class AppointmentsComponent implements OnInit {
       }
     });
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
-      if (message.ttype === 'todayAppt') {
-        this.todayAppts = message.data;
-        if (this.providerId) {
-          this.todayAppts = this.todayAppts.filter(waitlist => waitlist.provider && waitlist.provider.id === this.providerId);
-        }
+      switch (message.ttype) {
+        case 'todayAppt':
+          console.log(message.data);
+          this.todayAppts = this.todayAppts.concat(message.data);
+          break;
+        case 'futureAppt':
+          console.log(message.data);
+          this.futureAppts = this.futureAppts.concat(message.data);
+          break;
       }
-      if (message.ttype === 'futureAppt') {
-        this.futureAppts = message.data;
-        if (this.providerId) {
-          this.futureAppts = this.futureAppts.filter(waitlist => waitlist.provider && waitlist.provider.id === this.providerId);
-        }
-      }
-      this.totalAppts = [];
-      this.totalAppts = this.todayAppts.concat(this.futureAppts);
-      this.totalAppts = this.todayAppts.concat(this.historyAppts);
-      this.handleApptSelectionType(this.timeType);
+      this.setDatas();
     });
   }
   ngOnDestroy() {
@@ -55,56 +50,73 @@ export class AppointmentsComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.getTodayAppts();
+    this.getTodayAppts().then(data => {
+      this.getFutureAppts().then(data => {
+        this.getHistoryAppts().then(data => {
+          this.setDatas();
+          this.loading = false;
+        });
+      });
+    });
   }
-  getTodayAppts() {
+  setDatas() {
+    this.todayAppts.map((obj) => {
+      obj.type = 1;
+      return obj;
+    });
+    this.futureAppts.map((obj) => {
+      obj.type = 2;
+      return obj;
+    });
+    this.historyAppts.map((obj) => {
+      obj.type = 3;
+      return obj;
+    });
+    this.totalAppts = [];
+    this.totalAppts = this.todayAppts.concat(this.futureAppts, this.historyAppts);
+    this.handleApptSelectionType(this.timeType);
+  }
+  setFilters() {
     const filter = {
-      'apptStatus-eq': 'Confirmed,Arrived'
+      'apptStatus-neq': 'prepaymentPending,failed'
     };
     if (this.providerId) {
       filter['provider-eq'] = this.providerId;
     }
-    this.provider_services.getTodayAppointments(filter)
-      .subscribe(
-        (data: any) => {
-          this.todayAppts = data;
-          this.todayAppts.map((obj) => {
-            obj.type = 1;
-            return obj;
-          });
-          this.totalAppts = this.apptToList = this.todayAppts;
-          this.getFutureAppts(filter);
-        });
+    return filter;
   }
-  getFutureAppts(filter) {
-    this.provider_services.getFutureAppointments(filter)
-      .subscribe(
-        (data: any) => {
-          this.futureAppts = data;
-          this.futureAppts.map((obj) => {
-            obj.type = 2;
-            return obj;
+  getTodayAppts() {
+    return new Promise((resolve) => {
+      const filter = this.setFilters();
+      this.provider_services.getTodayAppointments(filter)
+        .subscribe(
+          (data: any) => {
+            this.todayAppts = data;
+            resolve(data);
           });
-          this.totalAppts = this.totalAppts.concat(this.futureAppts);
-          this.getHistoryAppts();
-        });
+    });
+  }
+  getFutureAppts() {
+    return new Promise((resolve) => {
+      const filter = this.setFilters();
+      this.provider_services.getFutureAppointments(filter)
+        .subscribe(
+          (data: any) => {
+            this.futureAppts = data;
+            resolve(data);
+          });
+    });
   }
   getHistoryAppts() {
-    const api_filter = { 'apptStatus-neq': 'prepaymentPending,failed' };
-    if (this.providerId) {
-      api_filter['provider-eq'] = this.providerId;
-    }
-    this.provider_services.getHistoryAppointments(api_filter)
-      .subscribe(
-        data => {
-          this.historyAppts = data;
-          this.historyAppts.map((obj) => {
-            obj.type = 3;
-            return obj;
+    return new Promise((resolve) => {
+      const filter = this.setFilters();
+      this.provider_services.getHistoryAppointments(filter)
+        .subscribe(
+          data => {
+            this.historyAppts = data;
+            resolve(data);
           });
-          this.totalAppts = this.totalAppts.concat(this.historyAppts);
-          this.loading = false;
-        });
+    });
   }
   selectViewType(view) {
     this.selectedType = view;

@@ -577,7 +577,6 @@ export class ServiceActionsComponent implements OnInit {
         if (this.bookingType === 'checkin') {
             this.shared_services.getWaitlstMeetingDetails(this.waitlist_data.service.virtualCallingModes[0].callingMode, this.waitlist_data.ynwUuid).
                 subscribe((meetingdata) => {
-                    console.log(meetingdata);
                     this.meetlink_data = meetingdata;
                     if (this.waitlist_data.service.virtualCallingModes[0].callingMode === 'VideoCall') {
                         this.starting_url = this.meetlink_data.joiningUrl;

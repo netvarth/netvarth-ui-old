@@ -55,9 +55,9 @@
           </ng-container>
         </a>
         <a *ngIf="showTeleserviceStart && ((bookingType == 'checkin' && waitlist_data.waitlistStatus != 'started') || (bookingType != 'checkin' && waitlist_data.apptStatus != 'Started'))"
-        class="btn mb-2 action-button" (click)="changeWaitlistStatus('STARTED')">
-        <i class="fa fa-repeat"></i>Move to In progress
-      </a>
+          class="btn mb-2 action-button" (click)="changeWaitlistStatus('STARTED')">
+          <i class="fa fa-repeat"></i>Move to In progress
+        </a>
         <a *ngIf="waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived'"
           class="btn mb-2 action-button" (click)="witlistRescheduleActionClicked()">
           <i class="fa fa-repeat"></i>Reschedule
@@ -78,7 +78,8 @@
         <a *ngIf="showArrived" class="btn mb-2 action-button" (click)="changeWaitlistStatus('REPORT')">
           <i class="fa fa-map-marker"></i>Mark as arrived
         </a>
-        <a *ngIf="showComplete && !showTeleserviceStart" class="btn mb-2 action-button" (click)="changeWaitlistStatus('DONE')">
+        <a *ngIf="showComplete && !showTeleserviceStart" class="btn mb-2 action-button"
+          (click)="changeWaitlistStatus('DONE')">
           <i class="fa fa-check"></i>Complete
         </a>
         <a *ngIf="showComplete && showTeleserviceStart" class="btn mb-2 action-button" (click)="endmeeting()">
