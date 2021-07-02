@@ -171,22 +171,27 @@ export class BusinessComponent implements OnInit {
       .subscribe(
         (data: any) => {
           const waitlistOldList = this.newAppts;
-          this.shared_functions.sendMessage({ ttype: 'todayAppt', data: data });
+          const newTodayAppts = this.newAppts.filter(o1 => !waitlistOldList.some(o2 => o1.uid === o2.uid));
+          if (newTodayAppts.length > 0) {
+            this.shared_functions.sendMessage({ ttype: 'todayAppt', data: newTodayAppts });
+          }
           this.newAppts = data;
           this.provider_services.getFutureAppointments(filter)
             .subscribe(
               data => {
-                this.shared_functions.sendMessage({ ttype: 'futureAppt', data: data });
                 this.newAppts = this.newAppts.concat(data);
-                if (source) {
+                const newFutureAppts = this.newAppts.filter(o1 => !waitlistOldList.some(o2 => o1.uid === o2.uid));
+                if (newFutureAppts.length > 0) {
+                  this.shared_functions.sendMessage({ ttype: 'futureAppt', data: newFutureAppts });
+                }
+                const newAppts = newTodayAppts.concat(newFutureAppts);
+                if (newAppts.length > 0 && source) {
                   const newAppts = this.newAppts.filter(o1 => !waitlistOldList.some(o2 => o1.uid === o2.uid));
-                  if (newAppts.length > 0) {
-                    this.notifier.notify('success', (newAppts.length > 1) ? 'You have new appointments' : 'You have new appointment');
-                    var sound = new Howl({
-                      src: ['assets/notification/juntos.mp3']
-                    });
-                    sound.play();
-                  }
+                  this.notifier.notify('success', (newAppts.length > 1) ? 'You have new appointments' : 'You have new appointment');
+                  var sound = new Howl({
+                    src: ['assets/notification/juntos.mp3']
+                  });
+                  sound.play();
                 }
               });
         });
