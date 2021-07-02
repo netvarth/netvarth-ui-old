@@ -18,6 +18,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-appointment-checkin',
@@ -251,7 +252,8 @@ export class AppointmentComponent implements OnInit {
         private groupService: GroupStorageService,
         private dateTimeProcessor: DateTimeProcessor,
         private providerService: ProviderServices,
-        private lStorageService: LocalStorageService) {
+        private lStorageService: LocalStorageService,
+        private location: Location) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
@@ -1968,7 +1970,8 @@ export class AppointmentComponent implements OnInit {
             this.showCheckin = false;
             this.otherThirdParty = '';
         } else {
-            this.router.navigate(['provider', 'appointments']);
+            // this.router.navigate(['provider', 'appointments']);
+            this.location.back();
         }
         this.heading = 'Create an Appointment';
     }

@@ -19,6 +19,7 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
 import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-provider-checkin',
@@ -250,7 +251,8 @@ export class ProviderCheckinComponent implements OnInit {
         private dateTimeProcessor: DateTimeProcessor,
         private jaldeeTimeService: JaldeeTimeService,
         private lStorageService: LocalStorageService,
-        private providerService: ProviderServices) {
+        private providerService: ProviderServices,
+        private location: Location) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
@@ -2047,7 +2049,8 @@ export class ProviderCheckinComponent implements OnInit {
             this.showCheckin = false;
             this.otherThirdParty = '';
         } else {
-            this.router.navigate(['provider', 'check-ins']);
+            // this.router.navigate(['provider', 'check-ins']);
+            this.location.back();
         }
         if (this.showtoken) {
             this.heading = 'Create a Token';

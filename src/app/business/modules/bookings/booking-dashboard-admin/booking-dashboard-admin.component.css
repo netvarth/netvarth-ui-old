@@ -1,3 +1,12 @@
+.header-container {
+    background: transparent !important;
+}
+.header-container h1,
+.header-container h6 {
+    color: #515151 !important;
+    font-family: "Roboto", sans-serif !important;
+    font-weight: 400 !important;
+}
 .title-row {
     display: flex !important;
     flex-direction: row !important;

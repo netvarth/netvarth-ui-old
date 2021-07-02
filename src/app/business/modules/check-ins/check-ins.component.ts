@@ -29,8 +29,6 @@ import { Title } from '@angular/platform-browser';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { instantQueueComponent } from './instantQ/instantQueue.component';
 import { ConfirmBoxComponent } from '../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
-import { NotifierService } from 'angular-notifier';
-import { Howl } from 'howler';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html',
@@ -349,8 +347,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   instaQid: any;
   unassignview = false;
   accountSettings;
-  private notifier: NotifierService;
-  futureAppt_list: any = [];
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -364,9 +360,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
     private dateTimeProcessor: DateTimeProcessor,
-    private titleService: Title,
-    notifierService: NotifierService) {
-    this.notifier = notifierService;
+    private titleService: Title) {
     this.onResize();
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -1416,7 +1410,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.setApptSelections();
   }
-  getTodayWL(source?) {
+  getTodayWL() {
     const _this = this;
     this.loading = true;
     const Mfilter = this.setFilterForApi();
@@ -1459,19 +1453,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           _this.provider_services.getTodayWaitlist(Mfilter)
             .subscribe(
               (data: any) => {
-                const apptOldList = _this.appt_list;
                 _this.appt_list = [];
                 _this.appt_list = data;
-                const newAppts = _this.appt_list.filter(o1 => !apptOldList.some(o2 => o1.ynwUuid === o2.ynwUuid));
-                if (source) {
-                  for (const appt of newAppts) {
-                    this.notifier.notify('success', 'New Booking ' + appt.waitlistingFor[0].firstName);
-                    var sound = new Howl({
-                      src: ['assets/notification/juntos.mp3']
-                    });
-                    sound.play();
-                  }
-                }
                 _this.todayAppointments = _this.shared_functions.groupBy(_this.appt_list, 'waitlistStatus');
                 if (_this.filterapplied === true) {
                   _this.noFilter = false;
@@ -1498,7 +1481,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       _this.loading = false;
     }
   }
-  getFutureWL(source?) {
+  getFutureWL() {
     this.resetCheckList();
     this.loading = true;
     this.futureAppointments = [];
@@ -1546,19 +1529,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.provider_services.getFutureWaitlist(Mfilter)
           .subscribe(
             data => {
-              const apptOldList = this.futureAppt_list;
-              this.futureAppt_list = [];
-              this.futureAppt_list = data;
-              const newAppts = this.futureAppt_list.filter(o1 => !apptOldList.some(o2 => o1.ynwUuid === o2.ynwUuid));
-              if (source) {
-                for (const appt of newAppts) {
-                  this.notifier.notify('success', 'New Booking ' + appt.waitlistingFor[0].firstName);
-                  var sound = new Howl({
-                    src: ['assets/notification/juntos.mp3']
-                  });
-                  sound.play();
-                }
-              }
               this.futureAppointments = this.shared_functions.groupBy(data, 'waitlistStatus');
               if (this.filterapplied === true) {
                 this.noFilter = false;
@@ -2484,12 +2454,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['provider', 'check-ins', checkin.ynwUuid, 'add-label'], { queryParams: checkin.label });
   }
   refresh() {
-    // if (this.time_type === 1) {
-      this.getTodayWL('refresh');
-    // }
-    // if (this.time_type === 2) {
-      this.getFutureWL('refresh');
-    // }
+    if (this.time_type === 1) {
+      this.getTodayWL();
+    }
+    if (this.time_type === 2) {
+      this.getFutureWL();
+    }
   }
   addProviderNote() {
     const _this = this;
@@ -2527,7 +2497,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.groupService.setitemToGroupStorage('hP', this.filter.page || 1);
       this.groupService.setitemToGroupStorage('hPFil', this.filter);
     }
-    this.router.navigate(['provider', 'check-ins', checkin.ynwUuid], { queryParams: { timetype: this.time_type, type: 'checkin' } });
+    this.router.navigate(['provider', 'check-ins', checkin.ynwUuid], { queryParams: { timetype: this.time_type } });
   }
   viewBillPage() {
     const _this = this;

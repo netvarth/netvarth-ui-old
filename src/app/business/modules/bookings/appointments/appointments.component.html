@@ -1,14 +1,32 @@
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             Appointments
         </h5>
     </div>
 </section>
-<section class="content p-4">
+<section class="waitlist-dashboard content p-4">
     <app-common-innerloading-spinner *ngIf="loading"> </app-common-innerloading-spinner>
-    <div class="" *ngIf="!loading">
-        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+    <div class="card p-0" *ngIf="!loading">
+        <header class="main-header dash chkin">
+            <nav class="navbar navbar-static-top jd-custom-nav" role="navigation"
+                style="background: transparent !important;">
+                <div class="navbar-custom-menu width100pc">
+                    <ul class="nav navbar-nav width100pc mgn-bt-20">
+                        <li class="dropdown notifications-menu">
+                            <a (click)="apptClicked()"
+                                class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
+                                data-toggle="dropdown">
+                                <i class="fa fa-plus"></i>
+                                <span>Appointment</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
             <div class="pull-left" *ngIf="selectedType=='list'">
                 <mat-select class="selecttype" [(ngModel)]="timeType">
                     <mat-option [value]="1" (click)="handleApptSelectionType(1)">
@@ -29,11 +47,11 @@
                     (click)="selectViewType('calender')" [matTooltip]="'Calender View'"></i>
             </div>
         </div>
-        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-20" *ngIf="selectedType=='list'">
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20" *ngIf="selectedType=='list'">
             <app-records-datagrid [source]="'appt-dashboard'" [records]="apptToList" [timeType]="timeType">
             </app-records-datagrid>
         </div>
-        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-20" *ngIf="selectedType=='calender'">
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20" *ngIf="selectedType=='calender'">
             <app-calendar [waitlists]="totalAppts"></app-calendar>
         </div>
     </div>

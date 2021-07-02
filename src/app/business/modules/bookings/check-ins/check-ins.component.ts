@@ -1,5 +1,6 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 
 @Component({
@@ -17,7 +18,8 @@ export class CheckinsComponent implements OnInit {
   waitlistToList: any = [];
   loading = true;
   constructor(private activated_route: ActivatedRoute,
-    private provider_services: ProviderServices) {
+    private provider_services: ProviderServices,
+    private router: Router, private location: Location) {
     this.activated_route.queryParams.subscribe(params => {
       console.log(params);
       this.providerId = params.providerId;
@@ -77,5 +79,12 @@ export class CheckinsComponent implements OnInit {
     } else {
       this.waitlistToList = this.historyWaitlists;
     }
+  }
+  checkinClicked() {
+    this.router.navigate(['provider', 'check-ins', 'add'],
+      { queryParams: { checkinType: 'WALK_IN_CHECKIN' } });
+  }
+  goBack() {
+    this.location.back();
   }
 }

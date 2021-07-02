@@ -10,3 +10,38 @@
 .selecttype {
     width: 100px !important;
 }
+.dropdown.notifications-menu a {
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%) !important;
+    color: #1E4079 !important;
+    min-width: 100px;
+    text-align: center;
+}
+
+.dropdown.notifications-menu a i {
+    display: block !important;
+    font-size: 50px !important;
+    text-align: center !important;
+    margin-bottom: 10px !important;
+}
+
+@media (max-width: 576px) {
+    .dropdown.notifications-menu a {
+        padding-top: 2px !important;
+        line-height: 1.4 !important;
+        height: 75px !important;
+        width: 75px !important;
+    }
+    
+    .dropdown.notifications-menu a i {
+        font-size: 30px !important;
+        margin-top: 10px !important;
+    }    
+}
+.waitlist-dashboard .card {
+    min-height: 70vh !important;
+}
+.waitlist-dashboard .main-header {
+    margin-bottom: 40px !important;
+}
