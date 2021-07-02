@@ -319,7 +319,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   businessConfig: any = [];
   multipeLocationAllowed = false;
   // customer_label = '';
-  maintooltip = this.wordProcessor.getProjectMesssages('BPROFILE_TOOPTIP');
+  maintooltip :any
   primarydialogRef;
   loceditdialogRef;
   addlocdialogRef;
@@ -426,6 +426,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     private qservice: QuestionService,
     private changeDetectorRef: ChangeDetectorRef) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.maintooltip = this.wordProcessor.getProjectMesssages('BPROFILE_TOOPTIP');
     this.provider_datastorage.setWeightageArray([]);
     // this.shared_functions.getMessage().subscribe(data => {
     //   this.getLicensemetrics();

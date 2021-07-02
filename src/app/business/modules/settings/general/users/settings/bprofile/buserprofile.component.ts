@@ -224,7 +224,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   breadcrumbs = this.breadcrumbs_init;
   businessConfig: any = [];
   customer_label = '';
-  maintooltip = this.wordProcessor.getProjectMesssages('BPROFILE_TOOPTIP');
+  maintooltip:any;
   primarydialogRef;
   cacheavoider = '';
   frm_additional_cap = '';
@@ -284,6 +284,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+   this.maintooltip = this.wordProcessor.getProjectMesssages('BPROFILE_TOOPTIP');
     this.activated_route.params.subscribe(params => {
       this.userId = params.id;
     }

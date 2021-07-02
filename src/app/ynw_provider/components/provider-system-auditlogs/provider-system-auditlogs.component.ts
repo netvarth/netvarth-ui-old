@@ -42,7 +42,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   logSelsubcat = '';
   logSeldate = '';
   logSelaction = '';
-  filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
+
   holdlogSelcat = '';
   holdlogSelsubcat = '';
   holdlogSeldate = '';
@@ -70,6 +70,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   ];
   isCheckin;
   dateFilter = false;
+  filtericonTooltip: any;
   constructor(
     private locationobj: Location,
     private shared_services: SharedServices,
@@ -91,7 +92,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     this.logSelaction = '';
     this.setSubcategories('');
     this.auditStatus = 4;
-
+    this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
     this.holdlogSelcat = this.logSelcat;
     this.holdlogSelsubcat = this.logSelsubcat;
     this.holdlogSeldate = this.logSeldate;

@@ -34,13 +34,13 @@ export class ChangePasswordComponent implements OnInit {
   api_success = null;
   curtype;
   isBusinessowner = false;
-  breadcrumbs_init = [
-    {
-      title: 'Change Password',
-      url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/change-password'
-    }
-  ];
-  breadcrumbs = this.breadcrumbs_init;
+  // breadcrumbs_init = [
+  //   {
+  //     title: 'Change Password',
+  //     url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/change-password'
+  //   }
+  // ];
+  // breadcrumbs = this.breadcrumbs_init;
 
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,

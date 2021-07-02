@@ -17,7 +17,7 @@ export class PrivacyComponent implements OnInit, OnDestroy {
     privacypermissiontxt = projectConstants.PRIVACY_PERMISSIONS;
     normal_privacy_settings_show = 1;
     frm_privacy_cap = Messages.FRM_LEVEL_PRIVACY_MSG;
-    customernormal_label = this.wordProcessor.getTerminologyTerm('customer');
+    customernormal_label:any;
     add_it_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
     email_cap = Messages.SERVICE_EMAIL_CAP;
     bProfile = null;
@@ -58,6 +58,7 @@ export class PrivacyComponent implements OnInit, OnDestroy {
     ) { }
     ngOnInit() {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.customernormal_label = this.wordProcessor.getTerminologyTerm('customer');
         this.domain = user.sector;
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.setPrivacyDetails();

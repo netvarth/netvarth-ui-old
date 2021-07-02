@@ -184,7 +184,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
   };
   businessConfig: any = [];
   // customer_label = '';
-  maintooltip = this.wordProcessor.getProjectMesssages('BPROFILE_TOOPTIP');
+  maintooltip :any;
   primarydialogRef;
   cacheavoider = '';
   frm_additional_cap = '';
@@ -226,6 +226,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+    this.maintooltip = this.wordProcessor.getProjectMesssages('BPROFILE_TOOPTIP');
     this.activatedRoot.params.subscribe(params => {
       this.userId = params.id;
     });

@@ -55,15 +55,16 @@ export class EditProfileComponent implements OnInit {
   email1error = null;
   confrmshow = false;
   domain;
-  breadcrumb_moreoptions: any = [];
-  breadcrumbs_init = [
-    {
-      title: Messages.USER_PROF_CAP,
-      url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/profile'
-    }
-  ];
-  breadcrumbs = this.breadcrumbs_init;
+  // breadcrumb_moreoptions: any = [];
+  // breadcrumbs_init = [
+  //   {
+  //     title: Messages.USER_PROF_CAP,
+  //     url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/profile'
+  //   }
+  // ];
+  // breadcrumbs = this.breadcrumbs_init;
   loading = false;
+  breadcrumb_moreoptions: { 'actions': { 'title': string; 'type': string; }[]; };
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
