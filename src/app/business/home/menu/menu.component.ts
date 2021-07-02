@@ -42,6 +42,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   enquiryCount;
   isadminPrivilege: any;
   apptstatus: any;
+  checkinStatus:any;
   constructor(
     private shared_functions: SharedFunctions,
     public shared_service: SharedServices,
@@ -58,6 +59,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.getEnquiryCount();
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
+      console.log(message);
       switch (message.ttype) {
         case 'messageCount':
           this.inboxUnreadCnt = message.unreadCount - this.enquiryCount;
@@ -114,6 +116,9 @@ export class MenuComponent implements OnInit, OnDestroy {
         //   break;
         case 'waitlistSettings':
           this.showToken = message.value;
+          break;
+        case 'checkinStatus':
+          this.checkinStatus = message.checkinStatus;
           break;
         case 'donationStatus':
           this.donationstatus = message.donationStatus;
@@ -248,14 +253,17 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
   getGlobalSettings() {
     const settings = this.groupService.getitemFromGroupStorage('settings');
+    console.log(settings);
     if (settings) {
       this.donationstatus = settings.donationFundRaising;
       this.apptstatus = settings.appointment;
+      this.checkinStatus = settings.waitlist;
     } else {
       this.provider_services.getGlobalSettings().subscribe(
         (data: any) => {
           this.donationstatus = data.donationFundRaising;
           this.apptstatus = data.appointment;
+          this.checkinStatus = data.waitlist;
         });
     }
   }
@@ -264,7 +272,6 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.orderstatus = data.enableOrder;
     });
   }
-
   minimizeSideBar() {
     this.minimizeMenu = !this.minimizeMenu;
     this.shared_functions.sendMessage({ ttype: 'smallMenu', value: this.minimizeMenu });

@@ -2267,3 +2267,6 @@ footer.bus-page-footer.site-footer .footer-bottom .footer-links.bd-pd-left {
 #customAppPopup button{
   margin:15px !important;
 }
+#customAppIOSPopup {
+  display: none;
+}

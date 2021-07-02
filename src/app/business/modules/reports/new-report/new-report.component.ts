@@ -540,8 +540,16 @@ user_users;
     }
   }
   generateReport(reportType) {
-
     if (reportType === 'payment') {
+      if(this.payment_donationEmail){
+        const curemail = this.payment_donationEmail.trim();
+        const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
+        const result2 = pattern2.test(curemail);
+        if (!result2) {
+          this.snackbarService.openSnackBar (this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'),{ 'panelClass': 'snackbarerror' });
+          return;
+        }
+      }
       if (this.payment_timePeriod === 'DATE_RANGE' && (this.payment_startDate === undefined || this.payment_endDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {

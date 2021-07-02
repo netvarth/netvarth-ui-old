@@ -210,6 +210,7 @@ export const projectConstantsLocal = {
     retailStores: { iconClass: 'retailstores_icon' },
     otherMiscellaneous: { iconClass: 'other_icon' },
     educationalInstitution: { iconClass: 'education_icon' },
+    sportsAndEntertainement: { iconClass: 'sports_icon'}
 
   },
   DOMAIN_SERVICES_HINT: {
@@ -224,6 +225,8 @@ export const projectConstantsLocal = {
     retailStores: { helphint: 'Pickup, Home delivery' },
     otherMiscellaneous: { helphint: 'Add your services here' },
     educationalInstitution: { helphint: 'Add your services here' },
+    sportsAndEntertainement: { helphint: 'Add your services here' }
+
   },
   SUBDOMAIN_ICONS: {
     physiciansSurgeons: { help: 'single doctor facility', iconClass: 'allopathy_doc' },

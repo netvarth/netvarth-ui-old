@@ -189,7 +189,6 @@
 
                 </div>
               </div>
-
               <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12">
                   <label for="payment_donationEmail" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Donor's
@@ -204,7 +203,7 @@
                 <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12">
                   <label for="payment_donationPhone" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Donor's
                     Phone #</label>
-                  <input type="text" class="form-control col-lg-3 col-sm-3 col-md-3 col-xs-3"
+                  <input type="number" class="form-control col-lg-3 col-sm-3 col-md-3 col-xs-3"
                     [(ngModel)]="payment_donationPhone" maxlength="10" (keypress)="isNumeric($event)">
                 </div>
               </div>
@@ -530,7 +529,7 @@
               <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
                 <label for="donation_donorPhoneNumber" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label"> Donor's Phone #</label>
                 <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
-                  <input type="text" class="form-control" 
+                  <input type="number" class="form-control" 
                     [(ngModel)]="donation_donorPhoneNumber" maxlength="10" (keypress)="isNumeric($event)">
                 </div>
               </div>

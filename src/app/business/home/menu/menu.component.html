@@ -38,7 +38,7 @@
           </div>
         </li>
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
-          (click)="showMenuSection()">
+          (click)="showMenuSection()" *ngIf="checkinStatus">
           <a routerLink="check-ins" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="showToken ? 'Tokens' : 'Check-ins'"><span
               class="svg-icon menu-icon">
               <i class="fa fa-check-circle"></i>
@@ -65,7 +65,7 @@
 
 
 
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
+           <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
           (click)="showMenuSection()" *ngIf="orderstatus">
           <a routerLink="orders" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'Orders'"><span
               class="svg-icon menu-icon">
