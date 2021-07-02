@@ -21,6 +21,7 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 import { GalleryService } from '../../../../../shared/modules/gallery/galery-service';
 import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { DateFormatPipe } from '../../../../../shared/pipes/date-format/date-format.pipe';
+import { TeleServiceConfirmBoxComponent } from '../../../teleservice/teleservice-confirm-box/teleservice-confirm-box.component';
 
 @Component({
     selector: 'app-service-actions',
@@ -61,6 +62,9 @@ export class ServiceActionsComponent implements OnInit {
     elementType = 'url';
     isUserdisable = false;
     @ViewChild('closebutton') closebutton;
+    starting_url = '';
+    meetlink_data;
+    servStarted = false;
     constructor(private groupService: GroupStorageService,
         private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
@@ -158,6 +162,11 @@ export class ServiceActionsComponent implements OnInit {
             }
             if ((this.timeType === 1 || this.timeType === 3) && this.waitlist_data.virtualService && (this.waitlist_data.waitlistStatus === 'arrived' || this.waitlist_data.waitlistStatus === 'checkedIn' || this.waitlist_data.waitlistStatus === 'started')) {
                 this.showTeleserviceStart = true;
+                if (this.waitlist_data.waitlistStatus === 'started') {
+                    this.servStarted = true;
+                } else {
+                    this.servStarted = false;
+                }
             }
             if (this.board_count > 0 && this.timeType === 1 && !this.waitlist_data.virtualService && (this.waitlist_data.waitlistStatus === 'checkedIn' || this.waitlist_data.waitlistStatus === 'arrived')) {
                 this.showCall = true;
@@ -202,6 +211,11 @@ export class ServiceActionsComponent implements OnInit {
             }
             if ((this.timeType === 1 || this.timeType === 3) && this.waitlist_data.virtualService && (this.waitlist_data.apptStatus === 'Arrived' || this.waitlist_data.apptStatus === 'Confirmed' || this.waitlist_data.apptStatus === 'Started')) {
                 this.showTeleserviceStart = true;
+                if (this.waitlist_data.apptStatus === 'Started') {
+                    this.servStarted = true;
+                } else {
+                    this.servStarted = false;
+                }
             }
             if (this.board_count > 0 && this.timeType === 1 && !this.waitlist_data.virtualService && (this.waitlist_data.apptStatus === 'Confirmed' || this.waitlist_data.apptStatus === 'Arrived')) {
                 this.showCall = true;
@@ -220,6 +234,9 @@ export class ServiceActionsComponent implements OnInit {
                 this.getUser();
             }
         }
+        if (this.showTeleserviceStart) {
+            this.getMeetingDetails();
+        }
     }
     callingWaitlist() {
         if (this.bookingType == 'checkin') {
@@ -231,6 +248,32 @@ export class ServiceActionsComponent implements OnInit {
         } else {
             this.callingAppt();
         }
+    }
+    endmeeting() {
+        let consumerName;
+        if (this.bookingType == 'checkin') {
+            consumerName = this.waitlist_data.waitlistingFor[0].firstName + ' ' + this.waitlist_data.waitlistingFor[0].lastName;
+        } else {
+            consumerName = this.waitlist_data.appmtFor[0].firstName + ' ' + this.waitlist_data.appmtFor[0].lastName;
+        }
+        const startTeledialogRef = this.dialog.open(TeleServiceConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                message: 'Have you completed the',
+                serviceDetail: this.waitlist_data.service,
+                consumerName: consumerName,
+                custmerLabel: this.customer_label,
+                endmsg: 'teleserviceEnd',
+                app: this.waitlist_data.service.virtualCallingModes[0].callingMode
+            }
+        });
+        startTeledialogRef.afterClosed().subscribe(result => {
+            if (result && result === 'completed') {
+                this.changeWaitlistStatus('DONE');
+            }
+        });
     }
     changeWaitlistStatus(action) {
         if (this.bookingType == 'checkin') {
@@ -256,23 +299,72 @@ export class ServiceActionsComponent implements OnInit {
     }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
         if (this.bookingType == 'checkin') {
-            this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
+            this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data, this.showTeleserviceStart)
                 .then(
                     result => {
-                        this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                        if (result) {
+                            if (this.showTeleserviceStart) {
+                                if (action === 'DONE') {
+                                    this.snackbarService.openSnackBar('Meeting has been ended');
+                                    this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                                } else {
+                                    this.chkinTeleserviceJoinLink();
+                                    if (this.waitlist_data.service.virtualCallingModes[0].callingMode === 'VideoCall') {
+                                        this.router.navigate(['meeting', 'provider', this.waitlist_data.ynwUuid], { replaceUrl: true });
+                                    } else {
+                                        this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                                    }
+                                }
+                            } else {
+                                this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                            }
+                        }
                     },
                     error => {
-
                     });
         } else if (this.bookingType == 'appointment') {
-            this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)
+            this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data, this.showTeleserviceStart)
                 .then(
                     result => {
-                        this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                        if (result) {
+                            if (this.showTeleserviceStart) {
+                                if (action === 'Completed') {
+                                    this.snackbarService.openSnackBar('Meeting has been ended');
+                                    this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                                } else {
+                                    this.apptTeleserviceJoinLink();
+                                    if (this.waitlist_data.service.virtualCallingModes[0].callingMode === 'VideoCall') {
+                                        this.router.navigate(['meeting', 'provider', this.waitlist_data.uid], { replaceUrl: true });
+                                    } else {
+                                        this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                                    }
+                                }
+                            } else {
+                                this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                            }
+                        }
                     },
                     error => {
                     });
         }
+    }  // Sending rest API to consumer and provider about service starting
+    chkinTeleserviceJoinLink() {
+        const uuid_data = {
+            'mode': this.waitlist_data.service.virtualCallingModes[0].callingMode,
+            'recipients': ['PROVIDER', 'CONSUMER']
+        };
+        this.shared_services.consumerWtlstTeleserviceWithId(uuid_data, this.waitlist_data.ynwUuid).
+            subscribe((modeData) => {
+            });
+    }
+    apptTeleserviceJoinLink() {
+        const uuid_data = {
+            'mode': this.waitlist_data.service.virtualCallingModes[0].callingMode,
+            'recipients': ['PROVIDER', 'CONSUMER']
+        };
+        this.shared_services.consumerApptTeleserviceWithId(uuid_data, this.waitlist_data.uid).
+            subscribe((modeData) => {
+            });
     }
     smsCheckin() {
         const smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
@@ -421,6 +513,89 @@ export class ServiceActionsComponent implements OnInit {
                 }
             };
             this.router.navigate(['provider', 'telehealth'], navigationExtras);
+        }
+    }
+
+    asktoLaunch() {
+        if (!this.servStarted) {
+            let consumerName;
+            if (this.bookingType == 'checkin') {
+                consumerName = this.waitlist_data.waitlistingFor[0].firstName + ' ' + this.waitlist_data.waitlistingFor[0].lastName;
+            } else {
+                consumerName = this.waitlist_data.appmtFor[0].firstName + ' ' + this.waitlist_data.appmtFor[0].lastName;
+            }
+            const startTeledialogRef = this.dialog.open(TeleServiceConfirmBoxComponent, {
+                width: '50%',
+                panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+                disableClose: true,
+                data: {
+                    message: 'Are you ready to start',
+                    serviceDetail: this.waitlist_data.service,
+                    consumerName: consumerName,
+                    custmerLabel: this.customer_label,
+                    readymsg: 'teleserviceStart',
+                    meetingLink: this.starting_url,
+                    app: this.waitlist_data.service.virtualCallingModes[0].callingMode
+                }
+            });
+            startTeledialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    if (result === 'started') {
+                        if (this.bookingType == 'checkin') {
+                            if (this.waitlist_data.waitlistStatus !== 'started') {
+                                this.changeWaitlistStatus('STARTED');
+                            } else if (this.waitlist_data.waitlistStatus === 'started') {
+                                this.snackbarService.openSnackBar('Service already started!');
+                                this.servStarted = true;
+                            }
+                        } else {
+                            if (this.waitlist_data.apptStatus !== 'Started') {
+                                this.changeWaitlistStatus('Started');
+                            } else if (this.waitlist_data.apptStatus === 'Started') {
+                                this.snackbarService.openSnackBar('Service already started!');
+                                this.servStarted = true;
+                            }
+                        }
+                    }
+                }
+            });
+        } else {
+            if (this.waitlist_data.service.virtualCallingModes[0].callingMode === 'VideoCall') {
+                const uuid = (this.bookingType == 'checkin') ? this.waitlist_data.ynwUuid : this.waitlist_data.uid;
+                this.router.navigate(['meeting', 'provider', uuid]);
+            }
+            if (this.waitlist_data.service.virtualCallingModes[0].callingMode !== 'Phone' && this.waitlist_data.service.virtualCallingModes[0].callingMode !== 'VideoCall') {
+                window.open(this.starting_url, '_blank');
+            }
+            if (this.waitlist_data.service.virtualCallingModes[0].callingMode === 'Phone') {
+                window.open('tel:' + this.starting_url, '_blank');
+            }
+        }
+    }
+    getMeetingDetails() {
+        this.starting_url = '';
+        if (this.bookingType === 'checkin') {
+            this.shared_services.getWaitlstMeetingDetails(this.waitlist_data.service.virtualCallingModes[0].callingMode, this.waitlist_data.ynwUuid).
+                subscribe((meetingdata) => {
+                    console.log(meetingdata);
+                    this.meetlink_data = meetingdata;
+                    if (this.waitlist_data.service.virtualCallingModes[0].callingMode === 'VideoCall') {
+                        this.starting_url = this.meetlink_data.joiningUrl;
+                    } else {
+                        this.starting_url = this.meetlink_data.startingUl;
+                    }
+                });
+        } else {
+            this.shared_services.getApptMeetingDetails(this.waitlist_data.service.virtualCallingModes[0].callingMode, this.waitlist_data.uid).
+                subscribe((meetingdata) => {
+                    this.meetlink_data = meetingdata;
+                    if (this.waitlist_data.service.virtualCallingModes[0].callingMode === 'VideoCall') {
+                        this.starting_url = this.meetlink_data.joiningUrl;
+                    } else {
+                        this.starting_url = this.meetlink_data.startingUl;
+                    }
+
+                });
         }
     }
     witlistRescheduleActionClicked() {

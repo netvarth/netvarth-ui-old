@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 
@@ -10,16 +11,21 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 export class BookingStatsComponent implements OnInit {
   customer_count;
   customer_label = '';
-  @Input() source;
   @Input() newApptsCount;
   @Input() newWitlistCount;
   @Input() waitlistMgrSettings;
+  admin = true;
   constructor(private provider_services: ProviderServices,
-    private wordProcessor: WordProcessor) { }
+    private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService) { }
 
   ngOnInit(): void {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.getCustomersListCount();
+    const userDet = this.groupService.getitemFromGroupStorage('ynw-user');
+    if (userDet.accountType !== 'BRANCH' || userDet.accountType === 'BRANCH' && userDet.adminPrivilege) {
+      this.admin = true;
+    }
   }
   getCustomersListCount() {
     this.provider_services.getProviderCustomersCount()

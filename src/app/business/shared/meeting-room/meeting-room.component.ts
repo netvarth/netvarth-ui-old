@@ -366,17 +366,19 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
             _this.removePreviewTrackToDom(track, track.kind);
         })
 
-        let type = _this.type;
-        if (_this.type === 'wl') {
-            type = 'checkin'
-        }
+        // let type = _this.type;
+        // if (_this.type === 'wl') {
+        //     type = 'checkin'
+        // }
         const navigationExtras: NavigationExtras = {
             queryParams: {
-                waiting_id: _this.uuid,
-                type: type
+                uid: _this.uuid,
+                type: (_this.type === 'wl') ? 'checkin' : 'appointment',
+                timetype: 1
             }
         };
-        _this.router.navigate(['provider', 'telehealth'], navigationExtras);
+        // _this.router.navigate(['provider', 'telehealth'], navigationExtras);
+        _this.router.navigate(['provider', 'bookings', 'details'], navigationExtras);
     }
 
     /**
