@@ -511,9 +511,19 @@ export class BranchUsersComponent implements OnInit {
                 subDomain = 'colleges';
              } 
           }
+          else if (this.user.sector === 'sportsAndEntertainement') {
+            if (this.user.subSector === 'sports') {
+                console.log('insideewllefkkffj');
+              subDomain = 'sports';
+            } else if (this.user.subSector === 'entertainment') {
+                subDomain = 'entertainment';
+             }  
+          }
+          console.log(this.user.sector,subDomain);
         this.provider_services.getSpecializations(this.user.sector, subDomain)
             .subscribe(data => {
                 this.specialization_arr = data;
+                console.log(this.specialization_arr);
             });
     }
     setFilterDataCheckbox(type, value) {
@@ -567,6 +577,7 @@ export class BranchUsersComponent implements OnInit {
         return languages;
     }
     getSpecialization(specialization) {
+        console.log(specialization);
         for (let i = 0; i < specialization.length; i++) {
             const special = this.specialization_arr.filter(speciall => speciall.name === specialization[i]);
             if (special[0]) {
