@@ -2,7 +2,6 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl, FormGroup } from '@angular/forms';
-import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { Observable } from 'rxjs';
 import { Location } from '@angular/common';
 import { startWith, map } from 'rxjs/operators';
@@ -246,7 +245,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     public sharedfunctionObj: SharedFunctions,
@@ -255,7 +253,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private activated_route: ActivatedRoute,
-    // private dateTimeProcessor: DateTimeProcessor,
     @Inject(DOCUMENT) public document
   ) {
     this.activated_route.params.subscribe(params => {
