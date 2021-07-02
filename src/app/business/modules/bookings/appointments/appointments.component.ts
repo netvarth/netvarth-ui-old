@@ -1,6 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 
 @Component({
@@ -18,15 +20,40 @@ export class AppointmentsComponent implements OnInit {
   timeType = 1;
   apptToList: any = [];
   loading = true;
+  subscription: Subscription;
   constructor(private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
-    private router: Router, private location: Location) {
+    private router: Router, private location: Location,
+    private shared_functions: SharedFunctions) {
     this.activated_route.queryParams.subscribe(params => {
-      console.log(params);
-      this.providerId = params.providerId;
+      if (params.providerId) {
+        this.providerId = JSON.parse(params.providerId);
+      }
+    });
+    this.subscription = this.shared_functions.getMessage().subscribe(message => {
+      if (message.ttype === 'todayAppt') {
+        this.todayAppts = message.data;
+        if (this.providerId) {
+          this.todayAppts = this.todayAppts.filter(waitlist => waitlist.provider && waitlist.provider.id === this.providerId);
+        }
+      }
+      if (message.ttype === 'futureAppt') {
+        this.futureAppts = message.data;
+        if (this.providerId) {
+          this.futureAppts = this.futureAppts.filter(waitlist => waitlist.provider && waitlist.provider.id === this.providerId);
+        }
+      }
+      this.totalAppts = [];
+      this.totalAppts = this.todayAppts.concat(this.futureAppts);
+      this.totalAppts = this.todayAppts.concat(this.historyAppts);
+      this.handleApptSelectionType(this.timeType);
     });
   }
-
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
   ngOnInit(): void {
     this.getTodayAppts();
   }
@@ -76,7 +103,6 @@ export class AppointmentsComponent implements OnInit {
             return obj;
           });
           this.totalAppts = this.totalAppts.concat(this.historyAppts);
-          console.log('this.totalAppts', this.totalAppts);
           this.loading = false;
         });
   }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { Subscription } from 'rxjs';
+import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 
 @Component({
   selector: 'app-booking-dashboard-admin',
@@ -22,10 +24,35 @@ export class BookingDashboardAdminComponent implements OnInit {
   newWaitlists: any = [];
   customers: any = [];
   customer_label;
+  subscription: Subscription;
   constructor(private provider_services: ProviderServices,
     private groupService: GroupStorageService,
-    private wordProcessor: WordProcessor) { }
-
+    private shared_functions: SharedFunctions,
+    private wordProcessor: WordProcessor) {
+    this.subscription = this.shared_functions.getMessage().subscribe(message => {
+      if (message.ttype === 'todayWl') {
+        this.todayWaitlists = message.data;
+      }
+      if (message.ttype === 'futureWl') {
+        this.futureWaitlists = message.data;
+      }
+      if (message.ttype === 'todayAppt') {
+        this.todayAppts = message.data;
+      }
+      if (message.ttype === 'futureAppt') {
+        this.futureAppts = message.data;
+      }
+      this.newWaitlists = [];
+      this.newAppts = [];
+      this.newWaitlists = this.todayWaitlists.concat(this.futureWaitlists);
+      this.newAppts = this.todayAppts.concat(this.futureAppts);
+    });
+  }
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
   ngOnInit(): void {
     this.getTodayAppts();
     this.getTodayWatilists();
@@ -50,7 +77,6 @@ export class BookingDashboardAdminComponent implements OnInit {
     apiFilter['userType-eq'] = 'PROVIDER';
     this.provider_services.getUsers(apiFilter).subscribe(data => {
       this.users = data;
-      console.log(this.users);
     });
   }
   getConsumerBills() {
@@ -93,7 +119,6 @@ export class BookingDashboardAdminComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.todayWaitlists = data;
-          console.log(this.todayWaitlists);
           this.getFutureWatilists(filter);
         });
   }
@@ -102,7 +127,6 @@ export class BookingDashboardAdminComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.futureWaitlists = data;
-          console.log(this.futureWaitlists);
           this.newWaitlists = this.todayWaitlists.concat(this.futureWaitlists);
         });
   }

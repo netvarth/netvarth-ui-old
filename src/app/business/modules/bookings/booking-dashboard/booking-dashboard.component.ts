@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { Subscription } from 'rxjs';
+import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 
 @Component({
   selector: 'app-booking-dashboard',
@@ -24,24 +26,58 @@ export class BookingDashboardComponent implements OnInit {
   userDetails;
   customer_label;
   customers: any = [];
+  subscription: Subscription
   constructor(private provider_services: ProviderServices,
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
-    private activated_route: ActivatedRoute) {
+    private activated_route: ActivatedRoute,
+    private shared_functions: SharedFunctions) {
     this.activated_route.params.subscribe(params => {
-      console.log(params);
-      this.providerId = params.userid;
-      if (this.providerId) {
+      if (params.userid) {
+        this.providerId = JSON.parse(params.userid);
         this.getUserData();
       }
     });
+    this.subscription = this.shared_functions.getMessage().subscribe(message => {
+      if (message.ttype === 'todayWl') {
+        this.todayWaitlists = message.data;
+        if (this.providerId) {
+          this.todayWaitlists = this.todayWaitlists.filter(waitlist => waitlist.provider && waitlist.provider.id === this.providerId);
+        }
+      }
+      if (message.ttype === 'futureWl') {
+        this.futureWaitlists = message.data;
+        if (this.providerId) {
+          this.futureWaitlists = this.futureWaitlists.filter(waitlist => waitlist.provider && waitlist.provider.id === this.providerId);
+        }
+      }
+      if (message.ttype === 'todayAppt') {
+        this.todayAppts = message.data;
+        if (this.providerId) {
+          this.todayAppts = this.todayAppts.filter(waitlist => waitlist.provider && waitlist.provider.id === this.providerId);
+        }
+      }
+      if (message.ttype === 'futureAppt') {
+        this.futureAppts = message.data;
+        if (this.providerId) {
+          this.futureAppts = this.futureAppts.filter(waitlist => waitlist.provider && waitlist.provider.id === this.providerId);
+        }
+      }
+      this.newWaitlists = [];
+      this.newAppts = [];
+      this.newWaitlists = this.todayWaitlists.concat(this.futureWaitlists);
+      this.newAppts = this.todayAppts.concat(this.futureAppts);
+    });
   }
-
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
   ngOnInit(): void {
     const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     this.userData = this.groupService.getitemFromGroupStorage('ynw-user');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    console.log('userData', this.userData);
     if (bdetails) {
       if (this.userData.accountType === 'BRANCH' && this.userData.userType !== 2) {
         this.bname = this.userData.userName || 'User';
@@ -60,7 +96,6 @@ export class BookingDashboardComponent implements OnInit {
       .subscribe(
         res => {
           this.userDetails = res;
-          console.log(this.userDetails);
           this.bname = (this.userData.businessName) ? this.userData.businessName : this.userData.firstName + ' ' + this.userData.lastName;
         });
   }
@@ -112,7 +147,6 @@ export class BookingDashboardComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.todayWaitlists = data;
-          console.log(this.todayWaitlists);
           this.getFutureWatilists(filter);
         });
   }
@@ -121,7 +155,6 @@ export class BookingDashboardComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.futureWaitlists = data;
-          console.log(this.futureWaitlists);
           this.newWaitlists = this.todayWaitlists.concat(this.futureWaitlists);
         });
   }

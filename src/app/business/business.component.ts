@@ -5,7 +5,7 @@ import { SharedFunctions } from '../shared/functions/shared-functions';
 import { CommonDataStorageService } from '../shared/services/common-datastorage.service';
 import { ProviderSharedFuctions } from '../ynw_provider/shared/functions/provider-shared-functions';
 import { SharedServices } from '../shared/services/shared-services';
-import { Subscription } from 'rxjs';
+import { interval as observableInterval, Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateEmailComponent } from './modules/update-email/update-email.component';
 import { LocalStorageService } from '../shared/services/local-storage.service';
@@ -13,6 +13,9 @@ import { GroupStorageService } from '../shared/services/group-storage.service';
 import { SnackbarService } from '../shared/services/snackbar.service';
 import { WordProcessor } from '../shared/services/word-processor.service';
 import { Title } from '@angular/platform-browser';
+import { projectConstants } from '../app.component';
+import { NotifierService } from 'angular-notifier';
+import { Howl } from 'howler';
 
 @Component({
   selector: 'app-business',
@@ -27,12 +30,18 @@ export class BusinessComponent implements OnInit {
   apiloading = false;
   activeSkin;
   subscription: Subscription;
+  cronHandle: Subscription;
   contactInfo: any = [];
   profile: any = [];
   iswiz = false;
   smallMenuSection = false;
   screenWidth;
   bodyHeight = 700;
+  refreshTime = projectConstants.INBOX_REFRESH_TIME;
+  newWaitlists: any = [];
+  newAppts: any = [];
+  private notifier: NotifierService;
+  waitlistMgrSettings;
   constructor(router: Router,
     public route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -45,7 +54,9 @@ export class BusinessComponent implements OnInit {
     private groupService: GroupStorageService,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
-    private titleService: Title) {
+    private titleService: Title,
+    notifierService: NotifierService) {
+    this.notifier = notifierService;
     this.titleService.setTitle('Jaldee Business');
     router.events.subscribe(
       (event: RouterEvent): void => {
@@ -55,28 +66,30 @@ export class BusinessComponent implements OnInit {
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (this.shared_functions.isBusinessOwner()) {
-          // this.shared_functions.getGlobalSettings()
-          //   .then(
-          //     (settings: any) => {
-          if (router.url === '\/provider') {
-            router.navigate(['provider', 'bookings']);
-            // setTimeout(() => {
-            //   if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
-            //     if (settings.waitlist) {
-            //       router.navigate(['provider', 'check-ins']);
-            //     } else if (settings.appointment) {
-            //       router.navigate(['provider', 'appointments']);
-            //     } else if (settings.order) {
-            //       router.navigate(['provider', 'orders']);
-            //     } else {
-            //       router.navigate(['provider', 'settings']);
-            //     }
-            //   } else {
-            //     router.navigate(['provider', 'settings']);
-            //   }
-            // }, 500);
-          }
-          // });
+          this.shared_functions.getGlobalSettings()
+            .then(
+              (settings: any) => {
+                if (router.url === '\/provider') {
+                  router.navigate(['provider', 'bookings']);
+                  this.getNewWaitlists();
+                  this.getNewAppts();
+                  // setTimeout(() => {
+                  //   if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
+                  //     if (settings.waitlist) {
+                  //       router.navigate(['provider', 'check-ins']);
+                  //     } else if (settings.appointment) {
+                  //       router.navigate(['provider', 'appointments']);
+                  //     } else if (settings.order) {
+                  //       router.navigate(['provider', 'orders']);
+                  //     } else {
+                  //       router.navigate(['provider', 'settings']);
+                  //     }
+                  //   } else {
+                  //     router.navigate(['provider', 'settings']);
+                  //   }
+                  // }, 500);
+                }
+              });
         }
       }
     });
@@ -103,6 +116,76 @@ export class BusinessComponent implements OnInit {
           break;
       }
     });
+    this.cronHandle = observableInterval(this.refreshTime * 300).subscribe(() => {
+      this.refresh();
+    });
+  }
+  refresh() {
+    this.getNewWaitlists('refresh');
+    this.getNewAppts('refresh');
+  }
+  getProviderSettings() {
+    this.provider_services.getWaitlistMgr()
+      .subscribe(data => {
+        this.waitlistMgrSettings = data;
+      });
+  }
+  getNewWaitlists(source?) {
+    const filter = {
+      'waitlistStatus-eq': 'checkedIn,arrived'
+    };
+    this.provider_services.getTodayWaitlist(filter)
+      .subscribe(
+        (data: any) => {
+          const waitlistOldList = this.newWaitlists;
+          this.shared_functions.sendMessage({ ttype: 'todayWl', data: data });
+          this.newWaitlists = data;
+          this.provider_services.getFutureWaitlist(filter)
+            .subscribe(
+              data => {
+                this.shared_functions.sendMessage({ ttype: 'futureWl', data: data });
+                this.newWaitlists = this.newWaitlists.concat(data);
+                if (source) {
+                  const newAppts = this.newWaitlists.filter(o1 => !waitlistOldList.some(o2 => o1.ynwUuid === o2.ynwUuid));
+                  if (newAppts.length > 0) {
+                    const msg = (this.waitlistMgrSettings && this.waitlistMgrSettings.showTokenId) ? 'You have new token' : 'You have new check-in'
+                    this.notifier.notify('success', (newAppts.length > 1) ? msg + 's' : msg);
+                    var sound = new Howl({
+                      src: ['assets/notification/juntos.mp3']
+                    });
+                    sound.play();
+                  }
+                }
+              });
+        });
+  }
+  getNewAppts(source?) {
+    const filter = {
+      'apptStatus-eq': 'Confirmed,Arrived'
+    };
+    this.provider_services.getTodayAppointments(filter)
+      .subscribe(
+        (data: any) => {
+          const waitlistOldList = this.newAppts;
+          this.shared_functions.sendMessage({ ttype: 'todayAppt', data: data });
+          this.newAppts = data;
+          this.provider_services.getFutureAppointments(filter)
+            .subscribe(
+              data => {
+                this.shared_functions.sendMessage({ ttype: 'futureAppt', data: data });
+                this.newAppts = this.newAppts.concat(data);
+                if (source) {
+                  const newAppts = this.newAppts.filter(o1 => !waitlistOldList.some(o2 => o1.uid === o2.uid));
+                  if (newAppts.length > 0) {
+                    this.notifier.notify('success', (newAppts.length > 1) ? 'You have new appointments' : 'You have new appointment');
+                    var sound = new Howl({
+                      src: ['assets/notification/juntos.mp3']
+                    });
+                    sound.play();
+                  }
+                }
+              });
+        });
   }
   private _navigationInterceptor(event: RouterEvent): void {
     if (event instanceof NavigationStart) {
@@ -140,6 +223,9 @@ export class BusinessComponent implements OnInit {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    if (this.cronHandle) {
+      this.cronHandle.unsubscribe();
+    }
   }
   ngOnInit() {
     this.screenWidth = window.innerWidth;
@@ -151,6 +237,7 @@ export class BusinessComponent implements OnInit {
     }
     this.getBusinessProfile();
     this.getLicenseMetaData();
+    this.getProviderSettings();
     this.activeSkin = this.lStorageService.getitemfromLocalStorage('activeSkin');
     if (!this.activeSkin) {
       this.activeSkin = 'skin-blue';

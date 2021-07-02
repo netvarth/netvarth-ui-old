@@ -1,6 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 
 @Component({
@@ -17,15 +19,37 @@ export class CheckinsComponent implements OnInit {
   timeType = 1;
   waitlistToList: any = [];
   loading = true;
+  subscription: Subscription;
   constructor(private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
-    private router: Router, private location: Location) {
+    private router: Router, private location: Location,
+    private shared_functions: SharedFunctions) {
     this.activated_route.queryParams.subscribe(params => {
-      console.log(params);
-      this.providerId = params.providerId;
+      if (params.providerId) {
+        this.providerId = JSON.parse(params.providerId);
+      }
+    });
+    this.subscription = this.shared_functions.getMessage().subscribe(message => {
+      if (message.ttype === 'todayWl') {
+        this.todayWaitlists = message.data;
+        if (this.providerId) {
+          this.todayWaitlists = this.todayWaitlists.filter(waitlist => waitlist.provider && waitlist.provider.id === this.providerId);
+        }
+      }
+      if (message.ttype === 'futureWl') {
+        this.futureWaitlists = message.data;
+        if (this.providerId) {
+          this.futureWaitlists = this.futureWaitlists.filter(waitlist => waitlist.provider && waitlist.provider.id === this.providerId);
+        }
+      }
+      this.handleWaitlistType(this.timeType);
     });
   }
-
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
   ngOnInit(): void {
     this.getProviderSettings();
     this.getTodayWatilists();

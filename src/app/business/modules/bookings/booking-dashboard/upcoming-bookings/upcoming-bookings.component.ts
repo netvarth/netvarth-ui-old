@@ -17,6 +17,6 @@ export class UpcomingBookingsComponent implements OnInit {
   gotoDetails(type) {
     const uid = (type === 'checkin') ? this.nextWaitlists[0].ynwUuid : this.nextAppts[0].uid;
     console.log(uid);
-    this.router.navigate(['provider', 'bookings', uid], { queryParams: { timetype: 1, type: type } });
+    this.router.navigate(['provider', 'bookings', 'details'], { queryParams: { uid: uid, timetype: 1, type: type } });
   }
 }
