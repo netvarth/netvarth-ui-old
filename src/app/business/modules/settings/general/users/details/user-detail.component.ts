@@ -250,6 +250,10 @@ export class BranchUserDetailComponent implements OnInit {
                     }
                 }
                 
+              }else if(this.sector=== 'sportsAndEntertainement'){
+                if (subdomain.subDomain === this.subsector) {
+                    this.selectedsubDomain.push(subdomain);
+                } 
               }
         }
     }
@@ -426,12 +430,10 @@ export class BranchUserDetailComponent implements OnInit {
         };
         if(input.whatsappumber !==''){
             if(input.countryCode_whatsapp.startsWith('+')){
-                console.log("hi")
                 this.whatsappCountry = input.countryCode_whatsapp
             }
             else{
                 this.whatsappCountry = '+'+input.countryCode_whatsapp
-                console.log("no hi")
             }
             const whatsup = {}
             whatsup["countryCode"] =  this.whatsappCountry
@@ -440,11 +442,9 @@ export class BranchUserDetailComponent implements OnInit {
         }
         if(input.telegramnumber !==''){
             if(input.countryCode_telegram.startsWith('+')){
-                console.log(" whats hi")
                 this.telegramCountry = input.countryCode_telegram
             } else{
                 this.telegramCountry = '+'+input.countryCode_telegram
-                console.log("tele no hi")
             }
             const telegram = {}
             telegram["countryCode"] =  this.telegramCountry

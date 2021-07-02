@@ -591,6 +591,13 @@ export class UserServiceChnageComponent implements OnInit {
         subDomain = 'colleges';
      }
     }
+    else if (this.user.sector === 'sportsAndEntertainement') {
+      if (this.user.subSector === 'sports') {
+        subDomain = 'sports';
+      } else if (this.user.subSector === 'entertainment') {
+          subDomain = 'entertainment';
+       }  
+    }
     this.provider_services.getSpecializations(this.user.sector, subDomain)
       .subscribe(data => {
         this.specialization_arr = data;
