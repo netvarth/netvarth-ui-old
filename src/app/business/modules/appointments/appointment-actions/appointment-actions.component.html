@@ -52,7 +52,9 @@
             </div>
         </div>
 
-        <div class="action-box pointer-cursor" (click)="assignteam()">
+        <div class="action-box pointer-cursor" 
+        *ngIf="!data.multiSelection && accountType=='BRANCH' && groups.length > 0 && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')"
+        (click)="assignteam()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
                 <div class="icon-text">Assign Team</div>
