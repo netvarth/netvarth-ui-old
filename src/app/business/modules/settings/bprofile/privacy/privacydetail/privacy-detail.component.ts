@@ -52,7 +52,7 @@ export class PrivacyDetailComponent implements OnInit {
   privacypermissiontxt = projectConstants.PRIVACY_PERMISSIONS;
   tooltiphone = projectConstants.TOOLTIP_PRIVACYPHONE;
   tooltemail = projectConstants.TOOLTIP_PRIVACYEMAIL;
-  customernormal_label = this.wordProcessor.getTerminologyTerm('customer');
+ 
   loadData: ArrayBuffer;
   breadcrumbs_init = [
     {
@@ -75,6 +75,7 @@ export class PrivacyDetailComponent implements OnInit {
   data: any;
   edit_ph_id: any;
   edit_mail_id: any;
+  customernormal_label: any;
   constructor(
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
@@ -86,6 +87,7 @@ export class PrivacyDetailComponent implements OnInit {
     private snackbarService: SnackbarService,
     public shared_functions: SharedFunctions
   ) {
+    this.customernormal_label = this.wordProcessor.getTerminologyTerm('customer');
     this.activated_route.queryParams.subscribe(
       (qParams) => {
         this.data = qParams;

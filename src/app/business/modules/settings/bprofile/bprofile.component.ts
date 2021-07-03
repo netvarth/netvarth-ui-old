@@ -213,6 +213,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   api_success: string;
   imgType = false;
   spinner_load = false;
+  maintooltip: any;
   @ViewChild('qrCodeOnlineId', { read: ElementRef }) set content1(content1: ElementRef) {
     if (content1) { // initially setter gets called with undefined
       this.qrCodeParent = content1;
@@ -319,7 +320,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   businessConfig: any = [];
   multipeLocationAllowed = false;
   // customer_label = '';
-  maintooltip = this.wordProcessor.getProjectMesssages('BPROFILE_TOOPTIP');
+
   primarydialogRef;
   loceditdialogRef;
   addlocdialogRef;
@@ -427,6 +428,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     private changeDetectorRef: ChangeDetectorRef) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_datastorage.setWeightageArray([]);
+    this.maintooltip = this.wordProcessor.getProjectMesssages('BPROFILE_TOOPTIP');
     // this.shared_functions.getMessage().subscribe(data => {
     //   this.getLicensemetrics();
     //   switch (data.ttype) {

@@ -37,7 +37,7 @@ export class ProviderReimburseReportComponent implements OnInit {
   report_status_filter = projectConstants.REPORT_STATUS_FILTER;
   api_error = null;
   api_success = null;
-  filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
+  filtericonTooltip:any;
   breadcrumbs = [
     {
       title: 'Settings',
@@ -94,6 +94,7 @@ export class ProviderReimburseReportComponent implements OnInit {
     private groupService: GroupStorageService,
     private dateTimeProcessor: DateTimeProcessor,
     private activatedRoute:ActivatedRoute) {
+      this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
   }
 
   ngOnInit() {

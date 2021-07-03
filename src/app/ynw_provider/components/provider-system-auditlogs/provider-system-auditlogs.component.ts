@@ -42,7 +42,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   logSelsubcat = '';
   logSeldate = '';
   logSelaction = '';
-  filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
+  filtericonTooltip = '';
   holdlogSelcat = '';
   holdlogSelsubcat = '';
   holdlogSeldate = '';
@@ -79,7 +79,9 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
     private dateTimeProcessor: DateTimeProcessor
-  ) { }
+  ) { 
+    this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
+  }
 
   ngOnInit() {
     // this.getAuditList();\
