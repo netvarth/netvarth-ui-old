@@ -45,4 +45,8 @@
     .table-outer td:before {
         content: attr(data-title);
     }
+  
+}
+div.paddingLeft{
+    padding-left:250px!important;
 }

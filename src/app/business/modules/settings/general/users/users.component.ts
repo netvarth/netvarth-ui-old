@@ -151,7 +151,10 @@ export class BranchUsersComponent implements OnInit {
         }
         if (this.domain === 'finance') {
             this.userTypesFormfill = [{name: 'ASSISTANT',displayName: 'Assistant'}, {name: 'PROVIDER',displayName: 'Staff Member'},{name: 'ADMIN',displayName: 'Admin'}];
-        }        
+        }  
+        if (this.domain === 'educationalInstitution') {
+            this.userTypesFormfill = [{name: 'ASSISTANT',displayName: 'Assistant'}, {name: 'PROVIDER',displayName: 'Mentor'},{name: 'ADMIN',displayName: 'Admin'}];
+        }      
     }
 
     addBranchSP() {
@@ -471,15 +474,34 @@ export class BranchUsersComponent implements OnInit {
                 subDomain = 'alternateMedicinePractitioners';
             }
         } else if (this.user.sector === 'personalCare') {
-            subDomain = 'beautyCare';
+            if(this.user.subSector === 'beautyCare'){
+              subDomain = 'beautyCare';
+            } else if(this.user.subSector === 'personalFitness'){
+              subDomain = 'personalFitness';
+            }else if(this.user.subSector === 'massageCenters'){
+              subDomain = 'massageCenters';
+            }
+          
         } else if (this.user.sector === 'finance') {
+          if(this.user.subSector === 'bank'){
             subDomain = 'bank';
-        } else if (this.user.sector === 'veterinaryPetcare') {
+          } else if(this.user.subSector === 'nbfc'){
+            subDomain = 'nbfc';
+          }else if(this.user.subSector === 'insurance'){
+            subDomain = 'insurance';
+          }
+        }else if (this.user.sector === 'veterinaryPetcare') {
             if (this.user.subSector === 'veterinaryhospital') {
                 subDomain = 'veterinarydoctor';
             }
         } else if (this.user.sector === 'retailStores') {
-            subDomain = 'groceryShops';
+            if(this.user.subSector === 'groceryShops'){
+                subDomain = 'groceryShops';
+              } else if(this.user.subSector === 'supermarket'){
+                subDomain = 'supermarket';
+              }else if(this.user.subSector === 'hypermarket'){
+                subDomain = 'hypermarket';
+              }
         } else if (this.user.sector === 'educationalInstitution') {
             if (this.user.subSector === 'educationalTrainingInstitute') {
               subDomain = 'educationalTrainingInstitute';
@@ -488,15 +510,20 @@ export class BranchUsersComponent implements OnInit {
              } else if (this.user.subSector === 'colleges') {
                 subDomain = 'colleges';
              } 
-            //  else if (this.user.subSector === 'dentalHosp') {
-            //   subDomain = 'dentists';
-            // } else if (this.user.subSector === 'alternateMedicineHosp') {
-            //   subDomain = 'alternateMedicinePractitioners';
-            // }
           }
+          else if (this.user.sector === 'sportsAndEntertainement') {
+            if (this.user.subSector === 'sports') {
+                console.log('insideewllefkkffj');
+              subDomain = 'sports';
+            } else if (this.user.subSector === 'entertainment') {
+                subDomain = 'entertainment';
+             }  
+          }
+          console.log(this.user.sector,subDomain);
         this.provider_services.getSpecializations(this.user.sector, subDomain)
             .subscribe(data => {
                 this.specialization_arr = data;
+                console.log(this.specialization_arr);
             });
     }
     setFilterDataCheckbox(type, value) {
@@ -550,6 +577,7 @@ export class BranchUsersComponent implements OnInit {
         return languages;
     }
     getSpecialization(specialization) {
+        console.log(specialization);
         for (let i = 0; i < specialization.length; i++) {
             const special = this.specialization_arr.filter(speciall => speciall.name === specialization[i]);
             if (special[0]) {

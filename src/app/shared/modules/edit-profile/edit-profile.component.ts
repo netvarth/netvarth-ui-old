@@ -215,14 +215,24 @@ export class EditProfileComponent implements OnInit {
           }
           whatsup["number"] = sub_data.whatsappnumber
           post_data['whatsAppNum'] = whatsup;
+        }else{
+          const whatsup = {}
+          whatsup["countryCode"] = sub_data.countryCode_whtsap
+          whatsup["number"] = sub_data.whatsappnumber
+          post_data['whatsAppNum'] = whatsup;
         }
-        if (sub_data.telegramnumber !== '' && sub_data.telegramnumber !== undefined && sub_data.countryCode_telegram !== '' || sub_data.countryCode_telegram !== undefined) {
+        if (sub_data.telegramnumber !== '' && sub_data.telegramnumber !== undefined && sub_data.countryCode_telegram !== '' && sub_data.countryCode_telegram !== undefined) {
           const telegram = {}
           if (sub_data.countryCode_telegram.startsWith('+')) {
             telegram["countryCode"] = sub_data.countryCode_telegram
           } else {
             telegram["countryCode"] = '+' + sub_data.countryCode_telegram
           }
+          telegram["number"] = sub_data.telegramnumber
+          post_data['telegramNum'] = telegram;
+        }else{
+          const telegram = {}
+          telegram["countryCode"] = sub_data.countryCode_telegram
           telegram["number"] = sub_data.telegramnumber
           post_data['telegramNum'] = telegram;
         }

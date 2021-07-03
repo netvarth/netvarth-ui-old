@@ -983,6 +983,13 @@ input[type=checkbox]:not(old):checked + label > span:before {
   float: left;
   align-items: center;
 }
+.sports_icon {
+  content:    url(../../../../../assets/images/home/signup/clapperboard.png);
+  width: 25px !important;
+  height:25px !important;
+  float: left;
+  align-items: center;
+}
 .active .acc-header {
   background: #1da0f2 !important;
 

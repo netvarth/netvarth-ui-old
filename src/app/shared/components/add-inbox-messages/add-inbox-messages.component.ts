@@ -15,6 +15,7 @@ import { WordProcessor } from '../../services/word-processor.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
+import { LocalStorageService } from '../../services/local-storage.service';
 @Component({
   selector: 'app-add-inbox-messages',
   templateUrl: './add-inbox-messages.component.html'
@@ -62,6 +63,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   userId;
   jaldeeConsumer = true;
   private subs = new SubSink();
+  isBusinessOwner;
   constructor(
     public dialogRef: MatDialogRef<AddInboxMessagesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -75,9 +77,12 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
-    private s3Processor: S3UrlProcessor
+    private s3Processor: S3UrlProcessor,
+    private localStorageService: LocalStorageService
   ) {
     console.log(this.data);
+    this.isBusinessOwner = this.localStorageService.getitemfromLocalStorage('isBusinessOwner');
+    console.log(this.isBusinessOwner);
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.typeOfMsg = this.data.typeOfMsg;
     this.user_id = this.data.user_id || null;
