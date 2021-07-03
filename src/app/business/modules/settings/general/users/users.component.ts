@@ -131,6 +131,7 @@ export class BranchUsersComponent implements OnInit {
     apiError = '';
     showAddCustomerHint = false;
     @ViewChild('closebutton') closebutton;
+    @ViewChild('locclosebutton') locclosebutton;
     groups: any;
     teamLoaded = false;
     teamEdit = false;
@@ -144,6 +145,8 @@ export class BranchUsersComponent implements OnInit {
     loc_list: any = [];
     locIds: any = [];
     newlyCreatedGroupId;
+    showteams =  false;
+    showusers = true;
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -196,12 +199,12 @@ export class BranchUsersComponent implements OnInit {
                     console.log("hi");
                     console.log(this.groups);
                     console.log(groupId);
-                    const grp = this.groups.filter(group => group.id === groupId);
+                    const grp = this.groups.filter(group => group.id === JSON.stringify(groupId));
                     console.log(groupId);
                     console.log(this.groups);
                     console.log(grp);
                     console.log(grp[0])
-                    // this.customerGroupSelection(grp[0]);
+                    this.customerGroupSelection(grp[0]);
                 }
             }
         });
@@ -669,6 +672,7 @@ export class BranchUsersComponent implements OnInit {
     }
     showCustomerHint() {
         this.showAddCustomerHint = false;
+        console.log(this.newlyCreatedGroupId);
         this.getCustomerGroup(this.newlyCreatedGroupId);
         this.resetGroupFields();
         // this.resetError();
@@ -690,6 +694,10 @@ export class BranchUsersComponent implements OnInit {
         this.closebutton.nativeElement.click();
         // this.resetError();
     }
+    closelocDialog() {
+        this.locclosebutton.nativeElement.click();
+        // this.resetError();
+    }
     editGroup(group?) {
         console.log(group);
         this.teamEdit = true;
@@ -707,6 +715,8 @@ export class BranchUsersComponent implements OnInit {
         // }
     }
     customerGroupSelection(group, type?) {
+        this.showusers = true;
+        this.showteams =  false;
         if (group === 'all') {
             this.getUsers();
         }
@@ -805,31 +815,54 @@ export class BranchUsersComponent implements OnInit {
     getUserIds(service, id, values) {
         console.log(values.currentTarget.checked);
         console.log(service);
+        console.log(values);
+
+        // if (values.currentTarget.checked) {
+        //     this.userIds.push(id);
+        //     console.log(this.userIds)
+        // } else if (!values.currentTarget.checked) {
+        //     this.userIds.splice(id);
+        //     console.log(this.userIds)
+        // }
+        // console.log(this.userIds)
         if (values.currentTarget.checked) {
             this.userIds.push(id);
-            console.log(this.userIds)
-        } else if (!values.currentTarget.checked) {
-            this.userIds.splice(id);
-            console.log(this.userIds)
-        }
-        console.log(this.userIds)
+            // website.push(new FormControl(e.target.value));
+          } else {
+            console.log(this.userIds);
+             const index =  this.userIds.filter(x => x === id);
+             console.log(index)
+             this.userIds.pop(index);
+          }
+          console.log(this.userIds)
     }
     getLocIdsUserIds(loc, id, values) {
         console.log(values.currentTarget.checked);
         console.log(loc);
+        // if (values.currentTarget.checked) {
+        //     this.locIds.push(id);
+        //     console.log(this.userIds)
+        // } else if (!values.currentTarget.checked) {
+        //     this.locIds.splice(id);
+        //     console.log(this.locIds)
+        // }
+        // console.log(this.userIds)
         if (values.currentTarget.checked) {
             this.locIds.push(id);
-            console.log(this.userIds)
-        } else if (!values.currentTarget.checked) {
-            this.locIds.splice(id);
             console.log(this.locIds)
-        }
-        console.log(this.userIds)
+          } else {
+            console.log( this.locIds);
+             const index =   this.locIds.filter(x => x === id);
+             console.log(index)
+             this.locIds.pop(index);
+          }
+          console.log(this.locIds)
     }
     addlocation() {
         this.userIds = [];
         this.showcheckbox = true;
         this.addlocationcheck = true;
+        this.showusers = true;
         this.getProviderLocations();
     }
     getProviderLocations() {
@@ -847,6 +880,10 @@ export class BranchUsersComponent implements OnInit {
         this.addlocationcheck = false
     }
     assignLocationToUsers() {
+        if (this.locIds.length === 0) {
+            this.apiError = 'Please select at least one location';
+        }
+        else {
         const postData = {
             'userIds': this.userIds,
             'bussLocations': this.locIds
@@ -856,11 +893,30 @@ export class BranchUsersComponent implements OnInit {
             (data: any) => {
               this.showcheckbox = false;
               this.userIds = [];
+              this.addlocationcheck = false;
               this.locIds = [];
-            //   this.showCustomers = false;
+              this.getUsers();
+              this.closelocDialog();
             },
             error => {
               this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
+        }
     }
+    redirecToUsers() {
+        // this.routerobj.navigate(['provider', 'settings', 'general', 'users']);
+        this.showteams =  true;
+        this.showusers = false;
+
+      }
+     showteamsres() {
+        this.showteams =  true;
+        this.showusers = false;;
+      }
+      showallusers(){
+        this.showteams =  false;
+        this.showusers = true;
+        this.selectedGroup = 'all';
+        this.customerGroupSelection(this.selectedGroup);
+      }
 }

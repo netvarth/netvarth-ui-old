@@ -81,6 +81,14 @@
 .mgn-lt-45 {
   margin-left: 45px
 }
+
+@media (min-width: 991px) {
+  .waitlist-box-check {
+    /* padding: 0px !important; */
+    display: none !important;
+  }
+}
+
 @media (max-width: 576px) {
 .waitlist-box {
   margin: 10px 0px;
