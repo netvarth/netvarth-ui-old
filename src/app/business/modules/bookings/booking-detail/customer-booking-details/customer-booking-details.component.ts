@@ -5,6 +5,8 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { projectConstants } from '../../../../../app.component';
+import { MatDialog } from '@angular/material/dialog';
+import { CommunicationPopupComponent } from '../communication-popup/communication-popup.component';
 
 @Component({
   selector: 'app-customer-booking-details',
@@ -31,7 +33,8 @@ export class CustomerBookingDetailsComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private sharedFunctions: SharedFunctions,
     private snackbarService: SnackbarService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {
     this.activated_route.queryParams.subscribe(params => {
       this.bookingType = params.type;
@@ -163,5 +166,16 @@ export class CustomerBookingDetailsComponent implements OnInit {
   getAge(age) {
     age = age.split(',');
     return age[0];
+  }
+  showCommunications() {
+    this.dialog.open(CommunicationPopupComponent, {
+      width: '50%',
+      panelClass: ['newPopupClass'],
+      disableClose: true,
+      data: {
+        waitlist: this.waitlist_data,
+        type: this.bookingType
+      }
+    });
   }
 }

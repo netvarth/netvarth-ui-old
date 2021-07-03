@@ -57,7 +57,7 @@
           <i class="fa fa-map-marker icon"></i>
           <span class="value">{{waitlist_data.waitlistingFor[0].preferredLanguage}}</span>
         </div>
-        <button class="btn create-prescription-button">Communication</button>
+        <button class="btn create-prescription-button" (click)="showCommunications()">Communication</button>
       </div>
     </div>
     <div class="booking-details" *ngIf="bookingType === 'appointment'">
@@ -118,7 +118,7 @@
           <i class="fa fa-map-marker icon"></i>
           <span class="value">{{waitlist_data.appmtFor[0].preferredLanguage}}</span>
         </div>
-        <button class="btn create-prescription-button">Communication</button>
+        <button class="btn create-prescription-button" (click)="showCommunications()">Communication</button>
       </div>
     </div>
   </div>
