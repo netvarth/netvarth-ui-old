@@ -1,0 +1,10 @@
+.fa-times {
+    color: black !important;
+    cursor: pointer;
+}
+.communication {
+    padding: 20px;
+}
+.comm-box {
+    box-shadow: 0 0 10px 0 rgb(183 192 206 / 20%);
+}

@@ -5,10 +5,10 @@
             <i *ngIf="!checkDisable()" (click)="getWaitlistBill('view')" class="fa fa-external-link pointer-cursor"
                 aria-hidden="true"></i>
         </div>
-        <div *ngIf="loading">
+        <div class="mx-hgt" *ngIf="loading">
             <app-common-innerloading-spinner></app-common-innerloading-spinner>
         </div>
-        <div *ngIf="!loading">
+        <div class="mx-hgt" *ngIf="!loading">
             <div class="scroll-sec">
                 <div class="card-body">
                     <div class="outer-table-responsive table-responsive">

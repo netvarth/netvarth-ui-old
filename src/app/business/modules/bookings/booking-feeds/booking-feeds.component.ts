@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
-import { SharedServices } from '../../../../../shared/services/shared-services';
+import { Router } from '@angular/router';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { SharedServices } from '../../../../shared/services/shared-services';
 
 @Component({
   selector: 'app-booking-feeds',
   templateUrl: './booking-feeds.component.html',
-  styleUrls: ['./booking-feeds.component.css', '../../../../../../assets/css/style.bundle.css', '../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../../assets/plugins/custom/fullcalendar/fullcalendar.bundle.css']
+  styleUrls: ['./booking-feeds.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../assets/plugins/custom/fullcalendar/fullcalendar.bundle.css']
 })
 export class BookingFeedsComponent implements OnInit {
   auditlog_details: any = [];
@@ -17,7 +18,8 @@ export class BookingFeedsComponent implements OnInit {
     'bg-light-info'
   ];
   classIndex = 0;
-  constructor(private shared_services: SharedServices) { }
+  constructor(private shared_services: SharedServices,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.getAuditList();
@@ -35,8 +37,13 @@ export class BookingFeedsComponent implements OnInit {
     if (this.classes && this.classIndex === this.classes.length) {
       this.classIndex = 0;
     }
-    const auditclass = this.classes[this.classIndex];
-    this.classIndex++;
-    return auditclass;
+    if (this.classes[this.classIndex]) {
+      const auditclass = this.classes[this.classIndex];
+      this.classIndex++;
+      return auditclass;
+    }
+  }
+  gotoAuditLogs() {
+    this.router.navigate(['provider/auditlog']);
   }
 }

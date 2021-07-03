@@ -22,6 +22,7 @@ import { GalleryService } from '../../../../../shared/modules/gallery/galery-ser
 import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { DateFormatPipe } from '../../../../../shared/pipes/date-format/date-format.pipe';
 import { TeleServiceConfirmBoxComponent } from '../../../teleservice/teleservice-confirm-box/teleservice-confirm-box.component';
+import { TeleServiceShareComponent } from '../../../teleservice/teleservice-share/teleservice-share.component';
 
 @Component({
     selector: 'app-service-actions',
@@ -41,6 +42,7 @@ export class ServiceActionsComponent implements OnInit {
     showTeleserviceStart = false;
     showComplete = false;
     showMsg = false;
+    showInProgress = false;
     board_count;
     pos = false;
     showBill = false;
@@ -65,6 +67,10 @@ export class ServiceActionsComponent implements OnInit {
     starting_url = '';
     meetlink_data;
     servStarted = false;
+    is_web = false;
+    notSupported;
+    busnes_name = '';
+    showMoreActions = false;
     constructor(private groupService: GroupStorageService,
         private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
@@ -119,6 +125,7 @@ export class ServiceActionsComponent implements OnInit {
                 }
             }
         });
+        this.notSupported = this.wordProcessor.getProjectMesssages('TELE_NOT_SUPPORTED');
     }
     ngOnDestroy() {
         if (this.subscription) {
@@ -129,17 +136,48 @@ export class ServiceActionsComponent implements OnInit {
         }
     }
     ngOnInit(): void {
+        // checking the device
+        const isMobile = {
+            Android: function () {
+                return navigator.userAgent.match(/Android/i);
+            },
+            BlackBerry: function () {
+                return navigator.userAgent.match(/BlackBerry/i);
+            },
+            iOS: function () {
+                return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+            },
+            Opera: function () {
+                return navigator.userAgent.match(/Opera Mini/i);
+            },
+            Windows: function () {
+                return navigator.userAgent.match(/IEMobile/i);
+            },
+            any: function () {
+                return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+            }
+        };
+        console.log(isMobile.Android());
+        if (!isMobile.Android() && !isMobile.iOS()) {
+            this.is_web = true;
+        }
+        console.log(this.is_web);
         this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.setActions();
+        if (this.waitlist_data.provider) {
+            this.busnes_name = this.waitlist_data.provider.firstName + ' ' + this.waitlist_data.provider.lastName;
+        } else {
+            this.busnes_name = this.waitlist_data.providerAccount.businessName;
+        }
     }
     setActions() {
         if (this.bookingType === 'checkin') {
             if (this.timeType !== 3 && this.waitlist_data.waitlistStatus !== 'done' && this.waitlist_data.waitlistStatus !== 'checkedIn' && this.waitlist_data.waitlistStatus !== 'blocked') {
                 this.showUndo = true;
             }
-            if (this.timeType === 1 && this.waitlist_data.waitlistStatus === 'checkedIn' && Object.keys(this.waitlist_data.virtualService).length === 0 && this.waitlist_data.virtualService.constructor === Object) {
+            if (this.timeType === 1 && this.waitlist_data.waitlistStatus === 'checkedIn' && !this.waitlist_data.service.virtualCallingModes) {
                 this.showArrived = true;
             }
             if (this.waitlist_data.waitlistStatus === 'arrived' || this.waitlist_data.waitlistStatus === 'checkedIn') {
@@ -154,21 +192,24 @@ export class ServiceActionsComponent implements OnInit {
             if ((this.waitlist_data.waitlistingFor[0].phoneNo && this.waitlist_data.waitlistingFor[0].phoneNo !== 'null') || this.waitlist_data.waitlistingFor[0].email) {
                 this.showMsg = true;
             }
-            if ((this.waitlist_data.waitlistStatus === 'arrived' || this.waitlist_data.waitlistStatus === 'checkedIn') && this.timeType !== 2 && (!this.waitlist_data.virtualService)) {
+            if ((this.waitlist_data.waitlistStatus === 'arrived' || this.waitlist_data.waitlistStatus === 'checkedIn') && this.timeType !== 2 && (!this.waitlist_data.service.virtualCallingModes)) {
                 this.showStart = true;
             }
             if ((this.waitlist_data.waitlistStatus == 'started' || this.waitlist_data.waitlistStatus == 'arrived' || this.waitlist_data.waitlistStatus == 'checkedIn') && this.timeType !== 2) {
                 this.showComplete = true;
             }
-            if ((this.timeType === 1 || this.timeType === 3) && this.waitlist_data.virtualService && (this.waitlist_data.waitlistStatus === 'arrived' || this.waitlist_data.waitlistStatus === 'checkedIn' || this.waitlist_data.waitlistStatus === 'started')) {
+            if ((this.timeType === 1 || this.timeType === 3) && this.waitlist_data.service.virtualCallingModes && (this.waitlist_data.waitlistStatus === 'arrived' || this.waitlist_data.waitlistStatus === 'checkedIn' || this.waitlist_data.waitlistStatus === 'started')) {
                 this.showTeleserviceStart = true;
                 if (this.waitlist_data.waitlistStatus === 'started') {
                     this.servStarted = true;
                 } else {
                     this.servStarted = false;
                 }
+                if (this.is_web && this.waitlist_data.waitlistStatus != 'started' && this.waitlist_data.service.virtualCallingModes && this.waitlist_data.service.virtualCallingModes[0] && (this.waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp' || this.waitlist_data.service.virtualCallingModes[0].callingMode === 'Phone')) {
+                    this.showInProgress = true;
+                }
             }
-            if (this.board_count > 0 && this.timeType === 1 && !this.waitlist_data.virtualService && (this.waitlist_data.waitlistStatus === 'checkedIn' || this.waitlist_data.waitlistStatus === 'arrived')) {
+            if (this.board_count > 0 && this.timeType === 1 && !this.waitlist_data.service.virtualCallingModes && (this.waitlist_data.waitlistStatus === 'checkedIn' || this.waitlist_data.waitlistStatus === 'arrived')) {
                 this.showCall = true;
             }
             if (this.pos && this.waitlist_data.waitlistStatus !== 'blocked' && (this.waitlist_data.waitlistStatus !== 'cancelled' || (this.waitlist_data.waitlistStatus === 'cancelled' && this.waitlist_data.paymentStatus !== 'NotPaid'))) {
@@ -188,7 +229,7 @@ export class ServiceActionsComponent implements OnInit {
             if (this.timeType !== 3 && this.waitlist_data.apptStatus !== 'Completed' && this.waitlist_data.apptStatus !== 'Confirmed' && this.waitlist_data.apptStatus !== 'blocked') {
                 this.showUndo = true;
             }
-            if (this.timeType === 1 && this.waitlist_data.apptStatus === 'Confirmed' && !this.waitlist_data.virtualService) {
+            if (this.timeType === 1 && this.waitlist_data.apptStatus === 'Confirmed' && !this.waitlist_data.service.virtualCallingModes) {
                 this.showArrived = true;
             }
             if (this.waitlist_data.apptStatus === 'Arrived' || this.waitlist_data.apptStatus === 'Confirmed') {
@@ -203,21 +244,24 @@ export class ServiceActionsComponent implements OnInit {
             if (this.waitlist_data.providerConsumer.email || this.waitlist_data.providerConsumer.phoneNo) {
                 this.showMsg = true;
             }
-            if ((this.waitlist_data.apptStatus === 'Arrived' || this.waitlist_data.apptStatus === 'Confirmed') && this.timeType !== 2 && (!this.waitlist_data.virtualService)) {
+            if ((this.waitlist_data.apptStatus === 'Arrived' || this.waitlist_data.apptStatus === 'Confirmed') && this.timeType !== 2 && (!this.waitlist_data.service.virtualCallingModes)) {
                 this.showStart = true;
             }
             if ((this.waitlist_data.apptStatus == 'Started' || this.waitlist_data.apptStatus == 'Arrived' || this.waitlist_data.apptStatus == 'Confirmed') && this.timeType !== 2) {
                 this.showComplete = true;
             }
-            if ((this.timeType === 1 || this.timeType === 3) && this.waitlist_data.virtualService && (this.waitlist_data.apptStatus === 'Arrived' || this.waitlist_data.apptStatus === 'Confirmed' || this.waitlist_data.apptStatus === 'Started')) {
+            if ((this.timeType === 1 || this.timeType === 3) && this.waitlist_data.service.virtualCallingModes && (this.waitlist_data.apptStatus === 'Arrived' || this.waitlist_data.apptStatus === 'Confirmed' || this.waitlist_data.apptStatus === 'Started')) {
                 this.showTeleserviceStart = true;
                 if (this.waitlist_data.apptStatus === 'Started') {
                     this.servStarted = true;
                 } else {
                     this.servStarted = false;
                 }
+                if (this.is_web && this.waitlist_data.apptStatus != 'Started' && this.waitlist_data.service.virtualCallingModes && this.waitlist_data.service.virtualCallingModes[0] && (this.waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp' || this.waitlist_data.service.virtualCallingModes[0].callingMode === 'Phone')) {
+                    this.showInProgress = true;
+                }
             }
-            if (this.board_count > 0 && this.timeType === 1 && !this.waitlist_data.virtualService && (this.waitlist_data.apptStatus === 'Confirmed' || this.waitlist_data.apptStatus === 'Arrived')) {
+            if (this.board_count > 0 && this.timeType === 1 && !this.waitlist_data.service.virtualCallingModes && (this.waitlist_data.apptStatus === 'Confirmed' || this.waitlist_data.apptStatus === 'Arrived')) {
                 this.showCall = true;
             }
             if (this.pos && this.waitlist_data.apptStatus !== 'blocked' && ((this.waitlist_data.apptStatus !== 'Cancelled' && this.waitlist_data.apptStatus !== 'Rejected') || ((this.waitlist_data.apptStatus === 'Cancelled' || this.waitlist_data.apptStatus === 'Rejected') && this.waitlist_data.paymentStatus !== 'NotPaid'))) {
@@ -888,5 +932,47 @@ export class ServiceActionsComponent implements OnInit {
                 }, error => {
                 });
         }
+    }
+    sendReminderorMeetingDetails(source) {
+        let consumer;
+        let consumerName;
+        if (this.bookingType === 'checkin') {
+            consumer = this.waitlist_data.consumer;
+            consumerName = this.waitlist_data.waitlistingFor[0].firstName + ' ' + this.waitlist_data.waitlistingFor[0].lastName;
+        } else {
+            consumer = this.waitlist_data.providerConsumer;
+            consumerName = this.waitlist_data.appmtFor[0].firstName + ' ' + this.waitlist_data.appmtFor[0].lastName;
+        }
+        let postData = {
+            serviceDetail: this.waitlist_data.service,
+            consumerName: consumerName,
+            custmerLabel: this.customer_label,
+            providerLabel: this.provider_label,
+            meetingLink: this.starting_url,
+            app: this.waitlist_data.service.virtualCallingModes[0].callingMode,
+            waitingId: (this.bookingType === 'checkin') ? this.waitlist_data.ynwUuid : this.waitlist_data.uid,
+            waitingType: this.bookingType,
+            busnsName: this.busnes_name,
+            consumerDetails: consumer
+        };
+        if (source === 'reminder') {
+            postData['reminder'] = 'reminder';
+            postData['status'] = this.servStarted;
+        } else {
+            postData['token'] = this.waitlist_data.token;
+            postData['checkInTime'] = this.waitlist_data.checkInTime;
+            postData['meetingDetail'] = 'meetingdetails';
+        }
+        const startTeledialogRef = this.dialog.open(TeleServiceShareComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'popup-class'],
+            disableClose: true,
+            data: postData
+        });
+        startTeledialogRef.afterClosed().subscribe(result => {
+        });
+    }
+    showActions() {
+        this.showMoreActions = !this.showMoreActions;
     }
 }

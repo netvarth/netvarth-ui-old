@@ -7,15 +7,34 @@
 .clr_white {
     color: white !important;
 }
+.clr_grey {
+    color: #515151 !important;
+}
+.nxt_token .symbol-label {
+    background-color: #00acac !important;
+}
+.d-flex.flex-column.text-right {
+    width: 160px !important;
+}
 .btn_action {
     background: white !important;
     color: #1e4079 !important;
     border-radius: 20px !important; 
 }
+.bg_peacok .btn_action:hover {
+    background: #1e4079 !important;
+    color: white !important;
+    border: 1px solid white !important;
+}
 .btn_action2 {
     background: #1e4079 !important;
     color: white !important;
     border-radius: 20px !important; 
+}
+.nxt_token .btn_action2:hover {
+    color: #1e4079 !important;
+    background: white !important;
+    border: 1px solid #1e4079 !important;
 }
 .spinner {
     top: 30%;

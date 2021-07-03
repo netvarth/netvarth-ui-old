@@ -1,0 +1,51 @@
+.container-booking-feeds {
+    width: auto !important;
+    height: 400px !important;
+    overflow: auto !important;
+    border-radius: 8px !important;
+}
+.container-booking-feeds .card-body {
+    overflow: auto !important;
+    padding-right: 10px !important;
+}
+.container-booking-feeds .date {
+    font-family: "Roboto", sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    color: #8c8c8c !important;
+    text-transform: none !important;
+}
+.card.data-card {
+    box-shadow: none !important;
+    padding: 0 !important;
+    border: 1.75px solid #d0d0d0 !important;
+    border-radius: 10px !important;
+}
+.card.data-card .card-header {
+    padding: 8px 10px !important;
+    border-radius: 0 !important;
+    border-bottom: 1.75px solid #d0d0d0 !important;
+    font-size: 13px !important;
+    text-transform: uppercase !important;
+    color: #395789 !important;
+    font-weight: 700 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    min-height: auto !important;
+}
+.card.data-card .card-header i {
+    color: #395789 !important;
+    font-family: 'FontAwesome' !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+}
+.auditlog .rounded:nth-child(odd) {
+    background-color: #EEE5FF !important;
+}
+.auditlog .rounded:nth-child(even) {
+    background-color: #FFF4DE !important;
+}
+.auditlog {
+    padding: 20px !important;
+}

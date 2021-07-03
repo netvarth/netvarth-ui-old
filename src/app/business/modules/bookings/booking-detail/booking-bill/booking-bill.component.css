@@ -180,3 +180,6 @@
 .disabledclass .card {
     opacity: 0.5;
 }
+.mx-hgt {
+    height: 317px !important;
+}

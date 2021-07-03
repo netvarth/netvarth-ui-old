@@ -128,7 +128,7 @@
 }
 @media (min-width: 991px) {
     .gutter-b {
-        height: 220px !important;
+        height: 250px !important;
     }
 }
 .action-box {
@@ -139,4 +139,19 @@
     float: left;
     display: table;
     box-shadow: 10px 10px 15px 0px #cccccc9c;
+}
+.tele-msg .custom-red {
+    color: red !important;
+    font-weight: 700 !important;
+}
+.tele-msg .call-inst {
+    color: #1E4079 !important;
+    font-weight: 700 !important;
+    font-size: 1rem;
+}
+.viewmore a {
+    color: #1E4079 !important;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: .8rem;
 }

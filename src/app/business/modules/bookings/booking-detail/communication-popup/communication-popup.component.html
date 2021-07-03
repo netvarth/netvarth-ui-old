@@ -1,0 +1,78 @@
+<h1 class="mat-dialog-title pad-20">
+  Communication
+  <i class="fa fa-times pull-right" aria-hidden="true" (click)="dialogClose()"></i>
+</h1>
+<div class="communication">
+  <div class="comm-box">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding">
+      <span class="ribbon-new">Recommended</span>
+      <div class="disp-flex">
+        <div class="flx_8 video-head">
+          <span class="jvideo-icon"></span>
+        </div>&nbsp;
+        <div class="video-style">
+          Jaldee Video Call
+        </div>
+      </div>
+      <div class="disp-flex video">
+
+        <label>Remaining minutes : <span class="bold">
+            &nbsp;{{videocredits}}</span>
+        </label>
+      </div>
+      <ul>
+        <li>Inbuilt video technology
+        </li>
+        <li>Personal number will stay secure and not be revealed
+        </li>
+      </ul>
+      <div class="startBt">
+        <br>
+        <button type="button" class="cs-btn bt1 btn-grn txt-trans-none" style="color: white;" (click)="gotoMeet()">
+          Launch Meeting
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="comm-box">
+    <div
+    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding">
+    <div class="disp-flex">
+        <div class="flx_8 whsp-head">
+            <span class="wtsapvid-icon"></span>
+        </div>&nbsp;
+        <div class="whsp-style">
+            Whatsapp Video Call 
+        </div>
+    </div>
+    <div class="disp-flex whatsp">
+        <label> Whatsapp # : <span class="bold">
+                &nbsp;+{{data}}</span></label>
+       
+    </div>
+    <div class="clearfix"></div>
+        <ul>
+            <li>Your number will be revealed to your patient through this
+            </li>
+            <li>Not Inbuilt technology
+            </li>
+        </ul>
+    <br>
+    <div *ngIf="is_web">
+        <div class="custmer-font-wght">
+            <span class="custom-red">
+                {{notSupported}}</span><br>
+        </div>
+    </div>
+    <div class="startBt" *ngIf="!is_web">
+        <button type="button" class="cs-btn bt1 btn-grn txt-trans-none"
+            style="color: white;" (click)="amReady()">
+            Launch Meeting
+        </button>
+    </div>
+</div>
+  </div>
+  <div>
+
+  </div>
+</div>
