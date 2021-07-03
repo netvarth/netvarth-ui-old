@@ -57,8 +57,7 @@ export class EnquiryComponent implements OnInit {
           this.messages = data;
           this.sortMessages();
           const inbox = this.generateCustomInbox(this.messages);
-          console.log(inbox);
-          this.enquiries = inbox.filter(msg => msg.msgType === 'ENQUIRY' && !msg.replyMsgId && msg.messagestatus === 'in');
+          this.enquiries = inbox.filter(msg => msg.msgType === 'ENQUIRY' && msg.messagestatus === 'in');
           const enq = this.enquiries.filter(msg => !msg.read);
           this.enquiryUnreadCount = (enq) ? enq.length : 0;
           this.loading = false;
@@ -143,7 +142,7 @@ export class EnquiryComponent implements OnInit {
     return retdate;
   }
   gotoInbox(msg) {
-    this.router.navigate(['provider/enquiry/chat'], { queryParams: { customer: msg.accountId, provider: msg.providerId } });
+    this.router.navigate(['provider/enquiry/chat'], { queryParams: { customer: msg.accountId, provider: msg.providerId, msgId: msg.messageId } });
   }
   sortMessages() {
     this.messages.sort(function (message1, message2) {

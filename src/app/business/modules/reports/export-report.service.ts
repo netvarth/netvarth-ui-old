@@ -19,8 +19,15 @@ export class ExportReportService {
     this.saveExcelFile(excelBuffer, fileName);
   }
 
-  private saveExcelFile(buffer: any, fileName: string): void {
+  
+  public saveExcelFile(buffer: any, fileName: string): void {
     const data: Blob = new Blob([buffer], {type: this.fileType});
     FileSaver.saveAs(data, fileName + this.fileExtension);
   }
+  public exportToExcelFromHTml(data:any, fileName:string) {
+    const ws: XLSX.WorkSheet =   XLSX.utils.table_to_sheet(data);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.writeFile(wb, fileName+'.xlsx');
+   }
 }

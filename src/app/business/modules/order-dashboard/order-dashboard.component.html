@@ -5,7 +5,7 @@
   <div class="col-md-9 col-lg-9 col-sm-12 col-xs-12">
     <div class="disp-flex count-section">
       <div class="card boxshadow-style mgn-rt-10">
-        <!-- <div>Total orders</div>
+       <!-- <div>Total orders</div>
         <div class="order-count"> {{(todayOrdersCount + futureOrdersCount) ? todayOrdersCount + futureOrdersCount : 0}}
         </div>
         <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20">
@@ -22,7 +22,7 @@
           Quick Links
         </div>
         <mat-grid-list cols="3" rowHeight="90px" [gutterSize]="'30px'" >
-          <mat-grid-tile (click)="newwalkInOrder('WALKIN_ORDER')">
+          <mat-grid-tile (click)="newwalkInOrder('WALKIN_ORDER')" class="smorder">
             <div class="flex-shrink-0 text-center" style="width: 50px;margin-top:-20px">
               <i class="fas fa-cart-plus fa-2x pitch_blu"></i>
               <!-- <i class="flaticon2-plus icon-2x pitch_blu"></i> -->
@@ -31,7 +31,7 @@
                <span> New order</span>
               </mat-grid-tile-footer>
           </mat-grid-tile>
-          <mat-grid-tile (click)="newphoneInOrder('PHONE_ORDER')">
+          <mat-grid-tile (click)="newphoneInOrder('PHONE_ORDER')" class="smorder">
             <div class="flex-shrink-0 text-center" style="width: 50px; margin-top:-20px">
               <i class="fas fa-phone-alt fa-2x pitch_blu"></i>
               </div>
@@ -39,7 +39,7 @@
                 <span>New Phone-In</span>
               </mat-grid-tile-footer>
           </mat-grid-tile>
-          <mat-grid-tile (click)="searchCustomer()">
+          <mat-grid-tile (click)="searchCustomer()" class="smorder">
             <div class="flex-shrink-0 text-center" style="width: 50px; margin-top:-20px">
               <i class="fas fa-user-plus fa-2x pitch_blu"></i>
               </div>
