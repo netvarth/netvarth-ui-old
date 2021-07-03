@@ -27,6 +27,7 @@ export class InboxOuterComponent implements OnInit {
   loading = false;
   message = '';
   selectedProvider = '';
+  accId = '';
   selectedProviderName = '';
   selectedMessage = {
     files: [],
@@ -73,14 +74,15 @@ export class InboxOuterComponent implements OnInit {
     public shared_services: SharedServices,
     private dateTimeProcessor: DateTimeProcessor,
     private activaterouterobj: ActivatedRoute) {
-      this.activaterouterobj.queryParams.subscribe(qparams => {
-        if (qparams.accountId) {
-          this.selectedProvider = qparams.accountId;
-          this.customId = qparams.customId;
-          this.showChat =true;
-        }
-      });
-     }
+    this.activaterouterobj.queryParams.subscribe(qparams => {
+      if (qparams.accountId) {
+        this.selectedProvider = qparams.accountId;
+        this.accId = qparams.accountId;
+        this.customId = qparams.customId;
+        this.showChat = true;
+      }
+    });
+  }
   ngOnInit() {
     this.onResize();
     this.loading = true;
@@ -106,7 +108,6 @@ export class InboxOuterComponent implements OnInit {
   }
   getInboxMessages() {
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
-    // alert(this.accountId);
     this.inbox_services.getInbox(usertype)
       .subscribe(
         data => {
@@ -114,10 +115,8 @@ export class InboxOuterComponent implements OnInit {
           this.scrollDone = true;
           this.sortMessages();
           this.groupedMsgs = this.shared_functions.groupBy(this.messages, 'accountId');
-          console.log(this.groupedMsgs);
           if (this.selectedProvider !== '') {
             this.selectedUserMessages = this.groupedMsgs[this.selectedProvider];
-            console.log(this.selectedUserMessages);
             const unreadMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.owner.id !== this.userDet.id);
             if (unreadMsgs.length > 0) {
               const ids = unreadMsgs.map(msg => msg.messageId);
@@ -213,6 +212,9 @@ export class InboxOuterComponent implements OnInit {
       post_data['messageType'] = 'CHAT';
       if (this.replyMsg) {
         post_data['replyMessageId'] = this.replyMsg.messageId;
+        if (this.replyMsg.messageType === 'ENQUIRY') {
+          post_data['messageType'] = 'ENQUIRY';
+        }
       }
       const captions = {};
       let i = 0;

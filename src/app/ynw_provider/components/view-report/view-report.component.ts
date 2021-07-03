@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -10,6 +10,7 @@ import { GroupStorageService } from '../../../shared/services/group-storage.serv
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { Location } from '@angular/common';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
+import { ExportReportService } from '../../../business/modules/reports/export-report.service';
 
 @Component({
   selector: 'app-view-report',
@@ -43,13 +44,14 @@ export class ViewReportComponent implements OnInit {
   invoiceFromS3;
   invoice_id;
   isCheckin;
+  @ViewChild('epltable', { static: false }) epltable: ElementRef;
   constructor(private provider_servicesobj: ProviderServices,
-   // private sharedfunctionObj: SharedFunctions,
     private router: ActivatedRoute,
     private shared_services: SharedServices,
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
     private dateTimeProcessor: DateTimeProcessor,
+    private exportReportService: ExportReportService,
     public location: Location) { }
   ngOnInit() {
     this.router.params
@@ -88,11 +90,15 @@ export class ViewReportComponent implements OnInit {
           );
       }
   
-
+     
   formatDateDisplay(dateStr) {
     return this.dateTimeProcessor.formatDateDisplay(dateStr);
   }
   goBack() {
     this.location.back();
+  }
+  exportToExcel(){
+ this.exportReportService.exportToExcelFromHTml(this.epltable.nativeElement,'jaldeefinacial');
+        
   }
 }

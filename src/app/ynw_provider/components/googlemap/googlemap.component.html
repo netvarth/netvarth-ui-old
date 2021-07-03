@@ -32,6 +32,6 @@
     <div #gmap style='width:100%;height:400px'></div>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-button type="button" (click)="mapselectionDone()">{{yes_done_cap}}</button>
+    <button class="mgn-up-15" mat-button type="button" (click)="mapselectionDone()">{{yes_done_cap}}</button>
 </mat-dialog-actions>
 <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>

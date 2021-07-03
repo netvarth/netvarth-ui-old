@@ -937,10 +937,16 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   initViews(queues, source?) {
     const _this = this;
     _this.views = [];
+    let name = '';
+    if (this.showToken) {
+      name = 'All Tokens';
+    } else {
+      name = 'All Check-ins';
+    }
     const qsActive = this.getDefaultViewQs(queues);
     return new Promise(function (resolve, reject) {
       const tempView = {};
-      tempView['name'] = 'All Tokens';
+      tempView['name'] = name;
       tempView['id'] = 0;
       tempView['customViewConditions'] = {};
       tempView['customViewConditions'].queues = qsActive;
