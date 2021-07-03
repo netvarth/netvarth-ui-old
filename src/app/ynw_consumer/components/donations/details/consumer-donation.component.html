@@ -327,22 +327,37 @@
                                                                                 <div
                                                                                     class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20">
                                                                                     <label>
-                                                                                        <input
+                                                                                        <input (keyup)="resetErrors()"
                                                                                             style="font-size: larger;"
                                                                                             type="text"
-                                                                                            placeholder="donor name"
+                                                                                            placeholder="First name"
                                                                                             class="form-control phonenum"
-                                                                                            [(ngModel)]="donor" />
-                                                                                        <button (click)="addDonor()"
-                                                                                            class="btn bt3 btn-default coupon-apply-btn"
-                                                                                            type="button">Ok</button>
-                                                                                        <app-field-error-display
+                                                                                            [(ngModel)]="donorfirst" />
+                                                                                            <app-field-error-display
                                                                                             [displayError]="true"
                                                                                             *ngIf="donorerror != null"
                                                                                             errorMsg={{donorerror}}>
                                                                                         </app-field-error-display>
+                                                                                            <input (keyup)="resetErrors()"
+                                                                                            style="font-size: larger; margin-top: 10px;"
+                                                                                            type="text"
+                                                                                            placeholder="Last name"
+                                                                                            class="form-control phonenum"
+                                                                                            [(ngModel)]="donorlast" />
+                                                                                            <app-field-error-display
+                                                                                            [displayError]="true"
+                                                                                            *ngIf="donorlasterror != null"
+                                                                                            errorMsg={{donorlasterror}}>
+                                                                                        </app-field-error-display>
+                                                                                        <button (click)="addDonor()"
+                                                                                            class="btn bt3 btn-default coupon-apply-btn"
+                                                                                            type="button">Ok</button>
+                                                                                        
+                                                                                        
                                                                                     </label>
                                                                                 </div>
+
+                                                                                
                                                                             </div>
                                                                         </div>
                                                                         <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"

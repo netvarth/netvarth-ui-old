@@ -40,7 +40,7 @@ import { FormMessageDisplayService } from './shared/modules/form-message-display
 import { ProviderDetailService } from './shared/components/provider-detail/provider-detail.service';
 import { CapitalizeFirstPipeModule } from './shared/pipes/capitalize.module';
 import { OwlModule } from 'ngx-owl-carousel';
-import { LocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
+import {  LocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
 import { CouponsComponent } from './shared/components/coupons/coupons.component';
 import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
 import { BusinessPageComponent } from './shared/components/business-page/business-page.component';
@@ -111,6 +111,9 @@ import { VirtualFieldsModule } from './ynw_consumer/components/virtualfields/vir
 import { BusinessPageHomeComponent } from './shared/components/business-page-home/business-page-home.component';
 import { MeetRoomComponent } from './shared/components/meet-room/meet-room.component';
 import { MeetRoomModule } from './shared/components/meet-room/meet-room.module';
+import { MediaService } from './shared/services/media-service';
+import { RequestDialogComponent } from './business/shared/meeting-room/request-dialog/request-dialog.component';
+import { VideoCallSharedComponent } from './business/modules/video-call/video-call.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -147,7 +150,9 @@ export function init_app(globalService: GlobalService) {
     MeetingRoomComponent,
     CommunicationComponent,
     ListRecordingsDialogComponent,
-    BusinessPageHomeComponent
+    BusinessPageHomeComponent,
+    RequestDialogComponent,
+    VideoCallSharedComponent
   ],
   entryComponents: [
     SignUpComponent,
@@ -165,7 +170,8 @@ export function init_app(globalService: GlobalService) {
     UpdateProfilePopupComponent,
     AddAddressComponent,
     ListRecordingsDialogComponent,
-    MeetRoomComponent
+    MeetRoomComponent,
+    RequestDialogComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,
@@ -252,6 +258,7 @@ export function init_app(globalService: GlobalService) {
     LivetrackService,
     TeleBookingService,
     BookingService,
+    MediaService,
     Title,
     CommonDataStorageService,
     {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices]},

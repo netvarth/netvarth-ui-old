@@ -699,6 +699,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         emaildialogRef.afterClosed().subscribe(result => {
             if (result!== '' && result!==undefined) {
                 this.payEmail = result;
+                this.confirmcheckin(type);
             }
 
         });
@@ -791,6 +792,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 // const formattedDate = moment(momentDate).format("YYYY-MM-DD");
                 // console.log(formattedDate);
                 // this.waitlist_for[0]['dob'] = formattedDate;
+                this.waitlist_for[0]['whatsAppNum']={
+                    'countryCode': this.virtualInfo.countryCode_whtsap,
+                    'number': this.virtualInfo.whatsappnumber
+                }
+                this.waitlist_for[0]['telegramNum']={
+                    'countryCode': this.virtualInfo.countryCode_telegram,
+                    'number': this.virtualInfo.telegramnumber
+                }
                 this.waitlist_for[0]['age'] = this.virtualInfo.age;
                 if (this.virtualInfo.islanguage === 'yes') {
                     let langs = [];
@@ -803,6 +812,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 }
                 const bookingLocation = {};
                 bookingLocation['pincode'] = this.virtualInfo.pincode;
+                if(this.virtualInfo.pincode===''){
+               bookingLocation['district']=this.virtualInfo.localarea;
+               bookingLocation['state']=this.virtualInfo.state;
+                }
+          
                 this.waitlist_for[0]['bookingLocation'] = bookingLocation;
                 if (this.virtualInfo.gender !== '') {
                     this.waitlist_for[0]['gender'] = this.virtualInfo.gender;
@@ -1364,7 +1378,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.action = 'attachment';
                 }
             }
-            if (type && this.selectedMessage.files && this.selectedMessage.files.length > 0) {
+            if (type && this.selectedMessage.files && this.selectedMessage.files.length > 0 && input.length > 0) {
                 this.modal.nativeElement.click();
             }
         }
@@ -1373,6 +1387,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.selectedMessage.files.splice(i, 1);
         this.selectedMessage.base64.splice(i, 1);
         this.selectedMessage.caption.splice(i, 1);
+        this.imgCaptions[i] = '';
     }
     consumerNoteAndFileSave(uuids, parentUid?) {
         const dataToSend: FormData = new FormData();

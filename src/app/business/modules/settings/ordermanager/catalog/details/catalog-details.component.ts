@@ -209,6 +209,8 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
     removeitemdialogRef: any;
     addItems:any=[];
     private subscriptions = new SubSink();
+    today = new Date();
+    minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate());
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private router: Router,
@@ -267,9 +269,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         }
         this.no_of_grids = Math.round(divident / divider);
     }
-
     ngOnInit() {
-
     }
     ngOnDestroy() {
         this.subscriptions.unsubscribe();

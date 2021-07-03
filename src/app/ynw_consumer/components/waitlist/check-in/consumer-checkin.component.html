@@ -140,7 +140,7 @@
                                                                         *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                                     <i class="fa meet-icon"
                                                                         *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                                    <i class="fa zoom-icon"
+                                                                    <i class="fa zoom-icon zoom1"
                                                                         *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                                                                     <i class="fa jvideo-icon jvideo-icon-m jvideo-icon-mg5"
                                                                         *ngIf="sel_ser_det.virtualCallingModes  && sel_ser_det.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
@@ -344,8 +344,10 @@
                                                                             *ngIf="sel_ser_det.virtualServiceType === 'audioService'"></i>
                                                                         <i class="fa wtsapvid-icon" style="width: 20px;"
                                                                             *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
-                                                                        <span
-                                                                            class="phonevallabel">&nbsp;+{{callingModes}}</span><a
+                                                                        <span *ngIf="type === 'waitlistreschedule'"
+                                                                            class="phonevallabel">&nbsp;+{{callingModes}}</span>
+                                                                        <span *ngIf="type != 'waitlistreschedule'"
+                                                                            class="phonevallabel">&nbsp;{{whatsappCountryCode}} {{newWhatsapp}}</span><a
                                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
                                                                         <!-- <div class="mode-hint mgn-bt-5">
@@ -790,6 +792,10 @@
                                                                             <div class="gal_img">
                                                                                 <img [src]="getThumbUrl(file)">
                                                                             </div>
+                                                                            <div class="gal-input">
+                                                                                <!-- <label>{{file.caption}}</label> -->
+                                                                                <input type="text" readonly value="{{file.caption}}">
+                                                                             </div> 
                                                                         </div>
                                                                     </li>
                                                                 </ng-container>
@@ -1103,9 +1109,8 @@
                                             </div>
                                             <div class="disp-flex">
                                                 <span class="billing-head"
-                                                    style="display: flex !important; align-items: center !important;">Service</span>
-                                                <span
-                                                    style="display: flex !important; align-items: center !important;">&nbsp;:&nbsp;</span>
+                                                    style="display: flex !important; align-items: center !important;margin-bottom: 5px;">Service</span>
+                                                    <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
                                                 <span class="billing-value disp-flex align-items-center">
                                                     <span class="service-icon" style="display: inline-block !important;"
                                                         *ngIf="sel_ser_det.serviceType == 'virtualService'">
@@ -1122,7 +1127,7 @@
                                                         <i class="fa wtsapvid-icon"
                                                             *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='videoService'"></i>
                                                     </span>
-                                                    <span>{{sel_ser_det.name}}</span>
+                                                    <span class="mgn-bt-5">{{sel_ser_det.name}}</span>
                                                 </span>
                                             </div>
                                             <div class="disp-flex">
@@ -1147,7 +1152,7 @@
                                                 *ngIf="changePhno && currentPhone != callingModes && sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                 <span class="billing-head">WhatsApp #</span>
                                                 <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
-                                                <span class="billing-value"> +{{callingModes}}</span>
+                                                <span class="billing-value"> {{whatsappCountryCode}} {{newWhatsapp}}</span>
                                             </div>
                                             <div class="disp-flex" *ngIf="payEmail">
                                                 <span class="billing-head">Email</span>

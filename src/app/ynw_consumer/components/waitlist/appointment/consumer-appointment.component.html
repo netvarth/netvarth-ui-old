@@ -141,7 +141,7 @@
                                                                         *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                                     <i class="fa meet-icon"
                                                                         *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                                    <i class="fa zoom-icon"
+                                                                    <i class="fa zoom-icon zoom1"
                                                                         *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                                                                     <i class="fa jvideo-icon jvideo-icon-m"
                                                                         *ngIf="sel_ser_det.virtualCallingModes  && sel_ser_det.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
@@ -227,7 +227,7 @@
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding">
                                                             <div
-                                                                class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding">
+                                                                class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding" *ngIf="sel_ser_det.serviceType!=='virtualService'">
                                                                 Booking
                                                                 For <a *ngIf="type !== 'reschedule'"
                                                                     class="pointer-cursor changeitem mgn-lt-10 pull-right mgn-rt-20"
@@ -236,6 +236,11 @@
                                                                     data-target="#exampleModalCenter">Change
                                                                 </a>
                                                             </div>
+                                                            <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"
+                                                            *ngIf="sel_ser_det.serviceType==='virtualService'">
+                                                            Booking
+                                                            For 
+                                                        </div>
                                                             <div class="clearfix"></div>
                                                             <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
                                                                 <div class="card-body no-padding">
@@ -245,6 +250,19 @@
                                                                         {{waitlist_for[0].lastName |
                                                                         capitalizeFirst}}
                                                                     </h6>
+                                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
+                                                                        Contact Information
+                                                                        <a *ngIf="type !== 'reschedule'&& sel_ser_det.serviceType==='virtualService'"
+                                                                        class="change-button changeitem pointer-cursor mgn-lt-5 pull-right"
+                                                                        data-toggle="modal"
+                                                                        data-target="#exampleModalCenter"
+                                                                        (click)="handleSideScreen('members')">Change
+                                                                    </a>
+                                                                            <!-- <div class="mode-hint mgn-bt-5">
+                                                                                The provider will contact you in this
+                                                                                number
+                                                                            </div>  -->
+                                                                        </div>
                                                                     <div class="contact-section">
                                                                         <i class="fa fa-mobile "></i>
                                                                         <ng-container
@@ -277,14 +295,16 @@
                                                                             *ngIf="sel_ser_det.virtualServiceType === 'audioService'"></i>
                                                                         <i class="fa wtsapvid-icon" style="width: 20px;"
                                                                             *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
-                                                                        <span
-                                                                            class="mgn-lt-10 phonevallabel">+{{callingModes}}</span><a
+                                                                        <span *ngIf="type == 'reschedule'"
+                                                                            class="mgn-lt-10 phonevallabel">+{{callingModes}}</span>
+                                                                        <span *ngIf="type != 'reschedule'"
+                                                                            class="mgn-lt-10 phonevallabel">{{whatsappCountryCode}} {{newWhatsapp}}</span><a
                                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
-                                                                        <div class="mode-hint mgn-bt-5">
+                                                                        <!-- <div class="mode-hint mgn-bt-5">
                                                                             The provider will contact
                                                                             you in this number
-                                                                        </div>
+                                                                        </div> -->
                                                                     </div>
                                                                     <div class=""
                                                                         *ngIf="userData && userData.userProfile && userData.userProfile.email">
@@ -313,7 +333,7 @@
                                                                             *ngIf="sel_ser_det.consumerNoteMandatory && type != 'reschedule'">*</span></a>
                                                                 </mat-chip>
                                                                 <mat-chip><a class="lnk action pointer-cursor"
-                                                                        (click)="imagefile1.click();modal.click();"><input
+                                                                        (click)="imagefile1.click()"><input
                                                                             #imagefile1 type="file"
                                                                             accept="/*;capture=camera"
                                                                             style="display:none;" multiple
@@ -604,6 +624,10 @@
                                                                             <div class="gal_img">
                                                                                 <img [src]="getThumbUrl(file)">
                                                                             </div>
+                                                                            <div class="gal-input">
+                                                                               <!-- <label>{{file.caption}}</label> -->
+                                                                               <input type="text" readonly value="{{file.caption}}">
+                                                                            </div> 
                                                                         </div>
                                                                     </li>
                                                                 </ng-container>
@@ -638,7 +662,7 @@
                                                             class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-20">
                                                             <div class="pull-left"> Booking for
                                                             </div>
-                                                            <a class="lnk pointer-cursoraction mgn-lt-20"
+                                                            <a class="lnk pointer-cursoraction mgn-lt-20" *ngIf="sel_ser_det.serviceType !== 'virtualService'"
                                                                 (click)="addMember()"><i class="fa fa-user-plus"></i>
                                                                 {{add_member_cap}}</a>
                                                         </div>
@@ -646,7 +670,7 @@
                                                             <ng-container *ngIf="action==='members'">
                                                                 <div class="member-outer">
                                                                     <div class="member-list mgn-up-10">
-                                                                        <ul class="member-ul">
+                                                                        <ul class="member-ul" *ngIf="sel_ser_det.serviceType !== 'virtualService'">
                                                                             <mat-radio-group>
                                                                                 <li *ngFor="let memb of familymembers"
                                                                                     class="members">
@@ -665,6 +689,14 @@
                                                                             </mat-radio-group>
                                                                         </ul>
                                                                     </div>
+                                                                    <ng-container
+                                                                    *ngIf="sel_ser_det.serviceType === 'virtualService'">
+                                                                    <div class="card-title service mgn-bt-10"
+                                                                        *ngFor="let member of waitlist_for">
+                                                                        {{member.firstName | capitalizeFirst}}
+                                                                        {{member.lastName | capitalizeFirst}}
+                                                                    </div>
+                                                                </ng-container>
                                                                 </div>
                                                                 <div class="grey">
                                                                     <div class="serv-head">
@@ -937,7 +969,7 @@
                                                                         *ngIf="sel_ser_det.consumerNoteMandatory && type != 'reschedule'">*</span></a>
                                                             </mat-chip>
                                                             <mat-chip><a class="lnk action pointer-cursor"
-                                                                    (click)="imagefile1.click();modal.click();"><input
+                                                                    (click)="imagefile1.click()"><input
                                                                         #imagefile1 type="file"
                                                                         accept="/*;capture=camera" style="display:none;"
                                                                         multiple
@@ -1000,13 +1032,10 @@
                                                 </span>
                                             </div>
                                             <div class="disp-flex">
-                                                <span class="billing-head"
-                                                    style="display: flex !important; align-items: center !important;">
+                                                <span class="billing-head">
                                                     Service
                                                 </span>
-                                                <span style="display: flex !important; align-items: center !important;">
-                                                    &nbsp;:&nbsp;
-                                                </span>
+                                                <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
                                                 <span class="billing-value disp-flex align-items-center">
                                                     <span class="service-icon" style="display: inline-block !important;"
                                                         *ngIf="sel_ser_det.serviceType == 'virtualService'">
@@ -1023,7 +1052,7 @@
                                                         <i class="fa wtsapvid-icon"
                                                             *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='videoService'"></i>
                                                     </span>
-                                                    <span>{{sel_ser_det.name}}</span>
+                                                    <span class="mgn-bt-5">{{sel_ser_det.name}}</span>
                                                 </span>
                                             </div>
                                             <div class="disp-flex">
@@ -1041,7 +1070,7 @@
                                                 *ngIf="changePhno && currentPhone != callingModes && sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                 <span class="billing-head">WhatsApp #</span>
                                                 <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
-                                                <span class="billing-value">+{{callingModes}}</span>
+                                                <span class="billing-value">{{whatsappCountryCode}} {{newWhatsapp}}</span>
                                             </div>
                                             <div class="disp-flex" *ngIf="payEmail">
                                                 <span class="billing-head">Email</span>

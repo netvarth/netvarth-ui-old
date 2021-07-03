@@ -18,18 +18,14 @@ import { AddressComponent } from './address/address.component';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ShoppinglistuploadComponent } from '../../../../shared/components/shoppinglistupload/shoppinglistupload.component';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
-import { Subject } from 'rxjs/internal/Subject';
-import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { ContactInfoComponent } from './contact-info/contact-info.component';
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { SubSink } from '../../../../../../node_modules/subsink';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
  
-
-
-
-
 @Component({
   selector: 'app-order-wizard',
   templateUrl: './order-wizard.component.html',
@@ -232,7 +228,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
               if(!this.catalogExpired){
                 this.step = 2;
                 }else{
-                  this.snackbarService.openSnackBar('Your Catalog is not valid for now, It  might be disabled/Not applicable for today/expired ,please update to proceed', { 'panelClass': 'snackbarerror' });
+                  this.snackbarService.openSnackBar('Catalog is not valid. Update the status or validity of the catalog to proceed', { 'panelClass': 'snackbarerror' });
                 }
             
           

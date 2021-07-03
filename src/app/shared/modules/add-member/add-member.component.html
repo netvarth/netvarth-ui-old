@@ -4,20 +4,21 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
 <div *ngIf="calledFrom=='checkin'" class="addmem-head">{{fill_foll_details_cap}}</div>
 <div class="ynw-common-form">
     <div class="form-group">
-        <mat-form-field>
+    
+                <label class="form-control-label" >First Name</label>
             <input type="text" matInput [(ngModel)]="firstname" (keyup)="valuechange()" class="form-control" id="first_name"
                 placeholder="{{first_name_cap}}" autocomplete="off">
-        </mat-form-field>
+
         <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_name')"
     errorMsg="Please enter the first name.">
    </app-field-error-display> -->
     </div>
 
     <div class="form-group">
-        <mat-form-field>
+            <label class="form-control-label" >Last Name</label>
             <input type="text" matInput [(ngModel)]="lastname" (keyup)="valuechange()" class="form-control" id="last_name"
                 placeholder="{{last_name_cap}}" autocomplete="off">
-        </mat-form-field>
+  
         <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'last_name')"
     errorMsg="Please enter the last name.">
    </app-field-error-display> -->
@@ -33,7 +34,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
             </div>
         </mat-form-field>
     </div> -->
-    <div class="form-group" *ngIf="calledFrom !='checkin'">
+    <div class="form-group col-lg-7 col-md-7 col-sm-7 col-xs-12" *ngIf="calledFrom !='checkin'">
         <label class="col-form-label" for="gender">{{gender_cap}} </label>
         <mat-radio-group [(ngModel)]="gender" (change)="valuechange()">
             <mat-radio-button value="male">{{male_cap}}</mat-radio-button>
@@ -41,7 +42,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
             <mat-radio-button value="other">Other</mat-radio-button>
         </mat-radio-group>
     </div>
-    <div class="form-group col-md-3 no-padding" *ngIf="calledFrom !='checkin'">
+    <div class="form-group col-lg-5 col-md-5 col-sm-5 col-xs-12 no-padding" *ngIf="calledFrom !='checkin'">
         <!-- <label class="col-form-label" for="dob">{{dob_cap}} </label> -->
         <!-- <input type="text" [(ngModel)] = "dob" (keyup)="valuechange()" class="form-control" id="mobile" placeholder="Mobile Number"> -->
         <!-- <div class="pickerouter">
@@ -50,16 +51,61 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
             <input class="form-control nofocus" type="text" matInput [matDatepicker]="picker" [max]="tday" disabled
                 [(ngModel)]="dob" tabindex="-1">
         </div> -->
+        <label class="col-form-label" for="dob">Date of Birth </label>
         <mat-form-field>
-            <input matInput (dateChange)="dateChanged($event.value)" [matDatepicker]="picker" placeholder="Date of birth" #inputdob
-                [max]="tday" [min]="minday" disabled class="form-control" type="text" [(ngModel)]="dob" tabindex="-1">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker  [disabled]="false"></mat-datepicker>
-        </mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Date of birth"
+                    #inputdob formControlName="dob" [max]="tday" [min]="minday" disabled
+                    class="nofocus" tabindex="-1" readonly>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker [disabled]="false"></mat-datepicker>
+            </mat-form-field>
+  
         <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile')"
     errorMsg="Please enter the mobile number.">
     </app-field-error-display> -->
     </div>
+    <div class="col-xs-12 no-padding optional">
+            <label><i class="fa fa-whatsapp" style="color:green"></i> Whatsapp #</label>
+            <div class="disp-flex">
+                <div class="form-group no-margin">
+                    <input type="text" (keypress)="isNumericSign($event)" (keyup)="valuechange()" matInput
+                        class="form-control input-group-text" id="countryCode_whtsap"
+                        placeholder="" [(ngModel)]="countryCode_whtsap" autocomplete="off"
+                        maxlength="5" style="width:60px">
+                </div>
+                <div class="form-group width-100">
+                    <input type="text" (keypress)="isNumeric($event)" matInput
+                        class="form-control text-width" id="whatsappnumber"  (keyup)="valuechange()"[(ngModel)]="whatsappnumber"
+                        autocomplete="off">
+           
+                </div>
+            </div>
+        </div>
+        <div class=" col-xs-12 no-padding optional">
+                <label><i class="fa fa-telegram" style="color:#29b6f6;"></i> Telegram #</label>
+                <div class="disp-flex">
+                    <div class="form-group no-margin">
+                        <input type="text" (keypress)="isNumericSign($event)" matInput
+                            class="form-control input-group-text" id="countryCode_telegram"
+                            placeholder=""[(ngModel)]="countryCode_telegram"
+                            autocomplete="off" maxlength="5" style="width:60px" (keyup)="valuechange()">
+                    </div>
+                    <div class="form-group width-100">
+                        <input type="text" (keypress)="isNumeric($event)" matInput
+                            class="form-control text-width" id="telegramnumber" (keyup)="valuechange()" [(ngModel)]="telegramnumber"
+                            autocomplete="off" >
+                    
+                    </div>
+                </div>
+            </div> 
+        <br>
+             <div class="col-md-12"></div>
+            <div class="form-group"style="margin-top:10px;"> 
+                    <label for="email" class="col-form-label">Email</label>
+                    <input type="email" matInput class="form-control" [(ngModel)]="email" (keyup)="valuechange()" />
+      
+                   
+                </div>
 </div>
 
 <!-- <button  type="submit" mat-button

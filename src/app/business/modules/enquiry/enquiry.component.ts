@@ -6,6 +6,7 @@ import { ProviderServices } from '../../../ynw_provider/services/provider-servic
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { Router } from '@angular/router';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-enquiry',
@@ -20,11 +21,14 @@ export class EnquiryComponent implements OnInit {
   userDet: any = [];
   loading = true;
   newTimeDateFormat = projectConstantsLocal.DATE_FORMAT_WITH_TIME;
+  enquiryUnreadCount;
+  customer_label;
   constructor(private shared_functions: SharedFunctions,
     private inbox_services: InboxServices,
     private groupService: GroupStorageService,
     private provider_services: ProviderServices,
     private dateTimeProcessor: DateTimeProcessor,
+    public wordProcessor: WordProcessor,
     private router: Router) { }
   ngOnInit(): void {
     this.userDet = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -33,6 +37,7 @@ export class EnquiryComponent implements OnInit {
     } else {
       this.getInboxMessages();
     }
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
   getUsers() {
     const filter = {};
@@ -52,7 +57,9 @@ export class EnquiryComponent implements OnInit {
           this.messages = data;
           this.sortMessages();
           const inbox = this.generateCustomInbox(this.messages);
-          this.enquiries = inbox.filter(msg => !msg.read && msg.msgType === 'ENQUIRY');
+          this.enquiries = inbox.filter(msg => msg.msgType === 'ENQUIRY' && msg.messagestatus === 'in');
+          const enq = this.enquiries.filter(msg => !msg.read);
+          this.enquiryUnreadCount = (enq) ? enq.length : 0;
           this.loading = false;
         });
   }
@@ -68,22 +75,22 @@ export class EnquiryComponent implements OnInit {
     let providerId;
     let providerName;
     for (const message of messages) {
-      if (this.searchUserById(message.receiver.id).length > 0 || message.receiver.id === 0) {
+      if (this.searchUserById(message.receiver.id).length > 0 || message.receiver.id === 0 || message.receiver.id === this.userDet.id) {
         accountId = message.owner.id;
         senderName = message.owner.name;
         providerId = message.receiver.id;
-        if (message.receiver.id === 0) {
+        if (message.receiver.id === 0 || message.receiver.id === this.userDet.id) {
           providerName = message.accountName;
         } else {
           providerName = (this.searchUserById(message.receiver.id)[0].businessName) ? this.searchUserById(message.receiver.id)[0].businessName : this.searchUserById(message.receiver.id)[0].firstName + ' ' + this.searchUserById(message.receiver.id)[0].lastName;
         }
         messageStatus = 'in';
-      } else if (this.searchUserById(message.owner.id).length > 0 || message.owner.id === 0) {
+      } else if (this.searchUserById(message.owner.id).length > 0 || message.owner.id === 0 || message.owner.id === this.userDet.id) {
         accountId = message.receiver.id;
         providerId = message.owner.id;
         senderName = message.receiver.name;
         messageStatus = 'out';
-        if (message.owner.id === 0) {
+        if (message.owner.id === 0 || message.owner.id === this.userDet.id) {
           providerName = message.accountName;
         } else {
           providerName = (this.searchUserById(message.owner.id)[0].businessName) ? this.searchUserById(message.owner.id)[0].businessName : this.searchUserById(message.owner.id)[0].firstName + ' ' + this.searchUserById(message.owner.id)[0].lastName;
@@ -92,7 +99,7 @@ export class EnquiryComponent implements OnInit {
       const inboxData = {
         accountId: accountId,
         timeStamp: message.timeStamp,
-        accountName: senderName,
+        accountName: (senderName && senderName.trim() !== '') ? senderName : this.customer_label,
         service: message.service,
         msg: message.msg,
         providerId: providerId,
@@ -135,7 +142,7 @@ export class EnquiryComponent implements OnInit {
     return retdate;
   }
   gotoInbox(msg) {
-    this.router.navigate(['provider/inbox'], { queryParams: { customer: msg.accountId, provider: msg.providerId } });
+    this.router.navigate(['provider/enquiry/chat'], { queryParams: { customer: msg.accountId, provider: msg.providerId, msgId: msg.messageId } });
   }
   sortMessages() {
     this.messages.sort(function (message1, message2) {

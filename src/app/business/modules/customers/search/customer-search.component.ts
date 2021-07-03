@@ -19,7 +19,8 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
 
 @Component({
     selector: 'app-customer-search',
-    templateUrl: './customer-search.component.html'
+    templateUrl: './customer-search.component.html',
+    styleUrls:['./customer-search.component.css']
 })
 export class CustomerSearchComponent implements OnInit {
     checkinSubscribtion: Subscription;

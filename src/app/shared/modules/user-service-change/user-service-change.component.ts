@@ -423,15 +423,15 @@ export class UserServiceChnageComponent implements OnInit {
     if (user.profilePicture) {
       const proImage = user.profilePicture;
       return proImage.url;
-    } else if(user.gender === 'female'){
-      return '../../.././assets/images/unnamed.png';
-    }
-    else if(user.gender === 'male'){
-      return '../../.././assets/images/avatar5.png';
-    }
-    else{
-      return '../../.././assets/images/avatar5.png';
-    }
+    } else if(user.gender ==='male'){
+      return '../../.././assets/images/Asset1@300x.png';
+  }
+  else if(user.gender ==='female'){
+      return '../../.././assets/images/Asset2@300x.png';
+  }
+  else{
+      return '../../.././assets/images/Asset1@300x(1).png'; 
+  }
   }
   showMoreorLess(event, index, type) {
     event.stopPropagation();
@@ -541,6 +541,8 @@ export class UserServiceChnageComponent implements OnInit {
   }
   getSpecializations() {
     let subDomain;
+    console.log(this.user.sector);
+    console.log(this.user.subSector);
     if (this.user.sector === 'healthCare') {
       if (this.user.subSector === 'hospital') {
         subDomain = 'physiciansSurgeons';
@@ -550,15 +552,51 @@ export class UserServiceChnageComponent implements OnInit {
         subDomain = 'alternateMedicinePractitioners';
       }
     } else if (this.user.sector === 'personalCare') {
-      subDomain = 'beautyCare';
+        if(this.user.subSector === 'beautyCare'){
+          subDomain = 'beautyCare';
+        } else if(this.user.subSector === 'personalFitness'){
+          subDomain = 'personalFitness';
+        }else if(this.user.subSector === 'massageCenters'){
+          subDomain = 'massageCenters';
+        }
+      
     } else if (this.user.sector === 'finance') {
-      subDomain = 'bank';
+      if(this.user.subSector === 'bank'){
+        subDomain = 'bank';
+      } else if(this.user.subSector === 'nbfc'){
+        subDomain = 'nbfc';
+      }else if(this.user.subSector === 'insurance'){
+        subDomain = 'insurance';
+      }
     } else if (this.user.sector === 'veterinaryPetcare') {
       if (this.user.subSector === 'veterinaryhospital') {
         subDomain = 'veterinarydoctor';
       }
     } else if (this.user.sector === 'retailStores') {
-      subDomain = 'groceryShops';
+      if(this.user.subSector === 'groceryShops'){
+        subDomain = 'groceryShops';
+      } else if(this.user.subSector === 'supermarket'){
+        subDomain = 'supermarket';
+      }else if(this.user.subSector === 'hypermarket'){
+        subDomain = 'hypermarket';
+      }
+    } 
+    else if (this.user.sector === 'educationalInstitution') {
+      if (this.user.subSector === 'educationalTrainingInstitute') {
+        subDomain = 'educationalTrainingInstitute';
+      } else if (this.user.subSector === 'schools') {
+         subDomain = 'schools';
+      } 
+      else if (this.user.subSector === 'colleges') {
+        subDomain = 'colleges';
+     }
+    }
+    else if (this.user.sector === 'sportsAndEntertainement') {
+      if (this.user.subSector === 'sports') {
+        subDomain = 'sports';
+      } else if (this.user.subSector === 'entertainment') {
+          subDomain = 'entertainment';
+       }  
     }
     this.provider_services.getSpecializations(this.user.sector, subDomain)
       .subscribe(data => {
@@ -624,3 +662,4 @@ export class UserServiceChnageComponent implements OnInit {
     });
 }
 }
+

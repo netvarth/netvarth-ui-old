@@ -43,6 +43,7 @@ export class TeleServiceShareComponent implements OnInit {
     { value: '1 Hour', viewValue: '1 Hour' }
   ];
   api_success = null;
+  api_error = null;
   providerView = false;
   cancel_btn_cap = Messages.CANCEL_BTN;
   send_btn_cap = Messages.SEND_BTN;
@@ -127,7 +128,8 @@ export class TeleServiceShareComponent implements OnInit {
       this.instalZoom = '\n(If you do not have Zoom installed you will be prompted to install Zoom)';
       this.signinGoogle = '\n(If you are not already signed into Google you must sign in)';
       if(this.data.app === 'VideoCall') {
-        this.videocall_msg = ' , your ' + mode + ' will begin. You will be alerted once more when the call starts.\n\nFollow these instructions to join the video call:\n1. You will receive an alert that the ' + mode + ' call has started.\n2. When it is your turn, click on the following link- ' + this.meetingLink;
+       // this.videocall_msg = ' , your ' + mode + ' will begin. You will be alerted once more when the call starts.\n\nFollow these instructions to join the video call:\n1. You will receive an alert that the ' + mode + ' call has started.\n2. When it is your turn, click on the following link- ' + this.meetingLink;
+       this.videocall_msg =', your ' + mode + ' will begin. You will be alerted once more when the call starts.You can then join the call, by clicking on the following link-'  + this.meetingLink +'.Wait for the video call to start';
       }else {
         this.videocall_msg = ' , your ' + mode + ' video call will begin. You will be alerted once more when the call starts.\n\nFollow these instructions to join the video call:\n1. You will receive an alert that the ' + mode + ' call has started.\n2. When it is your turn, click on the following link- ' + this.meetingLink;
       }
@@ -152,7 +154,7 @@ export class TeleServiceShareComponent implements OnInit {
           this.msg_to_user = 'In ' + this.selectedTime + this.videocall_msg + this.signinGoogle + this.gooleWaitFor;
           break;
         case 'VideoCall':
-          this.msg_to_user = 'In ' + this.selectedTime + this.videocall_msg + this.waitFor;
+          this.msg_to_user = 'In ' + this.selectedTime + this.videocall_msg;
           break;
       }
     }
@@ -216,9 +218,14 @@ export class TeleServiceShareComponent implements OnInit {
   }
   // Mass communication
   sendMessage() {
+    this.api_error = '';
     console.log(this.providerView);
     this.disableButton = true;
-   
+    if(!this.msg_to_user){
+      this.api_error = 'Please enter your messsage';
+      this.disableButton = false;
+      return;
+    }
     if(this.providerView){
       const post_data = {
         medium: {

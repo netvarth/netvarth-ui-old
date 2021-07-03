@@ -248,9 +248,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   locateCustomerdialogRef;
   trackDetail: any = [];
   customerMsg = '';
-  delayTooltip = this.wordProcessor.getProjectMesssages('ADJUSTDELAY_TOOPTIP');
-  filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
-  cloudTooltip = this.wordProcessor.getProjectMesssages('CLOUDICON_TOOPTIP');
   tooltipcls = projectConstants.TOOLTIP_CLS;
   qr_value;
   path = projectConstants.PATH;
@@ -349,6 +346,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   endmaxday = new Date();
   statusChangeClicked = false;
   activeUser: any;
+  delayTooltip = '';
+  filtericonTooltip = '';
+  cloudTooltip = '';
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -365,6 +365,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     private titleService: Title) {
     this.titleService.setTitle('Jaldee Business - Appointments');
     this.onResize();
+    this.delayTooltip = this.wordProcessor.getProjectMesssages('ADJUSTDELAY_TOOPTIP');
+    this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
+    this.cloudTooltip = this.wordProcessor.getProjectMesssages('CLOUDICON_TOOPTIP');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.arrived_label = this.wordProcessor.getTerminologyTerm('arrived');
@@ -1005,9 +1008,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         );
     }
     if (this.time_type !== 3) {
-      const api_filter = {};
+     // const api_filter = {};
       // api_filter['apptStatus-eq'] = this.setWaitlistStatusFilterForHistory();
-      this.getHistoryAppointmentsCount(api_filter)
+      this.getHistoryAppointmentsCount()
         .then(
           (result) => {
             this.history_waitlist_count = result;
@@ -1191,9 +1194,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     let no_filter = false;
     if (!Mfilter) {
       Mfilter = {};
-      if (this.selected_location && this.selected_location.id) {
-        Mfilter['location-eq'] = this.selected_location.id;
-      }
+      
       if (queueid || this.activeUser) {
 
         if (this.activeUser) {
@@ -1203,6 +1204,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
       no_filter = true;
+    }
+    if (this.selected_location && this.selected_location.id) {
+      Mfilter['location-eq'] = this.selected_location.id;
     }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
@@ -1222,9 +1226,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const queueid = this.groupService.getitemFromGroupStorage('appt_future_selQ');
     if (!Mfilter) {
       Mfilter = {};
-      if (this.selected_location && this.selected_location.id) {
-        Mfilter['location-eq'] = this.selected_location.id;
-      }
       if (queueid || this.activeUser) {
         if (this.activeUser) {
           Mfilter['provider-eq'] = this.activeUser;
@@ -1233,6 +1234,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
 
       }
+    }
+    if (this.selected_location && this.selected_location.id) {
+      Mfilter['location-eq'] = this.selected_location.id;
     }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
@@ -1250,7 +1254,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getHistoryAppointmentsCount(Mfilter = null) {
     if (!Mfilter) {
-      Mfilter = {};
+      Mfilter = this.setFilterForApi();;
     }
     // if (this.filter.apptStatus === 'all') {
     //   Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
@@ -1296,6 +1300,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getTodayAppointments() {
     const Mfilter = this.setFilterForApi();
+    if (this.selected_location && this.selected_location.id) {
+      Mfilter['location-eq'] = this.selected_location.id;
+    }
     if (this.groupService.getitemFromGroupStorage('appt_selQ')) {
       this.selQIds = this.groupService.getitemFromGroupStorage('appt_selQ');
     } else {
@@ -1381,6 +1388,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selQIds = this.groupService.getitemFromGroupStorage('appt_future_selQ');
     }
     let Mfilter = this.setFilterForApi();
+    if (this.selected_location && this.selected_location.id) {
+      Mfilter['location-eq'] = this.selected_location.id;
+    }
     if (this.selQIds || this.activeUser) {
       if (this.activeUser) {
         Mfilter['provider-eq'] = this.activeUser;
@@ -1620,14 +1630,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['gender-eq'] = this.genderList.toString();
       }
     }
-    if (this.time_type !== 3) {
-      if (this.selected_location && this.selected_location.id) {
-        api_filter['location-eq'] = this.selected_location.id;
-      }
-    }
+    // if (this.time_type !== 3) {
+    //   if (this.selected_location && this.selected_location.id) {
+    //     api_filter['location-eq'] = this.selected_location.id;
+    //   }
+    // }
     if (this.labelFilterData !== '') {
       api_filter['label-eq'] = this.labelFilterData;
     }
+    
     if (this.filter.apptStatus === 'all') {
       api_filter['apptStatus-neq'] = 'prepaymentPending,failed';
     }

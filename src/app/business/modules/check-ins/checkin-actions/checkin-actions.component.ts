@@ -25,8 +25,7 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { ListRecordingsDialogComponent } from '../../../../shared/components/list-recordings-dialog/list-recordings-dialog.component';
 import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
-import { VoicecallConfirmBoxComponent } from '../../customers/confirm-box/voicecall-confirm-box.component';
-import { Location } from '@angular/common';
+import { VoiceConfirmComponent } from '../../customers/video-confirm/voice-confirm.component';
 
 
 @Component({
@@ -127,7 +126,6 @@ export class CheckinActionsComponent implements OnInit {
         private groupService: GroupStorageService,
         private lStorageService: LocalStorageService,
         private galleryService: GalleryService,
-        private location: Location,
         private dateTimeProcessor: DateTimeProcessor,
         public dialogRef: MatDialogRef<CheckinActionsComponent>) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
@@ -594,10 +592,10 @@ export class CheckinActionsComponent implements OnInit {
     }
     setActions() {
         this.apiloading = false;
-        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn' && this.checkin.waitlistStatus !== 'blocked' && !this.data.teleservice) {
+        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn' && this.checkin.waitlistStatus !== 'blocked' && !this.data.teleservice && this.checkin.paymentStatus !== 'FullyRefunded') {
             this.showUndo = true;
         }
-        if (this.data.timetype === 1 && this.checkin.waitlistStatus === 'checkedIn' && Object.keys(this.checkin.virtualService).length === 0 && this.checkin.virtualService.constructor === Object && !this.data.teleservice) {
+        if (this.data.timetype === 1 && this.checkin.waitlistStatus === 'checkedIn' && this.checkin.waitlistMode !== 'WALK_IN_CHECKIN' && Object.keys(this.checkin.virtualService).length === 0 && this.checkin.virtualService.constructor === Object && !this.data.teleservice) {
             this.showArrived = true;
         }
         if ((this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') && !this.data.teleservice) {
@@ -647,53 +645,52 @@ export class CheckinActionsComponent implements OnInit {
             this.loading = false;
         });
     }
-    gotoMeet() {
+    gotoSecureVideo() {
         this.dialogRef.close();
         const customerDetails = this.checkin.waitlistingFor[0];
         const customerId = customerDetails.id;
-        this.provider_services.meetReady(customerId).subscribe(data => {
-            this.meet_data = data;
-                this.providerMeetingUrl = this.meet_data.providerMeetingUrl;
-                  // this.subs.sink = observableInterval(this.refreshTime * 500).subscribe(() => {
-                //     this.getMeetingStatus();
-                // });
-                const retcheckarr = this.providerMeetingUrl.split('/');
-                this.id = retcheckarr[4]
-                const navigationExtras: NavigationExtras = {
-                    queryParams: { custId: customerId }
-                };
-                 // const path = 'meet/' + this.id ;
-                // window.open(path, '_blank');
-                this.router.navigate(['meet', this.id], navigationExtras);
-        },
-            error => {
-                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            });
+        let whtasappNum;
+        if(this.checkin && this.checkin.virtualService && this.checkin.virtualService.WhatsApp){
+         whtasappNum = this.checkin.virtualService.WhatsApp;
+        }
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                id : customerId,
+                phoneNum : whtasappNum,
+                type: 'secure_video'
+            }
+        };
+        this.router.navigate(['provider', 'secure-video'], navigationExtras);
     }
+   
     startVoiceCall() {
         this.closeDialog();
-        const customerDetails = this.checkin.waitlistingFor[0];
-        console.log(customerDetails.id)
-        const customerId = customerDetails.id;
-        this.provider_services.voiceCallReady(customerId).subscribe(data => {
-            this.voiceCallConfirm()
-        },
-            error => {
-                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            });
+        this.voiceCallConfirmed()
+        
+        // this.provider_services.voiceCallReady(customerId).subscribe(data => {
+        //     this.voiceCallConfirm()
+        // },
+        //     error => {
+        //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //     });
     }
-    voiceCallConfirm() {
-        const dialogref = this.dialog.open(VoicecallConfirmBoxComponent, {
-          width: '50%',
+    voiceCallConfirmed() {
+        const customerId =  this.checkin.waitlistingFor[0].id;
+        const num = this.checkin.countryCode + ' ' + this.checkin.waitlistPhoneNumber;
+        // const customerId = customerDetails[0].id;
+        const dialogref = this.dialog.open(VoiceConfirmComponent, {
+          width: '60%',
+          height: '30%',
           panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
           disableClose: true,
           data: {
-            // profile: this.profile
+            customerId: customerId,
+            customer : num,
           }
         });
         dialogref.afterClosed().subscribe(
           result => {
-            this.location.back();
+            this.closeDialog();
             // if (result) {
             // }
           }

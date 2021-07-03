@@ -699,10 +699,6 @@
   
 /* Filter Code Ends */
 
-#selectViewModal.modal.fade.in {
-    display: flex !important;
-}
-
 #selectViewModal .modal-dialog {
     max-width: calc(100% - 20px) !important;
     max-height: calc(100% - 20px) !important;
@@ -767,6 +763,7 @@
     max-width: -webkit-fill-available !important;
     align-items: flex-start !important;
     justify-content: flex-start !important;
+    width: auto !important;
 }
 
 #selectViewModal .modal-body ul.menu.dd-menu li {

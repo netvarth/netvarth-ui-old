@@ -162,7 +162,7 @@ export class ProPicPopupComponent implements OnInit {
                     this.item_pic.base64 = e.target['result'];
                 };
                 reader.readAsDataURL(fileobj);
-                if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
+             //   if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
                     // generating the data to be submitted to change the logo
                     const submit_data: FormData = new FormData();
                     submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
@@ -180,7 +180,7 @@ export class ProPicPopupComponent implements OnInit {
                             this.uploadLogo(submit_data);
                         }
                     }
-                }
+               // }
             } else {
                 this.error_list.push(this.success_error);
                 if (this.error_list[0].type) {

@@ -239,16 +239,16 @@
                 <div class="icon-text">Labels</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor"  (click)="gotoMeet()">
+        <div class="action-box pointer-cursor"  (click)="gotoSecureVideo()" *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked'">
             <div class="action-box-sub">
                 <span class="jvideo-icon"></span>
-                <div class="icon-text">Secure Video Call</div>
+                <div class="icon-text">Video Call</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" (click)="startVoiceCall()">
+        <div class="action-box pointer-cursor" (click)="startVoiceCall()" *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked'">
             <div class="action-box-sub">
                 <span class="phon-icon"></span>
-                <div class="icon-text">Secure Voice Call</div>
+                <div class="icon-text">Voice Call</div>
             </div>
         </div>
         <!--Added By Mani for Video Play-->
@@ -413,7 +413,7 @@
         <div class="status"> In Progress</div>
         <!-- <div class="form-level-settings">hints</div> -->
     </div>
-    <div class="status-box" *ngIf="checkin.waitlistStatus == 'started' || checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn'" (click)="changeWaitlistStatus('DONE')">
+    <div class="status-box" *ngIf="checkin.waitlistStatus == 'started' || checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' && data.timetype !== 2" (click)="changeWaitlistStatus('DONE')">
         <div class="status"> Complete</div>
         <!-- <div class="form-level-settings">hints</div> -->
     </div>

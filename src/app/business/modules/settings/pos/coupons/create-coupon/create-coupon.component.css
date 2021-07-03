@@ -25,3 +25,7 @@ input.picker[type="date"]::-webkit-calendar-picker-indicator {
 .tab-selected .step-icon, .tab-selected .wizard-bar,.tab-selected .wizard-icon{
   background: #3699FF !important;
 }
+
+.days .mat-checkbox {
+  width: 60px !important;
+}

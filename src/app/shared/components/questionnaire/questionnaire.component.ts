@@ -219,6 +219,7 @@ export class QuestionnaireComponent implements OnInit {
     }
     if (type === 'get') {
       Object.keys(this.uploadedFiles).forEach(key => {
+        this.uploadFilesTemp[key] = [];
         Object.keys(this.uploadedFiles[key]).forEach(key1 => {
           if (this.uploadedFiles[key][key1]) {
             if (!this.uploadFilesTemp[key]) {

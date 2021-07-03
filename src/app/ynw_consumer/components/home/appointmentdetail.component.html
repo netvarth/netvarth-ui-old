@@ -50,8 +50,8 @@
                                                     {{appt.provider.businessName | capitalizeFirst}}
                                                 </span> -->
                                                 <span>{{provider_label | capitalizeFirst}} : </span>
-                  <span>
-                  {{appt.provider.firstName | capitalizeFirst}}&nbsp;{{appt.provider.lastName}}</span>
+                  <span> {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName +
+                    ' ' + appt.provider.lastName}}</span> 
                                             </div>
                                             <div class="mgn-up-10">
                                                 <i *ngIf="appt.service.serviceType === 'virtualService'"
@@ -87,9 +87,13 @@
                                                 <span class="item-label-val">{{appt.appointmentEncId}}</span>
                                             </div>
                                             <div class="each-item" *ngIf="appt.phoneNumber">
-                                                <span class="item-head">Phone No</span>
+                                                <span class="item-head">Phone #</span>
                                                 <span class="item-label-val">{{appt.countryCode}}
                                                     {{appt.phoneNumber}}</span>
+                                            </div>
+                                            <div class="each-item" *ngIf="appt.service.serviceType === 'virtualService'&&appt.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                                <span class="item-head">WhatsApp #</span>
+                                                <span class="item-label-val">+{{ appt.virtualService[appt.service.virtualCallingModes[0].callingMode]}}</span>
                                             </div>
                                             <div class="each-item" *ngIf="appt.amountPaid">
                                                 <span class="item-head">Amount Paid</span>

@@ -38,7 +38,7 @@
           </div>
         </li>
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
-          (click)="showMenuSection()">
+          (click)="showMenuSection()" *ngIf="checkinStatus">
           <a routerLink="check-ins" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="showToken ? 'Tokens' : 'Check-ins'"><span
               class="svg-icon menu-icon">
               <i class="fa fa-check-circle"></i>
@@ -49,7 +49,7 @@
           <div class="menu-submenu"><i class="menu-arrow"></i>
           </div>
         </li>
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
+           <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
           (click)="showMenuSection()" *ngIf="orderstatus">
           <a routerLink="orders" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'Orders'"><span
               class="svg-icon menu-icon">
@@ -91,10 +91,10 @@
         </li>
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
           (click)="showMenuSection()">
-          <a routerLink="enquiry" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'Enquiry'"><span
+          <a routerLink="enquiry" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'Enquiries'"><span
               class="svg-icon menu-icon">
               <i class="fa fa-envelope"></i>
-            </span><span class="menu-text">Enquiry</span>
+            </span><span class="menu-text">Enquiries</span>
             <small class="label pull-right bg-green" *ngIf="enquiryCount>0 && !minimizeMenu">{{enquiryCount}}</small>
             <i class="menu-arrow"></i></a>
           <div class="menu-submenu"><i class="menu-arrow"></i>

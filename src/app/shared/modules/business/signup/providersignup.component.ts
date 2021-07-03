@@ -50,8 +50,9 @@ export class ProvidersignupComponent implements OnInit {
   activeDomainIndex;
   activeSubDomainIndex;
   subDomainList = [];
+  domainList = [];
   subdomainSettings = projectConstants.SUBDOMAIN_ICONS;
-  domainSettings = projectConstants.DOMAIN_ICONS;
+  domainSettings = projectConstantsLocal.DOMAIN_ICONS;
   phonenumber;
   first_name;
   last_name;
@@ -144,6 +145,8 @@ export class ProvidersignupComponent implements OnInit {
     healthCare: 'assets/images/home/HealthCare.jpg',
     retailStores: 'assets/images/home/supermarket-01.png',
     otherMiscellaneous: '',
+    educationalInstitution: 'assets/images/home/Education-01.svg',
+    sportsAndEntertainement: 'assets/images/home/Sportsdomain-01.svg',
     jaldee_qMgr: '',
     jaldee_appDesktop: 'assets/images/home/available-app.png',
     jaldee_playstore: 'assets/images/home/app_btn1.png',
@@ -205,7 +208,9 @@ export class ProvidersignupComponent implements OnInit {
     this.shared_services.bussinessDomains()
       .subscribe(
         data => {
-          this.business_domains = data;
+          const bDomains = data;
+          this.business_domains = this.shared_functions.sortByKey(bDomains, 'order' );
+          console.log(this.business_domains)
           if (this.claimDetails && this.claimDetails.sector) {
             const filteredList = this.business_domains.filter(domain => domain.domain === this.claimDetails.sector.toString());
             this.selectedDomain = filteredList[0];
@@ -216,12 +221,23 @@ export class ProvidersignupComponent implements OnInit {
           this.domainIndex[0] = false;
           // this.subdomainlist = this.selectedDomain.subDomains;
           // this.getPackages();
-          // this.setDomain(0);
+          // this.setDomain();
         },
         () => {
         }
       );
   }
+  // setDomain() { 
+  //   this.domainList = [];
+  //    const domains_sortbyorder = this.shared_functions.sortByKey(this.business_domains, 'order');
+  //    domains_sortbyorder.forEach(() => {
+  //   this.domainList.push();
+  //    });
+  //    console.log(this.domainList)
+  //     this.business_domains = this.domainList;
+  //     console.log(this.business_domains);
+
+  // }
 
   // getDomainIndex(domainname) {
   //   for (let i = 0; i < this.business_domains.length; i++) {

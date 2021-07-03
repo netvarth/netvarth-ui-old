@@ -20,7 +20,19 @@
                                 <div class="form-group col-md-12 mgn-up-10 sc-frm no-padding">
                                     <div class="mgn-up-10 mgn-lt-5"> Find an existing {{customer_label}}
                                     </div>
-                                    <div class="col-md-9 col-xs-10 col-sm-10 no-padding glbl-seting-heder">
+                                    <div class="form-group mgn-up-20">
+                                        <div class="input-group mob-container">
+                                            <input placeholder="Enter Phone #/Id/Email" type="text"
+                                            class="form-control" formControlName="search_input"
+                                            (keypress)="findCustomer(searchForm.value, $event)"/>
+                                          <div class="input-group-append"><button class="create_new_button cs-btn bt3"
+                                            (click)="searchCustomer(searchForm.value,selectedMode)">Find</button></div>
+                                        </div>
+                                        <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
+                                            <span *ngIf="emptyFielderror" class="sts-msg error">Please enter the Phone#/Id/Email</span>
+                                        </div>
+                                      </div>
+                                    <!-- <div class="col-md-9 col-xs-10 col-sm-10 no-padding glbl-seting-heder">
                                         <div class="col-md-10 col-sm-10 col-xs-10 no-padding">
                                             <mat-form-field>
                                                 <input matInput placeholder="Enter Phone #/Id/Email" type="text"
@@ -30,14 +42,12 @@
                                             <span *ngIf="emptyFielderror" class="sts-msg error">Please enter the Phone#/Id/Email</span>
                                         </div>
                                         <div class="col-md-2 col-sm-2 col-xs-10 no-padding">
-                                            <!-- <i class="fa fa-search pointer-cursor" (click)="searchForm.valid &&
-                                        searchCustomer(searchForm.value,selectedMode)"></i> -->
                                             <div class="col-md-12">
                                                 <button class="cs-btn bt3 mgn-up-20"
                                                     (click)="searchCustomer(searchForm.value,selectedMode)">Find</button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-12 col-xs-12 col-sm-12 create_new mgn-bt-20 font-9 no-padding mgn-up-20 mgn-lt-5"
                                         *ngIf="!searchClicked">
                                         <div class="or-style">OR</div>

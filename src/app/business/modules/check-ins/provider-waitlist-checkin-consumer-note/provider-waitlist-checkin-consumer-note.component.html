@@ -1,4 +1,4 @@
-<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">{{noteTitle}}
+<h1 class="mat-dialog-title note-head" style="font-size: 1.2rem !important;">{{noteTitle}}
   <span *ngIf="type === 'checkin'"> from {{(checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName) ?
     checkin.waitlistingFor[0].firstName + ' ' + checkin.waitlistingFor[0].lastName : consumer_label + ' id ' + checkin.consumer.jaldeeId}}
   </span>
@@ -12,7 +12,7 @@
     <i class="fa fa-window-close" aria-hidden="true"></i>
   </button>
 </h1>
-<mat-dialog-content style="padding-top: 0px;display: grid;">
+<mat-dialog-content style="display: grid;">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding no-margin" *ngIf="type === 'checkin'">
     <p *ngIf="checkin.token">Token # : {{checkin.token}}</p>
   </div>
@@ -23,7 +23,7 @@
   <div style="word-break: break-all;" *ngIf="type == 'appt' || type == 'checkin' || type == 'order-details'" class="prov-wtlst-note-border"
     [innerHTML]="checkin.consumerNote | nl2br">
   </div>
-  <div *ngIf="type == 'donation'" class="prov-wtlst-note-border" [innerHTML]="checkin.note | nl2br">
+  <div *ngIf="type == 'donation'" class="normal" [innerHTML]="checkin.note | nl2br">
   </div>
   <div *ngIf="type == 'order'" class="prov-wtlst-note-border" [innerHTML]="checkin.orderNote | nl2br">
   </div>

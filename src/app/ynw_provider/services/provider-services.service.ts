@@ -223,8 +223,8 @@ export class ProviderServices {
   addHoliday(data) {
     return this.servicemeta.httpPost('provider/settings/nonBusinessDays/holiday', data);
   }
-  Holidaywaitlist(id) {
-    return this.servicemeta.httpPut('provider/settings/nonBusinessDays/holiday/mark/' + id);
+  Holidaywaitlist(status,id) {
+    return this.servicemeta.httpPut('provider/settings/nonBusinessDays/holiday/mark/' + status + '/' + id);
   }
   userHolidaywaitlist(id) {
     return this.servicemeta.httpPut('provider/vacation/mark/' + id);
@@ -1633,6 +1633,15 @@ export class ProviderServices {
     const url = 'provider/report';
     return this.servicemeta.httpPut(url, data);
   }
+  generateUserReport(filter){
+    const url = 'provider/report/user';
+    return this.servicemeta.httpGet(url,null,filter);
+  }
+  generateUserInfoReport(filter){
+    const url = 'provider/report/user/info';
+    return this.servicemeta.httpGet(url,null,filter);
+  }
+  
   getJaldeeCustomer(data) {
     const url = 'consumer';
     return this.servicemeta.httpGet(url, null, data);
