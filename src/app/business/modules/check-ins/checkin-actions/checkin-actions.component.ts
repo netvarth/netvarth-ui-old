@@ -115,6 +115,7 @@ export class CheckinActionsComponent implements OnInit {
     meet_data: any;
     id: any;
     providerMeetingUrl: any;
+    groups: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -179,6 +180,7 @@ export class CheckinActionsComponent implements OnInit {
         });
         if (this.accountType === 'BRANCH') {
             this.getUser();
+            this.getUserTeams();
         }
     }
     getUser() {
@@ -1062,5 +1064,11 @@ export class CheckinActionsComponent implements OnInit {
     getStatusLabel(status) {
         const label_status = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm(status));
         return label_status;
+    }
+
+    getUserTeams() {
+        this.provider_services.getTeamGroup().subscribe((data: any) => {
+            this.groups = data;
+        });
     }
 }

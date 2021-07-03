@@ -199,14 +199,7 @@ export class BranchUsersComponent implements OnInit {
                     }
                 }
                 else {
-                    console.log("hi");
-                    console.log(this.groups);
-                    console.log(groupId);
                     const grp = this.groups.filter(group => group.id === JSON.stringify(groupId));
-                    console.log(groupId);
-                    console.log(this.groups);
-                    console.log(grp);
-                    console.log(grp[0])
                     this.customerGroupSelection(grp[0]);
                 }
             }
