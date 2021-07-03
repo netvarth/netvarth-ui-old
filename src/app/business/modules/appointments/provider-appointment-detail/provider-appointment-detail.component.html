@@ -57,7 +57,7 @@
                 <span class="itemHead">Language</span>
                 <span class="itemVal">{{waitlist_data.appmtFor[0].preferredLanguage}}</span>
               </div>
-              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.phoneNumber">
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.phoneNumber && checkDataNull(waitlist_data.phoneNumber)">
                 <span class="itemHead">Phone #</span>
                 <span class="itemVal">{{waitlist_data.countryCode}} {{waitlist_data.phoneNumber}}</span>
               </div>
