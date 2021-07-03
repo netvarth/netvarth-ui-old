@@ -103,6 +103,7 @@ export class AppointmentActionsComponent implements OnInit {
     isUserdisable;
     userid: any;
     user_arr: any;
+    groups: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -161,6 +162,7 @@ export class AppointmentActionsComponent implements OnInit {
         });
         if (this.accountType === 'BRANCH') {
             this.getUser();
+            this.getUserTeams();
         }
     }
     getUser() {
@@ -375,6 +377,10 @@ export class AppointmentActionsComponent implements OnInit {
     changeWaitlistservice() {
         this.dialogRef.close();
         this.router.navigate(['provider', 'check-ins', this.appt.uid, 'user'], { queryParams: { source: 'appt' } });
+    }
+    assignteam() {
+        this.dialogRef.close();
+        this.router.navigate(['provider', 'check-ins', this.appt.uid, 'team'], { queryParams: { source: 'appt' } });
     }
     removeProvider() {
         let msg = '';
@@ -1018,6 +1024,11 @@ export class AppointmentActionsComponent implements OnInit {
                         }
                     );
             }
+        });
+    }
+    getUserTeams() {
+        this.provider_services.getTeamGroup().subscribe((data: any) => {
+            this.groups = data;
         });
     }
 }

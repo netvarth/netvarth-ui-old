@@ -56,14 +56,11 @@ export class EditProfileComponent implements OnInit {
   confrmshow = false;
   domain;
   breadcrumb_moreoptions: any = [];
-  breadcrumbs_init = [
-    {
-      title: Messages.USER_PROF_CAP,
-      url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/profile'
-    }
-  ];
-  breadcrumbs = this.breadcrumbs_init;
+
+ 
   loading = false;
+  breadcrumbs_init: { title: string; url: string; }[];
+  breadcrumbs: { title: string; url: string; }[];
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
@@ -74,7 +71,15 @@ export class EditProfileComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private _location: Location,
     private snackbarService: SnackbarService
-  ) { }
+  ) {
+   this.breadcrumbs_init = [
+      {
+        title: Messages.USER_PROF_CAP,
+        url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/profile'
+      }
+    ];
+    this.breadcrumbs = this.breadcrumbs_init;
+   }
   goBack () {
     this.location.back();
   }

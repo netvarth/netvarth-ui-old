@@ -16,6 +16,7 @@ const routes: Routes = [
             { path: ':id', component: ProviderWaitlistCheckInDetailComponent },
             { path: ':id/add-label', component: ApplyLabelComponent },
             { path: ':id/user', loadChildren: () => import('../../../shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },
+            { path: ':id/team', loadChildren: () => import('../../../shared/modules/assign-team/assign-team.module').then(m => m.AssignTeamModule) },
         ]
     }
 ];
