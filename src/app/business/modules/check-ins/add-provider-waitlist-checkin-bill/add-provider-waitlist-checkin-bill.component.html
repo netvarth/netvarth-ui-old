@@ -87,24 +87,17 @@
 								<div class="d-flex flex-column flex-root">
 									<span class="font-weight-bolder mb-2">BILL TO</span>
 									<span class="opacity-70">
-										<!-- <ng-container *ngIf="!source">
-											<span class="dynamic" *ngFor="let user of checkin.waitlistingFor">
-												{{user.firstName | capitalizeFirst}}
-												{{user.lastName | capitalizeFirst}}
-											</span>
-										</ng-container> -->
-										<ng-container *ngIf="!source">
+										<ng-container *ngIf="!source && checkin && checkin.waitlistingFor">
 											<span class="dynamic" *ngFor="let user of checkin.waitlistingFor">
 												{{getUserName(user)}}
-
 											</span>
 										</ng-container>
-										<ng-container *ngIf="source === 'appt'">
+										<ng-container *ngIf="source === 'appt' && checkin && checkin.appmtFor">
 											<span class="dynamic" *ngFor="let user of checkin.appmtFor">
 												{{getUserName(user)}}
 											</span>
 										</ng-container>
-										<ng-container *ngIf="source === 'order'">
+										<ng-container *ngIf="source === 'order' && checkin && checkin.orderFor">
 											<span class="dynamic">
 												{{getUserName(checkin.orderFor)}}
 
