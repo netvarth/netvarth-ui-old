@@ -13800,3 +13800,17 @@ margin-top: 200px;
 .addinboxstyle .mat-dialog-title .modal_close {
   color: white !important;
 }
+.boxsty{
+  box-shadow: 5px 5px 5px 0px #cccccc60 !important;
+border: 1px solid #cccccc7d !important;
+min-height: 100px!important;
+max-height: 100px!important;
+margin: 5px;
+}
+.usrstyle{
+  color: green;
+font-size: small;
+}
+.userhed{
+  font-weight: bold;
+}

@@ -134,6 +134,7 @@
             <ng-container *ngIf="i < (service_data.questionnaireIds.length - 1)">, </ng-container></a>
         </div>
       </div>
+     
 
       <!-- </div> -->
       <div class="btm-ctrl">
@@ -150,6 +151,7 @@
       </div>
     </div>
   </div>
+  
   <div class="cop-r" *ngIf="action=='show' && !is_donation" style="margin-bottom: 10px;margin-top: 10px;">
     <ul class="info-lst serviceadd-info">
       <li *ngIf="source === 'appt'">Please add this service to the relevant
@@ -160,6 +162,34 @@
       </li>
     </ul>
   </div>
+  <span *ngIf="service_data.internalStatus && service_data.internalStatus.length > 0">Internal Status</span>
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding mgn-up-10 mgn-bt-10" *ngIf="service_data.internalStatus && service_data.internalStatus.length > 0">       
+<div class="col-xs-12 col-sm-12 col-md-8 col-lg-5 boxsty" *ngFor="let stat of service_data.internalStatus;  let i = index">
+    <!-- <div class="disp-flex"> -->
+<div class="userhed">{{stat.status}}</div>
+<span class="usrstyle" *ngFor="let user of stat.users;  let j = index"><span *ngIf="getProviderName(user)">{{getProviderName(user)}},</span></span>
+</div>
+  <!-- </div> -->
+  </div>
+  <!-- <div class="copy addons one  col-xs-12 col-sm-12 card no-padding remov_bg">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-10">
+          <mat-grid-list *ngIf="service_data.internalStatus.length > 0" cols="{{no_of_grids}}" rowHeight="160px"
+              [gutterSize]="'10px'">
+              <mat-grid-tile  *ngFor="let stat of service_data.internalStatus;  let i = index">
+                  <div class="wrap_div">
+                      <div class="disp-flex">
+                          <div class="flx_1 adon_count">
+                              {{stat.status}}
+                          </div>
+                         
+                      </div>
+                      
+                      <span class="wrd_brk"*ngFor="let user of stat.users;  let j = index">{{getProviderName(user)}}</span>
+                  </div>
+              </mat-grid-tile>
+          </mat-grid-list>
+      </div>
+  </div> -->
   <form [formGroup]="serviceForm" novalidate (ngSubmit)="serviceForm.valid &&
 onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show' && !showInfo"
     class="ynw-common-form-nm wiz-service serviceform">

@@ -427,4 +427,11 @@
         <div class="status"> Checked In</div>
         <!-- <div class="form-level-settings">hints</div> -->
     </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="statusList && statusList.length > 0">
+        <div>Internal Status</div>
+        <div class="status-box" *ngFor="let stat of statusList, let i= index" (click)="changeWaitlistInternalStatus(stat.status)">
+            <div class="status"> {{stat.status}}</div>
+            <!-- <div class="form-level-settings">hints</div> -->
+        </div>
+    </div>
 </div>

@@ -115,6 +115,7 @@ export class CheckinActionsComponent implements OnInit {
     meet_data: any;
     id: any;
     providerMeetingUrl: any;
+    statusList: any=[];
     groups: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
@@ -150,6 +151,7 @@ export class CheckinActionsComponent implements OnInit {
             this.accountid = this.checkin.providerAccount.id;
             this.showToken = this.checkin.showToken;
             this.getPos();
+            this.getInternStatus();
         } else {
             this.showMsg = true;
             this.apiloading = false;
@@ -570,6 +572,17 @@ export class CheckinActionsComponent implements OnInit {
     }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
         this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
+            .then(
+                result => {
+                    this.dialogRef.close('reload');
+                    this.buttonClicked = false;
+                },
+                error => {
+                    this.buttonClicked = false;
+                });
+    }
+    changeWaitlistInternalStatusApi(waitlist, action) {
+        this.provider_shared_functions.changeWaitlistInternalStatusApi(this, waitlist, action)
             .then(
                 result => {
                     this.dialogRef.close('reload');
@@ -1064,6 +1077,20 @@ export class CheckinActionsComponent implements OnInit {
     getStatusLabel(status) {
         const label_status = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm(status));
         return label_status;
+    }
+    getInternStatus(){
+        this.provider_services.getInternalstatList(this.ynwUuid).subscribe((data: any) => {
+            console.log(data);
+            this.statusList = data;
+        });
+    }
+    changeWaitlistInternalStatus(action){
+        console.log(action);
+        if (action !== 'CANCEL') {
+            // this.dialogRef.close();
+            this.buttonClicked = true;
+        }
+       this.provider_shared_functions.changeWaitlistinternalStatus(this, this.checkin, action);
     }
 
     getUserTeams() {
