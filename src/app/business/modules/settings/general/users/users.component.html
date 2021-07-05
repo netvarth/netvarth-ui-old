@@ -25,7 +25,7 @@
               data-toggle="modal" data-target="#exampleModalCenter">
               <i class="fa fa-plus"></i>Create Team</button>
           </a> 
-          <a  *ngIf="selectedGroup == 'all'" [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
+          <a  *ngIf="selectedGroup == 'all' && (loc_list && loc_list.length > 1)" [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
             class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5">
             <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add"
             (click)="addlocation()">
@@ -60,7 +60,7 @@
             <button  mat-menu-item  data-toggle="modal" data-target="#exampleModalCenter">
                 Create Team
             </button>
-            <button mat-menu-item (click)="addlocation()">
+            <button mat-menu-item *ngIf="(loc_list && loc_list.length > 1)" (click)="addlocation()">
                 Assign Locations
             </button>
         </mat-menu>
