@@ -114,6 +114,7 @@ export class BranchUsersComponent implements OnInit {
     specialization_arr: any = [];
     user;
     selectedLanguages: any = [];
+    selectedLocations: any = [];
     selectedSpecialization: any = [];
     selectedUser;
     selectrow = false;
@@ -170,6 +171,7 @@ export class BranchUsersComponent implements OnInit {
         this.getSpokenLanguages();
         this.getSpecializations();
         this.getCustomerGroup();
+        this.getProviderLocations();
         // this.addCustomerToGroup();
         if (this.domain === 'healthCare') {
             this.userTypesFormfill = [{ name: 'ASSISTANT', displayName: 'Assistant' }, { name: 'PROVIDER', displayName: 'Doctor' }, { name: 'ADMIN', displayName: 'Admin' }];
@@ -305,6 +307,7 @@ export class BranchUsersComponent implements OnInit {
                                 },
                                 (error: any) => {
                                     this.users_list = data;
+                                    this.user_list_dup = this.users_list;
                                     this.api_loading = false;
                                     this.loadComplete = true;
                                 });
@@ -386,10 +389,11 @@ export class BranchUsersComponent implements OnInit {
         };
         this.selectedSpecialization = [];
         this.selectedLanguages = [];
+        this.selectedLocations = [];
     }
     doSearch() {
         this.getUsers();
-        if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pincode || this.filter.available || this.filter.primaryMobileNo || this.filter.userType || this.selectedLanguages.length > 0 || this.selectedSpecialization.length > 0) {
+        if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pincode || this.filter.available || this.filter.primaryMobileNo || this.filter.userType || this.selectedLanguages.length > 0 || this.selectedLocations.length > 0 || this.selectedSpecialization.length > 0) {
             this.filterapplied = true;
         } else {
             this.filterapplied = false;
@@ -441,6 +445,9 @@ export class BranchUsersComponent implements OnInit {
         }
         if (this.selectedLanguages.length > 0) {
             api_filter['spokenlangs-eq'] = this.selectedLanguages.toString();
+        }
+        if (this.selectedLocations.length > 0) {
+            api_filter['businessLocs-eq'] = this.selectedLocations.toString();
         }
         if (this.selectedSpecialization.length > 0) {
             api_filter['specialization-eq'] = this.selectedSpecialization.toString();
@@ -576,6 +583,14 @@ export class BranchUsersComponent implements OnInit {
                 this.selectedLanguages.push(value);
             } else {
                 this.selectedLanguages.splice(indx, 1);
+            }
+        }
+        if (type === 'location') {
+            const indx = this.selectedLocations.indexOf(value);
+            if (indx === -1) {
+                this.selectedLocations.push(value);
+            } else {
+                this.selectedLocations.splice(indx, 1);
             }
         }
         if (type === 'specializations') {
