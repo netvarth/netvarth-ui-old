@@ -28,7 +28,7 @@ export class LabelsComponent implements OnInit {
             title: 'Custom Fields'
         }
     ];
-    api_loading: boolean;
+    api_loading=true;
     label_list: any;
 source;
     add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
@@ -46,6 +46,7 @@ source;
               });
               const user = this.groupService.getitemFromGroupStorage('ynw-user');
               this.domain = user.sector;
+              console.log(user.accountType);
               if (user.accountType === 'BRANCH') {
                   this.getProviders().then((data) => {
                    this.users = data;
@@ -72,14 +73,23 @@ source;
         // this.getLabels();
       
     }
+    getUsersList(users){
+       let userNamelist='';
+       users.forEach(element => {
+        const userObject =  this.users.filter(user => user.id === parseInt(element)); 
+        userNamelist=userNamelist+userObject[0].firstName+' '+userObject[0].lastName+','
+       }); 
+
+        return userNamelist.replace(/,\s*$/, '');
+    }
     getLabels() {
-       this.api_loading = true;
         this.label_list = [];
         this.provider_services.getLabelList()
             .subscribe(
                 (data: any) => {
-                    // this.label_list = data.filter(label => label.status === 'ACTIVE');
-                    this.label_list = data;
+                    console.log(data);
+                    //this.label_list = data.filter(label => label.status === 'ACTIVE');
+                    this.label_list=data;
                     this.api_loading = false;
                 },
                 error => {
