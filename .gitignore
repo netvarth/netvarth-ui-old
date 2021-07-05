@@ -12,8 +12,6 @@
 /documentation
 /platforms
 /plugins
-/resources/android
-/resources/ios
 
 # IDEs and editors
 /.idea
