@@ -8,7 +8,6 @@
     box-shadow: 5px 3px 10px rgb(0 0 0 / 20%) !important;
 }
 .card.card-custom .card-body {
-    display: flex !important;
     align-items: flex-start !important;
     justify-content: space-between !important;
     flex-direction: row !important;
@@ -107,7 +106,7 @@
     padding: 5px !important;
     font-size: 12px !important;
     text-transform: uppercase !important;
-    min-width: 31% !important;
+    min-width: 20% !important;
     max-width: 100% !important;
     margin-left: 2.5px !important;
     margin-right: 2.5px !important;
@@ -128,7 +127,8 @@
 }
 @media (min-width: 991px) {
     .gutter-b {
-        height: 220px !important;
+        height: 250px !important;
+        margin-bottom: 20px !important;
     }
 }
 .action-box {
@@ -143,11 +143,12 @@
 .tele-msg .custom-red {
     color: red !important;
     font-weight: 700 !important;
+    font-size: .8rem;
 }
 .tele-msg .call-inst {
     color: #1E4079 !important;
     font-weight: 700 !important;
-    font-size: 1rem;
+    font-size: .8rem;
 }
 .viewmore a {
     color: #1E4079 !important;

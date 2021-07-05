@@ -48,6 +48,7 @@
 }
 .card-body .add-record {
     width: 100% !important;
+    border-color: #395789 !important;
 }
 .card-body .inner-card {
     width: 48.5% !important;
@@ -67,28 +68,25 @@
         width: 100% !important;
     }    
 }
-.card-body .inner-card .inner-card-heading {
+.card-body .inner-card-heading {
     margin-top: 0.1rem !important;
     font-size: 10.5px !important;
     display: block !important;
     text-transform: uppercase !important;
     color: #969090 !important;
 }
-.card-body .inner-card .inner-card-text {
+.card-body .inner-card-text {
     margin-top: 0.2rem !important;
     color: #717171 !important;
     font-size: 12.5px !important;
     hyphens: auto !important;
 }
-.card-body .inner-card.add-record {
-    border-color: #395789 !important;
-}
-.card-body .inner-card.add-record .inner-card-heading {
+.card-body .add-record .inner-card-heading {
     color: #395789 !important;
     font-size: 12.5px !important;
     font-weight: 700 !important;
 }
-.card-body .inner-card.add-record .inner-card-text {
+.card-body .add-record .inner-card-text {
     color: #395789 !important;
     font-size: 10.5px !important;
 }

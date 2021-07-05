@@ -33,6 +33,7 @@ export class BookingDetailComponent implements OnInit {
   subscription: Subscription;
   customer_label;
   showToken;
+  wlStatus;
   constructor(private locationobj: Location,
     private groupService: GroupStorageService,
     private provider_services: ProviderServices,
@@ -44,7 +45,9 @@ export class BookingDetailComponent implements OnInit {
     this.activated_route.queryParams.subscribe(params => {
       this.bookingType = params.type;
       this.waitlist_id = params.uid;
-      this.showToken = params.showToken;
+      if (params.waitlistMgrSettings) {
+        this.showToken = params.waitlistMgrSettings.showTokenId;
+      }
     });
 
     this.subscription = this.sharedFunctions.getMessage().subscribe((message) => {
@@ -86,6 +89,7 @@ export class BookingDetailComponent implements OnInit {
       .subscribe(
         data => {
           this.waitlist_data = data;
+          this.wlStatus = this.waitlist_data.waitlistStatus;
           this.uuid = this.waitlist_data.ynwUuid;
           this.customerId = this.waitlist_data.waitlistingFor[0].id;
           if (this.waitlist_data.jaldeeConsumer) {
@@ -110,6 +114,7 @@ export class BookingDetailComponent implements OnInit {
       .subscribe(
         data => {
           this.waitlist_data = data;
+          this.wlStatus = this.waitlist_data.apptStatus;
           this.uuid = this.waitlist_data.uid;
           this.customerId = this.waitlist_data.appmtFor[0].id;
           if (this.waitlist_data.consumer) {

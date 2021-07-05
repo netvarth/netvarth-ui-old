@@ -19,9 +19,9 @@
         </app-customer-booking-details>
       </div>
     </div>
-    <div class="col-lg-4 no-padding-big mgn-bt-10"
-      *ngIf="(waitlist_data && waitlist_data.waitlistStatus && waitlist_data.waitlistStatus!=='blocked') || (waitlist_data && waitlist_data.apptStatus && waitlist_data.apptStatus!=='blocked')">
-      <app-provider-inbox-list [customer]="customer" [provider]="provider" [source]="'details'" [height]="height">
+    <div class="col-lg-4 no-padding-big mgn-bt-10">
+      <app-provider-inbox-list [customer]="customer" [provider]="provider" [source]="'details'" [height]="height"
+        [status]="wlStatus">
       </app-provider-inbox-list>
     </div>
   </div>

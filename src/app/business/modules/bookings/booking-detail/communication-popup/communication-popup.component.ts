@@ -19,7 +19,7 @@ export class CommunicationPopupComponent implements OnInit {
   providerMeetingUrl;
   id;
   whatsappNumber;
-  countryCode;
+  whatsappCountryCode;
   constructor(public dialogRef: MatDialogRef<CommunicationPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private wordProcessor: WordProcessor,
@@ -27,8 +27,8 @@ export class CommunicationPopupComponent implements OnInit {
     private router: Router, private dialog: MatDialog,
     private snackbarService: SnackbarService) {
     console.log(this.data);
-    this.countryCode = (this.data.type === 'appointment') ? this.data.waitlist.providerConsumer.whatsAppNum.countryCode : this.data.waitlist.countryCode;
-    this.whatsappNumber = (this.data.type === 'appointment') ? this.data.waitlist.providerConsumer.whatsAppNum.number : this.data.waitlist.waitlistingFor[0].phoneNo;
+    this.whatsappCountryCode = (this.data.type === 'appointment') ? this.data.waitlist.providerConsumer.whatsAppNum.countryCode : this.data.waitlistingFor[0].whatsAppNum.countryCode;
+    this.whatsappNumber = (this.data.type === 'appointment') ? this.data.waitlist.providerConsumer.whatsAppNum.number : this.data.waitlist.waitlistingFor[0].whatsAppNum.number;
   }
   ngOnInit(): void {
     this.notSupported = this.wordProcessor.getProjectMesssages('WATSAPP_NOT_SUPPORTED');
@@ -54,7 +54,7 @@ export class CommunicationPopupComponent implements OnInit {
       }
     };
     if (!isMobile.Android() && !isMobile.iOS()) {
-        this.is_web = true;
+      this.is_web = true;
     }
     console.log(this.is_web);
     this.getJaldeeVideoCredits();
@@ -96,11 +96,11 @@ export class CommunicationPopupComponent implements OnInit {
     let customerId;
     let num;
     if (this.data.type === 'appointment') {
-      customerId =  this.data.waitlist.appmtFor[0].id;
+      customerId = this.data.waitlist.appmtFor[0].id;
       num = this.data.waitlist.providerConsumer.countryCode + ' ' + this.data.waitlist.providerConsumer.phoneNo;
     } else {
-    customerId =  this.data.waitlist.waitlistingFor[0].id;
-    num = this.data.waitlist.waitlistingFor[0].countryCode + ' ' + this.data.waitlist.waitlistingFor[0].phoneNo;
+      customerId = this.data.waitlist.waitlistingFor[0].id;
+      num = this.data.waitlist.consumer.countryCode + ' ' + this.data.waitlist.consumer.phoneNo;
     }
     this.dialog.open(VoiceConfirmComponent, {
       width: '60%',
@@ -109,7 +109,7 @@ export class CommunicationPopupComponent implements OnInit {
       disableClose: true,
       data: {
         customerId: customerId,
-        customer : num,
+        customer: num,
       }
     });
   }

@@ -32,7 +32,7 @@
         <div class="column">
             <app-records-datagrid [source]="'waitlist'" [records]="todayWaitlists"
                 [heading]="(waitlistMgrSettings && waitlistMgrSettings.showTokenId) ? 'Tokens' : 'Check-ins'"
-                [timeType]="1" [showToken]="waitlistMgrSettings.showTokenId">
+                [timeType]="1" [waitlistMgrSettings]="waitlistMgrSettings">
             </app-records-datagrid>
         </div>
         <div class="column">

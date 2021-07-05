@@ -16,10 +16,6 @@ import { AppointmentActionsComponent } from '../../../appointments/appointment-a
 import { Subscription } from 'rxjs';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
-import { GalleryImportComponent } from '../../../../../shared/modules/gallery/import/gallery-import.component';
-import { Messages } from '../../../../../shared/constants/project-messages';
-import { GalleryService } from '../../../../../shared/modules/gallery/galery-service';
-import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { DateFormatPipe } from '../../../../../shared/pipes/date-format/date-format.pipe';
 import { TeleServiceConfirmBoxComponent } from '../../../teleservice/teleservice-confirm-box/teleservice-confirm-box.component';
 import { TeleServiceShareComponent } from '../../../teleservice/teleservice-share/teleservice-share.component';
@@ -48,7 +44,6 @@ export class ServiceActionsComponent implements OnInit {
     board_count;
     pos = false;
     showBill = false;
-    showAttachment = false;
     showCall;
     showmrrx = false;
     showAssign = false;
@@ -59,7 +54,6 @@ export class ServiceActionsComponent implements OnInit {
     customerMsg;
     newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
     subscription: Subscription;
-    gallerySubscription: Subscription;
     active_user;
     customer_label: any;
     provider_label: any;
@@ -88,7 +82,6 @@ export class ServiceActionsComponent implements OnInit {
         private dateTimeProcessor: DateTimeProcessor,
         private sharedFunctions: SharedFunctions,
         private wordProcessor: WordProcessor,
-        private galleryService: GalleryService,
         public dateformat: DateFormatPipe
     ) {
         this.activated_route.queryParams.subscribe(params => {
@@ -102,47 +95,14 @@ export class ServiceActionsComponent implements OnInit {
                     break;
             }
         });
-        this.gallerySubscription = this.galleryService.getMessage().subscribe(input => {
-            if (input && input.uuid) {
-                if (this.bookingType === 'checkin') {
-                    this.shared_services.addProviderWaitlistAttachment(input.uuid, input.value)
-                        .subscribe(
-                            () => {
-                                this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
-                                this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
-                            },
-                            error => {
-                                this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-                                this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
-                            }
-                        );
-                } else {
-                    this.shared_services.addProviderAppointmentAttachment(input.uuid, input.value)
-                        .subscribe(
-                            () => {
-                                this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
-                                this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
-                            },
-                            error => {
-                                this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-                                this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
-                            }
-                        );
-                }
-            }
-        });
         this.notSupported = this.wordProcessor.getProjectMesssages('TELE_NOT_SUPPORTED');
     }
     ngOnDestroy() {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
-        if (this.gallerySubscription) {
-            this.gallerySubscription.unsubscribe();
-        }
     }
     ngOnInit(): void {
-        // checking the device
         const isMobile = {
             Android: function () {
                 return navigator.userAgent.match(/Android/i);
@@ -163,11 +123,9 @@ export class ServiceActionsComponent implements OnInit {
                 return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
             }
         };
-        console.log(isMobile.Android());
         if (!isMobile.Android() && !isMobile.iOS()) {
             this.is_web = true;
         }
-        console.log(this.is_web);
         this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
         if (this.active_user.accountType) {
             this.getUserTeams();
@@ -176,36 +134,21 @@ export class ServiceActionsComponent implements OnInit {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.setActions();
         if (this.waitlist_data.provider) {
-            this.busnes_name = this.waitlist_data.provider.firstName + ' ' + this.waitlist_data.provider.lastName;
+            this.busnes_name = (this.waitlist_data.provider.businessName) ? this.waitlist_data.provider.businessName : this.waitlist_data.provider.firstName + ' ' + this.waitlist_data.provider.lastName;
         } else {
             this.busnes_name = this.waitlist_data.providerAccount.businessName;
         }
     }
     setActions() {
         if (this.bookingType === 'checkin') {
-            if (this.timeType !== 3 && this.waitlist_data.waitlistStatus !== 'done' && this.waitlist_data.waitlistStatus !== 'checkedIn' && this.waitlist_data.waitlistStatus !== 'blocked') {
-                this.showUndo = true;
-            }
-            if (this.timeType === 1 && this.waitlist_data.waitlistStatus === 'checkedIn' && !this.waitlist_data.service.virtualCallingModes) {
-                this.showArrived = true;
-            }
-            if (this.waitlist_data.waitlistStatus === 'arrived' || this.waitlist_data.waitlistStatus === 'checkedIn') {
-                this.showCancel = true;
-            }
             if (this.timeType === 1 && this.waitlist_data.service.livetrack && this.waitlist_data.waitlistStatus === 'checkedIn' && this.waitlist_data.jaldeeWaitlistDistanceTime && this.waitlist_data.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.waitlist_data.jaldeeStartTimeType === 'ONEHOUR' || this.waitlist_data.jaldeeStartTimeType === 'AFTERSTART')) {
                 this.trackStatus = true;
             }
             if (this.timeType !== 3 && this.waitlist_data.waitlistStatus !== 'cancelled' && ((this.waitlist_data.waitlistingFor[0].phoneNo && this.waitlist_data.waitlistingFor[0].phoneNo !== 'null') || this.waitlist_data.waitlistingFor[0].email)) {
                 this.showSendDetails = true;
             }
-            if ((this.waitlist_data.waitlistingFor[0].phoneNo && this.waitlist_data.waitlistingFor[0].phoneNo !== 'null') || this.waitlist_data.waitlistingFor[0].email) {
-                this.showMsg = true;
-            }
             if ((this.waitlist_data.waitlistStatus === 'arrived' || this.waitlist_data.waitlistStatus === 'checkedIn') && this.timeType !== 2 && (!this.waitlist_data.service.virtualCallingModes)) {
                 this.showStart = true;
-            }
-            if ((this.waitlist_data.waitlistStatus == 'started' || this.waitlist_data.waitlistStatus == 'arrived' || this.waitlist_data.waitlistStatus == 'checkedIn') && this.timeType !== 2) {
-                this.showComplete = true;
             }
             if ((this.timeType === 1 || this.timeType === 3) && this.waitlist_data.service.virtualCallingModes && (this.waitlist_data.waitlistStatus === 'arrived' || this.waitlist_data.waitlistStatus === 'checkedIn' || this.waitlist_data.waitlistStatus === 'started')) {
                 this.showTeleserviceStart = true;
@@ -226,9 +169,6 @@ export class ServiceActionsComponent implements OnInit {
             }
             if (this.timeType !== 2 && this.waitlist_data.waitlistStatus !== 'cancelled' && this.waitlist_data.waitlistStatus !== 'blocked') {
                 this.showmrrx = true;
-            }
-            if (this.waitlist_data.waitlistStatus !== 'blocked' && (this.waitlist_data.waitlistingFor[0].phoneNo && this.waitlist_data.waitlistingFor[0].phoneNo !== 'null') || this.waitlist_data.waitlistingFor[0].email) {
-                this.showAttachment = true;
             }
             if (this.active_user.accountType == 'BRANCH' && (this.waitlist_data.waitlistStatus === 'arrived' || this.waitlist_data.waitlistStatus === 'checkedIn')) {
                 this.getUser();
@@ -289,9 +229,6 @@ export class ServiceActionsComponent implements OnInit {
             }
             if (this.timeType !== 2 && this.waitlist_data.apptStatus !== 'blocked' && (this.waitlist_data.apptStatus !== 'Cancelled' && this.waitlist_data.apptStatus !== 'Rejected')) {
                 this.showmrrx = true;
-            }
-            if (this.waitlist_data.providerConsumer.email || this.waitlist_data.providerConsumer.phoneNo) {
-                this.showAttachment = true;
             }
             if (this.active_user.accountType == 'BRANCH' && (this.waitlist_data.apptStatus === 'Arrived' || this.waitlist_data.apptStatus === 'Confirmed')) {
                 this.getUser();
@@ -509,16 +446,6 @@ export class ServiceActionsComponent implements OnInit {
             return this.provider_shared_functions.getLiveTrackMessage(distance, unit, hours, minutes, mode);
         }
     }
-    unBlockAppt() {
-        this.provider_services.deleteAppointmentBlock(this.waitlist_data.uid)
-            .subscribe(
-                () => {
-                    this.router.navigate(['provider', 'appointments']);
-                },
-                error => {
-                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                });
-    }
     callingAppt() {
         const status = (this.waitlist_data.callingStatus) ? 'Disable' : 'Enable';
         this.provider_services.setApptCallStatus(this.waitlist_data.uid, status).subscribe(
@@ -703,27 +630,25 @@ export class ServiceActionsComponent implements OnInit {
         });
     }
     unBlockWaitlist() {
-        this.provider_services.deleteWaitlistBlock(this.waitlist_data.ynwUuid)
-            .subscribe(
-                () => {
-                    this.router.navigate(['provider', 'check-ins']);
-                },
-                error => {
-                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                });
-    }
-    sendimages() {
-        const galleryDialog = this.dialog.open(GalleryImportComponent, {
-            width: '50%',
-            panelClass: ['popup-class', 'commonpopupmainclass'],
-            disableClose: true,
-            data: {
-                source_id: 'attachment',
-                uid: (this.bookingType === 'checkin') ? this.waitlist_data.ynwUuid : this.waitlist_data.uid
-            }
-        });
-        galleryDialog.afterClosed().subscribe(result => {
-        })
+        if (this.bookingType === 'checkin') {
+            this.provider_services.deleteWaitlistBlock(this.waitlist_data.ynwUuid)
+                .subscribe(
+                    () => {
+                        this.router.navigate(['provider', 'check-ins']);
+                    },
+                    error => {
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
+        } else {
+            this.provider_services.deleteAppointmentBlock(this.waitlist_data.uid)
+                .subscribe(
+                    () => {
+                        this.router.navigate(['provider', 'appointments']);
+                    },
+                    error => {
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
+        }
     }
     printCheckin() {
         if (this.bookingType == 'checkin') {
@@ -840,117 +765,6 @@ export class ServiceActionsComponent implements OnInit {
         this.qr_value = this.path + 'status/' + valuetogenerate.checkinEncId;
         this.showQR = true;
     }
-    changeWaitlistservice() {
-        if (this.bookingType == 'checkin') {
-            this.router.navigate(['provider', 'check-ins', this.waitlist_data.ynwUuid, 'user'], { queryParams: { source: 'checkin' } });
-        } else {
-            this.router.navigate(['provider', 'check-ins', this.waitlist_data.uid, 'user'], { queryParams: { source: 'appt' } });
-        }
-    }
-    removeProvider() {
-        let msg = '';
-        msg = 'Do you want to remove this ' + this.provider_label + '?';
-        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
-            width: '50%',
-            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-            disableClose: true,
-            data: {
-                'message': msg,
-                'type': 'yes/no'
-            }
-        });
-        dialogrefd.afterClosed().subscribe(result => {
-            if (result) {
-                if (this.bookingType == 'checkin') {
-                    const post_data = {
-                        'ynwUuid': this.waitlist_data.ynwUuid,
-                        'provider': {
-                            'id': this.waitlist_data.provider.id
-                        },
-                    };
-                    this.provider_services.unassignUserWaitlist(post_data)
-                        .subscribe(
-                            data => {
-                                this.sharedFunctions.sendMessage({ type: 'statuschange' });
-                                this.closebutton.nativeElement.click();
-                            },
-                            error => {
-                                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                            }
-                        );
-                } else {
-                    const post_data = {
-                        'uid': this.waitlist_data.uid,
-                        'provider': {
-                            'id': this.waitlist_data.provider.id
-                        },
-                    };
-                    this.provider_services.unassignUserAppointment(post_data)
-                        .subscribe(
-                            data => {
-                                this.sharedFunctions.sendMessage({ type: 'statuschange' });
-                                this.closebutton.nativeElement.click();
-                            },
-                            error => {
-                                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                            }
-                        );
-                }
-            }
-        });
-    }
-    assignMyself() {
-        let msg = '';
-        msg = 'Are you sure you want to assign this token to yourself ?';
-        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
-            width: '50%',
-            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-            disableClose: true,
-            data: {
-                'message': msg,
-                'type': 'yes/no'
-            }
-        });
-        dialogrefd.afterClosed().subscribe(result => {
-            if (result) {
-                if (this.bookingType == 'checkin') {
-                    const post_data = {
-                        'ynwUuid': this.waitlist_data.ynwUuid,
-                        'provider': {
-                            'id': this.active_user.id
-                        },
-                    };
-                    this.provider_services.updateUserWaitlist(post_data)
-                        .subscribe(
-                            data => {
-                                this.sharedFunctions.sendMessage({ type: 'statuschange' });
-                                this.closebutton.nativeElement.click();
-                            },
-                            error => {
-                                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                            }
-                        );
-                } else {
-                    const post_data = {
-                        'uid': this.waitlist_data.uid,
-                        'provider': {
-                            'id': this.active_user.id
-                        },
-                    };
-                    this.provider_services.updateUserAppointment(post_data)
-                        .subscribe(
-                            data => {
-                                this.sharedFunctions.sendMessage({ type: 'statuschange' });
-                                this.closebutton.nativeElement.click();
-                            },
-                            error => {
-                                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                            }
-                        );
-                }
-            }
-        });
-    }
     getUser() {
         if (this.active_user.id) {
             this.provider_services.getUser(this.active_user.id)
@@ -1028,7 +842,7 @@ export class ServiceActionsComponent implements OnInit {
         this.provider_services.getTeamGroup().subscribe((data: any) => {
             this.groups = data;
         });
-    } 
+    }
     addCustomerDetails() {
         let virtualServicemode;
         let virtualServicenumber;
@@ -1038,6 +852,9 @@ export class ServiceActionsComponent implements OnInit {
                 virtualServicenumber = this.waitlist_data.virtualService[key];
             });
         }
-        this.router.navigate(['provider', 'check-ins', 'add'], { queryParams: { source: 'waitlist-block', uid: this.waitlist_data.ynwUuid, showtoken: this.showToken, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: this.waitlist_data.service.id, waitlistMode: this.waitlist_data.waitlistMode } });
+        const uid = (this.bookingType == 'checkin') ? this.waitlist_data.ynwUuid : this.waitlist_data.uid;
+        const mode = (this.bookingType == 'checkin') ? this.waitlist_data.waitlistMode : this.waitlist_data.appointmentMode;
+        const source = (this.bookingType == 'checkin') ? 'waitlist-block' : 'appt-block';
+        this.router.navigate(['provider', 'check-ins', 'add'], { queryParams: { source: source, uid: uid, showtoken: this.showToken, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: this.waitlist_data.service.id, waitlistMode: mode } });
     }
 }

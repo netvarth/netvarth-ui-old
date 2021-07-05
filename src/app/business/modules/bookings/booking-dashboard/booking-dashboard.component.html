@@ -28,7 +28,7 @@
         </div>
         <div class="column">
             <app-records-datagrid [source]="'waitlist'" [records]="todayWaitlists" [timeType]="1"
-                [showToken]="waitlistMgrSettings.showTokenId"
+                [waitlistMgrSettings]="waitlistMgrSettings"
                 [heading]="(waitlistMgrSettings && waitlistMgrSettings.showTokenId) ? 'Tokens' : 'Check-ins'">
             </app-records-datagrid>
         </div>

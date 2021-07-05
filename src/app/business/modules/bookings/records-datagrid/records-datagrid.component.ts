@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-import { projectConstants } from '../../../../app.component';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -16,7 +15,7 @@ export class RecordsDatagridComponent implements OnInit {
   @Input() source;
   @Input() timeType;
   @Input() showMore;
-  @Input() showToken;
+  @Input() waitlistMgrSettings;
   @Output() actionPerformed = new EventEmitter<any>();
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   waitlistModes = {
@@ -32,7 +31,7 @@ export class RecordsDatagridComponent implements OnInit {
     PHONE_CHECKIN: 'Phone in Token',
     ONLINE_CHECKIN: 'Online Token'
   };
-  check_in_statuses = projectConstants.CHECK_IN_STATUSES;
+  check_in_statuses = projectConstantsLocal.CHECK_IN_STATUSES;
   providerId;
   customer_label;
   provider_label;
@@ -58,10 +57,12 @@ export class RecordsDatagridComponent implements OnInit {
     return label_status;
   }
   actionClick(type, record?) {
+    console.log(this.waitlistMgrSettings);
+    console.log(this.source);
     if (this.source == 'waitlist' || this.source === 'appt' || this.source === 'appt-dashboard' || this.source === 'waitlist-dashboard') {
       const uid = (this.source === 'appt' || this.source === 'appt-dashboard') ? record.uid : record.ynwUuid;
       const waitlisttype = (this.source === 'appt' || this.source === 'appt-dashboard') ? 'appointment' : 'checkin';
-      this.router.navigate(['provider', 'bookings', 'details'], { queryParams: { uid: uid, timetype: 1, type: waitlisttype, showToken: this.showToken } });
+      this.router.navigate(['provider', 'bookings', 'details'], { queryParams: { uid: uid, timetype: 1, type: waitlisttype, waitlistMgrSettings: this.waitlistMgrSettings } });
     } else if (this.source == 'bill') {
       let source;
       if (record.type === 'Appointment') {
