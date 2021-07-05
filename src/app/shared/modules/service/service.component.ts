@@ -864,13 +864,18 @@ export class ServiceComponent implements OnInit, OnDestroy {
     gotoQnr(id) {
         this.router.navigate(['provider', 'settings', 'general', 'questionnaire', id]);
     }
-    getProviderName(user){
-        console.log(user);
+    getProviderName(users){
+        console.log(users);
+        let userlst = '';
         console.log(this.users_list);
+        for(let user of users){
         let details = this.users_list.filter(usr => usr.id == user);
         console.log(details);
         if(details && details.length > 0){
-        return details[0].firstName +' '+ details[0].lastName;
+            userlst = userlst + details[0].firstName +' '+ details[0].lastName + ',';
      }
     }
+    console.log(userlst);
+    return userlst;
+}
 }
