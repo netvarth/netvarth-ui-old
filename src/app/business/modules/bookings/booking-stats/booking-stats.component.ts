@@ -15,7 +15,7 @@ export class BookingStatsComponent implements OnInit {
   @Input() newApptsCount;
   @Input() newWitlistCount;
   @Input() waitlistMgrSettings;
-  admin = true;
+  admin = false;
   providerId;
   constructor(private provider_services: ProviderServices,
     private wordProcessor: WordProcessor,
@@ -32,10 +32,9 @@ export class BookingStatsComponent implements OnInit {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.getCustomersListCount();
     const userDet = this.groupService.getitemFromGroupStorage('ynw-user');
-    if (userDet.accountType !== 'BRANCH' && !this.providerId) {
+    if (userDet.accountType !== 'BRANCH' || (userDet.accountType === 'BRANCH' && !this.providerId)) {
       this.admin = true;
     }
-    console.log('admin', this.admin);
   }
   getCustomersListCount() {
     this.provider_services.getProviderCustomersCount()

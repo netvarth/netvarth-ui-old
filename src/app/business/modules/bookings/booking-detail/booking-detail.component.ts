@@ -32,6 +32,7 @@ export class BookingDetailComponent implements OnInit {
   height;
   subscription: Subscription;
   customer_label;
+  showToken;
   constructor(private locationobj: Location,
     private groupService: GroupStorageService,
     private provider_services: ProviderServices,
@@ -43,6 +44,7 @@ export class BookingDetailComponent implements OnInit {
     this.activated_route.queryParams.subscribe(params => {
       this.bookingType = params.type;
       this.waitlist_id = params.uid;
+      this.showToken = params.showToken;
     });
 
     this.subscription = this.sharedFunctions.getMessage().subscribe((message) => {

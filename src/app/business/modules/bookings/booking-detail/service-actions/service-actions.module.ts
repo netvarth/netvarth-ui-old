@@ -6,6 +6,7 @@ import { ServiceActionsComponent } from './service-actions.component';
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { GalleryModule } from '../../../../../shared/modules/gallery/gallery.module';
+import { ActionsPopupModule } from '../../actions-popup/actions-popup.module';
 
 
 
@@ -17,7 +18,8 @@ import { GalleryModule } from '../../../../../shared/modules/gallery/gallery.mod
     MatGridListModule,
     CapitalizeFirstPipeModule,
     NgxQRCodeModule,
-    GalleryModule
+    GalleryModule,
+    ActionsPopupModule
   ],
   exports: [ServiceActionsComponent]
 })

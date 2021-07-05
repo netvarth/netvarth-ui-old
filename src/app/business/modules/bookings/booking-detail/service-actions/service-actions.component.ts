@@ -23,6 +23,7 @@ import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/componen
 import { DateFormatPipe } from '../../../../../shared/pipes/date-format/date-format.pipe';
 import { TeleServiceConfirmBoxComponent } from '../../../teleservice/teleservice-confirm-box/teleservice-confirm-box.component';
 import { TeleServiceShareComponent } from '../../../teleservice/teleservice-share/teleservice-share.component';
+import { ActionsPopupComponent } from '../../actions-popup/actions-popup.component';
 
 @Component({
     selector: 'app-service-actions',
@@ -31,6 +32,7 @@ import { TeleServiceShareComponent } from '../../../teleservice/teleservice-shar
 })
 export class ServiceActionsComponent implements OnInit {
     @Input() waitlist_data;
+    @Input() showToken;
     bookingType;
     timeType;
     trackStatus = false;
@@ -50,6 +52,9 @@ export class ServiceActionsComponent implements OnInit {
     showCall;
     showmrrx = false;
     showAssign = false;
+    showAssignMyself = false;
+    showUnassign = false;
+    showAssignTeam = false;
     trackDetail: any = [];
     customerMsg;
     newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
@@ -71,6 +76,7 @@ export class ServiceActionsComponent implements OnInit {
     notSupported;
     busnes_name = '';
     showMoreActions = false;
+    groups: any = [];
     constructor(private groupService: GroupStorageService,
         private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
@@ -163,6 +169,9 @@ export class ServiceActionsComponent implements OnInit {
         }
         console.log(this.is_web);
         this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
+        if (this.active_user.accountType) {
+            this.getUserTeams();
+        }
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.setActions();
@@ -222,8 +231,19 @@ export class ServiceActionsComponent implements OnInit {
                 this.showAttachment = true;
             }
             if (this.active_user.accountType == 'BRANCH' && (this.waitlist_data.waitlistStatus === 'arrived' || this.waitlist_data.waitlistStatus === 'checkedIn')) {
-                this.showAssign = true;
                 this.getUser();
+                if (this.active_user && this.active_user.userType == 1 && !this.waitlist_data.provider && this.waitlist_data.queue.provider.id === 0 && this.isUserdisable) {
+                    this.showAssignMyself = true;
+                }
+                if (this.waitlist_data.queue.provider.id === 0 && this.waitlist_data.provider) {
+                    this.showUnassign = true;
+                }
+                if (this.waitlist_data.queue.provider.id === 0) {
+                    this.showAssign = true;
+                }
+                if (this.groups.length > 0 && (this.waitlist_data.waitlistStatus === 'arrived' || this.waitlist_data.waitlistStatus === 'checkedIn')) {
+                    this.showAssignTeam = true;
+                }
             }
         } else {
             if (this.timeType !== 3 && this.waitlist_data.apptStatus !== 'Completed' && this.waitlist_data.apptStatus !== 'Confirmed' && this.waitlist_data.apptStatus !== 'blocked') {
@@ -274,8 +294,19 @@ export class ServiceActionsComponent implements OnInit {
                 this.showAttachment = true;
             }
             if (this.active_user.accountType == 'BRANCH' && (this.waitlist_data.apptStatus === 'Arrived' || this.waitlist_data.apptStatus === 'Confirmed')) {
-                this.showAssign = true;
                 this.getUser();
+                if (this.active_user && this.active_user.userType == 1 && !this.waitlist_data.provider && this.waitlist_data.schedule.provider.id === 0 && this.isUserdisable) {
+                    this.showAssignMyself = true;
+                }
+                if (this.waitlist_data.schedule.provider.id === 0 && this.waitlist_data.provider) {
+                    this.showUnassign = true;
+                }
+                if (this.waitlist_data.schedule.provider.id === 0) {
+                    this.showAssign = true;
+                }
+                if (this.groups.length > 0 && (this.waitlist_data.apptStatus === 'Arrived' || this.waitlist_data.apptStatus === 'Confirmed')) {
+                    this.showAssignTeam = true;
+                }
             }
         }
         if (this.showTeleserviceStart) {
@@ -974,5 +1005,39 @@ export class ServiceActionsComponent implements OnInit {
     }
     showActions() {
         this.showMoreActions = !this.showMoreActions;
+    }
+    showActionsPopup(source) {
+        this.dialog.open(ActionsPopupComponent, {
+            width: '50%',
+            panelClass: ['newPopupClass'],
+            disableClose: true,
+            data: {
+                bookingType: this.bookingType,
+                waitlist_data: this.waitlist_data,
+                source: source,
+                timeType: this.timeType,
+                is_web: this.is_web,
+                showAssign: this.showAssign,
+                showUnassign: this.showUnassign,
+                showAssignTeam: this.showAssignTeam,
+                showAssignMyself: this.showAssignMyself
+            }
+        });
+    }
+    getUserTeams() {
+        this.provider_services.getTeamGroup().subscribe((data: any) => {
+            this.groups = data;
+        });
+    } 
+    addCustomerDetails() {
+        let virtualServicemode;
+        let virtualServicenumber;
+        if (this.waitlist_data.virtualService) {
+            Object.keys(this.waitlist_data.virtualService).forEach(key => {
+                virtualServicemode = key;
+                virtualServicenumber = this.waitlist_data.virtualService[key];
+            });
+        }
+        this.router.navigate(['provider', 'check-ins', 'add'], { queryParams: { source: 'waitlist-block', uid: this.waitlist_data.ynwUuid, showtoken: this.showToken, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: this.waitlist_data.service.id, waitlistMode: this.waitlist_data.waitlistMode } });
     }
 }

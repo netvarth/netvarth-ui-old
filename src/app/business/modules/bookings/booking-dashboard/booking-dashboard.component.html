@@ -1,15 +1,12 @@
-<div class="subheader header-container subheader-solid">
-    <div class="container-fluid d-flex flex-wrap flex-sm-nowrap">
-        <div class="d-flex flex-column flex-wrap mr-2">
-            <h1 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                <b>Good Morning</b>, {{bname}}!
-            </h1>
-            <h6>
-                Manage your complete practice from one place
-            </h6>
-        </div>
+<section *ngIf="providerId">
+    <div class="card title-gb">
+        <h5 class="no-margin">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>
+            <img [src]="getUserImg()">
+            {{bname}}
+        </h5>
     </div>
-</div>
+</section>
 <div class="book-stats">
     <app-booking-stats [waitlistMgrSettings]="waitlistMgrSettings" [newApptsCount]="newAppts.length"
         [newWitlistCount]="newWaitlists.length"></app-booking-stats>
@@ -31,6 +28,7 @@
         </div>
         <div class="column">
             <app-records-datagrid [source]="'waitlist'" [records]="todayWaitlists" [timeType]="1"
+                [showToken]="waitlistMgrSettings.showTokenId"
                 [heading]="(waitlistMgrSettings && waitlistMgrSettings.showTokenId) ? 'Tokens' : 'Check-ins'">
             </app-records-datagrid>
         </div>

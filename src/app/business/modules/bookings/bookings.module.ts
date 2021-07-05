@@ -9,7 +9,9 @@ import { BookingDashboardModule } from './booking-dashboard/booking-dashboard.mo
 
 
 @NgModule({
-  declarations: [BookingsComponent],
+  declarations: [
+    BookingsComponent
+  ],
   imports: [
     CommonModule,
     BookingsRoutingModule,

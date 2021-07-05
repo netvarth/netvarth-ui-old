@@ -16,6 +16,7 @@ export class RecordsDatagridComponent implements OnInit {
   @Input() source;
   @Input() timeType;
   @Input() showMore;
+  @Input() showToken;
   @Output() actionPerformed = new EventEmitter<any>();
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   waitlistModes = {
@@ -60,7 +61,7 @@ export class RecordsDatagridComponent implements OnInit {
     if (this.source == 'waitlist' || this.source === 'appt' || this.source === 'appt-dashboard' || this.source === 'waitlist-dashboard') {
       const uid = (this.source === 'appt' || this.source === 'appt-dashboard') ? record.uid : record.ynwUuid;
       const waitlisttype = (this.source === 'appt' || this.source === 'appt-dashboard') ? 'appointment' : 'checkin';
-      this.router.navigate(['provider', 'bookings', 'details'], { queryParams: { uid: uid, timetype: 1, type: waitlisttype } });
+      this.router.navigate(['provider', 'bookings', 'details'], { queryParams: { uid: uid, timetype: 1, type: waitlisttype, showToken: this.showToken } });
     } else if (this.source == 'bill') {
       let source;
       if (record.type === 'Appointment') {

@@ -67,6 +67,8 @@
     border-radius: 50% !important;
     height: 60px !important;
     width: 60px !important;
+}
+.bg_peacok .symbol-label {
     background-color: #f1b51c !important;
 }
 .container-upcoming-bookings .ser-name {

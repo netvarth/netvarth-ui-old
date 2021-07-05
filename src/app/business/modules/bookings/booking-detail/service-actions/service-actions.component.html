@@ -28,7 +28,7 @@
           <span class="custom-red">
             {{notSupported}}</span>
         </div>
-        <div class="mgn-up-20 call-inst"
+        <div class="mgn-up-10 call-inst"
           *ngIf="waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
           You can call the {{customer_label}} directly at
           +{{waitlist_data.virtualService['WhatsApp']}}
@@ -73,28 +73,10 @@
           <i class="fa fa-share-alt"></i>Share {{(waitlist_data.service?.virtualServiceType ==
           'videoService')? 'video' : 'audio'}} call instructions
         </a>
-        <a *ngIf="showInProgress" class="btn mb-2 action-button" (click)="changeWaitlistStatus('STARTED')">
-          <i class="fa fa-repeat"></i>Move to In progress
+        <a *ngIf="showAssign || showAssignMyself || showUnassign || showAssignTeam" class="btn mb-2 action-button" (click)="showActionsPopup('assign')">
+          <i class="fa fa-paperclip" aria-hidden="true"></i>Assign
         </a>
-        <a *ngIf="waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived'"
-          class="btn mb-2 action-button" (click)="witlistRescheduleActionClicked()">
-          <i class="fa fa-repeat"></i>Reschedule
-        </a>
-        <a *ngIf="waitlist_data.apptStatus == 'Confirmed' || waitlist_data.apptStatus == 'Arrived'"
-          class="btn mb-2 action-button" (click)="apptRescheduleActionClicked()">
-          <i class="fa fa-repeat"></i>Reschedule
-        </a>
-        <a *ngIf="showCancel" class="btn mb-2 action-button" (click)="changeWaitlistStatus('CANCEL')">
-          <i class="fa fa-times-circle-o"></i>Cancel
-        </a>
-        <a *ngIf="showComplete && !showTeleserviceStart" class="btn mb-2 action-button"
-          (click)="changeWaitlistStatus('DONE')">
-          <i class="fa fa-check"></i>Complete
-        </a>
-        <a *ngIf="showComplete && showTeleserviceStart" class="btn mb-2 action-button" (click)="endmeeting()">
-          <i class="fa fa-check"></i>Complete
-        </a>
-        <a *ngIf="showUndo" class="btn mb-2 action-button" (click)="changeWaitlistStatus('CHECK_IN')">
+        <a class="btn mb-2 action-button" (click)="showActionsPopup('status')">
           <i class="fa fa-exchange"></i>Status change
         </a>
       </div>
@@ -103,14 +85,22 @@
     </div>
     <div class="card-toolbar col-12 col-sm-12 col-lg-12 p-0 disp-grid mgn-up-10" *ngIf="showMoreActions">
       <div class="action-buttons-container">
+        <a *ngIf="waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived'"
+          class="btn mb-2 action-button" (click)="witlistRescheduleActionClicked()">
+          <i class="fa fa-repeat"></i>Reschedule
+        </a>
+        <a *ngIf="waitlist_data.apptStatus == 'Confirmed' || waitlist_data.apptStatus == 'Arrived'"
+          class="btn mb-2 action-button" (click)="apptRescheduleActionClicked()">
+          <i class="fa fa-repeat"></i>Reschedule
+        </a>
+        <a *ngIf="waitlist_data.waitlistStatus==='blocked'" class="btn mb-2 action-button" (click)="unBlockWaitlist()">
+          <i class="fa fa-unlock-alt"></i>Add {{customer_label}}
+        </a>
         <a *ngIf="waitlist_data.waitlistStatus==='blocked'" class="btn mb-2 action-button" (click)="unBlockWaitlist()">
           <i class="fa fa-unlock-alt"></i>Unblock
         </a>
         <a *ngIf="waitlist_data.apptStatus==='blocked'" class="btn mb-2 action-button" (click)="unBlockAppt()">
           <i class="fa fa-unlock-alt"></i>Unblock
-        </a>
-        <a *ngIf="showArrived" class="btn mb-2 action-button" (click)="changeWaitlistStatus('REPORT')">
-          <i class="fa fa-map-marker"></i>Mark as arrived
         </a>
         <a *ngIf="showCall" class="btn mb-2 action-button" (click)="callingWaitlist()">
           <ng-container *ngIf="waitlist_data.callingStatus">
@@ -131,9 +121,6 @@
         </a>
         <a *ngIf="showAttachment" class="btn mb-2 action-button" (click)="sendimages()">
           <i class="fa fa-paperclip" aria-hidden="true"></i>Send Attachments
-        </a>
-        <a *ngIf="showAssign" class="btn mb-2 action-button" data-toggle="modal" data-target="#exampleModalCenter">
-          <i class="fa fa-paperclip" aria-hidden="true"></i>Assign
         </a>
       </div>
     </div>

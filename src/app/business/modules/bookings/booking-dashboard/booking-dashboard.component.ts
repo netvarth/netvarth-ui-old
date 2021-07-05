@@ -5,6 +5,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Subscription } from 'rxjs';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-booking-dashboard',
@@ -31,7 +32,8 @@ export class BookingDashboardComponent implements OnInit {
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
     private activated_route: ActivatedRoute,
-    private shared_functions: SharedFunctions) {
+    private shared_functions: SharedFunctions,
+    private locationobj: Location) {
     this.activated_route.params.subscribe(params => {
       if (params.userid) {
         this.providerId = JSON.parse(params.userid);
@@ -91,7 +93,7 @@ export class BookingDashboardComponent implements OnInit {
       .subscribe(
         res => {
           this.userDetails = res;
-          this.bname = (this.userData.businessName) ? this.userData.businessName : this.userData.firstName + ' ' + this.userData.lastName;
+          this.bname = (this.userDetails.businessName) ? this.userDetails.businessName : this.userDetails.firstName + ' ' + this.userDetails.lastName;
         });
   }
   getProviderSettings() {
@@ -172,5 +174,14 @@ export class BookingDashboardComponent implements OnInit {
         data => {
           this.customers = data;
         });
+  }
+  getUserImg() {
+    if (this.userDetails && this.userDetails.profilePicture) {
+      return this.userDetails.profilePicture.url;
+    }
+    return 'assets/images/Asset1@300x(1).png';
+  }
+  goBack() {
+    this.locationobj.back();
   }
 }
