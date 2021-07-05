@@ -1,23 +1,21 @@
-<h1 class="mat-dialog-title pad-20">
+<h1 class="mat-dialog-title pad-20 no-margin">
   Communication
   <i class="fa fa-times pull-right" aria-hidden="true" (click)="dialogClose()"></i>
 </h1>
-<div class="communication">
-  <div class="comm-box">
-    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding">
-      <span class="ribbon-new">Recommended</span>
+<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 communication">
+  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 comm-box">
+    <div class="">
       <div class="disp-flex">
         <div class="flx_8 video-head">
           <span class="jvideo-icon"></span>
-        </div>&nbsp;
+        </div>
         <div class="video-style">
           Jaldee Video Call
         </div>
       </div>
       <div class="disp-flex video">
-
         <label>Remaining minutes : <span class="bold">
-            &nbsp;{{videocredits}}</span>
+            {{videocredits}}</span>
         </label>
       </div>
       <ul>
@@ -27,52 +25,50 @@
         </li>
       </ul>
       <div class="startBt">
-        <br>
-        <button type="button" class="cs-btn bt1 btn-grn txt-trans-none" style="color: white;" (click)="gotoMeet()">
+        <button type="button" class="cs-btn bt1 btn-grn txt-trans-none" (click)="gotoMeet()">
           Launch Meeting
         </button>
       </div>
     </div>
+    <div class="powered-by">
+      <div class="poweredby-text">
+        Recommended
+      </div>
+    </div>
   </div>
-  <div class="comm-box">
-    <div
-    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding">
+  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 comm-box mgn-up-20">
     <div class="disp-flex">
-        <div class="flx_8 whsp-head">
-            <span class="wtsapvid-icon"></span>
-        </div>&nbsp;
-        <div class="whsp-style">
-            Whatsapp Video Call 
-        </div>
+      <div class="flx_8 whsp-head">
+        <span class="wtsapvid-icon"></span>
+      </div>
+      <div class="whsp-style">
+        Whatsapp Video Call
+      </div>
     </div>
     <div class="disp-flex whatsp">
-        <label> Whatsapp # : <span class="bold">
-                &nbsp;+{{data}}</span></label>
-       
+      <label> Whatsapp # : <span class="bold">
+          {{countryCode}} {{whatsappNumber}}</span></label>
     </div>
-    <div class="clearfix"></div>
-        <ul>
-            <li>Your number will be revealed to your patient through this
-            </li>
-            <li>Not Inbuilt technology
-            </li>
-        </ul>
-    <br>
+    <ul>
+      <li>Your number will be revealed to your patient through this
+      </li>
+      <li>Not Inbuilt technology
+      </li>
+    </ul>
+    {{is_web}}={{notSupported}}
     <div *ngIf="is_web">
-        <div class="custmer-font-wght">
-            <span class="custom-red">
-                {{notSupported}}</span><br>
-        </div>
+      <div class="custmer-font-wght">
+        <span class="custom-red">
+          {{notSupported}}</span>
+      </div>
     </div>
     <div class="startBt" *ngIf="!is_web">
-        <button type="button" class="cs-btn bt1 btn-grn txt-trans-none"
-            style="color: white;" (click)="amReady()">
-            Launch Meeting
-        </button>
+      <button type="button" class="cs-btn bt1 btn-grn txt-trans-none" (click)="amReady()">
+        Launch Meeting
+      </button>
     </div>
-</div>
   </div>
-  <div>
-
+  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 comm-box mgn-up-20">
+    <div (click)="voiceCallConfirm()"> Voice Call</div>
   </div>
 </div>

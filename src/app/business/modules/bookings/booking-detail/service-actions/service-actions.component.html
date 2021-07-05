@@ -19,7 +19,7 @@
         <i class="fa fa-circle" aria-hidden="true"></i>
         {{waitlist_data.apptStatus | capitalizeFirst}}
       </div>
-      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign no-padding mgn-up-20 tele-msg"
+      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-20 tele-msg"
         *ngIf="waitlist_data.service.virtualCallingModes && waitlist_data.service.virtualCallingModes[0] && (waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp' || waitlist_data.service.virtualCallingModes[0].callingMode === 'Phone') && is_web">
         <div class="">
           <span class="custom-red">Note: {{(waitlist_data.service.virtualCallingModes[0].callingMode == 'Phone')?

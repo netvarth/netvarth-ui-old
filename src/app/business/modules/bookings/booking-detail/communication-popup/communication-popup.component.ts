@@ -18,6 +18,8 @@ export class CommunicationPopupComponent implements OnInit {
   meet_data: any = [];
   providerMeetingUrl;
   id;
+  whatsappNumber;
+  countryCode;
   constructor(public dialogRef: MatDialogRef<CommunicationPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private wordProcessor: WordProcessor,
@@ -25,8 +27,12 @@ export class CommunicationPopupComponent implements OnInit {
     private router: Router, private dialog: MatDialog,
     private snackbarService: SnackbarService) {
     console.log(this.data);
+    this.countryCode = (this.data.type === 'appointment') ? this.data.waitlist.providerConsumer.whatsAppNum.countryCode : this.data.waitlist.countryCode;
+    this.whatsappNumber = (this.data.type === 'appointment') ? this.data.waitlist.providerConsumer.whatsAppNum.number : this.data.waitlist.waitlistingFor[0].phoneNo;
   }
   ngOnInit(): void {
+    this.notSupported = this.wordProcessor.getProjectMesssages('WATSAPP_NOT_SUPPORTED');
+    console.log(this.notSupported);
     const isMobile = {
       Android: function () {
         return navigator.userAgent.match(/Android/i);
@@ -48,9 +54,9 @@ export class CommunicationPopupComponent implements OnInit {
       }
     };
     if (!isMobile.Android() && !isMobile.iOS()) {
-      this.is_web = true;
+        this.is_web = true;
     }
-    this.notSupported = this.wordProcessor.getProjectMesssages('WATSAPP_NOT_SUPPORTED');
+    console.log(this.is_web);
     this.getJaldeeVideoCredits();
   }
   dialogClose() {
@@ -65,8 +71,7 @@ export class CommunicationPopupComponent implements OnInit {
       );
   }
   amReady() {
-    const number = (this.data.type === 'appointment') ? this.data.waitlist.providerConsumer.whatsAppNum.number : this.data.waitlist.waitlistingFor[0].phoneNo;
-    const path = 'https://wa.me/' + number;
+    const path = 'https://wa.me/' + this.whatsappNumber;
     window.open(path, '_blank');
   }
   gotoMeet() {
