@@ -60,6 +60,13 @@
                                         </span>
                                         <h3 (click)="goLabelDetail(label)" class="pointer-cursor">
                                             {{label.displayName | capitalizeFirst}}</h3> 
+                                            
+                                            <!-- <span  *ngIf="label.ownershipDetails && label.ownershipDetails.users && label.ownershipDetails.users.length > 0">
+                                                <div  *ngFor="let user of label.ownershipDetails.users">
+                                                    <span>{{getUserName(user)}}</span>
+                                                </div>
+                                            </span> -->
+                                            
                                             <!-- <span class="layout_name">
                                                     ({{label.label | capitalizeFirst}})</span> -->
                                         <!-- <div class="c-ot m0">
