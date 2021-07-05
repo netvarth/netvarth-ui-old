@@ -131,15 +131,6 @@
         margin-bottom: 20px !important;
     }
 }
-.action-box {
-    width: 150px;
-    height: 100px;
-    margin: 15px;
-    text-align: center;
-    float: left;
-    display: table;
-    box-shadow: 10px 10px 15px 0px #cccccc9c;
-}
 .tele-msg .custom-red {
     color: red !important;
     font-weight: 700 !important;

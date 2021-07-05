@@ -164,12 +164,6 @@ export class ServiceActionsComponent implements OnInit {
             if (this.board_count > 0 && this.timeType === 1 && !this.waitlist_data.service.virtualCallingModes && (this.waitlist_data.waitlistStatus === 'checkedIn' || this.waitlist_data.waitlistStatus === 'arrived')) {
                 this.showCall = true;
             }
-            if (this.pos && this.waitlist_data.waitlistStatus !== 'blocked' && (this.waitlist_data.waitlistStatus !== 'cancelled' || (this.waitlist_data.waitlistStatus === 'cancelled' && this.waitlist_data.paymentStatus !== 'NotPaid'))) {
-                this.showBill = true;
-            }
-            if (this.timeType !== 2 && this.waitlist_data.waitlistStatus !== 'cancelled' && this.waitlist_data.waitlistStatus !== 'blocked') {
-                this.showmrrx = true;
-            }
             if (this.active_user.accountType == 'BRANCH' && (this.waitlist_data.waitlistStatus === 'arrived' || this.waitlist_data.waitlistStatus === 'checkedIn')) {
                 this.getUser();
                 if (this.active_user && this.active_user.userType == 1 && !this.waitlist_data.provider && this.waitlist_data.queue.provider.id === 0 && this.isUserdisable) {
@@ -186,29 +180,14 @@ export class ServiceActionsComponent implements OnInit {
                 }
             }
         } else {
-            if (this.timeType !== 3 && this.waitlist_data.apptStatus !== 'Completed' && this.waitlist_data.apptStatus !== 'Confirmed' && this.waitlist_data.apptStatus !== 'blocked') {
-                this.showUndo = true;
-            }
-            if (this.timeType === 1 && this.waitlist_data.apptStatus === 'Confirmed' && !this.waitlist_data.service.virtualCallingModes) {
-                this.showArrived = true;
-            }
-            if (this.waitlist_data.apptStatus === 'Arrived' || this.waitlist_data.apptStatus === 'Confirmed') {
-                this.showCancel = true;
-            }
             if (this.timeType === 1 && this.waitlist_data.service.livetrack && this.waitlist_data.apptStatus === 'Confirmed' && this.waitlist_data.jaldeeApptDistanceTime && this.waitlist_data.jaldeeApptDistanceTime.jaldeeDistanceTime && (this.waitlist_data.jaldeeStartTimeType === 'ONEHOUR' || this.waitlist_data.jaldeeStartTimeType === 'AFTERSTART')) {
                 this.trackStatus = true;
             }
             if (this.timeType !== 3 && this.waitlist_data.apptStatus !== 'Cancelled' && this.waitlist_data.apptStatus !== 'Rejected' && this.waitlist_data.providerConsumer && (this.waitlist_data.providerConsumer.email || this.waitlist_data.providerConsumer.phoneNo)) {
                 this.showSendDetails = true;
             }
-            if (this.waitlist_data.providerConsumer.email || this.waitlist_data.providerConsumer.phoneNo) {
-                this.showMsg = true;
-            }
             if ((this.waitlist_data.apptStatus === 'Arrived' || this.waitlist_data.apptStatus === 'Confirmed') && this.timeType !== 2 && (!this.waitlist_data.service.virtualCallingModes)) {
                 this.showStart = true;
-            }
-            if ((this.waitlist_data.apptStatus == 'Started' || this.waitlist_data.apptStatus == 'Arrived' || this.waitlist_data.apptStatus == 'Confirmed') && this.timeType !== 2) {
-                this.showComplete = true;
             }
             if ((this.timeType === 1 || this.timeType === 3) && this.waitlist_data.service.virtualCallingModes && (this.waitlist_data.apptStatus === 'Arrived' || this.waitlist_data.apptStatus === 'Confirmed' || this.waitlist_data.apptStatus === 'Started')) {
                 this.showTeleserviceStart = true;
@@ -223,12 +202,6 @@ export class ServiceActionsComponent implements OnInit {
             }
             if (this.board_count > 0 && this.timeType === 1 && !this.waitlist_data.service.virtualCallingModes && (this.waitlist_data.apptStatus === 'Confirmed' || this.waitlist_data.apptStatus === 'Arrived')) {
                 this.showCall = true;
-            }
-            if (this.pos && this.waitlist_data.apptStatus !== 'blocked' && ((this.waitlist_data.apptStatus !== 'Cancelled' && this.waitlist_data.apptStatus !== 'Rejected') || ((this.waitlist_data.apptStatus === 'Cancelled' || this.waitlist_data.apptStatus === 'Rejected') && this.waitlist_data.paymentStatus !== 'NotPaid'))) {
-                this.showBill = true;
-            }
-            if (this.timeType !== 2 && this.waitlist_data.apptStatus !== 'blocked' && (this.waitlist_data.apptStatus !== 'Cancelled' && this.waitlist_data.apptStatus !== 'Rejected')) {
-                this.showmrrx = true;
             }
             if (this.active_user.accountType == 'BRANCH' && (this.waitlist_data.apptStatus === 'Arrived' || this.waitlist_data.apptStatus === 'Confirmed')) {
                 this.getUser();
@@ -294,17 +267,8 @@ export class ServiceActionsComponent implements OnInit {
             if (action === 'STARTED') {
                 action = 'Started';
             }
-            if (action === 'CANCEL') {
-                action = 'Cancelled';
-            }
-            if (action === 'REPORT') {
-                action = 'Arrived';
-            }
             if (action === 'DONE') {
                 action = 'Completed';
-            }
-            if (action === 'CHECK_IN') {
-                action = 'Confirmed';
             }
             this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, action, 'appt');
         }
@@ -852,9 +816,10 @@ export class ServiceActionsComponent implements OnInit {
                 virtualServicenumber = this.waitlist_data.virtualService[key];
             });
         }
-        const uid = (this.bookingType == 'checkin') ? this.waitlist_data.ynwUuid : this.waitlist_data.uid;
-        const mode = (this.bookingType == 'checkin') ? this.waitlist_data.waitlistMode : this.waitlist_data.appointmentMode;
-        const source = (this.bookingType == 'checkin') ? 'waitlist-block' : 'appt-block';
-        this.router.navigate(['provider', 'check-ins', 'add'], { queryParams: { source: source, uid: uid, showtoken: this.showToken, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: this.waitlist_data.service.id, waitlistMode: mode } });
+        if (this.bookingType == 'checkin') {
+            this.router.navigate(['provider', 'check-ins', 'add'], { queryParams: { source: 'waitlist-block', uid: this.waitlist_data.ynwUuid, showtoken: this.showToken, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: this.waitlist_data.service.id, waitlistMode: this.waitlist_data.waitlistMode } });
+        } else {
+            this.router.navigate(['provider', 'appointments', 'appointment'], { queryParams: { source: 'appt-block', uid: this.waitlist_data.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: this.waitlist_data.service.id, apptMode: this.waitlist_data.appointmentMode } });
+        }
     }
 }

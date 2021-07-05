@@ -94,6 +94,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   @Input() provider;
   @Input() source;
   @Input() height;
+  @Input() status;
   @ViewChild('imgsec') elementView: ElementRef;
   constructor(
     private inbox_services: InboxServices,

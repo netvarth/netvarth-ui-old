@@ -1,7 +1,7 @@
 <h1 class="mat-dialog-title pad-20 no-margin">
   <i class="fa fa-times pull-right" aria-hidden="true" (click)="dialogClose()"></i>
 </h1>
-<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 communication" *ngIf="data.source == 'assign'">
+<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12" *ngIf="data.source == 'assign'">
   <div class="action-box pointer-cursor" *ngIf="data.showAssignMyself" (click)="assignMyself()">
     <div class="action-box-sub">
       <span class="doctor-change-icon"></span>
@@ -28,24 +28,23 @@
     </div>
   </div>
 </div>
-<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 communication" *ngIf="data.source == 'status'">
-  <a *ngIf="showInProgress" class="btn mb-2 action-button" (click)="changeWaitlistStatus('STARTED')">
-    <i class="fa fa-repeat"></i>Move to In progress
-  </a>
-  <a *ngIf="showCancel" class="btn mb-2 action-button" (click)="changeWaitlistStatus('CANCEL')">
-    <i class="fa fa-times-circle-o"></i>Cancel
-  </a>
-  <a *ngIf="showComplete && !showTeleserviceStart" class="btn mb-2 action-button"
-    (click)="changeWaitlistStatus('DONE')">
-    <i class="fa fa-check"></i>Complete
-  </a>
-  <a *ngIf="showComplete && showTeleserviceStart" class="btn mb-2 action-button" (click)="endmeeting()">
-    <i class="fa fa-check"></i>Complete
-  </a>
-  <a *ngIf="showUndo" class="btn mb-2 action-button" (click)="changeWaitlistStatus('CHECK_IN')">
-    <i class="fa fa-exchange"></i>{{(data.bookingType == 'checkin') ? 'Checked In' : 'Confirmed'}}
-  </a>
-  <a *ngIf="showArrived" class="btn mb-2 action-button" (click)="changeWaitlistStatus('REPORT')">
-    <i class="fa fa-map-marker"></i>Mark as arrived
-  </a>
+<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12" *ngIf="data.source == 'status'">
+  <div class="status-box" *ngIf="showInProgress" (click)="changeWaitlistStatus('STARTED')">
+    <div class="status"> Move to In progress</div>
+  </div>
+  <div class="status-box" *ngIf="showCancel" (click)="changeWaitlistStatus('CANCEL')">
+    <div class="status">Cancel</div>
+  </div>
+  <div class="status-box" *ngIf="showComplete && !showTeleserviceStart" (click)="changeWaitlistStatus('DONE')">
+    <div class="status">Complete</div>
+  </div>
+  <div class="status-box" *ngIf="showComplete && showTeleserviceStart" (click)="endmeeting()">
+    <div class="status">Complete</div>
+  </div>
+  <div class="status-box" *ngIf="showUndo" (click)="changeWaitlistStatus('CHECK_IN')">
+    <div class="status">{{(data.bookingType == 'checkin') ? 'Checked In' : 'Confirmed'}}</div>
+  </div>
+  <div class="status-box" *ngIf="showArrived" (click)="changeWaitlistStatus('REPORT')">
+    <div class="status">Mark as arrived</div>
+  </div>
 </div>
