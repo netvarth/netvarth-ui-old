@@ -2171,6 +2171,18 @@ export class ProviderServices {
     const url = 'provider/waitlist/questionnaire/upload/status/' + uid;
     return this.servicemeta.httpPut(url, data);
   }
+   getInternalstatList(uid) {
+    const url = 'provider/waitlist/internalStatuses/'+ uid;
+    return this.servicemeta.httpGet(url);
+  }
+  changeProviderWaitlistInternalStatus(waitlist_id, action) {
+    const url = 'provider/waitlist/applyInternalStatus/' + waitlist_id + '/' + action;
+    return this.servicemeta.httpPut(url);
+  }
+  changeProviderApptInternalStatus(waitlist_id, action) {
+    const url = 'provider/appointment/applyInternalStatus/' + waitlist_id + '/' + action;
+    return this.servicemeta.httpPut(url);
+  }
   getProviderBills(filter = {}) {
     const url = 'provider/bill';
     return this.servicemeta.httpGet(url, null, filter);

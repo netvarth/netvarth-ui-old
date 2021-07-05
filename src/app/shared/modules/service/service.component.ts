@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, HostListener } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ServicesService } from './services.service';
 import { Subscription } from 'rxjs';
@@ -149,6 +149,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
     active_user: any;
     showNoteError = '';
     questionnaire: any = [];
+    no_of_grids: number;
+    screenWidth: number;
 
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
@@ -310,6 +312,27 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 }
             }
         );
+    }
+    @HostListener('window:resize', ['$event'])
+    onResize() {
+     this.screenWidth = window.innerWidth;
+     let divider;
+     const divident = this.screenWidth / 37.8;
+     if (this.screenWidth > 1700) {
+       divider = divident / 5;
+     } else if (this.screenWidth > 1111 && this.screenWidth < 1700) {
+        divider = divident / 4;
+     } else if (this.screenWidth > 900 && this.screenWidth < 1111) {
+       divider = divident / 3;
+     } else if (this.screenWidth > 375 && this.screenWidth < 900) {
+       divider = divident / 2;
+     } else if (this.screenWidth < 375) {
+       divider = divident / 1;
+     }
+     console.log(divident);
+     console.log(divider);
+     this.no_of_grids = Math.round(divident / divider);
+     console.log(this.no_of_grids);
     }
     @Input() donationservice;
     setDescFocus() {
@@ -841,4 +864,18 @@ export class ServiceComponent implements OnInit, OnDestroy {
     gotoQnr(id) {
         this.router.navigate(['provider', 'settings', 'general', 'questionnaire', id]);
     }
+    getProviderName(users){
+        console.log(users);
+        let userlst = '';
+        console.log(this.users_list);
+        for(let user of users){
+        let details = this.users_list.filter(usr => usr.id == user);
+        console.log(details);
+        if(details && details.length > 0){
+            userlst = userlst + details[0].firstName +' '+ details[0].lastName + ',';
+     }
+    }
+    console.log(userlst);
+    return userlst;
+}
 }

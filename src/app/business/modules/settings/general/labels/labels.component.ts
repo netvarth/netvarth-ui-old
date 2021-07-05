@@ -33,6 +33,7 @@ export class LabelsComponent implements OnInit {
 source;
     add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
     domain: any;
+    users: any = [];
     constructor(private router: Router,
         private _location: Location, public activateroute: ActivatedRoute,
         private provider_services: ProviderServices,
@@ -41,17 +42,35 @@ source;
         private  wordProcessor: WordProcessor) {
             this.activateroute.queryParams.subscribe(params => {
                this.source = params.source;
+               
               });
+              const user = this.groupService.getitemFromGroupStorage('ynw-user');
+              this.domain = user.sector;
+              if (user.accountType === 'BRANCH') {
+                  this.getProviders().then((data) => {
+                   this.users = data;
+                   console.log(this.users);
+                   this.getLabels();
+                  });                  
+                }
+                else {
+                    this.getLabels();
+                }
          }
     ngOnInit() {
+
         this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'general->labels', 'subKey': 'timewindow', 'classname': 'b-queue',
             'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
         };
+        // const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        // this.domain = user.sector;
+        // if (user.accountType === 'BRANCH') {
+        //     this.getProviders();
+        //   }
 
-        this.getLabels();
-        const user = this.groupService.getitemFromGroupStorage('ynw-user');
-        this.domain = user.sector;
+        // this.getLabels();
+      
     }
     getLabels() {
        this.api_loading = true;
@@ -131,4 +150,26 @@ source;
     redirecToHelp() {
         this.router.navigate(['/provider/' + this.domain + '/general->labels']);
     }
+    getProviders() {
+        const _this = this;
+          return new Promise(function (resolve, reject) {
+            const apiFilter = {};
+            apiFilter['userType-eq'] = 'PROVIDER';
+            _this.provider_services.getUsers(apiFilter).subscribe(data => {
+                  resolve(data);
+                },
+                () => {
+                  reject();
+                }
+              );
+          });
+      }
+      getUserName(userid) {
+        console.log(userid);
+        console.log(this.users);
+        const userName =  this.users.filter(user => user.id === JSON.stringify(userid));
+        console.log(userName);       
+        // return userName.id;
+    
+      }
 }

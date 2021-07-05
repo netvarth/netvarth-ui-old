@@ -115,6 +115,7 @@ export class CheckinActionsComponent implements OnInit {
     meet_data: any;
     id: any;
     providerMeetingUrl: any;
+    statusList: any=[];
     groups: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
@@ -154,6 +155,7 @@ export class CheckinActionsComponent implements OnInit {
             this.showToken = this.checkin.showToken;
             if (!this.data.type) {
             this.getPos();
+            this.getInternStatus();
             }
         } else {
             this.showMsg = true;
@@ -584,6 +586,17 @@ export class CheckinActionsComponent implements OnInit {
                     this.buttonClicked = false;
                 });
     }
+    changeWaitlistInternalStatusApi(waitlist, action) {
+        this.provider_shared_functions.changeWaitlistInternalStatusApi(this, waitlist, action)
+            .then(
+                result => {
+                    this.dialogRef.close('reload');
+                    this.buttonClicked = false;
+                },
+                error => {
+                    this.buttonClicked = false;
+                });
+    }
     getDisplayboardCount() {
         let layout_list: any = [];
         this.provider_services.getDisplayboardsWaitlist()
@@ -611,7 +624,7 @@ export class CheckinActionsComponent implements OnInit {
         if (this.data.timetype === 1 && this.checkin.service.livetrack && this.checkin.waitlistStatus === 'checkedIn' && this.checkin.jaldeeWaitlistDistanceTime && this.checkin.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.checkin.jaldeeStartTimeType === 'ONEHOUR' || this.checkin.jaldeeStartTimeType === 'AFTERSTART')) {
             this.trackStatus = true;
         }
-        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'cancelled' && ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo !== 'null') || this.checkin.waitlistingFor[0].email)) {
+        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'cancelled' && ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo.trim() !== 'null') || this.checkin.waitlistingFor[0].email)) {
             this.showSendDetails = true;
         }
         if ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo !== 'null') || this.checkin.waitlistingFor[0].email) {
@@ -1069,6 +1082,20 @@ export class CheckinActionsComponent implements OnInit {
     getStatusLabel(status) {
         const label_status = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm(status));
         return label_status;
+    }
+    getInternStatus(){
+        this.provider_services.getInternalstatList(this.ynwUuid).subscribe((data: any) => {
+            console.log(data);
+            this.statusList = data;
+        });
+    }
+    changeWaitlistInternalStatus(action){
+        console.log(action);
+        if (action !== 'CANCEL') {
+            // this.dialogRef.close();
+            this.buttonClicked = true;
+        }
+       this.provider_shared_functions.changeWaitlistinternalStatus(this, this.checkin, action);
     }
 
     getUserTeams() {

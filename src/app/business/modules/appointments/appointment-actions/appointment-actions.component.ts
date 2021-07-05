@@ -455,7 +455,7 @@ export class AppointmentActionsComponent implements OnInit {
         if (this.data.timetype === 1 && this.appt.service.livetrack && this.appt.apptStatus === 'Confirmed' && this.appt.jaldeeApptDistanceTime && this.appt.jaldeeApptDistanceTime.jaldeeDistanceTime && (this.appt.jaldeeStartTimeType === 'ONEHOUR' || this.appt.jaldeeStartTimeType === 'AFTERSTART')) {
             this.trackStatus = true;
         }
-        if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected' && (this.appt.providerConsumer.email || this.appt.providerConsumer.phoneNo)) {
+        if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected' && (this.appt.providerConsumer.email || (this.appt.providerConsumer.phoneNo && this.appt.providerConsumer.phoneNo.trim() !== ''))) {
             this.showSendDetails = true;
         }
         if (this.appt.providerConsumer.email || (this.appt.providerConsumer.phoneNo && this.appt.providerConsumer.phoneNo !== 'null')) {
