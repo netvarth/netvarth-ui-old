@@ -19,7 +19,7 @@
         </app-customer-booking-details>
       </div>
     </div>
-    <div class="col-lg-4 no-padding-big mgn-bt-10">
+    <div class="col-lg-4 no-padding-big mgn-bt-10" *ngIf="!api_loading">
       <app-provider-inbox-list [customer]="customer" [provider]="provider" [source]="'details'" [height]="height"
         [status]="wlStatus">
       </app-provider-inbox-list>
