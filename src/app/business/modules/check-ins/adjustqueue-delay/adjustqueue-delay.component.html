@@ -46,11 +46,11 @@
                   <div class="service-outer" *ngIf="users.length > 0">
                     <ng-container>
                       <mat-form-field *ngIf="users.length == 1">
-                        <input matInput *ngFor="let user of users" [readonly]="true" placeholder="Doctors"
+                        <input matInput *ngFor="let user of users" [readonly]="true" placeholder="{{provider_label}}"
                           value="{{user.firstName | capitalizeFirst}} {{user.lastName}}">
                       </mat-form-field>
                       <mat-form-field *ngIf="users.length > 1">
-                        <mat-select placeholder="Select Doctor" [ngModel]="selected_user"
+                        <mat-select placeholder="{{provider_label}}s" [ngModel]="selected_user"
                           [ngModelOptions]="{standalone: true}" #usersel
                           (selectionChange)="handleUserSelection(usersel.value)">
                           <mat-option *ngFor="let user of users" [value]="user">
