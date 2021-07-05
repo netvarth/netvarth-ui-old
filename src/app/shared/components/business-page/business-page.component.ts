@@ -2703,57 +2703,58 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.orderstatus && this.userId == null) {
       this.shared_services.getConsumerCatalogs(account_Id).subscribe(
         (catalogs: any) => {
-          this.activeCatalog = catalogs[0];
-          this.orderType = this.activeCatalog.orderType;
-          if (this.activeCatalog.catalogImages && this.activeCatalog.catalogImages[0]) {
-            this.catalogImage = this.activeCatalog.catalogImages[0].url;
-            this.catalogimage_list_popup = [];
-            const imgobj = new Image(0,
-              { // modal
-                img: this.activeCatalog.catalogImages[0].url,
-                description: ''
-              });
-            this.catalogimage_list_popup.push(imgobj);
-          }
-          this.catlogArry();
-
-
-          this.advance_amount = this.activeCatalog.advanceAmount;
-          if (this.activeCatalog.pickUp) {
-            if (this.activeCatalog.pickUp.orderPickUp && this.activeCatalog.nextAvailablePickUpDetails) {
-              this.store_pickup = true;
-              this.choose_type = 'store';
-              this.sel_checkindate = this.activeCatalog.nextAvailablePickUpDetails.availableDate;
-              this.nextAvailableTime = this.activeCatalog.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.activeCatalog.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
+          if (catalogs.length > 0) {
+            this.activeCatalog = catalogs[0];
+            this.orderType = this.activeCatalog.orderType;
+            if (this.activeCatalog.catalogImages && this.activeCatalog.catalogImages[0]) {
+              this.catalogImage = this.activeCatalog.catalogImages[0].url;
+              this.catalogimage_list_popup = [];
+              const imgobj = new Image(0,
+                { // modal
+                  img: this.activeCatalog.catalogImages[0].url,
+                  description: ''
+                });
+              this.catalogimage_list_popup.push(imgobj);
             }
-          }
-          if (this.activeCatalog.homeDelivery) {
-            if (this.activeCatalog.homeDelivery.homeDelivery && this.activeCatalog.nextAvailableDeliveryDetails) {
-              this.home_delivery = true;
-
-              if (!this.store_pickup) {
-                this.choose_type = 'home';
-                this.deliveryCharge = this.activeCatalog.homeDelivery.deliveryCharge;
-                this.sel_checkindate = this.activeCatalog.nextAvailableDeliveryDetails.availableDate;
-                this.nextAvailableTime = this.activeCatalog.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.activeCatalog.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+            this.catlogArry();
+  
+  
+            this.advance_amount = this.activeCatalog.advanceAmount;
+            if (this.activeCatalog.pickUp) {
+              if (this.activeCatalog.pickUp.orderPickUp && this.activeCatalog.nextAvailablePickUpDetails) {
+                this.store_pickup = true;
+                this.choose_type = 'store';
+                this.sel_checkindate = this.activeCatalog.nextAvailablePickUpDetails.availableDate;
+                this.nextAvailableTime = this.activeCatalog.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.activeCatalog.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
               }
             }
-          }
-          this.shared_services.setOrderDetails(this.activeCatalog);
-          if (this.activeCatalog && this.activeCatalog.catalogItem) {
-            for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
-              const catalogItemId = this.activeCatalog.catalogItem[itemIndex].id;
-              const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
-              const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
-              const showpric = this.activeCatalog.showPrice;
-              if (this.activeCatalog.catalogItem[itemIndex].item.isShowOnLandingpage) {
-                orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item, 'showpric': showpric });
-                this.itemCount++;
+            if (this.activeCatalog.homeDelivery) {
+              if (this.activeCatalog.homeDelivery.homeDelivery && this.activeCatalog.nextAvailableDeliveryDetails) {
+                this.home_delivery = true;
+  
+                if (!this.store_pickup) {
+                  this.choose_type = 'home';
+                  this.deliveryCharge = this.activeCatalog.homeDelivery.deliveryCharge;
+                  this.sel_checkindate = this.activeCatalog.nextAvailableDeliveryDetails.availableDate;
+                  this.nextAvailableTime = this.activeCatalog.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.activeCatalog.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+                }
               }
             }
+            this.shared_services.setOrderDetails(this.activeCatalog);
+            if (this.activeCatalog && this.activeCatalog.catalogItem) {
+              for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
+                const catalogItemId = this.activeCatalog.catalogItem[itemIndex].id;
+                const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
+                const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
+                const showpric = this.activeCatalog.showPrice;
+                if (this.activeCatalog.catalogItem[itemIndex].item.isShowOnLandingpage) {
+                  orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item, 'showpric': showpric });
+                  this.itemCount++;
+                }
+              }
+            }
+            this.orderItems = orderItems;
           }
-          this.orderItems = orderItems;
-
         }
       );
     }
