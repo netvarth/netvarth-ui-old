@@ -15,7 +15,7 @@
                     <div class="copy addons one  col-xs-12 col-sm-12 card no-padding remov_bg">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-10">
                             <div class="disp_name_st">{{disp_name}}</div>
-                            <mat-grid-list *ngIf="adon_list.length > 0" cols="{{no_of_grids}}" rowHeight="160px"
+                            <mat-grid-list *ngIf="adon_list && adon_list.length > 0" cols="{{no_of_grids}}" rowHeight="160px"
                                 [gutterSize]="'10px'">
                                 <mat-grid-tile (click)="askConfirm(adon.addonId)" *ngFor="let adon of final_list">
                                     <div class="wrap_div">

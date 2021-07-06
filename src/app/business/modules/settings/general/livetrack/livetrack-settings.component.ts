@@ -16,9 +16,20 @@ export class LiveTrackSettingsComponent implements OnInit {
     livetrack_statusstr: string;
     cust_domain_name = '';
     custs_name = '';
-    customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    customer_label_upper = this.wordProcessor.firstToUpper(this. customer_label);
-    breadcrumbs_init = [
+    breadcrumbs_init = [];
+    breadcrumbs = this.breadcrumbs_init;
+    breadcrumb_moreoptions: any = [];
+    domain;
+    customer_label = '';
+    customer_label_upper = '';
+    constructor(private provider_services: ProviderServices,
+        private groupService: GroupStorageService,
+        private wordProcessor: WordProcessor,
+        private snackbarService: SnackbarService,
+        private router: Router) {
+            this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+            this.customer_label_upper = this.wordProcessor.firstToUpper(this. customer_label);
+            this.breadcrumbs_init = [
         {
             title: 'Settings',
             url: '/provider/settings'
@@ -31,14 +42,6 @@ export class LiveTrackSettingsComponent implements OnInit {
             title: Messages.LOCATESETTINGS.replace('[customer]', this. customer_label_upper),
         }
     ];
-    breadcrumbs = this.breadcrumbs_init;
-    breadcrumb_moreoptions: any = [];
-    domain;
-    constructor(private provider_services: ProviderServices,
-        private groupService: GroupStorageService,
-        private wordProcessor: WordProcessor,
-        private snackbarService: SnackbarService,
-        private router: Router) {
     }
     ngOnInit() {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');

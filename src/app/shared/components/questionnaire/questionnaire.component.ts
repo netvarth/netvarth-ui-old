@@ -113,7 +113,9 @@ export class QuestionnaireComponent implements OnInit {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     if (this.questionnaireList) {
       if (this.source === 'customer-create') {
-        this.questions = this.questionnaireList.labels[0].questions;
+        if(this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels[0]) {
+          this.questions = this.questionnaireList.labels[0].questions;
+        }
         if (this.customerDetails && this.customerDetails[0] && this.customerDetails[0].questionnaire) {
           this.getAnswers(this.customerDetails[0].questionnaire.questionAnswers, 'get');
         }
