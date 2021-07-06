@@ -104,6 +104,7 @@ export class AppointmentActionsComponent implements OnInit {
     userid: any;
     user_arr: any;
     groups: any;
+    statusList: any=[];
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -127,6 +128,7 @@ export class AppointmentActionsComponent implements OnInit {
         if (!this.data.multiSelection) {
             this.getPos();
             this.setData();
+            this.getInternStatus();
         } else {
             this.showMsg = true;
             this.apiloading = false;
@@ -412,6 +414,17 @@ export class AppointmentActionsComponent implements OnInit {
     }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
         this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)
+            .then(
+                result => {
+                    this.dialogRef.close('reload');
+                    this.buttonClicked = false;
+                },
+                error => {
+                    this.buttonClicked = false;
+                });
+    }
+    changeApptInternalStatusApi(waitlist, action) {
+        this.provider_shared_functions.changeApptInternalStatusApi(this, waitlist, action)
             .then(
                 result => {
                     this.dialogRef.close('reload');
@@ -1025,5 +1038,19 @@ export class AppointmentActionsComponent implements OnInit {
         this.provider_services.getTeamGroup().subscribe((data: any) => {
             this.groups = data;
         });
+    }
+    getInternStatus(){
+        this.provider_services.getapptInternalstatList(this.appt.uid).subscribe((data: any) => {
+            console.log(data);
+            this.statusList = data;
+        });
+    }
+    changeWaitlistInternalStatus(action){
+        console.log(action);
+        if (action !== 'Rejected') {
+            this.buttonClicked = true;
+        }
+        
+       this.provider_shared_functions.changeApptinternalStatus(this, this.appt, action);
     }
 }
