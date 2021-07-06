@@ -744,6 +744,10 @@
                           {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
                           + ' ' + checkin.provider.lastName}}
                         </div>
+                        <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
+                          <!-- Team Name -->
+                          {{getUsersList(checkin.teamId)}}
+                        </div>
                         <!-- <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
                           Not Assigned
                         </div> -->
@@ -1017,6 +1021,10 @@
                         <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
                           {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
                           + ' ' + checkin.provider.lastName}}
+                        </div>
+                        <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
+                          <!-- Team Name -->
+                          {{getUsersList(checkin.teamId)}}
                         </div>
                         <!-- <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
                           Not Assigned
@@ -1574,6 +1582,10 @@
                       <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
                         {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
                         ' ' + checkin.provider.lastName}}
+                      </div>
+                      <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
+                        <!-- Team Name -->
+                        {{getUsersList(checkin.teamId)}}
                       </div>
                       <!-- <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
                         Not Assigned
@@ -2285,6 +2297,10 @@
                       <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
                         {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
                         ' ' + checkin.provider.lastName}}
+                      </div>
+                      <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
+                       <!-- {{}} Team Name -->
+                       {{getUsersList(checkin.teamId)}}
                       </div>
                       <!-- <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
                         Not Assigned

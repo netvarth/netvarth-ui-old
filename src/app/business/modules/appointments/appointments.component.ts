@@ -349,6 +349,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   delayTooltip = '';
   filtericonTooltip = '';
   cloudTooltip = '';
+  teams: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -465,6 +466,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getServices();
     if (this.active_user.accountType === 'BRANCH') {
       this.getProviders();
+    }
+    if (this.active_user.accountType === 'BRANCH') {
+      this.getTeams().then((data) => {
+        this.teams = data;
+      });                  
     }
     this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
       this.refresh();
@@ -2819,4 +2825,19 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   //   }
   //   return this.apptStatuses.toString();
   // }
+  getTeams() {
+    const _this = this;
+    return new Promise<void>(function (resolve) {
+      _this.provider_services.getTeamGroup().subscribe(data => {
+        _this.teams = data;
+        },
+        () => {
+          resolve();
+        });
+    });
+  }
+  getUsersList(teamid){
+    const userObject =  this.teams.filter(user => parseInt(user.id) === teamid); 
+    return userObject[0].name;
+  }
 }

@@ -729,4 +729,8 @@ width: 200px;
   width: 16px;
   flex-shrink: 0;
 }
+.pointer-check{
+  cursor:auto!important;
+}
+
 /* Filter Code Ends Here */

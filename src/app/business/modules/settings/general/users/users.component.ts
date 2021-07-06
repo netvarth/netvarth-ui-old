@@ -649,13 +649,18 @@ export class BranchUsersComponent implements OnInit {
         return specialization;
     }
     selectedRow(index, user) {
-        this.selectrow = true;
-        this.selectedUser = user;
-        if (this.selectrow === true && user.id && user.userType === 'PROVIDER') {
-            this.manageSettings(user.id)
-        } else {
-            this.personalProfile(user.id)
+        if(!this.showcheckbox){
+            this.selectrow = true;
+            this.selectedUser = user;
+            if (this.selectrow === true && user.id && user.userType === 'PROVIDER') {
+                this.manageSettings(user.id)
+            } else {
+                this.personalProfile(user.id)
+            }
+
         }
+        // else {
+        // }
     }
     stopprop(event) {
         event.stopPropagation();
@@ -723,7 +728,7 @@ export class BranchUsersComponent implements OnInit {
         console.log(this.newlyCreatedGroupId);
         this.getCustomerGroup(this.newlyCreatedGroupId);
         this.resetGroupFields();
-        // this.resetError();
+        this.resetError();
     }
     showCustomerstoAdd(type?) {
         this.showcheckbox = true
@@ -740,11 +745,10 @@ export class BranchUsersComponent implements OnInit {
     }
     closeGroupDialog() {
         this.closebutton.nativeElement.click();
-        // this.resetError();
+        this.resetError();
     }
     closelocDialog() {
         this.locclosebutton.nativeElement.click();
-        // this.resetError();
     }
     editGroup(group?) {
         console.log(group);
@@ -970,5 +974,8 @@ export class BranchUsersComponent implements OnInit {
         this.showusers = true;
         this.selectedGroup = 'all';
         this.customerGroupSelection(this.selectedGroup);
+      }
+      resetError() {
+        this.apiError = '';
       }
 }

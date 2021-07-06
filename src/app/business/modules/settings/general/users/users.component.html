@@ -89,7 +89,7 @@
         </div>
         <div class="modal-footer"  *ngIf="!showAddCustomerHint" >
           <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal"
-            #closebutton>Cancel</button>
+            #closebutton (click)="resetGroupFields();resetError();">Cancel</button>
           <button type="button" class="btn btn-primary font-weight-bold" 
           (click)="customerGroupAction()">{{(teamEdit) ? 'Update' : 'Create'}}</button>
         </div>
@@ -603,6 +603,7 @@
                                                   <tr class="row_data border-bottom pointer-cursor waitlist-box"
                                                       *ngFor="let service of users_list | orderBy: order; let i = index;"
                                                       (click)="selectedRow(i,service)"
+                                                      [class.pointer-check]="this.showcheckbox" 
                                                       [class.disabled-group]="service.status=='INACTIVE'">
                                                       <!-- (click)="selectedRow(i,service)" -->
                                                       <td class="">

@@ -605,6 +605,9 @@
                             ' ' + appt.provider.lastName}}
                           <!-- {{appt.provider.firstName}}&nbsp;{{appt.provider.lastName}} -->
                         </div>
+                        <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
+                          {{getUsersList(appt.teamId)}}
+                        </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -1111,6 +1114,9 @@
                         <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
                           {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName +
                             ' ' + appt.provider.lastName}}
+                        </div>
+                        <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
+                          {{getUsersList(appt.teamId)}}
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
@@ -1640,6 +1646,9 @@
                       <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
                         {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName +
                           ' ' + appt.provider.lastName}}
+                      </div>
+                      <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
+                        {{getUsersList(appt.teamId)}}
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
@@ -2256,6 +2265,9 @@
                       <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
                         {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName +
                           ' ' + appt.provider.lastName}}
+                      </div>
+                      <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
+                        {{getUsersList(appt.teamId)}}
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">

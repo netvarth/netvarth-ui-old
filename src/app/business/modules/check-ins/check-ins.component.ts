@@ -347,6 +347,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   instaQid: any;
   unassignview = false;
   accountSettings;
+  teams: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -480,6 +481,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.account_type = this.active_user.accountType;
     this.domain = this.active_user.sector;
+    console.log(this.account_type);
     this.cust_note_tooltip = Messages.CUST_NOT_TOOLTIP.replace('[customer]', this.customer_label);
     this.customerIdTooltip = this.customer_label + ' Id';
     this.addCustomerTooltip = 'Add ' + this.customer_label;
@@ -499,6 +501,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.getLocationList();
       this.getServiceList();
+    }
+    if (this.active_user.accountType === 'BRANCH') {
+      this.getTeams().then((data) => {
+        this.teams = data;
+       console.log(this.teams);
+      });                  
     }
     this.image_list_popup_temp = [];
     // const savedtype = this.groupService.getitemFromGroupStorage('pdtyp');
@@ -2993,6 +3001,26 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       // this.handleUserSelection(this.selectedUser);
     });
   }
+
+  getTeams() {
+    const _this = this;
+    return new Promise<void>(function (resolve) {
+      // const apiFilter = {};
+      // apiFilter['userType-eq'] = 'PROVIDER';
+      // _this.provider_services.getUsers(apiFilter).subscribe(data => {
+      //   _this.users = data;       
+      //   resolve();
+      // },
+      _this.provider_services.getTeamGroup().subscribe(data => {
+        _this.teams = data;
+        },
+        () => {
+          resolve();
+        });
+    });
+  }
+
+
   handleUserSelection(user) {
     this.activeUser = null;
     this.qloading = true;
@@ -3439,5 +3467,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     age = age.split(' ');
     return age[0];
   }
+  getUsersList(teamid){
+    const userObject =  this.teams.filter(user => parseInt(user.id) === teamid); 
+    return userObject[0].name;
+  }
 }
+
 
