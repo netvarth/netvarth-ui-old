@@ -120,7 +120,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     provider: { id: any; };
     departId: any;
     include_audio = false;
-    selectedUser ;
+    selectedUser;
     defaultOption = {
         'id': '0',
         'firstName': 'Global',
@@ -315,24 +315,24 @@ export class ServiceComponent implements OnInit, OnDestroy {
     }
     @HostListener('window:resize', ['$event'])
     onResize() {
-     this.screenWidth = window.innerWidth;
-     let divider;
-     const divident = this.screenWidth / 37.8;
-     if (this.screenWidth > 1700) {
-       divider = divident / 5;
-     } else if (this.screenWidth > 1111 && this.screenWidth < 1700) {
-        divider = divident / 4;
-     } else if (this.screenWidth > 900 && this.screenWidth < 1111) {
-       divider = divident / 3;
-     } else if (this.screenWidth > 375 && this.screenWidth < 900) {
-       divider = divident / 2;
-     } else if (this.screenWidth < 375) {
-       divider = divident / 1;
-     }
-     console.log(divident);
-     console.log(divider);
-     this.no_of_grids = Math.round(divident / divider);
-     console.log(this.no_of_grids);
+        this.screenWidth = window.innerWidth;
+        let divider;
+        const divident = this.screenWidth / 37.8;
+        if (this.screenWidth > 1700) {
+            divider = divident / 5;
+        } else if (this.screenWidth > 1111 && this.screenWidth < 1700) {
+            divider = divident / 4;
+        } else if (this.screenWidth > 900 && this.screenWidth < 1111) {
+            divider = divident / 3;
+        } else if (this.screenWidth > 375 && this.screenWidth < 900) {
+            divider = divident / 2;
+        } else if (this.screenWidth < 375) {
+            divider = divident / 1;
+        }
+        console.log(divident);
+        console.log(divider);
+        this.no_of_grids = Math.round(divident / divider);
+        console.log(this.no_of_grids);
     }
     @Input() donationservice;
     setDescFocus() {
@@ -530,7 +530,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 form_data['virtualCallingModes'] = [this.teleCallingModes];
             }
             console.log(this.selectedUser);
-            if (this.selectedUser  && this.userspecific) {
+            if (this.selectedUser && this.userspecific) {
                 this.provider = {
                     'id': this.selectedUser
                 };
@@ -557,7 +557,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 }
             } else {
                 //console.log(serviceActionModel);
-               this.servicesService.actionPerformed(serviceActionModel);
+                this.servicesService.actionPerformed(serviceActionModel);
             }
         }
     }
@@ -606,7 +606,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
     }
     createForm() {
-        if(this.active_user.accountType === 'BRANCH' && !this.is_donation){
+        if (this.active_user.accountType === 'BRANCH' && !this.is_donation) {
             this.getDepartments();
         }
         if (this.subdomainsettings.serviceBillable) {
@@ -864,18 +864,20 @@ export class ServiceComponent implements OnInit, OnDestroy {
     gotoQnr(id) {
         this.router.navigate(['provider', 'settings', 'general', 'questionnaire', id]);
     }
-    getProviderName(users){
-        console.log(users);
+    getProviderName(users) {
         let userlst = '';
-        console.log(this.users_list);
-        for(let user of users){
-        let details = this.users_list.filter(usr => usr.id == user);
-        console.log(details);
-        if(details && details.length > 0){
-            userlst = userlst + details[0].firstName +' '+ details[0].lastName + ',';
-     }
+        if(users[0]==='All'){
+         return 'All Users'
+        }else{
+        for (let user of users) {
+            let details = this.users_list.filter(usr => usr.id == user);
+            if (details && details.length > 0) {
+                userlst = userlst + details[0].firstName + ' ' + details[0].lastName + ',';
+            }
+
+        }
+
+        return userlst.replace(/,\s*$/, '');
     }
-    console.log(userlst);
-    return userlst;
 }
 }
