@@ -2,12 +2,9 @@
 <section class="display-min-none">
   <div class="card title-gb">
       <h5 class="mgn-up-10">
-          <a class="user-title">
+          <a class="user-title" style="cursor:auto;">
               <div class="pull-left pad-tp-5 display-min-none">Users<span
                       *ngIf="user_count_filterApplied > 0">({{user_count_filterApplied}})</span></div>
-              <div class="pull-left pad-tp-5  waitlist-box-check"  (click)="showallusers()">Users<span
-                        *ngIf="user_count_filterApplied > 0">({{user_count_filterApplied}})</span></div>
-              <div class="pull-left pad-tp-5 waitlist-box-check"  (click)="showteamsres()">Teams</div>
           </a>
           <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-right">
               <i class="icon-filter-one">
@@ -19,7 +16,7 @@
               <button type="button" class="btn btn mb-2 action-button  btn-primary action-button-add"> <i
                       class="fa fa-plus"></i>User </button>
           </a>
-          <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
+          <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" *ngIf="selectedGroup == 'all'"
               class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5">
               <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add"
               data-toggle="modal" data-target="#exampleModalCenter">
@@ -57,7 +54,7 @@
             <button mat-menu-item  (click)="addBranchSP()" >
                 <i class="fa fa-plus"></i>User
             </button>
-            <button  mat-menu-item  data-toggle="modal" data-target="#exampleModalCenter">
+            <button  mat-menu-item  *ngIf="selectedGroup == 'all'" data-toggle="modal" data-target="#exampleModalCenter">
                 Create Team
             </button>
             <button mat-menu-item *ngIf="(loc_list && loc_list.length > 1)" (click)="addlocation()">
@@ -81,10 +78,10 @@
             <input type="text" class="form-control1" id="exampleInputPassword1" placeholder="Group Name"
               [(ngModel)]="teamName" autocomplete="off" />
           </div>
-          <div class="form-group mb-1">
+          <!-- <div class="form-group mb-1">
               <label for="exampleTextarea1">Size</label>
               <textarea class="form-control1" id="exampleTextarea1" rows="4" [(ngModel)]="size"></textarea>
-          </div>
+          </div> -->
           <div class="form-group mb-1">
             <label for="exampleTextarea">Description</label>
             <textarea class="form-control1" id="exampleTextarea" rows="4" [(ngModel)]="teamDescription"></textarea>

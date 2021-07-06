@@ -57,7 +57,8 @@
         (click)="assignteam()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
-                <div class="icon-text">Assign Team</div>
+                <div *ngIf="appt.teamId == 0" class="icon-text">Assign Team</div>
+                <div *ngIf="appt.teamId != 0"  class="icon-text">Change Team</div>
             </div>
         </div>
         <div class="action-box pointer-cursor"
