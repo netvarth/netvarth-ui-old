@@ -393,7 +393,7 @@ export class BranchUsersComponent implements OnInit {
         this.selectedLocations = [];
     }
     doSearch() {
-        this.getUsers();
+        // this.getUsers();
         if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pincode || this.filter.available || this.filter.primaryMobileNo || this.filter.userType || this.selectedLanguages.length > 0 || this.selectedLocations.length > 0 || this.selectedSpecialization.length > 0) {
             this.filterapplied = true;
         } else {
@@ -622,7 +622,7 @@ export class BranchUsersComponent implements OnInit {
                 this.filter.available = 'false';
             }
         }
-        this.doSearch();
+        // this.doSearch();
     }
     getLanguages(languages) {
         languages = JSON.parse(languages);

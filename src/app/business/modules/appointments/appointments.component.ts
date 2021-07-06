@@ -1687,9 +1687,22 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.loadApiSwitch('doSearch');
   }
-  keyPressed(event) {
-    if (event.keyCode === 13) {
-      this.doSearch();
+  keyPressed() {
+    this.shared_functions.setFilter();
+    this.lStorageService.removeitemfromLocalStorage('filter');
+    this.endminday = this.filter.check_in_start_date;
+    if (this.filter.check_in_end_date) {
+      this.maxday = this.filter.check_in_end_date;
+    } else {
+      this.maxday = new Date();
+    }
+    this.labelSelection();
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
+      this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
+      || this.filter.check_in_end_date !== null || this.filter.check_in_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all') {
+      this.filterapplied = true;
+    } else {
+      this.filterapplied = false;
     }
   }
   getSingleTime(slot) {
@@ -2054,7 +2067,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.allLocationSelected = true;
       }
     }
-    this.doSearch();
+    this.keyPressed();
   }
   showConsumerNote(checkin) {
     this.notedialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
@@ -2614,7 +2627,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.allLabelSelected = true;
       }
     }
-    this.doSearch();
+    this.keyPressed();
   }
   showCheckinActions(status, checkin?) {
     let waitlist = [];

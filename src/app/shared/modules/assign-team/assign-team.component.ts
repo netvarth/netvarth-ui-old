@@ -330,7 +330,7 @@ export class AssignTeam implements OnInit {
     this.selectedGroups = [];
   }
   doSearch() {
-    this.getProviders();
+    // this.getProviders();
     // this.getProvidersByTeam();
     if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pincode || this.filter.primaryMobileNo || this.filter.available || this.selectedLanguages.length > 0 || this.selectedGroups.length > 0 || this.selectedSpecialization.length > 0) {
       this.filterapplied = true;

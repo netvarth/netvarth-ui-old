@@ -301,14 +301,14 @@
                                   <div class="filterTextinput filter-text-input">
                                       <li class="filterli filter-li">
                                           <input type="text" id="firstName" [(ngModel)]="filter.firstName" #firstName
-                                              (blur)="doSearch()" (keyup)="focusInput($event, firstName)" maxlength="20"
+                                          (keyup)="doSearch()" maxlength="20"
                                               class="filterTextbox filter-textbox" placeholder="Enter First Name">
                                       </li>
                                   </div>
                                   <div class="filterTextinput filter-text-input">
                                       <li class="filterli filter-li">
                                           <input type="text" id="lastName" [(ngModel)]="filter.lastName" #lastName
-                                              (blur)="doSearch()" (keyup)="focusInput($event, lastName)" maxlength="10"
+                                          (keyup)="doSearch()" maxlength="10"
                                               class="filterTextbox filter-textbox" placeholder="Enter Last Name">
                                       </li>
                                   </div>
@@ -334,7 +334,7 @@
                                   <div class="filterTextinput filter-text-input">
                                       <li class="filterli filter-li">
                                           <input type="text" id="pincode" [(ngModel)]="filter.pincode" #pincode
-                                              (blur)="doSearch()" (keyup)="focusInput($event, pincode)" maxlength="10"
+                                          (keyup)="doSearch()" maxlength="10"
                                               class="filterTextbox filter-textbox" placeholder="Enter Pincode">
                                       </li>
                                   </div>
@@ -360,14 +360,14 @@
                                   <div class="filterTextinput filter-text-input">
                                       <li class="filterli filter-li">
                                           <input type="text" id="city" [(ngModel)]="filter.city" #city
-                                              (blur)="doSearch()" (keyup)="focusInput($event, city)" maxlength="20"
+                                          (keyup)="doSearch()" maxlength="20"
                                               class="filterTextbox filter-textbox" placeholder="Enter city">
                                       </li>
                                   </div>
                                   <div class="filterTextinput filter-text-input">
                                     <li class="filterli filter-li">
                                         <input type="text" id="state" [(ngModel)]="filter.state" #state
-                                            (blur)="doSearch()" (keyup)="focusInput($event, state)" maxlength="20"
+                                        (keyup)="doSearch()" maxlength="20"
                                             class="filterTextbox filter-textbox" placeholder="Enter state">
                                     </li>
                                 </div>
@@ -431,7 +431,7 @@
                                   <div class="filterTextinput filter-text-input">
                                       <li class="filterli filter-li">
                                           <input type="text" id="primaryMobileNo" [(ngModel)]="filter.primaryMobileNo"
-                                              #primaryMobileNo (blur)="doSearch()" (keyup)="focusInput($event, primaryMobileNo)"
+                                              #primaryMobileNo (keyup)="doSearch()"
                                                class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
                                       </li>
                                   </div>
@@ -568,7 +568,7 @@
                       <button class="btn reset-btn" (click)="clearFilter()">
                         <i class="fa fa-undo"></i>Reset
                       </button>
-                      <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                      <button class="btn apply-btn" (click)="getUsers()">
                         <i class="fa fa-check"></i>Apply
                       </button>
                   </div>
@@ -838,14 +838,14 @@
                                 <div class="filterTextinput filter-text-input">
                                     <li class="filterli filter-li">
                                         <input type="text" id="firstName" [(ngModel)]="filter.firstName" #firstName
-                                            (blur)="doSearch()" (keyup)="focusInput($event, firstName)" maxlength="20"
+                                            (keyup)="doSearch()" maxlength="20"
                                             class="filterTextbox filter-textbox" placeholder="Enter First Name">
                                     </li>
                                 </div>
                                 <div class="filterTextinput filter-text-input">
                                     <li class="filterli filter-li">
                                         <input type="text" id="lastName" [(ngModel)]="filter.lastName" #lastName
-                                            (blur)="doSearch()" (keyup)="focusInput($event, lastName)" maxlength="10"
+                                        (keyup)="doSearch()" maxlength="10"
                                             class="filterTextbox filter-textbox" placeholder="Enter Last Name">
                                     </li>
                                 </div>
@@ -871,7 +871,7 @@
                                 <div class="filterTextinput filter-text-input">
                                     <li class="filterli filter-li">
                                         <input type="text" id="pincode" [(ngModel)]="filter.pincode" #pincode
-                                            (blur)="doSearch()" (keyup)="focusInput($event, pincode)" maxlength="10"
+                                        (keyup)="doSearch()" maxlength="10"
                                             class="filterTextbox filter-textbox" placeholder="Enter Pincode">
                                     </li>
                                 </div>
@@ -897,14 +897,14 @@
                                 <div class="filterTextinput filter-text-input">
                                     <li class="filterli filter-li">
                                         <input type="text" id="city" [(ngModel)]="filter.city" #city
-                                            (blur)="doSearch()" (keyup)="focusInput($event, city)" maxlength="20"
+                                        (keyup)="doSearch()" maxlength="20"
                                             class="filterTextbox filter-textbox" placeholder="Enter city">
                                     </li>
                                 </div>
                                 <div class="filterTextinput filter-text-input">
                                   <li class="filterli filter-li">
                                       <input type="text" id="state" [(ngModel)]="filter.state" #state
-                                          (blur)="doSearch()" (keyup)="focusInput($event, state)" maxlength="20"
+                                      (keyup)="doSearch()" maxlength="20"
                                           class="filterTextbox filter-textbox" placeholder="Enter state">
                                   </li>
                               </div>
@@ -968,7 +968,7 @@
                                 <div class="filterTextinput filter-text-input">
                                     <li class="filterli filter-li">
                                         <input type="text" id="primaryMobileNo" [(ngModel)]="filter.primaryMobileNo"
-                                            #primaryMobileNo (blur)="doSearch()" (keyup)="focusInput($event, primaryMobileNo)"
+                                            #primaryMobileNo (keyup)="doSearch()"
                                              class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
                                     </li>
                                 </div>
@@ -1101,7 +1101,7 @@
                     <button class="btn reset-btn" (click)="clearFilter()">
                       <i class="fa fa-undo"></i>Reset
                     </button>
-                    <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                    <button class="btn apply-btn" (click)="getUsers()">
                       <i class="fa fa-check"></i>Apply
                     </button>
                 </div>

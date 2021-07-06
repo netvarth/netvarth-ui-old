@@ -598,7 +598,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.allLabelSelected = true;
       }
     }
-    this.doSearch();
+    this.keyPressed();
   }
 
   // setLabelFilter(label, value, event) {
@@ -836,7 +836,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.allLocationSelected = true;
       }
     }
-    this.doSearch();
+    this.keyPressed();
   }
   getDisplayboardCount() {
     let layout_list: any = [];
@@ -2953,10 +2953,25 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
     return 0;
   }
-  keyPressed(event) {
-    if (event.keyCode === 13) {
-      this.doSearch();
+  keyPressed() {
+    this.lStorageService.removeitemfromLocalStorage('wlfilter');
+    this.endminday = this.filter.check_in_start_date;
+    if (this.filter.check_in_end_date) {
+      this.maxday = this.filter.check_in_end_date;
+    } else {
+      this.maxday = new Date();
     }
+    this.labelSelection();
+     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.checkinEncId || this.filter.patientId || this.filter.service !== 'all' || this.filter.location != 'all'
+      || this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.check_in_start_date
+      || this.filter.check_in_end_date || this.filter.check_in_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== '') {
+      console.log('fdg');
+      this.filterapplied = true;
+    } else {
+      this.filterapplied = false;
+    }
+    console.log(this.filterapplied);
+    this.shared_functions.setFilter();
   }
   scrollToTop() {
     // this.chekinSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
