@@ -16,6 +16,8 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { GroupStorageService } from '../../services/group-storage.service';
+import { MatDialog } from '@angular/material/dialog';
+import { UserlistpopupComponent } from './userlist/userlistpopup.component';
 
 
 @Component({
@@ -151,6 +153,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     questionnaire: any = [];
     no_of_grids: number;
     screenWidth: number;
+    usersdialogRef: any;
 
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
@@ -163,6 +166,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         private provider_datastorage: ProviderDataStorageService,
         private dateTimeProcessor: DateTimeProcessor,
         private groupService: GroupStorageService,
+        private dialog: MatDialog,
         public router: Router) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.frm_enable_prepayment_cap = Messages.FRM_LEVEL_PREPAYMENT_SETTINGS_MSG;
@@ -865,6 +869,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.router.navigate(['provider', 'settings', 'general', 'questionnaire', id]);
     }
     getProviderName(users) {
+        console.log(users);
         let userlst = '';
         if(users[0]==='All'){
          return 'All Users'
@@ -874,10 +879,58 @@ export class ServiceComponent implements OnInit, OnDestroy {
             if (details && details.length > 0) {
                 userlst = userlst + details[0].firstName + ' ' + details[0].lastName + ',';
             }
-
         }
-
-        return userlst.replace(/,\s*$/, '');
+       // if(typ){
+            return userlst.replace(/,\s*$/, '');  
+        // }else {
+        //     return this.userlistType(userlst.replace(/,\s*$/, ''));
+        // }
+        
     }
 }
+getProviderNametruncate(users) {
+    console.log(users);
+    let userlst = '';
+    if(users[0]==='All'){
+     return 'All Users'
+    }else{
+    for (let user of users) {
+        let details = this.users_list.filter(usr => usr.id == user);
+        if (details && details.length > 0) {
+            userlst = userlst + details[0].firstName + ' ' + details[0].lastName + ',';
+        }
+    }  return this.truncateInst(userlst.replace(/,\s*$/, ''));
+    
+}
+}
+userlistType(val) {
+    const detail = val.length;
+    let len;
+    if (detail > 25) {
+      len = 0;
+    } else {
+      len = 1;
+    }
+    return len;
+  }
+  truncateInst(val) {
+    const inst = val.substr(0, 25);
+    return inst;
+  }
+  usersPopUp(useridlist){
+    this.usersdialogRef = this.dialog.open(UserlistpopupComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data:{
+            userlist:this.users_list,
+            ids:useridlist
+        }
+  
+      });
+      this.usersdialogRef.afterClosed().subscribe(result => {
+        if (result) {
+        }
+      });
+  }
 }
