@@ -34,7 +34,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
   startpageval = 1;
   perpage = 5;
   adwordshowmore = false;
-  emptyMsg = this.wordProcessor.getProjectMesssages('ADWORD_LISTEMPTY');
+  emptyMsg = '';
   remadwdialogRef;
   adwdialogRef;
   active_user;
@@ -50,6 +50,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private groupService:GroupStorageService) {
+    this.emptyMsg = this.wordProcessor.getProjectMesssages('ADWORD_LISTEMPTY');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
 
