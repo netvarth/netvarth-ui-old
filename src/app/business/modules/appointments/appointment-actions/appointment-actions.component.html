@@ -398,7 +398,7 @@
         <div class="status"> Arrived</div>
         <!-- <div class="form-level-settings">hints</div> -->
     </div>
-    <div class="status-box" *ngIf="showStart || showTeleserviceStart" (click)="changeWaitlistStatus('Started')">
+    <div class="status-box" *ngIf="showStart || (showTeleserviceStart && appt.apptStatus != 'Started')" (click)="changeWaitlistStatus('Started')">
         <div class="status"> In Progress</div>
         <!-- <div class="form-level-settings">hints</div> -->
     </div>

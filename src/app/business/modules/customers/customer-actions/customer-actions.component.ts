@@ -240,7 +240,7 @@ export class CustomerActionsComponent implements OnInit {
             'proConIds': ids
         };
         this.provider_services.addLabeltoCustomer(postData).subscribe(data => {
-            this.dialogRef.close();
+            this.dialogRef.close('reload');
         },
             error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -256,7 +256,7 @@ export class CustomerActionsComponent implements OnInit {
             'proConIds': ids
         };
         this.provider_services.deleteLabelFromCustomer(postData).subscribe(data => {
-            this.dialogRef.close();
+            this.dialogRef.close('reload');
         },
             error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

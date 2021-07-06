@@ -107,6 +107,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     payment_status: 'all',
     check_in_start_date: null,
     check_in_end_date: null,
+    check_in_date: null,
     location_id: 'all',
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1,
@@ -127,6 +128,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     payment_status: false,
     waitlistMode: false,
     check_in_start_date: false,
+    check_in_date: false,
     check_in_end_date: false,
     location_id: false,
     age: false,
@@ -481,7 +483,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.account_type = this.active_user.accountType;
     this.domain = this.active_user.sector;
-    console.log(this.account_type);
     this.cust_note_tooltip = Messages.CUST_NOT_TOOLTIP.replace('[customer]', this.customer_label);
     this.customerIdTooltip = this.customer_label + ' Id';
     this.addCustomerTooltip = 'Add ' + this.customer_label;
@@ -1529,6 +1530,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       // this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
       this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
     }
+    if (this.filter.check_in_date != null) {
+      Mfilter['date-eq'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_date);
+    }
     const promise = this.getFutureWLCount(Mfilter);
     promise.then(
       result => {
@@ -1812,6 +1816,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.filter.waitlist_status === 'all') {
       Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+    }
+    if (this.filter.check_in_date != null) {
+      Mfilter['date-eq'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_date);
     }
     return new Promise((resolve) => {
       this.provider_services.getWaitlistFutureCount(Mfilter)
@@ -2167,7 +2174,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.groupService.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.checkinEncId || this.filter.patientId || this.filter.service !== 'all' || this.filter.location != 'all'
       || this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.check_in_start_date
-      || this.filter.check_in_end_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== '') {
+      || this.filter.check_in_end_date || this.filter.check_in_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== '') {
       console.log('fdg');
       this.filterapplied = true;
     } else {
@@ -2205,6 +2212,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       waitlistMode: false,
       check_in_start_date: false,
       check_in_end_date: false,
+      check_in_date: false,
       location_id: false,
       age: false,
       gender: false
@@ -2223,6 +2231,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       waitlistMode: 'all',
       check_in_start_date: null,
       check_in_end_date: null,
+      check_in_date: null,
       location_id: 'all',
       page_count: projectConstants.PERPAGING_LIMIT,
       page: 0,
@@ -2544,7 +2553,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   filterClicked(type) {
     this.filters[type] = !this.filters[type];
     if (!this.filters[type]) {
-      if (type === 'check_in_start_date' || type === 'check_in_end_date') {
+      if (type === 'check_in_start_date' || type === 'check_in_end_date' || type === 'check_in_date') {
         this.filter[type] = null;
       } else if (type === 'payment_status' || type === 'service' || type === 'queue' || type === 'location' || type === 'waitlistMode') {
         this.filter[type] = 'all';
@@ -3102,7 +3111,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           // }
           if (new RegExp(this.imageAllowed.join("|")).test(thumbPathExt.toUpperCase())) {
             imagePath = communications[comIndex].s3path;
-        }
+          }
+          let type = communications[comIndex].type.split('/');
+          type = type[0];
+          if (type !== 'image') {
+            imagePath = communications[comIndex].thumbPath;
+          }
           console.log(imagePath);
           const imgobj = new Image(
             count,

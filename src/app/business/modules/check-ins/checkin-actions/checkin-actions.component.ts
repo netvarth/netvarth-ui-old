@@ -607,7 +607,7 @@ export class CheckinActionsComponent implements OnInit {
     }
     setActions() {
         this.apiloading = false;
-        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn' && this.checkin.waitlistStatus !== 'blocked' && !this.data.teleservice && this.checkin.paymentStatus !== 'FullyRefunded') {
+        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn' && this.checkin.waitlistStatus !== 'blocked' && this.checkin.paymentStatus !== 'FullyRefunded') {
             this.showUndo = true;
         }
         if (this.data.timetype === 1 && this.checkin.waitlistStatus === 'checkedIn' && this.checkin.waitlistMode !== 'WALK_IN_CHECKIN' && Object.keys(this.checkin.virtualService).length === 0 && this.checkin.virtualService.constructor === Object && !this.data.teleservice) {
@@ -1039,8 +1039,8 @@ export class CheckinActionsComponent implements OnInit {
     }
 
     assignMyself() {
-        let msg = '';
-        msg = 'Are you sure you want to assign this token to yourself ?';
+        let tokenmsg = (this.showToken) ? 'token' : 'check-in';
+        const msg = 'Are you sure you want to assign this ' + tokenmsg + ' to yourself ?';
         const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass', 'confirmationmainclass'],

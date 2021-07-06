@@ -1556,6 +1556,36 @@
                             </div>
                           </div>
                         </div>
+                        <div class="card" style="padding-bottom: 30px !important;">
+                          <div class="card-header">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseDate3" aria-expanded="false">
+                                <div>
+                                  <div style="display: inline-block !important;">
+                                    <i class="fa fa-calendar-o"></i>
+                                  </div>
+                                  <span>&nbsp;Date</span>
+                                </div>
+                                <i class="fa fa-angle-down"></i>
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapseDate3" class="collapse in" data-parent="#accordion3">
+                            <div class="card-body">
+                              <div class="filterTextinput filter-text-input">
+                                <li class="filterli filterDatepicker filter-li">
+                                  <input type="text" [(ngModel)]="filter.check_in_date"
+                                    [ngModelOptions]="{standalone: true}" [matDatepicker]="picker" #Fdate
+                                    (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox filter-textbox"
+                                    placeholder="Enter Date" [min]="tomorrowDate">
+                                  <mat-datepicker-toggle matSuffix [for]="picker">
+                                  </mat-datepicker-toggle>
+                                  <mat-datepicker #picker></mat-datepicker>
+                                </li>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </ul>
                     </section>
                     <div class="filter-footer" *ngIf="filterapplied === true">

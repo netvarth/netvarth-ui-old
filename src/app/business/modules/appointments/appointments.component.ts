@@ -102,6 +102,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     apptStatus: 'all',
     payment_status: 'all',
     check_in_start_date: null,
+    check_in_date: null,
     check_in_end_date: null,
     location_id: 'all',
     page_count: projectConstants.PERPAGING_LIMIT,
@@ -123,6 +124,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     apptStatus: false,
     payment_status: false,
     check_in_start_date: false,
+    check_in_date: false,
     check_in_end_date: false,
     location_id: false,
     age: false,
@@ -871,6 +873,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       apptStatus: false,
       payment_status: false,
       check_in_start_date: false,
+      check_in_date: false,
       check_in_end_date: false,
       location_id: false,
       age: false,
@@ -890,6 +893,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       apptStatus: 'all',
       payment_status: 'all',
       check_in_start_date: null,
+      check_in_date: null,
       check_in_end_date: null,
       location_id: 'all',
       page_count: projectConstants.PERPAGING_LIMIT,
@@ -1247,6 +1251,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     }
+    if (this.filter.check_in_date != null) {
+      Mfilter['date-eq'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_date);
+    }
     return new Promise((resolve) => {
       this.provider_services.getFutureAppointmentsCount(Mfilter)
         .subscribe(
@@ -1412,6 +1419,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
+    }
+    if (this.filter.check_in_date != null) {
+      Mfilter['date-eq'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_date);
     }
     const promise = this.getFutureAppointmentsCount(Mfilter);
     promise.then(
@@ -1659,6 +1669,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return api_filter;
   }
   doSearch() {
+    this.shared_functions.setFilter();
     this.lStorageService.removeitemfromLocalStorage('filter');
     this.endminday = this.filter.check_in_start_date;
     if (this.filter.check_in_end_date) {
@@ -1669,13 +1680,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.labelSelection();
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
       this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
-      || this.filter.check_in_end_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all') {
+      || this.filter.check_in_end_date !== null || this.filter.check_in_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all') {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
     }
     this.loadApiSwitch('doSearch');
-    this.shared_functions.setFilter();
   }
   keyPressed(event) {
     if (event.keyCode === 13) {
@@ -1798,7 +1808,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   filterClicked(type) {
     this.filters[type] = !this.filters[type];
     if (!this.filters[type]) {
-      if (type === 'check_in_start_date' || type === 'check_in_end_date') {
+      if (type === 'check_in_start_date' || type === 'check_in_end_date' || type === 'check_in_date') {
         this.filter[type] = null;
       } else if (type === 'payment_status' || type === 'service' || type === 'queue' || type === 'appointmentMode' || type === 'location') {
         this.filter[type] = 'all';
@@ -2461,7 +2471,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           // }
           if (new RegExp(this.imageAllowed.join("|")).test(thumbPathExt.toUpperCase())) {
             imagePath = communications[comIndex].s3path;
-        }
+          }
+          let type = communications[comIndex].type.split('/');
+          type = type[0];
+          if (type !== 'image') {
+            imagePath = communications[comIndex].thumbPath;
+          }
           const imgobj = new Image(
             count,
             { // modal

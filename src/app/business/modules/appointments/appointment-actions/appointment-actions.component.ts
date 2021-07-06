@@ -438,7 +438,7 @@ export class AppointmentActionsComponent implements OnInit {
     }
     setActions() {
         this.apiloading = false;
-        if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Completed' && this.appt.apptStatus !== 'Confirmed' && this.appt.apptStatus !== 'blocked' && !this.data.teleservice && this.appt.paymentStatus !== 'FullyRefunded') {
+        if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Completed' && this.appt.apptStatus !== 'Confirmed' && this.appt.apptStatus !== 'blocked' && this.appt.paymentStatus !== 'FullyRefunded') {
             this.showUndo = true;
         }
         if (this.data.timetype === 1 && this.appt.apptStatus === 'Confirmed' && this.appt.appointmentMode !== 'WALK_IN_APPOINTMENT' &&  !this.appt.virtualService && !this.data.teleservice) {
