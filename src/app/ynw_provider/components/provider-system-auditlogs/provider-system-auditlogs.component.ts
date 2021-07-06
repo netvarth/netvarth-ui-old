@@ -13,8 +13,6 @@ import { DateTimeProcessor } from '../../../shared/services/datetime-processor.s
 @Component({
   selector: 'app-provider-system-auditlogs',
   templateUrl: './provider-system-auditlogs.component.html'
-  /*
-  styleUrls: ['./provider-auditlogs.component.css']*/
 })
 export class ProviderSystemAuditLogComponent implements OnInit {
   tooltipcls = '';
@@ -42,7 +40,6 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   logSelsubcat = '';
   logSeldate = '';
   logSelaction = '';
-  filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
   holdlogSelcat = '';
   holdlogSelsubcat = '';
   holdlogSeldate = '';
@@ -70,6 +67,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   ];
   isCheckin;
   dateFilter = false;
+  filtericonTooltip = '';
   constructor(
     private locationobj: Location,
     private shared_services: SharedServices,
@@ -79,7 +77,9 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
     private dateTimeProcessor: DateTimeProcessor
-  ) { }
+  ) {
+    this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
+   }
 
   ngOnInit() {
     // this.getAuditList();\
