@@ -132,3 +132,9 @@
     width: 95% !important;
   }
 }
+.stst-bx {
+  box-shadow: 5px 5px 5px 0px #cccccc60 !important;
+  border-radius: 5px;
+  padding: 10px;  
+  border: 1px solid #cccccc60;
+}
