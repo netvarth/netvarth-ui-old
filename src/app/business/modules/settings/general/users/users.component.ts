@@ -622,7 +622,7 @@ export class BranchUsersComponent implements OnInit {
                 this.filter.available = 'false';
             }
         }
-        // this.doSearch();
+        this.doSearch();
     }
     getLanguages(languages) {
         languages = JSON.parse(languages);
