@@ -78,7 +78,7 @@
     <mat-checkbox [disabled]="is_noSMS" class="mgright50 example-margin" [(ngModel)]="sms">
       SMS
     </mat-checkbox>
-    <mat-checkbox class="mgright50 example-margin" [(ngModel)]="email" [disabled]="!haveEmail">Email
+    <mat-checkbox class="mgright50 example-margin" [(ngModel)]="email" [disabled]="(providerView && !providerEmail) || (!providerView && !haveEmail)">Email
     </mat-checkbox>
     <mat-checkbox class="mgright50 example-margin" [(ngModel)]="pushnotify">
       App Notification

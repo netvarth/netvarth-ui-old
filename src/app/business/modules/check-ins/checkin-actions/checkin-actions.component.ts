@@ -117,6 +117,8 @@ export class CheckinActionsComponent implements OnInit {
     providerMeetingUrl: any;
     statusList: any=[];
     groups: any;
+    showAssign = false;
+    users: any = [];
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -187,9 +189,10 @@ export class CheckinActionsComponent implements OnInit {
     }
     getUser() {
         if(this.userid){
-            this.provider_services.getUser(this.userid)
+            this.provider_services.getUsers()
             .subscribe((data: any) => {
-              this.user_arr = data;
+                this.users = data;
+              this.user_arr = this.users.filter(user => user.id === this.userid);
               if( this.user_arr.status === 'ACTIVE'){
                   this.isUserdisable = true
               } else{
@@ -645,6 +648,9 @@ export class CheckinActionsComponent implements OnInit {
         }
         if (this.data.timetype === 3) {
             this.changeService = false;
+        }
+        if (this.users.length > 1 && !this.data.multiSelection && this.accountType=='BRANCH' && (this.checkin.queue.provider.id === 0) && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn')) {
+            this.showAssign = true;
         }
     }
     getLabel() {

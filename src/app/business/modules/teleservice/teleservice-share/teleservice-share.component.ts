@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddproviderAddonComponent } from '../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-teleservice-share',
@@ -65,6 +66,7 @@ export class TeleServiceShareComponent implements OnInit {
   is_noSMS = false;
   zoomWaitFor: string;
   haveEmail = false;
+  providerEmail = false;
   constructor(public dialogRef: MatDialogRef<TeleServiceShareComponent>,
     public shared_functions: SharedFunctions,
     public shared_services: SharedServices,
@@ -72,9 +74,12 @@ export class TeleServiceShareComponent implements OnInit {
     private dialog: MatDialog,
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private groupService: GroupStorageService) { }
 
   ngOnInit() {
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
+    console.log(user);
     if (this.data.waitingType === 'checkin') {
       if (this.data.consumerDetails.email_verified) {
         this.haveEmail = true;
