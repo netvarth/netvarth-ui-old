@@ -224,7 +224,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   breadcrumbs = this.breadcrumbs_init;
   businessConfig: any = [];
   customer_label = '';
-  maintooltip = this.wordProcessor.getProjectMesssages('BPROFILE_TOOPTIP');
   primarydialogRef;
   cacheavoider = '';
   frm_additional_cap = '';
@@ -260,6 +259,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   jaldee_acc_url = Messages.JALDEE_URL;
   wndw_path = projectConstants.PATH;
   subdomain: any;
+  maintooltip = '';
 
 
 
@@ -283,6 +283,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor) {
+    this.maintooltip = this.wordProcessor.getProjectMesssages('BPROFILE_TOOPTIP');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.activated_route.params.subscribe(params => {
       this.userId = params.id;

@@ -67,8 +67,6 @@ export class CustomersListComponent implements OnInit {
   loadComplete = false;
   minday = new Date(1900, 0, 1);
   maxday = new Date();
-  filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
-  filtericonclearTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
   tooltipcls = projectConstants.TOOLTIP_CLS;
   apiloading = false;
   srchcustdialogRef;
@@ -115,6 +113,8 @@ export class CustomersListComponent implements OnInit {
   groupIdEdit = '';
   showAddCustomerHint = false;
   newlyCreatedGroupId
+  filtericonTooltip='';
+  filtericonclearTooltip='';
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -127,6 +127,8 @@ export class CustomersListComponent implements OnInit {
     private activated_route: ActivatedRoute,
     private snackbarService: SnackbarService,
     private dateTimeProcessor: DateTimeProcessor) {
+    this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
+    this.filtericonclearTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
     if (this.groupService.getitemFromGroupStorage('group')) {
       this.selectedGroup = this.groupService.getitemFromGroupStorage('group');
     } else {

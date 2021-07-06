@@ -231,14 +231,14 @@
 
                                 <!-- QR code -->
                                 <div class="pubs card w-dta bprof no-shadow no-padding-up">
-                                    <div *ngIf="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || bProfile.specialization.length === 0"
+                                    <div *ngIf="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || (bProfile && bProfile.specialization && bProfile.specialization.length === 0)"
                                         class="incomplete-msg">
                                         <div style="padding: 0 30px;">
                                             Please complete your profile to activate your Jaldee Link and QR Code
                                         </div>
                                     </div>
                                     <div
-                                        [class.all_disabled]="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || bProfile.specialization.length === 0">
+                                        [class.all_disabled]="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || (bProfile && bProfile.specialization && bProfile.specialization.length === 0)">
                                         <div>
                                             <h6 class="sub-heads">Here is your QR code and Link
                                                 <sup><span class="inactive"

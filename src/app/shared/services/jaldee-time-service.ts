@@ -4,9 +4,10 @@ import { DateTimeProcessor } from "./datetime-processor.service";
 @Injectable()
 
 export class JaldeeTimeService {
-
-    moment = this.dateTimeProcessor.getMoment();
-    constructor(private dateTimeProcessor: DateTimeProcessor) { }
+    moment: any;
+    constructor(private dateTimeProcessor: DateTimeProcessor) { 
+        this.moment = this.dateTimeProcessor.getMoment();
+    }
 
     /**
      * 
