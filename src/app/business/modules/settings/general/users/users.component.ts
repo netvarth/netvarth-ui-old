@@ -202,7 +202,7 @@ export class BranchUsersComponent implements OnInit {
                 }
                 else {
                     const grp = this.groups.filter(group => group.id === JSON.stringify(groupId));
-                    this.customerGroupSelection(grp[0]);
+                    this.customerGroupSelection(grp[0] , 'show');
                 }
             }
         });
@@ -259,7 +259,8 @@ export class BranchUsersComponent implements OnInit {
                 panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
                 disableClose: true,
                 data: {
-                    'message': msg
+                    'message': msg,
+                    'buttons': 'okCancel'
                 }
             });
             this.changeUserStatusdialogRef.afterClosed().subscribe(result => {
@@ -675,7 +676,7 @@ export class BranchUsersComponent implements OnInit {
         } else {
             const postData = {
                 'name': this.teamName,
-                'size': this.size,
+                // 'size': this.size,
                 'description': this.teamDescription
             };
             console.log(postData);
@@ -753,7 +754,7 @@ export class BranchUsersComponent implements OnInit {
             this.teamName = group.name;
             this.teamDescription = group.description;
             this.groupIdEdit = group.id;
-            this.size = group.size
+            // this.size = group.size
         }
         // else {
         //   this.teamName = this.selectedGroup.teamName;
@@ -796,6 +797,10 @@ export class BranchUsersComponent implements OnInit {
         }
         console.log(this.users_list);
         this.resetFilter();
+
+        if(type){
+            this.closeGroupDialog();
+        }
         // this.resetList();
         // this.customers = this.groupCustomers = [];
         // if (!type) {

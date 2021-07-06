@@ -68,6 +68,7 @@ export class AssignTeam implements OnInit {
   specialization_arr: any = [];
   user;
   selectedLanguages: any = [];
+  selectedGroups: any = [];
   selectedSpecialization: any = [];
   filterApplied_count: any;
   allSelected: boolean;
@@ -75,6 +76,7 @@ export class AssignTeam implements OnInit {
   notAvailabileSelected: boolean;
   accountSettings;
   contactDetailsdialogRef: any;
+  groups: any;
 
   constructor(
     private activated_route: ActivatedRoute,
@@ -108,11 +110,11 @@ export class AssignTeam implements OnInit {
     this.getSpokenLanguages();
     this.getSpecializations();
   }
-  // getProviders() {
+  // getProvidersByTeam() {
   //   let apiFilter = {};
   //   apiFilter = this.setFilterForApi();
-  //   apiFilter['userType-eq'] = 'PROVIDER';
-  //   apiFilter['status-eq'] = 'ACTIVE';
+  //   // apiFilter['userType-eq'] = 'PROVIDER';
+  //   // apiFilter['status-eq'] = 'ACTIVE';
   //   this.provider_services.getUsers(apiFilter).subscribe(data => {
   //     this.service_dataSource.data = this.setServiceDataSource(data);
   //     this.filterApplied_count = this.service_dataSource.data.length;
@@ -125,7 +127,7 @@ export class AssignTeam implements OnInit {
   getProviders() {
 
     this.provider_services.getTeamGroup().subscribe((data: any) => {
-      // this.groups = data;
+      this.groups = data;
      this.service_dataSource.data = this.setServiceDataSource(data);
       this.filterApplied_count = this.service_dataSource.data.length;
          setTimeout(() => {
@@ -325,10 +327,12 @@ export class AssignTeam implements OnInit {
     };
     this.selectedSpecialization = [];
     this.selectedLanguages = [];
+    this.selectedGroups = [];
   }
   doSearch() {
     this.getProviders();
-    if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pincode || this.filter.primaryMobileNo || this.filter.available || this.selectedLanguages.length > 0 || this.selectedSpecialization.length > 0) {
+    // this.getProvidersByTeam();
+    if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pincode || this.filter.primaryMobileNo || this.filter.available || this.selectedLanguages.length > 0 || this.selectedGroups.length > 0 || this.selectedSpecialization.length > 0) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -366,8 +370,8 @@ export class AssignTeam implements OnInit {
     if (this.selectedLanguages.length > 0) {
       api_filter['spokenlangs-eq'] = this.selectedLanguages.toString();
     }
-    if (this.selectedSpecialization.length > 0) {
-      api_filter['specialization-eq'] = this.selectedSpecialization.toString();
+    if (this.selectedGroups.length > 0) {
+      api_filter['teams-eq'] = this.selectedGroups.toString();
     }
     return api_filter;
   }
@@ -418,6 +422,13 @@ export class AssignTeam implements OnInit {
         this.selectedLanguages.push(value);
       } else {
         this.selectedLanguages.splice(indx, 1);
+      }
+    } if (type === 'group') {
+      const indx = this.selectedGroups.indexOf(value);
+      if (indx === -1) {
+        this.selectedGroups.push(value);
+      } else {
+        this.selectedGroups.splice(indx, 1);
       }
     }
     if (type === 'specializations') {
