@@ -740,14 +740,7 @@
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
-                        <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
-                          {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
-                          + ' ' + checkin.provider.lastName}}
-                        </div>
-                        <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
-                          <!-- Team Name -->
-                          {{getUsersList(checkin.teamId)}}
-                        </div>
+                     
                         <!-- <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
                           Not Assigned
                         </div> -->
@@ -767,6 +760,14 @@
                           <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                           {{checkin.service.name}}
+                        </div>
+                        <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
+                          {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
+                          + ' ' + checkin.provider.lastName}}
+                        </div>
+                        <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
+                          <!-- Team Name -->
+                          {{getUsersList(checkin.teamId)}}
                         </div>
                         <!-- <div [matTooltipClass]="tooltipcls" [matTooltip]="'Queue'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding queue-t" *ngIf="this.selQIds.length > 1">
@@ -1018,14 +1019,7 @@
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
-                        <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
-                          {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
-                          + ' ' + checkin.provider.lastName}}
-                        </div>
-                        <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
-                          <!-- Team Name -->
-                          {{getUsersList(checkin.teamId)}}
-                        </div>
+                
                         <!-- <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
                           Not Assigned
                         </div> -->
@@ -1045,6 +1039,14 @@
                           <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                           {{checkin.service.name}}
+                        </div>
+                        <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
+                          {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
+                          + ' ' + checkin.provider.lastName}}
+                        </div>
+                        <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
+                          <!-- Team Name -->
+                          {{getUsersList(checkin.teamId)}}
                         </div>
                         <!-- <div [matTooltipClass]="tooltipcls" [matTooltip]="'Queue'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding queue-t" *ngIf="this.selQIds.length > 1">
@@ -1609,14 +1611,7 @@
                         {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                     </td>
                     <td class="title td-two">
-                      <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
-                        {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
-                        ' ' + checkin.provider.lastName}}
-                      </div>
-                      <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
-                        <!-- Team Name -->
-                        {{getUsersList(checkin.teamId)}}
-                      </div>
+                
                       <!-- <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
                         Not Assigned
                       </div> -->
@@ -1637,6 +1632,14 @@
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                         {{checkin.service.name}}
 
+                      </div>
+                      <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
+                        {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
+                        ' ' + checkin.provider.lastName}}
+                      </div>
+                      <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
+                        <!-- Team Name -->
+                        {{getUsersList(checkin.teamId)}}
                       </div>
                       <!-- <div [matTooltipClass]="tooltipcls" [matTooltip]="'Queue'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding queue-t" *ngIf="this.selQIds.length > 1">
@@ -2324,14 +2327,7 @@
                         {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                     </td>
                     <td class="title td-two">
-                      <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
-                        {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
-                        ' ' + checkin.provider.lastName}}
-                      </div>
-                      <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
-                       <!-- {{}} Team Name -->
-                       {{getUsersList(checkin.teamId)}}
-                      </div>
+                   
                       <!-- <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
                         Not Assigned
                       </div> -->
@@ -2351,6 +2347,14 @@
                         <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                         {{checkin.service.name}}
+                      </div>
+                      <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
+                        {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
+                        ' ' + checkin.provider.lastName}}
+                      </div>
+                      <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
+                       <!-- {{}} Team Name -->
+                       {{getUsersList(checkin.teamId)}}
                       </div>
                       <!-- <div [matTooltipClass]="tooltipcls" [matTooltip]="'Queue'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding queue-t" *ngIf="this.selQIds.length > 1">
