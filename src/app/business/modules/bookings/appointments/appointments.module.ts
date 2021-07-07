@@ -9,6 +9,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
 import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 
 @NgModule({
   declarations: [AppointmentsComponent],
@@ -22,7 +25,10 @@ import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner
     MatOptionModule,
     FormsModule,
     LoadingSpinnerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDatepickerModule,
+    MatCheckboxModule,
+    CapitalizeFirstPipeModule
   ],
   exports: [AppointmentsComponent]
 })

@@ -70,25 +70,22 @@ export class BusinessComponent implements OnInit {
             .then(
               (settings: any) => {
                 if (router.url === '\/provider') {
-                  alert(this.groupService.getitemFromGroupStorage('isCheckin'));
-                  router.navigate(['provider', 'bookings']);
-                  this.getNewWaitlists();
-                  this.getNewAppts();
-                  // setTimeout(() => {
-                  //   if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
-                  //     if (settings.waitlist) {
-                  //       router.navigate(['provider', 'check-ins']);
-                  //     } else if (settings.appointment) {
-                  //       router.navigate(['provider', 'appointments']);
-                  //     } else if (settings.order) {
-                  //       router.navigate(['provider', 'orders']);
-                  //     } else {
-                  //       router.navigate(['provider', 'settings']);
-                  //     }
-                  //   } else {
-                  //     router.navigate(['provider', 'settings']);
-                  //   }
-                  // }, 500);
+                  setTimeout(() => {
+                    if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
+                      // if (settings.waitlist) {
+                      //   router.navigate(['provider', 'check-ins']);
+                      // } else if (settings.appointment) {
+                      //   router.navigate(['provider', 'appointments']);
+                      // } else if (settings.order) {
+                      //   router.navigate(['provider', 'orders']);
+                      // } else {
+                      //   router.navigate(['provider', 'settings']);
+                      // }
+                      router.navigate(['provider', 'bookings']);
+                    } else {
+                      router.navigate(['provider', 'settings']);
+                    }
+                  }, 500);
                 }
               });
         }
@@ -122,8 +119,8 @@ export class BusinessComponent implements OnInit {
     });
   }
   refresh() {
-    this.getNewWaitlists('refresh');
-    this.getNewAppts('refresh');
+    this.getNewWaitlists();
+    this.getNewAppts();
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
@@ -131,30 +128,49 @@ export class BusinessComponent implements OnInit {
         this.waitlistMgrSettings = data;
       });
   }
-  getNewWaitlists(source?) {
-    const filter = {
+  getNewWaitlists() {
+    let filter = {
       'waitlistStatus-eq': 'checkedIn,arrived',
       'waitlistMode-eq': 'ONLINE_CHECKIN'
     };
+    const userDet = this.groupService.getitemFromGroupStorage('ynw-user');
+    if (userDet.accountType === 'BRANCH' && !userDet.adminPrivilege) {
+      filter['provider-eq'] = userDet.id;
+    }
     this.provider_services.getTodayWaitlist(filter)
       .subscribe(
         (data: any) => {
-          const waitlistOldList = this.newWaitlists;
-          const newTodayAppts = this.newWaitlists.filter(o1 => !waitlistOldList.some(o2 => o1.ynwUuid === o2.ynwUuid));
+          const waitlists = this.groupService.getitemFromGroupStorage('newWaitlists');
+          const todaywaitlistOldList = waitlists.filter(waitlist => waitlist.type === 1 && waitlist.waitlistMode === 'ONLINE_CHECKIN' && (waitlist.waitlistStatus === 'checkedIn' || waitlist.waitlistStatus === 'arrived'));
+          const futurewaitlistOldList = waitlists.filter(waitlist => waitlist.type === 2 && waitlist.waitlistMode === 'ONLINE_CHECKIN' && (waitlist.waitlistStatus === 'checkedIn' || waitlist.waitlistStatus === 'arrived'));
+          console.log('waitlistOldList1', todaywaitlistOldList);
+          console.log('futurewaitlistOldList1', futurewaitlistOldList);
+          this.newWaitlists = [];
+          data.map((obj) => {
+            obj.type = 1;
+            return obj;
+          });
+          this.newWaitlists = data;
+          const newTodayAppts = this.newWaitlists.filter(o1 => !todaywaitlistOldList.some(o2 => o1.ynwUuid === o2.ynwUuid));
           if (newTodayAppts.length > 0) {
             this.shared_functions.sendMessage({ ttype: 'todayWl', data: newTodayAppts });
           }
-          this.newWaitlists = data;
           this.provider_services.getFutureWaitlist(filter)
             .subscribe(
-              data => {
+              (data: any) => {
+                data.map((obj) => {
+                  obj.type = 2;
+                  return obj;
+                });
                 this.newWaitlists = this.newWaitlists.concat(data);
-                const newFutureAppts = this.newWaitlists.filter(o1 => !waitlistOldList.some(o2 => o1.ynwUuid === o2.ynwUuid));
+                this.groupService.setitemToGroupStorage('newWaitlists', this.newWaitlists);
+                const newFutureAppts = this.newWaitlists.filter(o1 => !futurewaitlistOldList.some(o2 => o1.ynwUuid === o2.ynwUuid));
                 if (newFutureAppts.length > 0) {
                   this.shared_functions.sendMessage({ ttype: 'futureWl', data: newFutureAppts });
                 }
                 const newAppts = newTodayAppts.concat(newFutureAppts);
-                if (newAppts.length > 0 && source) {
+                console.log('newAppts1', newAppts);
+                if (newAppts.length > 0) {
                   const msg = (this.waitlistMgrSettings && this.waitlistMgrSettings.showTokenId) ? 'You have new token' : 'You have new check-in'
                   this.notifier.notify('success', (newAppts.length > 1) ? msg + 's' : msg);
                   var sound = new Howl({
@@ -165,31 +181,49 @@ export class BusinessComponent implements OnInit {
               });
         });
   }
-  getNewAppts(source?) {
-    const filter = {
+  getNewAppts() {
+    let filter = {
       'apptStatus-eq': 'Confirmed,Arrived',
       'appointmentMode-eq': 'ONLINE_APPOINTMENT'
     };
+    const userDet = this.groupService.getitemFromGroupStorage('ynw-user');
+    if (userDet.accountType === 'BRANCH' && !userDet.adminPrivilege) {
+      filter['provider-eq'] = userDet.id;
+    }
     this.provider_services.getTodayAppointments(filter)
       .subscribe(
         (data: any) => {
-          const waitlistOldList = this.newAppts;
-          const newTodayAppts = this.newAppts.filter(o1 => !waitlistOldList.some(o2 => o1.uid === o2.uid));
+          const waitlists = this.groupService.getitemFromGroupStorage('newAppts');
+          const todaywaitlistOldList = waitlists.filter(waitlist => waitlist.type === 1 && waitlist.appointmentMode === 'ONLINE_APPOINTMENT' && (waitlist.apptStatus === 'Confirmed' || waitlist.apptStatus === 'Arrived'));
+          const futurewaitlistOldList = waitlists.filter(waitlist => waitlist.type === 2 && waitlist.appointmentMode === 'ONLINE_APPOINTMENT' && (waitlist.apptStatus === 'Confirmed' || waitlist.apptStatus === 'Arrived'));
+          console.log('waitlistOldList2', todaywaitlistOldList);
+          console.log('futurewaitlistOldList2', futurewaitlistOldList);
+          this.newAppts = [];
+          data.map((obj) => {
+            obj.type = 1;
+            return obj;
+          });
+          this.newAppts = data;
+          const newTodayAppts = this.newAppts.filter(o1 => !todaywaitlistOldList.some(o2 => o1.uid === o2.uid));
           if (newTodayAppts.length > 0) {
             this.shared_functions.sendMessage({ ttype: 'todayAppt', data: newTodayAppts });
           }
-          this.newAppts = data;
           this.provider_services.getFutureAppointments(filter)
             .subscribe(
-              data => {
+              (data: any) => {
+                data.map((obj) => {
+                  obj.type = 2;
+                  return obj;
+                });
                 this.newAppts = this.newAppts.concat(data);
-                const newFutureAppts = this.newAppts.filter(o1 => !waitlistOldList.some(o2 => o1.uid === o2.uid));
+                this.groupService.setitemToGroupStorage('newAppts', this.newAppts);
+                const newFutureAppts = this.newAppts.filter(o1 => !futurewaitlistOldList.some(o2 => o1.uid === o2.uid));
                 if (newFutureAppts.length > 0) {
                   this.shared_functions.sendMessage({ ttype: 'futureAppt', data: newFutureAppts });
                 }
                 const newAppts = newTodayAppts.concat(newFutureAppts);
-                if (newAppts.length > 0 && source) {
-                  const newAppts = this.newAppts.filter(o1 => !waitlistOldList.some(o2 => o1.uid === o2.uid));
+                console.log('newAppts2', newAppts);
+                if (newAppts.length > 0) {
                   this.notifier.notify('success', (newAppts.length > 1) ? 'You have new appointments' : 'You have new appointment');
                   var sound = new Howl({
                     src: ['assets/notification/juntos.mp3']

@@ -99,7 +99,7 @@
                                             currency:'&#8377;' }} Paid</span>
                                     </td>
                                 </ng-container>
-                                <ng-container *ngIf="source == 'customer-order'">
+                                <ng-container *ngIf="source == 'customer-order' || source == 'order'">
                                     <td class="consumer-appthistory"> <i *ngIf="record.storePickup"
                                             class="storepickup-icon" [matTooltip]="'Store Pickup'"
                                             aria-hidden="true"></i> <i *ngIf="record.homeDelivery" class="delivery-icon"
@@ -247,6 +247,22 @@
                                             {{record.firstName}} {{record.lastName}}</ng-container>
                                         <ng-container *ngIf="!record.firstName && !record.lastName && record.jaldeeId">
                                             {{customer_label | capitalizeFirst}} id: {{record.jaldeeId}}</ng-container>
+                                    </td>
+                                </ng-container>
+                                <ng-container *ngIf="source == 'donation'">
+                                    <td>
+                                        {{record.date | date : newDateFormat}}
+                                    </td>
+                                    <td>
+                                        {{record.service.name}}
+                                    </td>
+                                    <td>
+                                        {{record.donor.firstName}} {{record.donor.lastName}}
+                                    </td>
+                                    <td>
+                                        <span class="rupee-font">
+                                            {{record.donationAmount |
+                                            currency:'&#8377;' }}</span>
                                     </td>
                                 </ng-container>
                             </tr>

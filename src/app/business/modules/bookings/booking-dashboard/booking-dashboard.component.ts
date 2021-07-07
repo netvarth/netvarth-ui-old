@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
@@ -20,14 +20,22 @@ export class BookingDashboardComponent implements OnInit {
   todayWaitlists: any = [];
   futureWaitlists: any = [];
   newWaitlists: any = [];
+  todayOrders: any = [];
+  futureOrders: any = [];
+  newOrders: any = [];
+  donations: any = [];
+  customers: any = [];
   bname;
   bills: any = [];
   userData;
-  providerId;
+  @Input() providerId;
   userDetails;
   customer_label;
-  customers: any = [];
-  subscription: Subscription
+  subscription: Subscription;
+  admin = false;
+  qParams;
+  nextWaitlist;
+  nextAppt;
   constructor(private provider_services: ProviderServices,
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
@@ -35,6 +43,7 @@ export class BookingDashboardComponent implements OnInit {
     private shared_functions: SharedFunctions,
     private locationobj: Location) {
     this.activated_route.params.subscribe(params => {
+      this.qParams = params;
       if (params.userid) {
         this.providerId = JSON.parse(params.userid);
         this.getUserData();
@@ -48,13 +57,15 @@ export class BookingDashboardComponent implements OnInit {
         case 'futureWl':
           this.futureWaitlists = this.futureWaitlists.concat(message.data);
           break;
-        case 'todayAppt':
-          this.todayWaitlists = this.todayWaitlists.concat(message.data);
-          break;
-        case 'futureAppt':
-          this.futureWaitlists = this.futureWaitlists.concat(message.data);
-          break;
+          case 'todayAppt':
+            this.todayAppts = this.todayAppts.concat(message.data);
+            break;
+          case 'futureAppt':
+            this.futureAppts = this.futureAppts.concat(message.data);
+            break;
       }
+      this.newWaitlists = this.todayWaitlists.concat(this.futureWaitlists);
+      this.newAppts = this.todayAppts.concat(this.futureAppts);
     });
   }
   ngOnDestroy() {
@@ -65,6 +76,11 @@ export class BookingDashboardComponent implements OnInit {
   ngOnInit(): void {
     const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     this.userData = this.groupService.getitemFromGroupStorage('ynw-user');
+    if (this.userData.accountType !== 'BRANCH') {
+      this.admin = true;
+      this.getCustomers();
+      this.getDonations();
+    }
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     if (bdetails) {
       if (this.userData.accountType === 'BRANCH' && this.userData.userType !== 2) {
@@ -77,15 +93,39 @@ export class BookingDashboardComponent implements OnInit {
       this.getFutureWatilists().then(data => {
         this.getTodayAppts().then(data => {
           this.getFutureAppts().then(data => {
-            this.newWaitlists = this.todayWaitlists.concat(this.futureWaitlists);
-            this.newAppts = this.todayAppts.concat(this.futureAppts);
+            this.getTodayOrders().then(data => {
+              this.getFutureOrders().then(data => {
+                this.todayAppts.map((obj) => {
+                  obj.type = 1;
+                  return obj;
+                });
+                this.futureAppts.map((obj) => {
+                  obj.type = 2;
+                  return obj;
+                });
+                this.todayWaitlists.map((obj) => {
+                  obj.type = 1;
+                  return obj;
+                });
+                this.futureWaitlists.map((obj) => {
+                  obj.type = 2;
+                  return obj;
+                });
+                this.newWaitlists = this.todayWaitlists.concat(this.futureWaitlists);
+                this.newAppts = this.todayAppts.concat(this.futureAppts);
+                this.newOrders = this.todayOrders.concat(this.futureOrders);
+                if (!this.qParams.userid) {
+                this.groupService.setitemToGroupStorage('newWaitlists', this.newWaitlists);
+                this.groupService.setitemToGroupStorage('newAppts', this.newAppts);
+                }
+              });
+            });
           });
         });
       });
     });
     this.getProviderSettings();
     this.getProviderBills();
-    this.getCustomers();
   }
   getUserData() {
     this.provider_services.getUser(this.providerId)
@@ -102,9 +142,11 @@ export class BookingDashboardComponent implements OnInit {
       });
   }
   setApptFilters() {
-    const filter = {
-      'apptStatus-neq': 'prepaymentPending,failed'
-    };
+    let filter = {};
+    filter['apptStatus-neq'] = 'prepaymentPending,failed';
+    if (this.providerId) {
+      filter['provider-eq'] = this.providerId ;
+    }
     return filter;
   }
   getTodayAppts() {
@@ -114,6 +156,9 @@ export class BookingDashboardComponent implements OnInit {
         .subscribe(
           (data: any) => {
             this.todayAppts = data;
+            if (this.todayAppts[0]) {
+              this.nextAppt = this.todayAppts[0];
+            }
             resolve(data);
           });
     });
@@ -130,9 +175,11 @@ export class BookingDashboardComponent implements OnInit {
     });
   }
   setWaitlistFilters() {
-    const filter = {
-      'waitlistStatus-neq': 'prepaymentPending,failed'
-    };
+    let filter = {};
+    filter['waitlistStatus-neq'] =  'prepaymentPending,failed';
+    if (this.providerId) {
+      filter['provider-eq'] = this.providerId ;
+    }
     return filter;
   }
   getTodayWatilists() {
@@ -142,6 +189,9 @@ export class BookingDashboardComponent implements OnInit {
         .subscribe(
           (data: any) => {
             this.todayWaitlists = data;
+            if (this.todayWaitlists[0]) {
+              this.nextWaitlist = this.todayWaitlists[0];
+            }
             resolve(data);
           });
     });
@@ -158,6 +208,37 @@ export class BookingDashboardComponent implements OnInit {
     });
   }
 
+  getTodayOrders() {
+    return new Promise((resolve) => {
+      this.provider_services.getProviderTodayOrders()
+        .subscribe(data => {
+          this.todayOrders = data;
+          resolve(data);
+        });
+    });
+  }
+  getFutureOrders() {
+    return new Promise((resolve) => {
+      this.provider_services.getProviderFutureOrders().subscribe(data => {
+        this.futureOrders = data;
+        resolve(data);
+      });
+    });
+  }
+  getCustomers() {
+    this.provider_services.getProviderCustomers()
+      .subscribe(
+        data => {
+          this.customers = data;
+        });
+  }
+  getDonations() {
+    this.provider_services.getDonations()
+      .subscribe(
+        data => {
+          this.donations = data;
+        });
+  }
   getProviderBills() {
     let filter = {};
     if (this.providerId) {
@@ -166,13 +247,6 @@ export class BookingDashboardComponent implements OnInit {
     this.provider_services.getProviderBills(filter).subscribe(data => {
       this.bills = data;
     })
-  }
-  getCustomers() {
-    this.provider_services.getProviderCustomers()
-      .subscribe(
-        data => {
-          this.customers = data;
-        });
   }
   getUserImg() {
     if (this.userDetails && this.userDetails.profilePicture) {

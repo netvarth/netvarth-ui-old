@@ -30,7 +30,7 @@
         margin-top: 10px !important;
     }    
 }
-.waitlist-dashboard .card {
+.waitlist-dashboard .card.p-0 {
     min-height: 70vh !important;
 }
 .waitlist-dashboard .main-header {

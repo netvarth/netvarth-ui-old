@@ -1379,7 +1379,7 @@ export class ProviderServices {
     const url = 'provider/donation/count';
     return this.servicemeta.httpGet(url, null, filter);
   }
-  getDonations(filter) {
+  getDonations(filter = {}) {
     const url = 'provider/donation';
     return this.servicemeta.httpGet(url, null, filter);
   }

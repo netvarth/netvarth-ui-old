@@ -10,14 +10,16 @@
         </div>
     </div>
 </div>
+<app-common-innerloading-spinner *ngIf="loading"> </app-common-innerloading-spinner>
 <div class="book-stats" *ngIf="!loading">
     <app-booking-stats [waitlistMgrSettings]="waitlistMgrSettings" [newApptsCount]="newAppts.length"
-        [newWitlistCount]="newWaitlists.length" [ordersCount]="newOrders.length" [donationsCount]="donations.length">
+        [customer_count]="customers.length" [newWitlistCount]="newWaitlists.length" [ordersCount]="newOrders.length"
+        [donationsCount]="donations.length" [admin]="true">
     </app-booking-stats>
 </div>
 <div class="row pt-0 px-6 pb-6 dashboard-content" *ngIf="!loading">
     <div class="col-lg-4 col-xxl-5 pr-0 col-md-4">
-        <app-upcoming-bookings [nextWaitlists]="todayWaitlists" [nextAppts]="todayAppts"></app-upcoming-bookings>
+        <app-upcoming-bookings [nextWaitlist]="nextWaitlist" [nextAppt]="nextAppt"></app-upcoming-bookings>
     </div>
     <div class="col-lg-4 col-xxl-3 pl-0 col-md-4">
         <app-booking-quick-actions></app-booking-quick-actions>
@@ -27,13 +29,21 @@
     </div>
     <div class="col-lg-12 col-xxl-12 col-md-12 appointments-and-doctors-row no-padding">
         <div class="column">
-            <app-records-datagrid [source]="'appt'" [heading]="'Appointments'" [records]="todayAppts" [timeType]="1">
+            <app-records-datagrid [source]="'appt'" [heading]="'Appointments'" [records]="newAppts">
             </app-records-datagrid>
         </div>
         <div class="column">
-            <app-records-datagrid [source]="'waitlist'" [records]="todayWaitlists"
+            <app-records-datagrid [source]="'waitlist'" [records]="newWaitlists"
                 [heading]="(waitlistMgrSettings && waitlistMgrSettings.showTokenId) ? 'Tokens' : 'Check-ins'"
-                [timeType]="1" [waitlistMgrSettings]="waitlistMgrSettings">
+                [waitlistMgrSettings]="waitlistMgrSettings">
+            </app-records-datagrid>
+        </div>
+        <div class="column">
+            <app-records-datagrid [source]="'order'" [heading]="'Orders'" [records]="newOrders">
+            </app-records-datagrid>
+        </div>
+        <div class="column">
+            <app-records-datagrid [source]="'donation'" [heading]="'Donations'" [records]="donations">
             </app-records-datagrid>
         </div>
         <div class="column">

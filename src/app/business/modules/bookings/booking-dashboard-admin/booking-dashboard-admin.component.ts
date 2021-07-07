@@ -30,6 +30,8 @@ export class BookingDashboardAdminComponent implements OnInit {
   customer_label;
   subscription: Subscription;
   loading = true;
+  nextWaitlist;
+  nextAppt;
   constructor(private provider_services: ProviderServices,
     private groupService: GroupStorageService,
     private shared_functions: SharedFunctions,
@@ -43,12 +45,14 @@ export class BookingDashboardAdminComponent implements OnInit {
           this.futureWaitlists = this.futureWaitlists.concat(message.data);
           break;
         case 'todayAppt':
-          this.todayWaitlists = this.todayWaitlists.concat(message.data);
+          this.todayAppts = this.todayAppts.concat(message.data);
           break;
         case 'futureAppt':
-          this.futureWaitlists = this.futureWaitlists.concat(message.data);
+          this.futureAppts = this.futureAppts.concat(message.data);
           break;
       }
+      this.newWaitlists = this.todayWaitlists.concat(this.futureWaitlists);
+      this.newAppts = this.todayAppts.concat(this.futureAppts);
     });
   }
   ngOnDestroy() {
@@ -67,10 +71,28 @@ export class BookingDashboardAdminComponent implements OnInit {
           this.getFutureAppts().then(data => {
             this.getTodayOrders().then(data => {
               this.getFutureOrders().then(data => {
+                this.todayAppts.map((obj) => {
+                  obj.type = 1;
+                  return obj;
+                });
+                this.futureAppts.map((obj) => {
+                  obj.type = 2;
+                  return obj;
+                });
+                this.todayWaitlists.map((obj) => {
+                  obj.type = 1;
+                  return obj;
+                });
+                this.futureWaitlists.map((obj) => {
+                  obj.type = 2;
+                  return obj;
+                });
                 this.newWaitlists = this.todayWaitlists.concat(this.futureWaitlists);
                 this.newAppts = this.todayAppts.concat(this.futureAppts);
                 this.newOrders = this.todayOrders.concat(this.futureOrders);
                 this.loading = false;
+                this.groupService.setitemToGroupStorage('newWaitlists', this.newWaitlists);
+                this.groupService.setitemToGroupStorage('newAppts', this.newAppts);
               });
             });
           });
@@ -78,6 +100,7 @@ export class BookingDashboardAdminComponent implements OnInit {
       });
     });
     this.getCustomers();
+    this.getDonations();
     this.getProviderSettings();
     if (this.active_user.accountType === 'BRANCH') {
       this.getUsers();
@@ -115,6 +138,9 @@ export class BookingDashboardAdminComponent implements OnInit {
         .subscribe(
           (data: any) => {
             this.todayAppts = data;
+            if (this.todayAppts[0]) {
+              this.nextAppt = this.todayAppts[0];
+            }
             resolve(data);
           });
     });
@@ -143,6 +169,9 @@ export class BookingDashboardAdminComponent implements OnInit {
         .subscribe(
           (data: any) => {
             this.todayWaitlists = data;
+            if (this.todayWaitlists[0]) {
+              this.nextWaitlist = this.todayWaitlists[0];
+            }
             resolve(data);
           });
     });
@@ -181,5 +210,12 @@ export class BookingDashboardAdminComponent implements OnInit {
         data => {
           this.customers = data;
         });
+  }
+  getDonations() {
+    this.provider_services.getDonations()
+    .subscribe(
+      data => {
+        this.donations = data;
+      });
   }
 }

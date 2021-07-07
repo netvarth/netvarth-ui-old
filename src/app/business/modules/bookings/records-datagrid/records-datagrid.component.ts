@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-records-datagrid',
@@ -13,9 +13,10 @@ export class RecordsDatagridComponent implements OnInit {
   @Input() records;
   @Input() heading;
   @Input() source;
-  @Input() timeType;
   @Input() showMore;
   @Input() waitlistMgrSettings;
+  @Input() timeType;
+  @Input() providerId;
   @Output() actionPerformed = new EventEmitter<any>();
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   waitlistModes = {
@@ -32,16 +33,11 @@ export class RecordsDatagridComponent implements OnInit {
     ONLINE_CHECKIN: 'Online Token'
   };
   check_in_statuses = projectConstantsLocal.CHECK_IN_STATUSES;
-  providerId;
   customer_label;
   provider_label;
   constructor(private dateTimeProcessor: DateTimeProcessor,
     private wordProcessor: WordProcessor,
-    private router: Router,
-    private activated_route: ActivatedRoute) {
-    this.activated_route.params.subscribe(params => {
-      this.providerId = params.userid;
-    });
+    private router: Router) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
   }
@@ -62,7 +58,7 @@ export class RecordsDatagridComponent implements OnInit {
     if (this.source == 'waitlist' || this.source === 'appt' || this.source === 'appt-dashboard' || this.source === 'waitlist-dashboard') {
       const uid = (this.source === 'appt' || this.source === 'appt-dashboard') ? record.uid : record.ynwUuid;
       const waitlisttype = (this.source === 'appt' || this.source === 'appt-dashboard') ? 'appointment' : 'checkin';
-      this.router.navigate(['provider', 'bookings', 'details'], { queryParams: { uid: uid, timetype: 1, type: waitlisttype, waitlistMgrSettings: this.waitlistMgrSettings } });
+      this.router.navigate(['provider', 'bookings', 'details'], { queryParams: { uid: uid, timetype: record.type, type: waitlisttype, waitlistMgrSettings: this.waitlistMgrSettings } });
     } else if (this.source == 'bill') {
       let source;
       if (record.type === 'Appointment') {
@@ -94,6 +90,10 @@ export class RecordsDatagridComponent implements OnInit {
       this.router.navigate(['provider', 'settings', 'general', 'users']);
     } else if (this.source == 'customers') {
       this.router.navigate(['provider', 'customers']);
+    } else if (this.source == 'donation') {
+      this.router.navigate(['provider', 'donations']);
+    } else if (this.source == 'order') {
+      this.router.navigate(['provider', 'orders']);
     }
   }
   getUserShort(record) {
