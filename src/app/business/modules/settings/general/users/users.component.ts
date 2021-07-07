@@ -893,13 +893,10 @@ export class BranchUsersComponent implements OnInit {
             // website.push(new FormControl(e.target.value));
           } else {
             console.log(this.userIds);
-             const index =  this.userIds.filter(x => x === id);
+             const index =  this.userIds.filter(x => x !== id);
              console.log(index)
-             this.userIds.pop(index, 1);
-            // this.userIds.splice(index, 1);
-            console.log(this.userIds)
-            // this.userIds.splice(index, 1);
-            //  this.userIds.splice(index);
+             this.userIds = index;
+             console.log(this.userIds)
           }
           console.log(this.userIds)
     }
