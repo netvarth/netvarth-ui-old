@@ -77,7 +77,6 @@ export class BookingDashboardComponent implements OnInit {
       this.getFutureWatilists().then(data => {
         this.getTodayAppts().then(data => {
           this.getFutureAppts().then(data => {
-
             this.newWaitlists = this.todayWaitlists.concat(this.futureWaitlists);
             this.newAppts = this.todayAppts.concat(this.futureAppts);
           });

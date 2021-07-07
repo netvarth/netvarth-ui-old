@@ -17,6 +17,16 @@
                         </div>
                     </div>
                     <table class="table table-hover">
+                        <!-- <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Patient Name</th>
+                                <th scope="col">Assigned Doctor</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Diseases</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead> -->
                         <tbody>
                             <tr class="pointer-cursor" *ngFor="let record of records"
                                 (click)="actionClick('details', record)">

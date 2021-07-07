@@ -15,6 +15,8 @@ export class BookingStatsComponent implements OnInit {
   @Input() newApptsCount;
   @Input() newWitlistCount;
   @Input() waitlistMgrSettings;
+  @Input() ordersCount;
+  @Input() donationsCount;
   admin = false;
   providerId;
   constructor(private provider_services: ProviderServices,

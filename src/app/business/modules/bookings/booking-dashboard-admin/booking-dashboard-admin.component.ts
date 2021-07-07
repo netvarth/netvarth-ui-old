@@ -22,9 +22,14 @@ export class BookingDashboardAdminComponent implements OnInit {
   todayWaitlists: any = [];
   futureWaitlists: any = [];
   newWaitlists: any = [];
+  todayOrders: any = [];
+  futureOrders: any = [];
+  newOrders: any = [];
+  donations: any = [];
   customers: any = [];
   customer_label;
   subscription: Subscription;
+  loading = true;
   constructor(private provider_services: ProviderServices,
     private groupService: GroupStorageService,
     private shared_functions: SharedFunctions,
@@ -60,8 +65,14 @@ export class BookingDashboardAdminComponent implements OnInit {
       this.getFutureWatilists().then(data => {
         this.getTodayAppts().then(data => {
           this.getFutureAppts().then(data => {
-            this.newWaitlists = this.todayWaitlists.concat(this.futureWaitlists);
-            this.newAppts = this.todayAppts.concat(this.futureAppts);
+            this.getTodayOrders().then(data => {
+              this.getFutureOrders().then(data => {
+                this.newWaitlists = this.todayWaitlists.concat(this.futureWaitlists);
+                this.newAppts = this.todayAppts.concat(this.futureAppts);
+                this.newOrders = this.todayOrders.concat(this.futureOrders);
+                this.loading = false;
+              });
+            });
           });
         });
       });
@@ -145,6 +156,23 @@ export class BookingDashboardAdminComponent implements OnInit {
             this.futureWaitlists = data;
             resolve(data);
           });
+    });
+  }
+  getTodayOrders() {
+    return new Promise((resolve) => {
+      this.provider_services.getProviderTodayOrders()
+        .subscribe(data => {
+          this.todayOrders = data;
+          resolve(data);
+        });
+    });
+  }
+  getFutureOrders() {
+    return new Promise((resolve) => {
+      this.provider_services.getProviderFutureOrders().subscribe(data => {
+        this.futureOrders = data;
+        resolve(data);
+      });
     });
   }
   getCustomers() {

@@ -5,7 +5,7 @@
                 Appointments
             </div>
             <div class="data">
-                <i class="icon material-icons align-middle" style="color: #6676de !important;">face</i>
+                <i class="icon fa fa-calendar align-middle" style="color: #6676de !important;"></i>
                 <div class="text-val">{{newApptsCount}}</div>
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -26,7 +26,7 @@
                 {{(waitlistMgrSettings && waitlistMgrSettings.showTokenId) ? 'Tokens' : 'Check-ins'}}
             </div>
             <div class="data">
-                <i class="icon material-icons align-middle" style="color: #fd7e14 !important;">content_cut</i>
+                <i class="icon fa fa-check-circle align-middle" style="color: #fd7e14 !important;"></i>
                 <div class="text-val">{{newWitlistCount}}</div>
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -45,13 +45,61 @@
             </svg>
         </div>
     </div>
+    <div class="column mgn-5">
+        <div class="card">
+            <div class="head">
+                Orders
+            </div>
+            <div class="data">
+                <i class="icon fa fa-shopping-cart align-middle" style="color: #0d6efd !important;"></i>
+                <div class="text-val">{{ordersCount}}</div>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#3d9aff" fill-opacity="1"
+                    d="M0,96L16,128C32,160,64,224,96,245.3C128,267,160,245,192,245.3C224,245,256,267,288,240C320,
+                            213,352,139,384,144C416,149,448,235,480,250.7C512,267,544,213,576,186.7C608,160,640,160,
+                            672,165.3C704,171,736,181,768,165.3C800,149,832,107,864,106.7C896,107,928,149,960,144C992,
+                            139,1024,85,1056,85.3C1088,85,1120,139,1152,160C1184,181,1216,171,1248,160C1280,149,1312,
+                            139,1344,144C1376,149,1408,171,1424,181.3L1440,192L1440,320L1424,320C1408,320,1376,320,
+                            1344,320C1312,320,1280,320,1248,320C1216,320,1184,320,1152,320C1120,320,1088,320,1056,
+                            320C1024,320,992,320,960,320C928,320,896,320,864,320C832,320,800,320,768,320C736,320,704,
+                            320,672,320C640,320,608,320,576,320C544,320,512,320,480,320C448,320,416,320,384,320C352,
+                            320,320,320,288,320C256,320,224,320,192,320C160,320,128,320,96,320C64,320,32,320,16,320L0,320Z">
+                </path>
+            </svg>
+        </div>
+    </div>
+    <div class="column mgn-5" *ngIf="admin">
+        <div class="card">
+            <div class="head">
+                Donations
+            </div>
+            <div class="data">
+                <i class="icon fa fa-inr align-middle" style="color: #e00e0e !important;"></i>
+                <div class="text-val">{{donationsCount}}</div>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="red" fill-opacity="1"
+                    d="M0,96L16,128C32,160,64,224,96,245.3C128,267,160,245,192,245.3C224,245,256,267,288,240C320,
+                            213,352,139,384,144C416,149,448,235,480,250.7C512,267,544,213,576,186.7C608,160,640,160,
+                            672,165.3C704,171,736,181,768,165.3C800,149,832,107,864,106.7C896,107,928,149,960,144C992,
+                            139,1024,85,1056,85.3C1088,85,1120,139,1152,160C1184,181,1216,171,1248,160C1280,149,1312,
+                            139,1344,144C1376,149,1408,171,1424,181.3L1440,192L1440,320L1424,320C1408,320,1376,320,
+                            1344,320C1312,320,1280,320,1248,320C1216,320,1184,320,1152,320C1120,320,1088,320,1056,
+                            320C1024,320,992,320,960,320C928,320,896,320,864,320C832,320,800,320,768,320C736,320,704,
+                            320,672,320C640,320,608,320,576,320C544,320,512,320,480,320C448,320,416,320,384,320C352,
+                            320,320,320,288,320C256,320,224,320,192,320C160,320,128,320,96,320C64,320,32,320,16,320L0,320Z">
+                </path>
+            </svg>
+        </div>
+    </div>
     <div class="column mgn-5" *ngIf="admin">
         <div class="card">
             <div class="head">
                 {{customer_label | capitalizeFirst}}s
             </div>
             <div class="data">
-                <i class="icon material-icons align-middle" style="color: #198754 !important;">person_add</i>
+                <i class="icon fa fa-users align-middle" style="color: #198754 !important;"></i>
                 <div class="text-val">{{customer_count}}</div>
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">

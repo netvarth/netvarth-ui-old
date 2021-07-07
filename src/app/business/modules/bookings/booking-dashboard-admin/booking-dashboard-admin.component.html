@@ -10,11 +10,12 @@
         </div>
     </div>
 </div>
-<div class="book-stats">
+<div class="book-stats" *ngIf="!loading">
     <app-booking-stats [waitlistMgrSettings]="waitlistMgrSettings" [newApptsCount]="newAppts.length"
-        [newWitlistCount]="newWaitlists.length"></app-booking-stats>
+        [newWitlistCount]="newWaitlists.length" [ordersCount]="newOrders.length" [donationsCount]="donations.length">
+    </app-booking-stats>
 </div>
-<div class="row pt-0 px-6 pb-6 dashboard-content">
+<div class="row pt-0 px-6 pb-6 dashboard-content" *ngIf="!loading">
     <div class="col-lg-4 col-xxl-5 pr-0 col-md-4">
         <app-upcoming-bookings [nextWaitlists]="todayWaitlists" [nextAppts]="todayAppts"></app-upcoming-bookings>
     </div>

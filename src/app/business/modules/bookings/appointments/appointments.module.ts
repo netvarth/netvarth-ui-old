@@ -21,7 +21,8 @@ import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner
     MatSelectModule,
     MatOptionModule,
     FormsModule,
-    LoadingSpinnerModule
+    LoadingSpinnerModule,
+    MatTooltipModule
   ],
   exports: [AppointmentsComponent]
 })

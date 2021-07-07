@@ -70,6 +70,7 @@ export class BusinessComponent implements OnInit {
             .then(
               (settings: any) => {
                 if (router.url === '\/provider') {
+                  alert(this.groupService.getitemFromGroupStorage('isCheckin'));
                   router.navigate(['provider', 'bookings']);
                   this.getNewWaitlists();
                   this.getNewAppts();
@@ -132,7 +133,8 @@ export class BusinessComponent implements OnInit {
   }
   getNewWaitlists(source?) {
     const filter = {
-      'waitlistStatus-eq': 'checkedIn,arrived'
+      'waitlistStatus-eq': 'checkedIn,arrived',
+      'waitlistMode-eq': 'ONLINE_CHECKIN'
     };
     this.provider_services.getTodayWaitlist(filter)
       .subscribe(
@@ -165,7 +167,8 @@ export class BusinessComponent implements OnInit {
   }
   getNewAppts(source?) {
     const filter = {
-      'apptStatus-eq': 'Confirmed,Arrived'
+      'apptStatus-eq': 'Confirmed,Arrived',
+      'appointmentMode-eq': 'ONLINE_APPOINTMENT'
     };
     this.provider_services.getTodayAppointments(filter)
       .subscribe(
