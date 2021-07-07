@@ -148,6 +148,7 @@ export class BranchUsersComponent implements OnInit {
     newlyCreatedGroupId;
     showteams =  false;
     showusers = true;
+    selecteTeamdUsers: any = [];
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -731,6 +732,7 @@ export class BranchUsersComponent implements OnInit {
         this.resetError();
     }
     showCustomerstoAdd(type?) {
+        this.selecteTeamdUsers = [];
         this.showcheckbox = true
         this.userIds = [];
         this.getUsers();
@@ -738,10 +740,21 @@ export class BranchUsersComponent implements OnInit {
         // this.resetList();
         this.resetFilter();
         // this.getCustomersList();
+        this.selecteTeamdUsers = this.selectedGroup.users;
         if (type) {
             this.closeGroupDialog();
             this.showCustomerHint();
         }
+        if (!type) {
+        if(this.selectedGroup.users.length > 0){
+            for (let i = 0; i < this.selectedGroup.users.length; i++) {
+                console.log(this.selectedGroup.users[i]);
+                this.userIds.push(this.selectedGroup.users[i].id);
+                console.log(this.userIds);
+            }
+        }
+       }
+        console.log(this.userIds);
     }
     closeGroupDialog() {
         this.closebutton.nativeElement.click();
@@ -768,7 +781,9 @@ export class BranchUsersComponent implements OnInit {
     }
     customerGroupSelection(group, type?) {
         this.showusers = true;
+        this.showUsers = false;
         this.showteams =  false;
+        this.showcheckbox = false;
         if (group === 'all') {
             this.getUsers();
         }
@@ -841,26 +856,27 @@ export class BranchUsersComponent implements OnInit {
         console.log(postData);
         this.provider_services.updateTeamMembers(postData).subscribe(
             (data: any) => {
-                //   this.getCustomerGroup();
                 this.getCustomerGroup('update');
                 this.showcheckbox = false;
                 this.showUsers = false;
-                //   this.getUsers();
-                //   this.customerGroupSelection(this.selectedGroup);
+
             },
             error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
-    //    checkSelection(customer) {
-    //        console.log(customer);
-    //         const custom = this.selectedcustomersformsg.filter(cust => cust.id === customer.id);
-    //         if (custom.length > 0) {
-    //           return true;
-    //         }
-    //     }
+    checkSelection(user) {
+        if(this.selecteTeamdUsers.length > 0){
+            const isuser = this.selecteTeamdUsers.filter(listofusers => listofusers.id === user.id);
+            if (isuser.length > 0) {
+              return true;
+             }
+            }
+        }
+       
     cancelAdd() {
         console.log("close");
+        this.userIds = [];
         this.showcheckbox = false;
         this.showUsers = false;
         console.log(this.selectedGroup);
@@ -872,23 +888,15 @@ export class BranchUsersComponent implements OnInit {
         console.log(values.currentTarget.checked);
         console.log(service);
         console.log(values);
-
-        // if (values.currentTarget.checked) {
-        //     this.userIds.push(id);
-        //     console.log(this.userIds)
-        // } else if (!values.currentTarget.checked) {
-        //     this.userIds.splice(id);
-        //     console.log(this.userIds)
-        // }
-        // console.log(this.userIds)
         if (values.currentTarget.checked) {
             this.userIds.push(id);
             // website.push(new FormControl(e.target.value));
           } else {
             console.log(this.userIds);
-             const index =  this.userIds.filter(x => x === id);
+             const index =  this.userIds.filter(x => x !== id);
              console.log(index)
-             this.userIds.pop(index);
+             this.userIds = index;
+             console.log(this.userIds)
           }
           console.log(this.userIds)
     }

@@ -440,6 +440,9 @@
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item user-txt-clr" *ngIf="waitlist.provider">
                     Assigned: {{(waitlist.provider.businessName) ? waitlist.provider.businessName : waitlist.provider.firstName + ' ' + waitlist.provider.lastName}}
                 </div>
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item user-txt-clr" *ngIf=" waitlist.internalStatus">
+                   - {{waitlist.internalStatus}}
+                </div>
                 <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item" *ngIf="!waitlist.provider">
                     Not assigned
                 </div> -->
@@ -449,7 +452,7 @@
                         {{waitlist.waitlistingFor[0].bookingLocation.state}}</span>
                 </div>
                 <div class="col-xs-12 col-sm-12 no-padding view-details">
-                    <span *ngIf="waitlist.waitlistingFor[0].age">{{getAge(waitlist.waitlistingFor[0].age)}}</span>
+                    <span *ngIf="waitlist.waitlistingFor[0].age">{{getAge(waitlist.waitlistingFor[0].age)}} yrs</span>
                     <span *ngIf="waitlist.waitlistingFor[0].age">&nbsp;</span>
                     <span *ngIf="waitlist.waitlistingFor[0].age">,</span>
                     <span *ngIf="waitlist.waitlistingFor[0].gender">{{waitlist.waitlistingFor[0].gender | capitalizeFirst}}</span>
@@ -605,6 +608,9 @@
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item user-txt-clr" *ngIf="appointment.provider">
                     Assigned: {{(appointment.provider.businessName) ? appointment.provider.businessName : appointment.provider.firstName + ' ' + appointment.provider.lastName}}
                 </div>
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item user-txt-clr" *ngIf="appointment.internalStatus">
+                  - {{appointment.internalStatus}}
+                </div>
                 <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item" *ngIf="!waitlist.provider">
                     Not assigned
                 </div> -->
@@ -614,7 +620,7 @@
                         {{appointment.appmtFor[0].bookingLocation.state}}</span>
                 </div>
                 <div class="col-xs-12 col-sm-12 no-padding view-details">
-                    <span *ngIf="appointment.appmtFor[0].age">{{getAge(appointment.appmtFor[0].age)}}</span>
+                    <span *ngIf="appointment.appmtFor[0].age">{{getAge(appointment.appmtFor[0].age)}} yrs</span>
                     <span *ngIf="appointment.appmtFor[0].age">&nbsp;</span>
                     <span *ngIf="appointment.appmtFor[0].age">,</span>
                     <span *ngIf="appointment.appmtFor[0].gender">{{appointment.appmtFor[0].gender | capitalizeFirst}}</span>

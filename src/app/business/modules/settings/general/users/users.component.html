@@ -246,15 +246,18 @@
              </div>
              <div class="col-sm-12 col-lg-8 col-xs-12 col-md-12 mb-4">
                    <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
-                   *ngIf="selectedGroup !== 'all' && !showUsers">
+                   *ngIf="selectedGroup !== 'all' && !showUsers  && (selectedGroup.users && selectedGroup.users.length == 0)">
                    Add Users</button>
+                   <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
+                   *ngIf="selectedGroup !== 'all' && !showUsers && (selectedGroup.users && selectedGroup.users.length > 0)">
+                   Update Users</button>
                    
                    <button mat-flat-button class="font-size-xs add_btn mgn-lt-10 cancel_btn" (click)="cancelAdd()"
                   *ngIf="selectedGroup !== 'all'  && showUsers"><i class="fa fa-times mgn-rt-5" aria-hidden="true"></i>
                    Cancel</button>
         
                   <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="addCustomerToGroup()"
-                  *ngIf="selectedGroup !== 'all'  && showUsers &&  this.userIds.length > 0">
+                  *ngIf="selectedGroup !== 'all'  && showUsers &&  (this.userIds.length > 0 || (this.selectedGroup.users &&  this.selectedGroup.users.length > 0)) ">
                   Add</button>
 
                   <button mat-flat-button class="font-size-xs add_btn mgn-lt-10 cancel_btn" (click)="locationclose()"
@@ -612,7 +615,7 @@
                                                               <div class="pr-3 check-box"   *ngIf="showcheckbox">
                                                                   <span class="symbol-label">
                                                                     <!-- <input type="checkbox" name="Checkboxes4" [checked]="checkSelection(service)"> -->
-                                                                    <input type="checkbox" name="Checkboxes4" (click)="stopprop($event);"   (change)="getUserIds(service, service.id , $event)">
+                                                                    <input type="checkbox" name="Checkboxes4"  [checked]="checkSelection(service)" (click)="stopprop($event);"   (change)="getUserIds(service, service.id , $event)">
                                                                     <!-- <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a> -->
 
                                                                   </span>
@@ -786,16 +789,21 @@
            </div>
            <div class="col-sm-12 col-lg-8 col-xs-12 col-md-12 mb-4">
                  <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
-                 *ngIf="selectedGroup !== 'all' && !showUsers">
-                 Add Users</button>
+                   *ngIf="selectedGroup !== 'all' && !showUsers  && (selectedGroup.users && selectedGroup.users.length == 0)">
+                   Add Users</button>
+                 <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
+                   *ngIf="selectedGroup !== 'all' && !showUsers && (selectedGroup.users && selectedGroup.users.length > 0)">
+                   Update Users</button>
+
                  
                  <button mat-flat-button class="font-size-xs add_btn mgn-lt-10 cancel_btn" (click)="cancelAdd()"
                 *ngIf="selectedGroup !== 'all'  && showUsers"><i class="fa fa-times mgn-rt-5" aria-hidden="true"></i>
                  Cancel</button>
       
                 <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="addCustomerToGroup()"
-                *ngIf="selectedGroup !== 'all'  && showUsers &&  this.userIds.length > 0">
+                *ngIf="selectedGroup !== 'all'  && showUsers &&  (this.userIds.length > 0 || (this.selectedGroup.users &&  this.selectedGroup.users.length > 0)) ">
                 Add</button>
+
 
                 <button mat-flat-button class="font-size-xs add_btn mgn-lt-10 cancel_btn" (click)="locationclose()"
                 *ngIf="addlocationcheck"><i class="fa fa-times mgn-rt-5" aria-hidden="true"></i>
@@ -1147,7 +1155,8 @@
                                                                 <span class="symbol-label">
                                                                   <!-- <input type="checkbox" name="Checkboxes4" [checked]="checkSelection(service)"> -->
                                                                   <!-- <input type="checkbox" name="Checkboxes4"  (change)="getUserIds(service, service.id , $event)"> -->
-                                                                  <input type="checkbox" name="Checkboxes4" (click)="stopprop($event);"   (change)="getUserIds(service, service.id , $event)">
+                                                                  <!-- <input type="checkbox" name="Checkboxes4" (click)="stopprop($event);"   (change)="getUserIds(service, service.id , $event)"> -->
+                                                                  <input type="checkbox" name="Checkboxes4"  [checked]="checkSelection(service)" (click)="stopprop($event);"   (change)="getUserIds(service, service.id , $event)">
 
                                                                 </span>
                                                               </div>
