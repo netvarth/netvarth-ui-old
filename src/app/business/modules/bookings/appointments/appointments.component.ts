@@ -10,6 +10,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import * as moment from 'moment';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { SharedServices } from '../../../../shared/services/shared-services';
 
 @Component({
   selector: 'app-appointments',
@@ -127,7 +128,8 @@ export class AppointmentsComponent implements OnInit {
     private shared_functions: SharedFunctions,
     private lStorageService: LocalStorageService,
     private wordProcessor: WordProcessor,
-    private dateTimeProcessor: DateTimeProcessor) {
+    private dateTimeProcessor: DateTimeProcessor,
+    private shared_services: SharedServices) {
     this.activated_route.queryParams.subscribe(params => {
       if (params.providerId) {
         this.providerId = JSON.parse(params.providerId);
@@ -136,11 +138,9 @@ export class AppointmentsComponent implements OnInit {
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
       switch (message.ttype) {
         case 'todayAppt':
-          console.log(message.data);
           this.todayAppts = this.todayAppts.concat(message.data);
           break;
         case 'futureAppt':
-          console.log(message.data);
           this.futureAppts = this.futureAppts.concat(message.data);
           break;
       }
@@ -154,11 +154,9 @@ export class AppointmentsComponent implements OnInit {
   }
   ngOnInit(): void {
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-    this.getProviderLocations();
-    this.getProviderSchedules();
-    this.getServices();
-    this.getLabel();
-    this.getTomorrowDate();
+    if (!this.server_date) {
+      this.setSystemDate();
+    }
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.customerIdTooltip = this.customer_label + ' Id';
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
@@ -170,6 +168,19 @@ export class AppointmentsComponent implements OnInit {
         });
       });
     });
+    this.getProviderLocations();
+    this.getProviderSchedules();
+    this.getServices();
+    this.getLabel();
+    this.getTomorrowDate();
+  }
+  setSystemDate() {
+    this.shared_services.getSystemDate()
+      .subscribe(
+        res => {
+          this.server_date = res;
+          this.lStorageService.setitemonLocalStorage('sysdate', res);
+        });
   }
   getTomorrowDate() {
     const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -236,7 +247,7 @@ export class AppointmentsComponent implements OnInit {
     }
     if (this.timeType === 3) {
       if (this.filteredSchedule.length > 0 && this.filter.schedule !== 'all') {
-          api_filter['schedule-eq'] = this.filteredSchedule.toString();
+        api_filter['schedule-eq'] = this.filteredSchedule.toString();
       }
       if (this.filterLocation.length > 0 && this.filter.location !== 'all') {
         api_filter['location-eq'] = this.filterLocation.toString();
@@ -249,10 +260,10 @@ export class AppointmentsComponent implements OnInit {
       api_filter['apptStatus-neq'] = 'prepaymentPending,failed';
     }
     if (this.timeType === 2) {
-    if (this.filter.check_in_date != null) {
-      api_filter['date-eq'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_date);
+      if (this.filter.check_in_date != null) {
+        api_filter['date-eq'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_date);
+      }
     }
-  }
     return api_filter;
   }
   getPatientIdFilter(patientid) {

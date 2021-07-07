@@ -213,9 +213,9 @@ export class BookingDashboardAdminComponent implements OnInit {
   }
   getDonations() {
     this.provider_services.getDonations()
-    .subscribe(
-      data => {
-        this.donations = data;
-      });
+      .subscribe(
+        data => {
+          this.donations = data;
+        });
   }
 }

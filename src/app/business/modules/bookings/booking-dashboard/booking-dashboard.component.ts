@@ -57,12 +57,12 @@ export class BookingDashboardComponent implements OnInit {
         case 'futureWl':
           this.futureWaitlists = this.futureWaitlists.concat(message.data);
           break;
-          case 'todayAppt':
-            this.todayAppts = this.todayAppts.concat(message.data);
-            break;
-          case 'futureAppt':
-            this.futureAppts = this.futureAppts.concat(message.data);
-            break;
+        case 'todayAppt':
+          this.todayAppts = this.todayAppts.concat(message.data);
+          break;
+        case 'futureAppt':
+          this.futureAppts = this.futureAppts.concat(message.data);
+          break;
       }
       this.newWaitlists = this.todayWaitlists.concat(this.futureWaitlists);
       this.newAppts = this.todayAppts.concat(this.futureAppts);
@@ -115,8 +115,8 @@ export class BookingDashboardComponent implements OnInit {
                 this.newAppts = this.todayAppts.concat(this.futureAppts);
                 this.newOrders = this.todayOrders.concat(this.futureOrders);
                 if (!this.qParams.userid) {
-                this.groupService.setitemToGroupStorage('newWaitlists', this.newWaitlists);
-                this.groupService.setitemToGroupStorage('newAppts', this.newAppts);
+                  this.groupService.setitemToGroupStorage('newWaitlists', this.newWaitlists);
+                  this.groupService.setitemToGroupStorage('newAppts', this.newAppts);
                 }
               });
             });
@@ -145,7 +145,7 @@ export class BookingDashboardComponent implements OnInit {
     let filter = {};
     filter['apptStatus-neq'] = 'prepaymentPending,failed';
     if (this.providerId) {
-      filter['provider-eq'] = this.providerId ;
+      filter['provider-eq'] = this.providerId;
     }
     return filter;
   }
@@ -176,9 +176,9 @@ export class BookingDashboardComponent implements OnInit {
   }
   setWaitlistFilters() {
     let filter = {};
-    filter['waitlistStatus-neq'] =  'prepaymentPending,failed';
+    filter['waitlistStatus-neq'] = 'prepaymentPending,failed';
     if (this.providerId) {
-      filter['provider-eq'] = this.providerId ;
+      filter['provider-eq'] = this.providerId;
     }
     return filter;
   }

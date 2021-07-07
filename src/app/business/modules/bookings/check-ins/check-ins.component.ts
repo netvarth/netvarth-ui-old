@@ -10,6 +10,7 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import * as moment from 'moment';
 import { projectConstants } from '../../../../app.component';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { SharedServices } from '../../../../shared/services/shared-services';
 
 @Component({
   selector: 'app-check-ins',
@@ -117,7 +118,8 @@ export class CheckinsComponent implements OnInit {
     private shared_functions: SharedFunctions,
     private wordProcessor: WordProcessor,
     private dateTimeProcessor: DateTimeProcessor,
-    private lStorageService: LocalStorageService) {
+    private lStorageService: LocalStorageService,
+    private shared_services: SharedServices) {
     this.activated_route.queryParams.subscribe(params => {
       if (params.providerId) {
         this.providerId = JSON.parse(params.providerId);
@@ -147,6 +149,9 @@ export class CheckinsComponent implements OnInit {
   }
   ngOnInit(): void {
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
+    if (!this.server_date) {
+      this.setSystemDate();
+    }
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.customerIdTooltip = this.customer_label + ' Id';
@@ -157,6 +162,14 @@ export class CheckinsComponent implements OnInit {
     this.getServices();
     this.getLabel();
     this.doSearch();
+  }
+  setSystemDate() {
+    this.shared_services.getSystemDate()
+      .subscribe(
+        res => {
+          this.server_date = res;
+          this.lStorageService.setitemonLocalStorage('sysdate', res);
+        });
   }
   isNumeric(evt) {
     return this.shared_functions.isNumeric(evt);

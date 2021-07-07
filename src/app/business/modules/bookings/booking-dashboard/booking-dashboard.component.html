@@ -1,4 +1,4 @@
-<section *ngIf="providerId">
+<section *ngIf="qParams.userid">
     <div class="card title-gb">
         <h5 class="no-margin">
             <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>
@@ -7,6 +7,18 @@
         </h5>
     </div>
 </section>
+<div class="subheader header-container subheader-solid" *ngIf="!qParams.userid">
+    <div class="container-fluid d-flex flex-wrap flex-sm-nowrap">
+        <div class="d-flex flex-column flex-wrap mr-2">
+            <h1 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                <b>Dashboard</b>
+            </h1>
+            <h6>
+                Manage your complete practice from one place
+            </h6>
+        </div>
+    </div>
+</div>
 <div class="book-stats">
     <app-booking-stats [waitlistMgrSettings]="waitlistMgrSettings" [newApptsCount]="newAppts.length"
         [customer_count]="customers.length" [newWitlistCount]="newWaitlists.length" [ordersCount]="newOrders.length"
@@ -25,7 +37,8 @@
     </div>
     <div class="col-lg-12 col-xxl-12 col-md-12 appointments-and-doctors-row no-padding">
         <div class="column">
-            <app-records-datagrid [source]="'appt'" [heading]="'Appointments'" [records]="newAppts" [providerId]="providerId">
+            <app-records-datagrid [source]="'appt'" [heading]="'Appointments'" [records]="newAppts"
+                [providerId]="providerId">
             </app-records-datagrid>
         </div>
         <div class="column">

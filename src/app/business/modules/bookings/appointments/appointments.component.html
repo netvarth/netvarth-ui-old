@@ -42,15 +42,15 @@
         <img src="assets/images/provider-filter-icon.png" (click)="showFilterSidebar()"
             [matTooltip]="filtericonTooltip" style="width: 22px !important; margin-top: -6px !important;">
       </a>
-      <!-- <div class="pull-right viewtypes">
+      <div class="pull-right viewtypes">
         View: <i class="fa fa-list-ul mgn-rt-5 pointer-cursor" [class.selectedView]="selectedType=='list'"
           (click)="selectViewType('list')" [matTooltip]="'List View'"></i>
         <i class="fa fa-calendar pointer-cursor" [class.selectedView]="selectedType=='calender'"
           (click)="selectViewType('calender')" [matTooltip]="'Calender View'"></i>
-      </div> -->
+      </div>
     </div>
     <div *ngIf="filter_sidebar">
-      <aside class="filterSidebar newfilter-sidebar" *ngIf="filter_sidebar">
+      <aside class="filterSidebar newfilter-sidebar">
         <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
           <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
             <span class="filter-head-title">Filters</span>

@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 export class UpcomingBookingsComponent implements OnInit {
   @Input() nextWaitlist: any = [];
   @Input() nextAppt: any = [];
-  loading = false;
   constructor(private router: Router) { }
 
   ngOnInit(): void {
