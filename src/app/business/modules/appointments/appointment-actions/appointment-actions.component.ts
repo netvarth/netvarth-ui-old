@@ -105,6 +105,8 @@ export class AppointmentActionsComponent implements OnInit {
     user_arr: any;
     groups: any;
     statusList: any=[];
+    showAssign = false;
+    users: any = [];
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -164,9 +166,10 @@ export class AppointmentActionsComponent implements OnInit {
     }
     getUser() {
         if(this.userid){
-            this.provider_services.getUser(this.userid)
+            this.provider_services.getUsers()
             .subscribe((data: any) => {
-              this.user_arr = data;
+                this.users = data;
+              this.user_arr = this.users.filter(user => user.id === this.userid);
               if( this.user_arr.status === 'ACTIVE'){
                   this.isUserdisable = true
               } else{
@@ -484,11 +487,14 @@ export class AppointmentActionsComponent implements OnInit {
         if (this.data.timetype !== 2 && this.appt.apptStatus !== 'blocked' && (this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected')) {
             this.showmrrx = true;
         }
-        if (this.appt.providerConsumer.email || this.appt.providerConsumer.phoneNo) {
+        if (this.appt.providerConsumer.email || (this.appt.providerConsumer.phoneNo && this.appt.providerConsumer.phoneNo.trim() !== '')) {
             this.showAttachment = true;
         }
         if (this.data.timetype === 3) {
             this.changeService = false;
+        }
+        if (this.users.length > 1 && !this.data.multiSelection && this.accountType=='BRANCH' && (this.appt.schedule.provider.id === 0) && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed')) {
+            this.showAssign = true;
         }
     }
     getLabel() {

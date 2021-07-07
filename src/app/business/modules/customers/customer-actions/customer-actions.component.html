@@ -57,13 +57,13 @@
                 <div class="icon-text">Labels</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" (click)="gotoSecureVideo()">
+        <div class="action-box pointer-cursor" (click)="gotoSecureVideo()" *ngIf="showMessage || whatsappNum">
             <div class="action-box-sub">
                 <span class="jvideo-icon"></span>
                 <div class="icon-text">Video Call</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" (click)="startVoiceCall()">
+        <div class="action-box pointer-cursor" (click)="startVoiceCall()" *ngIf="phoneNum">
             <div class="action-box-sub">
                 <span class="phon-icon" style="width: 50px;"></span>
                 <div class="icon-text">Voice Call</div>

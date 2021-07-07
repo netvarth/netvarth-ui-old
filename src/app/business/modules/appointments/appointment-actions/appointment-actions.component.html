@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="action-box pointer-cursor"
-                *ngIf="!data.multiSelection && accountType=='BRANCH' && (appt.schedule.provider.id === 0) && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')"
+                *ngIf="showAssign"
                 (click)="changeWaitlistservice()">
                 <div class="action-box-sub">
                     <span class="doctor-change-icon"></span>
@@ -240,13 +240,13 @@
                     <div class="icon-text">Labels</div>
                 </div>
             </div>
-            <div class="action-box pointer-cursor" (click)="gotoSecureVideo()" *ngIf="!data.multiSelection && appt.apptStatus!=='blocked'">
+            <div class="action-box pointer-cursor" (click)="gotoSecureVideo()" *ngIf="!data.multiSelection && appt.apptStatus!=='blocked' && (showMsg || (appt.virtualService && appt.virtualService.WhatsApp))">
                 <div class="action-box-sub">
                     <span class="jvideo-icon"></span>
                     <div class="icon-text">Video Call</div>
                 </div>
             </div>
-            <div class="action-box pointer-cursor" (click)="startVoiceCall()" *ngIf="!data.multiSelection && appt.apptStatus!=='blocked'">
+            <div class="action-box pointer-cursor" (click)="startVoiceCall()" *ngIf="!data.multiSelection && appt.apptStatus!=='blocked' && appt.phoneNumber">
                 <div class="action-box-sub">
                     <span class="phon-icon"></span>
                     <div class="icon-text">Voice Call</div>
