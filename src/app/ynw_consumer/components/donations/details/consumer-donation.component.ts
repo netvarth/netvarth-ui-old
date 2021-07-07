@@ -228,6 +228,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     bookStep = 'donation';
     loading = true;
     @ViewChild('closebutton') closebutton;
+    accountId;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -252,6 +253,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 // tslint:disable-next-line:radix
                 this.sel_loc = parseInt(params.loc_id);
                 this.account_id = params.account_id;
+                this.accountId = params.accountId;
                 this.provider_id = params.unique_id;
                 this.sel_ser = JSON.parse(params.service_id);
                 this.getConsumerQuestionnaire();

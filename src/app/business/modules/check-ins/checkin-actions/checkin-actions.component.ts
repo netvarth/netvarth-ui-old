@@ -117,6 +117,8 @@ export class CheckinActionsComponent implements OnInit {
     providerMeetingUrl: any;
     statusList: any=[];
     groups: any;
+    showAssign = false;
+    users: any = [];
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -192,9 +194,10 @@ export class CheckinActionsComponent implements OnInit {
     }
     getUser() {
         if(this.userid){
-            this.provider_services.getUser(this.userid)
+            this.provider_services.getUsers()
             .subscribe((data: any) => {
-              this.user_arr = data;
+                this.users = data;
+              this.user_arr = this.users.filter(user => user.id === this.userid);
               if( this.user_arr.status === 'ACTIVE'){
                   this.isUserdisable = true
               } else{
@@ -612,7 +615,7 @@ export class CheckinActionsComponent implements OnInit {
     }
     setActions() {
         this.apiloading = false;
-        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn' && this.checkin.waitlistStatus !== 'blocked' && !this.data.teleservice && this.checkin.paymentStatus !== 'FullyRefunded') {
+        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn' && this.checkin.waitlistStatus !== 'blocked' && this.checkin.paymentStatus !== 'FullyRefunded') {
             this.showUndo = true;
         }
         if (this.data.timetype === 1 && this.checkin.waitlistStatus === 'checkedIn' && this.checkin.waitlistMode !== 'WALK_IN_CHECKIN' && Object.keys(this.checkin.virtualService).length === 0 && this.checkin.virtualService.constructor === Object && !this.data.teleservice) {
@@ -650,6 +653,9 @@ export class CheckinActionsComponent implements OnInit {
         }
         if (this.data.timetype === 3) {
             this.changeService = false;
+        }
+        if (this.users.length > 1 && !this.data.multiSelection && this.accountType=='BRANCH' && (this.checkin.queue.provider.id === 0) && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn')) {
+            this.showAssign = true;
         }
     }
     getLabel() {
@@ -1044,8 +1050,8 @@ export class CheckinActionsComponent implements OnInit {
     }
 
     assignMyself() {
-        let msg = '';
-        msg = 'Are you sure you want to assign this token to yourself ?';
+        let tokenmsg = (this.showToken) ? 'token' : 'check-in';
+        const msg = 'Are you sure you want to assign this ' + tokenmsg + ' to yourself ?';
         const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass', 'confirmationmainclass'],

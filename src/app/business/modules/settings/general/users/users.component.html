@@ -89,7 +89,7 @@
         </div>
         <div class="modal-footer"  *ngIf="!showAddCustomerHint" >
           <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal"
-            #closebutton>Cancel</button>
+            #closebutton (click)="resetGroupFields();resetError();">Cancel</button>
           <button type="button" class="btn btn-primary font-weight-bold" 
           (click)="customerGroupAction()">{{(teamEdit) ? 'Update' : 'Create'}}</button>
         </div>
@@ -147,7 +147,7 @@
     </div>
 
     <!-- *** showing  web left side  team names and content***** -->
-    <div class="col-lg-4   display-min-none" *ngIf="!teamLoaded && groups.length > 0">
+    <div class="col-lg-3   display-min-none" *ngIf="!teamLoaded && groups.length > 0">
       <div class="card card-custom card-stretch gutter-b pitch_blu">
         <div class="card grp_label mb-2 pointer-cursor" (click)="customerGroupSelection('all')"
           [ngClass]="{'highlight': selectedGroup == 'all'}">
@@ -227,7 +227,7 @@
 
    <!-- ***start web view  users  content***** -->
   <div  class="display-min-none">
-      <div class="col-lg-8" [class.col-lg-12]="groups.length==0" *ngIf="!teamLoaded" >            
+      <div class="col-lg-9" [class.col-lg-12]="groups.length==0" *ngIf="!teamLoaded" >            
           <div class="card p0 w-dta">
             <!-- *** start show group name right side and add buttons and cancel buttons*** -->
              <div class="p-3">
@@ -301,14 +301,14 @@
                                   <div class="filterTextinput filter-text-input">
                                       <li class="filterli filter-li">
                                           <input type="text" id="firstName" [(ngModel)]="filter.firstName" #firstName
-                                              (blur)="doSearch()" (keyup)="focusInput($event, firstName)" maxlength="20"
+                                          (keyup)="doSearch()" maxlength="20"
                                               class="filterTextbox filter-textbox" placeholder="Enter First Name">
                                       </li>
                                   </div>
                                   <div class="filterTextinput filter-text-input">
                                       <li class="filterli filter-li">
                                           <input type="text" id="lastName" [(ngModel)]="filter.lastName" #lastName
-                                              (blur)="doSearch()" (keyup)="focusInput($event, lastName)" maxlength="10"
+                                          (keyup)="doSearch()" maxlength="10"
                                               class="filterTextbox filter-textbox" placeholder="Enter Last Name">
                                       </li>
                                   </div>
@@ -334,7 +334,7 @@
                                   <div class="filterTextinput filter-text-input">
                                       <li class="filterli filter-li">
                                           <input type="text" id="pincode" [(ngModel)]="filter.pincode" #pincode
-                                              (blur)="doSearch()" (keyup)="focusInput($event, pincode)" maxlength="10"
+                                          (keyup)="doSearch()" maxlength="10"
                                               class="filterTextbox filter-textbox" placeholder="Enter Pincode">
                                       </li>
                                   </div>
@@ -360,14 +360,14 @@
                                   <div class="filterTextinput filter-text-input">
                                       <li class="filterli filter-li">
                                           <input type="text" id="city" [(ngModel)]="filter.city" #city
-                                              (blur)="doSearch()" (keyup)="focusInput($event, city)" maxlength="20"
+                                          (keyup)="doSearch()" maxlength="20"
                                               class="filterTextbox filter-textbox" placeholder="Enter city">
                                       </li>
                                   </div>
                                   <div class="filterTextinput filter-text-input">
                                     <li class="filterli filter-li">
                                         <input type="text" id="state" [(ngModel)]="filter.state" #state
-                                            (blur)="doSearch()" (keyup)="focusInput($event, state)" maxlength="20"
+                                        (keyup)="doSearch()" maxlength="20"
                                             class="filterTextbox filter-textbox" placeholder="Enter state">
                                     </li>
                                 </div>
@@ -431,7 +431,7 @@
                                   <div class="filterTextinput filter-text-input">
                                       <li class="filterli filter-li">
                                           <input type="text" id="primaryMobileNo" [(ngModel)]="filter.primaryMobileNo"
-                                              #primaryMobileNo (blur)="doSearch()" (keyup)="focusInput($event, primaryMobileNo)"
+                                              #primaryMobileNo (keyup)="doSearch()"
                                                class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
                                       </li>
                                   </div>
@@ -568,7 +568,7 @@
                       <button class="btn reset-btn" (click)="clearFilter()">
                         <i class="fa fa-undo"></i>Reset
                       </button>
-                      <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                      <button class="btn apply-btn" (click)="getUsers()">
                         <i class="fa fa-check"></i>Apply
                       </button>
                   </div>
@@ -588,14 +588,15 @@
                                               <thead>
                                                   <tr class="text-left text-uppercase">
                                                       <th class="display-min-none" style="min-width: 250px;">
-                                                          {{provider_label}} name</th>
+                                                          <!-- {{provider_label}}  -->
+                                                          name</th>
                                                       <th class="display-min-none" style="min-width: 125px;">User Type
                                                       </th>
-                                                      <th class="display-min-none" style="min-width: 125px;">Contact Info</th>
+                                                      <!-- <th class="display-min-none" style="min-width: 125px;">Contact Info</th> -->
                                                       <th class="display-min-none" style="width: 30%;">Specializations
                                                       </th>
                                                       <th class="display-min-none">Languages</th>
-                                                      <th class="display-min-none">Tokens count</th>
+                                                      <th class="display-min-none">Tokens#</th>
                                                       <th class="display-min-none"></th>
                                                   </tr>
                                               </thead>
@@ -603,6 +604,7 @@
                                                   <tr class="row_data border-bottom pointer-cursor waitlist-box"
                                                       *ngFor="let service of users_list | orderBy: order; let i = index;"
                                                       (click)="selectedRow(i,service)"
+                                                      [class.pointer-check]="this.showcheckbox" 
                                                       [class.disabled-group]="service.status=='INACTIVE'">
                                                       <!-- (click)="selectedRow(i,service)" -->
                                                       <td class="">
@@ -633,6 +635,9 @@
                                                                           class="fa fa-map-marker mgn-rt-5"
                                                                           aria-hidden="true"></i>{{service.city}},&nbsp;{{service.state}}
                                                                   </div>
+                                                                  <div class="disp-flex mgn-up-5"  *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum || service.email">
+                                                                    <span (click)="stopprop($event); viewContactDetails(service)" style="color: #3c8dbc; cursor: pointer;">Contact Info</span>
+                                                                  </div>  
                                                                   <div class="d-lg-none">
                                                                       <div class=" mgn-up-5" *ngIf="service.userType">
                                                                           <span class="b2"
@@ -687,12 +692,11 @@
                                                           <span class="ttle"
                                                               *ngIf="service.userType === 'ADMIN'">Admin</span>
                                                       </td>
-                                                      <td class="display-min-none">
+                                                      <!-- <td class="display-min-none">
                                                           <span *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum || service.email">
                                                             <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
                                                           </span>
-                                                              <!-- {{service.countryCode}} {{service.mobileNo}}</span> -->
-                                                      </td>
+                                                      </td> -->
                                                       <td class="display-min-none">
                                                           <span *ngIf="service.specialization">
                                                               {{getSpecialization(service.specialization)}}</span>
@@ -709,7 +713,7 @@
                                                       </td>
                                                       <td>
                                                           <div class="copy">
-                                                              <span class="mbt">
+                                                              <span class="">
                                                                   <button type="button" style="margin-top: -12px;" mat-icon-button
                                                                       [matMenuTriggerFor]="appMenu"
                                                                       (click)="stopprop($event);">
@@ -837,14 +841,14 @@
                                 <div class="filterTextinput filter-text-input">
                                     <li class="filterli filter-li">
                                         <input type="text" id="firstName" [(ngModel)]="filter.firstName" #firstName
-                                            (blur)="doSearch()" (keyup)="focusInput($event, firstName)" maxlength="20"
+                                            (keyup)="doSearch()" maxlength="20"
                                             class="filterTextbox filter-textbox" placeholder="Enter First Name">
                                     </li>
                                 </div>
                                 <div class="filterTextinput filter-text-input">
                                     <li class="filterli filter-li">
                                         <input type="text" id="lastName" [(ngModel)]="filter.lastName" #lastName
-                                            (blur)="doSearch()" (keyup)="focusInput($event, lastName)" maxlength="10"
+                                        (keyup)="doSearch()" maxlength="10"
                                             class="filterTextbox filter-textbox" placeholder="Enter Last Name">
                                     </li>
                                 </div>
@@ -870,7 +874,7 @@
                                 <div class="filterTextinput filter-text-input">
                                     <li class="filterli filter-li">
                                         <input type="text" id="pincode" [(ngModel)]="filter.pincode" #pincode
-                                            (blur)="doSearch()" (keyup)="focusInput($event, pincode)" maxlength="10"
+                                        (keyup)="doSearch()" maxlength="10"
                                             class="filterTextbox filter-textbox" placeholder="Enter Pincode">
                                     </li>
                                 </div>
@@ -896,14 +900,14 @@
                                 <div class="filterTextinput filter-text-input">
                                     <li class="filterli filter-li">
                                         <input type="text" id="city" [(ngModel)]="filter.city" #city
-                                            (blur)="doSearch()" (keyup)="focusInput($event, city)" maxlength="20"
+                                        (keyup)="doSearch()" maxlength="20"
                                             class="filterTextbox filter-textbox" placeholder="Enter city">
                                     </li>
                                 </div>
                                 <div class="filterTextinput filter-text-input">
                                   <li class="filterli filter-li">
                                       <input type="text" id="state" [(ngModel)]="filter.state" #state
-                                          (blur)="doSearch()" (keyup)="focusInput($event, state)" maxlength="20"
+                                      (keyup)="doSearch()" maxlength="20"
                                           class="filterTextbox filter-textbox" placeholder="Enter state">
                                   </li>
                               </div>
@@ -967,7 +971,7 @@
                                 <div class="filterTextinput filter-text-input">
                                     <li class="filterli filter-li">
                                         <input type="text" id="primaryMobileNo" [(ngModel)]="filter.primaryMobileNo"
-                                            #primaryMobileNo (blur)="doSearch()" (keyup)="focusInput($event, primaryMobileNo)"
+                                            #primaryMobileNo (keyup)="doSearch()"
                                              class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
                                     </li>
                                 </div>
@@ -1100,7 +1104,7 @@
                     <button class="btn reset-btn" (click)="clearFilter()">
                       <i class="fa fa-undo"></i>Reset
                     </button>
-                    <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                    <button class="btn apply-btn" (click)="getUsers()">
                       <i class="fa fa-check"></i>Apply
                     </button>
                 </div>
@@ -1241,7 +1245,7 @@
                                                     </td>
                                                     <td>
                                                         <div class="copy">
-                                                            <span class="mbt" style="top: 4px;">
+                                                            <span class="" style="top: 4px;">
                                                                 <button type="button" mat-icon-button
                                                                     [matMenuTriggerFor]="appMenu"
                                                                     (click)="stopprop($event);">

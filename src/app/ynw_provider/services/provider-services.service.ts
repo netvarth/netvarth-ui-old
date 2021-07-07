@@ -2175,6 +2175,10 @@ export class ProviderServices {
     const url = 'provider/waitlist/internalStatuses/'+ uid;
     return this.servicemeta.httpGet(url);
   }
+  getapptInternalstatList(uid) {
+    const url = 'provider/appointment/internalStatuses/'+ uid;
+    return this.servicemeta.httpGet(url);
+  }
   changeProviderWaitlistInternalStatus(waitlist_id, action) {
     const url = 'provider/waitlist/applyInternalStatus/' + waitlist_id + '/' + action;
     return this.servicemeta.httpPut(url);

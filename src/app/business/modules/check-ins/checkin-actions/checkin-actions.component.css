@@ -120,7 +120,23 @@
   cursor: pointer;   
   border: 1px solid #cccccc60;
 }
+.status-box-internal{
+  box-shadow: 5px 5px 5px 0px #cccccc60 !important;
+  border-radius: 10px;
+  background: #ffffff;
+  color:#FF8C00;
+  width: 30%;
+  padding: 20px;
+  float: left;
+  margin: 10px;
+  cursor: pointer;   
+  border: 1px solid #cccccc60;
+}
 .status-box .status {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.status-box-internal .status {
   font-weight: bold;
   font-size: 1.2rem;
 }
@@ -131,4 +147,13 @@
   .status-box {
     width: 95% !important;
   }
+  .status-box-internal {
+    width: 95% !important;
+  }
+}
+.stst-bx {
+  box-shadow: 5px 5px 5px 0px #cccccc60 !important;
+  border-radius: 5px;
+  padding: 10px;  
+  border: 1px solid #cccccc60;
 }

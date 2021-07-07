@@ -107,6 +107,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     payment_status: 'all',
     check_in_start_date: null,
     check_in_end_date: null,
+    check_in_date: null,
     location_id: 'all',
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1,
@@ -127,6 +128,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     payment_status: false,
     waitlistMode: false,
     check_in_start_date: false,
+    check_in_date: false,
     check_in_end_date: false,
     location_id: false,
     age: false,
@@ -347,6 +349,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   instaQid: any;
   unassignview = false;
   accountSettings;
+  teams: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -500,6 +503,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.getLocationList();
       this.getServiceList();
     }
+    if (this.active_user.accountType === 'BRANCH') {
+      this.getTeams().then((data) => {
+        this.teams = data;
+       console.log(this.teams);
+      });                  
+    }
     this.image_list_popup_temp = [];
     // const savedtype = this.groupService.getitemFromGroupStorage('pdtyp');
     // if (savedtype !== undefined && savedtype !== null) {
@@ -589,7 +598,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.allLabelSelected = true;
       }
     }
-    this.doSearch();
+    this.keyPressed();
   }
 
   // setLabelFilter(label, value, event) {
@@ -827,7 +836,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.allLocationSelected = true;
       }
     }
-    this.doSearch();
+    this.keyPressed();
   }
   getDisplayboardCount() {
     let layout_list: any = [];
@@ -1521,6 +1530,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       // this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
       this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
     }
+    if (this.filter.check_in_date != null) {
+      Mfilter['date-eq'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_date);
+    }
     const promise = this.getFutureWLCount(Mfilter);
     promise.then(
       result => {
@@ -1804,6 +1816,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.filter.waitlist_status === 'all') {
       Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+    }
+    if (this.filter.check_in_date != null) {
+      Mfilter['date-eq'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_date);
     }
     return new Promise((resolve) => {
       this.provider_services.getWaitlistFutureCount(Mfilter)
@@ -2159,7 +2174,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.groupService.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.checkinEncId || this.filter.patientId || this.filter.service !== 'all' || this.filter.location != 'all'
       || this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.check_in_start_date
-      || this.filter.check_in_end_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== '') {
+      || this.filter.check_in_end_date || this.filter.check_in_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== '') {
       console.log('fdg');
       this.filterapplied = true;
     } else {
@@ -2197,6 +2212,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       waitlistMode: false,
       check_in_start_date: false,
       check_in_end_date: false,
+      check_in_date: false,
       location_id: false,
       age: false,
       gender: false
@@ -2215,6 +2231,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       waitlistMode: 'all',
       check_in_start_date: null,
       check_in_end_date: null,
+      check_in_date: null,
       location_id: 'all',
       page_count: projectConstants.PERPAGING_LIMIT,
       page: 0,
@@ -2536,7 +2553,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   filterClicked(type) {
     this.filters[type] = !this.filters[type];
     if (!this.filters[type]) {
-      if (type === 'check_in_start_date' || type === 'check_in_end_date') {
+      if (type === 'check_in_start_date' || type === 'check_in_end_date' || type === 'check_in_date') {
         this.filter[type] = null;
       } else if (type === 'payment_status' || type === 'service' || type === 'queue' || type === 'location' || type === 'waitlistMode') {
         this.filter[type] = 'all';
@@ -2936,10 +2953,25 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
     return 0;
   }
-  keyPressed(event) {
-    if (event.keyCode === 13) {
-      this.doSearch();
+  keyPressed() {
+    this.lStorageService.removeitemfromLocalStorage('wlfilter');
+    this.endminday = this.filter.check_in_start_date;
+    if (this.filter.check_in_end_date) {
+      this.maxday = this.filter.check_in_end_date;
+    } else {
+      this.maxday = new Date();
     }
+    this.labelSelection();
+     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.checkinEncId || this.filter.patientId || this.filter.service !== 'all' || this.filter.location != 'all'
+      || this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.check_in_start_date
+      || this.filter.check_in_end_date || this.filter.check_in_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== '') {
+      console.log('fdg');
+      this.filterapplied = true;
+    } else {
+      this.filterapplied = false;
+    }
+    console.log(this.filterapplied);
+    this.shared_functions.setFilter();
   }
   scrollToTop() {
     // this.chekinSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -2993,6 +3025,26 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       // this.handleUserSelection(this.selectedUser);
     });
   }
+
+  getTeams() {
+    const _this = this;
+    return new Promise<void>(function (resolve) {
+      // const apiFilter = {};
+      // apiFilter['userType-eq'] = 'PROVIDER';
+      // _this.provider_services.getUsers(apiFilter).subscribe(data => {
+      //   _this.users = data;       
+      //   resolve();
+      // },
+      _this.provider_services.getTeamGroup().subscribe(data => {
+        _this.teams = data;
+        },
+        () => {
+          resolve();
+        });
+    });
+  }
+
+
   handleUserSelection(user) {
     this.activeUser = null;
     this.qloading = true;
@@ -3074,7 +3126,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           // }
           if (new RegExp(this.imageAllowed.join("|")).test(thumbPathExt.toUpperCase())) {
             imagePath = communications[comIndex].s3path;
-        }
+          }
+          let type = communications[comIndex].type.split('/');
+          type = type[0];
+          if (type !== 'image') {
+            imagePath = communications[comIndex].thumbPath;
+          }
           console.log(imagePath);
           const imgobj = new Image(
             count,
@@ -3439,5 +3496,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     age = age.split(' ');
     return age[0];
   }
+  getUsersList(teamid){
+    const userObject =  this.teams.filter(user => parseInt(user.id) === teamid); 
+    return userObject[0].name;
+  }
 }
+
 

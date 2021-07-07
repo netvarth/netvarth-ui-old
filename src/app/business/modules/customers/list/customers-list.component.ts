@@ -239,7 +239,13 @@ export class CustomersListComponent implements OnInit {
         }
     });
     notedialogRef.afterClosed().subscribe(result => {
-        if (result === 'edit') {
+        if (result === 'reload') {
+          this.getLabel();
+          if (this.selectedGroup == 'all') {
+            this.getCustomersList();
+          } else {
+            this.getCustomerListByGroup();
+          }
             // this.editCustomer();
         } else {
             // this.getCustomers(this.customerId).then(

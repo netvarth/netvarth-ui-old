@@ -16,6 +16,8 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { GroupStorageService } from '../../services/group-storage.service';
+import { MatDialog } from '@angular/material/dialog';
+import { UserlistpopupComponent } from './userlist/userlistpopup.component';
 
 
 @Component({
@@ -120,7 +122,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     provider: { id: any; };
     departId: any;
     include_audio = false;
-    selectedUser ;
+    selectedUser;
     defaultOption = {
         'id': '0',
         'firstName': 'Global',
@@ -151,6 +153,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     questionnaire: any = [];
     no_of_grids: number;
     screenWidth: number;
+    usersdialogRef: any;
 
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
@@ -163,6 +166,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         private provider_datastorage: ProviderDataStorageService,
         private dateTimeProcessor: DateTimeProcessor,
         private groupService: GroupStorageService,
+        private dialog: MatDialog,
         public router: Router) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.frm_enable_prepayment_cap = Messages.FRM_LEVEL_PREPAYMENT_SETTINGS_MSG;
@@ -315,24 +319,24 @@ export class ServiceComponent implements OnInit, OnDestroy {
     }
     @HostListener('window:resize', ['$event'])
     onResize() {
-     this.screenWidth = window.innerWidth;
-     let divider;
-     const divident = this.screenWidth / 37.8;
-     if (this.screenWidth > 1700) {
-       divider = divident / 5;
-     } else if (this.screenWidth > 1111 && this.screenWidth < 1700) {
-        divider = divident / 4;
-     } else if (this.screenWidth > 900 && this.screenWidth < 1111) {
-       divider = divident / 3;
-     } else if (this.screenWidth > 375 && this.screenWidth < 900) {
-       divider = divident / 2;
-     } else if (this.screenWidth < 375) {
-       divider = divident / 1;
-     }
-     console.log(divident);
-     console.log(divider);
-     this.no_of_grids = Math.round(divident / divider);
-     console.log(this.no_of_grids);
+        this.screenWidth = window.innerWidth;
+        let divider;
+        const divident = this.screenWidth / 37.8;
+        if (this.screenWidth > 1700) {
+            divider = divident / 5;
+        } else if (this.screenWidth > 1111 && this.screenWidth < 1700) {
+            divider = divident / 4;
+        } else if (this.screenWidth > 900 && this.screenWidth < 1111) {
+            divider = divident / 3;
+        } else if (this.screenWidth > 375 && this.screenWidth < 900) {
+            divider = divident / 2;
+        } else if (this.screenWidth < 375) {
+            divider = divident / 1;
+        }
+        console.log(divident);
+        console.log(divider);
+        this.no_of_grids = Math.round(divident / divider);
+        console.log(this.no_of_grids);
     }
     @Input() donationservice;
     setDescFocus() {
@@ -530,7 +534,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 form_data['virtualCallingModes'] = [this.teleCallingModes];
             }
             console.log(this.selectedUser);
-            if (this.selectedUser  && this.userspecific) {
+            if (this.selectedUser && this.userspecific) {
                 this.provider = {
                     'id': this.selectedUser
                 };
@@ -557,7 +561,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 }
             } else {
                 //console.log(serviceActionModel);
-               this.servicesService.actionPerformed(serviceActionModel);
+                this.servicesService.actionPerformed(serviceActionModel);
             }
         }
     }
@@ -606,7 +610,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
     }
     createForm() {
-        if(this.active_user.accountType === 'BRANCH' && !this.is_donation){
+        if (this.active_user.accountType === 'BRANCH' && !this.is_donation) {
             this.getDepartments();
         }
         if (this.subdomainsettings.serviceBillable) {
@@ -864,18 +868,69 @@ export class ServiceComponent implements OnInit, OnDestroy {
     gotoQnr(id) {
         this.router.navigate(['provider', 'settings', 'general', 'questionnaire', id]);
     }
-    getProviderName(users){
+    getProviderName(users) {
         console.log(users);
         let userlst = '';
-        console.log(this.users_list);
-        for(let user of users){
-        let details = this.users_list.filter(usr => usr.id == user);
-        console.log(details);
-        if(details && details.length > 0){
-            userlst = userlst + details[0].firstName +' '+ details[0].lastName + ',';
-     }
+        if(users[0]==='All'){
+         return 'All Users'
+        }else{
+        for (let user of users) {
+            let details = this.users_list.filter(usr => usr.id == user);
+            if (details && details.length > 0) {
+                userlst = userlst + details[0].firstName + ' ' + details[0].lastName + ',';
+            }
+        }
+       // if(typ){
+            return userlst.replace(/,\s*$/, '');  
+        // }else {
+        //     return this.userlistType(userlst.replace(/,\s*$/, ''));
+        // }
+        
     }
-    console.log(userlst);
-    return userlst;
 }
+getProviderNametruncate(users) {
+    console.log(users);
+    let userlst = '';
+    if(users[0]==='All'){
+     return 'All Users'
+    }else{
+    for (let user of users) {
+        let details = this.users_list.filter(usr => usr.id == user);
+        if (details && details.length > 0) {
+            userlst = userlst + details[0].firstName + ' ' + details[0].lastName + ',';
+        }
+    }  return this.truncateInst(userlst.replace(/,\s*$/, ''));
+    
+}
+}
+userlistType(val) {
+    const detail = val.length;
+    let len;
+    if (detail > 25) {
+      len = 0;
+    } else {
+      len = 1;
+    }
+    return len;
+  }
+  truncateInst(val) {
+    const inst = val.substr(0, 25);
+    return inst;
+  }
+  usersPopUp(useridlist){
+    this.usersdialogRef = this.dialog.open(UserlistpopupComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data:{
+            userlist:this.users_list,
+            ids:useridlist
+        }
+  
+      });
+      this.usersdialogRef.afterClosed().subscribe(result => {
+        if (result) {
+        }
+      });
+  }
 }

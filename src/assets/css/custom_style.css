@@ -13828,6 +13828,11 @@ font-size: small;
 .userhed{
   font-weight: bold;
 }
+app-userwaitlist-queuedetail .wtsapvid-icon,
+app-waitlist-queuedetail .wtsapvid-icon {
+  width: 15px !important;
+  top: 2px !important;
+}
 .newPopupClass {
   height: 90vh !important;
   width: 90vw !important;

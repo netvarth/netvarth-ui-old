@@ -8,6 +8,7 @@ import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 import { SharedModule } from '../common/shared.module';
 import { AddServiceComponent } from '../../../business/modules/settings/general/users/settings/services/addservice/addservice.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { UserlistpopupComponent } from './userlist/userlistpopup.component';
 
 @NgModule({
     imports: [
@@ -20,7 +21,10 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
         SharedModule,
         CKEditorModule
     ],
-    declarations: [ServiceComponent, AddServiceComponent],
+    declarations: [ServiceComponent, AddServiceComponent,UserlistpopupComponent],
+    entryComponents: [
+        UserlistpopupComponent
+    ],
     exports: [ServiceComponent]
 })
 

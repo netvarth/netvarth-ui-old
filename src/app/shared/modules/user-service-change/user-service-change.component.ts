@@ -482,7 +482,7 @@ export class UserServiceChnageComponent implements OnInit {
     this.selectedLanguages = [];
   }
   doSearch() {
-    this.getProviders();
+    // this.getProviders();
     if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pincode || this.filter.primaryMobileNo || this.filter.available || this.selectedLanguages.length > 0 || this.selectedSpecialization.length > 0) {
       this.filterapplied = true;
     } else {
@@ -611,14 +611,6 @@ export class UserServiceChnageComponent implements OnInit {
         this.selectedLanguages.push(value);
       } else {
         this.selectedLanguages.splice(indx, 1);
-      }
-    }
-    if (type === 'specializations') {
-      const indx = this.selectedSpecialization.indexOf(value);
-      if (indx === -1) {
-        this.selectedSpecialization.push(value);
-      } else {
-        this.selectedSpecialization.splice(indx, 1);
       }
     }
     if (type === 'specializations') {

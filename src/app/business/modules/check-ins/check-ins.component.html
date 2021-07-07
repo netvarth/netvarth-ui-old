@@ -409,16 +409,16 @@
                           <div class="card-body">
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
-                                <input type="text" #Ffname (keyup)="keyPressed($event)" class="filterTextbox filter-textbox"
+                                <input type="text" #Ffname (keyup)="keyPressed()" class="filterTextbox filter-textbox"
                                   [(ngModel)]="filter.first_name" [ngModelOptions]="{standalone: true}"
-                                  placeholder="Enter First Name" (blur)="doSearch()">
+                                  placeholder="Enter First Name">
                               </li>
                             </div>
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
-                                <input type="text" #Flname (keyup)="keyPressed($event)" class="filterTextbox filter-textbox"
+                                <input type="text" #Flname (keyup)="keyPressed()" class="filterTextbox filter-textbox"
                                   [(ngModel)]="filter.last_name" [ngModelOptions]="{standalone: true}" placeholder="Enter Last Name"
-                                  (blur)="doSearch()">
+                                  >
                               </li>
                             </div>
                           </div>
@@ -443,7 +443,7 @@
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
                                 <input type="text" autocomplete="off" [(ngModel)]="filter.patientId"
-                                  [ngModelOptions]="{standalone: true}" (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                  [ngModelOptions]="{standalone: true}" (keyup)="keyPressed()"
                                   class="filterTextbox filter-textbox" placeholder="Enter {{customerIdTooltip | capitalizeFirst}}">
                               </li>
                             </div>
@@ -469,7 +469,7 @@
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
                                 <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId"
-                                  [ngModelOptions]="{standalone: true}" (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                  [ngModelOptions]="{standalone: true}" (keyup)="keyPressed()"
                                   class="filterTextbox filter-textbox" placeholder="Enter Booking ID">
                               </li>
                             </div>
@@ -633,7 +633,7 @@
                     <button class="btn reset-btn" (click)="clearFilter()">
                       <i class="fa fa-undo"></i>&nbsp;Reset
                     </button>
-                    <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                    <button class="btn apply-btn" (click)="doSearch()">
                       <i class="fa fa-check"></i>&nbsp;Apply
                     </button>
                   </div>
@@ -743,6 +743,10 @@
                         <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
                           {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
                           + ' ' + checkin.provider.lastName}}
+                        </div>
+                        <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
+                          <!-- Team Name -->
+                          {{getUsersList(checkin.teamId)}}
                         </div>
                         <!-- <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
                           Not Assigned
@@ -1018,6 +1022,10 @@
                           {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
                           + ' ' + checkin.provider.lastName}}
                         </div>
+                        <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
+                          <!-- Team Name -->
+                          {{getUsersList(checkin.teamId)}}
+                        </div>
                         <!-- <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
                           Not Assigned
                         </div> -->
@@ -1248,14 +1256,14 @@
                             <div class="card-body">
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
-                                  <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                  <input type="text" #Ffname (keyup)="keyPressed()"
                                     class="filterTextbox filter-textbox" [(ngModel)]="filter.first_name"
                                     [ngModelOptions]="{standalone: true}" placeholder="Enter First Name">
                                 </li>
                               </div>
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
-                                  <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                  <input type="text" #Flname (keyup)="keyPressed()"
                                     class="filterTextbox filter-textbox" [(ngModel)]="filter.last_name" [ngModelOptions]="{standalone: true}"
                                     placeholder="Enter Last Name">
                                 </li>
@@ -1281,8 +1289,8 @@
                             <div class="card-body">
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
-                                  <input type="text" autocomplete="off" [(ngModel)]="filter.patientId" (blur)="doSearch()"
-                                    [ngModelOptions]="{standalone: true}" (keyup)="keyPressed($event)" class="filterTextbox filter-textbox"
+                                  <input type="text" autocomplete="off" [(ngModel)]="filter.patientId"
+                                    [ngModelOptions]="{standalone: true}" (keyup)="keyPressed()" class="filterTextbox filter-textbox"
                                     placeholder="Enter {{customerIdTooltip | capitalizeFirst}}">
                                 </li>
                               </div>
@@ -1308,7 +1316,7 @@
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
                                   <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId"
-                                    [ngModelOptions]="{standalone: true}" (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                    [ngModelOptions]="{standalone: true}" (keyup)="keyPressed()"
                                     class="filterTextbox filter-textbox" placeholder="Enter Booking ID">
                                 </li>
                               </div>
@@ -1468,13 +1476,43 @@
                             </div>
                           </div>
                         </div>
+                        <div class="card" style="padding-bottom: 30px !important;">
+                          <div class="card-header">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseDate3" aria-expanded="false">
+                                <div>
+                                  <div style="display: inline-block !important;">
+                                    <i class="fa fa-calendar-o"></i>
+                                  </div>
+                                  <span>&nbsp;Date</span>
+                                </div>
+                                <i class="fa fa-angle-down"></i>
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapseDate3" class="collapse in" data-parent="#accordion3">
+                            <div class="card-body">
+                              <div class="filterTextinput filter-text-input">
+                                <li class="filterli filterDatepicker filter-li">
+                                  <input type="text" [(ngModel)]="filter.check_in_date"
+                                    [ngModelOptions]="{standalone: true}" [matDatepicker]="picker" #Fdate
+                                    class="filterTextbox filter-textbox" (dateChange)="keyPressed()" 
+                                    placeholder="Enter Date" [min]="tomorrowDate">
+                                  <mat-datepicker-toggle matSuffix [for]="picker">
+                                  </mat-datepicker-toggle>
+                                  <mat-datepicker #picker></mat-datepicker>
+                                </li>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </ul>
                     </section>
                     <div class="filter-footer" *ngIf="filterapplied === true">
                       <button class="btn reset-btn" (click)="clearFilter()">
                         <i class="fa fa-undo"></i>&nbsp;Reset
                       </button>
-                      <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                      <button class="btn apply-btn" (click)="doSearch()">
                         <i class="fa fa-check"></i>&nbsp;Apply
                       </button>
                     </div>
@@ -1574,6 +1612,10 @@
                       <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
                         {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
                         ' ' + checkin.provider.lastName}}
+                      </div>
+                      <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
+                        <!-- Team Name -->
+                        {{getUsersList(checkin.teamId)}}
                       </div>
                       <!-- <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
                         Not Assigned
@@ -1789,14 +1831,14 @@
                             <div class="card-body">
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
-                                  <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                  <input type="text" #Ffname (keyup)="keyPressed()"
                                     class="filterTextbox filter-textbox" [(ngModel)]="filter.first_name"
                                     [ngModelOptions]="{standalone: true}" placeholder="Enter First Name">
                                 </li>
                               </div>
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
-                                  <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                  <input type="text" #Flname (keyup)="keyPressed()"
                                     class="filterTextbox filter-textbox" [(ngModel)]="filter.last_name" [ngModelOptions]="{standalone: true}"
                                     placeholder="Enter Last Name">
                                 </li>
@@ -1823,7 +1865,7 @@
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
                                   <input type="text" autocomplete="off" [(ngModel)]="filter.patientId"
-                                    [ngModelOptions]="{standalone: true}" (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                    [ngModelOptions]="{standalone: true}" (keyup)="keyPressed()"
                                     class="filterTextbox filter-textbox" placeholder="Enter {{customerIdTooltip | capitalizeFirst}}">
                                 </li>
                               </div>
@@ -1849,7 +1891,7 @@
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
                                   <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId"
-                                    [ngModelOptions]="{standalone: true}" (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                    [ngModelOptions]="{standalone: true}" (keyup)="keyPressed()"
                                     class="filterTextbox filter-textbox" placeholder="Enter Booking ID">
                                 </li>
                               </div>
@@ -1875,8 +1917,8 @@
                               <div class="filterTextinput filter-text-input" *ngIf="time_type == 3">
                                 <li class="filterli filter-li">
                                   <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
-                                    [ngModelOptions]="{standalone: true}" #Fmobile (blur)="doSearch()"
-                                    (keyup)="keyPressed($event)" (keypress)="isNumeric($event)" maxlength="10"
+                                    [ngModelOptions]="{standalone: true}" #Fmobile
+                                    (keyup)="keyPressed()" (keypress)="isNumeric($event)" maxlength="10"
                                     class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
                                 </li>
                               </div>
@@ -2167,7 +2209,7 @@
                                 <li class="filterli filterDatepicker filter-li">
                                   <input type="text" [(ngModel)]="filter.check_in_start_date"
                                     [ngModelOptions]="{standalone: true}" [max]="maxday" [matDatepicker]="picker" #Fdate
-                                    (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox filter-textbox"
+                                    (dateChange)="keyPressed()" class="filterTextbox filter-textbox"
                                     placeholder="Enter Start Date">
                                   <mat-datepicker-toggle matSuffix [for]="picker">
                                   </mat-datepicker-toggle>
@@ -2178,7 +2220,7 @@
                                 <li class="filterli filterDatepicker filter-li">
                                   <input type="text" [(ngModel)]="filter.check_in_end_date"
                                     [ngModelOptions]="{standalone: true}" [min]="endminday" [max]="endmaxday"
-                                    [matDatepicker]="picker" #Fdate (dateChange)="doSearch()" (blur)="doSearch()"
+                                    [matDatepicker]="picker" #Fdate (dateChange)="keyPressed()"
                                     class="filterTextbox filter-textbox" placeholder="Enter End Date">
                                   <mat-datepicker-toggle matSuffix [for]="picker">
                                   </mat-datepicker-toggle>
@@ -2194,7 +2236,7 @@
                       <button class="btn reset-btn" (click)="clearFilter()">
                         <i class="fa fa-undo"></i>&nbsp;Reset
                       </button>
-                      <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                      <button class="btn apply-btn" (click)="doSearch()">
                         <i class="fa fa-check"></i>&nbsp;Apply
                       </button>
                     </div>
@@ -2285,6 +2327,10 @@
                       <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
                         {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
                         ' ' + checkin.provider.lastName}}
+                      </div>
+                      <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
+                       <!-- {{}} Team Name -->
+                       {{getUsersList(checkin.teamId)}}
                       </div>
                       <!-- <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
                         Not Assigned
