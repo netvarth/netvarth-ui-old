@@ -74,9 +74,12 @@ source;
       
     }
     getUsersList(users){
+        console.log(users);
+        console.log(this.users);
        let userNamelist='';
        users.forEach(element => {
         const userObject =  this.users.filter(user => user.id === parseInt(element)); 
+        console.log(userObject);
         userNamelist=userNamelist+userObject[0].firstName+' '+userObject[0].lastName+','
        }); 
 
@@ -164,7 +167,7 @@ source;
         const _this = this;
           return new Promise(function (resolve, reject) {
             const apiFilter = {};
-            apiFilter['userType-eq'] = 'PROVIDER';
+            // apiFilter['userType-eq'] = 'PROVIDER';
             _this.provider_services.getUsers(apiFilter).subscribe(data => {
                   resolve(data);
                 },

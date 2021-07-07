@@ -776,10 +776,11 @@ export class ServiceComponent implements OnInit, OnDestroy {
             });
     }
     getUsers() {
-        const filter = { 'userType-eq': 'PROVIDER' };
-        if (this.departId) {
-            filter['deptId-eq'] = this.departId.toString();
-        }
+        const filter={};
+        // const filter = { 'userType-eq': 'PROVIDER' };
+        // if (this.departId) {
+        //     filter['deptId-eq'] = this.departId.toString();
+        // }
         this.provider_services.getUsers(filter).subscribe(data => {
             this.users_list = data;
             this.selectedUser = this.users_list[0].id;
@@ -875,7 +876,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
          return 'All Users'
         }else{
         for (let user of users) {
-            let details = this.users_list.filter(usr => usr.id == user);
+            let details = this.users_list.filter(usr => usr.id == parseInt(user));
             if (details && details.length > 0) {
                 userlst = userlst + details[0].firstName + ' ' + details[0].lastName + ',';
             }
@@ -895,7 +896,7 @@ getProviderNametruncate(users) {
      return 'All Users'
     }else{
     for (let user of users) {
-        let details = this.users_list.filter(usr => usr.id == user);
+        let details = this.users_list.filter(usr => usr.id == parseInt(user));
         if (details && details.length > 0) {
             userlst = userlst + details[0].firstName + ' ' + details[0].lastName + ',';
         }
