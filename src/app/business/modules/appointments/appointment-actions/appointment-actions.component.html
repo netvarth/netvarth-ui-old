@@ -17,6 +17,7 @@
             <p>Appointment Time : {{getSingleTime(appt.appmtTime)}}
             </p>
             <p *ngIf="action === 'status'">Current <span *ngIf="statusList && statusList.length > 0">external</span> status: {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}</p>
+            <p *ngIf="action === 'status'">Current <span *ngIf="statusList && statusList.length > 0">internal</span> status: {{appt.internalStatus}}</p>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro" *ngIf="action === ''">
             <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && !data.NoViewDetail"
@@ -394,7 +395,7 @@
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-20 scro hght no-padding" *ngIf="action === 'status'">
-            <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 stst-bx mgn-up-10 mgn-lt-10" >
+            <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 stst-bx mgn-up-10 mgn-lt-10" *ngIf="appt.apptStatus !== 'done'" >
                     <div>External Status</div>
                     <p class="settings_info"> Any changes made in here will be visible to {{customer_label}}s</p>
         <div class="status-box" *ngIf="showArrived" (click)="changeWaitlistStatus('Arrived')">
