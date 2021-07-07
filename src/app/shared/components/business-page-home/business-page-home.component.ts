@@ -4,15 +4,21 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ScrollToConfigOptions, ScrollToService } from "@nicky-lenaers/ngx-scroll-to";
 import { DomainConfigGenerator } from "../../services/domain-config-generator.service";
 import { SharedServices } from "../../services/shared-services";
+import { MatSidenav } from '@angular/material/sidenav';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
     selector:'app-business-page-home',
-    templateUrl: './business-page-home.component.html'
+    templateUrl: './business-page-home.component.html',
+    styleUrls: ['./business-page-home.component.css']
+    
 })
 export class BusinessPageHomeComponent implements OnInit {
     
     @ViewChild('privacyPolicy') privacyPolicy: ElementRef;
     @ViewChild('termsConditions') termsConditions: ElementRef;
+    @ViewChild(MatSidenav)
+    sidenav!: MatSidenav;
     // pdfUrl: any;
     accountEncId: string;
     provider_id: any;
@@ -20,13 +26,21 @@ export class BusinessPageHomeComponent implements OnInit {
     privacyUrl: any;
     termsUrl: any;
     target: any;
+    contact = true;
+    termcondition = false;
+    privacypolicy =false;
+    refundcancell = false;
+    shippingdelivry = false;
+
+
     
     constructor(private domSanitizer: DomSanitizer,
         private activateroute:ActivatedRoute,
         private router: Router,
         private shared_services: SharedServices,
         private _scrollToService: ScrollToService,
-        private domainConfigService: DomainConfigGenerator) {
+        private domainConfigService: DomainConfigGenerator,
+        private observer: BreakpointObserver) {
         
     }
     ngOnInit() {
@@ -75,6 +89,18 @@ export class BusinessPageHomeComponent implements OnInit {
 
         // this.pdfUrl = this.domSanitizer.bypassSecurityTrustResourceUrl('https://jaldeeui.s3.ap-south-1.amazonaws.com/ui/scale/config/152877/PRIVACY+POLICY.pdf');
     }
+    ngAfterViewInit() {
+        this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
+          if (res.matches) {
+            this.sidenav.mode = 'over';
+            this.sidenav.close();
+          } else {
+            this.sidenav.mode = 'side';
+            this.sidenav.open();
+          }
+        });
+      }
+    
     /**
    * 
    * @param encId encId/customId which represents the Account
@@ -106,4 +132,13 @@ export class BusinessPageHomeComponent implements OnInit {
     };
     this._scrollToService.scrollTo(config);
   }
+  selection(type){
+    if(type=='contact'){
+        this.contact = true;
+    } else if (type =='term'){
+    this.termcondition = true;
+    this.contact = false;
+  }
+}
+
 }

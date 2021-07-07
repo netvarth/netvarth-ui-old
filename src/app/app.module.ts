@@ -114,6 +114,8 @@ import { MeetRoomModule } from './shared/components/meet-room/meet-room.module';
 import { MediaService } from './shared/services/media-service';
 import { RequestDialogComponent } from './business/shared/meeting-room/request-dialog/request-dialog.component';
 import { VideoCallSharedComponent } from './business/modules/video-call/video-call.component';
+import { ContactComponent } from './shared/components/business-page-home/contactus/contact.component';
+import { TermsconditionComponent } from './shared/components/business-page-home/termscondition/termscondition.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -152,7 +154,9 @@ export function init_app(globalService: GlobalService) {
     ListRecordingsDialogComponent,
     BusinessPageHomeComponent,
     RequestDialogComponent,
-    VideoCallSharedComponent
+    VideoCallSharedComponent,
+    ContactComponent,
+    TermsconditionComponent
   ],
   entryComponents: [
     SignUpComponent,
