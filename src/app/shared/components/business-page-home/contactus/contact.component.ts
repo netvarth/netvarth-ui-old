@@ -8,14 +8,14 @@ import { Component,  Input,OnInit } from '@angular/core';
     styleUrls: ['./contact.component.css']
 })
 export class ContactComponent implements OnInit {
-    @Input() item;
+    @Input() detail;
    
     constructor(
       //  private lStorageService: LocalStorageService
       ) {} 
 
     ngOnInit() {
-       this.item = 1
+       
     }
     
    

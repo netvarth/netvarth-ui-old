@@ -27,22 +27,22 @@
     
     <mat-sidenav-container>
         <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-                <img class="avatar mat-elevation-z8" src="https://source.unsplash.com/c_GmwfHBDzk/200x200" />
-
+                <img class="avatar mat-elevation-z8" src="{{bLogo}}" />
+                <h4 class="name">{{businessName}}</h4>
                 <mat-divider></mat-divider>
-            <button mat-button class="menu-button" (click)="selection('contact')">
+            <button mat-button class="menu-button" [ngClass]="{'active':contact }" (click)="selection('contact')">
                 <span> Contact us</span>
             </button>
-            <button mat-button class="menu-button" (click)="selection('term')">
+            <button mat-button class="menu-button"  [ngClass]="{'active':termcondition }" (click)="selection('term')">
                 <span>Terms & Condition</span>
             </button>
-            <button mat-button class="menu-button" >
+            <button mat-button class="menu-button" [ngClass]="{'active':privacypolicy }" (click)="selection('privacy')">
                 <span>Privacy Policy</span>
             </button>
-            <button mat-button class="menu-button">
+            <button mat-button class="menu-button" [ngClass]="{'active':refundcancell }" (click)="selection('refund')">
                     <span>Refund & Cancellation Policy</span>
                 </button>
-                <button mat-button class="menu-button">
+                <button mat-button class="menu-button" [ngClass]="{'active':shippingdelivry }" (click)="selection('shipping')">
                         <span>Shipping & Delivery Policy</span>
                     </button>
     
@@ -51,10 +51,19 @@
         </mat-sidenav>
         <mat-sidenav-content>
                 <div class="content mat-elevation-z8" *ngIf="contact">
-                        <app-contact></app-contact>
+                        <app-contact [detail]="contactdetail"></app-contact>
                 </div>
                 <div class="content mat-elevation-z8" *ngIf="termcondition">
-                        <app-termscondition></app-termscondition>
+                        <app-termscondition [detail]="termsdetail"></app-termscondition>
+                </div>
+                <div class="content mat-elevation-z8" *ngIf="privacypolicy">
+                        <app-privacy [detail]="privacydetail"></app-privacy>
+                </div>
+                <div class="content mat-elevation-z8" *ngIf="refundcancell">
+                        <app-refundcancel [detail]="refundcanceldetail"></app-refundcancel>
+                </div>
+                <div class="content mat-elevation-z8" *ngIf="shippingdelivry">
+                        <app-shippingdelivery [detail]="shippingdelivrydetail"></app-shippingdelivery>
                 </div>
             
                 <!-- <div class="content mat-elevation-z8" #termsConditions *ngIf="!termsUrl"></div>   

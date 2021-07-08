@@ -108,7 +108,8 @@ export class AssignTeam implements OnInit {
   ngOnInit() {
     this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
     this.getSpokenLanguages();
-    this.getSpecializations();
+    this.getProviders();
+    // this.getSpecializations();
   }
   // getProvidersByTeam() {
   //   let apiFilter = {};

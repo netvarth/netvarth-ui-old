@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div class="action-box pointer-cursor"
-                *ngIf="showAssign"
+                *ngIf="(this.users.length > 1 && !this.data.multiSelection && this.accountType=='BRANCH' && (this.checkin.queue.provider.id === 0) && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn'))"
                 (click)="changeWaitlistservice()">
                 <div class="action-box-sub">
                     <span class="doctor-change-icon"></span>
