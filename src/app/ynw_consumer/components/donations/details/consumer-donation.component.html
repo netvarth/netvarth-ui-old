@@ -249,9 +249,7 @@
                                                                             </p>
                                                                             <p class="form-level-settings applybill"
                                                                                 *ngIf="sel_ser_det.minDonationAmount == sel_ser_det.maxDonationAmount">
-                                                                                Donation Amount <span
-                                                                                    class="bold rupee-font">{{sel_ser_det.minDonationAmount|
-                                                                                    currency:'&#8377;'}}</span>
+                                                                                Donation Amount <i class="fa fa-inr"></i>  {{sel_ser_det.minDonationAmount}}
                                                                             </p>
                                                                         </div>
                                                                     </div>
@@ -415,6 +413,11 @@
                                                                         </div>
                                                                         <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding email-sec"
                                                                             *ngIf="action=='email'">
+                                                                            <div
+                                                                                class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-20">
+                                                                                Please
+                                                                                enter your
+                                                                                email for payment</div>
                                                                             <div
                                                                                 class="col-md-7 col-sm-12 col-xs-12 mgn-bt-20">
                                                                                 <ng-container>
