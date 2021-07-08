@@ -11,6 +11,7 @@ import { SnackbarService } from '../../../../../shared/services/snackbar.service
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { userContactInfoComponent } from './user-contact-info/user-contact-info.component';
+import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
 
 @Component({
 
@@ -146,7 +147,7 @@ export class BranchUsersComponent implements OnInit {
     loc_list: any = [];
     locIds: any = [];
     newlyCreatedGroupId;
-    showteams =  false;
+    showteams = false;
     showusers = true;
     selecteTeamdUsers: any = [];
     constructor(
@@ -156,7 +157,8 @@ export class BranchUsersComponent implements OnInit {
         private dialog: MatDialog,
         private snackbarService: SnackbarService,
         private groupService: GroupStorageService,
-        private wordProcessor: WordProcessor) {
+        private wordProcessor: WordProcessor,
+        private lStorageService: LocalStorageService) {
     }
     ngOnInit() {
         this.selectedGroup = 'all';
@@ -180,9 +182,9 @@ export class BranchUsersComponent implements OnInit {
         if (this.domain === 'finance') {
             this.userTypesFormfill = [{ name: 'ASSISTANT', displayName: 'Assistant' }, { name: 'PROVIDER', displayName: 'Staff Member' }, { name: 'ADMIN', displayName: 'Admin' }];
         }
-         if (this.domain === 'educationalInstitution') {
-            this.userTypesFormfill = [{name: 'ASSISTANT',displayName: 'Assistant'}, {name: 'PROVIDER',displayName: 'Mentor'},{name: 'ADMIN',displayName: 'Admin'}];
-        } 
+        if (this.domain === 'educationalInstitution') {
+            this.userTypesFormfill = [{ name: 'ASSISTANT', displayName: 'Assistant' }, { name: 'PROVIDER', displayName: 'Mentor' }, { name: 'ADMIN', displayName: 'Admin' }];
+        }
     }
     getCustomerGroup(groupId?) {
         this.teamLoaded = true;
@@ -203,7 +205,7 @@ export class BranchUsersComponent implements OnInit {
                 }
                 else {
                     const grp = this.groups.filter(group => group.id === JSON.stringify(groupId));
-                    this.customerGroupSelection(grp[0] , 'show');
+                    this.customerGroupSelection(grp[0], 'show');
                 }
             }
         });
@@ -291,6 +293,7 @@ export class BranchUsersComponent implements OnInit {
     }
     getUsers(from_oninit = false) {
         let filter = this.setFilterForApi();
+        this.lStorageService.setitemonLocalStorage('userfilter', filter);
         this.getUsersListCount(filter)
             .then(
                 result => {
@@ -342,8 +345,8 @@ export class BranchUsersComponent implements OnInit {
         else if (user.gender === 'female') {
             return '../../.././assets/images/Asset2@300x.png';
         }
-        else{
-            return '../../.././assets/images/Asset1@300x(1).png'; 
+        else {
+            return '../../.././assets/images/Asset1@300x(1).png';
         }
     }
     performActions(action) {
@@ -359,6 +362,7 @@ export class BranchUsersComponent implements OnInit {
         /* this.clearFilter(); */
     }
     clearFilter() {
+        this.lStorageService.removeitemfromLocalStorage('userfilter');
         this.allSelected = false;
         this.availabileSelected = false;
         this.notAvailabileSelected = false;
@@ -395,6 +399,7 @@ export class BranchUsersComponent implements OnInit {
     }
     doSearch() {
         // this.getUsers();
+        this.lStorageService.removeitemfromLocalStorage('userfilter');
         if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pincode || this.filter.available || this.filter.primaryMobileNo || this.filter.userType || this.selectedLanguages.length > 0 || this.selectedLocations.length > 0 || this.selectedSpecialization.length > 0) {
             this.filterapplied = true;
         } else {
@@ -414,7 +419,12 @@ export class BranchUsersComponent implements OnInit {
         return api_filter;
     }
     setFilterForApi() {
-        const api_filter = {};
+        let api_filter = {};
+        const filter = this.lStorageService.getitemfromLocalStorage('userfilter');
+        if (filter) {
+            api_filter = filter;
+            this.initFilters(filter);
+        }
         if (this.filter.firstName !== '') {
             api_filter['firstName-like'] = this.filter.firstName;
         }
@@ -455,6 +465,27 @@ export class BranchUsersComponent implements OnInit {
             api_filter['specialization-eq'] = this.selectedSpecialization.toString();
         }
         return api_filter;
+    }
+    initFilters(filter) {
+        if (Object.keys(filter).length > 0) {
+            Object.keys(filter).forEach(key => {
+                const splitedKey = key.split('-');
+                if (splitedKey[0] === 'spokenlangs') {
+                    const values = filter[key].split(',');
+                    this.selectedLanguages = values;
+                } else if (splitedKey[0] === 'businessLocs') {
+                    let values = filter[key].split(',');
+                    values = values.map(value => JSON.parse(value));
+                    this.selectedLocations = values;
+                } else if (splitedKey[0] === 'specialization') {
+                    const values = filter[key].split(',');
+                    this.selectedSpecialization = values;
+                } else {
+                    this.filter[splitedKey[0]] = filter[key];
+                }
+            });
+            this.filterapplied = true;
+        }
     }
     getUsersListCount(filter) {
         return new Promise((resolve, reject) => {
@@ -527,51 +558,51 @@ export class BranchUsersComponent implements OnInit {
                 subDomain = 'alternateMedicinePractitioners';
             }
         } else if (this.user.sector === 'personalCare') {
-            if(this.user.subSector === 'beautyCare'){
-              subDomain = 'beautyCare';
-            } else if(this.user.subSector === 'personalFitness'){
-              subDomain = 'personalFitness';
-            }else if(this.user.subSector === 'massageCenters'){
-              subDomain = 'massageCenters';
+            if (this.user.subSector === 'beautyCare') {
+                subDomain = 'beautyCare';
+            } else if (this.user.subSector === 'personalFitness') {
+                subDomain = 'personalFitness';
+            } else if (this.user.subSector === 'massageCenters') {
+                subDomain = 'massageCenters';
             }
-          
+
         } else if (this.user.sector === 'finance') {
-          if(this.user.subSector === 'bank'){
-            subDomain = 'bank';
-          } else if(this.user.subSector === 'nbfc'){
-            subDomain = 'nbfc';
-          }else if(this.user.subSector === 'insurance'){
-            subDomain = 'insurance';
-          }
-        }else if (this.user.sector === 'veterinaryPetcare') {
+            if (this.user.subSector === 'bank') {
+                subDomain = 'bank';
+            } else if (this.user.subSector === 'nbfc') {
+                subDomain = 'nbfc';
+            } else if (this.user.subSector === 'insurance') {
+                subDomain = 'insurance';
+            }
+        } else if (this.user.sector === 'veterinaryPetcare') {
             if (this.user.subSector === 'veterinaryhospital') {
                 subDomain = 'veterinarydoctor';
             }
         } else if (this.user.sector === 'retailStores') {
-            if(this.user.subSector === 'groceryShops'){
+            if (this.user.subSector === 'groceryShops') {
                 subDomain = 'groceryShops';
-              } else if(this.user.subSector === 'supermarket'){
+            } else if (this.user.subSector === 'supermarket') {
                 subDomain = 'supermarket';
-              }else if(this.user.subSector === 'hypermarket'){
+            } else if (this.user.subSector === 'hypermarket') {
                 subDomain = 'hypermarket';
-              }
+            }
         } else if (this.user.sector === 'educationalInstitution') {
             if (this.user.subSector === 'educationalTrainingInstitute') {
-              subDomain = 'educationalTrainingInstitute';
+                subDomain = 'educationalTrainingInstitute';
             } else if (this.user.subSector === 'schools') {
                 subDomain = 'schools';
-             } else if (this.user.subSector === 'colleges') {
+            } else if (this.user.subSector === 'colleges') {
                 subDomain = 'colleges';
-             } 
-          }
-          else if (this.user.sector === 'sportsAndEntertainement') {
+            }
+        }
+        else if (this.user.sector === 'sportsAndEntertainement') {
             if (this.user.subSector === 'sports') {
-              subDomain = 'sports';
+                subDomain = 'sports';
             } else if (this.user.subSector === 'entertainment') {
                 subDomain = 'entertainment';
-             }  
-          }
-          console.log(this.user.sector,subDomain);
+            }
+        }
+        console.log(this.user.sector, subDomain);
         this.provider_services.getSpecializations(this.user.sector, subDomain)
             .subscribe(data => {
                 this.specialization_arr = data;
@@ -650,7 +681,7 @@ export class BranchUsersComponent implements OnInit {
         return specialization;
     }
     selectedRow(index, user) {
-        if(!this.showcheckbox){
+        if (!this.showcheckbox) {
             this.selectrow = true;
             this.selectedUser = user;
             if (this.selectrow === true && user.id && user.userType === 'PROVIDER') {
@@ -702,7 +733,7 @@ export class BranchUsersComponent implements OnInit {
         this.provider_services.createTeamGroup(data).subscribe(data => {
             this.showAddCustomerHint = true;
             console.log(data);
-              this.newlyCreatedGroupId = data;
+            this.newlyCreatedGroupId = data;
             console.log(data);
         },
             error => {
@@ -746,14 +777,14 @@ export class BranchUsersComponent implements OnInit {
             this.showCustomerHint();
         }
         if (!type) {
-        if(this.selectedGroup.users.length > 0){
-            for (let i = 0; i < this.selectedGroup.users.length; i++) {
-                console.log(this.selectedGroup.users[i]);
-                this.userIds.push(this.selectedGroup.users[i].id);
-                console.log(this.userIds);
+            if (this.selectedGroup.users.length > 0) {
+                for (let i = 0; i < this.selectedGroup.users.length; i++) {
+                    console.log(this.selectedGroup.users[i]);
+                    this.userIds.push(this.selectedGroup.users[i].id);
+                    console.log(this.userIds);
+                }
             }
         }
-       }
         console.log(this.userIds);
     }
     closeGroupDialog() {
@@ -782,7 +813,7 @@ export class BranchUsersComponent implements OnInit {
     customerGroupSelection(group, type?) {
         this.showusers = true;
         this.showUsers = false;
-        this.showteams =  false;
+        this.showteams = false;
         this.showcheckbox = false;
         if (group === 'all') {
             this.getUsers();
@@ -817,7 +848,7 @@ export class BranchUsersComponent implements OnInit {
         console.log(this.users_list);
         this.resetFilter();
 
-        if(type){
+        if (type) {
             this.closeGroupDialog();
         }
         // this.resetList();
@@ -866,14 +897,14 @@ export class BranchUsersComponent implements OnInit {
             });
     }
     checkSelection(user) {
-        if(this.selecteTeamdUsers.length > 0){
+        if (this.selecteTeamdUsers.length > 0) {
             const isuser = this.selecteTeamdUsers.filter(listofusers => listofusers.id === user.id);
             if (isuser.length > 0) {
-              return true;
-             }
+                return true;
             }
         }
-       
+    }
+
     cancelAdd() {
         console.log("close");
         this.userIds = [];
@@ -891,14 +922,14 @@ export class BranchUsersComponent implements OnInit {
         if (values.currentTarget.checked) {
             this.userIds.push(id);
             // website.push(new FormControl(e.target.value));
-          } else {
+        } else {
             console.log(this.userIds);
-             const index =  this.userIds.filter(x => x !== id);
-             console.log(index)
-             this.userIds = index;
-             console.log(this.userIds)
-          }
-          console.log(this.userIds)
+            const index = this.userIds.filter(x => x !== id);
+            console.log(index)
+            this.userIds = index;
+            console.log(this.userIds)
+        }
+        console.log(this.userIds)
     }
     getLocIdsUserIds(loc, id, values) {
         console.log(values.currentTarget.checked);
@@ -914,13 +945,13 @@ export class BranchUsersComponent implements OnInit {
         if (values.currentTarget.checked) {
             this.locIds.push(id);
             console.log(this.locIds)
-          } else {
-            console.log( this.locIds);
-             const index =   this.locIds.filter(x => x === id);
-             console.log(index)
-             this.locIds.pop(index);
-          }
-          console.log(this.locIds)
+        } else {
+            console.log(this.locIds);
+            const index = this.locIds.filter(x => x === id);
+            console.log(index)
+            this.locIds.pop(index);
+        }
+        console.log(this.locIds)
     }
     addlocation() {
         this.userIds = [];
@@ -948,42 +979,42 @@ export class BranchUsersComponent implements OnInit {
             this.apiError = 'Please select at least one location';
         }
         else {
-        const postData = {
-            'userIds': this.userIds,
-            'bussLocations': this.locIds
-        };
-        console.log(postData);
-           this.provider_services.assignLocationToUsers(postData).subscribe(
-            (data: any) => {
-              this.showcheckbox = false;
-              this.userIds = [];
-              this.addlocationcheck = false;
-              this.locIds = [];
-              this.getUsers();
-              this.closelocDialog();
-            },
-            error => {
-              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            });
+            const postData = {
+                'userIds': this.userIds,
+                'bussLocations': this.locIds
+            };
+            console.log(postData);
+            this.provider_services.assignLocationToUsers(postData).subscribe(
+                (data: any) => {
+                    this.showcheckbox = false;
+                    this.userIds = [];
+                    this.addlocationcheck = false;
+                    this.locIds = [];
+                    this.getUsers();
+                    this.closelocDialog();
+                },
+                error => {
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
         }
     }
     redirecToUsers() {
         // this.routerobj.navigate(['provider', 'settings', 'general', 'users']);
-        this.showteams =  true;
+        this.showteams = true;
         this.showusers = false;
 
-      }
-     showteamsres() {
-        this.showteams =  true;
+    }
+    showteamsres() {
+        this.showteams = true;
         this.showusers = false;;
-      }
-      showallusers(){
-        this.showteams =  false;
+    }
+    showallusers() {
+        this.showteams = false;
         this.showusers = true;
         this.selectedGroup = 'all';
         this.customerGroupSelection(this.selectedGroup);
-      }
-      resetError() {
+    }
+    resetError() {
         this.apiError = '';
-      }
+    }
 }
