@@ -257,8 +257,12 @@
                    Cancel</button>
         
                   <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="addCustomerToGroup()"
-                  *ngIf="selectedGroup !== 'all'  && showUsers &&  (this.userIds.length > 0 || (this.selectedGroup.users &&  this.selectedGroup.users.length > 0)) ">
+                  *ngIf="selectedGroup !== 'all'  && showUsers &&  (this.userIds.length > 0 && (this.selectedGroup.users &&  this.selectedGroup.users.length == 0)) ">
                   Add</button>
+
+                  <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="addCustomerToGroup()"
+                  *ngIf="selectedGroup !== 'all'  && showUsers &&  (this.userIds.length > 0 && (this.selectedGroup.users &&  this.selectedGroup.users.length > 0))">
+                  Update</button>
 
                   <button mat-flat-button class="font-size-xs add_btn mgn-lt-10 cancel_btn" (click)="locationclose()"
                   *ngIf="addlocationcheck"><i class="fa fa-times mgn-rt-5" aria-hidden="true"></i>
@@ -801,8 +805,12 @@
                  Cancel</button>
       
                 <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="addCustomerToGroup()"
-                *ngIf="selectedGroup !== 'all'  && showUsers &&  (this.userIds.length > 0 || (this.selectedGroup.users &&  this.selectedGroup.users.length > 0)) ">
+                *ngIf="selectedGroup !== 'all'  && showUsers &&  (this.userIds.length > 0 && (this.selectedGroup.users &&  this.selectedGroup.users.length == 0)) ">
                 Add</button>
+
+                <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="addCustomerToGroup()"
+                *ngIf="selectedGroup !== 'all'  && showUsers &&  (this.userIds.length > 0 && (this.selectedGroup.users &&  this.selectedGroup.users.length > 0))">
+                Update</button>
 
 
                 <button mat-flat-button class="font-size-xs add_btn mgn-lt-10 cancel_btn" (click)="locationclose()"

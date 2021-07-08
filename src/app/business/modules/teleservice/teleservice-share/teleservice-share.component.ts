@@ -139,7 +139,7 @@ export class TeleServiceShareComponent implements OnInit {
         this.videocall_msg = ' , your ' + mode + ' video call will begin. You will be alerted once more when the call starts.\n\nFollow these instructions to join the video call:\n1. You will receive an alert that the ' + mode + ' call has started.\n2. When it is your turn, click on the following link- ' + this.meetingLink;
       }
       this.waitFor = '\n3. Wait for the video call to start';
-      this.gooleWaitFor = '\n2. Wait for the video call to start';
+      this.gooleWaitFor = '\n3. Wait for the video call to start';
       this.zoomWaitFor = '\n2. Wait for the video call to start';
       switch (this.data.app) {
         case 'WhatsApp':
