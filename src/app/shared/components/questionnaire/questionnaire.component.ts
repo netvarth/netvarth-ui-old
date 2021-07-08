@@ -123,7 +123,7 @@ export class QuestionnaireComponent implements OnInit {
         this.questions = this.questionnaireList.labels;
       }
     }
-    if (this.source === 'customer-details') {
+    if (this.source === 'customer-details' && this.customerDetails[0]) {
       this.questionnaireList = this.customerDetails[0].questionnaire;
       this.questions = this.customerDetails[0].questionnaire.questionAnswers;
       this.getAnswers(this.customerDetails[0].questionnaire.questionAnswers, 'get');
