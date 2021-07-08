@@ -384,12 +384,12 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         if (dnrFirst === '') {
             this.donorerror = 'Please enter the first name';
             return;
-        } else if(dnrLast === '') {
+        } else if (dnrLast === '') {
             this.donorlasterror = 'Please enter the last name';
             return;
         } else {
             this.donorFirstName = dnrFirst;
-            this.donorLastName = dnrLast; 
+            this.donorLastName = dnrLast;
             setTimeout(() => {
                 this.action = '';
             }, 500);
@@ -414,7 +414,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         } else {
             this.consumerPhoneNo = this.selected_phone;
             this.userPhone = this.selected_phone;
-            this.edit = true; 
+            this.edit = true;
             setTimeout(() => {
                 this.action = '';
             }, 500);
@@ -461,7 +461,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.resetApi();
     }
     showConfrmEmail() {
-            this.confrmshow = true;
+        this.confrmshow = true;
     }
     isSelectedService(id) {
         let clr = false;
@@ -628,7 +628,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         }
         if (stat && stat1) {
             if (this.payEmail === this.payEmail1) {
-                this.userEmail = this.payEmail;  
+                this.userEmail = this.payEmail;
                 setTimeout(() => {
                     this.action = '';
                 }, 500);
