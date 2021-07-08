@@ -248,6 +248,7 @@ export class CustomerActionsComponent implements OnInit {
             'proConIds': ids
         };
         this.provider_services.addLabeltoCustomer(postData).subscribe(data => {
+            this.snackbarService.openSnackBar('Label applied successfully', { 'panelClass': 'snackbarerror' });
             this.dialogRef.close('reload');
         },
             error => {
@@ -264,6 +265,9 @@ export class CustomerActionsComponent implements OnInit {
             'proConIds': ids
         };
         this.provider_services.deleteLabelFromCustomer(postData).subscribe(data => {
+            if (Object.keys(this.labelMap).length === 0) {
+                this.snackbarService.openSnackBar('Label applied successfully', { 'panelClass': 'snackbarerror' });
+            }
             this.dialogRef.close('reload');
         },
             error => {
