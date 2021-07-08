@@ -398,7 +398,7 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-20 scro hght no-padding" *ngIf="action === 'status'">
             <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 stst-bx mgn-up-10 mgn-lt-10" *ngIf="appt.apptStatus !== 'done'" >
                     <div>External Status</div>
-                    <p class="settings_info"> Any changes made in here will be visible to {{customer_label}}s</p>
+                    <p class="settings_info"> External status is public and visible for your {{customer_label}}s</p>
         <div class="status-box" *ngIf="showArrived" (click)="changeWaitlistStatus('Arrived')">
             <div class="status"> Arrived</div>
             <!-- <div class="form-level-settings">hints</div> -->
@@ -422,7 +422,7 @@
             </div>
         <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 stst-bx mgn-up-10 mgn-lt-10" *ngIf="statusList && statusList.length > 0">
                 <div>Internal Status</div>
-                <p class="settings_info">Internal status is only for internal purposes it is not visible to {{customer_label}}s</p>
+                <p class="settings_info">Internal status is only visible for users of this account. Not visible for your {{customer_label}}s</p>
                 <div class="status-box-internal" *ngFor="let stat of statusList, let i= index" (click)="changeWaitlistInternalStatus(stat.status)">
                     <div class="status"> {{stat.status|capitalizeFirst}}</div>
                     <!-- <div class="form-level-settings">hints</div> -->
