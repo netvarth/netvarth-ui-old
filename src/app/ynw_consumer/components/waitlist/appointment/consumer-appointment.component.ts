@@ -240,6 +240,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     disablebutton = false;
     consumerType: string;
     newMember: any;
+    readMore = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -2204,5 +2205,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     changePolicy(event) {
         console.log(event.target.checked);
         this.checkPolicy = event.target.checked;
+    }
+    showText() {
+        this.readMore = !this.readMore;
     }
 }
