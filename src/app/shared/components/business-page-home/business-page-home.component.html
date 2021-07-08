@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
     <div class="col-md-12 mgn-bt-50" #privacyPolicy *ngIf="!termsUrl">
     </div>
     <div class="clearfix"></div>
@@ -8,10 +8,58 @@
     <div class="clearfix"></div>
     <div id="terms">
         <div class="col-md-12 mgn-bt-50" #termsConditions *ngIf="!termsUrl">
-            <!-- <iframe [src]="termsUrl" width="500" height="600" type='application/pdf'></iframe> -->
         </div>
         <div class="col-md-12 mgn-bt-50" *ngIf="termsUrl">
             <iframe [src]="termsUrl" width="500" height="600"></iframe>
         </div>
     </div>
-</div>
+</div> -->
+<mat-toolbar class="mat-elevation-z8">
+        <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+            <mat-icon *ngIf="!sidenav.opened">
+                menu
+            </mat-icon>
+            <mat-icon *ngIf="sidenav.opened">
+                close
+            </mat-icon>
+        </button>
+    </mat-toolbar>
+    
+    <mat-sidenav-container>
+        <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+                <img class="avatar mat-elevation-z8" src="https://source.unsplash.com/c_GmwfHBDzk/200x200" />
+
+                <mat-divider></mat-divider>
+            <button mat-button class="menu-button" (click)="selection('contact')">
+                <span> Contact us</span>
+            </button>
+            <button mat-button class="menu-button" (click)="selection('term')">
+                <span>Terms & Condition</span>
+            </button>
+            <button mat-button class="menu-button" >
+                <span>Privacy Policy</span>
+            </button>
+            <button mat-button class="menu-button">
+                    <span>Refund & Cancellation Policy</span>
+                </button>
+                <button mat-button class="menu-button">
+                        <span>Shipping & Delivery Policy</span>
+                    </button>
+    
+            <mat-divider></mat-divider>
+    
+        </mat-sidenav>
+        <mat-sidenav-content>
+                <div class="content mat-elevation-z8" *ngIf="contact">
+                        <app-contact></app-contact>
+                </div>
+                <div class="content mat-elevation-z8" *ngIf="termcondition">
+                        <app-termscondition></app-termscondition>
+                </div>
+            
+                <!-- <div class="content mat-elevation-z8" #termsConditions *ngIf="!termsUrl"></div>   
+            <div class="content mat-elevation-z8" *ngIf="termsUrl">
+                    <iframe [src]="termsUrl"   ></iframe>
+            </div> -->
+        </mat-sidenav-content>
+    </mat-sidenav-container>
