@@ -138,9 +138,8 @@ export class BookingDashboardAdminComponent implements OnInit {
         .subscribe(
           (data: any) => {
             this.todayAppts = data;
-            if (this.todayAppts[0]) {
-              this.nextAppt = this.todayAppts[0];
-            }
+            this.nextAppt = this.todayAppts.filter(waitlist => waitlist.apptStatus === 'Confirmed' || waitlist.apptStatus === 'Arrived');
+            this.nextAppt = this.nextAppt[0];
             resolve(data);
           });
     });
@@ -169,9 +168,8 @@ export class BookingDashboardAdminComponent implements OnInit {
         .subscribe(
           (data: any) => {
             this.todayWaitlists = data;
-            if (this.todayWaitlists[0]) {
-              this.nextWaitlist = this.todayWaitlists[0];
-            }
+            this.nextWaitlist = this.todayWaitlists.filter(waitlist => waitlist.waitlistStatus === 'checkedIn' || waitlist.waitlistStatus === 'arrived');
+            this.nextWaitlist = this.nextWaitlist[0];
             resolve(data);
           });
     });

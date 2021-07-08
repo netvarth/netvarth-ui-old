@@ -148,14 +148,10 @@ export class CheckinsComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-    if (!this.server_date) {
-      this.setSystemDate();
-    }
+    this.setSystemDate();
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.customerIdTooltip = this.customer_label + ' Id';
-    this.getTomorrowDate();
     this.getProviderSettings();
     this.getProviderLocations();
     this.getQs();
@@ -168,6 +164,7 @@ export class CheckinsComponent implements OnInit {
       .subscribe(
         res => {
           this.server_date = res;
+          this.getTomorrowDate();
           this.lStorageService.setitemonLocalStorage('sysdate', res);
         });
   }

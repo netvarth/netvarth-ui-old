@@ -11,6 +11,7 @@ import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
+import { RecordsDatagridModule } from '../bookings/records-datagrid/records-datagrid.module';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { QuestionnaireModule } from '../../../shared/components/questionnaire/qu
         CapitalizeFirstPipeModule,
         Nl2BrPipeModule,
         QuestionnaireModule,
-        CapitalizeFirstPipeModule
+        CapitalizeFirstPipeModule,
+        RecordsDatagridModule
     ],
     exports: [DonationsComponent]
 })

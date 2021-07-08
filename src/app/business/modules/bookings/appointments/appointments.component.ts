@@ -71,13 +71,9 @@ export class AppointmentsComponent implements OnInit {
   apptModes: any = [];
   paymentStatuses: any = [];
   apptStatuses: any = [];
-  ageGroups: any = [];
   allModeSelected = false;
   allPayStatusSelected = false;
   allApptStatusSelected = false;
-  allGenderSlected = false;
-  allAgeSlected = false;
-  genderList: any = [];
   service_list: any = [];
   allServiceSelected = false;
   services: any = [];
@@ -85,23 +81,11 @@ export class AppointmentsComponent implements OnInit {
   allLabelSelected: any = [];
   filteredSchedule: any = [];
   allScheduleSelected = false;
-  filter_date_start_min = null;
-  filter_date_start_max = null;
-  filter_date_end_min = null;
-  filter_date_end_max = new Date();
-  filter_dob_start_min = null;
-  filter_dob_start_max = null;
-  filter_dob_end_min = null;
-  filter_dob_end_max = null;
-  labelMultiCtrl: any = [];
   endminday;
   maxday = new Date();
   endmaxday = new Date();
   allLocationSelected = false;
   filterLocation: any = [];
-  labelsCount: any = [];
-  statusMultiCtrl: any = [];
-  labelFilter: any = [];
   allLabels: any = [];
   providerLabels: any = [];
   locations: any = [];
@@ -153,10 +137,7 @@ export class AppointmentsComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-    if (!this.server_date) {
-      this.setSystemDate();
-    }
+    this.setSystemDate();
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.customerIdTooltip = this.customer_label + ' Id';
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
@@ -164,7 +145,6 @@ export class AppointmentsComponent implements OnInit {
       this.getFutureAppts().then(data => {
         this.getHistoryAppts().then(data => {
           this.setDatas();
-          this.loading = false;
         });
       });
     });
@@ -172,13 +152,13 @@ export class AppointmentsComponent implements OnInit {
     this.getProviderSchedules();
     this.getServices();
     this.getLabel();
-    this.getTomorrowDate();
   }
   setSystemDate() {
     this.shared_services.getSystemDate()
       .subscribe(
         res => {
           this.server_date = res;
+          this.getTomorrowDate();
           this.lStorageService.setitemonLocalStorage('sysdate', res);
         });
   }
@@ -277,6 +257,7 @@ export class AppointmentsComponent implements OnInit {
         .subscribe(
           (data: any) => {
             this.todayAppts = data;
+            this.loading = false;
             resolve(data);
           });
     });
@@ -288,6 +269,7 @@ export class AppointmentsComponent implements OnInit {
         .subscribe(
           (data: any) => {
             this.futureAppts = data;
+            this.loading = false;
             resolve(data);
           });
     });
@@ -299,6 +281,7 @@ export class AppointmentsComponent implements OnInit {
         .subscribe(
           data => {
             this.historyAppts = data;
+            this.loading = false;
             resolve(data);
           });
     });
@@ -326,6 +309,7 @@ export class AppointmentsComponent implements OnInit {
   }
   showFilterSidebar() {
     this.filter_sidebar = true;
+    alert(this.filter_sidebar);
     this.shared_functions.setFilter();
   }
   hideFilterSidebar() {
@@ -364,7 +348,6 @@ export class AppointmentsComponent implements OnInit {
   }
   labelSelection() {
     this.labelFilterData = '';
-    this.labelsCount = [];
     let count = 0;
     Object.keys(this.selectedLabels).forEach(key => {
       if (this.selectedLabels[key].length > 0) {
@@ -395,8 +378,6 @@ export class AppointmentsComponent implements OnInit {
     this.paymentStatuses = [];
     this.apptModes = [];
     this.filterLocation = [];
-    this.allAgeSlected = false;
-    this.allGenderSlected = false;
     this.allServiceSelected = false;
     this.allScheduleSelected = false;
     this.allApptStatusSelected = false;
@@ -441,7 +422,6 @@ export class AppointmentsComponent implements OnInit {
       check_in_end_date: null,
       location_id: 'all'
     };
-    this.statusMultiCtrl = [];
     this.labelFilterData = '';
   }
   setLabelFilter(label, event) {

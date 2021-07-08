@@ -184,3 +184,16 @@ h3 {
   overflow: hidden !important;
   white-space: nowrap !important;
 }
+.btn-group {
+  margin: 5px !important;
+}
+@media (max-width: 768px) {
+  .container-calendar {
+    text-align: center !important;
+  }
+}
+@media (min-width: 769px) {
+  .container-calendar h3 {
+    float: right !important;
+  }
+}

@@ -7,8 +7,7 @@
   </div>
 </section>
 <section class="waitlist-dashboard content p-4">
-  <app-common-innerloading-spinner *ngIf="loading"> </app-common-innerloading-spinner>
-  <div class="card p-0" *ngIf="!loading">
+  <div class="card p-0">
     <header class="main-header dash chkin">
       <nav class="navbar navbar-static-top jd-custom-nav" role="navigation" style="background: transparent !important;">
         <div class="navbar-custom-menu width100pc">
@@ -48,7 +47,7 @@
         <i class="fa fa-calendar pointer-cursor" [class.selectedView]="selectedType=='calender'"
           (click)="selectViewType('calender')" [matTooltip]="'Calender View'"></i>
       </div>
-    </div>
+    </div>{{filter_sidebar}}
     <div *ngIf="filter_sidebar">
       <aside class="filterSidebar newfilter-sidebar">
         <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
@@ -413,11 +412,12 @@
         </div>
       </aside>
     </div>
-    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20" *ngIf="selectedType=='list'">
+    <app-common-innerloading-spinner *ngIf="loading"> </app-common-innerloading-spinner>
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20" *ngIf="!loading && selectedType=='list'">
       <app-records-datagrid [source]="'appt-dashboard'" [records]="apptToList">
       </app-records-datagrid>
     </div>
-    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20" *ngIf="selectedType=='calender'">
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20" *ngIf="!loading && selectedType=='calender'">
       <app-calendar [waitlists]="totalAppts"></app-calendar>
     </div>
   </div>

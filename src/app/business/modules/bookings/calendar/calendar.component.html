@@ -1,6 +1,6 @@
 <div class="container-calendar calendar-main-div">
-  <div class="row text-center">
-    <div class="col-md-4">
+  <div class="row">
+    <div class="col-md-7 col-sm-7">
       <div class="btn-group">
         <div class="btn custom-left-btn btn-blue" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
           (viewDateChange)="closeOpenMonthViewDay()">
@@ -14,11 +14,6 @@
           Next
         </div>
       </div>
-    </div>
-    <div class="col-md-4">
-      <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
-    </div>
-    <div class="col-md-4">
       <div class="btn-group">
         <div class="btn custom-left-btn btn-blue" (click)="setView(CalendarView.Month)"
           [class.active]="view === CalendarView.Month">
@@ -33,6 +28,9 @@
           Day
         </div>
       </div>
+    </div>
+    <div class="col-md-5 col-sm-5">
+      <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
     </div>
   </div>
   <br />

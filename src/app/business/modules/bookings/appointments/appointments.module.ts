@@ -25,7 +25,6 @@ import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.m
     MatOptionModule,
     FormsModule,
     LoadingSpinnerModule,
-    MatTooltipModule,
     MatDatepickerModule,
     MatCheckboxModule,
     CapitalizeFirstPipeModule

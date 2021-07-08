@@ -1,4 +1,4 @@
-<div class="operations-row" [class.bord-class]="source != 'waitlist-dashboard' && source != 'appt-dashboard'">
+<div class="operations-row" [class.bord-class]="source != 'waitlist-dashboard' && source != 'appt-dashboard' && source != 'donation-dashboard'">
     <div class="column operations-column">
         <div class="card">
             <div class="card-header" *ngIf="heading">
@@ -249,7 +249,7 @@
                                             {{customer_label | capitalizeFirst}} id: {{record.jaldeeId}}</ng-container>
                                     </td>
                                 </ng-container>
-                                <ng-container *ngIf="source == 'donation'">
+                                <ng-container *ngIf="source == 'donation' || source == 'donation-dashboard'">
                                     <td>
                                         {{record.date | date : newDateFormat}}
                                     </td>

@@ -71,6 +71,10 @@ export class RecordsDatagridComponent implements OnInit {
       this.router.navigate(['provider', 'bookings', record.id]);
     } else if (this.source == 'customers') {
       this.router.navigate(['provider', 'customers', record.id]);
+    } else if (this.source == 'donation' || this.source == 'donation-dashboard') {
+      this.router.navigate(['provider', 'donations', record.uid]);
+    } else if (this.source == 'order') {
+      this.router.navigate(['provider', 'orders', record.uid]);
     } else {
       this.actionPerformed.emit({ record: record, type: type, timeType: this.timeType, source: this.source, heading: this.heading });
     }

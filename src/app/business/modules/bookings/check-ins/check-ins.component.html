@@ -7,7 +7,6 @@
     </div>
 </section>
 <section class="waitlist-dashboard content p-4">
-    <app-common-innerloading-spinner *ngIf="loading"> </app-common-innerloading-spinner>
     <div class="card p-0">
         <header class="main-header dash chkin">
             <nav class="navbar navbar-static-top jd-custom-nav" role="navigation"
@@ -531,6 +530,7 @@
                 </div>
             </aside>
         </div>
+        <app-common-innerloading-spinner *ngIf="loading"> </app-common-innerloading-spinner>
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20" *ngIf="!loading">
             <app-records-datagrid [source]="'waitlist-dashboard'" [records]="waitlistToList" [timeType]="timeType">
             </app-records-datagrid>
