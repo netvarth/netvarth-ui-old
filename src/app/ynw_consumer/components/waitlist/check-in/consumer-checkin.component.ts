@@ -465,7 +465,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 if (serv.virtualCallingModes) {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
                         if (this.type === 'waitlistreschedule') {
-                            this.callingModes = this.waitlist.virtualService['WhatsApp'];
+                            if(this.waitlist.virtualService && this.waitlist.virtualService['WhatsApp']){
+                                this.callingModes = this.waitlist.virtualService['WhatsApp'];
+                            }
                             const phNumber = this.waitlist.countryCode + this.waitlist.waitlistPhoneNumber;
                             const callMode = '+' + serv.virtualCallingModes[0].value;
                             if (callMode === phNumber) {
