@@ -38,8 +38,6 @@
   </div> -->
 </section>
 <section class="waitlist-dashboard content p-4" *ngIf="!apiloading">
-  <!-- <div class="col-md-12 no-padding-small">
-    <div class="row"> -->
   <div class="card p0">
     <!-- <div class="col-md-12 no-padding">
           <ul class="nav cust-dash jd-custom-nav">
@@ -65,46 +63,116 @@
             </li>
           </ul>
         </div> -->
-    <aside class="filterSidebar" *ngIf="filter_sidebar">
-      <section class="sidebar sidebar-bottom">
-        <div class="filterClosebtn">
-          <i class="icon-filter-one-op ng-star-inserted pointer-cursor " (click)="hideFilterSidebar()"
-            [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
-          <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
-            [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
+    <aside class="filterSidebar newfilter-sidebar" *ngIf="filter_sidebar">
+      <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+        <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+          <span class="filter-head-title">Filters</span>
+          <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right" (click)="hideFilterSidebar()"
+            [matTooltip]="'Close filter window'"></i>
         </div>
-        <ul class="sidebar-menu">
-          <div class="filterTextinput">
-            <li class="filterli">
-              <input type="text" #Ffname (blur)="doSearch()" class="filterTextbox" [(ngModel)]="filter.first_name"
-                placeholder="First Name">
-            </li>
+        <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
+        <ul class="sidebar-menu accordion" id="accordion3">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName3"
+                  aria-expanded="false">
+                  <div>
+                    <div style="display: inline-block !important;">
+                      <i class="fa fa-user"></i>
+                    </div>
+                    <span>&nbsp;Name</span>
+                  </div>
+                  <i class="fa fa-angle-down"></i>
+                </button>
+              </h2>
+            </div>
+            <div id="collapseName3" class="collapse in" data-parent="#accordion3">
+              <div class="card-body">
+                <div class="filterTextinput filter-text-input">
+                  <li class="filterli filter-li">
+                    <input type="text" #Ffname class="filterTextbox filter-textbox" [(ngModel)]="filter.first_name"
+                      placeholder="Enter First Name" (keyup)="doSearch()">
+                  </li>
+                </div>
+                <div class="filterTextinput filter-text-input">
+                  <li class="filterli filter-li">
+                    <input type="text" #Flname class="filterTextbox filter-textbox" [(ngModel)]="filter.last_name"
+                      placeholder="Enter Last Name" (keyup)="doSearch()">
+                  </li>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="filterTextinput">
-            <li class="filterli">
-              <input type="text" #Llname (blur)="doSearch()" class="filterTextbox" [(ngModel)]="filter.last_name"
-                placeholder="Last Name">
-            </li>
+          <div class="card">
+            <div class="card-header">
+              <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName2"
+                  aria-expanded="false">
+                  <div>
+                    <div style="display: inline-block !important;">
+                      <i class="fa fa-user"></i>
+                    </div>
+                    <span>&nbsp;Date</span>
+                  </div>
+                  <i class="fa fa-angle-down"></i>
+                </button>
+              </h2>
+            </div>
+            <div id="collapseName2" class="collapse in" data-parent="#accordion2">
+              <div class="card-body">
+                <div class="filterTextinput filter-text-input">
+                  <li class="filterli filter-li">
+                    <input type="text" [(ngModel)]="filter.date" [min]="minday" [max]="maxday" [matDatepicker]="picker"
+                      #Fdate (dateChange)="doSearch()" class="filterTextbox" placeholder="Date" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker">
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </li>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="filterTextinput">
-            <li class="filterli filterDatepicker">
-              <input type="text" [(ngModel)]="filter.date" [min]="minday" [max]="maxday" [matDatepicker]="picker" #Fdate
-                (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox" placeholder="Date" readonly>
-              <mat-datepicker-toggle matSuffix [for]="picker">
-              </mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </li>
-          </div>
-          <div>
-            <label class="filterHeaders">Causes</label>
-            <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-              <mat-checkbox *ngFor="let service of donationServices" [checked]="services.indexOf(service.id) !== -1"
-                (change)="setFilterDataCheckbox('service', service.id, $event)">
-                {{service.name}}</mat-checkbox>
-            </li>
+          <div class="card">
+            <div class="card-header">
+              <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName1"
+                  aria-expanded="false">
+                  <div>
+                    <div style="display: inline-block !important;">
+                      <i class="fa fa-user"></i>
+                    </div>
+                    <span>&nbsp;Causes</span>
+                  </div>
+                  <i class="fa fa-angle-down"></i>
+                </button>
+              </h2>
+            </div>
+            <div id="collapseName1" class="collapse in" data-parent="#accordion1">
+              <div class="card-body">
+                <div class="filter-checkbox-input">
+                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                  </li>
+                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                    *ngFor="let service of donationServices">
+                    <mat-checkbox class="filter-checkbox" [checked]="services.indexOf(service.id) !== -1"
+                      (change)="setFilterDataCheckbox('service', service.id, $event)">
+                      {{service.name}}</mat-checkbox>
+                  </li>
+                </div>
+              </div>
+            </div>
           </div>
         </ul>
       </section>
+      <div class="filter-footer" *ngIf="filterapplied">
+        <button class="btn reset-btn" (click)="clearFilter()">
+          <i class="fa fa-undo"></i>&nbsp;Reset
+        </button>
+        <button class="btn apply-btn" (click)="getDonationsList()">
+          <i class="fa fa-check"></i>&nbsp;Apply
+        </button>
+      </div>
     </aside>
     <!-- <div class="bill-section">
           <div class="c-outer bill-section-content m0">
@@ -155,7 +223,7 @@
           </div>
         </div> -->
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-      <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="control-sidebar">
+      <a class="dropdown-toggle navbar-item-color bold pointer-cursor pad-10 pull-right" data-toggle="control-sidebar">
         <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
           [matTooltip]="filtericonTooltip">
         </i>
@@ -171,8 +239,6 @@
       </app-pager>
     </div>
   </div>
-  <!-- </div>
-  </div> -->
   <div class="clearfix"></div>
 </section>
 <div *ngIf="apiloading" style="margin-top: 100px">

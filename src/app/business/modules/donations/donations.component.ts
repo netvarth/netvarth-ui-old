@@ -288,7 +288,6 @@ export class DonationsComponent implements OnInit {
     this.doSearch();
   }
   doSearch() {
-    this.getDonationsList();
     if (this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.service) {
       this.filterapplied = true;
     } else {
