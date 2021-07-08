@@ -52,7 +52,7 @@
             <!-- <h6 class="service-type" *ngIf="item.type!='donation'">&nbsp;</h6>
             <h6 class="service-type" *ngIf="item.type=='donation'">&nbsp;</h6>  -->
             <p class="card-text donationAmount" *ngIf="item.type=='donation'">
-                <span class="rupee-font bold">Donate <i class="fa fa-inr"></i>{{service.minDonationAmount}}</span>
+                <span class="rupee-font bold">Donate <i class="fa fa-inr"></i> {{service.minDonationAmount}}</span>
                 <span class="rupee-font bold" *ngIf="service.maxDonationAmount != service.minDonationAmount"> or more</span>
             </p>
             <p class="card-text peopleAhead font-normal" *ngIf="personsAheadText">{{personsAheadText}}</p>

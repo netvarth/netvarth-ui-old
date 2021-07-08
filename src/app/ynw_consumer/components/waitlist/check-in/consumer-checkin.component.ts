@@ -211,6 +211,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     virtualFields: any;
     whatsappCountryCode;
     disablebutton = false;
+    readMore = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -2354,5 +2355,8 @@ console.log('inside validaity');
     viewAttachments() {
         this.action = 'attachment';
         this.modal.nativeElement.click();
+    }
+    showText() {
+        this.readMore = !this.readMore;
     }
 }

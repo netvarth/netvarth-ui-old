@@ -1243,9 +1243,7 @@ ngx-intl-tel-input input {
 }
 .prenotes {
   border: 1px solid #cccccc80;
-  padding: 10px;
-  max-height: 100px;
-  overflow: auto;
+  padding: 20px 10px;
 }
 .preinfo-title {
   margin-bottom: 10px;
@@ -1758,4 +1756,7 @@ body.modal-open {
 
 .c-checkin-new .chk-btns-div mat-chip.margin-right-0{
   margin-right: 0 !important;
+}
+.prenotes a {
+  color: #1572a8 !important;
 }
