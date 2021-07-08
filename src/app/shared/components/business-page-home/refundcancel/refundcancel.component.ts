@@ -3,11 +3,11 @@ import { Component,  Input,OnInit } from '@angular/core';
 //import { LocalStorageService } from '../../../services/local-storage.service';
 
 @Component({
-    selector: 'app-termscondition',
-    templateUrl: './termscondition.component.html',
-    styleUrls: ['./termscondition.component.css']
+    selector: 'app-refundcancel',
+    templateUrl: './refundcancel.component.html',
+    styleUrls: ['./refundcancel.component.css']
 })
-export class TermsconditionComponent implements OnInit {
+export class RefundcancelComponent implements OnInit {
   @Input() detail;
    
     constructor(

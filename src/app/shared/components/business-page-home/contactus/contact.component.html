@@ -1,7 +1,36 @@
 <!-- Card -->
 <div class="fb"> <h1>Contact us</h1></div>
 <hr>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!detail">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+    <div class="block1">
+        <span class="divfont">
+        <i  class="fa fa-envelope"></i>
+        </span>
+        <div>
+                We will reply as soon as possible
+                info@jaldee.com
+        </div>
+    </div>
     
+    </div> 
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="block1">
+                <span class="divfont">
+                        <i class="fa fa-phone-square"></i>
+                </span>
+                    <div>
+                            <div> Mon - Sat 9:00 AM - 6:00 PM </div>
+                         +91 88801 25000
+                        
+                    </div>
+        
+        </div>
+    </div> 
+</div>   
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="detail">
+    {{detail}}
+</div> 
    
     
 

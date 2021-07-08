@@ -6,6 +6,7 @@ import { DomainConfigGenerator } from "../../services/domain-config-generator.se
 import { SharedServices } from "../../services/shared-services";
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 
 @Component({
     selector:'app-business-page-home',
@@ -31,8 +32,17 @@ export class BusinessPageHomeComponent implements OnInit {
     privacypolicy =false;
     refundcancell = false;
     shippingdelivry = false;
-
-
+    contactdetail:any;
+    termsdetail:any;
+    privacydetail:any;
+    refundcanceldetail:any;
+    shippingdelivrydetail:any;
+    businessjson: any = [];
+    bgCover: any;
+  businessName;
+  bLogo = '';
+  emaillist: any = [];
+  phonelist: any = [];
     
     constructor(private domSanitizer: DomSanitizer,
         private activateroute:ActivatedRoute,
@@ -40,7 +50,8 @@ export class BusinessPageHomeComponent implements OnInit {
         private shared_services: SharedServices,
         private _scrollToService: ScrollToService,
         private domainConfigService: DomainConfigGenerator,
-        private observer: BreakpointObserver) {
+        private observer: BreakpointObserver,
+        private s3Processor: S3UrlProcessor) {
         
     }
     ngOnInit() {
@@ -57,10 +68,25 @@ export class BusinessPageHomeComponent implements OnInit {
             this.getAccountIdFromEncId(this.accountEncId).then(
                 (id: any) => {
                     _this.provider_id = id;
+                    _this.gets3curl();
                     _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
                     (uiconfig: any) => {
-                    
-                        if (uiconfig.terms) {
+                    if(uiconfig.contact){
+                    this.contactdetail = uiconfig.contact
+                    }
+                    if(uiconfig.terms){
+                      this.termsdetail = uiconfig.terms
+                      }                       
+                      if(uiconfig.privacy){
+                        this.privacydetail = uiconfig.privacy
+                        }
+                        if(uiconfig.refund){
+                          this.refundcanceldetail = uiconfig.refund
+                          }
+                          if(uiconfig.shipping){
+                            this.shippingdelivrydetail = uiconfig.shipping
+                            }
+                      if (uiconfig.terms) {
                             if(uiconfig.terms.startsWith('https')) {
                                 console.log(uiconfig.terms);
                                 this.termsUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(uiconfig.terms);
@@ -135,10 +161,98 @@ export class BusinessPageHomeComponent implements OnInit {
   selection(type){
     if(type=='contact'){
         this.contact = true;
+        this.termcondition = false;
+        this.privacypolicy =false;
+    this.refundcancell = false;
+    this.shippingdelivry = false;
     } else if (type =='term'){
     this.termcondition = true;
     this.contact = false;
+    this.privacypolicy =false;
+    this.refundcancell = false;
+    this.shippingdelivry = false;
+  } else if(type == 'privacy'){
+    this.privacypolicy =true;
+    this.contact = false;
+    this.termcondition = false;
+    this.refundcancell = false;
+    this.shippingdelivry = false;
+
+  }else if(type == 'refund'){
+    this.refundcancell = true;
+    this.contact = false;
+    this.privacypolicy =false;
+    this.termcondition = false;
+    this.shippingdelivry = false;
+
+  }else if(type == 'shipping'){
+    this.contact = false;
+    this.privacypolicy =false;
+    this.refundcancell = false;
+    this.termcondition = false;
+    this.shippingdelivry = true;
+  }
+}
+gets3curl() {
+  let accountS3List = 'settings,appointmentsettings,terminologies,coupon,providerCoupon,location,businessProfile,virtualFields,services,apptServices,apptServices,donationServices,departmentProviders';
+
+  this.s3Processor.getJsonsbyTypes(this.provider_id,
+    null, accountS3List).subscribe(
+      (accountS3s) => {
+          if (accountS3s['settings']) {
+            this.processS3s('settings', accountS3s['settings']);
+          }
+          if (accountS3s['terminologies']) {
+            this.processS3s('terminologies', accountS3s['terminologies']);
+          }
+          
+          if (accountS3s['businessProfile']) {
+            this.processS3s('businessProfile', accountS3s['businessProfile']);
+           
+          }
+
+          
+        }
+     
+    );
+}
+processS3s(type, res) {
+  let result = this.s3Processor.getJson(res);
+  switch (type) {
+    case 'businessProfile': {
+      this.setBusinesssProfile(result);
+      break;
+    }
   }
 }
 
+   
+setBusinesssProfile(res){
+      this.businessjson = res;
+      this.businessName = this.businessjson.businessName;
+       
+     
+      if (this.businessjson.cover) {
+        this.bgCover = this.businessjson.cover.url;
+      }
+      
+      if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
+        if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
+          this.bLogo = this.businessjson.logo.url;
+        }
+      } else {
+        // this.bLogo = '';
+        this.bLogo = '../../../assets/images/img-null.svg';
+      }
+     
+      if (this.businessjson.emails) {
+        this.emaillist = this.businessjson.emails;
+      }
+      if (this.businessjson.phoneNumbers) {
+        this.phonelist = this.businessjson.phoneNumbers;
+      }
+     
+    }
+     
+  
 }
