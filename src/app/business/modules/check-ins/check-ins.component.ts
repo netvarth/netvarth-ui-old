@@ -1444,7 +1444,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           Mfilter['provider-eq'] =  null;
         }
         else{
-          Mfilter['queue-eq'] = this.selQIds;
+          if(this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege){
+            Mfilter['provider-eq'] = this.active_user.id;
+          }else {
+            Mfilter['queue-eq'] = this.selQIds;
+          }
         }
       }
       this.groupService.setitemToGroupStorage('selQ', this.selQIds);
@@ -1523,7 +1527,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           Mfilter['provider-eq'] =  null;
         }
         else{
-          Mfilter['queue-eq'] = this.selQIds;
+          if(this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege){
+            Mfilter['provider-eq'] = this.active_user.id;
+          }else {
+            Mfilter['queue-eq'] = this.selQIds;
+          }
+          // Mfilter['queue-eq'] = this.selQIds;
         }
       }
       // this.groupService.setitemToGroupStorage('selQ', this.selQIds);
