@@ -26,7 +26,7 @@ export class AppointmentsComponent implements OnInit {
   selectedType = 'list';
   timeType = 1;
   apptToList: any = [];
-  loading = true;
+  loading = false;
   subscription: Subscription;
   filter_sidebar = false;
   filterapplied = false;
@@ -123,12 +123,17 @@ export class AppointmentsComponent implements OnInit {
       switch (message.ttype) {
         case 'todayAppt':
           this.todayAppts = this.todayAppts.concat(message.data);
+          if (message.data.length > 0) {
+            this.refresh();
+          }
           break;
         case 'futureAppt':
           this.futureAppts = this.futureAppts.concat(message.data);
+          if (message.data.length > 0) {
+            this.refresh();
+          }
           break;
       }
-      this.setDatas();
     });
   }
   ngOnDestroy() {
@@ -167,23 +172,6 @@ export class AppointmentsComponent implements OnInit {
     const serverdate = moment(server).format();
     const servdate = new Date(serverdate);
     this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
-  }
-  setDatas() {
-    this.todayAppts.map((obj) => {
-      obj.type = 1;
-      return obj;
-    });
-    this.futureAppts.map((obj) => {
-      obj.type = 2;
-      return obj;
-    });
-    this.historyAppts.map((obj) => {
-      obj.type = 3;
-      return obj;
-    });
-    this.totalAppts = [];
-    this.totalAppts = this.todayAppts.concat(this.futureAppts, this.historyAppts);
-    this.handleApptSelectionType(this.timeType);
   }
   setFilters() {
     let api_filter = {};
@@ -250,75 +238,10 @@ export class AppointmentsComponent implements OnInit {
     const idFilter = 'memberJaldeeId::' + patientid;
     return idFilter;
   }
-  getTodayAppts() {
-    return new Promise((resolve) => {
-      const filter = this.setFilters();
-      this.provider_services.getTodayAppointments(filter)
-        .subscribe(
-          (data: any) => {
-            this.todayAppts = data;
-            this.loading = false;
-            resolve(data);
-          });
-    });
-  }
-  getFutureAppts() {
-    return new Promise((resolve) => {
-      const filter = this.setFilters();
-      this.provider_services.getFutureAppointments(filter)
-        .subscribe(
-          (data: any) => {
-            this.futureAppts = data;
-            this.loading = false;
-            resolve(data);
-          });
-    });
-  }
-  getHistoryAppts() {
-    return new Promise((resolve) => {
-      const filter = this.setFilters();
-      this.provider_services.getHistoryAppointments(filter)
-        .subscribe(
-          data => {
-            this.historyAppts = data;
-            this.loading = false;
-            resolve(data);
-          });
-    });
-  }
-  selectViewType(view) {
-    this.selectedType = view;
-  }
-  handleApptSelectionType(type) {
-    this.hideFilterSidebar();
-    this.timeType = type;
-    if (this.timeType === 1) {
-      this.apptToList = this.todayAppts;
-    } else if (this.timeType === 2) {
-      this.apptToList = this.futureAppts;
-    } else {
-      this.apptToList = this.historyAppts;
+  doSearch(type?) {
+    if (!type) {
+      this.loading = true;
     }
-  }
-  apptClicked() {
-    this.router.navigate(['provider', 'appointments', 'appointment'],
-      { queryParams: { checkinType: 'WALK_IN_APPOINTMENT' } });
-  }
-  goBack() {
-    this.location.back();
-  }
-  showFilterSidebar() {
-    this.filter_sidebar = true;
-    alert(this.filter_sidebar);
-    this.shared_functions.setFilter();
-  }
-  hideFilterSidebar() {
-    this.filter_sidebar = false;
-  }
-  isNumeric(evt) {
-    return this.shared_functions.isNumeric(evt);
-  }
-  doSearch() {
     switch (this.timeType) {
       case 1: this.getTodayAppts();
         break;
@@ -369,7 +292,6 @@ export class AppointmentsComponent implements OnInit {
     this.resetFilterValues();
     this.filterapplied = false;
     this.doSearch();
-    this.shared_functions.setFilter();
   }
   resetFilterValues() {
     this.services = [];
@@ -453,13 +375,6 @@ export class AppointmentsComponent implements OnInit {
       }
     }
     this.keyPressed();
-  }
-  getLabel() {
-    this.providerLabels = [];
-    this.provider_services.getLabelList().subscribe(data => {
-      this.allLabels = data;
-      this.providerLabels = this.allLabels.filter(label => label.status === 'ENABLED');
-    });
   }
   setFilterDataCheckbox(type, value, event) {
     this.filter[type] = value;
@@ -620,6 +535,109 @@ export class AppointmentsComponent implements OnInit {
       }
     }
     this.keyPressed();
+  }
+  showFilterSidebar() {
+    this.filter_sidebar = true;
+    this.shared_functions.setFilter();
+  }
+  hideFilterSidebar() {
+    this.filter_sidebar = false;
+  }
+  getTodayAppts() {
+    return new Promise((resolve) => {
+      const filter = this.setFilters();
+      this.provider_services.getTodayAppointments(filter)
+        .subscribe(
+          (data: any) => {
+            this.todayAppts = data;
+            this.todayAppts.map((obj) => {
+              obj.type = 1;
+              return obj;
+            });
+            this.loading = false;
+            this.setWaitlistForDisplay();
+            resolve(data);
+          });
+    });
+  }
+  getFutureAppts() {
+    return new Promise((resolve) => {
+      const filter = this.setFilters();
+      this.provider_services.getFutureAppointments(filter)
+        .subscribe(
+          (data: any) => {
+            this.futureAppts = data;
+            this.futureAppts.map((obj) => {
+              obj.type = 2;
+              return obj;
+            });
+            this.loading = false;
+            this.setWaitlistForDisplay();
+            resolve(data);
+          });
+    });
+  }
+  getHistoryAppts() {
+    return new Promise((resolve) => {
+      const filter = this.setFilters();
+      this.provider_services.getHistoryAppointments(filter)
+        .subscribe(
+          data => {
+            this.historyAppts = data;
+            this.historyAppts.map((obj) => {
+              obj.type = 3;
+              return obj;
+            });
+            this.loading = false;
+            this.setWaitlistForDisplay();
+            resolve(data);
+          });
+    });
+  }
+  setDatas() {
+    this.totalAppts = [];
+    this.totalAppts = this.todayAppts.concat(this.futureAppts, this.historyAppts);
+    this.handleApptSelectionType(this.timeType);
+  }
+  setWaitlistForDisplay() {
+    if (this.timeType === 1) {
+      this.apptToList = this.todayAppts;
+    } else if (this.timeType === 2) {
+      this.apptToList = this.futureAppts;
+    } else {
+      this.apptToList = this.historyAppts;
+    }
+  }
+  refresh() {
+    this.setWaitlistForDisplay();
+    if (this.filterapplied && this.timeType !== 3) {
+      this.doSearch('refresh');
+    }
+  }
+  selectViewType(view) {
+    this.selectedType = view;
+  }
+  handleApptSelectionType(type) {
+    this.timeType = type;
+    this.clearFilter();
+    this.hideFilterSidebar();
+  }
+  apptClicked() {
+    this.router.navigate(['provider', 'appointments', 'appointment'],
+      { queryParams: { checkinType: 'WALK_IN_APPOINTMENT' } });
+  }
+  goBack() {
+    this.location.back();
+  }
+  isNumeric(evt) {
+    return this.shared_functions.isNumeric(evt);
+  }
+  getLabel() {
+    this.providerLabels = [];
+    this.provider_services.getLabelList().subscribe(data => {
+      this.allLabels = data;
+      this.providerLabels = this.allLabels.filter(label => label.status === 'ENABLED');
+    });
   }
   getProviderLocations() {
     this.provider_services.getProviderLocations()

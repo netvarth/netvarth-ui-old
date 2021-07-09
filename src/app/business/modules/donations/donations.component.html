@@ -5,37 +5,6 @@
       <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
     </div>
   </div>
-  <!-- <div class="pull-right">
-    <nav class="navbar navbar-static-top no-margin" role="navigation" [class.index-zero]="filter_sidebar">
-      <div class="navbar-custom-menu width100pc">
-        <ul class="nav navbar-nav width100pc">
-          <li class="dropdown messages-menu loc-lst queue-menu pull-right">
-            <i class="icon-location dropdown-toggle " data-toggle="dropdown"></i>
-            <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
-              *ngIf="selected_location" style="padding-top: 12px !important;">
-              <span *ngIf="!small_device_display">
-                {{selected_location.place | capitalizeFirst}}</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li>
-                <ul class="menu">
-                  <li *ngFor="let location of locations"
-                    [ngClass]="{'active': (location.place == selected_location.place)}">
-                    <a class="pointer-cursor" (click)="onChangeLocationSelect(location)">
-                      <h4 *ngIf="location.place.length>='27'">
-                        {{ location.place.substring(0,24) | capitalizeFirst }}...</h4>
-                      <h4 *ngIf="location.place.length<'27'">{{ location.place | capitalizeFirst }}</h4>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </div> -->
 </section>
 <section class="waitlist-dashboard content p-4" *ngIf="!apiloading">
   <div class="card p0">
@@ -111,7 +80,7 @@
                   aria-expanded="false">
                   <div>
                     <div style="display: inline-block !important;">
-                      <i class="fa fa-user"></i>
+                      <i class="fa fa-calendar-o"></i>
                     </div>
                     <span>&nbsp;Date</span>
                   </div>
@@ -133,14 +102,14 @@
               </div>
             </div>
           </div>
-          <div class="card">
+          <div class="card" *ngIf="donationServices.length > 1">
             <div class="card-header">
               <h2 class="mb-0">
                 <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName1"
                   aria-expanded="false">
                   <div>
                     <div style="display: inline-block !important;">
-                      <i class="fa fa-user"></i>
+                      <i class="fa fa-cogs"></i>
                     </div>
                     <span>&nbsp;Causes</span>
                   </div>
@@ -163,6 +132,36 @@
               </div>
             </div>
           </div>
+          <div class="card" *ngIf="locations.length > 1">
+            <div class="card-header">
+              <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName4"
+                  aria-expanded="false">
+                  <div>
+                    <div style="display: inline-block !important;">
+                      <i class="fa fa-map-marker"></i>
+                    </div>
+                    <span>&nbsp;Locations</span>
+                  </div>
+                  <i class="fa fa-angle-down"></i>
+                </button>
+              </h2>
+            </div>
+            <div id="collapseName4" class="collapse in" data-parent="#accordion4">
+              <div class="card-body">
+                <div class="filter-checkbox-input">
+                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                  </li>
+                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                    *ngFor="let location of locations">
+                    <mat-checkbox class="filter-checkbox" [checked]="selectedLocations.indexOf(location.id) !== -1"
+                      (change)="setFilterDataCheckbox('location', location.id, $event)">
+                      {{location.place}}</mat-checkbox>
+                  </li>
+                </div>
+              </div>
+            </div>
+          </div>
         </ul>
       </section>
       <div class="filter-footer" *ngIf="filterapplied">
@@ -174,54 +173,6 @@
         </button>
       </div>
     </aside>
-    <!-- <div class="bill-section">
-          <div class="c-outer bill-section-content m0">
-            <div class="c-body bill-wrapper">
-              <div class="history one section-four no-padding">
-                <div class="col-md-12 cust-sect no-padding">
-                  <div class="list-outer">
-                    <div class="table-th">
-                      <div class="th one">Date</div>
-                      <div class="th two">Cause</div>
-                      <div class="th one">Donor</div>
-                      <div class="th three">{{amount_cap}}</div>
-                    </div>
-
-                    <div class="listing" *ngFor="let donation of donations; let i = index">
-                      <div class="wrap pointer-cursor" (click)="gotoDonation(donation)">
-                        <div class="td one">
-                          <input [checked]="donationsSelected[i]" type="checkbox" class="ckbx pull-left"
-                            (change)="selectDonations(i)" (click)="stopprop($event)" />
-                          <span class="date">{{donation.date | date: newDateFormat}}</span>
-                        </div>
-                        <div class="td two">
-                          <span>{{donation.service.name |
-                            capitalizeFirst}} </span>
-                        </div>
-                        <div class="td one">
-                          <span
-                            *ngIf="donation.consumer.userProfile.firstName">{{donation.donor.firstName}}</span>&nbsp;
-                          <span *ngIf="donation.consumer.userProfile.lastName">{{donation.donor.lastName}}</span>
-                        </div>
-                        <div class="td three rupee-font"> <span class="amt"></span> {{donation.donationAmount |
-                          currency:'&#8377;' }}
-                          <span class="pull-right mgn-rt-5">
-                            <i *ngIf="!donation.note" class="icon-note" style="visibility: hidden;"></i>
-                            <i *ngIf="donation.note" [matTooltip]="'Notes'" class="icon-note pointer-cursor"
-                              (click)="stopprop($event);showConsumerNote(donation)"></i>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-12 custs  pt10 pb10" *ngIf="loadComplete && donations.length === 0">
-                    No Donations Found
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
       <a class="dropdown-toggle navbar-item-color bold pointer-cursor pad-10 pull-right" data-toggle="control-sidebar">
         <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"

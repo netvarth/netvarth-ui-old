@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BookingsRoutingModule } from '../bookings.routing.module';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { BookingDocumentsComponent } from './booking-documents.component';
+import { BookingDocumentsRoutingModule } from './booking-documents.routing.module';
 
 
 
@@ -11,7 +11,7 @@ import { BookingDocumentsComponent } from './booking-documents.component';
   declarations: [BookingDocumentsComponent],
   imports: [
     CommonModule,
-    BookingsRoutingModule,
+    BookingDocumentsRoutingModule,
     MatGridListModule,
     CapitalizeFirstPipeModule
   ],

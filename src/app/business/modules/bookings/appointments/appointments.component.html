@@ -38,8 +38,8 @@
         </mat-select>
       </div>
       <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
-        <img src="assets/images/provider-filter-icon.png" (click)="showFilterSidebar()"
-            [matTooltip]="filtericonTooltip" style="width: 22px !important; margin-top: -6px !important;">
+        <img src="assets/images/provider-filter-icon.png" (click)="showFilterSidebar()" [matTooltip]="filtericonTooltip"
+          style="width: 22px !important; margin-top: -6px !important;">
       </a>
       <div class="pull-right viewtypes">
         View: <i class="fa fa-list-ul mgn-rt-5 pointer-cursor" [class.selectedView]="selectedType=='list'"
@@ -47,7 +47,7 @@
         <i class="fa fa-calendar pointer-cursor" [class.selectedView]="selectedType=='calender'"
           (click)="selectViewType('calender')" [matTooltip]="'Calender View'"></i>
       </div>
-    </div>{{filter_sidebar}}
+    </div>
     <div *ngIf="filter_sidebar">
       <aside class="filterSidebar newfilter-sidebar">
         <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
@@ -246,8 +246,7 @@
                     </li>
                     <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                       *ngFor="let appt_status of check_in_statuses_filter">
-                      <mat-checkbox class="filter-checkbox"
-                        [checked]="apptStatuses.indexOf(appt_status.value) !== -1"
+                      <mat-checkbox class="filter-checkbox" [checked]="apptStatuses.indexOf(appt_status.value) !== -1"
                         (change)="setFilterDataCheckbox('apptStatus', appt_status.value, $event)">
                         {{appt_status.displayName}}</mat-checkbox>
                     </li>
@@ -258,8 +257,8 @@
             <div class="card">
               <div class="card-header">
                 <h2 class="mb-0">
-                  <button class="btn btn-link" type="button" data-toggle="collapse"
-                    data-target="#collapsePayStatus3" aria-expanded="false">
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePayStatus3"
+                    aria-expanded="false">
                     <div>
                       <div style="display: inline-block !important;">
                         <i class="fa fa-inr"></i>
@@ -282,8 +281,7 @@
                     </li>
                     <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                       *ngFor="let pay_status of payStatusList">
-                      <mat-checkbox class="filter-checkbox"
-                        [checked]="paymentStatuses.indexOf(pay_status.pk) !== -1"
+                      <mat-checkbox class="filter-checkbox" [checked]="paymentStatuses.indexOf(pay_status.pk) !== -1"
                         (change)="setFilterDataCheckbox('payment_status', pay_status.pk, $event)">
                         {{pay_status.value}}</mat-checkbox>
                     </li>

@@ -91,14 +91,12 @@ export class BusinessComponent implements OnInit {
         }
       }
     });
-
     this.route.data.subscribe((data) => {
       if (data.terminologies) {
         this.wordProcessor.setTerminologies(data.terminologies);
       }
     });
     this.shared_functions.sendMessage({ ttype: 'main_loading', action: false });
-
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
       switch (message.ttype) {
         case 'skin':
@@ -114,7 +112,7 @@ export class BusinessComponent implements OnInit {
           break;
       }
     });
-    this.cronHandle = observableInterval(this.refreshTime * 300).subscribe(() => {
+    this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
       this.refresh();
     });
   }

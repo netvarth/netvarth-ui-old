@@ -25,7 +25,7 @@ export class CheckinsComponent implements OnInit {
   waitlistMgrSettings;
   timeType = 1;
   waitlistToList: any = [];
-  loading = true;
+  loading = false;
   subscription: Subscription;
   check_in_statuses_filter = projectConstantsLocal.CHECK_IN_STATUSES_FILTER;
   payStatusList = [
@@ -111,7 +111,6 @@ export class CheckinsComponent implements OnInit {
   filtericonTooltip = '';
   tomorrowDate;
   server_date;
-  timeTypeTemp = 1;
   constructor(private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
     private router: Router, private location: Location,
@@ -129,13 +128,13 @@ export class CheckinsComponent implements OnInit {
       switch (message.ttype) {
         case 'todayWl':
           this.todayWaitlists = this.todayWaitlists.concat(message.data);
-          if (message.data && message.data.length > 0) {
+          if (message.data.length > 0) {
             this.refresh();
           }
           break;
         case 'futureWl':
           this.futureWaitlists = this.futureWaitlists.concat(message.data);
-          if (message.data && message.data.length > 0) {
+          if (message.data.length > 0) {
             this.refresh();
           }
           break;
@@ -168,23 +167,11 @@ export class CheckinsComponent implements OnInit {
           this.lStorageService.setitemonLocalStorage('sysdate', res);
         });
   }
-  isNumeric(evt) {
-    return this.shared_functions.isNumeric(evt);
-  }
   getTomorrowDate() {
     const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const serverdate = moment(server).format();
     const servdate = new Date(serverdate);
     this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
-  }
-  getProviderSettings() {
-    this.provider_services.getWaitlistMgr()
-      .subscribe(data => {
-        this.waitlistMgrSettings = data;
-        if (this.waitlistMgrSettings.showTokenId) {
-          this.waitlistModes = this.waitlistModesToken;
-        }
-      });
   }
   setFilters() {
     let api_filter = {};
@@ -258,6 +245,10 @@ export class CheckinsComponent implements OnInit {
         .subscribe(
           (data: any) => {
             this.todayWaitlists = data;
+            this.todayWaitlists.map((obj) => {
+              obj.type = 1;
+              return obj;
+            });
             this.loading = false;
             this.setWaitlistForDisplay();
             resolve(data);
@@ -271,6 +262,10 @@ export class CheckinsComponent implements OnInit {
         .subscribe(
           (data: any) => {
             this.futureWaitlists = data;
+            this.futureWaitlists.map((obj) => {
+              obj.type = 2;
+              return obj;
+            });
             this.loading = false;
             this.setWaitlistForDisplay();
             resolve(data);
@@ -284,6 +279,10 @@ export class CheckinsComponent implements OnInit {
         .subscribe(
           data => {
             this.historyWaitlists = data;
+            this.historyWaitlists.map((obj) => {
+              obj.type = 3;
+              return obj;
+            });
             this.loading = false;
             this.setWaitlistForDisplay();
             resolve(data);
@@ -291,16 +290,14 @@ export class CheckinsComponent implements OnInit {
     });
   }
   handleWaitlistType(type) {
-    const timetype = this.timeType;
-    this.clearFilter(timetype);
     this.timeType = type;
-    this.setWaitlistForDisplay();
+    this.clearFilter();
     this.hideFilterSidebar();
   }
   refresh() {
     this.setWaitlistForDisplay();
-    if (this.filterapplied) {
-      this.doSearch();
+    if (this.filterapplied && this.timeType !== 3) {
+      this.doSearch('refresh');
     }
   }
   setWaitlistForDisplay() {
@@ -312,16 +309,11 @@ export class CheckinsComponent implements OnInit {
       this.waitlistToList = this.historyWaitlists;
     }
   }
-  checkinClicked() {
-    this.router.navigate(['provider', 'check-ins', 'add'],
-      { queryParams: { checkinType: 'WALK_IN_CHECKIN' } });
-  }
-  goBack() {
-    this.location.back();
-  }
   doSearch(type?) {
-    type = (type) ? type : this.timeType;
-    switch (type) {
+    if (!type) {
+      this.loading = true;
+    }
+    switch (this.timeType) {
       case 1: this.getTodayWatilists();
         break;
       case 2: this.getFutureWatilists();
@@ -330,11 +322,11 @@ export class CheckinsComponent implements OnInit {
         break;
     }
   }
-  clearFilter(type?) {
+  clearFilter() {
     this.resetFilter();
     this.resetFilterValues();
     this.filterapplied = false;
-    this.doSearch(type);
+    this.doSearch();
   }
   resetFilter() {
     this.filters = {
@@ -620,6 +612,25 @@ export class CheckinsComponent implements OnInit {
   showFilterSidebar() {
     this.filter_sidebar = true;
     this.shared_functions.setFilter();
+  }
+  checkinClicked() {
+    this.router.navigate(['provider', 'check-ins', 'add'],
+      { queryParams: { checkinType: 'WALK_IN_CHECKIN' } });
+  }
+  goBack() {
+    this.location.back();
+  }
+  isNumeric(evt) {
+    return this.shared_functions.isNumeric(evt);
+  }
+  getProviderSettings() {
+    this.provider_services.getWaitlistMgr()
+      .subscribe(data => {
+        this.waitlistMgrSettings = data;
+        if (this.waitlistMgrSettings.showTokenId) {
+          this.waitlistModes = this.waitlistModesToken;
+        }
+      });
   }
   getProviderLocations() {
     this.provider_services.getProviderLocations()

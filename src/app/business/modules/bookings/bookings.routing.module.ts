@@ -7,6 +7,7 @@ const routes: Routes = [
     { path: 'appointments', loadChildren: () => import('./appointments/appointments.module').then(m => m.AppointmentsModule) },
     { path: 'checkins', loadChildren: () => import('./check-ins/check-ins.module').then(m => m.CheckinsModule) },
     { path: 'details', loadChildren: () => import('./booking-detail/booking-detail.module').then(m => m.BookingDetailModule) },
+    { path: 'documents', loadChildren: () => import('./booking-documents/booking-documents.module').then(m => m.BookingDocumentsModule) },
     { path: ':userid', loadChildren: () => import('./booking-dashboard/booking-dashboard.module').then(m => m.BookingDashboardModule) }
 ];
 
