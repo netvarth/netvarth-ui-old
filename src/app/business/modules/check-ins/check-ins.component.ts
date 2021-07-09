@@ -1455,10 +1455,17 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       // this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
       // this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
     }
+    if(this.selQIds && this.selQIds.length == 0 && this.active_user.accountType === 'BRANCH'){
+      if(this.unassignview){
+        Mfilter['provider-eq'] =  null;
+      } else {
+        Mfilter['provider-eq'] = this.active_user.id;
+      }
+    }
     // this.resetPaginationData();
     // this.pagination.startpageval = 1;
     // this.pagination.totalCnt = 0; // no need of pagination in today
-    if (this.activeQs.length > 0 || this.activeUser) {
+    if (this.activeQs.length > 0 || this.activeUser || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) {
       const promise = this.getTodayWLCount(Mfilter);
       promise.then(
         result => {
@@ -1538,6 +1545,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       // this.groupService.setitemToGroupStorage('selQ', this.selQIds);
       // this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
       this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
+    }
+    if(this.selQIds && this.selQIds.length == 0 && (this.active_user && this.active_user.accountType === 'BRANCH')){
+      if(this.unassignview){
+        Mfilter['provider-eq'] =  null;
+      } else {
+        Mfilter['provider-eq'] = this.active_user.id;
+      }
     }
     if (this.filter.check_in_date != null) {
       Mfilter['date-eq'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_date);
