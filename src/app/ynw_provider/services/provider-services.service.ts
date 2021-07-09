@@ -2187,14 +2187,14 @@ export class ProviderServices {
     const url = 'provider/appointment/applyInternalStatus/' + waitlist_id + '/' + action;
     return this.servicemeta.httpPut(url);
   }
+  telegramChat(countryCode, phNumber) {
+      if (countryCode === '') {
+        const url = 'chatbot/telegram/provider/chatId/91/' + phNumber;
+        return this.servicemeta.httpGet(url);
+      }
+      else {
+        const url = 'chatbot/telegram/provider/chatId/' + countryCode + '/' + phNumber;
+        return this.servicemeta.httpGet(url);
+      }
+    }
 }
-telegramChat(countryCode, phNumber) {
-    if (countryCode === '') {
-      const url = 'chatbot/telegram/provider/chatId/91/' + phNumber;
-      return this.servicemeta.httpGet(url);
-    }
-    else {
-      const url = 'chatbot/telegram/provider/chatId/' + countryCode + '/' + phNumber;
-      return this.servicemeta.httpGet(url);
-    }
-  }
