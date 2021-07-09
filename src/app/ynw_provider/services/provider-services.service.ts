@@ -979,6 +979,10 @@ export class ProviderServices {
     const url = 'provider/account/settings/sms/' + state;
     return this.servicemeta.httpPut(url);
   }
+  setTelegramglobalSettings() {
+    const url = 'chatbot/telegram/provider';
+    return this.servicemeta.httpGet(url);
+  }
   getSMSCredits() {
     const url = 'provider/account/settings/smsCount';
     return this.servicemeta.httpGet(url);
@@ -2129,5 +2133,17 @@ export class ProviderServices {
   providerWaitlistQnrUploadStatusUpdate(uid, data) {
     const url = 'provider/waitlist/questionnaire/upload/status/' + uid;
     return this.servicemeta.httpPut(url, data);
+  }
+telegramChat(countryCode,phNumber) {
+  console.log(countryCode)
+  if(countryCode === ''){
+    const url = 'chatbot/telegram/provider/chatId/91/'+ phNumber;
+    return this.servicemeta.httpGet(url);
+  }
+else{
+  const url = 'chatbot/telegram/provider/chatId/'+ countryCode + '/' + phNumber;
+  return this.servicemeta.httpGet(url);
+}
+   
   }
 }
