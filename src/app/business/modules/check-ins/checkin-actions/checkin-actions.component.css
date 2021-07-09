@@ -171,3 +171,12 @@
   padding: 10px;  
   border: 1px solid #cccccc60;
 }
+::ng-deep .action-label .mat-checkbox-layout{
+  white-space: normal !important;
+}
+::ng-deep .action-label .mat-checkbox-inner-container {
+  margin: 0 auto !important;
+}
+::ng-deep .action-label .mat-checkbox-layout .mat-checkbox-label {
+  margin-left: 5px !important;
+}
