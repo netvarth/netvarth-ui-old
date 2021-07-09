@@ -44,7 +44,7 @@ export class TelegramInfoComponent {
   teleChat(){
      this.provider_services.telegramChat(this.country_code,this.telegram_number).subscribe(data => {
      
-        const path = 'http://t.me/JaldeeScaleSpsBot'
+        const path = 'https://t.me/JaldeeScaleSpsBot'
         window.open(path, '_blank');
         this.dialogRef.close();
         },

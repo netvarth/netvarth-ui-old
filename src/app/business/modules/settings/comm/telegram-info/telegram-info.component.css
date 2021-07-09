@@ -20,6 +20,17 @@
     padding-top: 70px;
 
 }
+@media  (max-width: 750px)  {
+  .btt{
+    color: black;
+      background: white;
+      border-radius: 20px;
+      width: 100px;
+      font-size: 16px;
+      height: 35px;
+      margin-top: 15px;
+  }
+}
 .bt{
   color: black;
     background: white;

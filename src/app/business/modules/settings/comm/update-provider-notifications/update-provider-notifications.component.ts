@@ -363,13 +363,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       }
       else {
         this.isTeleNumExists(curTele)
-        this.provider_services.telegramChat(this.teleCountrycode,curTele).subscribe(data => {
-          this.chatId = data;
-          if(this.chatId === null){
-            this.telegramInfo();
-          }
-      },
-      );
+       
       }
       this.okCheckinStatus = true;
       this.notifyTele = '';
@@ -393,6 +387,13 @@ export class UpdateProviderNotificationsComponent implements OnInit {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         } else {
           this.tele_arr.push(this.val);
+          this.provider_services.telegramChat(this.teleCountrycode,curTele).subscribe(data => {
+            this.chatId = data;
+            if(this.chatId === null){
+              this.telegramInfo();
+            }
+        },
+        );
         }
   }
   isSmsNumExists(curphone) {
@@ -609,7 +610,13 @@ export class UpdateProviderNotificationsComponent implements OnInit {
         return;
       }
       if (this.tele1_arr.length === 0) {
-        console.log(this.tele1_arr);
+        this.provider_services.telegramChat(this.tele1Countrycode,curtele1).subscribe(data => {
+          this.chatId = data;
+          if(this.chatId === null){
+            this.telegramInfo();
+          }
+      },
+      );
         if (this.tele1Countrycode) {
           const val = {
             'number': curtele1,
@@ -743,8 +750,16 @@ export class UpdateProviderNotificationsComponent implements OnInit {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' }); 
         } else {
           this.tele1_arr.push(this.val);
+          this.provider_services.telegramChat(this.tele1Countrycode,curtele1).subscribe(data => {
+            this.chatId = data;
+            if(this.chatId === null){
+              this.telegramInfo();
+            }
+        },
+        );
           // this.tele_arr.splice(indx, 1);
         }
+        
   }
   ispushCancelNumExists(curphone) {
     if (this.push1Countrycode) {
