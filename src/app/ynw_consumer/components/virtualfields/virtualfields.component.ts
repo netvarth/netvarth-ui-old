@@ -72,6 +72,7 @@ export class VirtualFieldsComponent implements OnInit {
   provider: any;
   languageSelected: any = [];
   iseditLanguage=false;
+  submitData;
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
@@ -499,6 +500,7 @@ export class VirtualFieldsComponent implements OnInit {
   }
   validateFields() {
     let isinvalid = false;
+    
     if (this.countryCode === '+91') {
       if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
         isinvalid = true;
@@ -586,6 +588,7 @@ console.log(isinvalid);
   }
 
   onSubmit(formdata) {
+    this.submitData = formdata
     this.submitbtndisabled = true;
     formdata['phoneno'] = this.customer_data.userProfile.primaryMobileNo;
      if(this.virtualForm.controls.email.invalid){
@@ -593,7 +596,11 @@ console.log(isinvalid);
      }
     if (this.validateFields() === true) {
       this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
-    } else  {
+    } else if(formdata.countryCode_whtsap.trim().length === 0 && formdata.whatsappnumber.trim().length > 0){
+      this.snackbarService.openSnackBar('Please fill whatsapp countrycode', { 'panelClass': 'snackbarerror' });
+    }else if(formdata.countryCode_telegram.trim().length === 0 && formdata.telegramnumber.trim().length > 0){
+      this.snackbarService.openSnackBar('Please fill whatsapp countrycode', { 'panelClass': 'snackbarerror' });
+    }else {
       console.log('success inisde');
       if (this.is_parent) {
         this.updateParentInfo(formdata).then(
