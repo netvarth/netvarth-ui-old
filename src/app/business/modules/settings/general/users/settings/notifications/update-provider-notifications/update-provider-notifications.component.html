@@ -24,7 +24,7 @@
         </div>
         <section *ngIf="SelchkinNotify">
             <ul class="notifications pad-left-20">
-                <li>
+                <li *ngIf="isInternationalUser !== true">
                     <span class="notification"> via SMS </span>
                     <span [class.disabled]="is_noSMS" class="noti-add-btn" (click)="smsAddClicked()">Add</span>
                     <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a
@@ -110,7 +110,7 @@
         </div>
         <section *ngIf="SelchkincnclNotify">
             <ul class="notifications pad-left-20">
-                <li>
+                <li *ngIf="isInternationalUser !== true">
                     <span class="notification"> via SMS</span>
                     <span [class.disabled]="is_noSMS" class="noti-add-btn"
                         (click)="cancelledCheckinsmsAddClicked()">Add</span>
