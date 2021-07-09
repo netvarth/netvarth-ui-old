@@ -163,10 +163,9 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
       'countryCode': dialCode,
       'loginId': loginId,
       'password': data.password,
-      'mUniqueId': null
+      'mUniqueId': _this.lStorageService.getitemfromLocalStorage('mUniqueId')
     };
     _this.api_loading = true;
-    // post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
     if (post_data.loginId.startsWith('55') && _this.test_provider === false) {
       setTimeout(() => {
         _this.api_error = this.wordProcessor.getProjectMesssages('TESTACC_LOGIN_NA');
@@ -191,7 +190,6 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
         error => {
           console.log("Login Error :");
           console.log(error);
-          _this.shared_services.callHealth(error.message);
           _this.api_error = _this.wordProcessor.getProjectErrorMesssages(error);
           _this.api_loading = false;
         }
@@ -425,7 +423,6 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
         }
       }, (error) => {
         console.log(error);
-        this.shared_services.callHealth(error.message);
       }
       );
     } else {

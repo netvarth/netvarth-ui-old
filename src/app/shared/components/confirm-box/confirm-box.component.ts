@@ -6,8 +6,7 @@ import { Messages } from '../../constants/project-messages';
 
 @Component({
   selector: 'app-confirm-box',
-  templateUrl: './confirm-box.component.html',
-  // styleUrls: ['./home.component.scss']
+  templateUrl: './confirm-box.component.html'
 })
 
 export class ConfirmBoxComponent implements OnInit {

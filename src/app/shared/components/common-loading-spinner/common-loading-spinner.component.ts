@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
     selector: 'app-common-innerloading-spinner',
     templateUrl: './common-loading-spinner.component.html',
-    styleUrls: ['./common-loading-spinner.component.scss']
+    styleUrls: ['./common-loading-spinner.component.css']
 })
 
 export class CommonLoadingSpinnerComponent implements OnInit {

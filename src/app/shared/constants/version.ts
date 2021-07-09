@@ -1,6 +1,6 @@
 const versionString = {
-    'desktop' : '1.8.0.1',
-    'androidpro': 'android-1.6.3',
-    'iospro': 'iospro-1.6.3'
+    'desktop' : '1.9.4.1',
+    'androidpro': 'android-1.9.4',
+    'iospro': 'iospro-1.9.4'
 };
 export const version = versionString;

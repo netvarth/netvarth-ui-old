@@ -57,7 +57,7 @@
 }
 .update-email input{
   padding: 0px 12px 0px 24px;
-  border: 1px solid var(--text-color-level2, rgba(77, 80, 85, 0.6));
+  /* border: 1px solid var(--text-color-level2, rgba(77, 80, 85, 0.6)); */
   border-radius: 20px 0 0 20px;
   width: 100%;
   border-right-style: none;

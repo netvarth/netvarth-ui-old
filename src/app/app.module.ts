@@ -89,6 +89,9 @@ import { VirtualFieldsModule } from './ynw_consumer/components/virtualfields/vir
 import { SearchDetailServices } from './shared/components/search-detail/search-detail-services.service';
 import { QRCodeGeneratordetailComponent } from './shared/components/qrcodegenerator/qrcodegeneratordetail.component';
 import { NotificationDialogComponent } from './shared/components/notification-dialog/notification-dialog.component';
+import { IonicModule } from '@ionic/angular';
+import { Device } from '@ionic-native/device/ngx';
+import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 // import { FCM } from '@ionic-native/fcm/ngx';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -163,11 +166,13 @@ export function init_app(globalService: GlobalService) {
     // ShareIconsModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    VirtualFieldsModule
+    VirtualFieldsModule,
+    IonicModule.forRoot()
   ],
   providers: [
     BsModalService,
-    // FCM,
+    Device,
+    FirebaseX,
     AuthGuardConsumer,
     AuthGuardHome,
     AuthGuardLogin,

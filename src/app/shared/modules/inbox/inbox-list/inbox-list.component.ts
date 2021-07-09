@@ -14,8 +14,6 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 @Component({
   selector: 'app-inbox-list',
   templateUrl: './inbox-list.component.html'
-  /*,
-  styleUrls: ['./provider-inbox.component.scss']*/
 })
 export class InboxListComponent implements OnInit, OnDestroy {
   provider_consumer_cap = Messages.PROVIDER_CONSUMER_CAP;

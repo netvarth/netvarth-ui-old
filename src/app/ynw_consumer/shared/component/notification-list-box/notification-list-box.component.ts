@@ -3,8 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-confirm-box',
-  templateUrl: './notification-list-box.component.html',
-  // styleUrls: ['./home.component.scss']
+  templateUrl: './notification-list-box.component.html'
 })
 
 

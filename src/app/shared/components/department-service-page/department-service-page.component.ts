@@ -382,12 +382,10 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
                 this.gets3curl();
               }, (error) => {
                 console.log(error);
-                this.shared_services.callHealth(error.message);
               }
             )
           }, (error) => {
             console.log(error);
-            this.shared_services.callHealth(error.message);
           }
         )
       });
@@ -548,7 +546,6 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
           }
         }, (error) => {
           console.log(error);
-          this.shared_services.callHealth(error.message);
         }
       );
   }
@@ -1396,7 +1393,6 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
         }
       }, (error) => {
         console.log(error);
-        _this.shared_services.callHealth(error.message);
       }
     );
   }
@@ -1413,7 +1409,6 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
         }
       }, (error) => {
         console.log(error);
-        _this.shared_services.callHealth(error.message);
       }
     );
   }
@@ -1461,7 +1456,6 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
           },
           (error) => {
             console.log(error);
-            _this.shared_services.callHealth(error.message);
             console.log("Get Profile Information Error: ");
             reject();
           }
@@ -2021,12 +2015,10 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
             _this.setServiceUserDetails();
           },
             error => {
-              _this.shared_services.callHealth(error.message);
               _this.wordProcessor.apiErrorAutoHide(_this, error);
             });
       },
         error => {
-_this.shared_services.callHealth(error.message);
           _this.wordProcessor.apiErrorAutoHide(_this, error);
         });
   }
