@@ -168,8 +168,8 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div class="question-main-outer" *ngIf="(selectedLocation.parkingType && selectedLocation.parkingType!=='' && selectedLocation.parkingType != undefined && selectedLocation.parkingType != 'none') ||
-                                                (selectedLocation.open24hours && selectedLocation.open24hours==1) || selectedLocation?.locationVirtualFields?.traumacentre=='true' ||
+                                            <div class="question-main-outer" *ngIf="(selectedLocation.parkingType && selectedLocation.parkingType!=='' && selectedLocation.parkingType != undefined && selectedLocation.parkingType != 'None') ||
+                                                selectedLocation.open24hours || selectedLocation?.locationVirtualFields?.traumacentre=='true' ||
                                                 selectedLocation?.locationVirtualFields?.docambulance=='true'|| selectedLocation?.locationVirtualFields?.densistambulance=='true' || selectedLocation?.locationVirtualFields?.physiciansemergencyservices=='true' ||
                                                 selectedLocation?.locationVirtualFields?.dentistemergencyservices=='true' ||
                                                 selectedLocation?.locationVirtualFields?.altemergencyservices=='true' ||

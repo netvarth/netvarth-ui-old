@@ -946,7 +946,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const _this = this;
     _this.views = [];
     let name = '';
-    if (this.showToken) {
+    if (_this.showToken) {
       name = 'All Tokens';
     } else {
       name = 'All Check-ins';

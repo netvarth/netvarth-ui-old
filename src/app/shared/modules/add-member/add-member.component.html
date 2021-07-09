@@ -55,7 +55,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
         <mat-form-field>
                 <input matInput [matDatepicker]="picker" placeholder="Date of birth"
                     #inputdob formControlName="dob" [max]="tday" [min]="minday" disabled
-                    class="nofocus" tabindex="-1" readonly>
+                    class="nofocus" tabindex="-1" readonly (dateChange)="dateChanged($event)">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker [disabled]="false"></mat-datepicker>
             </mat-form-field>
