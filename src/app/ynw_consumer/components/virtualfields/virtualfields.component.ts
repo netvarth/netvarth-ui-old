@@ -599,7 +599,7 @@ console.log(isinvalid);
     } else if(formdata.countryCode_whtsap.trim().length === 0 && formdata.whatsappnumber.trim().length > 0){
       this.snackbarService.openSnackBar('Please fill whatsapp countrycode', { 'panelClass': 'snackbarerror' });
     }else if(formdata.countryCode_telegram.trim().length === 0 && formdata.telegramnumber.trim().length > 0){
-      this.snackbarService.openSnackBar('Please fill whatsapp countrycode', { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('Please fill telegram countrycode', { 'panelClass': 'snackbarerror' });
     }else {
       console.log('success inisde');
       if (this.is_parent) {
