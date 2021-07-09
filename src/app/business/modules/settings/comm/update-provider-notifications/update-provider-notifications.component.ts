@@ -422,7 +422,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
     const dialogref = this.dialog.open(TelegramInfoComponent, {
       width: '70%',
       height: '30%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'full-screen-modal'],
+      panelClass: ['popup-class', 'commonpopupmainclass', 'full-screen-modal', 'telegramPopupClass'],
       disableClose: true,
       data: {
         telegramNum: this.telegram_num
