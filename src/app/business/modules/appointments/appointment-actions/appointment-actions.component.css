@@ -145,7 +145,21 @@
   cursor: pointer;   
   border: 1px solid #cccccc60;
 }
-.status-box-internal .status {
+.status-box-disabled{
+  box-shadow: 5px 5px 5px 0px #cccccc60 !important;
+  border-radius: 10px;
+  background: #ffffff;
+  color:grey;
+  width: 30%;
+  padding: 20px;
+  float: left;
+  margin: 10px;
+  cursor: pointer;   
+  border: 1px solid #cccccc60;
+  pointer-events: none;
+  opacity: 0.4;
+}
+.status-box-internal .status,.status-box-disabled .status {
   font-weight: bold;
   font-size: 1.2rem;
 }
