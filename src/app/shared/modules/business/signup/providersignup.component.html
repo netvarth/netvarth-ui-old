@@ -16,7 +16,6 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                     <mat-select [(ngModel)] = "selectedCountryCode" [ngModelOptions]="{standalone: true}">
                                         <mat-option *ngFor="let codes of countryCodes" [value]="codes.value">{{codes.displayName}}</mat-option>
                                       </mat-select>
-                    
                                     </span>
 
                                 <input class="mgn-lt-15" type="text" formControlName="phonenumber" name="phone" id="phone"

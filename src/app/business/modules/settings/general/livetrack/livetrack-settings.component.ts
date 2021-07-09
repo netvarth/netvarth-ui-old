@@ -93,3 +93,4 @@ export class LiveTrackSettingsComponent implements OnInit {
         this.router.navigate(['/provider/' + this.domain + '/general->livetracking']);
     }
 }
+

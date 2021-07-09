@@ -1,0 +1,59 @@
+.btn-grn{
+    background: #00cc96 !important;
+  }
+.txt-trans-none{
+    text-transform: none !important;
+}
+.centeralign  .fa{
+  width:20px !important;
+}
+.pad-15 {
+  padding: 15px !important;
+}
+.txt-color{
+  color: rgb(60 141 188) !important;
+}
+
+.image{
+  height: 220px !important;
+    width: 220px !important;
+    padding-top: 70px;
+
+}
+.bt{
+  color: black;
+    background: white;
+    border-radius: 20px;
+    width: 150px;
+    font-size: 16px;
+    height: 45px;
+    margin-top: 15px;
+}
+.text{
+ margin-top: 10px !important;
+  color: white;
+  padding-top: 11px;
+}
+.content{
+  background-color: #50a9f7;
+}
+
+
+.mgn-up-30 {
+  margin-top: 30px;
+}
+.popup-hieght{
+  height: 350px;
+}
+@media  (max-width: 750px)  {
+  .web{
+      display: none !important;
+  }
+}
+@media (min-width: 450px) {
+  .disply  {
+      display: none !important;
+  }
+}
+
+
