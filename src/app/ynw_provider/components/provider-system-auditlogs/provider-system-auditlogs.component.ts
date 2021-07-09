@@ -235,3 +235,4 @@ redirecToHelp() {
     this.filter_sidebar = false;
   }
 }
+

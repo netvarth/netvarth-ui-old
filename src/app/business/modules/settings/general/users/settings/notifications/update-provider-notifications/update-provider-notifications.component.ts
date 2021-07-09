@@ -53,6 +53,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
   accountType;
   notificationJson: any = {};
   cancelNotificationJson: any = {};
+  isInternationalUser;
   constructor(private sharedfunctionObj: SharedFunctions,
     public dialogRef: MatDialogRef<UpdateProviderNotificationsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -68,6 +69,8 @@ export class UpdateProviderNotificationsComponent implements OnInit {
     this.accountType = user.accountType;
     this.getNotificationList();
     this.getSMSCredits();
+    this.isInternationalUser = this.data.inernationalUser;
+    console.log(this.isInternationalUser)
   }
   getNotificationList() {
     this.api_loading = true;

@@ -8,6 +8,7 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { TelegramInfoComponent } from '../telegram-info/telegram-info.component';
 
 @Component({
   selector: 'app-update-provider-notifications',
@@ -15,25 +16,36 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
   styleUrls: ['./update-provider-notifications.component.css']
 })
 export class UpdateProviderNotificationsComponent implements OnInit {
-
+  telegram = false;
   sms = false;
   email = false;
   cheknPushph = false;
   cheknCancelPushph = false;
   cancelsms = false;
+  cancelTelegram = false;
   cancelemail = false;
   cancelpush = false;
   notifyphonenumber = '';
+  notifyTele = '';
+  teleCountrycode = '+91';
+  tele1Countrycode = '+91';
+  smsCountrycode = '+91';
+  sms1Countrycode = '+91';
+  pushCountrycode= '+91';
+  push1Countrycode= '+91';
   notifycheknPushphonenumber = '';
   notifycheknCancelPushphonenumber = '';
   notifyemail = '';
   notifycanclphonenumber = '';
+  notifycancltelegram = '';
   notifycanclemail = '';
   ph_arr: any = [];
+  tele_arr: any = [];
   cheknPushph_arr: any = [];
   cheknCancelPushph_arr: any = [];
   em_arr: any = [];
   ph1_arr: any = [];
+  tele1_arr: any = [];
   em1_arr: any = [];
   savechekinNotification_json: any = {};
   savecancelNotification_json: any = {};
@@ -41,6 +53,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
   okCheckinStatus = false;
   okCancelStatus = false;
   SelchkinNotify = false;
+  SelTelegramNotify = false;
   SelchkincnclNotify = false;
   appointment_status: any;
   waitlistStatus: any;
@@ -57,6 +70,13 @@ export class UpdateProviderNotificationsComponent implements OnInit {
   accountType;
   notificationJson: any = {};
   cancelNotificationJson: any = {};
+  chatId;
+  teleNum: string;
+  post_data: any[];
+  telegram_num: string;
+  isValid;
+  tele_num: any;
+  val: any = [];
   constructor(private sharedfunctionObj: SharedFunctions,
     public dialogRef: MatDialogRef<UpdateProviderNotificationsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -126,6 +146,11 @@ export class UpdateProviderNotificationsComponent implements OnInit {
           this.ph_arr = addList[0].sms;
           // this.SelchkinNotify = true;
         }
+        if (addList[0].telegramPhone && addList[0].telegramPhone.length !== 0) {
+          this.tele_arr = addList[0].telegramPhone;
+
+          // this.SelchkinNotify = true;
+        }
         if (addList[0].pushMsg && addList[0].pushMsg.length !== 0) {
           this.cheknPushph_arr = addList[0].pushMsg;
           // this.SelchkinNotify = true;
@@ -146,7 +171,12 @@ export class UpdateProviderNotificationsComponent implements OnInit {
         }
         if (cancelList[0].sms && cancelList[0].sms.length !== 0) {
           this.ph1_arr = cancelList[0].sms;
-          // this.SelchkincnclNotify = true;
+
+          if (cancelList[0].telegramPhone && cancelList[0].telegramPhone.length !== 0) {
+            this.tele1_arr = cancelList[0].telegramPhone;
+
+            // this.SelchkincnclNotify = true;
+          }// this.SelchkincnclNotify = true;
         }
         if (cancelList[0].pushMsg && cancelList[0].pushMsg.length !== 0) {
           this.cheknCancelPushph_arr = cancelList[0].pushMsg;
@@ -161,6 +191,20 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       this.api_loading = false;
     }
   }
+  //   handleTelegramSettings(event) {
+  //     const value = (event.checked) ? true : false;
+  //     const status = (value) ? 'enabled' : 'disabled';
+  //     const state = (value) ? 'Enable' : 'Disable';
+  //     this.provider_services.setTelegramglobalSettings(state).subscribe(data => {
+  //         this.snackbarService.openSnackBar('SMS settings ' + status + ' successfully');
+  //         // this.getSMSglobalSettings();
+  //     }, (error) => {
+  //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //         // this.getSMSglobalSettings();
+  //     });
+  // }
+
+
   selectChekinNotify(event) {
     this.SelchkinNotify = event.checked;
     // if (!this.SelchkinNotify) {
@@ -240,16 +284,161 @@ export class UpdateProviderNotificationsComponent implements OnInit {
         // 'Mobile number should have 10 digits';
         return;
       }
-
-      if (this.ph_arr.indexOf(curphone) === -1) {
-        this.ph_arr.push(curphone);
-      } else {
-        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
-        // 'Phone number already exists'
+      if (this.ph_arr.length === 0) {
+      console.log(this.ph_arr);
+      if (this.smsCountrycode) {
+        const val = {
+          'number': curphone,
+          'countryCode': this.smsCountrycode
+        }
+        this.ph_arr.push(val);
       }
+      else {
+        const val = {
+          'number': curphone,
+          'countryCode': '91'
+        }
+        this.tele_arr.push(val);
+      }
+    }
+    else {
+        this.isSmsNumExists(curphone)
+      }
+      // if (this.ph_arr.indexOf(curphone) === -1) {
+      //   this.ph_arr.push(curphone);
+
+      // } else {
+      //   this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+      //   // 'Phone number already exists'
+      // }
       this.okCheckinStatus = true;
       this.notifyphonenumber = '';
     }
+  }
+  addTele() {
+    if (this.notifyTele === '') {
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      // 'Please enter mobile phone number';
+      return;
+    }
+    if (this.notifyTele !== '') {
+      const curTele = this.notifyTele;
+      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+      const result = pattern.test(curTele);
+      if (!result) {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid mobile phone number';
+        return;
+      }
+      const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+      const result1 = pattern1.test(curTele);
+      if (!result1) {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        // 'Mobile number should have 10 digits';
+        return;
+      }
+      if (this.tele_arr.length === 0) {
+          this.provider_services.telegramChat(this.teleCountrycode,curTele).subscribe(data => {
+          this.chatId = data;
+          if(this.chatId === null){
+            this.telegramInfo();
+          }
+      },
+      );
+        console.log(this.tele_arr);
+        if (this.teleCountrycode) {
+          const val = {
+            'number': curTele,
+            'countryCode': this.teleCountrycode
+          }
+          this.tele_arr.push(val);
+        }
+        else {
+          const val = {
+            'number': curTele,
+            'countryCode': '91'
+          }
+          this.tele_arr.push(val);
+        }
+      }
+      else {
+        this.isTeleNumExists(curTele)
+       
+      }
+      this.okCheckinStatus = true;
+      this.notifyTele = '';
+    }
+  }
+  isTeleNumExists(curTele) {
+    if (this.teleCountrycode) {
+      this.val = {
+        'number': curTele,
+        'countryCode': this.teleCountrycode
+      }
+    }
+    else {
+      this.val = {
+        'number': curTele,
+        'countryCode': '91'
+      }
+    }
+    const indx = this.tele_arr.filter(vale => (vale.number === this.val.number));
+        if (indx.length>0) {
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        } else {
+          this.tele_arr.push(this.val);
+          this.provider_services.telegramChat(this.teleCountrycode,curTele).subscribe(data => {
+            this.chatId = data;
+            if(this.chatId === null){
+              this.telegramInfo();
+            }
+        },
+        );
+        }
+  }
+  isSmsNumExists(curphone) {
+    if (this.smsCountrycode) {
+      this.val = {
+        'number': curphone,
+        'countryCode': this.smsCountrycode
+      }
+    }
+    else {
+      this.val = {
+        'number': curphone,
+        'countryCode': '91'
+      }
+    }
+    const indx = this.ph_arr.filter(vale => (vale.number === this.val.number));
+        if (indx.length>0) {
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        } else {
+          this.ph_arr.push(this.val);
+          // this.tele_arr.splice(indx, 1);
+          
+        }
+  }
+  
+  telegramInfo() {
+    const dialogref = this.dialog.open(TelegramInfoComponent, {
+      width: '70%',
+      height: '30%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'full-screen-modal', 'telegramPopupClass'],
+      disableClose: true,
+      data: {
+        telegramNum: this.telegram_num
+      }
+    });
+    dialogref.afterClosed().subscribe(
+      result => {
+        //  this.closeDialog();
+        // if (result) {
+        // }
+      }
+    );
+  }
+  closeDialog() {
+    this.dialogRef.close();
   }
   addcheknPushPh() {
     if (this.notifycheknPushphonenumber === '') {
@@ -273,17 +462,57 @@ export class UpdateProviderNotificationsComponent implements OnInit {
         // 'Mobile number should have 10 digits';
         return;
       }
-
-      if (this.cheknPushph_arr.indexOf(curphone) === -1) {
-        this.cheknPushph_arr.push(curphone);
-      } else {
-        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
-        // 'Phone number already exists'
+      if (this.cheknPushph_arr.length === 0) {
+        console.log(this.cheknPushph_arr);
+        if (this.pushCountrycode) {
+          const val = {
+            'number': curphone,
+            'countryCode': this.pushCountrycode
+          }
+          this.cheknPushph_arr.push(val);
+        }
+        else {
+          const val = {
+            'number': curphone,
+            'countryCode': '91'
+          }
+          this.cheknPushph_arr.push(val);
+        }
       }
+      else {
+          this.isPushNumExists(curphone)
+        }
+      // if (this.cheknPushph_arr.indexOf(curphone) === -1) {
+      //   this.cheknPushph_arr.push(curphone);
+      // } else {
+      //   this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+      //   // 'Phone number already exists'
+      // }
       this.okCheckinStatus = true;
       this.notifycheknPushphonenumber = '';
       this.cheknPushph = false;
     }
+  }
+  isPushNumExists(curphone) {
+    if (this.pushCountrycode) {
+      this.val = {
+        'number': curphone,
+        'countryCode': this.pushCountrycode
+      }
+    }
+    else {
+      this.val = {
+        'number': curphone,
+        'countryCode': '91'
+      }
+    }
+    const indx = this.cheknPushph_arr.filter(vale => (vale.number === this.val.number));
+        if (indx.length>0) {
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' }); 
+        } else {
+          this.cheknPushph_arr.push(this.val);
+          // this.tele_arr.splice(indx, 1);
+        }
   }
   addChkinemil() {
     if (this.notifyemail === '') {
@@ -332,15 +561,83 @@ export class UpdateProviderNotificationsComponent implements OnInit {
         // 'Mobile number should have 10 digits';
         return;
       }
-      if (this.ph1_arr.indexOf(curphone1) === -1) {
-        this.ph1_arr.push(curphone1);
-      } else {
-        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
-        // 'Phone number already exists'
+      if (this.ph1_arr.length === 0) {
+        console.log(this.ph1_arr);
+        if (this.tele1Countrycode) {
+          const val = {
+            'number': curphone1,
+            'countryCode': this.tele1Countrycode
+          }
+          this.ph1_arr.push(val);
+        }
+        else {
+          const val = {
+            'number': curphone1,
+            'countryCode': '91'
+          }
+          this.ph1_arr.push(val);
+        }
       }
+      else {
+          this.isSmsCancelNumExists(curphone1)
+        }
+     
       // this.ph1_arr.push(curphone1);
       this.okCancelStatus = true;
       this.notifycanclphonenumber = '';
+    }
+  }
+  addCheknCancltelegram() {
+    if (this.notifycancltelegram === '') {
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      // 'Please enter mobile phone number';
+      return;
+    }
+    if (this.notifycancltelegram !== '') {
+      const curtele1 = this.notifycancltelegram;
+      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+      const result = pattern.test(curtele1);
+      if (!result) {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid mobile phone number';
+        return;
+      }
+      const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+      const result1 = pattern1.test(curtele1);
+      if (!result1) {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        // 'Mobile number should have 10 digits';
+        return;
+      }
+      if (this.tele1_arr.length === 0) {
+        this.provider_services.telegramChat(this.tele1Countrycode,curtele1).subscribe(data => {
+          this.chatId = data;
+          if(this.chatId === null){
+            this.telegramInfo();
+          }
+      },
+      );
+        if (this.tele1Countrycode) {
+          const val = {
+            'number': curtele1,
+            'countryCode': this.tele1Countrycode
+          }
+          this.tele1_arr.push(val);
+        }
+        else {
+          const val = {
+            'number': curtele1,
+            'countryCode': '91'
+          }
+          this.tele1_arr.push(val);
+        }
+      }
+      else {
+          this.isteleCancelNumExists(curtele1)
+        }
+        
+        this.okCancelStatus = true;
+      this.notifycancltelegram = '';
     }
   }
   addcheknCancelPushPh() {
@@ -365,13 +662,27 @@ export class UpdateProviderNotificationsComponent implements OnInit {
         // 'Mobile number should have 10 digits';
         return;
       }
-
-      if (this.cheknCancelPushph_arr.indexOf(curphone) === -1) {
-        this.cheknCancelPushph_arr.push(curphone);
-      } else {
-        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
-        // 'Phone number already exists'
+      if (this.cheknCancelPushph_arr.length === 0) {
+        console.log(this.cheknCancelPushph_arr);
+        if (this.push1Countrycode) {
+          const val = {
+            'number': curphone,
+            'countryCode': this.push1Countrycode
+          }
+          this.cheknCancelPushph_arr.push(val);
+        }
+        else {
+          const val = {
+            'number': curphone,
+            'countryCode': '91'
+          }
+          this.cheknCancelPushph_arr.push(val);
+        }
       }
+      else {
+          this.ispushCancelNumExists(curphone)
+        }
+     
       this.okCancelStatus = true;
       this.notifycheknCancelPushphonenumber = '';
       this.cheknCancelPushph = false;
@@ -399,6 +710,77 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       this.notifycanclemail = '';
       this.okCancelStatus = true;
     }
+  }
+  isSmsCancelNumExists(curphone1) {
+    if (this.sms1Countrycode) {
+      this.val = {
+        'number': curphone1,
+        'countryCode': this.sms1Countrycode
+      }
+    }
+    else {
+      this.val = {
+        'number': curphone1,
+        'countryCode': '91'
+      }
+    }
+    const indx = this.ph1_arr.filter(vale => (vale.number === this.val.number));
+        if (indx.length>0) {
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' }); 
+        } else {
+          this.ph1_arr.push(this.val);
+          // this.tele_arr.splice(indx, 1);
+        }
+  }
+  isteleCancelNumExists(curtele1) {
+    if (this.tele1Countrycode) {
+      this.val = {
+        'number': curtele1,
+        'countryCode': this.tele1Countrycode
+      }
+    }
+    else {
+      this.val = {
+        'number': curtele1,
+        'countryCode': '91'
+      }
+    }
+    const indx = this.tele1_arr.filter(vale => (vale.number === this.val.number));
+        if (indx.length>0) {
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' }); 
+        } else {
+          this.tele1_arr.push(this.val);
+          this.provider_services.telegramChat(this.tele1Countrycode,curtele1).subscribe(data => {
+            this.chatId = data;
+            if(this.chatId === null){
+              this.telegramInfo();
+            }
+        },
+        );
+          // this.tele_arr.splice(indx, 1);
+        }
+        
+  }
+  ispushCancelNumExists(curphone) {
+    if (this.push1Countrycode) {
+      this.val = {
+        'number': curphone,
+        'countryCode': this.push1Countrycode
+      }
+    }
+    else {
+      this.val = {
+        'number': curphone,
+        'countryCode': '91'
+      }
+    }
+    const indx = this.cheknCancelPushph_arr.filter(vale => (vale.number === this.val.number));
+        if (indx.length>0) {
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' }); 
+        } else {
+          this.cheknCancelPushph_arr.push(this.val);
+          // this.tele_arr.splice(indx, 1);
+        }
   }
   chekinNotifications(source) {
     this.savechekinNotification_json = {};
@@ -437,6 +819,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       this.savechekinNotification_json.eventType = 'ORDERCONFIRM';
     }
     this.savechekinNotification_json.sms = this.ph_arr;
+    this.savechekinNotification_json.telegramPhone = this.tele_arr;
     this.savechekinNotification_json.email = this.em_arr;
     this.savechekinNotification_json.pushMsg = this.cheknPushph_arr;
     this.savechekinNotification_json.providerId = 0;
@@ -472,6 +855,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       this.savecancelNotification_json.eventType = 'ORDERCANCEL';
     }
     this.savecancelNotification_json.sms = this.ph1_arr;
+    this.savecancelNotification_json.telegramPhone = this.tele1_arr;
     this.savecancelNotification_json.email = this.em1_arr;
     this.savecancelNotification_json.pushMsg = this.cheknCancelPushph_arr;
     this.savecancelNotification_json.providerId = 0;
@@ -485,6 +869,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
     this.cheknCancelPushph = false;
     this.cancelemail = false;
     this.cancelsms = false;
+    this.cancelTelegram = false;
     if (mode === 'ADD') {
       this.provider_services.addNotificationList(saveNotification_json)
         .subscribe(
@@ -542,6 +927,13 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       this.sms = true;
     }
   }
+  telegramAddClicked() {
+    if (this.telegram) {
+      this.telegram = false;
+    } else {
+      this.telegram = true;
+    }
+  }
   cheknPushAddClicked() {
     if (this.cheknPushph) {
       this.cheknPushph = false;
@@ -554,6 +946,13 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       this.cancelsms = false;
     } else {
       this.cancelsms = true;
+    }
+  }
+  cancelledCheckintelegramAddClicked() {
+    if (this.cancelTelegram) {
+      this.cancelTelegram = false;
+    } else {
+      this.cancelTelegram = true;
     }
   }
   cheknCancelPushAddClicked() {

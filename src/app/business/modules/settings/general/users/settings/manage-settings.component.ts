@@ -208,7 +208,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
   settings: any = [];
   showToken = false;
   services_cap = Messages.WAITLIST_SERVICES_CAP;
-  maintooltip: any;
+  maintooltip = '';
   constructor(
     private router: Router,
     private routerobj: Router,

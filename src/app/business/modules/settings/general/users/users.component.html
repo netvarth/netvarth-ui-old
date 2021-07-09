@@ -159,7 +159,7 @@
           [ngClass]="{'highlight': selectedGroup.id==group.id}" 
           [class.disabled-group]="group.status=='INACTIVE'"
           [class.pointer-cursor]="group.status=='ACTIVE'">  
-          <div class="max-hgt-20">
+          <div class="max-hgt-20 disp-flex">
             <span class="pull-left group-name">{{group.name}}</span>
             <span class="pull-right mgn-m-up-10">
               <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event);">
@@ -198,7 +198,7 @@
           [ngClass]="{'highlight': selectedGroup.id==group.id}" 
           [class.disabled-group]="group.status=='INACTIVE'"
           [class.pointer-cursor]="group.status=='ACTIVE'">  
-          <div class="max-hgt-20">
+          <div class="max-hgt-20 disp-flex">
             <span class="pull-left group-name">{{group.name}}</span>
             <span class="pull-right mgn-m-up-10">
               <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event);">
@@ -445,6 +445,32 @@
                                 </div>
                               </div>
                           </div>
+                          <div class="card">
+                            <div class="card-header">
+                              <h2 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseEmail1" aria-expanded="false">
+                                  <div>
+                                    <div style="display: inline-block !important;">
+                                      <i class="fa fa-envelope"></i>
+                                    </div>
+                                    Email
+                                  </div>
+                                  <i class="fa fa-angle-down"></i>
+                                </button>
+                              </h2>
+                            </div>
+                            <div id="collapseEmail1" class="collapse in" data-parent="#accordion1">
+                              <div class="card-body">
+                                <div class="filterTextinput filter-text-input">
+                                    <li class="filterli filter-li">
+                                        <input type="text" id="email" [(ngModel)]="filter.email"
+                                            #email (keyup)="doSearch()"
+                                             class="filterTextbox filter-textbox" placeholder="Enter Email">
+                                    </li>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
                           <div class="card">
                               <div class="card-header">
                                 <h2 class="mb-0">
@@ -995,6 +1021,32 @@
                             </div>
                         </div>
                         <div class="card">
+                          <div class="card-header">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseEmail1" aria-expanded="false">
+                                <div>
+                                  <div style="display: inline-block !important;">
+                                    <i class="fa fa-envelope"></i>
+                                  </div>
+                                  Email
+                                </div>
+                                <i class="fa fa-angle-down"></i>
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapseEmail1" class="collapse in" data-parent="#accordion1">
+                            <div class="card-body">
+                              <div class="filterTextinput filter-text-input">
+                                  <li class="filterli filter-li">
+                                      <input type="text" id="email" [(ngModel)]="filter.email"
+                                          #email (keyup)="doSearch()"
+                                           class="filterTextbox filter-textbox" placeholder="Enter Email">
+                                  </li>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                        <div class="card">
                             <div class="card-header">
                               <h2 class="mb-0">
                                 <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseUType1" aria-expanded="false">
@@ -1315,5 +1367,4 @@
    <!-- *** close MObile  users content***** -->
 
 </section>
-
 

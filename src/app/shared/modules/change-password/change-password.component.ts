@@ -124,3 +124,4 @@ export class ChangePasswordComponent implements OnInit {
     this.api_error = null;
   }
 }
+

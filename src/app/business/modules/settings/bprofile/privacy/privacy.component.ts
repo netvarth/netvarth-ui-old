@@ -296,3 +296,4 @@ export class PrivacyComponent implements OnInit, OnDestroy {
         this.UpdatePrimaryFields(post_itemdata);
     }
 }
+

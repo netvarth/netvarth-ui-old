@@ -153,3 +153,4 @@ export class CustomerIdSettingsComponent implements OnInit {
         this.routerobj.navigate(['/provider/' + this.domain + '/customers->custid-settings']);
     }
 }
+

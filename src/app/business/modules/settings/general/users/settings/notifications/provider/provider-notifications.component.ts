@@ -105,6 +105,7 @@ export class ProviderNotificationUserComponent implements OnInit {
   corpSettings: any;
   addondialogRef: any;
   is_noSMS = false;
+  isInternationalUser = false;
   constructor(
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -145,6 +146,9 @@ export class ProviderNotificationUserComponent implements OnInit {
   getUser() {
     this.provider_services.getUser(this.userId)
       .subscribe((data: any) => {
+        if (data.countryCode !== '+91') {
+          this.isInternationalUser = true;
+        }
         const breadcrumbs = [];
         this.breadcrumbs_init.map((e) => {
           breadcrumbs.push(e);
@@ -1039,6 +1043,7 @@ export class ProviderNotificationUserComponent implements OnInit {
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
+          inernationalUser : this.isInternationalUser,
           type: type,
           userId: this.userId
         }

@@ -213,7 +213,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   api_success: string;
   imgType = false;
   spinner_load = false;
-  maintooltip: any;
+  maintooltip = '';
   @ViewChild('qrCodeOnlineId', { read: ElementRef }) set content1(content1: ElementRef) {
     if (content1) { // initially setter gets called with undefined
       this.qrCodeParent = content1;

@@ -29,3 +29,4 @@ export class Razorpaymodel {
     color: '#F37254'
     };
 }
+

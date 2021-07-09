@@ -2171,7 +2171,7 @@ export class ProviderServices {
     const url = 'provider/waitlist/questionnaire/upload/status/' + uid;
     return this.servicemeta.httpPut(url, data);
   }
-   getInternalstatList(uid) {
+  getInternalstatList(uid) {
     const url = 'provider/waitlist/internalStatuses/'+ uid;
     return this.servicemeta.httpGet(url);
   }
@@ -2187,6 +2187,16 @@ export class ProviderServices {
     const url = 'provider/appointment/applyInternalStatus/' + waitlist_id + '/' + action;
     return this.servicemeta.httpPut(url);
   }
+  telegramChat(countryCode, phNumber) {
+      if (countryCode === '') {
+        const url = 'chatbot/telegram/provider/chatId/91/' + phNumber;
+        return this.servicemeta.httpGet(url);
+      }
+      else {
+        const url = 'chatbot/telegram/provider/chatId/' + countryCode + '/' + phNumber;
+        return this.servicemeta.httpGet(url);
+      }
+    }
   getProviderBills(filter = {}) {
     const url = 'provider/bill';
     return this.servicemeta.httpGet(url, null, filter);
