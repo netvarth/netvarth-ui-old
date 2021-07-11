@@ -1,4 +1,4 @@
-const metros = {
+{
 	"metros": [{
 		"name": "Kochi",
 		"latitude": "9.931233",
@@ -36,4 +36,3 @@ const metros = {
         "longitude": "72.877656"
     }]
 }
-export const metrojson = metros; 

@@ -750,9 +750,13 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         urlstr += ';';
       }
       let autoname = this.kwautoname;
-      autoname = autoname.replace(/\//g, '%2F');    // url encoding (replacing forward slash)
+      if (autoname) {
+        autoname = autoname.replace(/\//g, '%2F');    // url encoding (replacing forward slash)
+      }
       let kw = this.kwautoname;
-      kw = kw.replace(/\//g, '%2F');
+      if (kw) {
+        kw = kw.replace(/\//g, '%2F');
+      }
       urlstr += 'kw=' + kw + ';kwauto=' + autoname + ';kwdomain=' + this.kwdomain + ';kwsubdomain=' + this.kwsubdomain + ';kwtyp=' + this.kwtyp;
     }
     if (this.commonfilters !== '') {
@@ -809,46 +813,45 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     }
     let phrasestr = '';
     if (this.kwtyp === 'kwtitle') {
-      let ptitle = this.kw.replace('/', '');
-      ptitle = ptitle.replace(/'/g, '\\\'');
-      q_str = q_str + '(or (prefix field=title \'' + ptitle + '\') (phrase field=title \'' + ptitle + '\'))';
+      if (this.kw) {
+        let ptitle = this.kw.replace('/', '');
+        ptitle = ptitle.replace(/'/g, '\\\'');
+        q_str = q_str + '(or (prefix field=title \'' + ptitle + '\') (phrase field=title \'' + ptitle + '\'))';
+      }
     } else if (this.kwtyp === 'kwphrase') {
       const words = [];
-      this.kw = this.kw.replace(/'/g, '\\\'');
-      let fullWord = this.kw;
-      const wordsInQuotes = fullWord.match(/"(.*?)"/g);
-      if (wordsInQuotes != null) {
-        for (let i = 0; i < wordsInQuotes.length; i++) {
-          fullWord = fullWord.replace(wordsInQuotes[i], '').trim();
-          words.push(wordsInQuotes[i].replace(/"/g, '').trim());
-        }
-      }
-      const splitSpace = fullWord.trim().split(' ');
-      if (splitSpace.length > 0) {
-        for (let i = 0; i < splitSpace.length; i++) {
-          if (splitSpace[i] !== '') {
-            words.push(splitSpace[i]);
+      if (this.kw) {
+        this.kw = this.kw.replace(/'/g, '\\\'');
+        let fullWord = this.kw;
+        const wordsInQuotes = fullWord.match(/"(.*?)"/g);
+        if (wordsInQuotes != null) {
+          for (let i = 0; i < wordsInQuotes.length; i++) {
+            fullWord = fullWord.replace(wordsInQuotes[i], '').trim();
+            words.push(wordsInQuotes[i].replace(/"/g, '').trim());
           }
         }
+        const splitSpace = fullWord.trim().split(' ');
+        if (splitSpace.length > 0) {
+          for (let i = 0; i < splitSpace.length; i++) {
+            if (splitSpace[i] !== '') {
+              words.push(splitSpace[i]);
+            }
+          }
+        }
+
+        phrasestr = ' (or sub_sector_displayname:\'' + this.kw + '\'' + ' sub_sector:\'' + this.kw.toLowerCase() + '\'' + ' specialization:\'' + this.kw.toLowerCase() + '\'' +
+          ' specialization_displayname:\'' + this.kw + '\''
+          + ' (or (prefix field=title \'' + this.kw + '\') (phrase field=title \'' + this.kw + '\'))'
+          + ' (or (prefix field=providers \'' + this.kw + '\') (phrase field=providers \'' + this.kw + '\'))' + ' services:\'' + this.kw + '\''
+          + ' custom_id:\'' + this.kw + '\'' + ' enc_uid:\'' + this.kw + '\''
+          + ' qualification:\'' + this.kw + '\' adwords:\'' + this.kw.split(' ').join(projectConstants.ADWORDSPLIT) + '\')';
       }
-      // let queryStr = 'adwords:\'' + this.kw + '\' ';
-      // if (words.length > 1) {
-      //   queryStr = '(and ';
-      //   for (let i = 0; i < words.length; i++) {
-      //     queryStr += ('adwords:\'' + words[i] + '\' ');
-      //   }
-      //   queryStr += ')';
-      // }
-      phrasestr = ' (or sub_sector_displayname:\'' + this.kw + '\'' + ' sub_sector:\'' + this.kw.toLowerCase() + '\'' + ' specialization:\'' + this.kw.toLowerCase() + '\'' +
-        ' specialization_displayname:\'' + this.kw + '\''
-        + ' (or (prefix field=title \'' + this.kw + '\') (phrase field=title \'' + this.kw + '\'))'
-        + ' (or (prefix field=providers \'' + this.kw + '\') (phrase field=providers \'' + this.kw + '\'))' + ' services:\'' + this.kw + '\''
-        + ' custom_id:\'' + this.kw + '\'' + ' enc_uid:\'' + this.kw + '\''
-        + ' qualification:\'' + this.kw + '\' adwords:\'' + this.kw.split(' ').join(projectConstants.ADWORDSPLIT) + '\')';
     } else if (this.kwtyp === 'onlineid') {
-      let ptitle = this.kw.replace('/', '');
-      ptitle = ptitle.replace(/'/g, '\\\'');
-      q_str = q_str + '(or custom_id: \'' + ptitle + '\'' + ' enc_uid: \'' + ptitle + '\')';
+      if (this.kw) {
+        let ptitle = this.kw.replace('/', '');
+        ptitle = ptitle.replace(/'/g, '\\\'');
+        q_str = q_str + '(or custom_id: \'' + ptitle + '\'' + ' enc_uid: \'' + ptitle + '\')';
+      }
     }
     if (this.domain && this.domain !== 'All' && this.domain !== 'undefined' && this.domain !== undefined) { // case of domain is selected
       q_str = q_str + 'sector:\'' + this.domain + '\'';
@@ -2007,11 +2010,11 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     console.log(search_result);
     const name = search_result.fields.title || null; // providername
     const obj = search_result.id || null;
-  //  const uniqueId=search_result.fields.unique_id;
+    //  const uniqueId=search_result.fields.unique_id;
     if (obj) {
-     const arr = obj.split('-');
-     const providforCommunicate = arr[0];
-     
+      const arr = obj.split('-');
+      const providforCommunicate = arr[0];
+
 
       // check whether logged in as consumer
       if (this.shared_functions.checkLogin()) {

@@ -1,19 +1,24 @@
-.fb{
+.block1 {
+    font-size: 1.25rem !important;
+    padding: 40px 20px !important;
+    transform: scale(0.9) !important;
+    transition: 0.2s all !important;
+    border-radius: 10px;
+    line-height:30px !important;
+    box-shadow: 10px 10px 15px 10px #cccccc9c !important;
+    max-height: 250px;
+    min-height: 250px;
+}
+.block1 i {
+    font-size: 2rem !important;
+}
+/* .fb{
     color: black;
 }
-.block1{
-    background-color:aliceblue  !important;
-color: #7d7c7c !important;
-font-size: 1rem !important;
-padding: 40px 20px !important;
-transform: scale(0.9) !important;
-transition: 0.2s all !important;
-border-radius: 10px;
-box-shadow: 10px 10px 15px 0px #cccccc9c !important;
-max-height: 250px;
-min-height: 250px;
-}
-.divfont{
-    font-size: xx-large;
-    color: cornflowerblue;
-}
+*/
+.head{
+    font-size: 1.5rem;
+    margin:5px;
+    font-weight: 600;
+    word-wrap: break-word;
+} 

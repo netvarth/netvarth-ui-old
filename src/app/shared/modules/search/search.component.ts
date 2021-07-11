@@ -9,14 +9,13 @@ import { SharedServices } from '../../services/shared-services';
 import { SearchDataStorageService } from '../../services/search-datastorage.services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { SearchFields } from './searchfields';
-import { locationjson } from '../../../../assets/json/locations';
-import { metrojson } from '../../../../assets/json/metros_capital';
 import { projectConstants } from '../../../app.component';
 import { Subscription } from 'rxjs';
 import { SnackbarService } from '../../services/snackbar.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
+import { FileReaderService } from '../../services/file-reader.service';
 export class Locscls {
   constructor(public autoname: string, public name: string, public lat: string, public lon: string, public typ: string, public rank: number) { }
 }
@@ -147,6 +146,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   screenWidth: number;
   small_device_display: boolean;
   jsonArrayList: any = [];
+  locationjson: any = [];
+  metrojson: any = {};
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
@@ -164,6 +165,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
     private dateTimeProcessor: DateTimeProcessor,
+    private fileReader: FileReaderService,
     private routerobj: Router) {
     this.myControl_prov.valueChanges.subscribe(val => {
       this.filterKeywords(val);
@@ -208,7 +210,23 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.setNullKeyword('');
     this.hide_location_div = false;
     this.initialize_fields();
-    this.loadLocationjsontoArray();
+    if (this.fileReader.getLocations()) {
+      this.locationjson = this.fileReader.getLocations();
+      this.metrojson = this.fileReader.getMetros();
+      this.loadLocationjsontoArray();
+    } else {
+      this.fileReader.getLocationJson().subscribe((locations) => {
+        this.fileReader.setLocations(locations);
+        this.locationjson = locations;
+        this.fileReader.getMetrosJson().subscribe((metros) => {
+          this.metrojson = metros;
+          this.fileReader.setMetros(metros);
+          this.loadLocationjsontoArray();
+        })
+      })
+
+    }
+
     // Checking whether the location is blank, if yes, then set it to the default location mentioned in the constants file
     this.checktoSetLocationtoDefaultLocation();
   }
@@ -371,9 +389,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   }
   // loads the location details in json file to the respective array
   private loadLocationjsontoArray() {
-    console.log(locationjson);
-    console.log(metrojson);
-    for (const state of locationjson['states']) {
+    // console.log(locationjson);
+    // console.log(metrojson);
+    for (const state of this.locationjson['states']) {
       const objstate = { autoname: state.name + ', India', name: state.name, lat: state.latitude, lon: state.longitude, typ: 'state', rank: 4 };
       this.locationList.push(objstate);
       for (const city of state.cities) {
@@ -385,11 +403,11 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         }
       }
     }
-    for (const metro of metrojson['metros']) {
+    for (const metro of this.metrojson['metros']) {
       const objstate = { autoname: metro.name + ' (Metro)', name: metro.name, lat: metro.latitude, lon: metro.longitude, typ: 'metro', rank: 1 };
       this.locationList.push(objstate);
     }
-    for (const capital of metrojson['capitals']) {
+    for (const capital of this.metrojson['capitals']) {
       const objstate = { autoname: capital.name + ' (Capital)', name: capital.name, lat: capital.latitude, lon: capital.longitude, typ: 'capital', rank: 2 };
       this.locationList.push(objstate);
     }

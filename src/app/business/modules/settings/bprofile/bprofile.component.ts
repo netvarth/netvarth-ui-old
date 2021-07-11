@@ -1456,7 +1456,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
           this.imageToShow = '';
           this.clogo = data;
           // this.cover_url = data[0].url;
-          this.cover_url = (data[0].url) ? data[0].url : '';
+          this.cover_url = (data[0]?.url) ? data[0].url : '';
           //  this.imageToShow = this.cover_url;
           this.imageToShow = this.sharedfunctionobj.showlogoicon(this.cover_url);
         }
