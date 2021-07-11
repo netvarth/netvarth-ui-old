@@ -233,13 +233,15 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
       retmsg = this.default_message_arr[this.cancel_reason_key];
     }
     // retmsg = this.default_message;
-    retmsg = retmsg.replace(/\[consumer\]/g, this.rep_username);
-    retmsg = retmsg.replace(/\[service\]/g, this.rep_service);
-    retmsg = retmsg.replace(/\[date\]/g, this.rep_date);
-    retmsg = retmsg.replace(/\[time\]/g, this.rep_time);
-    retmsg = retmsg.replace(/\[.*?\]/g, this.rep_provname);
-    if (this.cancel_reason && this.cancel_reason !== '') {
-      retmsg = retmsg.replace('[reason]', this.cancel_reason);
+    if (retmsg && retmsg!=='') {
+      retmsg = retmsg.replace(/\[consumer\]/g, this.rep_username);
+      retmsg = retmsg.replace(/\[service\]/g, this.rep_service);
+      retmsg = retmsg.replace(/\[date\]/g, this.rep_date);
+      retmsg = retmsg.replace(/\[time\]/g, this.rep_time);
+      retmsg = retmsg.replace(/\[.*?\]/g, this.rep_provname);
+      if (this.cancel_reason && this.cancel_reason !== '') {
+        retmsg = retmsg.replace('[reason]', this.cancel_reason);
+      }
     }
     return retmsg;
   }

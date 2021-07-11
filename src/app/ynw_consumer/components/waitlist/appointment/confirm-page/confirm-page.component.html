@@ -42,7 +42,7 @@
                                         <tr>
                                             <td width="48%" align="right">Location </td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td>{{appointment.location?.place}}<a
+                                            <td>{{appointment.location?.place}}<a *ngIf="appointment && appointment.location && appointment.location.googleMapUrl"
                                                     [href]="appointment.location.googleMapUrl" target="_blank"
                                                     class="icon-location" matTooltip="Click to navigate">
                                                 </a></td>
