@@ -14,6 +14,7 @@ import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-
 import { SessionStorageService } from '../../services/session-storage.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
+import { TelegramInfoComponent } from '../telegram-info/telegram-info.component';
 
 
 
@@ -49,7 +50,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
   PhoneNumberFormat = PhoneNumberFormat;
 	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
   phoneError: string;
-
+  chatId: ArrayBuffer;
+  tele_num: any;
+  countryCode;
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -239,8 +242,39 @@ export class LoginComponent implements OnInit, AfterViewInit {
               this.api_loading = false;
             }
           );
+          this.tele_num = loginId;
+          if(dialCode.startsWith('+')){
+            this.countryCode = dialCode.substring(1);
+          }
+          this.shared_services.telegramChat(this.countryCode,loginId)
+           .subscribe(
+               data => { 
+                 this.chatId = data; 
+                 if(this.chatId === null){
+                   this.telegramInfo();
+                 }
+               },
+               (error) => {
+                  
+               }
+           );
       }
     }
+  }
+  telegramInfo() {
+    const dialogref = this.dialog.open(TelegramInfoComponent, {
+      width: '70%',
+      height: '30%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'full-screen-modal', 'telegramPopupClass'],
+      disableClose: true,
+    });
+    dialogref.afterClosed().subscribe(
+      result => {
+       //  this.closeDialog();
+        // if (result) {
+        // }
+      }
+    );
   }
   doForgotPassword() {
     this.resetApiErrors();

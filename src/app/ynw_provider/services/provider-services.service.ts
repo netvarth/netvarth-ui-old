@@ -2197,4 +2197,8 @@ export class ProviderServices {
         return this.servicemeta.httpGet(url);
       }
     }
+telegramLaunch() {
+    const url = 'chatbot/telegram/provider';
+    return this.servicemeta.httpGet(url);
+}
 }
