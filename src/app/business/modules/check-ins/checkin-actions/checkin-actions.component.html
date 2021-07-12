@@ -409,7 +409,7 @@
     A consolidated bill has been generated for this 'group booking'. To view the consolidated bill, click the bill of <a
         (click)="getBill(checkin.parentUuid)">{{checkin.parentName}}</a>.
 </div>
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-20  no-padding" *ngIf="action === 'status'">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-20 scro no-padding" *ngIf="action === 'status'">
   <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 stst-bx mgn-up-10 mgn-lt-10" *ngIf="checkin.waitlistStatus !== 'done'" >
         <div>External Status</div>
         <p class="settings_info"> External status is public and visible for your {{customer_label}}s</p>

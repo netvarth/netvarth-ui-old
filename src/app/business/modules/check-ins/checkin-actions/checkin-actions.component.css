@@ -164,6 +164,9 @@
   .status-box-internal {
     width: 95% !important;
   }
+  .status-box-disabled {
+    width: 95% !important;
+  }
 }
 .stst-bx {
   box-shadow: 5px 5px 5px 0px #cccccc60 !important;
