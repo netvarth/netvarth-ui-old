@@ -75,7 +75,6 @@
     -webkit-border-radius: 100%;
     border-radius: 100%;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     overflow: hidden;
     -webkit-box-shadow: 2px 3px 0px rgba(0, 0, 0, 0.08) !important;
     -moz-box-shadow: 2px 3px 0px rgba(0, 0, 0, 0.08) !important;
@@ -295,7 +294,6 @@
     -webkit-border-radius: 200px;
     border-radius: 200px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     transform: scale(1, 1) translate(-50%);
     transform-origin: 50% 50%;
 }
@@ -360,7 +358,6 @@
     -webkit-border-radius: 50px;
     border-radius: 50px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     margin-bottom: 10px;
 }
 
@@ -509,7 +506,6 @@
     padding: 15px;
     display: block;
     background: #fff;
-    /*border: 2px solid $cc-red;*/
     font-weight: 500;
     font-size: 1rem;
     color: #f24949;
@@ -947,7 +943,6 @@
     -webkit-border-radius: 50px;
     border-radius: 50px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     color: #00aef2;
     cursor: pointer;
     font-weight: 600;
@@ -1108,21 +1103,13 @@
     margin-top: 15px;
     padding: 20px 15px 15px;
     background: #f8f8f8;
-    /* Old browsers */
     background: -moz-linear-gradient(top, #f8f8f8 0%, #fff 100%);
-    /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f8f8f8), color-stop(100%, #fff));
-    /* Chrome,Safari4+ */
     background: -webkit-linear-gradient(top, #f8f8f8 0%, #fff 100%);
-    /* Chrome10+,Safari5.1+ */
     background: -o-linear-gradient(top, #f8f8f8 0%, #fff 100%);
-    /* Opera 11.10+ */
     background: -ms-linear-gradient(top, #f8f8f8 0%, #fff 100%);
-    /* IE10+ */
     background: linear-gradient(to bottom, #f8f8f8 0%, #fff 100%);
-    /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1873f2', endColorstr='#00aef2', GradientType=0);
-    /* IE6-9 */
 }
 
 .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .prepay-outer .prepay-amt {
@@ -1172,7 +1159,6 @@
     -webkit-border-radius: 5px;
     border-radius: 5px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
 }
 
 .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .member-outer .member-list .member-add:hover {
@@ -1363,7 +1349,6 @@
 }
 
 .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter {
-    /*height: 50vh;*/
     overflow: auto;
 }
 
@@ -1586,7 +1571,6 @@
     -webkit-border-radius: 150px;
     border-radius: 150px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     color: #fff;
     font-size: 1.125rem;
     font-weight: 600;
@@ -1627,7 +1611,6 @@
     -webkit-border-radius: 200px;
     border-radius: 200px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     transform: scale(1, 1) translate(-50%);
     transform-origin: 50% 50%;
 }
