@@ -7,6 +7,7 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 import { projectConstants } from '../../../../../app.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CommunicationPopupComponent } from '../communication-popup/communication-popup.component';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-customer-booking-details',
@@ -16,7 +17,7 @@ import { CommunicationPopupComponent } from '../communication-popup/communicatio
 export class CustomerBookingDetailsComponent implements OnInit {
   @Input() waitlist_data;
   @Output() getHeight = new EventEmitter<any>();
-  bookingType;
+  @Input() bookingType;
   customer_label;
   privateNote = '';
   selectedMessage = {
@@ -27,6 +28,7 @@ export class CustomerBookingDetailsComponent implements OnInit {
   @ViewChild('details') elementView: ElementRef;
   addedHeight;
   provider_label;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   constructor(
     private provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
@@ -37,7 +39,9 @@ export class CustomerBookingDetailsComponent implements OnInit {
     private dialog: MatDialog
   ) {
     this.activated_route.queryParams.subscribe(params => {
-      this.bookingType = params.type;
+      if (params.type) {
+        this.bookingType = params.type;
+      }
     });
   }
 
@@ -95,8 +99,10 @@ export class CustomerBookingDetailsComponent implements OnInit {
     let customerId;
     if (this.bookingType === 'checkin') {
       customerId = this.waitlist_data.waitlistingFor[0].id;
-    } else {
+    } else if (this.bookingType === 'checkin') {
       customerId = this.waitlist_data.appmtFor[0].id;
+    } else {
+      customerId = this.waitlist_data.consumer.id;
     }
     const navigationExtras: NavigationExtras = {
       queryParams: { action: 'edit', id: customerId }

@@ -129,9 +129,10 @@
                                             currency:'&#8377;' }} Paid</span> </td>
                                 </ng-container>
                                 <ng-container *ngIf="source == 'waitlist' || source == 'waitlist-dashboard'">
-                                    <td>
-                                        {{record.token}}
-                                    </td>
+                                        <td> {{record.date | date: newDateFormat}}
+                                            <div *ngIf="record.token">Token#
+                                                {{record.token}} </div>
+                                        </td>
                                     <td>
                                         <ng-container
                                             *ngIf="record.waitlistingFor[0].firstName || record.waitlistingFor[0].lastName">
@@ -172,7 +173,9 @@
                                 </ng-container>
                                 <ng-container *ngIf="source == 'appt' || source == 'appt-dashboard'">
                                     <td>
-                                        {{getSingleTime(record.appmtTime)}}
+                                        {{record.appmtDate | date: newDateFormat}}
+                                        <div>
+                                        {{getSingleTime(record.appmtTime)}}</div>
                                     </td>
                                     <td>
                                         <ng-container

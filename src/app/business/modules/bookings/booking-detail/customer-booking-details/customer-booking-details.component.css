@@ -184,6 +184,9 @@
     .box-hgt {
         min-height: 315px !important;
     }
+    .donation-hgt {
+        min-height: 395px !important;
+    }
 }
 textarea {
    resize: none !important;

@@ -1,5 +1,21 @@
-<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 p-0 disp-md-flex box-hgt" #details>
-  <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12 padding-20px right-border bottom-border">
+<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 p-0 disp-md-flex box-hgt" #details [class.donation-hgt]="bookingType=='donation'">
+  <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12 p-0 bottom-border right-border" *ngIf="bookingType === 'donation'">
+    <div class="padding-20px">
+      <div class="card-title col-12 col-sm-7 col-lg-7 p-0">
+        <h3 class="service-name">
+          {{waitlist_data.service.name}}
+        </h3>
+        <div>
+          {{waitlist_data.date | date: newDateFormat}}
+        </div>
+        <div class="rupee-font">
+          {{waitlist_data.donationAmount | currency:'&#8377;' }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12 padding-20px bottom-border"
+    [class.right-border]="bookingType!='donation'">
     <div class="booking-details" *ngIf="bookingType === 'checkin'">
       <div class="booking-details-head">
         <div>
@@ -123,8 +139,58 @@
           *ngIf="waitlist_data.apptStatus!=='blocked'">Communication</button>
       </div>
     </div>
+    <div class="booking-details" *ngIf="bookingType === 'donation'">
+      <div class="booking-details-head">
+        <div>
+          <h5>
+            {{waitlist_data.donor.firstName | capitalizeFirst}} {{waitlist_data.donor.lastName |
+            capitalizeFirst}}
+          </h5>
+          <a (click)="editCustomer()">Edit Details</a>
+        </div>
+        <!-- <div class="age" *ngIf="waitlist_data.appmtFor[0].age">
+          <span class="value">{{getAge(waitlist_data.appmtFor[0].age)}} yrs</span>
+        </div> -->
+      </div>
+      <div class="booking-details-body">
+        <!-- <div class="jaldee-id" *ngIf="waitlist_data.appmtFor[0].memberJaldeeId">
+          <i class="fa fa-id-card-o icon"></i>
+          <span class="value">{{customer_label}} Id: {{waitlist_data.appmtFor[0].memberJaldeeId}}</span>
+        </div> -->
+        <div class="jaldee-id">
+          <i class="fa fa-id-card-o icon"></i>
+          <span class="value">Booking Id: {{waitlist_data.donationEncId}}</span>
+        </div>
+        <div class="contact-no" *ngIf="waitlist_data.donorPhoneNumber">
+          <i class="fa fa-mobile icon"></i>
+          <span class="value">{{waitlist_data.countryCode}} {{waitlist_data.donorPhoneNumber}}</span>
+        </div>
+        <!-- <div class="contact-no"
+          *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+          <i class="fa fa-mobile icon"></i>
+          <span class="value">WhatsApp # +{{
+            waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
+        </div> -->
+        <div class="email" *ngIf="waitlist_data.donorEmail">
+          <i class="fa fa-envelope icon"></i>
+          <span class="value">{{waitlist_data.donorEmail}}</span>
+        </div>
+        <div class="location">
+          <i class="fa fa-map-marker icon"></i>
+          <span class="value">{{waitlist_data.location.place}}</span>
+        </div>
+        <!-- <div class="gender-and-dob">
+          <div *ngIf="waitlist_data.appmtFor[0].gender" class="gender">
+            <i *ngIf="waitlist_data.appmtFor[0].gender === 'male'" class="fa fa-mars icon"></i>
+            <i *ngIf="waitlist_data.appmtFor[0].gender === 'female'" class="fa fa-venus icon"></i>
+            <span class="value">{{waitlist_data.appmtFor[0].gender | capitalizeFirst}}</span>
+          </div>
+        </div> -->
+        <button class="btn create-prescription-button" (click)="showCommunications()">Communication</button>
+      </div>
+    </div>
   </div>
-  <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12 padding-20px">
+  <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12 padding-20px" *ngIf="bookingType!='donation'">
     <div class="card-body records p-0">
       <div class="notes" *ngIf="waitlist_data.consumerNote && waitlist_data.consumerNote !== ''">
         <label class="no-margin">{{waitlist_data.service.consumerNoteTitle}}</label>

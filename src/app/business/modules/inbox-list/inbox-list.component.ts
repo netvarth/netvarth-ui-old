@@ -196,6 +196,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
       this.small_device_display = true;
       this.msgHeight = this.msgHeightTemp = 440;
       this.showChat = true;
+      if (this.height) {
+        this.msgHeight = this.msgHeightTemp = this.height;
+      }
     }
   }
   ngOnDestroy() {

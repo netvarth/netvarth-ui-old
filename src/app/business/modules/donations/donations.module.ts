@@ -12,6 +12,9 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
 import { RecordsDatagridModule } from '../bookings/records-datagrid/records-datagrid.module';
+import { InboxListModule } from '../inbox-list/inbox-list.module';
+import { CustomerBookingDetailsModule } from '../bookings/booking-detail/customer-booking-details/customer-booking-details.module';
+import { BookingDocumentsModule } from '../bookings/booking-documents/booking-documents.module';
 
 
 @NgModule({
@@ -29,7 +32,10 @@ import { RecordsDatagridModule } from '../bookings/records-datagrid/records-data
         Nl2BrPipeModule,
         QuestionnaireModule,
         CapitalizeFirstPipeModule,
-        RecordsDatagridModule
+        RecordsDatagridModule,
+        InboxListModule,
+        CustomerBookingDetailsModule,
+        BookingDocumentsModule
     ],
     exports: [DonationsComponent]
 })

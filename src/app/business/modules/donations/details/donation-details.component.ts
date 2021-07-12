@@ -12,16 +12,17 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 @Component({
     'selector': 'app-donation-details',
     'templateUrl': './donation-details.component.html',
-    styleUrls: ['./donation-details.component.css']
+    styleUrls: ['./donation-details.component.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../assets/css/style.bundle.css']
 })
 export class DonationDetailsComponent {
     uid;
     donationDetails: any = [];
     display_dateFormat = projectConstantsLocal.PIPE_DISPLAY_DATE_FORMAT;
     newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
-
     loading = false;
     customer_label = '';
+    customer;
+    height;
     constructor(public activaterouter: ActivatedRoute,
         public sharedFunctions: SharedFunctions,
         public providerservices: ProviderServices,
@@ -38,6 +39,7 @@ export class DonationDetailsComponent {
         this.loading = true;
         this.providerservices.getDonationByUid(uid).subscribe(data => {
             this.donationDetails = data;
+            this.customer = this.donationDetails.consumer.id;
             this.loading = false;
         });
     }

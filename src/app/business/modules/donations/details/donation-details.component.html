@@ -1,4 +1,4 @@
-<section class="">
+<!-- <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
             <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -6,7 +6,6 @@
         </h5>
     </div>
 </section>
-
 <section>
     <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
     <div class="card col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding min-hght" *ngIf="!loading">
@@ -52,7 +51,6 @@
                 </table>
             </div>
         </div>
-        <!-- Questionnaire starts-->
         <div class="col-md-8 col-xs-12 col-sm-12 col-lg-9 no-padding mgn-20 no-margin-small">
             <div class="card"
                 *ngIf="donationDetails && donationDetails.questionnaire && donationDetails.questionnaire.questionAnswers && donationDetails.questionnaire.questionAnswers.length > 0">
@@ -67,7 +65,49 @@
                 </div>
             </div>
         </div>
-        <!-- Questionnaire end-->
     </div>
     <div class="clearfix"></div>
+</section> -->
+
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Donation
+        </h5>
+    </div>
+</section>
+<section class="content p-4">
+    <div *ngIf="loading" class="card">
+        <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+    </div>
+    <div class="row pad10" *ngIf="!loading">
+        <div class="col-lg-8">
+            <div class="card card-custom mgn-bt-20 wave-success p-0 booking-details">
+                <app-customer-booking-details [waitlist_data]="donationDetails" [bookingType]="'donation'">
+                </app-customer-booking-details>
+            </div>
+        </div>
+        <div class="col-lg-4 no-padding-big mgn-bt-10">
+            <app-provider-inbox-list [customer]="customer" [provider]="0" [source]="'details'" [height]="250">
+            </app-provider-inbox-list>
+        </div>
+    </div>
+    <div class="appointments-and-doctors-row" *ngIf="!loading">
+        <div class="column">
+            <app-booking-documents [bookingType]="'donation'"></app-booking-documents>
+        </div>
+        <div class="column"
+            *ngIf="donationDetails && donationDetails.questionnaire && donationDetails.questionnaire.questionAnswers && donationDetails.questionnaire.questionAnswers.length > 0">
+            <div class="card">
+                <div class="card-header">
+                    <div>{{customer_label | capitalizeFirst}} info</div>
+                </div>
+                <div class="qnr-hgt">
+                    <app-questionnaire [source]="'proDonation'" [donationDetails]="donationDetails" [type]="'details'">
+                    </app-questionnaire>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>

@@ -14204,3 +14204,8 @@ font-weight: 700 !important;
   font-size: 14px !important;
 }
 /* Filter Code Ends */
+@media (max-width: 767px) {
+  .d-small-none {
+    display: none !important;
+  }
+}

@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -17,10 +18,11 @@ export class BookingDocumentsComponent implements OnInit {
   @Input() bookingType;
   @Input() waitlist_data;
   subscription: Subscription;
+  widget = false;
   constructor(private galleryService: GalleryService,
     private shared_services: SharedServices,
     private snackbarService: SnackbarService,
-    private dialog: MatDialog,
+    private dialog: MatDialog, private location: Location,
     private router: Router) {
     this.subscription = this.galleryService.getMessage().subscribe(input => {
       if (input && input.uuid) {
@@ -53,6 +55,11 @@ export class BookingDocumentsComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    if (this.bookingType) {
+      this.widget = true;
+    } else {
+      this.widget = false;
+    }
   }
   ngOnDestroy() {
     if (this.subscription) {
@@ -74,5 +81,8 @@ export class BookingDocumentsComponent implements OnInit {
   }
   gotoDocuments() {
     this.router.navigate(['provider/bookings/documents']);
+  }  
+  goBack() {
+    this.location.back();
   }
 }

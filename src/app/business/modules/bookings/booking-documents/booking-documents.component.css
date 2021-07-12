@@ -2,8 +2,6 @@
     box-shadow: none !important;
     border-radius: 0 !important;
     padding: 0 !important;
-    border: 1.75px solid #d0d0d0 !important;
-    border-radius: 10px !important;
 }
 .card.data-card .card-header {
     padding: 8px 10px !important;
@@ -26,8 +24,14 @@
 }
 .card-body {
     padding: 12px 15px !important;
+}
+.widgetStyle .card-body {
     height: 317px !important;
     overflow: auto !important;
+}
+.widgetStyle .data-card {
+    border: 1.75px solid #d0d0d0 !important;
+    border-radius: 10px !important;
 }
 .card-body > div {
     display: flex !important;
