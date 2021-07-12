@@ -156,7 +156,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     usersdialogRef: any;
     team:any=[];
     userNamelist: string;
-    maxuserLength=10;
+    maxuserLength=50;
 
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
