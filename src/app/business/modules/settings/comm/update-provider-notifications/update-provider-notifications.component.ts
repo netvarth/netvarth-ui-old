@@ -335,13 +335,13 @@ export class UpdateProviderNotificationsComponent implements OnInit {
         // 'Mobile number should have 10 digits';
         return;
       }
-      this.provider_services.telegramChat(this.removePlus(this.teleCountrycode), curTele).subscribe(data => {
-        this.chatId = data;
-        if (this.chatId === null) {
-          this.telegramInfo();
-        }
-      },
-      );
+      // this.provider_services.telegramChat(this.removePlus(this.teleCountrycode), curTele).subscribe(data => {
+      //   this.chatId = data;
+      //   if (this.chatId === null) {
+      //     this.telegramInfo();
+      //   }
+      // },
+      // );
       if (this.tele_arr.length === 0) {
         this.provider_services.telegramChat(this.removePlus(this.teleCountrycode), curTele).subscribe(data => {
           this.chatId = data;
