@@ -481,10 +481,41 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                   _this.provider_id = id;
                   _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
                     (uiconfig: any) => {
-                      if (uiconfig['iosApp'] && uiconfig['iosApp']['icon-180']) {
+                      if (uiconfig['iosApp']) {
                         this.iosConfig = true;
-                        document.getElementById('apple_touch_icon').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['icon-180']['src']);
-                        console.log(uiconfig['iosApp']['icon-180']['src']);
+                        if ( uiconfig['iosApp']['icon-180']) {
+                          document.getElementById('apple_touch_icon').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['icon-180']['src']);
+                        }
+                        if (uiconfig['iosApp']['screen-1242x2208']) {
+                          document.getElementById('screen_1242x2208').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-1242x2208']['src']);
+                        }  
+                        if (uiconfig['iosApp']['screen-1242x2688']) {
+                          document.getElementById('screen_1242x2688').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-1242x2688']['src']);
+                        }  
+                        if (uiconfig['iosApp']['screen-828x1792']) {
+                          document.getElementById('screen_828x1792').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-828x1792']['src']);
+                        }  
+                        if (uiconfig['iosApp']['screen-1125x2436']) {
+                          document.getElementById('screen_1125x2436').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-1125x2436']['src']);
+                        }  
+                        if (uiconfig['iosApp']['screen-750x1334']) {
+                          document.getElementById('screen_750x1334').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-750x1334']['src']);
+                        }  
+                         if (uiconfig['iosApp']['screen-640x1136']) {
+                          document.getElementById('screen_640x1136').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-640x1136']['src']);
+                        }  
+                         if (uiconfig['iosApp']['screen-1668x2388']) {
+                          document.getElementById('screen_1668x2388').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-1668x2388']['src']);
+                        }  
+                        if (uiconfig['iosApp']['screen-2048x2732']) {
+                          document.getElementById('screen_2048x2732').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-2048x2732']['src']);
+                        }  
+                        if (uiconfig['iosApp']['screen-1668x2224']) {
+                          document.getElementById('screen_1668x2224').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-1668x2224']['src']);
+                        }  
+                        if (uiconfig['iosApp']['screen-1536x2048']) {
+                          document.getElementById('screen_1536x2048').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-1536x2048']['src']);
+                        }                 
                       }
                       if (uiconfig['terms']) {
                         this.terms = true;
