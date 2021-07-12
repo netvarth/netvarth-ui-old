@@ -352,6 +352,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   filtericonTooltip = '';
   cloudTooltip = '';
   teams: any;
+  yesterdayDate;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -451,6 +452,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     if (this.server_date) {
       this.getTomorrowDate();
+      this.getYesterdayDate();
     }
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     if (this.active_user.adminPrivilege) {
@@ -1395,6 +1397,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.filter.future_appt_date = moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD');
     }
   }
+  getYesterdayDate() {
+    const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const serverdate = moment(server).format();
+    const servdate = new Date(serverdate);
+    this.yesterdayDate = this.maxday = this.endmaxday = new Date(moment(new Date(servdate)).add(-1, 'days').format('YYYY-MM-DD'));
+  }
   getFutureAppointments() {
     this.resetCheckList();
     if (this.groupService.getitemFromGroupStorage('appt_future_selQ')) {
@@ -1675,7 +1683,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.check_in_end_date) {
       this.maxday = this.filter.check_in_end_date;
     } else {
-      this.maxday = new Date();
+      this.maxday = this.yesterdayDate;
     }
     this.labelSelection();
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
@@ -1694,7 +1702,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.check_in_end_date) {
       this.maxday = this.filter.check_in_end_date;
     } else {
-      this.maxday = new Date();
+      this.maxday = this.yesterdayDate;
     }
     this.labelSelection();
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
