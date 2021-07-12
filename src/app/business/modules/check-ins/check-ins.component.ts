@@ -351,6 +351,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   accountSettings;
   teams: any;
   yesterdayDate;
+  @ViewChild('closebutton') closebutton;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -2445,6 +2446,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['provider', 'settings', 'general', 'locations']);
   }
   gotoCustomViews() {
+    this.closebutton.nativeElement.click();
     const navigationExtras: NavigationExtras = {
       queryParams: {
         type: 'checkin'

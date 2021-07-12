@@ -353,6 +353,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   cloudTooltip = '';
   teams: any;
   yesterdayDate;
+  @ViewChild('closebutton') closebutton;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -1813,6 +1814,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   //   this.router.navigate(['provider', 'settings', 'general', 'customview']);
   // }
   gotoCustomViews() {
+    this.closebutton.nativeElement.click();
     const navigationExtras: NavigationExtras = {
       queryParams: {
         type: 'appt'
