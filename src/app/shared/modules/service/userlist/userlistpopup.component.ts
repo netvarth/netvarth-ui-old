@@ -6,26 +6,53 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class UserlistpopupComponent implements OnInit {
   order: any = [];
-  displayusers: any= [];
-    users: any;
-    userslist: any;
+  displayusers:any;
+
+    users_list: any;
+  internalStatus: any;
+  team: any;
+  loading=true;
   constructor(
     public dialogRef: MatDialogRef<UserlistpopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.users = this.data.ids;
-    this.userslist = this.data.userlist
-    console.log(this.users);
-    for (let user of this.users) {
-        let details = this.userslist.filter(usr => usr.id == user);
-        if (details && details.length > 0) {
-            this.displayusers.push(details[0].firstName + ' ' + details[0].lastName );
-        }
-    }  
+ 
+   this.users_list=data.userlist;
+   this.team=data.team;
+   this.internalStatus=data.serviceStatus;
+  
   }
   ngOnInit() {
-    //this.locationMessage = this.medicine.instructions;
+    this.getOwnership(this.internalStatus);
   }
+  getOwnership(ownerShipData){
+    this.displayusers='';
+   if(ownerShipData.users &&ownerShipData.users.length>0){
+ 
+        ownerShipData.users.forEach(element => {
+            const userObject =  this.users_list.filter(user => user.id === parseInt(element)); 
+            console.log(userObject);
+            this.displayusers=this.displayusers+userObject[0].firstName+' '+userObject[0].lastName+','
+           });
+    
+          this.displayusers= this.displayusers.replace(/,\s*$/, '')
+          this.loading=false;
+            
+       }
+       if(ownerShipData.teams &&ownerShipData.teams.length>0){
+
+        ownerShipData.teams.forEach(element => {
+            const userObject =  this.team.filter(team => team.id === parseInt(element)); 
+            console.log(userObject);
+            this.displayusers=this.displayusers+userObject[0].name+','
+           }); 
+            this.displayusers= this.displayusers.replace(/,\s*$/, '');
+            this.loading=false;
+        }
+          
+
+
+}
   closeDialog() {
     this.dialogRef.close();
   }
