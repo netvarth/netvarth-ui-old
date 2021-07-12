@@ -7170,3 +7170,7 @@ font-weight: 600;
   font-size: 0.9rem;
 font-weight: 600;
 }
+.teleConatiner {
+  height: 100vh !important;
+  background-color: #50a9f7;
+}

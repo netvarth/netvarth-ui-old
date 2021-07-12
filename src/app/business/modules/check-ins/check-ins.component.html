@@ -46,7 +46,7 @@
                
             
             </li> -->
-            <ng-container *ngIf="!apiloading && accountSettings.availability && account_type == 'BRANCH' && active_user.userType == 1 && qAvailability">
+            <ng-container *ngIf="!apiloading && (accountSettings && accountSettings.availability) && account_type == 'BRANCH' && active_user.userType == 1 && qAvailability">
             <li class="status-buttons-li make-unavailable pull-right mgn-rt-15" *ngIf="qAvailability.availableNow">
               <span class="status-val">I'm available till {{qAvailability.timeRange.eTime}}</span>
               <span class="btn btn-danger" (click)="createInstantQ()" *ngIf="instaQid">Make me unavailable</span>

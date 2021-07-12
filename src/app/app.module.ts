@@ -119,6 +119,7 @@ import { TermsconditionComponent } from './shared/components/business-page-home/
 import { ShippingdeliveryComponent } from './shared/components/business-page-home/shippingdelivery/shippingdelivery.component';
 import { RefundcancelComponent } from './shared/components/business-page-home/refundcancel/refundcancel.component';
 import { PrivacyComponent } from './shared/components/business-page-home/privacy/privacy.component';
+import { FileReaderService } from './shared/services/file-reader.service';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -244,6 +245,7 @@ export function init_app(globalService: GlobalService) {
     },
     AuthService,
     ConsumerAuthService,
+    FileReaderService,
     SharedServices,
     GlobalService,
     SharedFunctions,

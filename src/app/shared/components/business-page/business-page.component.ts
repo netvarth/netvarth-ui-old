@@ -394,7 +394,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.loc_details = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
     this.jdnTooltip = this.wordProcessor.getProjectMesssages('JDN_TOOPTIP');
-   
+
     const isMobile = {
       Android: function () {
         return navigator.userAgent.match(/Android/i);
@@ -827,17 +827,17 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.customAppIOSPopup.nativeElement.style.display = 'none';
       //       // Detects if device is on iOS 
 
-      if(this.iosConfig) {
+      if (this.iosConfig) {
         const isIOS = () => {
           const userAgent = window.navigator.userAgent.toLowerCase();
-          return /iphone|ipad|ipod/.test( userAgent );
+          return /iphone|ipad|ipod/.test(userAgent);
         }
         const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);
         // Checks if should display install popup notification:
         if (isIOS() && !isInStandaloneMode()) {
           this.customAppIOSPopup.nativeElement.style.display = 'block';
         }
-      }      
+      }
       // const path = this.customAppSerice.getManifest(res, projectConstantsLocal.UIS3PATH + this.provider_id, projectConstants.PATH);
       if (this.accountProperties) {
         const path = projectConstantsLocal.UIS3PATH + this.provider_id + '/manifest.json';
@@ -1854,7 +1854,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
             }
             else {
-            _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
+              _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
             }
           }
         } else {
@@ -2603,16 +2603,20 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.userCount = 0;
     if (this.showDepartments) {
       if (this.userId) {
-        for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
-          if (this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex]['provider']['id'] === JSON.parse(this.userId) && this.apptServices[aptIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
-            this.serviceCount++;
+        if (this.apptServices) {
+          for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+            if (this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex]['provider']['id'] === JSON.parse(this.userId) && this.apptServices[aptIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+              this.serviceCount++;
+            }
           }
         }
-        for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
-          if (this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex]['provider']['id'] === JSON.parse(this.userId) && this.wlServices[wlIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
-            this.serviceCount++;
+        if (this.wlServices) {
+          for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+            if (this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex]['provider']['id'] === JSON.parse(this.userId) && this.wlServices[wlIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+              this.serviceCount++;
+            }
           }
         }
       } else {
@@ -2622,16 +2626,20 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           deptItem['departmentCode'] = this.deptUsers[dIndex]['departmentCode'];
           deptItem['departmentId'] = this.deptUsers[dIndex]['departmentId'];
           deptItem['departmentItems'] = [];
-          for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
-            if (!this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex].serviceAvailability && deptItem['departmentId'] === this.apptServices[aptIndex].department) {
-              deptItem['departmentItems'].push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
-              this.serviceCount++;
+          if (this.apptServices) {
+            for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+              if (!this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex].serviceAvailability && deptItem['departmentId'] === this.apptServices[aptIndex].department) {
+                deptItem['departmentItems'].push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+                this.serviceCount++;
+              }
             }
           }
-          for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
-            if (!this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex].serviceAvailability && deptItem['departmentId'] === this.wlServices[wlIndex].department) {
-              deptItem['departmentItems'].push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
-              this.serviceCount++;
+          if (this.wlServices) {
+            for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+              if (!this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex].serviceAvailability && deptItem['departmentId'] === this.wlServices[wlIndex].department) {
+                deptItem['departmentItems'].push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+                this.serviceCount++;
+              }
             }
           }
           if (!this.userId && (this.settingsjson.enabledWaitlist || this.apptSettingsJson.enableAppt)) {
@@ -2653,37 +2661,47 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       // tslint:disable-next-line:no-shadowed-variable
       const servicesAndProviders = [];
       if (this.userId) {
-        for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
-          if (this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex]['provider']['id'] === JSON.parse(this.userId) && this.apptServices[aptIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
-            this.serviceCount++;
+        if (this.apptServices) {
+          for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+            if (this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex]['provider']['id'] === JSON.parse(this.userId) && this.apptServices[aptIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+              this.serviceCount++;
+            }
           }
         }
-        for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
-          if (this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex]['provider']['id'] === JSON.parse(this.userId) && this.wlServices[wlIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
-            this.serviceCount++;
+        if (this.wlServices) {
+          for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+            if (this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex]['provider']['id'] === JSON.parse(this.userId) && this.wlServices[wlIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+              this.serviceCount++;
+            }
           }
         }
       } else {
-        for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
-          if (!this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
-            this.serviceCount++;
+        if (this.apptServices) {
+          for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+            if (!this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+              this.serviceCount++;
+            }
           }
         }
-        for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
-          if (!this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
-            this.serviceCount++;
+        if (this.wlServices) {
+          for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+            if (!this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+              this.serviceCount++;
+            }
           }
         }
         if (this.settingsjson.enabledWaitlist || this.apptSettingsJson.enableAppt) {
-          for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
-            this.deptUsers[dIndex]['waitingTime'] = this.waitlisttime_arr[dIndex];
-            this.deptUsers[dIndex]['apptTime'] = this.appttime_arr[dIndex];
-            servicesAndProviders.push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
-            this.userCount++;
+          if (this.deptUsers) {
+            for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
+              this.deptUsers[dIndex]['waitingTime'] = this.waitlisttime_arr[dIndex];
+              this.deptUsers[dIndex]['apptTime'] = this.appttime_arr[dIndex];
+              servicesAndProviders.push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
+              this.userCount++;
+            }
           }
         }
       }
@@ -2704,57 +2722,58 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.orderstatus && this.userId == null) {
       this.shared_services.getConsumerCatalogs(account_Id).subscribe(
         (catalogs: any) => {
-          this.activeCatalog = catalogs[0];
-          this.orderType = this.activeCatalog.orderType;
-          if (this.activeCatalog.catalogImages && this.activeCatalog.catalogImages[0]) {
-            this.catalogImage = this.activeCatalog.catalogImages[0].url;
-            this.catalogimage_list_popup = [];
-            const imgobj = new Image(0,
-              { // modal
-                img: this.activeCatalog.catalogImages[0].url,
-                description: ''
-              });
-            this.catalogimage_list_popup.push(imgobj);
-          }
-          this.catlogArry();
-
-
-          this.advance_amount = this.activeCatalog.advanceAmount;
-          if (this.activeCatalog.pickUp) {
-            if (this.activeCatalog.pickUp.orderPickUp && this.activeCatalog.nextAvailablePickUpDetails) {
-              this.store_pickup = true;
-              this.choose_type = 'store';
-              this.sel_checkindate = this.activeCatalog.nextAvailablePickUpDetails.availableDate;
-              this.nextAvailableTime = this.activeCatalog.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.activeCatalog.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
+          if (catalogs.lenght > 0) {
+            this.activeCatalog = catalogs[0];
+            this.orderType = this.activeCatalog.orderType;
+            if (this.activeCatalog.catalogImages && this.activeCatalog.catalogImages[0]) {
+              this.catalogImage = this.activeCatalog.catalogImages[0].url;
+              this.catalogimage_list_popup = [];
+              const imgobj = new Image(0,
+                { // modal
+                  img: this.activeCatalog.catalogImages[0].url,
+                  description: ''
+                });
+              this.catalogimage_list_popup.push(imgobj);
             }
-          }
-          if (this.activeCatalog.homeDelivery) {
-            if (this.activeCatalog.homeDelivery.homeDelivery && this.activeCatalog.nextAvailableDeliveryDetails) {
-              this.home_delivery = true;
+            this.catlogArry();
 
-              if (!this.store_pickup) {
-                this.choose_type = 'home';
-                this.deliveryCharge = this.activeCatalog.homeDelivery.deliveryCharge;
-                this.sel_checkindate = this.activeCatalog.nextAvailableDeliveryDetails.availableDate;
-                this.nextAvailableTime = this.activeCatalog.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.activeCatalog.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+
+            this.advance_amount = this.activeCatalog.advanceAmount;
+            if (this.activeCatalog.pickUp) {
+              if (this.activeCatalog.pickUp.orderPickUp && this.activeCatalog.nextAvailablePickUpDetails) {
+                this.store_pickup = true;
+                this.choose_type = 'store';
+                this.sel_checkindate = this.activeCatalog.nextAvailablePickUpDetails.availableDate;
+                this.nextAvailableTime = this.activeCatalog.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.activeCatalog.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
               }
             }
-          }
-          this.shared_services.setOrderDetails(this.activeCatalog);
-          if (this.activeCatalog && this.activeCatalog.catalogItem) {
-            for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
-              const catalogItemId = this.activeCatalog.catalogItem[itemIndex].id;
-              const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
-              const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
-              const showpric = this.activeCatalog.showPrice;
-              if (this.activeCatalog.catalogItem[itemIndex].item.isShowOnLandingpage) {
-                orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item, 'showpric': showpric });
-                this.itemCount++;
+            if (this.activeCatalog.homeDelivery) {
+              if (this.activeCatalog.homeDelivery.homeDelivery && this.activeCatalog.nextAvailableDeliveryDetails) {
+                this.home_delivery = true;
+
+                if (!this.store_pickup) {
+                  this.choose_type = 'home';
+                  this.deliveryCharge = this.activeCatalog.homeDelivery.deliveryCharge;
+                  this.sel_checkindate = this.activeCatalog.nextAvailableDeliveryDetails.availableDate;
+                  this.nextAvailableTime = this.activeCatalog.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.activeCatalog.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+                }
               }
             }
+            this.shared_services.setOrderDetails(this.activeCatalog);
+            if (this.activeCatalog && this.activeCatalog.catalogItem) {
+              for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
+                const catalogItemId = this.activeCatalog.catalogItem[itemIndex].id;
+                const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
+                const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
+                const showpric = this.activeCatalog.showPrice;
+                if (this.activeCatalog.catalogItem[itemIndex].item.isShowOnLandingpage) {
+                  orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item, 'showpric': showpric });
+                  this.itemCount++;
+                }
+              }
+            }
+            this.orderItems = orderItems;
           }
-          this.orderItems = orderItems;
-
         }
       );
     }
@@ -3010,17 +3029,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
   }
-  termsClicked() {
-    let queryParams = {
-      'target': 'terms'
-    };
+  footerClicked(selectedItem) {
     let navigationExtras: NavigationExtras = {
-      queryParams: queryParams
-    }
+      queryParams: { 'target': selectedItem }
+    };
     this.router.navigate([this.accEncUid, 'home'], navigationExtras);
-  }
-  privacyClicked() {
-    this.router.navigate([this.accEncUid, 'home']);
   }
   dashboardClicked() {
     const _this = this;

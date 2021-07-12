@@ -73,7 +73,6 @@ export class UpdateProviderNotificationsComponent implements OnInit {
   chatId;
   teleNum: string;
   post_data: any[];
-  telegram_num: string;
   isValid;
   tele_num: any;
   val: any = [];
@@ -285,7 +284,6 @@ export class UpdateProviderNotificationsComponent implements OnInit {
         return;
       }
       if (this.ph_arr.length === 0) {
-      console.log(this.ph_arr);
       if (this.smsCountrycode) {
         const val = {
           'number': curphone,
@@ -298,7 +296,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
           'number': curphone,
           'countryCode': '91'
         }
-        this.tele_arr.push(val);
+        this.ph_arr.push(val);
       }
     }
     else {
@@ -338,14 +336,13 @@ export class UpdateProviderNotificationsComponent implements OnInit {
         return;
       }
       if (this.tele_arr.length === 0) {
-          this.provider_services.telegramChat(this.teleCountrycode,curTele).subscribe(data => {
+          this.provider_services.telegramChat(this.removePlus(this.teleCountrycode),curTele).subscribe(data => {
           this.chatId = data;
           if(this.chatId === null){
             this.telegramInfo();
           }
       },
       );
-        console.log(this.tele_arr);
         if (this.teleCountrycode) {
           const val = {
             'number': curTele,
@@ -369,7 +366,15 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       this.notifyTele = '';
     }
   }
+  removePlus(countryCode){
+    if(countryCode.startsWith('+')){
+      countryCode = countryCode.substring(1);
+    }
+    return countryCode;
+  }
+ 
   isTeleNumExists(curTele) {
+    // this.removePlus(this.teleCountrycode)
     if (this.teleCountrycode) {
       this.val = {
         'number': curTele,
@@ -387,7 +392,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         } else {
           this.tele_arr.push(this.val);
-          this.provider_services.telegramChat(this.teleCountrycode,curTele).subscribe(data => {
+          this.provider_services.telegramChat(this.removePlus(this.teleCountrycode),curTele).subscribe(data => {
             this.chatId = data;
             if(this.chatId === null){
               this.telegramInfo();
@@ -425,9 +430,6 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       height: '30%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'full-screen-modal', 'telegramPopupClass'],
       disableClose: true,
-      data: {
-        telegramNum: this.telegram_num
-      }
     });
     dialogref.afterClosed().subscribe(
       result => {
@@ -463,7 +465,6 @@ export class UpdateProviderNotificationsComponent implements OnInit {
         return;
       }
       if (this.cheknPushph_arr.length === 0) {
-        console.log(this.cheknPushph_arr);
         if (this.pushCountrycode) {
           const val = {
             'number': curphone,
@@ -562,7 +563,6 @@ export class UpdateProviderNotificationsComponent implements OnInit {
         return;
       }
       if (this.ph1_arr.length === 0) {
-        console.log(this.ph1_arr);
         if (this.tele1Countrycode) {
           const val = {
             'number': curphone1,
@@ -610,7 +610,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
         return;
       }
       if (this.tele1_arr.length === 0) {
-        this.provider_services.telegramChat(this.tele1Countrycode,curtele1).subscribe(data => {
+        this.provider_services.telegramChat(this.removePlus(this.tele1Countrycode),curtele1).subscribe(data => {
           this.chatId = data;
           if(this.chatId === null){
             this.telegramInfo();
@@ -663,7 +663,6 @@ export class UpdateProviderNotificationsComponent implements OnInit {
         return;
       }
       if (this.cheknCancelPushph_arr.length === 0) {
-        console.log(this.cheknCancelPushph_arr);
         if (this.push1Countrycode) {
           const val = {
             'number': curphone,
@@ -750,7 +749,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' }); 
         } else {
           this.tele1_arr.push(this.val);
-          this.provider_services.telegramChat(this.tele1Countrycode,curtele1).subscribe(data => {
+          this.provider_services.telegramChat(this.removePlus(this.tele1Countrycode),curtele1).subscribe(data => {
             this.chatId = data;
             if(this.chatId === null){
               this.telegramInfo();

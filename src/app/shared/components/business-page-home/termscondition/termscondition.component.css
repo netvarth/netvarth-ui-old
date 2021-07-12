@@ -1,7 +1,9 @@
-.fb{
-    color: black;
-}
-.fontmodel{
-    font-size: medium;
-color: black;
+.fontmodel, p{
+    line-height: 30px !important;
+    text-align: justify;
+
+} 
+h2{
+    margin-top: 15px;
+    font-size: 1.2rem !important;
 }

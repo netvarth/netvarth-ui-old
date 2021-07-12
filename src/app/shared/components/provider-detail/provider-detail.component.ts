@@ -442,7 +442,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     let firstCheckin = true;
     if (this.activeUser) {
       this.checkinProviderList = this.activeUser.checkedInProviders;
-      if (this.checkinProviderList.length > 0) {
+      if (this.checkinProviderList && this.checkinProviderList.length > 0) {
         if (this.checkinProviderList.includes(this.provider_bussiness_id)) {
           firstCheckin = false;
           console.log('already taken');
@@ -1741,8 +1741,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
       }
       else {
-      this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
-       }
+        this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
+      }
     } else if (this.userType === '') {
       const passParam = { callback: 'appointment', current_provider: current_provider, serviceType: service.serviceType };
       this.doLogin('consumer', passParam);
@@ -2339,7 +2339,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.serviceCount++;
             }
           }
-        } if (this.wlServices) {
+        }
+        if (this.wlServices) {
           for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
             if (this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex]['provider']['id'] === this.userId && this.wlServices[wlIndex].serviceAvailability) {
               servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
@@ -2354,16 +2355,20 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           deptItem['departmentCode'] = this.deptUsers[dIndex]['departmentCode'];
           deptItem['departmentId'] = this.deptUsers[dIndex]['departmentId'];
           deptItem['departmentItems'] = [];
-          for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
-            if (!this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex].serviceAvailability && deptItem['departmentId'] === this.apptServices[aptIndex].department) {
-              deptItem['departmentItems'].push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
-              this.serviceCount++;
+          if (this.apptServices) {
+            for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+              if (!this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex].serviceAvailability && deptItem['departmentId'] === this.apptServices[aptIndex].department) {
+                deptItem['departmentItems'].push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+                this.serviceCount++;
+              }
             }
           }
-          for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
-            if (!this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex].serviceAvailability && deptItem['departmentId'] === this.wlServices[wlIndex].department) {
-              deptItem['departmentItems'].push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
-              this.serviceCount++;
+          if (this.wlServices) {
+            for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+              if (!this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex].serviceAvailability && deptItem['departmentId'] === this.wlServices[wlIndex].department) {
+                deptItem['departmentItems'].push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+                this.serviceCount++;
+              }
             }
           }
           if (!this.userId && (this.settingsjson && this.settingsjson.enabledWaitlist || this.apptSettingsJson && this.apptSettingsJson.enableAppt)) {
@@ -2385,29 +2390,37 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       // tslint:disable-next-line:no-shadowed-variable
       const servicesAndProviders = [];
       if (this.userId) {
-        for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
-          if (this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex]['provider']['id'] === this.userId && this.apptServices[aptIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
-            this.serviceCount++;
+        if (this.apptServices) {
+          for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+            if (this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex]['provider']['id'] === this.userId && this.apptServices[aptIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+              this.serviceCount++;
+            }
           }
         }
-        for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
-          if (this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex]['provider']['id'] === this.userId && this.wlServices[wlIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
-            this.serviceCount++;
+        if (this.wlServices) {
+          for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+            if (this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex]['provider']['id'] === this.userId && this.wlServices[wlIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+              this.serviceCount++;
+            }
           }
         }
       } else {
-        for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
-          if (!this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
-            this.serviceCount++;
+        if (this.apptServices) {
+          for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+            if (!this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+              this.serviceCount++;
+            }
           }
         }
-        for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
-          if (!this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
-            this.serviceCount++;
+        if (this.wlServices) {
+          for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+            if (!this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+              this.serviceCount++;
+            }
           }
         }
         if (this.settingsjson && this.settingsjson.enabledWaitlist || this.apptSettingsJson && this.apptSettingsJson.enableAppt) {
