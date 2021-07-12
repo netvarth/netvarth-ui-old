@@ -8,6 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
 import { AssignTeam } from './assign-team.component';
 import { AssignTeamRoutingModule } from './assign-team.routing.module';
+import { TeamMembersComponent } from './team-members/team-members.component';
+import { MaterialModule } from '../common/material.module';
 
 
 
@@ -20,12 +22,16 @@ import { AssignTeamRoutingModule } from './assign-team.routing.module';
       AssignTeamRoutingModule,
       MatInputModule,
       FormsModule,
-      LoadingSpinnerModule
+      LoadingSpinnerModule,
+      CommonModule,
+        MaterialModule,
+     
       
     ],
     declarations: [
     //    UserServiceChnageComponent 
-       AssignTeam
+       AssignTeam,
+    TeamMembersComponent
     ],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
