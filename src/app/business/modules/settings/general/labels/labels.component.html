@@ -61,11 +61,13 @@
                                         <h3 (click)="goLabelDetail(label)" class="pointer-cursor">
                                             {{label.displayName | capitalizeFirst}}</h3> 
                                             
-                                            <span  *ngIf="label.ownershipDetails && label.ownershipDetails.users && label.ownershipDetails.users.length > 0">
-                                                <div >
-                                                    <span>{{getUsersList(label.ownershipDetails.users)}}</span>
+                                     
+                                                <div *ngIf="label.ownershipDetails">
+                                                     <div class="smallFont"> Permitted Users/Team</div>
+                                                    <span class="ownership">{{getOwnership(label.ownershipDetails)}}</span>
+                                         
                                                 </div>
-                                            </span>
+                                       
                                             
                                             <!-- <span class="layout_name">
                                                     ({{label.label | capitalizeFirst}})</span> -->

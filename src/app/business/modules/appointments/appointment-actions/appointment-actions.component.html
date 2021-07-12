@@ -18,7 +18,7 @@
         </p>
         <p *ngIf="action === 'status' &&statusList && statusList.length == 0">Current  Status: {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}</p>
         <p *ngIf="action === 'status' &&statusList && statusList.length > 0">Current External Status: {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}</p>
-        <p *ngIf="action === 'status'&&statusList && statusList.length > 0">Current Internal Status: {{appt.internalStatus}}</p>
+        <p *ngIf="action === 'status'&&statusList && statusList.length > 0">Current Internal Status: {{appt.internalStatus || 'Nil'}}</p>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro" *ngIf="action === ''">
         <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && !data.NoViewDetail"

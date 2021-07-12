@@ -20,7 +20,7 @@
         <p *ngIf="checkin.token">Token: {{checkin.token}}</p>
         <p *ngIf="action === 'status' &&statusList && statusList.length == 0">Current  Status: {{check_in_statuses[getStatusLabel(checkin.waitlistStatus)]}}</p>
         <p *ngIf="action === 'status' &&statusList && statusList.length > 0">Current External Status: {{check_in_statuses[getStatusLabel(checkin.waitlistStatus)]}}</p>
-        <p *ngIf="action === 'status'&&statusList && statusList.length > 0">Current Internal Status: {{checkin.internalStatus}}</p>
+        <p *ngIf="action === 'status'&&statusList && statusList.length > 0">Current Internal Status: {{checkin.internalStatus ||'Nil'}}</p>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro" *ngIf="action === ''">
         <!-- <div class="action-box pointer-cursor"
