@@ -20,6 +20,12 @@
     padding-top: 70px;
 
 }
+.images{
+  height: 100px !important;
+    width: 100px !important;
+    padding-top: 70px;
+
+}
 @media  (max-width: 750px)  {
   .btt{
     color: black;
@@ -70,5 +76,5 @@
 
 .teleConatiner {
   height: 100vh !important;
-  background-color: #50a9f7;
+  background-color: rgb(115, 180, 237);
 }
