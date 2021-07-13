@@ -1018,6 +1018,7 @@ export class BranchUsersComponent implements OnInit {
         // this.routerobj.navigate(['provider', 'settings', 'general', 'users']);
         this.showteams = true;
         this.showusers = false;
+        this.selectedGroup = 'all';
 
     }
     showteamsres() {
