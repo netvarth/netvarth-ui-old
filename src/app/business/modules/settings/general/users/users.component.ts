@@ -150,7 +150,7 @@ export class BranchUsersComponent implements OnInit {
     locIds: any = [];
     newlyCreatedGroupId;
     showteams = false;
-    showusers = true;
+    showusers = false;
     selecteTeamdUsers: any = [];
     constructor(
         private router: Router,
@@ -194,6 +194,14 @@ export class BranchUsersComponent implements OnInit {
             this.groups = data;
             console.log(this.groups);
             this.teamLoaded = false;
+            if(this.groups.length > 0){
+                this.showteams = true;
+                this.showusers = false;
+            }
+            if(this.groups.length == 0){
+                this.showteams = false;
+                this.showusers = true;
+            }
             if (groupId) {
                 console.log("hi");
 

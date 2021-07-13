@@ -38,30 +38,31 @@
   <div class="card title-gb">
       <h5 class="mgn-up-10">
           <a class="user-title">
-            <a (click)="showallusers()" class="btn mb-2 action-button mgn-lt-5"><u> users</u></a>
-            <a (click)="showteamsres()" class="btn mb-2 action-button mgn-lt-5 "><u>teams </u></a>
+            <a (click)="showallusers()" class="btn mb-2 action-button mgn-lt-5"  *ngIf="!teamLoaded && groups.length == 0"><u> users</u></a>
+            <a (click)="showteamsres()" class="btn mb-2 action-button mgn-lt-5 " *ngIf="!teamLoaded && groups.length > 0"><u>teams </u></a>
+          </a>
+          <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" 
+          class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5">
+            <button type="button"  [matMenuTriggerFor]="appMenu" class="btn btn mb-2 action-button  dropdown-toggle  pull-right btn-primary action-button-add"> 
+              Actions</button>
+            <mat-menu #appMenu="matMenu">
+                <button mat-menu-item  (click)="addBranchSP()" >
+                    <i class="fa fa-plus"></i>User
+                </button>
+                <button  mat-menu-item  *ngIf="selectedGroup == 'all'" data-toggle="modal" data-target="#exampleModalCenter">
+                    Create Team
+                </button>
+                <button mat-menu-item *ngIf="(loc_list && loc_list.length > 1)" (click)="addlocation()">
+                    Assign Locations
+                </button>
+            </mat-menu>
           </a>
           <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-right">
               <i class="icon-filter-one">
               </i>
           </a>
       </h5>
-      <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" 
-      class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5">
-        <button type="button"  [matMenuTriggerFor]="appMenu" class="btn btn mb-2 action-button  dropdown-toggle  pull-right btn-primary action-button-add"> 
-          Actions</button>
-        <mat-menu #appMenu="matMenu">
-            <button mat-menu-item  (click)="addBranchSP()" >
-                <i class="fa fa-plus"></i>User
-            </button>
-            <button  mat-menu-item  *ngIf="selectedGroup == 'all'" data-toggle="modal" data-target="#exampleModalCenter">
-                Create Team
-            </button>
-            <button mat-menu-item *ngIf="(loc_list && loc_list.length > 1)" (click)="addlocation()">
-                Assign Locations
-            </button>
-        </mat-menu>
-      </a>
+     
   </div>
 </section>
  <!-- ***close Header part for mobile***** -->
@@ -241,7 +242,7 @@
                       </span>
                     <span class="card-label font-1 font-weight-bolder text-dark"
                       *ngIf="selectedGroup !== 'all'">{{selectedGroup.name}}</span>
-                    <div class="sel-group-desc">{{selectedGroup.description}}</div>
+                    <!-- <div class="sel-group-desc">{{selectedGroup.description}}</div> -->
                   </h3>
              </div>
              <div class="col-sm-12 col-lg-8 col-xs-12 col-md-12 mb-4">
@@ -806,7 +807,8 @@
            <div class="p-3">
                 <h3 class="align-items-start flex-column">
                 <!-- <div class="waitlist-box-check"> -->
-                  <span class="fa fa-arrow-left pointer-cursor  waitlist-box-check" (click)="redirecToUsers()"> </span>&nbsp;&nbsp;
+                  <span *ngIf="!teamLoaded && groups.length > 0" class="fa fa-arrow-left pointer-cursor  waitlist-box-check" (click)="redirecToUsers()"> </span>
+                  &nbsp;
                 <!-- </div> -->
                   <span class="card-label font-1 font-weight-bolder text-dark"
                     *ngIf="selectedGroup == 'all' && groups.length > 0">All
@@ -814,7 +816,7 @@
                     </span>
                   <span class="card-label font-1 font-weight-bolder text-dark"
                     *ngIf="selectedGroup !== 'all'">{{selectedGroup.name}}</span>
-                  <div class="sel-group-desc">{{selectedGroup.description}}</div>
+                  <!-- <div class="sel-group-desc">{{selectedGroup.description}}</div> -->
                 </h3>
            </div>
            <div class="col-sm-12 col-lg-8 col-xs-12 col-md-12 mb-4">
