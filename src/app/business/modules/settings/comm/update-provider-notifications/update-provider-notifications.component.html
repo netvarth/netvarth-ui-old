@@ -4,11 +4,16 @@
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
 </h1>
+
 <mat-dialog-content>
     <div class="rw col-md-12 mgn-bt-20">
+        <!-- <span class="notification" style="font-weight: 600">Send Telegram</span><mat-slide-toggle class="example-margin" (change)="handleTelegramSettings($event)"
+        [(ngModel)]="SelTelegramNotify">
+        </mat-slide-toggle> -->
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
         <div class="form-group" *ngIf="!api_loading">
             <div class="disp-flex">
+               
                 <span *ngIf="data.type === 'Token'" class="notification" style="font-weight: 600">Notify whenever a
                     token is
                     generated</span>
@@ -42,8 +47,10 @@
                         avoid undelivered SMS'}}</div>
                     <div class="form-group mgn-up-10" *ngIf="sms">
                         <div class="input-group mb-3 phadd">
-                            <input class="form-control" style="max-width: 50px !important;" type="text" readonly
-                                value="+91">
+                            <!-- <input class="form-control" style="max-width: 50px !important;" type="text"
+                                value="+91"> -->
+                            <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
+                                 [(ngModel)]="smsCountrycode" minlength="2" maxlength="4">
                             <input type="text" class="form-control" placeholder="Phonenumber"
                                 (keypress)="isNumeric($event)" [(ngModel)]="notifyphonenumber" minlength="0"
                                 maxlength="10">
@@ -53,10 +60,11 @@
                         </div>
                     </div>
                     <ul class="pad-left-20" *ngIf="ph_arr.length > 0">
-                        <li *ngFor="let phne of ph_arr">+91 {{phne}} <i class="pointer-cursor icon-delete"
+                        <li *ngFor="let phne of ph_arr">{{phne.countryCode}} {{' '}} {{phne.number}}<i class="pointer-cursor icon-delete"
                                 (click)="removePhEmail(phne, ph_arr, 'newcheckin')"></i></li>
                     </ul>
                 </li>
+               
                 <li>
                     <span class="notification"> via Email</span>
                     <!-- <span [class.icon-add]="!email" [class.icon-minus]="email" (click)="emailAddClicked()"></span> -->
@@ -84,8 +92,10 @@
                         (click)="cheknPushAddClicked()">Add</span>
                     <div class="form-group mgn-up-10" *ngIf="cheknPushph">
                         <div class="input-group mb-3 phadd">
-                            <input class="form-control" style="max-width: 50px !important;" type="text" readonly
-                                value="+91">
+                            <!-- <input class="form-control" style="max-width: 50px !important;" type="text" readonly
+                                value="+91"> -->
+                                <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
+                                [(ngModel)]="pushCountrycode" minlength="2" maxlength="4">
                             <input type="text" class="form-control" placeholder="Phonenumber"
                                 (keypress)="isNumeric($event)" [(ngModel)]="notifycheknPushphonenumber" minlength="0"
                                 maxlength="10">
@@ -95,8 +105,31 @@
                         </div>
                     </div>
                     <ul class="pad-left-20" *ngIf="cheknPushph_arr.length > 0">
-                        <li *ngFor="let phne of cheknPushph_arr">+91 {{phne}} <i class="pointer-cursor icon-delete"
+                        <li *ngFor="let phne of cheknPushph_arr">{{phne.countryCode}} {{' '}} {{phne.number}}<i class="pointer-cursor icon-delete"
                                 (click)="removePhEmail(phne, cheknPushph_arr, 'newcheckin')"></i></li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="notification"> via Telegram </span>
+                    <!-- <span [class.disabled]="is_noSMS" [class.icon-add]="!sms" [class.icon-minus]="sms"
+                        (click)="smsAddClicked()"></span> -->
+                    <span class="noti-add-btn" (click)="telegramAddClicked()">Add</span>
+                   
+                    <div class="form-group mgn-up-10" *ngIf="telegram">
+                        <div class="input-group mb-3 phadd">
+                            <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
+                                 [(ngModel)]="teleCountrycode" minlength="2" maxlength="4" (keypress)="isNumericSign($event)">
+                            <input type="text" class="form-control" placeholder="Phonenumber"
+                                (keypress)="isNumeric($event)" [(ngModel)]="notifyTele" minlength="0"
+                                maxlength="10">
+                            <div class="input-group-append">
+                                <button class="btn bt3 btn-default" type="button" (click)="addTele()">Ok</button>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="pad-left-20" *ngIf="tele_arr.length > 0">
+                        <li *ngFor="let tele of tele_arr"> {{tele.countryCode}} {{' '}} {{tele.number}} <i class="pointer-cursor icon-delete"
+                                (click)="removePhEmail(tele, tele_arr, 'newcheckin')"></i></li>
                     </ul>
                 </li>
             </ul>
@@ -138,8 +171,10 @@
                         avoid undelivered SMS'}}</div>
                     <div class="form-group mgn-up-10" *ngIf="cancelsms">
                         <div class="input-group mb-3 phadd">
-                            <input class="form-control" style="max-width: 50px !important;" type="text" readonly
-                                value="+91">
+                            <!-- <input class="form-control" style="max-width: 50px !important;" type="text" readonly
+                                value="+91"> -->
+                                <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
+                                [(ngModel)]="sms1Countrycode" minlength="2" maxlength="4"> 
                             <input type="text" class="form-control" placeholder="Phonenumber"
                                 (keypress)="isNumeric($event)" [(ngModel)]="notifycanclphonenumber" minlength="0"
                                 maxlength="10">
@@ -150,10 +185,11 @@
                         </div>
                     </div>
                     <ul class="pad-left-20" *ngIf="ph1_arr.length > 0">
-                        <li *ngFor="let phnecancel of ph1_arr">+91 {{phnecancel}} <i class="pointer-cursor icon-delete"
+                        <li *ngFor="let phnecancel of ph1_arr">{{phnecancel.countryCode}} {{' '}} {{phnecancel.number}}<i class="pointer-cursor icon-delete"
                                 (click)="removePhEmail(phnecancel, ph1_arr, 'cancelcheckin')"></i></li>
                     </ul>
                 </li>
+               
                 <li>
                     <span class="notification"> via Email </span>
                     <!-- <span [class.icon-add]="!cancelemail" [class.icon-minus]="cancelemail"
@@ -184,8 +220,10 @@
                         (click)="cheknCancelPushAddClicked()">Add</span>
                     <div class="form-group mgn-up-10" *ngIf="cheknCancelPushph">
                         <div class="input-group mb-3 phadd">
-                            <input class="form-control" style="max-width: 50px !important;" type="text" readonly
-                                value="+91">
+                            <!-- <input class="form-control" style="max-width: 50px !important;" type="text" readonly
+                                value="+91"> -->
+                                <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
+                                [(ngModel)]="push1Countrycode" minlength="2" maxlength="4"> 
                             <input type="text" class="form-control" placeholder="Phonenumber"
                                 (keypress)="isNumeric($event)" [(ngModel)]="notifycheknCancelPushphonenumber"
                                 minlength="0" maxlength="10">
@@ -196,9 +234,33 @@
                         </div>
                     </div>
                     <ul class="pad-left-20" *ngIf="cheknCancelPushph_arr.length > 0">
-                        <li *ngFor="let phne of cheknCancelPushph_arr">+91 {{phne}} <i
+                        <li *ngFor="let phne of cheknCancelPushph_arr">{{phne.countryCode}} {{' '}} {{phne.number}}<i
                                 class="pointer-cursor icon-delete"
                                 (click)="removePhEmail(phne, cheknCancelPushph_arr, 'cancelcheckin')"></i></li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="notification"> via Telegram</span>
+                    <span  class="noti-add-btn"
+                        (click)="cancelledCheckintelegramAddClicked()">Add</span>
+                    <div class="form-group mgn-up-10" *ngIf="cancelTelegram">
+                        <div class="input-group mb-3 phadd">
+                            <!-- <input class="form-control" style="max-width: 50px !important;" type="text" readonly
+                                value="+91"> -->
+                                <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
+                                [(ngModel)]="tele1Countrycode" minlength="2" maxlength="4">
+                            <input type="text" class="form-control" placeholder="Phonenumber"
+                                (keypress)="isNumeric($event)" [(ngModel)]="notifycancltelegram" minlength="0"
+                                maxlength="10">
+                            <div class="input-group-append">
+                                <button class="btn bt3 btn-default" (click)="addCheknCancltelegram()"
+                                    type="button">Ok</button>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="pad-left-20" *ngIf="tele1_arr.length > 0">
+                        <li *ngFor="let telecancel of tele1_arr">{{telecancel.countryCode}} {{' '}} {{telecancel.number}}<i class="pointer-cursor icon-delete"
+                                (click)="removePhEmail(telecancel, tele1_arr, 'cancelcheckin')"></i></li>
                     </ul>
                 </li>
             </ul>

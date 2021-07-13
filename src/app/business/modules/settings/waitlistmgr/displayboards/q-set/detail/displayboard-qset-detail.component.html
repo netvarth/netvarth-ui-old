@@ -171,7 +171,7 @@
                     <ul *ngFor="let user of userMultiCtrl">
                         <li>
                             <!-- {{user.firstName}} {{user.lastName}} -->
-                            {{user.businessName}}
+                            {{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}
                         </li>
                     </ul>
                 </div>

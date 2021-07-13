@@ -16,7 +16,9 @@
             {{customer_label | capitalizeFirst}} id : {{appt.providerConsumer.jaldeeId}} </p>
         <p>Appointment Time : {{getSingleTime(appt.appmtTime)}}
         </p>
-        <p *ngIf="action === 'status'">Current Status: {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}</p>
+        <p *ngIf="action === 'status' &&statusList && statusList.length == 0">Current  Status: {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}</p>
+        <p *ngIf="action === 'status' &&statusList && statusList.length > 0">Current External Status: {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}</p>
+        <p *ngIf="action === 'status'&&statusList && statusList.length > 0">Current Internal Status: {{appt.internalStatus || 'Nil'}}</p>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro" *ngIf="action === ''">
         <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && !data.NoViewDetail"
@@ -42,13 +44,23 @@
             </div>
         </div>
         <div class="action-box pointer-cursor"
-            *ngIf="!data.multiSelection && accountType=='BRANCH' && (appt.schedule.provider.id === 0) && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')"
+            *ngIf="showAssign"
             (click)="changeWaitlistservice()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
                 <!-- <div class="icon-text">Assign {{provider_label | capitalizeFirst}}</div> -->
                 <div *ngIf="appt.provider" class="icon-text">Change {{provider_label | capitalizeFirst}}</div>
                 <div *ngIf="!appt.provider" class="icon-text">Assign {{provider_label | capitalizeFirst}}</div>
+            </div>
+        </div>
+
+        <div class="action-box pointer-cursor" 
+        *ngIf="!data.multiSelection && accountType=='BRANCH' && groups.length > 0 && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')"
+        (click)="assignteam()">
+            <div class="action-box-sub">
+                <span class="doctor-change-icon"></span>
+                <div *ngIf="appt.teamId == 0" class="icon-text">Assign Team</div>
+                <div *ngIf="appt.teamId != 0"  class="icon-text">Change Team</div>
             </div>
         </div>
         <div class="action-box pointer-cursor"
@@ -230,13 +242,13 @@
                 <div class="icon-text">Labels</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" (click)="gotoSecureVideo()" *ngIf="!data.multiSelection && appt.apptStatus!=='blocked'">
+        <div class="action-box pointer-cursor" (click)="gotoSecureVideo()" *ngIf="!data.multiSelection && appt.apptStatus!=='blocked' && (showMsg || (appt.virtualService && appt.virtualService.WhatsApp))">
             <div class="action-box-sub">
                 <span class="jvideo-icon"></span>
                 <div class="icon-text">Video Call</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" (click)="startVoiceCall()" *ngIf="!data.multiSelection && appt.apptStatus!=='blocked'">
+        <div class="action-box pointer-cursor" (click)="startVoiceCall()" *ngIf="!data.multiSelection && appt.apptStatus!=='blocked' && appt.phoneNumber">
             <div class="action-box-sub">
                 <span class="phon-icon"></span>
                 <div class="icon-text">Voice Call</div>
@@ -264,14 +276,14 @@
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button>
 </h1>
-<div *ngIf="action === 'label'">
+<div *ngIf="action === 'label'" class="action-label">
     <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding queue-outer" *ngIf="loading">
         <app-common-innerloading-spinner></app-common-innerloading-spinner>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 scro"
         *ngIf="providerLabels.length > 0 && !loading">
         <div class="mgn-bt-5" *ngFor="let label of providerLabels;let i = index">
-            <mat-checkbox [checked]="label.selected" (change)="addLabeltoAppt(label.label, $event)">
+            <mat-checkbox [checked]="label.selected" (change)="addLabeltoAppt(label.label, $event)" [disabled]="!label.isPermitted">
                 {{label.displayName | capitalizeFirst}}</mat-checkbox>
         </div>
     </div>
@@ -384,11 +396,14 @@
     </div>
 </div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-20 scro hght no-padding" *ngIf="action === 'status'">
+        <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 stst-bx mgn-up-10 mgn-lt-10" *ngIf="appt.apptStatus !== 'done'" >
+                <div>External Status</div>
+                <p class="settings_info"> External status is public and visible for your {{customer_label}}s</p>
     <div class="status-box" *ngIf="showArrived" (click)="changeWaitlistStatus('Arrived')">
         <div class="status"> Arrived</div>
         <!-- <div class="form-level-settings">hints</div> -->
     </div>
-    <div class="status-box" *ngIf="showStart || showTeleserviceStart" (click)="changeWaitlistStatus('Started')">
+    <div class="status-box" *ngIf="showStart || (showTeleserviceStart && appt.apptStatus != 'Started')" (click)="changeWaitlistStatus('Started')">
         <div class="status"> In Progress</div>
         <!-- <div class="form-level-settings">hints</div> -->
     </div>
@@ -404,4 +419,15 @@
         <div class="status"> Checked In</div>
         <!-- <div class="form-level-settings">hints</div> -->
     </div>
+        </div>
+    <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 stst-bx mgn-up-10 mgn-lt-10" *ngIf="statusList && statusList.length > 0">
+            <div>Internal Status</div>
+            <p class="settings_info">Internal status is only visible for users of this account. Not visible for your {{customer_label}}s</p>
+            <ng-container  *ngFor="let stat of statusList, let i= index">
+                <div  [ngClass]="stat.isPermitted ?'status-box-internal':'status-box-disabled'" (click)="changeWaitlistInternalStatus(stat.status)">
+                    <div class="status"  > {{stat.status|capitalizeFirst}}</div>
+                    <!-- <div class="form-level-settings">hints</div> -->
+                </div>
+            </ng-container>
+        </div>
 </div>

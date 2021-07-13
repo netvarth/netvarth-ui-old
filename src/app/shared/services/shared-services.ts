@@ -1079,4 +1079,8 @@ export class SharedServices {
     const url = 'consumer/appointment/questionnaire/upload/status/' + uid + '?account=' + account;
     return this.servicemeta.httpPut(url, data);
   }
+  telegramChat(countryCode,loginId) {
+    const url = 'chatbot/telegram/consumer/chatId/' + countryCode + '/' + loginId;
+    return this.servicemeta.httpGet(url);
+  }
 }

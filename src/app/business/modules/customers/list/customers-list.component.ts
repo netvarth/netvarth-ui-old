@@ -67,6 +67,7 @@ export class CustomersListComponent implements OnInit {
   loadComplete = false;
   minday = new Date(1900, 0, 1);
   maxday = new Date();
+
   tooltipcls = projectConstants.TOOLTIP_CLS;
   apiloading = false;
   srchcustdialogRef;
@@ -113,8 +114,8 @@ export class CustomersListComponent implements OnInit {
   groupIdEdit = '';
   showAddCustomerHint = false;
   newlyCreatedGroupId
-  filtericonTooltip='';
-  filtericonclearTooltip='';
+  filtericonTooltip: any;
+  filtericonclearTooltip: any;
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -127,8 +128,8 @@ export class CustomersListComponent implements OnInit {
     private activated_route: ActivatedRoute,
     private snackbarService: SnackbarService,
     private dateTimeProcessor: DateTimeProcessor) {
-    this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
-    this.filtericonclearTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
+     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
+      this.filtericonclearTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
     if (this.groupService.getitemFromGroupStorage('group')) {
       this.selectedGroup = this.groupService.getitemFromGroupStorage('group');
     } else {
@@ -238,7 +239,13 @@ export class CustomersListComponent implements OnInit {
         }
     });
     notedialogRef.afterClosed().subscribe(result => {
-        if (result === 'edit') {
+        if (result === 'reload') {
+          this.getLabel();
+          if (this.selectedGroup == 'all') {
+            this.getCustomersList();
+          } else {
+            this.getCustomerListByGroup();
+          }
             // this.editCustomer();
         } else {
             // this.getCustomers(this.customerId).then(

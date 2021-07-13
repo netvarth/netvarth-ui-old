@@ -144,7 +144,7 @@ export class CheckinDetailsSendComponent implements OnInit {
         this.Schedulestime = this.data.qdata.schedule.apptSchedule.timeSlots[0].sTime ;
         this.Scheduleetime = this.data.qdata.schedule.apptSchedule.timeSlots[0].eTime;
         if (this.data.qdata.providerConsumer.phoneNo) {
-         this.phone = this.data.qdata.providerConsumer.phoneNo;
+         this.phone = this.data.qdata.providerConsumer.phoneNo.trim();
         }
         if (this.data.qdata.providerConsumer.email) {
           this.consumer_email = this.data.qdata.providerConsumer.email;
