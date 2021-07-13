@@ -898,7 +898,7 @@
                           (click)="stopprop($event)" (change)="chkStartedAptHistoryClicked(i, checkin)" />
                       </div>
                       <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
-                        [checkins]="startedCheckins" (actionPerformed)="cardClicked($event)" [allLabels]="allLabels"
+                        [checkins]="startedCheckins" [teams]="teams" (actionPerformed)="cardClicked($event)" [allLabels]="allLabels"
                         [statusAction]="'started'">
                       </app-card>
                     </div>
@@ -1196,7 +1196,7 @@
                           (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, checkin)" />
                       </div>
                       <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
-                        [checkins]="check_in_filtered_list" (actionPerformed)="cardClicked($event)"
+                        [checkins]="check_in_filtered_list" [teams]="teams" (actionPerformed)="cardClicked($event)"
                         [allLabels]="allLabels" [statusAction]="statusAction">
                       </app-card>
                     </div>
@@ -1776,7 +1776,7 @@
                         (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, checkin)" />
                     </div>
                     <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
-                      [checkins]="check_in_filtered_list" (actionPerformed)="cardClicked($event)"
+                      [checkins]="check_in_filtered_list" [teams]="teams" (actionPerformed)="cardClicked($event)"
                       [allLabels]="allLabels" [statusAction]="statusAction">
                     </app-card>
                   </div>
@@ -2489,7 +2489,7 @@
                         (change)="chkAptHistoryClicked(i, checkin)" />
                     </div>
                     <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
-                      [checkins]="check_in_filtered_list" (actionPerformed)="cardClicked($event)"
+                      [checkins]="check_in_filtered_list" [teams]="teams" (actionPerformed)="cardClicked($event)"
                       [allLabels]="allLabels" [statusAction]="statusAction">
                     </app-card>
                   </div>

@@ -26,6 +26,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     @Input() allLabels;
     @Input() checkins;
     @Input() theme;
+    @Input() teams;
     // @Input() pos;
     @Input() statusAction;
     service: any;
@@ -59,6 +60,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     ngOnInit() {
         console.log(this.item)
         console.log(this.type)
+        console.log(this.teams);
         if(this.type == 'appointment-dashboard'){
             this.appointment = this.item;
             console.log(this.appointment)
@@ -361,5 +363,9 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     getScheduleIndex(id) {
         // const filterSchedule = this.activeSchedules.filter(sch => sch.id === id);
         // return this.activeSchedules.indexOf(filterSchedule[0]);
-      }
+    }
+    getUsersList(teamid){
+       const userObject =  this.teams.filter(user => parseInt(user.id) === teamid); 
+       return userObject[0].name;
+    }
 }
