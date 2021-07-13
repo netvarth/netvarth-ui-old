@@ -265,7 +265,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   apptStatuses: any = [];
   ageGroups: any = [];
   allModeSelected = false;
-  allLabelSelected: any = [];
+  allLabelSelected = false;
   allPayStatusSelected = false;
   allApptStatusSelected = false;
   service_list: any = [];
@@ -2046,7 +2046,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.allApptStatusSelected = false;
     this.allPayStatusSelected = false;
     this.allModeSelected = false;
-    this.allLabelSelected = [];
+    this.allLabelSelected = false;
     this.allQSelected = false;
     this.allLocationSelected = false;
   }
@@ -2215,7 +2215,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.groupService.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.checkinEncId || this.filter.patientId || this.filter.service !== 'all' || this.filter.location != 'all'
       || this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.check_in_start_date
-      || this.filter.check_in_end_date || this.filter.check_in_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== '') {
+      || this.filter.check_in_end_date || this.filter.check_in_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== ''
+      || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
+      || this.allPayStatusSelected || this.allModeSelected || this.allLabelSelected || this.allQSelected || this.allLocationSelected) {
       console.log('fdg');
       this.filterapplied = true;
     } else {
@@ -3004,9 +3006,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.maxday = this.yesterdayDate;
     }
     this.labelSelection();
-     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.checkinEncId || this.filter.patientId || this.filter.service !== 'all' || this.filter.location != 'all'
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.checkinEncId || this.filter.patientId || this.filter.service !== 'all' || this.filter.location != 'all'
       || this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.check_in_start_date
-      || this.filter.check_in_end_date || this.filter.check_in_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== '') {
+      || this.filter.check_in_end_date || this.filter.check_in_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== ''
+      || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
+      || this.allPayStatusSelected || this.allModeSelected || this.allLabelSelected || this.allQSelected || this.allLocationSelected) {
       console.log('fdg');
       this.filterapplied = true;
     } else {
