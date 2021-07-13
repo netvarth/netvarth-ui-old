@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalService } from './shared/services/global-service';
-import {version} from './shared/constants/version';
+import { version } from './shared/constants/version';
 import { LocalStorageService } from './shared/services/local-storage.service';
 import { SharedFunctions } from './shared/functions/shared-functions';
 import { Device } from '@ionic-native/device/ngx';
 import { Platform } from '@ionic/angular';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
-import { MatDialog } from '@angular/material/dialog';
-import { NotificationDialogComponent } from './shared/components/notification-dialog/notification-dialog.component';
+// import { MatDialog } from '@angular/material/dialog';
+// import { NotificationDialogComponent } from './shared/components/notification-dialog/notification-dialog.component';
+// import { LocalNotificationsOriginal } from '@ionic-native/local-notifications';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 export let projectConstants: any = {};
 @Component({
   selector: 'app-root',
@@ -18,7 +20,7 @@ export let projectConstants: any = {};
  * Root class of Jaldee Application
  */
 export class AppComponent implements OnInit {
-  
+
   // not used
   title = 'app';
 
@@ -34,7 +36,8 @@ export class AppComponent implements OnInit {
     private firebaseX: FirebaseX,
     private device: Device,
     private platform: Platform,
-    private dialog: MatDialog
+    // private dialog: MatDialog,
+    private localNotifications: LocalNotifications
   ) { }
 
   /**
@@ -50,7 +53,16 @@ export class AppComponent implements OnInit {
       // Here you can do any higher level native things you might need.
       console.log('here');
       console.log('Device UUID is: ' + this.device.manufacturer);
-
+      // this.localNotifications.isTriggered().then(
+      //   (reason)=>{
+      //     console.log(reason);
+      //   }
+      // )
+      this.localNotifications.on('action').subscribe(
+        (message)=> {
+          console.log("Local Notification Message");
+          console.log(message);
+      });
       this.firebaseX.grantPermission().then(hasPermission => {
         console.log("Permission was " + (hasPermission ? "granted" : "denied"));
       });
@@ -63,19 +75,32 @@ export class AppComponent implements OnInit {
 
       this.firebaseX.onMessageReceived().subscribe(message => {
         console.log(message);
-        const dialogrefd = this.dialog.open(NotificationDialogComponent, {
-          width: '50%',
-          panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-          disableClose: true,
-          data: {
-            'message': message.body,
-            'title': "Jaldee for Business",
-            'btnOkTitle': 'OK'
-          }
-        });
-        dialogrefd.afterClosed().subscribe(result => {
-          console.log(result);
-        });
+        if (message.tap) {
+          // const dialogrefd = this.dialog.open(NotificationDialogComponent, {
+          //   width: '50%',
+          //   panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+          //   disableClose: true,
+          //   data: {
+          //     'message': message.body,
+          //     'title': "Jaldee for Business",
+          //     'btnOkTitle': 'OK'
+          //   }
+          // });
+          // dialogrefd.afterClosed().subscribe(result => {
+          //   console.log(result);
+          // });
+        } else {
+          let actions = [{
+            identifier: 'PUSH_CLICK',
+            title: 'Jaldee for Business',
+            activationMode: 'background'
+          }]
+          this.localNotifications.schedule({
+            text: message.body,
+            data: message,
+            actions: [actions[0]]
+          });
+        }
       });
 
       this.firebaseX.onTokenRefresh()
