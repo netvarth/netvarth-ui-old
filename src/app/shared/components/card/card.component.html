@@ -276,6 +276,9 @@
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item user-txt-clr" *ngIf="waitlist.provider">
                     Assigned: {{(waitlist.provider.businessName) ? waitlist.provider.businessName : waitlist.provider.firstName + ' ' + waitlist.provider.lastName}}
                 </div>
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item user-txt-clr"  *ngIf="waitlist.teamId !== 0">
+                    Team: {{getUsersList(waitlist.teamId)}}
+                </div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item user-txt-clr" *ngIf=" waitlist.internalStatus">
                    - {{waitlist.internalStatus}}
                 </div>
