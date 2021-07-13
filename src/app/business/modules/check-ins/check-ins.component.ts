@@ -462,6 +462,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   ngOnInit() {
+    this.getProviderSettings();
     this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
     this.titleService.setTitle('Jaldee Business - Checkins/Tokens');
     this.pagination.startpageval = this.groupService.getitemFromGroupStorage('paginationStart') || 1;
@@ -566,7 +567,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe(
         data => {
           this.services = data;
-          this.getProviderSettings();
         },
         () => { }
       );
@@ -1616,6 +1616,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         Mfilter['queue-eq'] = qids.toString();
       }
     }
+    if (this.active_user.accountType === 'BRANCH' && this.activeUser) {
+      Mfilter['provider-eq'] = this.activeUser;
+    }
     const promise = this.getHistoryWLCount(Mfilter);
     promise.then(
       result => {
@@ -1884,13 +1887,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // if (this.filter.waitlist_status === 'all' && this.firstTime) {
     //   Mfilter['waitlistStatus-eq'] = this.setWaitlistStatusFilterForHistory();
     // }
-    if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeQs.length > 0) {
-      const qids = this.activeQs.map(q => q.id);
-      if (this.activeUser) {
-        Mfilter['provider-eq'] = this.activeUser;
-      } else {
-        Mfilter['queue-eq'] = qids.toString();
-      }
+    // if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeQs.length > 0) {
+    //   const qids = this.activeQs.map(q => q.id);
+    //   if (this.activeUser) {
+    //     Mfilter['provider-eq'] = this.activeUser;
+    //   } else {
+    //     Mfilter['queue-eq'] = qids.toString();
+    //   }
+    // }
+    if (Mfilter['queue-eq'] && (this.filterQ.length === 0 || this.filter.queue === 'all')) {
+      delete Mfilter['queue-eq'];
+    }
+    if (this.active_user.accountType === 'BRANCH' && this.activeUser) {
+      Mfilter['provider-eq'] = this.activeUser;
     }
     return new Promise((resolve) => {
       this.provider_services.getwaitlistHistoryCount(Mfilter)

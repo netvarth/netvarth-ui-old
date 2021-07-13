@@ -1275,14 +1275,20 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // if (this.filter.apptStatus === 'all') {
     //   Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     // }
-    if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeSchedules.length > 0) {
-      const qids = this.activeSchedules.map(q => q.id);
-      if (this.activeUser) {
-        Mfilter['provider-eq'] = this.activeUser;
-      } else {
-        Mfilter['schedule-eq'] = qids.toString();
-      }
+    // if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeSchedules.length > 0) {
+    //   const qids = this.activeSchedules.map(q => q.id);
+    //   if (this.activeUser) {
+    //     Mfilter['provider-eq'] = this.activeUser;
+    //   } else {
+    //     Mfilter['schedule-eq'] = qids.toString();
+    //   }
 
+    // }
+    if (Mfilter['schedule-eq'] && (this.filteredSchedule.length === 0 || this.filter.schedule === 'all')) {
+        delete Mfilter['schedule-eq'];
+    }
+    if (this.active_user.accountType === 'BRANCH' && this.activeUser) {
+      Mfilter['provider-eq'] = this.activeUser;
     }
     return new Promise((resolve) => {
       this.provider_services.getHistoryAppointmentsCount(Mfilter)
@@ -1477,6 +1483,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         Mfilter['schedule-eq'] = qids.toString();
       }
 
+    }
+    if (this.active_user.accountType === 'BRANCH' && this.activeUser) {
+      Mfilter['provider-eq'] = this.activeUser;
     }
     const promise = this.getHistoryAppointmentsCount(Mfilter);
     promise.then(
