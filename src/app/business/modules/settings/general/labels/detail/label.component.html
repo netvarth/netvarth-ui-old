@@ -35,6 +35,22 @@
                                             <span>Text</span>
                                         </div> -->
                                     </div>
+                                    <div class="c-ot m0"  *ngIf="labelData.ownershipDetails">
+                                            <div class="item displyfont">
+                                                <span class="ttle">Permitted Users/Team</span>
+                                          
+                                                {{getOwnership(labelData.ownershipDetails)}}
+                                            </div>
+                                            <!-- <div class="item displyfont">
+                                                <span class="ttle">Data type</span>
+                                                <span>Text</span>
+                                            </div> -->
+                                        </div>
+                                    <!-- <div class="col-md-12 col-sm-12 col-xs-12" *ngIf="labelData.ownershipDetails">
+                                            <span class="ttle">Permitted Users/Team</span>
+                                          {{getOwnership(labelData.ownershipDetails)}}
+  
+                                      </div> -->
                                     <div class="btm-ctrl">
                                         <div class="ctrl enable-disable">
                                           <span class="ttle">Label Status</span>
@@ -45,7 +61,10 @@
                                           <span class='enabled' *ngIf="labelData.status=='ENABLED'">Enabled</span>
                                           <span class='disabled' *ngIf="labelData.status=='DISABLED'">Disabled</span>
                                         </div>
+                                        <br>
+                               
                                       </div>
+                                   
                                     <!-- <div class="c-ot m0 mgn-up-20">
                                         <div class="item desfont"
                                             *ngIf="labelData && labelData.valueSet && labelData.valueSet.length > 0">

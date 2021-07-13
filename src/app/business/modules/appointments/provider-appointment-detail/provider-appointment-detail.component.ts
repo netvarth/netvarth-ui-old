@@ -164,7 +164,9 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
         this.api_loading = false;
       });
   }
-
+  checkDataNull(value){
+    return value.trim()!=="";
+  }
   getApptDetails() {
     this.provider_services.getAppointmentById(this.waitlist_id)
       .subscribe(

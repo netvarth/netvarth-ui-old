@@ -59,7 +59,6 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.getEnquiryCount();
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
-      console.log(message);
       switch (message.ttype) {
         case 'messageCount':
           this.inboxUnreadCnt = message.unreadCount - this.enquiryCount;

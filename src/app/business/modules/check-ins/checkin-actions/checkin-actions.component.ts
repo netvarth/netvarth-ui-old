@@ -116,6 +116,10 @@ export class CheckinActionsComponent implements OnInit {
     meet_data: any;
     id: any;
     providerMeetingUrl: any;
+    statusList: any=[];
+    groups: any;
+    showAssign = false;
+    users: any = [];
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -150,6 +154,7 @@ export class CheckinActionsComponent implements OnInit {
             this.accountid = this.checkin.providerAccount.id;
             this.showToken = this.checkin.showToken;
             this.getPos();
+            this.getInternStatus();
         } else {
             this.showMsg = true;
             this.apiloading = false;
@@ -180,14 +185,16 @@ export class CheckinActionsComponent implements OnInit {
         });
         if (this.accountType === 'BRANCH') {
             this.getUser();
+            this.getUserTeams();
         }
     }
     getUser() {
         if(this.userid){
-            this.provider_services.getUser(this.userid)
+            this.provider_services.getUsers()
             .subscribe((data: any) => {
-              this.user_arr = data;
-              if( this.user_arr.status === 'ACTIVE'){
+                this.users = data;
+              this.user_arr = this.users.filter(user => user.id === this.userid);
+              if(this.user_arr[0].status === 'ACTIVE'){
                   this.isUserdisable = true
               } else{
                   this.isUserdisable = false
@@ -531,6 +538,10 @@ export class CheckinActionsComponent implements OnInit {
         this.dialogRef.close();
         this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid, 'user'], { queryParams: { source: 'checkin' } });
     }
+    assignteam() {
+        this.dialogRef.close();
+        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid, 'team'], { queryParams: { source: 'checkin' } });
+    }
     removeProvider() {
         // this.dialogRef.close();
         let msg = '';
@@ -576,6 +587,17 @@ export class CheckinActionsComponent implements OnInit {
                     this.buttonClicked = false;
                 });
     }
+    changeWaitlistInternalStatusApi(waitlist, action) {
+        this.provider_shared_functions.changeWaitlistInternalStatusApi(this, waitlist, action)
+            .then(
+                result => {
+                    this.dialogRef.close('reload');
+                    this.buttonClicked = false;
+                },
+                error => {
+                    this.buttonClicked = false;
+                });
+    }
     getDisplayboardCount() {
         let layout_list: any = [];
         this.provider_services.getDisplayboardsWaitlist()
@@ -591,7 +613,7 @@ export class CheckinActionsComponent implements OnInit {
     }
     setActions() {
         this.apiloading = false;
-        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn' && this.checkin.waitlistStatus !== 'blocked' && !this.data.teleservice && this.checkin.paymentStatus !== 'FullyRefunded') {
+        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn' && this.checkin.waitlistStatus !== 'blocked' && this.checkin.paymentStatus !== 'FullyRefunded') {
             this.showUndo = true;
         }
         if (this.data.timetype === 1 && this.checkin.waitlistStatus === 'checkedIn' && this.checkin.waitlistMode !== 'WALK_IN_CHECKIN' && Object.keys(this.checkin.virtualService).length === 0 && this.checkin.virtualService.constructor === Object && !this.data.teleservice) {
@@ -603,7 +625,7 @@ export class CheckinActionsComponent implements OnInit {
         if (this.data.timetype === 1 && this.checkin.service.livetrack && this.checkin.waitlistStatus === 'checkedIn' && this.checkin.jaldeeWaitlistDistanceTime && this.checkin.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.checkin.jaldeeStartTimeType === 'ONEHOUR' || this.checkin.jaldeeStartTimeType === 'AFTERSTART')) {
             this.trackStatus = true;
         }
-        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'cancelled' && ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo !== 'null') || this.checkin.waitlistingFor[0].email)) {
+        if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'cancelled' && ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo.trim() !== 'null') || this.checkin.waitlistingFor[0].email)) {
             this.showSendDetails = true;
         }
         if ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo !== 'null') || this.checkin.waitlistingFor[0].email) {
@@ -612,7 +634,7 @@ export class CheckinActionsComponent implements OnInit {
         if ((this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn') && this.data.timetype !== 2 && (this.checkin.service.serviceType === 'physicalService') && !this.data.teleservice) {
             this.showStart = true;
         }
-        if ((this.data.timetype === 1 || (this.data.timetype === 3 && this.checkin.service.virtualCallingModes && this.checkin.service.virtualCallingModes[0].callingMode !== 'VideoCall')) && (this.checkin.service.serviceType === 'virtualService') && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'started') && !this.data.teleservice) {
+        if ((this.data.timetype === 1 || this.data.timetype === 3) && (this.checkin.service.serviceType === 'virtualService') && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'started') && !this.data.teleservice) {
             this.showTeleserviceStart = true;
         }
         if (this.board_count > 0 && this.data.timetype === 1 && !this.checkin.virtualService && (this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'arrived') && !this.data.teleservice) {
@@ -629,6 +651,10 @@ export class CheckinActionsComponent implements OnInit {
         }
         if (this.data.timetype === 3) {
             this.changeService = false;
+        }
+        if (this.users.length > 1 && !this.data.multiSelection && this.accountType=='BRANCH' && (this.checkin.queue.provider.id === 0) && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn')) {
+            this.showAssign = true;
+            console.log("hi");
         }
     }
     getLabel() {
@@ -723,6 +749,9 @@ export class CheckinActionsComponent implements OnInit {
             'uuid': ids
         };
         this.provider_services.deleteLabelFromMultipleCheckin(postData).subscribe(data => {
+            if (Object.keys(this.labelMap).length === 0) {
+                this.snackbarService.openSnackBar('Label removed', { 'panelclass': 'snackbarerror' });
+            }
             this.dialogRef.close('reload');
         },
             error => {
@@ -786,6 +815,7 @@ export class CheckinActionsComponent implements OnInit {
             'uuid': ids
         };
         this.provider_services.addLabeltoMultipleCheckin(postData).subscribe(data => {
+            this.snackbarService.openSnackBar('Label applied successfully', { 'panelclass': 'snackbarerror' });
             this.dialogRef.close('reload');
         },
             error => {
@@ -1023,8 +1053,8 @@ export class CheckinActionsComponent implements OnInit {
     }
 
     assignMyself() {
-        let msg = '';
-        msg = 'Are you sure you want to assign this token to yourself ?';
+        let tokenmsg = (this.showToken) ? 'token' : 'check-in';
+        const msg = 'Are you sure you want to assign this ' + tokenmsg + ' to yourself ?';
         const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
@@ -1061,5 +1091,25 @@ export class CheckinActionsComponent implements OnInit {
     getStatusLabel(status) {
         const label_status = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm(status));
         return label_status;
+    }
+    getInternStatus(){
+        this.provider_services.getInternalstatList(this.ynwUuid).subscribe((data: any) => {
+            console.log(data);
+            this.statusList = data;
+        });
+    }
+    changeWaitlistInternalStatus(action){
+        console.log(action);
+        if (action !== 'CANCEL') {
+            // this.dialogRef.close();
+            this.buttonClicked = true;
+        }
+       this.provider_shared_functions.changeWaitlistinternalStatus(this, this.checkin, action);
+    }
+
+    getUserTeams() {
+        this.provider_services.getTeamGroup().subscribe((data: any) => {
+            this.groups = data;
+        });
     }
 }
