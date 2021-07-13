@@ -273,7 +273,7 @@ textarea {
 }
 .details-inbox .card.p0 {
     border: 1.75px solid #d0d0d0 !important;
-    min-height: 270px;
+    min-height: 300px;
     box-shadow: none !important;
     padding: 0 !important;
     border-radius: 10px !important;

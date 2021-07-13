@@ -1,7 +1,8 @@
-<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 p-0 disp-md-flex box-hgt" #details [class.donation-hgt]="bookingType=='donation'">
+<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 p-0 disp-md-flex box-hgt" #details
+  [class.donation-hgt]="bookingType=='donation'">
   <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12 p-0 bottom-border right-border" *ngIf="bookingType === 'donation'">
-    <div class="padding-20px">
-      <div class="card-title col-12 col-sm-7 col-lg-7 p-0">
+    <div class="donation-pad">
+      <div class="col-12 col-sm-7 col-lg-7 p-0">
         <h3 class="service-name">
           {{waitlist_data.service.name}}
         </h3>
@@ -14,8 +15,8 @@
       </div>
     </div>
   </div>
-  <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12 padding-20px bottom-border"
-    [class.right-border]="bookingType!='donation'">
+  <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12 padding-20px right-border bottom-border"
+    *ngIf="bookingType != 'donation'">
     <div class="booking-details" *ngIf="bookingType === 'checkin'">
       <div class="booking-details-head">
         <div>
@@ -139,7 +140,9 @@
           *ngIf="waitlist_data.apptStatus!=='blocked'">Communication</button>
       </div>
     </div>
-    <div class="booking-details" *ngIf="bookingType === 'donation'">
+  </div>
+  <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12 donation-pad" *ngIf="bookingType === 'donation'">
+    <div class="booking-details">
       <div class="booking-details-head">
         <div>
           <h5>

@@ -84,7 +84,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
   replyMsg;
   showReply = false;
   msgTypes = projectConstantsLocal.INBOX_MSG_TYPES;
-  isCustomer;
   @ViewChildren('outmsgId') outmsgIds: QueryList<ElementRef>;
   @ViewChildren('inmsgId') inmsgId: QueryList<ElementRef>;
   customers: any = [];
@@ -131,7 +130,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
     const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
     this.cacheavoider = dd;
     this.userDet = this.selectedUser = this.groupService.getitemFromGroupStorage('ynw-user');
-    this.isCustomer = this.qParams.customer;
     if (this.qParams.customer && this.qParams.provider) {
       if (this.userDet.accountType === 'BRANCH') {
         this.selectedCustomer = this.qParams.customer + '=' + this.qParams.provider;
@@ -266,7 +264,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.messages = data;
-          if (this.isCustomer) {
+          if (this.messageId) {
             this.messages = this.messages.filter(msg => msg.messageType === 'ENQUIRY');
             this.showChat = true;
           } else {
@@ -599,7 +597,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       const dataToSend: FormData = new FormData();
       let post_data = {};
       post_data['msg'] = this.message;
-      if (this.isCustomer) {
+      if (this.messageId) {
         post_data['messageType'] = 'ENQUIRY';
       }
       else {

@@ -1,13 +1,13 @@
 <section class="" *ngIf="!source">
-    <div class="card title-gb" *ngIf="isCustomer">
+    <div class="card title-gb mgn-bt-10" *ngIf="messageId">
         <h5 class="mgn-up-10">
             <span class="fa fa-arrow-left pointer-cursor" (click)="gotoEnquiry()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            {{(!isCustomer) ? 'Messages' : 'Enquiries'}}
+            Enquiries
             <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
         </h5>
     </div>
-    <div class="title-gb no-padding" *ngIf="!isCustomer">
-        <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
+    <div class="title-gb no-padding" *ngIf="!messageId">
+        <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 mgn-bt-10 dash-head">
             Messages
             <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
         </div>
@@ -126,12 +126,12 @@
                                 <div class="null-text">Select a chat to start messaging</div>
                             </ng-template>
                         </div>
-                        <div class="flex-row-fluid" id="kt_chat_content" [class.ml-lg-8]="!source && !isCustomer"
+                        <div class="flex-row-fluid" id="kt_chat_content" [class.ml-lg-8]="!source && !messageId"
                             *ngIf="(selectedCustomer != '' && !small_device_display) || (small_device_display && showChat)">
                             <div class="card card-custom">
                                 <div class="card-header align-items-center px-4 py-3" *ngIf="!source">
                                     <div class="text-center flex-grow-1">
-                                        <div class="text-left flex-grow-1" *ngIf="!isCustomer">
+                                        <div class="text-left flex-grow-1" *ngIf="!messageId">
                                             <i (click)="showChatSection()"
                                                 class="fa fa-arrow-left pointer-cursor d-md-none"></i>
                                         </div>
@@ -150,17 +150,17 @@
                                                     <div>
                                                         <span
                                                             class="text-muted font-size-sm">{{formatDateDisplay(msg.timeStamp)}}</span>
-                                                        <span *ngIf="!isCustomer"
+                                                        <span *ngIf="!messageId"
                                                             class="greenc font-size-sm mgn-lt-5">{{getMsgType(msg)}}</span>
                                                     </div>
                                                 </div>
                                                 <div
                                                     class="rounded pad-10 bg-light-success font-weight-bold font-size-lg msg-width">
-                                                    <div class="reply-text" *ngIf="!isCustomer">
+                                                    <div class="reply-text" *ngIf="!messageId">
                                                         <a (click)="replytoMsg(msg)">Reply</a>
                                                     </div>
                                                     <div class="reply-msg text-left"
-                                                        *ngIf="!isCustomer && msg.replyMsgId && getReplyMsgbyId(msg.replyMsgId)"
+                                                        *ngIf="!messageId && msg.replyMsgId && getReplyMsgbyId(msg.replyMsgId)"
                                                         (click)="gotoReplyMsgSection(msg.replyMsgId)">
                                                         <div class="username">
                                                             {{(getReplyMsgbyId(msg.replyMsgId).messagestatus ===
@@ -190,7 +190,7 @@
                                                 class="d-flex flex-column mb-5 align-items-end">
                                                 <div class="d-flex align-items-center">
                                                     <div>
-                                                        <span *ngIf="!isCustomer"
+                                                        <span *ngIf="!messageId"
                                                             class="greenc font-size-sm mgn-rt-5">{{getMsgType(msg)}}</span>
                                                         <span
                                                             class="text-muted font-size-sm">{{formatDateDisplay(msg.timeStamp)}}</span>
@@ -198,11 +198,11 @@
                                                 </div>
                                                 <div
                                                     class="rounded pad-10 bg-light-primary font-weight-bold font-size-lg msg-width">
-                                                    <div class="reply-text" *ngIf="!isCustomer">
+                                                    <div class="reply-text" *ngIf="!messageId">
                                                         <a (click)="replytoMsg(msg)">Reply</a>
                                                     </div>
                                                     <div class="reply-msg text-left"
-                                                        *ngIf="!isCustomer && msg.replyMsgId && getReplyMsgbyId(msg.replyMsgId)"
+                                                        *ngIf="!messageId && msg.replyMsgId && getReplyMsgbyId(msg.replyMsgId)"
                                                         (click)="gotoReplyMsgSection(msg.replyMsgId)">
                                                         <div class="username">
                                                             {{(getReplyMsgbyId(msg.replyMsgId).messagestatus ===

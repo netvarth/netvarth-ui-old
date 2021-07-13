@@ -81,14 +81,14 @@
     <div *ngIf="loading" class="card">
         <app-common-innerloading-spinner> </app-common-innerloading-spinner>
     </div>
-    <div class="row pad10" *ngIf="!loading">
+    <div class="row pad-10" *ngIf="!loading">
         <div class="col-lg-8">
             <div class="card card-custom mgn-bt-20 wave-success p-0 booking-details">
                 <app-customer-booking-details [waitlist_data]="donationDetails" [bookingType]="'donation'">
                 </app-customer-booking-details>
             </div>
         </div>
-        <div class="col-lg-4 no-padding-big mgn-bt-10">
+        <div class="col-lg-4 no-padding-big">
             <app-provider-inbox-list [customer]="customer" [provider]="0" [source]="'details'" [height]="250">
             </app-provider-inbox-list>
         </div>

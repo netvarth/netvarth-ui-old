@@ -219,3 +219,11 @@ textarea {
 .galul li {
     float: left;
 }
+.donation-pad {
+    padding: 40px 20px !important;
+}
+.service-name {
+    color: #717171 !important;
+    font-weight: 700 !important;
+    text-transform: capitalize !important;
+}
