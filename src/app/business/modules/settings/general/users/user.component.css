@@ -582,7 +582,7 @@
 }
 .customersList .selected_customers {
   font-size: 0.7rem !important;
-  color: green !important;
+  color: green;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -636,8 +636,12 @@
   color: white !important;
 }
 .customersList .highlight{
-    box-shadow: 0 3px 5px 0 rgba(40,44,63,.4) !important;
-    border: 2px dashed #1e4079 !important;
+    /* box-shadow: 0 3px 5px 0 rgba(40,44,63,.4) !important;
+    border: 2px dashed #1e4079 !important; */
+    background-color:#1e4079 !important;
+  }
+  .highlightcolor{
+    color: white !important;
   }
 .customersList .fa-filter {
   position: absolute;

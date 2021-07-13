@@ -7,8 +7,9 @@
                       *ngIf="user_count_filterApplied > 0">({{user_count_filterApplied}})</span></div>
           </a>
           <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-right">
-              <i class="icon-filter-one">
-              </i>
+              <!-- <i class="icon-filter-one"> -->
+                  <img src="../../../assets/images/provider-filter-icon.png"  style="width: 22px !important; margin-top: -6px !important;">
+              <!-- </i> -->
               Filter
           </a>
           <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click)="addBranchSP()"
@@ -40,8 +41,9 @@
           <div class="pull-left pad-tp-5" *ngIf="!teamLoaded && groups.length == 0">Users</div>
           <!-- <div class="pull-left pad-tp-5" *ngIf="!teamLoaded && groups.length > 0">Teams</div> -->
           <a  (click)="showFilterSidebar()" style="padding: 5px 7px !important;" class="btn mb-2 action-button mgn-lt-5 pull-right">
-              <i class="icon-filter-one">
-              </i>
+              <!-- <i class="icon-filter-one">
+              </i> -->
+              <img src="../../../assets/images/provider-filter-icon.png"  style="width: 22px !important; margin-top: -6px !important;">
           </a>
           <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" 
           class="navbar-item-color bold pointer-cursor mgn-lt-5">
@@ -151,7 +153,8 @@
       <div class="card card-custom card-stretch gutter-b pitch_blu">
         <div class="card grp_label mb-2 pointer-cursor" (click)="customerGroupSelection('all')"
           [ngClass]="{'highlight': selectedGroup == 'all'}">
-          All Users</div>
+        <span  [ngClass]="{'highlightcolor': selectedGroup == 'all'}">All Users</span>
+        </div>
         <!-- <button mat-flat-button class="font-size-xs add_btn mgn-bt-10" data-toggle="modal"
           data-target="#exampleModalCenter">Create Team</button> -->
         <div class="card grp_label mb-2" *ngFor="let group of groups"
@@ -160,9 +163,9 @@
           [class.disabled-group]="group.status=='INACTIVE'"
           [class.pointer-cursor]="group.status=='ACTIVE'">  
           <div class="max-hgt-20 disp-flex">
-            <span class="pull-left group-name">{{group.name}}</span>
+            <span  [ngClass]="{'highlightcolor': selectedGroup.id==group.id}"  class="pull-left group-name">{{group.name}}</span>
             <span class="pull-right mgn-m-up-10">
-              <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event);">
+              <button  [ngClass]="{'highlightcolor': selectedGroup.id==group.id}" type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event);">
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
@@ -179,7 +182,7 @@
               </mat-menu>
             </span>
           </div>
-          <div class="selected_customers">{{group.description}}</div>
+          <div  [ngClass]="{'highlightcolor': selectedGroup.id==group.id}"  class="selected_customers">{{group.description}}</div>
         </div>
       </div>
    </div>
