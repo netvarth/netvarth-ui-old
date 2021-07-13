@@ -394,6 +394,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       }
       inboxList.push(inboxData);
     }
+    inboxList = inboxList.sort((a,b) => 0 - (a.timeStamp > b.timeStamp ? -1 : 1));
     return inboxList;
   }
   searchUserById(id) {

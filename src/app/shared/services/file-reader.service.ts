@@ -23,12 +23,14 @@ export class FileReaderService {
         return this.locations;
     }
 
-    getLocationJson () {
-        return this.servicemeta.getJSON('http://localhost:4200/assets/json/locations.json');
+    getLocationJson (path) {
+        let url = path + 'assets/json/locations.json';
+        return this.servicemeta.getJSON(url);
     }
 
-    getMetrosJson() {
-        return this.servicemeta.getJSON('http://localhost:4200/assets/json/metros_capital.json');
+    getMetrosJson(path) {
+        let url = path + 'assets/json/metros_capital.json';
+        return this.servicemeta.getJSON(url);
     }
 
 }

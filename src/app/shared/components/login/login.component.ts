@@ -264,7 +264,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   telegramInfo() {
     const dialogref = this.dialog.open(TelegramInfoComponent, {
       width: '70%',
-      height: '30%',
+      height: '40%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'full-screen-modal', 'telegramPopupClass'],
       disableClose: true,
     });

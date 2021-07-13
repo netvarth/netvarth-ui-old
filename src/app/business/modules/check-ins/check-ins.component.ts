@@ -350,6 +350,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   unassignview = false;
   accountSettings;
   teams: any;
+  yesterdayDate;
+  @ViewChild('closebutton') closebutton;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -476,6 +478,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     if (this.server_date) {
       this.getTomorrowDate();
+      this.getYesterdayDate();
     }
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     if (this.active_user.adminPrivilege) {
@@ -874,6 +877,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.filter.futurecheckin_date = moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD');
     }
+  }
+  getYesterdayDate() {
+    const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const serverdate = moment(server).format();
+    const servdate = new Date(serverdate);
+    this.yesterdayDate = this.maxday = this.endmaxday = new Date(moment(new Date(servdate)).add(-1, 'days').format('YYYY-MM-DD'));
   }
   ngAfterViewInit() {
     setTimeout(() => {
@@ -2190,7 +2199,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.check_in_end_date) {
       this.maxday = this.filter.check_in_end_date;
     } else {
-      this.maxday = new Date();
+      this.maxday = this.yesterdayDate;
     }
     this.labelSelection();
     // this.groupService.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
@@ -2437,6 +2446,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['provider', 'settings', 'general', 'locations']);
   }
   gotoCustomViews() {
+    this.closebutton.nativeElement.click();
     const navigationExtras: NavigationExtras = {
       queryParams: {
         type: 'checkin'
@@ -2982,7 +2992,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.check_in_end_date) {
       this.maxday = this.filter.check_in_end_date;
     } else {
-      this.maxday = new Date();
+      this.maxday = this.yesterdayDate;
     }
     this.labelSelection();
      if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.checkinEncId || this.filter.patientId || this.filter.service !== 'all' || this.filter.location != 'all'

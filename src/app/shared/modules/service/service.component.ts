@@ -154,6 +154,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
     no_of_grids: number;
     screenWidth: number;
     usersdialogRef: any;
+    team:any=[];
+    userNamelist: string;
+    maxuserLength=50;
 
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
@@ -431,11 +434,26 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.getBusinessProfile();
         this.getGlobalSettings();
         this.getUsers();
+        this.getUsersTeam();
         this.getQuestionnaire();
         if (this.donationservice) {
             this.is_donation = true;
         }
     }
+    getUsersTeam() {
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+        
+          _this.provider_services.getTeamGroup().subscribe(data => {
+              _this.team=data;
+                resolve(data);
+              },
+              () => {
+                reject();
+              }
+            );
+        });   
+      }
     ngOnDestroy() {
         if (this.serviceSubscription) {
             this.serviceSubscription.unsubscribe();
@@ -904,28 +922,56 @@ getProviderNametruncate(users) {
     
 }
 }
-userlistType(val) {
-    const detail = val.length;
-    let len;
-    if (detail > 25) {
-      len = 0;
-    } else {
-      len = 1;
-    }
-    return len;
-  }
+getOwnership(ownerShipData,isTruncate){
+    this. userNamelist='';
+   if(ownerShipData.users &&ownerShipData.users.length>0){
+ 
+        ownerShipData.users.forEach(element => {
+            const userObject =  this.users_list.filter(user => user.id === parseInt(element)); 
+            console.log(userObject);
+            this.userNamelist=this.userNamelist+userObject[0].firstName+' '+userObject[0].lastName+','
+           }); 
+            if(isTruncate){
+                this.truncateInst(this.userNamelist.replace(/,\s*$/, ''));
+            }else{
+                this.userNamelist= this.userNamelist.replace(/,\s*$/, '')
+                console.log(this.userNamelist.length);
+            }
+           
+       }
+       if(ownerShipData.teams &&ownerShipData.teams.length>0){
+
+        ownerShipData.teams.forEach(element => {
+            const userObject =  this.team.filter(team => team.id === parseInt(element)); 
+            console.log(userObject);
+            this.userNamelist=this.userNamelist+userObject[0].name+','
+           }); 
+           if(isTruncate){
+            this.truncateInst(this.userNamelist.replace(/,\s*$/, ''));
+        }else{
+            this.userNamelist= this.userNamelist.replace(/,\s*$/, '')
+            console.log(this.userNamelist.length);
+        }
+          
+       }
+   return this.userNamelist;
+
+}
+
   truncateInst(val) {
-    const inst = val.substr(0, 25);
+    const inst = val.substr(0, this.maxuserLength);
     return inst;
   }
-  usersPopUp(useridlist){
+  usersPopUp(serviceStats){
     this.usersdialogRef = this.dialog.open(UserlistpopupComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data:{
             userlist:this.users_list,
-            ids:useridlist
+            team:this.team,
+            serviceStatus:serviceStats
+    
         }
   
       });

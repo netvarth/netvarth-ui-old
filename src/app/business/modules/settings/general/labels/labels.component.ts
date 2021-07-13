@@ -9,7 +9,8 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
 
 @Component({
     selector: 'app-labels',
-    templateUrl: './labels.component.html'
+    templateUrl: './labels.component.html',
+    styleUrls: ['./labels.component.css']
 })
 export class LabelsComponent implements OnInit {
     tooltipcls = '';
@@ -34,6 +35,7 @@ source;
     add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
     domain: any;
     users: any = [];
+    team: any;
     constructor(private router: Router,
         private _location: Location, public activateroute: ActivatedRoute,
         private provider_services: ProviderServices,
@@ -51,8 +53,11 @@ source;
                   this.getProviders().then((data) => {
                    this.users = data;
                    console.log(this.users);
-                   this.getLabels();
-                  });                  
+                   this.getUsersTeam().then((team)=>{
+                       this.team=team;
+                    this.getLabels();
+                   }); 
+                });                 
                 }
                 else {
                     this.getLabels();
@@ -84,6 +89,30 @@ source;
        }); 
 
         return userNamelist.replace(/,\s*$/, '');
+    }
+    getOwnership(ownerShipData){
+        let userNamelist='';
+       if(ownerShipData.users &&ownerShipData.users.length>0){
+     
+            ownerShipData.users.forEach(element => {
+                const userObject =  this.users.filter(user => user.id === parseInt(element)); 
+                console.log(userObject);
+                userNamelist=userNamelist+userObject[0].firstName+' '+userObject[0].lastName+','
+               }); 
+        
+                userNamelist= userNamelist.replace(/,\s*$/, '')
+           }
+           if(ownerShipData.teams &&ownerShipData.teams.length>0){
+
+            ownerShipData.teams.forEach(element => {
+                const userObject =  this.team.filter(team => team.id === parseInt(element)); 
+                console.log(userObject);
+                userNamelist=userNamelist+userObject[0].name+','
+               }); 
+               userNamelist= userNamelist.replace(/,\s*$/, '')
+           }
+       return userNamelist;
+
     }
     getLabels() {
         this.label_list = [];
@@ -176,6 +205,19 @@ source;
                 }
               );
           });
+      }
+      getUsersTeam() {
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+        
+          _this.provider_services.getTeamGroup().subscribe(data => {
+                resolve(data);
+              },
+              () => {
+                reject();
+              }
+            );
+        });   
       }
       getUserName(userid) {
         console.log(userid);

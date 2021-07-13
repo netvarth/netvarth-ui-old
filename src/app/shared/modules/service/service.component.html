@@ -168,10 +168,17 @@
 <div class="col-xs-12 col-sm-12 col-md-8 col-lg-5 boxsty" *ngFor="let stat of service_data.internalStatus;  let i = index">
     <!-- <div class="disp-flex"> -->
 <div class="userhed" style="padding-top:10px;">{{stat.status|capitalizeFirst}}</div>
-<div class="usrstyle" *ngIf="getProviderName(stat.users).length > 50;else other_content"> <span>{{getProviderNametruncate(stat.users)}}...<span (click)="usersPopUp(stat.users)"><u style="color: #3c8dbc ; font-size: smaller;cursor: pointer;">more</u></span></span></div>
-<ng-template #other_content ><span class="usrstyle">{{getProviderName(stat.users)}}</span> </ng-template>
+<div style="font-size:small;"> Permitted Users/Team</div>
+<div  *ngIf="getOwnership(stat,false).length > maxuserLength">
+  <span class="usrstyle">{{getOwnership(stat,true)}}...<span (click)="usersPopUp(stat)"><u style="color: #3c8dbc ; font-size: smaller;cursor: pointer;">more</u></span></span>
+  </div>
+  <div  *ngIf="getOwnership(stat,false).length < maxuserLength">
+      <span class="usrstyle">{{getOwnership(stat,false)}}</span> 
+      </div>
+  <!-- <ng-template #same_content></ng-template >
+<ng-template #other_content ><span class="usrstyle">{{getOwnership(stat,false)}}</span> </ng-template> -->
 </div>
-  <!-- </div> -->
+  <!-- </div> --
   </div>
   <!-- <div class="copy addons one  col-xs-12 col-sm-12 card no-padding remov_bg">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-10">

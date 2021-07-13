@@ -15,7 +15,8 @@ import { ConfirmBoxComponent } from '../../../ynw_provider/shared/component/conf
 import { WordProcessor } from '../../services/word-processor.service';
 import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../constants/project-constants';
-import { userContactInfoComponent } from '../../../business/modules/settings/general/users/user-contact-info/user-contact-info.component';
+// import { userContactInfoComponent } from '../../../business/modules/settings/general/users/user-contact-info/user-contact-info.component';
+import { TeamMembersComponent } from './team-members/team-members.component';
 
 @Component({
   selector: 'app-assign-team',
@@ -471,7 +472,7 @@ export class AssignTeam implements OnInit {
     this.doSearch();
   }
   viewContactDetails(user) {
-    this.contactDetailsdialogRef = this.dialog.open(userContactInfoComponent, {
+    this.contactDetailsdialogRef = this.dialog.open(TeamMembersComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,

@@ -752,6 +752,7 @@ export class BranchUsersComponent implements OnInit {
             this.getCustomerGroup('update');
             this.resetGroupFields();
             this.closeGroupDialog();
+            this.snackbarService.openSnackBar('Team updated successfully', { ' panelclass': 'snackbarerror' });
         },
             error => {
                 this.apiError = error.error;

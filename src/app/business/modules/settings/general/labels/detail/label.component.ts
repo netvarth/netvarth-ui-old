@@ -7,6 +7,7 @@ import { FormMessageDisplayService } from '../../../../../../shared/modules/form
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { Location } from '@angular/common';
+import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 @Component({
     selector: 'app-label',
     templateUrl: './label.component.html'
@@ -67,12 +68,14 @@ export class LabelComponent implements OnInit {
     labelcaption = 'Create Label';
     labelStatus = false;
     source;
+    users: any;
     constructor(private router: Router,
         private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
         public fed_service: FormMessageDisplayService,
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService,
         public _location: Location) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.waitlist_label = this.wordProcessor.getTerminologyTerm('waitlist');
@@ -105,9 +108,46 @@ export class LabelComponent implements OnInit {
                     this.breadcrumbs = breadcrumbs;
                 }
             });
+            const user = this.groupService.getitemFromGroupStorage('ynw-user');
+    
+              if (user.accountType === 'BRANCH') {
+                  this.getProviders().then((data) => {
+                   this.users = data;
+                
+                  });                  
+                }
     }
 
     ngOnInit() {
+
+    }
+    getProviders() {
+        const _this = this;
+          return new Promise(function (resolve, reject) {
+            const apiFilter = {};
+            // apiFilter['userType-eq'] = 'PROVIDER';
+            _this.provider_services.getUsers(apiFilter).subscribe(data => {
+                  resolve(data);
+                },
+                () => {
+                  reject();
+                }
+              );
+          });
+      }
+    getOwnership(ownerShipData){
+        let userNamelist='';
+       if(ownerShipData.users &&ownerShipData.users.length>0){
+     
+            ownerShipData.users.forEach(element => {
+                const userObject =  this.users.filter(user => user.id === parseInt(element)); 
+                console.log(userObject);
+                userNamelist=userNamelist+userObject[0].firstName+' '+userObject[0].lastName+','
+               }); 
+        
+                return userNamelist.replace(/,\s*$/, '')
+           }
+       
 
     }
     editLabelbyId(id) {

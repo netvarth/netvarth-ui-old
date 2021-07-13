@@ -195,7 +195,7 @@
                         </div>
                         <div class="modal-footer">
                           <li>
-                            <button type="button" class="btn close-btn" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn close-btn" data-dismiss="modal" #closebutton>Close</button>
                           </li>
                           <li class="footer manage-views"><a class="pointer-cursor btn" (click)="gotoCustomViews()">
                             <i class="fa fa-cogs"></i>
@@ -2423,7 +2423,7 @@
                       </a>
                       <a class="statusText btn-play pointer-cursor start-btn"
                         [ngClass]="{'vid-ic-pd': (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Zoom')?true:false}"
-                        *ngIf="(time_type==1 || time_type==3) && appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Started') && appt.service.virtualCallingModes[0].callingMode !== 'VideoCall'"
+                        *ngIf="(time_type==1 || time_type==3) && appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Started')"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                         (click)="stopprop($event);showCallingModes(appt)">
                         <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"

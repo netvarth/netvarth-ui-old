@@ -1,12 +1,16 @@
-<h1 class="mat-dialog-title"> List of providers
+<h1 class="mat-dialog-title"> List of Users and Team
         <!-- <button #locte mat-dialog-close class="modal_close" tabindex="-1">
           <i class="fa fa-window-close" aria-hidden="true"></i>
         </button> -->
       </h1>
       <mat-dialog-content>
-       <div>
-         <ul>
-           <li *ngFor="let label of displayusers">
+          <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding queue-outer" *ngIf="loading">
+              <app-common-innerloading-spinner></app-common-innerloading-spinner>
+          </div>
+       <div *ngIf="!loading">
+
+         <ul >
+           <li *ngFor="let label of displayusers.split(',')">
     {{label}}
            </li>
          </ul>
