@@ -389,7 +389,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="card">
+                      <div class="card" *ngIf="domain!='finance'">
                         <div class="card-header">
                           <h2 class="mb-0">
                             <button class="btn btn-link" type="button" data-toggle="collapse"
@@ -770,7 +770,7 @@
                           (change)="chkStartedAptHistoryClicked(i, appt)" />
                       </div>
                       <app-card [item]="appt" [type]="'appointment-dashboard'" [time_type]="time_type"
-                        [checkins]="startedAppts" (actionPerformed)="cardClicked($event)" [allLabels]="allLabels"
+                        [checkins]="startedAppts" [teams]="teams" (actionPerformed)="cardClicked($event)" [allLabels]="allLabels"
                         [statusAction]="'started'">
                       </app-card>
                     </div>
@@ -1294,7 +1294,7 @@
                          (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
                       </div>
                       <app-card [item]="appt" [type]="'appointment-dashboard'" [time_type]="time_type"
-                        [checkins]="check_in_filtered_list" (actionPerformed)="cardClicked($event)"
+                        [checkins]="check_in_filtered_list" [teams]="teams" (actionPerformed)="cardClicked($event)"
                         [allLabels]="allLabels" [statusAction]="statusAction">
                       </app-card>
                     </div>
@@ -1469,7 +1469,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="card">
+                        <div class="card" *ngIf="domain!='finance'">
                           <div class="card-header">
                             <h2 class="mb-0">
                               <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePayStatus2" aria-expanded="false">
@@ -1862,7 +1862,7 @@
                       class="pull-left" (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
                     </div>
                     <app-card [item]="appt" [type]="'appointment-dashboard'" [time_type]="time_type"
-                      [checkins]="check_in_filtered_list" (actionPerformed)="cardClicked($event)"
+                      [checkins]="check_in_filtered_list" [teams]="teams" (actionPerformed)="cardClicked($event)"
                       [allLabels]="allLabels" [statusAction]="statusAction">
                     </app-card>
                   </div>
@@ -2094,7 +2094,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="card">
+                        <div class="card" *ngIf="domain!='finance'">
                           <div class="card-header">
                             <h2 class="mb-0">
                               <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePayStatus3" aria-expanded="false">
@@ -2485,7 +2485,7 @@
                       class="ckbx pull-left" (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
                     </div>
                     <app-card [item]="appt" [type]="'appointment-dashboard'" [time_type]="time_type"
-                      [checkins]="check_in_filtered_list" (actionPerformed)="cardClicked($event)"
+                      [checkins]="check_in_filtered_list" [teams]="teams" (actionPerformed)="cardClicked($event)"
                       [allLabels]="allLabels" [statusAction]="statusAction">
                     </app-card>
                   </div>

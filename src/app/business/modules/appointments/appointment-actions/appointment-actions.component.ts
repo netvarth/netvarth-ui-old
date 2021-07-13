@@ -529,6 +529,9 @@ export class AppointmentActionsComponent implements OnInit {
             'uuid': ids
         };
         this.provider_services.deleteLabelFromMultipleAppt(postData).subscribe(data => {
+            if (Object.keys(this.labelMap).length === 0) {
+                this.snackbarService.openSnackBar('Label removed', { 'panelclass': 'snackbarerror' });
+            }
             this.dialogRef.close('reload');
         },
             error => {
@@ -578,6 +581,7 @@ export class AppointmentActionsComponent implements OnInit {
             'uuid': ids
         };
         this.provider_services.addLabeltoMultipleAppt(postData).subscribe(data => {
+            this.snackbarService.openSnackBar('Label applied successfully', { 'panelclass': 'snackbarerror' });
             this.dialogRef.close('reload');
         },
             error => {

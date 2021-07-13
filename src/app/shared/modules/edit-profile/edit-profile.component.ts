@@ -12,6 +12,8 @@ import { Location } from '@angular/common';
 import { GroupStorageService } from '../../services/group-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { SnackbarService } from '../../services/snackbar.service';
+import { TelegramInfoComponent } from '../../components/telegram-info/telegram-info.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-edit-profile',
@@ -61,6 +63,13 @@ export class EditProfileComponent implements OnInit {
   loading = false;
   breadcrumbs_init: { title: string; url: string; }[];
   breadcrumbs: { title: string; url: string; }[];
+  tele_arr: any = [];
+  chatId;
+  val: any = [];
+  telegramstat = true ;
+  status = false ;
+  boturl: any;
+  telegramdialogRef: any;
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
@@ -70,6 +79,7 @@ export class EditProfileComponent implements OnInit {
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
     private _location: Location,
+    public dialog: MatDialog,
     private snackbarService: SnackbarService
   ) {
    this.breadcrumbs_init = [
@@ -111,6 +121,8 @@ export class EditProfileComponent implements OnInit {
       dispmonth = month.toString();
     }
     this.maxalloweddate = this.tday.getFullYear() + '-' + dispmonth + '-' + this.tday.getDate();
+    this.curtype = this.shared_functions.isBusinessOwner('returntyp');
+    this.getTelegramstat();
   }
   getProfile(typ) {
     this.loading = true;
@@ -314,4 +326,108 @@ export class EditProfileComponent implements OnInit {
     this._location.back();
     // this.router.navigate(['provider', 'settings', 'bprofile']);
   }
+  addTele() {
+    console.log(this.editProfileForm.get('telegramnumber').value)
+    if (this.editProfileForm.get('telegramnumber').value === '') {
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      // 'Please enter mobile phone number';
+      return;
+    }
+    if (this.editProfileForm.get('telegramnumber').value !== '') {
+      const curTele = this.editProfileForm.get('telegramnumber').value;
+      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+      const result = pattern.test(curTele);
+      if (!result) {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid mobile phone number';
+        return;
+      }
+      const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+      const result1 = pattern1.test(curTele);
+      if (!result1) {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        // 'Mobile number should have 10 digits';
+        return;
+      }
+     
+      else {
+        
+
+      }
+      // this.notifyTele = '';
+    }
+  }
+  telegramInfo() {
+    this.telegramdialogRef = this.dialog.open(TelegramInfoComponent, {
+      width: '70%',
+      height: '40%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'full-screen-modal', 'telegramPopupClass'],
+      disableClose: true,
+    });
+    this.telegramdialogRef.afterClosed().subscribe(
+      result => {
+        if (result) {
+          this.getTelegramstat();
+        }
+      }
+    );
+  }
+ 
+  enableTelegram(stat){
+    this.shared_services.telegramChat(this.countryCode, this.phonenoHolder).subscribe(data => {
+      this.chatId = data;
+    })
+    this.teleGramStat(stat).then(
+      (data) => {
+        console.log('then');
+        this.getTelegramstat();
+      },
+      error => {
+        this.telegramstat = false;
+        if(!this.telegramstat || this.chatId === null){
+          this.telegramInfo();
+          // this.telegramdialogRef = this.dialog.open(telegramPopupComponent, {
+          //   width: '50%',
+          //   panelClass: ['popup-class', 'commonpopupmainclass'],
+          //   disableClose: true,
+          //   data: this.boturl
+          // });
+          //   this.telegramdialogRef.afterClosed().subscribe(result => {
+          //   if (result) {
+          //     this.getTelegramstat();
+          //   }
+          // });
+        }
+      });
+  }
+  teleGramStat(stat) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.shared_services.enableTelegramNoti(stat)
+            .subscribe(
+                data => {
+                    resolve(data);
+                },
+                (error) => {
+                    reject(error);
+                }
+            );
+    });
+}
+getTelegramstat(){
+  this.shared_services.getTelegramstat()
+  .subscribe(
+    (data:any) => {
+     console.log(data);
+     this.status = data.status;
+     if(data.botUrl){
+      this.boturl = data.botUrl;
+     }
+     
+    },
+    error => {
+      console.log(error);
+    }
+  );
+}
 }

@@ -80,6 +80,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
     public dialogRef: MatDialogRef<UpdateProviderNotificationsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialog: MatDialog,
+    private shared_functions: SharedFunctions,
     public provider_services: ProviderServices,
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
@@ -171,12 +172,12 @@ export class UpdateProviderNotificationsComponent implements OnInit {
         if (cancelList[0].sms && cancelList[0].sms.length !== 0) {
           this.ph1_arr = cancelList[0].sms;
 
-          if (cancelList[0].telegramPhone && cancelList[0].telegramPhone.length !== 0) {
-            this.tele1_arr = cancelList[0].telegramPhone;
-
-            // this.SelchkincnclNotify = true;
-          }// this.SelchkincnclNotify = true;
+         this.SelchkincnclNotify = true;
         }
+        if (cancelList[0].telegramPhone && cancelList[0].telegramPhone.length !== 0) {
+          this.tele1_arr = cancelList[0].telegramPhone;
+          // this.SelchkincnclNotify = true;
+        }// 
         if (cancelList[0].pushMsg && cancelList[0].pushMsg.length !== 0) {
           this.cheknCancelPushph_arr = cancelList[0].pushMsg;
           // this.SelchkincnclNotify = true;
@@ -318,6 +319,16 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
       // 'Please enter mobile phone number';
       return;
+    }
+    if (this.teleCountrycode !== '') {
+      const curTelecode = this.teleCountrycode;
+      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_COUNTRYCODE);
+      const result = pattern.test(curTelecode);
+      if (!result) {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_COUNTRYCODE'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid mobile phone number';
+        return;
+      }
     }
     if (this.notifyTele !== '') {
       const curTele = this.notifyTele;
@@ -667,12 +678,16 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       // this.notifycancltelegram = '';
     }
   }
+  isNumericSign(evt) {
+    return this.shared_functions.isNumericSign(evt);
+}
   addcheknCancelPushPh() {
     if (this.notifycheknCancelPushphonenumber === '') {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
       // 'Please enter mobile phone number';
       return;
     }
+    
     if (this.notifycheknCancelPushphonenumber !== '') {
       const curphone = this.notifycheknCancelPushphonenumber;
       const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);

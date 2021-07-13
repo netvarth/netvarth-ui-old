@@ -1153,7 +1153,7 @@
 
 										<button type="button"
 											class="btn btn-light-info  font-weight-bolder mb-2 mr-3  my-1 lh-p8 fnt-p8 full_wdth"
-											*ngIf="refund_show.length != 0 && bill_data.billStatus!='Settled'"
+											*ngIf="(refund_show && refund_show.length != 0) && bill_data.billStatus!='Settled'"
 											data-toggle="modal" data-target="#exampleModalSizeDefaultrefund"
 											(click)="refundBtnShow('refund')">Refund</button>
 
