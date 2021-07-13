@@ -1,153 +1,120 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class ServiceMeta {
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-    httpGet(url_path, header?, params?) {
-
-        const options: any = {}; // Create a request option
-
-        if (header) {
-          const httpHeads = new HttpHeaders(header);
-          options.headers = httpHeads;
-        }
-
-        if (params) {
-          let httpParams = new HttpParams();
-          Object.keys(params).forEach(function (key) {
-              httpParams = httpParams.append(key, params[key]);
-
-          });
-
-          options.params = httpParams;
-          options.showLoader = true;
-
-        }
-        return this.http.get(url_path, options);
-    }
-    httpGetText(url_path, header?, params?) {
-
-      const options: any = {}; // Create a request option
-
-      // if (header) {
-      //   const httpHeads = new HttpHeaders(header);
-
-        const  httpHeads = new HttpHeaders({
-            'Accept': 'text/html, application/xhtml+xml, */*',
-            'Content-Type': 'application/x-www-form-urlencoded'
-          });
-          options.headers = httpHeads;
-          options.responseType = 'Text';
-      if (params) {
-        let httpParams = new HttpParams();
-        Object.keys(params).forEach(function (key) {
-            httpParams = httpParams.append(key, params[key]);
-
-        });
-
-        options.params = httpParams;
-        options.showLoader = true;
-
-      }
-      return this.http.get(url_path, options);
+  getJSON(path): Observable<any> {
+    return this.http.get(path);
   }
-    httpPost(url_path, body?, header?, params?) {
-        // const bodyString = JSON.stringify(body); // Stringify payload
-        const options: any = {}; // Create a request option
 
-        if (header) {
-          const httpHeads = new HttpHeaders(header);
-           options.headers = httpHeads;
-        }
-
-
-        if (params) {
-            let httpParams = new HttpParams();
-            Object.keys(params).forEach(function (key) {
-                httpParams = httpParams.append(key, params[key]);
-
-            });
-
-          options.params = httpParams;
-        }
-        return this.http.post(url_path, body, options); // ...using post request
-
+  httpGet(url_path, header?, params?) {
+    const options: any = {}; // Create a request option
+    if (header) {
+      const httpHeads = new HttpHeaders(header);
+      options.headers = httpHeads;
     }
 
-    httpPatch(url_path, body?, header?, params?) {
-
-              // const bodyString = JSON.stringify(body); // Stringify payload
-              const options: any = {}; // Create a request option
-
-              if (header) {
-                const httpHeads = new HttpHeaders(header);
-                options.headers = httpHeads;
-              }
-
-
-              if (params) {
-                  let httpParams = new HttpParams();
-                  Object.keys(params).forEach(function (key) {
-                      httpParams = httpParams.append(key, params[key]);
-
-                  });
-
-                options.params = httpParams;
-              }
-              return this.http.patch(url_path, body, options); // ...using patch request
-
+    if (params) {
+      let httpParams = new HttpParams();
+      Object.keys(params).forEach(function (key) {
+        httpParams = httpParams.append(key, params[key]);
+      });
+      options.params = httpParams;
+      options.showLoader = true;
     }
+    return this.http.get(url_path, options);
+  }
+  httpGetText(url_path, header?, params?) {
+    const options: any = {}; // Create a request option
+    // if (header) {
+    //   const httpHeads = new HttpHeaders(header);
+    const httpHeads = new HttpHeaders({
+      'Accept': 'text/html, application/xhtml+xml, */*',
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
+    options.headers = httpHeads;
+    options.responseType = 'Text';
+    if (params) {
+      let httpParams = new HttpParams();
+      Object.keys(params).forEach(function (key) {
+        httpParams = httpParams.append(key, params[key]);
 
-    httpPut(url_path, body?, header?, params?) {
-
-        // const bodyString = JSON.stringify(body); // Stringify payload
-        const options: any = {}; // Create a request option
-
-        if (header) {
-          const httpHeads = new HttpHeaders(header);
-          options.headers = httpHeads;
-        }
-
-
-        if (params) {
-            let httpParams = new HttpParams();
-            Object.keys(params).forEach(function (key) {
-                httpParams = httpParams.append(key, params[key]);
-
-            });
-
-          options.params = httpParams;
-        }
-        return this.http.put(url_path, body, options); // ...using put request
-
+      });
+      options.params = httpParams;
+      options.showLoader = true;
     }
-
-    httpDelete(url_path, body?, header?, params?) {
-        const options: any = {}; // Create a request option
-
-        if (header) {
-          const httpHeads = new HttpHeaders(header);
-          options.headers = httpHeads;
-        }
-
-
-        if (params) {
-            let httpParams = new HttpParams();
-            Object.keys(params).forEach(function (key) {
-                httpParams = httpParams.append(key, params[key]);
-
-            });
-
-          options.params = httpParams;
-        }
-        if (body) {
-          options.body = body;
-        }
-        return this.http.delete(url_path, options);
-
+    return this.http.get(url_path, options);
+  }
+  httpPost(url_path, body?, header?, params?) {
+    // const bodyString = JSON.stringify(body); // Stringify payload
+    const options: any = {}; // Create a request option
+    if (header) {
+      const httpHeads = new HttpHeaders(header);
+      options.headers = httpHeads;
     }
+    if (params) {
+      let httpParams = new HttpParams();
+      Object.keys(params).forEach(function (key) {
+        httpParams = httpParams.append(key, params[key]);
+      });
+      options.params = httpParams;
+    }
+    return this.http.post(url_path, body, options); // ...using post request
+  }
 
+  httpPatch(url_path, body?, header?, params?) {
+    // const bodyString = JSON.stringify(body); // Stringify payload
+    const options: any = {}; // Create a request option
+    if (header) {
+      const httpHeads = new HttpHeaders(header);
+      options.headers = httpHeads;
+    }
+    if (params) {
+      let httpParams = new HttpParams();
+      Object.keys(params).forEach(function (key) {
+        httpParams = httpParams.append(key, params[key]);
+      });
+      options.params = httpParams;
+    }
+    return this.http.patch(url_path, body, options); // ...using patch request
+  }
 
+  httpPut(url_path, body?, header?, params?) {
+    // const bodyString = JSON.stringify(body); // Stringify payload
+    const options: any = {}; // Create a request option
+    if (header) {
+      const httpHeads = new HttpHeaders(header);
+      options.headers = httpHeads;
+    }
+    if (params) {
+      let httpParams = new HttpParams();
+      Object.keys(params).forEach(function (key) {
+        httpParams = httpParams.append(key, params[key]);
+      });
+      options.params = httpParams;
+    }
+    return this.http.put(url_path, body, options); // ...using put request
+  }
+
+  httpDelete(url_path, body?, header?, params?) {
+    const options: any = {}; // Create a request option
+    if (header) {
+      const httpHeads = new HttpHeaders(header);
+      options.headers = httpHeads;
+    }
+    if (params) {
+      let httpParams = new HttpParams();
+      Object.keys(params).forEach(function (key) {
+        httpParams = httpParams.append(key, params[key]);
+      });
+      options.params = httpParams;
+    }
+    if (body) {
+      options.body = body;
+    }
+    return this.http.delete(url_path, options);
+  }
 }

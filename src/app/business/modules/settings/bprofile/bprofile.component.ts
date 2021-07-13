@@ -321,6 +321,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   businessConfig: any = [];
   multipeLocationAllowed = false;
   // customer_label = '';
+
   primarydialogRef;
   loceditdialogRef;
   addlocdialogRef;
@@ -426,9 +427,9 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     private shared_services: SharedServices,
     private qservice: QuestionService,
     private changeDetectorRef: ChangeDetectorRef) {
-    this.maintooltip = this.wordProcessor.getProjectMesssages('BPROFILE_TOOPTIP');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_datastorage.setWeightageArray([]);
+    this.maintooltip = this.wordProcessor.getProjectMesssages('BPROFILE_TOOPTIP');
     // this.shared_functions.getMessage().subscribe(data => {
     //   this.getLicensemetrics();
     //   switch (data.ttype) {
@@ -1455,10 +1456,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
           this.imageToShow = '';
           this.clogo = data;
           // this.cover_url = data[0].url;
-          this.cover_url = '';
-          if (data[0] && data[0].url) {
-            this.cover_url = (data[0].url)
-          }
+          this.cover_url = (data[0]?.url) ? data[0].url : '';
           //  this.imageToShow = this.cover_url;
           this.imageToShow = this.sharedfunctionobj.showlogoicon(this.cover_url);
         }

@@ -14,8 +14,10 @@ import { WordProcessor } from '../../../../../shared/services/word-processor.ser
     'templateUrl': './customer-id.component.html'
 })
 export class CustomerIdSettingsComponent implements OnInit {
+    breadcrumbs:any;
+  
 
-    
+   
     formats = {
         auto: { value: 'AUTO', displayName: 'Auto' },
         manual: { value: 'MANUAL', displayName: 'Manual' },
@@ -29,9 +31,8 @@ export class CustomerIdSettingsComponent implements OnInit {
     domain: any;
     cust_domain_name = '';
     breadcrumb_moreoptions: any = [];
-    customer_label = '';
-    customer_label_upper = '';
-    breadcrumbs = [];
+    customer_label: any;
+    customer_label_upper: any;
     constructor(
         private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -43,7 +44,7 @@ export class CustomerIdSettingsComponent implements OnInit {
     ) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.customer_label_upper = this.wordProcessor.firstToUpper(this. customer_label);
-        this.breadcrumbs = [
+       this.breadcrumbs = [
             {
                 title: 'Settings',
                 url: '/provider/settings'
@@ -53,7 +54,7 @@ export class CustomerIdSettingsComponent implements OnInit {
                 url: '/provider/settings/customers'
             },
             {
-                title: Messages.CUSTOMER_ID.replace('[customer]', this.customer_label_upper),
+                title: Messages.CUSTOMER_ID.replace('[customer]',this.customer_label_upper),
             }
         ];
     }
@@ -152,3 +153,4 @@ export class CustomerIdSettingsComponent implements OnInit {
         this.routerobj.navigate(['/provider/' + this.domain + '/customers->custid-settings']);
     }
 }
+

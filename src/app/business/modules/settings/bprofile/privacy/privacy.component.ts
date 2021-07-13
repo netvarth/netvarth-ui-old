@@ -17,7 +17,7 @@ export class PrivacyComponent implements OnInit, OnDestroy {
     privacypermissiontxt = projectConstants.PRIVACY_PERMISSIONS;
     normal_privacy_settings_show = 1;
     frm_privacy_cap = Messages.FRM_LEVEL_PRIVACY_MSG;
-    
+
     add_it_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
     email_cap = Messages.SERVICE_EMAIL_CAP;
     bProfile = null;
@@ -47,7 +47,7 @@ export class PrivacyComponent implements OnInit, OnDestroy {
     breadcrumb_moreoptions: any = [];
     small_device_display = false;
     screenWidth;
-    customernormal_label = '';
+    customernormal_label: any;
     constructor(
         private provider_services: ProviderServices,
         private routerobj: Router,
@@ -56,9 +56,9 @@ export class PrivacyComponent implements OnInit, OnDestroy {
         private dialog: MatDialog,
         private groupService: GroupStorageService,
         private wordProcessor: WordProcessor
-    ) { 
+    ) {
         this.customernormal_label = this.wordProcessor.getTerminologyTerm('customer');
-    }
+     }
     ngOnInit() {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
@@ -296,3 +296,4 @@ export class PrivacyComponent implements OnInit, OnDestroy {
         this.UpdatePrimaryFields(post_itemdata);
     }
 }
+

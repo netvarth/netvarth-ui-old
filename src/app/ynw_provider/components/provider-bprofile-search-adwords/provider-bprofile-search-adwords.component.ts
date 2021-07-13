@@ -34,7 +34,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
   startpageval = 1;
   perpage = 5;
   adwordshowmore = false;
-  emptyMsg = '';
+
   remadwdialogRef;
   adwdialogRef;
   active_user;
@@ -43,6 +43,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
   frm_adword_cap = '';
   domain;
   warningdialogRef: any;
+  emptyMsg: any;
 
   constructor(private provider_servicesobj: ProviderServices,
     private dialog: MatDialog,
@@ -50,8 +51,8 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private groupService:GroupStorageService) {
-    this.emptyMsg = this.wordProcessor.getProjectMesssages('ADWORD_LISTEMPTY');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.emptyMsg = this.wordProcessor.getProjectMesssages('ADWORD_LISTEMPTY');
   }
 
   ngOnInit() {
@@ -206,3 +207,4 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
   //   return moreOptions;
   // }
 }
+

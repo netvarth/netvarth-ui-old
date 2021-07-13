@@ -147,6 +147,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       this.notedialogRef.close();
     }
   }
+  checkDataNull(value){
+    return value.trim()!=="";
+  }
   getProviderSettings() {
     this.api_loading = true;
     this.provider_services.getWaitlistMgr()

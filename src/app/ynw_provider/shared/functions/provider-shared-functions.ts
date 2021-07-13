@@ -284,7 +284,12 @@ export class ProviderSharedFuctions {
       ob.changeWaitlistStatusApi(waitlist, action);
     }
   }
-
+  changeWaitlistinternalStatus(ob, waitlist, action){
+    ob.changeWaitlistInternalStatusApi(waitlist, action);
+  }
+  changeApptinternalStatus(ob, waitlist, action){
+    ob.changeApptInternalStatusApi(waitlist, action);
+  }
   changeApptStatusApi(ob, waitlist, action, post_data = {}, showMessage?) {
     return new Promise((resolve, reject) => {
       ob.provider_services.changeProviderApptStatus(waitlist.uid, action, post_data)
@@ -351,7 +356,36 @@ export class ProviderSharedFuctions {
         );
     });
   }
-
+  changeWaitlistInternalStatusApi(ob, waitlist, action){
+    return new Promise((resolve, reject) => {
+      ob.provider_services.changeProviderWaitlistInternalStatus(waitlist.ynwUuid, action)
+        .subscribe(
+          (data) => {
+            resolve(data);
+            this.snackbarService.openSnackBar('status changed successfully');
+          },
+          error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            reject(error);
+          }
+        );
+    });
+  }
+  changeApptInternalStatusApi(ob, waitlist, action){
+    return new Promise((resolve, reject) => {
+      ob.provider_services.changeProviderApptInternalStatus(waitlist.uid, action)
+        .subscribe(
+          (data) => {
+            resolve(data);
+            this.snackbarService.openSnackBar('status changed successfully');
+          },
+          error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            reject(error);
+          }
+        );
+    });
+  }
   addConsumerInboxMessage(waitlist, Cthis?, appt?) {
     const uuids = [];
     let type;
