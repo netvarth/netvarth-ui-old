@@ -30,9 +30,10 @@ export class TelegramInfoComponent {
      this.shared_services.getTelegramstat().subscribe(data => {
         this.telegram_dta = data;
           this.boturl = this.telegram_dta.botUrl;
+          this.dialogRef.close();
         const path = this.boturl;
         window.open(path, '_blank');
-        this.dialogRef.close();
+     
         },
             error => {
                 // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

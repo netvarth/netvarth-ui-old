@@ -172,12 +172,12 @@ export class UpdateProviderNotificationsComponent implements OnInit {
         if (cancelList[0].sms && cancelList[0].sms.length !== 0) {
           this.ph1_arr = cancelList[0].sms;
 
-          if (cancelList[0].telegramPhone && cancelList[0].telegramPhone.length !== 0) {
-            this.tele1_arr = cancelList[0].telegramPhone;
-
-            // this.SelchkincnclNotify = true;
-          }// this.SelchkincnclNotify = true;
+         this.SelchkincnclNotify = true;
         }
+        if (cancelList[0].telegramPhone && cancelList[0].telegramPhone.length !== 0) {
+          this.tele1_arr = cancelList[0].telegramPhone;
+          // this.SelchkincnclNotify = true;
+        }// 
         if (cancelList[0].pushMsg && cancelList[0].pushMsg.length !== 0) {
           this.cheknCancelPushph_arr = cancelList[0].pushMsg;
           // this.SelchkincnclNotify = true;
