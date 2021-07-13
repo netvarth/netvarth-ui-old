@@ -55,7 +55,7 @@
     background-color: grey !important;
 }
  .mat-grid-tile-footer {
-    padding: 0 14px !important;
+    padding: 0 5px !important;
 }
 app-appt-card, app-wl-card {
     height: 100%;
