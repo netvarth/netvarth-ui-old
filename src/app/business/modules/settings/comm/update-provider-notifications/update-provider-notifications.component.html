@@ -50,7 +50,7 @@
                             <!-- <input class="form-control" style="max-width: 50px !important;" type="text"
                                 value="+91"> -->
                             <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
-                                 [(ngModel)]="smsCountrycode" minlength="2" maxlength="2">
+                                 [(ngModel)]="smsCountrycode" minlength="2" maxlength="4">
                             <input type="text" class="form-control" placeholder="Phonenumber"
                                 (keypress)="isNumeric($event)" [(ngModel)]="notifyphonenumber" minlength="0"
                                 maxlength="10">
@@ -95,7 +95,7 @@
                             <!-- <input class="form-control" style="max-width: 50px !important;" type="text" readonly
                                 value="+91"> -->
                                 <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
-                                [(ngModel)]="pushCountrycode" minlength="2" maxlength="2">
+                                [(ngModel)]="pushCountrycode" minlength="2" maxlength="4">
                             <input type="text" class="form-control" placeholder="Phonenumber"
                                 (keypress)="isNumeric($event)" [(ngModel)]="notifycheknPushphonenumber" minlength="0"
                                 maxlength="10">
@@ -118,7 +118,7 @@
                     <div class="form-group mgn-up-10" *ngIf="telegram">
                         <div class="input-group mb-3 phadd">
                             <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
-                                 [(ngModel)]="teleCountrycode" minlength="2" maxlength="2">
+                                 [(ngModel)]="teleCountrycode" minlength="2" maxlength="4" (keypress)="isNumericSign($event)">
                             <input type="text" class="form-control" placeholder="Phonenumber"
                                 (keypress)="isNumeric($event)" [(ngModel)]="notifyTele" minlength="0"
                                 maxlength="10">
@@ -174,7 +174,7 @@
                             <!-- <input class="form-control" style="max-width: 50px !important;" type="text" readonly
                                 value="+91"> -->
                                 <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
-                                [(ngModel)]="sms1Countrycode" minlength="2" maxlength="2"> 
+                                [(ngModel)]="sms1Countrycode" minlength="2" maxlength="4"> 
                             <input type="text" class="form-control" placeholder="Phonenumber"
                                 (keypress)="isNumeric($event)" [(ngModel)]="notifycanclphonenumber" minlength="0"
                                 maxlength="10">
@@ -223,7 +223,7 @@
                             <!-- <input class="form-control" style="max-width: 50px !important;" type="text" readonly
                                 value="+91"> -->
                                 <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
-                                [(ngModel)]="push1Countrycode" minlength="2" maxlength="2"> 
+                                [(ngModel)]="push1Countrycode" minlength="2" maxlength="4"> 
                             <input type="text" class="form-control" placeholder="Phonenumber"
                                 (keypress)="isNumeric($event)" [(ngModel)]="notifycheknCancelPushphonenumber"
                                 minlength="0" maxlength="10">
@@ -248,7 +248,7 @@
                             <!-- <input class="form-control" style="max-width: 50px !important;" type="text" readonly
                                 value="+91"> -->
                                 <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
-                                [(ngModel)]="tele1Countrycode" minlength="2" maxlength="2">
+                                [(ngModel)]="tele1Countrycode" minlength="2" maxlength="4">
                             <input type="text" class="form-control" placeholder="Phonenumber"
                                 (keypress)="isNumeric($event)" [(ngModel)]="notifycancltelegram" minlength="0"
                                 maxlength="10">

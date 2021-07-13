@@ -230,6 +230,22 @@ export class LoginComponent implements OnInit, AfterViewInit {
               this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
               this.lStorageService.setitemonLocalStorage('qrp', data.password);
               this.dialogRef.close('success');
+              this.tele_num = loginId;
+              if(dialCode.startsWith('+')){
+                this.countryCode = dialCode.substring(1);
+              }
+              this.shared_services.telegramChat(this.countryCode,loginId)
+               .subscribe(
+                   data => { 
+                     this.chatId = data; 
+                     if(this.chatId === null){
+                       this.telegramInfo();
+                     }
+                   },
+                   (error) => {
+                      
+                   }
+               );
             },
             error => {
              if (error.status === 401 && error.error === 'Session already exists.') {
@@ -242,22 +258,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
               this.api_loading = false;
             }
           );
-          this.tele_num = loginId;
-          if(dialCode.startsWith('+')){
-            this.countryCode = dialCode.substring(1);
-          }
-          this.shared_services.telegramChat(this.countryCode,loginId)
-           .subscribe(
-               data => { 
-                 this.chatId = data; 
-                 if(this.chatId === null){
-                   this.telegramInfo();
-                 }
-               },
-               (error) => {
-                  
-               }
-           );
+         
       }
     }
   }
