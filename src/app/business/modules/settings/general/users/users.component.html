@@ -12,7 +12,7 @@
               <!-- </i> -->
               Filter
           </a>
-          <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click)="addBranchSP()"
+          <a   *ngIf="selectedGroup == 'all'" [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click)="addBranchSP()"
               class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5">
               <button type="button" class="btn btn mb-2 action-button  btn-primary action-button-add"> <i
                       class="fa fa-plus"></i>User </button>
@@ -29,6 +29,13 @@
             (click)="addlocation()">
              Assign Locations</button>
           </a>
+          
+          <button mat-flat-button class="btn btn mb-2 action-button bold pointer-cursor pull-right mgn-lt-5  btn-primary action-button-add" (click)="showCustomerstoAdd()"
+                   *ngIf="selectedGroup !== 'all' && !showUsers && (selectedGroup.users && selectedGroup.users.length > 0)">
+                   Manage Users</button>
+                   <button mat-flat-button  class="btn btn mb-2 action-button bold pointer-cursor pull-right mgn-lt-5  btn-primary action-button-add" (click)="showCustomerstoAdd()"
+                   *ngIf="selectedGroup !== 'all' && !showUsers  && (selectedGroup.users && selectedGroup.users.length == 0)">
+                   Add Users</button>
       </h5>
   </div>
 </section>
@@ -40,14 +47,14 @@
       <h5 class="mgn-up-10">
           <div class="pull-left pad-tp-5" *ngIf="!teamLoaded && groups.length == 0">Users</div>
           <!-- <div class="pull-left pad-tp-5" *ngIf="!teamLoaded && groups.length > 0">Teams</div> -->
-          <a  (click)="showFilterSidebar()" style="padding: 5px 7px !important;" class="btn mb-2 action-button mgn-lt-5 pull-right">
+          <a *ngIf="showusers" (click)="showFilterSidebar()" style="padding: 5px 7px !important;" class="btn mb-2 action-button mgn-lt-5 pull-right">
               <!-- <i class="icon-filter-one">
               </i> -->
               <img src="../../../assets/images/provider-filter-icon.png"  style="width: 22px !important; margin-top: -6px !important;">
           </a>
           <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" 
           class="navbar-item-color bold pointer-cursor mgn-lt-5">
-            <button type="button" style="padding: 5px 7px !important;"  [matMenuTriggerFor]="appMenu" class="btn btn mb-2 action-button  dropdown-toggle  pull-right"> 
+            <button type="button" style="padding: 5px 7px !important; margin-left: 5px !important;"   [matMenuTriggerFor]="appMenu" class="btn btn mb-2 action-button  dropdown-toggle  pull-right"> 
               Actions  
             </button>
             <mat-menu #appMenu="matMenu">
@@ -61,7 +68,13 @@
                     Assign Locations
                 </button>
             </mat-menu>
-          </a>
+          </a>      
+          <button mat-flat-button class="btn btn mb-2 action-button bold pointer-cursor pull-right mgn-lt-5  btn-primary action-button-add" (click)="showCustomerstoAdd()"
+                   *ngIf="selectedGroup !== 'all' && !showUsers && (selectedGroup.users && selectedGroup.users.length > 0)">
+                   Manage Users</button>
+         <button mat-flat-button  class="btn btn mb-2 action-button bold pointer-cursor pull-right mgn-lt-5  btn-primary action-button-add" (click)="showCustomerstoAdd()"
+                   *ngIf="selectedGroup !== 'all' && !showUsers  && (selectedGroup.users && selectedGroup.users.length == 0)">
+                   Add Users</button>
       </h5>
      
   </div>
@@ -249,12 +262,12 @@
                   </h3>
              </div>
              <div class="col-sm-12 col-lg-8 col-xs-12 col-md-12 mb-4">
-                   <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
+                   <!-- <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
                    *ngIf="selectedGroup !== 'all' && !showUsers  && (selectedGroup.users && selectedGroup.users.length == 0)">
-                   Add Users</button>
-                   <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
+                   Add Users</button> -->
+                   <!-- <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
                    *ngIf="selectedGroup !== 'all' && !showUsers && (selectedGroup.users && selectedGroup.users.length > 0)">
-                   Update Users</button>
+                   Update Users</button> -->
                    
                    <button mat-flat-button class="font-size-xs add_btn mgn-lt-10 cancel_btn" (click)="cancelAdd()"
                   *ngIf="selectedGroup !== 'all'  && showUsers"><i class="fa fa-times mgn-rt-5" aria-hidden="true"></i>
@@ -823,12 +836,12 @@
                 </h3>
            </div>
            <div class="col-sm-12 col-lg-8 col-xs-12 col-md-12 mb-4">
-                 <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
+                 <!-- <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
                    *ngIf="selectedGroup !== 'all' && !showUsers  && (selectedGroup.users && selectedGroup.users.length == 0)">
-                   Add Users</button>
-                 <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
+                   Add Users</button> -->
+                 <!-- <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
                    *ngIf="selectedGroup !== 'all' && !showUsers && (selectedGroup.users && selectedGroup.users.length > 0)">
-                   Update Users</button>
+                   Update Users</button> -->
 
                  
                  <button mat-flat-button class="font-size-xs add_btn mgn-lt-10 cancel_btn" (click)="cancelAdd()"
