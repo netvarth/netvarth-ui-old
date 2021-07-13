@@ -724,7 +724,7 @@ export class BranchUsersComponent implements OnInit {
     }
     customerGroupAction() {
         if (this.teamName === '' || (this.teamName && this.teamName.trim() === '')) {
-            this.apiError = 'Please enter the group name';
+            this.apiError = 'Please enter the team name';
         } else {
             const postData = {
                 'name': this.teamName,
