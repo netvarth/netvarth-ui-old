@@ -140,8 +140,8 @@ export class BranchUsersComponent implements OnInit {
     teamLoaded = false;
     teamEdit = false;
     groupIdEdit = '';
-    selectedGroup;
-    teamusers: any = [];
+    selectedTeam;
+    // teamusers: any = [];
     showUsers = false;
     userIds: any = [];
     showcheckbox = false;
@@ -152,6 +152,7 @@ export class BranchUsersComponent implements OnInit {
     showteams = false;
     showusers = false;
     selecteTeamdUsers: any = [];
+    addUser = false;
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -163,7 +164,7 @@ export class BranchUsersComponent implements OnInit {
         private lStorageService: LocalStorageService) {
     }
     ngOnInit() {
-        this.selectedGroup = 'all';
+        this.selectedTeam = 'all';
         this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
         this.user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = this.user.sector;
@@ -175,7 +176,7 @@ export class BranchUsersComponent implements OnInit {
         this.getLicenseUsage();
         this.getSpokenLanguages();
         this.getSpecializations();
-        this.getCustomerGroup();
+        this.getTeams();
         this.getProviderLocations();
         // this.addCustomerToGroup();
         if (this.domain === 'healthCare') {
@@ -188,7 +189,7 @@ export class BranchUsersComponent implements OnInit {
             this.userTypesFormfill = [{ name: 'ASSISTANT', displayName: 'Assistant' }, { name: 'PROVIDER', displayName: 'Mentor' }, { name: 'ADMIN', displayName: 'Admin' }];
         }
     }
-    getCustomerGroup(groupId?) {
+    getTeams(groupId?) {
         this.teamLoaded = true;
         this.provider_services.getTeamGroup().subscribe((data: any) => {
             this.groups = data;
@@ -206,16 +207,16 @@ export class BranchUsersComponent implements OnInit {
                 console.log("hi");
 
                 if (groupId === 'update') {
-                    if (this.selectedGroup !== 'all') {
-                        const grp = this.groups.filter(group => group.id === this.selectedGroup.id);
-                        this.selectedGroup = grp[0];
+                    if (this.selectedTeam !== 'all') {
+                        const grp = this.groups.filter(group => group.id === this.selectedTeam.id);
+                        this.selectedTeam = grp[0];
                         console.log(this.selectedUser)
-                        this.customerGroupSelection(this.selectedGroup);
+                        this.teamSelected(this.selectedTeam);
                     }
                 }
                 else {
                     const grp = this.groups.filter(group => group.id === JSON.stringify(groupId));
-                    this.customerGroupSelection(grp[0], 'show');
+                    this.teamSelected(grp[0], 'show');
                 }
             }
         });
@@ -302,7 +303,11 @@ export class BranchUsersComponent implements OnInit {
         }
     }
     getUsers(from_oninit = false) {
-        let filter = this.setFilterForApi();
+        this.loading = true;
+        let filter= this.setFilterForApi();
+        if(this.selectedTeam!=='all' && !this.addUser) {
+            filter['teams-eq'] = this.selectedTeam.id;
+        }
         this.lStorageService.setitemonLocalStorage('userfilter', filter);
         this.getUsersListCount(filter)
             .then(
@@ -478,6 +483,9 @@ export class BranchUsersComponent implements OnInit {
         }
         if (this.selectedSpecialization.length > 0) {
             api_filter['specialization-eq'] = this.selectedSpecialization.toString();
+        }
+        if (this.selectedTeam === 'all' || this.addUser) {
+            delete api_filter['teams-eq'];
         }
         return api_filter;
     }
@@ -728,16 +736,12 @@ export class BranchUsersComponent implements OnInit {
         } else {
             const postData = {
                 'name': this.teamName,
-                // 'size': this.size,
                 'description': this.teamDescription
             };
             console.log(postData);
             if (!this.teamEdit) {
                 this.createGroup(postData);
             } else {
-                // postData['id'] = (this.groupIdEdit !== '') ? this.groupIdEdit : '';
-
-                // postData['id'] = (this.groupIdEdit !== '') ? this.groupIdEdit : this.selectedGroup.id;
                 this.updateGroup(postData);
             }
         }
@@ -757,7 +761,7 @@ export class BranchUsersComponent implements OnInit {
     }
     updateGroup(data) {
         this.provider_services.updateTeamGroup(data, this.groupIdEdit).subscribe(data => {
-            this.getCustomerGroup('update');
+            this.getTeams('update');
             this.resetGroupFields();
             this.closeGroupDialog();
             this.snackbarService.openSnackBar('Team updated successfully', { ' panelclass': 'snackbarerror' });
@@ -774,29 +778,28 @@ export class BranchUsersComponent implements OnInit {
     showCustomerHint() {
         this.showAddCustomerHint = false;
         console.log(this.newlyCreatedGroupId);
-        this.getCustomerGroup(this.newlyCreatedGroupId);
+        this.getTeams(this.newlyCreatedGroupId);
         this.resetGroupFields();
         this.resetError();
     }
     showCustomerstoAdd(type?) {
+        this.addUser = true;
         this.selecteTeamdUsers = [];
         this.showcheckbox = true
         this.userIds = [];
         this.getUsers();
         this.showUsers = true;
-        // this.resetList();
         this.resetFilter();
-        // this.getCustomersList();
-        this.selecteTeamdUsers = this.selectedGroup.users;
+        this.selecteTeamdUsers = this.selectedTeam.users;
         if (type) {
             this.closeGroupDialog();
             this.showCustomerHint();
         }
         if (!type) {
-            if (this.selectedGroup.users.length > 0) {
-                for (let i = 0; i < this.selectedGroup.users.length; i++) {
-                    console.log(this.selectedGroup.users[i]);
-                    this.userIds.push(this.selectedGroup.users[i].id);
+            if (this.selectedTeam.users.length > 0) {
+                for (let i = 0; i < this.selectedTeam.users.length; i++) {
+                    console.log(this.selectedTeam.users[i]);
+                    this.userIds.push(this.selectedTeam.users[i].id);
                     console.log(this.userIds);
                 }
             }
@@ -818,67 +821,22 @@ export class BranchUsersComponent implements OnInit {
             this.teamName = group.name;
             this.teamDescription = group.description;
             this.groupIdEdit = group.id;
-            // this.size = group.size
         }
-        // else {
-        //   this.teamName = this.selectedGroup.teamName;
-        //   this.teamDescription = this.selectedGroup.description;
-        //   this.groupIdEdit = this.selectedGroup.id;
-        // }
     }
-    customerGroupSelection(group, type?) {
+    teamSelected(team, type?) {
+        console.log("Selected Team:");
+        console.log(team);
         this.showusers = true;
         this.showteams = false;
         if(!type){
             this.showUsers = false;
             this.showcheckbox = false;
         }
-        if (group === 'all') {
-            this.getUsers();
-        }
-        console.log(group);
-        console.log(this.users_list);
-        this.selectedGroup = group;
-        this.teamusers = this.selectedGroup.users;
-        console.log(this.teamusers);
-        if (group !== 'all') {
-            console.log('emptycheck');
-            if (this.teamusers.length === 0) {
-                console.log('empty');
-                this.users_list = [];
-            }
-            else {
-                // this.user_list_dup = this.users_list;
-                this.users_list = [];
-                console.log(this.user_list_dup);
-                for (let i = 0; i < this.teamusers.length; i++) {
-                    console.log(i);
-                    this.user_list_add = this.user_list_dup.filter(users => users.id === this.teamusers[i].id);
-                    console.log(this.teamusers[i].id)
-                    console.log(this.user_list_add);
-                    this.users_list.push(this.user_list_add[0]);
-                    // this.user_list_add.push(this.users_list);
-                    console.log(this.users_list);
-                    this.user_list_add = [];
-                }
-            }
-        }
-        console.log(this.users_list);
-        this.resetFilter();
-
+        this.selectedTeam = team;
+        this.clearFilter();
         if (type) {
             this.closeGroupDialog();
         }
-        // this.resetList();
-        // this.customers = this.groupCustomers = [];
-        // if (!type) {
-        //   this.showUsers = false;
-        //   if (this.selectedGroup === 'all') {
-        //     this.getCustomersList();
-        //   } else {
-        //     this.getCustomerListByGroup();
-        //   }
-        // }
     }
     changeGroupStatus(group) {
         let status;
@@ -889,26 +847,24 @@ export class BranchUsersComponent implements OnInit {
         }
         this.provider_services.updateTeamStatus(group.id, status).subscribe(
             (data: any) => {
-                this.getCustomerGroup();
+                this.getTeams();
             },
             error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
     addCustomerToGroup() {
-        console.log("hi")
-        console.log(this.selectedGroup);
         const postData = {
             'userIds': this.userIds,
-            'teams': [this.selectedGroup.id]
+            'teams': [this.selectedTeam.id]
         };
         console.log(postData);
         this.provider_services.updateTeamMembers(postData).subscribe(
             (data: any) => {
-                this.getCustomerGroup('update');
+                this.getTeams('update');
                 this.showcheckbox = false;
                 this.showUsers = false;
-
+                this.addUser = false;
             },
             error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -928,10 +884,7 @@ export class BranchUsersComponent implements OnInit {
         this.userIds = [];
         this.showcheckbox = false;
         this.showUsers = false;
-        console.log(this.selectedGroup);
-        this.customerGroupSelection(this.selectedGroup);
-        // this.resetList();
-        // this.getCustomerListByGroup();
+        this.teamSelected(this.selectedTeam);
     }
     getUserIds(service, id, values) {
         console.log(values.currentTarget.checked);
@@ -939,7 +892,6 @@ export class BranchUsersComponent implements OnInit {
         console.log(values);
         if (values.currentTarget.checked) {
             this.userIds.push(id);
-            // website.push(new FormControl(e.target.value));
         } else {
             console.log(this.userIds);
             const index = this.userIds.filter(x => x !== id);
@@ -1020,7 +972,7 @@ export class BranchUsersComponent implements OnInit {
         // this.routerobj.navigate(['provider', 'settings', 'general', 'users']);
         this.showteams = true;
         this.showusers = false;
-        this.selectedGroup = 'all';
+        this.selectedTeam = 'all';
 
     }
     showteamsres() {
@@ -1030,8 +982,8 @@ export class BranchUsersComponent implements OnInit {
     showallusers() {
         this.showteams = false;
         this.showusers = true;
-        this.selectedGroup = 'all';
-        this.customerGroupSelection(this.selectedGroup);
+        this.selectedTeam = 'all';
+        this.teamSelected(this.selectedTeam);
     }
     resetError() {
         this.apiError = '';
