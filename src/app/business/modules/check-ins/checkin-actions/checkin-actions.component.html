@@ -18,9 +18,9 @@
         <p *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName">
             {{customer_label | capitalizeFirst}} id : {{checkin.consumer.jaldeeId}}</p>
         <p *ngIf="checkin.token">Token: {{checkin.token}}</p>
-        <p *ngIf="action === 'status' &&statusList && statusList.length == 0">Current  Status: {{check_in_statuses[getStatusLabel(checkin.waitlistStatus)]}}</p>
-        <p *ngIf="action === 'status' &&statusList && statusList.length > 0">Current External Status: {{check_in_statuses[getStatusLabel(checkin.waitlistStatus)]}}</p>
-        <p *ngIf="action === 'status'&&statusList && statusList.length > 0">Current Internal Status: {{checkin.internalStatus ||'Nil'}}</p>
+        <p *ngIf="action === 'status' && statusList && statusList.length == 0">Current  Status: {{check_in_statuses[getStatusLabel(checkin.waitlistStatus)]}}</p>
+        <p *ngIf="action === 'status' && statusList && statusList.length > 0">Current External Status: {{check_in_statuses[getStatusLabel(checkin.waitlistStatus)]}}</p>
+        <p *ngIf="action === 'status' && statusList && statusList.length > 0">Current Internal Status: {{checkin.internalStatus ||'Nil'}}</p>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro" *ngIf="action === ''">
         <!-- <div class="action-box pointer-cursor"
@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="action-box pointer-cursor" (click)="changeWaitlistStatusAction()"
-            *ngIf="showArrived || showCancel || showUndo || checkin.waitlistStatus == 'started'||statusList && statusList.length > 0">
+            *ngIf="showArrived || showCancel || showUndo || checkin.waitlistStatus == 'started' || (statusList && statusList.length > 0)">
             <div class="action-box-sub">
                 <span class="changestatus-icon"></span>
                 <div class="icon-text">Change Status to</div>
@@ -54,7 +54,7 @@
             </div>
         </div>
         <div class="action-box pointer-cursor"
-            *ngIf="(this.users.length > 1 && !this.data.multiSelection && this.accountType=='BRANCH' && (this.checkin.queue.provider.id === 0) && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn'))"
+            *ngIf="(users && users.length > 1 && !this.data.multiSelection && this.accountType=='BRANCH' && (this.checkin.queue.provider.id === 0) && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn'))"
             (click)="changeWaitlistservice()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
@@ -65,7 +65,7 @@
         </div>
 
         <div class="action-box pointer-cursor"
-        *ngIf="!data.multiSelection && accountType=='BRANCH' && groups.length > 0 &&  (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')"
+        *ngIf="!data.multiSelection && accountType=='BRANCH' && groups && groups.length > 0 &&  (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')"
         (click)="assignteam()">  
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
@@ -244,7 +244,7 @@
                 <div class="icon-text">Labels</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor"  (click)="gotoSecureVideo()" *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked' && (showMsg || (checkin.virtualService && checkin.virtualService.WhatsApp))">
+        <div class="action-box pointer-cursor"  (click)="gotoSecureVideo()" *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked' && checkin.waitlistPhoneNumber && (showMsg || (checkin.virtualService && checkin.virtualService.WhatsApp))">
             <div class="action-box-sub">
                 <span class="jvideo-icon"></span>
                 <div class="icon-text">Video Call</div>
@@ -282,14 +282,14 @@
         <app-common-innerloading-spinner></app-common-innerloading-spinner>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 scro"
-        *ngIf="providerLabels.length > 0 && !loading">
+        *ngIf="providerLabels && providerLabels.length > 0 && !loading">
         <div class="mgn-bt-5" *ngFor="let label of providerLabels;let i = index">
             <mat-checkbox [checked]="label.selected"  [disabled]="!label.isPermitted"(change)="addLabeltoAppt(label.label, $event)">
                 {{label.displayName | capitalizeFirst}}</mat-checkbox>
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-30 scro"
-        *ngIf="providerLabels.length === 0 && !loading">
+        *ngIf="providerLabels && providerLabels.length === 0 && !loading">
         No labels created till now
     </div>
     <div class="clearfix"></div>
@@ -378,7 +378,7 @@
             <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding queue-outer" *ngIf="loading">
                 <app-common-innerloading-spinner></app-common-innerloading-spinner>
             </div>
-            <div class="col-md-12 mgn-bt-10 btborder" *ngIf="queuejson.length > 0">
+            <div class="col-md-12 mgn-bt-10 btborder" *ngIf="queuejson && queuejson.length > 0">
                 <mat-chip-list>
                     <mat-chip *ngFor="let queue of queuejson, let i= index" (click)="handleQueueSelection(queue, i);"
                         [selected]="queue.id === queuejson[this.sel_queue_indx].id">
@@ -388,14 +388,14 @@
                     </mat-chip>
                 </mat-chip-list>
             </div>
-            <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-lt-10" *ngIf="queuejson.length === 0 && !loading">
+            <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-lt-10" *ngIf="queuejson && queuejson.length === 0 && !loading">
                 No queues available.
             </div>
             <div
                 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20 mgn-bt-20 footerlinks no-padding reschedulebtn">
                 <button type="button" class="cs-btn bt2 mgn-rt-5" (click)="close()">Cancel</button>
                 <button class="cs-btn bt1" (click)="rescheduleWaitlist()"
-                    [disabled]="queuejson.length === 0">Reschedule</button>
+                    [disabled]="queuejson && queuejson.length === 0">Reschedule</button>
             </div>
         </div>
     </div>

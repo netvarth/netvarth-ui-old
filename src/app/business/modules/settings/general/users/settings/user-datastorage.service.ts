@@ -94,18 +94,18 @@ export class UserDataStorageService {
     // console.log(this.weightageObjectDomain);
     // console.log(this.weightageObjectSubDomain);
     if (!this.checkExistenceInWeightageArray(mandatoryObject)) {
-      if ((this.weightageObjectDomain.mandatoryDomain && this.weightageObjectDomain.mandatoryDomainFilledStatus) || (this.weightageObjectSubDomain.mandatorySubDomain && this.weightageObjectSubDomain.mandatorySubDomainFilledStatus)) {
+      if ((this.weightageObjectDomain && this.weightageObjectDomain.mandatoryDomain && this.weightageObjectDomain.mandatoryDomainFilledStatus) || (this.weightageObjectSubDomain && this.weightageObjectSubDomain.mandatorySubDomain && this.weightageObjectSubDomain.mandatorySubDomainFilledStatus)) {
         this.user_weightageArray.push(projectConstantsLocal.USER_BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO);
         this.setWeightageArray(this.user_weightageArray);
       }
     } else {
-      if ((this.weightageObjectDomain.mandatoryDomain && this.weightageObjectDomain.mandatoryDomainFilledStatus === false) || (this.weightageObjectSubDomain.mandatorySubDomain && this.weightageObjectSubDomain.mandatorySubDomainFilledStatus === false)) {
+      if ((this.weightageObjectDomain && this.weightageObjectDomain.mandatoryDomain && this.weightageObjectDomain.mandatoryDomainFilledStatus === false) || (this.weightageObjectSubDomain && this.weightageObjectSubDomain.mandatorySubDomain && this.weightageObjectSubDomain.mandatorySubDomainFilledStatus === false)) {
         this.user_weightageArray = this.user_weightageArray.filter(obj => obj.name !== projectConstantsLocal.USER_BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO.name);
         this.setWeightageArray(this.user_weightageArray);
       }
     }
     if (!this.checkExistenceInWeightageArray(additionalObject)) {
-      if (this.weightageObjectDomain.additionalDomainFullyFilled && this.weightageObjectSubDomain.additionalSubDomainFullyFilled) {
+      if (this.weightageObjectDomain && this.weightageObjectDomain.additionalDomainFullyFilled && this.weightageObjectSubDomain && this.weightageObjectSubDomain.additionalSubDomainFullyFilled) {
         this.user_weightageArray.push(projectConstantsLocal.USER_BUSINESS_PROFILE_WEIGHTAGE.ADDITIONAL_INFO);
         this.setWeightageArray(this.user_weightageArray);
         // some domains don't have mandatory additional info so to correct the sum if domain not having mandatory , adding mandaoty weightage too

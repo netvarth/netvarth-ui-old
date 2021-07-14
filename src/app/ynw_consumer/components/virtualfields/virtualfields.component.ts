@@ -728,7 +728,7 @@ console.log(isinvalid);
     let memberInfo: any = {};
     memberInfo.userProfile = {}
     console.log(formdata.whatsappnumber);
-    if (formdata.whatsappnumber.trim().length>0 && formdata.whatsappnumber !== undefined && formdata.countryCode_whtsap.trim().length>0 && formdata.countryCode_whtsap !== undefined) {
+    if (formdata.whatsappnumber && formdata.whatsappnumber.trim().length>0 && formdata.whatsappnumber !== undefined && formdata.countryCode_whtsap && formdata.countryCode_whtsap.trim().length>0 && formdata.countryCode_whtsap !== undefined) {
       const whatsup = {}
       if (formdata.countryCode_whtsap.startsWith('+')) {
         whatsup["countryCode"] = formdata.countryCode_whtsap
@@ -738,7 +738,7 @@ console.log(isinvalid);
       whatsup["number"] = formdata.whatsappnumber
       memberInfo.userProfile['whatsAppNum'] = whatsup;
     }
-    if (formdata.telegramnumber.trim().length>0 && formdata.telegramnumber !== undefined && formdata.countryCode_telegram.trim().length>0 || formdata.countryCode_telegram !== undefined) {
+    if (formdata.telegramnumber && formdata.telegramnumber.trim().length>0 && formdata.telegramnumber !== undefined && formdata.countryCode_telegram && formdata.countryCode_telegram.trim().length>0 || formdata.countryCode_telegram !== undefined) {
       const telegram = {}
       if (formdata.countryCode_telegram.startsWith('+')) {
         telegram["countryCode"] = formdata.countryCode_telegram
