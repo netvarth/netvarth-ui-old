@@ -1,27 +1,31 @@
 <section class="">
-  <div class="title-gb no-padding">
-    <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
-      {{customer_labels}}
-      <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
-    </div>
+  <div class="card title-gb">
+    <h5 class="mgn-up-10">
+      <a class="user-title" style="cursor:auto;">
+        <div class="pull-left pad-tp-5 display-min-none bold">{{customer_labels}}</div>
+      </a>
+      <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5">
+        <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add" data-toggle="modal"
+          data-target="#exampleModalCenter">
+          <i class="fa fa-plus"></i>Create Group</button>
+      </a>
+    </h5>
   </div>
 </section>
 <section class="customersList">
-  <div class="row p-3 displayblock">
+  <div class="row p-3">
     <div class="card" *ngIf="groupLoaded">
       <app-common-innerloading-spinner></app-common-innerloading-spinner>
     </div>
-    <div class="col-lg-4" *ngIf="!groupLoaded && groups.length > 0">
+    <div class="col-lg-4" *ngIf="!groupLoaded && groups.length > 0 && !hideGroups">
       <div class="card card-custom card-stretch gutter-b pitch_blu">
         <div class="card grp_label mb-2 pointer-cursor" (click)="customerGroupSelection('all')"
           [ngClass]="{'highlight': selectedGroup == 'all'}">All {{customer_label | capitalizeFirst}}s</div>
-        <button mat-flat-button class="font-size-xs add_btn mgn-bt-10" data-toggle="modal"
-          data-target="#exampleModalCenter">Create Group</button>
-        <div class="card grp_label mb-2" *ngFor="let group of groups"
+        <div class="card grp_label mb-2 pr-0" *ngFor="let group of groups"
           (click)="group.status=='ENABLE' && customerGroupSelection(group)"
           [ngClass]="{'highlight': selectedGroup.id==group.id}" [class.disabled-group]="group.status=='DISABLE'"
           [class.pointer-cursor]="group.status=='ENABLE'">
-          <div class="max-hgt-20">
+          <div class="max-hgt-20 disp-flex">
             <span class="pull-left group-name">{{group.groupName}}</span>
             <span class="pull-right mgn-m-up-10">
               <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event);">
@@ -45,16 +49,23 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-8" [class.col-lg-12]="groups.length==0" *ngIf="!groupLoaded">
+    <div class="col-lg-8" [class.col-lg-12]="groups.length==0"
+      *ngIf="!groupLoaded && ((small_device_display && hideGroups) || !small_device_display)">
       <div class="card card-custom card-stretch gutter-b no-padding">
         <div class="p-3">
           <h3 class="align-items-start flex-column">
+            <span class="fa fa-arrow-left pointer-cursor mgn-rt-10" *ngIf="hideGroups"
+              (click)="hideGroups = false"></span>
             <span class="card-label font-1 font-weight-bolder text-dark"
               *ngIf="selectedGroup == 'all' && groups.length > 0">All
-              {{customer_label | capitalizeFirst}}s</span> <span class="card-label font-1 font-weight-bolder text-dark">
-              </span>
+              {{customer_label | capitalizeFirst}}s</span>
             <span class="card-label font-1 font-weight-bolder text-dark"
               *ngIf="selectedGroup !== 'all'">{{selectedGroup.groupName}}</span>
+            <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-right">
+              <img src="assets/images/provider-filter-icon.png"
+                style="width: 22px !important; margin-top: -4px !important;">
+              Filter
+            </a>
             <div class="sel-group-desc">{{selectedGroup.description}}</div>
           </h3>
         </div>
@@ -108,10 +119,6 @@
                 </div>
               </div>
             </div>
-            <!-- <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" data-toggle="modal"
-              data-target="#exampleModalCenter"
-              *ngIf="selectedGroup !== 'all' && !showCustomers && selectedcustomersformsg.length == 0"
-              (click)="editGroup()">Edit Group</button> -->
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10 cancel_btn" (click)="cancelAdd()"
               *ngIf="selectedGroup !== 'all' && showCustomers"><i class="fa fa-times mgn-rt-5" aria-hidden="true"></i>
               Cancel</button>
@@ -132,70 +139,197 @@
                 class="label-icon"></i></button>
           </div>
           <div class="col-sm-6 col-lg-4 col-xs-12 col-md-6 filter" *ngIf="!showCustomers">
-            <input type="search" class="form-control search-input-mgn-rt search" placeholder="search by Name"
-              aria-controls="kt_datatable1" [(ngModel)]="filter.first_name" (keypress)="search($event)">
-            <i class="fa fa-filter" (click)="showFilterSidebar()"></i>
-            <aside class="filterSidebar" *ngIf="filter_sidebar">
-              <section class="sidebar sidebar-bottom" style="overflow:auto;height:568px">
-                <div class="filterClosebtn">
-                  <i class="icon-filter-one-op ng-star-inserted pointer-cursor " (click)="hideFilterSidebar()"
+            <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
+              <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+                <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+                  <span class="filter-head-title">Filters</span>
+                  <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right" (click)="hideFilterSidebar()"
                     [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
-                  <span *ngIf="filterapplied === true" class="clearFilter white" (click)="clearFilter()"
-                    [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
                 </div>
-                <ul class="sidebar-menu">
-                  <div class="filterTextinput">
-                    <li class="filterli">
-                      <input type="text" #jaldeeid (blur)="doSearch()" (keyup)="focusInput($event,lName)"
-                        class="filterTextbox" [(ngModel)]="filter.jaldeeid"
-                        placeholder="{{customer_label | capitalizeFirst}} id">
-                    </li>
+                <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
+                <ul class="sidebar-menu accordion" id="accordion1">
+                  <div class="card">
+                    <div class="card-header">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseId"
+                          aria-expanded="false">
+                          <div>
+                            <div style="display: inline-block !important;">
+                              <i class="fa fa-id-badge"></i>
+                            </div>
+                            {{customer_label | capitalizeFirst}} Id
+                          </div>
+                          <i class="fa fa-angle-down"></i>
+                        </button>
+                      </h2>
+                    </div>
+                    <div id="collapseId" class="collapse in" data-parent="#accordion1">
+                      <div class="card-body">
+                        <div class="filterTextinput filter-text-input">
+                          <li class="filterli filter-li">
+                            <input type="text" id="jaldeeid" [(ngModel)]="filter.jaldeeid" #jaldeeid
+                              (keyup)="keyPress()" class="filterTextbox filter-textbox"
+                              placeholder="Enter {{customer_label | capitalizeFirst}} Id">
+                          </li>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="filterTextinput">
-                    <li class="filterli">
-                      <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,lName)"
-                        class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
-                    </li>
+                  <div class="card">
+                    <div class="card-header">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName"
+                          aria-expanded="false">
+                          <div>
+                            <div style="display: inline-block !important;">
+                              <i class="fa fa-user"></i>
+                            </div>
+                            Name
+                          </div>
+                          <i class="fa fa-angle-down"></i>
+                        </button>
+                      </h2>
+                    </div>
+                    <div id="collapseName" class="collapse in" data-parent="#accordion1">
+                      <div class="card-body">
+                        <div class="filterTextinput filter-text-input">
+                          <li class="filterli filter-li">
+                            <input type="text" id="firstName" [(ngModel)]="filter.first_name" #firstName
+                              (keyup)="keyPress()" maxlength="20" class="filterTextbox filter-textbox"
+                              placeholder="Enter First Name">
+                          </li>
+                        </div>
+                        <div class="filterTextinput filter-text-input">
+                          <li class="filterli filter-li">
+                            <input type="text" id="lastName" [(ngModel)]="filter.last_name" #lastName
+                              (keyup)="keyPress()" maxlength="10" class="filterTextbox filter-textbox"
+                              placeholder="Enter Last Name">
+                          </li>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="filterTextinput">
-                    <li class="filterli">
-                      <input type="text" #lName (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
-                        class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
-                    </li>
+                  <div class="card">
+                    <div class="card-header">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseDOB"
+                          aria-expanded="false">
+                          <div>
+                            <div style="display: inline-block !important;">
+                              <i class="fa fa-calendar-o"></i>
+                            </div>
+                            Date of birth
+                          </div>
+                          <i class="fa fa-angle-down"></i>
+                        </button>
+                      </h2>
+                    </div>
+                    <div id="collapseDOB" class="collapse in" data-parent="#accordion1">
+                      <div class="card-body">
+                        <div class="filterTextinput filter-text-input">
+                          <li class="filterli filterDatepicker filter-li">
+                            <input type="text" [(ngModel)]="filter.date" [min]="minday" [max]="maxday"
+                              [matDatepicker]="picker" #Fdate (dateChange)="keyPress()" class="filterTextbox"
+                              placeholder="Date of birth" readonly (click)="picker.open()">
+                            <mat-datepicker-toggle matSuffix [for]="picker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </li>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="filterTextinput">
-                    <li class="filterli filterDatepicker">
-                      <input type="text" [(ngModel)]="filter.date" [min]="minday" [max]="maxday"
-                        [matDatepicker]="picker" #Fdate (dateChange)="doSearch()" (blur)="doSearch()"
-                        class="filterTextbox" placeholder="Date of birth" readonly (click)="picker.open()">
-                      <mat-datepicker-toggle matSuffix [for]="picker">
-                      </mat-datepicker-toggle>
-                      <mat-datepicker #picker></mat-datepicker>
-                    </li>
+                  <div class="card">
+                    <div class="card-header">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePhone1"
+                          aria-expanded="false">
+                          <div>
+                            <div style="display: inline-block !important;">
+                              <i class="fa fa-phone"></i>
+                            </div>
+                            Phone Number
+                          </div>
+                          <i class="fa fa-angle-down"></i>
+                        </button>
+                      </h2>
+                    </div>
+                    <div id="collapsePhone1" class="collapse in" data-parent="#accordion1">
+                      <div class="card-body">
+                        <div class="filterTextinput filter-text-input">
+                          <li class="filterli filter-li">
+                            <input type="text" id="mobile" [(ngModel)]="filter.mobile" #mobile (keyup)="keyPress()"
+                              class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
+                          </li>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="filterTextinput">
-                    <li class="filterli">
-                      <input type="text" id="txt_mobile" [(ngModel)]="filter.mobile" #Fmobile (blur)="doSearch()"
-                        (keyup)="focusInput($event, Femail)" (keypress)="isNumeric($event)" maxlength="10"
-                        class="filterTextbox" placeholder="Phone Number">
-                    </li>
+                  <div class="card">
+                    <div class="card-header">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseEmail"
+                          aria-expanded="false">
+                          <div>
+                            <div style="display: inline-block !important;">
+                              <i class="fa fa-envelope"></i>
+                            </div>
+                            email
+                          </div>
+                          <i class="fa fa-angle-down"></i>
+                        </button>
+                      </h2>
+                    </div>
+                    <div id="collapseEmail" class="collapse in" data-parent="#accordion1">
+                      <div class="card-body">
+                        <div class="filterTextinput filter-text-input">
+                          <li class="filterli filter-li">
+                            <input type="text" id="email" [(ngModel)]="filter.email" #email (keyup)="keyPress()"
+                              class="filterTextbox filter-textbox" placeholder="Enter email">
+                          </li>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="filterTextinput">
-                    <li class="filterli filterDatepicker">
-                      <input type="text" id="txt_email" [(ngModel)]="filter.email" #Femail (blur)="doSearch()"
-                        (keyup)="focusInput($event, Fdate)" class="filterTextbox" placeholder="Email">
-                    </li>
-                  </div>
-                  <div *ngIf="providerLabels.length > 0">
-                    <label class="filterHeaders">Labels</label>
-                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                      *ngFor="let lbl of providerLabels">
-                      <mat-checkbox [checked]="selectedLabels[lbl.label]" (change)="setLabelFilter(lbl, $event)">
-                        {{lbl.displayName}}</mat-checkbox>
-                    </li>
+                  <div class="card">
+                    <div class="card-header">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseLabel"
+                          aria-expanded="false">
+                          <div>
+                            <div style="display: inline-block !important;">
+                              <i class="fa fa-tags"></i>
+                            </div>
+                            Labels
+                          </div>
+                          <i class="fa fa-angle-down"></i>
+                        </button>
+                      </h2>
+                    </div>
+                    <div id="collapseLabel" class="collapse in" data-parent="#accordion1">
+                      <div class="card-body">
+                        <div class="filter-checkbox-input" *ngIf="providerLabels.length > 0">
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                            *ngFor="let lbl of providerLabels">
+                            <mat-checkbox class="filter-checkbox"
+                              [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(true) !== -1"
+                              (change)="setLabelFilter(lbl, $event)">
+                              {{lbl.displayName}}</mat-checkbox>
+                          </li>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </ul>
               </section>
+              <div class="filter-footer" *ngIf="filterapplied === true">
+                <button class="btn reset-btn" (click)="clearFilter()">
+                  <i class="fa fa-undo"></i>Reset
+                </button>
+                <button class="btn apply-btn" (click)="doSearch()">
+                  <i class="fa fa-check"></i>Apply
+                </button>
+              </div>
             </aside>
           </div>
         </div>
@@ -207,7 +341,7 @@
                 *ngIf="customers.length > 0">
                 <thead>
                   <tr class="text-left text-uppercase">
-                    <th style="min-width: 150px" class="pad-lt-0" [class.pad-bt-0]="selectedcustomersformsg.length > 0">
+                    <th style="min-width: 150px" class="" [class.pad-bt-0]="selectedcustomersformsg.length > 0">
                       <span class="text-dark-75">
                         <input type="checkbox" (change)="selectAllcustomers($event)"
                           [checked]="isAllCustomerSelected()">
@@ -218,20 +352,19 @@
                     </th>
                     <th class="hide_th" style="min-width: 50px">Id</th>
                     <th class="hide_th" style="min-width: 100px">Phone</th>
-                    <!-- <th class="hide_th" style="min-width: 10px">DOB</th> -->
                     <th style="min-width: 50px"></th>
-                    <th style="min-width: 50px"></th>
-                    <th style="min-width: 10px"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="row_data border-bottom" *ngFor="let customer of customers; let i=index"  (click)="selectedRow(customer)">
-                    <td class="pl-0 py-4">
+                  <tr class="row_data border-bottom" *ngFor="let customer of customers; let i=index"
+                    [class.pointer-cursor]="!showCustomers" (click)="selectedRow(customer)">
+                    <td class="py-4">
                       <div class="d-flex align-items-center">
                         <div class="pr-3">
                           <span class="symbol-label">
                             <input type="checkbox" name="Checkboxes4" [checked]="checkSelection(customer)"
-                              (click)="stopprop($event)" (change)="selectcustomers(customer)" [disabled]="showText(customer)">
+                              (click)="stopprop($event)" (change)="selectcustomers(customer)"
+                              [disabled]="showText(customer)">
                           </span>
                         </div>
                         <div>
@@ -255,92 +388,30 @@
                         {{customer.countryCode}} {{customer.phoneNo}}
                       </span>
                     </td>
-                    <!-- <td class="hide_th">
-                      <span class="text-dark-75 d-block" *ngIf="customer.dob">
-                        {{customer.dob | date : dateFormat}}
-                      </span>
-                    </td> -->
-                    <!-- <td *ngIf="!showCustomers">
-                      <button *ngIf="customer.phoneNo || customer.email" class="hide_th" mat-flat-button
-                        (click)="CustomersInboxMessage(customer)">Message</button>
-                      <i *ngIf="customer.phoneNo || customer.email" class="text-dark-50 flaticon2-chat-1 hidden_th"
-                        (click)="CustomersInboxMessage(customer)"></i>
-                    </td> -->
-                    <!-- <td *ngIf="!showCustomers">
-                      <button mat-flat-button class="prof_btn hide_th" (click)="viewCustomer(customer)">Details</button>
-                      <i class="text-dark-50 flaticon-profile-1 hidden_th" (click)="viewCustomer(customer)"></i>
-                    </td> -->
-                      <td *ngIf="!showCustomers" class="pr-0 text-right">
-                      <button mat-flat-button class="prof_btn" (click)="stopprop($event); showCustomerAction(customer)">Actions</button>
-                      <!-- <button mat-flat-button class="prof_btn hide_th" (click)="stopprop($event); showCustomerAction()">Actions</button>
-                      <i class="text-dark-50 flaticon-profile-1 hidden_th" (click)="viewCustomer(customer)"></i> -->
+                    <td *ngIf="!showCustomers" class="text-right">
+                      <button mat-flat-button class="prof_btn"
+                        (click)="stopprop($event); showCustomerAction(customer)">Actions</button>
                     </td>
-                    <!-- <td class="pr-0 text-right" *ngIf="!showCustomers">
-                      <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event);">
-                        <mat-icon>more_horiz</mat-icon>
-                      </button>
-                      <mat-menu #menu="matMenu">
-                        <button type="button" mat-menu-item (click)="editCustomer(customer)">
-                          <i class="icon-edit"></i>
-                          Edit
-                        </button>
-                        <button type="button" mat-menu-item (click)="removeCustomerFromGroup(customer)"
-                          *ngIf="selectedGroup !== 'all'">
-                          <i class="fa fa-trash"></i>
-                          Remove from group
-                        </button>
-                        <button type="button" (click)="showLabelPopup(customer)" mat-menu-item>
-                          <i class="label-icon"></i>
-                          <span>Label</span>
-                        </button>
-                        <button
-                          *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
-                          mat-menu-item (click)="listMedicalrecords(customer)">
-                          <i class="medicalrecordlisticon-customer"></i>
-                          List of MedicalRecords
-                        </button>
-                        <button
-                          *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
-                          mat-menu-item (click)="lastvisits(customer)">
-                          <i class="viewdetails-icon-customer"></i>
-                          Last visits
-                        </button>
-                        <button
-                          *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
-                          mat-menu-item (click)="medicalRecord(customer)">
-                          <i class="medicalrecord-icon-customer"></i>
-                          Medical Record
-                        </button>
-                        <button
-                          *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'"
-                          mat-menu-item (click)="prescription(customer)">
-                          <i class="mr-rx-icon-customer"></i>
-                          Prescription
-                        </button>
-                      </mat-menu>
-                    </td> -->
                   </tr>
                 </tbody>
               </table>
               <div class="no-customer" *ngIf="!apiloading && customers.length === 0 && !filterapplied">
-                <div>
+                <div *ngIf="selectedGroup == 'all'">
                   You don't have any {{customer_label}}s
                   <button mat-flat-button class="font-size-xs add_btn" (click)="searchCustomer()">Create
                     {{customer_label
                     |
                     capitalizeFirst}}</button>
                 </div>
+                <div *ngIf="selectedGroup != 'all'">
+                  No {{customer_label}}s added to this group.
+                </div>
               </div>
               <div *ngIf="!apiloading && customers.length === 0 && filterapplied">
-                <ng-container *ngIf="selectedGroup != 'all'">
-                  No {{customer_label}}s added to this group.
-                </ng-container>
-                <ng-container *ngIf="selectedGroup == 'all'">
-                  No {{customer_label}}s found.
-                </ng-container>
+                No {{customer_label}}s found.
               </div>
               <div class="d-flex justify-content-between align-items-center flex-wrap pull-right"
-                *ngIf="!apiloading && !showCustomers">
+                *ngIf="!apiloading && !showCustomers && customers.length > 0">
                 <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                   (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
               </div>
@@ -350,15 +421,4 @@
       </div>
     </div>
   </div>
-  <div class="clearfix"></div>
-
-  <script src="../../../../../assets/plugins/global/plugins.bundle.js"></script>
-  <script src="../../../../../assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
-  <script src="../../../../../assets/js/scripts.bundle.js"></script>
-  <!--end::Global Theme Bundle-->
-
-  <!--begin::Page Scripts(used by this page)-->
-  <script src="../../../../../assets/js/pages/widgets.js"></script>
-  <!--end::Page Scripts-->
-  <div class="clearfix"></div>
 </section>
