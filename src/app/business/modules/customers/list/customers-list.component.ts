@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
@@ -50,13 +50,6 @@ export class CustomersListComponent implements OnInit {
   checkin_label = '';
   checkedin_label = '';
   domain;
-  breadcrumb_moreoptions: any = [];
-  breadcrumbs_init = [
-    {
-      title: this.customer_label
-    }
-  ];
-  breadcrumbs = this.breadcrumbs_init;
   pagination: any = {
     startpageval: 1,
     totalCnt: 0,
@@ -116,6 +109,8 @@ export class CustomersListComponent implements OnInit {
   newlyCreatedGroupId
   filtericonTooltip: any;
   filtericonclearTooltip: any;
+  small_device_display = false;
+  hideGroups = false;
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -128,8 +123,9 @@ export class CustomersListComponent implements OnInit {
     private activated_route: ActivatedRoute,
     private snackbarService: SnackbarService,
     private dateTimeProcessor: DateTimeProcessor) {
-     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
-      this.filtericonclearTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
+    this.onResize();
+    this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
+    this.filtericonclearTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
     if (this.groupService.getitemFromGroupStorage('group')) {
       this.selectedGroup = this.groupService.getitemFromGroupStorage('group');
     } else {
@@ -138,12 +134,6 @@ export class CustomersListComponent implements OnInit {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.no_customer_cap = Messages.NO_CUSTOMER_CAP.replace('[customer]', this.customer_label);
     this.customer_labels = this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1).toLowerCase() + 's';
-    this.breadcrumbs_init = [
-      {
-        title: this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1).toLowerCase() + 's'
-      }
-    ];
-    this.breadcrumbs = this.breadcrumbs_init;
     this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
     this.checkedin_label = Messages.CHECKED_IN_LABEL;
     this.activated_route.queryParams.subscribe(qparams => {
@@ -151,6 +141,15 @@ export class CustomersListComponent implements OnInit {
         this.addNewCustomertoGroup(qparams.customerId);
       }
     });
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    const screenWidth = window.innerWidth;
+    if (screenWidth <= 893) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
+    }
   }
   ngOnInit() {
     if (this.selectedGroup == 'all') {
@@ -166,7 +165,6 @@ export class CustomersListComponent implements OnInit {
     this.subdomain = user.subSector;
     this.getLabel();
     this.getCustomerGroup();
-    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
   filterClicked(type) {
@@ -192,8 +190,10 @@ export class CustomersListComponent implements OnInit {
     this.routerobj.navigate(['/provider/' + this.domain + '/customer']);
   }
   selectedRow(customer) {
-    this.router.navigate(['/provider/customers/' + customer.id]);
-}
+    if (!this.showCustomers) {
+      this.router.navigate(['/provider/customers/' + customer.id]);
+    }
+  }
 
   getCustomersList(from_oninit = true) {
     this.apiloading = true;
@@ -210,7 +210,7 @@ export class CustomersListComponent implements OnInit {
             .subscribe(
               data => {
                 this.customers = data;
-               console.log(this.customers)
+                console.log(this.customers)
                 console.log(this.customers.length);
                 this.apiloading = false;
                 this.loadComplete = true;
@@ -231,28 +231,22 @@ export class CustomersListComponent implements OnInit {
     const cust = [];
     cust.push(customer)
     const notedialogRef = this.dialog.open(CustomerActionsComponent, {
-        width: '50%',
-        panelClass: ['popup-class', 'commonpopupmainclass'],
-        disableClose: true,
-        data: {
-            customer: cust,
-        }
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        customer: cust,
+      }
     });
     notedialogRef.afterClosed().subscribe(result => {
-        if (result === 'reload') {
-          this.getLabel();
-          if (this.selectedGroup == 'all') {
-            this.getCustomersList();
-          } else {
-            this.getCustomerListByGroup();
-          }
-            // this.editCustomer();
+      if (result === 'reload') {
+        this.getLabel();
+        if (this.selectedGroup == 'all') {
+          this.getCustomersList();
         } else {
-            // this.getCustomers(this.customerId).then(
-            //     (customer) => {
-            //         this.customer = customer;
-            //     });
+          this.getCustomerListByGroup();
         }
+      }
     });
   }
   clearFilter() {
@@ -301,6 +295,8 @@ export class CustomersListComponent implements OnInit {
     } else {
       this.getCustomerListByGroup();
     }
+  }
+  keyPress() {
     if (this.filter.jaldeeid || this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.mobile || this.filter.email || this.labelFilterData !== '') {
       this.filterapplied = true;
     } else {
@@ -392,7 +388,6 @@ export class CustomersListComponent implements OnInit {
 
   selectcustomers(customer) {
     this.hide_msgicon = false;
-
     const custArr = this.selectedcustomersformsg.filter(cust => cust.id === customer.id);
     if (custArr.length === 0) {
       this.selectedcustomersformsg.push(customer);
@@ -573,7 +568,7 @@ export class CustomersListComponent implements OnInit {
       this.selectedLabels[label.label] = value;
       this.labelFilterData = label.label + '::' + value;
     }
-    this.doSearch();
+    this.keyPress();
   }
   getLabel() {
     this.providerLabels = [];
@@ -600,8 +595,13 @@ export class CustomersListComponent implements OnInit {
   customerGroupSelection(group, type?) {
     this.selectedGroup = group;
     this.groupService.setitemToGroupStorage('group', this.selectedGroup);
+    this.filterapplied = false;
     this.resetFilter();
     this.resetList();
+    this.hideFilterSidebar();
+    if (this.small_device_display) {
+      this.hideGroups = true;
+    }
     this.customers = this.groupCustomers = [];
     if (!type) {
       this.showCustomers = false;
@@ -690,6 +690,7 @@ export class CustomersListComponent implements OnInit {
   }
   showCustomerstoAdd(type?) {
     this.showCustomers = true;
+    this.filterapplied = false;
     this.resetList();
     this.resetFilter();
     this.getCustomersList();
