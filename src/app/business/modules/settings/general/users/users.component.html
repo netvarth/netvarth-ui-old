@@ -64,7 +64,7 @@
                 <button  mat-menu-item  *ngIf="selectedGroup == 'all'" data-toggle="modal" data-target="#exampleModalCenter">
                     Create Team
                 </button>
-                <button mat-menu-item *ngIf="(loc_list && loc_list.length > 1)" (click)="addlocation()">
+                <button mat-menu-item *ngIf="showusers && (loc_list && loc_list.length > 1)" (click)="addlocation()">
                     Assign Locations
                 </button>
             </mat-menu>
