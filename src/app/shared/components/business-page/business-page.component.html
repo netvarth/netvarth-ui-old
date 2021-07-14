@@ -360,8 +360,9 @@
                 </div>
             </div>
         </div>
+        <app-common-innerloading-spinner *ngIf="loading_direct"></app-common-innerloading-spinner>
         <!-- Locations -->
-        <div class="row info-bar locations" *ngIf="locationjson.length > 1 && !api_loading && !loading">
+        <div class="row info-bar locations" *ngIf="locationjson.length > 1 && !api_loading && !loading && !loading_direct">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-top-20 pad-bt-10 bg-col">
                 <div class="col-md-7 col-xs-8 no-padding">
                     <h4 *ngIf="!isPlaceisSame"><a [href]="selectedLocation.googleMapUrl" target="_blank"
@@ -389,7 +390,7 @@
                 </div>
             </div>
         </div>
-        <div class="row info-bar locations" *ngIf="locationjson.length > 0 && !api_loading && !loading">
+        <div class="row info-bar locations" *ngIf="locationjson.length > 0 && !api_loading && !loading && !loading_direct">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-50 no-padding">
                 <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12">
                     <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20"

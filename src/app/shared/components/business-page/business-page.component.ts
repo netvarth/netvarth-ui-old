@@ -250,6 +250,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   departmentId;
   deptUsers: any = [];
   loading = false;
+  loading_direct = false;
   pSource;
   apptfirstArray: any = [];
   apptTempArray: any = [];
@@ -1932,9 +1933,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       } else {
         _this.showCheckin(id, place, location, date, service, 'consumer', virtualFields);
       }
-
-
-
     } else {
       const virtualdialogRef = _this.dialog.open(VirtualFieldsComponent, {
         width: '40%',
@@ -1944,6 +1942,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         data: { consumer: consumerdata, theme: this.theme, service: service, businessDetails: this.businessjson }
       });
       virtualdialogRef.afterClosed().subscribe(result => {
+        _this.loading_direct = true;
         if (result) {
           _this.consumerVirtualinfo = result;
           if (type === 'appt') {
@@ -1951,7 +1950,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           } else {
             _this.showCheckin(id, place, location, date, service, 'consumer', result);
           }
-
+        } else {
+          _this.loading_direct = false;
         }
       });
 
@@ -2234,19 +2234,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         serdet: serv
       };
     }
-
-    // const initialState = {
-    //   data: servData
-    // };
-
-    // this.bsModalRef = this.modalService.show(ServiceDetailComponent, {
-    //   initialState,
-    //   class: 'commonpopupmainclass popup-class specialclass service-detail-modal',
-    //   backdrop: "static"
-    // });
-
-    // $('modal-container:has(.service-detail-modal)').addClass('service-detail-modal-container');
-
     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', this.theme],
