@@ -1,6 +1,11 @@
-.heartfulness_theme1 .panel, .heartfulness_theme1 .serv-head.service-serv-head{
+.heartfulness_theme1 .panel, 
+.heartfulness_theme1 .serv-head.service-serv-head,
+.heartfulness_theme1 mat-toolbar  {
     background: #522e5a 0% 0% no-repeat padding-box !important; 
     background-color: transparent !important; 
+}
+.heartfulness_theme1 mat-sidenav {
+  background: #522e5a 0% 0% no-repeat padding-box !important; 
 }
 .heartfulness_theme1 .mat-button {
     background-color: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;

@@ -5,9 +5,10 @@ import { DateTimeProcessor } from "./datetime-processor.service";
 
 export class JaldeeTimeService {
     moment: any;
-    constructor(private dateTimeProcessor: DateTimeProcessor) { 
+
+    constructor(private dateTimeProcessor: DateTimeProcessor) {
         this.moment = this.dateTimeProcessor.getMoment();
-    }
+     }
 
     /**
      * 

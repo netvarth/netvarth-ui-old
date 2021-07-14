@@ -82,6 +82,7 @@ import { MeetRoomModule } from './shared/components/meet-room/meet-room.module';
 import { MediaService } from './shared/services/media-service';
 import { RequestDialogComponent } from './business/shared/meeting-room/request-dialog/request-dialog.component';
 import { VideoCallSharedComponent } from './business/modules/video-call/video-call.component';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -149,6 +150,7 @@ export function init_app(globalService: GlobalService) {
   providers: [
     FirebaseX,
     Device,
+    LocalNotifications,
     AuthGuardConsumer,
     AuthGuardProvider,
     AuthGuardHome,

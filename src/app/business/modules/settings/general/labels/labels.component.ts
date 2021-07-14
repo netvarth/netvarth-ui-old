@@ -9,7 +9,8 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
 
 @Component({
     selector: 'app-labels',
-    templateUrl: './labels.component.html'
+    templateUrl: './labels.component.html',
+    styleUrls: ['./labels.component.css']
 })
 export class LabelsComponent implements OnInit {
     tooltipcls = '';
@@ -28,11 +29,13 @@ export class LabelsComponent implements OnInit {
             title: 'Custom Fields'
         }
     ];
-    api_loading: boolean;
+    api_loading=true;
     label_list: any;
 source;
     add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
     domain: any;
+    users: any = [];
+    team: any;
     constructor(private router: Router,
         private _location: Location, public activateroute: ActivatedRoute,
         private provider_services: ProviderServices,
@@ -41,26 +44,84 @@ source;
         private  wordProcessor: WordProcessor) {
             this.activateroute.queryParams.subscribe(params => {
                this.source = params.source;
+               
               });
+              const user = this.groupService.getitemFromGroupStorage('ynw-user');
+              this.domain = user.sector;
+              console.log(user.accountType);
+              if (user.accountType === 'BRANCH') {
+                  this.getProviders().then((data) => {
+                   this.users = data;
+                   console.log(this.users);
+                   this.getUsersTeam().then((team)=>{
+                       this.team=team;
+                    this.getLabels();
+                   }); 
+                });                 
+                }
+                else {
+                    this.getLabels();
+                }
          }
     ngOnInit() {
+
         this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'general->labels', 'subKey': 'timewindow', 'classname': 'b-queue',
             'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
         };
+        // const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        // this.domain = user.sector;
+        // if (user.accountType === 'BRANCH') {
+        //     this.getProviders();
+        //   }
 
-        this.getLabels();
-        const user = this.groupService.getitemFromGroupStorage('ynw-user');
-        this.domain = user.sector;
+        // this.getLabels();
+      
+    }
+    getUsersList(users){
+        console.log(users);
+        console.log(this.users);
+       let userNamelist='';
+       users.forEach(element => {
+        const userObject =  this.users.filter(user => user.id === parseInt(element)); 
+        console.log(userObject);
+        userNamelist=userNamelist+userObject[0].firstName+' '+userObject[0].lastName+','
+       }); 
+
+        return userNamelist.replace(/,\s*$/, '');
+    }
+    getOwnership(ownerShipData){
+        let userNamelist='';
+       if(ownerShipData.users &&ownerShipData.users.length>0){
+     
+            ownerShipData.users.forEach(element => {
+                const userObject =  this.users.filter(user => user.id === parseInt(element)); 
+                console.log(userObject);
+                userNamelist=userNamelist+userObject[0].firstName+' '+userObject[0].lastName+','
+               }); 
+        
+                userNamelist= userNamelist.replace(/,\s*$/, '')
+           }
+           if(ownerShipData.teams &&ownerShipData.teams.length>0){
+
+            ownerShipData.teams.forEach(element => {
+                const userObject =  this.team.filter(team => team.id === parseInt(element)); 
+                console.log(userObject);
+                userNamelist=userNamelist+userObject[0].name+','
+               }); 
+               userNamelist= userNamelist.replace(/,\s*$/, '')
+           }
+       return userNamelist;
+
     }
     getLabels() {
-       this.api_loading = true;
         this.label_list = [];
         this.provider_services.getLabelList()
             .subscribe(
                 (data: any) => {
-                    // this.label_list = data.filter(label => label.status === 'ACTIVE');
-                    this.label_list = data;
+                    console.log(data);
+                    //this.label_list = data.filter(label => label.status === 'ACTIVE');
+                    this.label_list=data;
                     this.api_loading = false;
                 },
                 error => {
@@ -131,4 +192,39 @@ source;
     redirecToHelp() {
         this.router.navigate(['/provider/' + this.domain + '/general->labels']);
     }
+    getProviders() {
+        const _this = this;
+          return new Promise(function (resolve, reject) {
+            const apiFilter = {};
+            // apiFilter['userType-eq'] = 'PROVIDER';
+            _this.provider_services.getUsers(apiFilter).subscribe(data => {
+                  resolve(data);
+                },
+                () => {
+                  reject();
+                }
+              );
+          });
+      }
+      getUsersTeam() {
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+        
+          _this.provider_services.getTeamGroup().subscribe(data => {
+                resolve(data);
+              },
+              () => {
+                reject();
+              }
+            );
+        });   
+      }
+      getUserName(userid) {
+        console.log(userid);
+        console.log(this.users);
+        const userName =  this.users.filter(user => user.id === JSON.stringify(userid));
+        console.log(userName);       
+        // return userName.id;
+    
+      }
 }

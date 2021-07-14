@@ -12,16 +12,19 @@ import { SnackbarService } from '../../../../../shared/services/snackbar.service
     templateUrl: './livetrack-settings.component.html'
 })
 export class LiveTrackSettingsComponent implements OnInit {
+    breadcrumbs_init: ({ title: string; url: string; } | { title: string; url?: undefined; })[];
+  
     livetrack_status: any;
     livetrack_statusstr: string;
     cust_domain_name = '';
     custs_name = '';
-    breadcrumbs_init = [];
-    breadcrumbs = this.breadcrumbs_init;
+
+
     breadcrumb_moreoptions: any = [];
     domain;
-    customer_label = '';
-    customer_label_upper = '';
+    customer_label: any;
+    customer_label_upper: any;
+    breadcrumbs: ({ title: string; url: string; } | { title: string; url?: undefined; })[];
     constructor(private provider_services: ProviderServices,
         private groupService: GroupStorageService,
         private wordProcessor: WordProcessor,
@@ -30,18 +33,19 @@ export class LiveTrackSettingsComponent implements OnInit {
             this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
             this.customer_label_upper = this.wordProcessor.firstToUpper(this. customer_label);
             this.breadcrumbs_init = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: Messages.GENERALSETTINGS,
-            url: '/provider/settings/general'
-        },
-        {
-            title: Messages.LOCATESETTINGS.replace('[customer]', this. customer_label_upper),
-        }
-    ];
+                {
+                    title: 'Settings',
+                    url: '/provider/settings'
+                },
+                {
+                    title: Messages.GENERALSETTINGS,
+                    url: '/provider/settings/general'
+                },
+                {
+                    title: Messages.LOCATESETTINGS.replace('[customer]', this. customer_label_upper),
+                }
+            ];
+            this.breadcrumbs = this.breadcrumbs_init;
     }
     ngOnInit() {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -89,3 +93,4 @@ export class LiveTrackSettingsComponent implements OnInit {
         this.router.navigate(['/provider/' + this.domain + '/general->livetracking']);
     }
 }
+

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, HostListener } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ServicesService } from './services.service';
 import { Subscription } from 'rxjs';
@@ -16,6 +16,8 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { GroupStorageService } from '../../services/group-storage.service';
+import { MatDialog } from '@angular/material/dialog';
+import { UserlistpopupComponent } from './userlist/userlistpopup.component';
 
 
 @Component({
@@ -120,7 +122,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     provider: { id: any; };
     departId: any;
     include_audio = false;
-    selectedUser ;
+    selectedUser;
     defaultOption = {
         'id': '0',
         'firstName': 'Global',
@@ -149,6 +151,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
     active_user: any;
     showNoteError = '';
     questionnaire: any = [];
+    no_of_grids: number;
+    screenWidth: number;
+    usersdialogRef: any;
+    team:any=[];
+    userNamelist: string;
+    maxuserLength=50;
 
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
@@ -161,6 +169,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         private provider_datastorage: ProviderDataStorageService,
         private dateTimeProcessor: DateTimeProcessor,
         private groupService: GroupStorageService,
+        private dialog: MatDialog,
         public router: Router) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.frm_enable_prepayment_cap = Messages.FRM_LEVEL_PREPAYMENT_SETTINGS_MSG;
@@ -311,6 +320,27 @@ export class ServiceComponent implements OnInit, OnDestroy {
             }
         );
     }
+    @HostListener('window:resize', ['$event'])
+    onResize() {
+        this.screenWidth = window.innerWidth;
+        let divider;
+        const divident = this.screenWidth / 37.8;
+        if (this.screenWidth > 1700) {
+            divider = divident / 5;
+        } else if (this.screenWidth > 1111 && this.screenWidth < 1700) {
+            divider = divident / 4;
+        } else if (this.screenWidth > 900 && this.screenWidth < 1111) {
+            divider = divident / 3;
+        } else if (this.screenWidth > 375 && this.screenWidth < 900) {
+            divider = divident / 2;
+        } else if (this.screenWidth < 375) {
+            divider = divident / 1;
+        }
+        console.log(divident);
+        console.log(divider);
+        this.no_of_grids = Math.round(divident / divider);
+        console.log(this.no_of_grids);
+    }
     @Input() donationservice;
     setDescFocus() {
         this.isfocused = true;
@@ -404,11 +434,26 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.getBusinessProfile();
         this.getGlobalSettings();
         this.getUsers();
+        this.getUsersTeam();
         this.getQuestionnaire();
         if (this.donationservice) {
             this.is_donation = true;
         }
     }
+    getUsersTeam() {
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+        
+          _this.provider_services.getTeamGroup().subscribe(data => {
+              _this.team=data;
+                resolve(data);
+              },
+              () => {
+                reject();
+              }
+            );
+        });   
+      }
     ngOnDestroy() {
         if (this.serviceSubscription) {
             this.serviceSubscription.unsubscribe();
@@ -507,7 +552,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 form_data['virtualCallingModes'] = [this.teleCallingModes];
             }
             console.log(this.selectedUser);
-            if (this.selectedUser  && this.userspecific) {
+            if (this.selectedUser && this.userspecific) {
                 this.provider = {
                     'id': this.selectedUser
                 };
@@ -534,7 +579,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 }
             } else {
                 //console.log(serviceActionModel);
-               this.servicesService.actionPerformed(serviceActionModel);
+                this.servicesService.actionPerformed(serviceActionModel);
             }
         }
     }
@@ -583,7 +628,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
     }
     createForm() {
-        if(this.active_user.accountType === 'BRANCH' && !this.is_donation){
+        if (this.active_user.accountType === 'BRANCH' && !this.is_donation) {
             this.getDepartments();
         }
         if (this.subdomainsettings.serviceBillable) {
@@ -749,10 +794,11 @@ export class ServiceComponent implements OnInit, OnDestroy {
             });
     }
     getUsers() {
-        const filter = { 'userType-eq': 'PROVIDER' };
-        if (this.departId) {
-            filter['deptId-eq'] = this.departId.toString();
-        }
+        const filter={};
+        // const filter = { 'userType-eq': 'PROVIDER' };
+        // if (this.departId) {
+        //     filter['deptId-eq'] = this.departId.toString();
+        // }
         this.provider_services.getUsers(filter).subscribe(data => {
             this.users_list = data;
             this.selectedUser = this.users_list[0].id;
@@ -841,4 +887,97 @@ export class ServiceComponent implements OnInit, OnDestroy {
     gotoQnr(id) {
         this.router.navigate(['provider', 'settings', 'general', 'questionnaire', id]);
     }
+    getProviderName(users) {
+        console.log(users);
+        let userlst = '';
+        if(users[0]==='All'){
+         return 'All Users'
+        }else{
+        for (let user of users) {
+            let details = this.users_list.filter(usr => usr.id == parseInt(user));
+            if (details && details.length > 0) {
+                userlst = userlst + details[0].firstName + ' ' + details[0].lastName + ',';
+            }
+        }
+       // if(typ){
+            return userlst.replace(/,\s*$/, '');  
+        // }else {
+        //     return this.userlistType(userlst.replace(/,\s*$/, ''));
+        // }
+        
+    }
+}
+getProviderNametruncate(users) {
+    console.log(users);
+    let userlst = '';
+    if(users[0]==='All'){
+     return 'All Users'
+    }else{
+    for (let user of users) {
+        let details = this.users_list.filter(usr => usr.id == parseInt(user));
+        if (details && details.length > 0) {
+            userlst = userlst + details[0].firstName + ' ' + details[0].lastName + ',';
+        }
+    }  return this.truncateInst(userlst.replace(/,\s*$/, ''));
+    
+}
+}
+getOwnership(ownerShipData,isTruncate){
+    this. userNamelist='';
+   if(ownerShipData.users &&ownerShipData.users.length>0){
+ 
+        ownerShipData.users.forEach(element => {
+            const userObject =  this.users_list.filter(user => user.id === parseInt(element)); 
+            console.log(userObject);
+            this.userNamelist=this.userNamelist+userObject[0].firstName+' '+userObject[0].lastName+','
+           }); 
+            if(isTruncate){
+                this.truncateInst(this.userNamelist.replace(/,\s*$/, ''));
+            }else{
+                this.userNamelist= this.userNamelist.replace(/,\s*$/, '')
+                console.log(this.userNamelist.length);
+            }
+           
+       }
+       if(ownerShipData.teams &&ownerShipData.teams.length>0){
+
+        ownerShipData.teams.forEach(element => {
+            const userObject =  this.team.filter(team => team.id === parseInt(element)); 
+            console.log(userObject);
+            this.userNamelist=this.userNamelist+userObject[0].name+','
+           }); 
+           if(isTruncate){
+            this.truncateInst(this.userNamelist.replace(/,\s*$/, ''));
+        }else{
+            this.userNamelist= this.userNamelist.replace(/,\s*$/, '')
+            console.log(this.userNamelist.length);
+        }
+          
+       }
+   return this.userNamelist;
+
+}
+
+  truncateInst(val) {
+    const inst = val.substr(0, this.maxuserLength);
+    return inst;
+  }
+  usersPopUp(serviceStats){
+    this.usersdialogRef = this.dialog.open(UserlistpopupComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data:{
+            userlist:this.users_list,
+            team:this.team,
+            serviceStatus:serviceStats
+    
+        }
+  
+      });
+      this.usersdialogRef.afterClosed().subscribe(result => {
+        if (result) {
+        }
+      });
+  }
 }

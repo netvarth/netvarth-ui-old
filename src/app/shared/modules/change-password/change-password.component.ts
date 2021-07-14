@@ -33,10 +33,9 @@ export class ChangePasswordComponent implements OnInit {
   api_success = null;
   curtype;
   isBusinessowner = false;
-  breadcrumbs_init= [];
-  breadcrumbs=[];
-  
-  
+  breadcrumbs_init: { title: string; url: string; }[];
+  breadcrumbs: any;
+
 
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
@@ -47,6 +46,8 @@ export class ChangePasswordComponent implements OnInit {
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService
   ) {
+    this.isBusinessowner = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
+    this.curtype = this.shared_functions.isBusinessOwner('returntyp');
     this.breadcrumbs_init = [
       {
         title: 'Change Password',
@@ -54,8 +55,6 @@ export class ChangePasswordComponent implements OnInit {
       }
     ];
     this.breadcrumbs = this.breadcrumbs_init;
-    this.isBusinessowner = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
-    this.curtype = this.shared_functions.isBusinessOwner('returntyp');
    }
   goBack() {
     this.location.back();
@@ -125,3 +124,4 @@ export class ChangePasswordComponent implements OnInit {
     this.api_error = null;
   }
 }
+

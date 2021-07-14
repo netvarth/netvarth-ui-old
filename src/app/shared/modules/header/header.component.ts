@@ -24,6 +24,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @Input() source;
   @Input() accountId;
   @Input() customId;
+  @Input() showHeaderAction;
   sign_in_cap = Messages.SIGN_IN_CAP;
   join_cap = Messages.JOIN_CAP;
   are_you_ser_pro = Messages.ARE_YOU_SER_PRO_CAP;
