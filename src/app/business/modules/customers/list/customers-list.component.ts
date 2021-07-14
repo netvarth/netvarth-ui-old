@@ -748,6 +748,7 @@ export class CustomersListComponent implements OnInit {
     this.provider_services.updateCustomerGroupStatus(group.id, status).subscribe(
       (data: any) => {
         this.getCustomerGroup();
+        this.selectedGroup = 'all';
       },
       error => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
