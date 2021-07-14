@@ -54,7 +54,9 @@ const routes: Routes = [
     { path: 'order/item-details', component: ItemDetailsSharedComponent },
     { path: ':id', component: BusinessPageComponent },
     { path: ':id/home', component: BusinessPageHomeComponent },
-    { path: ':id/:userEncId', component: BusinessPageComponent }
+    { path: ':id/:userEncId', component: BusinessPageComponent },
+    { path: ':id/service/:serid', loadChildren: () => import('./shared/components/mainservice-detail/mainservice-detail.module').then(m => m.MainserviceDetailModule) },
+    { path: ':id/:userEncId/service/:serid', loadChildren: () => import('./shared/components/mainservice-detail/mainservice-detail.module').then(m => m.MainserviceDetailModule) }
 ];
 
 @NgModule({
