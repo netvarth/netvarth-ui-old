@@ -828,9 +828,11 @@ export class BranchUsersComponent implements OnInit {
     }
     customerGroupSelection(group, type?) {
         this.showusers = true;
-        this.showUsers = false;
         this.showteams = false;
-        this.showcheckbox = false;
+        if(!type){
+            this.showUsers = false;
+            this.showcheckbox = false;
+        }
         if (group === 'all') {
             this.getUsers();
         }
@@ -913,7 +915,7 @@ export class BranchUsersComponent implements OnInit {
             });
     }
     checkSelection(user) {
-        if (this.selecteTeamdUsers.length > 0) {
+        if ( this.selecteTeamdUsers && this.selecteTeamdUsers.length > 0) {
             const isuser = this.selecteTeamdUsers.filter(listofusers => listofusers.id === user.id);
             if (isuser.length > 0) {
                 return true;
