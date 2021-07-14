@@ -492,3 +492,6 @@
 .mgn-lt-28 {
   margin-left: 28px;
 }
+.card.title-gb {
+  border-radius: 0 !important;
+}

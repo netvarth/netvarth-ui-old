@@ -6,12 +6,12 @@
       </a>
       <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small">
         <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add" data-toggle="modal"
-          data-target="#exampleModalCenter">
+          data-target="#exampleModalCenter" *ngIf="customerCount > 0">
           Create Group</button>
       </a>
       <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small">
         <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add"
-          (click)="searchCustomer()" *ngIf="filterapplied || (customers.length > 0 && !filterapplied)">Create {{customer_label |
+          (click)="searchCustomer()" *ngIf="customerCount > 0">Create {{customer_label |
           capitalizeFirst}}</button>
       </a>
       <a class="navbar-item-color bold pointer-cursor mgn-lt-5 disp-none-large">
@@ -80,7 +80,8 @@
               {{customer_label | capitalizeFirst}}s</span>
             <span class="card-label font-1 font-weight-bolder text-dark"
               *ngIf="selectedGroup !== 'all'">{{selectedGroup.groupName}}</span>
-            <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-right" *ngIf="filterapplied || (customers.length > 0 && !filterapplied)">
+            <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-right"
+              *ngIf="filterapplied || (!showCustomers && customers.length > 0 && !filterapplied)">
               <img src="assets/images/provider-filter-icon.png"
                 style="width: 22px !important; margin-top: -4px !important;">
               Filter
@@ -91,7 +92,7 @@
         <div class="row displayblock">
           <div class="col-sm-12 col-lg-8 col-xs-12 col-md-12 mb-4">
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
-              *ngIf="selectedGroup !== 'all' && !showCustomers && selectedcustomersformsg.length == 0 && customerCount > 0">Add
+              *ngIf="selectedGroup !== 'all' && !showCustomers && selectedcustomersformsg.length == 0">Add
               {{customer_label | capitalizeFirst}}</button>
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10 cancel_btn" (click)="cancelAdd()"
               *ngIf="selectedGroup !== 'all' && showCustomers"><i class="fa fa-times mgn-rt-5" aria-hidden="true"></i>
@@ -296,7 +297,7 @@
                   </div>
                 </ul>
               </section>
-              <div class="filter-footer" *ngIf="filterapplied === true">
+              <div class="filter-footer" *ngIf="filterapplied">
                 <button class="btn reset-btn" (click)="clearFilter()">
                   <i class="fa fa-undo"></i>Reset
                 </button>

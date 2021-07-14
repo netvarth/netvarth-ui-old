@@ -138,7 +138,7 @@ export class CustomersListComponent implements OnInit {
     this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
     this.checkedin_label = Messages.CHECKED_IN_LABEL;
     this.activated_route.queryParams.subscribe(qparams => {
-      if (qparams.selectedGroup && qparams.selectedGroup !== 'all') {
+      if (qparams.selectedGroup && qparams.selectedGroup !== 'all' && !this.small_device_display) {
         this.addNewCustomertoGroup(qparams.customerId);
       }
     });
@@ -153,6 +153,7 @@ export class CustomersListComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.getCustomerCount();
     if (this.selectedGroup == 'all') {
       this.getCustomersList(true);
     } else {
@@ -195,7 +196,13 @@ export class CustomersListComponent implements OnInit {
       this.router.navigate(['/provider/customers/' + customer.id]);
     }
   }
-
+  getCustomerCount() {
+    this.provider_services.getProviderCustomersCount()
+      .subscribe(
+        result => {
+          this.customerCount = result;
+        });
+  }
   getCustomersList(from_oninit = true) {
     this.apiloading = true;
     this.customers = [];
@@ -203,7 +210,7 @@ export class CustomersListComponent implements OnInit {
     this.getCustomersListCount(filter)
       .then(
         result => {
-          if (from_oninit) { this.customer_count = this.customerCount = result; }
+          if (from_oninit) { this.customer_count = result; }
           if (!this.showCustomers) {
             filter = this.setPaginationFilter(filter);
           }
@@ -466,8 +473,6 @@ export class CustomersListComponent implements OnInit {
     this.router.navigate(['/provider/customers/' + customer.id]);
   }
   searchCustomer() {
-    // filter['id'] = 'add';
-    // filter['type'] = 'create';
     const navigationExtras: NavigationExtras = {
       queryParams: {
         source: 'clist',
@@ -832,10 +837,13 @@ export class CustomersListComponent implements OnInit {
     }
   }
   showCustomerHint() {
-    this.showAddCustomerHint = false;
+    this.closeGroupDialog();
     this.getCustomerGroup(this.newlyCreatedGroupId);
     this.resetGroupFields();
     this.resetError();
+    setTimeout(() => {
+      this.showAddCustomerHint = false;
+    }, 500);
   }
   addNewCustomertoGroup(customerId) {
     const removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
