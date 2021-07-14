@@ -14,7 +14,7 @@
     "compodoc": "compodoc -p tsconfig.json",
     "build-serve": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng serve",
     "build-prod": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng build --configuration production",
-    "ionic-build": "ionic cordova build android --project=jaldeeprovider",
+    "ionic-build": "ionic cordova build android --project=jaldeeprovider --optimizejs --minifyjs --minifycss --prod",
     "ionic-device": "ionic cordova run android --project=jaldeeprovider  --optimizejs --minifyjs --minifycss --prod --device",
     "ionic-release": "ionic cordova build android --project=jaldeeprovider  --optimizejs --minifyjs --minifycss --prod --release",
     "increase-memory": "set NODE_OPTIONS=--max_old_space_size=8048"
