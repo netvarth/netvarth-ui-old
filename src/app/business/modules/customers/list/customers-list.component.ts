@@ -111,6 +111,7 @@ export class CustomersListComponent implements OnInit {
   filtericonclearTooltip: any;
   small_device_display = false;
   hideGroups = false;
+  customerCount;
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -202,7 +203,7 @@ export class CustomersListComponent implements OnInit {
     this.getCustomersListCount(filter)
       .then(
         result => {
-          if (from_oninit) { this.customer_count = result; }
+          if (from_oninit) { this.customer_count = this.customerCount = result; }
           if (!this.showCustomers) {
             filter = this.setPaginationFilter(filter);
           }
@@ -465,13 +466,16 @@ export class CustomersListComponent implements OnInit {
     this.router.navigate(['/provider/customers/' + customer.id]);
   }
   searchCustomer() {
+    // filter['id'] = 'add';
+    // filter['type'] = 'create';
     const navigationExtras: NavigationExtras = {
       queryParams: {
         source: 'clist',
+        id: 'add',
         selectedGroup: (this.selectedGroup !== 'all') ? this.selectedGroup.id : 'all'
       }
     };
-    this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
+    this.router.navigate(['/provider/customers/create'], navigationExtras);
   }
   lastvisits(customerDetail) {
     this.mrdialogRef = this.dialog.open(LastVisitComponent, {
@@ -849,5 +853,12 @@ export class CustomersListComponent implements OnInit {
         this.addCustomerToGroup(customerId);
       }
     });
+  }
+  showCustomersSection() {
+    if (!this.groupLoaded && ((this.small_device_display && this.hideGroups) || !this.small_device_display || this.groups.length === 0)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

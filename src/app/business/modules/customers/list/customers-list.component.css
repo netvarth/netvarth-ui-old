@@ -168,6 +168,14 @@
   .customersList .highlight .selected_customers {
     color: white !important;
   }
+  .disp-none-large {
+    display: none;
+  }
+}
+@media (max-width: 893px) {
+  .disp-none-small {
+    display: none;
+  }
 }
 .card.card-custom .card-body {
   padding: 1rem !important;
@@ -177,7 +185,7 @@
   background-color: white !important;
   border: 1px solid #1E4079 !important;
   font-weight: 700 !important;
-  padding: 5px 10px !important;
+  padding: 5px 15px !important;
   font-size: 12px !important;
   text-transform: uppercase !important; 
   height: 30px;
@@ -480,4 +488,7 @@
   font-weight: 500 !important;
   color: white !important;
   font-size: 14px !important;
+}
+.mgn-lt-28 {
+  margin-left: 28px;
 }
