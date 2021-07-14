@@ -120,6 +120,7 @@ import { ShippingdeliveryComponent } from './shared/components/business-page-hom
 import { RefundcancelComponent } from './shared/components/business-page-home/refundcancel/refundcancel.component';
 import { PrivacyComponent } from './shared/components/business-page-home/privacy/privacy.component';
 import { FileReaderService } from './shared/services/file-reader.service';
+import { AttachmentPopupComponent } from './shared/components/attachment-popup/attachment-popup.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -163,7 +164,8 @@ export function init_app(globalService: GlobalService) {
     TermsconditionComponent,
     PrivacyComponent,
     ShippingdeliveryComponent,
-    RefundcancelComponent
+    RefundcancelComponent,
+    AttachmentPopupComponent
   ],
   entryComponents: [
     SignUpComponent,
@@ -182,7 +184,9 @@ export function init_app(globalService: GlobalService) {
     AddAddressComponent,
     ListRecordingsDialogComponent,
     MeetRoomComponent,
-    RequestDialogComponent
+    RequestDialogComponent,
+    AttachmentPopupComponent
+
   ],
   imports: [
     CapitalizeFirstPipeModule,
