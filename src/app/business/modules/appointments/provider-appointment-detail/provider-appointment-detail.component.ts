@@ -102,6 +102,8 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   apptMultiSelection = false;
   timetype;
   showImages: any = [];
+  internalStatuslog: any=[];
+  statusLog:any=[];
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -214,7 +216,16 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
           if (this.waitlist_data.apptStatus !== 'blocked') {
             this.getWaitlistNotes(this.waitlist_data.uid);
           }
-          this.getCheckInHistory(this.waitlist_data.uid);
+          this.getCheckInHistory(this.waitlist_data.uid).then(data=>{
+            this.waitlist_history = data;
+            this.getInternalStatusLog(this.waitlist_data.uid).then(status=>{
+            this.internalStatuslog=status;
+            // this.statusLog.push(this.waitlist_history);
+            // this.statusLog.push(this.internalStatuslog);
+            // console.log(this.statusLog);
+            
+            });
+          });
           this.getCommunicationHistory(this.waitlist_data.uid);
           if (this.waitlist_data.provider) {
             this.spfname = this.waitlist_data.provider.firstName;
@@ -241,15 +252,35 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       );
   }
   getCheckInHistory(uuid) {
-    this.provider_services.getProviderAppointmentHistory(uuid)
-      .subscribe(
-        data => {
-          this.waitlist_history = data;
-        },
-        () => {
-          //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
-        }
-      );
+      const _this = this;
+    return new Promise(function (resolve, reject) {
+   
+      _this.provider_services.getProviderAppointmentHistory(uuid)
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
+  }
+  getInternalStatusLog(uuid){
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+   
+      _this.provider_services.getProviderAppointmentInternalStatusHistory(uuid)
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
+
   }
 
   getCommunicationHistory(uuid) {
