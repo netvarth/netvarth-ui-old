@@ -4,10 +4,6 @@
       <a class="user-title" style="cursor:auto;">
         <div class="pull-left pad-tp-5 display-min-none bold">{{customer_labels}}</div>
       </a>
-      <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-right">
-        <img src="assets/images/provider-filter-icon.png" style="width: 22px !important; margin-top: -4px !important;">
-        <span class="dispnone">Filter</span>
-      </a>
       <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5">
         <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add" data-toggle="modal"
           data-target="#exampleModalCenter">
@@ -25,7 +21,7 @@
       <div class="card card-custom card-stretch gutter-b pitch_blu">
         <div class="card grp_label mb-2 pointer-cursor" (click)="customerGroupSelection('all')"
           [ngClass]="{'highlight': selectedGroup == 'all'}">All {{customer_label | capitalizeFirst}}s</div>
-        <div class="card grp_label mb-2" *ngFor="let group of groups"
+        <div class="card grp_label mb-2 pr-0" *ngFor="let group of groups"
           (click)="group.status=='ENABLE' && customerGroupSelection(group)"
           [ngClass]="{'highlight': selectedGroup.id==group.id}" [class.disabled-group]="group.status=='DISABLE'"
           [class.pointer-cursor]="group.status=='ENABLE'">
@@ -65,6 +61,11 @@
               {{customer_label | capitalizeFirst}}s</span>
             <span class="card-label font-1 font-weight-bolder text-dark"
               *ngIf="selectedGroup !== 'all'">{{selectedGroup.groupName}}</span>
+            <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-right">
+              <img src="assets/images/provider-filter-icon.png"
+                style="width: 22px !important; margin-top: -4px !important;">
+              Filter
+            </a>
             <div class="sel-group-desc">{{selectedGroup.description}}</div>
           </h3>
         </div>
@@ -138,8 +139,6 @@
                 class="label-icon"></i></button>
           </div>
           <div class="col-sm-6 col-lg-4 col-xs-12 col-md-6 filter" *ngIf="!showCustomers">
-            <input type="search" class="form-control search-input-mgn-rt search" placeholder="search by Name"
-              aria-controls="kt_datatable1" [(ngModel)]="filter.first_name" (keypress)="search($event)">
             <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
               <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
                 <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
@@ -389,7 +388,7 @@
                         {{customer.countryCode}} {{customer.phoneNo}}
                       </span>
                     </td>
-                    <td *ngIf="!showCustomers" class="pr-0 text-right">
+                    <td *ngIf="!showCustomers" class="text-right">
                       <button mat-flat-button class="prof_btn"
                         (click)="stopprop($event); showCustomerAction(customer)">Actions</button>
                     </td>

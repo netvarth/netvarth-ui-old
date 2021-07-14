@@ -169,11 +169,6 @@
     color: white !important;
   }
 }
-@media (max-width: 893px) {
-  .dispnone {
-    display: none !important;
-  }
-}
 .card.card-custom .card-body {
   padding: 1rem !important;
 }

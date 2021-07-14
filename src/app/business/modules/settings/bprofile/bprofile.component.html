@@ -357,7 +357,15 @@
                         <div class="col-a col-b pl0 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                             <div class="card p0 w-dta active">
                                 <div class="mgn-bt-20">
-
+                                     <!-- About me -->
+                                    <div class="cd-b">
+                                        <div class="div-outline custId-cursor" [ngClass]="{'div-grn-outline':aboutmefilled,'div-red-outline':!aboutmefilled }" (click)="gotoAboutMe()">
+                                            <i *ngIf="aboutmefilled" class="fa fa-check-circle fa-lg fa-grn fl-right" aria-hidden="true"></i>
+                                            <i *ngIf="!aboutmefilled" class="fa fa-exclamation-circle fa-lg fa-red fl-right" aria-hidden="true"></i>
+                                            <i class="fa person-icon"></i> &nbsp;&nbsp;
+                                            <span class="fontstyl">About Us</span>
+                                        </div>
+                                    </div>
                                     <!-- Location -->
                                     <div class="cd-b" (click)="editLocation()">
                                         <div class="div-outline custId-cursor"
