@@ -1,5 +1,5 @@
 <header>
-    <div class="content comn-cls" *ngIf="bill_data.amountDue > 0">
+    <div class="content comn-cls" *ngIf="bill_data && bill_data.amountDue > 0">
         <div *ngIf="paidStatus == 'false'">
             <section>
                 <div class="content settings">
@@ -502,5 +502,5 @@
             </div>
         </div>
     </div>
-    <div class="linkexpired" *ngIf="bill_data.amountDue == 0">This Link has expired </div>
+    <div class="linkexpired" *ngIf="bill_data && bill_data.amountDue == 0">This Link has expired </div>
 </header>

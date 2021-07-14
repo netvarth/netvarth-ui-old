@@ -1406,6 +1406,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return this.mins;
   }
   recheckwaitlistCounters() {
+    if (this.waitlists && this.waitlists.length > 0) {
     for (let i = 0; i < this.waitlists.length; i++) {
       if (this.waitlists[i].estimated_autocounter) {
         if (this.waitlists[i].estimated_timeinmins > 0) {
@@ -1418,6 +1419,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       }
     }
+  }
   }
   btnJoinVideoClicked(checkin, event) {
     event.stopPropagation();

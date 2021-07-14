@@ -409,7 +409,7 @@
                                 {{sps.departmentName}}
                             </h4>
                             <div class="bus-item-N" *ngFor="let sp of sps['departmentItems']">
-                                <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp" [domain]="businessjson.serviceSector.domain"
+                                <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp" [domain]="businessjson?.serviceSector?.domain"
                                     [terminology]='terminologiesjson' [loc]="selectedLocation"
                                     (actionPerformed)="cardClicked($event)"></app-card>
                             </div>
@@ -419,7 +419,7 @@
                     </ng-container>
                     <ng-container *ngIf="!showDepartments || (showDepartments && userId)">
                         <div class="bus-item-N" *ngFor="let sp of servicesAndProviders">
-                            <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp" [domain]="businessjson.serviceSector.domain"
+                            <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp" [domain]="businessjson?.serviceSector?.domain"
                                 [terminology]='terminologiesjson' [loc]="selectedLocation"
                                 (actionPerformed)="cardClicked($event)"></app-card>
                         </div>

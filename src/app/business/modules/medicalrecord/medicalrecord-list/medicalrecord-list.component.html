@@ -1,6 +1,6 @@
 <section class="">
   <div class="card title-gb">
-    <h5 class="mgn-up-10">
+    <h5 class="mgn-up-10" *ngIf="patientDetails[0]">
       <span class="fa fa-arrow-left pointer-cursor" (click)="back()"></span>&nbsp;&nbsp;&nbsp;&nbsp; Medical records of
       {{patientDetails[0].firstName}} {{patientDetails[0].lastName}}
     </h5>

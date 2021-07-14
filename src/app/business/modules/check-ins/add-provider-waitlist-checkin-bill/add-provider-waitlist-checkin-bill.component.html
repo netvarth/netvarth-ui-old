@@ -291,7 +291,7 @@
 
 												<button class="mb-1 top_n10" mat-icon-button
 													[matMenuTriggerFor]="tdmenu"
-													*ngIf="pos && source && bill_data.billStatus!='Settled' && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
+													*ngIf="pos && source && bill_data.billStatus!='Settled' && bill_data.apptStatus && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
 														((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
 													<mat-icon>more_horiz</mat-icon>
 												</button>
@@ -304,7 +304,7 @@
 													</button>
 
 													<button mat-menu-item data-toggle="modal"
-														*ngIf="bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected'"
+														*ngIf="bill_data.apptStatus && bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected'"
 														(click)="adjustService(service.serviceName, service.quantity)">
 														Change Qty/Price
 													</button>
@@ -351,7 +351,7 @@
 													</button>
 
 													<button mat-menu-item data-toggle="modal"
-														*ngIf="checkin.waitlistStatus != 'cancelled'"
+														*ngIf="checkin.waitlistStatus && checkin.waitlistStatus != 'cancelled'"
 														(click)="adjustService(service.serviceName, service.quantity)">
 														Change Qty/Price
 													</button>
@@ -1081,7 +1081,7 @@
 											*ngIf="!source && bill_data.checkinStatus === 'cancelled'">
 											{{showToken ? 'Token' : 'Check-in'}} Cancelled</span>
 										<span class="red" style="font-size: smaller;"
-											*ngIf="source === 'appt' && (bill_data.apptStatus === 'Rejected' || bill_data.apptStatus === 'Cancelled')">
+											*ngIf="source === 'appt' && bill_data.apptStatus && (bill_data.apptStatus === 'Rejected' || bill_data.apptStatus === 'Cancelled')">
 											Appointment Cancelled</span>
 										<span class="red" style="font-size: smaller;"
 											*ngIf="source === 'order' && bill_data.billStatus === 'Cancel'">
