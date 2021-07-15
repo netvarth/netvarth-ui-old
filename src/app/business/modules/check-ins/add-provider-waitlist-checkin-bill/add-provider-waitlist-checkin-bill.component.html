@@ -1167,7 +1167,7 @@
 											*ngIf="bill_data.billStatus=='Settled'">{{email_bill_cap}}</button>
 
 									</div>
-									<div class="col-md-6 col-lg-6 col-sm-6 col-xs-12" style="text-align: end;">
+									<div class="col-md-6 col-lg-6 col-sm-6 col-xs-12" style="text-align: end;" *ngIf="showPaymentSection">
 										<button type="button"
 											class="full_wdth btn btn-temp-primary-light   font-weight-bold mr-3 my-1 lh-p8 fnt-p8 "
 											*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline && jaldeeConsumer && walkinConsumer_status"
