@@ -134,7 +134,7 @@
                                                     <div class="bold font11" *ngIf="customer_data.firstName || customer_data.lastName">
                                                         {{ customer_data.firstName }} {{ customer_data.lastName }}</div>
                                                     <div *ngIf="jaldeeId">Id - {{ jaldeeId }}</div>
-                                                    <div *ngIf="customer_data.phoneNo"> <i class="fa fa-phone" aria-hidden="true"></i> {{countryCode}} {{customer_data.phoneNo}}</div>
+                                                    <div *ngIf="customer_data.phoneNo.trim()!==''"> <i class="fa fa-phone" aria-hidden="true"></i> {{countryCode}} {{customer_data.phoneNo}}</div>
                                                     <div *ngIf="customer_email"> <i class="fa fa-envelope" aria-hidden="true"></i> {{customer_email}}
                                                     </div>
 

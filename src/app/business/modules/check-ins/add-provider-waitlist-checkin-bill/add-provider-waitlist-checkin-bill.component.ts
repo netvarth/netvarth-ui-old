@@ -464,10 +464,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       userDetails = user.firstName +' '+ user.lastName;
     } else {
       if (user.memberJaldeeId) {
-        userDetails = 'Patient id : ' + user.memberJaldeeId;
+        userDetails = this.customer_label + ' : ' + user.memberJaldeeId;
       }
       if (user.jaldeeId) {
-        userDetails = 'Patient id : ' + user.jaldeeId;
+        userDetails =  this.customer_label + ' : ' + user.jaldeeId;
       }
     }
     return userDetails;

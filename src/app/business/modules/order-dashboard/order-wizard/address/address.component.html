@@ -66,9 +66,9 @@
       <div class="form-group row">
         <div class="col-xl-6 col-lg-6 col-md-6  col-sm-6 col-xs-12">
           <input type="text" class="form-control" placeholder="Address" formControlName="address">
-          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
+          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'address')" [errorMsgs]="fed_service.getErrorMessage(amForm,'address',
                           {
-                            'required' : 'Please enter city name',
+                            'required' : 'Please enter address',
                             'pattern' : 'Only alphabets are allowed'
                           })">
           </app-field-error-display>
