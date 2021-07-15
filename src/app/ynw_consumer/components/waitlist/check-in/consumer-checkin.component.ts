@@ -2262,7 +2262,9 @@ console.log('inside validaity');
     actionCompleted() {
         console.log(this.action);
         if (this.action === 'timeChange') {
+            if (this.queuejson[this.sel_queue_indx]) {
             this.selectedQTime = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
+            }
             this.selectedDate = this.sel_checkindate;
             this.checkFutureorToday();
             this.personsAhead = this.sel_queue_personaahead;
