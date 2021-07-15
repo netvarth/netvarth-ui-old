@@ -660,7 +660,11 @@
                             (click)="stopprop($event);showConsumerNote(appt)">
                             <i class="icon-note"></i>
                           </span>
-                          <span (click)="stopprop($event);openAttachmentGallery(appt)"
+                          <!-- <span (click)="stopprop($event);openAttachmentGallery(appt)"
+                            [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                            *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
+                              class="material-icons">attach_file</i></span> -->
+                              <span (click)="stopprop($event);showAttachments(appt)"
                             [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                             *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
                               class="material-icons">attach_file</i></span>
@@ -945,10 +949,14 @@
                               (click)="stopprop($event);showConsumerNote(apptByTimeSlot[appt.time][0])">
                               <i class="icon-note"></i>
                             </span>
-                            <span (click)="stopprop($event);openAttachmentGallery(apptByTimeSlot[appt.time][0])"
+                            <!-- <span (click)="stopprop($event);openAttachmentGallery(apptByTimeSlot[appt.time][0])"
                               [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                               *ngIf="apptByTimeSlot[appt.time][0].hasAttachment"><i style="font-size: 20px;"
-                                class="material-icons">attach_file</i></span>
+                                class="material-icons">attach_file</i></span> -->
+                                <span (click)="stopprop($event);showAttachments(appt)"
+                                [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                                *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
+                                  class="material-icons">attach_file</i></span>
                           </div>
                           <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                             *ngIf="time_type === 3 || (time_type !== 3 && (!apptByTimeSlot[appt.time][0].virtualService || (apptByTimeSlot[appt.time][0].virtualService && apptByTimeSlot[appt.time][0].apptStatus !== 'Arrived')))">
@@ -1178,10 +1186,14 @@
                             (click)="stopprop($event);showConsumerNote(appt)">
                             <i class="icon-note"></i>
                           </span>
-                          <span (click)="stopprop($event);openAttachmentGallery(appt)"
+                          <span (click)="stopprop($event);showAttachments(appt)"
+                          [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                          *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
+                            class="material-icons">attach_file</i></span>
+                          <!-- <span (click)="stopprop($event);openAttachmentGallery(appt)"
                             [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                             *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
-                              class="material-icons">attach_file</i></span>
+                              class="material-icons">attach_file</i></span> -->
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                           *ngIf="time_type === 3 || (time_type !== 3 && (!appt.virtualService || (appt.virtualService && appt.apptStatus !== 'Arrived')))">
@@ -1748,10 +1760,14 @@
                           (click)="stopprop($event);showConsumerNote(appt)">
                           <i class="icon-note"></i>
                         </span>
-                        <span (click)="stopprop($event);openAttachmentGallery(appt)"
+                        <!-- <span (click)="stopprop($event);openAttachmentGallery(appt)"
                           [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                           *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
-                            class="material-icons">attach_file</i></span>
+                            class="material-icons">attach_file</i></span> -->
+                            <span (click)="stopprop($event);showAttachments(appt)"
+                            [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                            *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
+                              class="material-icons">attach_file</i></span>
                       </div>
                       <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                         *ngIf="time_type === 3 || (time_type !== 3 && (!appt.virtualService || (appt.virtualService && appt.apptStatus !== 'Arrived')))">
@@ -2375,10 +2391,14 @@
                           (click)="stopprop($event);showConsumerNote(appt)">
                           <i class="icon-note"></i>
                         </span>
-                        <span (click)="stopprop($event);openAttachmentGallery(appt)"
+                        <!-- <span (click)="stopprop($event);openAttachmentGallery(appt)"
                           [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                           *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
-                            class="material-icons">attach_file</i></span>
+                            class="material-icons">attach_file</i></span> -->
+                            <span (click)="stopprop($event);showAttachments(appt)"
+                            [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                            *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
+                              class="material-icons">attach_file</i></span>
                       </div>
                       <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                         *ngIf="time_type === 3 || (time_type !== 3 && (!appt.virtualService || (appt.virtualService && appt.apptStatus !== 'Arrived')))">

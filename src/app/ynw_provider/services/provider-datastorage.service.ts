@@ -164,12 +164,12 @@ updateMandatoryAndAdditionalFieldWeightage() {
   const mandatoryObject = projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO;
   const additionalObject = projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.ADDITIONAL_INFO;
   if (!this.checkExistenceInWeightageArray(mandatoryObject)) {
-    if ((this.weightageObjectDomain.mandatoryDomain && this.weightageObjectDomain.mandatoryDomainFilledStatus) || (this.weightageObjectSubDomain.mandatorySubDomain && this.weightageObjectSubDomain.mandatorySubDomainFilledStatus)) {
+    if ((this.weightageObjectDomain && this.weightageObjectDomain.mandatoryDomain && this.weightageObjectDomain.mandatoryDomainFilledStatus) || (this.weightageObjectSubDomain.mandatorySubDomain && this.weightageObjectSubDomain.mandatorySubDomainFilledStatus)) {
       this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO);
       this.setWeightageArray(this.weightageArray);
     }
   } else {
-    if ((this.weightageObjectDomain.mandatoryDomain && this.weightageObjectDomain.mandatoryDomainFilledStatus === false) || (this.weightageObjectSubDomain.mandatorySubDomain && this.weightageObjectSubDomain.mandatorySubDomainFilledStatus === false)) {
+    if ((this.weightageObjectDomain && this.weightageObjectDomain.mandatoryDomain && this.weightageObjectDomain.mandatoryDomainFilledStatus === false) || (this.weightageObjectSubDomain.mandatorySubDomain && this.weightageObjectSubDomain.mandatorySubDomainFilledStatus === false)) {
       this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO.name);
       this.setWeightageArray(this.weightageArray);
 

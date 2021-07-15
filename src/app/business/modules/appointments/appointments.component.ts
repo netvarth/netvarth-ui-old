@@ -22,6 +22,7 @@ import { LocalStorageService } from '../../../shared/services/local-storage.serv
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { Title } from '@angular/platform-browser';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
+import { AttachmentPopupComponent } from '../../../../app/shared/components/attachment-popup/attachment-popup.component';
 declare let cordova: any;
 @Component({
   selector: 'app-appointments',
@@ -355,6 +356,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   teams: any;
   yesterdayDate;
   @ViewChild('closebutton') closebutton;
+  showattachmentDialogRef: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -704,8 +706,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getSchedulesFromView(view, schedules) {
-    console.log(view);
-    console.log(schedules);
     const qs = [];
     if (view && view.name !== 'All Appointments') {
       for (let i = 0; i < schedules.length; i++) {
@@ -2471,6 +2471,24 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cancelled_count = 0;
   }
 
+  showAttachments(appt) {
+    this.provider_services.getProviderAppointmentAttachmentsByUuid(appt.uid).subscribe(
+      (communications: any) => {
+        this.showattachmentDialogRef = this.dialog.open(AttachmentPopupComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true,
+          data: {
+            attachments: communications,
+            type: 'appt'
+          }
+        });
+        this.showattachmentDialogRef.afterClosed().subscribe(result => {
+          if (result === 'reloadlist') {
+          }
+        });
+      });
+  }
   openAttachmentGallery(appt) {
     // this.provider_services.getProviderAttachments(appt.uid).subscribe(
     this.provider_services.getProviderAppointmentAttachmentsByUuid(appt.uid).subscribe(
@@ -2867,7 +2885,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (event.type === 'note') {
       this.showConsumerNote(event.waitlist);
     } else if (event.type === 'attachment') {
-      this.openAttachmentGallery(event.waitlist);
+      this.showAttachments(event.waitlist);
+      //this.openAttachmentGallery(event.waitlist);
     } else if (event.type === 'actions') {
       this.showCheckinActions(event.statusAction, event.waitlist);
     }

@@ -83,6 +83,7 @@ import { MediaService } from './shared/services/media-service';
 import { RequestDialogComponent } from './business/shared/meeting-room/request-dialog/request-dialog.component';
 import { VideoCallSharedComponent } from './business/modules/video-call/video-call.component';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { AttachmentPopupComponent } from './shared/components/attachment-popup/attachment-popup.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -103,7 +104,8 @@ export function init_app(globalService: GlobalService) {
     ListRecordingsDialogComponent,
     NotificationDialogComponent,
     RequestDialogComponent,
-    VideoCallSharedComponent
+    VideoCallSharedComponent,
+     AttachmentPopupComponent
   ],
   entryComponents: [
     ConfirmBoxComponent,
@@ -114,7 +116,9 @@ export function init_app(globalService: GlobalService) {
     ListRecordingsDialogComponent,
     NotificationDialogComponent,
     MeetRoomComponent,
-    RequestDialogComponent
+    RequestDialogComponent,
+    AttachmentPopupComponent
+
   ],
   imports: [
     CapitalizeFirstPipeModule,

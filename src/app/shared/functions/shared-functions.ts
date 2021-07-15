@@ -455,7 +455,7 @@ export class SharedFunctions {
       'alternateMedicinePractitioners': 'alternateMedicineHosp'
     };
     const ynw_conf = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
-    if (ynw_conf.bdata) {
+    if (ynw_conf.bdata && ynw_conf.bdata.length > 0) {
       for (let i = 0; i < ynw_conf.bdata.length; i++) {
         if (ynw_conf.bdata[i].domain === selected_domain) {
           for (let subdom = 0; subdom < ynw_conf.bdata[i].subDomains.length; subdom++) {
