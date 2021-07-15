@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
-import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { Messages } from '../../constants/project-messages';
 import { projectConstants } from '../../../app.component';
@@ -12,8 +11,9 @@ import { Location } from '@angular/common';
 import { GroupStorageService } from '../../services/group-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { SnackbarService } from '../../services/snackbar.service';
-import { TelegramInfoComponent } from '../../components/telegram-info/telegram-info.component';
 import { MatDialog } from '@angular/material/dialog';
+import { TelegramInfoComponent } from '../../../ynw_consumer/components/telegram-info/telegram-info.component';
+import { SharedServices } from '../../services/shared-services';
 
 @Component({
   selector: 'app-edit-profile',
@@ -374,7 +374,7 @@ export class EditProfileComponent implements OnInit {
   }
  
   enableTelegram(stat){
-    this.shared_services.telegramChat(this.countryCode, this.phonenoHolder).subscribe(data => {
+    this.shared_services.telegramChat(this.removePlus(this.countryCode), this.phonenoHolder).subscribe(data => {
       this.chatId = data;
     })
     this.teleGramStat(stat).then(
@@ -429,5 +429,11 @@ getTelegramstat(){
       console.log(error);
     }
   );
+}
+removePlus(countryCode) {
+  if (countryCode.startsWith('+')) {
+    countryCode = countryCode.substring(1);
+  }
+  return countryCode;
 }
 }

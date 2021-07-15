@@ -597,10 +597,10 @@ export class UpdateProviderNotificationsComponent implements OnInit {
         return;
       }
       if (this.ph1_arr.length === 0) {
-        if (this.tele1Countrycode) {
+        if (this.sms1Countrycode) {
           const val = {
             'number': curphone1,
-            'countryCode': this.tele1Countrycode
+            'countryCode': this.sms1Countrycode
           }
           this.ph1_arr.push(val);
         }
