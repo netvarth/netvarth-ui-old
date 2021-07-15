@@ -58,11 +58,11 @@ export class AppComponent implements OnInit {
       //     console.log(reason);
       //   }
       // )
-      this.localNotifications.on('action').subscribe(
-        (message)=> {
-          console.log("Local Notification Message");
-          console.log(message);
-      });
+      // this.localNotifications.on('action').subscribe(
+      //   (message)=> {
+      //     console.log("Local Notification Message");
+      //     console.log(message);
+      // });
       this.firebaseX.grantPermission().then(hasPermission => {
         console.log("Permission was " + (hasPermission ? "granted" : "denied"));
       });
@@ -90,15 +90,16 @@ export class AppComponent implements OnInit {
           //   console.log(result);
           // });
         } else {
-          let actions = [{
-            identifier: 'PUSH_CLICK',
-            title: 'Jaldee for Business',
-            activationMode: 'background'
-          }]
+          // let actions = [{
+          //   identifier: 'PUSH_CLICK',
+          //   title: 'Jaldee for Business',
+          //   activationMode: 'background'
+          // }]
           this.localNotifications.schedule({
             text: message.body,
-            data: message,
-            actions: [actions[0]]
+            data: message
+            // ,
+            // actions: [actions[0]]
           });
         }
       });
