@@ -884,3 +884,6 @@
     font-weight: normal !important;
     font-size: .8rem !important;
 }
+.modal-dialog {
+    margin: 30px auto !important;
+}

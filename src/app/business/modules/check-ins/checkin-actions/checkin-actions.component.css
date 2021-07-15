@@ -183,3 +183,7 @@
 ::ng-deep .action-label .mat-checkbox-layout .mat-checkbox-label {
   margin-left: 5px !important;
 }
+.status-scro {
+  max-height: 65vh;
+  overflow-y: scroll;
+}
