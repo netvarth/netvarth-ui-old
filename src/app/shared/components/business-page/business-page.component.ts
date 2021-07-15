@@ -2771,7 +2771,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.orderstatus && this.userId == null) {
       this.shared_services.getConsumerCatalogs(account_Id).subscribe(
         (catalogs: any) => {
-          if (catalogs.lenght > 0) {
+          if (catalogs.length > 0) {
             this.activeCatalog = catalogs[0];
             this.orderType = this.activeCatalog.orderType;
             if (this.activeCatalog.catalogImages && this.activeCatalog.catalogImages[0]) {
