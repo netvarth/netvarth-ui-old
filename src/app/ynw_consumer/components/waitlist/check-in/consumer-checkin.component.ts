@@ -211,6 +211,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     virtualFields: any;
     whatsappCountryCode;
     disablebutton = false;
+    readMore = false;
     checkJcash = false;
     checkJcredit = false;
     jaldeecash: any;
@@ -2446,6 +2447,9 @@ console.log('inside validaity');
     viewAttachments() {
         this.action = 'attachment';
         this.modal.nativeElement.click();
+    }
+      showText() {
+        this.readMore = !this.readMore;
     }
   
     changeJcashUse(event) {
