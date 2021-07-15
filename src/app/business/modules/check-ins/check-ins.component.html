@@ -801,10 +801,14 @@
                             (click)="stopprop($event);showConsumerNote(checkin)">
                             <i class="icon-note"></i>
                           </span>
-                          <span (click)="stopprop($event);openAttachmentGallery(checkin)"
+                          <!-- <span (click)="stopprop($event);openAttachmentGallery(checkin)"
                             [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                             *ngIf="checkin.hasAttachment"><i style="font-size: 20px;"
-                              class="material-icons">attach_file</i></span>
+                              class="material-icons">attach_file</i></span> -->
+                              <span (click)="stopprop($event);showAttachments(checkin)"
+                              [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                              *ngIf="checkin.hasAttachment"><i style="font-size: 20px;"
+                                class="material-icons">attach_file</i></span> 
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Payment status'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="pos">
@@ -1080,10 +1084,14 @@
                             (click)="stopprop($event);showConsumerNote(checkin)">
                             <i class="icon-note"></i>
                           </span>
-                          <span (click)="stopprop($event);openAttachmentGallery(checkin)"
+                          <span (click)="stopprop($event);showAttachments(checkin)"
+                          [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                          *ngIf="checkin.hasAttachment"><i style="font-size: 20px;"
+                            class="material-icons">attach_file</i></span> 
+                          <!-- <span (click)="stopprop($event);openAttachmentGallery(checkin)"
                             [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                             *ngIf="checkin.hasAttachment"><i style="font-size: 20px;"
-                              class="material-icons">attach_file</i></span>
+                              class="material-icons">attach_file</i></span> -->
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="pos">
                           <span [matTooltipClass]="tooltipcls" [matTooltip]="'Payment status'"
@@ -1673,10 +1681,14 @@
                           (click)="stopprop($event);showConsumerNote(checkin)">
                           <i class="icon-note"></i>
                         </span>
-                        <span (click)="stopprop($event);openAttachmentGallery(checkin)"
+                        <!-- <span (click)="stopprop($event);openAttachmentGallery(checkin)"
                           [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                           *ngIf="checkin.hasAttachment"><i style="font-size: 20px;"
-                            class="material-icons">attach_file</i></span>
+                            class="material-icons">attach_file</i></span> -->
+                            <span (click)="stopprop($event);showAttachments(checkin)"
+                            [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                            *ngIf="checkin.hasAttachment"><i style="font-size: 20px;"
+                              class="material-icons">attach_file</i></span> 
                       </div>
                       <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="pos">
                         <span [matTooltipClass]="tooltipcls" [matTooltip]="'Payment status'" data-title="Payment Status"
@@ -2388,10 +2400,14 @@
                           (click)="stopprop($event);showConsumerNote(checkin)">
                           <i class="icon-note"></i>
                         </span>
-                        <span (click)="stopprop($event);openAttachmentGallery(checkin)"
+                        <!-- <span (click)="stopprop($event);openAttachmentGallery(checkin)"
                           [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                           *ngIf="checkin.hasAttachment"><i style="font-size: 20px;"
-                            class="material-icons">attach_file</i></span>
+                            class="material-icons">attach_file</i></span> -->
+                            <span (click)="stopprop($event);showAttachments(checkin)"
+                            [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                            *ngIf="checkin.hasAttachment"><i style="font-size: 20px;"
+                              class="material-icons">attach_file</i></span> 
                       </div>
                       <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                         <span class="" style="font-size: smaller;">

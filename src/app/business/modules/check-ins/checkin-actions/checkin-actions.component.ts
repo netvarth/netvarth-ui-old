@@ -293,7 +293,7 @@ export class CheckinActionsComponent implements OnInit {
                     this.queuejson = data;
                     this.loading = false;
                     this.queueQryExecuted = true;
-                    if (this.queuejson.length > 0) {
+                    if (this.queuejson && this.queuejson.length > 0) {
                         let selindx = 0;
                         for (let i = 0; i < this.queuejson.length; i++) {
                             if (this.queuejson[i]['queueWaitingTime'] !== undefined) {
@@ -604,7 +604,7 @@ export class CheckinActionsComponent implements OnInit {
         let layout_list: any = [];
         this.provider_services.getDisplayboardsWaitlist()
             .subscribe(
-                data => {
+                (data: any) => {
                     layout_list = data;
                     this.board_count = layout_list.length;
                     this.setActions();
@@ -654,7 +654,7 @@ export class CheckinActionsComponent implements OnInit {
         if (this.data.timetype === 3) {
             this.changeService = false;
         }
-        if (this.users.length > 1 && !this.data.multiSelection && this.accountType=='BRANCH' && (this.checkin.queue.provider.id === 0) && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn')) {
+        if (this.users && this.users.length > 1 && !this.data.multiSelection && this.accountType=='BRANCH' && (this.checkin.queue.provider.id === 0) && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn')) {
             this.showAssign = true;
             console.log("hi");
         }

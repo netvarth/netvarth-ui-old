@@ -145,6 +145,10 @@ export class ProviderServices {
     const url = 'provider/bill/coupons/' + id + '/publish';
     return this.servicemeta.httpPut(url, data);
   }
+  getProviderAppointmentInternalStatusHistory(uid){
+    const url = 'provider/appointment/internalStatuses/log' + uid;
+    return this.servicemeta.httpGet(url);
+  }
 
 
   editCoupon(data) {
@@ -639,6 +643,10 @@ export class ProviderServices {
   }
   getProviderWaitlistHistroy(uuid) {
     const url = 'provider/waitlist/states/' + uuid;
+    return this.servicemeta.httpGet(url);
+  }
+  getProviderWaitlistinternalHistroy(uuid) {
+    const url = 'provider/waitlist/internalStatuses/log/' + uuid;
     return this.servicemeta.httpGet(url);
   }
   acceptPayment(data) {

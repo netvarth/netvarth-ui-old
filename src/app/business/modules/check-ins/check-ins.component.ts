@@ -29,6 +29,7 @@ import { Title } from '@angular/platform-browser';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { instantQueueComponent } from './instantQ/instantQueue.component';
 import { ConfirmBoxComponent } from '../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { AttachmentPopupComponent } from '../../../../app/shared/components/attachment-popup/attachment-popup.component';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html',
@@ -352,6 +353,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   teams: any;
   yesterdayDate;
   @ViewChild('closebutton') closebutton;
+  showattachmentDialogRef: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -3464,10 +3466,26 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (event.type === 'note') {
       this.showConsumerNote(event.waitlist);
     } else if (event.type === 'attachment') {
-      this.openAttachmentGallery(event.waitlist);
+      this.showAttachments(event.waitlist);
+      //this.openAttachmentGallery(event.waitlist);
     } else if (event.type === 'actions') {
       this.showCheckinActions(event.statusAction, event.waitlist);
     }
+  }
+  showAttachments(wailtist) {
+    this.provider_services.getProviderWaitlistAttachmentsByUuid(wailtist.ynwUuid).subscribe(
+      (communications: any) => {
+        this.showattachmentDialogRef= this.dialog.open(AttachmentPopupComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true,
+          data: {
+            attachments:communications
+          }
+        });
+      
+        
+      });
   }
   isuserAvailableNow() {
     console.log(this.active_user.id);

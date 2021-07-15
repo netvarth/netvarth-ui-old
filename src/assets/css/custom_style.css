@@ -13836,6 +13836,9 @@ app-waitlist-queuedetail .wtsapvid-icon {
 .telegramPopupClass {
   width: 700px !important;
 }
+.mgn-5 {
+  margin: 5px !important;
+}
 .newPopupClass {
   height: 90vh !important;
   width: 90vw !important;

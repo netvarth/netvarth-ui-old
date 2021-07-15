@@ -96,6 +96,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   timetype;
   spName: any;
   showImages: any = [];
+  internalStatuslog:any= [];
+  statusLog: any=[];
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -240,7 +242,25 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           if (this.waitlist_data.waitlistStatus !== 'blocked') {
             this.getWaitlistNotes(this.waitlist_data.ynwUuid);
           }
-          this.getCheckInHistory(this.waitlist_data.ynwUuid);
+          this.getCheckInHistory(this.waitlist_data.ynwUuid).then(data=>{
+            this.waitlist_history = data;
+            console.log(this.waitlist_history);
+            
+            this.getInternalStatusLog(this.waitlist_data.ynwUuid).then((status:any)=>{
+            this.internalStatuslog=status;
+            // for(let stat of status){
+    
+            // const newStatus={'waitlistStatus':stat.InternalStatus,'time':stat.DateTime,'user':stat.User}
+            // this.internalStatuslog.push(newStatus)
+            // }
+      
+            // this.statusLog=this.waitlist_history.concat(this.internalStatuslog);
+            //this.statusLog =  this.statusLog.sort((a,b) => 0 - (a.DateTime > b.DateTime ? -1 : 1));
+          
+            console.log(this.statusLog);
+            
+            });
+          });
           this.getCommunicationHistory(this.waitlist_data.ynwUuid);
           if (this.waitlist_data.provider) {
             this.spName = (this.waitlist_data.provider.businessName) ? this.waitlist_data.provider.businessName : this.waitlist_data.provider.firstName + ' ' + this.waitlist_data.provider.lastName;
@@ -254,6 +274,38 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         }
       );
   }
+  
+  getCheckInHistory(uuid) {
+    const _this = this;
+  return new Promise(function (resolve, reject) {
+ 
+    _this.provider_services.getProviderWaitlistHistroy(uuid)
+      .subscribe(
+        data => {
+          resolve(data);
+        },
+        () => {
+          reject();
+        }
+      );
+  });
+}
+getInternalStatusLog(uuid){
+  const _this = this;
+  return new Promise(function (resolve, reject) {
+ 
+    _this.provider_services.getProviderWaitlistinternalHistroy(uuid)
+      .subscribe(
+        data => {
+          resolve(data);
+        },
+        () => {
+          reject();
+        }
+      );
+  });
+
+}
 
   // getWaitlistNotes() {
   //   this.provider_services.getProviderWaitlistNotes(this.waitlist_data.consumer.id)
@@ -268,17 +320,17 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         }
       );
   }
-  getCheckInHistory(uuid) {
-    this.provider_services.getProviderWaitlistHistroy(uuid)
-      .subscribe(
-        data => {
-          this.waitlist_history = data;
-        },
-        () => {
-          //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
-        }
-      );
-  }
+  // getCheckInHistory(uuid) {
+  //   this.provider_services.getProviderWaitlistHistroy(uuid)
+  //     .subscribe(
+  //       data => {
+  //         this.waitlist_history = data;
+  //       },
+  //       () => {
+  //         //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+  //       }
+  //     );
+  // }
 
   getCommunicationHistory(uuid) {
     this.provider_services.getProviderInbox()
@@ -602,5 +654,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     let timeDate;
     timeDate = time.replace(/\s/, 'T');
     return timeDate;
+  }
+  getFormatedDateTime(date){
+    return this.dateTimeProcessor.transformToYMDFormat(date);
   }
 }

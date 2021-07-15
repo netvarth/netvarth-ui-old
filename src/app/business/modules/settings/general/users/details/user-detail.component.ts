@@ -469,7 +469,7 @@ export class BranchUserDetailComponent implements OnInit {
             post_data1['deptId'] = input.selectedDepartment;
             // post_data1['subdomain'] = input.selectedSubDomain;
             console.log(this.selectedsubDomain);
-            post_data1['subdomain'] = this.selectedsubDomain[0].id || 0;
+            post_data1['subdomain'] = (this.selectedsubDomain[0]) ? this.selectedsubDomain[0].id : 0;
         }
         if (input.selectedUserType !== 'ADMIN') {
         post_data1['admin'] = input.privileges;

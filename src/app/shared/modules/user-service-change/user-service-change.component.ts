@@ -340,10 +340,10 @@ export class UserServiceChnageComponent implements OnInit {
   }
   updateUser() {
     let msg = '';
-    if (this.selectedUser.isAvailable) {
-      msg = 'Do you want to assign this ' + this.customer_label + ' to ' + this.selectedUser.businessName + '?';
-    } else {
+    if (!this.selectedUser.isAvailable && (this.user.id === 136239 || this.user.id === 9341)) {
       msg = this.selectedUser.businessName + ' seems to be unavailable now. Assign anyway ? ';
+    } else {
+      msg = 'Do you want to assign this ' + this.customer_label + ' to ' + this.selectedUser.businessName + '?';
     }
     const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',

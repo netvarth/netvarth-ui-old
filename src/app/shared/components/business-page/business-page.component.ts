@@ -6,7 +6,7 @@ import { Messages } from '../../constants/project-messages';
 import { projectConstants } from '../../../app.component';
 import { MatDialog } from '@angular/material/dialog';
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
-import { ServiceDetailComponent } from '../service-detail/service-detail.component';
+//import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 import { CouponsComponent } from '../coupons/coupons.component';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
@@ -250,6 +250,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   departmentId;
   deptUsers: any = [];
   loading = false;
+  loading_direct = false;
   pSource;
   apptfirstArray: any = [];
   apptTempArray: any = [];
@@ -1932,9 +1933,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       } else {
         _this.showCheckin(id, place, location, date, service, 'consumer', virtualFields);
       }
-
-
-
     } else {
       const virtualdialogRef = _this.dialog.open(VirtualFieldsComponent, {
         width: '40%',
@@ -1944,6 +1942,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         data: { consumer: consumerdata, theme: this.theme, service: service, businessDetails: this.businessjson }
       });
       virtualdialogRef.afterClosed().subscribe(result => {
+        _this.loading_direct = true;
         if (result) {
           _this.consumerVirtualinfo = result;
           if (type === 'appt') {
@@ -1951,7 +1950,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           } else {
             _this.showCheckin(id, place, location, date, service, 'consumer', result);
           }
-
+        } else {
+          _this.loading_direct = false;
         }
       });
 
@@ -2219,42 +2219,58 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   onButtonAfterHook() { }
   showServiceDetail(serv, busname) {
-    let servData;
     if (serv.serviceType && serv.serviceType === 'donationService') {
-      servData = {
-        bname: busname,
-        sector: this.businessjson.serviceSector.domain,
-        serdet: serv,
-        serv_type: 'donation'
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          bname: busname,
+          sector: this.businessjson.serviceSector.domain,
+         // serdet: JSON.stringify(serv),
+          serv_type: 'donation'}
       };
+      if(this.userId){
+        this.routerobj.navigate([this.accountEncId,this.userId,'service',serv.id], navigationExtras);
+      }else{
+        this.routerobj.navigate([this.accountEncId,'service',serv.id], navigationExtras);
+      }
+      
     } else {
-      servData = {
-        bname: busname,
-        sector: this.businessjson.serviceSector.domain,
-        serdet: serv
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+           bname: busname,
+          sector: this.businessjson.serviceSector.domain,
+         // serdet: JSON.stringify(serv)
+        }
       };
+      if(this.userId){
+        this.routerobj.navigate([this.accountEncId,this.userId,'service',serv.id], navigationExtras);
+      }else{
+        this.routerobj.navigate([this.accountEncId,'service',serv.id], navigationExtras);
+      }
     }
+    // let servData;
+    // if (serv.serviceType && serv.serviceType === 'donationService') {
+    //   servData = {
+    //     bname: busname,
+    //     sector: this.businessjson.serviceSector.domain,
+    //     serdet: serv,
+    //     serv_type: 'donation'
+    //   };
+    // } else {
+    //   servData = {
+    //     bname: busname,
+    //     sector: this.businessjson.serviceSector.domain,
+    //     serdet: serv
+    //   };
+    // }
 
-    // const initialState = {
+    // this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
+    //   width: '50%',
+    //   panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', this.theme],
+    //   disableClose: true,
     //   data: servData
-    // };
-
-    // this.bsModalRef = this.modalService.show(ServiceDetailComponent, {
-    //   initialState,
-    //   class: 'commonpopupmainclass popup-class specialclass service-detail-modal',
-    //   backdrop: "static"
     // });
-
-    // $('modal-container:has(.service-detail-modal)').addClass('service-detail-modal-container');
-
-    this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', this.theme],
-      disableClose: true,
-      data: servData
-    });
-    this.servicedialogRef.afterClosed().subscribe(() => {
-    });
+    // this.servicedialogRef.afterClosed().subscribe(() => {
+    // });
   }
   getTerminologyTerm(term) {
     if (this.terminologiesjson) {
@@ -2484,20 +2500,20 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
-        this.showServiceDetail(actionObj['service'], this.businessjson.name);
+        this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
       } else {
         this.checkinClicked(actionObj['location'], actionObj['service']);
       }
 
     } else if (actionObj['type'] === 'appt') {
       if (actionObj['action'] === 'view') {
-        this.showServiceDetail(actionObj['service'], this.businessjson.name);
+        this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
       } else {
         this.appointmentClicked(actionObj['location'], actionObj['service']);
       }
     } else if (actionObj['type'] === 'donation') {
       if (actionObj['action'] === 'view') {
-        this.showServiceDetail(actionObj['service'], this.businessjson.name);
+        this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
       } else {
         this.payClicked(actionObj['location'].id, actionObj['location'].place, new Date(), actionObj['service']);
       }
@@ -2687,6 +2703,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
       this.servicesAndProviders = servicesAndProviders;
+      console.log("tyuhjhj"+this.servicesAndProviders);
       // });
     } else {
       // tslint:disable-next-line:no-shadowed-variable
@@ -2737,6 +2754,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
       this.servicesAndProviders = servicesAndProviders;
+      console.log("hjhj"+this.servicesAndProviders);
     }
     if (this.businessjson.donationFundRaising && this.onlinePresence && this.donationServicesjson.length >= 1) {
       for (let dIndex = 0; dIndex < this.donationServicesjson.length; dIndex++) {
