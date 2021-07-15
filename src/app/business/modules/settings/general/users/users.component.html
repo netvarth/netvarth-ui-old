@@ -12,23 +12,30 @@
               <!-- </i> -->
               Filter
           </a>
-          <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click)="addBranchSP()"
+          <a   *ngIf="selectedTeam == 'all'" [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click)="addBranchSP()"
               class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5">
               <button type="button" class="btn btn mb-2 action-button  btn-primary action-button-add"> <i
                       class="fa fa-plus"></i>User </button>
           </a>
-          <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" *ngIf="selectedGroup == 'all'"
+          <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" *ngIf="selectedTeam == 'all'"
               class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5">
               <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add"
               data-toggle="modal" data-target="#exampleModalCenter">
               <i class="fa fa-plus"></i>Create Team</button>
           </a> 
-          <a  *ngIf="selectedGroup == 'all' && (loc_list && loc_list.length > 1)" [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
+          <a  *ngIf="selectedTeam == 'all' && (loc_list && loc_list.length > 1)" [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
             class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5">
             <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add"
             (click)="addlocation()">
              Assign Locations</button>
           </a>
+          
+          <button mat-flat-button class="btn btn mb-2 action-button bold pointer-cursor pull-right mgn-lt-5  btn-primary action-button-add" (click)="showCustomerstoAdd()"
+                   *ngIf="selectedTeam !== 'all' && !showUsers && (selectedTeam.users && selectedTeam.users.length > 0)">
+                   Manage Users</button>
+                   <button mat-flat-button  class="btn btn mb-2 action-button bold pointer-cursor pull-right mgn-lt-5  btn-primary action-button-add" (click)="showCustomerstoAdd()"
+                   *ngIf="selectedTeam !== 'all' && !showUsers  && (selectedTeam.users && selectedTeam.users.length == 0)">
+                   Add Users</button>
       </h5>
   </div>
 </section>
@@ -40,28 +47,34 @@
       <h5 class="mgn-up-10">
           <div class="pull-left pad-tp-5" *ngIf="!teamLoaded && groups.length == 0">Users</div>
           <!-- <div class="pull-left pad-tp-5" *ngIf="!teamLoaded && groups.length > 0">Teams</div> -->
-          <a  (click)="showFilterSidebar()" style="padding: 5px 7px !important;" class="btn mb-2 action-button mgn-lt-5 pull-right">
+          <a *ngIf="showusers" (click)="showFilterSidebar()" style="padding: 5px 7px !important;" class="btn mb-2 action-button mgn-lt-5 pull-right">
               <!-- <i class="icon-filter-one">
               </i> -->
               <img src="../../../assets/images/provider-filter-icon.png"  style="width: 22px !important; margin-top: -6px !important;">
           </a>
-          <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" 
+          <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"   *ngIf="selectedTeam === 'all'"
           class="navbar-item-color bold pointer-cursor mgn-lt-5">
-            <button type="button" style="padding: 5px 7px !important;"  [matMenuTriggerFor]="appMenu" class="btn btn mb-2 action-button  dropdown-toggle  pull-right"> 
+            <button type="button" style="padding: 5px 7px !important; margin-left: 5px !important;"   [matMenuTriggerFor]="appMenu" class="btn btn mb-2 action-button  dropdown-toggle  pull-right"> 
               Actions  
             </button>
             <mat-menu #appMenu="matMenu">
                 <button mat-menu-item  (click)="addBranchSP()" >
                   Create User
                 </button>
-                <button  mat-menu-item  *ngIf="selectedGroup == 'all'" data-toggle="modal" data-target="#exampleModalCenter">
+                <button  mat-menu-item  *ngIf="selectedTeam == 'all'" data-toggle="modal" data-target="#exampleModalCenter">
                     Create Team
                 </button>
-                <button mat-menu-item *ngIf="(loc_list && loc_list.length > 1)" (click)="addlocation()">
+                <button mat-menu-item *ngIf="showusers && (loc_list && loc_list.length > 1)" (click)="addlocation()">
                     Assign Locations
                 </button>
             </mat-menu>
-          </a>
+          </a>      
+          <button mat-flat-button class="btn btn mb-2 action-button bold pointer-cursor pull-right mgn-lt-5  btn-primary action-button-add" (click)="showCustomerstoAdd()"
+                   *ngIf="selectedTeam !== 'all' && !showUsers && (selectedTeam.users && selectedTeam.users.length > 0)">
+                   Manage Users</button>
+         <button mat-flat-button  class="btn btn mb-2 action-button bold pointer-cursor pull-right mgn-lt-5  btn-primary action-button-add" (click)="showCustomerstoAdd()"
+                   *ngIf="selectedTeam !== 'all' && !showUsers  && (selectedTeam.users && selectedTeam.users.length == 0)">
+                   Add Users</button>
       </h5>
      
   </div>
@@ -151,21 +164,21 @@
     <!-- *** showing  web left side  team names and content***** -->
     <div class="col-lg-3   display-min-none" *ngIf="!teamLoaded && groups.length > 0">
       <div class="card card-custom card-stretch gutter-b pitch_blu">
-        <div class="card grp_label mb-2 pointer-cursor" (click)="customerGroupSelection('all')"
-          [ngClass]="{'highlight': selectedGroup == 'all'}">
-        <span  [ngClass]="{'highlightcolor': selectedGroup == 'all'}">All Users</span>
+        <div class="card grp_label mb-2 pointer-cursor" (click)="teamSelected('all')"
+          [ngClass]="{'highlight': selectedTeam == 'all'}">
+        <span  [ngClass]="{'highlightcolor': selectedTeam == 'all'}">All Users</span>
         </div>
         <!-- <button mat-flat-button class="font-size-xs add_btn mgn-bt-10" data-toggle="modal"
           data-target="#exampleModalCenter">Create Team</button> -->
         <div class="card grp_label mb-2" *ngFor="let group of groups"
-          (click)="group.status=='ACTIVE' && customerGroupSelection(group)"
-          [ngClass]="{'highlight': selectedGroup.id==group.id}" 
+          (click)="group.status=='ACTIVE' && teamSelected(group)"
+          [ngClass]="{'highlight': selectedTeam.id==group.id}" 
           [class.disabled-group]="group.status=='INACTIVE'"
           [class.pointer-cursor]="group.status=='ACTIVE'">  
           <div class="max-hgt-20 disp-flex">
-            <span  [ngClass]="{'highlightcolor': selectedGroup.id==group.id}"  class="pull-left group-name">{{group.name}}</span>
+            <span  [ngClass]="{'highlightcolor': selectedTeam.id==group.id}"  class="pull-left group-name">{{group.name}}</span>
             <span class="pull-right mgn-m-up-10">
-              <button  [ngClass]="{'highlightcolor': selectedGroup.id==group.id}" type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event);">
+              <button  [ngClass]="{'highlightcolor': selectedTeam.id==group.id}" type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event);">
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
@@ -182,7 +195,7 @@
               </mat-menu>
             </span>
           </div>
-          <div  [ngClass]="{'highlightcolor': selectedGroup.id==group.id}"  class="selected_customers">{{group.description}}</div>
+          <div  [ngClass]="{'highlightcolor': selectedTeam.id==group.id}"  class="selected_customers">{{group.description}}</div>
         </div>
       </div>
    </div>
@@ -191,7 +204,7 @@
     <!-- *** start Mobile teams  content***** -->
    <div class="col-lg-4 waitlist-box-check" *ngIf="!teamLoaded && groups.length > 0 && showteams">
       <div class="card card-custom card-stretch gutter-b pitch_blu">
-        <div class="card grp_label mb-2 pointer-cursor" (click)="customerGroupSelection('all')">
+        <div class="card grp_label mb-2 pointer-cursor" (click)="teamSelected('all')">
           All Users</div>
         <!-- <button mat-flat-button class="font-size-xs add_btn mgn-bt-10" data-toggle="modal"
           data-target="#exampleModalCenter">Create Team</button> -->
@@ -199,7 +212,7 @@
               <div style="font-size: medium;" class="pull-left pad-tp-5">Teams</div>
           </h6>
         <div class="card grp_label mb-2" *ngFor="let group of groups"
-          (click)="group.status=='ACTIVE' && customerGroupSelection(group)"
+          (click)="group.status=='ACTIVE' && teamSelected(group)"
           [class.disabled-group]="group.status=='INACTIVE'"
           [class.pointer-cursor]="group.status=='ACTIVE'">  
           <div class="max-hgt-20 disp-flex">
@@ -240,32 +253,24 @@
                     <span class="fa fa-arrow-left pointer-cursor  waitlist-box-check" (click)="redirecToUsers()"> </span>&nbsp;&nbsp;
                   </div>
                     <span class="card-label font-1 font-weight-bolder text-dark"
-                      *ngIf="selectedGroup == 'all' && groups.length > 0">All
+                      *ngIf="selectedTeam == 'all' && groups.length > 0">All
                       Users</span> <span class="card-label font-1 font-weight-bolder text-dark">
                       </span>
                     <span class="card-label font-1 font-weight-bolder text-dark"
-                      *ngIf="selectedGroup !== 'all'">{{selectedGroup.name}}</span>
-                    <!-- <div class="sel-group-desc">{{selectedGroup.description}}</div> -->
+                      *ngIf="selectedTeam !== 'all'">{{selectedTeam.name}}</span>
                   </h3>
              </div>
              <div class="col-sm-12 col-lg-8 col-xs-12 col-md-12 mb-4">
-                   <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
-                   *ngIf="selectedGroup !== 'all' && !showUsers  && (selectedGroup.users && selectedGroup.users.length == 0)">
-                   Add Users</button>
-                   <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
-                   *ngIf="selectedGroup !== 'all' && !showUsers && (selectedGroup.users && selectedGroup.users.length > 0)">
-                   Update Users</button>
-                   
                    <button mat-flat-button class="font-size-xs add_btn mgn-lt-10 cancel_btn" (click)="cancelAdd()"
-                  *ngIf="selectedGroup !== 'all'  && showUsers"><i class="fa fa-times mgn-rt-5" aria-hidden="true"></i>
+                  *ngIf="selectedTeam !== 'all'  && showUsers"><i class="fa fa-times mgn-rt-5" aria-hidden="true"></i>
                    Cancel</button>
         
                   <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="addCustomerToGroup()"
-                  *ngIf="selectedGroup !== 'all'  && showUsers &&  (this.userIds.length > 0 && (this.selectedGroup.users &&  this.selectedGroup.users.length == 0)) ">
+                  *ngIf="selectedTeam !== 'all'  && showUsers &&  (this.userIds.length > 0 && (this.selectedTeam.users &&  this.selectedTeam.users.length == 0)) ">
                   Add</button>
 
                   <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="addCustomerToGroup()"
-                  *ngIf="selectedGroup !== 'all'  && showUsers &&  ((this.selectedGroup.users &&  this.selectedGroup.users.length > 0))">
+                  *ngIf="selectedTeam !== 'all'  && showUsers &&  ((this.selectedTeam.users &&  this.selectedTeam.users.length > 0))">
                   Update</button>
 
                   <button mat-flat-button class="font-size-xs add_btn mgn-lt-10 cancel_btn" (click)="locationclose()"
@@ -814,33 +819,24 @@
                   &nbsp;
                 <!-- </div> -->
                   <span class="card-label font-1 font-weight-bolder text-dark"
-                    *ngIf="selectedGroup == 'all' && groups.length > 0">All
+                    *ngIf="selectedTeam == 'all' && groups.length > 0">All
                     Users</span> <span class="card-label font-1 font-weight-bolder text-dark">
                     </span>
                   <span class="card-label font-1 font-weight-bolder text-dark"
-                    *ngIf="selectedGroup !== 'all'">{{selectedGroup.name}}</span>
-                  <!-- <div class="sel-group-desc">{{selectedGroup.description}}</div> -->
+                    *ngIf="selectedTeam !== 'all'">{{selectedTeam.name}}</span>
                 </h3>
            </div>
            <div class="col-sm-12 col-lg-8 col-xs-12 col-md-12 mb-4">
-                 <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
-                   *ngIf="selectedGroup !== 'all' && !showUsers  && (selectedGroup.users && selectedGroup.users.length == 0)">
-                   Add Users</button>
-                 <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
-                   *ngIf="selectedGroup !== 'all' && !showUsers && (selectedGroup.users && selectedGroup.users.length > 0)">
-                   Update Users</button>
-
-                 
                  <button mat-flat-button class="font-size-xs add_btn mgn-lt-10 cancel_btn" (click)="cancelAdd()"
-                *ngIf="selectedGroup !== 'all'  && showUsers"><i class="fa fa-times mgn-rt-5" aria-hidden="true"></i>
+                *ngIf="selectedTeam !== 'all'  && showUsers"><i class="fa fa-times mgn-rt-5" aria-hidden="true"></i>
                  Cancel</button>
       
                 <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="addCustomerToGroup()"
-                *ngIf="selectedGroup !== 'all'  && showUsers &&  (this.userIds.length > 0 && (this.selectedGroup.users &&  this.selectedGroup.users.length == 0)) ">
+                *ngIf="selectedTeam !== 'all'  && showUsers &&  (this.userIds.length > 0 && (this.selectedTeam.users &&  this.selectedTeam.users.length == 0)) ">
                 Add</button>
 
                 <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="addCustomerToGroup()"
-                *ngIf="selectedGroup !== 'all'  && showUsers &&  ((this.selectedGroup.users &&  this.selectedGroup.users.length > 0))">
+                *ngIf="selectedTeam !== 'all'  && showUsers &&  ((this.selectedTeam.users &&  this.selectedTeam.users.length > 0))">
                 Update</button>
 
 
@@ -884,14 +880,10 @@
                                                     *ngFor="let service of users_list | orderBy: order; let i = index;"
                                                     (click)="selectedRow(i,service)"
                                                     [class.disabled-group]="service.status=='INACTIVE'">
-                                                    <!-- (click)="selectedRow(i,service)" -->
                                                     <td class="">
                                                         <div class="disp-flex">
                                                             <div class="pr-3 check-box"   *ngIf="showcheckbox">
-                                                                <span class="symbol-label">
-                                                                  <!-- <input type="checkbox" name="Checkboxes4" [checked]="checkSelection(service)"> -->
-                                                                  <!-- <input type="checkbox" name="Checkboxes4"  (change)="getUserIds(service, service.id , $event)"> -->
-                                                                  <!-- <input type="checkbox" name="Checkboxes4" (click)="stopprop($event);"   (change)="getUserIds(service, service.id , $event)"> -->
+                                                                <span class="symbol-label">                                                                
                                                                   <input type="checkbox" name="Checkboxes4"  [checked]="checkSelection(service)" (click)="stopprop($event);"   (change)="getUserIds(service, service.id , $event)">
 
                                                                 </span>
@@ -931,8 +923,6 @@
                                                                         <span class="b2">
                                                                           <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
                                                                         </span>
-                                                                           <!-- {{service.countryCode}} {{service.mobileNo}} 
-                                                                        </span> -->
                                                                     </div>
                                                                     <div class="mgn-up-5"
                                                                         *ngIf="service.specialization"> <span
@@ -972,7 +962,6 @@
                                                         <span *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum || service.email">
                                                           <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
                                                         </span>
-                                                            <!-- {{service.countryCode}} {{service.mobileNo}}</span> -->
                                                     </td>
                                                     <td class="display-min-none">
                                                         <span *ngIf="service.specialization">
@@ -1021,7 +1010,6 @@
                                                     </td>
                                                 </tr>
                                                 <tr *ngIf="users_list.length == 0 && !api_loading">
-                                                    <!-- No {{provider_label}} found -->
                                                     No users found
                                                 </tr>
                                             </tbody>
@@ -1047,10 +1035,6 @@
       <section class="sidebar filter-container" id="filterContainer" style="overflow:auto" 
           [ngStyle]="{'height.vh': 90, 'margin-top.px': filterapplied === true ? 95 : 44}">
           <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
-              <!-- <span *ngIf="filterapplied === true" class="clearFilter reset-filter" (click)="clearFilter()"
-                  [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">
-                  Reset
-              </span> -->
               <span class="filter-head-title">Filters</span>
               <i class="icon-filter-one-op ng-star-inserted closeFilter"
                   (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"

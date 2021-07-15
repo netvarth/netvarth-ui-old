@@ -196,6 +196,21 @@
               <p class="no-result" *ngIf="waitlist_history.length == 0">{{no_history_found}}</p>
             </div>
           </div>
+          <div class="card" *ngIf="internalStatuslog.length>0">
+    
+            <h2 >Internal Status History</h2>
+            <div class="c-history-outer">
+              <ul class="internal-history">
+                <li class="internal-status" *ngFor="let log of internalStatuslog">
+                  <div class="time">{{log.DateTime}}</div>
+                  <div class="action">{{log.InternalStatus | capitalizeFirst}}</div>
+                  <div class="action">{{log.InternalStatus | capitalizeFirst}}-<span class="user">{{log.User | capitalizeFirst}}</span></div>
+                  <!-- <div class="user">{{log.User | capitalizeFirst}}</div> -->
+                </li>
+              </ul>
+              
+            </div>
+          </div>
         </div>
       </div>
     </div>

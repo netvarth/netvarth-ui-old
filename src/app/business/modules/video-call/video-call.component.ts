@@ -134,10 +134,9 @@ export class VideoCallSharedComponent implements OnInit, OnDestroy {
         data => {
           // console.log(data)
           this.customer = data;
-          if (this.customer[0].phoneNo && this.customer[0].phoneNo.trim() !== '') {
+          if (this.customer[0] && this.customer[0].phoneNo && this.customer[0].phoneNo.trim() !== '') {
           this.phoneNumber = this.customer[0].phoneNo;
           }
-          console.log(this.customer[0].phoneNo);
         },
         () => {
         }
