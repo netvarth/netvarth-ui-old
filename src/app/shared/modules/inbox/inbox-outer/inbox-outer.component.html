@@ -3,7 +3,7 @@
     <div class="panel panel-default">
       <div class="panel-heading top-row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-          <app-header *ngIf="shared_functions.checkLogin()" [accountId]="accId" [customId]="customId"></app-header>
+          <app-header *ngIf="shared_functions.checkLogin()" [accountId]="accId" [customId]="customId" [showHeaderAction]="true"></app-header>
         </div>
       </div>
       <div class="panel-body no-padding">
@@ -172,11 +172,11 @@
                             </div>
                             <div>
                               <button type="button" (click)="sendMessageCompleted && sendMessage()"
-                                *ngIf="!small_device_display" [class.disabled]="message==''"
+                                *ngIf="!small_device_display" [class.disabled]="!sendMessageCompleted || message==''"
                                 class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6 disp-flex">Send
                               </button>
                               <i *ngIf="small_device_display" (click)="sendMessageCompleted && sendMessage()"
-                                class="fa fa-paper-plane" aria-hidden="true" [class.grey]="message==''"></i>
+                                class="fa fa-paper-plane" aria-hidden="true" [class.grey]="!sendMessageCompleted || message==''"></i>
                             </div>
                           </div>
                           <div class="img-section mgn-up-20"

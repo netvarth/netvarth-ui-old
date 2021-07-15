@@ -184,7 +184,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
   };
   businessConfig: any = [];
   // customer_label = '';
-  maintooltip :any;
+
   primarydialogRef;
   cacheavoider = '';
   frm_additional_cap = '';
@@ -208,6 +208,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
   settings: any = [];
   showToken = false;
   services_cap = Messages.WAITLIST_SERVICES_CAP;
+  maintooltip = '';
   constructor(
     private router: Router,
     private routerobj: Router,
@@ -224,9 +225,9 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
     private lStorageService: LocalStorageService,
     private wordProcessor: WordProcessor
   ) {
+    this.maintooltip = this.wordProcessor.getProjectMesssages('BPROFILE_TOOPTIP');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
-    this.maintooltip = this.wordProcessor.getProjectMesssages('BPROFILE_TOOPTIP');
     this.activatedRoot.params.subscribe(params => {
       this.userId = params.id;
     });

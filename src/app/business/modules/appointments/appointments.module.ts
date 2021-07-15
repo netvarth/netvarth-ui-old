@@ -29,6 +29,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UserServiceChangeModule } from '../../../shared/modules/user-service-change/user-service-change.module';
 import { AppointmentComponent } from './appointment/appointment.component';
 import { CheckinAddMemberModule } from '../../../shared/modules/checkin-add-member/checkin-add-member.module';
+import { AssignTeamModule } from '../../../shared/modules/assign-team/assign-team.module';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { CheckinAddMemberModule } from '../../../shared/modules/checkin-add-memb
         MatTableModule,
         MatCheckboxModule,
         UserServiceChangeModule,
-        CheckinAddMemberModule
+        CheckinAddMemberModule,
+        AssignTeamModule
     ],
     declarations: [
         AppointmentsComponent,

@@ -42,7 +42,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   logSelsubcat = '';
   logSeldate = '';
   logSelaction = '';
-
+  filtericonTooltip = '';
   holdlogSelcat = '';
   holdlogSelsubcat = '';
   holdlogSeldate = '';
@@ -70,7 +70,6 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   ];
   isCheckin;
   dateFilter = false;
-  filtericonTooltip: any;
   constructor(
     private locationobj: Location,
     private shared_services: SharedServices,
@@ -80,7 +79,9 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
     private dateTimeProcessor: DateTimeProcessor
-  ) { }
+  ) { 
+    this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
+  }
 
   ngOnInit() {
     // this.getAuditList();\
@@ -92,7 +93,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     this.logSelaction = '';
     this.setSubcategories('');
     this.auditStatus = 4;
-    this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
+
     this.holdlogSelcat = this.logSelcat;
     this.holdlogSelsubcat = this.logSelsubcat;
     this.holdlogSeldate = this.logSeldate;
@@ -234,3 +235,4 @@ redirecToHelp() {
     this.filter_sidebar = false;
   }
 }
+

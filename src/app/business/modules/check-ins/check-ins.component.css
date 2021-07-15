@@ -241,6 +241,7 @@
     background-color: white !important;
     margin: -10px -15px 0 !important;
     width: -webkit-fill-available !important;
+    width: -moz-available !important;
     /* text-transform: uppercase !important; */
 }
 
@@ -791,4 +792,7 @@
 #selectViewModal .modal-footer li button.btn.close-btn:hover {
     color: #3d3d3d !important;
     background-color: #C9C9C9 !important;
+}
+.modal-dialog {
+    margin: 30px auto !important;
 }

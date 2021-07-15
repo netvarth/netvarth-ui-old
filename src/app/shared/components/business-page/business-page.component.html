@@ -8,7 +8,7 @@
                         &nbsp;
                     </div>
                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
-                        <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'pdetails'" [accountId]="accountId" [customId]="customId"></app-header>
+                        <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'pdetails'" [accountId]="accountId" [customId]="customId" [showHeaderAction]="true"></app-header>
                         <div class="view-booking" *ngIf="!sharedFunctionobj.checkLogin()" >
                             <button class="pull-right btn btn-primary dashboard-btn" (click)="dashboardClicked()">My Bookings</button>
                         </div>
@@ -172,8 +172,8 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div class="question-main-outer" *ngIf="(selectedLocation.parkingType && selectedLocation.parkingType!=='' && selectedLocation.parkingType != undefined && selectedLocation.parkingType != 'none') ||
-                                                (selectedLocation.open24hours && selectedLocation.open24hours==1) || selectedLocation?.locationVirtualFields?.traumacentre=='true' ||
+                                            <div class="question-main-outer" *ngIf="(selectedLocation.parkingType && selectedLocation.parkingType!=='' && selectedLocation.parkingType != undefined && selectedLocation.parkingType != 'None') ||
+                                                selectedLocation.open24hours || selectedLocation?.locationVirtualFields?.traumacentre=='true' ||
                                                 selectedLocation?.locationVirtualFields?.docambulance=='true'|| selectedLocation?.locationVirtualFields?.densistambulance=='true' || selectedLocation?.locationVirtualFields?.physiciansemergencyservices=='true' ||
                                                 selectedLocation?.locationVirtualFields?.dentistemergencyservices=='true' ||
                                                 selectedLocation?.locationVirtualFields?.altemergencyservices=='true' ||
@@ -360,8 +360,9 @@
                 </div>
             </div>
         </div>
+        <app-common-innerloading-spinner *ngIf="loading_direct"></app-common-innerloading-spinner>
         <!-- Locations -->
-        <div class="row info-bar locations" *ngIf="locationjson.length > 1 && !api_loading && !loading">
+        <div class="row info-bar locations" *ngIf="locationjson.length > 1 && !api_loading && !loading && !loading_direct">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-top-20 pad-bt-10 bg-col">
                 <div class="col-md-7 col-xs-8 no-padding">
                     <h4 *ngIf="!isPlaceisSame"><a [href]="selectedLocation.googleMapUrl" target="_blank"
@@ -389,7 +390,7 @@
                 </div>
             </div>
         </div>
-        <div class="row info-bar locations" *ngIf="locationjson.length > 0 && !api_loading && !loading">
+        <div class="row info-bar locations" *ngIf="locationjson.length > 0 && !api_loading && !loading && !loading_direct">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-50 no-padding">
                 <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12">
                     <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20"
@@ -409,7 +410,7 @@
                                 {{sps.departmentName}}
                             </h4>
                             <div class="bus-item-N" *ngFor="let sp of sps['departmentItems']">
-                                <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp" [domain]="businessjson.serviceSector.domain"
+                                <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp" [domain]="businessjson?.serviceSector?.domain"
                                     [terminology]='terminologiesjson' [loc]="selectedLocation"
                                     (actionPerformed)="cardClicked($event)"></app-card>
                             </div>
@@ -419,7 +420,7 @@
                     </ng-container>
                     <ng-container *ngIf="!showDepartments || (showDepartments && userId)">
                         <div class="bus-item-N" *ngFor="let sp of servicesAndProviders">
-                            <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp" [domain]="businessjson.serviceSector.domain"
+                            <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp" [domain]="businessjson?.serviceSector?.domain"
                                 [terminology]='terminologiesjson' [loc]="selectedLocation"
                                 (actionPerformed)="cardClicked($event)"></app-card>
                         </div>
@@ -539,14 +540,15 @@
         </div>
     </div>
 </div>
-<footer class="site-footer bus-page-footer" *ngIf="(privacy || terms) && !userId"  [ngClass]="accountProperties?accountProperties['theme']:''">
+<footer class="site-footer bus-page-footer" *ngIf="!userId && !loading_direct"  [ngClass]="accountProperties?accountProperties['theme']:''">
     <div class="footer-bottom brd-tp pad-up-20">
         <div class="container">
             <div class="row align-items-center justify-content-between text-center">
                 <div class="footer-bottom--links col-md-auto mgn-bt-20">
                     <!-- <span>Follow Us: </span> -->
-                    <a *ngIf="privacy" class="footer-links bd-pd-right" (click)="privacyClicked()">Privacy</a>
-                    <a *ngIf="terms" class="footer-links bd-pd-left" (click)="termsClicked()">Terms & Conditions</a>
+                    <a class="footer-links bd-pd-right" (click)="footerClicked('privacy')">Privacy</a>
+                    <a class="footer-links bd-pd-left bd-pd-right" (click)="footerClicked('terms')">Terms & Conditions</a>
+                    <a class="footer-links bd-pd-left" (click)="footerClicked('contact')">Contact</a>
                 </div>
             </div>
         </div>

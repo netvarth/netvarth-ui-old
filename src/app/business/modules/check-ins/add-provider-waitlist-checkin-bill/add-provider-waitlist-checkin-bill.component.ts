@@ -1403,7 +1403,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         data => {
           this.paynot = '';
           if (this.pay_data.acceptPaymentBy === 'self_pay') {
-            this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_SELFPAY);
+            this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_SELFPAY.replace('[customer]', this.customer_label));
           } else {
             if (status === 2) {
               if (this.source === 'appt') {

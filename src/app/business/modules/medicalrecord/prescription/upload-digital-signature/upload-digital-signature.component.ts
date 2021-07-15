@@ -43,7 +43,7 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
   };
   showSave = true;
   sharedialogRef;
-  uploadImages: any =[] ;
+  uploadImages: any = [];
 
   upload_status = 'Added to list';
   disable = false;
@@ -89,8 +89,10 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     // this.signaturePad is now available
-    this.signaturePad.set('minWidth', 5); // set signature_pad options at runtime
-    this.signaturePad.clear(); // invoke functions from signature_pad API
+    if (this.signaturePad) {
+      this.signaturePad.set('minWidth', 5); // set signature_pad options at runtime
+      this.signaturePad.clear(); // invoke functions from signature_pad API
+    }
   }
 
   drawComplete() {
@@ -99,13 +101,13 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
     const propertiesDetob = {};
     let i = 0;
     const blob = this.sharedfunctionObj.b64toBlobforSign(this.signaturePad.toDataURL());
-       const submit_data: FormData = new FormData();
-      submit_data.append('files', blob, signName);
-      const properties = {
-        'caption': this.selectedMessage.caption[i] || ''
-      };
-      propertiesDetob[i] = properties;
-      i++;
+    const submit_data: FormData = new FormData();
+    submit_data.append('files', blob, signName);
+    const properties = {
+      'caption': this.selectedMessage.caption[i] || ''
+    };
+    propertiesDetob[i] = properties;
+    i++;
     const propertiesDet = {
       'propertiesMap': propertiesDetob
     };
@@ -128,7 +130,7 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
     };
     this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'uploadsignature'], navigationExtras);
   }
-  manualSignature(){
+  manualSignature() {
     const navigationExtras: NavigationExtras = {
       queryParams: { providerId: this.providerId }
     };
@@ -141,7 +143,7 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
         .subscribe((data: any) => {
           this.loading = false;
           this.digitalSign = true;
-                  this.selectedMessage.files.push(data);
+          this.selectedMessage.files.push(data);
         },
           error => {
             this.digitalSign = false;
@@ -164,24 +166,24 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
     });
     this.removedsigndialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.provider_services.deleteUplodedsign(img.keyName , this.providerId)
-      .subscribe((data) => {
-        this.selectedMessage.files.splice(index, 1);
-        this.getDigitalSign();
-       },
-      error => {
-        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-      });
+        this.provider_services.deleteUplodedsign(img.keyName, this.providerId)
+          .subscribe((data) => {
+            this.selectedMessage.files.splice(index, 1);
+            this.getDigitalSign();
+          },
+            error => {
+              this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            });
       }
     });
-    }
+  }
 
 
   filesSelected(event) {
     const input = event.target.files;
     if (input) {
       for (const file of input) {
-       if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
           this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
         } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
           this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });

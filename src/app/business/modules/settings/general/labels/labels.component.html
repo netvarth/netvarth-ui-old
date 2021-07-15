@@ -50,7 +50,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="col-md-12 pt10 mt5 custlabl" *ngFor="let label of label_list" [class.grid-disabled]="label.status=='DISABLED'">
+                            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 pt10 mt5 boxsty" *ngFor="let label of label_list" [class.grid-disabled]="label.status=='DISABLED'">
                                 <div>
                                     <div class="copy">
                                         <span class="mbt">
@@ -60,6 +60,15 @@
                                         </span>
                                         <h3 (click)="goLabelDetail(label)" class="pointer-cursor">
                                             {{label.displayName | capitalizeFirst}}</h3> 
+                                            
+                                     
+                                                <div *ngIf="label.ownershipDetails">
+                                                     <div class="smallFont"> Permitted Users/Team</div>
+                                                    <span class="ownership">{{getOwnership(label.ownershipDetails)}}</span>
+                                         
+                                                </div>
+                                       
+                                            
                                             <!-- <span class="layout_name">
                                                     ({{label.label | capitalizeFirst}})</span> -->
                                         <!-- <div class="c-ot m0">

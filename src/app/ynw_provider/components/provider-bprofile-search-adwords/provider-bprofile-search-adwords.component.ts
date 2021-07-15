@@ -52,6 +52,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
     private snackbarService: SnackbarService,
     private groupService:GroupStorageService) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.emptyMsg = this.wordProcessor.getProjectMesssages('ADWORD_LISTEMPTY');
   }
 
   ngOnInit() {
@@ -207,3 +208,4 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
   //   return moreOptions;
   // }
 }
+

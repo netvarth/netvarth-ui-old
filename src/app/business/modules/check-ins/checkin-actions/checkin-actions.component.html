@@ -18,7 +18,9 @@
         <p *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName">
             {{customer_label | capitalizeFirst}} id : {{checkin.consumer.jaldeeId}}</p>
         <p *ngIf="checkin.token">Token: {{checkin.token}}</p>
-        <p *ngIf="action === 'status'">Current Status: {{check_in_statuses[getStatusLabel(checkin.waitlistStatus)]}}</p>
+        <p *ngIf="action === 'status' && statusList && statusList.length == 0">Current  Status: {{check_in_statuses[getStatusLabel(checkin.waitlistStatus)]}}</p>
+        <p *ngIf="action === 'status' && statusList && statusList.length > 0">Current External Status: {{check_in_statuses[getStatusLabel(checkin.waitlistStatus)]}}</p>
+        <p *ngIf="action === 'status' && statusList && statusList.length > 0">Current Internal Status: {{checkin.internalStatus ||'Nil'}}</p>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro" *ngIf="action === ''">
         <!-- <div class="action-box pointer-cursor"
@@ -37,7 +39,7 @@
             </div>
         </div>
         <div class="action-box pointer-cursor" (click)="changeWaitlistStatusAction()"
-            *ngIf="showArrived || showCancel || showUndo || checkin.waitlistStatus == 'started'">
+            *ngIf="showArrived || showCancel || showUndo || checkin.waitlistStatus == 'started' || (statusList && statusList.length > 0)">
             <div class="action-box-sub">
                 <span class="changestatus-icon"></span>
                 <div class="icon-text">Change Status to</div>
@@ -52,7 +54,7 @@
             </div>
         </div>
         <div class="action-box pointer-cursor"
-            *ngIf="!data.multiSelection && accountType=='BRANCH' &&  (checkin.queue.provider.id === 0) &&(checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')"
+            *ngIf="(users && users.length > 1 && !this.data.multiSelection && this.accountType=='BRANCH' && (this.checkin.queue.provider.id === 0) && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn'))"
             (click)="changeWaitlistservice()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
@@ -61,6 +63,18 @@
                 <div *ngIf="!checkin.provider" class="icon-text">Assign {{provider_label | capitalizeFirst}}</div>
             </div>
         </div>
+
+        <div class="action-box pointer-cursor"
+        *ngIf="!data.multiSelection && accountType=='BRANCH' && groups && groups.length > 0 &&  (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')"
+        (click)="assignteam()">  
+            <div class="action-box-sub">
+                <span class="doctor-change-icon"></span>
+                <div *ngIf="checkin.teamId == 0" class="icon-text">Assign Team</div>
+                <div *ngIf="checkin.teamId != 0"  class="icon-text">Change Team</div>
+            </div>
+        </div>
+
+
         <div class="action-box pointer-cursor"
             *ngIf="!data.multiSelection && accountType=='BRANCH' &&  (checkin.queue.provider.id === 0) && (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn') && checkin.provider"
             (click)="removeProvider()">
@@ -230,13 +244,13 @@
                 <div class="icon-text">Labels</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor"  (click)="gotoSecureVideo()" *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked'">
+        <div class="action-box pointer-cursor"  (click)="gotoSecureVideo()" *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked' && checkin.waitlistPhoneNumber && (showMsg || (checkin.virtualService && checkin.virtualService.WhatsApp))">
             <div class="action-box-sub">
                 <span class="jvideo-icon"></span>
                 <div class="icon-text">Video Call</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" (click)="startVoiceCall()" *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked'">
+        <div class="action-box pointer-cursor" (click)="startVoiceCall()" *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked' && checkin.waitlistPhoneNumber">
             <div class="action-box-sub">
                 <span class="phon-icon"></span>
                 <div class="icon-text">Voice Call</div>
@@ -263,19 +277,19 @@
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button>
 </h1>
-<div *ngIf="action === 'label'">
+<div *ngIf="action === 'label'" class="action-label">
     <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-30 no-padding queue-outer" *ngIf="loading">
         <app-common-innerloading-spinner></app-common-innerloading-spinner>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 scro"
-        *ngIf="providerLabels.length > 0 && !loading">
+        *ngIf="providerLabels && providerLabels.length > 0 && !loading">
         <div class="mgn-bt-5" *ngFor="let label of providerLabels;let i = index">
-            <mat-checkbox [checked]="label.selected" (change)="addLabeltoAppt(label.label, $event)">
+            <mat-checkbox [checked]="label.selected"  [disabled]="!label.isPermitted"(change)="addLabeltoAppt(label.label, $event)">
                 {{label.displayName | capitalizeFirst}}</mat-checkbox>
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-30 scro"
-        *ngIf="providerLabels.length === 0 && !loading">
+        *ngIf="providerLabels && providerLabels.length === 0 && !loading">
         No labels created till now
     </div>
     <div class="clearfix"></div>
@@ -364,7 +378,7 @@
             <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding queue-outer" *ngIf="loading">
                 <app-common-innerloading-spinner></app-common-innerloading-spinner>
             </div>
-            <div class="col-md-12 mgn-bt-10 btborder" *ngIf="queuejson.length > 0">
+            <div class="col-md-12 mgn-bt-10 btborder" *ngIf="queuejson && queuejson.length > 0">
                 <mat-chip-list>
                     <mat-chip *ngFor="let queue of queuejson, let i= index" (click)="handleQueueSelection(queue, i);"
                         [selected]="queue.id === queuejson[this.sel_queue_indx].id">
@@ -374,14 +388,14 @@
                     </mat-chip>
                 </mat-chip-list>
             </div>
-            <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-lt-10" *ngIf="queuejson.length === 0 && !loading">
+            <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-lt-10" *ngIf="queuejson && queuejson.length === 0 && !loading">
                 No queues available.
             </div>
             <div
                 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20 mgn-bt-20 footerlinks no-padding reschedulebtn">
                 <button type="button" class="cs-btn bt2 mgn-rt-5" (click)="close()">Cancel</button>
                 <button class="cs-btn bt1" (click)="rescheduleWaitlist()"
-                    [disabled]="queuejson.length === 0">Reschedule</button>
+                    [disabled]="queuejson && queuejson.length === 0">Reschedule</button>
             </div>
         </div>
     </div>
@@ -395,12 +409,15 @@
     A consolidated bill has been generated for this 'group booking'. To view the consolidated bill, click the bill of <a
         (click)="getBill(checkin.parentUuid)">{{checkin.parentName}}</a>.
 </div>
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-20 scro hght no-padding" *ngIf="action === 'status'">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-20 status-scro no-padding" *ngIf="action === 'status'">
+  <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 stst-bx mgn-up-10 mgn-lt-10" *ngIf="checkin.waitlistStatus !== 'done'" >
+        <div>External Status</div>
+        <p class="settings_info"> External status is public and visible for your {{customer_label}}s</p>
     <div class="status-box" *ngIf="showArrived" (click)="changeWaitlistStatus('REPORT')">
         <div class="status"> Arrived</div>
         <!-- <div class="form-level-settings">hints</div> -->
     </div>
-    <div class="status-box" *ngIf="showStart || showTeleserviceStart" (click)="changeWaitlistStatus('STARTED')">
+    <div class="status-box" *ngIf="showStart || (showTeleserviceStart && checkin.waitlistStatus !== 'started')" (click)="changeWaitlistStatus('STARTED')">
         <div class="status"> In Progress</div>
         <!-- <div class="form-level-settings">hints</div> -->
     </div>
@@ -415,5 +432,17 @@
     <div class="status-box" *ngIf="showUndo" (click)="changeWaitlistStatus('CHECK_IN')">
         <div class="status"> Checked In</div>
         <!-- <div class="form-level-settings">hints</div> -->
+    </div>
+  </div>
+    <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 stst-bx mgn-up-10 mgn-lt-10" *ngIf="statusList && statusList.length > 0">
+        <div>Internal Status</div>
+        <p class="settings_info">Internal status is only visible for users of this account. Not visible for your {{customer_label}}s</p>
+        <ng-container  *ngFor="let stat of statusList, let i= index">
+        <div  [ngClass]="stat.isPermitted?'status-box-internal':'status-box-disabled'" (click)="changeWaitlistInternalStatus(stat.status)">
+            <div class="status"  > {{stat.status|capitalizeFirst}}</div>
+            <!-- <div class="form-level-settings">hints</div> -->
+        </div>
+    </ng-container>
+        <!-- [ngClass]="position=='RIGHT'?'pull-right':'pull-left'"  -->
     </div>
 </div>

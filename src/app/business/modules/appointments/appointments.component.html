@@ -195,7 +195,7 @@
                         </div>
                         <div class="modal-footer">
                           <li>
-                            <button type="button" class="btn close-btn" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn close-btn" data-dismiss="modal" #closebutton>Close</button>
                           </li>
                           <li class="footer manage-views"><a class="pointer-cursor btn" (click)="gotoCustomViews()">
                             <i class="fa fa-cogs"></i>
@@ -270,14 +270,14 @@
                           <div class="card-body">
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
-                                <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                <input type="text" #Ffname (keyup)="keyPressed()"
                                   class="filterTextbox filter-textbox" [(ngModel)]="filter.first_name"
                                   placeholder="Enter First Name">
                               </li>
                             </div>
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
-                                <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                <input type="text" #Flname (keyup)="keyPressed()"
                                   class="filterTextbox filter-textbox" [(ngModel)]="filter.last_name"
                                   placeholder="Enter Last Name">
                               </li>
@@ -304,8 +304,8 @@
                           <div class="card-body">
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
-                                <input type="text" autocomplete="off" [(ngModel)]="filter.patientId" (blur)="doSearch()"
-                                  (keyup)="keyPressed($event)" class="filterTextbox filter-textbox"
+                                <input type="text" autocomplete="off" [(ngModel)]="filter.patientId" 
+                                  class="filterTextbox filter-textbox" (keyup)="keyPressed()"
                                   placeholder="Enter {{customerIdTooltip | capitalizeFirst}}">
                               </li>
                             </div>
@@ -332,7 +332,7 @@
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
                                 <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId"
-                                  (blur)="doSearch()" (keyup)="keyPressed($event)" class="filterTextbox filter-textbox"
+                                  class="filterTextbox filter-textbox" (keyup)="keyPressed()"
                                   placeholder="Enter Booking ID">
                               </li>
                             </div>
@@ -389,7 +389,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="card">
+                      <div class="card" *ngIf="domain!='finance'">
                         <div class="card-header">
                           <h2 class="mb-0">
                             <button class="btn btn-link" type="button" data-toggle="collapse"
@@ -505,7 +505,7 @@
                     <button class="btn reset-btn" (click)="clearFilter()">
                       <i class="fa fa-undo"></i>&nbsp;Reset
                     </button>
-                    <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                    <button class="btn apply-btn" (click)="doSearch()">
                       <i class="fa fa-check"></i>&nbsp;Apply
                     </button>
                   </div>
@@ -600,11 +600,14 @@
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
-                        <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
+                        <!-- <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
                           {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName +
                             ' ' + appt.provider.lastName}}
-                          <!-- {{appt.provider.firstName}}&nbsp;{{appt.provider.lastName}} -->
+                          {{appt.provider.firstName}}&nbsp;{{appt.provider.lastName}
                         </div>
+                        <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
+                          {{getUsersList(appt.teamId)}}
+                        </div> -->
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -620,6 +623,14 @@
                             *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
                           <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                             *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>{{appt.service.name}}
+                        </div>
+                        <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
+                          {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName
+                          + ' ' + appt.provider.lastName}} <span style="color:green" *ngIf="appt.internalStatus">- {{ appt.internalStatus }}</span>
+                        </div>
+                        <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
+                          <!-- Team Name -->
+                          {{getUsersList(appt.teamId)}}
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding">
@@ -649,7 +660,11 @@
                             (click)="stopprop($event);showConsumerNote(appt)">
                             <i class="icon-note"></i>
                           </span>
-                          <span (click)="stopprop($event);openAttachmentGallery(appt)"
+                          <!-- <span (click)="stopprop($event);openAttachmentGallery(appt)"
+                            [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                            *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
+                              class="material-icons">attach_file</i></span> -->
+                              <span (click)="stopprop($event);showAttachments(appt)"
                             [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                             *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
                               class="material-icons">attach_file</i></span>
@@ -759,7 +774,7 @@
                           (change)="chkStartedAptHistoryClicked(i, appt)" />
                       </div>
                       <app-card [item]="appt" [type]="'appointment-dashboard'" [time_type]="time_type"
-                        [checkins]="startedAppts" (actionPerformed)="cardClicked($event)" [allLabels]="allLabels"
+                        [checkins]="startedAppts" [teams]="teams" (actionPerformed)="cardClicked($event)" [allLabels]="allLabels"
                         [statusAction]="'started'">
                       </app-card>
                     </div>
@@ -934,10 +949,14 @@
                               (click)="stopprop($event);showConsumerNote(apptByTimeSlot[appt.time][0])">
                               <i class="icon-note"></i>
                             </span>
-                            <span (click)="stopprop($event);openAttachmentGallery(apptByTimeSlot[appt.time][0])"
+                            <!-- <span (click)="stopprop($event);openAttachmentGallery(apptByTimeSlot[appt.time][0])"
                               [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                               *ngIf="apptByTimeSlot[appt.time][0].hasAttachment"><i style="font-size: 20px;"
-                                class="material-icons">attach_file</i></span>
+                                class="material-icons">attach_file</i></span> -->
+                                <span (click)="stopprop($event);showAttachments(appt)"
+                                [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                                *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
+                                  class="material-icons">attach_file</i></span>
                           </div>
                           <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                             *ngIf="time_type === 3 || (time_type !== 3 && (!apptByTimeSlot[appt.time][0].virtualService || (apptByTimeSlot[appt.time][0].virtualService && apptByTimeSlot[appt.time][0].apptStatus !== 'Arrived')))">
@@ -1108,10 +1127,13 @@
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
-                        <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
+                        <!-- <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
                           {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName +
                             ' ' + appt.provider.lastName}}
                         </div>
+                        <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
+                          {{getUsersList(appt.teamId)}}
+                        </div> -->
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -1127,6 +1149,14 @@
                             *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
                           <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                             *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>{{appt.service.name}}
+                        </div>
+                        <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
+                          {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName
+                          + ' ' + appt.provider.lastName}} <span style="color:green" *ngIf="appt.internalStatus">- {{ appt.internalStatus }}</span>
+                        </div>
+                        <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
+                          <!-- Team Name -->
+                          {{getUsersList(appt.teamId)}}
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding">
@@ -1156,10 +1186,14 @@
                             (click)="stopprop($event);showConsumerNote(appt)">
                             <i class="icon-note"></i>
                           </span>
-                          <span (click)="stopprop($event);openAttachmentGallery(appt)"
+                          <span (click)="stopprop($event);showAttachments(appt)"
+                          [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                          *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
+                            class="material-icons">attach_file</i></span>
+                          <!-- <span (click)="stopprop($event);openAttachmentGallery(appt)"
                             [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                             *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
-                              class="material-icons">attach_file</i></span>
+                              class="material-icons">attach_file</i></span> -->
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                           *ngIf="time_type === 3 || (time_type !== 3 && (!appt.virtualService || (appt.virtualService && appt.apptStatus !== 'Arrived')))">
@@ -1272,7 +1306,7 @@
                          (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
                       </div>
                       <app-card [item]="appt" [type]="'appointment-dashboard'" [time_type]="time_type"
-                        [checkins]="check_in_filtered_list" (actionPerformed)="cardClicked($event)"
+                        [checkins]="check_in_filtered_list" [teams]="teams" (actionPerformed)="cardClicked($event)"
                         [allLabels]="allLabels" [statusAction]="statusAction">
                       </app-card>
                     </div>
@@ -1334,13 +1368,13 @@
                             <div class="card-body">
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
-                                  <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                  <input type="text" #Ffname (keyup)="keyPressed()"
                                     class="filterTextbox filter-textbox" [(ngModel)]="filter.first_name" placeholder="Enter First Name">
                                 </li>
                               </div>
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
-                                  <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                  <input type="text" #Flname (keyup)="keyPressed()"
                                     class="filterTextbox filter-textbox" [(ngModel)]="filter.last_name" placeholder="Enter Last Name">
                                 </li>
                               </div>
@@ -1365,8 +1399,8 @@
                             <div class="card-body">
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
-                                  <input type="text" autocomplete="off" [(ngModel)]="filter.patientId" (blur)="doSearch()"
-                                    (keyup)="keyPressed($event)" class="filterTextbox filter-textbox"
+                                  <input type="text" autocomplete="off" [(ngModel)]="filter.patientId" 
+                                    class="filterTextbox filter-textbox" (keyup)="keyPressed()"
                                     placeholder="Enter {{customerIdTooltip | capitalizeFirst}}">
                                 </li>
                               </div>
@@ -1391,8 +1425,8 @@
                             <div class="card-body">
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
-                                  <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId" (blur)="doSearch()"
-                                    (keyup)="keyPressed($event)" class="filterTextbox filter-textbox" placeholder="Enter Booking ID">
+                                  <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId" (keyup)="keyPressed()"
+                                   class="filterTextbox filter-textbox" placeholder="Enter Booking ID">
                                 </li>
                               </div>
                             </div>
@@ -1447,7 +1481,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="card">
+                        <div class="card" *ngIf="domain!='finance'">
                           <div class="card-header">
                             <h2 class="mb-0">
                               <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePayStatus2" aria-expanded="false">
@@ -1550,13 +1584,43 @@
                             </div>
                           </div>
                         </div>
+                        <div class="card" style="padding-bottom: 30px !important;">
+                          <div class="card-header">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseDate3" aria-expanded="false">
+                                <div>
+                                  <div style="display: inline-block !important;">
+                                    <i class="fa fa-calendar-o"></i>
+                                  </div>
+                                  <span>&nbsp;Date</span>
+                                </div>
+                                <i class="fa fa-angle-down"></i>
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapseDate3" class="collapse in" data-parent="#accordion3">
+                            <div class="card-body">
+                              <div class="filterTextinput filter-text-input">
+                                <li class="filterli filterDatepicker filter-li">
+                                  <input type="text" [(ngModel)]="filter.check_in_date"
+                                    [ngModelOptions]="{standalone: true}" [matDatepicker]="picker" #Fdate
+                                    class="filterTextbox filter-textbox" (dateChange)="keyPressed()" 
+                                    placeholder="Enter Date" [min]="tomorrowDate">
+                                  <mat-datepicker-toggle matSuffix [for]="picker">
+                                  </mat-datepicker-toggle>
+                                  <mat-datepicker #picker></mat-datepicker>
+                                </li>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </ul>
                     </section>
                     <div class="filter-footer" *ngIf="filterapplied === true">
                       <button class="btn reset-btn" (click)="clearFilter()">
                         <i class="fa fa-undo"></i>&nbsp;Reset
                       </button>
-                      <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                      <button class="btn apply-btn" (click)="doSearch()">
                         <i class="fa fa-check"></i>&nbsp;Apply
                       </button>
                     </div>
@@ -1637,10 +1701,13 @@
                         {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                     </td>
                     <td class="title td-two">
-                      <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
+                      <!-- <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
                         {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName +
                           ' ' + appt.provider.lastName}}
                       </div>
+                      <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
+                        {{getUsersList(appt.teamId)}}
+                      </div> -->
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                         <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -1656,6 +1723,14 @@
                           *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
                         <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                           *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>{{appt.service.name}}
+                      </div>
+                      <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
+                        {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName
+                        + ' ' + appt.provider.lastName}} <span style="color:green" *ngIf="appt.internalStatus">- {{ appt.internalStatus }}</span>
+                      </div>
+                      <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
+                        <!-- Team Name -->
+                        {{getUsersList(appt.teamId)}}
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding">
@@ -1685,10 +1760,14 @@
                           (click)="stopprop($event);showConsumerNote(appt)">
                           <i class="icon-note"></i>
                         </span>
-                        <span (click)="stopprop($event);openAttachmentGallery(appt)"
+                        <!-- <span (click)="stopprop($event);openAttachmentGallery(appt)"
                           [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                           *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
-                            class="material-icons">attach_file</i></span>
+                            class="material-icons">attach_file</i></span> -->
+                            <span (click)="stopprop($event);showAttachments(appt)"
+                            [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                            *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
+                              class="material-icons">attach_file</i></span>
                       </div>
                       <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                         *ngIf="time_type === 3 || (time_type !== 3 && (!appt.virtualService || (appt.virtualService && appt.apptStatus !== 'Arrived')))">
@@ -1799,7 +1878,7 @@
                       class="pull-left" (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
                     </div>
                     <app-card [item]="appt" [type]="'appointment-dashboard'" [time_type]="time_type"
-                      [checkins]="check_in_filtered_list" (actionPerformed)="cardClicked($event)"
+                      [checkins]="check_in_filtered_list" [teams]="teams" (actionPerformed)="cardClicked($event)"
                       [allLabels]="allLabels" [statusAction]="statusAction">
                     </app-card>
                   </div>
@@ -1857,13 +1936,13 @@
                             <div class="card-body">
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
-                                  <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                  <input type="text" #Ffname (keyup)="keyPressed()"
                                     class="filterTextbox filter-textbox" [(ngModel)]="filter.first_name" placeholder="Enter First Name">
                                 </li>
                               </div>
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
-                                  <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                  <input type="text" #Flname (keyup)="keyPressed()"
                                     class="filterTextbox filter-textbox" [(ngModel)]="filter.last_name" placeholder="Enter Last Name">
                                 </li>
                               </div>
@@ -1888,8 +1967,8 @@
                             <div class="card-body">
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
-                                  <input type="text" autocomplete="off" [(ngModel)]="filter.patientId" (blur)="doSearch()"
-                                    (keyup)="keyPressed($event)" class="filterTextbox filter-textbox"
+                                  <input type="text" autocomplete="off" [(ngModel)]="filter.patientId"
+                                    class="filterTextbox filter-textbox" (keyup)="keyPressed()"
                                     placeholder="Enter {{customerIdTooltip | capitalizeFirst}}">
                                 </li>
                               </div>
@@ -1915,7 +1994,7 @@
                               <div class="filterTextinput filter-text-input" *ngIf="time_type == 3">
                                 <li class="filterli filter-li">
                                   <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number" #Fmobile
-                                    (blur)="doSearch()" (keyup)="keyPressed($event)" (keypress)="isNumeric($event)"
+                                    (keypress)="isNumeric($event)" (keyup)="keyPressed()"
                                     maxlength="10" class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
                                 </li>
                               </div>
@@ -1940,8 +2019,8 @@
                             <div class="card-body">
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
-                                  <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId" (blur)="doSearch()"
-                                    (keyup)="keyPressed($event)" class="filterTextbox filter-textbox" placeholder="Enter Booking Id">
+                                  <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId" 
+                                  class="filterTextbox filter-textbox" placeholder="Enter Booking Id" (keyup)="keyPressed()">
                                 </li>
                               </div>
                             </div>
@@ -2031,7 +2110,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="card">
+                        <div class="card" *ngIf="domain!='finance'">
                           <div class="card-header">
                             <h2 class="mb-0">
                               <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePayStatus3" aria-expanded="false">
@@ -2153,8 +2232,8 @@
                               <div class="filterTextinput filter-text-input" *ngIf="time_type == 3">
                                 <li class="filterli filterDatepicker filter-li">
                                   <input type="text" [(ngModel)]="filter.check_in_start_date" [matDatepicker]="picker" #Fdate
-                                    (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox filter-textbox" [max]="maxday"
-                                    placeholder="Enter Start Date">
+                                    class="filterTextbox filter-textbox" [max]="maxday"
+                                    placeholder="Enter Start Date" (dateChange)="keyPressed()" >
                                   <mat-datepicker-toggle matSuffix [for]="picker">
                                   </mat-datepicker-toggle>
                                   <mat-datepicker #picker></mat-datepicker>
@@ -2163,8 +2242,8 @@
                               <div class="filterTextinput filter-text-input" *ngIf="time_type == 3">
                                 <li class="filterli filterDatepicker filter-li">
                                   <input type="text" [(ngModel)]="filter.check_in_end_date" [matDatepicker]="picker" #Fdate
-                                    (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox filter-textbox" placeholder="Enter End Date"
-                                    [min]="endminday" [max]="endmaxday">
+                                    class="filterTextbox filter-textbox" placeholder="Enter End Date"
+                                    [min]="endminday" [max]="endmaxday" (dateChange)="keyPressed()" >
                                   <mat-datepicker-toggle matSuffix [for]="picker">
                                   </mat-datepicker-toggle>
                                   <mat-datepicker #picker></mat-datepicker>
@@ -2179,7 +2258,7 @@
                       <button class="btn reset-btn" (click)="clearFilter()">
                         <i class="fa fa-undo"></i>&nbsp;Reset
                       </button>
-                      <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                      <button class="btn apply-btn" (click)="doSearch()">
                         <i class="fa fa-check"></i>&nbsp;Apply
                       </button>
                     </div>
@@ -2253,10 +2332,13 @@
                         {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                     </td>
                     <td class="title td-two">
-                      <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
+                      <!-- <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
                         {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName +
                           ' ' + appt.provider.lastName}}
                       </div>
+                      <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
+                        {{getUsersList(appt.teamId)}}
+                      </div> -->
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                         <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -2272,6 +2354,14 @@
                           *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
                         <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                           *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>{{appt.service.name}}
+                      </div>
+                      <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
+                        {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName
+                        + ' ' + appt.provider.lastName}} <span style="color:green" *ngIf="appt.internalStatus">- {{ appt.internalStatus }}</span>
+                      </div>
+                      <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
+                        <!-- Team Name -->
+                        {{getUsersList(appt.teamId)}}
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding">
@@ -2301,10 +2391,14 @@
                           (click)="stopprop($event);showConsumerNote(appt)">
                           <i class="icon-note"></i>
                         </span>
-                        <span (click)="stopprop($event);openAttachmentGallery(appt)"
+                        <!-- <span (click)="stopprop($event);openAttachmentGallery(appt)"
                           [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                           *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
-                            class="material-icons">attach_file</i></span>
+                            class="material-icons">attach_file</i></span> -->
+                            <span (click)="stopprop($event);showAttachments(appt)"
+                            [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                            *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
+                              class="material-icons">attach_file</i></span>
                       </div>
                       <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                         *ngIf="time_type === 3 || (time_type !== 3 && (!appt.virtualService || (appt.virtualService && appt.apptStatus !== 'Arrived')))">
@@ -2349,7 +2443,7 @@
                       </a>
                       <a class="statusText btn-play pointer-cursor start-btn"
                         [ngClass]="{'vid-ic-pd': (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode === 'Zoom')?true:false}"
-                        *ngIf="(time_type==1 || time_type==3) && appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Started') && appt.service.virtualCallingModes[0].callingMode !== 'VideoCall'"
+                        *ngIf="(time_type==1 || time_type==3) && appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Started')"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                         (click)="stopprop($event);showCallingModes(appt)">
                         <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
@@ -2411,7 +2505,7 @@
                       class="ckbx pull-left" (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
                     </div>
                     <app-card [item]="appt" [type]="'appointment-dashboard'" [time_type]="time_type"
-                      [checkins]="check_in_filtered_list" (actionPerformed)="cardClicked($event)"
+                      [checkins]="check_in_filtered_list" [teams]="teams" (actionPerformed)="cardClicked($event)"
                       [allLabels]="allLabels" [statusAction]="statusAction">
                     </app-card>
                   </div>

@@ -50,8 +50,7 @@ export class DonationsComponent implements OnInit {
   loadComplete = false;
   minday = new Date(2015, 0, 1);
   maxday = new Date();
-  filtericonTooltip :any;
-  filtericonclearTooltip:any;
+  
   tooltipcls = projectConstants.TOOLTIP_CLS;
   date_cap = Messages.DATE_CAP;
   amount_cap = Messages.AMOUNT_CAP;
@@ -80,6 +79,8 @@ export class DonationsComponent implements OnInit {
   screenWidth;
   small_device_display = false;
   selectAll = false;
+  filtericonTooltip: any;
+  filtericonclearTooltip: any;
   constructor(private provider_services: ProviderServices,
     public dateformat: DateFormatPipe, private provider_shared_functions: ProviderSharedFuctions,
     private routerobj: Router, private dialog: MatDialog,
@@ -87,9 +88,9 @@ export class DonationsComponent implements OnInit {
     private groupService: GroupStorageService,
     private dateTimeProcessor: DateTimeProcessor,
     private wordProcessor: WordProcessor) {
+      this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
+  this.filtericonclearTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
-   this.filtericonclearTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
     this.onResize();
     // this.breadcrumbs_init = [
     //     {

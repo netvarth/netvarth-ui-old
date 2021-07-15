@@ -37,7 +37,7 @@
                 </div>
                 <div *ngIf="waitlist_data.provider && waitlist_data.provider.mobileNo" class="mgn-up-5 sub-user-name">
                   <i class="fa fa-mobile icon"></i>
-                  <span> +91 {{waitlist_data.provider.mobileNo}}</span>
+                  <span> {{waitlist_data.provider.countryCode}} {{waitlist_data.provider.mobileNo}}</span>
                 </div>
               </h2>
               <!-- Content -->
@@ -66,7 +66,7 @@
                 <span class="itemHead">Date of Birth</span>
                 <span class="itemVal">{{waitlist_data.waitlistingFor[0].dob | date:newDateFormat}}</span>
               </div>
-              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.waitlistPhoneNumber">
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.phoneNumber && checkDataNull(waitlist_data.phoneNumber)">
                 <span class="itemHead">Phone #</span>
                 <span class="itemVal">{{waitlist_data.countryCode}} {{waitlist_data.waitlistPhoneNumber}}</span>
               </div>
@@ -134,6 +134,9 @@
                   <span>
                     {{check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst]}}
                   </span>
+                  <span *ngIf="waitlist_data.internalStatus"><small style="color:blue">{{waitlist_data.internalStatus | capitalizeFirst}}</small>
+                  
+                  </span>
                 </div>
                 <div class="col-md-4 col-lg-4 col-xl-4 col-xs-12 stats-item">
                   <span class="status-label">DATE & TIME-WINDOW</span>
@@ -173,7 +176,7 @@
                       <p>{{note.timeStamp | date: newDateFormat}}</p>
                     </div>
                   </span>
-                  <span *ngIf="waitlist_notes.length == 0">{{no_pvt_notes_cap}}</span>
+                  <span *ngIf="waitlist_notes && waitlist_notes.length == 0">{{no_pvt_notes_cap}}</span>
                 </mat-tab>
                 <mat-tab label="Messages">
                   <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'"
@@ -215,7 +218,21 @@
                   <div class="action">{{check_in_statuses[history.waitlistStatus | capitalizeFirst]}}</div>
                 </li>
               </ul>
-              <p class="no-result" *ngIf="waitlist_history.length == 0">{{no_history_found}}</p>
+              <p class="no-result" *ngIf="waitlist_history && waitlist_history.length == 0">{{no_history_found}}</p>
+            </div>
+          </div>
+          <div class="card" *ngIf="internalStatuslog && internalStatuslog.length>0">
+    
+            <h2 >Internal Status History</h2>
+            <div class="c-history-outer">
+              <ul class="internal-history">
+                <li class="internal-status" *ngFor="let log of internalStatuslog">
+                  <div class="time">{{log.DateTime}}</div>
+                  <div class="action">{{log.InternalStatus | capitalizeFirst}}-<span class="user">{{log.User | capitalizeFirst}}</span></div>
+                  <!-- <div class="user">{{log.User | capitalizeFirst}}</div> -->
+                </li>
+              </ul>
+              
             </div>
           </div>
         </div>

@@ -4,7 +4,7 @@
 .action-box {
   /* border: 1px solid #ccc; */
   width: 150px;
-  height: 100px;
+  height: 110px;
   margin: 15px;
   text-align: center;
   float: left;
@@ -133,6 +133,36 @@
   font-weight: bold;
   font-size: 1.2rem;
 }
+.status-box-internal{
+  box-shadow: 5px 5px 5px 0px #cccccc60 !important;
+  border-radius: 10px;
+  background: #ffffff;
+  color:#FF8C00;
+  width: 30%;
+  padding: 20px;
+  float: left;
+  margin: 10px;
+  cursor: pointer;   
+  border: 1px solid #cccccc60;
+}
+.status-box-disabled{
+  box-shadow: 5px 5px 5px 0px #cccccc60 !important;
+  border-radius: 10px;
+  background: #ffffff;
+  color:grey;
+  width: 30%;
+  padding: 20px;
+  float: left;
+  margin: 10px;
+  cursor: pointer;   
+  border: 1px solid #cccccc60;
+  pointer-events: none;
+  opacity: 0.4;
+}
+.status-box-internal .status,.status-box-disabled .status {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
 .hght {
   height: 250px;
 }
@@ -140,4 +170,23 @@
   .status-box {
     width: 95% !important;
   }
+  .status-box-internal {
+    width: 95% !important;
+  }
+  .status-box-disabled {
+    width: 95% !important;
+  }
+}
+::ng-deep .action-label .mat-checkbox-layout{
+  white-space: normal !important;
+}
+::ng-deep .action-label .mat-checkbox-inner-container {
+  margin: 0 auto !important;
+}
+::ng-deep .action-label .mat-checkbox-layout .mat-checkbox-label {
+  margin-left: 5px !important;
+}
+.status-scro {
+  max-height: 65vh;
+  overflow-y: scroll;
 }

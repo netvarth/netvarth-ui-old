@@ -42,7 +42,7 @@
                                         <tr>
                                             <td width="48%" align="right">Location </td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td>{{appointment.location?.place}}<a
+                                            <td>{{appointment.location?.place}}<a *ngIf="appointment && appointment.location && appointment.location.googleMapUrl"
                                                     [href]="appointment.location.googleMapUrl" target="_blank"
                                                     class="icon-location" matTooltip="Click to navigate">
                                                 </a></td>
@@ -54,17 +54,17 @@
                                                 <span class="service-icon pull-left"
                                                     *ngIf="appointment.service && appointment.service.serviceType == 'virtualService'">
                                                     <i class="fa phon-icon"
-                                                        *ngIf="appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                        *ngIf="appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0] && appointment.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                     <i class="fa meet-icon"
-                                                        *ngIf="appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                        *ngIf="appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0] && appointment.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                                     <i class="fa zoom-icon"
-                                                        *ngIf="appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                        *ngIf="appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0] && appointment.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                                                     <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
-                                                        *ngIf="appointment.service.virtualCallingModes  && appointment.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+                                                        *ngIf="appointment.service.virtualCallingModes  && appointment.service.virtualCallingModes[0] && appointment.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
                                                     <i class="fa wtsapaud-icon"
-                                                        *ngIf="appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appointment.service.virtualServiceType ==='audioService'"></i>
+                                                        *ngIf="appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0] && appointment.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appointment.service.virtualServiceType ==='audioService'"></i>
                                                     <i class="fa wtsapvid-icon"
-                                                        *ngIf="appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appointment.service.virtualServiceType ==='videoService'"></i>
+                                                        *ngIf="appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0] && appointment.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appointment.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
                                                 {{appointment.service?.name}}
                                             </td>

@@ -217,9 +217,7 @@
 }
 .prenotes {
   border: 1px solid #cccccc80;
-  padding: 10px;
-  max-height: 100px;
-  overflow: auto;
+  padding: 20px 10px;
 }
 .preinfo-title {
   margin-bottom: 10px;
@@ -355,4 +353,44 @@ a, .fa-file-text-o {
 }
 .col-xs-9 .col-sm-9 .col-md-9 .col-lg-9 {
   width: 75% !important;
+}
+.email-sec .coupon-apply-btn {
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 10px 20px !important;
+}
+.fa-mobile, .fa-envelope-o {
+  font-size: 1.2rem !important;
+}
+.fa-pencil {
+  color: #1572a8 !important;
+  font-size: 1.2rem !important;
+  margin-left: 5px;
+}
+.email-sec .form-level-settings {
+  padding: 0 10px 20px;
+}
+.cons-donate .fa-inr {
+  color: black !important;
+}
+.codenumber {
+  display: flex;
+  margin-left: auto;
+  width: 100%;
+}
+.codenumber #countryCode {
+  border-right: none;
+}
+.width100 {
+  width: 100%;
+}
+.height40 {
+  height: 32px;
+  font-size: 12px !important;
+}
+.email-border {
+  border: 1px solid #cccc;
+}
+.code-field {
+  width: 40px !important;
 }

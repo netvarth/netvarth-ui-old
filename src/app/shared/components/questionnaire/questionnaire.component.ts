@@ -113,7 +113,9 @@ export class QuestionnaireComponent implements OnInit {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     if (this.questionnaireList) {
       if (this.source === 'customer-create') {
-        this.questions = this.questionnaireList.labels[0].questions;
+        if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+          this.questions = this.questionnaireList.labels[0].questions;
+        }
         if (this.customerDetails && this.customerDetails[0] && this.customerDetails[0].questionnaire) {
           this.getAnswers(this.customerDetails[0].questionnaire.questionAnswers, 'get');
         }
@@ -123,7 +125,7 @@ export class QuestionnaireComponent implements OnInit {
         this.questions = this.questionnaireList.labels;
       }
     }
-    if (this.source === 'customer-details') {
+    if (this.source === 'customer-details' && this.customerDetails[0]) {
       this.questionnaireList = this.customerDetails[0].questionnaire;
       this.questions = this.customerDetails[0].questionnaire.questionAnswers;
       this.getAnswers(this.customerDetails[0].questionnaire.questionAnswers, 'get');

@@ -103,6 +103,10 @@ export class AppointmentActionsComponent implements OnInit {
     isUserdisable;
     userid: any;
     user_arr: any;
+    groups: any;
+    statusList: any=[];
+    showAssign = false;
+    users: any = [];
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -126,6 +130,7 @@ export class AppointmentActionsComponent implements OnInit {
         if (!this.data.multiSelection) {
             this.getPos();
             this.setData();
+            this.getInternStatus();
         } else {
             this.showMsg = true;
             this.apiloading = false;
@@ -156,13 +161,15 @@ export class AppointmentActionsComponent implements OnInit {
         });
         if (this.accountType === 'BRANCH') {
             this.getUser();
+            this.getUserTeams();
         }
     }
     getUser() {
         if(this.userid){
-            this.provider_services.getUser(this.userid)
+            this.provider_services.getUsers()
             .subscribe((data: any) => {
-              this.user_arr = data;
+                this.users = data;
+              this.user_arr = this.users.filter(user => user.id === this.userid);
               if( this.user_arr.status === 'ACTIVE'){
                   this.isUserdisable = true
               } else{
@@ -371,6 +378,10 @@ export class AppointmentActionsComponent implements OnInit {
         this.dialogRef.close();
         this.router.navigate(['provider', 'check-ins', this.appt.uid, 'user'], { queryParams: { source: 'appt' } });
     }
+    assignteam() {
+        this.dialogRef.close();
+        this.router.navigate(['provider', 'check-ins', this.appt.uid, 'team'], { queryParams: { source: 'appt' } });
+    }
     removeProvider() {
         let msg = '';
         msg = 'Do you want to remove this ' + this.provider_label + '?';
@@ -415,6 +426,17 @@ export class AppointmentActionsComponent implements OnInit {
                     this.buttonClicked = false;
                 });
     }
+    changeApptInternalStatusApi(waitlist, action) {
+        this.provider_shared_functions.changeApptInternalStatusApi(this, waitlist, action)
+            .then(
+                result => {
+                    this.dialogRef.close('reload');
+                    this.buttonClicked = false;
+                },
+                error => {
+                    this.buttonClicked = false;
+                });
+    }
     getDisplayboardCount() {
         let layout_list: any = [];
         let displayboards: any = [];
@@ -432,7 +454,7 @@ export class AppointmentActionsComponent implements OnInit {
     }
     setActions() {
         this.apiloading = false;
-        if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Completed' && this.appt.apptStatus !== 'Confirmed' && this.appt.apptStatus !== 'blocked' && !this.data.teleservice && this.appt.paymentStatus !== 'FullyRefunded') {
+        if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Completed' && this.appt.apptStatus !== 'Confirmed' && this.appt.apptStatus !== 'blocked' && this.appt.paymentStatus !== 'FullyRefunded') {
             this.showUndo = true;
         }
         if (this.data.timetype === 1 && this.appt.apptStatus === 'Confirmed' && this.appt.appointmentMode !== 'WALK_IN_APPOINTMENT' &&  !this.appt.virtualService && !this.data.teleservice) {
@@ -444,16 +466,16 @@ export class AppointmentActionsComponent implements OnInit {
         if (this.data.timetype === 1 && this.appt.service.livetrack && this.appt.apptStatus === 'Confirmed' && this.appt.jaldeeApptDistanceTime && this.appt.jaldeeApptDistanceTime.jaldeeDistanceTime && (this.appt.jaldeeStartTimeType === 'ONEHOUR' || this.appt.jaldeeStartTimeType === 'AFTERSTART')) {
             this.trackStatus = true;
         }
-        if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected' && (this.appt.providerConsumer.email || this.appt.providerConsumer.phoneNo)) {
+        if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected' && this.appt.providerConsumer && (this.appt.providerConsumer.email || (this.appt.providerConsumer.phoneNo && this.appt.providerConsumer.phoneNo.trim() !== ''))) {
             this.showSendDetails = true;
         }
-        if (this.appt.providerConsumer.email || (this.appt.providerConsumer.phoneNo && this.appt.providerConsumer.phoneNo !== 'null')) {
+        if (this.appt.providerConsumer && this.appt.providerConsumer.email || (this.appt.providerConsumer.phoneNo && this.appt.providerConsumer.phoneNo !== 'null')) {
             this.showMsg = true;
         }
         if ((this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') && this.data.timetype !== 2 && (!this.appt.virtualService) && !this.data.teleservice) {
             this.showStart = true;
         }
-        if ((this.data.timetype === 1 || (this.data.timetype === 3 && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0].callingMode !== 'VideoCall')) && this.appt.virtualService && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed' ) && !this.data.teleservice) {
+        if ((this.data.timetype === 1 || this.data.timetype === 3) && this.appt.virtualService && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed' ) && !this.data.teleservice) {
             this.showTeleserviceStart = true;
         }
         if (this.board_count > 0 && this.data.timetype === 1 && !this.appt.virtualService && (this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Arrived') && !this.data.teleservice) {
@@ -465,11 +487,14 @@ export class AppointmentActionsComponent implements OnInit {
         if (this.data.timetype !== 2 && this.appt.apptStatus !== 'blocked' && (this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected')) {
             this.showmrrx = true;
         }
-        if (this.appt.providerConsumer.email || this.appt.providerConsumer.phoneNo) {
+        if (this.appt.providerConsumer && this.appt.providerConsumer.email || (this.appt.providerConsumer.phoneNo && this.appt.providerConsumer.phoneNo.trim() !== '')) {
             this.showAttachment = true;
         }
         if (this.data.timetype === 3) {
             this.changeService = false;
+        }
+        if (this.users.length > 1 && !this.data.multiSelection && this.accountType=='BRANCH' && (this.appt.schedule.provider.id === 0) && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed')) {
+            this.showAssign = true;
         }
     }
     getLabel() {
@@ -499,6 +524,9 @@ export class AppointmentActionsComponent implements OnInit {
             'uuid': ids
         };
         this.provider_services.deleteLabelFromMultipleAppt(postData).subscribe(data => {
+            if (Object.keys(this.labelMap).length === 0) {
+                this.snackbarService.openSnackBar('Label removed', { 'panelclass': 'snackbarerror' });
+            }
             this.dialogRef.close('reload');
         },
             error => {
@@ -548,6 +576,7 @@ export class AppointmentActionsComponent implements OnInit {
             'uuid': ids
         };
         this.provider_services.addLabeltoMultipleAppt(postData).subscribe(data => {
+            this.snackbarService.openSnackBar('Label applied successfully', { 'panelclass': 'snackbarerror' });
             this.dialogRef.close('reload');
         },
             error => {
@@ -1014,5 +1043,24 @@ export class AppointmentActionsComponent implements OnInit {
                     );
             }
         });
+    }
+    getUserTeams() {
+        this.provider_services.getTeamGroup().subscribe((data: any) => {
+            this.groups = data;
+        });
+    }
+    getInternStatus(){
+        this.provider_services.getapptInternalstatList(this.appt.uid).subscribe((data: any) => {
+            console.log(data);
+            this.statusList = data;
+        });
+    }
+    changeWaitlistInternalStatus(action){
+        console.log(action);
+        if (action !== 'Rejected') {
+            this.buttonClicked = true;
+        }
+        
+       this.provider_shared_functions.changeApptinternalStatus(this, this.appt, action);
     }
 }

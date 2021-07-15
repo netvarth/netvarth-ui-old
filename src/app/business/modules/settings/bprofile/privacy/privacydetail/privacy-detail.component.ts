@@ -52,7 +52,7 @@ export class PrivacyDetailComponent implements OnInit {
   privacypermissiontxt = projectConstants.PRIVACY_PERMISSIONS;
   tooltiphone = projectConstants.TOOLTIP_PRIVACYPHONE;
   tooltemail = projectConstants.TOOLTIP_PRIVACYEMAIL;
-  customernormal_label :any;
+ 
   loadData: ArrayBuffer;
   breadcrumbs_init = [
     {
@@ -75,6 +75,7 @@ export class PrivacyDetailComponent implements OnInit {
   data: any;
   edit_ph_id: any;
   edit_mail_id: any;
+  customernormal_label: any;
   constructor(
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,

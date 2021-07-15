@@ -13791,3 +13791,37 @@ display: inline-block;
 vertical-align: middle;
 margin-top: 200px;
 }
+.addinboxstyle .mat-dialog-title {
+  background-color: #00183a !important;
+  color: white !important;
+  font-weight: 500 !important;
+  font-size: 18px !important;
+}
+.addinboxstyle .mat-dialog-title .modal_close {
+  color: white !important;
+}
+.boxsty{
+  box-shadow: 5px 5px 5px 0px #cccccc60 !important;
+border: 1px solid #cccccc7d !important;
+min-height: 100px!important;
+max-height: 100px!important;
+margin: 5px;
+}
+.usrstyle{
+  color: green;
+font-size: small;
+}
+.userhed{
+  font-weight: bold;
+}
+app-userwaitlist-queuedetail .wtsapvid-icon,
+app-waitlist-queuedetail .wtsapvid-icon {
+  width: 15px !important;
+  top: 2px !important;
+}
+.telegramPopupClass {
+  width: 700px !important;
+}
+.mgn-5 {
+  margin: 5px !important;
+}

@@ -105,6 +105,7 @@ export class ProviderNotificationUserComponent implements OnInit {
   corpSettings: any;
   addondialogRef: any;
   is_noSMS = false;
+  isInternationalUser = false;
   constructor(
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -145,6 +146,9 @@ export class ProviderNotificationUserComponent implements OnInit {
   getUser() {
     this.provider_services.getUser(this.userId)
       .subscribe((data: any) => {
+        if (data.countryCode !== '+91') {
+          this.isInternationalUser = true;
+        }
         const breadcrumbs = [];
         this.breadcrumbs_init.map((e) => {
           breadcrumbs.push(e);
@@ -194,10 +198,10 @@ export class ProviderNotificationUserComponent implements OnInit {
     }
   }
   setNotificationList(notificationList) {
-    if (notificationList.length !== 0) {
+    if (notificationList && notificationList.length !== 0) {
       for (const notifyList of notificationList) {
         if (notifyList.eventType && notifyList.eventType === 'WAITLISTADD') {
-          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
+          if (notifyList.email && notifyList.email.length === 0 && notifyList.sms && notifyList.sms.length === 0 && notifyList.pushMsg && notifyList.pushMsg.length === 0) {
             this.SelchkinNotify = false;
           }
           if (notifyList.email && notifyList.email.length !== 0) {
@@ -222,7 +226,7 @@ export class ProviderNotificationUserComponent implements OnInit {
           //   this.SelchkinNotify = false;
           // }
         } else if (notifyList.eventType && notifyList.eventType === 'WAITLISTCANCEL') {
-          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
+          if (notifyList.email && notifyList.email.length === 0 && notifyList.sms && notifyList.sms.length === 0 && notifyList.pushMsg && notifyList.pushMsg.length === 0) {
             this.SelchkincnclNotify = false;
           }
           if (notifyList.email && notifyList.email.length !== 0) {
@@ -247,7 +251,7 @@ export class ProviderNotificationUserComponent implements OnInit {
           //   this.SelchkinNotify = false;
           // }
         } else if (notifyList.eventType && notifyList.eventType === 'APPOINTMENTADD') {
-          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
+          if (notifyList.email && notifyList.email.length === 0 && notifyList.sms && notifyList.sms.length === 0 && notifyList.pushMsg && notifyList.pushMsg.length === 0) {
             this.selApptNotify = false;
           }
           if (notifyList.email && notifyList.email.length !== 0) {
@@ -273,7 +277,7 @@ export class ProviderNotificationUserComponent implements OnInit {
           //   this.SelchkinNotify = false;
           // }
         } else if (notifyList.eventType && notifyList.eventType === 'APPOINTMENTCANCEL') {
-          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
+          if (notifyList.email && notifyList.email.length === 0 && notifyList.sms && notifyList.sms.length === 0 && notifyList.pushMsg && notifyList.pushMsg.length === 0) {
             this.selApptCancelNotify = false;
           }
           if (notifyList.email && notifyList.email.length !== 0) {
@@ -1039,6 +1043,7 @@ export class ProviderNotificationUserComponent implements OnInit {
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
+          inernationalUser : this.isInternationalUser,
           type: type,
           userId: this.userId
         }

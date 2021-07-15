@@ -2,6 +2,13 @@ import { Injectable } from '@angular/core';
 import { RazorpayprefillModel } from './razorpayprefill.model';
 @Injectable()
 export class Razorpaymodel {
+    prefill: RazorpayprefillModel;
+
+    constructor(
+        public razorprefillmodel: RazorpayprefillModel
+    ) {
+        this.prefill = this.razorprefillmodel;
+    }
     key: string;
     amount: string;
     order_id: string;
@@ -10,7 +17,7 @@ export class Razorpaymodel {
     description: string;
     image: string;
     retry: boolean;
-    prefill:any;
+   
     modal: {
         // We should prevent closing of the form when esc key is pressed.
     escape: false,
@@ -21,11 +28,5 @@ export class Razorpaymodel {
     theme: {
     color: '#F37254'
     };
-
-    constructor(
-        public razorprefillmodel: RazorpayprefillModel
-    ) {
-        this.prefill=razorprefillmodel;
-    }
 }
- 
+

@@ -185,7 +185,6 @@ export class UploadFileComponent implements OnInit {
       .subscribe(
         (data: any) => {
           const response = data;
-          this.loading = false;
           this.patientDetails = response[0];
           this.patientId = this.patientDetails.id;
           if (this.patientDetails.memberJaldeeId) {
@@ -194,6 +193,7 @@ export class UploadFileComponent implements OnInit {
             this.display_PatientId = this.patientDetails.jaldeeId;
           }
           this.medicalrecord_service.setPatientDetails(this.patientDetails);
+          this.loading = false;
 
 
         },

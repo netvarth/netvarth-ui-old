@@ -181,7 +181,8 @@
                                                                         *ngIf="sel_ser_det.preInfoEnabled">
                                                                         <div class="preinfo-title">
                                                                             {{sel_ser_det.preInfoTitle}}</div>
-                                                                        <div [innerHTML]="sel_ser_det.preInfoText">
+                                                                        <div>{{(readMore) ? sel_ser_det.preInfoText : sel_ser_det.preInfoText | slice:0:200}}
+                                                                            <a class="changeitem pointer-cursor mgn-lt-5 mgn-rt-20 pull-right" (click)="showText()" *ngIf="sel_ser_det.preInfoText.length > 200"> {{(readMore) ? 'less': 'more'}}</a>
                                                                         </div>
                                                                     </div>
                                                                 </div>

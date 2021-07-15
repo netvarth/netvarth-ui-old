@@ -228,6 +228,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     bookStep = 'donation';
     loading = true;
     @ViewChild('closebutton') closebutton;
+    accountId;
+    readMore = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -252,6 +254,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 // tslint:disable-next-line:radix
                 this.sel_loc = parseInt(params.loc_id);
                 this.account_id = params.account_id;
+                this.accountId = params.accountId;
                 this.provider_id = params.unique_id;
                 this.sel_ser = JSON.parse(params.service_id);
                 this.getConsumerQuestionnaire();
@@ -381,12 +384,12 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         if (dnrFirst === '') {
             this.donorerror = 'Please enter the first name';
             return;
-        } else if(dnrLast === '') {
+        } else if (dnrLast === '') {
             this.donorlasterror = 'Please enter the last name';
             return;
         } else {
             this.donorFirstName = dnrFirst;
-            this.donorLastName = dnrLast; 
+            this.donorLastName = dnrLast;
             setTimeout(() => {
                 this.action = '';
             }, 500);
@@ -397,13 +400,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     }
     addPhone() {
         this.phoneError = '';
-        if (this.selected_phone) {
-            const pN = this.selected_phone.e164Number;
-            this.dialCode = this.selected_phone.dialCode;
-            if (pN.startsWith(this.dialCode)) {
-                this.selected_phone = pN.split(this.dialCode)[1];
-            }
-        }
         this.resetApiErrors();
         this.resetApi();
         const curphone = this.selected_phone;
@@ -418,7 +414,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         } else {
             this.consumerPhoneNo = this.selected_phone;
             this.userPhone = this.selected_phone;
-            this.edit = true; 
+            this.edit = true;
             setTimeout(() => {
                 this.action = '';
             }, 500);
@@ -464,10 +460,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.setServiceDetails(obj);
         this.resetApi();
     }
-    showConfrmEmail(event) {
-        if (event.key !== 'Enter') {
-            this.confrmshow = true;
-        }
+    showConfrmEmail() {
+        this.confrmshow = true;
     }
     isSelectedService(id) {
         let clr = false;
@@ -624,8 +618,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     addEmail() {
         this.resetApiErrors();
         this.resetApi();
-        let post_data;
-        let passtyp;
         const stat = this.validateEmail(this.payEmail);
         const stat1 = this.validateEmail(this.payEmail1);
         if (this.payEmail === '' || !stat) {
@@ -634,37 +626,15 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         if (this.payEmail1 === '' || !stat1) {
             this.email1error = 'Please enter a valid email.';
         }
-        // return new Promise((resolve) => {
         if (stat && stat1) {
             if (this.payEmail === this.payEmail1) {
-                post_data = {
-                    'id': this.userData.userProfile.id || null,
-                    'firstName': this.userData.userProfile.firstName || null,
-                    'lastName': this.userData.userProfile.lastName || null,
-                    'dob': this.userData.userProfile.dob || null,
-                    'gender': this.userData.userProfile.gender || null,
-                    'email': this.payEmail || ''
-                };
-                passtyp = 'consumer';
-                if (this.payEmail) {
-                    this.subs.sink = this.shared_services.updateProfile(post_data, passtyp)
-                        .subscribe(
-                            () => {
-                                this.getProfile();
-                                // this.hideFilterSidebar();
-                                setTimeout(() => {
-                                    this.action = '';
-                                }, 500);
-                                this.closebutton.nativeElement.click();
-                            },
-                            error => {
-                                this.api_error = error.error;
-                                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                            });
-                }
+                this.userEmail = this.payEmail;
+                setTimeout(() => {
+                    this.action = '';
+                }, 500);
+                this.closebutton.nativeElement.click();
             } else {
                 this.email1error = 'Email and Re-entered Email do not match';
-                // this.snackbarService.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
             }
         }
     }
@@ -879,7 +849,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     handleEmail(email) {
         this.action = 'email';
         this.confrmshow = false;
-        this.payEmail= email;
+        this.payEmail = email;
+        this.payEmail1 = '';
         // if (this.dispCustomerEmail) {
         //     this.dispCustomerEmail = false;
         // } else {
@@ -1165,5 +1136,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     resetErrors() {
         this.donorerror = null;
         this.donorlasterror = null;
+    }
+    showText() {
+        this.readMore = !this.readMore;
     }
 }

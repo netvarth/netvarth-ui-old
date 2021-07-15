@@ -114,6 +114,13 @@ import { MeetRoomModule } from './shared/components/meet-room/meet-room.module';
 import { MediaService } from './shared/services/media-service';
 import { RequestDialogComponent } from './business/shared/meeting-room/request-dialog/request-dialog.component';
 import { VideoCallSharedComponent } from './business/modules/video-call/video-call.component';
+import { ContactComponent } from './shared/components/business-page-home/contactus/contact.component';
+import { TermsconditionComponent } from './shared/components/business-page-home/termscondition/termscondition.component';
+import { ShippingdeliveryComponent } from './shared/components/business-page-home/shippingdelivery/shippingdelivery.component';
+import { RefundcancelComponent } from './shared/components/business-page-home/refundcancel/refundcancel.component';
+import { PrivacyComponent } from './shared/components/business-page-home/privacy/privacy.component';
+import { FileReaderService } from './shared/services/file-reader.service';
+import { AttachmentPopupComponent } from './shared/components/attachment-popup/attachment-popup.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -152,7 +159,13 @@ export function init_app(globalService: GlobalService) {
     ListRecordingsDialogComponent,
     BusinessPageHomeComponent,
     RequestDialogComponent,
-    VideoCallSharedComponent
+    VideoCallSharedComponent,
+    ContactComponent,
+    TermsconditionComponent,
+    PrivacyComponent,
+    ShippingdeliveryComponent,
+    RefundcancelComponent,
+    AttachmentPopupComponent
   ],
   entryComponents: [
     SignUpComponent,
@@ -171,7 +184,9 @@ export function init_app(globalService: GlobalService) {
     AddAddressComponent,
     ListRecordingsDialogComponent,
     MeetRoomComponent,
-    RequestDialogComponent
+    RequestDialogComponent,
+    AttachmentPopupComponent
+
   ],
   imports: [
     CapitalizeFirstPipeModule,
@@ -234,6 +249,7 @@ export function init_app(globalService: GlobalService) {
     },
     AuthService,
     ConsumerAuthService,
+    FileReaderService,
     SharedServices,
     GlobalService,
     SharedFunctions,

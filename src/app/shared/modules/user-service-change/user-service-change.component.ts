@@ -201,6 +201,7 @@ export class UserServiceChnageComponent implements OnInit {
     state: '',
     pincode: '',
     primaryMobileNo: '',
+    email: '',
     available: ''
   };
 
@@ -211,6 +212,7 @@ export class UserServiceChnageComponent implements OnInit {
     'state': false,
     'pincode': false,
     'primaryMobileNo': false,
+    'email': false,
     'available': false
   };
   languages_arr: any = [];
@@ -338,10 +340,10 @@ export class UserServiceChnageComponent implements OnInit {
   }
   updateUser() {
     let msg = '';
-    if (this.selectedUser.isAvailable) {
-      msg = 'Do you want to assign this ' + this.customer_label + ' to ' + this.selectedUser.businessName + '?';
-    } else {
+    if (!this.selectedUser.isAvailable && (this.user.id === 136239 || this.user.id === 9341)) {
       msg = this.selectedUser.businessName + ' seems to be unavailable now. Assign anyway ? ';
+    } else {
+      msg = 'Do you want to assign this ' + this.customer_label + ' to ' + this.selectedUser.businessName + '?';
     }
     const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
@@ -466,6 +468,7 @@ export class UserServiceChnageComponent implements OnInit {
       'state': false,
       'pincode': false,
       'primaryMobileNo': false,
+      'email': false,
       'available': false
     };
     this.filter = {
@@ -475,6 +478,7 @@ export class UserServiceChnageComponent implements OnInit {
       state: '',
       pincode: '',
       primaryMobileNo: '',
+      email: '',
       available: ''
       
     };
@@ -482,8 +486,8 @@ export class UserServiceChnageComponent implements OnInit {
     this.selectedLanguages = [];
   }
   doSearch() {
-    this.getProviders();
-    if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pincode || this.filter.primaryMobileNo || this.filter.available || this.selectedLanguages.length > 0 || this.selectedSpecialization.length > 0) {
+    // this.getProviders();
+    if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pincode || this.filter.email || this.filter.primaryMobileNo || this.filter.available || this.selectedLanguages.length > 0 || this.selectedSpecialization.length > 0) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -508,6 +512,9 @@ export class UserServiceChnageComponent implements OnInit {
     }
     if (this.filter.available !== '') {
       api_filter['available-eq'] = this.filter.available;
+    }
+    if (this.filter.email !== '') {
+      api_filter['email-eq'] = this.filter.email;
     }
     if (this.filter.primaryMobileNo !== '') {
       const pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
@@ -591,6 +598,13 @@ export class UserServiceChnageComponent implements OnInit {
         subDomain = 'colleges';
      }
     }
+    else if (this.user.sector === 'sportsAndEntertainement') {
+      if (this.user.subSector === 'sports') {
+        subDomain = 'sports';
+      } else if (this.user.subSector === 'entertainment') {
+          subDomain = 'entertainment';
+       }  
+    }
     this.provider_services.getSpecializations(this.user.sector, subDomain)
       .subscribe(data => {
         this.specialization_arr = data;
@@ -604,14 +618,6 @@ export class UserServiceChnageComponent implements OnInit {
         this.selectedLanguages.push(value);
       } else {
         this.selectedLanguages.splice(indx, 1);
-      }
-    }
-    if (type === 'specializations') {
-      const indx = this.selectedSpecialization.indexOf(value);
-      if (indx === -1) {
-        this.selectedSpecialization.push(value);
-      } else {
-        this.selectedSpecialization.splice(indx, 1);
       }
     }
     if (type === 'specializations') {

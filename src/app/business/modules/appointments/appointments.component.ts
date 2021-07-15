@@ -22,6 +22,7 @@ import { LocalStorageService } from '../../../shared/services/local-storage.serv
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { Title } from '@angular/platform-browser';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
+import { AttachmentPopupComponent } from '../../../../app/shared/components/attachment-popup/attachment-popup.component';
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html',
@@ -102,6 +103,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     apptStatus: 'all',
     payment_status: 'all',
     check_in_start_date: null,
+    check_in_date: null,
     check_in_end_date: null,
     location_id: 'all',
     page_count: projectConstants.PERPAGING_LIMIT,
@@ -123,6 +125,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     apptStatus: false,
     payment_status: false,
     check_in_start_date: false,
+    check_in_date: false,
     check_in_end_date: false,
     location_id: false,
     age: false,
@@ -349,6 +352,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   delayTooltip = '';
   filtericonTooltip = '';
   cloudTooltip = '';
+  teams: any;
+  yesterdayDate;
+  @ViewChild('closebutton') closebutton;
+  showattachmentDialogRef: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -448,6 +455,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     if (this.server_date) {
       this.getTomorrowDate();
+      this.getYesterdayDate();
     }
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     if (this.active_user.adminPrivilege) {
@@ -465,6 +473,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getServices();
     if (this.active_user.accountType === 'BRANCH') {
       this.getProviders();
+    }
+    if (this.active_user.accountType === 'BRANCH') {
+      this.getTeams().then((data) => {
+        this.teams = data;
+      });                  
     }
     this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
       this.refresh();
@@ -865,6 +878,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       apptStatus: false,
       payment_status: false,
       check_in_start_date: false,
+      check_in_date: false,
       check_in_end_date: false,
       location_id: false,
       age: false,
@@ -884,6 +898,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       apptStatus: 'all',
       payment_status: 'all',
       check_in_start_date: null,
+      check_in_date: null,
       check_in_end_date: null,
       location_id: 'all',
       page_count: projectConstants.PERPAGING_LIMIT,
@@ -1241,6 +1256,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     }
+    if (this.filter.check_in_date != null) {
+      Mfilter['date-eq'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_date);
+    }
     return new Promise((resolve) => {
       this.provider_services.getFutureAppointmentsCount(Mfilter)
         .subscribe(
@@ -1259,14 +1277,20 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // if (this.filter.apptStatus === 'all') {
     //   Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     // }
-    if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeSchedules.length > 0) {
-      const qids = this.activeSchedules.map(q => q.id);
-      if (this.activeUser) {
-        Mfilter['provider-eq'] = this.activeUser;
-      } else {
-        Mfilter['schedule-eq'] = qids.toString();
-      }
+    // if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeSchedules.length > 0) {
+    //   const qids = this.activeSchedules.map(q => q.id);
+    //   if (this.activeUser) {
+    //     Mfilter['provider-eq'] = this.activeUser;
+    //   } else {
+    //     Mfilter['schedule-eq'] = qids.toString();
+    //   }
 
+    // }
+    if (Mfilter['schedule-eq'] && (this.filteredSchedule.length === 0 || this.filter.schedule === 'all')) {
+        delete Mfilter['schedule-eq'];
+    }
+    if (this.active_user.accountType === 'BRANCH' && this.activeUser) {
+      Mfilter['provider-eq'] = this.activeUser;
     }
     return new Promise((resolve) => {
       this.provider_services.getHistoryAppointmentsCount(Mfilter)
@@ -1382,6 +1406,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.filter.future_appt_date = moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD');
     }
   }
+  getYesterdayDate() {
+    const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const serverdate = moment(server).format();
+    const servdate = new Date(serverdate);
+    this.yesterdayDate = this.maxday = this.endmaxday = new Date(moment(new Date(servdate)).add(-1, 'days').format('YYYY-MM-DD'));
+  }
   getFutureAppointments() {
     this.resetCheckList();
     if (this.groupService.getitemFromGroupStorage('appt_future_selQ')) {
@@ -1406,6 +1436,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
+    }
+    if (this.filter.check_in_date != null) {
+      Mfilter['date-eq'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_date);
     }
     const promise = this.getFutureAppointmentsCount(Mfilter);
     promise.then(
@@ -1452,6 +1485,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         Mfilter['schedule-eq'] = qids.toString();
       }
 
+    }
+    if (this.active_user.accountType === 'BRANCH' && this.activeUser) {
+      Mfilter['provider-eq'] = this.activeUser;
     }
     const promise = this.getHistoryAppointmentsCount(Mfilter);
     promise.then(
@@ -1653,27 +1689,44 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return api_filter;
   }
   doSearch() {
+    this.shared_functions.setFilter();
     this.lStorageService.removeitemfromLocalStorage('filter');
     this.endminday = this.filter.check_in_start_date;
     if (this.filter.check_in_end_date) {
       this.maxday = this.filter.check_in_end_date;
     } else {
-      this.maxday = new Date();
+      this.maxday = this.yesterdayDate;
     }
     this.labelSelection();
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
       this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
-      || this.filter.check_in_end_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all') {
+      || this.filter.check_in_end_date !== null || this.filter.check_in_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all'
+      || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
+      || this.allPayStatusSelected || this.allModeSelected || this.allLabelSelected || this.allScheduleSelected || this.allLocationSelected) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
     }
     this.loadApiSwitch('doSearch');
-    this.shared_functions.setFilter();
   }
-  keyPressed(event) {
-    if (event.keyCode === 13) {
-      this.doSearch();
+  keyPressed() {
+    this.shared_functions.setFilter();
+    this.lStorageService.removeitemfromLocalStorage('filter');
+    this.endminday = this.filter.check_in_start_date;
+    if (this.filter.check_in_end_date) {
+      this.maxday = this.filter.check_in_end_date;
+    } else {
+      this.maxday = this.yesterdayDate;
+    }
+    this.labelSelection();
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
+      this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
+      || this.filter.check_in_end_date !== null || this.filter.check_in_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all'
+      || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
+      || this.allPayStatusSelected || this.allModeSelected || this.allLabelSelected || this.allScheduleSelected || this.allLocationSelected) {
+      this.filterapplied = true;
+    } else {
+      this.filterapplied = false;
     }
   }
   getSingleTime(slot) {
@@ -1776,6 +1829,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   //   this.router.navigate(['provider', 'settings', 'general', 'customview']);
   // }
   gotoCustomViews() {
+    this.closebutton.nativeElement.click();
     const navigationExtras: NavigationExtras = {
       queryParams: {
         type: 'appt'
@@ -1792,7 +1846,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   filterClicked(type) {
     this.filters[type] = !this.filters[type];
     if (!this.filters[type]) {
-      if (type === 'check_in_start_date' || type === 'check_in_end_date') {
+      if (type === 'check_in_start_date' || type === 'check_in_end_date' || type === 'check_in_date') {
         this.filter[type] = null;
       } else if (type === 'payment_status' || type === 'service' || type === 'queue' || type === 'appointmentMode' || type === 'location') {
         this.filter[type] = 'all';
@@ -2038,7 +2092,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.allLocationSelected = true;
       }
     }
-    this.doSearch();
+    this.keyPressed();
   }
   showConsumerNote(checkin) {
     this.notedialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
@@ -2415,6 +2469,24 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cancelled_count = 0;
   }
 
+  showAttachments(appt) {
+    this.provider_services.getProviderAppointmentAttachmentsByUuid(appt.uid).subscribe(
+      (communications: any) => {
+        this.showattachmentDialogRef = this.dialog.open(AttachmentPopupComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true,
+          data: {
+            attachments: communications,
+            type: 'appt'
+          }
+        });
+        this.showattachmentDialogRef.afterClosed().subscribe(result => {
+          if (result === 'reloadlist') {
+          }
+        });
+      });
+  }
   openAttachmentGallery(appt) {
     // this.provider_services.getProviderAttachments(appt.uid).subscribe(
     this.provider_services.getProviderAppointmentAttachmentsByUuid(appt.uid).subscribe(
@@ -2455,7 +2527,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           // }
           if (new RegExp(this.imageAllowed.join("|")).test(thumbPathExt.toUpperCase())) {
             imagePath = communications[comIndex].s3path;
-        }
+          }
+          let type = communications[comIndex].type.split('/');
+          type = type[0];
+          if (type !== 'image') {
+            imagePath = communications[comIndex].thumbPath;
+          }
           const imgobj = new Image(
             count,
             { // modal
@@ -2593,7 +2670,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.allLabelSelected = true;
       }
     }
-    this.doSearch();
+    this.keyPressed();
   }
   showCheckinActions(status, checkin?) {
     let waitlist = [];
@@ -2806,7 +2883,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (event.type === 'note') {
       this.showConsumerNote(event.waitlist);
     } else if (event.type === 'attachment') {
-      this.openAttachmentGallery(event.waitlist);
+      this.showAttachments(event.waitlist);
+      //this.openAttachmentGallery(event.waitlist);
     } else if (event.type === 'actions') {
       this.showCheckinActions(event.statusAction, event.waitlist);
     }
@@ -2819,4 +2897,19 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   //   }
   //   return this.apptStatuses.toString();
   // }
+  getTeams() {
+    const _this = this;
+    return new Promise<void>(function (resolve) {
+      _this.provider_services.getTeamGroup().subscribe(data => {
+        _this.teams = data;
+        },
+        () => {
+          resolve();
+        });
+    });
+  }
+  getUsersList(teamid){
+    const userObject =  this.teams.filter(user => parseInt(user.id) === teamid); 
+    return userObject[0].name;
+  }
 }

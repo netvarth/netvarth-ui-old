@@ -8,6 +8,8 @@ import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 import { SharedModule } from '../common/shared.module';
 import { AddServiceComponent } from '../../../business/modules/settings/general/users/settings/services/addservice/addservice.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { UserlistpopupComponent } from './userlist/userlistpopup.component';
+import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
 
 @NgModule({
     imports: [
@@ -18,9 +20,13 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
         CommonModule,
         CapitalizeFirstPipeModule,
         SharedModule,
+        LoadingSpinnerModule,
         CKEditorModule
     ],
-    declarations: [ServiceComponent, AddServiceComponent],
+    declarations: [ServiceComponent, AddServiceComponent,UserlistpopupComponent],
+    entryComponents: [
+        UserlistpopupComponent
+    ],
     exports: [ServiceComponent]
 })
 

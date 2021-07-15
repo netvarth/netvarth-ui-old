@@ -231,14 +231,14 @@
 
                                 <!-- QR code -->
                                 <div class="pubs card w-dta bprof no-shadow no-padding-up">
-                                    <div *ngIf="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || bProfile.specialization.length === 0"
+                                    <div *ngIf="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || (bProfile && bProfile.specialization && bProfile.specialization.length === 0)"
                                         class="incomplete-msg">
                                         <div style="padding: 0 30px;">
                                             Please complete your profile to activate your Jaldee Link and QR Code
                                         </div>
                                     </div>
                                     <div
-                                        [class.all_disabled]="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || bProfile.specialization.length === 0">
+                                        [class.all_disabled]="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || (bProfile && bProfile.specialization && bProfile.specialization.length === 0)">
                                         <div>
                                             <h6 class="sub-heads">Here is your QR code and Link
                                                 <sup><span class="inactive"
@@ -357,7 +357,15 @@
                         <div class="col-a col-b pl0 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                             <div class="card p0 w-dta active">
                                 <div class="mgn-bt-20">
-
+                                     <!-- About me -->
+                                    <div class="cd-b">
+                                        <div class="div-outline custId-cursor" [ngClass]="{'div-grn-outline':aboutmefilled,'div-red-outline':!aboutmefilled }" (click)="gotoAboutMe()">
+                                            <i *ngIf="aboutmefilled" class="fa fa-check-circle fa-lg fa-grn fl-right" aria-hidden="true"></i>
+                                            <i *ngIf="!aboutmefilled" class="fa fa-exclamation-circle fa-lg fa-red fl-right" aria-hidden="true"></i>
+                                            <i class="fa person-icon"></i> &nbsp;&nbsp;
+                                            <span class="fontstyl">About Us</span>
+                                        </div>
+                                    </div>
                                     <!-- Location -->
                                     <div class="cd-b" (click)="editLocation()">
                                         <div class="div-outline custId-cursor"

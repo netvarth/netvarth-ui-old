@@ -4,7 +4,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading top-row ">
                     <app-header *ngIf="showsearchsection && obtainedRefined" [headerTitle]="'Header'"
-                        [includedfrom]="'details'"></app-header>
+                        [includedfrom]="'details'" [showHeaderAction]="true"></app-header>
                     <div class="search-form mgn-up-20 col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div>Search Service Provider</div>
                         <app-search-form *ngIf="showsearchsection && obtainedRefined"

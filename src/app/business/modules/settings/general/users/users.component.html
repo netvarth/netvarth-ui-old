@@ -1,27 +1,289 @@
-<section class="">
+ <!-- ***start Header part for Webview***** -->
+<section class="display-min-none">
   <div class="card title-gb">
       <h5 class="mgn-up-10">
-          <a class="user-title">
-              <div class="pull-left pad-tp-5">Users<span
+          <a class="user-title" style="cursor:auto;">
+              <div class="pull-left pad-tp-5 display-min-none">Users<span
                       *ngIf="user_count_filterApplied > 0">({{user_count_filterApplied}})</span></div>
           </a>
           <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-right">
-              <i class="icon-filter-one">
-              </i>
+              <!-- <i class="icon-filter-one"> -->
+                  <img src="../../../assets/images/provider-filter-icon.png"  style="width: 22px !important; margin-top: -6px !important;">
+              <!-- </i> -->
               Filter
           </a>
-          <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click)="addBranchSP()"
-              class="navbar-item-color bold pointer-cursor pull-right">
+          <a   *ngIf="selectedTeam == 'all'" [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click)="addBranchSP()"
+              class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5">
               <button type="button" class="btn btn mb-2 action-button  btn-primary action-button-add"> <i
                       class="fa fa-plus"></i>User </button>
           </a>
+          <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" *ngIf="selectedTeam == 'all'"
+              class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5">
+              <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add"
+              data-toggle="modal" data-target="#exampleModalCenter">
+              <i class="fa fa-plus"></i>Create Team</button>
+          </a> 
+          <a  *ngIf="selectedTeam == 'all' && (loc_list && loc_list.length > 1)" [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
+            class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5">
+            <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add"
+            (click)="addlocation()">
+             Assign Locations</button>
+          </a>
+          
+          <button mat-flat-button class="btn btn mb-2 action-button bold pointer-cursor pull-right mgn-lt-5  btn-primary action-button-add" (click)="showCustomerstoAdd()"
+                   *ngIf="selectedTeam !== 'all' && !showUsers && (selectedTeam.users && selectedTeam.users.length > 0)">
+                   Manage Users</button>
+                   <button mat-flat-button  class="btn btn mb-2 action-button bold pointer-cursor pull-right mgn-lt-5  btn-primary action-button-add" (click)="showCustomerstoAdd()"
+                   *ngIf="selectedTeam !== 'all' && !showUsers  && (selectedTeam.users && selectedTeam.users.length == 0)">
+                   Add Users</button>
       </h5>
   </div>
 </section>
-<section class="app-branchusers-component">
-  <div class="content loc-list">
-      <div class="col-md-12 no-padding-small">
+ <!-- ***close Header part for Webview ***** -->
+
+ <!-- ***start Header part for mobile***** -->
+<section class="waitlist-box-check">
+  <div class="card title-gb">
+      <h5 class="mgn-up-10">
+          <div class="pull-left pad-tp-5" *ngIf="!teamLoaded && groups.length == 0">Users</div>
+          <!-- <div class="pull-left pad-tp-5" *ngIf="!teamLoaded && groups.length > 0">Teams</div> -->
+          <a *ngIf="showusers" (click)="showFilterSidebar()" style="padding: 5px 7px !important;" class="btn mb-2 action-button mgn-lt-5 pull-right">
+              <!-- <i class="icon-filter-one">
+              </i> -->
+              <img src="../../../assets/images/provider-filter-icon.png"  style="width: 22px !important; margin-top: -6px !important;">
+          </a>
+          <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"   *ngIf="selectedTeam === 'all'"
+          class="navbar-item-color bold pointer-cursor mgn-lt-5">
+            <button type="button" style="padding: 5px 7px !important; margin-left: 5px !important;"   [matMenuTriggerFor]="appMenu" class="btn btn mb-2 action-button  dropdown-toggle  pull-right"> 
+              Actions  
+            </button>
+            <mat-menu #appMenu="matMenu">
+                <button mat-menu-item  (click)="addBranchSP()" >
+                  Create User
+                </button>
+                <button  mat-menu-item  *ngIf="selectedTeam == 'all'" data-toggle="modal" data-target="#exampleModalCenter">
+                    Create Team
+                </button>
+                <button mat-menu-item *ngIf="showusers && (loc_list && loc_list.length > 1)" (click)="addlocation()">
+                    Assign Locations
+                </button>
+            </mat-menu>
+          </a>      
+          <button mat-flat-button class="btn btn mb-2 action-button bold pointer-cursor pull-right mgn-lt-5  btn-primary action-button-add" (click)="showCustomerstoAdd()"
+                   *ngIf="selectedTeam !== 'all' && !showUsers && (selectedTeam.users && selectedTeam.users.length > 0)">
+                   Manage Users</button>
+         <button mat-flat-button  class="btn btn mb-2 action-button bold pointer-cursor pull-right mgn-lt-5  btn-primary action-button-add" (click)="showCustomerstoAdd()"
+                   *ngIf="selectedTeam !== 'all' && !showUsers  && (selectedTeam.users && selectedTeam.users.length == 0)">
+                   Add Users</button>
+      </h5>
+     
+  </div>
+</section>
+ <!-- ***close Header part for mobile***** -->
+<section class="app-branchusers-component customersList">
+
+   <!-- ***start Model for add Teams***** -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body" *ngIf="!showAddCustomerHint">
+          <div class="form-group">
+            <label for="exampleInputPassword1">Team Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control1" id="exampleInputPassword1" placeholder="Group Name"
+              [(ngModel)]="teamName" autocomplete="off" />
+          </div>
+          <!-- <div class="form-group mb-1">
+              <label for="exampleTextarea1">Size</label>
+              <textarea class="form-control1" id="exampleTextarea1" rows="4" [(ngModel)]="size"></textarea>
+          </div> -->
+          <div class="form-group mb-1">
+            <label for="exampleTextarea">Description</label>
+            <textarea class="form-control1" id="exampleTextarea" rows="4" [(ngModel)]="teamDescription"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer"  *ngIf="!showAddCustomerHint" >
+          <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal"
+            #closebutton (click)="resetGroupFields();resetError();">Cancel</button>
+          <button type="button" class="btn btn-primary font-weight-bold" 
+          (click)="customerGroupAction()">{{(teamEdit) ? 'Update' : 'Create'}}</button>
+        </div>
+        <div class="modal-body" *ngIf="showAddCustomerHint">
+          <div class="pad-10">
+            Do you want to add the users now?
+          </div>
+        </div>
+        <div class="modal-footer" *ngIf="showAddCustomerHint">
+          <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal"
+            #closebutton (click)="resetGroupFields();showCustomerHint()">Not Now</button>
+          <button type="button" class="btn btn-primary font-weight-bold"
+            (click)="showCustomerstoAdd('close')">Add Now</button>
+        </div>
+        <div class="error-section" *ngIf="apiError !== ''">
+            {{apiError}}
+          </div>
+      </div>
+    </div>
+    </div>
+   <!-- *** close Model for add Teams***** -->
+
+   <!-- *** start Model for add ASSIGN LOCATIONS***** -->
+    <div class="modal fade" id="exampleModalCenterlocation" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+           <div class="modal-content">
+              <div class="modal-body">
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Select Locations<span class="text-danger">*</span></label>
+                  </div>
+                  <label *ngFor="let loc of loc_list" class="checkbox checkbox-outline checkbox-outline-2x checkbox-primary mt-4 fnt-p8">
+											<input type="checkbox" name="Checkboxes16"  (change)="getLocIdsUserIds(loc,   loc.id ,$event)">
+											<span style="margin-right: 0.75rem;"></span> 
+                       {{loc.place | capitalizeFirst}} {{loc.address | capitalizeFirst}}
+                       <a [href]="loc.googleMapUrl" target="_blank" class="icon-location" matTooltip="Click to navigate"></a>
+                       <br>
+									</label>
+                </div>
+                <div class="modal-footer"  *ngIf="!showAddCustomerHint" >
+                  <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal"
+                    #locclosebutton>Cancel</button>
+                  <button type="button" class="btn btn-primary font-weight-bold" 
+                  (click)="assignLocationToUsers()">{{(teamEdit) ? 'Update' : 'Save'}}</button>
+                </div>
+                <div class="error-section" *ngIf="apiError !== ''">
+                  {{apiError}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- *** CLOSE Model for add ASSIGN LOCATIONS***** -->
+    <div class="card" *ngIf="teamLoaded">
+      <app-common-innerloading-spinner></app-common-innerloading-spinner>
+    </div>
+
+    <!-- *** showing  web left side  team names and content***** -->
+    <div class="col-lg-3   display-min-none" *ngIf="!teamLoaded && groups.length > 0">
+      <div class="card card-custom card-stretch gutter-b pitch_blu">
+        <div class="card grp_label mb-2 pointer-cursor" (click)="teamSelected('all')"
+          [ngClass]="{'highlight': selectedTeam == 'all'}">
+        <span  [ngClass]="{'highlightcolor': selectedTeam == 'all'}">All Users</span>
+        </div>
+        <!-- <button mat-flat-button class="font-size-xs add_btn mgn-bt-10" data-toggle="modal"
+          data-target="#exampleModalCenter">Create Team</button> -->
+        <div class="card grp_label mb-2" *ngFor="let group of groups"
+          (click)="group.status=='ACTIVE' && teamSelected(group)"
+          [ngClass]="{'highlight': selectedTeam.id==group.id}" 
+          [class.disabled-group]="group.status=='INACTIVE'"
+          [class.pointer-cursor]="group.status=='ACTIVE'">  
+          <div class="max-hgt-20 disp-flex">
+            <span  [ngClass]="{'highlightcolor': selectedTeam.id==group.id}"  class="pull-left group-name">{{group.name}}</span>
+            <span class="pull-right mgn-m-up-10">
+              <button  [ngClass]="{'highlightcolor': selectedTeam.id==group.id}" type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event);">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button type="button" mat-menu-item data-toggle="modal" data-target="#exampleModalCenter"
+                  (click)="editGroup(group)">
+                  <i class="icon-edit chkin-mobic"></i>
+                  Edit
+                </button>
+                <button type="button" mat-menu-item (click)="changeGroupStatus(group)">
+                  <i *ngIf="group.status=='INACTIVE'" class="icon-enable phone-in-icon"></i>
+                  <i *ngIf="group.status=='ACTIVE'" class="icon-disable phone-in-icon"></i>
+                  {{(group.status==='ACTIVE') ? 'Disable' : 'Enable'}}
+                </button>
+              </mat-menu>
+            </span>
+          </div>
+          <div  [ngClass]="{'highlightcolor': selectedTeam.id==group.id}"  class="selected_customers">{{group.description}}</div>
+        </div>
+      </div>
+   </div>
+     <!-- *** close web left side team names and content***** -->
+
+    <!-- *** start Mobile teams  content***** -->
+   <div class="col-lg-4 waitlist-box-check" *ngIf="!teamLoaded && groups.length > 0 && showteams">
+      <div class="card card-custom card-stretch gutter-b pitch_blu">
+        <div class="card grp_label mb-2 pointer-cursor" (click)="teamSelected('all')">
+          All Users</div>
+        <!-- <button mat-flat-button class="font-size-xs add_btn mgn-bt-10" data-toggle="modal"
+          data-target="#exampleModalCenter">Create Team</button> -->
+          <h6> 
+              <div style="font-size: medium;" class="pull-left pad-tp-5">Teams</div>
+          </h6>
+        <div class="card grp_label mb-2" *ngFor="let group of groups"
+          (click)="group.status=='ACTIVE' && teamSelected(group)"
+          [class.disabled-group]="group.status=='INACTIVE'"
+          [class.pointer-cursor]="group.status=='ACTIVE'">  
+          <div class="max-hgt-20 disp-flex">
+            <span class="pull-left group-name">{{group.name}}</span>
+            <span class="pull-right mgn-m-up-10">
+              <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event);">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button type="button" mat-menu-item data-toggle="modal" data-target="#exampleModalCenter"
+                  (click)="editGroup(group)">
+                  <i class="icon-edit chkin-mobic"></i>
+                  Edit
+                </button>
+                <button type="button" mat-menu-item (click)="changeGroupStatus(group)">
+                  <i *ngIf="group.status=='INACTIVE'" class="icon-enable phone-in-icon"></i>
+                  <i *ngIf="group.status=='ACTIVE'" class="icon-disable phone-in-icon"></i>
+                  {{(group.status==='ACTIVE') ? 'Disable' : 'Enable'}}
+                </button>
+              </mat-menu>
+            </span>
+          </div>
+          <div class="selected_customers">{{group.description}}</div>
+        </div>
+      </div>
+   </div>
+   <!-- *** close MObile teams content***** -->
+
+
+   <!-- ***start web view  users  content***** -->
+  <div  class="display-min-none">
+      <div class="col-lg-9" [class.col-lg-12]="groups.length==0" *ngIf="!teamLoaded" >            
           <div class="card p0 w-dta">
+            <!-- *** start show group name right side and add buttons and cancel buttons*** -->
+             <div class="p-3">
+                  <h3 class="align-items-start flex-column">
+                  <div class="waitlist-box-check">
+                    <span class="fa fa-arrow-left pointer-cursor  waitlist-box-check" (click)="redirecToUsers()"> </span>&nbsp;&nbsp;
+                  </div>
+                    <span class="card-label font-1 font-weight-bolder text-dark"
+                      *ngIf="selectedTeam == 'all' && groups.length > 0">All
+                      Users</span> <span class="card-label font-1 font-weight-bolder text-dark">
+                      </span>
+                    <span class="card-label font-1 font-weight-bolder text-dark"
+                      *ngIf="selectedTeam !== 'all'">{{selectedTeam.name}}</span>
+                  </h3>
+             </div>
+             <div class="col-sm-12 col-lg-8 col-xs-12 col-md-12 mb-4">
+                   <button mat-flat-button class="font-size-xs add_btn mgn-lt-10 cancel_btn" (click)="cancelAdd()"
+                  *ngIf="selectedTeam !== 'all'  && showUsers"><i class="fa fa-times mgn-rt-5" aria-hidden="true"></i>
+                   Cancel</button>
+        
+                  <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="addCustomerToGroup()"
+                  *ngIf="selectedTeam !== 'all'  && showUsers &&  (this.userIds.length > 0 && (this.selectedTeam.users &&  this.selectedTeam.users.length == 0)) ">
+                  Add</button>
+
+                  <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="addCustomerToGroup()"
+                  *ngIf="selectedTeam !== 'all'  && showUsers &&  ((this.selectedTeam.users &&  this.selectedTeam.users.length > 0))">
+                  Update</button>
+
+                  <button mat-flat-button class="font-size-xs add_btn mgn-lt-10 cancel_btn" (click)="locationclose()"
+                  *ngIf="addlocationcheck"><i class="fa fa-times mgn-rt-5" aria-hidden="true"></i>
+                  Cancel</button>
+                  
+                  <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" 
+                  *ngIf="addlocationcheck && this.userIds.length > 0" data-toggle="modal" data-target="#exampleModalCenterlocation">
+                  Assign Locations</button>
+             </div>            
+            <!-- *** close show group name right side and add buttons and cancel buttons*** -->
+
+             <!-- ***Apply  filter code***** -->
               <aside class="filterSidebar filter-sidebar user-filter" *ngIf="filter_sidebar">
                   <section class="sidebar filter-container" id="filterContainer" style="overflow:auto" 
                       [ngStyle]="{'height.vh': 90, 'margin-top.px': filterapplied === true ? 95 : 44}">
@@ -55,14 +317,14 @@
                                   <div class="filterTextinput filter-text-input">
                                       <li class="filterli filter-li">
                                           <input type="text" id="firstName" [(ngModel)]="filter.firstName" #firstName
-                                              (blur)="doSearch()" (keyup)="focusInput($event, firstName)" maxlength="20"
+                                          (keyup)="doSearch()" maxlength="20"
                                               class="filterTextbox filter-textbox" placeholder="Enter First Name">
                                       </li>
                                   </div>
                                   <div class="filterTextinput filter-text-input">
                                       <li class="filterli filter-li">
                                           <input type="text" id="lastName" [(ngModel)]="filter.lastName" #lastName
-                                              (blur)="doSearch()" (keyup)="focusInput($event, lastName)" maxlength="10"
+                                          (keyup)="doSearch()" maxlength="10"
                                               class="filterTextbox filter-textbox" placeholder="Enter Last Name">
                                       </li>
                                   </div>
@@ -87,8 +349,8 @@
                                 <div class="card-body">
                                   <div class="filterTextinput filter-text-input">
                                       <li class="filterli filter-li">
-                                          <input type="text" id="pincode" [(ngModel)]="filter.pincode" #pincode
-                                              (blur)="doSearch()" (keyup)="focusInput($event, pincode)" maxlength="10"
+                                          <input type="text" id="pincode" [(ngModel)]="filter.pinCode" #pincode
+                                          (keyup)="doSearch()" maxlength="10"
                                               class="filterTextbox filter-textbox" placeholder="Enter Pincode">
                                       </li>
                                   </div>
@@ -114,14 +376,14 @@
                                   <div class="filterTextinput filter-text-input">
                                       <li class="filterli filter-li">
                                           <input type="text" id="city" [(ngModel)]="filter.city" #city
-                                              (blur)="doSearch()" (keyup)="focusInput($event, city)" maxlength="20"
+                                          (keyup)="doSearch()" maxlength="20"
                                               class="filterTextbox filter-textbox" placeholder="Enter city">
                                       </li>
                                   </div>
                                   <div class="filterTextinput filter-text-input">
                                     <li class="filterli filter-li">
                                         <input type="text" id="state" [(ngModel)]="filter.state" #state
-                                            (blur)="doSearch()" (keyup)="focusInput($event, state)" maxlength="20"
+                                        (keyup)="doSearch()" maxlength="20"
                                             class="filterTextbox filter-textbox" placeholder="Enter state">
                                     </li>
                                 </div>
@@ -185,13 +447,39 @@
                                   <div class="filterTextinput filter-text-input">
                                       <li class="filterli filter-li">
                                           <input type="text" id="primaryMobileNo" [(ngModel)]="filter.primaryMobileNo"
-                                              #primaryMobileNo (blur)="doSearch()" (keyup)="focusInput($event, primaryMobileNo)"
+                                              #primaryMobileNo (keyup)="doSearch()"
                                                class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
                                       </li>
                                   </div>
                                 </div>
                               </div>
                           </div>
+                          <div class="card">
+                            <div class="card-header">
+                              <h2 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseEmail1" aria-expanded="false">
+                                  <div>
+                                    <div style="display: inline-block !important;">
+                                      <i class="fa fa-envelope"></i>
+                                    </div>
+                                    Email
+                                  </div>
+                                  <i class="fa fa-angle-down"></i>
+                                </button>
+                              </h2>
+                            </div>
+                            <div id="collapseEmail1" class="collapse in" data-parent="#accordion1">
+                              <div class="card-body">
+                                <div class="filterTextinput filter-text-input">
+                                    <li class="filterli filter-li">
+                                        <input type="text" id="email" [(ngModel)]="filter.email"
+                                            #email (keyup)="doSearch()"
+                                             class="filterTextbox filter-textbox" placeholder="Enter Email">
+                                    </li>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
                           <div class="card">
                               <div class="card-header">
                                 <h2 class="mb-0">
@@ -253,6 +541,40 @@
                                 </div>
                               </div>
                           </div>
+
+
+                          <div class="card">
+                            <div class="card-header">
+                              <h2 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseLocation2" aria-expanded="false">
+                                  <div>
+                                    <div style="display: inline-block !important;">
+                                      <i class="fa fa-language"></i>
+                                    </div>
+                                    Locations
+                                  </div>
+                                  <i class="fa fa-angle-down"></i>
+                                </button>
+                              </h2>
+                            </div>
+                            <div id="collapseLocation2" class="collapse" data-parent="#accordion1">
+                              <div class="card-body">
+                                <div class="filterTextinput filter-checkbox-input">
+                                    <!-- <label class="filterHeaders">Languages</label> -->
+                                    <li class="filterli">
+                                        <mat-checkbox *ngFor="let loc of loc_list" class="filter-checkbox"
+                                            [checked]="selectedLocations.indexOf(loc.id) !== -1"
+                                            (change)="setFilterDataCheckbox('location', loc.id)">
+                                            <!-- {{language.displayName}} -->
+                                            {{loc.place | capitalizeFirst}} 
+                                        </mat-checkbox>
+                                    </li>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+
+
                           <div class="card">
                               <div class="card-header">
                                 <h2 class="mb-0">
@@ -288,11 +610,14 @@
                       <button class="btn reset-btn" (click)="clearFilter()">
                         <i class="fa fa-undo"></i>Reset
                       </button>
-                      <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                      <button class="btn apply-btn" (click)="getUsers()">
                         <i class="fa fa-check"></i>Apply
                       </button>
                   </div>
               </aside>
+              <!-- *** close Apply filter code***** -->
+
+              <!-- *** start users details code ***** -->
               <section class="customersList">
                   <div class="row p-3">
                       <div class="col-lg-12">
@@ -305,14 +630,15 @@
                                               <thead>
                                                   <tr class="text-left text-uppercase">
                                                       <th class="display-min-none" style="min-width: 250px;">
-                                                          {{provider_label}} name</th>
+                                                          <!-- {{provider_label}}  -->
+                                                          name</th>
                                                       <th class="display-min-none" style="min-width: 125px;">User Type
                                                       </th>
-                                                      <th class="display-min-none" style="min-width: 125px;">Contact Info</th>
+                                                      <!-- <th class="display-min-none" style="min-width: 125px;">Contact Info</th> -->
                                                       <th class="display-min-none" style="width: 30%;">Specializations
                                                       </th>
                                                       <th class="display-min-none">Languages</th>
-                                                      <th class="display-min-none">Tokens count</th>
+                                                      <th class="display-min-none">Tokens#</th>
                                                       <th class="display-min-none"></th>
                                                   </tr>
                                               </thead>
@@ -320,9 +646,19 @@
                                                   <tr class="row_data border-bottom pointer-cursor waitlist-box"
                                                       *ngFor="let service of users_list | orderBy: order; let i = index;"
                                                       (click)="selectedRow(i,service)"
+                                                      [class.pointer-check]="this.showcheckbox" 
                                                       [class.disabled-group]="service.status=='INACTIVE'">
+                                                      <!-- (click)="selectedRow(i,service)" -->
                                                       <td class="">
                                                           <div class="disp-flex">
+                                                              <div class="pr-3 check-box"   *ngIf="showcheckbox">
+                                                                  <span class="symbol-label">
+                                                                    <!-- <input type="checkbox" name="Checkboxes4" [checked]="checkSelection(service)"> -->
+                                                                    <input type="checkbox" name="Checkboxes4"  [checked]="checkSelection(service)" (click)="stopprop($event);"   (change)="getUserIds(service, service.id , $event)">
+                                                                    <!-- <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a> -->
+
+                                                                  </span>
+                                                                </div>
                                                               <div class='user-img'>
                                                                   <img [src]="getUserImg(service)" />
                                                               </div>
@@ -341,6 +677,9 @@
                                                                           class="fa fa-map-marker mgn-rt-5"
                                                                           aria-hidden="true"></i>{{service.city}},&nbsp;{{service.state}}
                                                                   </div>
+                                                                  <div class="disp-flex mgn-up-5"  *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum || service.email">
+                                                                    <span (click)="stopprop($event); viewContactDetails(service)" style="color: #3c8dbc; cursor: pointer;">Contact Info</span>
+                                                                  </div>  
                                                                   <div class="d-lg-none">
                                                                       <div class=" mgn-up-5" *ngIf="service.userType">
                                                                           <span class="b2"
@@ -395,12 +734,11 @@
                                                           <span class="ttle"
                                                               *ngIf="service.userType === 'ADMIN'">Admin</span>
                                                       </td>
-                                                      <td class="display-min-none">
+                                                      <!-- <td class="display-min-none">
                                                           <span *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum || service.email">
                                                             <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
                                                           </span>
-                                                              <!-- {{service.countryCode}} {{service.mobileNo}}</span> -->
-                                                      </td>
+                                                      </td> -->
                                                       <td class="display-min-none">
                                                           <span *ngIf="service.specialization">
                                                               {{getSpecialization(service.specialization)}}</span>
@@ -417,7 +755,7 @@
                                                       </td>
                                                       <td>
                                                           <div class="copy">
-                                                              <span class="mbt">
+                                                              <span class="">
                                                                   <button type="button" style="margin-top: -12px;" mat-icon-button
                                                                       [matMenuTriggerFor]="appMenu"
                                                                       (click)="stopprop($event);">
@@ -462,10 +800,561 @@
                       </div>
                   </div>
               </section>
+              <!-- *** close  users details code ***** -->
           </div>
       </div>
       <div class="clearfix"></div>
   </div>
-</section>
+   <!-- ***close  web view  users  content***** -->
 
+   <!-- *** start Mobile Users  content***** -->
+  <div class="waitlist-box-check"  *ngIf="showusers" >
+    <div class="col-lg-8" [class.col-lg-12]="groups.length==0" *ngIf="!teamLoaded" >            
+        <div class="card p0 w-dta">
+          <!-- *** start show group name right side and add buttons and cancel buttons*** -->
+           <div class="p-3" *ngIf="!teamLoaded && groups.length > 0">
+                <h3 class="align-items-start flex-column">
+                <!-- <div class="waitlist-box-check"> -->
+                  <span *ngIf="!teamLoaded && groups.length > 0" class="fa fa-arrow-left pointer-cursor  waitlist-box-check" (click)="redirecToUsers()"> </span>
+                  &nbsp;
+                <!-- </div> -->
+                  <span class="card-label font-1 font-weight-bolder text-dark"
+                    *ngIf="selectedTeam == 'all' && groups.length > 0">All
+                    Users</span> <span class="card-label font-1 font-weight-bolder text-dark">
+                    </span>
+                  <span class="card-label font-1 font-weight-bolder text-dark"
+                    *ngIf="selectedTeam !== 'all'">{{selectedTeam.name}}</span>
+                </h3>
+           </div>
+           <div class="col-sm-12 col-lg-8 col-xs-12 col-md-12 mb-4">
+                 <button mat-flat-button class="font-size-xs add_btn mgn-lt-10 cancel_btn" (click)="cancelAdd()"
+                *ngIf="selectedTeam !== 'all'  && showUsers"><i class="fa fa-times mgn-rt-5" aria-hidden="true"></i>
+                 Cancel</button>
+      
+                <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="addCustomerToGroup()"
+                *ngIf="selectedTeam !== 'all'  && showUsers &&  (this.userIds.length > 0 && (this.selectedTeam.users &&  this.selectedTeam.users.length == 0)) ">
+                Add</button>
+
+                <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="addCustomerToGroup()"
+                *ngIf="selectedTeam !== 'all'  && showUsers &&  ((this.selectedTeam.users &&  this.selectedTeam.users.length > 0))">
+                Update</button>
+
+
+                <button mat-flat-button class="font-size-xs add_btn mgn-lt-10 cancel_btn" (click)="locationclose()"
+                *ngIf="addlocationcheck"><i class="fa fa-times mgn-rt-5" aria-hidden="true"></i>
+                Cancel</button>
+                
+                <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" 
+                *ngIf="addlocationcheck && this.userIds.length > 0" data-toggle="modal" data-target="#exampleModalCenterlocation">
+                Assign Locations</button>
+           </div>            
+          <!-- *** close show group name right side and add buttons and cancel buttons*** -->
+
+
+            <!-- *** start users details code ***** -->
+            <section class="customersList">
+                <div class="row p-3">
+                    <div class="col-lg-12">
+                        <div class="card card-custom card-stretch gutter-b no-padding">
+                            <div class="card-body pt-0 pb-3 no-padding">
+                                <div class="tab-content">
+                                    <div class="table-responsive1">
+                                        <table
+                                            class="table table-head-custom table-head-bg table-borderless table-vertical-center">
+                                            <thead>
+                                                <tr class="text-left text-uppercase">
+                                                    <th class="display-min-none" style="min-width: 250px;">
+                                                        {{provider_label}} name</th>
+                                                    <th class="display-min-none" style="min-width: 125px;">User Type
+                                                    </th>
+                                                    <th class="display-min-none" style="min-width: 125px;">Contact Info</th>
+                                                    <th class="display-min-none" style="width: 30%;">Specializations
+                                                    </th>
+                                                    <th class="display-min-none">Languages</th>
+                                                    <th class="display-min-none">Tokens count</th>
+                                                    <th class="display-min-none"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="row_data border-bottom pointer-cursor waitlist-box"
+                                                    *ngFor="let service of users_list | orderBy: order; let i = index;"
+                                                    (click)="selectedRow(i,service)"
+                                                    [class.disabled-group]="service.status=='INACTIVE'">
+                                                    <td class="">
+                                                        <div class="disp-flex">
+                                                            <div class="pr-3 check-box"   *ngIf="showcheckbox">
+                                                                <span class="symbol-label">                                                                
+                                                                  <input type="checkbox" name="Checkboxes4"  [checked]="checkSelection(service)" (click)="stopprop($event);"   (change)="getUserIds(service, service.id , $event)">
+
+                                                                </span>
+                                                              </div>
+                                                            <div class='user-img'>
+                                                                <img [src]="getUserImg(service)" />
+                                                            </div>
+                                                            <div class="mgn-lt-10">
+                                                                <div class="username">
+                                                                    {{(service.businessName) ? service.businessName
+                                                                    : service.firstName + ' ' +
+                                                                    service.lastName}}&nbsp;
+                                                                    <div class='status-circle'
+                                                                        [ngClass]="service.isAvailable ? 'green' : 'grey'"
+                                                                        *ngIf="accountSettings.availability && service.userType === 'PROVIDER' ">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="disp-flex mgn-up-5"
+                                                                    *ngIf="service.city && service.state"><i
+                                                                        class="fa fa-map-marker mgn-rt-5"
+                                                                        aria-hidden="true"></i>{{service.city}},&nbsp;{{service.state}}
+                                                                </div>
+                                                                <div class="d-lg-none">
+                                                                    <div class=" mgn-up-5" *ngIf="service.userType">
+                                                                        <span class="b2"
+                                                                            *ngIf="service.userType === 'PROVIDER' ">{{provider_label
+                                                                            |
+                                                                            capitalizeFirst}}</span>
+                                                                        <span class="b2"
+                                                                            *ngIf="service.userType === 'ASSISTANT'">{{assistant_label
+                                                                            |
+                                                                            capitalizeFirst}}</span>
+                                                                        <span class="b2"
+                                                                            *ngIf="service.userType === 'ADMIN'">Admin</span>
+                                                                    </div>
+                                                                    <div class="mgn-up-5" *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum || service.email">
+                                                                        <span class="b2">
+                                                                          <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="mgn-up-5"
+                                                                        *ngIf="service.specialization"> <span
+                                                                            class="b2">
+                                                                            {{getSpecialization(service.specialization)}}
+                                                                        </span></div>
+                                                                    <div class="mgn-up-5"
+                                                                        *ngIf="service.preferredLanguages"><span
+                                                                            class="b2">
+                                                                            {{getLanguages(service.preferredLanguages)}}
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="mgn-up-5"
+                                                                        *ngIf="service.userType === 'PROVIDER'">
+                                                                        <span class="b1">Tokens Count:
+                                                                        </span><span class="b2">
+                                                                            {{service.currentWlCount}}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="display-min-none">
+                                                        <span class="ttle"
+                                                            *ngIf="service.userType === 'PROVIDER' ">
+                                                            {{provider_label | capitalizeFirst}}
+                                                        </span>
+                                                        <span class="ttle"
+                                                            *ngIf="service.userType === 'ASSISTANT'">{{assistant_label
+                                                            |
+                                                            capitalizeFirst}}</span>
+                                                        <span class="ttle"
+                                                            *ngIf="service.userType === 'ADMIN'">Admin</span>
+                                                    </td>
+                                                    <td class="display-min-none">
+                                                        <span *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum || service.email">
+                                                          <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
+                                                        </span>
+                                                    </td>
+                                                    <td class="display-min-none">
+                                                        <span *ngIf="service.specialization">
+                                                            {{getSpecialization(service.specialization)}}</span>
+                                                    </td>
+                                                    <td class="display-min-none">
+                                                        <span *ngIf="service.preferredLanguages">
+                                                            {{getLanguages(service.preferredLanguages)}}
+                                                        </span>
+                                                    </td>
+                                                    <td class="display-min-none">
+                                                        <span *ngIf="service.userType === 'PROVIDER'">
+                                                            {{service.currentWlCount}}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <div class="copy">
+                                                            <span class="" style="top: 4px;">
+                                                                <button type="button" mat-icon-button
+                                                                    [matMenuTriggerFor]="appMenu"
+                                                                    (click)="stopprop($event);">
+                                                                    <mat-icon>more_vert</mat-icon>
+                                                                </button>
+                                                            </span>
+                                                            <mat-menu #appMenu="matMenu">
+                                                                <button mat-menu-item
+                                                                    (click)="personalProfile(service.id)">
+                                                                    Personal Details
+                                                                </button>
+                                                                <button *ngIf="service.userType === 'PROVIDER'"
+                                                                    mat-menu-item
+                                                                    (click)="manageSettings(service.id)">
+                                                                    Settings
+                                                                </button>
+                                                                <button mat-menu-item
+                                                                    (click)="changeUserStatus(service)">
+                                                                    <i *ngIf="service.status=='INACTIVE' || !service.status"
+                                                                        class="icon-enable disabled "></i>
+                                                                    <i *ngIf="service.status=='ACTIVE'"
+                                                                        class="icon-disable"></i>
+                                                                    {{(service.status=='ACTIVE') ? 'Disable'
+                                                                    :'Enable'}}
+                                                                </button>
+                                                            </mat-menu>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr *ngIf="users_list.length == 0 && !api_loading">
+                                                    No users found
+                                                </tr>
+                                            </tbody>
+                                            <app-common-innerloading-spinner *ngIf="api_loading">
+                                            </app-common-innerloading-spinner>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- *** close  users details code ***** -->
+        </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+   <!-- *** close MObile  users content***** -->
+
+    <!-- ***Apply  filter code for mobile ***** -->
+    <aside  class="filterSidebar filter-sidebar user-filter waitlist-box-check" *ngIf="filter_sidebar">
+      <section class="sidebar filter-container" id="filterContainer" style="overflow:auto" 
+          [ngStyle]="{'height.vh': 90, 'margin-top.px': filterapplied === true ? 95 : 44}">
+          <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+              <span class="filter-head-title">Filters</span>
+              <i class="icon-filter-one-op ng-star-inserted closeFilter"
+                  (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="'Close filter sidebar'"></i>
+          </div>
+          <ul class="sidebar-menu accordion" id="accordion1">
+              <div class="card">
+                  <div class="card-header">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName1" aria-expanded="false">
+                        <div>
+                          <div style="display: inline-block !important;">
+                            <i class="fa fa-user"></i>
+                          </div>
+                          Name
+                        </div>
+                        <i class="fa fa-angle-down"></i>
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapseName1" class="collapse in" data-parent="#accordion1">
+                    <div class="card-body">
+                      <div class="filterTextinput filter-text-input">
+                          <li class="filterli filter-li">
+                              <input type="text" id="firstName" [(ngModel)]="filter.firstName" #firstName
+                                  (keyup)="doSearch()" maxlength="20"
+                                  class="filterTextbox filter-textbox" placeholder="Enter First Name">
+                          </li>
+                      </div>
+                      <div class="filterTextinput filter-text-input">
+                          <li class="filterli filter-li">
+                              <input type="text" id="lastName" [(ngModel)]="filter.lastName" #lastName
+                              (keyup)="doSearch()" maxlength="10"
+                                  class="filterTextbox filter-textbox" placeholder="Enter Last Name">
+                          </li>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="card">
+                  <div class="card-header">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePin1" aria-expanded="false">
+                        <div>
+                          <div style="display: inline-block !important;">
+                            <i class="fa fa-location-arrow"></i>
+                          </div>
+                          Pincode
+                        </div>
+                        <i class="fa fa-angle-down"></i>
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapsePin1" class="collapse in" data-parent="#accordion1">
+                    <div class="card-body">
+                      <div class="filterTextinput filter-text-input">
+                          <li class="filterli filter-li">
+                              <input type="text" id="pincode" [(ngModel)]="filter.pinCode" #pincode
+                              (keyup)="doSearch()" maxlength="10"
+                                  class="filterTextbox filter-textbox" placeholder="Enter Pincode">
+                          </li>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="card">
+                  <div class="card-header">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseLocation1" aria-expanded="false">
+                        <div>
+                          <div style="display: inline-block !important;">
+                            <i class="fa fa-map-marker"></i>
+                          </div>
+                          Location
+                        </div>
+                        <i class="fa fa-angle-down"></i>
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapseLocation1" class="collapse in" data-parent="#accordion1">
+                    <div class="card-body">
+                      <div class="filterTextinput filter-text-input">
+                          <li class="filterli filter-li">
+                              <input type="text" id="city" [(ngModel)]="filter.city" #city
+                              (keyup)="doSearch()" maxlength="20"
+                                  class="filterTextbox filter-textbox" placeholder="Enter city">
+                          </li>
+                      </div>
+                      <div class="filterTextinput filter-text-input">
+                        <li class="filterli filter-li">
+                            <input type="text" id="state" [(ngModel)]="filter.state" #state
+                            (keyup)="doSearch()" maxlength="20"
+                                class="filterTextbox filter-textbox" placeholder="Enter state">
+                        </li>
+                    </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="card" *ngIf="accountSettings.availability">
+                <div class="card-header">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseAvailable1" aria-expanded="false">
+                      <div>
+                        <div style="display: inline-block !important;">
+                          <i class="fa fa-clock-o"></i>
+                        </div>
+                        Availability
+                      </div>
+                      <i class="fa fa-angle-down"></i>
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseAvailable1" class="collapse in" data-parent="#accordion1">
+                  <div class="card-body">
+                    <div class="filterTextinput filter-checkbox-input">
+                      <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                      </li>
+                      <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                        <mat-checkbox class="filter-checkbox" [checked]="allSelected"
+                          (change)="setFilterDataCheckbox('available', 'ALL')">
+                          All</mat-checkbox>
+                      </li>
+                      <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                        <mat-checkbox class="filter-checkbox" [checked]="availabileSelected"
+                          (change)="setFilterDataCheckbox('available', 'true')">
+                          Available</mat-checkbox>
+                      </li>
+                      <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                        <mat-checkbox class="filter-checkbox" [checked]="notAvailabileSelected"
+                          (change)="setFilterDataCheckbox('available', 'false')">
+                          Not Available</mat-checkbox>
+                      </li>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                  <div class="card-header">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePhone1" aria-expanded="false">
+                        <div>
+                          <div style="display: inline-block !important;">
+                            <i class="fa fa-phone"></i>
+                          </div>
+                          Phone Number
+                        </div>
+                        <i class="fa fa-angle-down"></i>
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapsePhone1" class="collapse in" data-parent="#accordion1">
+                    <div class="card-body">
+                      <div class="filterTextinput filter-text-input">
+                          <li class="filterli filter-li">
+                              <input type="text" id="primaryMobileNo" [(ngModel)]="filter.primaryMobileNo"
+                                  #primaryMobileNo (keyup)="doSearch()"
+                                   class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
+                          </li>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseEmail1" aria-expanded="false">
+                      <div>
+                        <div style="display: inline-block !important;">
+                          <i class="fa fa-envelope"></i>
+                        </div>
+                        Email
+                      </div>
+                      <i class="fa fa-angle-down"></i>
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseEmail1" class="collapse in" data-parent="#accordion1">
+                  <div class="card-body">
+                    <div class="filterTextinput filter-text-input">
+                        <li class="filterli filter-li">
+                            <input type="text" id="email" [(ngModel)]="filter.email"
+                                #email (keyup)="doSearch()"
+                                 class="filterTextbox filter-textbox" placeholder="Enter Email">
+                        </li>
+                    </div>
+                  </div>
+                </div>
+            </div>
+              <div class="card">
+                  <div class="card-header">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseUType1" aria-expanded="false">
+                        <div>
+                          <div style="display: inline-block !important;">
+                            <i class="fa fa-users"></i>
+                          </div>
+                          User Type
+                        </div>
+                        <i class="fa fa-angle-down"></i>
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapseUType1" class="collapse in" data-parent="#accordion1">
+                    <div class="card-body">
+                      <div class="filterTextinput filter-text-input">
+                          <li class="filterli filterDatepicker filter-li">
+                              <mat-form-field class="userfilter">
+                                  <mat-select id="userType" #userType [(ngModel)]="filter.userType"
+                                      placeholder="Select user type" (selectionChange)="doSearch()"
+                                      style="height: 0px;padding: 2px;">
+                                      <mat-option *ngFor="let user of userTypesFormfill" [value]="user.name">
+                                          {{user.displayName}}
+                                      </mat-option>
+                                  </mat-select>
+                              </mat-form-field>
+                          </li>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="card">
+                  <div class="card-header">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseLanguages1" aria-expanded="false">
+                        <div>
+                          <div style="display: inline-block !important;">
+                            <i class="fa fa-language"></i>
+                          </div>
+                          Languages
+                        </div>
+                        <i class="fa fa-angle-down"></i>
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapseLanguages1" class="collapse" data-parent="#accordion1">
+                    <div class="card-body">
+                      <div class="filterTextinput filter-checkbox-input">
+                          <!-- <label class="filterHeaders">Languages</label> -->
+                          <li class="filterli">
+                              <mat-checkbox *ngFor="let language of languages_arr" class="filter-checkbox"
+                                  [checked]="selectedLanguages.indexOf(language.name) !== -1"
+                                  (change)="setFilterDataCheckbox('languages', language.name)">
+                                  {{language.displayName}}
+                              </mat-checkbox>
+                          </li>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseLocation2" aria-expanded="false">
+                      <div>
+                        <div style="display: inline-block !important;">
+                          <i class="fa fa-language"></i>
+                        </div>
+                        Locations
+                      </div>
+                      <i class="fa fa-angle-down"></i>
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseLocation2" class="collapse" data-parent="#accordion1">
+                  <div class="card-body">
+                    <div class="filterTextinput filter-checkbox-input">
+                        <!-- <label class="filterHeaders">Languages</label> -->
+                        <li class="filterli">
+                            <mat-checkbox *ngFor="let loc of loc_list" class="filter-checkbox"
+                                [checked]="selectedLocations.indexOf(loc.id) !== -1"
+                                (change)="setFilterDataCheckbox('location', loc.id)">
+                                <!-- {{language.displayName}} -->
+                                {{loc.place | capitalizeFirst}} 
+                            </mat-checkbox>
+                        </li>
+                    </div>
+                  </div>
+                </div>
+             </div>
+              <div class="card">
+                  <div class="card-header">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSpecializations1" aria-expanded="false">
+                        <div>
+                          <div style="display: inline-block !important;">
+                            <i class="fas fa-user-tag"></i>
+                          </div>
+                          Specializations
+                        </div>
+                        <i class="fa fa-angle-down"></i>
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapseSpecializations1" class="collapse" data-parent="#accordion1">
+                    <div class="card-body">
+                      <div class="filter-checkbox-input">
+                          <!-- <label class="filterHeaders">Specializations</label> -->
+                          <li class="filterli">
+                              <mat-checkbox *ngFor="let special of specialization_arr" class="filter-checkbox"
+                                  [checked]="selectedSpecialization.indexOf(special.name) !== -1"
+                                  (change)="setFilterDataCheckbox('specializations', special.name)">
+                                  {{special.displayName}}
+                              </mat-checkbox>
+                          </li>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+          </ul>
+      </section>
+      <div class="filter-footer" *ngIf="filterapplied === true">
+          <button class="btn reset-btn" (click)="clearFilter()">
+            <i class="fa fa-undo"></i>Reset
+          </button>
+          <button class="btn apply-btn" (click)="getUsers()">
+            <i class="fa fa-check"></i>Apply
+          </button>
+      </div>
+  </aside>
+  <!-- *** close Apply filter code mobile***** -->
+
+</section>
 

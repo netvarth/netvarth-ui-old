@@ -101,10 +101,10 @@ this.email=data.member.userProfile.email || '';
   }
   dateChanged(e) {
     if (e) {
-      if (e._i) {
-        let cday = e._i.date;
-        let cmon = (e._i.month + 1);
-        const cyear = e._i.year;
+      if (e.value._i) {
+        let cday = e.value._i.date;
+        let cmon = (e.value._i.month + 1);
+        const cyear = e.value._i.year;
         if (cday < 10) {
           cday = '0' + cday;
         }

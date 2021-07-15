@@ -316,6 +316,7 @@
     background-color: white !important;
     margin: -10px -15px 0 !important;
     width: -webkit-fill-available !important;
+    width: -moz-available !important;
     /* text-transform: uppercase !important; */
 }
 
@@ -878,4 +879,11 @@
     border-radius: 0.75rem;
     box-shadow: 0 4px 4px 0 rgb(0 0 0 / 25%);
     border: 1px solid #eee;
+}
+.location {
+    font-weight: normal !important;
+    font-size: .8rem !important;
+}
+.modal-dialog {
+    margin: 30px auto !important;
 }

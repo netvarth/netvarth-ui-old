@@ -228,7 +228,13 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       if (this.userData.accountType === 'BRANCH' && this.userData.userType !== 2) {
         this.branchName = bdetails.bn || 'User';
         this.bname = this.userData.userName || 'User';
-        this.blogo = (this.userDetails.profilePicture) ? this.userDetails.profilePicture.url : '../../../assets/images/img-null.svg';
+        if (this.userDetails.profilePicture) {
+          this.blogo = this.userDetails.profilePicture;
+        } else if (bdetails.logo) {
+          this.blogo = bdetails.logo;
+        } else {
+          this.blogo = '../../../assets/images/img-null.svg';
+        }
       } else {
         this.bname = bdetails.bn || 'User';
         this.blogo = bdetails.logo || '../../../assets/images/img-null.svg';

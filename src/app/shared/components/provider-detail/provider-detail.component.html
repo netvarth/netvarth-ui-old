@@ -7,7 +7,7 @@
                         <a class="pull-left back-btn mgn-up-5" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
                     </div>
                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
-                        <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'pdetails'"></app-header>
+                        <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'pdetails'" [showHeaderAction]="true"></app-header>
                     </div>
                 </div>
                 <div *ngIf="bgCover" class="cvr-ht" [ngStyle]="{ 'background-image': 'url(' + bgCover + ')'}">
@@ -168,8 +168,8 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div class="question-main-outer" *ngIf="(selectedLocation.parkingType && selectedLocation.parkingType!=='' && selectedLocation.parkingType != undefined && selectedLocation.parkingType != 'none') ||
-                                                (selectedLocation.open24hours && selectedLocation.open24hours==1) || selectedLocation?.locationVirtualFields?.traumacentre=='true' ||
+                                            <div class="question-main-outer" *ngIf="(selectedLocation.parkingType && selectedLocation.parkingType!=='' && selectedLocation.parkingType != undefined && selectedLocation.parkingType != 'None') ||
+                                                selectedLocation.open24hours || selectedLocation?.locationVirtualFields?.traumacentre=='true' ||
                                                 selectedLocation?.locationVirtualFields?.docambulance=='true'|| selectedLocation?.locationVirtualFields?.densistambulance=='true' || selectedLocation?.locationVirtualFields?.physiciansemergencyservices=='true' ||
                                                 selectedLocation?.locationVirtualFields?.dentistemergencyservices=='true' ||
                                                 selectedLocation?.locationVirtualFields?.altemergencyservices=='true' ||

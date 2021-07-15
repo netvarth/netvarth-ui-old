@@ -30,6 +30,8 @@ export class CustomerActionsComponent implements OnInit {
     meet_data: any;
     id: any;
     providerMeetingUrl: any;
+    phoneNum;
+    whatsappNum;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private provider_services: ProviderServices,
         private snackbarService: SnackbarService,
         private groupService: GroupStorageService,
@@ -41,7 +43,13 @@ export class CustomerActionsComponent implements OnInit {
     ngOnInit() {
         this.getLabel();
         this.customerDetails = this.data.customer;
-        if (this.customerDetails[0].phoneNo || this.customerDetails[0].email) {
+        if (this.customerDetails[0].phoneNo && this.customerDetails[0].phoneNo.trim() !== '') {
+            this.phoneNum = this.customerDetails[0].phoneNo;
+        }
+        if (this.customerDetails[0].whatsAppNum && this.customerDetails[0].whatsAppNum.number) {
+            this.whatsappNum = this.customerDetails[0].whatsAppNum.number;
+        }
+        if (this.phoneNum || this.customerDetails[0].email) {
             this.showMessage = true;
         }
         if (this.data.type && this.data.type === 'label') {
@@ -240,7 +248,8 @@ export class CustomerActionsComponent implements OnInit {
             'proConIds': ids
         };
         this.provider_services.addLabeltoCustomer(postData).subscribe(data => {
-            this.dialogRef.close();
+            this.snackbarService.openSnackBar('Label applied successfully', { 'panelclass': 'snackbarerror' });
+            this.dialogRef.close('reload');
         },
             error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -256,7 +265,10 @@ export class CustomerActionsComponent implements OnInit {
             'proConIds': ids
         };
         this.provider_services.deleteLabelFromCustomer(postData).subscribe(data => {
-            this.dialogRef.close();
+            if (Object.keys(this.labelMap).length === 0) {
+                this.snackbarService.openSnackBar('Label removed', { 'panelclass': 'snackbarerror' });
+            }
+            this.dialogRef.close('reload');
         },
             error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

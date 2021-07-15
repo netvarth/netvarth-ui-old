@@ -82,6 +82,7 @@ export class VideoCallSharedComponent implements OnInit, OnDestroy {
   is_web = false;
   notSupported: any;
   videocredits: ArrayBuffer;
+  phoneNumber;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -133,7 +134,9 @@ export class VideoCallSharedComponent implements OnInit, OnDestroy {
         data => {
           // console.log(data)
           this.customer = data;
-          console.log(this.customer[0].phoneNo);
+          if (this.customer[0] && this.customer[0].phoneNo && this.customer[0].phoneNo.trim() !== '') {
+          this.phoneNumber = this.customer[0].phoneNo;
+          }
         },
         () => {
         }

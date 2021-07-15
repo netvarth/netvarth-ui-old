@@ -6,7 +6,8 @@
     <nav class="navbar navbar-static-top no-margin" role="navigation" [class.index-zero]="filter_sidebar">
       <div class="navbar-custom-menu width100pc">
         <ul class="nav navbar-nav width100pc">
-          <li class="dropdown messages-menu loc-lst queue-menu pull-right" *ngIf="account_type !== 'BRANCH' && time_type !==3">
+          <!-- <li class="dropdown messages-menu loc-lst queue-menu pull-right" *ngIf="account_type !== 'BRANCH' && time_type !==3"> -->
+          <li class="dropdown messages-menu loc-lst queue-menu pull-right" *ngIf="time_type !==3">
             <i class="icon-location dropdown-toggle " data-toggle="dropdown"></i>
             <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
               *ngIf="selected_location" style="padding-top: 12px !important;">
@@ -45,7 +46,7 @@
                
             
             </li> -->
-            <ng-container *ngIf="!apiloading && accountSettings.availability && account_type == 'BRANCH' && active_user.userType == 1 && qAvailability">
+            <ng-container *ngIf="!apiloading && (accountSettings && accountSettings.availability) && account_type == 'BRANCH' && active_user.userType == 1 && qAvailability">
             <li class="status-buttons-li make-unavailable pull-right mgn-rt-15" *ngIf="qAvailability.availableNow">
               <span class="status-val">I'm available till {{qAvailability.timeRange.eTime}}</span>
               <span class="btn btn-danger" (click)="createInstantQ()" *ngIf="instaQid">Make me unavailable</span>
@@ -327,7 +328,7 @@
                         </div>
                         <div class="modal-footer">
                           <li>
-                            <button type="button" class="btn close-btn" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn close-btn" data-dismiss="modal" #closebutton>Close</button>
                           </li>
                           <li class="footer manage-views"><a class="pointer-cursor btn" (click)="gotoCustomViews()">
                             <i class="fa fa-cogs"></i>
@@ -408,16 +409,16 @@
                           <div class="card-body">
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
-                                <input type="text" #Ffname (keyup)="keyPressed($event)" class="filterTextbox filter-textbox"
+                                <input type="text" #Ffname (keyup)="keyPressed()" class="filterTextbox filter-textbox"
                                   [(ngModel)]="filter.first_name" [ngModelOptions]="{standalone: true}"
-                                  placeholder="Enter First Name" (blur)="doSearch()">
+                                  placeholder="Enter First Name">
                               </li>
                             </div>
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
-                                <input type="text" #Flname (keyup)="keyPressed($event)" class="filterTextbox filter-textbox"
+                                <input type="text" #Flname (keyup)="keyPressed()" class="filterTextbox filter-textbox"
                                   [(ngModel)]="filter.last_name" [ngModelOptions]="{standalone: true}" placeholder="Enter Last Name"
-                                  (blur)="doSearch()">
+                                  >
                               </li>
                             </div>
                           </div>
@@ -442,7 +443,7 @@
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
                                 <input type="text" autocomplete="off" [(ngModel)]="filter.patientId"
-                                  [ngModelOptions]="{standalone: true}" (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                  [ngModelOptions]="{standalone: true}" (keyup)="keyPressed()"
                                   class="filterTextbox filter-textbox" placeholder="Enter {{customerIdTooltip | capitalizeFirst}}">
                               </li>
                             </div>
@@ -468,7 +469,7 @@
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
                                 <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId"
-                                  [ngModelOptions]="{standalone: true}" (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                  [ngModelOptions]="{standalone: true}" (keyup)="keyPressed()"
                                   class="filterTextbox filter-textbox" placeholder="Enter Booking ID">
                               </li>
                             </div>
@@ -522,7 +523,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="card">
+                      <div class="card" *ngIf="domain!='finance'">
                         <div class="card-header">
                           <h2 class="mb-0">
                             <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePayStatus1" aria-expanded="false">
@@ -632,7 +633,7 @@
                     <button class="btn reset-btn" (click)="clearFilter()">
                       <i class="fa fa-undo"></i>&nbsp;Reset
                     </button>
-                    <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                    <button class="btn apply-btn" (click)="doSearch()">
                       <i class="fa fa-check"></i>&nbsp;Apply
                     </button>
                   </div>
@@ -685,7 +686,7 @@
                     </tr>
                   </tbody>
                   <tbody
-                    *ngIf="startedCheckins.length > 0 && (activeQs.length > 0 || activeUser) && !small_device_display">
+                    *ngIf="startedCheckins.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0) ) && !small_device_display">
                     <tr class="pointer-cursor" [class.user-tr-backclr]="checkin.provider" *ngFor="let checkin of startedCheckins, let i=index"
                       (click)="goCheckinDetail(checkin)">
                       <td class="chkWth" *ngIf="startedCheckins.length > 1">
@@ -739,10 +740,7 @@
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
-                        <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
-                          {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
-                          + ' ' + checkin.provider.lastName}}
-                        </div>
+                     
                         <!-- <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
                           Not Assigned
                         </div> -->
@@ -762,6 +760,14 @@
                           <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                           {{checkin.service.name}}
+                        </div>
+                        <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
+                          {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
+                          + ' ' + checkin.provider.lastName}} <span style="color:green" *ngIf="checkin.internalStatus">- {{ checkin.internalStatus }}</span>
+                        </div>
+                        <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
+                          <!-- Team Name -->
+                          {{getUsersList(checkin.teamId)}}
                         </div>
                         <!-- <div [matTooltipClass]="tooltipcls" [matTooltip]="'Queue'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding queue-t" *ngIf="this.selQIds.length > 1">
@@ -795,10 +801,14 @@
                             (click)="stopprop($event);showConsumerNote(checkin)">
                             <i class="icon-note"></i>
                           </span>
-                          <span (click)="stopprop($event);openAttachmentGallery(checkin)"
+                          <!-- <span (click)="stopprop($event);openAttachmentGallery(checkin)"
                             [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                             *ngIf="checkin.hasAttachment"><i style="font-size: 20px;"
-                              class="material-icons">attach_file</i></span>
+                              class="material-icons">attach_file</i></span> -->
+                              <span (click)="stopprop($event);showAttachments(checkin)"
+                              [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                              *ngIf="checkin.hasAttachment"><i style="font-size: 20px;"
+                                class="material-icons">attach_file</i></span> 
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Payment status'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="pos">
@@ -884,7 +894,7 @@
                     </tr>
                   </tbody>
                   <tbody
-                    *ngIf="startedCheckins.length > 0 && (activeQs.length > 0 || activeUser) && small_device_display && !statusLoaded">
+                    *ngIf="startedCheckins.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) && small_device_display && !statusLoaded">
                     <div [class.user-tr-backclr]="checkin.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
                       *ngFor="let checkin of startedCheckins, let i=index">
                       <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="startedCheckins.length > 1">
@@ -892,7 +902,7 @@
                           (click)="stopprop($event)" (change)="chkStartedAptHistoryClicked(i, checkin)" />
                       </div>
                       <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
-                        [checkins]="startedCheckins" (actionPerformed)="cardClicked($event)" [allLabels]="allLabels"
+                        [checkins]="startedCheckins" [teams]="teams" (actionPerformed)="cardClicked($event)" [allLabels]="allLabels"
                         [statusAction]="'started'">
                       </app-card>
                     </div>
@@ -953,7 +963,7 @@
                     </tr>
                   </tbody>
                   <tbody
-                    *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser) && !small_device_display">
+                    *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) && !small_device_display">
                     <tr class="pointer-cursor" [class.user-tr-backclr]="checkin.provider" *ngFor="let checkin of check_in_filtered_list, let i=index"
                       (click)="goCheckinDetail(checkin)">
                       <td class="chkWth" *ngIf="showSelectAll()">
@@ -1013,10 +1023,7 @@
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
-                        <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
-                          {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
-                          + ' ' + checkin.provider.lastName}}
-                        </div>
+                
                         <!-- <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
                           Not Assigned
                         </div> -->
@@ -1036,6 +1043,14 @@
                           <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                           {{checkin.service.name}}
+                        </div>
+                        <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
+                          {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
+                          + ' ' + checkin.provider.lastName}}  <span style="color:green" *ngIf="checkin.internalStatus">- {{ checkin.internalStatus }}</span>
+                        </div>
+                        <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
+                          <!-- Team Name -->
+                          {{getUsersList(checkin.teamId)}}
                         </div>
                         <!-- <div [matTooltipClass]="tooltipcls" [matTooltip]="'Queue'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding queue-t" *ngIf="this.selQIds.length > 1">
@@ -1069,10 +1084,14 @@
                             (click)="stopprop($event);showConsumerNote(checkin)">
                             <i class="icon-note"></i>
                           </span>
-                          <span (click)="stopprop($event);openAttachmentGallery(checkin)"
+                          <span (click)="stopprop($event);showAttachments(checkin)"
+                          [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                          *ngIf="checkin.hasAttachment"><i style="font-size: 20px;"
+                            class="material-icons">attach_file</i></span> 
+                          <!-- <span (click)="stopprop($event);openAttachmentGallery(checkin)"
                             [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                             *ngIf="checkin.hasAttachment"><i style="font-size: 20px;"
-                              class="material-icons">attach_file</i></span>
+                              class="material-icons">attach_file</i></span> -->
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="pos">
                           <span [matTooltipClass]="tooltipcls" [matTooltip]="'Payment status'"
@@ -1177,7 +1196,7 @@
                     </tr>
                   </tbody>
                   <tbody
-                    *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser) && small_device_display && !statusLoaded">
+                    *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) && small_device_display && !statusLoaded">
                     <div [class.user-tr-backclr]="checkin.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
                       *ngFor="let checkin of check_in_filtered_list, let i=index">
                       <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="showSelectAll()">
@@ -1185,7 +1204,7 @@
                           (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, checkin)" />
                       </div>
                       <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
-                        [checkins]="check_in_filtered_list" (actionPerformed)="cardClicked($event)"
+                        [checkins]="check_in_filtered_list" [teams]="teams" (actionPerformed)="cardClicked($event)"
                         [allLabels]="allLabels" [statusAction]="statusAction">
                       </app-card>
                     </div>
@@ -1247,14 +1266,14 @@
                             <div class="card-body">
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
-                                  <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                  <input type="text" #Ffname (keyup)="keyPressed()"
                                     class="filterTextbox filter-textbox" [(ngModel)]="filter.first_name"
                                     [ngModelOptions]="{standalone: true}" placeholder="Enter First Name">
                                 </li>
                               </div>
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
-                                  <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                  <input type="text" #Flname (keyup)="keyPressed()"
                                     class="filterTextbox filter-textbox" [(ngModel)]="filter.last_name" [ngModelOptions]="{standalone: true}"
                                     placeholder="Enter Last Name">
                                 </li>
@@ -1280,8 +1299,8 @@
                             <div class="card-body">
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
-                                  <input type="text" autocomplete="off" [(ngModel)]="filter.patientId" (blur)="doSearch()"
-                                    [ngModelOptions]="{standalone: true}" (keyup)="keyPressed($event)" class="filterTextbox filter-textbox"
+                                  <input type="text" autocomplete="off" [(ngModel)]="filter.patientId"
+                                    [ngModelOptions]="{standalone: true}" (keyup)="keyPressed()" class="filterTextbox filter-textbox"
                                     placeholder="Enter {{customerIdTooltip | capitalizeFirst}}">
                                 </li>
                               </div>
@@ -1307,7 +1326,7 @@
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
                                   <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId"
-                                    [ngModelOptions]="{standalone: true}" (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                    [ngModelOptions]="{standalone: true}" (keyup)="keyPressed()"
                                     class="filterTextbox filter-textbox" placeholder="Enter Booking ID">
                                 </li>
                               </div>
@@ -1363,7 +1382,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="card">
+                        <div class="card" *ngIf="domain!='finance'">
                           <div class="card-header">
                             <h2 class="mb-0">
                               <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePayStatus2" aria-expanded="false">
@@ -1467,13 +1486,43 @@
                             </div>
                           </div>
                         </div>
+                        <div class="card" style="padding-bottom: 30px !important;">
+                          <div class="card-header">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseDate3" aria-expanded="false">
+                                <div>
+                                  <div style="display: inline-block !important;">
+                                    <i class="fa fa-calendar-o"></i>
+                                  </div>
+                                  <span>&nbsp;Date</span>
+                                </div>
+                                <i class="fa fa-angle-down"></i>
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapseDate3" class="collapse in" data-parent="#accordion3">
+                            <div class="card-body">
+                              <div class="filterTextinput filter-text-input">
+                                <li class="filterli filterDatepicker filter-li">
+                                  <input type="text" [(ngModel)]="filter.check_in_date"
+                                    [ngModelOptions]="{standalone: true}" [matDatepicker]="picker" #Fdate
+                                    class="filterTextbox filter-textbox" (dateChange)="keyPressed()" 
+                                    placeholder="Enter Date" [min]="tomorrowDate">
+                                  <mat-datepicker-toggle matSuffix [for]="picker">
+                                  </mat-datepicker-toggle>
+                                  <mat-datepicker #picker></mat-datepicker>
+                                </li>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </ul>
                     </section>
                     <div class="filter-footer" *ngIf="filterapplied === true">
                       <button class="btn reset-btn" (click)="clearFilter()">
                         <i class="fa fa-undo"></i>&nbsp;Reset
                       </button>
-                      <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                      <button class="btn apply-btn" (click)="doSearch()">
                         <i class="fa fa-check"></i>&nbsp;Apply
                       </button>
                     </div>
@@ -1510,7 +1559,7 @@
                   </tr>
                 </tbody>
                 <tbody
-                  *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser) && !small_device_display">
+                  *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) && !small_device_display">
                   <tr class="pointer-cursor" [class.user-tr-backclr]="checkin.provider" *ngFor="let checkin of check_in_filtered_list, let i=index"
                     (click)="goCheckinDetail(checkin)">
                     <td class="chkWth" *ngIf="showSelectAll()">
@@ -1570,10 +1619,7 @@
                         {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                     </td>
                     <td class="title td-two">
-                      <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
-                        {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
-                        ' ' + checkin.provider.lastName}}
-                      </div>
+                
                       <!-- <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
                         Not Assigned
                       </div> -->
@@ -1594,6 +1640,14 @@
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                         {{checkin.service.name}}
 
+                      </div>
+                      <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
+                        {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
+                        ' ' + checkin.provider.lastName}}  <span style="color:green" *ngIf="checkin.internalStatus">- {{ checkin.internalStatus }}</span>
+                      </div>
+                      <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
+                        <!-- Team Name -->
+                        {{getUsersList(checkin.teamId)}}
                       </div>
                       <!-- <div [matTooltipClass]="tooltipcls" [matTooltip]="'Queue'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding queue-t" *ngIf="this.selQIds.length > 1">
@@ -1627,10 +1681,14 @@
                           (click)="stopprop($event);showConsumerNote(checkin)">
                           <i class="icon-note"></i>
                         </span>
-                        <span (click)="stopprop($event);openAttachmentGallery(checkin)"
+                        <!-- <span (click)="stopprop($event);openAttachmentGallery(checkin)"
                           [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                           *ngIf="checkin.hasAttachment"><i style="font-size: 20px;"
-                            class="material-icons">attach_file</i></span>
+                            class="material-icons">attach_file</i></span> -->
+                            <span (click)="stopprop($event);showAttachments(checkin)"
+                            [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                            *ngIf="checkin.hasAttachment"><i style="font-size: 20px;"
+                              class="material-icons">attach_file</i></span> 
                       </div>
                       <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="pos">
                         <span [matTooltipClass]="tooltipcls" [matTooltip]="'Payment status'" data-title="Payment Status"
@@ -1722,7 +1780,7 @@
                   </tr>
                 </tbody>
                 <tbody
-                  *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser) && small_device_display && !statusLoaded">
+                  *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) && small_device_display && !statusLoaded">
                   <div [class.user-tr-backclr]="checkin.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
                     *ngFor="let checkin of check_in_filtered_list, let i=index">
                     <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="showSelectAll()">
@@ -1730,7 +1788,7 @@
                         (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, checkin)" />
                     </div>
                     <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
-                      [checkins]="check_in_filtered_list" (actionPerformed)="cardClicked($event)"
+                      [checkins]="check_in_filtered_list" [teams]="teams" (actionPerformed)="cardClicked($event)"
                       [allLabels]="allLabels" [statusAction]="statusAction">
                     </app-card>
                   </div>
@@ -1788,14 +1846,14 @@
                             <div class="card-body">
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
-                                  <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                  <input type="text" #Ffname (keyup)="keyPressed()"
                                     class="filterTextbox filter-textbox" [(ngModel)]="filter.first_name"
                                     [ngModelOptions]="{standalone: true}" placeholder="Enter First Name">
                                 </li>
                               </div>
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
-                                  <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                  <input type="text" #Flname (keyup)="keyPressed()"
                                     class="filterTextbox filter-textbox" [(ngModel)]="filter.last_name" [ngModelOptions]="{standalone: true}"
                                     placeholder="Enter Last Name">
                                 </li>
@@ -1822,7 +1880,7 @@
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
                                   <input type="text" autocomplete="off" [(ngModel)]="filter.patientId"
-                                    [ngModelOptions]="{standalone: true}" (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                    [ngModelOptions]="{standalone: true}" (keyup)="keyPressed()"
                                     class="filterTextbox filter-textbox" placeholder="Enter {{customerIdTooltip | capitalizeFirst}}">
                                 </li>
                               </div>
@@ -1848,7 +1906,7 @@
                               <div class="filterTextinput filter-text-input">
                                 <li class="filterli filter-li">
                                   <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId"
-                                    [ngModelOptions]="{standalone: true}" (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                    [ngModelOptions]="{standalone: true}" (keyup)="keyPressed()"
                                     class="filterTextbox filter-textbox" placeholder="Enter Booking ID">
                                 </li>
                               </div>
@@ -1874,8 +1932,8 @@
                               <div class="filterTextinput filter-text-input" *ngIf="time_type == 3">
                                 <li class="filterli filter-li">
                                   <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
-                                    [ngModelOptions]="{standalone: true}" #Fmobile (blur)="doSearch()"
-                                    (keyup)="keyPressed($event)" (keypress)="isNumeric($event)" maxlength="10"
+                                    [ngModelOptions]="{standalone: true}" #Fmobile
+                                    (keyup)="keyPressed()" (keypress)="isNumeric($event)" maxlength="10"
                                     class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
                                 </li>
                               </div>
@@ -2042,7 +2100,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="card">
+                        <div class="card" *ngIf="domain!='finance'">
                           <div class="card-header">
                             <h2 class="mb-0">
                               <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePayStatus3" aria-expanded="false">
@@ -2166,7 +2224,7 @@
                                 <li class="filterli filterDatepicker filter-li">
                                   <input type="text" [(ngModel)]="filter.check_in_start_date"
                                     [ngModelOptions]="{standalone: true}" [max]="maxday" [matDatepicker]="picker" #Fdate
-                                    (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox filter-textbox"
+                                    (dateChange)="keyPressed()" class="filterTextbox filter-textbox"
                                     placeholder="Enter Start Date">
                                   <mat-datepicker-toggle matSuffix [for]="picker">
                                   </mat-datepicker-toggle>
@@ -2177,7 +2235,7 @@
                                 <li class="filterli filterDatepicker filter-li">
                                   <input type="text" [(ngModel)]="filter.check_in_end_date"
                                     [ngModelOptions]="{standalone: true}" [min]="endminday" [max]="endmaxday"
-                                    [matDatepicker]="picker" #Fdate (dateChange)="doSearch()" (blur)="doSearch()"
+                                    [matDatepicker]="picker" #Fdate (dateChange)="keyPressed()"
                                     class="filterTextbox filter-textbox" placeholder="Enter End Date">
                                   <mat-datepicker-toggle matSuffix [for]="picker">
                                   </mat-datepicker-toggle>
@@ -2193,7 +2251,7 @@
                       <button class="btn reset-btn" (click)="clearFilter()">
                         <i class="fa fa-undo"></i>&nbsp;Reset
                       </button>
-                      <button class="btn apply-btn" (click)="hideFilterSidebar()">
+                      <button class="btn apply-btn" (click)="doSearch()">
                         <i class="fa fa-check"></i>&nbsp;Apply
                       </button>
                     </div>
@@ -2281,10 +2339,7 @@
                         {{customer_label | capitalizeFirst}} id:&nbsp; {{checkin.consumer.jaldeeId}}</div>
                     </td>
                     <td class="title td-two">
-                      <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
-                        {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
-                        ' ' + checkin.provider.lastName}}
-                      </div>
+                   
                       <!-- <div class="" *ngIf="selectedUser && selectedUser.id == 'all' && !checkin.provider">
                         Not Assigned
                       </div> -->
@@ -2304,6 +2359,14 @@
                         <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                           *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></i>
                         {{checkin.service.name}}
+                      </div>
+                      <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
+                        {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
+                        ' ' + checkin.provider.lastName}}<span style="color:green" *ngIf="checkin.internalStatus">- {{ checkin.internalStatus }}</span>
+                      </div>
+                      <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
+                       <!-- {{}} Team Name -->
+                       {{getUsersList(checkin.teamId)}}
                       </div>
                       <!-- <div [matTooltipClass]="tooltipcls" [matTooltip]="'Queue'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding queue-t" *ngIf="this.selQIds.length > 1">
@@ -2337,10 +2400,14 @@
                           (click)="stopprop($event);showConsumerNote(checkin)">
                           <i class="icon-note"></i>
                         </span>
-                        <span (click)="stopprop($event);openAttachmentGallery(checkin)"
+                        <!-- <span (click)="stopprop($event);openAttachmentGallery(checkin)"
                           [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                           *ngIf="checkin.hasAttachment"><i style="font-size: 20px;"
-                            class="material-icons">attach_file</i></span>
+                            class="material-icons">attach_file</i></span> -->
+                            <span (click)="stopprop($event);showAttachments(checkin)"
+                            [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                            *ngIf="checkin.hasAttachment"><i style="font-size: 20px;"
+                              class="material-icons">attach_file</i></span> 
                       </div>
                       <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                         <span class="" style="font-size: smaller;">
@@ -2373,7 +2440,7 @@
                         <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor start-btn" style="padding: 3px 5px 5px 2px;"
-                        *ngIf="(time_type==1||time_type==3) &&  (checkin.service.serviceType === 'virtualService') && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'started') && checkin.service.virtualCallingModes[0].callingMode !== 'VideoCall'"
+                        *ngIf="(time_type==1||time_type==3) &&  (checkin.service.serviceType === 'virtualService') && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'started')"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                         (click)="stopprop($event);showCallingModes(checkin, 'STARTED')">
                         <span
@@ -2430,7 +2497,7 @@
                   </tr>
                 </tbody>
                 <tbody
-                  *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser) && small_device_display">
+                  *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) && small_device_display">
                   <div [class.user-tr-backclr]="checkin.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
                     *ngFor="let checkin of check_in_filtered_list, let i=index">
                     <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="check_in_filtered_list.length > 1">
@@ -2438,7 +2505,7 @@
                         (change)="chkAptHistoryClicked(i, checkin)" />
                     </div>
                     <app-card [item]="checkin" [type]="'checkin-dashboard'" [time_type]="time_type"
-                      [checkins]="check_in_filtered_list" (actionPerformed)="cardClicked($event)"
+                      [checkins]="check_in_filtered_list" [teams]="teams" (actionPerformed)="cardClicked($event)"
                       [allLabels]="allLabels" [statusAction]="statusAction">
                     </app-card>
                   </div>

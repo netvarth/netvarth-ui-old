@@ -37,6 +37,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UserServiceChangeModule } from '../../../shared/modules/user-service-change/user-service-change.module';
 import { instantQueueComponent } from './instantQ/instantQueue.component';
+import { AssignTeamModule } from '../../../shared/modules/assign-team/assign-team.module';
 
 
 @NgModule({
@@ -70,7 +71,8 @@ import { instantQueueComponent } from './instantQ/instantQueue.component';
         CardModule,
         MatTableModule,
         MatCheckboxModule,
-        UserServiceChangeModule
+        UserServiceChangeModule,
+        AssignTeamModule
     ],
     declarations: [
         CheckInsComponent,

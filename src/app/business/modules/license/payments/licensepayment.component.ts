@@ -19,16 +19,6 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 export class PaymentComponent implements OnInit {
   payment_popup = null;
   breadcrumbs = [];
-  // breadcrumbs = [
-  //   {
-  //     title: 'License & Invoice',
-  //     url: '/provider/license'
-  //   },
-  //   {
-  //       title: 'Payments'
-  //   }
-  // ];
-  // breadcrumbs = this.breadcrumbs_init;
   waitlistDetails: any = [];
   paymentresponse: any = [];
   origin;
@@ -73,7 +63,6 @@ export class PaymentComponent implements OnInit {
     });
   }
   ngOnInit() {
-    // this.breadcrumbs = this.breadcrumbs_init;
     this.breadcrumbs = [
       {
         title: 'License & Invoice',
