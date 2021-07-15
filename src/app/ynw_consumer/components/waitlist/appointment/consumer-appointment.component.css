@@ -1246,9 +1246,7 @@ ngx-intl-tel-input input {
 }
 .prenotes {
   border: 1px solid #cccccc80;
-  padding: 10px;
-  max-height: 100px;
-  overflow: auto;
+  padding: 20px 10px;
 }
 .preinfo-title {
   margin-bottom: 10px;
@@ -1731,6 +1729,9 @@ body.modal-open {
 }
 .jvideo-icon-mg5 {
   margin-bottom: 5px !important;
+}
+.prenotes a {
+  color: #1572a8 !important;
 }
 .creditleft{
   font-size: small;
