@@ -191,11 +191,11 @@
                                                 </div>                                     
                                             </div>
                                             <div class="clearfix"></div>
-                                            <div class="card-body" style="margin-top: 10px !important">
+                                            <!-- <div class="card-body" style="margin-top: 10px !important">
                                                     <span class="notistyle">Telegram Notifications</span>
                                                     <span class="badge badge-info pull-right notistyle" *ngIf="!status" (click)="enableTelegram('ENABLED')">Off</span>
                                                     <span class="badge badge-info pull-right notistyle" *ngIf="status" (click)="enableTelegram('DISABLED')">On</span>
-                                                </div>
+                                                </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -216,9 +216,27 @@
                     </div>
                 </div>
             </div>
-            
+            <div class="panel-body no-padding web">
+                    <div class="card component-card_1 mgn-up-10 mgn-lt-10">
+                            <div class="card-body">
+                                    <span><img class="image" src="./assets/images/Asset2@300x(1).png" alt="Basic Plus"></span>
+                                    <span class="notistyle">Telegram Notifications</span>
+                                            <span class="badge badge-info  notistyles" *ngIf="!status" (click)="enableTelegram('ENABLED')">Off</span>
+                                            <span class="badge badge-info notistyles"*ngIf="status" (click)="enableTelegram('DISABLED')">On</span>
+                            </div>
+                        </div>
+            </div>
+            <div class="panel-body no-padding disply">
+                    <div class="card component-card_1 mgn-up-10 mgn-lt-10">
+                            <div class="card-body">
+                                    <span><img class="image" src="./assets/images/Asset2@300x(1).png" alt="Basic Plus"></span>
+                                    <span class="notistyle">Telegram Notifications</span>
+                                            <span class="badge badge-info notistyles" *ngIf="!status" (click)="enableTelegram('ENABLED')">Off</span>
+                                            <span class="badge badge-info notistyles"*ngIf="status" (click)="enableTelegram('DISABLED')">On</span>
+                            </div>
+                        </div>
+            </div>
         </div>
-
     </div>
 </section>
 
