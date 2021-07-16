@@ -51,6 +51,7 @@ export class ShareRxComponent implements OnInit {
   consumer_email: any;
   api_loading = false;
   phone = '';
+  phon= '';
   SEND_MESSAGE = '';
   settings: any = [];
   showToken = false;
@@ -162,6 +163,7 @@ export class ShareRxComponent implements OnInit {
             }
             if (this.customerDetail.phoneNo) {
               this.phone = this.customerDetail.phoneNo;
+              this.phon = this.phone.replace(/\s/g, "");
             }
 
   });
@@ -446,6 +448,7 @@ export class ShareRxComponent implements OnInit {
           this.smsWarnMsg = Messages.LOW_SMS_CREDIT;
           this.getLicenseCorpSettings();
         } else if (this.smsCredits === 0) {
+          
           this.is_smsLow = true;
           this.is_noSMS = true;
           this.smsWarnMsg = Messages.NO_SMS_CREDIT;
