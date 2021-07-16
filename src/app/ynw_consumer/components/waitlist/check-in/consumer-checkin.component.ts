@@ -212,6 +212,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     whatsappCountryCode;
     disablebutton = false;
     readMore = false;
+    razorpayGatway = false;
+    paytmGateway = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -873,7 +875,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
         });
     }
-    saveCheckin(type?) {
+    saveCheckin(type? , gateway?) {
+         if(gateway){
+            if(gateway === 'razorpay'){
+                this.razorpayGatway = true;
+            }else{
+                this.paytmGateway = true;
+               }
+         }
         console.log('insaide');
         if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
             if (this.waitlist_for.length !== 0) {
@@ -951,6 +960,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                     this.disablebutton = false;
+                    this.paytmGateway = false;   
+                    this.razorpayGatway = false;
                 });
     }
     submitQuestionnaire(uuid) {
@@ -999,7 +1010,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     paymentOperation() {
         if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
-            this.payuPayment();
+            // this.payuPayment();
+            if(this.razorpayGatway){
+                this.payuPayment();
+              }
+              else{
+                this.paytmPayment();
+              }
+  
         } else {
             let multiple;
             if (this.uuidList.length > 1) {
@@ -2186,6 +2204,12 @@ console.log('inside validaity');
         paymentWay = 'DC';
         this.makeFailedPayment(paymentWay);
     }
+    paytmPayment() {
+        let paymentWay;
+        paymentWay = 'PPI';
+        this.makeFailedPayment(paymentWay);
+        this.paytmGateway = false;    
+      }
     makeFailedPayment(paymentMode) {
         this.waitlistDetails = {
             'amount': this.paymentDetails.amountRequiredNow,
