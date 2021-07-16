@@ -277,7 +277,8 @@ export class EditProfileComponent implements OnInit {
             curuserdetexisting['userName'] = sub_data.first_name + ' ' + sub_data.last_name;
             curuserdetexisting['firstName'] = sub_data.first_name;
             curuserdetexisting['lastName'] = sub_data.last_name;
-            this.groupService.setitemToGroupStorage('ynw-user', curuserdetexisting);
+            curuserdetexisting['email'] = sub_data.email;
+            this.groupService.setitemToGroupStorage('ynw-user', curuserdetexisting,);
             const pdata = { 'ttype': 'updateuserdetails' };
             this.shared_functions.sendMessage(pdata);
           },
@@ -325,37 +326,6 @@ export class EditProfileComponent implements OnInit {
   redirecToSettings() {
     this._location.back();
     // this.router.navigate(['provider', 'settings', 'bprofile']);
-  }
-  addTele() {
-    console.log(this.editProfileForm.get('telegramnumber').value)
-    if (this.editProfileForm.get('telegramnumber').value === '') {
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
-      // 'Please enter mobile phone number';
-      return;
-    }
-    if (this.editProfileForm.get('telegramnumber').value !== '') {
-      const curTele = this.editProfileForm.get('telegramnumber').value;
-      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
-      const result = pattern.test(curTele);
-      if (!result) {
-        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
-        // 'Please enter a valid mobile phone number';
-        return;
-      }
-      const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
-      const result1 = pattern1.test(curTele);
-      if (!result1) {
-        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
-        // 'Mobile number should have 10 digits';
-        return;
-      }
-     
-      else {
-        
-
-      }
-      // this.notifyTele = '';
-    }
   }
   telegramInfo() {
     this.telegramdialogRef = this.dialog.open(TelegramInfoComponent, {
