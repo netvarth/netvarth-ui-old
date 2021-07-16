@@ -129,7 +129,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     currentPhone;
     users: any = [];
     emailExist = false;
-    payEmail;
+    payEmail = '';
     emailerror = null;
     changePhno = false;
     selected_phone;
@@ -743,6 +743,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         });
     }
     confirmcheckin(type?) {
+        console.log(type+this.sel_ser_det.isPrePayment +this.payEmail);
+        
         if(type==='appt' && this.sel_ser_det.isPrePayment &&this.payEmail===''){
             const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
                 width: '40%',
@@ -895,7 +897,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     saveCheckin(type?) {
-        console.log('insaide');
+        console.log('insaide'+type);
         if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
             if (this.waitlist_for.length !== 0) {
                 for (const list of this.waitlist_for) {
