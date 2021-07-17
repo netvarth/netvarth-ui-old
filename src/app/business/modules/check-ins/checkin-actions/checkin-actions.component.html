@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="action-box pointer-cursor" (click)="changeWaitlistStatusAction()"
-            *ngIf="showArrived || showCancel || showUndo || checkin.waitlistStatus == 'started' || (statusList && statusList.length > 0)">
+            *ngIf="showArrived || showCancel || showUndo || checkin.waitlistStatus == 'started'">
             <div class="action-box-sub">
                 <span class="changestatus-icon"></span>
                 <div class="icon-text">Change Status to</div>
@@ -65,7 +65,7 @@
         </div>
 
         <div class="action-box pointer-cursor"
-        *ngIf="!data.multiSelection && accountType=='BRANCH' && groups && groups.length > 0 &&  (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')"
+        *ngIf="!data.multiSelection && accountType=='BRANCH' &&  !checkin.provider && groups && groups.length > 0 &&  (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')"
         (click)="assignteam()">  
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
