@@ -2219,58 +2219,56 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   onButtonAfterHook() { }
   showServiceDetail(serv, busname) {
-    if (serv.serviceType && serv.serviceType === 'donationService') {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          bname: busname,
-          sector: this.businessjson.serviceSector.domain,
-         // serdet: JSON.stringify(serv),
-          serv_type: 'donation'}
-      };
-      if(this.userId){
-        this.routerobj.navigate([this.accountEncId,this.userId,'service',serv.id], navigationExtras);
-      }else{
-        this.routerobj.navigate([this.accountEncId,'service',serv.id], navigationExtras);
-      }
-      
-    } else {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-           bname: busname,
-          sector: this.businessjson.serviceSector.domain,
-         // serdet: JSON.stringify(serv)
-        }
-      };
-      if(this.userId){
-        this.routerobj.navigate([this.accountEncId,this.userId,'service',serv.id], navigationExtras);
-      }else{
-        this.routerobj.navigate([this.accountEncId,'service',serv.id], navigationExtras);
-      }
-    }
-    // let servData;
     // if (serv.serviceType && serv.serviceType === 'donationService') {
-    //   servData = {
-    //     bname: busname,
-    //     sector: this.businessjson.serviceSector.domain,
-    //     serdet: serv,
-    //     serv_type: 'donation'
+    //   const navigationExtras: NavigationExtras = {
+    //     queryParams: {
+    //       bname: busname,
+    //       sector: this.businessjson.serviceSector.domain
+    //       serv_type: 'donation'}
     //   };
+    //   if(this.userId){
+    //     this.routerobj.navigate([this.accountEncId,this.userId,'service',serv.id], navigationExtras);
+    //   }else{
+    //     this.routerobj.navigate([this.accountEncId,'service',serv.id], navigationExtras);
+    //   }
+      
     // } else {
-    //   servData = {
-    //     bname: busname,
-    //     sector: this.businessjson.serviceSector.domain,
-    //     serdet: serv
+    //   const navigationExtras: NavigationExtras = {
+    //     queryParams: {
+    //        bname: busname,
+    //       sector: this.businessjson.serviceSector.domain
+    //     }
     //   };
+    //   if(this.userId){
+    //     this.routerobj.navigate([this.accountEncId,this.userId,'service',serv.id], navigationExtras);
+    //   }else{
+    //     this.routerobj.navigate([this.accountEncId,'service',serv.id], navigationExtras);
+    //   }
     // }
+    let servData;
+    if (serv.serviceType && serv.serviceType === 'donationService') {
+      servData = {
+        bname: busname,
+        sector: this.businessjson.serviceSector.domain,
+        serdet: serv,
+        serv_type: 'donation'
+      };
+    } else {
+      servData = {
+        bname: busname,
+        sector: this.businessjson.serviceSector.domain,
+        serdet: serv
+      };
+    }
 
-    // this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
-    //   width: '50%',
-    //   panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', this.theme],
-    //   disableClose: true,
-    //   data: servData
-    // });
-    // this.servicedialogRef.afterClosed().subscribe(() => {
-    // });
+    this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', this.theme],
+      disableClose: true,
+      data: servData
+    });
+    this.servicedialogRef.afterClosed().subscribe(() => {
+    });
   }
   getTerminologyTerm(term) {
     if (this.terminologiesjson) {
