@@ -47,7 +47,7 @@
                 <span class="itemHead">Booking id</span>
                 <span class="itemVal">{{waitlist_data.appointmentEncId}}</span>
               </div>
-              <div class="mgn-up-10 stats-item" *ngIf="(waitlist_data.appmtFor[0].bookingLocation) && (waitlist_data.appmtFor[0].bookingLocation || waitlist_data.appmtFor[0].bookingLocation.district || waitlist_data.appmtFor[0].bookingLocation.state)">
+              <div class="mgn-up-10 stats-item" *ngIf="(waitlist_data.appmtFor[0].bookingLocation) && (waitlist_data.appmtFor[0].bookingLocation.district || waitlist_data.appmtFor[0].bookingLocation.state)">
                 <span class="itemHead">Location</span>
                 <span class="itemVal">
                   {{waitlist_data.appmtFor[0].bookingLocation.district}},
