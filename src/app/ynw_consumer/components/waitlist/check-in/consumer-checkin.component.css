@@ -1310,11 +1310,13 @@ ngx-intl-tel-input input {
 .containerAppt {
   font-size: 1.7rem;
   margin: auto;
-  color: darkblue;
+  color: rgb(4, 124, 133);
   font-weight: bold;
   margin-bottom: 20px;
   border: 1px solid #00008b26;
-  box-shadow: 0px 0px 2px 2px #cac8c880;
+  border-radius: 10px;
+  /* box-shadow: 0px 0px 2px 2px #cac8c880; */
+  box-shadow: rgba(45, 42, 42, 0.11) 0px 30px 30px, rgba(0, 0, 0, 0.1) 0px -12px 30px, rgba(0, 0, 0, 0.05) 0px 4px 6px;
 }
 .containerpayment {
   font-size: 1.3rem;
@@ -1323,7 +1325,8 @@ ngx-intl-tel-input input {
   margin-bottom: 20px;
   /* border: 1px solid #00008b26; */
   /* box-shadow: 4px 4px 1px 1px #d9d9d9; */
-  box-shadow:rgb(0 0 0 / 10%) 0px 30px 30px, rgb(0 0 0 / 10%) 0px -12px 30px, rgb(0 0 0 / 10%) 0px 4px 6px;
+  /* box-shadow:rgb(0 0 0 / 10%) 0px 30px 30px, rgb(0 0 0 / 10%) 0px -12px 30px, rgb(0 0 0 / 10%) 0px 4px 6px; */
+  
   border-radius: 10px;
   padding-left: 10px;
   height: 110px;
@@ -1776,25 +1779,64 @@ body.modal-open {
 }
 
 .creditleft{
-  font-size: small;
+  font-size: x-small;
   padding-left: 20px;
   color: darkgrey;
+  padding-bottom: 10px;
 }
 .jaldeecredit{
   /* color: darkgrey; */
-  font-size: medium;
   padding-top: 5px;
+  font-size: small;
 }
 .cancelpolicy{
   text-align: center;
   padding-bottom: 10px;
-}
-.prepayment{
+}.prepayment{
   text-align: center;
   font-size: 1.3rem;
 }
+.prepayment-confirm{
+  text-align: center;
+  font-size: 1.3rem;
+  margin-top:50px;
+  margin-left: 100px;
+}
+.prepayment-confirm .btn{
+  border-radius: 1.5rem!important;
+  font-size:1.5rem!important;
+}
+.prepayment .btn{
+ border-radius: 1.5rem!important;
+ font-size:1.5rem!important;
+}
 @media (max-width: 400px) {
-.containerpayment{
-  height: 140px;
-}
-}
+  .containerpayment{
+    height: 140px;
+    font-size: .75rem;
+  }
+   .containerAppt{
+    font-size: 1rem;
+  }
+  .prepayment{
+    text-align: center;
+    font-size: 1rem;
+  }
+  .prepayment-confirm{
+    text-align: center;
+    font-size: 1rem;
+    margin-top:20px;
+    margin-left: 20px;
+  }
+  .prepayment-confirm .btn{
+    border-radius: 1rem!important;
+    font-size:1rem!important;
+  }
+  .prepayment .btn{
+   border-radius: 1rem!important;
+   font-size:1rem!important;
+  }
+  .cancelpolicy{
+    margin-top:5px;
+  }
+  }

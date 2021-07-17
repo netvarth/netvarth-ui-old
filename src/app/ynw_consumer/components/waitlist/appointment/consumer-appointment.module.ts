@@ -49,7 +49,8 @@ import { VirtualFieldsModule } from '../../virtualfields/virtualfields.module';
         VirtualFieldsModule
     ],
     entryComponents: [
-        AppointmentConfirmPopupComponent
+        AppointmentConfirmPopupComponent,
+      
     ],
     exports: [ConsumerAppointmentComponent]
 })
