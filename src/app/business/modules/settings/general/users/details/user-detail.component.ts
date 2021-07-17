@@ -105,6 +105,7 @@ export class BranchUserDetailComponent implements OnInit {
     whatsappCountry;
     countrycode;
     isadminPrivilege: any;
+    provider_label = '';
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -125,6 +126,7 @@ export class BranchUserDetailComponent implements OnInit {
         );
     }
     ngOnInit() {
+        this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.createForm();
         if (this.actionparam.val) {
             this.userId = this.actionparam.val;
@@ -147,15 +149,16 @@ export class BranchUserDetailComponent implements OnInit {
         console.log(bConfig);
         console.log(this.sector);
         console.log(this.subsector);
-        if (this.sector !== 'healthCare' && this.sector !== 'finance') {
-            this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: 'Provider' }, { value: 'ADMIN', name: 'Admin' }];
-        }
-        if (this.sector === 'finance') {
-            this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: 'Staff Member' }, { value: 'ADMIN', name: 'Admin' }];
-        }
-        if (this.sector === 'educationalInstitution') {
-            this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: 'MENTOR' }, { value: 'ADMIN', name: 'Admin' }];
-        }
+        this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: this.provider_label }, { value: 'ADMIN', name: 'Admin' }];
+        // if (this.sector !== 'healthCare' && this.sector !== 'finance') {
+        //     this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: 'Provider' }, { value: 'ADMIN', name: 'Admin' }];
+        // }
+        // if (this.sector === 'finance') {
+        //     this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: 'Staff Member' }, { value: 'ADMIN', name: 'Admin' }];
+        // }
+        // if (this.sector === 'educationalInstitution') {
+        //     this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: 'MENTOR' }, { value: 'ADMIN', name: 'Admin' }];
+        // }
         if (bConfig && bConfig.bdata) {
             console.log("");
             for (let i = 0; i < bConfig.bdata.length; i++) {

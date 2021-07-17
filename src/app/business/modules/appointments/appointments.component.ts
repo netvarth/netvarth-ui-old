@@ -1737,6 +1737,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   apptClicked(type, time?) {
     if (this.schedules.length === 0) {
       this.snackbarService.openSnackBar('No active schedules', { 'panelClass': 'snackbarerror' });
+    } else if (this.service_list.length === 0) {
+      this.snackbarService.openSnackBar('No active services', { 'panelClass': 'snackbarerror' });
     } else {
       let slot = '';
       let scheduleId;

@@ -2473,6 +2473,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   checkinClicked(source) {
     if (this.queues.length === 0) {
       this.snackbarService.openSnackBar('No active queues', { 'panelClass': 'snackbarerror' });
+    } else if (this.services.length === 0) {
+      this.snackbarService.openSnackBar('No active services', { 'panelClass': 'snackbarerror' });
     } else {
       let deptId;
       let userId;

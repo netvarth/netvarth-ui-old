@@ -338,7 +338,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.maxsize = 1;
         this.step = 1;
         this.gets3curl();
-        this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        if (this.server_date) {
+            this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        }
         this.today = new Date(this.today);
         this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         this.minDate = new Date(this.minDate);
@@ -403,7 +405,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 if (this.type === 'reschedule') {
                     this.waitlist_for.push({ id: this.appointment.appmtFor[0].id, firstName: this.appointment.appmtFor[0].firstName, lastName: this.appointment.appmtFor[0].lastName, phoneNo: this.appointment.phoneNumber });
                     this.userPhone = this.appointment.phoneNumber;
-                    this.countryCode = this.appointment.countryCode;
+                    this.countryCode = this.appointment.countryCode;  
+                    this.consumerNote = this.appointment.consumerNote;
                 }
                 this.sel_loc = this.appointment.location.id;
                 this.selectedService = this.appointment.service.id;

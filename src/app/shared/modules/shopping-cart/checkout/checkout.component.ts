@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, AfterViewInit } from '@angular/core';
 // import * as itemjson from '../../assets/json/item.json';
 // import * as itemjson from '../../../../assets/json/item.json';
 import { SharedFunctions } from '../../../functions/shared-functions';
@@ -162,7 +162,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   showCouponWB: boolean;
   cartDetails: any = [];
   // @ViewChild('closeModal') private closeModal: ElementRef;
-  @ViewChild('firstStep',{static: false}) public nextbtn: ElementRef;
   store_availables: any;
   home_availables: any;
   couponStatuses: any;
@@ -377,7 +376,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.customer_phoneNumber = this.customer_countrycode + activeUser.primaryPhoneNumber;
       console.log(this.customer_phoneNumber);
       this.getaddress();
-      this.nextbtn.nativeElement.click();
+      // this.nextbtn.nativeElement.click();
     } else {
       this.doLogin('consumer');
     }
@@ -922,7 +921,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         this.sharedFunctionobj.sendMessage(pdata);
         this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
         if (this.isLoggedIn()) {
-          this.nextbtn.nativeElement.click();
+          // this.nextbtn.nativeElement.click();
         }
 
       } else if (result === 'showsignup') {

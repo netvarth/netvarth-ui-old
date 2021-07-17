@@ -50,7 +50,7 @@
               <div class="mgn-up-10 stats-item" *ngIf="(waitlist_data.appmtFor[0].bookingLocation) && (waitlist_data.appmtFor[0].bookingLocation.district || waitlist_data.appmtFor[0].bookingLocation.state)">
                 <span class="itemHead">Location</span>
                 <span class="itemVal">
-                  {{waitlist_data.appmtFor[0].bookingLocation.district}},
+                <ng-container *ngIf="waitlist_data.appmtFor[0].bookingLocation.district"> {{waitlist_data.appmtFor[0].bookingLocation.district}},</ng-container> 
                   {{waitlist_data.appmtFor[0].bookingLocation.state}}</span>
               </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.appmtFor[0].preferredLanguage">

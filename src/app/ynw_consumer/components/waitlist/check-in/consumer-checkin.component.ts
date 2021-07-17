@@ -381,6 +381,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.wtlst_for_lname = this.waitlist.waitlistingFor[0].lastName;
                     this.userPhone = this.waitlist.waitlistPhoneNumber;
                     this.countryCode = this.waitlist.countryCode;
+                    this.consumerNote = this.waitlist.consumerNote;
                 }
                 this.checkin_date = this.waitlist.date;
                 if (this.checkin_date !== this.todaydate) {
