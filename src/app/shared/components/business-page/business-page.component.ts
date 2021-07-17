@@ -919,10 +919,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.businessjson.phoneNumbers) {
         this.phonelist = this.businessjson.phoneNumbers;
       }
-      // this.getbusinessprofiledetails_json('gallery', true);
-      if (this.userType === 'consumer') {
-        this.getFavProviders();
-      }
       const holdbName = this.businessjson.businessDesc || '';
       const maxCnt = 120;
       if (holdbName.length > maxCnt) {
@@ -1715,73 +1711,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.commdialogRef.afterClosed().subscribe(() => {
     });
   }
-  getFavProviders(mod?) {
-    const _this = this;
-    _this.goThroughLogin().then(
-      (status) => {
-        if (status) {
-          if (mod) {
-            this.handle_Fav(mod);
-          } else {
-            this.shared_services.getFavProvider()
-              .subscribe(data => {
-                this.favprovs = data;
-                if (this.favprovs.length === 0) {
-                  this.handle_Fav('add');
-                } else {
-                  const provider = this.favprovs.filter(fav => fav.id === this.provider_bussiness_id);
-                  if (provider.length === 0) {
-                    this.handle_Fav('add');
-                  } else {
-                    this.isInFav = true;
-                  }
-                }
-              }, error => {
-                this.wordProcessor.apiErrorAutoHide(this, error);
-              });
-          }
-        } else {
-          const passParam = { callback: 'fav' };
-          _this.doLogin('consumer', passParam);
-        }
-      });
-  }
-  handle_Fav(mod) {
-    const _this = this;
-    const accountid = _this.provider_bussiness_id;
-    if (mod === 'add' && !_this.isInFav) {
-      _this.shared_services.addProvidertoFavourite(accountid)
-        .subscribe(() => {
-          _this.isInFav = true;
-        },
-          error => {
-            _this.wordProcessor.apiErrorAutoHide(_this, error);
-          });
-    } else if (mod === 'remove') {
-      _this.shared_services.removeProviderfromFavourite(accountid)
-        .subscribe(() => {
-          _this.isInFav = false;
-        },
-          error => {
-            _this.wordProcessor.apiErrorAutoHide(_this, error);
-          });
-    }
-  }
-  doRemoveFav() {
-    this.remdialogRef = this.dialog.open(ConfirmBoxComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        'message': 'Do you want to remove this provider from your favourite list?'
-      }
-    });
-    this.remdialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.handle_Fav('remove');
-      }
-    });
-  }
   checkinClicked(location, service) {
     const current_provider = {
       'id': location.id,
@@ -1872,11 +1801,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!location.futureAppt) {
       this.futureAllowed = false;
     }
-
     _this.goThroughLogin().then(
       (status) => {
+        console.log("Login Status:" + status);
         if (status) {
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
+          console.log("User Type:" + _this.userType);
           if (_this.userType === 'consumer') {
 
             if (service.serviceType === 'virtualService') {
@@ -2049,27 +1979,23 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedFunctionobj.sendMessage(pdata);
         this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
-        this.getFavProviders();
         if (passParam['callback'] === 'communicate') {
-          // this.getFavProviders();
           this.showCommunicate(passParam['providerId']);
         } else if (passParam['callback'] === 'history') {
           this.redirectToHistory();
-        } else if (passParam['callback'] === 'fav') {
-          this.getFavProviders(passParam['mod']);
         } else if (passParam['callback'] === 'dashboard') {
           this.viewDashboard();
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-          // if (current_provider['service']['serviceType'] === 'virtualService') {
-          //   this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-          //     this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'appt', current_provider['service']);
-          //   });
-          // } else {
+          if (current_provider['service']['serviceType'] === 'virtualService') {
+            this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+              this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'appt', current_provider['service'], consumerdata);
+            });
+          } else {
           this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
           // this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'],current_provider['service'],'consumer' );
-          //  }
+           }
 
           // this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else if (passParam['callback'] === 'order') {
@@ -2110,13 +2036,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedFunctionobj.sendMessage(pdata);
         this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
-        this.getFavProviders();
         if (passParam['callback'] === 'communicate') {
           this.showCommunicate(passParam['providerId']);
         } else if (passParam['callback'] === 'history') {
           this.redirectToHistory();
-        } else if (passParam['callback'] === 'fav') {
-          this.getFavProviders(passParam['mod']);
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
@@ -2218,7 +2141,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   onButtonBeforeHook() {
   }
   onButtonAfterHook() { }
-  showServiceDetail(serv, busname) {
+ showServiceDetail(serv, busname) {
     // if (serv.serviceType && serv.serviceType === 'donationService') {
     //   const navigationExtras: NavigationExtras = {
     //     queryParams: {

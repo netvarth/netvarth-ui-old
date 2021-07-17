@@ -20,7 +20,7 @@
                 <div class="panel-body">
                     <div class="col-md-3 col-xs-12 col-sm-12 col-lg-3">
                         <div class="badge-smalldv  visible-xs visible-sm"
-                            *ngIf="profileSettings && profileSettings['showVerified']">
+                            *ngIf="!profileSettings || (profileSettings && profileSettings['showVerified'])">
                             <span class="pull-right verify-image2" *ngIf="businessjson.verifyLevel == 'BASIC'"><img
                                     class="img_sizenew" src="./assets/images/BasicOrg.png" alt="Basic"></span>
                             <span class="pull-right verify-image2" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img
@@ -255,7 +255,7 @@
                             </div>
                         </div>
                         <div class="col-md-2 col-xs-12 col-sm-12 col-lg-1 no-padding">
-                            <div class="verify hidden-xs hidden-sm">
+                            <div class="verify hidden-xs hidden-sm" *ngIf="(!profileSettings || (profileSettings && profileSettings['showSpecialization'] || profileSettings['showProfile']))">
                                 <span class="pull-right verify-image1" *ngIf="businessjson.verifyLevel == 'BASIC'"><img
                                         class="img_sizenew" src="./assets/images/BasicOrg.png" alt="Basic"></span>
                                 <span class="pull-right verify-image1"
