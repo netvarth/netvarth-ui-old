@@ -80,7 +80,7 @@
                   </div>
                 </div>
               </div>
-              <span class="expirecash" *ngIf="cashbalanceInfoExpireddetail.length > 0"><a (click)="expiredCash()">Expired cash</a></span>
+              <div class="expirecash" *ngIf="cashbalanceInfoExpireddetail.length > 0"><a (click)="expiredCash()">Expired cash</a></div>
               <div class="widget1 widget-table-one"  *ngIf="cashbalanceInfoExpireddetail.length > 0 && expiredcash">
               <div class="widget-content" *ngFor="let details of cashbalanceInfoExpireddetail; let i = index;">
                 <div class="transactions-list">
@@ -164,7 +164,7 @@
             </div>
           </div>
 
-<span class="expirecash" *ngIf="cashbalanceInfoExpireddetail.length > 0"><a (click)="expiredCash()">Expired cash</a></span>
+<div class="expirecash" *ngIf="cashbalanceInfoExpireddetail.length > 0"><a (click)="expiredCash()">Expired cash</a></div>
           <div  *ngIf="cashbalanceInfoExpireddetail.length > 0 && expiredcash">
             <div >
       <div class="table-outer q-itm">

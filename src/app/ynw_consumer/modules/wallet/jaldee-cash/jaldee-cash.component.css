@@ -349,7 +349,7 @@ background-color: #f8f8f8 !important;
   margin-left: 15px;
 }
 .expirecash{
-  margin-left: 15px;
+  margin: 15px;
   text-decoration: underline;
 }
 @media (max-width: 350px){

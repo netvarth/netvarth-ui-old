@@ -755,6 +755,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             emaildialogRef.afterClosed().subscribe(result => {
                 if (result!== '' && result!==undefined) {
                     this.payEmail = result;
+                    this.confirmcheckin(type);
                 }
     
             });
@@ -865,11 +866,12 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.waitlist_for[0]['gender'] = this.virtualInfo.gender;
 
                 }
-                if (this.payEmail !== '') {
-                    this.waitlist_for[0]['email'] = this.payEmail;
-                }
+                
             }
 
+        }
+        if (this.payEmail !== '') {
+            this.waitlist_for[0]['email'] = this.payEmail;
         }
         post_Data['appmtFor'] = JSON.parse(JSON.stringify(this.waitlist_for));
         if (this.jcashamount > 0 && this.checkJcash) {

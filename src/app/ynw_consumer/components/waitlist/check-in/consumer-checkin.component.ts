@@ -832,12 +832,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.waitlist_for[0]['gender'] = this.virtualInfo.gender;
 
                 }
-                if (this.payEmail !== '') {
-                    this.waitlist_for[0]['email'] = this.payEmail;
-                }
+                
             }
         }
-
+        if (this.payEmail !== '') {
+            this.waitlist_for[0]['email'] = this.payEmail;
+        }
       
         post_Data['waitlistingFor'] = JSON.parse(JSON.stringify(this.waitlist_for));
         if (this.apptTime) {
