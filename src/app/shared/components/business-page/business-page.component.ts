@@ -6,7 +6,7 @@ import { Messages } from '../../constants/project-messages';
 import { projectConstants } from '../../../app.component';
 import { MatDialog } from '@angular/material/dialog';
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
-//import { ServiceDetailComponent } from '../service-detail/service-detail.component';
+import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 import { CouponsComponent } from '../coupons/coupons.component';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
