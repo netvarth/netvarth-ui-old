@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener, ViewChild, ElementRef, AfterViewInit, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, AfterViewInit } from '@angular/core';
 // import * as itemjson from '../../assets/json/item.json';
 // import * as itemjson from '../../../../assets/json/item.json';
 import { SharedFunctions } from '../../../functions/shared-functions';
@@ -1038,24 +1038,25 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         .subscribe(data => {
           const retData = data;
           this.checkoutDisabled = false;
+          let prepayAmount;
           const uuidList = [];
           Object.keys(retData).forEach(key => {
             if (key === '_prepaymentAmount') {
-              this.prepayAmount = retData['_prepaymentAmount'];
+              prepayAmount = retData['_prepaymentAmount'];
             } else {
               this.trackUuid = retData[key];
               uuidList.push(retData[key]);
             }
           });
 
-          // const navigationExtras: NavigationExtras = {
-          //   queryParams: {
-          //     account_id: this.account_id,
-          //     type_check: 'order_prepayment',
-          //     prepayment: prepayAmount,
-          //     uuid: this.trackUuid
-          //   }
-          // };
+          const navigationExtras: NavigationExtras = {
+            queryParams: {
+              account_id: this.account_id,
+              type_check: 'order_prepayment',
+              prepayment: prepayAmount,
+              uuid: this.trackUuid
+            }
+          };
 
           if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
@@ -1106,16 +1107,16 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           });
 
-          // const navigationExtras: NavigationExtras = {
-          //   queryParams: {
-          //     account_id: this.account_id,
-          //     type_check: 'order_prepayment',
-          //     prepayment: prepayAmount,
-          //     uuid: this.trackUuid
-          //   }
-          // };
-          if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
-            this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
+          const navigationExtras: NavigationExtras = {
+            queryParams: {
+              account_id: this.account_id,
+              type_check: 'order_prepayment',
+              prepayment: prepayAmount,
+              uuid: this.trackUuid
+            }
+          };
+          if (this.catalog_details.paymentType !== 'NONE' && prepayAmount > 0) {
+            this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id,  post_Data.email)
               .subscribe(res => {
                 if (this.jcashamount > 0 && this.checkJcash) {
                   this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.cartDetails.advanceAmount)
