@@ -506,7 +506,7 @@ export class CheckinActionsComponent implements OnInit {
         this.provider_services.getWaitlistBill(uuid)
             .subscribe(
                 data => {
-                    this.router.navigate(['provider', 'bill', uuid]);
+                    this.router.navigate(['provider', 'bill', uuid], { queryParams: { timetype: this.data.timetype } });
                     this.dialogRef.close();
                 },
                 error => {

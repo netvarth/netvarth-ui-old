@@ -45,7 +45,7 @@ export class TeleServiceShareComponent implements OnInit {
   ];
   api_success = null;
   api_error = null;
-  providerView = false;
+  providerView = true;
   cancel_btn_cap = Messages.CANCEL_BTN;
   send_btn_cap = Messages.SEND_BTN;
   internt_cap: any;
@@ -65,7 +65,7 @@ export class TeleServiceShareComponent implements OnInit {
   addondialogRef: any;
   is_noSMS = false;
   zoomWaitFor: string;
-  haveEmail = false;
+  haveEmail;
   providerEmail = false;
   constructor(public dialogRef: MatDialogRef<TeleServiceShareComponent>,
     public shared_functions: SharedFunctions,
@@ -79,7 +79,12 @@ export class TeleServiceShareComponent implements OnInit {
 
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
-    console.log(user);
+    if (user.email) {
+      this.providerEmail = true;
+    }
+    else{
+      this.providerEmail = false;
+    }
     if (this.data.waitingType === 'checkin') {
       if (this.data.consumerDetails.email_verified) {
         this.haveEmail = true;
@@ -103,7 +108,7 @@ export class TeleServiceShareComponent implements OnInit {
     this.getSMSCredits();
     if (this.data.reminder) {
       this.getReminderData();
-      this.providerView = true;
+      // this.providerView = true;
     } else if (this.data.meetingDetail) {
       this.getMeetingDetailsData();
     }
@@ -116,13 +121,11 @@ export class TeleServiceShareComponent implements OnInit {
     this.msg_to_user = evt;
   }
   tabClick(evt) {
-    console.log(this.providerView);
     if (evt.index === 0) {
-      this.providerView = false;
-    } else {
       this.providerView = true;
+    } else {
+      this.providerView = false;
     }
-    console.log(this.providerView);
   }
   // Reminder textarea msg content
   getReminderData() {
@@ -132,10 +135,10 @@ export class TeleServiceShareComponent implements OnInit {
     } else {
       this.instalZoom = '\n(If you do not have Zoom installed you will be prompted to install Zoom)';
       this.signinGoogle = '\n(If you are not already signed into Google you must sign in)';
-      if(this.data.app === 'VideoCall') {
-       // this.videocall_msg = ' , your ' + mode + ' will begin. You will be alerted once more when the call starts.\n\nFollow these instructions to join the video call:\n1. You will receive an alert that the ' + mode + ' call has started.\n2. When it is your turn, click on the following link- ' + this.meetingLink;
-       this.videocall_msg =', your ' + mode + ' will begin. You will be alerted once more when the call starts.You can then join the call, by clicking on the following link-'  + this.meetingLink +'.Wait for the video call to start';
-      }else {
+      if (this.data.app === 'VideoCall') {
+        // this.videocall_msg = ' , your ' + mode + ' will begin. You will be alerted once more when the call starts.\n\nFollow these instructions to join the video call:\n1. You will receive an alert that the ' + mode + ' call has started.\n2. When it is your turn, click on the following link- ' + this.meetingLink;
+        this.videocall_msg = ', your ' + mode + ' will begin. You will be alerted once more when the call starts.You can then join the call, by clicking on the following link-' + this.meetingLink + '.Wait for the video call to start';
+      } else {
         this.videocall_msg = ' , your ' + mode + ' video call will begin. You will be alerted once more when the call starts.\n\nFollow these instructions to join the video call:\n1. You will receive an alert that the ' + mode + ' call has started.\n2. When it is your turn, click on the following link- ' + this.meetingLink;
       }
       this.waitFor = '\n3. Wait for the video call to start';
@@ -205,7 +208,6 @@ export class TeleServiceShareComponent implements OnInit {
 
   // Copy textarea content
   copyMessageInfo(elementId, Message) {
-    console.log(elementId);
     elementId.select();
     document.execCommand('copy');
     elementId.setSelectionRange(0, 0);
@@ -224,77 +226,76 @@ export class TeleServiceShareComponent implements OnInit {
   // Mass communication
   sendMessage() {
     this.api_error = '';
-    console.log(this.providerView);
     this.disableButton = true;
-    if(!this.msg_to_user){
+    if (!this.msg_to_user) {
       this.api_error = 'Please enter your messsage';
       this.disableButton = false;
       return;
     }
-    if(this.providerView){
+    if (this.providerView) {
       const post_data = {
         medium: {
           email: this.email,
           sms: this.sms,
           pushNotification: this.pushnotify
         },
-        communicationMessage: this.msg_to_user, 
+        communicationMessage: this.msg_to_user,
         uuid: [this.data.waitingId]
       };
-    if (this.data.waitingType === 'checkin') {
-      this.shared_services.consumerMassCommunication(post_data).
-        subscribe(() => {
-          this.api_success = this.wordProcessor.getProjectMesssages('PROVIDERTOCONSUMER_NOTE_ADD');
-          this.disableButton = false;
-          setTimeout(() => {
-            this.dialogRef.close();
-          }, 2000);
-        }
-        );
-    } else {
-      this.shared_services.consumerMassCommunicationAppt(post_data).
-        subscribe(() => {
-          this.api_success = this.wordProcessor.getProjectMesssages('PROVIDERTOCONSUMER_NOTE_ADD');
-          this.disableButton = false;
-          setTimeout(() => {
-            this.dialogRef.close();
-          }, 2000);
-        }
-        );
+      if (this.data.waitingType === 'checkin') {
+        this.shared_services.consumerMassCommunication(post_data).
+          subscribe(() => {
+            this.api_success = this.wordProcessor.getProjectMesssages('PROVIDERTOCONSUMER_NOTE_ADD');
+            this.disableButton = false;
+            setTimeout(() => {
+              this.dialogRef.close();
+            }, 2000);
+          }
+          );
+      } else {
+        this.shared_services.consumerMassCommunicationAppt(post_data).
+          subscribe(() => {
+            this.api_success = this.wordProcessor.getProjectMesssages('PROVIDERTOCONSUMER_NOTE_ADD');
+            this.disableButton = false;
+            setTimeout(() => {
+              this.dialogRef.close();
+            }, 2000);
+          }
+          );
+      }
     }
-  }
-  else{
-    const post_data = {
-      medium: {
-        email: this.email,
-        sms: this.sms,
-        pushNotification: this.pushnotify
-      },
-      meetingDetails: this.msg_to_me, 
-      uuid: this.data.waitingId
-    };
-    if (this.data.waitingType === 'checkin') {
-      this.shared_services.shareMeetingdetails(post_data).
-        subscribe(() => {
-          this.api_success = this.wordProcessor.getProjectMesssages('PROVIDERTOCONSUMER_NOTE_ADD');
-          this.disableButton = false;
-          setTimeout(() => {
-            this.dialogRef.close();
-          }, 2000);
-        }
-        );
-    } else {
-      this.shared_services.shareMeetingDetailsAppt(post_data).
-        subscribe(() => {
-          this.api_success = this.wordProcessor.getProjectMesssages('PROVIDERTOCONSUMER_NOTE_ADD');
-          this.disableButton = false;
-          setTimeout(() => {
-            this.dialogRef.close();
-          }, 2000);
-        }
-        );
+    else {
+      const post_data = {
+        medium: {
+          email: this.email,
+          sms: this.sms,
+          pushNotification: this.pushnotify
+        },
+        meetingDetails: this.msg_to_me,
+        uuid: this.data.waitingId
+      };
+      if (this.data.waitingType === 'checkin') {
+        this.shared_services.shareMeetingdetails(post_data).
+          subscribe(() => {
+            this.api_success = this.wordProcessor.getProjectMesssages('PROVIDERTOCONSUMER_NOTE_ADD');
+            this.disableButton = false;
+            setTimeout(() => {
+              this.dialogRef.close();
+            }, 2000);
+          }
+          );
+      } else {
+        this.shared_services.shareMeetingDetailsAppt(post_data).
+          subscribe(() => {
+            this.api_success = this.wordProcessor.getProjectMesssages('PROVIDERTOCONSUMER_NOTE_ADD');
+            this.disableButton = false;
+            setTimeout(() => {
+              this.dialogRef.close();
+            }, 2000);
+          }
+          );
+      }
     }
-  }
   }
 
   getSMSCredits() {

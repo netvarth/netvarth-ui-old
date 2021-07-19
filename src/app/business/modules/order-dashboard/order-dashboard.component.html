@@ -269,7 +269,7 @@
                     <span class="walkin-icon card-icons" *ngIf="order.orderMode == 'WALKIN_ORDER'"
                       [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
                     </span>
-                    <!-- <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span> -->
+                    <!-- <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order, 1)"> Actions</span> -->
                   </div>
                 </div>
               </div>
@@ -508,7 +508,7 @@
                     <span class="walkin-icon card-icons" *ngIf="order.orderMode == 'WALKIN_ORDER'"
                       [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
                     </span>
-                    <!-- <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span> -->
+                    <!-- <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order, 2)"> Actions</span> -->
                   </div>
                 </div>
               </div>
@@ -680,7 +680,7 @@
                   <span class="order-number-head">Order No.:</span>
                   <span class="order-number">{{order.orderNumber}}</span>
                 </div>
-                <i class="pull-right fa fa-ellipsis-h order-actions" (click)="stopprop($event);showActionPopup(order,'history')"></i>
+                <i class="pull-right fa fa-ellipsis-h order-actions" (click)="stopprop($event);showActionPopup(order, 3)"></i>
               </div>
               <div class="main-sec">
                 <div class="consumer-name"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>

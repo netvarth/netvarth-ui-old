@@ -116,6 +116,7 @@ export class PaymentLinkComponent implements OnInit {
   businessname: any;
   username: any;
   provider_label: any;
+  customer: any;
 
   constructor(
     public provider_services: ProviderServices,
@@ -161,7 +162,18 @@ export class PaymentLinkComponent implements OnInit {
           if (this.bill_data.accountProfile.providerBusinessName) {
             this.username = this.bill_data.accountProfile.providerBusinessName;
           }
-
+          if(this.bill_data.accountProfile.domain && this.bill_data.accountProfile.subDomain){
+            const domain = this.bill_data.accountProfile.domain || null;
+            const sub_domain =  this.bill_data.accountProfile.subDomain|| null;
+            this.provider_services.getIdTerminologies(domain, sub_domain)
+            .subscribe((data:any) => {
+                this.customer = data.customer;
+              },
+              error => {
+                this.api_error = this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' };
+              }
+            );
+          }
           for (let i = 0; i < this.bill_data.discount.length; i++) {
             if (this.bill_data.discount[i].displayNote) {
               this.discountDisplayNotes = true;

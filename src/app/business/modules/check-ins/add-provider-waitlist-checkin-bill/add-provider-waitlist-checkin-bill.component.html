@@ -186,7 +186,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="add_item col-2" *ngIf="pos && (bill_data.billStatus!='Settled') && ((!source && checkin.waitlistStatus != 'cancelled') ||
+							<div class="add_item col-2" *ngIf="pos && checkin && (bill_data.billStatus!='Settled') && ((!source && checkin.waitlistStatus != 'cancelled') ||
 												(source === 'appt' && checkin.apptStatus != 'Rejected' && checkin.apptStatus != 'Cancelled')
 												|| (source === 'order' && bill_data.billStatus !== 'Cancel'))">
 
@@ -351,7 +351,7 @@
 													</button>
 
 													<button mat-menu-item data-toggle="modal"
-														*ngIf="checkin.waitlistStatus && checkin.waitlistStatus != 'cancelled'"
+														*ngIf="checkin && checkin.waitlistStatus && checkin.waitlistStatus != 'cancelled'"
 														(click)="adjustService(service.serviceName, service.quantity)">
 														Change Qty/Price
 													</button>
@@ -426,7 +426,7 @@
 													<sup [matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
 														*ngIf="item.GSTpercentage > 0">Tax</sup>
 													{{(item.quantity * item.price) | currency:'&#8377;'}}</span>
-												<button mat-icon-button [matMenuTriggerFor]="tdmenu" *ngIf=" bill_data.billStatus!='Settled' && pos && ((!source && checkin.waitlistStatus != 'cancelled') ||
+												<button mat-icon-button [matMenuTriggerFor]="tdmenu" *ngIf=" bill_data.billStatus!='Settled' && pos && checkin && ((!source && checkin.waitlistStatus != 'cancelled') ||
 												(source === 'appt' && checkin.apptStatus != 'Rejected' && checkin.apptStatus != 'Cancelled')
 												|| (source === 'order' && bill_data.billStatus !== 'Cancel'))" class="top_n10">
 													<mat-icon>more_horiz</mat-icon>
@@ -1167,7 +1167,7 @@
 											*ngIf="bill_data.billStatus=='Settled'">{{email_bill_cap}}</button>
 
 									</div>
-									<div class="col-md-6 col-lg-6 col-sm-6 col-xs-12" style="text-align: end;">
+									<div class="col-md-6 col-lg-6 col-sm-6 col-xs-12" style="text-align: end;" *ngIf="showPaymentSection">
 										<button type="button"
 											class="full_wdth btn btn-temp-primary-light   font-weight-bold mr-3 my-1 lh-p8 fnt-p8 "
 											*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline && jaldeeConsumer && walkinConsumer_status"

@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { DatePipe, DOCUMENT } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
@@ -20,7 +20,8 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
-// import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import * as moment from 'moment';
 
 export interface ItemServiceGroup {
   type: string;
@@ -241,8 +242,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   btn_hide = false;
   is_policy = false;
   location: any;
-
-
+  server_date;
+  yesterdayDate;
+  timetype;
+  showPaymentSection = true;
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -254,7 +257,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private activated_route: ActivatedRoute,
-    // private dateTimeProcessor: DateTimeProcessor,
+    private lStorageService: LocalStorageService,
+    private datepipe: DatePipe,
     @Inject(DOCUMENT) public document
   ) {
     this.activated_route.params.subscribe(params => {
@@ -262,30 +266,16 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     });
     this.activated_route.queryParams.subscribe(qparams => {
       this.source = qparams.source;
+      if (qparams.timetype) {
+        this.timetype = JSON.parse(qparams.timetype);
+      }
+      this.getYesterdayDate();
       if (this.source === 'appt') {
-        this.breadcrumbs = [
-          {
-            title: 'Appointments',
-            url: '/provider/appointments'
-          },
-          {
-            title: 'Bill'
-          }
-        ];
         this.getApptDetails();
       } else if (this.source === 'order') {
         this.ad_ser_item_cap = 'Add Item';
         this.getOrderDetails();
       } else {
-        this.breadcrumbs = [
-          {
-            title: 'Check-ins',
-            url: '/provider/check-ins'
-          },
-          {
-            title: 'Bill'
-          }
-        ];
         this.getCheckinDetails();
       }
     });
@@ -313,6 +303,14 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.getProviderSettings();
     this.getJaldeeIntegrationSettings();
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+  }
+  getYesterdayDate() {
+    this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
+    const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const serverdate = moment(server).format();
+    const servdate = new Date(serverdate);
+    this.yesterdayDate = new Date(moment(new Date(servdate)).add(-1, 'days').format('YYYY-MM-DD'));
+    this.yesterdayDate = this.datepipe.transform(this.yesterdayDate, 'yyyy-MM-dd');
   }
   selectChangeHandler(event: any) {
     this.discountId_servie = event;
@@ -386,7 +384,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.checkin = data;
-          console.log(JSON.stringify(this.checkin));
+          if (this.timetype === 3) {
+            if (this.checkin.orderDate !== this.yesterdayDate) {
+              this.showPaymentSection = false;
+            }
+          }
           this.jaldeeConsumer = this.checkin.jaldeeConsumer ? true : false;
           this.emailId = this.checkin.email;
           this.mobilenumber = this.checkin.phoneNumber;
@@ -411,6 +413,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.checkin = data;
+          if (this.timetype === 3) {
+            if (this.checkin.appmtDate !== this.yesterdayDate) {
+              this.showPaymentSection = false;
+            }
+          }
           this.jaldeeConsumer = this.checkin.consumer ? true : false;
           this.emailId = this.checkin.providerConsumer.email;
           this.mobilenumber = this.checkin.phoneNumber;
@@ -440,6 +447,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.checkin = data;
+          if (this.timetype === 3) {
+            if (this.checkin.date !== this.yesterdayDate) {
+              this.showPaymentSection = false;
+            }
+          }
           this.jaldeeConsumer = this.checkin.jaldeeConsumer ? true : false;
           this.mobilenumber = this.checkin.waitlistPhoneNumber,
             this.emailId = this.checkin.waitlistingFor[0].email;
@@ -461,13 +473,13 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   getUserName(user) {
     let userDetails = '';
     if (user.firstName && user.firstName !== null && user.firstName !== undefined && user.firstName !== '') {
-      userDetails = user.firstName +' '+ user.lastName;
+      userDetails = user.firstName + ' ' + user.lastName;
     } else {
       if (user.memberJaldeeId) {
-        userDetails = 'Patient id : ' + user.memberJaldeeId;
+        userDetails = this.customer_label + ' : ' + user.memberJaldeeId;
       }
       if (user.jaldeeId) {
-        userDetails = 'Patient id : ' + user.jaldeeId;
+        userDetails = this.customer_label + ' : ' + user.jaldeeId;
       }
     }
     return userDetails;
@@ -478,7 +490,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       const datearr = this.bill_data.createdDate.split(' ');
       const billdatearr = datearr[0].split('-');
       this.billdate = billdatearr[0] + '-' + billdatearr[1] + '-' + billdatearr[2];
-      console.log(this.billdate);
     } else {
       this.billdate = this.bill_data.createdDate;
     }
@@ -582,7 +593,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
   getDomainSubdomainSettings() {
     const user_data = this.groupService.getitemFromGroupStorage('ynw-user');
-    console.log(user_data);
     const domain = user_data.sector || null;
     const sub_domain = user_data.subSector || null;
     return new Promise<void>((resolve, reject) => {
@@ -876,7 +886,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showAddItemsec = false;
     this.showAddItemMenuSection = false;
     this.showDeliveryChargeSection = false;
-    this.selOrderDiscount='';
+    this.selOrderDiscount = '';
   }
   orderPCouponSelected() {
     this.showDiscountSection = false;
@@ -886,7 +896,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showAddItemsec = false;
     this.showAddItemMenuSection = false;
     this.showDeliveryChargeSection = false;
-    this.selOrderProviderCoupon='';
+    this.selOrderProviderCoupon = '';
   }
   jCouponSelected() {
     this.showDiscountSection = false;
@@ -896,7 +906,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showAddItemsec = false;
     this.showAddItemMenuSection = false;
     this.showDeliveryChargeSection = false;
-    this.selOrderProviderjCoupon='';
+    this.selOrderProviderjCoupon = '';
   }
 
   disaplynoteSelected() {
@@ -1296,22 +1306,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     const discounts = [];
     const discount = {};
     discount['id'] = this.selOrderDiscount;
-    // discount['id'] = this.selOrderDiscount.id;
-    // applyOrderDiscount
     if (this.discount_type.discType === 'OnDemand') {
-      console.log(this.discAmount);
-     
-      // const len = this.discAmount.split('.').length;
-      // if (len > 2) {
-      //   this.snackbarService.openSnackBar('Please enter valid discount amount', { 'panelClass': 'snackbarerror' });
-      // } else {
-      //   discount['discValue'] = this.discAmount;
-      // }
-      
       if (this.discAmount) {
         discount['discValue'] = this.discAmount;
       }
-      if(!this.discAmount){
+      if (!this.discAmount) {
         this.snackbarService.openSnackBar('Please enter valid discount amount', { 'panelClass': 'snackbarerror' });
       }
 
@@ -1327,7 +1326,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.disableDiscountbtn = true;
     if ((this.discount_type.discType === 'OnDemand' && discount['discValue']) || this.discount_type.discType !== 'OnDemand') {
       this.applyAction(action, this.bill_data.uuid, data, 'closeJcDiscPc');
-      this.discount_type  = '';
+      this.discount_type = '';
     } else {
       this.disableDiscountbtn = false;
     }
@@ -1583,7 +1582,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
         bill_html += '	<tr style="line-height:0;">';
         bill_html += '<td style="text-align:right" colspan="2"></td>';
-        bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd"> </td>';
+        bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd">Â </td>';
         bill_html += '	</tr>';
         bill_html += '	<tr style="font-weight:bold">';
         bill_html += '<td style="text-align:right"colspan="2">Sub Total</td>';
@@ -1616,7 +1615,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
         bill_html += '	<tr style="line-height:0;">';
         bill_html += '<td style="text-align:right" colspan="2"></td>';
-        bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd">Ã‚Â </td>';
+        bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd">Ãƒâ€šÃ‚Â </td>';
         bill_html += '	</tr>';
         bill_html += '	<tr style="font-weight:bold">';
         bill_html += '<td style="text-align:right" colspan="2">Sub Total</td>';
@@ -1659,18 +1658,18 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
     // List<Coupon> providerCoupons = mapper.readValue(bill.getProviderCoupon().toString(), new TypeReference<List<Coupon>>(){});
     if (this.bill_data.providerCoupon) {
-   // for (const providerCoupon of this.bill_data.providerCoupon) {
-    for (const [key, value] of Object.entries(this.bill_data.providerCoupon)) {
-      bill_html += '	<tr><td>';
-      bill_html += '<table width="100%" style="color:#000000; font-size:10pt;  font-family:Ubuntu, Arial,sans-serif; padding-bottom:5px">';
-      bill_html += '	<tr style="color:#aaa">';
-      bill_html += '<td width="70%" style="text-align:right">' +  key + '</td>';
-      bill_html += '<td width="30%" style="text-align:right">(-) &#x20b9;' + parseFloat(value['value']).toFixed(2) + '</td>';
-      bill_html += '	</tr>                                                                           ';
-      bill_html += '</table>';
-      bill_html += '	</td></tr>';
+      // for (const providerCoupon of this.bill_data.providerCoupon) {
+      for (const [key, value] of Object.entries(this.bill_data.providerCoupon)) {
+        bill_html += '	<tr><td>';
+        bill_html += '<table width="100%" style="color:#000000; font-size:10pt;  font-family:Ubuntu, Arial,sans-serif; padding-bottom:5px">';
+        bill_html += '	<tr style="color:#aaa">';
+        bill_html += '<td width="70%" style="text-align:right">' + key + '</td>';
+        bill_html += '<td width="30%" style="text-align:right">(-) &#x20b9;' + parseFloat(value['value']).toFixed(2) + '</td>';
+        bill_html += '	</tr>                                                                           ';
+        bill_html += '</table>';
+        bill_html += '	</td></tr>';
+      }
     }
-  }
     // List<JaldeeCoupon> jCoupons = new ArrayList<>();
     // if(bill.getjCoupon()!=null) {
     // 	jCoupons = mapper.readValue(bill.getjCoupon().toString(), new TypeReference<List<JaldeeCoupon>>(){});
@@ -1895,5 +1894,4 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   refundBack() {
     this.is_policy = false;
   }
-
 }

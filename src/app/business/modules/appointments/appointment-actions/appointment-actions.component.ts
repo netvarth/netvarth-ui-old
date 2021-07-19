@@ -349,7 +349,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.provider_services.getWaitlistBill(this.appt.uid)
             .subscribe(
                 data => {
-                    this.router.navigate(['provider', 'bill', this.appt.uid], { queryParams: { source: 'appt' } });
+                    this.router.navigate(['provider', 'bill', this.appt.uid], { queryParams: { source: 'appt', timetype: this.data.timetype } });
                     this.dialogRef.close();
                 },
                 error => {

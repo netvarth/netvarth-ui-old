@@ -1,5 +1,8 @@
 <section id="cons_home_n">
-	<header class="site-header">
+	<div *ngIf="loading" class="loading">
+		<app-common-innerloading-spinner ></app-common-innerloading-spinner>
+	</div>
+	<header class="site-header" *ngIf="!loading">
 		<div class="container">
 			<div class="row align-items-center hidden-xs hidden-sm ">
 				<div class="site-branding col-md-4 col-lg-4 mb-4 mb-lg-0">
@@ -64,7 +67,7 @@
 
 
 
-	<main id="site-main">
+	<main id="site-main" *ngIf="!loading">
 
 		<div id="search" class="srch">
 			<div class="container">
@@ -527,7 +530,7 @@
 
 	</main>
 
-	<footer class="site-footer">
+	<footer class="site-footer" *ngIf="!loading">
 
 		<div class="footer-top">
 			<div class="container">

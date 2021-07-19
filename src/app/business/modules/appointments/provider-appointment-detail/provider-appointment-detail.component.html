@@ -47,10 +47,10 @@
                 <span class="itemHead">Booking id</span>
                 <span class="itemVal">{{waitlist_data.appointmentEncId}}</span>
               </div>
-              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.appmtFor[0].bookingLocation">
+              <div class="mgn-up-10 stats-item" *ngIf="(waitlist_data.appmtFor[0].bookingLocation) && (waitlist_data.appmtFor[0].bookingLocation.district || waitlist_data.appmtFor[0].bookingLocation.state)">
                 <span class="itemHead">Location</span>
                 <span class="itemVal">
-                  {{waitlist_data.appmtFor[0].bookingLocation.district}},
+                <ng-container *ngIf="waitlist_data.appmtFor[0].bookingLocation.district"> {{waitlist_data.appmtFor[0].bookingLocation.district}},</ng-container> 
                   {{waitlist_data.appmtFor[0].bookingLocation.state}}</span>
               </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.appmtFor[0].preferredLanguage">
@@ -196,7 +196,7 @@
               <p class="no-result" *ngIf="waitlist_history.length == 0">{{no_history_found}}</p>
             </div>
           </div>
-          <div class="card" *ngIf="internalStatuslog.length>0">
+          <div class="card" *ngIf="internalStatuslog && internalStatuslog.length>0">
     
             <h2 >Internal Status History</h2>
             <div class="c-history-outer">
