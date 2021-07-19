@@ -1115,11 +1115,11 @@
 
                                         <div class="containerpayment "
                                             *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0 && paymentDetails.amountRequiredNow > 0">
-                                            <div class="jaldeecredit">
+                                            <div class="jaldeecredit"  *ngIf="jcashamount>0">
                                                 <mat-checkbox [(ngModel)]="checkJcash" (change)="changeJcashUse($event)"></mat-checkbox>
                                                 Use Jaldee cash balance : <span class="rupee-font">{{jcashamount| currency:'&#8377;'}}</span>
                                             </div>
-                                            <div class="creditleft">
+                                            <div class="creditleft"  *ngIf="jcashamount>0">
                                                 Balance amount can be paid by other payment methods
                                             </div>
                                             <div class="prepayment">
