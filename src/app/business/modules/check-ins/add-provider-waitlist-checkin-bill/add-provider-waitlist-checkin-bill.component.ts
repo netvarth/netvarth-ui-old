@@ -246,6 +246,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   yesterdayDate;
   timetype;
   showPaymentSection = true;
+  jcashRefund=false;
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
