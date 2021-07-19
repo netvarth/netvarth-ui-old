@@ -1313,11 +1313,11 @@
                                                 <span *ngIf="checkJcash" class="rupee-font">{{payAmount |
                                                     currency:'&#8377;'}}
                                                 </span> -->
-                                                <button type="button" (click)="saveCheckin('appt')" id="stepThreeConfirmButton"  class="next-button btn btn-primary font-weight-bold  px-12 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
+                                                <button type="button" (click)="saveCheckin('checkin')" id="stepThreeConfirmButton"  class="next-button btn btn-primary font-weight-bold  px-12 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
                                                     <ng-container
                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
                                                       ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
-                                                     Confirm</ng-container>
+                                                     Confirm Waitlist</ng-container>
                                                 <ng-container
                                                      *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
                                                      Proceed to pay <span >Rs {{checkJcash ? payAmount : paymentDetails.amountRequiredNow}}</span></ng-container>
@@ -1390,9 +1390,9 @@
 
                                         <div class="containerpayment" style="margin:20px;" *ngIf="sel_ser_det && sel_ser_det.isPrePayment==false && paymentLength==0|| (paymentDetails && paymentDetails.amountRequiredNow == 0)">
                                             <div class="prepayment-confirm">
-                                                <button type="button" (click)="saveCheckin('appt')" id="stepThreeConfirmButton"  class="next-button btn btn-primary font-weight-bold  px-12 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
+                                                <button type="button" (click)="saveCheckin('checkin')" id="stepThreeConfirmButton"  class="next-button btn btn-primary font-weight-bold  px-12 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
                                                     
-                                                     Confirm Wailtist</button>
+                                                     Confirm Waitlist</button>
                                                 
                                                 
                                             </div>
