@@ -20,7 +20,7 @@ import { projectConstants } from '../app.component';
 import { ProviderFaqModule } from './modules/faq/provider-faq.module';
 import { BusinessComponent } from './business.component';
 import { BreadCrumbModule } from '../shared/modules/breadcrumb/breadcrumb.module';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
 import { MaterialModule } from '../shared/modules/common/material.module';
 import { SharedModule } from '../shared/modules/common/shared.module';
@@ -128,6 +128,7 @@ import { EnquiryComponent } from './modules/enquiry/enquiry.component';
         MessageService,
         ProviderSharedFuctions,
         ProviderResolver,
+        DatePipe,
         { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
         { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
         { provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS }

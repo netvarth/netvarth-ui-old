@@ -50,7 +50,7 @@ export class UploadFileComponent implements OnInit {
   upload_status = 'Added to list';
   disable = false;
   heading = 'Uploaded Files';
-  display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
+  display_dateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   navigationParams: any;
   navigationExtras: NavigationExtras;
   removeprescriptiondialogRef;

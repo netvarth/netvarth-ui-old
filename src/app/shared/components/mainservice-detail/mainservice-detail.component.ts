@@ -1,4 +1,4 @@
-import { Component, Inject, /* Inject, */ OnInit, HostListener } from '@angular/core';
+import { Component, Inject, /* Inject, */ OnInit, HostListener, ViewChild } from '@angular/core';
 /* import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'; */
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -22,6 +22,8 @@ import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtual
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 import { SignUpComponent } from '../signup/signup.component';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-mainservice-detail',
@@ -32,7 +34,7 @@ import { SignUpComponent } from '../signup/signup.component';
 export class MainserviceDetailComponent implements OnInit {
 
   // data: any;
-
+  @ViewChild(MatSidenav) sidenav!: MatSidenav;
   service_cap = Messages.SERVICE_CAP;
   duration_cap = Messages.DURATION_CAP;
   price_cap = Messages.PRICES_CAP;
@@ -158,6 +160,7 @@ export class MainserviceDetailComponent implements OnInit {
     private groupService: GroupStorageService,
     private dateTimeProcessor: DateTimeProcessor,
     public sharedFunctionobj: SharedFunctions,
+    private observer: BreakpointObserver,
     private dialog: MatDialog,
     private activaterouterobj: ActivatedRoute) {
   }
@@ -233,37 +236,7 @@ export class MainserviceDetailComponent implements OnInit {
       this.is_donation_serv = true;
     }
     });
-    // if (this.minutes) {
-    //   this.min = this.minutes % 60;
-    //   this.hour = (this.minutes - this.min) / 60;
-    //   if (this.hour > 0 && this.min > 0) {
-    //     if (this.hour > 1) {
-    //       this.HHMM = this.hour + ' ' + 'hrs' + ' ' + this.min + ' ' + 'mins';
-    //     } else {
-    //       this.HHMM = this.hour + ' ' + 'hr' + ' ' + this.min + ' ' + 'mins';
-    //     }
-    //   } else if (this.hour === 0) {
-    //     this.HHMM = this.min + ' ' + 'mins';
-    //   } else if (this.min === 0) {
-    //     if (this.hour > 1) {
-    //       this.HHMM = this.hour + ' ' + 'hrs';
-    //     } else {
-    //       this.HHMM = this.hour + ' ' + 'hr';
-    //     }
-    //   }
-    // }
-    // this.image_list_popup = [];
-    // if (this.service.hasOwnProperty('servicegallery')) {
-    //   for (let i = 0; i < this.service.servicegallery.length; i++) {
-    //     const imgobj = new Image(
-    //       i,
-    //       { // modal
-    //         img: this.service.servicegallery[i].url,
-    //         description: this.service.servicegallery[i].caption || ''
-    //       });
-    //     this.image_list_popup.push(imgobj);
-    //   }
-    // }
+    
   }
   goBack() {
     this.locationobj.back();
@@ -284,6 +257,22 @@ getAccountIdFromEncId(encId) {
         reject();
       }
     );
+  });
+}
+ngAfterViewInit() {
+  const _this= this;
+  _this.sidenav.mode = 'over';
+  this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
+    setTimeout(() => {
+      if (res.matches) {
+        _this.sidenav.mode = 'over';
+        _this.sidenav.close();
+      } else {
+        _this.sidenav.mode = 'side';
+        _this.sidenav.open();
+      }
+    }, 100);
+    
   });
 }
 gets3curl() {

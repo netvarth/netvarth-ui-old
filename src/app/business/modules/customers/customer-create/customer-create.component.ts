@@ -562,7 +562,7 @@ export class CustomerCreateComponent implements OnInit {
             this.snackbarService.openSnackBar('Updated Successfully');
             const qParams = {};
             qParams['pid'] = data;
-            if (this.questionAnswers) {
+            if (this.questionAnswers.length > 0) {
               this.submitQnr(form_data, this.customerId);
             } else {
               this.goBackAfterEdit(form_data, data);

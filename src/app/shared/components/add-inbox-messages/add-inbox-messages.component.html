@@ -37,7 +37,7 @@
         <div *ngIf = "!api_loading &&  source ==='provider-waitlist' && selectedMessage.files.length !== 0"><i class="fa fa-bell-o"></i>&nbsp;Messages with upload files will be send to Jaldee inbox.</div>
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
     </mat-dialog-content>
-    <mat-dialog-actions>
+    <mat-dialog-actions class="mat-scrool">
         <ng-container *ngIf="selectedMessage">
             <div class="row col-md-12 no-padding-small" style="display: flex;" *ngFor="let item of selectedMessage.files; let i = index">
                 <div class="col-md-7 no-padding-small">

@@ -72,8 +72,8 @@
                                         <tr>
                                             <td width="48%" align="right">Appointment for</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td>{{appointment.appmtFor[0].firstName}}
-                                                {{appointment.appmtFor[0].lastName}}</td>
+                                            <td *ngFor="let member of appointment.appmtFor">{{member.firstName}}
+                                                {{member.lastName}}</td>
                                         </tr>
                                         <tr>
                                             <td width="48%" align="right">Appointment Time </td>

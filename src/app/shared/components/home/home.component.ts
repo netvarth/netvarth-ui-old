@@ -46,6 +46,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   customOptions: any;
   carouselPackages: any;
   evnt;
+  loading = false;
   constructor(
     private shared_service: SharedServices,
     public shared_functions: SharedFunctions,
@@ -331,8 +332,10 @@ ngAfterViewInit() {
         is_provider: this.checkProvider(origin)
       }
     });
-    dialogRef.afterClosed().subscribe(() => {
-      // this.animal = result;
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result){
+        this.loading = true;
+      }
     });
   }
   doWatchVideo() {

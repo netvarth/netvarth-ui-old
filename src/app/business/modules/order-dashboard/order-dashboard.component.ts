@@ -443,7 +443,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
      this.subs.sink= this.providerservices.getWaitlistBill(order.uid)
         .subscribe(
           data => {
-            this.router.navigate(['provider', 'bill', order.uid], { queryParams: { source: 'order' } });
+            this.router.navigate(['provider', 'bill', order.uid], { queryParams: { source: 'order', timetype: this.selectedTab } });
           },
           error => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

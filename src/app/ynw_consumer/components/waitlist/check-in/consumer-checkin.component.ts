@@ -212,6 +212,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     whatsappCountryCode;
     disablebutton = false;
     readMore = false;
+    razorpayGatway = false;
+    paytmGateway = false;
     checkJcash = false;
     checkJcredit = false;
     jaldeecash: any;
@@ -388,6 +390,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.wtlst_for_lname = this.waitlist.waitlistingFor[0].lastName;
                     this.userPhone = this.waitlist.waitlistPhoneNumber;
                     this.countryCode = this.waitlist.countryCode;
+                    this.consumerNote = this.waitlist.consumerNote;
                 }
                 this.checkin_date = this.waitlist.date;
                 if (this.checkin_date !== this.todaydate) {
@@ -975,6 +978,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                     this.disablebutton = false;
+                    this.paytmGateway = false;   
+                    this.razorpayGatway = false;
                 });
     }
     submitQuestionnaire(uuid) {
@@ -2354,7 +2359,9 @@ console.log('inside validaity');
     actionCompleted() {
         console.log(this.action);
         if (this.action === 'timeChange') {
+            if (this.queuejson[this.sel_queue_indx]) {
             this.selectedQTime = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
+            }
             this.selectedDate = this.sel_checkindate;
             this.checkFutureorToday();
             this.personsAhead = this.sel_queue_personaahead;
