@@ -17,8 +17,8 @@ import { SpentListComponent } from './spent-list/spent-list.component';
 })
 export class JaldeeCashComponent implements OnInit {
   private subs = new SubSink();
-  screenWidth: number;
-  small_device_display: boolean;
+  screenWidth;
+  small_device_display = false;
   cashbalanceInfo:any = [];
   cashbalanceInfodetail: any;
   wallet_notes = projectConstantsLocal.WALLET_NOTES;
@@ -26,20 +26,22 @@ export class JaldeeCashComponent implements OnInit {
   cashbalanceInfoExpireddetail:any = [];
   expiredcash = false;
   loading = true;
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    this.screenWidth = window.innerWidth;
-    if (this.screenWidth <= 767) {
-      this.small_device_display = true;
-    } else {
-      this.small_device_display = false;
-    }
-  }
   constructor(private location: Location,
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
     private consumer_services: ConsumerServices,
-    public shared_functions: SharedFunctions) { }
+    public shared_functions: SharedFunctions) { 
+      this.onResize();
+    }
+    @HostListener('window:resize', ['$event'])
+    onResize() {
+      this.screenWidth = window.innerWidth;
+      if (this.screenWidth <= 767) {
+        this.small_device_display = true;
+      } else {
+        this.small_device_display = false;
+      }
+    }
 
   ngOnInit(): void {
    this.cashInfo();
