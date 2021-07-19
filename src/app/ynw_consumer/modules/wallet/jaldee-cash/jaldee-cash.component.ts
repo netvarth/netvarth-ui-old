@@ -18,7 +18,7 @@ import { SpentListComponent } from './spent-list/spent-list.component';
 export class JaldeeCashComponent implements OnInit {
   private subs = new SubSink();
   screenWidth: number;
-  small_device_display: boolean;
+  small_device_display=false;
   cashbalanceInfo:any = [];
   cashbalanceInfodetail: any;
   wallet_notes = projectConstantsLocal.WALLET_NOTES;

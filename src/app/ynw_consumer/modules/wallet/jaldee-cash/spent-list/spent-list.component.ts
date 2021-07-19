@@ -8,7 +8,8 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 
 @Component({
   selector: 'app-spentlist',
-  templateUrl: './spent-list.component.html'
+  templateUrl: './spent-list.component.html',
+   styleUrls: ['./spent-list.component.css'],
 })
 
 export class SpentListComponent implements OnInit {
@@ -30,7 +31,6 @@ export class SpentListComponent implements OnInit {
     if (this.data && this.data.cashid!==undefined) {
         this.spentlist();
     } else{
-      console.log('total spent');
     this.totalSpentlist();
     }
   }

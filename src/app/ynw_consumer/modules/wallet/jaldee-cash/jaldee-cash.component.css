@@ -162,6 +162,7 @@ background-color: #f8f8f8 !important;
   vertical-align: top;
   color: #009688;
 }
+
 .widget-account-invoice-three .widget-amount .w-a-info.funds-spent svg {
   vertical-align: bottom;
   color: #e7515a;
@@ -356,4 +357,9 @@ background-color: #f8f8f8 !important;
   .w-a-info span {
     margin: 0px;
   }
+  }
+ 
+  table td .bluelink {
+    color: #5CB3FF; 
+    cursor: pointer;
   }

@@ -152,8 +152,8 @@
                       <td  data-title="Amount earned" >
                           <i class="fa fa-inr" aria-hidden="true"></i> {{details.originalAmt}}
                       </td>
-                      <td data-title="Amount spent"  class="{'pointlist': (details.amount > 0)}" (click)="spentlist(details.id)">
-                          <i class="fa fa-inr" aria-hidden="true"></i> {{details.originalAmt-details.remainingAmt}}
+                      <td data-title="Amount spent"   (click)="spentlist(details.id)">
+                          <span [ngClass]="details.amount !== 0 ?'bluelink':'nolink'" ><i class="fa fa-inr" aria-hidden="true"></i>{{details.originalAmt-details.remainingAmt}}</span> 
                       </td>
                       <td data-title="Awarded date" >
                         {{details.jCashIssueInfo.issuedDt  | date: newDateFormat}}
@@ -203,7 +203,7 @@
               <td  data-title="Amount earned" >
                   <i class="fa fa-inr" aria-hidden="true"></i> {{details.jCash.originalAmt}}
               </td>
-              <td data-title="Amount expired" >
+              <td data-title="Amount expired"  >
                   <i class="fa fa-inr" aria-hidden="true"></i> {{details.amount}}
               </td>
               <td data-title="Awarded date" >
