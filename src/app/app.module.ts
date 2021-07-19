@@ -116,7 +116,6 @@ import { RequestDialogComponent } from './business/shared/meeting-room/request-d
 import { VideoCallSharedComponent } from './business/modules/video-call/video-call.component';
 import { ContactComponent } from './shared/components/business-page-home/contactus/contact.component';
 import { TermsconditionComponent } from './shared/components/business-page-home/termscondition/termscondition.component';
-import { ShippingdeliveryComponent } from './shared/components/business-page-home/shippingdelivery/shippingdelivery.component';
 import { RefundcancelComponent } from './shared/components/business-page-home/refundcancel/refundcancel.component';
 import { PrivacyComponent } from './shared/components/business-page-home/privacy/privacy.component';
 import { FileReaderService } from './shared/services/file-reader.service';
@@ -163,7 +162,6 @@ export function init_app(globalService: GlobalService) {
     ContactComponent,
     TermsconditionComponent,
     PrivacyComponent,
-    ShippingdeliveryComponent,
     RefundcancelComponent,
     AttachmentPopupComponent
   ],
