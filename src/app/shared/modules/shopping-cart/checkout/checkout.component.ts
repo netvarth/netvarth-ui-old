@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, AfterViewInit, ViewChild, ElementRef, Inject } from '@angular/core';
 // import * as itemjson from '../../assets/json/item.json';
 // import * as itemjson from '../../../../assets/json/item.json';
 import { SharedFunctions } from '../../../functions/shared-functions';
@@ -167,7 +167,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   cartDetails: any = [];
   listDetails: any = [];
   // @ViewChild('closeModal') private closeModal: ElementRef;
-  @ViewChild('firstStep', { static: false }) public nextbtn: ElementRef;
+   @ViewChild('firstStep', { static: false }) public nextbtn: ElementRef;
   store_availables: any;
   home_availables: any;
   couponStatuses: any;
@@ -204,7 +204,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     private s3Processor: S3UrlProcessor,
     public _sanitizer: DomSanitizer,
     private wordProcessor: WordProcessor,
-    @Inject(DOCUMENT) public document,
+   @Inject(DOCUMENT) public document,
     public prefillmodel: RazorpayprefillModel,
     public razorpayService: RazorpayService,
   ) {
@@ -1049,16 +1049,16 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           });
 
-          const navigationExtras: NavigationExtras = {
-            queryParams: {
-              account_id: this.account_id,
-              type_check: 'order_prepayment',
-              prepayment: prepayAmount,
-              uuid: this.trackUuid
-            }
-          };
+          // const navigationExtras: NavigationExtras = {
+          //   queryParams: {
+          //     account_id: this.account_id,
+          //     type_check: 'order_prepayment',
+          //     prepayment: prepayAmount,
+          //     uuid: this.trackUuid
+          //   }
+          // };
 
-          if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
+          if (this.catalog_details.paymentType !== 'NONE' && prepayAmount > 0) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
               .subscribe(res => {
                 if (this.jcashamount > 0 && this.checkJcash) {
@@ -1107,15 +1107,15 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           });
 
-          const navigationExtras: NavigationExtras = {
-            queryParams: {
-              account_id: this.account_id,
-              type_check: 'order_prepayment',
-              prepayment: prepayAmount,
-              uuid: this.trackUuid
-            }
-          };
-          if (this.catalog_details.paymentType !== 'NONE' && prepayAmount > 0) {
+          // const navigationExtras: NavigationExtras = {
+          //   queryParams: {
+          //     account_id: this.account_id,
+          //     type_check: 'order_prepayment',
+          //     prepayment: this.prepayAmount,
+          //     uuid: this.trackUuid
+          //   }
+          // };
+          if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id,  post_Data.email)
               .subscribe(res => {
                 if (this.jcashamount > 0 && this.checkJcash) {
