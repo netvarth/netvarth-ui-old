@@ -876,14 +876,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
         });
     }
-    saveCheckin(type? , gateway?) {
-         if(gateway){
-            if(gateway === 'razorpay'){
-                this.razorpayGatway = true;
-            }else{
-                this.paytmGateway = true;
-               }
-         }
+    saveCheckin(type?) {
+        //  if(gateway){
+        //     if(gateway === 'razorpay'){
+        //         this.razorpayGatway = true;
+        //     }else{
+        //         this.paytmGateway = true;
+        //        }
+        //  }
         console.log('insaide');
         if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
             if (this.waitlist_for.length !== 0) {
@@ -1011,13 +1011,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     paymentOperation() {
         if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
-            // this.payuPayment();
-            if(this.razorpayGatway){
-                this.payuPayment();
-              }
-              else{
-                this.paytmPayment();
-              }
+            this.payuPayment();
+            // if(this.razorpayGatway){
+            //     this.payuPayment();
+            //   }
+            //   else{
+            //     this.paytmPayment();
+            //   }
   
         } else {
             let multiple;

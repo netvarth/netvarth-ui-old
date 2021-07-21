@@ -1290,8 +1290,9 @@
                                                 *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                 <div class="select-pay"> Payment option</div>
                                                 <div class="">
-                                                    <span class="razorpay-icon selected-payment" (click)="saveCheckin('checkin' ,'razorpay')"></span> &nbsp;
-                                                    <span class="paytm-icon" (click)="saveCheckin('checkin' ,'paytm')"></span>
+                                                    <span class="razorpay-icon selected-payment"></span>
+                                                    <!-- <span class="razorpay-icon selected-payment" (click)="saveCheckin('checkin' ,'razorpay')"></span> &nbsp;
+                                                    <span class="paytm-icon" (click)="saveCheckin('checkin' ,'paytm')"></span> -->
                                                 </div>
                                                 <div
                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
@@ -1513,13 +1514,16 @@
                                                 <!-- <button *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0" class="btn btn-success font-weight-bold text-uppercase px-2 mr-5 py-2">
                                                     Cancellation Policy
                                                 </button> -->
-                                                <button type="button" (click)="saveCheckin('checkin' ,'razorpay')" id="stepThreeConfirmButton"
+                                                <!-- <button type="button" (click)="saveCheckin('checkin' ,'razorpay')" id="stepThreeConfirmButton"
                                                 [class.spinner]="disablebutton" [class.spinner-darker-success]="disablebutton" [class.spinner-center]="disablebutton"
                                                 class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4" [disabled]="(!checkPolicy && heartfulnessAccount) || disablebutton"
-                                                *ngIf="paymentLength == 0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)">
-                                                    <!-- <ng-container
+                                                *ngIf="paymentLength == 0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)"> -->
+                                                <button type="button" (click)="saveCheckin('checkin')" id="stepThreeConfirmButton"
+                                                [class.spinner]="disablebutton" [class.spinner-darker-success]="disablebutton" [class.spinner-center]="disablebutton"
+                                                class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4" [disabled]="(!checkPolicy && heartfulnessAccount) || disablebutton">
+                                                    <ng-container
                                                         *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                        Pay</ng-container> -->
+                                                        Pay</ng-container>
                                                     <ng-container
                                                         *ngIf="paymentLength == 0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)">
                                                         Confirm</ng-container>
