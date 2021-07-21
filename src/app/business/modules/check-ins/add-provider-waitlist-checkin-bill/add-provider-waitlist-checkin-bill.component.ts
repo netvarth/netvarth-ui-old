@@ -22,6 +22,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import * as moment from 'moment';
+import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 
 export interface ItemServiceGroup {
   type: string;
@@ -259,6 +260,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     private activated_route: ActivatedRoute,
     private lStorageService: LocalStorageService,
     private datepipe: DatePipe,
+    public dateformat: DateFormatPipe,
     @Inject(DOCUMENT) public document
   ) {
     this.activated_route.params.subscribe(params => {
@@ -1535,7 +1537,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     } else {
       bill_html += '<td width="50%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif;">' + this.checkin.orderFor.firstName + ' ' + this.checkin.orderFor.lastName + '</td>';
     }
-    bill_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.changedDate + '</td>';
+    // bill_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.changedDate + '</td>';
+    bill_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' +  this.dateformat.transformToMonthlyDate(this.billdate)  +' '+ this.billtime+ '</td>';
+
     bill_html += '	</tr>';
     bill_html += '	<tr>';
     bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">Bill # ' + this.bill_data.billId + '</td>';
