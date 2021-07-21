@@ -189,7 +189,7 @@
                                 </div>
                                 <!-- Questionnaire starts-->
                                 <div class="card"
-                                    *ngIf="api_loading && appt && appt.questionnaire.questionAnswers && appt.questionnaire.questionAnswers.length > 0">
+                                    *ngIf="api_loading && appt && appt.questionnaire && appt.questionnaire.questionAnswers && appt.questionnaire.questionAnswers.length > 0">
                                     <div class="pad-10 pad-bt-0">
                                         <h3 class="no-margin">
                                             {{questionnaire_heading}}
