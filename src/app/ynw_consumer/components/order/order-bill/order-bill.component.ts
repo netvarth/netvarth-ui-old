@@ -643,6 +643,16 @@ private subs=new SubSink();
             bill_html += '</table>';
             bill_html += '	</td></tr>';
         }
+        if (this.bill_data.deliveryCharges > 0) {
+            bill_html += '	<tr><td>';
+            bill_html += '<table width="100%"	style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; ;padding-bottom:5px">';
+            bill_html += '	<tr style="font-weight: bold;">';
+            bill_html += '<td width="70%" style="text-align:right">Delivery Charge</td>';
+            bill_html += '<td width="30%" style="text-align:right"> (+) &#x20b9;' + parseFloat(this.bill_data.deliveryCharges).toFixed(2) + '</td>';
+            bill_html += '	</tr>';
+            bill_html += '</table>';
+            bill_html += '	</td></tr>';
+        }
         if (this.bill_data.netRate > 0) {
             bill_html += '	<tr><td>';
             bill_html += '<table width="100%"	style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; ;padding-bottom:5px">';
