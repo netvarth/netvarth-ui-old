@@ -6,7 +6,7 @@ import { AuthGuardProviderHome, AuthGuardLogin } from '../shared/guard/auth.guar
 import { BusinessComponent } from './business.component';
 import { EditProfileComponent } from '../shared/modules/edit-profile/edit-profile.component';
 import { ProviderSystemAlertComponent } from '../ynw_provider/components/provider-system-alerts/provider-system-alerts.component';
-import { ProviderSystemAuditLogComponent } from '../ynw_provider/components/provider-system-auditlogs/provider-system-auditlogs.component';
+//import { ProviderSystemAuditLogComponent } from '../ynw_provider/components/provider-system-auditlogs/provider-system-auditlogs.component';
 import { AddProviderWaitlistCheckInBillComponent } from './modules/check-ins/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
 import { ChangePasswordComponent } from '../shared/modules/change-password/change-password.component';
 import { ChangeMobileComponent } from '../shared/modules/change-mobile/change-mobile.component';
@@ -39,7 +39,7 @@ const routes: Routes = [
       { path: 'otherMiscellaneous', loadChildren: () => import('./modules/learnmore/otherMiscellaneous/otherMiscellaneous.module').then(m => m.OtherMiscellaneousModule) },
       { path: 'license', loadChildren: () => import('../business/modules/license/license.module').then(m => m.LicenseModule) },
       { path: 'reports', loadChildren: () => import('../business/modules/reports/reports.module').then(m => m.ReportsModule) },
-      { path: 'auditlog', component: ProviderSystemAuditLogComponent },
+      { path: 'auditlog', loadChildren: () => import('../ynw_provider/components/provider-system-auditlogs/provider-system-auditlogs.module').then(m => m.providerSystemauditlogsModule) },
       { path: 'alerts', component: ProviderSystemAlertComponent },
       { path: 'check-ins', loadChildren: () => import('../business/modules/check-ins/check-ins.module').then(m => m.CheckinsModule) },
       { path: 'bwizard', component: ProviderbWizardComponent },

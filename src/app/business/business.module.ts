@@ -26,7 +26,7 @@ import { MaterialModule } from '../shared/modules/common/material.module';
 import { SharedModule } from '../shared/modules/common/shared.module';
 import { PagerModule } from '../shared/modules/pager/pager.module';
 import { LoadingSpinnerModule } from '../shared/modules/loading-spinner/loading-spinner.module';
-import { ProviderSystemAuditLogComponent } from '../ynw_provider/components/provider-system-auditlogs/provider-system-auditlogs.component';
+//import { ProviderSystemAuditLogComponent } from '../ynw_provider/components/provider-system-auditlogs/provider-system-auditlogs.component';
 import { ProviderSystemAlertComponent } from '../ynw_provider/components/provider-system-alerts/provider-system-alerts.component';
 import { AddProviderBprofileSearchAdwordsComponent } from '../ynw_provider/components/add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
 import { AddProviderWaitlistCheckInBillComponent } from './modules/check-ins/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
@@ -55,6 +55,7 @@ import { ItemListDialogComponent } from './shared/item-list-dialog/item-list-dia
 import { ConsumerLabelDialogComponent } from './shared/consumer-label-dialog/consumer-label-dialog.component';
 import { EnquiryComponent } from './modules/enquiry/enquiry.component';
 
+
 @NgModule({
     declarations: [
         MenuComponent,
@@ -62,7 +63,7 @@ import { EnquiryComponent } from './modules/enquiry/enquiry.component';
         FooterNewComponent,
         BusinessHomeComponent,
         BusinessComponent,
-        ProviderSystemAuditLogComponent,
+       // ProviderSystemAuditLogComponent,
         ProviderSystemAlertComponent,
         AddProviderBprofileSearchAdwordsComponent,
         AddProviderWaitlistCheckInBillComponent,
@@ -101,7 +102,8 @@ import { EnquiryComponent } from './modules/enquiry/enquiry.component';
         AddProviderSchedulesModule,
         DynamicFormModule,
         JoyrideModule.forChild(),
-        InboxListModule
+        InboxListModule,
+        
     ],
     entryComponents: [
         AddProviderWaitlistCheckInBillComponent,

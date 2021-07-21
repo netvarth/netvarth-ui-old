@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
@@ -70,6 +70,8 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   ];
   isCheckin;
   dateFilter = false;
+   _selectedColumns: any[];
+   cols:any[]=[];
   constructor(
     private locationobj: Location,
     private shared_services: SharedServices,
@@ -82,6 +84,14 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+  //   this.cols = [
+  //     { field: 'date', header: this.date_time_cap },
+  //     { field: 'subject', header: this.subject_cap },
+  //     { field: 'text', header: this.text_cap },
+  //     { field: 'userName', header: this.user_name_cap }
+  // ];
+
+  //this._selectedColumns = this.cols;
     // this.getAuditList();\
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
@@ -100,6 +110,17 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
   }
+  @Input() get selectedColumns(): any[] {
+    return this._selectedColumns;
+}
+
+set selectedColumns(val: any[]) {
+    //restore original order
+    if(this.cols.length > 0){
+      this._selectedColumns = this.cols.filter(col => val.includes(col));
+    }
+    
+}
   getAuditListTotalCnt(cat, subcat, action, sdate) {
     this.shared_services.getAuditLogsTotalCnt(cat, subcat, action, sdate)
       .subscribe(data => {
@@ -127,7 +148,16 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     this.shared_services.getAuditLogs(cat, subcat, action, sdate, Number(pageval), this.perPage)
       .subscribe(data => {
         this.auditlog_details = data;
+        console.log(this.auditlog_details)
+        Object.keys(this.auditlog_details[0]).forEach(item=>{
+          console.log(item)
+          if(item == 'date' ||item =='subject'|| item == 'text'||item == 'userName'){
+            this.cols.push({field: item, header: item});
+          }
+          
+        })
         this.auditStatus = 3;
+        this._selectedColumns = this.cols;
       },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
