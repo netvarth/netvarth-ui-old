@@ -322,7 +322,8 @@
                                                       <i class="icon-edit"></i>
                                                       <span>{{edit_cap}}</span>
                                                                                                 </button>
-                                                                                                <button type="button" mat-menu-item (click)="deleteGridDynamicField(fields.name, 'subdomain_questions', i)">
+                                                                                                <button type="button" mat-menu-item (click)="deleteGridDynamicField(fields.name, 'subdomain_questions', i)"
+                                                                                                *ngIf="!fields.mandatory || (fields.mandatory && fields.value.length>1)">
                                                       <i class="icon-delete"></i>
                                                       <span>{{delete_btn}}</span>
                                                     </button>
