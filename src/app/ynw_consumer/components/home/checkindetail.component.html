@@ -4,7 +4,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading top-row ">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                        <app-header *ngIf="shared_functions.checkLogin()" [showHeaderAction]="true"></app-header>
+                        <app-header *ngIf="shared_functions.checkLogin()" [customId]="customId" [accountId]="accountId" [showHeaderAction]="true"></app-header>
                     </div>
                 </div>
                 <div class="panel-body no-padding">
