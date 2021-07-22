@@ -306,21 +306,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                     this.disableButton = false;
                   }
                 );
-            } else if (this.source === 'donation-list') {  
-              const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
-              dataToSend.append('communication', blobpost_Data);
-              this.shared_services.donationMassCommunication(dataToSend).
-                subscribe(() => {
-                  this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
-                  setTimeout(() => {
-                    this.dialogRef.close('reloadlist');
-                  }, projectConstants.TIMEOUT_DELAY);
-                },
-                  error => {
-                    this.wordProcessor.apiErrorAutoHide(this, error);
-                    this.disableButton = false;
-                  }
-                );
             } else {
               this.shared_services.consumerMassCommunication(post_data).
                 subscribe(() => {
@@ -385,6 +370,31 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
             case 'provider-common': this.providerToConsumerNoteAdd(post_data); break;
           }
         }
+      }  
+      const post_data = {
+        medium: {
+          email: this.email,
+          sms: this.sms,
+          pushNotification: this.pushnotify
+        },
+        communicationMessage: form_data.message,
+        uuid: this.uuid
+      };
+      if (this.source === 'donation-list') {  
+        const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+        dataToSend.append('communication', blobpost_Data);
+        this.shared_services.donationMassCommunication(dataToSend).
+          subscribe(() => {
+            this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+            setTimeout(() => {
+              this.dialogRef.close('reloadlist');
+            }, projectConstants.TIMEOUT_DELAY);
+          },
+            error => {
+              this.wordProcessor.apiErrorAutoHide(this, error);
+              this.disableButton = false;
+            }
+          );
       }
     }
   }
