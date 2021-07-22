@@ -123,6 +123,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
     terminologiesjson;
     provider_id;
     private subs=new SubSink();
+    splocation: any;
     constructor(private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
         public sharedfunctionObj: SharedFunctions,
@@ -352,6 +353,9 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
                     }
                     if (this.bill_data.amountDue < 0) {
                         this.refund_value = Math.abs(this.bill_data.amountDue);
+                    }
+                    if (this.bill_data.accountProfile.location && this.bill_data.accountProfile.location.place) {
+                        this.splocation = this.bill_data.accountProfile.location.place;
                     }
                     this.getBillDateandTime();
                 },
