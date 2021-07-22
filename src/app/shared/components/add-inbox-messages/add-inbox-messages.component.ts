@@ -47,6 +47,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   sms = true;
   email = true;
   pushnotify = true;
+  telegram = true;
   typeOfMsg;
   type;
   email_id: any;
@@ -64,6 +65,13 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   jaldeeConsumer = true;
   private subs = new SubSink();
   isBusinessOwner;
+  loginId;
+  countryCode;
+  countryCodeTele;
+  chatId: any;
+  IsTelegramDisable:any;
+  countryCod;
+  ynw_credentials;
   constructor(
     public dialogRef: MatDialogRef<AddInboxMessagesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -78,6 +86,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private s3Processor: S3UrlProcessor,
+    private lStorageService: LocalStorageService,
     private localStorageService: LocalStorageService
   ) {
     console.log(this.data);
@@ -90,6 +99,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     this.uuid = this.data.uuid || null;
     this.email_id = this.data.email;
     this.phone = (this.data.phone) ? this.data.phone.trim() : '';
+    this.countryCode = this.data.countryCode;
     this.phone_history = this.data.phone_history;
     this.source = this.data.source || null;
     this.receiver_name = this.data.name || null;
@@ -103,6 +113,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       }
       if ((!this.phone && !this.phone_history) || this.phone === '') {
         this.sms = false;
+      }
+      if ((!this.phone && !this.phone_history) || this.phone === '') {
+        this.telegram = false;
       }
       if (!this.email_id && (!this.phone || (this.phone === '')) || !this.jaldeeConsumer) {
         this.pushnotify = false;
@@ -157,6 +170,28 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     }
   }
   ngOnInit() {
+    this.ynw_credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+    if (this.phone) {
+      if(this.countryCode.startsWith('+')){
+        this.countryCod = this.countryCode.substring(1);
+      }
+      this.shared_services.telegramChat(this.countryCod,this.phone)
+       .subscribe(
+           data => { 
+             this.chatId = data; 
+             if(this.chatId === null){
+              this.IsTelegramDisable = true;
+             }
+             else{
+              this.IsTelegramDisable = false;
+             }
+            
+           },
+           (error) => {
+              
+           }
+       );
+    }
     this.SEND_MESSAGE = Messages.SEND_MESSAGE.replace('[customer]', this.customer_label);
     this.createForm();
     if (this.source === 'provider-waitlist' || this.source === 'customer-list') {
@@ -238,7 +273,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     } else {
       if (this.typeOfMsg === 'multiple') {
         if (this.data.source === 'customer-list') {
-          if (!this.sms && !this.email && !this.pushnotify) {
+          if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
             this.api_error = 'share message via options are not selected';
             return;
           } else {
@@ -246,7 +281,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               medium: {
                 email: this.email,
                 sms: this.sms,
-                pushNotification: this.pushnotify
+                pushNotification: this.pushnotify,
+                telegram: this.telegram
               },
               communicationMessage: form_data.message,
               consumerId: this.uuid
@@ -267,7 +303,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               );
           }
         } else {
-          if (!this.sms && !this.email && !this.pushnotify) {
+          if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
             this.api_error = 'share message via options are not selected';
             return;
           } else {
@@ -275,7 +311,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               medium: {
                 email: this.email,
                 sms: this.sms,
-                pushNotification: this.pushnotify
+                pushNotification: this.pushnotify,
+                telegram: this.telegram
               },
               communicationMessage: form_data.message,
               uuid: this.uuid
@@ -324,7 +361,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         }
       } else {
         if (this.data.source === 'customer-list') {
-          if (!this.sms && !this.email && !this.pushnotify) {
+          if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
             this.api_error = 'share message via options are not selected';
             return;
           } else {
@@ -332,7 +369,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               medium: {
                 email: this.email,
                 sms: this.sms,
-                pushNotification: this.pushnotify
+                pushNotification: this.pushnotify,
+                telegram: this.telegram
               },
               communicationMessage: form_data.message,
               consumerId: [this.uuid]
@@ -354,7 +392,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
           }
         } else {
           if (this.data.source === 'provider-waitlist') {
-            if (!this.sms && !this.email && !this.pushnotify) {
+            if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
               this.api_error = 'share message via options are not selected';
               return;
             }
@@ -375,7 +413,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         medium: {
           email: this.email,
           sms: this.sms,
-          pushNotification: this.pushnotify
+          pushNotification: this.pushnotify,
+          telegram: this.telegram
         },
         communicationMessage: form_data.message,
         uuid: this.uuid
@@ -424,7 +463,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         medium: {
           email: this.email,
           sms: this.sms,
-          pushNotification: this.pushnotify
+          pushNotification: this.pushnotify,
+          telegram: this.telegram
         },
         communicationMessage: post_data.communicationMessage,
         uuid: foruuid

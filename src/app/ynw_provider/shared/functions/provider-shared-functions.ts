@@ -394,6 +394,7 @@ export class ProviderSharedFuctions {
     let name;
     let email;
     let phone;
+    let countryCode;
     let phone_history;
     let jaldeeConsumer = 'false';
     if (waitlist.length > 1) {
@@ -422,6 +423,7 @@ export class ProviderSharedFuctions {
         name = fname + ' ' + lname;
         email = waitlist[0].providerConsumer.email;
         phone = waitlist[0].providerConsumer.phoneNo;
+        countryCode = waitlist[0].countryCode;
         if (waitlist[0].consumer) {
           jaldeeConsumer = 'true';
         }
@@ -438,6 +440,7 @@ export class ProviderSharedFuctions {
         name = fname + ' ' + lname;
         email = waitlist[0].email;
         phone = waitlist[0].phoneNumber;
+        countryCode = waitlist[0].countryCode;
         if (waitlist[0].jaldeeConsumer) {
           jaldeeConsumer = 'true';
         }
@@ -454,6 +457,7 @@ export class ProviderSharedFuctions {
         name = fname + ' ' + lname;
         email = waitlist[0].waitlistingFor[0].email;
         phone = waitlist[0].waitlistingFor[0].phoneNo;
+        countryCode = waitlist[0].countryCode;
         phone_history = waitlist[0].waitlistPhoneNumber;
         if (waitlist[0].jaldeeConsumer) {
           jaldeeConsumer = 'true';
@@ -481,6 +485,7 @@ export class ProviderSharedFuctions {
           appt: appt,
           email: email,
           phone: phone,
+          countryCode: countryCode,
           phone_history: phone_history,
           jaldeeConsumer: jaldeeConsumer
         }
