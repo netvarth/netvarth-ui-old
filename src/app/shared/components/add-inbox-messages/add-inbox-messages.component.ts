@@ -170,6 +170,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     }
   }
   ngOnInit() {
+    this.createForm();
     this.ynw_credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
     if (this.phone) {
       if(this.countryCode.startsWith('+')){
@@ -193,7 +194,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
        );
     }
     this.SEND_MESSAGE = Messages.SEND_MESSAGE.replace('[customer]', this.customer_label);
-    this.createForm();
     if (this.source === 'provider-waitlist' || this.source === 'customer-list') {
       this.getSMSCredits();
     }
