@@ -179,7 +179,7 @@
                                                             <a (click)="openImage(msg.attachements, i)"
                                                                 *ngIf="attachment.s3path && checkImgType(attachment.s3path) === 'img'"><img
                                                                     [src]="getThumbUrl(attachment)" /></a>
-                                                            <a [href]="attachment.s3path"
+                                                            <a [href]="attachment.s3path" target="_blank"
                                                                 *ngIf="attachment.s3path && checkImgType(attachment.s3path) === 'pdf'"><img
                                                                     [src]="getThumbUrl(attachment)" /></a>
                                                         </ng-container>
@@ -222,7 +222,7 @@
                                                             <a (click)="openImage(msg.attachements, i)"
                                                                 *ngIf="attachment.s3path && checkImgType(attachment.s3path) === 'img'"><img
                                                                     [src]="getThumbUrl(attachment)" /></a>
-                                                            <a [href]="attachment.s3path"
+                                                            <a [href]="attachment.s3path" target="_blank"
                                                                 *ngIf="attachment.s3path && checkImgType(attachment.s3path) === 'pdf'"><img
                                                                     [src]="getThumbUrl(attachment)" /></a>
                                                         </ng-container>

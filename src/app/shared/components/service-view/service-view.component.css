@@ -157,13 +157,18 @@
     display: block !important;
     width: 100%;
 }
+.busname{
+  color: #073B4C;
+  font-size: 1.25rem !important;
+  font-weight: 600;
+  width: 100%;
+}
 
-.service-detail-content.service-popup-content .servicedet_outer .outer .outer1.line .description ,.busname{
-    color: #073B4C;
-    /* text-align: center; */
-    font-size: 1.125rem !important;
-    font-weight: 600;
+.service-detail-content.service-popup-content .servicedet_outer .outer .outer1.line .description{
+    font-size: 1rem !important;
+    font-weight: 500;
     width: 100%;
+    color: #666 !important;
 }
 
 .service-detail-content.service-popup-content .servicedet_outer .outer .outer5.service-duration {
@@ -491,18 +496,20 @@
     
   }
   .actionbtn{
-background-color: rgb(61, 156, 219) !important;
 border: 1px solid rgb(50, 47, 223);
-background-color: #FFC107;
-color: #073B4C;
+color: #073B4C !important;
+background-color: #E0A800 !important;
+border-color: #D39E00;
+color: #fff;
 font-weight: 600;
+min-width: 150px !important;
   }
   .mgncla{
     margin-bottom: 10px;
     margin-top: -10px;
   }
   .divshadow{
-    /* box-shadow: 0 4px 4px 0 #c7cbd1; */
+    box-shadow: 0 4px 4px 0 #c7cbd1;
   }
   mat-toolbar {
     background: #004a9f;
@@ -534,7 +541,9 @@ mat-sidenav {
     align-items: center;
     justify-content: flex-start;
     font-size: 1rem;   
+    text-transform: none !important;
     background: none !important; 
+    overflow: none !important;
 }
 .content {
     height: calc(100vh - 65px);

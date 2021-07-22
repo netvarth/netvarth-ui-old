@@ -58,6 +58,13 @@ app-appt-card, app-wl-card {
         text-align: left !important;
     }
 }
+.telebt{
+    color: #3c8dbc;
+    border: 1px solid;
+}
+.tbt{
+    font-size: 20px !important
+}
 
 
 [class^="ribbon-new"] {

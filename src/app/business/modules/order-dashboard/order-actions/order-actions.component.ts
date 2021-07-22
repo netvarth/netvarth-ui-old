@@ -258,7 +258,8 @@ addLabel() {
     'uuid': ids
 };
   this.provider_services.addLabeltoMultipleOrder(postData).subscribe(data => {
-      this.dialogRef.close('reload');
+    this.snackbarService.openSnackBar('Label applied successfully', { 'panelclass': 'snackbarerror' });
+    this.dialogRef.close('reload');
   },
       error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -356,6 +357,9 @@ deleteLabel() {
             'uuid': ids
         };
         this.provider_services.deleteLabelfromOrder(postData).subscribe(data => {
+          if (Object.keys(this.labelMap).length === 0) {
+            this.snackbarService.openSnackBar('Label removed', { 'panelclass': 'snackbarerror' });
+        }
             this.dialogRef.close('reload');
         },
             error => {
