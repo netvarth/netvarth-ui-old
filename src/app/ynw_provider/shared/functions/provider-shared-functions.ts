@@ -512,9 +512,6 @@ export class ProviderSharedFuctions {
       type = 'multiple';
       for (const custlst of customerlist) {
         if (source === 'donation-list') {
-          if (customerlist.length === 1) {
-            type = 'single';
-          }
           custids.push(custlst.uid);
         } else {
           custids.push(custlst.id);
@@ -538,6 +535,9 @@ export class ProviderSharedFuctions {
       ynwcustid = custid;
     } else {
       ynwcustid = custids;
+    }
+    if (customerlist.length === 1) {
+      type = 'single';
     }
     const terminologies = this.common_datastorage.get('terminologies');
     return new Promise<void>((resolve, reject) => {

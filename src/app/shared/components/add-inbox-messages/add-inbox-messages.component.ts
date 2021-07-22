@@ -145,7 +145,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     if (!data.terminologies &&
       (this.source === 'consumer-waitlist' ||
         this.source === 'consumer-common')) {
-          const id = (this.data.userId) ? this.data.userId : this.data.user_id;
+      const id = (this.data.userId) ? this.data.userId : this.data.user_id;
       this.subs.sink = this.s3Processor.getJsonsbyTypes(id, null, 'terminologies').subscribe(
         (accountS3s) => {
           if (accountS3s['terminologies']) {
@@ -343,6 +343,21 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                     this.disableButton = false;
                   }
                 );
+            } else if (this.source === 'donation-list') {
+              const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+              dataToSend.append('communication', blobpost_Data);
+              this.shared_services.donationMassCommunication(dataToSend).
+                subscribe(() => {
+                  this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                  setTimeout(() => {
+                    this.dialogRef.close('reloadlist');
+                  }, projectConstants.TIMEOUT_DELAY);
+                },
+                  error => {
+                    this.wordProcessor.apiErrorAutoHide(this, error);
+                    this.disableButton = false;
+                  }
+                );
             } else {
               this.shared_services.consumerMassCommunication(post_data).
                 subscribe(() => {
@@ -374,10 +389,40 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               },
               communicationMessage: form_data.message,
               consumerId: [this.uuid]
-            }; 
+            };
             const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
             dataToSend.append('communication', blobpost_Data);
             this.shared_services.consumerMassCommunicationWithId(dataToSend).
+              subscribe(() => {
+                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                setTimeout(() => {
+                  this.dialogRef.close('reloadlist');
+                }, projectConstants.TIMEOUT_DELAY);
+              },
+                error => {
+                  this.wordProcessor.apiErrorAutoHide(this, error);
+                  this.disableButton = false;
+                }
+              );
+          }
+        } else if (this.source === 'donation-list') {
+          if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
+            this.api_error = 'share message via options are not selected';
+            return;
+          } else {
+            const post_data = {
+              medium: {
+                email: this.email,
+                sms: this.sms,
+                pushNotification: this.pushnotify,
+                telegram: this.telegram
+              },
+              communicationMessage: form_data.message,
+              uuid: this.uuid
+            };
+            const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+            dataToSend.append('communication', blobpost_Data);
+            this.shared_services.donationMassCommunication(dataToSend).
               subscribe(() => {
                 this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
                 setTimeout(() => {
@@ -408,32 +453,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
             case 'provider-common': this.providerToConsumerNoteAdd(post_data); break;
           }
         }
-      }  
-      const post_data = {
-        medium: {
-          email: this.email,
-          sms: this.sms,
-          pushNotification: this.pushnotify,
-          telegram: this.telegram
-        },
-        communicationMessage: form_data.message,
-        uuid: this.uuid
-      };
-      if (this.source === 'donation-list') {  
-        const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
-        dataToSend.append('communication', blobpost_Data);
-        this.shared_services.donationMassCommunication(dataToSend).
-          subscribe(() => {
-            this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
-            setTimeout(() => {
-              this.dialogRef.close('reloadlist');
-            }, projectConstants.TIMEOUT_DELAY);
-          },
-            error => {
-              this.wordProcessor.apiErrorAutoHide(this, error);
-              this.disableButton = false;
-            }
-          );
       }
     }
   }
@@ -845,8 +864,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     }
   }
   keyPressed(event) {
-    if(event.length == 330) {
+    if (event.length == 330) {
       this.snackbarService.openSnackBar('Character limit reached ');
-    } 
+    }
   }
 }
