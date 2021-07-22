@@ -30,7 +30,7 @@
                     [ngModelOptions]="{standalone: true}">App
                     notification
                 </mat-checkbox>
-                <mat-checkbox [disabled]="((source === 'customer-list' || source === 'donation-list') && selectedMessage.files.length !== 0) || (IsTelegramDisable && (selectedMessage.files.length !== 0 ||   (source ==='provider-waitlist' || source ==='customer-list')))"   class="mgright50 example-margin" [(ngModel)]="telegram" [ngModelOptions]="{standalone: true}">
+                <mat-checkbox *ngIf="typeOfMsg !== 'multiple'" [disabled]="((source === 'customer-list' || source === 'donation-list') && selectedMessage.files.length !== 0) || (typeOfMsg === 'single' && (selectedMessage.files.length !== 0 ||   (source ==='provider-waitlist' || source ==='customer-list') && ((!phone && !phone_history )|| phone === 'null' || phone === '' ) || IsTelegramDisable))" class="mgright50 example-margin" [(ngModel)]="telegram" [ngModelOptions]="{standalone: true}">
                     Telegram
                 </mat-checkbox>
             </div>

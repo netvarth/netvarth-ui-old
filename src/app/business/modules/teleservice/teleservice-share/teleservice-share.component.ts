@@ -121,27 +121,30 @@ export class TeleServiceShareComponent implements OnInit {
     else{
       this.providerEmail = false;
     }
-    this.cusmtor_countrycode = this.data.consumerDetails.countryCode;
-    this.cusmtor_phone = this.data.consumerDetails.phoneNo;
-    if(this.cusmtor_countrycode.startsWith('+')){
-      this.cust_countryCode = this.cusmtor_countrycode.substring(1);
-    }
-    this.shared_services.telegramChat(this.cust_countryCode, this.cusmtor_phone)
-     .subscribe(
-         data => { 
-           this.chatId = data; 
-           if(this.chatId === null){
-            this.IsTelegramCustomrDisable = true;
-           }
-           else{
-            this.IsTelegramCustomrDisable = false;
-           }
-          
-         },
-         (error) => {
+    if(this.data.consumerDetails && this.data.consumerDetails.countryCode){
+      this.cusmtor_countrycode = this.data.consumerDetails.countryCode;
+      this.cusmtor_phone = this.data.consumerDetails.phoneNo;
+      if(this.cusmtor_countrycode.startsWith('+')){
+        this.cust_countryCode = this.cusmtor_countrycode.substring(1);
+      }
+      this.shared_services.telegramChat(this.cust_countryCode, this.cusmtor_phone)
+       .subscribe(
+           data => { 
+             this.chatId = data; 
+             if(this.chatId === null){
+              this.IsTelegramCustomrDisable = true;
+             }
+             else{
+              this.IsTelegramCustomrDisable = false;
+             }
             
-         }
-     );
+           },
+           (error) => {
+              
+           }
+       );
+    }
+    
     if (this.data.waitingType === 'checkin') {
       if (this.data.consumerDetails.email_verified) {
         this.haveEmail = true;

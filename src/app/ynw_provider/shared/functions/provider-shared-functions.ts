@@ -508,6 +508,7 @@ export class ProviderSharedFuctions {
     let name;
     let phone;
     let email;
+    let countryCode;
     if (customerlist.length > 1 || source === 'donation-list') {
       type = 'multiple';
       for (const custlst of customerlist) {
@@ -529,6 +530,7 @@ export class ProviderSharedFuctions {
       const lname = (customerlist[0].lastName) ? customerlist[0].lastName : '';
       name = fname + ' ' + lname;
       phone = customerlist[0].phoneNo;
+      countryCode = customerlist[0].countryCode;
       email = customerlist[0].email;
     }
     if (type === 'single') {
@@ -554,6 +556,7 @@ export class ProviderSharedFuctions {
           name: name,
           email: email,
           phone: phone,
+          countryCode: countryCode
         }
       });
 
