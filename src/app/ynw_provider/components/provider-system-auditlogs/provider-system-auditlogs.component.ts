@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
@@ -72,6 +72,8 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   dateFilter = false;
    _selectedColumns: any[];
    cols:any[]=[];
+   screenWidth: number;
+   smalldevice = false;
   constructor(
     private locationobj: Location,
     private shared_services: SharedServices,
@@ -82,6 +84,17 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private dateTimeProcessor: DateTimeProcessor
   ) { }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth < 700) {
+      this.smalldevice = true;
+      this.getAuditList('', '', '', '');
+    } else {
+      this.smalldevice = false;
+      this.getAuditList('', '', '', '');
+    }
+  }
 
   ngOnInit() {
   //   this.cols = [
@@ -138,6 +151,7 @@ set selectedColumns(val: any[]) {
         });
   }
   getAuditList(cat, subcat, action, sdate) {
+    this.cols=[];
     let pageval;
     if (this.startpageval) {
       pageval = (this.startpageval - 1) * this.perPage;
@@ -151,9 +165,16 @@ set selectedColumns(val: any[]) {
         console.log(this.auditlog_details)
         Object.keys(this.auditlog_details[0]).forEach(item=>{
           console.log(item)
-          if(item == 'date' ||item =='subject'|| item == 'text'||item == 'userName'){
-            this.cols.push({field: item, header: item});
+          if(!this.smalldevice){
+            if(item == 'date' ||item =='subject'|| item == 'text'||item == 'userName'){
+              this.cols.push({field: item, header: item});
+            }
+          } else {
+            if(item == 'date' ||item =='subject'||item == 'userName'){
+              this.cols.push({field: item, header: item});
+            }
           }
+          
           
         })
         this.auditStatus = 3;
