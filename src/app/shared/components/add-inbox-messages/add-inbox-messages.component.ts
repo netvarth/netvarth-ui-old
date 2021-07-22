@@ -97,7 +97,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     if (data.jaldeeConsumer) {
       this.jaldeeConsumer = (data.jaldeeConsumer === 'true') ? true : false;
     }
-    if (this.typeOfMsg === 'single') {
+    if (this.typeOfMsg === 'single' && this.source !== 'donation-list') {
       if (!this.email_id) {
         this.email = false;
       }
@@ -219,6 +219,20 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   onSubmit(form_data) {
     this.resetApiErrors();
     const blankvalidate = projectConstantsLocal.VALIDATOR_BLANK;
+    const dataToSend: FormData = new FormData();
+    const captions = {};
+    let i = 0;
+    if (this.selectedMessage) {
+      for (const pic of this.selectedMessage.files) {
+        dataToSend.append('attachments', pic, pic['name']);
+        captions[i] = 'caption';
+        i++;
+      }
+    }
+    const foruuid = [];
+    foruuid.push(this.uuid);
+    const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
+    dataToSend.append('captions', blobPropdata);
     if (blankvalidate.test(form_data.message)) {
       this.api_error = this.wordProcessor.getProjectMesssages('MSG_ERROR');
     } else {
@@ -237,7 +251,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               communicationMessage: form_data.message,
               consumerId: this.uuid
             };
-            this.shared_services.consumerMassCommunicationWithId(post_data).
+            const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+            dataToSend.append('communication', blobpost_Data);
+            this.shared_services.consumerMassCommunicationWithId(dataToSend).
               subscribe(() => {
                 this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
                 setTimeout(() => {
@@ -290,8 +306,10 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                     this.disableButton = false;
                   }
                 );
-            } else if (this.source === 'donation-list') {
-              this.shared_services.donationMassCommunication(post_data).
+            } else if (this.source === 'donation-list') {  
+              const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+              dataToSend.append('communication', blobpost_Data);
+              this.shared_services.donationMassCommunication(dataToSend).
                 subscribe(() => {
                   this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
                   setTimeout(() => {
@@ -333,8 +351,10 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               },
               communicationMessage: form_data.message,
               consumerId: [this.uuid]
-            };
-            this.shared_services.consumerMassCommunicationWithId(post_data).
+            }; 
+            const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+            dataToSend.append('communication', blobpost_Data);
+            this.shared_services.consumerMassCommunicationWithId(dataToSend).
               subscribe(() => {
                 this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
                 setTimeout(() => {

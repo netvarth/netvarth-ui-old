@@ -507,6 +507,9 @@ export class ProviderSharedFuctions {
       type = 'multiple';
       for (const custlst of customerlist) {
         if (source === 'donation-list') {
+          if (customerlist.length === 1) {
+            type = 'single';
+          }
           custids.push(custlst.uid);
         } else {
           custids.push(custlst.id);
