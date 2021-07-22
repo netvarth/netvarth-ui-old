@@ -69,6 +69,8 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
   wthistory;
   questionnaire_heading = Messages.QUESTIONNAIRE_CONSUMER_HEADING;
   type;
+  accountId: any;
+  customId: any;
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -87,6 +89,10 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
         this.ynwUuid = qParams.uuid;
         this.providerId = qParams.providerId;
         this.type = qParams.type;
+        this.accountId = qParams.accountId;
+        if (qParams && qParams.customId) {
+          this.customId = qParams.customId;
+        }
       });
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -205,7 +211,11 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
     });
   }
   providerDetail(provider) {
-    this.router.navigate(['searchdetail', provider.uniqueId]);
+    if (this.customId) {
+      this.router.navigate([this.customId]);
+    } else {
+      this.router.navigate(['searchdetail', provider.uniqueId]);
+    }
   }
   viewMore() {
     this.view_more = !this.view_more;

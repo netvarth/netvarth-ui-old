@@ -471,53 +471,71 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['consumer', 'payments'], navigationExtras);
   }
   orderpaymentsClicked() {
-    this.router.navigate(['consumer', 'order', 'order-payments']);
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['accountId'] = this.accountId;
+      queryParams['customId'] = this.customId;
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParams
+    };
+    this.router.navigate(['consumer', 'order', 'order-payments'], navigationExtras);
   }
   showcheckindetails(waitlist) {
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['accountId'] = this.accountId;
+      queryParams['customId'] = this.customId;
+    }
+    queryParams['uuid']=waitlist.ynwUuid;
+    queryParams['providerId']=waitlist.providerAccount.id;
     const navigationExtras: NavigationExtras = {
-      queryParams: {
-        uuid: waitlist.ynwUuid,
-        providerId: waitlist.providerAccount.id
-      }
+      queryParams: queryParams
     };
     this.router.navigate(['consumer', 'checkindetails'], navigationExtras);
   }
   showApptdetails(apptlist) {
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['accountId'] = this.accountId;
+      queryParams['customId'] = this.customId;
+    }
+    queryParams['uuid']=apptlist.uid;
+    queryParams['providerId']=apptlist.providerAccount.id;
     const navigationExtras: NavigationExtras = {
-      queryParams: {
-        uuid: apptlist.uid,
-        providerId: apptlist.providerAccount.id
-      }
+      queryParams: queryParams
     };
     this.router.navigate(['consumer', 'apptdetails'], navigationExtras);
   }
   showBookingDetails(booking, type?) {
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['accountId'] = this.accountId;
+      queryParams['customId'] = this.customId;
+    }
     if (booking.apptStatus) {
+      queryParams['uuid'] = booking.uid;
+      queryParams['providerId'] = booking.providerAccount.id;
+      queryParams['type'] = type;
       const navigationExtras: NavigationExtras = {
-        queryParams: {
-          uuid: booking.uid,
-          providerId: booking.providerAccount.id,
-          type: type
-        }
+        queryParams: queryParams
       };
       this.router.navigate(['consumer', 'apptdetails'], navigationExtras);
     } else if (booking.waitlistStatus) {
+      queryParams['uuid'] = booking.ynwUuid;
+      queryParams['providerId'] = booking.providerAccount.id;
+      queryParams['type'] = type;
       const navigationExtras: NavigationExtras = {
-        queryParams: {
-          uuid: booking.ynwUuid,
-          providerId: booking.providerAccount.id,
-          type: type
-        }
+        queryParams: queryParams
       };
       this.router.navigate(['consumer', 'checkindetails'], navigationExtras);
     } else {
-      // console.log('this is order');
-      // console.log(booking);
+      console.log('this is order');
+      console.log(booking);
+      queryParams['uuid'] = booking.uid;
+      queryParams['providerId'] = booking.providerAccount.id;
       const navigationExtras: NavigationExtras = {
-        queryParams: {
-          uuid: booking.uid,
-          providerId: booking.providerAccount.id
-        }
+        queryParams: queryParams
       };
       this.router.navigate(['consumer', 'orderdetails'], navigationExtras);
     }

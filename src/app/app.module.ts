@@ -59,7 +59,6 @@ import { SalesChannelModule } from './shared/modules/saleschannel/saleschannel.m
 import { ForgotPasswordModule } from './shared/components/forgot-password/forgot-password.module';
 import { SetPasswwordModule } from './shared/components/set-password-form/set-password-form.module';
 import { JdnComponent } from './shared/components/jdn-detail/jdn-detail-component';
-import { CheckYourStatusComponent } from './shared/components/status-check/check-status.component';
 import { BreadCrumbModule } from './shared/modules/breadcrumb/breadcrumb.module';
 import { GlobalService } from './shared/services/global-service';
 import { Razorpaymodel } from './shared/components/razorpay/razorpay.model';
@@ -108,16 +107,11 @@ import { environment } from '../environments/environment';
 import { ConsumerAuthService } from './shared/services/consumer-auth-service';
 import { ListRecordingsDialogComponent } from './shared/components/list-recordings-dialog/list-recordings-dialog.component';
 import { VirtualFieldsModule } from './ynw_consumer/components/virtualfields/virtualfields.module';
-import { BusinessPageHomeComponent } from './shared/components/business-page-home/business-page-home.component';
 import { MeetRoomComponent } from './shared/components/meet-room/meet-room.component';
 import { MeetRoomModule } from './shared/components/meet-room/meet-room.module';
 import { MediaService } from './shared/services/media-service';
 import { RequestDialogComponent } from './business/shared/meeting-room/request-dialog/request-dialog.component';
 import { VideoCallSharedComponent } from './business/modules/video-call/video-call.component';
-import { ContactComponent } from './shared/components/business-page-home/contactus/contact.component';
-import { TermsconditionComponent } from './shared/components/business-page-home/termscondition/termscondition.component';
-import { RefundcancelComponent } from './shared/components/business-page-home/refundcancel/refundcancel.component';
-import { PrivacyComponent } from './shared/components/business-page-home/privacy/privacy.component';
 import { FileReaderService } from './shared/services/file-reader.service';
 import { AttachmentPopupComponent } from './shared/components/attachment-popup/attachment-popup.component';
 export function init_app(globalService: GlobalService) {
@@ -145,7 +139,6 @@ export function init_app(globalService: GlobalService) {
     AdminLoginComponent,
     ConsumerJoinComponent,
     ManageProviderComponent,
-    CheckYourStatusComponent,
     PaymentLinkComponent,
     VoicecallDetailsSendComponent,
     JdnComponent,
@@ -156,13 +149,8 @@ export function init_app(globalService: GlobalService) {
     MeetingRoomComponent,
     CommunicationComponent,
     ListRecordingsDialogComponent,
-    BusinessPageHomeComponent,
     RequestDialogComponent,
     VideoCallSharedComponent,
-    ContactComponent,
-    TermsconditionComponent,
-    PrivacyComponent,
-    RefundcancelComponent,
     AttachmentPopupComponent
   ],
   entryComponents: [
