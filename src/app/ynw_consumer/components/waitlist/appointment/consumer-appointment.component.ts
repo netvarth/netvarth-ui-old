@@ -129,7 +129,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     currentPhone;
     users: any = [];
     emailExist = false;
-    payEmail;
+    payEmail='';
     emailerror = null;
     changePhno = false;
     selected_phone;
@@ -737,6 +737,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         });
     }
     confirmcheckin(type?) {
+        console.log(type +this.payEmail)
         if(type==='appt' && this.sel_ser_det.isPrePayment &&this.payEmail===''){
             const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
                 width: '40%',
@@ -747,6 +748,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             emaildialogRef.afterClosed().subscribe(result => {
                 if (result!== '' && result!==undefined) {
                     this.payEmail = result;
+                    this.confirmcheckin(type);
                 }
     
             });
@@ -818,6 +820,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     post_Data['virtualService'] = { 'VideoCall': '' };
                 }
             }
+        
             if (this.virtualInfo) {
                 if(!this.waitlist_for[0]['apptTime']){
                 this.waitlist_for[0]['apptTime']= this.selectedApptTime['time']
@@ -857,12 +860,16 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.waitlist_for[0]['gender'] = this.virtualInfo.gender;
 
                 }
+            }
+        }
                 if (this.payEmail !== '') {
                     this.waitlist_for[0]['email'] = this.payEmail;
                 }
-            }
+               
+           
+           
 
-        }
+        
         post_Data['appmtFor'] = JSON.parse(JSON.stringify(this.waitlist_for));
         console.log('post_data' + JSON.stringify(post_Data));
         console.log(type);
