@@ -298,8 +298,9 @@
                                                                                         Amount Due
                                                                                     </div>
                                                                                     <div class="price rupee-font">
-                                                                                        {{bill_data.amountDue |
-                                                                                        currency:'&#8377; '}}</div>
+                                                                                        {{checkJcash ? ((bill_data.amountDue - jcashamount) | currency:'&#8377;' ): (bill_data.amountDue  | currency:'&#8377;') }}
+                                                                                        <!-- {{bill_data.amountDue | currency:'&#8377; '}} -->
+                                                                                    </div>
                                                                                 </div>
                                                                                 <div class="c-row one two-col"
                                                                                     *ngIf="bill_data.amountDue < 0">
