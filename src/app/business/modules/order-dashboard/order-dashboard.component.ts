@@ -88,6 +88,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   ];
   allModeSelected = false;
   refreshTime: any;
+  objectKeys=Object.keys;
   private subs=new SubSink();
   constructor(public sharedFunctions: SharedFunctions,
     public router: Router, private dialog: MatDialog,
