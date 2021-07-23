@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { projectConstants } from '../../../../../app.component';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
@@ -36,6 +36,8 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
   type = 'appt';
   private subs=new SubSink();
   theme: any;
+  accountId;
+  customId;
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public sharedFunctionobj: SharedFunctions,
@@ -55,6 +57,9 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
         if (params.type) {
           this.type = params.type;
         }
+        if (params.customId) {
+          this.customId = params.customId;
+        }
         if(params.theme){
           this.theme=params.theme;
         }
@@ -67,11 +72,23 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
     this.subs.unsubscribe();
   }
   okClick() {
+    let queryParam = {};
+    if (this.customId) {
+      queryParam['customId'] = this.customId;
+      queryParam['theme'] = this.theme;
+    }
+    if (this.infoParams.account_id) {
+      queryParam['account_id'] = this.infoParams.account_id;
+      queryParam['accountId'] = this.infoParams.account_id;
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParam
+    };
     this.lStorageService.setitemonLocalStorage('orderStat', false);
     if (this.appointment.service.livetrack && this.type !== 'reschedule') {
-      this.router.navigate(['consumer', 'appointment', 'track', this.infoParams.uuid], { queryParams: { account_id: this.infoParams.account_id } });
+      this.router.navigate(['consumer', 'appointment', 'track', this.infoParams.uuid], navigationExtras);
     } else {
-      this.router.navigate(['consumer']);
+      this.router.navigate(['consumer'], navigationExtras);
     }
   }
   getSingleTime(slot) {

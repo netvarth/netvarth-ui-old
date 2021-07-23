@@ -23,9 +23,11 @@
                                     Provider &nbsp; <i class="fa fa-search"></i></button>
                             </h1>
                         </div>
-                        <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4 bg-visible fl-right no-padding">
-                            <img class="myjaldee-bg fl-right" _ngcontent-ywv-c30=""
-                                src="assets/images/myjaldee/Group92.png">
+                        <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4 bg-visible fl-right tele_button" *ngIf="showTeleBt">
+                            <!-- <img class="myjaldee-bg fl-right" _ngcontent-ywv-c30=""
+                                src="assets/images/myjaldee/Group92.png"> -->
+                            
+                                <button class="mgn-up-20 find-sp-btn telebt" mat-raised-button (click)="redirectto('profile')"><i class="fa fa-telegram tbt" aria-hidden="true"></i>  &nbsp; Get Updation On Telegram</button>
                         </div>
                     </div>
 

@@ -17,8 +17,8 @@ import { ConsumerFooterModule } from '../../../ynw_consumer/components/footer/fo
 import { TruncateModule } from '../../pipes/limitTo.module';
 import { CardModule } from '../card/card.module';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MainserviceDetailComponent } from './mainservice-detail.component';
-import { MainserviceDetailRoutingModule } from './mainservice-detail.routing.module';
+import { ServiceViewComponent } from './service-view.component';
+import { ServiceViewRoutingModule } from './service-view.routing.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -39,14 +39,11 @@ import { MainserviceDetailRoutingModule } from './mainservice-detail.routing.mod
         TruncateModule,
         CardModule,
         MatDialogModule,
-        MainserviceDetailRoutingModule
+        ServiceViewRoutingModule
     ],
     declarations: [
-        MainserviceDetailComponent
-    ],
-    entryComponents: [
-       
+        ServiceViewComponent
     ]
 })
 
-export class MainserviceDetailModule { }
+export class ServiceViewModule { }

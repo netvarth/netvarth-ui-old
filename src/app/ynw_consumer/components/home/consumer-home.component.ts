@@ -173,6 +173,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   api_loading = false;
   futureAllowed = true;
   usr_details: any;
+  login_details: any;
   future_appointments: any = [];
   future_waitlists: any = [];
   todayDate = new Date();
@@ -239,6 +240,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   customAppid: any;
   customId: any;
   orderstatus = false;
+  countryCode: any;
+  chatId: any;
+  showTeleBt = false;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -298,13 +302,30 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       divider = divident / 1;
     }
     this.no_of_grids = Math.round(divident / divider);
-    console.log(this.screenWidth);
-    console.log(this.no_of_grids);
+    // console.log(this.screenWidth);
+    // console.log(this.no_of_grids);
   }
 
   ngOnInit() {
-    console.log(this.bookingStatusClasses);
+    // console.log(this.bookingStatusClasses);
     this.usr_details = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.login_details = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+    let login = JSON.parse(this.login_details);
+    if(login.countryCode.startsWith('+')){
+      this.countryCode = login.countryCode.substring(1);
+    }
+    this.shared_services.telegramChat(this.countryCode,login.loginId)
+     .subscribe(
+         data => { 
+           this.chatId = data; 
+           if(this.chatId === null){
+            this.showTeleBt = true;
+           }
+         },
+         (error) => {
+            
+         }
+     );
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.locationholder = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
     let stat;
@@ -398,9 +419,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
 
     this.subs.sink = this.galleryService.getMessage().subscribe(input => {
-      console.log(input);
+      // console.log(input);
       if (input && input.accountId && input.uuid && input.type === 'appt') {
-        console.log(input);
+        // console.log(input);
         this.shared_services.addConsumerAppointmentAttachment(input.accountId, input.uuid, input.value)
           .subscribe(
             () => {
@@ -413,7 +434,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             }
           );
       } else {
-        console.log(input);
+        // console.log(input);
         if (input && input.accountId && input.uuid && input.type === 'checkin') {
           this.shared_services.addConsumerWaitlistAttachment(input.accountId, input.uuid, input.value)
             .subscribe(
@@ -430,6 +451,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     });
   }
+  redirectto(mod) {
+    const usertype = this.shared_functions.isBusinessOwner('returntyp');
+    switch (mod) {
+      case 'profile':
+        this.router.navigate([usertype, 'profile']);
+        break;
+    }
+  }
   paymentsClicked() {
     let queryParams = {};
     if (this.customId) {
@@ -442,53 +471,71 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['consumer', 'payments'], navigationExtras);
   }
   orderpaymentsClicked() {
-    this.router.navigate(['consumer', 'order', 'order-payments']);
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['accountId'] = this.accountId;
+      queryParams['customId'] = this.customId;
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParams
+    };
+    this.router.navigate(['consumer', 'order', 'order-payments'], navigationExtras);
   }
   showcheckindetails(waitlist) {
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['accountId'] = this.accountId;
+      queryParams['customId'] = this.customId;
+    }
+    queryParams['uuid']=waitlist.ynwUuid;
+    queryParams['providerId']=waitlist.providerAccount.id;
     const navigationExtras: NavigationExtras = {
-      queryParams: {
-        uuid: waitlist.ynwUuid,
-        providerId: waitlist.providerAccount.id
-      }
+      queryParams: queryParams
     };
     this.router.navigate(['consumer', 'checkindetails'], navigationExtras);
   }
   showApptdetails(apptlist) {
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['accountId'] = this.accountId;
+      queryParams['customId'] = this.customId;
+    }
+    queryParams['uuid']=apptlist.uid;
+    queryParams['providerId']=apptlist.providerAccount.id;
     const navigationExtras: NavigationExtras = {
-      queryParams: {
-        uuid: apptlist.uid,
-        providerId: apptlist.providerAccount.id
-      }
+      queryParams: queryParams
     };
     this.router.navigate(['consumer', 'apptdetails'], navigationExtras);
   }
   showBookingDetails(booking, type?) {
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['accountId'] = this.accountId;
+      queryParams['customId'] = this.customId;
+    }
     if (booking.apptStatus) {
+      queryParams['uuid'] = booking.uid;
+      queryParams['providerId'] = booking.providerAccount.id;
+      queryParams['type'] = type;
       const navigationExtras: NavigationExtras = {
-        queryParams: {
-          uuid: booking.uid,
-          providerId: booking.providerAccount.id,
-          type: type
-        }
+        queryParams: queryParams
       };
       this.router.navigate(['consumer', 'apptdetails'], navigationExtras);
     } else if (booking.waitlistStatus) {
+      queryParams['uuid'] = booking.ynwUuid;
+      queryParams['providerId'] = booking.providerAccount.id;
+      queryParams['type'] = type;
       const navigationExtras: NavigationExtras = {
-        queryParams: {
-          uuid: booking.ynwUuid,
-          providerId: booking.providerAccount.id,
-          type: type
-        }
+        queryParams: queryParams
       };
       this.router.navigate(['consumer', 'checkindetails'], navigationExtras);
     } else {
       console.log('this is order');
       console.log(booking);
+      queryParams['uuid'] = booking.uid;
+      queryParams['providerId'] = booking.providerAccount.id;
       const navigationExtras: NavigationExtras = {
-        queryParams: {
-          uuid: booking.uid,
-          providerId: booking.providerAccount.id
-        }
+        queryParams: queryParams
       };
       this.router.navigate(['consumer', 'orderdetails'], navigationExtras);
     }
@@ -1995,14 +2042,17 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   do_search() {
-    const passparam = {
-      do: 'All',
-      la: this.locationholder.lat || '',
-      lo: this.locationholder.lon || '',
-      lon: this.locationholder.name || '',
-      lontyp: this.locationholder.typ || '',
-      lonauto: this.locationholder.autoname || ''
-    };
+    let passparam = {};
+    if (this.locationholder) {
+      passparam = {
+        do: 'All',
+        la: this.locationholder.lat || '',
+        lo: this.locationholder.lon || '',
+        lon: this.locationholder.name || '',
+        lontyp: this.locationholder.typ || '',
+        lonauto: this.locationholder.autoname || ''
+      };
+    }
     this.router.navigate(['/searchdetail', passparam]);
   }
   showMoreTdyBookings() {

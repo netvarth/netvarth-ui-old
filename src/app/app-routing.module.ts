@@ -10,12 +10,10 @@ import { MaintenanceComponent } from './shared/modules/maintenance/maintenance.c
 import { AdminLoginComponent } from './shared/components/admin/login/login.component';
 import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
 import { ConsumerJoinComponent } from './ynw_consumer/components/consumer-join/join.component';
-import { CheckYourStatusComponent } from './shared/components/status-check/check-status.component';
 import { PaymentLinkComponent } from './shared/components/payment-link/payment-link.component';
 import { CheckoutSharedComponent } from './shared/components/checkout/checkout.component';
 import { ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
 import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
-import { BusinessPageHomeComponent } from './shared/components/business-page-home/business-page-home.component';
 import { MeetRoomComponent } from './shared/components/meet-room/meet-room.component';
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent },
@@ -44,7 +42,7 @@ const routes: Routes = [
     { path: 'meeting/:phonenumber', loadChildren: () => import('./shared/modules/tele-home/tele-home.module').then(m => m.TeleHomeModule)},
     { path: 'maintenance', component: MaintenanceComponent },
     { path: 'manage/:id', component: ManageProviderComponent },
-    { path: 'status/:id', component: CheckYourStatusComponent },
+    { path: 'status/:id', loadChildren: () => import('./shared/components/status-check/check-status.module').then(m => m.CheckStatusModule)},
     { path: 'consumer-join', component: ConsumerJoinComponent },
     { path: 'pay/:id', component: PaymentLinkComponent },
     { path: 'order/checkout', component: CheckoutSharedComponent },
@@ -53,10 +51,10 @@ const routes: Routes = [
     { path: 'userchange', loadChildren: () => import('./shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },
     { path: 'order/item-details', component: ItemDetailsSharedComponent },
     { path: ':id', component: BusinessPageComponent },
-    { path: ':id/home', component: BusinessPageHomeComponent },
+    { path: ':id/home', loadChildren: () => import('./shared/components/business-page-home/business-page-home.module').then(m => m.BusinessPageHomeModule) },
     { path: ':id/:userEncId', component: BusinessPageComponent },
-    { path: ':id/service/:serid', loadChildren: () => import('./shared/components/mainservice-detail/mainservice-detail.module').then(m => m.MainserviceDetailModule) },
-    { path: ':id/:userEncId/service/:serid', loadChildren: () => import('./shared/components/mainservice-detail/mainservice-detail.module').then(m => m.MainserviceDetailModule) }
+    { path: ':id/service/:serid', loadChildren: () => import('./shared/components/service-view/service-view.module').then(m => m.ServiceViewModule) },
+    { path: ':id/:userEncId/service/:serid', loadChildren: () => import('./shared/components/service-view/service-view.module').then(m => m.ServiceViewModule) }
 ];
 
 @NgModule({
