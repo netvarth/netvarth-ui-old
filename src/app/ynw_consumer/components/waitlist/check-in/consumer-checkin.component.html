@@ -193,7 +193,7 @@
                                                 <div
                                                     class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp border-rt check-new-group pad-rt-0">
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
-                                                        *ngIf="!api_loading1">
+                                                        *ngIf="queuejson && queuejson.length != 0 && !api_loading1">
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
                                                             Date/Time
@@ -213,7 +213,7 @@
                                                                 </span>
                                                             </h6>
                                                         </div>
-                                                        <div *ngIf="personsAhead == 0 ||personsAhead > 0"
+                                                        <div
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20">
                                                             Waiting in Line
                                                         </div>
@@ -569,7 +569,7 @@
                                                                         *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                                     <i class="fa fa-phone" style="font-size: 20px !important; align-self: center; padding-right: 9px;"
                                                                         *ngIf="!(sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone')"></i>
-                                                                    <div class="number-caption" [class.width-input]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">&nbsp; Phone#</div>
+                                                                    <div class="number-caption" [class.width-input]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'"> Phone#</div>
                                                                     <!-- <b>{{countryCode}}
                                                                         {{selected_phone}}</b> -->
                                                                     <div class="codenumber">
@@ -1131,7 +1131,7 @@
                                                     <span class="mgn-bt-5">{{sel_ser_det.name}}</span>
                                                 </span>
                                             </div>
-                                            <div class="disp-flex">
+                                            <!-- <div class="disp-flex">
                                                 <span class="billing-head" *ngIf="settingsjson.showTokenId">Token
                                                     for</span>
                                                 <span class="billing-head" *ngIf="!settingsjson.showTokenId">Check-in
@@ -1143,7 +1143,7 @@
                                                         {{customer.lastName}}{{i < waitlist_for.length-1 ? ", " : "" }}
                                                             </span>
                                                     </span>
-                                            </div>
+                                            </div> -->
                                             <div class="disp-flex">
                                                 <span class="billing-head">Contact #</span>
                                                 <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
@@ -1242,7 +1242,28 @@
                                         </table> -->
 
                                         <div class="containerAppt textcenter" *ngIf="!theme || theme != 'heartfulness_theme1'">
-                                            <div class="mgn-up-10 no-mgn-bt bold">Date/Time</div>
+                                            <div class="mgn-up-10 no-mgn-bt bold"><span >{{settingsjson.showTokenId?'Token For':'Checkin For'}} :&nbsp;</span>
+                                               
+                                                <span >
+                                                    <span class="service-icon" style="display: inline-block !important;"
+                                                        *ngIf="sel_ser_det.serviceType == 'virtualService'">
+                                                        <i class="fa phon-icon"
+                                                            *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                        <i class="fa meet-icon"
+                                                            *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                        <i class="fa zoom-icon"
+                                                            *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                        <i class="fa jvideo-icon jvideo-icon-m jvideo-icon-mg5"
+                                                            *ngIf="sel_ser_det.virtualCallingModes  && sel_ser_det.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+                                                        <i class="fa wtsapaud-icon"
+                                                            *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='audioService'"></i>
+                                                        <i class="fa wtsapvid-icon"
+                                                            *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='videoService'"></i>
+                                                    </span>
+                                                    <span>{{sel_ser_det.name}}</span>
+                                                </span></div>
+                                            
+                                            <!-- <div class="mgn-up-10 no-mgn-bt bold">Date/Time</div> -->
                                             <div class="mgn-bt-5">
                                                 <span *ngIf="!isFuturedate">Today, </span>
                                                 <span *ngIf="isFuturedate">{{selectedDate | date:
@@ -1271,9 +1292,112 @@
                                                             </span>{{serviceTime}}</span>
                                                     </ng-container>
                                                 </span>
+                                            </div> 
+                                        </div>
+                                         <div >
+       
+                                            <div class="containerpayment "
+                                            *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0 && paymentDetails.amountRequiredNow > 0">
+                                            <div class="jaldeecredit"  *ngIf="jcashamount>0" >
+                                                <mat-checkbox [(ngModel)]="checkJcash" (change)="changeJcashUse($event)"></mat-checkbox>
+                                                Use Jaldee cash balance : <span class="rupee-font">{{jcashamount| currency:'&#8377;'}}</span>
+                                            </div>
+                                            <div class="creditleft"  *ngIf="jcashamount>0">
+                                                Balance amount can be paid by other payment methods
+                                            </div>
+                                            <div class="prepayment">
+                                                <!-- Payment required now : &nbsp;
+                                                <span *ngIf="!checkJcash"class="rupee-font">{{paymentDetails.amountRequiredNow |
+                                                    currency:'&#8377;'}}
+                                                </span>
+                                                <span *ngIf="checkJcash" class="rupee-font">{{payAmount |
+                                                    currency:'&#8377;'}}
+                                                </span> -->
+                                                <button type="button" (click)="saveCheckin('checkin')" id="stepThreeConfirmButton"  class="next-button btn btn-primary font-weight-bold  px-12 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
+                                                    <ng-container
+                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
+                                                      ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
+                                                     Confirm <span >{{settingsjson.showTokenId?'Token ':'Checkin'}} </span></ng-container>
+                                                <ng-container
+                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                     Proceed to pay <span >Rs {{checkJcash ? payAmount : paymentDetails.amountRequiredNow}}</span></ng-container>
+                                                <!-- <ng-container
+                                                    *ngIf="paymentLength == 0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)">
+                                                    Confirm</ng-container> -->
+                                                </button>
+                                            </div>
+                                            <div class="cancelpolicy  mgn-rt-5"
+                                                *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                <div
+                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                    <a data-toggle="modal" data-target="#exampleModal"
+                                                        class="refund_policy">Cancellation Policy</a>
+                                                </div>
+                                            </div>
+                                            <!-- <div class=""
+                                                *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                <div class="select-pay"> Payment option</div>
+                                                <div class="">
+                                                    <span class="razorpay-icon selected-payment"></span>
+                                                    <span class="paytm-icon"></span>
+                                                </div>
+                                                <div
+                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                    <a data-toggle="modal" data-target="#exampleModal"
+                                                        class="refund_policy">Cancellation Policy</a>
+                                                </div>
+                                            </div> -->
+
+                                            <!-- modalbox -->
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog refundpol" role="document">
+                                                    <div class="modal-content">
+                                                        <!-- <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <i aria-hidden="true" class="ki ki-close"></i>
+                                                            </button>
+                                                        </div> -->
+                                                        <div class="modal-body pt-8 pb-0 refund_size">
+                                                            <span>Note:</span> Jaldee is not responsible for the
+                                                            transactions between Consumer and Provider.
+                                                            <ul>
+                                                                <li>Consumers can cancel the booking anytime</li>
+                                                                <li>If the consumer cancels the booking, 3% will be
+                                                                    deducted from the amount(which includes Jaldee
+                                                                    service charges and Online Gateway fees).</li>
+                                                                <li>Refund will be received directly to the consumer’s
+                                                                    bank account after he/she cancels the future
+                                                                    bookings.</li>
+                                                                <li>If the booking is cancelled on the date of booking,
+                                                                    refund will not be processed automatically(i.e
+                                                                    Consumer must inform the provider to initiate the
+                                                                    refund)</li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button"
+                                                                class="btn btn-light-primary font-weight-bold"
+                                                                data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="containerpayment" style="margin:20px;" *ngIf="sel_ser_det && sel_ser_det.isPrePayment==false && paymentLength==0|| (paymentDetails && paymentDetails.amountRequiredNow == 0)">
+                                            <div class="prepayment-confirm">
+                                                <button type="button" (click)="saveCheckin('checkin')" id="stepThreeConfirmButton"  class="next-button btn btn-primary font-weight-bold  px-12 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
+                                                    
+                                                     Confirm <span >{{settingsjson.showTokenId?'Token ':'Checkin'}} </span></button>
+                                                
+                                                
                                             </div>
                                         </div>
-                                        <div class="pay-section"
+                                        <!-- <div class="pay-section"
                                             *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0">
                                             <div>
                                                 Service Fee <span class="rupee-font">{{serviceCost |
@@ -1291,8 +1415,6 @@
                                                 <div class="select-pay"> Payment option</div>
                                                 <div class="">
                                                     <span class="razorpay-icon selected-payment"></span>
-                                                    <!-- <span class="razorpay-icon selected-payment" (click)="saveCheckin('checkin' ,'razorpay')"></span> &nbsp;
-                                                    <span class="paytm-icon" (click)="saveCheckin('checkin' ,'paytm')"></span> -->
                                                 </div>
                                                 <div
                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
@@ -1501,7 +1623,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div
+                                        <!-- <div
                                             class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 hf-double-btn-container">
                                             <div class="mr-2">
                                                 <button type="button"
@@ -1511,25 +1633,27 @@
                                                 </button>
                                             </div>
                                             <div>
-                                                <!-- <button *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0" class="btn btn-success font-weight-bold text-uppercase px-2 mr-5 py-2">
+                                                <button *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0" class="btn btn-success font-weight-bold text-uppercase px-2 mr-5 py-2">
                                                     Cancellation Policy
-                                                </button> -->
-                                                <!-- <button type="button" (click)="saveCheckin('checkin' ,'razorpay')" id="stepThreeConfirmButton"
-                                                [class.spinner]="disablebutton" [class.spinner-darker-success]="disablebutton" [class.spinner-center]="disablebutton"
-                                                class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4" [disabled]="(!checkPolicy && heartfulnessAccount) || disablebutton"
-                                                *ngIf="paymentLength == 0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)"> -->
+                                                </button> 
                                                 <button type="button" (click)="saveCheckin('checkin')" id="stepThreeConfirmButton"
-                                                [class.spinner]="disablebutton" [class.spinner-darker-success]="disablebutton" [class.spinner-center]="disablebutton"
-                                                class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4" [disabled]="(!checkPolicy && heartfulnessAccount) || disablebutton">
-                                                    <ng-container
+                                                class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
+                                                   <ng-container
                                                         *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                        Pay</ng-container>
+                                                        Pay by CC/DC/UPI</ng-container> 
+                                                    <ng-container
+                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
+                                                         ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || ( checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
+                                                         Confirm</ng-container>
+                                                    <ng-container
+                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                         Pay by CC/DC/UPI</ng-container>
                                                     <ng-container
                                                         *ngIf="paymentLength == 0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)">
                                                         Confirm</ng-container>
                                                 </button>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -1539,7 +1663,5 @@
             </div>
         </div>
         <div class="clearfix"></div>
-        <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>
-
     </div>
 </section>

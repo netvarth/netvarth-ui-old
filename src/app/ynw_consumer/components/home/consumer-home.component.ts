@@ -2042,14 +2042,17 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   do_search() {
-    const passparam = {
-      do: 'All',
-      la: this.locationholder.lat || '',
-      lo: this.locationholder.lon || '',
-      lon: this.locationholder.name || '',
-      lontyp: this.locationholder.typ || '',
-      lonauto: this.locationholder.autoname || ''
-    };
+    let passparam = {};
+    if (this.locationholder) {
+      passparam = {
+        do: 'All',
+        la: this.locationholder.lat || '',
+        lo: this.locationholder.lon || '',
+        lon: this.locationholder.name || '',
+        lontyp: this.locationholder.typ || '',
+        lonauto: this.locationholder.autoname || ''
+      };
+    }
     this.router.navigate(['/searchdetail', passparam]);
   }
   showMoreTdyBookings() {

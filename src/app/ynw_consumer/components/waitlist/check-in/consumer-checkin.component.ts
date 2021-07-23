@@ -214,6 +214,15 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     readMore = false;
     razorpayGatway = false;
     paytmGateway = false;
+    checkJcash = false;
+    checkJcredit = false;
+    jaldeecash: any;
+    jcashamount: any;
+    jcreditamount: any;
+    remainingadvanceamount;
+    amounttopay: any;
+    wallet: any;
+    payAmount: number;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -826,13 +835,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.waitlist_for[0]['gender'] = this.virtualInfo.gender;
 
                 }
-                if (this.payEmail !== '') {
-                    this.waitlist_for[0]['email'] = this.payEmail;
-                }
+                
             }
         }
-
-
+        if (this.payEmail !== '') {
+            this.waitlist_for[0]['email'] = this.payEmail;
+        }
+      
         post_Data['waitlistingFor'] = JSON.parse(JSON.stringify(this.waitlist_for));
         if (this.apptTime) {
             post_Data['appointmentTime'] = this.apptTime;
@@ -846,10 +855,23 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         post_Data['waitlistPhoneNumber'] = phNumber;
         post_Data['consumer'] = { id: this.customer_data.id };
+        if (this.jcashamount > 0 && this.checkJcash) {
+            post_Data['useCredit'] = this.checkJcredit
+            post_Data['useJcash'] = this.checkJcash
+        }
         if (!this.is_wtsap_empty) {
             if (type === 'checkin') {
-                this.disablebutton = true;
+                if (this.jcashamount > 0 && this.checkJcash) {
+                    this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.paymentDetails.amountRequiredNow)
+                        .subscribe(data => {
+                            this.remainingadvanceamount = data;
+                            this.addCheckInConsumer(post_Data);
+                        });
+                }
+                else {
+                  this.disablebutton = true;
                 this.addCheckInConsumer(post_Data);
+                }
             } else if (this.sel_ser_det.isPrePayment) {
                 this.addWaitlistAdvancePayment(post_Data);
             }
@@ -877,13 +899,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         });
     }
     saveCheckin(type?) {
-        //  if(gateway){
-        //     if(gateway === 'razorpay'){
-        //         this.razorpayGatway = true;
-        //     }else{
-        //         this.paytmGateway = true;
-        //        }
-        //  }
         console.log('insaide');
         if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
             if (this.waitlist_for.length !== 0) {
@@ -945,9 +960,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(this.uuidList, parentUid);
                 }
-                else {
-                    if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                        this.submitQuestionnaire(parentUid);
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                    this.submitQuestionnaire(parentUid);
+                } else {
+                    if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
+                        this.payuPayment();
                     } else {
                         this.paymentOperation();
                     }
@@ -1012,13 +1029,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     paymentOperation() {
         if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
             this.payuPayment();
-            // if(this.razorpayGatway){
-            //     this.payuPayment();
-            //   }
-            //   else{
-            //     this.paytmPayment();
-            //   }
-  
         } else {
             let multiple;
             if (this.uuidList.length > 1) {
@@ -2195,6 +2205,18 @@ console.log('inside validaity');
             .subscribe(data => {
                 this.paymentDetails = data;
                 this.paymentLength = Object.keys(this.paymentDetails).length;
+                this.checkJcash = true
+                this.jcashamount = this.paymentDetails.eligibleJcashAmt.jCashAmt;
+                this.jcreditamount = this.paymentDetails.eligibleJcashAmt.creditAmt;
+                console.log(this.paymentDetails.amountRequiredNow);
+                console.log(this.jcashamount);
+                if( this.checkJcash && this.paymentDetails.amountRequiredNow > this.jcashamount){
+                    this.payAmount = this.paymentDetails.amountRequiredNow - this.jcashamount;
+                    console.log(this.payAmount);
+                } else if( this.checkJcash && this.paymentDetails.amountRequiredNow <= this.jcashamount){
+                    this.payAmount = 0;
+                    console.log(this.payAmount)
+                }
             },
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -2205,12 +2227,6 @@ console.log('inside validaity');
         paymentWay = 'DC';
         this.makeFailedPayment(paymentWay);
     }
-    paytmPayment() {
-        let paymentWay;
-        paymentWay = 'PPI';
-        this.makeFailedPayment(paymentWay);
-        this.paytmGateway = false;    
-      }
     makeFailedPayment(paymentMode) {
         this.waitlistDetails = {
             'amount': this.paymentDetails.amountRequiredNow,
@@ -2223,31 +2239,87 @@ console.log('inside validaity');
         this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
         this.lStorageService.setitemonLocalStorage('acid', this.account_id);
         this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
-        this.subs.sink = this.shared_services.consumerPayment(this.waitlistDetails)
-            .subscribe((pData: any) => {
-                this.pGateway = pData.paymentGateway;
-                if (this.pGateway === 'RAZORPAY') {
-                    this.paywithRazorpay(pData);
-                } else {
-                    if (pData['response']) {
-                        this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+
+        if (this.remainingadvanceamount == 0 && this.checkJcash) {
+            const postData = {
+                'amountToPay': this.paymentDetails.amountRequiredNow,
+                'accountId': this.account_id,
+                'uuid': this.trackUuid,
+                'paymentPurpose': 'prePayment',
+                'isJcashUsed': true,
+                'isreditUsed': false,
+                'isRazorPayPayment': false,
+                'isPayTmPayment': false,
+                'paymentMode': "JCASH"
+            };
+            this.shared_services.PayByJaldeewallet(postData)
+                .subscribe(data => {
+                    this.wallet = data;
+                    if (!this.wallet.isGateWayPaymentNeeded && this.wallet.isJCashPaymentSucess) {
+                        let multiple;
+                        if (this.uuidList.length > 1) {
+                            multiple = true;
+                        } else {
+                            multiple = false;
+                        }
                         setTimeout(() => {
-                            if (paymentMode === 'DC') {
-                                this.document.getElementById('payuform').submit();
-                            } else {
-                                this.document.getElementById('paytmform').submit();
-                            }
-                        }, 2000);
-                    } else {
-                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+                            this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple } });
+                        }, 500);
                     }
-                }
-            },
-                error => {
-                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                },
+                    error => {
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
+        }
+        else if (this.remainingadvanceamount > 0 && this.checkJcash) {
+            const postData = {
+                'amountToPay': this.paymentDetails.amountRequiredNow,
+                'accountId': this.account_id,
+                'uuid': this.trackUuid,
+                'paymentPurpose': 'prePayment',
+                'isJcashUsed': true,
+                'isreditUsed': false,
+                'isRazorPayPayment': true,
+                'isPayTmPayment': false,
+                'paymentMode': "DC"
+            };
+            this.shared_services.PayByJaldeewallet(postData)
+                .subscribe((pData: any) => {
+                    if (pData.isGateWayPaymentNeeded && pData.isJCashPaymentSucess) {
+                        this.paywithRazorpay(pData.response);
+                    }
+                },
+                    error => {
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
+        }
+        else {
+            this.subs.sink = this.shared_services.consumerPayment(this.waitlistDetails)
+                .subscribe((pData: any) => {
+                    this.pGateway = pData.paymentGateway;
+                    if (this.pGateway === 'RAZORPAY') {
+                        this.paywithRazorpay(pData);
+                    } else {
+                        if (pData['response']) {
+                            this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                            setTimeout(() => {
+                                if (paymentMode === 'DC') {
+                                    this.document.getElementById('payuform').submit();
+                                } else {
+                                    this.document.getElementById('paytmform').submit();
+                                }
+                            }, 2000);
+                        } else {
+                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+                        }
+                    }
+                },
+                    error => {
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.disablebutton = false;
-                });
+                    });
+        }
     }
     paywithRazorpay(pData: any) {
         this.prefillmodel.name = pData.consumerName;
@@ -2383,7 +2455,15 @@ console.log('inside validaity');
         this.action = 'attachment';
         this.modal.nativeElement.click();
     }
-    showText() {
+      showText() {
         this.readMore = !this.readMore;
+    }
+  
+    changeJcashUse(event) {
+        if(event.checked){
+            this.checkJcash = true;
+        } else {
+            this.checkJcash = false;
+        }
     }
 }

@@ -1071,7 +1071,7 @@ export class SharedServices {
     const url = 'provider/donation/questionnaire/resubmit/' + uuid;
     return this.servicemeta.httpPost(url, body);
   }
-  consumerWaitlistQnrUploadStatusUpdate(uid, account, data) {
+    consumerWaitlistQnrUploadStatusUpdate(uid, account, data) {
     const url = 'consumer/waitlist/questionnaire/upload/status/' + uid + '?account=' + account;
     return this.servicemeta.httpPut(url, data);
   }
@@ -1083,4 +1083,15 @@ export class SharedServices {
     const url = 'chatbot/telegram/consumer/chatId/' + countryCode + '/' + loginId;
     return this.servicemeta.httpGet(url);
   }
+getJaldeeCashandJcredit(){
+  const url = 'consumer/wallet/redeem/eligible/amt';
+  return this.servicemeta.httpGet(url); 
+}
+getRemainingPrepaymentAmount(jcash? , jcredit? , advanceamount?){
+  const url = 'consumer/wallet/redeem/remaining/amt' + '?useJcash=' + jcash  + '&useJcredit=' + jcredit + '&advancePayAmount=' + advanceamount;
+  return this.servicemeta.httpGet(url);
+}
+PayByJaldeewallet(postData){
+  return this.servicemeta.httpPost('consumer/payment/wallet', postData);
+}
 }

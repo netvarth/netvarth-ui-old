@@ -2747,7 +2747,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       order_date: this.sel_checkindate,
       advance_amount: this.advance_amount,
       account_id: this.provider_bussiness_id
-
     };
     this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
@@ -2768,7 +2767,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       const navigationExtras: NavigationExtras = {
         queryParams: {
 
-          providerId: this.provider_bussiness_id,
+          // providerId: this.provider_bussiness_id,
+          providerId: this.provider_id,
         }
 
       };

@@ -4,8 +4,6 @@ import { Injectable } from "@angular/core";
     providedIn: 'root'
 })
 export class MediaService {
-
-
     getMediaDevices() {
         return new Promise(function (resolve, reject) {
             let media = {};
@@ -13,6 +11,7 @@ export class MediaService {
                 let videoDevices = [];
                 let audioDevices = [];
                 let count = devices.length;
+                console.log(count);
                 if (count > 0) {
                     console.log(devices);
                     devices.forEach(device => {

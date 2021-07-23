@@ -10,6 +10,7 @@ import { AddproviderAddonComponent } from '../../../../ynw_provider/components/a
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
 @Component({
   selector: 'app-teleservice-share',
@@ -32,6 +33,7 @@ export class TeleServiceShareComponent implements OnInit {
   sms = true;
   email = false;
   pushnotify = true;
+  telegram = true;
   reminder_cap: any;
   msg_to_user;
   msg_to_me;
@@ -67,17 +69,51 @@ export class TeleServiceShareComponent implements OnInit {
   zoomWaitFor: string;
   haveEmail;
   providerEmail = false;
+  ynw_credentials;
+  loginId;
+  countryCode;
+  countryCodeTele;
+  chatId: any;
+  IsTelegramDisable:any;
+  cusmtor_countrycode;
+  cusmtor_phone;
+  cust_countryCode;
+  IsTelegramCustomrDisable:any;
   constructor(public dialogRef: MatDialogRef<TeleServiceShareComponent>,
     public shared_functions: SharedFunctions,
     public shared_services: SharedServices,
     private provider_services: ProviderServices,
     private dialog: MatDialog,
+    private lStorageService: LocalStorageService,
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private groupService: GroupStorageService) { }
 
   ngOnInit() {
+    this.ynw_credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+    if (this.ynw_credentials) {
+      let login = JSON.parse(this.ynw_credentials);
+      if(login.countryCode.startsWith('+')){
+        this.countryCode = login.countryCode.substring(1);
+      }
+      this.shared_services.telegramChat(this.countryCode,login.loginId)
+       .subscribe(
+           data => { 
+             this.chatId = data; 
+             if(this.chatId === null){
+              this.IsTelegramDisable = true;
+             }
+             else{
+              this.IsTelegramDisable = false;
+             }
+            
+           },
+           (error) => {
+              
+           }
+       );
+    }
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     if (user.email) {
       this.providerEmail = true;
@@ -85,6 +121,30 @@ export class TeleServiceShareComponent implements OnInit {
     else{
       this.providerEmail = false;
     }
+    if(this.data.consumerDetails && this.data.consumerDetails.countryCode){
+      this.cusmtor_countrycode = this.data.consumerDetails.countryCode;
+      this.cusmtor_phone = this.data.consumerDetails.phoneNo;
+      if(this.cusmtor_countrycode.startsWith('+')){
+        this.cust_countryCode = this.cusmtor_countrycode.substring(1);
+      }
+      this.shared_services.telegramChat(this.cust_countryCode, this.cusmtor_phone)
+       .subscribe(
+           data => { 
+             this.chatId = data; 
+             if(this.chatId === null){
+              this.IsTelegramCustomrDisable = true;
+             }
+             else{
+              this.IsTelegramCustomrDisable = false;
+             }
+            
+           },
+           (error) => {
+              
+           }
+       );
+    }
+    
     if (this.data.waitingType === 'checkin') {
       if (this.data.consumerDetails.email_verified) {
         this.haveEmail = true;
@@ -237,7 +297,8 @@ export class TeleServiceShareComponent implements OnInit {
         medium: {
           email: this.email,
           sms: this.sms,
-          pushNotification: this.pushnotify
+          pushNotification: this.pushnotify,
+          telegram: this.telegram
         },
         communicationMessage: this.msg_to_user,
         uuid: [this.data.waitingId]
@@ -269,7 +330,8 @@ export class TeleServiceShareComponent implements OnInit {
         medium: {
           email: this.email,
           sms: this.sms,
-          pushNotification: this.pushnotify
+          pushNotification: this.pushnotify,
+          telegram: this.telegram,
         },
         meetingDetails: this.msg_to_me,
         uuid: this.data.waitingId

@@ -18,6 +18,7 @@ import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { GroupStorageService } from '../../services/group-storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UserlistpopupComponent } from './userlist/userlistpopup.component';
+import { ServiceQRCodeGeneratordetailComponent } from './serviceqrcodegenerator/serviceqrcodegeneratordetail.component';
 
 
 @Component({
@@ -157,6 +158,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
     team:any=[];
     userNamelist: string;
     maxuserLength=50;
+    qrdialogRef: any;
+    wndw_path = projectConstants.PATH;
 
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
@@ -188,6 +191,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     this.showService = true;
                     this.action = serviceParams.action;
                     this.service = serviceParams.service;
+                    console.log(this.service);
                     this.paymentsettings = serviceParams.paymentsettings;
                     this.taxsettings = serviceParams.taxsettings;
                     this.subdomainsettings = serviceParams.subdomainsettings;
@@ -979,5 +983,64 @@ getOwnership(ownerShipData,isTruncate){
         if (result) {
         }
       });
+  }
+  serviceqrCodegeneraterOnlineID(){
+      let pid = '';
+      let usrid = '';
+      if(!this.bprofile.customId){
+        pid = this.bprofile.accEncUid;
+      } else {
+        pid = this.bprofile.customId;
+      }
+      if(this.service && this.service.provider && this.service.provider.id){
+        usrid = this.service.provider.id;
+      } else {
+        usrid = '';
+      }
+    this.qrdialogRef = this.dialog.open(ServiceQRCodeGeneratordetailComponent, {
+        width: '40%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          accencUid: pid,
+          path: this.wndw_path,
+          serviceid: this.service.id,
+          userid: usrid
+        }
+      });
+  
+      this.qrdialogRef.afterClosed().subscribe(result => {
+        if (result === 'reloadlist') {
+          this.getBusinessProfile();
+        }
+      });
+  }
+  copyInputMessage() {
+      let path;
+      let pid = '';
+      if(!this.bprofile.customId){
+        pid = this.bprofile.accEncUid;
+      } else {
+        pid = this.bprofile.customId;
+      }
+      if(this.service && this.service.provider && this.service.provider.id){
+        path = projectConstants.PATH + pid +'/'+this.service.provider.id+'/service/'+ this.service.id ;
+      } else {
+        path = projectConstants.PATH + pid +'/service/'+ this.service.id ;
+      }
+    // this.wpath + this.accuid +'/'+ this.userId +'/service/'+ this.serviceId ;
+    //const path = projectConstants.PATH + valuetocopy;
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = path;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this.snackbarService.openSnackBar('Link copied to clipboard');
   }
 }
