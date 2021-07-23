@@ -529,6 +529,11 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
         if (this.bill_data.gstNumber) {
             bill_html += 'GSTIN ' + this.bill_data.gstNumber;
         }
+        bill_html += '	</tr>';
+        bill_html += '	<tr>';
+        if(this.splocation ){
+          bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.splocation + '</td>';
+        }
         bill_html += '	<tr>';
         if (this.checkin.provider) {
         bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.provider_label +':'+  this.checkin.provider.businessName+ '</td>';
