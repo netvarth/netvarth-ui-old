@@ -362,7 +362,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
         this.paymentStatuses.push(value);
       }
     }
-    this.doSearch();
+    this.keyPressed();
   }
   setFilterForApi() {
     const api_filter = {};
