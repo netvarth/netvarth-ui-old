@@ -356,6 +356,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   yesterdayDate;
   @ViewChild('closebutton') closebutton;
   showattachmentDialogRef: any;
+  unassignview = false;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -458,7 +459,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.getYesterdayDate();
     }
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
-    if (this.active_user.adminPrivilege) {
+    if (this.active_user.adminPrivilege || this.active_user.userType === 5) {
       this.admin = true;
     }
     this.account_type = this.active_user.accountType;
@@ -477,7 +478,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.active_user.accountType === 'BRANCH') {
       this.getTeams().then((data) => {
         this.teams = data;
-      });                  
+      });
     }
     this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
       this.refresh();
@@ -688,17 +689,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (date === 'all') {
       filterEnum['location-eq'] = this.selected_location.id;
     }
-    // if (this.selectedUser && this.selectedUser.id !== 'all') {
-    //   filterEnum['provider-eq'] = this.selectedUser.id;
-    // }
     return new Promise((resolve) => {
       _this.provider_services.getProviderSchedules(filterEnum).subscribe(
         (schedules: any) => {
-          // if (schedules.length > 0) {
-          //   _this.scheduleExist = true;
-          // } else {
-          //   _this.scheduleExist = false;
-          // }
           const qList = schedules.filter(sch => sch.apptState !== 'EXPIRED');
           resolve(qList);
         });
@@ -726,9 +719,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         return schedules;
       }
     }
-    // else {
-    //   return schedules;
-    // }
     return qs;
   }
   selectLocationFromCookie(cookie_location_id) {
@@ -816,7 +806,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   initView(view, source, type?) {
 
     const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
-    if (view.name === 'All Appointments' && !loggedUser.adminPrivilege) {
+    if (view.name === 'All Appointments' && !loggedUser.adminPrivilege && loggedUser.userType !== 5) {
       this.activeUser = loggedUser.id;
     } else {
 
@@ -840,11 +830,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.selQIds = this.groupService.getitemFromGroupStorage('appt_selQ');
       } else if (this.activeSchedules.length > 0) {
         if (this.time_type === 3) {
-          // const qIds = this.getQIdsFromView(view);
           this.selQidsforHistory = qids;
           this.groupService.setitemToGroupStorage('appt_history_selQ', this.selQidsforHistory);
         }
-        // this.selQIds = this.activeSchedules[this.findCurrentActiveQueue(this.activeSchedules)];
         this.selQIds = qids;
         if (this.time_type === 1) {
           this.groupService.setitemToGroupStorage('appt_selQ', this.selQIds);
@@ -857,12 +845,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(() => {
       this.qloading = false;
     }, 1000);
-    // this.getQsByProvider();
     this.loadApiSwitch(source);
   }
   resetAll() {
-    // this.apptSelected = [];
-    // this.apptSelection = 0;
     this.selectedAppt = [];
   }
   resetFilter() {
@@ -918,7 +903,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.doSearch();
   }
   loadApiSwitch(source) {
-    // this.resetAll();
     this.resetCheckList();
     let chkSrc = true;
     this.loading = true;
@@ -1004,7 +988,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.filter_date_end_max = null;
     if (this.time_type === 0) {
       this.filter_date_start_max = moment(new Date()).add(-1, 'days');
-      // this.filter_date_end_max = moment(new Date()).add(-1, 'days');
     } else if (this.time_type === 2) {
       this.filter_date_start_min = moment(new Date()).add(+1, 'days');
       this.filter_date_end_min = moment(new Date()).add(+1, 'days');
@@ -1023,8 +1006,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         );
     }
     if (this.time_type !== 3) {
-     // const api_filter = {};
-      // api_filter['apptStatus-eq'] = this.setWaitlistStatusFilterForHistory();
       this.getHistoryAppointmentsCount()
         .then(
           (result) => {
@@ -1104,21 +1085,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
-  // getAppointmentsPerSlot(appointments) {
-  //   let date;
-  //   if (this.time_type === 1) {
-  //     date = this.dateTimeProcessor.transformToYMDFormat(this.server_date);
-  //   }
-  //   if (this.time_type === 2) {
-  //     date = this.dateTimeProcessor.transformToYMDFormat(this.filter.future_appt_date);
-  //   }
-  //   if (this.selQIds && date) {
-  //     this.provider_services.getAppointmentSlotsByDate(this.selQIds, date).subscribe(data => {
-  //       this.availableSlotDetails = data;
-  //       this.timeSlotAppts = this.shared_functions.groupBy(appointments, 'appmtTime');
-  //     });
-  //   }
-  // }
+
   getActiveTimeSlot(slots) {
     const curDate = new Date();
     const curTime = curDate.getHours() + ':' + curDate.getMinutes();
@@ -1138,51 +1105,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
    * @param action Scheduled/Started/Cancelled/Completed
    * @param type Today/Future/History
    */
-  // viewStatusFilterBtnClicked(action, type?) {
-  //   this.statusAction = action;
-  //   this.resetCheckList();
-  //   if (action === 'new') {
-  //     if (type === 1) {
-  //       if (!this.isBatch) {
-  //         this.check_in_filtered_list = this.getScheduledAppointment(this.todayAppointments);
-  //       } else {
-  //         this.getAppointmentsPerSlot(this.getScheduledAppointment(this.todayAppointments));
-  //       }
-  //     } else {
-  //       if (!this.isBatch) {
-  //         this.check_in_filtered_list = this.getScheduledAppointment(this.futureAppointments);
-  //       } else {
-  //         this.getAppointmentsPerSlot(this.getScheduledAppointment(this.futureAppointments));
-  //       }
-  //     }
-  //   } else if (action === 'started') {
-  //     if (!this.isBatch) {
-  //       this.check_in_filtered_list = this.getStartedAppointment(this.todayAppointments);
-  //     } else {
-  //       this.getAppointmentsPerSlot(this.getStartedAppointment(this.todayAppointments));
-  //     }
-  //   } else if (action === 'completed') {
-  //     if (!this.isBatch) {
-  //       this.check_in_filtered_list = this.getCompletedAppointment(this.todayAppointments);
-  //     } else {
-  //       this.getAppointmentsPerSlot(this.getCompletedAppointment(this.todayAppointments));
-  //     }
-  //   } else {
-  //     if (type === 1) {
-  //       if (!this.isBatch) {
-  //         this.check_in_filtered_list = this.getCancelledAppointment(this.todayAppointments);
-  //       } else {
-  //         this.getAppointmentsPerSlot(this.getCancelledAppointment(this.todayAppointments));
-  //       }
-  //     } else {
-  //       if (!this.isBatch) {
-  //         this.check_in_filtered_list = this.getCancelledAppointment(this.futureAppointments);
-  //       } else {
-  //         this.getAppointmentsPerSlot(this.getCancelledAppointment(this.futureAppointments));
-  //       }
-  //     }
-  //   }
-  // }
   getCount(list, status) {
     return list.filter(function (elem) {
       return elem.apptStatus === status;
@@ -1209,9 +1131,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     let no_filter = false;
     if (!Mfilter) {
       Mfilter = {};
-      
       if (queueid || this.activeUser) {
-
         if (this.activeUser) {
           Mfilter['provider-eq'] = this.activeUser;
         } else {
@@ -1241,13 +1161,27 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const queueid = this.groupService.getitemFromGroupStorage('appt_future_selQ');
     if (!Mfilter) {
       Mfilter = {};
-      if (queueid || this.activeUser) {
+      if (queueid) {
+        if (this.activeUser) {
+          if (this.activeUser && this.unassignview) {
+            Mfilter['provider-eq'] = null;
+          } else {
+            Mfilter['provider-eq'] = this.activeUser;
+          }
+        } else {
+          if (this.unassignview) {
+            Mfilter['provider-eq'] = null;
+          } else {
+            Mfilter['schedule-eq'] = queueid;
+          }
+        }
+      } else {
         if (this.activeUser) {
           Mfilter['provider-eq'] = this.activeUser;
         } else {
-          Mfilter['schedule-eq'] = queueid;
+          Mfilter['schedule-eq'] = this.selQIds;
         }
-
+        this.groupService.setitemToGroupStorage('appt_future_selQ', this.selQIds);
       }
     }
     if (this.selected_location && this.selected_location.id) {
@@ -1270,27 +1204,23 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           });
     });
   }
-  getHistoryAppointmentsCount(Mfilter = null) {
+  getHistoryAppointmentsCount(Mfilter = null) {   
     if (!Mfilter) {
-      Mfilter = this.setFilterForApi();;
+      Mfilter = {};
     }
-    // if (this.filter.apptStatus === 'all') {
-    //   Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
-    // }
-    // if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeSchedules.length > 0) {
-    //   const qids = this.activeSchedules.map(q => q.id);
-    //   if (this.activeUser) {
-    //     Mfilter['provider-eq'] = this.activeUser;
-    //   } else {
-    //     Mfilter['schedule-eq'] = qids.toString();
-    //   }
-
-    // }
+    if (this.filter.apptStatus === 'all') {
+      Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
+    }
     if (Mfilter['schedule-eq'] && (this.filteredSchedule.length === 0 || this.filter.schedule === 'all')) {
-        delete Mfilter['schedule-eq'];
+      delete Mfilter['schedule-eq'];
     }
-    if (this.active_user.accountType === 'BRANCH' && this.activeUser) {
-      Mfilter['provider-eq'] = this.activeUser;
+    console.log('hisory', this.active_user);
+    if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
+      // if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+      //   Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.active_user.id;
+      // } else {
+        Mfilter['provider-eq'] = this.active_user.id;
+      // }
     }
     return new Promise((resolve) => {
       this.provider_services.getHistoryAppointmentsCount(Mfilter)
@@ -1329,21 +1259,28 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.groupService.getitemFromGroupStorage('appt_selQ')) {
       this.selQIds = this.groupService.getitemFromGroupStorage('appt_selQ');
-    } else {
-
     }
-    if (this.selQIds) {
+    if (this.selQIds && this.selQIds.length > 0 || this.activeUser) {
       if (this.activeUser) {
-        Mfilter['provider-eq'] = this.activeUser;
-      } else {
-        Mfilter['schedule-eq'] = this.selQIds.toString();
+        console.log(this.unassignview);
+        if (this.unassignview) {
+          Mfilter['provider-eq'] = null;
+        } else {
+          // if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+          //   Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
+          // } else {
+            Mfilter['provider-eq'] = this.activeUser;
+          // }
+        }
       }
-
-      const qs = [];
-      qs.push(this.selQIds);
+      else {
+        if (this.unassignview) {
+          Mfilter['provider-eq'] = null;
+        } else {
+          Mfilter['schedule-eq'] = this.selQIds;
+        }
+      }
       this.groupService.setitemToGroupStorage('appt_selQ', this.selQIds);
-      this.groupService.setitemToGroupStorage('appt_history_selQ', qs);
-      this.groupService.setitemToGroupStorage('appt_future_selQ', this.selQIds);
     }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
@@ -1373,7 +1310,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.startedAppts = this.getActiveAppointments(this.todayAppointments, 'started');
               },
               () => {
-                // this.load_waitlist = 1;
                 this.loading = false;
               },
               () => {
@@ -1421,19 +1357,27 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.selected_location && this.selected_location.id) {
       Mfilter['location-eq'] = this.selected_location.id;
     }
-    if (this.selQIds || this.activeUser) {
+    if (this.selQIds && this.selQIds.length > 0 || this.activeUser) {
       if (this.activeUser) {
-        Mfilter['provider-eq'] = this.activeUser;
+        if (this.unassignview) {
+          Mfilter['provider-eq'] = null;
+        } else {
+          // if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+          //   Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
+          // } else {
+            Mfilter['provider-eq'] = this.activeUser;
+          // }
+        }
       } else {
-        Mfilter['schedule-eq'] = this.selQIds;
+        if (this.unassignview) {
+          Mfilter['provider-eq'] = null;
+        } else {
+          Mfilter['schedule-eq'] = this.selQIds;
+        }
       }
-
-      const qs = [];
-      qs.push(this.selQIds);
-      this.groupService.setitemToGroupStorage('appt_selQ', this.selQIds);
-      this.groupService.setitemToGroupStorage('appt_history_selQ', qs);
       this.groupService.setitemToGroupStorage('appt_future_selQ', this.selQIds);
     }
+
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     }
@@ -1443,8 +1387,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const promise = this.getFutureAppointmentsCount(Mfilter);
     promise.then(
       result => {
-        // this.pagination.totalCnt = result;
-        // Mfilter = this.setPaginationFilter(Mfilter);
         this.provider_services.getFutureAppointments(Mfilter)
           .subscribe(
             data => {
@@ -1468,26 +1410,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getHistoryAppointments() {
     console.log("in history");
-    // const filter = this.lStorageService.getitemfromLocalStorage('filter');
-    // if(filter){
-    //   Mfilter = filter;
-    // }
     let Mfilter = this.setFilterForApi();
-
-    // if (this.filter.apptStatus === 'all') {
-    //   Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
-    // }
-    if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeSchedules.length > 0 || this.activeUser) {
-      const qids = this.activeSchedules.map(q => q.id);
-      if (this.activeUser) {
-        // Mfilter['provider-eq'] = this.activeUser;
-      } else {
-        Mfilter['schedule-eq'] = qids.toString();
-      }
-
-    }
-    if (this.active_user.accountType === 'BRANCH' && this.activeUser) {
-      Mfilter['provider-eq'] = this.activeUser;
+    if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
+      // if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+      //   Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.active_user.id;
+      // } else {
+        Mfilter['provider-eq'] = this.active_user.id;
+      // }
     }
     const promise = this.getHistoryAppointmentsCount(Mfilter);
     promise.then(
@@ -1501,18 +1430,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.provider_services.getHistoryAppointments(Mfilter)
           .subscribe(
             data => {
-              // this.new_checkins_list = [];
-              //  this.lStorageService.removeitemfromLocalStorage('filter');
               this.appt_list = this.check_in_filtered_list = data;
               if (this.filterapplied === true) {
                 this.noFilter = false;
               } else {
                 this.noFilter = true;
               }
-              // this.loading = false;
             },
             () => {
-              // this.load_waitlist = 1;
             },
             () => {
               this.loading = false;
@@ -1583,19 +1508,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       api_filter = filter;
     }
     console.log(api_filter);
-    if (this.time_type === 1) {
-      if (this.selQIds) {
-        if (this.activeUser) {
-          api_filter['provider-eq'] = this.activeUser;
-        } else {
-          api_filter['schedule-eq'] = this.selQIds.toString();
-        }
-
-      }
-      if (this.token && this.time_type === 1) {
-        api_filter['token-eq'] = this.token;
-      }
-    }
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;
     }
@@ -1666,21 +1578,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['gender-eq'] = this.genderList.toString();
       }
     }
-    // if (this.time_type !== 3) {
-    //   if (this.selected_location && this.selected_location.id) {
-    //     api_filter['location-eq'] = this.selected_location.id;
-    //   }
-    // }
     if (this.labelFilterData !== '') {
       api_filter['label-eq'] = this.labelFilterData;
     }
-    
+
     if (this.filter.apptStatus === 'all') {
       api_filter['apptStatus-neq'] = 'prepaymentPending,failed';
     }
-    // if (this.filter.apptStatus === 'all' && this.time_type === 3 && this.firstTime) {
-    //   api_filter['apptStatus-eq'] = this.setWaitlistStatusFilterForHistory();
-    // }
     return api_filter;
   }
   setPaginationFilter(api_filter) {
@@ -1766,16 +1670,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         }
       }
-      // let date;
-      // if (this.time_type === 2) {
-      // date = this.filter.future_appt_date;
-      // }
       this.router.navigate(['provider', 'appointments', 'appointment'],
         { queryParams: { timeslot: slot, scheduleId: scheduleId, checkinType: type, userId: userId, deptId: deptId, serviceId: serviceId } });
     }
   }
   searchCustomer() {
-    // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { appt: true } });
     this.router.navigate(['provider', 'customers', 'find']);
   }
   /**
@@ -1827,9 +1726,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   gotoLocations() {
     this.router.navigate(['provider', 'settings', 'general', 'locations']);
   }
-  // gotoCustomViews() {
-  //   this.router.navigate(['provider', 'settings', 'general', 'customview']);
-  // }
   gotoCustomViews() {
     this.closebutton.nativeElement.click();
     const navigationExtras: NavigationExtras = {
@@ -2317,6 +2213,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   handleViewSel(view) {
+    this.unassignview = false;
     console.log("view Seslection");
     console.log(view);
     this.activeUser = null;
@@ -2366,25 +2263,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['provider', 'telehealth'], navigationExtras);
   }
   scrollToSection(curTime) {
-    // if (this.time_type === 2) {
-    //   this.slotIds.toArray().forEach(element => {
-    //     if (element.nativeElement.innerText === this.futureUnAvailableSlots[0]) {
-    //       element.nativeElement.scrollIntoViewIfNeeded();
-    //       return false;
-    //     }
-    //   });
-    // }
-    // if (this.time_type === 1) {
     this.slotIds.toArray().forEach(element => {
       if (element.nativeElement.innerText === curTime) {
         element.nativeElement.scrollIntoViewIfNeeded({ behavior: 'smooth', block: 'start' });
         return false;
       }
     });
-    // }
   }
   scrollToTop() {
-    // this.apptSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     window.scroll({
       top: 0,
       left: 0,
@@ -2398,13 +2284,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   getProviders() {
     const apiFilter = {};
     apiFilter['userType-eq'] = 'PROVIDER';
-    // let filter = 'userType-neq :"assistant"'
     this.provider_services.getUsers(apiFilter).subscribe(data => {
       this.users = data;
       const tempUser = {};
       tempUser['firstName'] = 'All';
       tempUser['id'] = 'all';
-      // this.users.push(tempUser);
       if (this.groupService.getitemFromGroupStorage('appt-selectedUser')) {
         this.selectedUser = this.groupService.getitemFromGroupStorage('appt-selectedUser');
       } else {
@@ -2425,16 +2309,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.shared_functions.isNumeric(evt);
   }
   getQsByProvider(user?) {
-    // const qs = [];
     if (!user || (user && user === 'all')) {
       this.activeSchedules = this.tempActiveSchedules;
     } else {
       this.activeUser = user.id;
-      // for (let i = 0; i < this.tempActiveSchedules.length; i++) {
-      //   if (this.tempActiveSchedules[i].provider && this.tempActiveSchedules[i].provider.id === this.selectedUser.id) {
-      //     qs.push(this.tempActiveSchedules[i]);
-      //   }
-      // }
       this.activeSchedules = [];
     }
     if (this.activeSchedules.length === 0) {
@@ -2490,43 +2368,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
   openAttachmentGallery(appt) {
-    // this.provider_services.getProviderAttachments(appt.uid).subscribe(
     this.provider_services.getProviderAppointmentAttachmentsByUuid(appt.uid).subscribe(
       (communications: any) => {
         this.image_list_popup_temp = [];
         this.image_list_popup = [];
         let count = 0;
-        // for (let comIndex = 0; comIndex < communications.length; comIndex++) {
-        //   if (communications[comIndex].attachements) {
-        //     for (let attachIndex = 0; attachIndex < communications[comIndex].attachements.length; attachIndex++) {
-        //       const thumbPath = communications[comIndex].attachements[attachIndex].thumbPath;
-        //       let imagePath = thumbPath;
-        //       const description = communications[comIndex].attachements[attachIndex].s3path;
-        //       const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-        //       if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
-        //         imagePath = communications[comIndex].attachements[attachIndex].s3path;
-        //       }
-        //       const imgobj = new Image(
-        //         count,
-        //         { // modal
-        //           img: imagePath,
-        //           description: description
-        //         },
-        //       );
-        //       this.image_list_popup_temp.push(imgobj);
-        //       count++;
-        //     }
-        //   }
-        // }
         for (let comIndex = 0; comIndex < communications.length; comIndex++) {
           const thumbPath = communications[comIndex].thumbPath;
           let imagePath = thumbPath;
           const description = communications[comIndex].s3path;
           const caption = communications[comIndex].caption;
           const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-          // if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
-          //   imagePath = communications[comIndex].s3path;
-          // }
           if (new RegExp(this.imageAllowed.join("|")).test(thumbPathExt.toUpperCase())) {
             imagePath = communications[comIndex].s3path;
           }
@@ -2729,7 +2581,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       disableClose: true,
       data: {
         uuid: appmt,
-        // chekintype: 'appointment'
       }
     });
   }
@@ -2754,7 +2605,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         virtualServicenumber = appt.virtualService[key];
       });
     }
-    // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'appt-block', uid: appt.uid } });
     this.router.navigate(['provider', 'appointments', 'appointment'], { queryParams: { source: 'appt-block', uid: appt.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: appt.service.id, apptMode: appt.appointmentMode } });
   }
   selectAllStarted() {
@@ -2886,32 +2736,27 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.showConsumerNote(event.waitlist);
     } else if (event.type === 'attachment') {
       this.showAttachments(event.waitlist);
-      //this.openAttachmentGallery(event.waitlist);
     } else if (event.type === 'actions') {
       this.showCheckinActions(event.statusAction, event.waitlist);
     }
   }
-  // setWaitlistStatusFilterForHistory() {
-  //   for (const apptStatus of this.check_in_statuses_filter) {
-  //     if (this.apptStatuses.indexOf(apptStatus.value) === -1 && apptStatus.value !== 'prepaymentPending' && apptStatus.value !== 'failed') {
-  //       this.apptStatuses.push(apptStatus.value);
-  //     }
-  //   }
-  //   return this.apptStatuses.toString();
-  // }
   getTeams() {
     const _this = this;
     return new Promise<void>(function (resolve) {
       _this.provider_services.getTeamGroup().subscribe(data => {
         _this.teams = data;
-        },
+      },
         () => {
           resolve();
         });
     });
   }
-  getUsersList(teamid){
-    const userObject =  this.teams.filter(user => parseInt(user.id) === teamid); 
+  getUsersList(teamid) {
+    const userObject = this.teams.filter(user => parseInt(user.id) === teamid);
     return userObject[0].name;
+  }
+  gotoUnassign() {
+    this.unassignview = true;
+    this.loadApiSwitch('reloadAPIs');
   }
 }

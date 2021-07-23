@@ -22,6 +22,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import * as moment from 'moment';
+import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 
 export interface ItemServiceGroup {
   type: string;
@@ -260,6 +261,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     private activated_route: ActivatedRoute,
     private lStorageService: LocalStorageService,
     private datepipe: DatePipe,
+    public dateformat: DateFormatPipe,
     @Inject(DOCUMENT) public document
   ) {
     this.activated_route.params.subscribe(params => {
@@ -1536,13 +1538,21 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     } else {
       bill_html += '<td width="50%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif;">' + this.checkin.orderFor.firstName + ' ' + this.checkin.orderFor.lastName + '</td>';
     }
-    bill_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.changedDate + '</td>';
+    // bill_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.changedDate + '</td>';
+    bill_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' +  this.dateformat.transformToMonthlyDate(this.billdate)  +' '+ this.billtime+ '</td>';
+
     bill_html += '	</tr>';
     bill_html += '	<tr>';
     bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">Bill # ' + this.bill_data.billId + '</td>';
     bill_html += '<td style="text-align:right;color:#000000; font-size:10pt;font-family:Ubuntu, Arial,sans-serif;">';
     if (this.bill_data.gstNumber) {
       bill_html += 'GSTIN ' + this.bill_data.gstNumber;
+    }
+
+    bill_html += '	</tr>';
+    bill_html += '	<tr>';
+    if(this.location ){
+      bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.location + '</td>';
     }
     bill_html += '</td>';
     bill_html += '	</tr>';
@@ -1697,6 +1707,18 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       bill_html += '</table>';
       bill_html += '	</td></tr>';
     }
+   if(this.source === 'order'){
+    if (this.bill_data.deliveryCharges > 0) {
+      bill_html += '	<tr><td>';
+      bill_html += '<table width="100%"	style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; ;padding-bottom:5px">';
+      bill_html += '	<tr>';
+      bill_html += '<td width="70%" style="text-align:right">Delivery Charge</td>';
+      bill_html += '<td width="30%" style="text-align:right"> (+) &#x20b9;' + parseFloat(this.bill_data.deliveryCharges).toFixed(2) + '</td>';
+      bill_html += '	</tr>';
+      bill_html += '</table>';
+      bill_html += '	</td></tr>';
+    }
+    }
     if (this.bill_data.netRate > 0) {
       bill_html += '	<tr><td>';
       bill_html += '<table width="100%"	style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; ;padding-bottom:5px">';
@@ -1717,6 +1739,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       bill_html += '</table>';
       bill_html += '	</td></tr>';
     }
+
     if (this.bill_data.amountDue >= 0) {
       bill_html += '	<tr><td>';
       bill_html += '<table width="100%"';

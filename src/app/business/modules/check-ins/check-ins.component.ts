@@ -396,12 +396,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       { name: this.started_upper, value: 'started' },
       { name: this.arrived_upper, value: 'arrived' },
       { name: this.done_upper, value: 'complete' }];
-
-    // this.activateroute.queryParams.subscribe(params => {
-    //   if (params.servStatus) {
-    //     this.statusAction = 'started';
-    //   }
-    // });
     if (this.groupService.getitemFromGroupStorage('action')) {
       this.statusAction = this.groupService.getitemFromGroupStorage('action');
     }
@@ -439,7 +433,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   @HostListener('window:scroll', ['$event'])
   scrollHandler() {
-    const header = document.getElementById('childActionBar');
     let qHeader = 0;
     let tabHeader = 0;
     if (document.getElementById('qHeader')) {
@@ -449,14 +442,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       tabHeader = document.getElementById('tabHeader').offsetHeight;
     }
     this.topHeight = qHeader + tabHeader;
-    if (header) {
-      // if (window.pageYOffset > (this.topHeight + 50)) {
-      //   header.classList.add('sticky');
-      // } else {
-      //   header.classList.remove('sticky');
-      // }
-
-    }
     if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 100) {
       this.windowScrolled = true;
     } else if (this.windowScrolled && window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop < 10) {
@@ -469,10 +454,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.titleService.setTitle('Jaldee Business - Checkins/Tokens');
     this.pagination.startpageval = this.groupService.getitemFromGroupStorage('paginationStart') || 1;
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
-    // this.breadcrumb_moreoptions = {
-    //   'show_learnmore': true, 'scrollKey': 'appointments',
-    //   'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
-    // };
     const savedtype = this.groupService.getitemFromGroupStorage('pdtyp');
     if (savedtype !== undefined && savedtype !== null) {
       this.time_type = savedtype;
@@ -484,7 +465,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.getYesterdayDate();
     }
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
-    if (this.active_user.adminPrivilege) {
+    if (this.active_user.adminPrivilege || this.active_user.userType === 5) {
       this.admin = true;
     }
     this.account_type = this.active_user.accountType;
@@ -512,25 +493,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.active_user.accountType === 'BRANCH') {
       this.getTeams().then((data) => {
         this.teams = data;
-       console.log(this.teams);
-      });                  
+        console.log(this.teams);
+      });
     }
     this.image_list_popup_temp = [];
-    // const savedtype = this.groupService.getitemFromGroupStorage('pdtyp');
-    // if (savedtype !== undefined && savedtype !== null) {
-    //   this.time_type = savedtype;
-    // }
-    // this.getLocationList().then(
-    //   () => {
-    //     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
-    //     // this.router.events
-    //     //   .pipe(filter((e: any) => e instanceof RoutesRecognized),
-    //     //     pairwise()
-    //     //   ).subscribe((e: any) => {
-    //     //     this.returnedFromCheckDetails = (e[0].urlAfterRedirects.includes('/provider/check-ins/'));
-    //     //   });
-    //   }
-    // );
     this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
       this.refresh();
     });
@@ -606,82 +572,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.keyPressed();
   }
 
-  // setLabelFilter(label, value, event) {
-  //   this.resetPaginationData();
-  //   if (value === 'all') {
-  //     this.selectedLabels[label.label] = [];
-  //     this.allLabelSelected[label.label] = false;
-  //     if (event.checked) {
-  //       for (const value of label.valueSet) {
-  //         if (this.selectedLabels[label.label].indexOf(value.value) === -1) {
-  //           this.selectedLabels[label.label].push(value.value);
-  //         }
-  //       }
-  //       this.allLabelSelected[label.label] = true;
-  //     }
-  //   } else {
-  //     this.allLabelSelected[label.label] = false;
-  //     if (this.selectedLabels[label.label]) {
-  //       const indx = this.selectedLabels[label.label].indexOf(value);
-  //       if (indx === -1) {
-  //         this.selectedLabels[label.label].push(value);
-  //       } else {
-  //         this.selectedLabels[label.label].splice(indx, 1);
-  //       }
-  //     } else {
-  //       this.selectedLabels[label.label] = [];
-  //       this.selectedLabels[label.label].push(value);
-  //     }
-  //     if (this.selectedLabels[label.label].length === label.valueSet.length) {
-  //       this.allLabelSelected[label.label] = true;
-  //     }
-  //   }
-  //   this.doSearch();
-  // }
-
   setFilterDataCheckbox(type, value, event) {
     this.filter[type] = value;
     this.resetPaginationData();
-    // if (type === 'gender') {
-    //   if (value === 'all') {
-    //     this.genderList = [];
-    //     if (event.checked) {
-    //       this.allGenderSlected = true;
-    //     } else {
-    //       this.allGenderSlected = false;
-    //     }
-    //   } else {
-    //     const indx = this.genderList.indexOf(value);
-    //     if (indx === -1) {
-    //       this.genderList.push(value);
-    //     } else {
-    //       this.genderList.splice(indx, 1);
-    //     }
-    //   }
-    //   if (this.genderList.length === 0) {
-    //     this.filter['gender'] = 'all';
-    //   }
-    // }
-    // if (type === 'age') {
-    //   if (value === 'all') {
-    //     this.ageGroups = [];
-    //     if (event.checked) {
-    //       this.allAgeSlected = true;
-    //     } else {
-    //       this.allAgeSlected = false;
-    //     }
-    //   } else {
-    //     const indx = this.ageGroups.indexOf(value);
-    //     if (indx === -1) {
-    //       this.ageGroups.push(value);
-    //     } else {
-    //       this.ageGroups.splice(indx, 1);
-    //     }
-    //   }
-    //   if (this.ageGroups.length === 0) {
-    //     this.filter['age'] = 'all';
-    //   }
-    // }
     if (type === 'waitlistMode') {
       if (value === 'all') {
         this.apptModes = [];
@@ -950,9 +843,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       return allQueues;
     }
   }
-  getUserType() {
-
-  }
   initViews(queues, source?) {
     const _this = this;
     _this.views = [];
@@ -1070,30 +960,24 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selQIds.push(q.id);
     }
     if (this.time_type === 1) {
-      // this.shared_functions.removeitemFromGroupStorage('selQ');
       this.groupService.setitemToGroupStorage('selQ', this.selQIds);
     } else if (this.time_type === 2) {
-      // this.shared_functions.removeitemFromGroupStorage('future_selQ');
       this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
     } else {
-      // this.shared_functions.removeitemFromGroupStorage('history_selQ');
       this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
     }
     this.loadApiSwitch('reloadAPIs');
   }
   initView(view, source, type?) {
-
     const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (view.name === 'All Tokens' && !loggedUser.adminPrivilege && loggedUser.userType !== 5) {
       this.activeUser = loggedUser.id;
     } else {
-
       this.activeQs = [];
       const groupbyQs = this.shared_functions.groupBy(this.getQsFromView(view, this.queues), 'queueState');
       if (groupbyQs['ENABLED'] && groupbyQs['ENABLED'].length > 0) {
         this.activeQs = groupbyQs['ENABLED'];
       }
-      // const activeQ = this.activeQs[this.findCurrentActiveQueue(this.activeQs)];
       if (view.name !== 'All Tokens') {
         if (groupbyQs['DISABLED'] && groupbyQs['DISABLED'].length > 0) {
           this.activeQs = this.activeQs.concat(groupbyQs['DISABLED']);
@@ -1223,19 +1107,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQs(date?) {
     const _this = this;
-    // const filterEnum = {};
     if (date === 'all') {
-      // if (this.selectedUser && this.selectedUser.id !== 'all') {
-      //   filterEnum['provider-eq'] = this.selectedUser.id;
-      // }
       return new Promise((resolve) => {
         _this.provider_services.getProviderLocationQueues(_this.selected_location.id).subscribe(
           (queues: any) => {
-            // if (queues.length > 0) {
-            //   _this.qExist = true;
-            // } else {
-            //   _this.qExist = false;
-            // }
             const qList = queues.filter(sch => sch.queueState !== 'EXPIRED');
             resolve(qList);
           });
@@ -1324,7 +1199,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.apptStartedMultiSelection = false;
   }
   loadApiSwitch(source) {
-    // this.resetAll();
     this.resetCheckList();
     let chkSrc = true;
     if (source === 'changeLocation' && this.time_type === 3) {
@@ -1439,43 +1313,32 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.selQIds = this.getActiveQIdsFromView(this.selectedView);
     }
+    console.log(this.active_user);
+    console.log('todayselq', this.selQIds);
+    console.log('user', this.activeUser);
+    console.log('admin', this.admin);
     if (this.selQIds && this.selQIds.length > 0 || this.activeUser) {
       if (this.activeUser) {
-        if(this.activeUser && this.unassignview){
-          Mfilter['provider-eq'] =  null;
-        }
-        else{
-          Mfilter['provider-eq'] = this.activeUser;
-        }
-      } 
-      else {
-        // Mfilter['queue-eq'] = this.selQIds;
-        // this.unassignview = false;
-        if(this.unassignview){
-          Mfilter['provider-eq'] =  null;
-        }
-        else{
-          if(this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege){
-            Mfilter['provider-eq'] = this.active_user.id;
-          }else {
-            Mfilter['queue-eq'] = this.selQIds;
+        console.log(this.unassignview);
+        if (this.unassignview) {
+          Mfilter['provider-eq'] = null;
+        } else {
+          if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+            Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
+          } else {
+            Mfilter['provider-eq'] = this.activeUser;
           }
         }
       }
-      this.groupService.setitemToGroupStorage('selQ', this.selQIds);
-      // this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
-      // this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
-    }
-    if(this.selQIds && this.selQIds.length == 0 && this.active_user.accountType === 'BRANCH'){
-      if(this.unassignview){
-        Mfilter['provider-eq'] =  null;
-      } else {
-        Mfilter['provider-eq'] = this.active_user.id;
+      else {
+        if (this.unassignview) {
+          Mfilter['provider-eq'] = null;
+        } else {
+          Mfilter['queue-eq'] = this.selQIds;
+        }
       }
+      this.groupService.setitemToGroupStorage('selQ', this.selQIds);
     }
-    // this.resetPaginationData();
-    // this.pagination.startpageval = 1;
-    // this.pagination.totalCnt = 0; // no need of pagination in today
     if (this.activeQs.length > 0 || this.activeUser || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) {
       const promise = this.getTodayWLCount(Mfilter);
       promise.then(
@@ -1498,7 +1361,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 _this.loading = false;
               },
               () => {
-                // this.load_waitlist = 1;
                 _this.loading = false;
               },
               () => {
@@ -1519,59 +1381,40 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.futurecheckin_date === null) {
       this.getTomorrowDate();
     }
-    // this.groupService.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));
-    // const date = this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date);
     if (this.groupService.getitemFromGroupStorage('future_selQ')) {
       this.selQIds = this.groupService.getitemFromGroupStorage('future_selQ');
-    } else {
-
     }
-    // this.load_waitlist = 0;
     const Mfilter = this.setFilterForApi();
     if (this.selected_location && this.selected_location.id) {
       Mfilter['location-eq'] = this.selected_location.id;
     }
     if (this.selQIds && this.selQIds.length > 0 || this.activeUser) {
       if (this.activeUser) {
-        // Mfilter['provider-eq'] = this.activeUser;
-        if(this.activeUser && this.unassignview){
-          Mfilter['provider-eq'] =  null;
-        }
-        else{
-          Mfilter['provider-eq'] = this.activeUser;
-        }
-      } else {
-        if(this.unassignview){
-          Mfilter['provider-eq'] =  null;
-        }
-        else{
-          if(this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege){
-            Mfilter['provider-eq'] = this.active_user.id;
-          }else {
-            Mfilter['queue-eq'] = this.selQIds;
+        if (this.unassignview) {
+          Mfilter['provider-eq'] = null;
+        } else {
+          if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+            Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
+          } else {
+            Mfilter['provider-eq'] = this.activeUser;
           }
-          // Mfilter['queue-eq'] = this.selQIds;
+        }
+      } else {
+        if (this.unassignview) {
+          Mfilter['provider-eq'] = null;
+        } else {
+          Mfilter['queue-eq'] = this.selQIds;
         }
       }
-      // this.groupService.setitemToGroupStorage('selQ', this.selQIds);
-      // this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
       this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
-    }
-    if(this.selQIds && this.selQIds.length == 0 && (this.active_user && this.active_user.accountType === 'BRANCH')){
-      if(this.unassignview){
-        Mfilter['provider-eq'] =  null;
-      } else {
-        Mfilter['provider-eq'] = this.active_user.id;
-      }
     }
     if (this.filter.check_in_date != null) {
       Mfilter['date-eq'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_date);
     }
+    if (this.activeQs.length > 0 || this.activeUser || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) {
     const promise = this.getFutureWLCount(Mfilter);
     promise.then(
       result => {
-        // this.pagination.totalCnt = result;
-        // Mfilter = this.setPaginationFilter(Mfilter);
         this.provider_services.getFutureWaitlist(Mfilter)
           .subscribe(
             data => {
@@ -1581,14 +1424,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               } else {
                 this.noFilter = true;
               }
-              // if (this.selQIds) {
               this.check_in_filtered_list = this.getActiveAppointments(this.futureAppointments, this.statusAction);
               this.setFutureCounts(this.futureAppointments);
-              // }
               this.loading = false;
             },
             () => {
-              // this.load_waitlist = 1;
               this.loading = false;
             },
             () => {
@@ -1598,6 +1438,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       () => {
         this.loading = false;
       });
+    } else {
+      this.loading = false;
+    }
   }
   setFutureCounts(appointments) {
     this.scheduled_count = this.getActiveAppointments(appointments, 'new').length;
@@ -1606,20 +1449,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   getHistoryWL() {
     this.loading = true;
     let Mfilter = this.setFilterForApi();
-    console.log(Mfilter);
-    // if (this.selQIds.length !== 0) {
-    //   Mfilter['queue-eq'] = this.selQIds.toString();
-    // }
-    if ((this.active_user.accountType === 'BRANCH' && !this.admin && this.activeQs.length > 0) || this.activeUser) {
-      const qids = this.activeQs.map(q => q.id);
-      if (this.activeUser) {
-        // Mfilter['provider-eq'] = this.activeUser;
+    console.log(this.active_user);
+    if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
+      if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+        Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.active_user.id;
       } else {
-        Mfilter['queue-eq'] = qids.toString();
+        Mfilter['provider-eq'] = this.active_user.id;
       }
-    }
-    if (this.active_user.accountType === 'BRANCH' && this.activeUser) {
-      Mfilter['provider-eq'] = this.activeUser;
     }
     const promise = this.getHistoryWLCount(Mfilter);
     promise.then(
@@ -1633,7 +1469,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.provider_services.getHistoryWaitlist(Mfilter)
           .subscribe(
             data => {
-              // this.new_checkins_list = [];
               this.appt_list = this.check_in_filtered_list = data;
               this.loading = false;
               if (this.filterapplied === true) {
@@ -1644,7 +1479,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               this.loading = false;
             },
             () => {
-              // this.load_waitlist = 1;
               this.loading = false;
             },
             () => {
@@ -1663,13 +1497,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.showUndo = false;
     this.showRejected = false;
     const totalAppointmentsSelected = Object.keys(this.appointmentsChecked).length;
-    // const filterArray = this.check_in_filtered_list.filter(appt => appt.providerConsumer);
     if (totalAppointmentsSelected === this.check_in_filtered_list.length && totalAppointmentsSelected !== 0) {
       this.chkSelectAppointments = true;
     }
     if (totalAppointmentsSelected === 1) {
       this.apptSingleSelection = true;
-      // tslint:disable-next-line:forin
       for (const i in this.appointmentsChecked) {
         this.checkin_uuid = this.appointmentsChecked[i];
         if (!this.checkin_uuid.parentUuid) {
@@ -1743,7 +1575,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   viewStatusFilterBtnClicked(action, type) {
     this.statusAction = action;
-    // this.loading = true;
     this.resetCheckList();
     if (action === 'new') {
       if (type === 1) {
@@ -1792,7 +1623,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       if (queueid && queueid !== '') {
         if (this.activeUser) {
-          Mfilter['provider-eq'] = this.activeUser;
+          if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+            Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
+          } else {
+            Mfilter['provider-eq'] = this.activeUser;
+          }
         } else {
           Mfilter['queue-eq'] = queueid;
         }
@@ -1814,39 +1649,39 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getFutureWLCount(Mfilter = null) {
-    // let no_filter = false;
     const queueid = this.groupService.getitemFromGroupStorage('future_selQ');
     if (!Mfilter) {
       Mfilter = {};
-      if (queueid) {  
+      if (queueid) {
         if (this.activeUser) {
-          // Mfilter['provider-eq'] = this.activeUser;
-          if(this.activeUser && this.unassignview){
-            Mfilter['provider-eq'] =  null;
+          if (this.activeUser && this.unassignview) {
+            Mfilter['provider-eq'] = null;
+          } else {
+            if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+              Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
+            } else {
+              Mfilter['provider-eq'] = this.activeUser;
+            }
           }
-          else{
-            Mfilter['provider-eq'] = this.activeUser;
-            
-          }
-        }
-        else {
-          if(this.unassignview){
-            Mfilter['provider-eq'] =  null;
-          }
-          else{
+        } else {
+          if (this.unassignview) {
+            Mfilter['provider-eq'] = null;
+          } else {
             Mfilter['queue-eq'] = queueid;
           }
-          // Mfilter['queue-eq'] = queueid;
         }
       } else {
         if (this.activeUser) {
-          Mfilter['provider-eq'] = this.activeUser;
+          if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+            Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
+          } else {
+            Mfilter['provider-eq'] = this.activeUser;
+          }
         } else {
           Mfilter['queue-eq'] = this.selQIds;
         }
         this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
       }
-      // no_filter = true;
     }
     if (this.selected_location && this.selected_location.id) {
       Mfilter['location-eq'] = this.selected_location.id;
@@ -1869,39 +1704,23 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getHistoryWLCount(Mfilter = null) {
-    // const queueid = this.groupService.getitemFromGroupStorage('history_selQ');
-    // let no_filter = false;
     if (!Mfilter) {
-      Mfilter = this.setFilterForApi();
-      // if (this.selected_location && this.selected_location.id) {
-      //   Mfilter['location-eq'] = this.selected_location.id;
-      // }
-
-      // if (queueid && queueid.length > 0) {
-      //   Mfilter['queue-eq'] = queueid.toString();
-      // }
-      // no_filter = true;
+    //   Mfilter = this.setFilterForApi();
+      Mfilter = {};
     }
-    
-    // if (this.filter.waitlist_status === 'all') {
-    //   Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
-    // }
-    // if (this.filter.waitlist_status === 'all' && this.firstTime) {
-    //   Mfilter['waitlistStatus-eq'] = this.setWaitlistStatusFilterForHistory();
-    // }
-    // if (this.active_user.accountType === 'BRANCH' && !this.admin && this.activeQs.length > 0) {
-    //   const qids = this.activeQs.map(q => q.id);
-    //   if (this.activeUser) {
-    //     Mfilter['provider-eq'] = this.activeUser;
-    //   } else {
-    //     Mfilter['queue-eq'] = qids.toString();
-    //   }
-    // }
+    if (this.filter.waitlist_status === 'all') {
+      Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+    }
     if (Mfilter['queue-eq'] && (this.filterQ.length === 0 || this.filter.queue === 'all')) {
       delete Mfilter['queue-eq'];
     }
-    if (this.active_user.accountType === 'BRANCH' && this.activeUser) {
-      Mfilter['provider-eq'] = this.activeUser;
+    console.log(this.active_user);
+    if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
+      if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+        Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.active_user.id;
+      } else {
+        Mfilter['provider-eq'] = this.active_user.id;
+      }
     }
     return new Promise((resolve) => {
       this.provider_services.getwaitlistHistoryCount(Mfilter)
@@ -1917,8 +1736,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   getCounts() {
     this.today_waitlist_count = 0;
     this.history_waitlist_count = 0;
-    if (this.time_type !== 2) {
-      this.future_waitlist_count = 0;
+    this.future_waitlist_count = 0;
+    console.log('count', this.activeQs.length);
+    if (this.time_type !== 2 && this.activeQs.length > 0) {
       this.getFutureWLCount()
         .then(
           (result) => {
@@ -1934,7 +1754,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         );
     }
-    if (this.time_type !== 1) {
+    if (this.time_type !== 1 && this.activeQs.length > 0) {
       this.getTodayWLCount()
         .then(
           (result) => {
@@ -2088,18 +1908,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (filter) {
       api_filter = filter;
     }
-    // if (this.filter.waitlist_status === 'all' && this.time_type === 3 && this.firstTime) {
-    //   api_filter['waitlistStatus-eq'] = this.setWaitlistStatusFilterForHistory();
-    // }
     if (this.time_type === 1) {
-      // api_filter['queue-eq'] = this.selected_queue.id;
       if (this.token && this.time_type === 1) {
         api_filter['token-eq'] = this.token;
       }
     }
-    // else if (this.filter.queue !== 'all') {
-    //   api_filter['queue-eq'] = this.filter.queue;
-    // }
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;
     }
@@ -2124,21 +1937,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.apptModes.length > 0 && this.filter.waitlistMode !== 'all') {
       api_filter['waitlistMode-eq'] = this.apptModes.toString();
     }
-    // if (this.filter.waitlist_status !== 'all') {
-    //   api_filter['waitlistStatus-eq'] = this.filter.waitlist_status;
-    // }
     if (this.time_type !== 1) {
       if (this.filter.check_in_start_date != null) {
-        // api_filter['date-ge'] = this.dateformat.transformTofilterDate(this.filter.check_in_start_date);
         api_filter['date-ge'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_start_date);
       }
       if (this.filter.check_in_end_date != null) {
-        // api_filter['date-le'] = this.dateformat.transformTofilterDate(this.filter.check_in_end_date);
         api_filter['date-le'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_end_date);
       }
-      // if (this.filter.futurecheckin_date != null && this.time_type === 2) {
-      //   api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.futurecheckin_date);
-      // }
     }
     if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
       api_filter['billPaymentStatus-eq'] = this.paymentStatuses.toString();
@@ -2152,8 +1957,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           api_filter['queue-eq'] = this.filterQ.toString();
         }
       }
-      console.log(this.filter.location);
-      
       if (this.filterLocation.length > 0 && this.filter.location !== 'all') {
         api_filter['location-eq'] = this.filterLocation.toString();
       }
@@ -2180,20 +1983,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['gender-eq'] = this.genderList.toString();
       }
     }
-    // if (this.time_type !== 3) {
-    //   if (this.selected_location && this.selected_location.id) {
-    //     api_filter['location-eq'] = this.selected_location.id;
-    //   }
-    // }
     if (this.filter.waitlist_status === 'all') {
       api_filter['waitlistStatus-neq'] = 'prepaymentPending,failed';
     }
     if (this.labelFilterData !== '') {
       api_filter['label-eq'] = this.labelFilterData;
     }
-    //   if (this.labelFilterData !== '') {
-    //     api_filter['label-eq'] = this.labelFilterData;
-    // }
     return api_filter;
   }
   setPaginationFilter(api_filter) {
@@ -2203,8 +1998,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     return api_filter;
   }
   doSearch() {
-
-    // this.filter.waitlist_status !== 'all'
     this.lStorageService.removeitemfromLocalStorage('wlfilter');
     this.endminday = this.filter.check_in_start_date;
     if (this.filter.check_in_end_date) {
@@ -2213,8 +2006,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.maxday = this.yesterdayDate;
     }
     this.labelSelection();
-    // this.groupService.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
-    // this.groupService.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.checkinEncId || this.filter.patientId || this.filter.service !== 'all' || this.filter.location != 'all'
       || this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.check_in_start_date
       || this.filter.check_in_end_date || this.filter.check_in_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== ''
@@ -2326,20 +2117,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.selectedLabels[key].length > 0) {
         count++;
         if (!this.labelFilterData.includes(key)) {
-          // const labelvalues = this.selectedLabels[key].join(',');
-          // const labelvaluesArray = labelvalues.split(',');
-          // for (const value of labelvaluesArray) {
-          //   const lblFilter = key + '::' + value;
-          //   const Mfilter = this.setFilterForApi();
-          //   Mfilter['label-eq'] = lblFilter;
-          //   const promise = this.getHistoryWLCount(Mfilter);
-          //   promise.then(
-          //     result => {
-          //       if (this.labelsCount.indexOf(value + ' - ' + result) === -1) {
-          //         this.labelsCount.push(value + ' - ' + result);
-          //       }
-          //     });
-          // }
           if (count === 1) {
             this.labelFilterData = this.labelFilterData + key + '::' + this.selectedLabels[key].join(',');
           } else {
@@ -2492,20 +2269,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           showtoken: this.showToken,
           userId: userId,
           deptId: deptId
-          // isFrom: 'checkin'
         }
       };
       this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
     }
   }
   searchCustomer() {
-    // const navigationExtras: NavigationExtras = {
-    //   queryParams: {
-    //     source: source
-    //   }
-    // };
     this.router.navigate(['provider', 'customers', 'find']);
-    // this.router.navigate(['provider', 'customers', 'add']);
   }
   showAdjustDelay() {
     if (this.queues.length === 0) {
@@ -2658,67 +2428,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       return this.provider_shared_functions.getLiveTrackMessage(distance, unit, hours, minutes, mode);
     }
   }
-  // getBussinessProfileApi() {
-  //   const _this = this;
-  //   return new Promise(function (resolve, reject) {
-  //     _this.provider_services.getBussinessProfile()
-  //       .subscribe(
-  //         data => {
-  //           resolve(data);
-  //         },
-  //         () => {
-  //           reject();
-  //         }
-  //       );
-  //   });
-  // }
-  // get the logo url for the provider
-  // getProviderLogo(bname = '', bsector = '', bsubsector = '') {
-  //   let blogo;
-  //   this.provider_services.getProviderLogo()
-  //     .subscribe(
-  //       data => {
-  //         blogo = data;
-  //         let logo = '';
-  //         if (blogo[0]) {
-  //           logo = blogo[0].url;
-  //         } else {
-  //           logo = '';
-  //         }
-  //         // calling function which saves the business related details to show in the header
-  //         this.shared_functions.setBusinessDetailsforHeaderDisp(bname || '', bsector || '', bsubsector || '', logo);
-  //         const pdata = { 'ttype': 'updateuserdetails' };
-  //         this.shared_functions.sendMessage(pdata);
-  //       },
-  //       () => {
-  //       }
-  //     );
-  // }
-  // getBusinessProfile() {
-  //   let bProfile: any = [];
-  //   this.getBussinessProfileApi()
-  //     .then(
-  //       data => {
-  //         bProfile = data;
-  //         this.bprofile = bProfile;
-  //         this.bname = bProfile['businessName'];
-  //         if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
-  //           // calling function which saves the business related details to show in the header
-  //           const subsectorname = this.shared_functions.retSubSectorNameifRequired(bProfile['serviceSector']['domain'], bProfile['serviceSubSector']['displayName']);
-  //           this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
-  //             || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
-  //           this.getProviderLogo(bProfile['businessName'] || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '');
-  //           const pdata = { 'ttype': 'updateuserdetails' };
-  //           this.shared_functions.sendMessage(pdata);
-  //           const statusCode = this.provider_shared_functions.getProfileStatusCode(bProfile);
-  //           this.groupService.setitemToGroupStorage('isCheckin', statusCode);
-  //           // this.reloadAPIs();
-  //         }
-  //       },
-  //       () => { }
-  //     );
-  // }
-
   playSound(checkin, count) {
     const _this = this;
     let tokenNo = 1;
@@ -2726,7 +2435,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       tokenNo = checkin.token;
     }
     this.speech.setLanguage('en-IN');
-    // Speech.setVoice(voice);
     this.speech.speak({
       text: 'Token Number ' + tokenNo + checkin.waitlistingFor[0].firstName + ' ' + checkin.waitlistingFor[0].lastName,
       queue: false,
@@ -2841,7 +2549,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.showQR = true;
   }
   printBill(checkinlist) {
-    // const _this = this;
     this.qrCodegeneration(checkinlist);
     const fname = (checkinlist.waitlistingFor[0].firstName) ? checkinlist.waitlistingFor[0].firstName : '';
     const lname = (checkinlist.waitlistingFor[0].lastName) ? checkinlist.waitlistingFor[0].lastName : '';
@@ -2883,7 +2590,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       printWindow.document.write('</head><body>');
       printWindow.document.write(checkin_html);
       printWindow.document.write('</body></html>');
-      // this.showQR = false;
       printWindow.moveTo(0, 0);
       printWindow.print();
     });
@@ -2904,39 +2610,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         chekintype: 'Waitlist'
       }
     });
-    // this.provider_services.smsCheckin(appt.ynwUuid).subscribe(
-    //   () => {
-    //     this.snackbarService.openSnackBar('Check-in details sent successfully');
-    //   },
-    //   error => {
-    //     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //   }
-    // );
   }
-  // emailCheckin() {
-  //   const _this = this;
-  //   let appt;
-  //   Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
-  //     appt = _this.appointmentsChecked[apptIndex];
-  //   });
-  //   this.notedialogRef = this.dialog.open(CheckinDetailsSendComponent, {
-  //     width: '50%',
-  //     panelClass: ['popup-class', 'commonpopupmainclass'],
-  //     disableClose: true,
-  //     data: {
-  //       uuid : appt.ynwUuid,
-  //       check : 'email'
-  //     }
-  //   });
-  //   // this.provider_services.emailCheckin(appt.ynwUuid).subscribe(
-  //   //   () => {
-  //   //     this.snackbarService.openSnackBar('Check-in details mailed successfully');
-  //   //   },
-  //   //   error => {
-  //   //     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //   //   }
-  //   // );
-  // }
   goToCheckinDetails() {
     const _this = this;
     Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
@@ -3024,7 +2698,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.shared_functions.setFilter();
   }
   scrollToTop() {
-    // this.chekinSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     window.scroll({
       top: 0,
       left: 0,
@@ -3032,7 +2705,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getVirtualMode(virtualService) {
-    // Object.keys(virtualService)[0];
     return Object.keys(virtualService)[0];
   }
   showConsumerNote(checkin) {
@@ -3055,13 +2727,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise<void>(function (resolve) {
       const apiFilter = {};
       apiFilter['userType-eq'] = 'PROVIDER';
-      // let filter = 'userType-neq :"assistant"'
       _this.provider_services.getUsers(apiFilter).subscribe(data => {
         _this.users = data;
         const tempUser = {};
         tempUser['firstName'] = 'All';
         tempUser['id'] = 'all';
-        // _this.users.push(tempUser);
         if (_this.groupService.getitemFromGroupStorage('selectedUser')) {
           _this.selectedUser = _this.groupService.getitemFromGroupStorage('selectedUser');
         } else {
@@ -3072,22 +2742,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         () => {
           resolve();
         });
-      // this.handleUserSelection(this.selectedUser);
     });
   }
 
   getTeams() {
     const _this = this;
     return new Promise<void>(function (resolve) {
-      // const apiFilter = {};
-      // apiFilter['userType-eq'] = 'PROVIDER';
-      // _this.provider_services.getUsers(apiFilter).subscribe(data => {
-      //   _this.users = data;       
-      //   resolve();
-      // },
       _this.provider_services.getTeamGroup().subscribe(data => {
         _this.teams = data;
-        },
+      },
         () => {
           resolve();
         });
@@ -3123,24 +2786,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       for (const q of this.activeQs) {
         qids.push(q.id);
       }
-      // const selQids = [];
-      // if (qids.length > 0) {
-      //   if (this.selQIds && this.selQIds.length > 0) {
-      //     for (const id of this.selQIds) {
-      //       const qArr = qids.filter(qid => qid === id);
-      //       if (qArr.length > 0) {
-      //         selQids.push(id);
-      //       }
-      //     }
-      //     if (selQids.length === 0) {
-      //       this.selQIds = qids;
-      //     }
-      //   } else {
-      //     this.selQIds = qids;
-      //   }
-      // } else {
-      //   this.selQIds.push(this.activeQs[0].id);
-      // }
       this.selQIds = qids;
     }
     setTimeout(() => {
@@ -3155,7 +2800,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.loadApiSwitch('reloadAPIs');
   }
-  gotoUnassign(){
+  gotoUnassign() {
     this.unassignview = true;
     this.loadApiSwitch('reloadAPIs');
   }
@@ -3171,9 +2816,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           const description = communications[comIndex].s3path;
           const caption = communications[comIndex].caption;
           const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-          // if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
-          //   imagePath = communications[comIndex].s3path;
-          // }
           if (new RegExp(this.imageAllowed.join("|")).test(thumbPathExt.toUpperCase())) {
             imagePath = communications[comIndex].s3path;
           }
@@ -3387,7 +3029,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       disableClose: true,
       data: {
         checkin_id: waitlist
-        // chekintype: 'appointment'
       }
     });
   }
@@ -3416,16 +3057,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           lang: 'en-GB',
           rate: 1,
           pitch: 1,
-          // 'voice':'Google UK English Male',
-          // 'splitSentences': false,
           listeners: {
             onvoiceschanged: voices => {
             }
           }
         })
         .then(data => {
-          // _addVoicesList(data.voices);
-          // _prepareSpeakButton(speech);
         })
         .catch(e => {
         });
@@ -3440,7 +3077,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         virtualServicenumber = checkin.virtualService[key];
       });
     }
-    // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid } });
     this.router.navigate(['provider', 'check-ins', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid, showtoken: this.showToken, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: checkin.service.id, waitlistMode: checkin.waitlistMode } });
   }
   showSelectAll() {
@@ -3455,21 +3091,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       return false;
     }
   }
-  // setWaitlistStatusFilterForHistory() {
-  //   for (const apptStatus of this.check_in_statuses_filter) {
-  //     if (this.apptStatuses.indexOf(apptStatus.value) === -1 && apptStatus.value !== 'prepaymentPending' && apptStatus.value !== 'failed') {
-  //       this.apptStatuses.push(apptStatus.value);
-  //     }
-  //   }
-  //   return this.apptStatuses.toString();
-  // }
   cardClicked(event) {
     console.log(event);
     if (event.type === 'note') {
       this.showConsumerNote(event.waitlist);
     } else if (event.type === 'attachment') {
       this.showAttachments(event.waitlist);
-      //this.openAttachmentGallery(event.waitlist);
     } else if (event.type === 'actions') {
       this.showCheckinActions(event.statusAction, event.waitlist);
     }
@@ -3477,16 +3104,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   showAttachments(wailtist) {
     this.provider_services.getProviderWaitlistAttachmentsByUuid(wailtist.ynwUuid).subscribe(
       (communications: any) => {
-        this.showattachmentDialogRef= this.dialog.open(AttachmentPopupComponent, {
+        this.showattachmentDialogRef = this.dialog.open(AttachmentPopupComponent, {
           width: '50%',
           panelClass: ['popup-class', 'commonpopupmainclass'],
           disableClose: true,
           data: {
-            attachments:communications
+            attachments: communications
           }
         });
-      
-        
       });
   }
   isuserAvailableNow() {
@@ -3511,7 +3136,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.router.navigate(['provider', 'settings', 'general', 'users', userid, 'settings', 'queues']);
     }
-
   }
   createInstantQ() {
     if (this.qAvailability.availableNow) {
@@ -3562,12 +3186,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     age = age.split(' ');
     return age[0];
   }
-  getUsersList(teamid){
-    const userObject =  this.teams.filter(user => parseInt(user.id) === teamid); 
+  getUsersList(teamid) {
+    const userObject = this.teams.filter(user => parseInt(user.id) === teamid);
     if (userObject[0] && userObject[0].name) {
       return userObject[0].name;
     }
   }
 }
-
-

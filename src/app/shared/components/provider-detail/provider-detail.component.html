@@ -747,13 +747,14 @@
                     </div>
                 </ng-container>
                 <ng-container
-                    *ngIf="catalog_loading && orderType === 'SHOPPINGLIST' && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
-                    <div class="bus-item-O">
-                        <!-- <span (click)="shoppinglistupload()" class="popular_more">Upload shoppinglist</span> -->
-                        <a (click)="shoppinglistupload()" class="like-btn">Upload Shopping List</a>
-                    </div>
+                *ngIf="orderType === 'SHOPPINGLIST' && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
+                <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12">
+                <div class="bus-item-O">
+                    <a (click)="shoppinglistupload()" class="like-btn">Upload Shopping List</a>
+                </div>
+            </div>
 
-                </ng-container>
+            </ng-container>
 
             </div>
         </div>

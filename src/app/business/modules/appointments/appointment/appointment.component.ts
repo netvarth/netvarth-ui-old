@@ -1094,7 +1094,7 @@ export class AppointmentComponent implements OnInit {
             },
             'consumerNote': this.consumerNote,
             'countryCode': this.countryCode,
-            'phoneNumber': this.consumerPhoneNo,
+            // 'phoneNumber': this.consumerPhoneNo,
             'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'appointmentMode': this.apptType
         };

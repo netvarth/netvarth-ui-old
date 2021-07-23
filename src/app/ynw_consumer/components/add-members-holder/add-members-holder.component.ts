@@ -42,14 +42,14 @@ export class AddMembersHolderComponent implements OnInit,OnDestroy {
     public shared_functions: SharedFunctions,
     private wordProcessor: WordProcessor,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-
+console.log(data);
     if (data.type === 'edit') {
       this.addmemberobj.fname = data.member.userProfile.firstName || '';
       this.addmemberobj.lname = data.member.userProfile.lastName || '';
       this.addmemberobj.mobile = data.member.userProfile.primaryMobileNo || '';
       this.addmemberobj.gender = data.member.userProfile.gender || '';
       this.addmemberobj.dob = data.member.userProfile.dob || '';
-      if (data.member.userProfile.whatsAppNum  && data.member.userProfile.whatsAppNum !== undefined ) {
+      if (data.member.userProfile.whatsAppNum && data.member.userProfile.whatsAppNum.countryCode && data.member.userProfile.whatsAppNum.number) {
 
         const whatsup = {}
         if (data.member.userProfile.whatsAppNum.countryCode.startsWith('+')) {
@@ -60,7 +60,7 @@ export class AddMembersHolderComponent implements OnInit,OnDestroy {
         whatsup["number"] = data.member.userProfile.whatsAppNum.number
         this.addmemberobj['whatsAppNum'] = whatsup;
       }
-      if (data.member.userProfile.telegramNum  && data.member.userProfile.telegramNum !== undefined ) {
+      if (data.member.userProfile.telegramNum && data.member.userProfile.telegramNum.countryCode && data.member.userProfile.telegramNum.number) {
         const telegram = {}
         if (data.member.userProfile.telegramNum.countryCode.startsWith('+')) {
           telegram["countryCode"] = data.member.userProfile.telegramNum.countryCode

@@ -10,7 +10,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ContactComponent implements OnInit{
   @Input() content;
   @Input() emailList;
-  @Input() phoneList
+  @Input() phoneList;
+  @Input() address;
 
   showCustom = false;
   customEmail = false;

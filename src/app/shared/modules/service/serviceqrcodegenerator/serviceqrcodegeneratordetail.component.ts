@@ -1,13 +1,13 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { projectConstants } from '../../../../../app.component';
+import { projectConstants } from '../../../../app.component';
 import {  Meta, Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-qrcodegenerator',
-  templateUrl: './qrcodegenerator.component.html'
+  selector: 'app-serviceqrcodegenerator',
+  templateUrl: './serviceqrcodegeneratordetail.component.html'
 })
-export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
+export class ServiceQRCodeGeneratordetailComponent implements OnInit , OnDestroy {
   elementType = 'url';
   accuid: any;
   qr_code_cId = false;
@@ -20,8 +20,10 @@ export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
   shareLink: any;
   window_path: any;
   customId: any;
+  serviceId;
+  userId;
   constructor(private changeDetectorRef: ChangeDetectorRef,
-    public dialogRef: MatDialogRef<QRCodeGeneratorComponent>,
+    public dialogRef: MatDialogRef<ServiceQRCodeGeneratordetailComponent>,
     private angular_meta: Meta,
     private titleService: Title ,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -34,25 +36,30 @@ export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
     }
   }
   // private qrCodeCustId: ElementRef;
-
-  @ViewChild('qrCodeCustId') set content2(content2: ElementRef) {
-    if (content2) { // initially setter gets called with undefined
-      this.qrCodeParent = content2;
-    }
-  }
+  // @ViewChild('qrCodeCustId') set content2(content2: ElementRef) {
+  //   if (content2) { // initially setter gets called with undefined
+  //     this.qrCodeParent = content2;
+  //   }
+  // }
   // ngAfterViewChecked() {
   //     this.changeDetectorRef.detectChanges();
   // }
+  //this.accountEncId,this.userId,'service',serv.id
   ngOnInit() {
     this.accuid = this.data.accencUid;
     this.wpath = this.data.path;
-
+ this.serviceId = this.data.serviceid;
     this.customId = this.data.customId;
+    this.userId = this.data.userid;
     // this.window_path = this.data.pathUrl;
     // console.log(this.wpath + this.accuid);
-    this.shareLink = this.wpath + this.accuid;
-    // this.description = 'You can book my services by just clicking this link';
-    this.description = 'For consultations, book using this link';
+    if(this.userId){
+      this.shareLink = this.wpath + this.accuid +'/'+ this.userId +'/service/'+ this.serviceId ;
+    } else {
+      this.shareLink = this.wpath + this.accuid+'/service/'+ this.serviceId ;
+    }
+    
+    this.description = 'You can book my services by just clicking this link';
     this.imageUrl = this.wpath + 'assets/images/logo.png';
     this.qrCodegenerateOnlineID(this.accuid);
   }
@@ -65,7 +72,6 @@ export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
     this.changeDetectorRef.detectChanges();
     setTimeout(() => {
       this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
-      console.log(this.qrCodePath);
       this.angular_meta.addTags([
          { property: 'og:title', content: this.data.businessName },
         { property: 'og:image', content: this.imageUrl },

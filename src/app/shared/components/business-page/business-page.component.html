@@ -486,9 +486,11 @@
                 </ng-container>
                 <ng-container
                     *ngIf="orderType === 'SHOPPINGLIST' && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
+                    <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12">
                     <div class="bus-item-O">
                         <a (click)="shoppinglistupload()" class="like-btn">Upload Shopping List</a>
                     </div>
+                </div>
 
                 </ng-container>
             </div>

@@ -11,6 +11,9 @@ import { GroupStorageService } from '../../../../../../shared/services/group-sto
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { DateTimeProcessor } from '../../../../../../shared/services/datetime-processor.service';
+import { ProviderDataStorageService } from '../../../../../../ynw_provider/services/provider-datastorage.service';
+import { ServiceQRCodeGeneratordetailComponent } from '../../../../../../shared/modules/service/serviceqrcodegenerator/serviceqrcodegeneratordetail.component';
+
 
 @Component({
     selector: 'app-waitlist-services',
@@ -60,6 +63,9 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     adon_used: any;
     disply_name: any;
     warningdialogRef: any;
+    bprofile: any = [];
+    qrdialogRef: any;
+    wndw_path = projectConstants.PATH;
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         public provider_shared_functions: ProviderSharedFuctions,
@@ -69,6 +75,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         private wordProcessor: WordProcessor,
         private snackbarService: SnackbarService,
         private dateTimeProcessor: DateTimeProcessor,
+        private provider_datastorage: ProviderDataStorageService,
         private groupService: GroupStorageService) { }
 
     ngOnInit() {
@@ -101,6 +108,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
             this.breadcrumbs = breadcrumbs;
         }
         this.api_loading = true;
+        this.getBusinessProfile();
         this.getDomainSubdomainSettings();
         this.getServiceCount();
         this.getLicenseUsage();
@@ -121,6 +129,15 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         } else if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/q-manager->settings-services']);
         }
+    }
+    getBusinessProfile() {
+        this.provider_services.getBussinessProfile()
+            .subscribe(
+                data => {
+                    this.bprofile = data;
+                    
+                    this.provider_datastorage.set('bProfile', data);
+                });
     }
     getServices(pgefilter?) {
         this.api_loading = true;
@@ -290,5 +307,36 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
+    }
+    serviceqrCodegeneraterOnlineID(service){
+        let pid = '';
+        let usrid = '';
+        if(!this.bprofile.customId){
+          pid = this.bprofile.accEncUid;
+        } else {
+          pid = this.bprofile.customId;
+        }
+        if(service && service.provider && service.provider.id){
+          usrid = service.provider.id;
+        } else {
+          usrid = '';
+        }
+      this.qrdialogRef = this.dialog.open(ServiceQRCodeGeneratordetailComponent, {
+          width: '40%',
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true,
+          data: {
+            accencUid: pid,
+            path: this.wndw_path,
+            serviceid: service.id,
+            userid: usrid
+          }
+        });
+    
+        this.qrdialogRef.afterClosed().subscribe(result => {
+        //   if (result === 'reloadlist') {
+        //     this.getBusinessProfile();
+        //   }
+        });
     }
 }

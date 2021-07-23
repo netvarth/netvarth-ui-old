@@ -376,6 +376,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
                                     resolve(mode);
                                 } else if (!audioStatus && videoStatus) {
                                     mode = 'b-mic';
+                                    resolve(mode);
                                 } else {
                                     resolve('none');
                                 }

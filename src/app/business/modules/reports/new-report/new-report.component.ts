@@ -160,7 +160,7 @@ user_users;
       }
     });
     this.mxDate = new Date(new Date().setDate(new Date().getDate() - 1));
-    this.minDate = new Date(new Date().setDate(new Date().getDate() - 90));
+    this.minDate = new Date("September 1, 2020 01:15:00");
   }
 
   ngOnInit() {
