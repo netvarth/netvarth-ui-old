@@ -10,6 +10,10 @@ import { AddServiceComponent } from '../../../business/modules/settings/general/
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { UserlistpopupComponent } from './userlist/userlistpopup.component';
 import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
+import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { ServiceQRCodeGeneratordetailComponent } from './serviceqrcodegenerator/serviceqrcodegeneratordetail.component';
 
 @NgModule({
     imports: [
@@ -21,11 +25,16 @@ import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module'
         CapitalizeFirstPipeModule,
         SharedModule,
         LoadingSpinnerModule,
-        CKEditorModule
+        CKEditorModule,
+        NgxQRCodeModule,
+        ShareButtonsModule,
+        ShareIconsModule,
     ],
-    declarations: [ServiceComponent, AddServiceComponent,UserlistpopupComponent],
+    declarations: [ServiceComponent, AddServiceComponent,UserlistpopupComponent,
+        ServiceQRCodeGeneratordetailComponent],
     entryComponents: [
-        UserlistpopupComponent
+        UserlistpopupComponent,
+        ServiceQRCodeGeneratordetailComponent
     ],
     exports: [ServiceComponent]
 })
