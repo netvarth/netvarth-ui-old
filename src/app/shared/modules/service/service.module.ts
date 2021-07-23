@@ -30,7 +30,9 @@ import { ServiceQRCodeGeneratordetailComponent } from './serviceqrcodegenerator/
         ShareButtonsModule,
         ShareIconsModule,
     ],
-    declarations: [ServiceComponent, AddServiceComponent,UserlistpopupComponent,
+    declarations: [ServiceComponent,
+         AddServiceComponent,
+         UserlistpopupComponent,
         ServiceQRCodeGeneratordetailComponent],
     entryComponents: [
         UserlistpopupComponent,

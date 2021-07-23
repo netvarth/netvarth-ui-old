@@ -36,7 +36,6 @@ export class ServiceQRCodeGeneratordetailComponent implements OnInit , OnDestroy
     }
   }
   // private qrCodeCustId: ElementRef;
-
   // @ViewChild('qrCodeCustId') set content2(content2: ElementRef) {
   //   if (content2) { // initially setter gets called with undefined
   //     this.qrCodeParent = content2;

@@ -1028,7 +1028,7 @@ getOwnership(ownerShipData,isTruncate){
       } else {
         path = projectConstants.PATH + pid +'/service/'+ this.service.id ;
       }
-     // this.wpath + this.accuid +'/'+ this.userId +'/service/'+ this.serviceId ;
+    // this.wpath + this.accuid +'/'+ this.userId +'/service/'+ this.serviceId ;
     //const path = projectConstants.PATH + valuetocopy;
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';

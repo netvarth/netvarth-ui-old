@@ -335,9 +335,9 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         });
     
         this.qrdialogRef.afterClosed().subscribe(result => {
-          if (result === 'reloadlist') {
-            this.getBusinessProfile();
-          }
+        //   if (result === 'reloadlist') {
+        //     this.getBusinessProfile();
+        //   }
         });
     }
 }
