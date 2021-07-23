@@ -124,6 +124,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
     terminologiesjson;
     provider_id;
     private subs=new SubSink();
+      splocation: any;
     checkJcash = false;
     checkJcredit = false;
     jaldeecash: any;
@@ -334,6 +335,9 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                     }
                     if (this.bill_data.amountDue > 0) {
                         this.getJaldeeCashandCredit();
+                    }
+                      if (this.bill_data.accountProfile.location && this.bill_data.accountProfile.location.place) {
+                        this.splocation = this.bill_data.accountProfile.location.place;
                     }
                     this.getBillDateandTime();
                 },
@@ -635,6 +639,11 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
         bill_html += '<td style="text-align:right;color:#000000; font-size:10pt;font-family:Ubuntu, Arial,sans-serif;">';
         if (this.bill_data.gstNumber) {
             bill_html += 'GSTIN ' + this.bill_data.gstNumber;
+        }
+        bill_html += '	</tr>';
+        bill_html += '	<tr>';
+        if(this.splocation ){
+          bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.splocation + '</td>';
         }
         bill_html += '	<tr>';
         if (this.checkin.provider) {

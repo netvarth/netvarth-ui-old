@@ -69,6 +69,10 @@
                                                                                 {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
                                                                                     + ' ' + checkin.provider.lastName}}</span>
                                                                         </span>
+                                                                        <span  class="columns mgn-up-10" *ngIf="splocation">
+                                                                            <span class="dynamic">{{splocation}}</span>
+                                                                            <span class="icon-location"></span>
+                                                                        </span>
                                                                         <div class="col-md-12 col-sm-12 col-lg-12 no-padding red"
                                                                             *ngIf="bill_data.billStatus == 'Cancel'">
                                                                             Cancelled</div>
