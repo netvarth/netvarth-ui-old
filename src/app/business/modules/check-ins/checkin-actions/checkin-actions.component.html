@@ -65,7 +65,7 @@
         </div>
 
         <div class="action-box pointer-cursor"
-        *ngIf="!data.multiSelection && accountType=='BRANCH' &&  !checkin.provider && groups && groups.length > 0 &&  (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')"
+        *ngIf="!data.multiSelection && accountType=='BRANCH' && groups && groups.length > 0 &&  (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')"
         (click)="assignteam()">  
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
