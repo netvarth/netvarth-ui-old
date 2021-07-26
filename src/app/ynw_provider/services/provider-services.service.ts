@@ -146,7 +146,7 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url, data);
   }
   getProviderAppointmentInternalStatusHistory(uid){
-    const url = 'provider/appointment/internalStatuses/log' + uid;
+    const url = 'provider/appointment/internalStatuses/log/' + uid;
     return this.servicemeta.httpGet(url);
   }
 
