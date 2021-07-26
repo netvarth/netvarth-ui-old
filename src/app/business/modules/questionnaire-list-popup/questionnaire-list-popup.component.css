@@ -1,0 +1,21 @@
+.qnr-action-btns {
+    margin-left: auto;
+}
+.mat-dialog-title .modal_close {
+    color: black !important;
+}
+.qnr-list {
+    padding: 10px;
+}
+.qnr-list .qnr {
+    display: flex;
+    padding: 10px;
+    margin: 10px;
+}
+.qnr-action-btns a {
+    padding: 5px 20px;
+    background: darkblue;
+    color: white;
+    border-radius: 20px;
+    margin: 10px;
+}

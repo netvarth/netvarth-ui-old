@@ -1,0 +1,21 @@
+<h1 class="mat-dialog-title">
+  <span class="mgn-lt-10">Questionnaires</span>
+  <button mat-dialog-close class="modal_close" tabindex="-1">
+    <i class="fa fa-window-close" aria-hidden="true"></i>
+  </button>
+</h1>
+<div>
+  <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+  <div class="qnr-list" *ngIf="!loading">
+    <div class="qnr" *ngFor="let qnr of questionnaires">
+      <div *ngIf="getQnrStatus(qnr.id)">
+        <div class="qnr-name">{{qnr.questionnaireId}}</div>
+        <div class="qnr-action-btns">
+          <a (click)="changeReleaseStatus(qnr.id)">{{(getQnrStatus(qnr.id) === 'released') ? 'Unrelease' :
+            'Release'}}</a>
+          <a (click)="viewQnr()">View</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
