@@ -1323,11 +1323,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.unassignview) {
           Mfilter['provider-eq'] = null;
         } else {
-          // if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
-          //   Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
-          // } else {
+          if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+            Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
+          } else {
             Mfilter['provider-eq'] = this.activeUser;
-          // }
+          }
         }
       }
       else {
@@ -1393,11 +1393,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.unassignview) {
           Mfilter['provider-eq'] = null;
         } else {
-          // if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
-          //   Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
-          // } else {
+          if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+            Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
+          } else {
             Mfilter['provider-eq'] = this.activeUser;
-          // }
+          }
         }
       } else {
         if (this.unassignview) {
@@ -1451,11 +1451,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     let Mfilter = this.setFilterForApi();
     console.log(this.active_user);
     if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
-      // if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
-      //   Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.active_user.id;
-      // } else {
+      if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+        Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.active_user.id;
+      } else {
         Mfilter['provider-eq'] = this.active_user.id;
-      // }
+      }
     }
     const promise = this.getHistoryWLCount(Mfilter);
     promise.then(
@@ -1623,11 +1623,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       if (queueid && queueid !== '') {
         if (this.activeUser) {
-          // if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
-          //   Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
-          // } else {
+          if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+            Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
+          } else {
             Mfilter['provider-eq'] = this.activeUser;
-          // }
+          }
         } else {
           Mfilter['queue-eq'] = queueid;
         }
@@ -1657,11 +1657,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           if (this.activeUser && this.unassignview) {
             Mfilter['provider-eq'] = null;
           } else {
-            // if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
-            //   Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
-            // } else {
+            if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+              Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
+            } else {
               Mfilter['provider-eq'] = this.activeUser;
-            // }
+            }
           }
         } else {
           if (this.unassignview) {
@@ -1672,11 +1672,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       } else {
         if (this.activeUser) {
-          // if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
-          //   Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
-          // } else {
+          if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+            Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
+          } else {
             Mfilter['provider-eq'] = this.activeUser;
-          // }
+          }
         } else {
           Mfilter['queue-eq'] = this.selQIds;
         }
@@ -1716,11 +1716,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     console.log(this.active_user);
     if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
-      // if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
-      //   Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.active_user.id;
-      // } else {
+      if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+        Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.active_user.id;
+      } else {
         Mfilter['provider-eq'] = this.active_user.id;
-      // }
+      }
     }
     return new Promise((resolve) => {
       this.provider_services.getwaitlistHistoryCount(Mfilter)
