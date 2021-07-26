@@ -87,6 +87,12 @@
                 <div class="icon-text">Mark as Arrived</div>
             </div>
         </div> -->
+        <div class="action-box pointer-cursor" *ngIf="showQnr()" (click)="showQuestionnaires()">
+            <div class="action-box-sub">
+                <span class="start-icon"></span>
+                <div class="icon-text">Questionnaires</div>
+            </div>
+        </div>
         <div class="action-box pointer-cursor" *ngIf="showCall" (click)="callingAppt()">
             <div class="action-box-sub" *ngIf="appt.callingStatus">
                 <span class="callstop-icon"></span>
