@@ -594,9 +594,10 @@
                   </div>
                   <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
                     {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
-                    + ' ' + checkin.provider.lastName}} <span style="color:green" *ngIf="checkin.internalStatus">- {{
-                      checkin.internalStatus }}</span>
+                    + ' ' + checkin.provider.lastName}} 
                   </div>
+                  <span style="color:green" *ngIf="checkin.internalStatus"> {{
+                    checkin.internalStatus }}</span>
                   <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
                     <!-- Team Name -->
                     {{getUsersList(checkin.teamId)}}
@@ -839,9 +840,10 @@
                   </div>
                   <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
                     {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
-                    + ' ' + checkin.provider.lastName}} <span style="color:green" *ngIf="checkin.internalStatus">- {{
-                      checkin.internalStatus }}</span>
+                    + ' ' + checkin.provider.lastName}} 
                   </div>
+                  <span style="color:green" *ngIf="checkin.internalStatus">{{
+                    checkin.internalStatus }}</span>
                   <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
                     <!-- Team Name -->
                     {{getUsersList(checkin.teamId)}}
@@ -1397,9 +1399,10 @@
                 </div>
                 <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
                   {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
-                  ' ' + checkin.provider.lastName}} <span style="color:green" *ngIf="checkin.internalStatus">- {{
-                    checkin.internalStatus }}</span>
+                  ' ' + checkin.provider.lastName}} 
                 </div>
+                <span style="color:green" *ngIf="checkin.internalStatus"> {{
+                  checkin.internalStatus }}</span>
                 <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
                   <!-- Team Name -->
                   {{getUsersList(checkin.teamId)}}
@@ -2089,9 +2092,10 @@
                 </div>
                 <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
                   {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
-                  ' ' + checkin.provider.lastName}}<span style="color:green" *ngIf="checkin.internalStatus">- {{
-                    checkin.internalStatus }}</span>
+                  ' ' + checkin.provider.lastName}}
                 </div>
+                <span style="color:green" *ngIf="checkin.internalStatus"> {{
+                  checkin.internalStatus }}</span>
                 <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
                   <!-- {{}} Team Name -->
                   {{getUsersList(checkin.teamId)}}

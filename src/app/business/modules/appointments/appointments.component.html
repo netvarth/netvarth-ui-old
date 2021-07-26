@@ -632,8 +632,9 @@
                         </div>
                         <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
                           {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName
-                          + ' ' + appt.provider.lastName}} <span style="color:green" *ngIf="appt.internalStatus">- {{ appt.internalStatus }}</span>
+                          + ' ' + appt.provider.lastName}} 
                         </div>
+                        <span style="color:green" *ngIf="appt.internalStatus"> {{ appt.internalStatus }}</span>
                         <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
                           <!-- Team Name -->
                           {{getUsersList(appt.teamId)}}
@@ -1158,8 +1159,9 @@
                         </div>
                         <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
                           {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName
-                          + ' ' + appt.provider.lastName}} <span style="color:green" *ngIf="appt.internalStatus">- {{ appt.internalStatus }}</span>
+                          + ' ' + appt.provider.lastName}} 
                         </div>
+                        <span style="color:green" *ngIf="appt.internalStatus"> {{ appt.internalStatus }}</span>
                         <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
                           <!-- Team Name -->
                           {{getUsersList(appt.teamId)}}
@@ -1732,8 +1734,9 @@
                       </div>
                       <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
                         {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName
-                        + ' ' + appt.provider.lastName}} <span style="color:green" *ngIf="appt.internalStatus">- {{ appt.internalStatus }}</span>
+                        + ' ' + appt.provider.lastName}}
                       </div>
+                      <span style="color:green" *ngIf="appt.internalStatus">- {{ appt.internalStatus }}</span>
                       <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
                         <!-- Team Name -->
                         {{getUsersList(appt.teamId)}}
@@ -2363,8 +2366,9 @@
                       </div>
                       <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
                         {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName
-                        + ' ' + appt.provider.lastName}} <span style="color:green" *ngIf="appt.internalStatus">- {{ appt.internalStatus }}</span>
+                        + ' ' + appt.provider.lastName}} 
                       </div>
+                      <span style="color:green" *ngIf="appt.internalStatus"> {{ appt.internalStatus }}</span>
                       <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
                         <!-- Team Name -->
                         {{getUsersList(appt.teamId)}}
