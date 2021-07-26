@@ -50,7 +50,7 @@ import { LoadingSpinnerModule } from './shared/modules/loading-spinner/loading-s
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { LazyModule } from './shared/modules/lazy-load/lazy.module';
 import { ForceDialogComponent } from './shared/components/force-dialog/force-dialog.component';
-import { AdminLoginComponent } from './shared/components/admin/login/login.component';
+// import { AdminLoginComponent } from './shared/components/admin/login/login.component';
 import { ConsumerJoinComponent } from './ynw_consumer/components/consumer-join/join.component';
 import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.module';
 import { DisplayboardLayoutContentModule } from './business/modules/displayboard-content/displayboard-content.module';
@@ -65,7 +65,7 @@ import { Razorpaymodel } from './shared/components/razorpay/razorpay.model';
 import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefill.model';
 import { WindowRefService } from './shared/services/windowRef.service';
 import { RazorpayService } from './shared/services/razorpay.service';
-import { PaymentLinkComponent } from './shared/components/payment-link/payment-link.component';
+// import { PaymentLinkComponent } from './shared/components/payment-link/payment-link.component';
 import { ProviderDataStorageService } from './ynw_provider/services/provider-datastorage.service';
 import { JoyrideModule } from 'ngx-joyride';
 import { UpdateProfilePopupComponent } from './shared/components/update-profile-popup/update-profile-popup.component';
@@ -107,7 +107,7 @@ import { environment } from '../environments/environment';
 import { ConsumerAuthService } from './shared/services/consumer-auth-service';
 import { ListRecordingsDialogComponent } from './shared/components/list-recordings-dialog/list-recordings-dialog.component';
 import { VirtualFieldsModule } from './ynw_consumer/components/virtualfields/virtualfields.module';
-import { MeetRoomComponent } from './shared/components/meet-room/meet-room.component';
+// import { MeetRoomComponent } from './shared/components/meet-room/meet-room.component';
 import { MeetRoomModule } from './shared/components/meet-room/meet-room.module';
 import { MediaService } from './shared/services/media-service';
 import { RequestDialogComponent } from './business/shared/meeting-room/request-dialog/request-dialog.component';
@@ -136,10 +136,10 @@ export function init_app(globalService: GlobalService) {
     RequestForComponent,
     BusinessPageComponent,
     ForceDialogComponent,
-    AdminLoginComponent,
+    // AdminLoginComponent,
     ConsumerJoinComponent,
     ManageProviderComponent,
-    PaymentLinkComponent,
+    // PaymentLinkComponent,
     VoicecallDetailsSendComponent,
     JdnComponent,
     UpdateProfilePopupComponent,
@@ -169,7 +169,7 @@ export function init_app(globalService: GlobalService) {
     UpdateProfilePopupComponent,
     AddAddressComponent,
     ListRecordingsDialogComponent,
-    MeetRoomComponent,
+    // MeetRoomComponent,
     RequestDialogComponent,
     AttachmentPopupComponent
 

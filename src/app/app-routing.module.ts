@@ -7,16 +7,16 @@ import { AuthGuardConsumer, AuthGuardHome, AuthGuardProvider } from './shared/gu
 import { ReturnPaymentComponent } from './shared/components/return-payment/return-payment.component';
 import { BusinessPageComponent } from './shared/components/business-page/business-page.component';
 import { MaintenanceComponent } from './shared/modules/maintenance/maintenance.component';
-import { AdminLoginComponent } from './shared/components/admin/login/login.component';
+// import { AdminLoginComponent } from './shared/components/admin/login/login.component';
 import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
 import { ConsumerJoinComponent } from './ynw_consumer/components/consumer-join/join.component';
-import { PaymentLinkComponent } from './shared/components/payment-link/payment-link.component';
+// import { PaymentLinkComponent } from './shared/components/payment-link/payment-link.component';
 import { CheckoutSharedComponent } from './shared/components/checkout/checkout.component';
 import { ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
 import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
-import { MeetRoomComponent } from './shared/components/meet-room/meet-room.component';
+// import { MeetRoomComponent } from './shared/components/meet-room/meet-room.component';
 const routes: Routes = [
-    { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent },
+    { path: 'admin/login/:accountId/:userId',  loadChildren: () => import('./shared/components/admin/login/login.module').then(m => m.LoginModule) },
     {
         path: 'provider', loadChildren: () => import('./business/business.module').then(m => m.BusinessModule),
         canActivate: [AuthGuardProvider]
@@ -37,14 +37,14 @@ const routes: Routes = [
     {
         path: 'displayboard/:id', loadChildren: () => import('./business/modules/displayboard-content/displayboard-content.module').then(m => m.DisplayboardLayoutContentModule),
     },
-    { path: 'meet/:id', component: MeetRoomComponent },
+    { path: 'meet/:id', loadChildren: ()=> import('./shared/components/meet-room/meet-room.module').then(m => m.MeetRoomModule) },
     { path: 'meeting/provider/:id', component: MeetingRoomComponent },
     { path: 'meeting/:phonenumber', loadChildren: () => import('./shared/modules/tele-home/tele-home.module').then(m => m.TeleHomeModule)},
     { path: 'maintenance', component: MaintenanceComponent },
     { path: 'manage/:id', component: ManageProviderComponent },
     { path: 'status/:id', loadChildren: () => import('./shared/components/status-check/check-status.module').then(m => m.CheckStatusModule)},
     { path: 'consumer-join', component: ConsumerJoinComponent },
-    { path: 'pay/:id', component: PaymentLinkComponent },
+    { path: 'pay/:id', loadChildren: ()=> import('./shared/components/payment-link/payment-link.module').then(m => m.PaymentLinkModule) },
     { path: 'order/checkout', component: CheckoutSharedComponent },
     { path: 'order/shoppingcart', loadChildren: () => import('./shared/modules/shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule) },
     { path: 'order/shoppingcart/checkout', loadChildren: () => import('./shared/modules/shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule) },

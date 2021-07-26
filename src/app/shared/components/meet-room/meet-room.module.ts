@@ -5,6 +5,9 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { VisualizeModule } from "../../../business/modules/visualizer/visualize.module";
 import { TwilioService } from "../../services/twilio-service";
 import { MeetRoomComponent } from "./meet-room.component";
+import { MeetRoomRoutingModule } from "./meet-room.routing.module";
+// import { Routes, RouterModule } from '@angular/router';
+
 
 @NgModule({
     declarations: [
@@ -13,7 +16,10 @@ import { MeetRoomComponent } from "./meet-room.component";
     imports: [
         CommonModule,
         MatCheckboxModule,
-        VisualizeModule
+        VisualizeModule,
+        // RouterModule.forChild(routes)
+        MeetRoomRoutingModule
+
     ],
     exports: [
         MeetRoomComponent
