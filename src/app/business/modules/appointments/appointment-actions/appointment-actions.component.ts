@@ -1080,7 +1080,8 @@ export class AppointmentActionsComponent implements OnInit {
             panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {
-                waitlist: this.appt
+                waitlist: this.appt,
+                source: 'appt'
             }
         });
         dialogrefd.afterClosed().subscribe(result => {

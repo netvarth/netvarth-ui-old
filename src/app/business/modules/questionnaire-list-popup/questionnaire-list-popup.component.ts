@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ConfirmBoxComponent } from '../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-questionnaire-list-popupl',
@@ -11,13 +12,16 @@ import { ProviderServices } from '../../../ynw_provider/services/provider-servic
 export class QuestionnaireListPopupComponent implements OnInit {
   questionnaires: any = [];
   loading = true;
+  selectedQnr;
   constructor(public dialogRef: MatDialogRef<QuestionnaireListPopupComponent>,
     private providerServices: ProviderServices,
     private dialog: MatDialog,
+    private snackbarService: SnackbarService,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
     console.log(this.data);
+    console.log(this.selectedQnr);
     this.getQuestionnaires();
   }
   getQuestionnaires() {
@@ -27,21 +31,29 @@ export class QuestionnaireListPopupComponent implements OnInit {
     });
   }
   changeReleaseStatus(id) {
+    const status = (this.getQnrStatus(id) === 'released') ? 'unrelease' : 'release';
     const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': 'Do you want to ' + (this.getQnrStatus(id) === 'released') ? 'nnrelease' : 'release' + ' this questionnaire?',
+        'message': 'Do you want to ' + status + ' this questionnaire?',
         'type': 'yes/no'
       }
     });
     dialogrefd.afterClosed().subscribe(result => {
-      const status = (this.getQnrStatus(id) === 'unReleased') ? 'released' : 'unReleased';
-      this.providerServices.changeQnrReleaseStatus(status, this.data.waitlist.ynwUuid, id).subscribe(data => {
-        this.questionnaires = data;
-        this.loading = false;
-      });
+      if (result) {
+        const status = (this.getQnrStatus(id) === 'unReleased') ? 'released' : 'unReleased';
+        const uid = (this.data.source === 'appt') ? this.data.waitlist.uid : this.data.waitlist.ynwUuid;
+        this.providerServices.changeQnrReleaseStatus(status, uid, id).subscribe(data => {
+          this.questionnaires = data;
+          this.loading = false;
+          this.snackbarService.openSnackBar('questionnaire ' + status + 'd', { 'panelclass': 'snackbarerror' });
+          this.closeDialog();
+        }, error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
+      }
     });
   }
   getQnrStatus(id) {
@@ -50,7 +62,11 @@ export class QuestionnaireListPopupComponent implements OnInit {
       return qnrStatus[0].status;
     }
   }
-  viewQnr() {
-
+  viewQnr(qnr?) {
+    this.selectedQnr = qnr;
+    console.log(this.selectedQnr);
+  }
+  closeDialog() {
+    this.dialogRef.close();
   }
 }

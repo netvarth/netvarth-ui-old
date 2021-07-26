@@ -1126,7 +1126,8 @@ export class CheckinActionsComponent implements OnInit {
             panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {
-                waitlist: this.checkin
+                waitlist: this.checkin,
+                source: 'checkin'
             }
         });
         dialogrefd.afterClosed().subscribe(result => {
