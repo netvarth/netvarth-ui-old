@@ -31,13 +31,13 @@ export class QuestionnaireListPopupComponent implements OnInit {
     });
   }
   changeReleaseStatus(id) {
-    const status = (this.getQnrStatus(id) === 'released') ? 'unrelease' : 'release';
+    const statusmsg = (this.getQnrStatus(id) === 'released') ? 'unrelease' : 'release';
     const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': 'Do you want to ' + status + ' this questionnaire?',
+        'message': 'Do you want to ' + statusmsg + ' this questionnaire?',
         'type': 'yes/no'
       }
     });
@@ -48,7 +48,7 @@ export class QuestionnaireListPopupComponent implements OnInit {
         this.providerServices.changeQnrReleaseStatus(status, uid, id).subscribe(data => {
           this.questionnaires = data;
           this.loading = false;
-          this.snackbarService.openSnackBar('questionnaire ' + status + 'd', { 'panelclass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
           this.closeDialog();
         }, error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

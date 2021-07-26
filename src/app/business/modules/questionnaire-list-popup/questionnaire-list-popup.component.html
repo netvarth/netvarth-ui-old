@@ -1,5 +1,6 @@
 <h1 class="mat-dialog-title">
-  <span class="mgn-lt-10">Questionnaires</span>
+  <span class="mgn-lt-10" *ngIf="!selectedQnr">Questionnaires</span>
+  <span class="mgn-lt-10" *ngIf="selectedQnr">{{selectedQnr.questionnaireId}}</span>
   <button mat-dialog-close class="modal_close" tabindex="-1" (click)="closeDialog()"><i class="fa fa-window-close"
       aria-hidden="true"></i></button>
 </h1>
