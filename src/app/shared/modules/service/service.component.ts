@@ -999,7 +999,7 @@ getOwnership(ownerShipData,isTruncate){
       }
     this.qrdialogRef = this.dialog.open(ServiceQRCodeGeneratordetailComponent, {
         width: '40%',
-        panelClass: ['popup-class', 'commonpopupmainclass'],
+        panelClass: ['popup-class', 'commonpopupmainclass','servceqrcodesmall'],
         disableClose: true,
         data: {
           accencUid: pid,
