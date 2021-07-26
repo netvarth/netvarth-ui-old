@@ -51,7 +51,7 @@
 
                           <div class="w-a-info funds-spent" *ngIf="cashbalanceInfodetail">
                               <span>Spent <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
-                              <p (click)="spentlist()"><i class="fa fa-inr" aria-hidden="true"></i>{{cashbalanceInfodetail.totCashSpent}}</p>
+                              <p ><i class="fa fa-inr" aria-hidden="true"></i>{{cashbalanceInfodetail.totCashSpent}}</p>
                           </div>
                       </div>
 
@@ -152,8 +152,11 @@
                       <td  data-title="Amount earned" >
                           <i class="fa fa-inr" aria-hidden="true"></i> {{details.originalAmt}}
                       </td>
-                      <td data-title="Amount spent"   (click)="spentlist(details.id)">
-                          <span [ngClass]="details.amount !== 0 ?'bluelink':'nolink'" ><i class="fa fa-inr" aria-hidden="true"></i>{{details.originalAmt-details.remainingAmt}}</span> 
+                      <td data-title="Amount spent"  >
+
+
+                          <span  (click)="spentlist(details.id)" *ngIf="(details.originalAmt-details.remainingAmt)>0" class="bluelink" ><i class="fa fa-inr" aria-hidden="true"></i>&nbsp;{{details.originalAmt-details.remainingAmt}}</span> 
+                          <span  *ngIf="(details.originalAmt-details.remainingAmt)<=0"  ><i class="fa fa-inr" aria-hidden="true"></i> &nbsp;{{details.originalAmt-details.remainingAmt}}</span> 
                       </td>
                       <td data-title="Awarded date" >
                         {{details.jCashIssueInfo.issuedDt  | date: newDateFormat}}
