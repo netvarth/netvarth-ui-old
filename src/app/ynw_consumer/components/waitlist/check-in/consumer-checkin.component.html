@@ -347,8 +347,12 @@
                                                                             *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
                                                                         <span *ngIf="type === 'waitlistreschedule'"
                                                                             class="phonevallabel">&nbsp;+{{callingModes}}</span>
-                                                                        <span *ngIf="type != 'waitlistreschedule'"
+                                                                        <!-- <span *ngIf="type != 'waitlistreschedule'"
                                                                             class="phonevallabel">&nbsp;{{whatsappCountryCode}} {{newWhatsapp}}</span><a
+                                                                            class="mgn-lt-5 lnk pointer-cursor">
+                                                                        </a> -->
+                                                                        <span *ngIf="type != 'waitlistreschedule'"
+                                                                            class="phonevallabel">&nbsp;+{{callingModes}}</span><a
                                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
                                                                         <!-- <div class="mode-hint mgn-bt-5">
@@ -1153,7 +1157,7 @@
                                                 *ngIf="changePhno && currentPhone != callingModes && sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                 <span class="billing-head">WhatsApp #</span>
                                                 <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
-                                                <span class="billing-value"> {{whatsappCountryCode}} {{newWhatsapp}}</span>
+                                                <span class="billing-value"> +{{callingModes}}</span>
                                             </div>
                                             <div class="disp-flex" *ngIf="payEmail">
                                                 <span class="billing-head">Email</span>
@@ -1302,7 +1306,7 @@
                                                 <mat-checkbox [(ngModel)]="checkJcash" (change)="changeJcashUse($event)"></mat-checkbox>
                                                 Use Jaldee cash balance : <span class="rupee-font">{{jcashamount| currency:'&#8377;'}}</span>
                                             </div>
-                                            <div class="creditleft"  *ngIf="jcashamount>0">
+                                            <div class="creditleft" *ngIf="jcashamount>0  && (checkJcash && jcashamount < paymentDetails.amountRequiredNow)"> 
                                                 Balance amount can be paid by other payment methods
                                             </div>
                                             <div class="prepayment">

@@ -1881,9 +1881,15 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
   applyRefund(payment) {
     this.applydisc = true;
+    console.log(payment);
     if (payment) {
       this.selectedPayment = payment;
       this.amounttoRefund = payment.refundableAmount.toFixed(2);
+      if(payment.paymentMode==='JCASH'){
+        this.jcashRefund=true;
+      }else{
+        this.jcashRefund=false;
+      }
       // this.showRefundSection = true;
     } else {
       this.selectedPayment = [];

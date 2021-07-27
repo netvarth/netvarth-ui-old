@@ -145,8 +145,8 @@ export class ProviderServices {
     const url = 'provider/bill/coupons/' + id + '/publish';
     return this.servicemeta.httpPut(url, data);
   }
-  getProviderAppointmentInternalStatusHistory(uid){
-    const url = 'provider/appointment/internalStatuses/log' + uid;
+  getProviderAppointmentInternalStatusHistory(uid) {
+    const url = 'provider/appointment/internalStatuses/log/' + uid;
     return this.servicemeta.httpGet(url);
   }
 
@@ -227,7 +227,7 @@ export class ProviderServices {
   addHoliday(data) {
     return this.servicemeta.httpPost('provider/settings/nonBusinessDays/holiday', data);
   }
-  Holidaywaitlist(status,id) {
+  Holidaywaitlist(status, id) {
     return this.servicemeta.httpPut('provider/settings/nonBusinessDays/holiday/mark/' + status + '/' + id);
   }
   userHolidaywaitlist(id) {
@@ -1387,7 +1387,7 @@ export class ProviderServices {
     const url = 'provider/donation/count';
     return this.servicemeta.httpGet(url, null, filter);
   }
-  getDonations(filter = {}) {
+  getDonations(filter) {
     const url = 'provider/donation';
     return this.servicemeta.httpGet(url, null, filter);
   }
@@ -1641,15 +1641,15 @@ export class ProviderServices {
     const url = 'provider/report';
     return this.servicemeta.httpPut(url, data);
   }
-  generateUserReport(filter){
+  generateUserReport(filter) {
     const url = 'provider/report/user';
-    return this.servicemeta.httpGet(url,null,filter);
+    return this.servicemeta.httpGet(url, null, filter);
   }
-  generateUserInfoReport(filter){
+  generateUserInfoReport(filter) {
     const url = 'provider/report/user/info';
-    return this.servicemeta.httpGet(url,null,filter);
+    return this.servicemeta.httpGet(url, null, filter);
   }
-  
+
   getJaldeeCustomer(data) {
     const url = 'consumer';
     return this.servicemeta.httpGet(url, null, data);
@@ -1984,13 +1984,13 @@ export class ProviderServices {
   createTeamGroup(data) {
     const url = 'provider/user/team';
     return this.servicemeta.httpPost(url, data);
-  } 
+  }
   getTeamGroup() {
     const url = 'provider/user/team';
     return this.servicemeta.httpGet(url);
   }
-  updateTeamGroup(data ,id) {
-    const url = 'provider/user/team/'  + id;;
+  updateTeamGroup(data, id) {
+    const url = 'provider/user/team/' + id;;
     return this.servicemeta.httpPut(url, data);
   }
   updateTeamWaitlist(post_data) {
@@ -2024,11 +2024,11 @@ export class ProviderServices {
   }
   updateTeamMembers(data) {
     const url = 'provider/user/updateTeam';
-    return this.servicemeta.httpPut(url,data);
+    return this.servicemeta.httpPut(url, data);
   }
   assignLocationToUsers(data) {
     const url = 'provider/user/updateBusinessLoc';
-    return this.servicemeta.httpPut(url,data);
+    return this.servicemeta.httpPut(url, data);
   }
   addCustomerToGroup(name, data) {
     const url = 'provider/customers/group/' + name;
@@ -2180,11 +2180,11 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url, data);
   }
   getInternalstatList(uid) {
-    const url = 'provider/waitlist/internalStatuses/'+ uid;
+    const url = 'provider/waitlist/internalStatuses/' + uid;
     return this.servicemeta.httpGet(url);
   }
   getapptInternalstatList(uid) {
-    const url = 'provider/appointment/internalStatuses/'+ uid;
+    const url = 'provider/appointment/internalStatuses/' + uid;
     return this.servicemeta.httpGet(url);
   }
   changeProviderWaitlistInternalStatus(waitlist_id, action) {
@@ -2196,21 +2196,29 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url);
   }
   telegramChat(countryCode, phNumber) {
-      if (countryCode === '') {
-        const url = 'chatbot/telegram/provider/chatId/91/' + phNumber;
-        return this.servicemeta.httpGet(url);
-      }
-      else {
-        const url = 'chatbot/telegram/provider/chatId/' + countryCode + '/' + phNumber;
-        return this.servicemeta.httpGet(url);
-      }
+    if (countryCode === '') {
+      const url = 'chatbot/telegram/provider/chatId/91/' + phNumber;
+      return this.servicemeta.httpGet(url);
     }
-    telegramLaunch() {
+    else {
+      const url = 'chatbot/telegram/provider/chatId/' + countryCode + '/' + phNumber;
+      return this.servicemeta.httpGet(url);
+    }
+  }
+  telegramLaunch() {
     const url = 'chatbot/telegram/provider';
     return this.servicemeta.httpGet(url);
-}
-  getProviderBills(filter = {}) {
-    const url = 'provider/bill';
-    return this.servicemeta.httpGet(url, null, filter);
+  }
+  changeQnrReleaseStatus(status, uid, id) {
+    const url = 'provider/waitlist/questionnaire/change/' + status + '/' + uid + '/' + id;
+    return this.servicemeta.httpPut(url);
+  }
+  getWaitlistQuestionnaireByUid(uid) {
+    const url = 'provider/waitlist/questionnaire/' + uid;
+    return this.servicemeta.httpGet(url);
+  }
+  getApptQuestionnaireByUid(uid) {
+    const url = 'provider/appointment/questionnaire/' + uid;
+    return this.servicemeta.httpGet(url);
   }
 }

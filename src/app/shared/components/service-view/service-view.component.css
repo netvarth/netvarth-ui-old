@@ -153,7 +153,7 @@
 }
 
 .service-detail-content.service-popup-content .servicedet_outer .outer .outer1.line {
-    margin-bottom: 10px !important;
+    /* margin-bottom: 10px !important; */
     display: block !important;
     width: 100%;
 }
@@ -555,4 +555,22 @@ mat-sidenav {
 }
 .active {
     background: #1873f2 !important;
+}
+.prinfo{  
+  font-weight: 600;
+}
+.infocolor{
+  font-style: italic;
+  color: #666 !important;
+}
+.alice{
+  background-color: aliceblue;
+}
+@media (max-width: 767px) {
+  .service-detail-content.service-popup-content .servicedet_outer {
+    text-align: center!important;
+  }
+  .centralign{
+    text-align: center!important;
+  }
 }

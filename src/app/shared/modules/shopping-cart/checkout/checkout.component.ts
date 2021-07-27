@@ -501,6 +501,21 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   //       this.jcreditamount = this.jaldeecash.creditAmt;
   //     });
   // }
+  getAmountToPay(paymentDetails) {
+    let totalamountPay=paymentDetails.advanceAmount;
+    if(this.jcashamount>0 && this.checkJcash){
+      totalamountPay=paymentDetails.advanceAmount-this.jcashamount;
+    }else{
+        totalamountPay=paymentDetails.advanceAmount;
+      }
+    
+   return totalamountPay; 
+
+  }
+  OnChangeJcash(event){
+    console.log(event.checked);
+
+  }
   gets3curl() {
     console.log('getS3url');
     this.api_loading1 = true;

@@ -7374,14 +7374,14 @@ board-box {
 
 ::-webkit-scrollbar {
   width: 5px;
-  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 6px rgb(0 0 0 / 30%);
-  box-shadow: inset 0 0 6px rgb(0 0 0 / 30%);
-  background-color: #7e7e7e00;
+  background: #cac8c8;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -13649,20 +13649,6 @@ padding-left: 15px !important;
 .pad-bt-0 {
   padding-bottom: 0px !important;
 }
-
-.cal-week-view .cal-hour:not(:last-child) .cal-hour-segment,
-.cal-week-view .cal-hour:last-child :not(:last-child) .cal-hour-segment {
-  border-bottom-color: transparent !important; 
-}
-.cal-week-view .cal-time-events .cal-day-columns:not(.cal-resize-active) .cal-hour-segment:hover {
-  background-color: none !important; 
-}
-.cal-week-view .cal-time {
-  width: 100px !important;
-}
-.cal-day-view .cal-events-container {
-  margin-left: 100px !important;
-}
 .tbl-hover:hover {
   box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.1);
 }
@@ -14203,16 +14189,8 @@ font-weight: 700 !important;
   color: white !important;
   font-size: 14px !important;
 }
-.newPopupClass {
-  height: 90vh !important;
-  width: 90vw !important;
-  max-width: 100vw !important;
-}
-.newPopupClass::ng-deep .mat-dialog-container {
-  border-radius: 0px !important;
-}
-@media (max-width: 767px) {
-  .d-small-none {
-    display: none !important;
-  }
+@media only screen and (max-width: 575px) {
+.servceqrcodesmall{
+  height:700px !important;
+  } 
 }

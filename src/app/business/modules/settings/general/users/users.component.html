@@ -27,7 +27,7 @@
             class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5">
             <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add"
             (click)="addlocation()">
-             Assign Locations</button>
+             Assign to Locations</button>
           </a>
           
           <button mat-flat-button class="btn btn mb-2 action-button bold pointer-cursor pull-right mgn-lt-5  btn-primary action-button-add" (click)="showCustomerstoAdd()"
@@ -65,7 +65,7 @@
                     Create Team
                 </button>
                 <button mat-menu-item *ngIf="showusers && (loc_list && loc_list.length > 1)" (click)="addlocation()">
-                    Assign Locations
+                    Assign to Locations
                 </button>
             </mat-menu>
           </a>      
@@ -279,7 +279,7 @@
                   
                   <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" 
                   *ngIf="addlocationcheck && this.userIds.length > 0" data-toggle="modal" data-target="#exampleModalCenterlocation">
-                  Assign Locations</button>
+                  Assign to Locations</button>
              </div>            
             <!-- *** close show group name right side and add buttons and cancel buttons*** -->
 
@@ -846,7 +846,7 @@
                 
                 <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" 
                 *ngIf="addlocationcheck && this.userIds.length > 0" data-toggle="modal" data-target="#exampleModalCenterlocation">
-                Assign Locations</button>
+                Assign to Locations</button>
            </div>            
           <!-- *** close show group name right side and add buttons and cancel buttons*** -->
 

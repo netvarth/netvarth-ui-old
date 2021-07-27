@@ -55,7 +55,7 @@
         </div>
 
         <div class="action-box pointer-cursor" 
-        *ngIf="!data.multiSelection && accountType=='BRANCH' &&  !appt.provider && groups.length > 0 && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')"
+        *ngIf="!data.multiSelection && accountType=='BRANCH' && groups.length > 0 && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')"
         (click)="assignteam()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
@@ -87,6 +87,12 @@
                 <div class="icon-text">Mark as Arrived</div>
             </div>
         </div> -->
+        <div class="action-box pointer-cursor" *ngIf="showQnr()" (click)="showQuestionnaires()">
+            <div class="action-box-sub">
+                <span class="start-icon"></span>
+                <div class="icon-text">Questionnaires</div>
+            </div>
+        </div>
         <div class="action-box pointer-cursor" *ngIf="showCall" (click)="callingAppt()">
             <div class="action-box-sub" *ngIf="appt.callingStatus">
                 <span class="callstop-icon"></span>
@@ -424,7 +430,7 @@
             <div>Internal Status</div>
             <p class="settings_info">Internal status is only visible for users of this account. Not visible for your {{customer_label}}s</p>
             <ng-container  *ngFor="let stat of statusList, let i= index">
-                <div  [ngClass]="stat.isPermitted ?'status-box-internal':'status-box-disabled'" (click)="changeWaitlistInternalStatus(stat.status)">
+                <div  [ngClass]="stat.isPermitted ?'status-box-internal':'status-box-disabled'" (click)="changeWaitlistInternalStatus(stat.statusId)">
                     <div class="status"  > {{stat.status|capitalizeFirst}}</div>
                     <!-- <div class="form-level-settings">hints</div> -->
                 </div>
