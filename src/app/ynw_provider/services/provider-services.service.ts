@@ -1387,7 +1387,7 @@ export class ProviderServices {
     const url = 'provider/donation/count';
     return this.servicemeta.httpGet(url, null, filter);
   }
-  getDonations(filter) {
+  getDonations(filter = {}) {
     const url = 'provider/donation';
     return this.servicemeta.httpGet(url, null, filter);
   }
@@ -2220,5 +2220,9 @@ export class ProviderServices {
   getApptQuestionnaireByUid(uid) {
     const url = 'provider/appointment/questionnaire/' + uid;
     return this.servicemeta.httpGet(url);
+  }
+  getProviderBills(filter = {}) {
+    const url = 'provider/bill';
+    return this.servicemeta.httpGet(url, null, filter);
   }
 }
