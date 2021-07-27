@@ -59,6 +59,7 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
         }
         if (params.customId) {
           this.customId = params.customId;
+          this.accountId = params.account_id;
         }
         if(params.theme){
           this.theme=params.theme;
@@ -71,25 +72,54 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
-  okClick() {
-    let queryParam = {};
+  // okClick() {
+  //   let queryParam = {};
+  //   if (this.customId) {
+  //     queryParam['customId'] = this.customId;
+  //     queryParam['theme'] = this.theme;
+  //   }
+  //   if (this.infoParams.account_id) {
+  //     queryParam['account_id'] = this.infoParams.account_id;
+  //     queryParam['accountId'] = this.infoParams.account_id;
+
+  //   }
+  //   const navigationExtras: NavigationExtras = {
+  //     queryParams: queryParam
+  //   };
+  //   this.lStorageService.setitemonLocalStorage('orderStat', false);
+  //   if (this.appointment.service.livetrack && this.type !== 'reschedule') {
+  //     this.router.navigate(['consumer', 'appointment', 'track', this.infoParams.uuid], navigationExtras);
+  //   } else {
+  //     this.router.navigate(['consumer'], navigationExtras);
+  //   }
+  // }
+  okClick(appt) {
+    if (appt.service.livetrack && this.type !== 'reschedule') {
+      let queryParams= {
+        account_id: this.infoParams.account_id,
+        theme:this.theme 
+    }
     if (this.customId) {
-      queryParam['customId'] = this.customId;
-      queryParam['theme'] = this.theme;
+      queryParams['customId'] = this.customId;
     }
-    if (this.infoParams.account_id) {
-      queryParam['account_id'] = this.infoParams.account_id;
-      queryParam['accountId'] = this.infoParams.account_id;
-    }
-    const navigationExtras: NavigationExtras = {
-      queryParams: queryParam
+    let navigationExtras: NavigationExtras = {
+        queryParams: queryParams
     };
-    this.lStorageService.setitemonLocalStorage('orderStat', false);
-    if (this.appointment.service.livetrack && this.type !== 'reschedule') {
-      this.router.navigate(['consumer', 'appointment', 'track', this.infoParams.uuid], navigationExtras);
+    this.router.navigate(['consumer', 'appointment', 'track', this.infoParams.uuid], navigationExtras);
     } else {
+      let queryParams= {
+        theme:this.theme,
+        accountId: this.accountId
+      }
+      if (this.customId) {
+          queryParams['customId'] = this.customId;
+      }
+      let navigationExtras: NavigationExtras = {
+          queryParams: queryParams
+      };
       this.router.navigate(['consumer'], navigationExtras);
     }
+    this.lStorageService.setitemonLocalStorage('orderStat', false);
   }
   getSingleTime(slot) {
     if (slot) {
