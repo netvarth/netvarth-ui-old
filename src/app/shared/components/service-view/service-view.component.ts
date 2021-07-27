@@ -139,6 +139,8 @@ export class ServiceViewComponent implements OnInit {
   loading_direct = false;
   loading = true;
   source: any;
+  showpreinfo = false;
+  showpostinfo = false;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public shared_services: SharedServices,
@@ -1401,5 +1403,19 @@ export class ServiceViewComponent implements OnInit {
       queryParams: queryParam
     };
     this.routerobj.navigate(['consumer'], navigationExtras);
+  }
+  preInfoClick(){
+    if(this.showpreinfo){
+      this.showpreinfo = false;
+    } else {
+      this.showpreinfo = true;
+    }
+  }
+  postInfoClick(){
+    if(this.showpostinfo){
+      this.showpostinfo = false;
+    } else {
+      this.showpostinfo = true;
+    }
   }
 }

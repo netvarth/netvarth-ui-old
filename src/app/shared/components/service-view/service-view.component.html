@@ -41,12 +41,110 @@
         <mat-sidenav-content>
             <div class="panel-body">
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 panel no-padding" *ngIf="!loading">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 panel no-padding alice" *ngIf="!loading">
                     <div class=" col-md-12 col-xs-12 col-sm-12 no-padding">
                         <div class="modal-body service-detail-content service-popup-content">
                             <div class="servicedet_outer" *ngIf="servicedetails && servicedetails.name !==''">
-                                <div class="outer">
-                                    <div class="busname" *ngIf="servicename" [innerHTML]="servicename | nl2br">
+                                    <div class=" col-md-12 col-xs-12 col-sm-12">
+                                <div class=" col-md-6 col-xs-12 col-sm-6">
+                                        <div class="busname" *ngIf="servicename" [innerHTML]="servicename | capitalizeFirst">
+                                            </div>
+                                            <div class="deptname" *ngIf="deptname">({{deptname}})</div>
+                                            <div class="outer1 line" *ngIf="servicedetails && servicedetails.description">
+                                                <div class="description" *ngIf="servicedetails && servicedetails.description"
+                                                    [innerHTML]="servicedetails.description | nl2br">
+                                                </div>
+                                            </div>
+                                            <div class="outer4"
+                                            *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount != servicedetails.totalAmount">
+                                            <div class="prepayment">
+                                                <span class="data-label">Advance Payment : </span>
+                                                <span style="font-weight: bold" class="rupee-font data-value">
+                                                    <i class="fa fa-inr"></i>{{servicedetails.minPrePaymentAmount |
+                                                    currency: '':''}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="outer5 donation" *ngIf="servicedetails && is_donation_serv">
+                                                <div class="duration">
+                                                    <span class="data-label">Min amount : </span>
+                                                    <span class="data-value" *ngIf="servicedetails && servicedetails.minValue"
+                                                        style="font-weight: bold">
+                                                        {{servicedetails.minValue}}
+                                                    </span>
+                                                    <span *ngIf="servicedetails && servicedetails.minDonationAmount"
+                                                        style="font-weight: bold" class="rupee-font data-value">
+                                                        <i class="fa fa-inr"></i> {{servicedetails.minDonationAmount}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                </div>
+                                <div class=" col-md-6 col-xs-12 col-sm-6">
+                                        <div class="outer5 service-duration"
+                                        *ngIf="servicedetails && servicedetails.serviceDuration && !is_donation_serv">
+                                        <div class="duration">
+                                            <span>{{service_duration}} : </span>
+                                            <span style="font-weight: bold">
+                                                {{HHMM}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="outer3"
+                                    *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0">
+                                    <div class="duration">
+                                        <span class="data-label"> {{(sector =='healthCare') ? 'Consultation' : '
+                                            Service'}} Fee : </span>
+                                        <span style="font-weight: bold" class="rupee-font data-value">
+                                            <i class='fa fa-inr'></i>{{servicedetails.totalAmount | currency:
+                                            '':''}}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="outer4 tax" *ngIf="servicedetails && servicedetails.taxable">
+                                        <span class="data-label">Tax Applicable : </span>
+                                        <span style="font-weight: bold" class="data-value">
+                                            Yes
+                                        </span>
+                                    </div>
+                                    <div class="outer5 donation" *ngIf="servicedetails && is_donation_serv">
+                                            <div class="duration">
+                                                <span class="data-label">Max amount : </span>
+                                                <span class="data-value" *ngIf="servicedetails && servicedetails.maxValue"
+                                                    style="font-weight: bold">
+                                                    {{servicedetails.maxValue}}
+                                                </span>
+                                                <span *ngIf="servicedetails && servicedetails.maxDonationAmount"
+                                                    style="font-weight: bold" class="rupee-font data-value">
+                                                    <i class="fa fa-inr"></i> {{servicedetails.maxDonationAmount}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class=" col-md-12 col-xs-12 col-sm-12 ">
+                                    <div  class="mgn-up-10 mgn-lt-15" *ngIf="servicedetails.preInfoEnabled" >Pre Instruction
+                                        <div class="infocolor"  *ngIf="servicedetails.preInfoEnabled" >
+                                                <span *ngIf="servicedetails.preInfoTitle">{{servicedetails.preInfoTitle}}</span>
+                                                <p *ngIf="servicedetails.preInfoText">{{servicedetails.preInfoText}}</p>
+                                            </div>
+                                    </div>
+                                    
+                                    <div  class="mgn-up-10 mgn-lt-15" *ngIf="servicedetails.postInfoEnabled" >Post Instruction
+                                        <div class="infocolor"  *ngIf="servicedetails.postInfoEnabled " >
+                                                <span *ngIf="servicedetails.postInfoTitle">{{servicedetails.postInfoTitle}}</span>
+                                                <p *ngIf="servicedetails.postInfoText">{{servicedetails.postInfoText}}</p>
+                                            </div>
+                                        </div>
+                                    
+                                    <div class="mgn-up-10 mgn-lt-15"
+                                        *ngIf="servicedetails && servicedetails.minPrePaymentAmount == servicedetails.totalAmount">
+                                        Note: {{(sector=='healthCare') ? 'Consultation' : ' Service'}} fee should be
+                                        paid in advance while
+                                        booking.
+                                    </div>
+                                </div>
+                                <!-- <div class="outer">
+                                    <div class="busname" *ngIf="servicename" [innerHTML]="servicename | capitalizeFirst">
                                     </div>
                                     <div class="deptname" *ngIf="deptname">({{deptname}})</div>
                                     <div class="outer1 line" *ngIf="servicedetails && servicedetails.description">
@@ -124,20 +222,33 @@
                                             </span>
                                         </div>
                                     </div>
+                                    <div  class="prinfo" *ngIf="servicedetails.preInfoEnabled" (click)="preInfoClick()"><a>Pre Instruction</a>
+                                    </div>
+                                    <div class="infocolor"  *ngIf="servicedetails.preInfoEnabled && showpreinfo" >
+                                        <span *ngIf="servicedetails.preInfoTitle">{{servicedetails.preInfoTitle}}</span>
+                                        <p *ngIf="servicedetails.preInfoText">{{servicedetails.preInfoText}}</p>
+                                    </div>
+                                    <div  class="prinfo" *ngIf="servicedetails.postInfoEnabled" (click)="postInfoClick()"><a>Post Instruction</a>
+                                        </div>
+                                        <div class="infocolor"  *ngIf="servicedetails.postInfoEnabled && showpostinfo" >
+                                            <span *ngIf="servicedetails.postInfoTitle">{{servicedetails.postInfoTitle}}</span>
+                                            <p *ngIf="servicedetails.postInfoText">{{servicedetails.postInfoText}}</p>
+                                        </div>
+                                    
                                     <div class="mgn-bt-5"
                                         *ngIf="servicedetails && servicedetails.minPrePaymentAmount == servicedetails.totalAmount">
                                         Note: {{(sector=='healthCare') ? 'Consultation' : ' Service'}} fee should be
                                         paid in advance while
                                         booking.
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <hr>
                         <ng-container>
                             <div *ngFor="let sp of servicesAndProviders">
                                 <div
-                                    class="pad-10 col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-20 divshadow no-padding">
+                                    class="pad-10 col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-20 divshadow ">
                                     <div class="col-xs-7 col-md-5">
                                         <div class="mgn-bt-10">
                                             <span class="card-text peopleAhead font-normal"
