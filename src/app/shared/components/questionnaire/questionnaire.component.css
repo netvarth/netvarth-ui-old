@@ -112,3 +112,12 @@
 .qnrDisableState .dz-image-preview {
     background: #eeeeee9e !important;
 }
+.qnr-section {
+    font-weight: bold;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+}
+.qnrsec {
+    /* border-bottom: 1px solid #aaa; */
+    padding: 10px;
+}

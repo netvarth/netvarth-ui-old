@@ -232,5 +232,16 @@ export class ConsumerServices {
     const url = 'consumer/wallet/cash/spent';
      return this.servicemeta.httpGet(url);
   }
-
+  getWaitlistQuestionnaireByUid(uid) {
+    const url = 'consumer/waitlist/questionnaire/' + uid;
+    return this.servicemeta.httpGet(url);
+  }
+  getApptQuestionnaireByUid(uid) {
+    const url = 'consumer/appointment/questionnaire/' + uid;
+    return this.servicemeta.httpGet(url);
+  }
+  getDonaitonQuestionnaireByUid(uid) {
+    const url = 'consumer/donation/questionnaire/' + uid;
+    return this.servicemeta.httpGet(url);
+  }
 }
