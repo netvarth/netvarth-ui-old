@@ -556,3 +556,13 @@ mat-sidenav {
 .active {
     background: #1873f2 !important;
 }
+.prinfo{  
+  font-weight: 600;
+}
+.infocolor{
+  font-style: italic;
+  color: #666 !important;
+}
+.alice{
+  background-color: aliceblue;
+}
