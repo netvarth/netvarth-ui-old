@@ -58,7 +58,7 @@ export class QuestionnaireListPopupComponent implements OnInit {
   }
   getQnrStatus(id) {
     const qnrStatus = this.data.waitlist.releasedQnr.filter(qnr => qnr.id === id);
-    if (qnrStatus[0]) {
+    if (qnrStatus[0] && qnrStatus[0].status && qnrStatus[0].status !== 'submitted') {
       return qnrStatus[0].status;
     }
   }
