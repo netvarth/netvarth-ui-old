@@ -299,7 +299,7 @@
                                                                         <span *ngIf="type == 'reschedule'"
                                                                             class="mgn-lt-10 phonevallabel">+{{callingModes}}</span>
                                                                         <span *ngIf="type != 'reschedule'"
-                                                                            class="mgn-lt-10 phonevallabel">{{whatsappCountryCode}} {{newWhatsapp}}</span><a
+                                                                            class="mgn-lt-10 phonevallabel">+{{callingModes}}</span><a
                                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
                                                                         <!-- <div class="mode-hint mgn-bt-5">
@@ -777,7 +777,7 @@
                                                                                 <input
                                                                                     class="width100 height40 email-border input-field pull-right"
                                                                                     id="newWhatsapp" placeholder=""
-                                                                                    name="newWhatsapp" [(ngModel)]="newWhatsapp"
+                                                                                    name="newWhatsapp" [(ngModel)]="newWhatsapp" (ngModelChange)="onNewWhatsappChange($event)"
                                                                                     autocomplete="off">
                                                                             </div>
                                                                             <!-- <ngx-intl-tel-input
@@ -1071,7 +1071,7 @@
                                                 *ngIf="changePhno && currentPhone != callingModes && sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                 <span class="billing-head">WhatsApp #</span>
                                                 <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
-                                                <span class="billing-value">{{whatsappCountryCode}} {{newWhatsapp}}</span>
+                                                <span class="billing-value"> +{{callingModes}}</span>
                                             </div>
                                             <div class="disp-flex" *ngIf="payEmail">
                                                 <span class="billing-head">Email</span>
