@@ -1,3 +1,4 @@
+
 <div *ngIf="includedfrom=='home'">
 <div class="overlay  moreOptionsOverlay" [class.show]="showMoreOptionsOverlay" (click)="closeMoreoptions()"></div>
 <div class="overlay  moreOptionsOverlay" [class.show]="showMorepopularOptionsOverlay"
@@ -84,7 +85,7 @@
 </ng-container>
 <div class="sa-ps" *ngIf="includedfrom=='home'">
   <div class="col-md-12 no-padding" *ngIf="jsonlist">
-    <p class="text-center" >Popular Searches</p>
+    <p class="text-center" >{{'Popular Searches' | translate}}</p>
     <div class="mgn-up-10">
     <owl-carousel [options]="carouselOne"
           [carouselClasses]="['owl-carousel', 'owl-theme']">

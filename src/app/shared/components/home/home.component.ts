@@ -12,6 +12,8 @@ import { Meta, Title } from '@angular/platform-browser';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 
+import { TranslateService } from '@ngx-translate/core';
+import {I18nService} from '../../services/i18n-service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -47,8 +49,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   carouselPackages: any;
   evnt;
   loading = false;
+  selectedlanguage='en';
   constructor(
     private shared_service: SharedServices,
+    
+    private i18nService: I18nService, 
     public shared_functions: SharedFunctions,
     private routerobj: Router,
     public dialog: MatDialog,
@@ -56,8 +61,15 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     private lStorageService: LocalStorageService,
     private dateTimeProcessor: DateTimeProcessor,
     private titleService: Title,
-    private metaService: Meta
-  ) {
+    private metaService: Meta,
+    public translate: TranslateService,
+  ) 
+  {
+    this.translate.addLangs(['en', 'hd']);
+    this.translate.setDefaultLang('en');
+    this.translate.use('en'); 
+
+    
     this.evnt = routerobj.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (routerobj.url === '\/') {
@@ -82,7 +94,15 @@ ngAfterViewInit() {
   // let a = document.getElementById('hubspot-messages-iframe-container');
   // a.setAttribute('style', 'visibility:visible !important');
 }
+
+
+
+
+
   ngOnInit() {
+    this.i18nService.localeEvent.subscribe(locale => this.translate.use(locale));  
+    
+
 
     const a = document.getElementById("fb-root");
     if (a) {

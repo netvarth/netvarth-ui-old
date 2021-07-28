@@ -25,11 +25,13 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegeneratordetail.component';
+
 @NgModule({
     imports: [
         CommonModule,
         HeaderModule,
         MaterialModule,
+        
         FormsModule,
         RatingStarModule,
         CapitalizeFirstPipeModule,
@@ -48,7 +50,8 @@ import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegenerat
         MatDialogModule,
         NgxQRCodeModule,
         ShareButtonsModule,
-        ShareIconsModule
+        ShareIconsModule,
+
     ],
     declarations: [
         SearchDetailComponent,

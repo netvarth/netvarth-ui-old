@@ -16,6 +16,8 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { FileReaderService } from '../../services/file-reader.service';
+import { TranslateService } from '@ngx-translate/core';
+import {I18nService} from '../../services/i18n-service';
 export class Locscls {
   constructor(public autoname: string, public name: string, public lat: string, public lon: string, public typ: string, public rank: number) { }
 }
@@ -166,7 +168,16 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     private snackbarService: SnackbarService,
     private dateTimeProcessor: DateTimeProcessor,
     private fileReader: FileReaderService,
-    private routerobj: Router) {
+    private routerobj: Router,
+    
+    public translate: TranslateService,
+    private i18nService: I18nService,
+    ) {
+
+      this.translate.setDefaultLang('en');
+      this.translate.use('en'); 
+
+
     this.myControl_prov.valueChanges.subscribe(val => {
       this.filterKeywords(val);
     });
@@ -184,6 +195,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   }
 
   ngOnInit() {
+    this.i18nService.localeEvent.subscribe(locale => this.translate.use(locale));  
+
     this.onResize();
     this.selected_domain = 'All';
     if (this.passedDomain) {

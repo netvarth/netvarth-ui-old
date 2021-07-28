@@ -19,7 +19,7 @@ import { PagerModule } from './shared/modules/pager/pager.module';
 // import { CheckInModule } from './shared/modules/check-in/check-in.module';
 import { ConsumerCheckinHistoryListModule } from './shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.module';
 import { AppComponent, projectConstants } from './app.component';
-import { HomeComponent } from './shared/components/home/home.component';
+// import { HomeComponent } from './shared/components/home/home.component';
 import { LogoutComponent } from './shared/components/logout/logout.component';
 import { SignUpComponent } from './shared/components/signup/signup.component';
 import { LoginComponent } from './shared/components/login/login.component';
@@ -114,6 +114,14 @@ import { RequestDialogComponent } from './business/shared/meeting-room/request-d
 import { VideoCallSharedComponent } from './business/modules/video-call/video-call.component';
 import { FileReaderService } from './shared/services/file-reader.service';
 import { AttachmentPopupComponent } from './shared/components/attachment-popup/attachment-popup.component';
+import {HttpClient} from '@angular/common/http';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http,'./assets/i18n/','.json');
+}
+
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -121,7 +129,7 @@ export function init_app(globalService: GlobalService) {
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    // HomeComponent,
     LogoutComponent,
     EqualValidator,
     SignUpComponent,
@@ -215,7 +223,15 @@ export function init_app(globalService: GlobalService) {
     ShareIconsModule,
     VirtualFieldsModule,
     MeetRoomModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+      },
+      isolate: true,
+  })
   ],
   providers: [
     BsModalService,

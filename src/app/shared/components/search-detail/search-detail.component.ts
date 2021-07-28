@@ -217,11 +217,15 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     private dateTimeProcessor: DateTimeProcessor,
     private jaldeeTimeService: JaldeeTimeService,
     private s3Processor: S3UrlProcessor,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+   
+    ) {
+   
     this.onResize();
   }
 
   ngOnInit() {
+
     this.setSystemDate();
     this.loc_details = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');

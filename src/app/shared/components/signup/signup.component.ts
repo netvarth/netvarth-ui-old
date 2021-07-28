@@ -102,12 +102,18 @@ export class SignUpComponent implements OnInit {
     public shared_functions: SharedFunctions,
     private wordProcessor: WordProcessor,
     private lStorageService: LocalStorageService,
-    private groupService: GroupStorageService
+    private groupService: GroupStorageService,
+
+    
+
   ) {
+    
     this.is_provider = data.is_provider || 'true';
+   
   }
 
   ngOnInit() {
+    
     if (this.countryCodes.length !== 0) {
       this.selectedCountryCode =this.countryCodes[0].value;
     }

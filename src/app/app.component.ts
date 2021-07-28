@@ -3,6 +3,8 @@ import { GlobalService } from './shared/services/global-service';
 import {version} from './shared/constants/version';
 import { LocalStorageService } from './shared/services/local-storage.service';
 export let projectConstants: any = {};
+import { TranslateService } from '@ngx-translate/core';
+import {I18nService} from '../app/shared/services/i18n-service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -23,8 +25,14 @@ export class AppComponent implements OnInit {
    */
   constructor(
     private globalService: GlobalService,
-    private lStorageService: LocalStorageService
-  ) { }
+    private lStorageService: LocalStorageService,
+    public translate: TranslateService,
+    private i18nService: I18nService, 
+  ) { 
+    this.translate.setDefaultLang('en');
+    this.translate.use('en'); 
+
+  }
 
   /**
    * Init Method
@@ -33,6 +41,7 @@ export class AppComponent implements OnInit {
    * @returns projectConstants which represents the constant variables used in jaldee UI
    * 
    */
+
   ngOnInit() {
     projectConstants = this.globalService.getGlobalConstants();
     const cVersion = version.desktop;
@@ -43,6 +52,12 @@ export class AppComponent implements OnInit {
     } else {
       this.lStorageService.setitemonLocalStorage('version', cVersion);
     }
+  }
+  changeLocale(locale: string) {
+   
+    this.translate.use(locale); 
+     this.i18nService.changeLocale(locale);
+       
   }
 }
 
