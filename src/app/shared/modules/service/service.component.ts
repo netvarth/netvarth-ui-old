@@ -104,7 +104,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
         'callingMode': '',
         'status': 'ACTIVE',
         'value': '',
-        'instructions': ''
+        'instructions': '',
+        'countryCode': ''
     };
     vcallmodes;
     modeselected = false;
@@ -160,6 +161,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     maxuserLength=50;
     qrdialogRef: any;
     wndw_path = projectConstants.PATH;
+    tool_code;
 
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
@@ -265,6 +267,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                         this.tool_name = this.service_data.virtualCallingModes[0].callingMode;
                                         this.tool_id = this.service_data.virtualCallingModes[0].value;
                                         this.tool_instruct = this.service_data.virtualCallingModes[0].instructions;
+                                        if(this.service_data.virtualCallingModes[0].countryCode){
+                                        this.tool_code = this.service_data.virtualCallingModes[0].countryCode;
+                                        }
                                     }
 
                                 } else {
@@ -311,6 +316,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             this.tool_name = this.service_data.virtualCallingModes[0].callingMode;
                                             this.tool_id = this.service_data.virtualCallingModes[0].value;
                                             this.tool_instruct = this.service_data.virtualCallingModes[0].instructions;
+                                            if(this.service_data.virtualCallingModes[0].countryCode){
+                                                this.tool_code = this.service_data.virtualCallingModes[0].countryCode;
+                                            }
                                         }
                                     }
                                     this.convertTime(this.service_data['serviceDuration']);
@@ -407,6 +415,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.getVirtualCallingModesList();
         this.selctd_tool = event;
         this.tool_id = '';
+        this.tool_code = '91';
         this.is_tool = true;
         this.provider_services.getvirtualServiceInstructions().subscribe(
             (data: any) => {
@@ -503,7 +512,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 'callingMode': this.tool_name || '',
                 'value': this.tool_id || '',
                 'status': 'ACTIVE',
-                'instructions': this.tool_instruct || ''
+                'instructions': this.tool_instruct || '',
+                'countryCode': this.tool_code || '91'
             };
         }
         form_data['preInfoEnabled'] = this.preInfoEnabled;
@@ -778,9 +788,13 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 for (let i = 0; i < this.vcallmodes.length; i++) {
                     if (this.selctd_tool === this.vcallmodes[i].callingMode) {
                         this.tool_id = this.vcallmodes[i].value;
+                        if( (this.vcallmodes[i].callingMode  === 'WhatsApp' || this.vcallmodes[i].callingMode  === 'Phone') && this.vcallmodes[i].countryCode ){
+                            this.tool_code = this.vcallmodes[i].countryCode
+                        }
                         break;
                     } else {
                         this.tool_id = '';
+                        this.tool_code = '91'
                     }
                 }
             });

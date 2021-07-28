@@ -296,13 +296,37 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field
-            *ngIf="(is_tool || ((service_data && service_data.serviceType==='virtualService' && is_physical ===0) && tool_name !== '')) && tool_name!=='VideoCall'"
-            class="example-full-width mat-select-virtualservice">
-            <input matInput type="text" class="form-control" autocomplete="off" value="{{tool_id}}"
-              placeholder="{{(tool_name === 'WhatsApp' || tool_name === 'Phone') ? tool_name+' Number' : tool_name+' ID'}}"
-              [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}" (blur)="checkUrl(tool_id)">
-          </mat-form-field>
+          <!-- <mat-form-field
+              *ngIf="(is_tool || ((service_data && service_data.serviceType==='virtualService' && is_physical ===0) && tool_name !== '')) && tool_name!=='VideoCall'"
+              class="example-full-width mat-select-virtualservice">
+              <div style="display: flex;">
+                  <input style="max-width: 40px;" *ngIf="tool_name === 'WhatsApp' || tool_name === 'Phone'" 
+                      type="text"  value="{{tool_code}}"
+                    [(ngModel)]="tool_code" [ngModelOptions]="{standalone: true}" >
+
+                  <input  type="text"  autocomplete="off" value="{{tool_id}}"
+                    placeholder="{{(tool_name === 'WhatsApp' || tool_name === 'Phone') ? tool_name+' Number' : tool_name+' ID'}}"
+                    [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}" (blur)="checkUrl(tool_id)">
+
+              </div>
+            </mat-form-field> -->
+            <div class="example-full-width mat-select-virtualservice"> 
+              <div class="form-group"  *ngIf="(is_tool || ((service_data && service_data.serviceType==='virtualService' && is_physical ===0) && tool_name !== '')) && tool_name!=='VideoCall'">
+                  <label class="label ">
+                      {{(tool_name === 'WhatsApp' || tool_name === 'Phone') ? tool_name+' Number' : tool_name+' ID'}}
+                   </label> <br/>
+              <div class="input-group">
+                 <div  class="input-group-prepend" *ngIf="tool_name === 'WhatsApp' || tool_name === 'Phone'" >
+                      <input type="text" style="max-width: 75px;"  class="serv-county-code" value="{{tool_code}}"
+                    [(ngModel)]="tool_code" [ngModelOptions]="{standalone: true}" >
+                  </div>
+                  <input  type="text"  type="text" class="form-control serv-phone-code"  autocomplete="off" value="{{tool_id}}"
+                  [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}" (blur)="checkUrl(tool_id)">
+              </div>
+            </div>
+            </div>
+
+        
         </div>
         <div class="form-group"
           *ngIf="bprofile.accountType === 'BRANCH' && !serviceFrom && action === 'add' && !is_donation && users_list.length >= 1">
