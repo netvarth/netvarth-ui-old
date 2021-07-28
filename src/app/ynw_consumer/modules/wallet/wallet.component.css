@@ -1,14 +1,9 @@
 .walletimg{
     width: 75px;
-    height: 75px;
+    height: 70px;
+    padding:5px;
 }
-@media only screen and (max-width: 575px) {
-    .walletimg{
-        width: 50px;
-        height: 50px;
-        margin-top:20px;
-    }
-  }
+
   .walletbase{
     font-size: large;
     color: rgb(4 62 121);
@@ -193,12 +188,41 @@
 .widget-account-invoice-three .widget-heading {
     padding: 24px 22px 63px 22px;
 }
+.jcash{
+  overflow-x:hidden;
+}
+.viewdetails{
+ font-size:12px;
+}
+.walletimg{
+  width: 75px;
+ 
+ 
+}
 }
 .w-a-info span {
   margin-left: 15px;
+}
+.jcash{
+  background-color:#ffdead;
+ overflow:auto;
+ height:100%;
+ width:98%;
+ border-radius:2px;
+ margin:10px;
+ font-weight:bold;
+ color:blue;
+
+}
+.viewdetails{
+  background-color:#ffebcd;
+  border-radius:5px;
+  padding:10px;
+  text-align: center;
 }
 @media (max-width: 350px){
   .w-a-info span {
     margin: 0px;
   }
+ 
   }

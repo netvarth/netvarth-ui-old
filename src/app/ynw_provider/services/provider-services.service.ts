@@ -2213,4 +2213,12 @@ export class ProviderServices {
     const url = 'provider/waitlist/questionnaire/change/' + status + '/' + uid + '/' + id;
     return this.servicemeta.httpPut(url);
   }
+  getWaitlistQuestionnaireByUid(uid) {
+    const url = 'provider/waitlist/questionnaire/' + uid;
+    return this.servicemeta.httpGet(url);
+  }
+  getApptQuestionnaireByUid(uid) {
+    const url = 'provider/appointment/questionnaire/' + uid;
+    return this.servicemeta.httpGet(url);
+  }
 }

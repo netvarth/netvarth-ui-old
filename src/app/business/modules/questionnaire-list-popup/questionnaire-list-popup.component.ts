@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { ConfirmBoxComponent } from '../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 @Component({
   selector: 'app-questionnaire-list-popupl',
@@ -16,6 +17,7 @@ export class QuestionnaireListPopupComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<QuestionnaireListPopupComponent>,
     private providerServices: ProviderServices,
     private dialog: MatDialog,
+    private sharedFunctions: SharedFunctions,
     private snackbarService: SnackbarService,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -46,10 +48,9 @@ export class QuestionnaireListPopupComponent implements OnInit {
         const status = (this.getQnrStatus(id) === 'unReleased') ? 'released' : 'unReleased';
         const uid = (this.data.source === 'appt') ? this.data.waitlist.uid : this.data.waitlist.ynwUuid;
         this.providerServices.changeQnrReleaseStatus(status, uid, id).subscribe(data => {
-          this.questionnaires = data;
-          this.loading = false;
           this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
           this.closeDialog();
+          this.sharedFunctions.sendMessage({type: 'reload'});
         }, error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
@@ -58,7 +59,7 @@ export class QuestionnaireListPopupComponent implements OnInit {
   }
   getQnrStatus(id) {
     const qnrStatus = this.data.waitlist.releasedQnr.filter(qnr => qnr.id === id);
-    if (qnrStatus[0]) {
+    if (qnrStatus[0] && qnrStatus[0].status && qnrStatus[0].status !== 'submitted') {
       return qnrStatus[0].status;
     }
   }

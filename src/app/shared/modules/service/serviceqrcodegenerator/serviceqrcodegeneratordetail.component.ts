@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { projectConstants } from '../../../../app.component';
+//import { projectConstants } from '../../../../app.component';
 import {  Meta, Title } from '@angular/platform-browser';
 
 @Component({
@@ -61,13 +61,13 @@ export class ServiceQRCodeGeneratordetailComponent implements OnInit , OnDestroy
     
     this.description = 'You can book my services by just clicking this link';
     this.imageUrl = this.wpath + 'assets/images/logo.png';
-    this.qrCodegenerateOnlineID(this.accuid);
+    this.qrCodegenerateOnlineID(this.shareLink);
   }
   ngOnDestroy() {
     this.titleService.setTitle('Jaldee');
   }
   qrCodegenerateOnlineID(valuetogenerate) {
-    this.qr_value = projectConstants.PATH + valuetogenerate;
+    this.qr_value = valuetogenerate;
     this.qr_code_oId = true;
     this.changeDetectorRef.detectChanges();
     setTimeout(() => {
