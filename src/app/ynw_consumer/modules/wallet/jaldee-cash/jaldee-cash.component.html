@@ -73,7 +73,9 @@
                                   </div>
                               </div>
                               <div class="t-name">
-                                  <span>{{details.jCashOffer.name}}</span>
+                                  <span>{{details.jCashOffer.name}}</span><br>
+                                  <span   *ngIf="(details.originalAmt-details.remainingAmt)>0" >Spent</span><span (click)="spentlist(details.id)" class="bluelink" >&nbsp;<i class="fa fa-inr" aria-hidden="true"></i>&nbsp;{{details.originalAmt-details.remainingAmt}}</span> 
+                          <span  *ngIf="(details.originalAmt-details.remainingAmt)<=0"  >Spent&nbsp;<i class="fa fa-inr" aria-hidden="true"></i> &nbsp;{{details.originalAmt-details.remainingAmt}}</span> 
                                   <p class="meta-date">{{details.jCashIssueInfo.issuedDt | date: newDateFormat}}</p>
                               </div>
     

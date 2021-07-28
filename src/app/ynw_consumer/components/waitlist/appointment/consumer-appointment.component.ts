@@ -491,6 +491,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.emailerror = null;
     }
     setVirtualTeleserviceCustomer() {
+        console.log("hoorayyy");
         console.log(this.virtualInfo);
         if (this.virtualInfo && this.virtualInfo.email && this.virtualInfo.email !== '') {
             this.payEmail = this.virtualInfo.email;
@@ -518,6 +519,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
 
         } if (this.virtualInfo && this.virtualInfo.serviceFor) {
+            console.log(this.familymembers);
             console.log('inisdee');
             this.consumerType = 'member';
             this.waitlist_for = [];
@@ -2208,6 +2210,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.shared_services.getConsumerQuestionnaire(this.sel_ser, consumerid, this.account_id).subscribe(data => {
             this.questionnaireList = data;
             this.questionnaireLoaded = true;
+            if (this.sel_ser_det.serviceType === 'virtualService') {
+                this.setVirtualTeleserviceCustomer();
+            }
         });
     }
     checkCouponvalidity() {
