@@ -209,13 +209,6 @@ addItem(post_data) {
                     this.api_loading = false;
                     this.dialogRef.close();
                 }
-                
-
-                // if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0) {
-                  
-                // } else if (this.selectedMessage.files.length == 0 || this.selectedMessageMain.files.length == 0) {
-                   
-                // }
             },
             error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -383,6 +376,7 @@ saveImages(id, routeTo?) {
     },
         error => {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.disableButton = false;
             this.getItem(id).then(
                 (item) => {
                     this.item = item;

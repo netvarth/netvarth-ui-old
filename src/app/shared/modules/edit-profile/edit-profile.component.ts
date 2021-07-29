@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
-import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { Messages } from '../../constants/project-messages';
 import { projectConstants } from '../../../app.component';
@@ -12,8 +11,9 @@ import { Location } from '@angular/common';
 import { GroupStorageService } from '../../services/group-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { SnackbarService } from '../../services/snackbar.service';
-import { TelegramInfoComponent } from '../../components/telegram-info/telegram-info.component';
 import { MatDialog } from '@angular/material/dialog';
+// import { TelegramInfoComponent } from '../../../ynw_consumer/components/telegram-info/telegram-info.component';
+import { SharedServices } from '../../services/shared-services';
 
 @Component({
   selector: 'app-edit-profile',
@@ -277,7 +277,8 @@ export class EditProfileComponent implements OnInit {
             curuserdetexisting['userName'] = sub_data.first_name + ' ' + sub_data.last_name;
             curuserdetexisting['firstName'] = sub_data.first_name;
             curuserdetexisting['lastName'] = sub_data.last_name;
-            this.groupService.setitemToGroupStorage('ynw-user', curuserdetexisting);
+            curuserdetexisting['email'] = sub_data.email;
+            this.groupService.setitemToGroupStorage('ynw-user', curuserdetexisting,);
             const pdata = { 'ttype': 'updateuserdetails' };
             this.shared_functions.sendMessage(pdata);
           },
@@ -326,55 +327,24 @@ export class EditProfileComponent implements OnInit {
     this._location.back();
     // this.router.navigate(['provider', 'settings', 'bprofile']);
   }
-  addTele() {
-    console.log(this.editProfileForm.get('telegramnumber').value)
-    if (this.editProfileForm.get('telegramnumber').value === '') {
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
-      // 'Please enter mobile phone number';
-      return;
-    }
-    if (this.editProfileForm.get('telegramnumber').value !== '') {
-      const curTele = this.editProfileForm.get('telegramnumber').value;
-      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
-      const result = pattern.test(curTele);
-      if (!result) {
-        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
-        // 'Please enter a valid mobile phone number';
-        return;
-      }
-      const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
-      const result1 = pattern1.test(curTele);
-      if (!result1) {
-        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
-        // 'Mobile number should have 10 digits';
-        return;
-      }
-     
-      else {
-        
-
-      }
-      // this.notifyTele = '';
-    }
-  }
   telegramInfo() {
-    this.telegramdialogRef = this.dialog.open(TelegramInfoComponent, {
-      width: '70%',
-      height: '40%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'full-screen-modal', 'telegramPopupClass'],
-      disableClose: true,
-    });
-    this.telegramdialogRef.afterClosed().subscribe(
-      result => {
-        if (result) {
-          this.getTelegramstat();
-        }
-      }
-    );
+    // this.telegramdialogRef = this.dialog.open(TelegramInfoComponent, {
+    //   width: '70%',
+    //   height: '40%',
+    //   panelClass: ['popup-class', 'commonpopupmainclass', 'full-screen-modal', 'telegramPopupClass'],
+    //   disableClose: true,
+    // });
+    // this.telegramdialogRef.afterClosed().subscribe(
+    //   result => {
+    //     if (result) {
+    //       this.getTelegramstat();
+    //     }
+    //   }
+    // );
   }
  
   enableTelegram(stat){
-    this.shared_services.telegramChat(this.countryCode, this.phonenoHolder).subscribe(data => {
+    this.shared_services.telegramChat(this.removePlus(this.countryCode), this.phonenoHolder).subscribe(data => {
       this.chatId = data;
     })
     this.teleGramStat(stat).then(
@@ -429,5 +399,11 @@ getTelegramstat(){
       console.log(error);
     }
   );
+}
+removePlus(countryCode) {
+  if (countryCode.startsWith('+')) {
+    countryCode = countryCode.substring(1);
+  }
+  return countryCode;
 }
 }

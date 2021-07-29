@@ -14,6 +14,7 @@ import { SnackbarService } from '../../../../../shared/services/snackbar.service
 export class UpdateNotificationComponent implements OnInit {
     virtualCallModesList;
     callingMode = '';
+    countryCode = '91';
     mode;
     jaldeeVideoRecord_status: any;
     jaldeeVideoRecord_statusstr: string;
@@ -37,6 +38,9 @@ export class UpdateNotificationComponent implements OnInit {
         const filtererList = this.virtualCallModesList.filter(mode => mode.callingMode === this.mode);
         if (filtererList && filtererList[0]) {
             this.callingMode = filtererList[0].value;
+            if(filtererList[0].countryCode){
+            this.countryCode = filtererList[0].countryCode;
+            }
             this.btn_name = 'Update';
         }
     }
@@ -62,6 +66,9 @@ export class UpdateNotificationComponent implements OnInit {
                         'value': this.callingMode,
                         'status': 'ACTIVE'
                     };
+                    if(this.mode == 'WhatsApp' || this.mode == 'Phone'){
+                        mode['countryCode']= this.countryCode;
+                    }
                     virtualCallingModes.push(mode);
                     found = true;
                 } else {
@@ -75,11 +82,15 @@ export class UpdateNotificationComponent implements OnInit {
                     'value': this.callingMode,
                     'status': 'ACTIVE'
                 };
+                if(this.mode == 'WhatsApp' || this.mode == 'Phone'){
+                    mode['countryCode']= this.countryCode;
+                }
                 virtualCallingModes.push(mode);
             }
             const postdata = {
                 'virtualCallingModes': virtualCallingModes
             };
+            console.log(postdata);
             this.provider_services.addVirtualCallingModes(postdata).subscribe(
                 (data) => {
                     if (this.mode === 'WhatsApp') {
@@ -140,10 +151,13 @@ export class UpdateNotificationComponent implements OnInit {
             );
     }
     buttonDisable() {
-        if (this.callingMode == '' || ((this.mode === 'WhatsApp' || this.mode === 'Phone') && this.callingMode.length !== 10)) {
+        if (this.callingMode == '' || ((this.mode === 'WhatsApp' || this.mode === 'Phone') && this.countryCode == '')) {
             return true;
         } else {
             return false;
         }
+    }
+    isNumericSign(evt) {
+        return this.shared_functions.isNumericSign(evt);
     }
 }

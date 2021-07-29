@@ -11,11 +11,12 @@
     <div class="">
       <div class="form-group row">
         <div class="col-xl-6 col-lg-6 col-md-6  col-sm-6 col-xs-12">
+          <label>Mobile*</label>
           <div class="input-group-prepend mob-prefix" #mobPrefix style="display: flex;">
             <span class="mobPrefix">
               <i style="font-style: normal;font-size: small;">+91</i></span>
 
-            <input type="text" class="form-control" placeholder="Phone number" formControlName="phoneNumber">
+            <input type="text" class="form-control" formControlName="phoneNumber">
           </div>
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'phoneNumber')" [errorMsgs]="fed_service.getErrorMessage(amForm,'phoneNumber',
                                                               {
@@ -28,7 +29,8 @@
 
         </div>
         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6  col-xs-12">
-          <input type="text" class="form-control" placeholder="First name" formControlName="firstName">
+          <label>First Name*</label>
+          <input type="text" class="form-control" formControlName="firstName">
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'firstName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'firstName',
                               {
                                 'required' : 'First name is required',
@@ -39,8 +41,9 @@
       </div>
       <div class="form-group row">
         <div class="col-xl-6 col-lg-6 col-md-6  col-sm-6 col-xs-12">
+          <label>Last Name*</label>
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Last name" formControlName="lastName">
+            <input type="text" class="form-control" formControlName="lastName">
 
           </div>
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'lastName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'lastName',
@@ -51,8 +54,9 @@
           </app-field-error-display>
         </div>
         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6  col-xs-12">
+          <label>Email*</label>
           <div class="input-group">
-            <input type="email" class="form-control" placeholder="Email(user@xyz.com)" formControlName="email">
+            <input type="email" class="form-control" formControlName="email">
 
           </div>
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email')" [errorMsgs]="fed_service.getErrorMessage(amForm,'email',
@@ -65,16 +69,18 @@
       </div>
       <div class="form-group row">
         <div class="col-xl-6 col-lg-6 col-md-6  col-sm-6 col-xs-12">
-          <input type="text" class="form-control" placeholder="Address" formControlName="address">
-          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
+          <label>Address*</label>
+          <input type="text" class="form-control" formControlName="address">
+          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'address')" [errorMsgs]="fed_service.getErrorMessage(amForm,'address',
                           {
-                            'required' : 'Please enter city name',
+                            'required' : 'Please enter address',
                             'pattern' : 'Only alphabets are allowed'
                           })">
           </app-field-error-display>
         </div>
         <div class="col-xl-6 col-lg-6 col-md-6  col-sm-6 col-xs-12">
-          <input type="text" class="form-control" placeholder="City" formControlName="city">
+          <label>City*</label>
+          <input type="text" class="form-control" formControlName="city">
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
                             {
                               'required' : 'Please enter city name',
@@ -86,7 +92,8 @@
 
       <div class="form-group row">
         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6  col-xs-12">
-          <input type="text" class="form-control" placeholder="Postal Code /ZIP" formControlName="postalCode">
+          <label>Postal Code /ZIP*</label>
+          <input type="text" class="form-control" formControlName="postalCode">
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'postalCode')" [errorMsgs]="fed_service.getErrorMessage(amForm,'postalCode',
                                 {
                                   'required' : 'Please enter Postal Code ',
@@ -97,7 +104,8 @@
           </app-field-error-display>
         </div>
         <div class="col-xl-6 col-lg-6 col md-6 col-sm-6 col-xs-12">
-          <input type="text" class="form-control" placeholder="Landmark" formControlName="landMark">
+          <label>Landmark*</label>
+          <input type="text" class="form-control" formControlName="landMark">
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'landMark')" [errorMsgs]="fed_service.getErrorMessage(amForm,'landMark',
                                   {
                                     'required' : 'Please enter landmark'

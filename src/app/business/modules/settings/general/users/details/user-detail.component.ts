@@ -105,6 +105,7 @@ export class BranchUserDetailComponent implements OnInit {
     whatsappCountry;
     countrycode;
     isadminPrivilege: any;
+    provider_label = '';
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -125,6 +126,7 @@ export class BranchUserDetailComponent implements OnInit {
         );
     }
     ngOnInit() {
+        this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.createForm();
         if (this.actionparam.val) {
             this.userId = this.actionparam.val;
@@ -147,15 +149,16 @@ export class BranchUserDetailComponent implements OnInit {
         console.log(bConfig);
         console.log(this.sector);
         console.log(this.subsector);
-        if (this.sector !== 'healthCare' && this.sector !== 'finance') {
-            this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: 'Provider' }, { value: 'ADMIN', name: 'Admin' }];
-        }
-        if (this.sector === 'finance') {
-            this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: 'Staff Member' }, { value: 'ADMIN', name: 'Admin' }];
-        }
-        if (this.sector === 'educationalInstitution') {
-            this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: 'MENTOR' }, { value: 'ADMIN', name: 'Admin' }];
-        }
+        this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: this.provider_label }, { value: 'ADMIN', name: 'Admin' }];
+        // if (this.sector !== 'healthCare' && this.sector !== 'finance') {
+        //     this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: 'Provider' }, { value: 'ADMIN', name: 'Admin' }];
+        // }
+        // if (this.sector === 'finance') {
+        //     this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: 'Staff Member' }, { value: 'ADMIN', name: 'Admin' }];
+        // }
+        // if (this.sector === 'educationalInstitution') {
+        //     this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: 'MENTOR' }, { value: 'ADMIN', name: 'Admin' }];
+        // }
         if (bConfig && bConfig.bdata) {
             console.log("");
             for (let i = 0; i < bConfig.bdata.length; i++) {
@@ -292,11 +295,13 @@ export class BranchUserDetailComponent implements OnInit {
         this.getWaitlistMgr();
     }
     getUserData() {
+        console.log("hi");
         if (this.userId) {
             this.provider_services.getUser(this.userId)
                 .subscribe(
                     res => {
                         this.user_data = res;
+                        console.log("hi");
                         if (this.actionparam.type === 'edit') {
                             this.usercaption = 'User Details';
                             this.type = this.user_data.userType;
@@ -316,7 +321,9 @@ export class BranchUserDetailComponent implements OnInit {
                                 }
                             }
                             // this.createForm();
+                            console.log("check");
                             this.updateForm();
+                            console.log("check");
                         }
                         const breadcrumbs = [];
                         this.breadcrumbs_init.map((e) => {
@@ -334,6 +341,7 @@ export class BranchUserDetailComponent implements OnInit {
         }
     }
     updateForm() {
+        console.log("hi");
         if (this.user_data.userType === 'PROVIDER') {
             this.showPrvdrFields = true;
         }
@@ -343,6 +351,8 @@ export class BranchUserDetailComponent implements OnInit {
         // if(this.user_data.whatsAppNum){
         //     this.whatsappCountry  = this.user_data.whatsAppNum.countryCode.split('+')
         // }
+        console.log(this.user_data);
+        console.log(this.userForm);
        
         this.userForm.setValue({
             'first_name': this.user_data.firstName || null,
@@ -358,15 +368,19 @@ export class BranchUserDetailComponent implements OnInit {
             'selectedUserType': this.user_data.userType || null,
             'privileges': this.user_data.admin || false,
             'postalCode': this.user_data.pincode || null,
-            'countryCode_whatsapp': (this.user_data.whatsAppNum) ?  this.user_data.whatsAppNum.countryCode   : '+91', 
-            'whatsappumber': (this.user_data.whatsAppNum) ? this.user_data.whatsAppNum.number  : '', 
-            'countryCode_telegram': (this.user_data.telegramNum) ?  this.user_data.telegramNum.countryCode : '+91', 
-            'telegramnumber': (this.user_data.telegramNum) ?  this.user_data.telegramNum.number : '', 
+            'countryCode_whatsapp': (this.user_data.whatsAppNum && this.user_data.whatsAppNum.countryCode) ?  this.user_data.whatsAppNum.countryCode : '+91', 
+            'whatsappumber': (this.user_data.whatsAppNum && this.user_data.whatsAppNum.number) ? this.user_data.whatsAppNum.number  : '', 
+            'countryCode_telegram': (this.user_data.telegramNum && this.user_data.telegramNum.countryCode) ?  this.user_data.telegramNum.countryCode : '+91', 
+            'telegramnumber': (this.user_data.telegramNum && this.user_data.telegramNum.number) ?  this.user_data.telegramNum.number : '', 
 
             // 'address': this.user_data.address || null,
             // 'state': this.user_data.state || null,
             // 'city': this.user_data.city || null
+      
         });
+        console.log(this.userForm);
+       
+
         // if(this.user_data.pincode) {
         //     this.blurPincodeQty(this.user_data.pincode);
         // }

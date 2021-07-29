@@ -550,13 +550,16 @@ export class AppointmentComponent implements OnInit {
             },
             'appmtFor': [{
                 'id': this.customer_data.id,
-            }],
+            }], 
         };
-        if (this.virtualServicemode && this.virtualServicenumber) {
+        console.log(this.virtualServicemode);
+        console.log(this.virtualServicenumber);
+        if (this.virtualServicemode || this.virtualServicenumber) {
             const virtualArray = {};
-            virtualArray[this.virtualServicemode] = this.virtualServicenumber;
+            virtualArray[this.virtualServicemode] = this.virtualServicenumber||'';
             post_data['virtualService'] = virtualArray;
         }
+        console.log(post_data);
         this.provider_services.confirmAppointmentBlock(post_data)
             .subscribe(
                 data => {
@@ -939,9 +942,11 @@ export class AppointmentComponent implements OnInit {
 
     handleQueueSelection(queue, index) {
         this.sel_queue_indx = index;
-        this.sel_queue_id = queue.id;
-        if (queue.timeDuration && queue.timeDuration !== 0) {
-            this.getAvailableTimeSlots(queue.apptSchedule.timeSlots[0]['sTime'], queue.apptSchedule.timeSlots[0]['eTime'], queue.timeDuration);
+        if (queue) {
+            this.sel_queue_id = queue.id;
+            if (queue.timeDuration && queue.timeDuration !== 0) {
+                this.getAvailableTimeSlots(queue.apptSchedule.timeSlots[0]['sTime'], queue.apptSchedule.timeSlots[0]['eTime'], queue.timeDuration);
+            }
         }
     }
 
@@ -1092,7 +1097,7 @@ export class AppointmentComponent implements OnInit {
             },
             'consumerNote': this.consumerNote,
             'countryCode': this.countryCode,
-            'phoneNumber': this.consumerPhoneNo,
+            // 'phoneNumber': this.consumerPhoneNo,
             'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'appointmentMode': this.apptType
         };
