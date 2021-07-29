@@ -77,7 +77,8 @@
           <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'Phone'" class=" ttle">Phone Number
           </span>
           <span
-            *ngIf="service_data.virtualCallingModes[0].callingMode === 'Phone' || service_data.virtualCallingModes[0].callingMode === 'WhatsApp'">+91</span>&nbsp;
+            *ngIf="service_data.virtualCallingModes[0].callingMode === 'Phone' || service_data.virtualCallingModes[0].callingMode === 'WhatsApp'">
+            {{(service_data.virtualCallingModes[0].countryCode) ? service_data.virtualCallingModes[0].countryCode : +91 }}</span>&nbsp;
           <span>{{service_data.virtualCallingModes[0].value}}</span>
         </div>
 
@@ -317,10 +318,10 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                    </label> <br/>
               <div class="input-group">
                  <div  class="input-group-prepend" *ngIf="tool_name === 'WhatsApp' || tool_name === 'Phone'" >
-                      <input type="text" style="max-width: 75px;"  class="serv-county-code" value="{{tool_code}}"
+                      <input type="text" style="max-width: 38px; padding: 0px !important;"  class="serv-county-code" value="{{tool_code}}"
                     [(ngModel)]="tool_code" [ngModelOptions]="{standalone: true}" >
                   </div>
-                  <input  type="text"  type="text" class="form-control serv-phone-code"  autocomplete="off" value="{{tool_id}}"
+                  <input  type="text"  style="padding: 0px !important;" type="text" class="form-control serv-phone-code"  autocomplete="off" value="{{tool_id}}"
                   [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}" (blur)="checkUrl(tool_id)">
               </div>
             </div>
