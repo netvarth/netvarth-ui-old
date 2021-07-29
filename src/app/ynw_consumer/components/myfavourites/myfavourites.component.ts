@@ -16,6 +16,9 @@ import { S3UrlProcessor } from '../../../shared/services/s3-url-processor.servic
 import { SubSink } from '../../../../../node_modules/subsink';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
+
+import { TranslateService } from '@ngx-translate/core';
+import {I18nService} from '../../../shared/services/i18n-service';
 @Component({
   selector: 'app-myfavourites',
   templateUrl: './myfavourites.component.html',
@@ -75,10 +78,19 @@ private subs=new SubSink();
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private dateTimeProcessor: DateTimeProcessor,
-    private s3Processor: S3UrlProcessor
-  ) { }
+    private s3Processor: S3UrlProcessor,
+    public translate: TranslateService,
+    private i18nService: I18nService,  
+  ) {
+    this.translate.setDefaultLang('hd');
+    this.translate.use('hd'); 
+   }
 
   ngOnInit() {
+    this.i18nService.localeEvent.subscribe(locale =>{
+      this.translate.use(locale);
+      console.log('service in login',locale);
+    } ); 
     this.setSystemDate();
     this.getFavouriteProvider();
     // this.gets3curl();

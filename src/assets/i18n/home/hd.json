@@ -65,5 +65,61 @@
      "Resources":"साधन",
      "Videos":"वीडियो",
      "Follow Us:":"हमारे पर का पालन करें:",
-     "Popular Searches":"लोकप्रिय खोजें"
+     "Popular Searches":"लोकप्रिय खोजें",
+
+
+     "Mobile_num":"अपना मोबाइल संख्या दर्ज करे",
+     "Password":"पासवर्ड",
+     "Login":"लॉग इन करें",
+     "Forgot Password":"पासवर्ड भूल गए ?",
+     "Sign Up":"साइन अप करें",
+     "Login_msg":"अगर आप सर्विस प्रोवाइडर/बिजनेस ओनर हैं",
+     "Go_Jaldee_Business":"जलदी बिजनेस पर जाएं",
+
+
+     "First Name":"प्रथम नाम",
+     "Last Name":"उपनाम",
+     "Email":"ईमेल",
+     "Send OTP":"OTP भेजें",
+
+     "My Favourites":"मेरा पसंदीदा",
+     "View Profile":"प्रोफ़ाइल देखें",
+
+
+     "Find_Service_Provider":"सेवा प्रदाता खोजें",
+     "Telegram_msg":"टेलीग्राम पर अपडेट प्राप्त करें",
+    "MY BOOKINGS":"मेरी बुकिंग",
+    "MY ORDERS":"मेरे आदेश",
+    "My Orders":"मेरे आदेश",
+    "My Bookings":"मेरी बुकिंग",
+    "My Payments":"मेरी भुगतान",
+    "History":"इतिहास",
+    "No_Active_Bookings":"कोई सक्रिय बुकिंग नहीं",
+    "TODAY":"आज",
+    "show_more":"और दिखाओ...",
+    "show_less":"कम दिखाएं...",
+    "UPCOMING":"आगामी",
+    "No Active Orders":"कोई सक्रिय आदेश नहीं",
+    "Cancel":"रद्द करना",
+    "Order details":"ऑर्डर का विवरण",
+    "Rate Your Order":"अपने आदेश का मूल्यांकन करें",
+    "Paid":"भुगतान किया गया",
+    "Refunded":"वापसी की गई है",
+    "Receipt":"रसीद",
+    "Add to Favourites":"पसंदीदा में जोड़ें",
+    "My wallet":"मेरा बटुआ",
+    "Payments Log":"भुगतान लॉग",
+    "No payments":"कोई भुगतान नहीं",
+    "Change Password":"पासवर्ड बदलें",
+    "Old Password":"पुराना पासवर्ड",
+    "New Password":"नया पासवर्ड",
+    "Re-enter new password":"नया पासवर्ड पुनः दर्ज करें",
+    "My Account":"मेरा खाता",
+    "Re-enter Email":"ईमेल पुन: दर्ज करें",
+     "Family Members" :"परिवार के सदस्य",
+     "Date of Birth":"जन्म की तारीख"
+  
+
+     
+ 
 }

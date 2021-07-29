@@ -27,7 +27,7 @@
         <div>Or</div> -->
 
         <div class="form-group">
-            <mat-label for="phone">Enter your Mobile Number</mat-label>
+            <mat-label for="phone">{{'Mobile_num' | translate}}</mat-label>
             <ngx-intl-tel-input [cssClass]="'custom'" [preferredCountries]="preferredCountries"
                 [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
                 [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
@@ -73,7 +73,7 @@
                 in with email id/mobile number</p>
         </div> -->
         <div class="form-group">
-            <mat-label for="password">Password</mat-label>
+            <mat-label for="password">{{'Password' | translate }}</mat-label>
             <!-- <mat-form-field> -->
                 <input type="password"  class="form-control" id="password" placeholder=""
                     formControlName="password" autocomplete="off" (keyup)="handlekeyup($event)">
@@ -85,16 +85,15 @@
     </div>
     <div class="mat-dialog-actions">
         <button type="submit" mat-button [disabled]="api_loading" (click)="showError()">
-            <span *ngIf="!api_loading">Login</span>
+            <span *ngIf="!api_loading">{{'Login' | translate}}</span>
             <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
             </app-common-innerloading-spinner>
         </button>
-        <a style="float: right; margin-top:10px;" class="forgotpass" (click)="doForgotPassword()">Forgot Password ?</a>
-        <a style="float: right; margin-top:10px; padding-right: 20px" class="forgotpass" (click)="handleSignup()">Sign
-            Up</a>
+        <a style="float: right; margin-top:10px;" class="forgotpass" (click)="doForgotPassword()">{{'Forgot Password' | translate}}</a>
+        <a style="float: right; margin-top:10px; padding-right: 20px" class="forgotpass" (click)="handleSignup()">{{'Sign Up' | translate}}</a>
         <!-- <div class="newuser" (click)="">{{signup_here}}<span>Signup here</span></div> -->
-        <div *ngIf="is_provider=='false'">If you are a Service Provider / Business Owner
-            <div><a style="cursor:pointer" class="normal-link" (click)="goBusinessClicked()">Go to Jaldee Business</a>
+        <div *ngIf="is_provider=='false'">{{'Login_msg' | translate}}
+            <div><a style="cursor:pointer" class="normal-link" (click)="goBusinessClicked()">{{'Go_Jaldee_Business' | translate}}</a>
             </div>
         </div>
     </div>

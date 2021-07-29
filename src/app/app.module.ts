@@ -119,7 +119,7 @@ import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http,'./assets/i18n/','.json');
+  return new TranslateHttpLoader(http,'./assets/i18n/home/','.json');
 }
 
 export function init_app(globalService: GlobalService) {
@@ -223,6 +223,7 @@ export function init_app(globalService: GlobalService) {
     ShareIconsModule,
     VirtualFieldsModule,
     MeetRoomModule,
+    SharedModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     TranslateModule.forRoot({
       loader: {
@@ -231,7 +232,7 @@ export function init_app(globalService: GlobalService) {
           deps: [HttpClient]
       },
       isolate: true,
-  })
+  }),
   ],
   providers: [
     BsModalService,

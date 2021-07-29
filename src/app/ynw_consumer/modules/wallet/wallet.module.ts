@@ -11,6 +11,12 @@ import { SpentListComponent } from './jaldee-cash/spent-list/spent-list.componen
 import { TermsConditionComponent } from './jaldee-cash/terms-condition/terms-condition.component';
 
 
+import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+export function homeHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/home/', '.json');
+}
 
 @NgModule({
   declarations: [ WalletComponent, JaldeeCashComponent, StoreCreditComponent,SpentListComponent,TermsConditionComponent],
@@ -18,7 +24,15 @@ import { TermsConditionComponent } from './jaldee-cash/terms-condition/terms-con
     CommonModule,
     WalletRoutingModule,
     HeaderModule,
-    LoadingSpinnerModule
+    LoadingSpinnerModule,
+    HttpClientModule,
+    TranslateModule.forChild({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: homeHttpLoaderFactory,
+          deps: [HttpClient]
+      },
+  })
   ],
   
   entryComponents: [

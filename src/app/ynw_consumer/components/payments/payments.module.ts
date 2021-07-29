@@ -9,6 +9,13 @@ import { ConsumerPaymentDetailsComponent } from './payment-details/payment-detai
 import { LoadingSpinnerModule } from '../../../shared/modules/loading-spinner/loading-spinner.module';
 import { HeaderModule } from '../../../shared/modules/header/header.module';
 import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
+
+import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+export function homeHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/home/', '.json');
+}
 @NgModule({
     declarations: [
         ConsumerPaymentsComponent,
@@ -22,7 +29,15 @@ import { QuestionnaireModule } from '../../../shared/components/questionnaire/qu
         CapitalizeFirstPipeModule,
         LoadingSpinnerModule,
         HeaderModule,
-        QuestionnaireModule
+        QuestionnaireModule,
+        HttpClientModule,
+        TranslateModule.forChild({
+          loader: {
+              provide: TranslateLoader,
+              useFactory: homeHttpLoaderFactory,
+              deps: [HttpClient]
+          },
+      })
     ],
     exports: [
         ConsumerPaymentsComponent

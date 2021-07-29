@@ -12,6 +12,7 @@ export class I18nService {
   constructor(private translate: TranslateService) { }
 
   changeLocale(locale: string){
+    console.log(locale,';;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;')
     this.translate.use(locale);
     this.localeEvent.next(locale);
   }

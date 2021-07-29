@@ -1,4 +1,5 @@
 {
+    
     "Home" :"Service Provider Home",
     "Log_in":"Log in",
     "Sign_up":"Sign up",
@@ -65,12 +66,68 @@
      "Resources":"Resources",
      "Videos":"Videos",
      "Follow Us:":"Follow Us:",
-     "Popular Searches":"Popular Searches"
+     "Popular Searches":"Popular Searches",
 
      
+     "Mobile_num":"Enter your Mobile Number",
+     "Password":"Password",
+     "Login":"Login",
+    "Forgot Password":"Forgot Password ?",
+    "Sign Up":"Sign Up",
+    "Login_msg":"If you are a Service Provider / Business Owner",
+    "Go_Jaldee_Business":"Go to Jaldee Business",
 
 
+    "First Name":"First Name",
+    "Last Name":"Last Name",
+    "Email":"Email",
+    "Send OTP":"Send OTP",
 
+    "My Favourites":"My Favourites",
+    "View Profile":"View Profile",
+    "Home Page":"Home Page",
+
+    "Find_Service_Provider":"Find Service Provider",
+    "Telegram_msg":"Get Updation On Telegram",
+    "MY BOOKINGS":"MY BOOKINGS",
+    "MY ORDERS":"MY ORDERS",
+    "My Orders":"My Orders",
+    "My Bookings":"My Bookings",
+    "My Payments":"My Payments",
+    "History":"History",
+    "No_Active_Bookings":"No Active Bookings",
+    "TODAY":"TODAY",
+    "show_more":"Show more...",
+    "show_less":"Show less...",
+    "UPCOMING":"UPCOMING",
+    "No Active Orders":"No Active Orders",
+    "Cancel":"Cancel",
+    "Order details":"Order details",
+    "Rate Your Order":"Rate Your Order",
+    "Paid":"Paid",
+    "Refunded":"Refunded",
+    "Receipt":"Receipt",
+    "Add to Favourites":"Add to Favourites",
+    "My wallet":"My wallet",
+    "Payments Log":"Payments Log",
+    "No payments":"No payments",
+    "Change Password":"Change Password",
+    "Old Password":"Old Password",
+    "New Password":"New Password",
+    "Re-enter new password":"Re-enter new password",
+    "My Account":"My Account",
+    "Re-enter Email":"Re-enter Email",
+    "Family Members":"Family Members",
+    "Date of Birth":"Date of Birth"
+  
+
+    
+
+    
+
+
+    
+  
 
 
 

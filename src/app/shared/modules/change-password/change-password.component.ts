@@ -9,6 +9,8 @@ import { projectConstants } from '../../../app.component';
 import { Location } from '@angular/common';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { SnackbarService } from '../../services/snackbar.service';
+import { TranslateService } from '@ngx-translate/core';
+import {I18nService} from '../../../shared/services/i18n-service';
 
 @Component({
   selector: 'app-change-password',
@@ -45,8 +47,13 @@ export class ChangePasswordComponent implements OnInit {
     public router: Router,
     private location: Location,
     private lStorageService: LocalStorageService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    public translate: TranslateService,
+    private i18nService: I18nService,
   ) {
+    this.translate.addLangs(['en', 'hd']);
+    this.translate.setDefaultLang('hd');
+    this.translate.use('hd'); 
     this.isBusinessowner = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
     this.breadcrumbs_init = [
@@ -61,6 +68,7 @@ export class ChangePasswordComponent implements OnInit {
     this.location.back();
   }
   ngOnInit() {
+    this.i18nService.localeEvent.subscribe(locale => this.translate.use(locale));  
 
     if (this.curtype!=='consumer') {
       this.spForm = this.fb.group({

@@ -13,6 +13,9 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { GroupStorageService } from '../../services/group-storage.service';
 
+
+import { TranslateService } from '@ngx-translate/core';
+import {I18nService} from '../../services/i18n-service';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html'
@@ -105,15 +108,25 @@ export class SignUpComponent implements OnInit {
     private groupService: GroupStorageService,
 
     
+    public translate: TranslateService,
+    private i18nService: I18nService,  
 
   ) {
-    
+    this.translate.addLangs(['en', 'hd']);
+    this.translate.setDefaultLang('hd');
+    this.translate.use('hd'); 
     this.is_provider = data.is_provider || 'true';
    
   }
 
   ngOnInit() {
     
+    this.i18nService.localeEvent.subscribe(locale =>{
+      this.translate.use(locale);
+      console.log('service in login',locale);
+    } );  
+
+
     if (this.countryCodes.length !== 0) {
       this.selectedCountryCode =this.countryCodes[0].value;
     }

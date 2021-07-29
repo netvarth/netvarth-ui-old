@@ -31,6 +31,9 @@ import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
 
+
+import { TranslateService } from '@ngx-translate/core';
+import {I18nService} from '../../../shared/services/i18n-service';
 @Component({
   selector: 'app-consumer-home',
   templateUrl: './consumer-home.component.html',
@@ -255,7 +258,15 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private galleryService: GalleryService,
     private dateTimeProcessor: DateTimeProcessor,
-    public _sanitizer: DomSanitizer) {
+    public _sanitizer: DomSanitizer,
+    
+    public translate: TranslateService,
+    private i18nService: I18nService,  
+    ) {
+      this.translate.addLangs(['en', 'hd']);
+      this.translate.setDefaultLang('hd');
+      this.translate.use('hd');
+
     this.onResize();
     this.subs.sink = this.activated_route.queryParams.subscribe(qparams => {
       if (qparams.source && (qparams.source === 'checkin_prepayment' || qparams.source === 'appt_prepayment')) {
@@ -307,6 +318,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.i18nService.localeEvent.subscribe(locale =>{
+      this.translate.use(locale);
+      console.log('service in login',locale);
+    } ); 
     // console.log(this.bookingStatusClasses);
     this.usr_details = this.groupService.getitemFromGroupStorage('ynw-user');
     this.login_details = this.lStorageService.getitemfromLocalStorage('ynw-credentials');

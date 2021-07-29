@@ -13,6 +13,10 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { SubSink } from 'subsink';
 
+import { TranslateService } from '@ngx-translate/core';
+import {I18nService} from '../../../shared/services/i18n-service';
+
+
 
 @Component({
   selector: 'app-consumer-members',
@@ -53,9 +57,18 @@ curtype;
     public shared_functions: SharedFunctions,
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
-    private location: Location) { }
+    private location: Location,
+    public translate: TranslateService,
+    private i18nService: I18nService,
+    ) { 
+      this.translate.addLangs(['en', 'hd']);
+      this.translate.setDefaultLang('hd');
+      this.translate.use('hd');
+    }
 
   ngOnInit() {
+    this.i18nService.localeEvent.subscribe(locale => this.translate.use(locale));  
+
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
     this.getMembers();
   }

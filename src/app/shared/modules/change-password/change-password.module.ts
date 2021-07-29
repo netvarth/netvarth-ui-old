@@ -7,7 +7,12 @@ import { FormMessageDisplayModule } from '../../../shared/modules/form-message-d
 import { ChangePasswordComponent } from './change-password.component';
 import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
 import { HeaderModule } from '../header/header.module';
-
+import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+export function homeHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/home/', '.json');
+}
 @NgModule({
     imports: [
         CommonModule,
@@ -16,7 +21,15 @@ import { HeaderModule } from '../header/header.module';
         ReactiveFormsModule,
         FormMessageDisplayModule,
         BreadCrumbModule,
-        HeaderModule
+        HeaderModule,
+        HttpClientModule,
+        TranslateModule.forChild({
+          loader: {
+              provide: TranslateLoader,
+              useFactory: homeHttpLoaderFactory,
+              deps: [HttpClient]
+          },
+      })
     ],
     declarations: [
         ChangePasswordComponent

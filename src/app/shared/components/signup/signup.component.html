@@ -10,7 +10,7 @@
 <div class="mat-dialog-content" *ngIf="step==1">
   <div class="form-group" *ngIf="!data.moreOptions.isCreateProv">
     <div class="form-group">
-      <mat-label for="phone">Enter your Mobile Number</mat-label>
+      <mat-label for="phone">{{'Mobile_num' | translate}}</mat-label>
       <ngx-intl-tel-input [cssClass]="'custom'" [preferredCountries]="preferredCountries"
         [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
         [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
@@ -50,7 +50,7 @@
       </app-field-error-display>
     </div> -->
     <div class="form-group">
-      <mat-label for="phone">First Name</mat-label>
+      <mat-label for="phone">{{'First Name' | translate}}</mat-label>
       <!-- <mat-form-field> -->
         <input type="text" class="form-control" id="first_name" placeholder=""
           formControlName="first_name" autocomplete="off" (blur)="onFieldBlur('first_name')">
@@ -63,7 +63,7 @@
       </app-field-error-display>
     </div>
     <div class="form-group">
-      <mat-label for="phone">Last Name</mat-label>
+      <mat-label for="phone">{{'Last Name' | translate}}</mat-label>
       <!-- <mat-form-field> -->
         <input type="text"  class="form-control" id="last_name" placeholder=""
           formControlName="last_name" autocomplete="off" (blur)="onFieldBlur('last_name')">
@@ -76,7 +76,7 @@
       </app-field-error-display>
     </div>
     <div class="form-group" *ngIf="countrySelected != 'in'">
-      <mat-label for="phone">Email</mat-label>
+      <mat-label for="phone">{{'Email' | translate}}</mat-label>
       <!-- <mat-form-field> -->
         <input type="text"  class="form-control" id="last_name" placeholder=""
           formControlName="email" autocomplete="off" (blur)="onFieldBlur('email')">
@@ -149,10 +149,9 @@
 </div>
 <div class="mat-dialog-actions" *ngIf="step==1">
   <button type="submit" mat-button
-    [disabled]="signupForm.get('terms_condition').value == '' || signupForm.get('terms_condition').value == false">Send
-    OTP</button>
-  <div *ngIf="is_provider=='false'" style="padding-top:10px;">If you are a Service Provider / Business Owner
-    <div><a style="cursor:pointer" class="normal-link" (click)="goBusinessClicked()">Go to Jaldee Business</a></div>
+    [disabled]="signupForm.get('terms_condition').value == '' || signupForm.get('terms_condition').value == false">{{'Send OTP' | translate}}</button>
+  <div *ngIf="is_provider=='false'" style="padding-top:10px;">{{'Login_msg' | translate}}
+    <div><a style="cursor:pointer" class="normal-link" (click)="goBusinessClicked()">{{'Go_Jaldee_Business' | translate}}</a></div>
   </div>
 </div>
 </form>

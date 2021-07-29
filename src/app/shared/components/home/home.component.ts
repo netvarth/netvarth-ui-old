@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private shared_service: SharedServices,
     
-    private i18nService: I18nService, 
+     
     public shared_functions: SharedFunctions,
     private routerobj: Router,
     public dialog: MatDialog,
@@ -63,6 +63,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     private titleService: Title,
     private metaService: Meta,
     public translate: TranslateService,
+    private i18nService: I18nService,
   ) 
   {
     this.translate.addLangs(['en', 'hd']);

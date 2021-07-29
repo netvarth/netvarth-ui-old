@@ -15,7 +15,8 @@ import { SessionStorageService } from '../../services/session-storage.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 
-
+import { TranslateService } from '@ngx-translate/core';
+import {I18nService} from '../../services/i18n-service';
 
 @Component({
   selector: 'app-login',
@@ -64,8 +65,14 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private wordProcessor: WordProcessor,
     public dialog: MatDialog,
     private router: Router,
+    public translate: TranslateService,
+    private i18nService: I18nService,     
     @Inject(DOCUMENT) public document
   ) {
+    this.translate.addLangs(['en', 'hd']);
+    this.translate.setDefaultLang('hd');
+    this.translate.use('hd'); 
+    
     if (this.shared_functions.checkLogin()) {
       this.shared_functions.logout();
     }
@@ -78,6 +85,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
     // this.cd.detectChanges();
   }
   ngOnInit() {
+
+    this.i18nService.localeEvent.subscribe(locale =>{
+      this.translate.use(locale);
+      console.log('service in login',locale);
+    } );  
+
     // if (this.countryCodes.length !== 0) {
     //   this.selectedCountryCode =this.countryCodes[0].value;
     // }

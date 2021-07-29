@@ -216,6 +216,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     }
     if (this.domainlistpassed.length > 0) {
       this.domainlist_data = this.domainlistpassed;
+      console.log('Domian List',this.domainlist_data)
     } else {
       this.getDomainList();
     }
@@ -691,6 +692,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     const plen = 2;
     let jIndex = 0;
     this.jsonArrayList[0] = [];
+    
     for (let i = 0; i < jsonlist.length; i++) {
       this.jsonArrayList[jIndex].push(jsonlist[i]);
       if ((i + 1) % plen === 0) {
@@ -700,6 +702,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         }
       }
     }
+    console.log("jsonarray",this.jsonArrayList)
   }
 
   // To get searchlabels for 3rd search box

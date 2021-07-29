@@ -1,6 +1,7 @@
 <!-- <section [ngClass]="{'container': curtype=='consumer'}">
     <app-breadcrumb [breadcrumbs]="breadcrumbs" (performAction)="performActions($event)" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section> -->
+
 <section *ngIf="curtype=='consumer'" class="container no-padding myaccount no-padding-small consumer-profile">
     <div class="content p0 see-pages cons-members">
 
@@ -12,7 +13,7 @@
             </div>
             <div class="panel-body no-padding">
                 <div class="card title-gb">
-                    <h5 class="mgn-up-10">My Account
+                    <h5 class="mgn-up-10">{{'My Account' | translate}}
                         <a class="pull-left mgn-rt-20 back-btn" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
                     </h5>
                 </div>
@@ -34,7 +35,7 @@
                                                     autocomplete="off">
                                             </mat-form-field> -->
                                             <div class="">
-                                                <label class="form-control-label">First Name</label>
+                                                <label class="form-control-label">{{'First Name' | translate}}</label>
                                                 <input type="text" class="form-control is-invalid" id="first_name"
                                                     placeholder="First Name" formControlName="first_name" autocomplete="off" />
                                             </div>
@@ -56,7 +57,7 @@
                                                     autocomplete="off">
                                             </mat-form-field> -->
                                             <div class="">
-                                                <label class="form-control-label">Last Name</label>
+                                                <label class="form-control-label">{{'Last Name' | translate}}</label>
                                                 <input type="text" class="form-control is-invalid" id="last_name"
                                                     placeholder="Last Name" formControlName="last_name" autocomplete="off" />
                                             </div>
@@ -80,7 +81,7 @@
                                                     ondrag="return false" ondrop="return false">
                                             </mat-form-field> -->
                                             <div class="">
-                                                <label class="form-control-label">Email</label>
+                                                <label class="form-control-label">{{'Email' | translate}}</label>
                                                 <input type="text" class="form-control is-invalid" id="email"
                                                     formControlName="email" placeholder="Email(user@xyz.com)"
                                                     autocomplete="off" (keyup)="showConfrmEmail($event)" onpaste="return false;"
@@ -99,7 +100,7 @@
                                                     oncut="return false" ondrag="return false" ondrop="return false">
                                             </mat-form-field> -->
                                             <div class="">
-                                                <label class="form-control-label">Re-enter Email</label>
+                                                <label class="form-control-label">{{'Re-enter Email' | translate}}</label>
                                                 <input type="text" class="form-control is-invalid" id="email1"
                                                     formControlName="email1" placeholder="Re-enter Email(user@xyz.com)"
                                                     autocomplete="off" onpaste="return false;" oncopy="return false"

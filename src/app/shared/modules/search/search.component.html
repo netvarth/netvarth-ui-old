@@ -30,7 +30,7 @@
           <mat-select panelClass="search_domaindropdown_class" [(ngModel)]="selected_domain" [formControl]="myControl_domain" #seldomain (selectionChange)="handledomainchange($event.value)">
             <mat-option value="All">{{all_cap}}</mat-option>
             <mat-option *ngFor="let domain of domainlist_data" [value]="domain.domain">
-              {{ domain.displayName }}
+             {{ domain.displayName }}
             </mat-option>
           </mat-select>
         </div>

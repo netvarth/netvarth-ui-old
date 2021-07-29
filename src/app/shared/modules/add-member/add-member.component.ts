@@ -6,6 +6,9 @@ import { FormMessageDisplayService } from '../../../shared//modules/form-message
 import { SharedServices } from '../../services/shared-services';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../functions/shared-functions';
+import { TranslateService } from '@ngx-translate/core';
+import {I18nService} from '../../../shared/services/i18n-service';
+
 
 @Component({
   selector: 'app-consumer-add-member',
@@ -51,8 +54,16 @@ export class AddMemberComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public fed_service: FormMessageDisplayService,
     public sharedservice: SharedServices,
-    public shared_functions: SharedFunctions
+    public shared_functions: SharedFunctions,
+    
+    public translate: TranslateService,
+    private i18nService: I18nService,
   ) {
+    this.translate.addLangs(['en', 'hd']);
+    this.translate.setDefaultLang('hd');
+    this.translate.use('hd'); 
+
+
     if (data.type === 'edit') {
       console.log(data);
       this.firstname = data.member.userProfile.firstName || '';
@@ -79,6 +90,8 @@ this.email=data.member.userProfile.email || '';
   }
 
   ngOnInit() {
+    this.i18nService.localeEvent.subscribe(locale => this.translate.use(locale));  
+
   }
   isNumericSign(evt) {
     return this.shared_functions.isNumericSign(evt);
