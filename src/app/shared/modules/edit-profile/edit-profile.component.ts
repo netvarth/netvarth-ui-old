@@ -12,7 +12,7 @@ import { GroupStorageService } from '../../services/group-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { MatDialog } from '@angular/material/dialog';
-import { TelegramInfoComponent } from '../../../ynw_consumer/components/telegram-info/telegram-info.component';
+// import { TelegramInfoComponent } from '../../../ynw_consumer/components/telegram-info/telegram-info.component';
 import { SharedServices } from '../../services/shared-services';
 
 @Component({
@@ -328,19 +328,19 @@ export class EditProfileComponent implements OnInit {
     // this.router.navigate(['provider', 'settings', 'bprofile']);
   }
   telegramInfo() {
-    this.telegramdialogRef = this.dialog.open(TelegramInfoComponent, {
-      width: '70%',
-      height: '40%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'full-screen-modal', 'telegramPopupClass'],
-      disableClose: true,
-    });
-    this.telegramdialogRef.afterClosed().subscribe(
-      result => {
-        if (result) {
-          this.getTelegramstat();
-        }
-      }
-    );
+    // this.telegramdialogRef = this.dialog.open(TelegramInfoComponent, {
+    //   width: '70%',
+    //   height: '40%',
+    //   panelClass: ['popup-class', 'commonpopupmainclass', 'full-screen-modal', 'telegramPopupClass'],
+    //   disableClose: true,
+    // });
+    // this.telegramdialogRef.afterClosed().subscribe(
+    //   result => {
+    //     if (result) {
+    //       this.getTelegramstat();
+    //     }
+    //   }
+    // );
   }
  
   enableTelegram(stat){
