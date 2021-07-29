@@ -195,7 +195,6 @@ export class QuestionnaireComponent implements OnInit {
         return rv;
       }, {});
     }
-    console.log('groupedQnr', this.groupedQnr);
   }
   setValidateError(errors) {
     this.apiError = [];
@@ -227,10 +226,8 @@ export class QuestionnaireComponent implements OnInit {
                   if (!this.uploadedFiles[answ.answerLine.labelName][answ.answerLine.answer[answ.question.fieldDataType][i].caption]) {
                     this.uploadedFiles[answ.answerLine.labelName][answ.answerLine.answer[answ.question.fieldDataType][i].caption] = {};
                   }
-                  console.log(answ.answerLine);
                   this.comments[answ.answerLine.labelName + '=' + answ.answerLine.answer[answ.question.fieldDataType][i].caption] = answ.answerLine.answer[answ.question.fieldDataType][i].comments;
                   this.uploadedFiles[answ.answerLine.labelName][answ.answerLine.answer[answ.question.fieldDataType][i].caption] = answ.answerLine.answer[answ.question.fieldDataType][i];
-                  console.log('comments', this.comments);
                 } else {
                   this.selectedMessage.push(answ.answerLine.answer[answ.question.fieldDataType][i]);
                   if (!this.filestoUpload[answ.answerLine.labelName]) {
@@ -512,7 +509,6 @@ export class QuestionnaireComponent implements OnInit {
         'answer': newFiled
       });
     });
-    console.log(this.answers);
     Object.keys(this.answers).forEach(key => {
       this.apiError[key] = [];
       let newMap = {};
@@ -970,7 +966,6 @@ export class QuestionnaireComponent implements OnInit {
     let count = 0;
     let imagePath;
     let caption = '';
-    console.log(this.comments);
     if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
       let type = this.filestoUpload[question.labelName][document].type.split('/');
       if (type[0] === 'video' || type[0] === 'audio') {
@@ -1118,5 +1113,8 @@ export class QuestionnaireComponent implements OnInit {
     if (columnDetails[0]) {
       return columnDetails[0].dataType;
     }
+  }
+  getSectionCount() {
+    return Object.keys(this.groupedQnr).length;
   }
 }

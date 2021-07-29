@@ -354,7 +354,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   yesterdayDate;
   @ViewChild('closebutton') closebutton;
   showattachmentDialogRef: any;
-  subscription: Subscription;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -400,13 +399,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.groupService.getitemFromGroupStorage('action')) {
       this.statusAction = this.groupService.getitemFromGroupStorage('action');
     }
-    this.subscription = this.shared_functions.getMessage().subscribe(message => {
-      switch (message.type) {
-        case 'reload':
-          this.refresh();
-          break;
-      }
-    });
   }
   payStatusList = [
     { pk: 'NotPaid', value: 'Not Paid' },
@@ -811,9 +803,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     if (this.cronHandle) {
       this.cronHandle.unsubscribe();
-    }
-    if (this.subscription) {
-      this.subscription.unsubscribe();
     }
   }
   selectLocationFromCookie(cookie_location_id) {

@@ -1,24 +1,48 @@
-<h1 class="mat-dialog-title">
-  <span class="mgn-lt-10" *ngIf="!selectedQnr">Questionnaires</span>
-  <span class="mgn-lt-10" *ngIf="selectedQnr">{{selectedQnr.questionnaireId}}</span>
-  <button mat-dialog-close class="modal_close" tabindex="-1" (click)="closeDialog()"><i class="fa fa-window-close"
-      aria-hidden="true"></i></button>
-</h1>
-<div>
-  <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-  <div class="qnr-list" *ngIf="!loading && !selectedQnr">
-    <ng-container *ngFor="let qnr of questionnaires">
-      <div class="qnr" *ngIf="getQnrStatus(qnr.id)">
-        <div class="qnr-name">{{qnr.questionnaireId}}</div>
-        <div class="qnr-action-btns">
-          <a (click)="changeReleaseStatus(qnr.id)">{{(getQnrStatus(qnr.id) === 'released') ? 'Unrelease' :
-            'Release'}}</a>
-          <a (click)="viewQnr(qnr)">View</a>
-        </div>
-      </div>
-    </ng-container>
-  </div>
-  <div class="qnr-details" *ngIf="selectedQnr">
+<!-- Questionnaire View Popup -->
+<ng-container *ngIf="selectedQnr">
+  <h1 class="mat-dialog-title">
+    <span class="mgn-lt-10">{{selectedQnr.questionnaireId}}</span>
+    <button mat-dialog-close class="modal_close" tabindex="-1" (click)="closeDialog()"><i class="fa fa-window-close"
+        aria-hidden="true"></i></button>
+  </h1>
+  <div class="qnr-details">
     <app-questionnaire [questionnaireList]="selectedQnr" [source]="'qnrDetails'"></app-questionnaire>
   </div>
-</div>
+</ng-container>
+
+<!-- Questionnaires List Page -->
+<ng-container *ngIf="!selectedQnr">
+  <section class="">
+    <div class="card title-gb">
+      <h5 class="mgn-up-10">
+        <span class="fa fa-arrow-left pointer-cursor" (click)="gotoPrev()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span>Questionnaires</span>
+      </h5>
+    </div>
+  </section>
+  <section class="qnrlist">
+    <div class="content">
+      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small">
+        <div class="card no-padding-small">
+          <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+          <div class="table-responsive1" *ngIf="!loading">
+            <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
+              <tbody>
+                <tr class="row_data" *ngFor="let qnr of questionnaires">
+                  <td class="qnr-name">{{qnr.questionnaireId}}</td>
+                  <td>{{qnrStatuses[getQnrStatus(qnr.id)]}}</td>
+                  <td class="qnr-action-btns"> <a (click)="viewQnr(qnr)">View</a></td>
+                  <td class="qnr-action-btns"> <a (click)="changeReleaseStatus(qnr.id)"
+                      *ngIf="getQnrStatus(qnr.id)!='submitted'">{{(getQnrStatus(qnr.id) ===
+                      'released')
+                      ? 'Unrelease' :
+                      'Release'}}</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-container>

@@ -15,7 +15,6 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-provider-appointment-detail',
@@ -106,7 +105,6 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   internalStatuslog: any = [];
   statusLog: any = [];
   questionnaires: any = [];
-  subscription: Subscription;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -133,13 +131,6 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
     this.breadcrumbs_init.push({
       'title': 'Appointment'
-    });
-    this.subscription = this.shared_Functionsobj.getMessage().subscribe(message => {
-      switch (message.type) {
-        case 'reload':
-          this.getApptDetails();
-          break;
-      }
     });
   }
   ngOnInit() {

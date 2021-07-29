@@ -47,9 +47,6 @@
     width: 120px;
     height: 120px;
 }
-.my-5 .card {
-    /* box-shadow: 0 0 10px rgb(0 0 0 / 22%) !important; */
-}
 .dropzone .dropzone-default {
     border: 1px dashed #EBEDF3 !important;
 }
@@ -119,6 +116,11 @@
 }
 .qnrsec {
     padding: 10px;
+}
+.section-shadow {
+    margin-bottom: 20px;
+    padding: 20px !important;
+    box-shadow: 0 0 10px rgb(0 0 0 / 12%) !important;
 }
 .gridSection .gridColumn {
     padding: 15px;

@@ -16,7 +16,6 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-provider-waitlist-checkin-detail',
@@ -100,7 +99,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   internalStatuslog: any = [];
   statusLog: any = [];
   questionnaires: any = [];
-  subscription: Subscription;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -126,13 +124,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.checkin_upper = this.wordProcessor.firstToUpper(this.checkin_label);
     this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
     this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
-    this.subscription = this.shared_Functionsobj.getMessage().subscribe(message => {
-      switch (message.type) {
-        case 'reload':
-          this.getWaitlistDetail();
-          break;
-      }
-    });
   }
   ngOnInit() {
     this.getPos();
