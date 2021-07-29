@@ -13,7 +13,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 
 import { TranslateService } from '@ngx-translate/core';
-import {I18nService} from '../../services/i18n-service';
+// import {I18nService} from '../../services/i18n-service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     private titleService: Title,
     private metaService: Meta,
     public translate: TranslateService,
-    private i18nService: I18nService,
+    // private i18nService: I18nService,
   ) 
   {
     this.translate.addLangs(['en', 'hd']);
@@ -101,7 +101,15 @@ ngAfterViewInit() {
 
 
   ngOnInit() {
-    this.i18nService.localeEvent.subscribe(locale => this.translate.use(locale));  
+    // console.log('checkingggg',)
+    if(JSON.parse(localStorage.getItem('myData')) == null) {
+      const jsonData = JSON.stringify('en');
+      localStorage.setItem('myData', jsonData)
+      this.translate.use(JSON.parse(localStorage.getItem('myData')))
+    } else {
+      this.translate.use(JSON.parse(localStorage.getItem('myData')))
+    }
+    
     
 
 

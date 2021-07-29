@@ -359,7 +359,7 @@ background-color: #f8f8f8 !important;
   }
   }
  
-  table td .bluelink {
+   .bluelink {
     color: #5CB3FF; 
     cursor: pointer;
   }

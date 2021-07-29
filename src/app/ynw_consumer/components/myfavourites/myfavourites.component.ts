@@ -18,7 +18,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 
 
 import { TranslateService } from '@ngx-translate/core';
-import {I18nService} from '../../../shared/services/i18n-service';
+// import {I18nService} from '../../../shared/services/i18n-service';
 @Component({
   selector: 'app-myfavourites',
   templateUrl: './myfavourites.component.html',
@@ -80,17 +80,14 @@ private subs=new SubSink();
     private dateTimeProcessor: DateTimeProcessor,
     private s3Processor: S3UrlProcessor,
     public translate: TranslateService,
-    private i18nService: I18nService,  
+    // private i18nService: I18nService,  
   ) {
-    this.translate.setDefaultLang('hd');
-    this.translate.use('hd'); 
+    this.translate.setDefaultLang('en');
+    this.translate.use('en'); 
    }
 
   ngOnInit() {
-    this.i18nService.localeEvent.subscribe(locale =>{
-      this.translate.use(locale);
-      console.log('service in login',locale);
-    } ); 
+    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
     this.setSystemDate();
     this.getFavouriteProvider();
     // this.gets3curl();

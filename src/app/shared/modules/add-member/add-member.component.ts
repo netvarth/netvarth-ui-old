@@ -7,7 +7,7 @@ import { SharedServices } from '../../services/shared-services';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { TranslateService } from '@ngx-translate/core';
-import {I18nService} from '../../../shared/services/i18n-service';
+// import {I18nService} from '../../../shared/services/i18n-service';
 
 
 @Component({
@@ -57,11 +57,11 @@ export class AddMemberComponent implements OnInit {
     public shared_functions: SharedFunctions,
     
     public translate: TranslateService,
-    private i18nService: I18nService,
+    // private i18nService: I18nService,
   ) {
     this.translate.addLangs(['en', 'hd']);
-    this.translate.setDefaultLang('hd');
-    this.translate.use('hd'); 
+    this.translate.setDefaultLang('en');
+    this.translate.use('en'); 
 
 
     if (data.type === 'edit') {
@@ -90,7 +90,7 @@ this.email=data.member.userProfile.email || '';
   }
 
   ngOnInit() {
-    this.i18nService.localeEvent.subscribe(locale => this.translate.use(locale));  
+    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
 
   }
   isNumericSign(evt) {

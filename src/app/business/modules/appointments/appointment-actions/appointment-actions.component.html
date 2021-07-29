@@ -55,7 +55,7 @@
         </div>
 
         <div class="action-box pointer-cursor" 
-        *ngIf="!data.multiSelection && accountType=='BRANCH' && groups.length > 0 && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')"
+        *ngIf="!data.multiSelection && accountType=='BRANCH' &&  !appt.provider  && groups.length > 0 && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')"
         (click)="assignteam()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>

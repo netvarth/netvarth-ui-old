@@ -33,7 +33,7 @@ import { SubSink } from '../../../../../node_modules/subsink';
 
 
 import { TranslateService } from '@ngx-translate/core';
-import {I18nService} from '../../../shared/services/i18n-service';
+// import {I18nService} from '../../../shared/services/i18n-service';
 @Component({
   selector: 'app-consumer-home',
   templateUrl: './consumer-home.component.html',
@@ -261,11 +261,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     public _sanitizer: DomSanitizer,
     
     public translate: TranslateService,
-    private i18nService: I18nService,  
+    // private i18nService: I18nService,  
     ) {
       this.translate.addLangs(['en', 'hd']);
-      this.translate.setDefaultLang('hd');
-      this.translate.use('hd');
+      this.translate.setDefaultLang('en');
+      this.translate.use('en');
 
     this.onResize();
     this.subs.sink = this.activated_route.queryParams.subscribe(qparams => {
@@ -318,10 +318,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.i18nService.localeEvent.subscribe(locale =>{
-      this.translate.use(locale);
-      console.log('service in login',locale);
-    } ); 
+    this.translate.use(JSON.parse(localStorage.getItem('myData')))  
     // console.log(this.bookingStatusClasses);
     this.usr_details = this.groupService.getitemFromGroupStorage('ynw-user');
     this.login_details = this.lStorageService.getitemfromLocalStorage('ynw-credentials');

@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
   ) { 
     this.translate.setDefaultLang('en');
     this.translate.use('en'); 
-
+    this.changeLocale('en');
   }
 
   /**

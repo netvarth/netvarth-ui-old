@@ -12,7 +12,8 @@ export class I18nService {
   constructor(private translate: TranslateService) { }
 
   changeLocale(locale: string){
-    console.log(locale,';;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;')
+    const jsonData = JSON.stringify(locale);
+    localStorage.setItem('myData', jsonData)
     this.translate.use(locale);
     this.localeEvent.next(locale);
   }

@@ -8,7 +8,7 @@ import { ConsumerServices } from '../../services/consumer-services.service';
 import { SpentListComponent } from './jaldee-cash/spent-list/spent-list.component';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import {I18nService} from '../../../shared/services/i18n-service';
+// import {I18nService} from '../../../shared/services/i18n-service';
 @Component({
   selector: 'app-wallet',
   templateUrl: './wallet.component.html',
@@ -26,19 +26,16 @@ export class WalletComponent implements OnInit {
     private consumer_services: ConsumerServices,
     public router: Router,
     public translate: TranslateService,
-    private i18nService: I18nService, 
+    // private i18nService: I18nService, 
     ) { 
       this.translate.addLangs(['en', 'hd']);
-      this.translate.setDefaultLang('hd');
-      this.translate.use('hd');
+      this.translate.setDefaultLang('en');
+      this.translate.use('en');
     
   }
 
   ngOnInit(): void {
-        this.i18nService.localeEvent.subscribe(locale =>{
-      this.translate.use(locale);
-      console.log('service in login',locale);
-    } ); 
+    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
     this.jaldeecashbalance();
   }
   jaldeecashbalance() {

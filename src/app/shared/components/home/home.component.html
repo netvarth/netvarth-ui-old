@@ -171,14 +171,14 @@
 								<!-- <h2 class="section-title">Jaldee News</h2> -->
 								<!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p> -->
 							</div>
-							<owl-carousel [options]="carouselOne" [carouselClasses]="['owl-carousel', 'owl-theme']">
+							<owl-carousel  [options]="carouselOne" [carouselClasses]="['owl-carousel', 'owl-theme']">
 								<div class="item  review-card text-center">
 									<!-- <div class="customer-avatar">
 											<img src="assets/images/home/client.png" alt="client-avatar" />
 										</div> -->
 									<div class="customer-info">
 										<!-- <h4 class="name">John Smith</h4> -->
-										<h4 class="name">{{'Jaldee_telehealth' | translate}}</h4>
+										<h4 class="name">Jaldee Telehealth</h4>
 										<p class="position">&nbsp;</p>
 										<!-- <p class="position">Manager</p> -->
 									</div>
@@ -187,10 +187,10 @@
 											<img src="assets/images/home/rating-hover.png" alt="ratings" class="rating-hover" />
 										</div> -->
 									<div class="review-text">
-										<p>{{'consult_doctor' | translate}} 
-											<a routerLink="/business">telehealth.jaldee.com</a> 
-											{{'view_doctor' | translate}}
-											</p>
+										<p>Consult your doctor from anywhere. Visit <a
+												routerLink="/business">telehealth.jaldee.com</a> to view
+											our doctors
+											and book a video consultation.</p>
 									</div>
 								</div>
 								<div class="item review-card text-center">
@@ -199,7 +199,7 @@
 										</div> -->
 									<div class="customer-info">
 										<!-- <h4 class="name">John Smith</h4> -->
-										<h4 class="name">{{'Jaldee_blog' | translate}}</h4>
+										<h4 class="name">Jaldee Blog</h4>
 										<p class="position">&nbsp;</p>
 
 										<!-- <p class="position">Manager</p> -->
@@ -209,7 +209,7 @@
 											<img src="assets/images/home/rating-hover.png" alt="ratings" class="rating-hover" />
 										</div> -->
 									<div class="review-text">
-										<p>{{'Jaldee_blog_review' | translate}}
+										<p>Jaldee is proud to announce the launch of our new blog. Check it out! Visit
 											<a href="https://blog.jaldee.com/">blog.jaldee.com</a>.
 										</p>
 									</div>
@@ -220,7 +220,7 @@
 										</div> -->
 									<div class="customer-info">
 										<!-- <h4 class="name">John Smith</h4> -->
-										<h4 class="name">{{'Jaldee_Business' | translate}}</h4>
+										<h4 class="name">Jaldee Business</h4>
 										<p class="position">&nbsp;</p>
 										<!-- <p class="position">Manager</p> -->
 									</div>
@@ -229,13 +229,16 @@
 											<img src="assets/images/home/rating-hover.png" alt="ratings" class="rating-hover" />
 										</div> -->
 									<div class="review-text">
-										<p>{{'Jaldee_Business_review' | translate}} 
-											<a routerLink="/business">business.jaldee.com</a> 
-												{{'Jaldee_Business_review2' | translate}}
-											</p>
+										<p>Get your website and QR code online in minutes. Visit <a
+												routerLink="/business">business.jaldee.com</a> to get
+											started.</p>
 									</div>
 								</div>
 							</owl-carousel>
+							
+
+
+
 						</div>
 						<!-- </section> -->
 						<!-- <ul>
@@ -335,69 +338,69 @@
 		<section id="services">
 			<div class="container">
 				<div class="section-header text-center">
-					<h3>You don’t have to wait in lines to get a quality service!</h3>
-					<h2 class="section-title">Not anymore! <strong>Jaldee Karo!</strong></h2>
+					<h3>{{'Jaldee_msg' | translate}}</h3>
+					<h2 class="section-title">{{'Not anymore!' | translate}} <strong>{{'Jaldee Karo!' | translate}}</strong></h2>
 				</div>
 
 				<div id="services-list" class="row no-gutters">
 					<ul class="col-md">
 						<li>
-							<div class="servicelist-icon icon-1"></div>Find services nearby
+							<div class="servicelist-icon icon-1"></div>{{'Find services nearby' | translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-2"></div>Get online token
+							<div class="servicelist-icon icon-2"></div>{{'Get online token' | translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-3"></div>Book an appointment
+							<div class="servicelist-icon icon-3"></div>{{'Book an appointment' | translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-4"></div>Check-in to a queue from anywhere
+							<div class="servicelist-icon icon-4"></div>{{'Check-in to a queue from anywhere' | translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-5"></div>Take a video call with your Doctor
+							<div class="servicelist-icon icon-5"></div>{{'Take a video call with your Doctor' | translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-6"></div>Book home services
+							<div class="servicelist-icon icon-6"></div>{{'Book home services' | translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-7"></div>Get real-time status alerts
-						</li>
-					</ul>
-					<ul class="col-md">
-						<li>
-							<div class="servicelist-icon icon-8"></div>Check your waiting time and delay
-						</li>
-						<li>
-							<div class="servicelist-icon icon-9"></div>Get traffic live alerts & know when to leave
-						</li>
-						<li>
-							<div class="servicelist-icon icon-10"></div>Auto share your arrival time
-						</li>
-						<li>
-							<div class="servicelist-icon icon-11"></div>Do online enquiries before you visit
-						</li>
-						<li>
-							<div class="servicelist-icon icon-12"></div>Do it all while protecting your privacy
-						</li>
-						<li>
-							<div class="servicelist-icon icon-13"></div>Pay for your services using your phone
-						</li>
-						<li>
-							<div class="servicelist-icon icon-14"></div>Contactless receipts & billing
+							<div class="servicelist-icon icon-7"></div>{{'Get real-time status alerts' | translate}}
 						</li>
 					</ul>
 					<ul class="col-md">
 						<li>
-							<div class="servicelist-icon icon-15"></div>No convenience charges, never pay here!!
+							<div class="servicelist-icon icon-8"></div>{{'Check your waiting time and delay' | translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-16"></div>Use Jaldee Mobile Apps or browser UI
+							<div class="servicelist-icon icon-9"></div>{{'Get traffic live alerts & know when to leave' | translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-17"></div>Favorite your service providers
+							<div class="servicelist-icon icon-10"></div>{{'Auto share your arrival time' | translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-18"></div>Get coupons and discounts
+							<div class="servicelist-icon icon-11"></div>{{'Do online enquiries before you visit' | translate}}
+						</li>
+						<li>
+							<div class="servicelist-icon icon-12"></div>{{'Do it all while protecting your privacy' | translate}}
+						</li>
+						<li>
+							<div class="servicelist-icon icon-13"></div>{{'Pay for your services using your phone' | translate}}
+						</li>
+						<li>
+							<div class="servicelist-icon icon-14"></div>{{'Contactless receipts & billing' | translate}}
+						</li>
+					</ul>
+					<ul class="col-md">
+						<li>
+							<div class="servicelist-icon icon-15"></div>{{'No convenience charges, never pay here!!' | translate}}
+						</li>
+						<li>
+							<div class="servicelist-icon icon-16"></div>{{'Use Jaldee Mobile Apps or browser UI' | translate}}
+						</li>
+						<li>
+							<div class="servicelist-icon icon-17"></div>{{'Favorite your service providers' | translate}}
+						</li>
+						<li>
+							<div class="servicelist-icon icon-18"></div>{{'Get coupons and discounts' | translate}}
 						</li>
 					</ul>
 				</div>
