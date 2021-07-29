@@ -146,7 +146,7 @@ export class ProviderNotificationUserComponent implements OnInit {
   getUser() {
     this.provider_services.getUser(this.userId)
       .subscribe((data: any) => {
-        if (data.countryCode !== '+91') {
+        if (data.countryCode !== '91') {
           this.isInternationalUser = true;
         }
         const breadcrumbs = [];
