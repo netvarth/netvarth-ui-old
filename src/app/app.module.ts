@@ -77,8 +77,6 @@ import { IonicModule } from '@ionic/angular';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { Device } from '@ionic-native/device/ngx';
 import { NotificationDialogComponent } from './shared/components/notification-dialog/notification-dialog.component';
-import { MeetRoomComponent } from './shared/components/meet-room/meet-room.component';
-import { MeetRoomModule } from './shared/components/meet-room/meet-room.module';
 import { MediaService } from './shared/services/media-service';
 import { RequestDialogComponent } from './business/shared/meeting-room/request-dialog/request-dialog.component';
 import { VideoCallSharedComponent } from './business/modules/video-call/video-call.component';
@@ -115,7 +113,6 @@ export function init_app(globalService: GlobalService) {
     ForceDialogComponent,
     ListRecordingsDialogComponent,
     NotificationDialogComponent,
-    MeetRoomComponent,
     RequestDialogComponent,
     AttachmentPopupComponent
 
@@ -148,8 +145,7 @@ export function init_app(globalService: GlobalService) {
     JoyrideModule.forRoot(),
     TruncateModule,
     CardModule,
-    IonicModule.forRoot(),
-    MeetRoomModule
+    IonicModule.forRoot()
   ],
   providers: [
     FirebaseX,
