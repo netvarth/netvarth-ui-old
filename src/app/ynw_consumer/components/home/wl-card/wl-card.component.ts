@@ -42,12 +42,18 @@ export class WlCardComponent implements OnInit, OnChanges {
   showPaidInfo = false;
   videoBtnCaption;
   customId: any;
-
+  showQnrBtn = false;
   constructor(private wordProcessor: WordProcessor, private dateTimeProcessor: DateTimeProcessor) { }
 
   ngOnInit(): void {
   }
   ngOnChanges() {
+    if (this.booking.releasedQnr && this.booking.releasedQnr.length > 0) {
+      const releasedQnrs = this.booking.releasedQnr.filter(qnr => qnr.status === 'released');
+      if (releasedQnrs.length > 0) {
+        this.showQnrBtn = true;
+      }
+    }
     if (this.booking.waitlistStatus == 'checkedIn' || this.booking.waitlistStatus === 'arrived') {
       this.showRescheduleBtn = true;
     }
@@ -141,6 +147,7 @@ export class WlCardComponent implements OnInit, OnChanges {
     actionObj['action'] = action;
     actionObj['booking'] = booking;
     actionObj['event'] = event;
+    actionObj['timetype'] = this.type;
     this.actionPerformed.emit(actionObj);
   }
   getBookingStatusClass(status) {

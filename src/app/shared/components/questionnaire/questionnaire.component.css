@@ -118,6 +118,33 @@
     text-transform: uppercase;
 }
 .qnrsec {
-    /* border-bottom: 1px solid #aaa; */
     padding: 10px;
+}
+.gridSection .gridColumn {
+    padding: 15px;
+}
+.gridSection .gridColumn label {
+    padding: 0px 12.5px !important;
+    font-weight: 400 !important;
+    color: #3F4254 !important;
+    font-size: .9rem !important;
+}
+.gridSection .act-btns .btn {
+    padding: 5px 10px !important;
+    margin: 5px !important;
+}
+.gridSection .act-btns {
+    padding: 0 20px;
+}
+.fa-plus-circle, .fa-minus-circle {
+    font-size: 1.5rem !important;
+    color: #1e4079 !important;
+}
+.fa-trash, .fa-pen {
+    color: black !important;
+    font-size: 1rem !important;
+}
+.dz-preview input {
+    width: 120px !important;
+    margin-left: 1px !important;
 }

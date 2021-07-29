@@ -357,6 +357,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('closebutton') closebutton;
   showattachmentDialogRef: any;
   unassignview = false;
+  subscription: Subscription;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -407,6 +408,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.groupService.getitemFromGroupStorage('appt_action')) {
           this.statusAction = this.groupService.getitemFromGroupStorage('appt_action');
         }
+      }
+    });
+    this.subscription = this.shared_functions.getMessage().subscribe(message => {
+      switch (message.type) {
+        case 'reload':
+          this.refresh();
+          break;
       }
     });
   }
@@ -615,6 +623,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     if (this.cronHandle) {
       this.cronHandle.unsubscribe();
+    }
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
   }
   ngAfterViewInit() {

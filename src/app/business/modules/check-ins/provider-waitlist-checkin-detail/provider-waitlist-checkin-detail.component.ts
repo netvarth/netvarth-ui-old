@@ -16,6 +16,7 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-provider-waitlist-checkin-detail',
@@ -96,8 +97,10 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   timetype;
   spName: any;
   showImages: any = [];
-  internalStatuslog:any= [];
-  statusLog: any=[];
+  internalStatuslog: any = [];
+  statusLog: any = [];
+  questionnaires: any = [];
+  subscription: Subscription;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -123,6 +126,13 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.checkin_upper = this.wordProcessor.firstToUpper(this.checkin_label);
     this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
     this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
+    this.subscription = this.shared_Functionsobj.getMessage().subscribe(message => {
+      switch (message.type) {
+        case 'reload':
+          this.getWaitlistDetail();
+          break;
+      }
+    });
   }
   ngOnInit() {
     this.getPos();
@@ -149,8 +159,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       this.notedialogRef.close();
     }
   }
-  checkDataNull(value){
-    return value.trim()!=="";
+  checkDataNull(value) {
+    return value.trim() !== "";
   }
   getProviderSettings() {
     this.api_loading = true;
@@ -192,6 +202,15 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       .subscribe(
         data => {
           this.waitlist_data = data;
+          if (this.waitlist_data.questionnaires && this.waitlist_data.questionnaires.length > 0) {
+            this.questionnaires = this.waitlist_data.questionnaires;
+          }
+          if (this.waitlist_data.releasedQnr && this.waitlist_data.releasedQnr.length > 0) {
+            const releasedQnrs = this.waitlist_data.releasedQnr.filter(qnr => qnr.status === 'released');
+            if (releasedQnrs.length > 0) {
+              this.getReleasedQnrs(releasedQnrs);
+            }
+          }
           if (this.waitlist_data.service.serviceType === 'virtualService') {
             switch (this.waitlist_data.service.virtualCallingModes[0].callingMode) {
               case 'Zoom': {
@@ -242,23 +261,18 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           if (this.waitlist_data.waitlistStatus !== 'blocked') {
             this.getWaitlistNotes(this.waitlist_data.ynwUuid);
           }
-          this.getCheckInHistory(this.waitlist_data.ynwUuid).then(data=>{
+          this.getCheckInHistory(this.waitlist_data.ynwUuid).then(data => {
             this.waitlist_history = data;
-            console.log(this.waitlist_history);
-            
-            this.getInternalStatusLog(this.waitlist_data.ynwUuid).then((status:any)=>{
-            this.internalStatuslog=status;
-            // for(let stat of status){
-    
-            // const newStatus={'waitlistStatus':stat.InternalStatus,'time':stat.DateTime,'user':stat.User}
-            // this.internalStatuslog.push(newStatus)
-            // }
-      
-            // this.statusLog=this.waitlist_history.concat(this.internalStatuslog);
-            //this.statusLog =  this.statusLog.sort((a,b) => 0 - (a.DateTime > b.DateTime ? -1 : 1));
-          
-            console.log(this.statusLog);
-            
+            this.getInternalStatusLog(this.waitlist_data.ynwUuid).then((status: any) => {
+              this.internalStatuslog = status;
+              // for(let stat of status){
+
+              // const newStatus={'waitlistStatus':stat.InternalStatus,'time':stat.DateTime,'user':stat.User}
+              // this.internalStatuslog.push(newStatus)
+              // }
+
+              // this.statusLog=this.waitlist_history.concat(this.internalStatuslog);
+              //this.statusLog =  this.statusLog.sort((a,b) => 0 - (a.DateTime > b.DateTime ? -1 : 1));            
             });
           });
           this.getCommunicationHistory(this.waitlist_data.ynwUuid);
@@ -274,38 +288,38 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         }
       );
   }
-  
+
   getCheckInHistory(uuid) {
     const _this = this;
-  return new Promise(function (resolve, reject) {
- 
-    _this.provider_services.getProviderWaitlistHistroy(uuid)
-      .subscribe(
-        data => {
-          resolve(data);
-        },
-        () => {
-          reject();
-        }
-      );
-  });
-}
-getInternalStatusLog(uuid){
-  const _this = this;
-  return new Promise(function (resolve, reject) {
- 
-    _this.provider_services.getProviderWaitlistinternalHistroy(uuid)
-      .subscribe(
-        data => {
-          resolve(data);
-        },
-        () => {
-          reject();
-        }
-      );
-  });
+    return new Promise(function (resolve, reject) {
 
-}
+      _this.provider_services.getProviderWaitlistHistroy(uuid)
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
+  }
+  getInternalStatusLog(uuid) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+
+      _this.provider_services.getProviderWaitlistinternalHistroy(uuid)
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
+
+  }
 
   // getWaitlistNotes() {
   //   this.provider_services.getProviderWaitlistNotes(this.waitlist_data.consumer.id)
@@ -655,7 +669,29 @@ getInternalStatusLog(uuid){
     timeDate = time.replace(/\s/, 'T');
     return timeDate;
   }
-  getFormatedDateTime(date){
+  getFormatedDateTime(date) {
     return this.dateTimeProcessor.transformToYMDFormat(date);
+  }
+  getReleasedQnrs(releasedQnrs) {
+    this.provider_services.getWaitlistQuestionnaireByUid(this.waitlist_data.ynwUuid).subscribe((data: any) => {
+      const qnrs = data.filter(function (o1) {
+        return releasedQnrs.some(function (o2) {
+          return o1.id === o2.id;
+        });
+      });
+      this.questionnaires = this.questionnaires.concat(qnrs);
+    });
+  }
+  getQuestionAnswers(event) {
+    if (event === 'reload') {
+      this.getWaitlistDetail();
+    }
+  }
+  getQnrStatus(qnr) {
+    const id = (qnr.questionnaireId) ? qnr.questionnaireId : qnr.id;
+    const questr = this.waitlist_data.releasedQnr.filter(questionnaire => questionnaire.id === id);
+    if (questr[0]) {
+      return questr[0].status;
+    }
   }
 }

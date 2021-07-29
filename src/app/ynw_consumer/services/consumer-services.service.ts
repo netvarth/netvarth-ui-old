@@ -232,12 +232,12 @@ export class ConsumerServices {
     const url = 'consumer/wallet/cash/spent';
      return this.servicemeta.httpGet(url);
   }
-  getWaitlistQuestionnaireByUid(uid) {
-    const url = 'consumer/waitlist/questionnaire/' + uid;
+  getWaitlistQuestionnaireByUid(uid, accountId) {
+    const url = 'consumer/waitlist/questionnaire/' + uid + '?account=' + accountId;
     return this.servicemeta.httpGet(url);
   }
-  getApptQuestionnaireByUid(uid) {
-    const url = 'consumer/appointment/questionnaire/' + uid;
+  getApptQuestionnaireByUid(uid, accountId) {
+    const url = 'consumer/appointment/questionnaire/' + uid + '?account=' + accountId;
     return this.servicemeta.httpGet(url);
   }
   getDonaitonQuestionnaireByUid(uid) {

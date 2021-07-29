@@ -15,6 +15,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-provider-appointment-detail',
@@ -102,8 +103,10 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   apptMultiSelection = false;
   timetype;
   showImages: any = [];
-  internalStatuslog: any=[];
-  statusLog:any=[];
+  internalStatuslog: any = [];
+  statusLog: any = [];
+  questionnaires: any = [];
+  subscription: Subscription;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -130,6 +133,13 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
     this.breadcrumbs_init.push({
       'title': 'Appointment'
+    });
+    this.subscription = this.shared_Functionsobj.getMessage().subscribe(message => {
+      switch (message.type) {
+        case 'reload':
+          this.getApptDetails();
+          break;
+      }
     });
   }
   ngOnInit() {
@@ -166,14 +176,23 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
         this.api_loading = false;
       });
   }
-  checkDataNull(value){
-    return value.trim()!=="";
+  checkDataNull(value) {
+    return value.trim() !== "";
   }
   getApptDetails() {
     this.provider_services.getAppointmentById(this.waitlist_id)
       .subscribe(
         data => {
           this.waitlist_data = data;
+          if (this.waitlist_data.questionnaires && this.waitlist_data.questionnaires.length > 0) {
+            this.questionnaires = this.waitlist_data.questionnaires;
+          }
+          if (this.waitlist_data.releasedQnr && this.waitlist_data.releasedQnr.length > 0) {
+            const releasedQnrs = this.waitlist_data.releasedQnr.filter(qnr => qnr.status === 'released');
+            if (releasedQnrs.length > 0) {
+              this.getReleasedQnrs(releasedQnrs);
+            }
+          }
           if (this.waitlist_data.service.serviceType === 'virtualService') {
             switch (this.waitlist_data.service.virtualCallingModes[0].callingMode) {
               case 'Zoom': {
@@ -216,14 +235,14 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
           if (this.waitlist_data.apptStatus !== 'blocked') {
             this.getWaitlistNotes(this.waitlist_data.uid);
           }
-          this.getCheckInHistory(this.waitlist_data.uid).then(data=>{
+          this.getCheckInHistory(this.waitlist_data.uid).then(data => {
             this.waitlist_history = data;
-            this.getInternalStatusLog(this.waitlist_data.uid).then(status=>{
-            this.internalStatuslog=status;
-            // this.statusLog.push(this.waitlist_history);
-            // this.statusLog.push(this.internalStatuslog);
-            // console.log(this.statusLog);
-            
+            this.getInternalStatusLog(this.waitlist_data.uid).then(status => {
+              this.internalStatuslog = status;
+              // this.statusLog.push(this.waitlist_history);
+              // this.statusLog.push(this.internalStatuslog);
+              // console.log(this.statusLog);
+
             });
           });
           this.getCommunicationHistory(this.waitlist_data.uid);
@@ -252,9 +271,9 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       );
   }
   getCheckInHistory(uuid) {
-      const _this = this;
+    const _this = this;
     return new Promise(function (resolve, reject) {
-   
+
       _this.provider_services.getProviderAppointmentHistory(uuid)
         .subscribe(
           data => {
@@ -266,10 +285,10 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
         );
     });
   }
-  getInternalStatusLog(uuid){
+  getInternalStatusLog(uuid) {
     const _this = this;
     return new Promise(function (resolve, reject) {
-   
+
       _this.provider_services.getProviderAppointmentInternalStatusHistory(uuid)
         .subscribe(
           data => {
@@ -545,6 +564,34 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       return attachment.thumbPath;
     } else {
       return attachment.s3path;
+    }
+  }
+  getReleasedQnrs(releasedQnrs) {
+    this.provider_services.getApptQuestionnaireByUid(this.waitlist_data.uid)
+      .subscribe(
+        (data: any) => {
+          const qnrs = data.filter(function (o1) {
+            return releasedQnrs.some(function (o2) {
+              return o1.id === o2.id;
+            });
+          });
+          this.questionnaires = this.questionnaires.concat(qnrs);
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  getQuestionAnswers(event) {
+    if (event === 'reload') {
+      this.getApptDetails();
+    }
+  }
+  getQnrStatus(qnr) {
+    const id = (qnr.questionnaireId) ? qnr.questionnaireId : qnr.id;
+    const questr = this.waitlist_data.releasedQnr.filter(questionnaire => questionnaire.id === id);
+    if (questr[0]) {
+      return questr[0].status;
     }
   }
 }

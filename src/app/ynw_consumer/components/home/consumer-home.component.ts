@@ -2342,15 +2342,18 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     console.log(actionObj);
     switch (actionObj['type']) {
       case 'appt':
-        this.performApptActions(actionObj['action'], actionObj['booking'], actionObj['event']);
+        this.performApptActions(actionObj['action'], actionObj['booking'], actionObj['event'], actionObj['timetype']);
         break;
       case 'wl':
-        this.performWLActions(actionObj['action'], actionObj['booking'], actionObj['event']);
+        this.performWLActions(actionObj['action'], actionObj['booking'], actionObj['event'], actionObj['timetype']);
         break;
     }
   }
-  performWLActions(actionString, booking, event) {
+  performWLActions(actionString, booking, event, timetype) {
     switch (actionString) {
+      case 'details':
+        this.showBookingDetails(booking, timetype);
+        break;
       case 'reschedule':
         this.gotoWaitlistReschedule(booking);
         break;
@@ -2401,8 +2404,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         break;
     }
   }
-  performApptActions(actionString, booking, event) {
+  performApptActions(actionString, booking, event, timetype) {
     switch (actionString) {
+      case 'details':
+        this.showBookingDetails(booking, timetype);
+        break;
       case 'reschedule':
         this.gotoAptmtReschedule(booking);
         break;
