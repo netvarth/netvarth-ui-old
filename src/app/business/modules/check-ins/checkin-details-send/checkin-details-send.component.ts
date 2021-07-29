@@ -127,6 +127,13 @@ export class CheckinDetailsSendComponent implements OnInit {
         }
         // this.spfname = this.data.qdata.provider.firstName;
         // this.splname = this.data.qdata.provider.lastName;
+        if(this.data.qdata.provider){
+          this.spfname = this.data.qdata.provider.firstName;
+          this.splname = this.data.qdata.provider.lastName;
+          console.log(this.spfname);
+          console.log(this.splname);
+
+          }
     } else {
         this.consumer_fname = this.data.qdata.appmtFor[0].firstName + ' ' + this.data.qdata.appmtFor[0].lastName;
         if (this.data.qdata.consumer && this.data.qdata.consumer.userProfile && this.data.qdata.consumer.userProfile.emailVerified) {
@@ -152,8 +159,11 @@ export class CheckinDetailsSendComponent implements OnInit {
         if(this.data.qdata.appmtFor[0].memberJaldeeId){
           this.patientid = this.data.qdata.appmtFor[0].memberJaldeeId;
         }
-        // this.spfname = this.data.qdata.provider.firstName;
-        // this.splname = this.data.qdata.provider.lastName;
+        if(this.data.qdata.provider){
+        this.spfname = this.data.qdata.provider.firstName;
+        this.splname = this.data.qdata.provider.lastName;
+        }
+        
     }
    }
    getProviderSettings() {

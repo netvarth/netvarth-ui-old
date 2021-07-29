@@ -376,6 +376,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
                                     resolve(mode);
                                 } else if (!audioStatus && videoStatus) {
                                     mode = 'b-mic';
+                                    resolve(mode);
                                 } else {
                                     resolve('none');
                                 }
@@ -410,7 +411,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
                 mode: mode
             }
         });
-        this.chatDialog.afterClosed().subscribe(result => {
+        this.reqDialogRef.afterClosed().subscribe(result => {
             if (result === 'success') {
             }
         });

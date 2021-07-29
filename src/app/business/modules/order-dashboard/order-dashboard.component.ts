@@ -20,7 +20,7 @@ import { SubSink } from 'subsink';
 @Component({
   selector: 'app-order-dashboard',
   templateUrl: './order-dashboard.component.html',
-  styleUrls: ['./order-dashboard.component.scss', '../../../../assets/css/style.bundle.css', '../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
+  styleUrls: ['./order-dashboard.component.scss']
 })
 export class OrderDashboardComponent implements OnInit,OnDestroy {
   businessName;
@@ -295,18 +295,15 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     };
   }
   doSearch() {
+    this.setTabSelection(this.selectedTab);
+  }
+  keyPressed() {
     this.labelSelection();
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.patientId ||
       this.filter.payment_status !== 'all' || this.filter.orderNumber || this.orderStatuses.length > 0 || this.filter.orderMode !== 'all' || this.paymentStatuses.length > 0 || this.labelFilterData !== '') {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
-    }
-    this.setTabSelection(this.selectedTab);
-  }
-  keyPressed(event) {
-    if (event.keyCode === 13) {
-      this.doSearch();
     }
   }
   handleOrderType(type) {
@@ -365,7 +362,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
         this.paymentStatuses.push(value);
       }
     }
-    this.doSearch();
+    this.keyPressed();
   }
   setFilterForApi() {
     const api_filter = {};
@@ -443,7 +440,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
      this.subs.sink= this.providerservices.getWaitlistBill(order.uid)
         .subscribe(
           data => {
-            this.router.navigate(['provider', 'bill', order.uid], { queryParams: { source: 'order' } });
+            this.router.navigate(['provider', 'bill', order.uid], { queryParams: { source: 'order', timetype: this.selectedTab } });
           },
           error => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -716,7 +713,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
         this.allLabelSelected = true;
       }
     }
-    this.doSearch();
+    this.keyPressed();
   }
 
   newphoneInOrder(phnein) {

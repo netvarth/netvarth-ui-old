@@ -227,7 +227,7 @@ export class ConsumerNotificationsComponent implements OnInit {
     const value = (event.checked) ? true : false;
     const status = (value) ? 'Enable' : 'Disable';
     this.provider_services.setNotificationSettings(status).subscribe(data => {
-      this.snackbarService.openSnackBar('Notifications ' + status + 'ed successfully');
+      this.snackbarService.openSnackBar('Notifications ' + status + 'd successfully');
       this.getNotificationSettings();
     }, (error) => {
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

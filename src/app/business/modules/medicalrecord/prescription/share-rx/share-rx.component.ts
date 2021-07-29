@@ -12,6 +12,7 @@ import { AddproviderAddonComponent } from '../../../../../ynw_provider/component
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { SharedServices } from '../../../../../shared/services/shared-services';
 
 
 @Component({
@@ -51,10 +52,12 @@ export class ShareRxComponent implements OnInit {
   consumer_email: any;
   api_loading = false;
   phone = '';
+  phon= '';
   SEND_MESSAGE = '';
   settings: any = [];
   showToken = false;
   pushnotify = false;
+  telegram = false;
   disableButton;
   sharewith;
   showcustomId = false;
@@ -95,6 +98,10 @@ export class ShareRxComponent implements OnInit {
   note = '';
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   doctorName;
+  countryCode;
+  countryCod;
+  chatId: any;
+  IsTelegramDisable:any;
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -107,6 +114,7 @@ export class ShareRxComponent implements OnInit {
     private medicalService: MedicalrecordService,
     private groupService: GroupStorageService,
     private snackbarService: SnackbarService,
+    public shared_services: SharedServices,
     private wordProcessor: WordProcessor
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -157,11 +165,33 @@ export class ShareRxComponent implements OnInit {
           const response = data;
           console.log(response);
           this.customerDetail = response[0];
+          console.log(this.customerDetail)
            if (this.customerDetail.email) {
               this.email_id = this.customerDetail.email;
             }
             if (this.customerDetail.phoneNo) {
+              this.countryCode = this.customerDetail.countryCode;
               this.phone = this.customerDetail.phoneNo;
+              this.phon = this.phone.replace(/\s/g, "");
+              if(this.countryCode.startsWith('+')){
+                this.countryCod = this.countryCode.substring(1);
+              }
+              this.shared_services.telegramChat(this.countryCod,this.phone)
+               .subscribe(
+                   data => { 
+                     this.chatId = data; 
+                     if(this.chatId === null){
+                      this.IsTelegramDisable = true;
+                     }
+                     else{
+                      this.IsTelegramDisable = false;
+                     }
+                    
+                   },
+                   (error) => {
+                      
+                   }
+               );
             }
 
   });
@@ -223,7 +253,7 @@ export class ShareRxComponent implements OnInit {
       }
     }
     if (this.sharewith === 0 ) {
-      if (!this.sms && !this.email && !this.pushnotify) {
+      if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
         this.api_error = 'share via options are not selected';
         this.disable = false;
         this.sharebtnloading = false;
@@ -261,7 +291,8 @@ export class ShareRxComponent implements OnInit {
           'medium': {
             'email': this.email,
             'sms': this.sms,
-            'pushNotification': this.pushnotify
+            'pushNotification': this.pushnotify,
+            'telegram': this.telegram
           }
         };
         this.provider_services.shareRx(this.mrId, passData)
@@ -306,7 +337,8 @@ export class ShareRxComponent implements OnInit {
           'medium': {
             'email': this.email,
             'sms': this.sms,
-            'pushNotification': this.pushnotify
+            'pushNotification': this.pushnotify,
+            'telegram': this.telegram
           }
         };
         this.provider_services.shareRx(this.mrId, passData)
@@ -446,6 +478,7 @@ export class ShareRxComponent implements OnInit {
           this.smsWarnMsg = Messages.LOW_SMS_CREDIT;
           this.getLicenseCorpSettings();
         } else if (this.smsCredits === 0) {
+          
           this.is_smsLow = true;
           this.is_noSMS = true;
           this.smsWarnMsg = Messages.NO_SMS_CREDIT;

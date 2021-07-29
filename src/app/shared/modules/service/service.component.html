@@ -77,7 +77,8 @@
           <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'Phone'" class=" ttle">Phone Number
           </span>
           <span
-            *ngIf="service_data.virtualCallingModes[0].callingMode === 'Phone' || service_data.virtualCallingModes[0].callingMode === 'WhatsApp'">+91</span>&nbsp;
+            *ngIf="service_data.virtualCallingModes[0].callingMode === 'Phone' || service_data.virtualCallingModes[0].callingMode === 'WhatsApp'">
+            {{(service_data.virtualCallingModes[0].countryCode) ? service_data.virtualCallingModes[0].countryCode : +91 }}</span>&nbsp;
           <span>{{service_data.virtualCallingModes[0].value}}</span>
         </div>
 
@@ -135,7 +136,21 @@
           </a>
         </div>
       </div>
-
+     
+      <span class="setings">Share link</span>
+      <p>
+        <span class='assured' *ngIf="service && service.provider && service.provider.id">{{wndw_path}}{{bprofile.accEncUid}}/{{service.provider.id}}/service/{{service.id}}</span>
+        <span class='assured' *ngIf="service && !service.provider">{{wndw_path}}{{bprofile.accEncUid}}/service/{{service.id}}</span>
+        <span class="custid">
+          <i class="fa fa-qrcode custId-cursor pad-left-20 font-lrge"
+            (click)="serviceqrCodegeneraterOnlineID()"
+            [matTooltip]="'QR code'"></i>
+        </span>
+        <span class="custid">
+          <i class="fa fa-copy custId-cursor pad-left-20 font-lrge"
+            (click)="copyInputMessage()" [matTooltip]="'Copy link'"></i>
+        </span>
+      </p>
 
       <!-- </div> -->
       <div class="btm-ctrl">
@@ -150,6 +165,9 @@
           <span class='disabled' *ngIf="service_data.status=='INACTIVE' || !service_data.status">{{disbale_cap}}</span>
         </div>
       </div>
+     
+       
+      
     </div>
   </div>
 
@@ -279,13 +297,37 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field
-            *ngIf="(is_tool || ((service_data && service_data.serviceType==='virtualService' && is_physical ===0) && tool_name !== '')) && tool_name!=='VideoCall'"
-            class="example-full-width mat-select-virtualservice">
-            <input matInput type="text" class="form-control" autocomplete="off" value="{{tool_id}}"
-              placeholder="{{(tool_name === 'WhatsApp' || tool_name === 'Phone') ? tool_name+' Number' : tool_name+' ID'}}"
-              [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}" (blur)="checkUrl(tool_id)">
-          </mat-form-field>
+          <!-- <mat-form-field
+              *ngIf="(is_tool || ((service_data && service_data.serviceType==='virtualService' && is_physical ===0) && tool_name !== '')) && tool_name!=='VideoCall'"
+              class="example-full-width mat-select-virtualservice">
+              <div style="display: flex;">
+                  <input style="max-width: 40px;" *ngIf="tool_name === 'WhatsApp' || tool_name === 'Phone'" 
+                      type="text"  value="{{tool_code}}"
+                    [(ngModel)]="tool_code" [ngModelOptions]="{standalone: true}" >
+
+                  <input  type="text"  autocomplete="off" value="{{tool_id}}"
+                    placeholder="{{(tool_name === 'WhatsApp' || tool_name === 'Phone') ? tool_name+' Number' : tool_name+' ID'}}"
+                    [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}" (blur)="checkUrl(tool_id)">
+
+              </div>
+            </mat-form-field> -->
+            <div class="example-full-width mat-select-virtualservice"> 
+              <div class="form-group"  *ngIf="(is_tool || ((service_data && service_data.serviceType==='virtualService' && is_physical ===0) && tool_name !== '')) && tool_name!=='VideoCall'">
+                  <label class="label ">
+                      {{(tool_name === 'WhatsApp' || tool_name === 'Phone') ? tool_name+' Number' : tool_name+' ID'}}
+                   </label> <br/>
+              <div class="input-group">
+                 <div  class="input-group-prepend" *ngIf="tool_name === 'WhatsApp' || tool_name === 'Phone'" >
+                      <input type="text" style="max-width: 38px; padding: 0px !important;"  class="serv-county-code" value="{{tool_code}}"
+                    [(ngModel)]="tool_code" [ngModelOptions]="{standalone: true}" >
+                  </div>
+                  <input  type="text"  style="padding: 0px !important;" type="text" class="form-control serv-phone-code"  autocomplete="off" value="{{tool_id}}"
+                  [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}" (blur)="checkUrl(tool_id)">
+              </div>
+            </div>
+            </div>
+
+        
         </div>
         <div class="form-group"
           *ngIf="bprofile.accountType === 'BRANCH' && !serviceFrom && action === 'add' && !is_donation && users_list.length >= 1">

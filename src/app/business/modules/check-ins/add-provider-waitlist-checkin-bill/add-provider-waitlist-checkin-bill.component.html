@@ -186,7 +186,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="add_item col-2" *ngIf="pos && (bill_data.billStatus!='Settled') && ((!source && checkin.waitlistStatus != 'cancelled') ||
+							<div class="add_item col-2" *ngIf="pos && checkin && (bill_data.billStatus!='Settled') && ((!source && checkin.waitlistStatus != 'cancelled') ||
 												(source === 'appt' && checkin.apptStatus != 'Rejected' && checkin.apptStatus != 'Cancelled')
 												|| (source === 'order' && bill_data.billStatus !== 'Cancel'))">
 
@@ -351,7 +351,7 @@
 													</button>
 
 													<button mat-menu-item data-toggle="modal"
-														*ngIf="checkin.waitlistStatus && checkin.waitlistStatus != 'cancelled'"
+														*ngIf="checkin && checkin.waitlistStatus && checkin.waitlistStatus != 'cancelled'"
 														(click)="adjustService(service.serviceName, service.quantity)">
 														Change Qty/Price
 													</button>
@@ -426,7 +426,7 @@
 													<sup [matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
 														*ngIf="item.GSTpercentage > 0">Tax</sup>
 													{{(item.quantity * item.price) | currency:'&#8377;'}}</span>
-												<button mat-icon-button [matMenuTriggerFor]="tdmenu" *ngIf=" bill_data.billStatus!='Settled' && pos && ((!source && checkin.waitlistStatus != 'cancelled') ||
+												<button mat-icon-button [matMenuTriggerFor]="tdmenu" *ngIf=" bill_data.billStatus!='Settled' && pos && checkin && ((!source && checkin.waitlistStatus != 'cancelled') ||
 												(source === 'appt' && checkin.apptStatus != 'Rejected' && checkin.apptStatus != 'Cancelled')
 												|| (source === 'order' && bill_data.billStatus !== 'Cancel'))" class="top_n10">
 													<mat-icon>more_horiz</mat-icon>
@@ -854,7 +854,7 @@
 									aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered" role="document">
 										<div class="modal-content">
-											<div class="modal-body pb-3" *ngIf="!is_policy">
+											<div class="modal-body pb-3 scrool-refund" *ngIf="!is_policy">
 												<div class="row">
 													<div class="col-md-12 py-md-10 pr-md-5">
 														<div class="table-responsive">
@@ -878,7 +878,7 @@
 																</thead>
 																<tbody
 																	*ngFor="let payment of pre_payment_log; let i = index">
-																	<tr class="font-weight-bolder font-size-sm">
+																	<tr class="font-weight-bolder font-size-sm" *ngIf = "payment.status == 'SUCCESS'">
 																		<td class="fnt-p7 text-center pt-4">
 																			{{payment.status | capitalizeFirst}}</td>
 																		<td class=" fnt-p7 text-center pt-4">
@@ -922,7 +922,7 @@
 														</div>
 													</div>
 												</div>
-												<div class="row" *ngFor="let payment of pre_payment_log; let i = index">
+												<div class="row " *ngFor="let payment of pre_payment_log; let i = index">
 													<div *ngIf="payment.refundDetails.length" class="table-responsive"
 														style="width: 100%">
 														<table class="table mb-0">
@@ -1015,21 +1015,25 @@
 													class="btn btn-light-primary btn-square lh-1 font-weight-bold"
 													(click)="refundBack()">Back</button>
 
-												<button *ngIf="applydisc" type="button"
+												<button *ngIf="applydisc && !jcashRefund " type="button"
 													class="btn btn-success btn-square lh-p6 font-weight-bold"
 													(click)="refundPayment('cash')" data-dismiss="modal">Pay by
 													Cash</button>
 
-												<button *ngIf="applydisc" type="button"
+												<button *ngIf="applydisc && !jcashRefund " type="button"
 													class="btn btn-success btn-square lh-p6 font-weight-bold"
 													(click)="refundPayment('other')" data-dismiss="modal">Pay by
 													Others</button>
 												<button type="button"
 													class="btn btn-success btn-square lh-p6 font-weight-bold"
-													*ngIf="applydisc && selectedPayment.paymentMode !== 'Cash' && selectedPayment.paymentMode !== 'Other'"
+													*ngIf="applydisc && !jcashRefund && selectedPayment.paymentMode !== 'Cash' && selectedPayment.paymentMode !== 'Other'"
 													(click)="refundPayment('online')" data-dismiss="modal">Pay
-													Online</button>
-
+													Online</button>												
+												<button type="button"
+													class="btn btn-success btn-square lh-p6 font-weight-bold"
+													*ngIf="applydisc && jcashRefund"
+													(click)="refundPayment('jcash')" data-dismiss="modal">Confirm
+													</button>
 												<button *ngIf="applydisc" type="button"
 													class="btn btn-light-primary btn-square lh-p6 font-weight-bold"
 													(click)="revokeRefund()">Cancel</button>
@@ -1167,7 +1171,7 @@
 											*ngIf="bill_data.billStatus=='Settled'">{{email_bill_cap}}</button>
 
 									</div>
-									<div class="col-md-6 col-lg-6 col-sm-6 col-xs-12" style="text-align: end;">
+									<div class="col-md-6 col-lg-6 col-sm-6 col-xs-12" style="text-align: end;" *ngIf="showPaymentSection">
 										<button type="button"
 											class="full_wdth btn btn-temp-primary-light   font-weight-bold mr-3 my-1 lh-p8 fnt-p8 "
 											*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline && jaldeeConsumer && walkinConsumer_status"

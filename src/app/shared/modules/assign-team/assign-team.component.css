@@ -274,6 +274,7 @@ td, .d-lg-none .mgn-up-5 {
   background-color: white !important;
   margin: -10px -15px 0 !important;
   width: -webkit-fill-available !important;
+  width: -moz-available !important;
   /* text-transform: uppercase !important; */
 }
 

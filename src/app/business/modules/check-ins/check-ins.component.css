@@ -385,13 +385,14 @@
 .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox,
 .filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox,
 .filter-sidebar .filter-container .sidebar-menu#accordion3 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox {
-    margin-top: 5px !important;
+    margin-bottom: 10px !important;
 }
 
 ::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-layout,
 ::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion2 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-layout,
 ::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion3 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-layout {
     margin: 0 !important;
+    white-space: normal !important;
 }
 
 ::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-inner-container,
@@ -405,6 +406,7 @@
     border-radius: 3px !important;
     background-color: #fff !important;
     margin-right: 10px !important;
+    margin: 0 auto !important;
 }
 
 ::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-inner-container .mat-checkbox-frame,
@@ -438,6 +440,7 @@
     align-items: center !important;
     flex-direction: row !important;
     justify-content: flex-start !important;
+    margin-left: 5px !important;
 }
 
 ::ng-deep .app-check-ins-component .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-checkbox-input .mat-checkbox.filter-checkbox .mat-checkbox-label .service-name,

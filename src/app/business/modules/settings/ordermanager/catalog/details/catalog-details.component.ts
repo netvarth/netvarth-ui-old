@@ -304,8 +304,8 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             
         }else {
             this.step = this.step + 1;
-            if(this.step==2){
-               this.getItems();
+            if(this.step===2){
+               this.getUpdatedItems();
             }
         }
     }
