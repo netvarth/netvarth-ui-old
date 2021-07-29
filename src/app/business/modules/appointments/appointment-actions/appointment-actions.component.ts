@@ -171,7 +171,7 @@ export class AppointmentActionsComponent implements OnInit {
             .subscribe((data: any) => {
                 this.users = data;
               this.user_arr = this.users.filter(user => user.id === this.userid);
-              if( this.user_arr.status === 'ACTIVE'){
+              if(this.user_arr[0].status === 'ACTIVE') {
                   this.isUserdisable = true
               } else{
                   this.isUserdisable = false
