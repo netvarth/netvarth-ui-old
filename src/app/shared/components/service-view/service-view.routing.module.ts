@@ -1,11 +1,11 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { MainserviceDetailComponent } from './mainservice-detail.component';
+import { ServiceViewComponent } from './service-view.component';
 const routes: Routes = [
-    { path: '', component: MainserviceDetailComponent }
+    { path: '', component: ServiceViewComponent }
 ];
 @NgModule({
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class MainserviceDetailRoutingModule { }
+export class ServiceViewRoutingModule { }

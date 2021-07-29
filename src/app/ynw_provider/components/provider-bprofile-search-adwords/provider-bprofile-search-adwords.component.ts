@@ -56,6 +56,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
   }
 
   ngOnInit() {
+    this.emptyMsg = this.wordProcessor.getProjectMesssages('ADWORD_LISTEMPTY');
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');

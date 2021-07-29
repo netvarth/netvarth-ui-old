@@ -197,6 +197,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
                                     resolve(mode);
                                 } else if (!audioStatus && videoStatus) {
                                     mode = 'b-mic';
+                                    resolve(mode);
                                 } else {
                                     resolve('none');
                                 }

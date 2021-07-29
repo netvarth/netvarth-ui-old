@@ -116,7 +116,7 @@
                                     <i *ngIf="servStarted" class="fa fa-comments-o fa-blk" aria-hidden="true"></i>
                                     <a class="tspace">Send {{servStarted ? 'Message' : 'Reminder'}}</a>
                                 </button>
-                                <button (click)="meetingDetails()"
+                                <button (click)="meetingDetails()" *ngIf="data.waitlistPhoneNumber || data.phoneNumber"
                                     class="functionality-btn btn-primary-n tele-btn txt-trans-none mgn-up-5">
                                     <i class="fa fa-share-alt fa-blk" aria-hidden="true"></i>
                                     <a class="tspace">Share {{(servDetails?.virtualServiceType ==

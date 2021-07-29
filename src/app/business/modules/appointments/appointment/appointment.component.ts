@@ -939,9 +939,11 @@ export class AppointmentComponent implements OnInit {
 
     handleQueueSelection(queue, index) {
         this.sel_queue_indx = index;
-        this.sel_queue_id = queue.id;
-        if (queue.timeDuration && queue.timeDuration !== 0) {
-            this.getAvailableTimeSlots(queue.apptSchedule.timeSlots[0]['sTime'], queue.apptSchedule.timeSlots[0]['eTime'], queue.timeDuration);
+        if (queue) {
+            this.sel_queue_id = queue.id;
+            if (queue.timeDuration && queue.timeDuration !== 0) {
+                this.getAvailableTimeSlots(queue.apptSchedule.timeSlots[0]['sTime'], queue.apptSchedule.timeSlots[0]['eTime'], queue.timeDuration);
+            }
         }
     }
 
@@ -1092,7 +1094,7 @@ export class AppointmentComponent implements OnInit {
             },
             'consumerNote': this.consumerNote,
             'countryCode': this.countryCode,
-            'phoneNumber': this.consumerPhoneNo,
+            // 'phoneNumber': this.consumerPhoneNo,
             'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'appointmentMode': this.apptType
         };

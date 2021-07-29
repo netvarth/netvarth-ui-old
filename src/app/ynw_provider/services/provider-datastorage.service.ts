@@ -178,21 +178,21 @@ updateMandatoryAndAdditionalFieldWeightage() {
   }
 
   if (!this.checkExistenceInWeightageArray(additionalObject)) {
-    if (this.weightageObjectDomain.additionalDomainFullyFilled && this.weightageObjectSubDomain.additionalSubDomainFullyFilled) {
+    if (this.weightageObjectDomain && this.weightageObjectDomain.additionalDomainFullyFilled && this.weightageObjectSubDomain.additionalSubDomainFullyFilled) {
       this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.ADDITIONAL_INFO);
       this.setWeightageArray(this.weightageArray);
       // some domains don't have mandatory additional info so to correct the sum if domain not having mandatory , adding mandaoty weightage too
       if (!this.checkExistenceInWeightageArray(mandatoryObject)) {
-        if (this.weightageObjectDomain.mandatoryDomain === false && this.weightageObjectSubDomain.mandatorySubDomain === false) {
+        if (this.weightageObjectDomain && this.weightageObjectDomain.mandatoryDomain === false && this.weightageObjectSubDomain.mandatorySubDomain === false) {
           this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO);
           this.setWeightageArray(this.weightageArray);
         }
       }
     }
   } else {
-    if (this.weightageObjectDomain.additionalDomainFullyFilled === false || this.weightageObjectSubDomain.additionalSubDomainFullyFilled === false) {
+    if (this.weightageObjectDomain && this.weightageObjectDomain.additionalDomainFullyFilled === false || this.weightageObjectSubDomain.additionalSubDomainFullyFilled === false) {
       this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.ADDITIONAL_INFO.name);
-      if (this.weightageObjectDomain.mandatoryDomain === false && this.weightageObjectSubDomain.mandatorySubDomain === false) {
+      if (this.weightageObjectDomain && this.weightageObjectDomain.mandatoryDomain === false && this.weightageObjectSubDomain.mandatorySubDomain === false) {
         this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO.name);
         this.setWeightageArray(this.weightageArray);
       }

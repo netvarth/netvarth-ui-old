@@ -7,7 +7,9 @@
 <mat-dialog-content>
     <div class="col-md-12 mgn-up-10 no-padding" style="display: flex;">
         <div class="input-group-prepend mob-prefix" *ngIf="mode === 'WhatsApp' || mode === 'Phone'">
-            <span class="input-group-text mgn-up-10">+91</span>
+            <!-- <span class="input-group-text mgn-up-10">+91</span> -->
+            <input style="max-width: 40px;" class="input-group-text" [(ngModel)]="countryCode"  matInput type="text"
+              autocomplete="off" maxlength="5" (keypress)="isNumericSign($event)" >
         </div>
         <mat-form-field *ngIf="mode!=='JaldeeVideo'">
             <div class="input-group">
