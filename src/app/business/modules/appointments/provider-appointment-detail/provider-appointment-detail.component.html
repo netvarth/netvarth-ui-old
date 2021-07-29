@@ -203,7 +203,6 @@
               <ul class="internal-history">
                 <li class="internal-status" *ngFor="let log of internalStatuslog">
                   <div class="time">{{log.DateTime}}</div>
-                  <div class="action">{{log.InternalStatus | capitalizeFirst}}</div>
                   <div class="action">{{log.InternalStatus | capitalizeFirst}}-<span class="user">{{log.User | capitalizeFirst}}</span></div>
                   <!-- <div class="user">{{log.User | capitalizeFirst}}</div> -->
                 </li>
