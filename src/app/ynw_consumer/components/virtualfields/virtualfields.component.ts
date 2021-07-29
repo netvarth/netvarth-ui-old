@@ -664,7 +664,7 @@ console.log(isinvalid);
     return new Promise(function (resolve, reject) {
       const userObj = {};
       userObj['id'] = _this.customer_data.id;
-      if (formdata.whatsappnumber.trim().length>0 && formdata.whatsappnumber !== undefined && formdata.countryCode_whtsap.trim().length>0 && formdata.countryCode_whtsap !== undefined) {
+      if (  formdata.whatsappnumber !== undefined &&formdata.whatsappnumber.trim().length>0  && formdata.countryCode_whtsap !== undefined && formdata.countryCode_whtsap.trim().length>0) {
         const whatsup = {}
         if (formdata.countryCode_whtsap.startsWith('+')) {
           whatsup["countryCode"] = formdata.countryCode_whtsap
@@ -676,7 +676,7 @@ console.log(isinvalid);
       }
       console.log(formdata.telegramnumber.trim());
       console.log(formdata.countryCode_telegram.trim());
-      if (formdata.telegramnumber.trim().length>0 && formdata.telegramnumber !== undefined && formdata.countryCode_telegram.trim().length>0 && formdata.countryCode_telegram !== undefined) {
+      if (formdata.telegramnumber !== undefined && formdata.telegramnumber.trim().length>0 &&  formdata.countryCode_telegram !== undefined&&formdata.countryCode_telegram.trim().length>0) {
        console.log('dsfdf');
         const telegram = {}
         if (formdata.countryCode_telegram.startsWith('+')) {
@@ -730,7 +730,7 @@ console.log(isinvalid);
     let memberInfo: any = {};
     memberInfo.userProfile = {}
     console.log(formdata.whatsappnumber);
-    if (formdata.whatsappnumber && formdata.whatsappnumber.trim().length>0 && formdata.whatsappnumber !== undefined && formdata.countryCode_whtsap && formdata.countryCode_whtsap.trim().length>0 && formdata.countryCode_whtsap !== undefined) {
+    if (  formdata.whatsappnumber !== undefined &&formdata.whatsappnumber.trim().length>0  && formdata.countryCode_whtsap !== undefined && formdata.countryCode_whtsap.trim().length>0) {
       const whatsup = {}
       if (formdata.countryCode_whtsap.startsWith('+')) {
         whatsup["countryCode"] = formdata.countryCode_whtsap
@@ -740,7 +740,7 @@ console.log(isinvalid);
       whatsup["number"] = formdata.whatsappnumber
       memberInfo.userProfile['whatsAppNum'] = whatsup;
     }
-    if (formdata.telegramnumber && formdata.telegramnumber.trim().length>0 && formdata.telegramnumber !== undefined && formdata.countryCode_telegram && formdata.countryCode_telegram.trim().length>0 || formdata.countryCode_telegram !== undefined) {
+    if (formdata.telegramnumber !== undefined && formdata.telegramnumber.trim().length>0 &&  formdata.countryCode_telegram !== undefined&&formdata.countryCode_telegram.trim().length>0) {
       const telegram = {}
       if (formdata.countryCode_telegram.startsWith('+')) {
         telegram["countryCode"] = formdata.countryCode_telegram
@@ -793,7 +793,8 @@ console.log(isinvalid);
     const _this = this;
     const memberInfo = {};
     memberInfo['userProfile'] = {}
-    if (formdata.whatsappnumber.trim().length>0 && formdata.whatsappnumber !== undefined && formdata.countryCode_whtsap.trim().length>0 && formdata.countryCode_whtsap !== undefined) {
+    if (  formdata.whatsappnumber !== undefined &&formdata.whatsappnumber.trim().length>0  && formdata.countryCode_whtsap !== undefined && formdata.countryCode_whtsap.trim().length>0) {
+
       const whatsup = {}
       if (formdata.countryCode_whtsap.startsWith('+')) {
         whatsup["countryCode"] = formdata.countryCode_whtsap
@@ -803,7 +804,7 @@ console.log(isinvalid);
       whatsup["number"] = formdata.whatsappumber
       memberInfo['userProfile']['whatsAppNum'] = whatsup;
     }
-    if (formdata.telegramnumber.trim().length>0 && formdata.telegramnumber !== undefined && formdata.countryCode_telegram .trim().length>0 || formdata.countryCode_telegram !== undefined) {
+    if (formdata.telegramnumber !== undefined && formdata.telegramnumber.trim().length>0 &&  formdata.countryCode_telegram !== undefined&&formdata.countryCode_telegram.trim().length>0) {
       const telegram = {}
       if (formdata.countryCode_telegram.startsWith('+')) {
         telegram["countryCode"] = formdata.countryCode_telegram
