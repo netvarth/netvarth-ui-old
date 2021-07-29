@@ -6,9 +6,6 @@ import { SharedFunctions } from './shared/functions/shared-functions';
 import { Device } from '@ionic-native/device/ngx';
 import { Platform } from '@ionic/angular';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
-// import { MatDialog } from '@angular/material/dialog';
-// import { NotificationDialogComponent } from './shared/components/notification-dialog/notification-dialog.component';
-// import { LocalNotificationsOriginal } from '@ionic-native/local-notifications';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 export let projectConstants: any = {};
 @Component({
