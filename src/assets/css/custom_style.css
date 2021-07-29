@@ -13825,3 +13825,6 @@ app-waitlist-queuedetail .wtsapvid-icon {
 .mgn-5 {
   margin: 5px !important;
 }
+body {
+  overflow: auto !important;
+}
