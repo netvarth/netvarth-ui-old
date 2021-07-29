@@ -19,7 +19,7 @@ export class QuestionnaireListPopupComponent implements OnInit {
   qnrStatuses = {
     released: 'Released',
     submitted: 'Submitted',
-    unreleased: 'Unreleased'
+    unReleased: 'Unreleased'
   }
   releasedQnrs: any = [];
   constructor(public dialogRef: MatDialogRef<QuestionnaireListPopupComponent>,
@@ -72,10 +72,11 @@ export class QuestionnaireListPopupComponent implements OnInit {
       if (result) {
         const status = (this.getQnrStatus(id) === 'unReleased') ? 'released' : 'unReleased';
         this.providerServices.changeQnrReleaseStatus(status, this.qParams.uid, id).subscribe(data => {
+          this.loading = true;
           if (this.qParams.source === 'appt') {
-            this.getApptQuestionnaires();
+            this.getApptDetail();
           } else if (this.qParams.source === 'checkin') {
-            this.getWaitlistQuestionnaires();
+            this.getWaitlistDetail();
           }
           this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
         }, error => {
@@ -107,5 +108,21 @@ export class QuestionnaireListPopupComponent implements OnInit {
   }
   gotoPrev() {
     this.location.back();
+  }
+  getWaitlistDetail() {
+    this.providerServices.getProviderWaitlistDetailById(this.qParams.uid)
+      .subscribe(
+        (data: any) => {
+          this.releasedQnrs = data.releasedQnr;
+          this.loading = false;
+        });
+  }
+  getApptDetail() {
+    this.providerServices.getAppointmentById(this.qParams.uid)
+      .subscribe(
+        (data: any) => {
+          this.releasedQnrs = data.releasedQnr;
+          this.loading = false;
+        });
   }
 }
