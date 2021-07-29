@@ -193,12 +193,9 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
         });
         // this.twilioService.previewContainer = this.previewContainer;
         // this.twilioService.previewMedia();
-
-        // this.sharedServices.callHealth("UI Heath Message").subscribe();
         _this.mediaService.getMediaDevices().then(
             (media: any) => {
                 _this.media = media;
-
                 if (media['videoDevices'].length > 0) {
                     _this.twilioService.camDeviceCount = media['videoDevices'].length;
 
@@ -292,8 +289,10 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
             } else {
                 _this.getVideoStatus().then(
                     (videoStatus) => {
+                        console.log(videoStatus);
                         _this.getAudioStatus().then(
                             (audioStatus) => {
+                                console.log(audioStatus);
                                 if (!audioStatus && !videoStatus) {
                                     mode = 'b-both';
                                     resolve(mode);
@@ -302,6 +301,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
                                     resolve(mode);
                                 } else if (!audioStatus && videoStatus) {
                                     mode = 'b-mic';
+                                    resolve(mode);
                                 } else {
                                     resolve('none');
                                 }

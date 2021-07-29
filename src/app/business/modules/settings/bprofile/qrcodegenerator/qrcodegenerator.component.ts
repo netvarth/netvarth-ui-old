@@ -51,7 +51,8 @@ export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
     // this.window_path = this.data.pathUrl;
     // console.log(this.wpath + this.accuid);
     this.shareLink = this.wpath + this.accuid;
-    this.description = 'You can book my services by just clicking this link';
+    // this.description = 'You can book my services by just clicking this link';
+    this.description = 'For consultations, book using this link';
     this.imageUrl = this.wpath + 'assets/images/logo.png';
     this.qrCodegenerateOnlineID(this.accuid);
   }

@@ -38,6 +38,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UserServiceChangeModule } from '../../../shared/modules/user-service-change/user-service-change.module';
 import { instantQueueComponent } from './instantQ/instantQueue.component';
 import { AssignTeamModule } from '../../../shared/modules/assign-team/assign-team.module';
+import { QuestionnaireListPopupModule } from '../questionnaire-list-popup/questionnaire-list-popup.module';
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import { AssignTeamModule } from '../../../shared/modules/assign-team/assign-tea
         MatTableModule,
         MatCheckboxModule,
         UserServiceChangeModule,
-        AssignTeamModule
+        AssignTeamModule,
+        QuestionnaireListPopupModule
     ],
     declarations: [
         CheckInsComponent,

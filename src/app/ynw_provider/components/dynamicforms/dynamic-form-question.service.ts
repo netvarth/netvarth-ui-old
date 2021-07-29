@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 import { DropdownQuestion } from './form-dropdown';
 import { FormBase } from './form-base';
 import { TextboxQuestion } from './form-textbox';
@@ -15,6 +14,7 @@ export class QuestionService {
   // Todo: get from a remote source of question metadata
   // Todo: make asynchronous
   questions: FormBase<any>[] = [];
+  // questions:any=[];
 
   getQuestions(questions_array) {
     this.questions = [];
@@ -119,12 +119,10 @@ export class QuestionService {
   }
 
   createYearField(que) {
-
     const d = new Date();
     const list = [];
     const highEnd = (!isNaN(parseInt(que.maxBoundary, 10))) ? que.maxBoundary : d.getFullYear();
     const lowEnd = (!isNaN(parseInt(que.minBoundary, 10))) ? que.minBoundary : d.getFullYear() - 100;
-
     for (let i = lowEnd; i <= highEnd; i++) {
         list.push( {name: '' + i,  displayName: i});
     }

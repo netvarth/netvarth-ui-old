@@ -50,7 +50,7 @@ export class UploadFileComponent implements OnInit {
   upload_status = 'Added to list';
   disable = false;
   heading = 'Uploaded Files';
-  display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
+  display_dateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   navigationParams: any;
   navigationExtras: NavigationExtras;
   removeprescriptiondialogRef;
@@ -185,7 +185,6 @@ export class UploadFileComponent implements OnInit {
       .subscribe(
         (data: any) => {
           const response = data;
-          this.loading = false;
           this.patientDetails = response[0];
           this.patientId = this.patientDetails.id;
           if (this.patientDetails.memberJaldeeId) {
@@ -194,6 +193,7 @@ export class UploadFileComponent implements OnInit {
             this.display_PatientId = this.patientDetails.jaldeeId;
           }
           this.medicalrecord_service.setPatientDetails(this.patientDetails);
+          this.loading = false;
 
 
         },

@@ -26,6 +26,7 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { ListRecordingsDialogComponent } from '../../../../shared/components/list-recordings-dialog/list-recordings-dialog.component';
 import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { VoiceConfirmComponent } from '../../customers/video-confirm/voice-confirm.component';
+import { QuestionnaireListPopupComponent } from '../../questionnaire-list-popup/questionnaire-list-popup.component';
 
 @Component({
     selector: 'app-appointment-actions',
@@ -346,7 +347,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.provider_services.getWaitlistBill(this.appt.uid)
             .subscribe(
                 data => {
-                    this.router.navigate(['provider', 'bill', this.appt.uid], { queryParams: { source: 'appt' } });
+                    this.router.navigate(['provider', 'bill', this.appt.uid], { queryParams: { source: 'appt', timetype: this.data.timetype } });
                     this.dialogRef.close();
                 },
                 error => {
@@ -1064,5 +1065,28 @@ export class AppointmentActionsComponent implements OnInit {
         }
         
        this.provider_shared_functions.changeApptinternalStatus(this, this.appt, action);
+    }      
+    showQnr() {
+        if (!this.data.multiSelection && this.appt.releasedQnr && this.appt.releasedQnr.length > 0) {
+            const notSubmittedQnrs = this.appt.releasedQnr.filter(qnr => qnr.status !== 'submitted');
+            if (notSubmittedQnrs.length > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+    showQuestionnaires() {
+        this.dialogRef.close();
+        const dialogrefd = this.dialog.open(QuestionnaireListPopupComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                waitlist: this.appt,
+                source: 'appt'
+            }
+        });
+        dialogrefd.afterClosed().subscribe(result => {
+        });
     }
 }

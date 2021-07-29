@@ -160,7 +160,9 @@ export class AddonsComponent implements OnInit, OnDestroy {
     getAddonClass(adon) {
         const retdet = this.addonIconClasses.filter(
         soc => soc.value === adon);
-        const returndet = retdet[0].class;
-        return returndet;
+        if (retdet[0] && retdet[0].class) {
+            const returndet = retdet[0].class;
+            return returndet;
+        }
     }
 }

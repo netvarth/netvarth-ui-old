@@ -84,6 +84,11 @@
                                         <i class="icon-edit chkin-mobic"
                                             ></i>Edit
                                     </button>
+                                    <button mat-menu-item 
+                                    (click)="serviceqrCodegeneraterOnlineID(service)">
+                                        <i class="fa fa-qrcode"
+                                            ></i>Share link
+                                    </button>
                                     <!-- <button mat-menu-item [class.disabled]="!is_virtual_enbl && service.serviceType === 'virtualService'"
                                     (click)="(is_virtual_enbl && service.serviceType === 'virtualService') && editService(service)"
                                     *ngIf="service.status=='ACTIVE'&& service.serviceType === 'virtualService'">

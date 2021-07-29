@@ -37,7 +37,7 @@ export class OrderActionsComponent implements OnInit {
   action = '';
   providerLabels: any = [];
   labelMap = {};
-  timeType = '';
+  timeType;
   labelsforRemove: any = [];
   ordersByLabel: any = [];
   status: any = projectConstantsLocal.ORDER_STATUS_FILTER;
@@ -100,7 +100,7 @@ export class OrderActionsComponent implements OnInit {
     this.provider_services.getWaitlistBill(this.orderDetails.uid)
       .subscribe(
         data => {
-          this.router.navigate(['provider', 'bill', this.orderDetails.uid], { queryParams: { source: 'order' } });
+          this.router.navigate(['provider', 'bill', this.orderDetails.uid], { queryParams: { source: 'order', timetype: this.timeType } });
           this.dialogRef.close();
         },
         error => {
@@ -258,7 +258,8 @@ addLabel() {
     'uuid': ids
 };
   this.provider_services.addLabeltoMultipleOrder(postData).subscribe(data => {
-      this.dialogRef.close('reload');
+    this.snackbarService.openSnackBar('Label applied successfully', { 'panelclass': 'snackbarerror' });
+    this.dialogRef.close('reload');
   },
       error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -356,6 +357,9 @@ deleteLabel() {
             'uuid': ids
         };
         this.provider_services.deleteLabelfromOrder(postData).subscribe(data => {
+          if (Object.keys(this.labelMap).length === 0) {
+            this.snackbarService.openSnackBar('Label removed', { 'panelclass': 'snackbarerror' });
+        }
             this.dialogRef.close('reload');
         },
             error => {
@@ -415,7 +419,7 @@ addConsumerInboxMessage() {
 }
   getEditOrderstatus(){
     let stat = false;
-    if(this.timeType != 'history' && (this.orderDetails.orderStatus === 'Order Received' || this.orderDetails.orderStatus === 'Order Acknowledged' || this.orderDetails.orderStatus === 'Order Confirmed')){
+    if(this.timeType != 3 && (this.orderDetails.orderStatus === 'Order Received' || this.orderDetails.orderStatus === 'Order Acknowledged' || this.orderDetails.orderStatus === 'Order Confirmed')){
       stat = true;
         if(this.orderDetails.bill && this.orderDetails.bill.billStatus === 'Settled'){
           stat = false;

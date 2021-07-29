@@ -1,7 +1,7 @@
 // import { Location } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { SharedServices } from '../../services/shared-services';
+import { SharedServices } from '../../../shared/services/shared-services';
 // import { Messages } from 'src/app/shared/constants/project-messages';
 @Component({
   selector: 'app-telegram-info',

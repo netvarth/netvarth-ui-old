@@ -295,7 +295,7 @@ export class ProviderReimburseReportComponent implements OnInit {
    * Perform Search Action
    */
   doSearch() {
-    this.loadApiSwitch('doSearch');
+    // this.loadApiSwitch('doSearch');
     if (this.filter.from_date !== null || this.filter.to_date !== null || this.statusMultiCtrl.length > 0) {
       this.filterapplied = true;
     } else {

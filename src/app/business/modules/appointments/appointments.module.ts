@@ -30,6 +30,7 @@ import { UserServiceChangeModule } from '../../../shared/modules/user-service-ch
 import { AppointmentComponent } from './appointment/appointment.component';
 import { CheckinAddMemberModule } from '../../../shared/modules/checkin-add-member/checkin-add-member.module';
 import { AssignTeamModule } from '../../../shared/modules/assign-team/assign-team.module';
+import { QuestionnaireListPopupModule } from '../questionnaire-list-popup/questionnaire-list-popup.module';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { AssignTeamModule } from '../../../shared/modules/assign-team/assign-tea
         MatCheckboxModule,
         UserServiceChangeModule,
         CheckinAddMemberModule,
-        AssignTeamModule
+        AssignTeamModule,
+        QuestionnaireListPopupModule
     ],
     declarations: [
         AppointmentsComponent,

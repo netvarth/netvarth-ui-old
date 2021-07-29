@@ -9,7 +9,9 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
-
+import { MatDialog } from '@angular/material/dialog';
+import { ServiceQRCodeGeneratordetailComponent } from '../..../../../../../../shared/modules/service/serviceqrcodegenerator/serviceqrcodegeneratordetail.component';
+import { ProviderDataStorageService } from '../../../../../ynw_provider/services/provider-datastorage.service';
 
 @Component({
     selector: 'app-donation-causelist',
@@ -48,20 +50,26 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
     cause_list: any = [];
     causes_list: any;
     order = 'status';
+    bprofile: any = [];
+    qrdialogRef: any;
+    wndw_path = projectConstants.PATH;
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         public provider_shared_functions: ProviderSharedFuctions,
         private routerobj: Router,
         private groupService: GroupStorageService,
+        private dialog: MatDialog,
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
         private dateTimeProcessor: DateTimeProcessor,
+        private provider_datastorage: ProviderDataStorageService,
         public router: Router) { }
 
     ngOnInit() {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
+        this.getBusinessProfile();
         this.getDomainSubdomainSettings();
         this.getServices();
         this.breadcrumb_moreoptions = {
@@ -94,6 +102,15 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
                     this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
+    }
+    getBusinessProfile() {
+        this.provider_services.getBussinessProfile()
+            .subscribe(
+                data => {
+                    this.bprofile = data;
+                    
+                    this.provider_datastorage.set('bProfile', data);
+                });
     }
 
     changeServiceStatus(service) {
@@ -163,5 +180,36 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
     }
     addcause() {
         this.router.navigate(['provider', 'settings', 'donationmanager', 'causes', 'add']);
+    }
+    serviceqrCodegeneraterOnlineID(service){
+        let pid = '';
+        let usrid = '';
+        if(!this.bprofile.customId){
+          pid = this.bprofile.accEncUid;
+        } else {
+          pid = this.bprofile.customId;
+        }
+        if(service && service.provider && service.provider.id){
+          usrid = service.provider.id;
+        } else {
+          usrid = '';
+        }
+      this.qrdialogRef = this.dialog.open(ServiceQRCodeGeneratordetailComponent, {
+          width: '40%',
+          panelClass: ['popup-class', 'commonpopupmainclass','servceqrcodesmall'],
+          disableClose: true,
+          data: {
+            accencUid: pid,
+            path: this.wndw_path,
+            serviceid: service.id,
+            userid: usrid
+          }
+        });
+    
+        this.qrdialogRef.afterClosed().subscribe(result => {
+        //   if (result === 'reloadlist') {
+        //     this.getBusinessProfile();
+        //   }
+        });
     }
 }

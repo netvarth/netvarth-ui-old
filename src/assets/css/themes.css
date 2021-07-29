@@ -262,7 +262,7 @@ footer.heartfulness_theme1.bus-page-footer.site-footer .footer-bottom .footer-li
   border-color: #59345D !important;
 }
 
-.heartfulness_theme1 .mat-radio-button.mat-accent .mat-radio-inner-circle {
+.heartfulness_theme1 .mat-radio-button.mat-accent .mat-radio-inner-circle, .heartfulness_theme1 .service-view-glb .active {
   background-color: #59345D !important;
 }
 

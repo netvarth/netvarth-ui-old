@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="action-box pointer-cursor" (click)="changeWaitlistStatusAction()"
-            *ngIf="showArrived || showCancel || showUndo || checkin.waitlistStatus == 'started' || (statusList && statusList.length > 0)">
+            *ngIf="showArrived || showCancel || showUndo || checkin.waitlistStatus == 'started'">
             <div class="action-box-sub">
                 <span class="changestatus-icon"></span>
                 <div class="icon-text">Change Status to</div>
@@ -65,7 +65,7 @@
         </div>
 
         <div class="action-box pointer-cursor"
-        *ngIf="!data.multiSelection && accountType=='BRANCH' && groups && groups.length > 0 &&  (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')"
+        *ngIf="!data.multiSelection && accountType=='BRANCH' && !checkin.provider && groups && groups.length > 0 &&  (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')"
         (click)="assignteam()">  
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
@@ -90,6 +90,12 @@
                 <div class="icon-text">Mark as Arrived</div>
             </div>
         </div> -->
+        <div class="action-box pointer-cursor" *ngIf="showQnr()" (click)="showQuestionnaires()">
+            <div class="action-box-sub">
+                <span class="start-icon"></span>
+                <div class="icon-text">Questionnaires</div>
+            </div>
+        </div>
         <div class="action-box pointer-cursor" *ngIf="showCall" (click)="callingWaitlist()">
             <div class="action-box-sub" *ngIf="checkin.callingStatus">
                 <span class="callstop-icon"></span>
@@ -438,7 +444,7 @@
         <div>Internal Status</div>
         <p class="settings_info">Internal status is only visible for users of this account. Not visible for your {{customer_label}}s</p>
         <ng-container  *ngFor="let stat of statusList, let i= index">
-        <div  [ngClass]="stat.isPermitted?'status-box-internal':'status-box-disabled'" (click)="changeWaitlistInternalStatus(stat.status)">
+        <div  [ngClass]="stat.isPermitted?'status-box-internal':'status-box-disabled'" (click)="changeWaitlistInternalStatus(stat.statusId)">
             <div class="status"  > {{stat.status|capitalizeFirst}}</div>
             <!-- <div class="form-level-settings">hints</div> -->
         </div>
