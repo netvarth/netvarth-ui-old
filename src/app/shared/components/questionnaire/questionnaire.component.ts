@@ -135,6 +135,9 @@ export class QuestionnaireComponent implements OnInit {
       } else if (!this.uuid) {
         this.questions = this.questionnaireList.labels;
         this.groupQuestionsBySection();
+      } else if (this.source === 'qnrView') {
+        this.questions = this.questionnaireList.labels;
+        this.groupQuestionsBySection();
       }
     }
     if (this.source === 'customer-details' && this.customerDetails[0]) {
@@ -935,7 +938,7 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
     }
-    if (this.source === 'consDonationDetails' || this.source === 'qnrDetails' || (this.type && !this.editQuestionnaire)) {
+    if (this.source === 'consDonationDetails' || this.source === 'qnrDetails' || this.source === 'qnrView' || (this.type && !this.editQuestionnaire)) {
       return true;
     }
   }
