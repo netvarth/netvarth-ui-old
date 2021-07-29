@@ -26,11 +26,12 @@
                 <span class="loc-cls"><i class="fa fa-map-marker"></i>&nbsp;{{waitlist_data.location.place
                   | capitalizeFirst}}</span><br>
                 <div *ngIf="waitlist_data.provider" class="mgn-up-5 sub-user-name">
-                    <!-- <span>{{waitlist_data.provider.businessName | capitalizeFirst}}
+                  <!-- <span>{{waitlist_data.provider.businessName | capitalizeFirst}}
                       </span><br> -->
                   <span>{{provider_label | capitalizeFirst}} : </span>
                   <span>
-                  {{waitlist_data.provider.firstName | capitalizeFirst}}&nbsp;{{waitlist_data.provider.lastName}}</span>
+                    {{waitlist_data.provider.firstName |
+                    capitalizeFirst}}&nbsp;{{waitlist_data.provider.lastName}}</span>
                 </div>
                 <div *ngIf="waitlist_data.provider && waitlist_data.provider.mobileNo" class="mgn-up-5 sub-user-name">
                   <i class="fa fa-mobile icon"></i>
@@ -38,7 +39,8 @@
                 </div>
               </h2>
               <!-- Content -->
-              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.appmtFor[0].firstName || waitlist_data.appmtFor[0].lastName">
+              <div class="mgn-up-10 stats-item"
+                *ngIf="waitlist_data.appmtFor[0].firstName || waitlist_data.appmtFor[0].lastName">
                 <span class="itemHead">Booking For</span>
                 <span class="itemVal">{{waitlist_data.appmtFor[0].firstName | capitalizeFirst}}
                   {{waitlist_data.appmtFor[0].lastName | capitalizeFirst}}</span>
@@ -47,26 +49,30 @@
                 <span class="itemHead">Booking id</span>
                 <span class="itemVal">{{waitlist_data.appointmentEncId}}</span>
               </div>
-              <div class="mgn-up-10 stats-item" *ngIf="(waitlist_data.appmtFor[0].bookingLocation) && (waitlist_data.appmtFor[0].bookingLocation.district || waitlist_data.appmtFor[0].bookingLocation.state)">
+              <div class="mgn-up-10 stats-item"
+                *ngIf="(waitlist_data.appmtFor[0].bookingLocation) && (waitlist_data.appmtFor[0].bookingLocation.district || waitlist_data.appmtFor[0].bookingLocation.state)">
                 <span class="itemHead">Location</span>
                 <span class="itemVal">
-                <ng-container *ngIf="waitlist_data.appmtFor[0].bookingLocation.district"> {{waitlist_data.appmtFor[0].bookingLocation.district}},</ng-container> 
-                  {{waitlist_data.appmtFor[0].bookingLocation.state}}</span>
+                  <ng-container *ngIf="waitlist_data.appmtFor[0].bookingLocation.district">
+                    {{waitlist_data.appmtFor[0].bookingLocation.district}},</ng-container>
+                  {{waitlist_data.appmtFor[0].bookingLocation.state}}
+                </span>
               </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.appmtFor[0].preferredLanguage">
                 <span class="itemHead">Language</span>
                 <span class="itemVal">{{waitlist_data.appmtFor[0].preferredLanguage}}</span>
               </div>
-              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.phoneNumber && checkDataNull(waitlist_data.phoneNumber)">
+              <div class="mgn-up-10 stats-item"
+                *ngIf="waitlist_data.phoneNumber && checkDataNull(waitlist_data.phoneNumber)">
                 <span class="itemHead">Phone #</span>
                 <span class="itemVal">{{waitlist_data.countryCode}} {{waitlist_data.phoneNumber}}</span>
               </div>
               <div class="mgn-up-10 stats-item"
-              *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
-              <span class="itemHead">WhatsApp #</span>
-              <span class="itemVal">+
-                {{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
-            </div>
+                *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                <span class="itemHead">WhatsApp #</span>
+                <span class="itemVal">+
+                  {{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
+              </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.appmtFor[0].memberJaldeeId">
                 <span class="itemHead">{{customer_label | capitalizeFirst}} id</span>
                 <span class="itemVal">{{waitlist_data.appmtFor[0].memberJaldeeId}}</span>
@@ -96,8 +102,9 @@
                   <span>
                     {{check_in_statuses[waitlist_data.apptStatus | capitalizeFirst]}}
                   </span>
-                  <span *ngIf="waitlist_data.internalStatus"><small style="color:blue">{{waitlist_data.internalStatus | capitalizeFirst}}</small>
-                  
+                  <span *ngIf="waitlist_data.internalStatus"><small style="color:blue">{{waitlist_data.internalStatus |
+                      capitalizeFirst}}</small>
+
                   </span>
                 </div>
                 <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item pl0"
@@ -170,16 +177,41 @@
             </div>
           </div>
           <!-- Questionnaire starts-->
-          <div class="card"
-            *ngIf="!api_loading && waitlist_data && waitlist_data.questionnaire && waitlist_data.questionnaire.questionAnswers && waitlist_data.questionnaire.questionAnswers.length > 0">
+          <div class="card" *ngIf="!api_loading && questionnaires.length > 0">
             <div class="">
               <h3 class="">
                 {{customer_label | capitalizeFirst}} info
               </h3>
             </div>
-            <div class="c-details">
-              <app-questionnaire [source]="'proAppt'" [uuid]="waitlist_data.uid" [type]="'details'"></app-questionnaire>
-            </div>
+            <ng-container *ngIf="questionnaires.length > 1">
+              <mat-accordion class="qnr-accord no-padding" *ngFor="let qnr of questionnaires">
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      {{(qnr.questionnaireName) ? qnr.questionnaireName : qnr.questionnaireId}}
+                      <div class="qnrstatus">
+                        <span class="greenc" *ngIf="getQnrStatus(qnr) === 'submitted'">Submitted</span>
+                        <span class="red" *ngIf="getQnrStatus(qnr) !== 'submitted'">Released</span>
+                      </div>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="c-details">
+                    <app-questionnaire [questionnaireList]="qnr" [source]="'proAppt'" [uuid]="waitlist_data.uid"
+                      [type]="'details'" [waitlistStatus]="waitlist_data.apptStatus"
+                      (returnAnswers)="getQuestionAnswers($event)">
+                    </app-questionnaire>
+                  </div>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </ng-container>
+            <ng-container *ngIf="questionnaires.length === 1">
+              <div class="c-details" *ngFor="let qnr of questionnaires">
+                <app-questionnaire [questionnaireList]="qnr" [source]="'proAppt'" [uuid]="waitlist_data.uid"
+                  [type]="'details'" [waitlistStatus]="waitlist_data.apptStatus"
+                  (returnAnswers)="getQuestionAnswers($event)">
+                </app-questionnaire>
+              </div>
+            </ng-container>
           </div>
           <!-- Questionnaire end-->
         </div>
@@ -197,17 +229,19 @@
             </div>
           </div>
           <div class="card" *ngIf="internalStatuslog && internalStatuslog.length>0">
-    
-            <h2 >Internal Status History</h2>
+
+            <h2>Internal Status History</h2>
             <div class="c-history-outer">
               <ul class="internal-history">
                 <li class="internal-status" *ngFor="let log of internalStatuslog">
                   <div class="time">{{log.DateTime}}</div>
-                  <div class="action">{{log.InternalStatus | capitalizeFirst}}-<span class="user">{{log.User | capitalizeFirst}}</span></div>
+                  <div class="action">{{log.InternalStatus | capitalizeFirst}}</div>
+                  <div class="action">{{log.InternalStatus | capitalizeFirst}}-<span class="user">{{log.User |
+                      capitalizeFirst}}</span></div>
                   <!-- <div class="user">{{log.User | capitalizeFirst}}</div> -->
                 </li>
               </ul>
-              
+
             </div>
           </div>
         </div>
