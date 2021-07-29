@@ -550,13 +550,16 @@ export class AppointmentComponent implements OnInit {
             },
             'appmtFor': [{
                 'id': this.customer_data.id,
-            }],
+            }], 
         };
-        if (this.virtualServicemode && this.virtualServicenumber) {
+        console.log(this.virtualServicemode);
+        console.log(this.virtualServicenumber);
+        if (this.virtualServicemode || this.virtualServicenumber) {
             const virtualArray = {};
-            virtualArray[this.virtualServicemode] = this.virtualServicenumber;
+            virtualArray[this.virtualServicemode] = this.virtualServicenumber||'';
             post_data['virtualService'] = virtualArray;
         }
+        console.log(post_data);
         this.provider_services.confirmAppointmentBlock(post_data)
             .subscribe(
                 data => {
