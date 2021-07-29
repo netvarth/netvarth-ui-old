@@ -2597,13 +2597,19 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     event.stopPropagation();
   }
   addCustomerDetails(appt) {
+    console.log(appt);
     let virtualServicemode;
     let virtualServicenumber;
-    if (appt.virtualService) {
-      Object.keys(appt.virtualService).forEach(key => {
-        virtualServicemode = key;
-        virtualServicenumber = appt.virtualService[key];
-      });
+    if (appt.service.serviceType == 'virtualService') {
+      virtualServicemode = appt.service.virtualCallingModes[0].callingMode;
+      if(appt.service.virtualCallingModes[0].value){
+        virtualServicenumber = appt.service.virtualCallingModes[0].value;
+      }
+      
+      // Object.keys(appt.virtualService).forEach(key => {
+      //   virtualServicemode = key;
+      //   virtualServicenumber = appt.virtualService[key];
+      // });
     }
     this.router.navigate(['provider', 'appointments', 'appointment'], { queryParams: { source: 'appt-block', uid: appt.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: appt.service.id, apptMode: appt.appointmentMode } });
   }
