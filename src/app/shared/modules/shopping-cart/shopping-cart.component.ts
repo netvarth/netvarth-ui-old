@@ -97,6 +97,9 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   store_availables: any;
   home_availables: any;
   private subs = new SubSink();
+  customId: any; // To know the source whether the router came from Landing page or not
+  businessId: any;
+
   constructor(
     public router: Router,
     public route: ActivatedRoute,
@@ -115,6 +118,10 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         if (params.unique_id) {
           this.provider_id = params.unique_id;
         }
+        if (params.customId) {
+          this.customId = params.customId;
+          this.businessId = this.account_id;
+      }
       });
 
   }
@@ -541,12 +548,19 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
 
 
       };
+      // const navigationExtras: NavigationExtras = {
+      //   queryParams: {
+      //     providerId: this.provider_id,
+      //   }
+      // };
+      let queryParam = {
+        providerId: this.provider_id,
+      };
+      if (this.businessId) {
+        queryParam['customId'] = this.customId;
+      }
       const navigationExtras: NavigationExtras = {
-        queryParams: {
-
-          providerId: this.provider_id,
-        }
-
+        queryParams: queryParam,
       };
       this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
       this.router.navigate(['order', 'shoppingcart', 'checkout'],navigationExtras);
@@ -829,10 +843,19 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
 
   itemDetails(item) {
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
+    // const navigationExtras: NavigationExtras = {
+    //   queryParams: {
+    //     item: JSON.stringify(item)
+    //   }
+    // };
+    let queryParam = {
+      item: JSON.stringify(item)
+    };
+    if (this.businessId) {
+      queryParam['customId'] = this.customId;
+    }
     const navigationExtras: NavigationExtras = {
-      queryParams: {
-        item: JSON.stringify(item)
-      }
+      queryParams: queryParam,
     };
     this.router.navigate(['order', 'item-details'], navigationExtras);
   }
