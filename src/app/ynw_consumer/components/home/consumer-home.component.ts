@@ -1,6 +1,6 @@
 
 import { interval as observableInterval, Subscription } from 'rxjs';
-import { Component, OnInit, OnDestroy, Inject, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -243,6 +243,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   countryCode: any;
   chatId: any;
   showTeleBt = false;
+  tele_popUp;
+  @ViewChild('popupforApp') popUp:ElementRef;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -310,6 +312,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     // console.log(this.bookingStatusClasses);
     this.usr_details = this.groupService.getitemFromGroupStorage('ynw-user');
     this.login_details = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+    this.tele_popUp = this.lStorageService.getitemfromLocalStorage('showTelePop');
     let login = JSON.parse(this.login_details);
     if(login.countryCode.startsWith('+')){
       this.countryCode = login.countryCode.substring(1);
@@ -320,6 +323,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
            this.chatId = data; 
            if(this.chatId === null){
             this.showTeleBt = true;
+            if(this.tele_popUp){
+              this.popUp.nativeElement.style.display = 'block';
+              this.lStorageService.removeitemfromLocalStorage('showTelePop');
+            }
+
            }
          },
          (error) => {
@@ -2462,4 +2470,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   gotoDetails() {
     this.router.navigate([this.customId]);
   }
+  closeModal(){
+    this.popUp.nativeElement.style.display = 'none';
+  }
+
 }
