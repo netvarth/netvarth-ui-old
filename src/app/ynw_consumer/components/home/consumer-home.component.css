@@ -82,3 +82,104 @@ app-appt-card, app-wl-card {
     font-weight: bold;
     font-size: 0.9rem;
 }
+[class~=modal-content], [class~=modal] {
+    position: fixed;
+  }
+  
+  [class~=modal] {
+    z-index: 1;
+  }
+  
+  [class~=modal] {
+    left: 0;
+  }
+  
+  [class~=modal] {
+    top: 0;
+  }
+  
+  [class~=modal-content], [class~=modal] {
+    width: 100%;
+  }
+  
+  [class~=modal] {
+    height: 100%;
+  }
+  
+  [class~=modal] {
+    overflow: auto;
+  }
+  
+  [class~=modal] {
+    -webkit-animation-name: fadeIn;
+  }
+  
+  [class~=close]:focus, [class~=close]:hover {
+    text-decoration: none;
+  }
+  
+  [class~=close]:focus, [class~=close]:hover {
+    cursor: pointer;
+  }
+  
+  [class~=modal-content], [class~=modal] {
+    -webkit-animation-duration: .4s;
+  }
+  
+  [class~=modal] {
+    animation-name: fadeIn;
+  }
+  
+  [class~=modal] {
+    animation-duration: .4s;
+  }
+  
+  [class~=modal-content] {
+    bottom: 0;
+  }
+  
+  [class~=modal-content] {
+    background-color: #fefefe;
+  }
+  
+  [class~=modal-content] {
+    -webkit-animation-name: slideIn;
+  }
+  
+  [class~=modal-content] {
+    animation-name: slideIn;
+  }
+  
+  [class~=modal-content] {
+    animation-duration: .4;
+  }
+  #popup .modal-header {
+    padding: 15px 5px 15px 0px !important; 
+  }
+  #popup .close {
+    opacity: 1 !important;
+    font-size: 1.75rem !important;
+  }
+  
+  ::ng-deep .service-detail-modal {
+    transform: translate(0, 5%) !important;
+  }
+  
+  ::ng-deep .service-detail-modal-container {
+    opacity: 1 !important;
+  }
+@media (max-width: 775px) {
+    .pop-up_small {
+        display: block !important;
+    }
+}
+@media  (max-width: 750px)  {
+  .web{
+      display: none !important;
+  }
+}
+@media (min-width: 450px) {
+  .disply  {
+      display: none !important;
+  }
+}
