@@ -12,7 +12,7 @@ const routes: Routes = [
         children: [
             { path: 'add', component: ProviderCheckinComponent },
             { path: 'adjustdelay', component: AdjustqueueDelayComponent },
-            { path: 'questionnaire', loadChildren: () => import('../../../shared/components/questionnaire/questionnaire.module').then(m => m.QuestionnaireModule) },
+            { path: 'questionnaires', loadChildren: () => import('../questionnaire-list-popup/questionnaire-list-popup.module').then(m => m.QuestionnaireListPopupModule) },
             { path: ':id', component: ProviderWaitlistCheckInDetailComponent },
             { path: ':id/add-label', component: ApplyLabelComponent },
             { path: ':id/user', loadChildren: () => import('../../../shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },

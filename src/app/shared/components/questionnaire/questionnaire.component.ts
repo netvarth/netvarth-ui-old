@@ -8,10 +8,10 @@ import { WordProcessor } from '../../services/word-processor.service';
 import { Subscription } from 'rxjs';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, ButtonEvent } from '@ks89/angular-modal-gallery';
-import { Messages } from '../../constants/project-messages';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { ShowuploadfileComponent } from '../../../business/modules/medicalrecord/uploadfile/showuploadfile/showuploadfile.component';
 import { MatDialog } from '@angular/material/dialog';
+import { projectConstantsLocal } from '../../constants/project-constants';
 
 @Component({
   selector: 'app-questionnaire',
@@ -26,9 +26,11 @@ export class QuestionnaireComponent implements OnInit {
   @Input() customerDetails;
   @Input() uuid;
   @Input() type;
+  @Input() waitlistStatus;
   @Input() donationDetails;
   @Output() returnAnswers = new EventEmitter<any>();
   answers: any = {};
+  showDataGrid: any = {};
   selectedMessage: any = [];
   apiError: any = [];
   params;
@@ -75,6 +77,13 @@ export class QuestionnaireComponent implements OnInit {
   customer_label = '';
   editQuestionnaire = false;
   audioVideoFiles: any = [];
+  groupedQnr: any = [];
+  dataGridColumns: any = {};
+  dataGridColumnsAnswerList: any = [];
+  updatedGridIndex = {};
+  newTimeDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
+  qnrStatus = '';
+  comments = {};
   constructor(private sharedService: SharedServices,
     private activated_route: ActivatedRoute,
     private snackbarService: SnackbarService,
@@ -115,19 +124,26 @@ export class QuestionnaireComponent implements OnInit {
       if (this.source === 'customer-create') {
         if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
           this.questions = this.questionnaireList.labels[0].questions;
+          this.groupQuestionsBySection();
         }
         if (this.customerDetails && this.customerDetails[0] && this.customerDetails[0].questionnaire) {
           this.getAnswers(this.customerDetails[0].questionnaire.questionAnswers, 'get');
         }
       } else if (this.source === 'qnrDetails') {
         this.questions = this.questionnaireList.questions;
-      } else {
+        this.groupQuestionsBySection();
+      } else if (!this.uuid) {
         this.questions = this.questionnaireList.labels;
+        this.groupQuestionsBySection();
+      } else if (this.source === 'qnrView') {
+        this.questions = this.questionnaireList.labels;
+        this.groupQuestionsBySection();
       }
     }
     if (this.source === 'customer-details' && this.customerDetails[0]) {
       this.questionnaireList = this.customerDetails[0].questionnaire;
       this.questions = this.customerDetails[0].questionnaire.questionAnswers;
+      this.groupQuestionsBySection();
       this.getAnswers(this.customerDetails[0].questionnaire.questionAnswers, 'get');
     }
     if (this.questionAnswers) {
@@ -140,6 +156,12 @@ export class QuestionnaireComponent implements OnInit {
       if (this.questionAnswers.filestoUpload) {
         this.filestoUpload = this.questionAnswers.filestoUpload;
       }
+      if (this.questionAnswers.dataGridColumnsAnswerList) {
+        this.dataGridColumnsAnswerList = this.questionAnswers.dataGridColumnsAnswerList;
+      }
+      if (this.questionAnswers.comments) {
+        this.comments = this.questionAnswers.comments;
+      }
       if (this.questionAnswers.answers) {
         this.getAnswers(this.questionAnswers.answers.answerLine, 'init');
       }
@@ -147,24 +169,34 @@ export class QuestionnaireComponent implements OnInit {
     if (this.donationDetails) {
       this.questionnaireList = this.donationDetails.questionnaire;
       this.questions = this.questionnaireList.questionAnswers;
+      this.groupQuestionsBySection();
       if (this.questions && this.questions.length > 0) {
         this.getAnswers(this.questions, 'get');
       }
     }
     if (this.uuid) {
-      this.loading = true;
-      this.getWaitlistDetails();
+      if (this.questionnaireList.questionAnswers) {
+        this.questions = this.questionnaireList.questionAnswers;
+        this.qnrStatus = 'submitted';
+        this.groupQuestionsBySection();
+      } else {
+        this.questions = this.questionnaireList.labels;
+        this.qnrStatus = 'released';
+        this.groupQuestionsBySection();
+      }
+      if (this.questions && this.questions.length > 0) {
+        this.getAnswers(this.questions, 'get');
+      }
     }
   }
-  getWaitlistDetails() {
-    if (this.source === 'consCheckin') {
-      this.getConsumerCheckinDetails();
-    } else if (this.source === 'consAppt') {
-      this.getConsumerApptDetails();
-    } else if (this.source === 'proCheckin') {
-      this.getCheckinDetailsProvider();
+  groupQuestionsBySection() {
+    if (this.source === 'customer-create' || this.source === 'qnrDetails') {
+      this.groupedQnr = this.sharedFunctionobj.groupBy(this.questions, 'sectionName');
     } else {
-      this.getApptDetailsProvider();
+      this.groupedQnr = this.questions.reduce(function (rv, x) {
+        (rv[x.question['sectionName']] = rv[x.question['sectionName']] || []).push(x);
+        return rv;
+      }, {});
     }
   }
   setValidateError(errors) {
@@ -179,15 +211,14 @@ export class QuestionnaireComponent implements OnInit {
   }
   getAnswers(answerData, type?) {
     this.answers = new Object();
+    this.dataGridColumns = {};
     if (type === 'get') {
       this.selectedMessage = [];
       this.uploadedImages = [];
       this.uploadedFiles = [];
       for (let answ of answerData) {
         if (answ.answerLine) {
-          if (answ.question.fieldDataType !== 'fileUpload') {
-            this.answers[answ.answerLine.labelName] = answ.answerLine.answer[answ.question.fieldDataType];
-          } else {
+          if (answ.question.fieldDataType === 'fileUpload') {
             if (answ.answerLine.answer && answ.answerLine.answer[answ.question.fieldDataType] && answ.answerLine.answer[answ.question.fieldDataType].length > 0) {
               for (let i = 0; i < answ.answerLine.answer[answ.question.fieldDataType].length; i++) {
                 if (type === 'get') {
@@ -198,6 +229,7 @@ export class QuestionnaireComponent implements OnInit {
                   if (!this.uploadedFiles[answ.answerLine.labelName][answ.answerLine.answer[answ.question.fieldDataType][i].caption]) {
                     this.uploadedFiles[answ.answerLine.labelName][answ.answerLine.answer[answ.question.fieldDataType][i].caption] = {};
                   }
+                  this.comments[answ.answerLine.labelName + '=' + answ.answerLine.answer[answ.question.fieldDataType][i].caption] = answ.answerLine.answer[answ.question.fieldDataType][i].comments;
                   this.uploadedFiles[answ.answerLine.labelName][answ.answerLine.answer[answ.question.fieldDataType][i].caption] = answ.answerLine.answer[answ.question.fieldDataType][i];
                 } else {
                   this.selectedMessage.push(answ.answerLine.answer[answ.question.fieldDataType][i]);
@@ -211,6 +243,19 @@ export class QuestionnaireComponent implements OnInit {
                 }
               }
             }
+          } else if (answ.question.fieldDataType === 'dataGrid') {
+            for (let row of answ.answerLine.answer[answ.question.fieldDataType]) {
+              let columns = [];
+              for (let i = 0; i < row.dataGridColumn.length; i++) {
+                columns[i + 1] = row.dataGridColumn[i].column[Object.keys(row.dataGridColumn[i].column)[0]];
+              }
+              if (!this.dataGridColumnsAnswerList[answ.answerLine.labelName]) {
+                this.dataGridColumnsAnswerList[answ.answerLine.labelName] = [];
+              }
+              this.dataGridColumnsAnswerList[answ.answerLine.labelName].push(columns);
+            }
+          } else {
+            this.answers[answ.answerLine.labelName] = answ.answerLine.answer[answ.question.fieldDataType];
           }
         }
       }
@@ -254,8 +299,6 @@ export class QuestionnaireComponent implements OnInit {
       for (const file of input) {
         let type = file.type.split('/');
         this.apiError[question.labelName] = [];
-        console.log(type);
-        console.log(question.filePropertie.fileTypes);
         if (question.filePropertie.fileTypes.indexOf(type[1]) === -1) {
           this.snackbarService.openSnackBar('Selected file type not supported', { 'panelClass': 'snackbarerror' });
         } else {
@@ -386,9 +429,9 @@ export class QuestionnaireComponent implements OnInit {
               let type = this.filestoUpload[key][key1].type.split('/');
               type = type[0];
               if (type === 'application' || type === 'image') {
-                this.answers[key].push({ index: indx, caption: key1, action: status, size: this.filestoUpload[key][key1].size });
+                this.answers[key].push({ index: indx, caption: key1, action: status, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1] });
               } else {
-                this.answers[key].push({ caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size });
+                this.answers[key].push({ caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1] });
               }
             }
           } else {
@@ -435,22 +478,55 @@ export class QuestionnaireComponent implements OnInit {
       }
     });
     let data = [];
+    Object.keys(this.dataGridColumnsAnswerList).forEach(key => {
+      let newMap = {};
+      let newFiled = {};
+      let question = this.questions.filter(quest => this.getQuestion(quest).labelName === key);
+      if (this.source === 'customer-create' || this.source === 'qnrDetails') {
+        question = question[0];
+      } else {
+        question = question[0].question;
+      }
+      for (let gridAnswer of this.dataGridColumnsAnswerList[key]) {
+        let columnData = [];
+        Object.keys(gridAnswer).forEach(key1 => {
+          let newType = {};
+          const columnDetails = question.dataGridProperties.dataGridColumns.filter(clmn => clmn.order === JSON.parse(key1));
+          if (columnDetails[0]) {
+            const columnType = columnDetails[0].dataType;
+            newType[columnType] = gridAnswer[key1];
+            columnData.push({
+              columnId: columnDetails[0].columnId,
+              column: newType
+            });
+          }
+        });
+        newMap['dataGridColumn'] = columnData;
+        if (!newFiled[question.fieldDataType]) {
+          newFiled[question.fieldDataType] = [];
+        }
+        newFiled[question.fieldDataType].push(newMap);
+      }
+      data.push({
+        'labelName': key,
+        'answer': newFiled
+      });
+    });
     Object.keys(this.answers).forEach(key => {
       this.apiError[key] = [];
       let newMap = {};
-      const question = this.questions.filter(quest => this.getQuestion(quest).labelName === key);
-      let questiontype;
+      let question = this.questions.filter(quest => this.getQuestion(quest).labelName === key);
       if (this.source === 'customer-create' || this.source === 'qnrDetails') {
-        questiontype = question[0].fieldDataType;
+        question = question[0];
       } else {
-        questiontype = question[0].question.fieldDataType;
+        question = question[0].question;
       }
-      if (this.answers[key] || questiontype === 'bool') {
+      if (this.answers[key] || question.fieldDataType === 'bool') {
         let answer = this.answers[key];
-        if (questiontype === 'date') {
+        if (question.fieldDataType === 'date') {
           answer = this.dateProcessor.transformToYMDFormat(answer);
         }
-        newMap[questiontype] = answer;
+        newMap[question.fieldDataType] = answer;
         data.push({
           'labelName': key,
           'answer': newMap
@@ -466,7 +542,7 @@ export class QuestionnaireComponent implements OnInit {
       'questionnaireId': (this.questionnaireList.id) ? this.questionnaireList.id : this.questionnaireList.questionnaireId,
       'answerLine': data
     }
-    const passData = { 'answers': postData, 'files': this.selectedMessage, 'audioVideo': this.audioVideoFiles, 'filestoUpload': this.filestoUpload };
+    const passData = { 'answers': postData, 'files': this.selectedMessage, 'audioVideo': this.audioVideoFiles, 'filestoUpload': this.filestoUpload, 'dataGridColumnsAnswerList': this.dataGridColumnsAnswerList, 'comments': this.comments };
     if (keytype === 'inputChange') {
       this.changeHappened = true;
     }
@@ -487,52 +563,91 @@ export class QuestionnaireComponent implements OnInit {
   getDate(date) {
     return new Date(date);
   }
-  listChange(ev, value, question) {
-    if (ev.target.checked) {
-      if (!this.answers[question.labelName]) {
-        this.answers[question.labelName] = [];
-      }
-      if (question.listPropertie && question.listPropertie.maxAnswers && question.listPropertie.maxAnswers > 1) {
-        this.answers[question.labelName].push(value);
+  listChange(ev, value, question, column?) {
+    if (question.fieldDataType !== 'dataGrid') {
+      if (ev.target.checked) {
+        if (!this.answers[question.labelName]) {
+          this.answers[question.labelName] = [];
+        }
+        if (question.listPropertie && question.listPropertie.maxAnswers && question.listPropertie.maxAnswers > 1) {
+          this.answers[question.labelName].push(value);
+        } else {
+          this.answers[question.labelName][0] = value;
+        }
       } else {
-        this.answers[question.labelName][0] = value;
+        const indx = this.answers[question.labelName].indexOf(value);
+        this.answers[question.labelName].splice(indx, 1);
+      }
+      if (this.answers[question.labelName].length === 0) {
+        this.answers[question.labelName] = '';
+      }
+      this.onSubmit('inputChange');
+    } else {
+      if (ev.target.checked) {
+        if (!this.dataGridColumns[question.labelName + '=' + column.order]) {
+          this.dataGridColumns[question.labelName + '=' + column.order] = [];
+        }
+        this.dataGridColumns[question.labelName + '=' + column.order].push(value);
+      } else {
+        const indx = this.dataGridColumns[question.labelName + '=' + column.order].indexOf(value);
+        this.dataGridColumns[question.labelName + '=' + column.order].splice(indx, 1);
+      }
+    }
+  }
+  isChecked(value, question, column?) {
+    if (question.fieldDataType !== 'dataGrid') {
+      if (this.answers[question.labelName]) {
+        const indx = this.answers[question.labelName].indexOf(value);
+        if (indx !== -1) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
       }
     } else {
-      const indx = this.answers[question.labelName].indexOf(value);
-      this.answers[question.labelName].splice(indx, 1);
+      if (this.dataGridColumns[question.labelName + '=' + column.order]) {
+        const indx = this.dataGridColumns[question.labelName + '=' + column.order].indexOf(value);
+        if (indx !== -1) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
     }
-    if (this.answers[question.labelName].length === 0) {
-      this.answers[question.labelName] = '';
-    }
-    this.onSubmit('inputChange');
   }
-  isChecked(value, question) {
-    if (this.answers[question.labelName]) {
-      const indx = this.answers[question.labelName].indexOf(value);
-      if (indx !== -1) {
+  booleanChange(ev, value, question, column?) {
+    if (question.fieldDataType !== 'dataGrid') {
+      if (ev.target.checked) {
+        if (!this.answers[question.labelName]) {
+          this.answers[question.labelName] = {};
+        }
+        this.answers[question.labelName] = (value.toLowerCase() === 'yes') ? true : false;
+      }
+      this.onSubmit('inputChange');
+    } else {
+      if (ev.target.checked) {
+        this.dataGridColumns[question.labelName + '=' + column.order] = (value.toLowerCase() === 'yes') ? true : false;
+      }
+    }
+  }
+  isBooleanChecked(value, question, column?) {
+    value = (value.toLowerCase() === 'yes') ? true : false;
+    if (question.fieldDataType !== 'dataGrid') {
+      if (this.answers[question.labelName] === value) {
         return true;
       } else {
         return false;
       }
     } else {
-      return false;
-    }
-  }
-  booleanChange(ev, value, question) {
-    if (ev.target.checked) {
-      if (!this.answers[question.labelName]) {
-        this.answers[question.labelName] = {};
+      if (this.dataGridColumns[question.labelName + '=' + column.order] === value) {
+        return true;
+      } else {
+        return false;
       }
-      this.answers[question.labelName] = (value.toLowerCase() === 'yes') ? true : false;
-    }
-    this.onSubmit('inputChange');
-  }
-  isBooleanChecked(value, question) {
-    value = (value.toLowerCase() === 'yes') ? true : false;
-    if (this.answers[question.labelName] === value) {
-      return true;
-    } else {
-      return false;
     }
   }
   submitQuestionnaire(passData) {
@@ -573,8 +688,24 @@ export class QuestionnaireComponent implements OnInit {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
   }
+  submitConsumerWaitlistQuestionnaire(body) {
+    this.sharedService.submitConsumerWaitlistQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
+      this.uploadAudioVideo(data, 'consCheckin');
+    }, error => {
+      this.buttonDisable = false;
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+  }
   resubmitConsumerApptQuestionnaire(body) {
     this.sharedService.resubmitConsumerApptQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
+      this.uploadAudioVideo(data, 'consAppt');
+    }, error => {
+      this.buttonDisable = false;
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+  }
+  submitConsumerApptQuestionnaire(body) {
+    this.sharedService.submitConsumerApptQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
       this.uploadAudioVideo(data, 'consAppt');
     }, error => {
       this.buttonDisable = false;
@@ -589,6 +720,14 @@ export class QuestionnaireComponent implements OnInit {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
   }
+  submitProviderWaitlistQuestionnaire(body) {
+    this.providerService.submitProviderWaitlistQuestionnaire(body, this.uuid).subscribe(data => {
+      this.uploadAudioVideo(data, 'proCheckin');
+    }, error => {
+      this.buttonDisable = false;
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+  }
   resubmitProviderApptQuestionnaire(body) {
     this.providerService.resubmitProviderApptQuestionnaire(body, this.uuid).subscribe(data => {
       this.uploadAudioVideo(data, 'proAppt');
@@ -597,8 +736,26 @@ export class QuestionnaireComponent implements OnInit {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
   }
+  submitProviderApptQuestionnaire(body) {
+    this.providerService.submitProviderApptQuestionnaire(body, this.uuid).subscribe(data => {
+      this.uploadAudioVideo(data, 'proAppt');
+    }, error => {
+      this.buttonDisable = false;
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+  }
   resubmitDonationQuestionnaire(body) {
     this.sharedService.resubmitProviderDonationQuestionnaire(this.donationDetails.uid, body).subscribe(data => {
+      this.editQnr();
+      this.snackbarService.openSnackBar('Updated Successfully');
+      this.buttonDisable = false;
+    }, error => {
+      this.buttonDisable = false;
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+  }
+  submitDonationQuestionnaire(body) {
+    this.sharedService.submitDonationQuestionnaire(this.donationDetails.uid, body, this.accountId).subscribe(data => {
       this.editQnr();
       this.snackbarService.openSnackBar('Updated Successfully');
       this.buttonDisable = false;
@@ -669,66 +826,6 @@ export class QuestionnaireComponent implements OnInit {
   goBack() {
     this.location.back();
   }
-  getConsumerCheckinDetails() {
-    this.questionnaire_heading = Messages.QUESTIONNAIRE_CONSUMER_HEADING;
-    this.sharedService.getCheckinByConsumerUUID(this.uuid, this.accountId).subscribe(
-      (data: any) => {
-        this.bookingDetails = data;
-        if (data && data.questionnaire) {
-          this.questionnaireList = data.questionnaire;
-          this.questions = this.questionnaireList.questionAnswers;
-          this.loading = false;
-          if (this.questions && this.questions.length > 0) {
-            this.getAnswers(this.questions, 'get');
-          }
-        }
-      });
-  }
-  getConsumerApptDetails() {
-    this.questionnaire_heading = Messages.QUESTIONNAIRE_CONSUMER_HEADING;
-    this.sharedService.getAppointmentByConsumerUUID(this.uuid, this.accountId).subscribe(
-      (data: any) => {
-        this.bookingDetails = data;
-        if (data && data.questionnaire) {
-          this.questionnaireList = data.questionnaire;
-          this.questions = this.questionnaireList.questionAnswers;
-          this.loading = false;
-          if (this.questions && this.questions.length > 0) {
-            this.getAnswers(this.questions, 'get');
-          }
-        }
-      });
-  }
-  getCheckinDetailsProvider() {
-    this.questionnaire_heading = this.customer_label + ' info';
-    this.providerService.getProviderWaitlistDetailById(this.uuid).subscribe(
-      (data: any) => {
-        this.bookingDetails = data;
-        if (data && data.questionnaire) {
-          this.questionnaireList = data.questionnaire;
-          this.questions = this.questionnaireList.questionAnswers;
-          this.loading = false;
-          if (this.questions && this.questions.length > 0) {
-            this.getAnswers(this.questions, 'get');
-          }
-        }
-      });
-  }
-  getApptDetailsProvider() {
-    this.questionnaire_heading = this.customer_label + ' info';
-    this.providerService.getAppointmentById(this.uuid).subscribe(
-      (data: any) => {
-        this.bookingDetails = data;
-        if (data && data.questionnaire) {
-          this.questionnaireList = data.questionnaire;
-          this.questions = this.questionnaireList.questionAnswers;
-          this.loading = false;
-          if (this.questions && this.questions.length > 0) {
-            this.getAnswers(this.questions, 'get');
-          }
-        }
-      });
-  }
   getQuestion(question) {
     if (this.source === 'customer-create' || this.source === 'qnrDetails') {
       return question;
@@ -745,9 +842,17 @@ export class QuestionnaireComponent implements OnInit {
         } else if (this.source === 'proDonation') {
           this.resubmitDonationQuestionnaire(dataToSend);
         } else if (this.source === 'proCheckin') {
-          this.resubmitProviderWaitlistQuestionnaire(dataToSend);
+          if (this.qnrStatus === 'submitted') {
+            this.resubmitProviderWaitlistQuestionnaire(dataToSend);
+          } else {
+            this.submitProviderWaitlistQuestionnaire(dataToSend);
+          }
         } else {
-          this.resubmitProviderApptQuestionnaire(dataToSend);
+          if (this.qnrStatus === 'submitted') {
+            this.resubmitProviderApptQuestionnaire(dataToSend);
+          } else {
+            this.submitProviderApptQuestionnaire(dataToSend);
+          }
         }
       }
     }, error => {
@@ -760,9 +865,17 @@ export class QuestionnaireComponent implements OnInit {
       this.setValidateError(data);
       if (data.length === 0) {
         if (this.source === 'consCheckin') {
-          this.resubmitConsumerWaitlistQuestionnaire(dataToSend);
+          if (this.qnrStatus === 'submitted') {
+            this.resubmitConsumerWaitlistQuestionnaire(dataToSend);
+          } else {
+            this.submitConsumerWaitlistQuestionnaire(dataToSend);
+          }
         } else {
-          this.resubmitConsumerApptQuestionnaire(dataToSend);
+          if (this.qnrStatus === 'submitted') {
+            this.resubmitConsumerApptQuestionnaire(dataToSend);
+          } else {
+            this.submitConsumerApptQuestionnaire(dataToSend);
+          }
         }
       }
     }, error => {
@@ -813,31 +926,31 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   disableInput() {
-    if (this.bookingDetails && this.uuid) {
+    if (this.uuid) {
       if (this.source === 'consCheckin' || this.source === 'proCheckin') {
-        if (this.bookingDetails.waitlistStatus !== 'checkedIn' && this.bookingDetails.waitlistStatus !== 'arrived') {
+        if (this.waitlistStatus !== 'checkedIn' && this.waitlistStatus !== 'arrived') {
           return true;
         }
       }
       if (this.source === 'consAppt' || this.source === 'proAppt') {
-        if (this.bookingDetails.apptStatus !== 'Confirmed' && this.bookingDetails.apptStatus !== 'Arrived') {
+        if (this.waitlistStatus !== 'Confirmed' && this.waitlistStatus !== 'Arrived') {
           return true;
         }
       }
     }
-    if (this.source === 'consDonationDetails' || this.source === 'qnrDetails' || (this.type && !this.editQuestionnaire)) {
+    if (this.source === 'consDonationDetails' || this.source === 'qnrDetails' || this.source === 'qnrView' || (this.type && !this.editQuestionnaire)) {
       return true;
     }
   }
   showEditBtn() {
     if (this.type) {
       if (this.source === 'consCheckin' || this.source === 'proCheckin') {
-        if (this.bookingDetails.waitlistStatus !== 'checkedIn' && this.bookingDetails.waitlistStatus !== 'arrived') {
+        if (this.waitlistStatus !== 'checkedIn' && this.waitlistStatus !== 'arrived') {
           return false;
         }
       }
       if (this.source === 'consAppt' || this.source === 'proAppt') {
-        if (this.bookingDetails.apptStatus !== 'Confirmed' && this.bookingDetails.apptStatus !== 'Arrived') {
+        if (this.waitlistStatus !== 'Confirmed' && this.waitlistStatus !== 'Arrived') {
           return false;
         }
       }
@@ -851,11 +964,11 @@ export class QuestionnaireComponent implements OnInit {
     if (event.button.type === ButtonType.DOWNLOAD) {
     }
   }
-  onButtonAfterHook() { }
   openAttachmentGallery(question, document) {
     this.image_list_popup = [];
     let count = 0;
     let imagePath;
+    let caption = '';
     if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
       let type = this.filestoUpload[question.labelName][document].type.split('/');
       if (type[0] === 'video' || type[0] === 'audio') {
@@ -868,6 +981,7 @@ export class QuestionnaireComponent implements OnInit {
             window.open(this.selectedMessage[indx].path, '_blank');
           } else {
             imagePath = this.uploadedImages[indx].path;
+            caption = this.comments[question.labelName + '=' + document];
           }
         }
       }
@@ -882,6 +996,7 @@ export class QuestionnaireComponent implements OnInit {
           window.open(this.uploadedFiles[question.labelName][document].s3path, '_blank');
         } else {
           imagePath = this.uploadedImages[indx].s3path;
+          caption = this.uploadedImages[indx].comments;
         }
       }
     }
@@ -889,7 +1004,8 @@ export class QuestionnaireComponent implements OnInit {
       const imgobj = new Image(
         count,
         {
-          img: imagePath
+          img: imagePath,
+          description: caption
         },
       );
       this.image_list_popup.push(imgobj);
@@ -942,9 +1058,66 @@ export class QuestionnaireComponent implements OnInit {
       this.location.back();
     } else {
       this.filestoUpload = [];
-      this.getWaitlistDetails();
       this.editQnr();
+      this.returnAnswers.emit('reload');
       this.snackbarService.openSnackBar('Updated Successfully');
     }
+  }
+  showDataGridAddSection(question, value) {
+    this.showDataGrid[question.labelName] = value;
+    this.updatedGridIndex[question.labelName] = null;
+  }
+  saveDataGridColumn(question) {
+    let columns = [];
+    for (let column of question.dataGridProperties.dataGridColumns) {
+      if (this.dataGridColumns[question.labelName + '=' + column.order] || column.dataType === 'bool') {
+        columns[column.order] = this.dataGridColumns[question.labelName + '=' + column.order];
+      } else {
+        if (column.dataType === 'list' || column.dataType === 'fileUpload') {
+          columns[column.order] = [];
+        } else {
+          columns[column.order] = '';
+        }
+      }
+    }
+    if (!this.dataGridColumnsAnswerList[question.labelName]) {
+      this.dataGridColumnsAnswerList[question.labelName] = [];
+    }
+    if (this.updatedGridIndex[question.labelName] !== null) {
+      this.dataGridColumnsAnswerList[question.labelName][this.updatedGridIndex[question.labelName]] = columns;
+    } else {
+      this.dataGridColumnsAnswerList[question.labelName].push(columns);
+    }
+    this.cancelAddorUpdate(question);
+    this.onSubmit('inputChange');
+  }
+  editDataGrid(question, column) {
+    const index = this.dataGridColumnsAnswerList[question.labelName].indexOf(column);
+    Object.keys(column).forEach(key => {
+      this.dataGridColumns[question.labelName + '=' + key] = column[key];
+    });
+    this.updatedGridIndex[question.labelName] = index;
+    this.showDataGrid[question.labelName] = true;
+  }
+  deleteDataGrid(question, column) {
+    const index = this.dataGridColumnsAnswerList[question.labelName].indexOf(column);
+    this.dataGridColumnsAnswerList[question.labelName].splice(index, 1);
+    this.onSubmit('inputChange');
+  }
+  cancelAddorUpdate(question) {
+    this.showDataGrid[question.labelName] = false;
+    this.updatedGridIndex[question.labelName] = null;
+    for (let column of question.dataGridProperties.dataGridColumns) {
+      this.dataGridColumns[question.labelName + '=' + column.order] = {};
+    }
+  }
+  getColumnType(columns, column) {
+    const columnDetails = columns.filter(clmn => clmn.order === JSON.parse(column));
+    if (columnDetails[0]) {
+      return columnDetails[0].dataType;
+    }
+  }
+  getSectionCount() {
+    return Object.keys(this.groupedQnr).length;
   }
 }

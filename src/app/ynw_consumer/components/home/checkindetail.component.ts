@@ -71,6 +71,7 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
   type;
   accountId: any;
   customId: any;
+  questionnaires: any = [];
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -103,9 +104,22 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.getCommunicationHistory();
+    this.getCheckinDetails();
+    this.getFavouriteProvider();
+  }
+  getCheckinDetails() {
     this.subs.sink = this.sharedServices.getCheckinByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
       (data) => {
         this.waitlist = data;
+        if (this.waitlist.questionnaires && this.waitlist.questionnaires.length > 0) {
+          this.questionnaires = this.waitlist.questionnaires;
+        }
+        if (this.waitlist.releasedQnr && this.waitlist.releasedQnr.length > 0) {
+          const releasedQnrs = this.waitlist.releasedQnr.filter(qnr => qnr.status === 'released');
+          if (releasedQnrs.length > 0) {
+            this.getReleasedQnrs(releasedQnrs);
+          }
+        }
         this.api_loading = true;
         this.generateQR();
         this.getWtlistHistory(this.waitlist.ynwUuid, this.waitlist.providerAccount.id);
@@ -146,9 +160,7 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
       (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
-    this.getFavouriteProvider();
   }
-
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
@@ -314,7 +326,7 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
     }
   }
   joinMeetitng(actionObj) {
-    if(actionObj === 'wl'){
+    if (actionObj === 'wl') {
       this.getMeetingDetails(this.waitlist, 'waitlist');
     }
   }
@@ -331,5 +343,33 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
     });
     this.addnotedialogRef.afterClosed().subscribe(result => {
     });
+  }
+  getReleasedQnrs(releasedQnrs) {
+    this.consumer_services.getWaitlistQuestionnaireByUid(this.ynwUuid, this.providerId)
+      .subscribe(
+        (data: any) => {
+          const qnrs = data.filter(function (o1) {
+            return releasedQnrs.some(function (o2) {
+              return o1.id === o2.id;
+            });
+          });
+          this.questionnaires = this.questionnaires.concat(qnrs);
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  getQuestionAnswers(event) {
+    if (event === 'reload') {
+      this.getCheckinDetails();
+    }
+  }
+  getQnrStatus(qnr) {
+    const id = (qnr.questionnaireId) ? qnr.questionnaireId : qnr.id;
+    const questr = this.waitlist.releasedQnr.filter(questionnaire => questionnaire.id === id);
+    if (questr[0]) {
+      return questr[0].status;
+    }
   }
 }
