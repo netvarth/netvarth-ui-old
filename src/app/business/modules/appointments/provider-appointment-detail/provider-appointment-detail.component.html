@@ -113,6 +113,10 @@
                   <span>
                     {{check_in_statuses[waitlist_data.apptStatus | capitalizeFirst]}}
                   </span>
+                  <span *ngIf="waitlist_data.internalStatus"><small style="color:blue">{{waitlist_data.internalStatus |
+                    capitalizeFirst}}</small>
+
+                </span>
                 </div>
                 <div class="col-md-4 col-lg-4 col-xl-4 col-xs-5 stats-item">
                   <span class="status-label">DATE & TIME-WINDOW</span>
@@ -235,7 +239,7 @@
               <ul class="internal-history">
                 <li class="internal-status" *ngFor="let log of internalStatuslog">
                   <div class="time">{{log.DateTime}}</div>
-                  <div class="action">{{log.InternalStatus | capitalizeFirst}}</div>
+                  <!-- <div class="action">{{log.InternalStatus | capitalizeFirst}}</div> -->
                   <div class="action">{{log.InternalStatus | capitalizeFirst}}-<span class="user">{{log.User |
                       capitalizeFirst}}</span></div>
                   <!-- <div class="user">{{log.User | capitalizeFirst}}</div> -->
