@@ -73,6 +73,7 @@ export class VirtualFieldsComponent implements OnInit {
   provider: any;
   languageSelected: any = [];
   iseditLanguage=false;
+
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
@@ -396,7 +397,8 @@ export class VirtualFieldsComponent implements OnInit {
       location: ['', Validators.compose([Validators.required])],
       localarea:[''],
       state:[''],
-      country:['']
+      country:[''],
+      updateEmail:[false]
     });
 
     this.virtualForm.patchValue({ islanguage: 'yes' });
@@ -687,7 +689,9 @@ console.log(isinvalid);
         telegram["number"] = formdata.telegramnumber
         userObj['telegramNum'] = telegram;
       }
-      if (formdata.email !== '') {
+      console.log(formdata.updateEmail);
+      
+      if (formdata.email !== ''&& formdata.updateEmail) {
         userObj['email'] = formdata.email
       }
       userObj['gender'] = formdata.gender;
@@ -751,7 +755,7 @@ console.log(isinvalid);
       memberInfo.userProfile['telegramNum'] = telegram;
 
     }
-    if (formdata.email !== '') {
+    if (formdata.email !== '' && formdata.updateEmail) {
       memberInfo['userProfile']['email'] = formdata.email
     }
 
@@ -815,7 +819,7 @@ console.log(isinvalid);
       telegram["number"] = formdata.telegramnumber
       memberInfo['userProfile']['telegramNum'] = telegram;
     }
-    if (formdata.email !== '') {
+    if (formdata.email !== '' && formdata.updateEmail) {
       memberInfo['userProfile']['email'] = formdata.email
     }
 
