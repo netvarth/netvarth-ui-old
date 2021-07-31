@@ -12,7 +12,7 @@ const routes: Routes = [
         children: [
             { path: 'adjustdelay', component: AdjustscheduleDelayComponent },
             { path: 'appointment', component: AppointmentComponent },
-            { path: 'questionnaire', loadChildren: () => import('../../../shared/components/questionnaire/questionnaire.module').then(m => m.QuestionnaireModule) },
+            { path: 'questionnaires', loadChildren: () => import('../questionnaire-list-popup/questionnaire-list-popup.module').then(m => m.QuestionnaireListPopupModule) },
             { path: ':id', component: ProviderAppointmentDetailComponent },
             // { path: ':id/user', component: UserServiceChnageComponent }
             { path: ':id/user', loadChildren: () => import('../../../shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },

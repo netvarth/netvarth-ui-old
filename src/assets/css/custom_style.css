@@ -14207,3 +14207,24 @@ font-weight: 700 !important;
     display: none !important;
   }
 }
+
+.label {
+  color: #3f51b5 !important;
+  font-weight: normal;
+  margin-bottom: 0!important;
+}
+
+.serv-county-code {
+  max-width: 40px;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  padding: 0;
+}
+
+.serv-phone-code {
+   border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    padding: 0;
+}

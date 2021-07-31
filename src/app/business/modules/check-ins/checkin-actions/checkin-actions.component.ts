@@ -26,7 +26,6 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { ListRecordingsDialogComponent } from '../../../../shared/components/list-recordings-dialog/list-recordings-dialog.component';
 import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { VoiceConfirmComponent } from '../../customers/video-confirm/voice-confirm.component';
-import { QuestionnaireListPopupComponent } from '../../questionnaire-list-popup/questionnaire-list-popup.component';
 
 
 @Component({
@@ -1116,26 +1115,13 @@ export class CheckinActionsComponent implements OnInit {
         });
     }
     showQnr() {
-        if (!this.data.multiSelection && this.checkin.releasedQnr && this.checkin.releasedQnr.length > 0) {
-            const notSubmittedQnrs = this.checkin.releasedQnr.filter(qnr => qnr.status !== 'submitted');
-            if (notSubmittedQnrs.length > 0) {
-                return true;
-            }
+        if (!this.data.multiSelection && this.checkin.releasedQnr && this.checkin.releasedQnr.length > 1) {
+            return true;
         }
         return false;
     }
     showQuestionnaires() {
         this.dialogRef.close();
-        const dialogrefd = this.dialog.open(QuestionnaireListPopupComponent, {
-            width: '50%',
-            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-            disableClose: true,
-            data: {
-                waitlist: this.checkin,
-                source: 'checkin'
-            }
-        });
-        dialogrefd.afterClosed().subscribe(result => {
-        });
+        this.router.navigate(['provider', 'check-ins', 'questionnaires'], { queryParams: { source: 'checkin', uid: this.checkin.ynwUuid, releasedQnr: JSON.stringify(this.checkin.releasedQnr) } });
     }
 }

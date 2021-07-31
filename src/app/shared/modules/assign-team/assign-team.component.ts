@@ -215,6 +215,7 @@ export class AssignTeam implements OnInit {
             .subscribe(
               data => {
                 //this.router.navigate(['provider', 'check-ins']);
+                this.snackbarService.openSnackBar('Assigned team successfully', { 'panelclass': 'snackbarerror' });
                 this.location.back();
               },
               error => {

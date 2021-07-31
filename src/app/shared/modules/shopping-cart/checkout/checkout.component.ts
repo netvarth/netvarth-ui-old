@@ -4,7 +4,7 @@ import { Component, OnInit, OnDestroy, HostListener, AfterViewInit, ViewChild, E
 import { SharedFunctions } from '../../../functions/shared-functions';
 import { Location, DOCUMENT } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 //  import { ConsumerServices } from '../../../ynw_consumer/services/consumer-services.service';
 import { AddAddressComponent } from './add-address/add-address.component';
 import { SharedServices } from '../../../services/shared-services';
@@ -188,6 +188,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   razorModel: Razorpaymodel;
   livetrack: any;
   prepayAmount: any;
+  customId: any; // To know the source whether the router came from Landing page or not
+  businessId: any;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -223,7 +225,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.route.queryParams.subscribe(
       params => {
         this.provider_id = params.providerId;
-      });
+        if (params.customId) {
+          this.customId = params.customId;
+      }
+      });      
 
 
 
@@ -1096,7 +1101,18 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             this.lStorageService.removeitemfromLocalStorage('order_spId');
             this.lStorageService.removeitemfromLocalStorage('order');
             this.snackbarService.openSnackBar('Your Order placed successfully');
-            this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
+            let queryParams= {
+            'source': 'order' 
+            }
+            if (this.customId) {
+              queryParams['customId'] = this.customId;
+              queryParams['accountId'] = this.account_id; 
+            }
+            let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
+            };
+            this.router.navigate(['consumer'],  navigationExtras);
+            // this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
           }
         },
           error => {
@@ -1152,7 +1168,18 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             this.lStorageService.removeitemfromLocalStorage('order_spId');
             this.lStorageService.removeitemfromLocalStorage('order');
             this.snackbarService.openSnackBar('Your Order placed successfully');
-            this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
+            let queryParams= {
+              'source': 'order' 
+              }
+              if (this.customId) {
+                queryParams['customId'] = this.customId;
+                queryParams['accountId'] = this.account_id; 
+              }
+              let navigationExtras: NavigationExtras = {
+                  queryParams: queryParams
+              };
+              this.router.navigate(['consumer'],  navigationExtras);
+            // this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
           }
         },
           error => {
@@ -1656,7 +1683,18 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             this.lStorageService.removeitemfromLocalStorage('order_spId');
             this.lStorageService.removeitemfromLocalStorage('order');
             this.snackbarService.openSnackBar('Your Order placed successfully');
-            this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
+            let queryParams= {
+              'source': 'order' 
+              }
+              if (this.customId) {
+                queryParams['customId'] = this.customId;
+                queryParams['accountId'] = this.account_id; 
+              }
+              let navigationExtras: NavigationExtras = {
+                  queryParams: queryParams
+              };
+              this.router.navigate(['consumer'],  navigationExtras);
+            // this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
           }
         },
           error => {

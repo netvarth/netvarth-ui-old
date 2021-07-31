@@ -110,3 +110,9 @@ form.virtual-fields, form.virtual-fields .mat-dialog-content {
 .mat-dialog-content >.ng-start-inserted div.optional {
 margin-bottom:none!important;
 }
+.updateemail{
+    font-size:10px;
+    color:grey;
+    font-style:italic;
+
+}

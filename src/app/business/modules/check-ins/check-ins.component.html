@@ -26,7 +26,7 @@
                   </li>
                 </ul>
               </li>
-              <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
+              <li *ngIf="admin"  class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
             </ul>
           </li>
           <ng-container
@@ -598,7 +598,7 @@
                   </div>
                   <span style="color:green" *ngIf="checkin.internalStatus"> {{
                     checkin.internalStatus }}</span>
-                  <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
+                  <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0  && !checkin.provider">
                     <!-- Team Name -->
                     {{getUsersList(checkin.teamId)}}
                   </div>
@@ -844,7 +844,7 @@
                   </div>
                   <span style="color:green" *ngIf="checkin.internalStatus">{{
                     checkin.internalStatus }}</span>
-                  <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
+                  <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0 && !checkin.provider">
                     <!-- Team Name -->
                     {{getUsersList(checkin.teamId)}}
                   </div>
@@ -1403,7 +1403,7 @@
                 </div>
                 <span style="color:green" *ngIf="checkin.internalStatus"> {{
                   checkin.internalStatus }}</span>
-                <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
+                <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0 && !checkin.provider">
                   <!-- Team Name -->
                   {{getUsersList(checkin.teamId)}}
                 </div>
@@ -2096,7 +2096,7 @@
                 </div>
                 <span style="color:green" *ngIf="checkin.internalStatus"> {{
                   checkin.internalStatus }}</span>
-                <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0">
+                <div class="bold user-txt-clr" *ngIf="checkin.teamId !== 0 && !checkin.provider">
                   <!-- {{}} Team Name -->
                   {{getUsersList(checkin.teamId)}}
                 </div>

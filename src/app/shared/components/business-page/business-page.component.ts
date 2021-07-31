@@ -2859,13 +2859,19 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       };
       this.lStorageService.setitemonLocalStorage('order', this.orderList);
       this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
+      // const navigationExtras: NavigationExtras = {
+      //   queryParams: {
+      //     account_id: this.provider_bussiness_id,
+      //     unique_id: this.provider_id,
+      //   }
+      // };
+      let queryParam = {
+        account_id: this.provider_bussiness_id,
+        unique_id: this.provider_id,
+      };
+      queryParam['customId'] = this.accountEncId;
       const navigationExtras: NavigationExtras = {
-        queryParams: {
-          account_id: this.provider_bussiness_id,
-          unique_id: this.provider_id,
-
-        }
-
+        queryParams: queryParam,
       };
       this.router.navigate(['order/shoppingcart'], navigationExtras);
     }

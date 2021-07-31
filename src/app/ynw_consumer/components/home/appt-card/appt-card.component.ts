@@ -46,6 +46,7 @@ export class ApptCardComponent implements OnInit, OnChanges {
   
   virtualMode;
   customId: any;
+  showQnrBtn = false;
   constructor(
     private wordProcessor: WordProcessor, 
     private dateTimeProcessor: DateTimeProcessor, 
@@ -58,6 +59,12 @@ export class ApptCardComponent implements OnInit, OnChanges {
   }
   ngOnChanges() {
     // this.cdref.detectChanges();
+    if (this.booking.releasedQnr && this.booking.releasedQnr.length > 0) {
+      const releasedQnrs = this.booking.releasedQnr.filter(qnr => qnr.status === 'released');
+      if (releasedQnrs.length > 0) {
+        this.showQnrBtn = true;
+      }
+    }
     if (this.booking.apptStatus == 'Confirmed' || this.booking.apptStatus == 'Arrived') {
       this.showRescheduleBtn = true;
     }
@@ -149,6 +156,7 @@ export class ApptCardComponent implements OnInit, OnChanges {
     actionObj['action'] = action;
     actionObj['booking'] = booking;
     actionObj['event'] = event;
+    actionObj['timetype'] = this.type;
     this.actionPerformed.emit(actionObj);
   }
   getBookingStatusClass(status) {

@@ -68,6 +68,7 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
   type;
   accountId: any;
   customId: any;
+  questionnaires: any = [];
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -99,10 +100,22 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.getCommunicationHistory();
+    this.getApptDetails();
+    this.getFavouriteProvider();
+  }
+  getApptDetails() {
     this.subs.sink = this.sharedServices.getAppointmentByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
       (data) => {
         this.appt = data;
-        console.log(this.appt)
+        if (this.appt.questionnaires && this.appt.questionnaires.length > 0) {
+          this.questionnaires = this.appt.questionnaires;
+        }
+        if (this.appt.releasedQnr && this.appt.releasedQnr.length > 0) {
+          const releasedQnrs = this.appt.releasedQnr.filter(qnr => qnr.status === 'released');
+          if (releasedQnrs.length > 0) {
+            this.getReleasedQnrs(releasedQnrs);
+          }
+        }
         this.api_loading = true;
         this.generateQR();
         this.getAppointmentHistory(this.appt.uid, this.appt.providerAccount.id);
@@ -139,7 +152,6 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
       (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
-    this.getFavouriteProvider();
   }
   ngOnDestroy(): void {
     this.subs.unsubscribe();
@@ -307,7 +319,7 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
       );
   }
   joinMeetitng(actionObj) {
-    if(actionObj === 'appt'){
+    if (actionObj === 'appt') {
       this.getMeetingDetails(this.appt, 'appt');
     }
   }
@@ -324,5 +336,33 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
     });
     this.addnotedialogRef.afterClosed().subscribe(result => {
     });
+  }
+  getReleasedQnrs(releasedQnrs) {
+    this.consumer_services.getApptQuestionnaireByUid(this.ynwUuid, this.providerId)
+      .subscribe(
+        (data: any) => {
+          const qnrs = data.filter(function (o1) {
+            return releasedQnrs.some(function (o2) {
+              return o1.id === o2.id;
+            });
+          });
+          this.questionnaires = this.questionnaires.concat(qnrs);
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  getQuestionAnswers(event) {
+    if (event === 'reload') {
+      this.getApptDetails();
+    }
+  }
+  getQnrStatus(qnr) {
+    const id = (qnr.questionnaireId) ? qnr.questionnaireId : qnr.id;
+    const questr = this.appt.releasedQnr.filter(questionnaire => questionnaire.id === id);
+    if (questr[0]) {
+      return questr[0].status;
+    }
   }
 }

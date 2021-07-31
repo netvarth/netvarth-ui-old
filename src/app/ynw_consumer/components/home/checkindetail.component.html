@@ -4,7 +4,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading top-row ">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                        <app-header *ngIf="shared_functions.checkLogin()" [customId]="customId" [accountId]="accountId" [showHeaderAction]="true"></app-header>
+                        <app-header *ngIf="shared_functions.checkLogin()" [customId]="customId" [accountId]="accountId"
+                            [showHeaderAction]="true"></app-header>
                     </div>
                 </div>
                 <div class="panel-body no-padding">
@@ -19,8 +20,9 @@
                             </div> -->
                             <!-- Title with back option -->
                             <div class="card title-gb">
-                                <h5 class="mgn-up-10 index-head" *ngIf="api_loading">{{titlename}} <a class="pull-left mgn-rt-20 back-btn"
-                                        (click)="gotoPrev()"><i class="fa fa-arrow-left"></i></a></h5>
+                                <h5 class="mgn-up-10 index-head" *ngIf="api_loading">{{titlename}} <a
+                                        class="pull-left mgn-rt-20 back-btn" (click)="gotoPrev()"><i
+                                            class="fa fa-arrow-left"></i></a></h5>
                             </div>
                             <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                 <div class="card" *ngIf="!api_loading">
@@ -50,8 +52,9 @@
                                             <div *ngIf="waitlist.provider" class="mgn-up-10 usr-name">
                                                 <span>{{provider_label | capitalizeFirst}} :</span>
                                                 <span>
-                                                    {{(waitlist.provider.businessName) ? waitlist.provider.businessName : waitlist.provider.firstName +
-                                                        ' ' + waitlist.provider.lastName}}
+                                                    {{(waitlist.provider.businessName) ? waitlist.provider.businessName
+                                                    : waitlist.provider.firstName +
+                                                    ' ' + waitlist.provider.lastName}}
                                                     <!-- {{waitlist.provider.businessName | capitalizeFirst}} -->
                                                     <!-- {{waitlist.provider.firstName | capitalizeFirst}}
                                                     {{waitlist.provider.lastName | capitalizeFirst}} -->
@@ -70,8 +73,7 @@
                                                         href="{{waitlist.service.virtualCallingModes[0].value}}"
                                                         target="blank">Join Meeting</a>
                                                     <a *ngIf="waitlist.waitlistStatus !== 'cancelled' && type === 'today' && type === 'today' && waitlist.service.serviceType === 'virtualService' && (waitlist.service.virtualCallingModes[0].callingMode == 'VideoCall')"
-                                                        class="joinMeeting"
-                                                        (click)="joinMeetitng('wl')"
+                                                        class="joinMeeting" (click)="joinMeetitng('wl')"
                                                         target="blank">Join Now</a>
                                                 </span>
                                             </div>
@@ -96,13 +98,16 @@
                                                 <span class="item-label-val">{{waitlist.countryCode}}
                                                     {{waitlist.waitlistPhoneNumber}}</span>
                                             </div>
-                                            <div class="each-item" *ngIf="waitlist.service.serviceType === 'virtualService'&&waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                            <div class="each-item"
+                                                *ngIf="waitlist.service.serviceType === 'virtualService'&&waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                 <span class="item-head">WhatsApp #</span>
-                                                <span class="item-label-val">+{{ waitlist.virtualService[waitlist.service.virtualCallingModes[0].callingMode]}}</span>
+                                                <span class="item-label-val">+{{
+                                                    waitlist.virtualService[waitlist.service.virtualCallingModes[0].callingMode]}}</span>
                                             </div>
                                             <div class="each-item" *ngIf="waitlist.waitlistingFor[0].email">
                                                 <span class="item-head">Email</span>
-                                                <span class="item-label-val">{{ waitlist.waitlistingFor[0].email}}</span>
+                                                <span class="item-label-val">{{
+                                                    waitlist.waitlistingFor[0].email}}</span>
                                             </div>
                                             <div class="each-item" *ngIf="waitlist.amountPaid">
                                                 <span class="item-head">Amount Paid</span>
@@ -125,7 +130,8 @@
                                     <div class="mgn-bt-20 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stats-bar"
                                         style="padding: 10px !important; display: flex !important; align-items: flex-start !important; justify-content: space-between !important;">
                                         <div *ngIf="(waitlist.service.serviceType === 'virtualService' && waitlist.waitlistStatus !== 'arrived') || waitlist.service.serviceType !== 'virtualService'"
-                                        class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item" style="padding-right: 4px !important; padding-left: 4px !important;">
+                                            class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item"
+                                            style="padding-right: 4px !important; padding-left: 4px !important;">
                                             <span class="status-label">STATUS</span>
                                             <span>
                                                 <!-- <div *ngIf="waitlist.waitlistStatus == 'checkedIn'"
@@ -142,13 +148,18 @@
                                                 </div>
                                             </span>
                                         </div>
-                                        <div class="col-md-4 col-lg-4 col-xl-4 col-xs-4 stats-item" style="padding-right: 4px !important; padding-left: 4px !important; flex: 1 !important;">
+                                        <div class="col-md-4 col-lg-4 col-xl-4 col-xs-4 stats-item"
+                                            style="padding-right: 4px !important; padding-left: 4px !important; flex: 1 !important;">
                                             <span class="status-label">DATE & TIME-WINDOW</span>
                                             <span class="item-label-val">{{waitlist.date | date:newDateFormat}}</span>
-                                            <span class="item-label-val"><span style="display: inline-block !important;">{{waitlist.queue.queueStartTime}}</span> -
-                                                <span style="display: inline-block !important;">{{waitlist.queue.queueEndTime}}</span></span>
+                                            <span class="item-label-val"><span
+                                                    style="display: inline-block !important;">{{waitlist.queue.queueStartTime}}</span>
+                                                -
+                                                <span
+                                                    style="display: inline-block !important;">{{waitlist.queue.queueEndTime}}</span></span>
                                         </div>
-                                        <div class="col-md-2 col-lg-2 col-xl-2 col-xs-3 stats-item txt-align-center" style="padding-right: 4px !important; padding-left: 4px !important;">
+                                        <div class="col-md-2 col-lg-2 col-xl-2 col-xs-3 stats-item txt-align-center"
+                                            style="padding-right: 4px !important; padding-left: 4px !important;">
                                             <span class="status-label"
                                                 *ngIf="waitlist.token && waitlist.appxWaitingTime>=0">TOKEN NO</span>
                                             <!-- virtual time today -->
@@ -183,7 +194,8 @@
                                                 at : {{waitlist.serviceTime}}</span>
                                         </div>
                                         <div *ngIf="waitlist.batchName"
-                                            class="col-md-2 col-lg-2 col-xl-2 col-xs-2 stats-item" style="padding-right: 4px !important; padding-left: 4px !important;">
+                                            class="col-md-2 col-lg-2 col-xl-2 col-xs-2 stats-item"
+                                            style="padding-right: 4px !important; padding-left: 4px !important;">
                                             <span class="status-label">BATCH</span>
                                             <span class="item-label-val">{{waitlist.batchName}}</span>
                                         </div>
@@ -236,18 +248,47 @@
                                     </div>
                                 </div>
                                 <!-- Questionnaire starts-->
-                                <div class="card"
-                                    *ngIf="waitlist && waitlist.questionnaire && waitlist.questionnaire.questionAnswers && waitlist.questionnaire.questionAnswers.length > 0">
-                                    <div class="pad-10 pad-bt-0">
+                                <div class="card" *ngIf="questionnaires.length > 0">
+                                    <div class="pad-10">
                                         <h3 class="no-margin">
                                             {{questionnaire_heading}}
                                         </h3>
                                     </div>
-                                    <div class="c-details">
-                                        <app-questionnaire [source]="'consCheckin'" [uuid]="waitlist.ynwUuid"
-                                            [accountId]="waitlist.providerAccount.id" [type]="'details'">
-                                        </app-questionnaire>
-                                    </div>
+                                    <ng-container *ngIf="questionnaires.length > 1">
+                                        <mat-accordion class="qnr-accord no-padding" *ngFor="let qnr of questionnaires">
+                                            <mat-expansion-panel>
+                                                <mat-expansion-panel-header>
+                                                    <mat-panel-title>
+                                                        {{(qnr.questionnaireName) ? qnr.questionnaireName :
+                                                        qnr.questionnaireId}}
+                                                        <div class="qnrstatus">
+                                                            <span class="greenc"
+                                                                *ngIf="getQnrStatus(qnr) === 'submitted'">Submitted</span>
+                                                            <span class="red"
+                                                                *ngIf="getQnrStatus(qnr) !== 'submitted'">Released</span>
+                                                        </div>
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <div class="c-details">
+                                                    <app-questionnaire [questionnaireList]="qnr"
+                                                        [source]="'consCheckin'" [uuid]="waitlist.ynwUuid"
+                                                        [accountId]="waitlist.providerAccount.id" [type]="'details'"
+                                                        [waitlistStatus]="waitlist.waitlistStatus"
+                                                        (returnAnswers)="getQuestionAnswers($event)">
+                                                    </app-questionnaire>
+                                                </div>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                    </ng-container>
+                                    <ng-container *ngIf="questionnaires.length === 1">
+                                        <div class="c-details" *ngFor="let qnr of questionnaires">
+                                            <app-questionnaire [questionnaireList]="qnr" [source]="'consCheckin'"
+                                                [uuid]="waitlist.ynwUuid" [accountId]="waitlist.providerAccount.id"
+                                                [type]="'details'" [waitlistStatus]="waitlist.waitlistStatus"
+                                                (returnAnswers)="getQuestionAnswers($event)">
+                                            </app-questionnaire>
+                                        </div>
+                                    </ng-container>
                                 </div>
                                 <!-- Questionnaire end-->
                             </div>

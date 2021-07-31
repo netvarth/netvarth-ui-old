@@ -130,6 +130,13 @@
     <!-- Actions and status -->
     <mat-grid-tile-footer>
         <div class="">
+
+            <span *ngIf="showQnrBtn" class="mgn-rt-5">
+                <button  mat-flat-button
+                    class="btns" (click)="cardActionPerformed('wl', 'details', booking, $event)">More Info</button>
+            </span>
+
+            
             <span *ngIf="showJoinOtherVideoBtn" class="mgn-rt-5" (click)="stopprop($event)">
                 <a [href]="booking.service.virtualCallingModes[0].value" target="_blank">
                     <button mat-flat-button class="btns">{{videoBtnCaption}}</button>
