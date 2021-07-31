@@ -372,6 +372,7 @@ export class QuestionnaireComponent implements OnInit {
           this.audioVideoFiles.splice(index, 1);
         }
         delete this.filestoUpload[question.labelName][document];
+        this.comments[question.labelName + '=' + document] = '';
         if (this.answers[question.labelName] && this.answers[question.labelName].length > 0) {
           const filteredAnswer = this.answers[question.labelName].filter(answer => answer.caption === document);
           if (filteredAnswer[0]) {
@@ -392,6 +393,7 @@ export class QuestionnaireComponent implements OnInit {
       const index = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][document]);
       if (index !== -1) {
         this.uploadedFiles[question.labelName][document] = 'remove';
+        this.comments[question.labelName + '=' + document] = '';
       }
     }
     this.onSubmit('inputChange');
@@ -1108,7 +1110,7 @@ export class QuestionnaireComponent implements OnInit {
     this.showDataGrid[question.labelName] = false;
     this.updatedGridIndex[question.labelName] = null;
     for (let column of question.dataGridProperties.dataGridColumns) {
-      this.dataGridColumns[question.labelName + '=' + column.order] = {};
+      this.dataGridColumns[question.labelName + '=' + column.order] = '';
     }
   }
   getColumnType(columns, column) {

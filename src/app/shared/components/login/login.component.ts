@@ -238,7 +238,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
               const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
               this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
               this.lStorageService.setitemonLocalStorage('qrp', data.password);
+              
               this.dialogRef.close('success');
+              this.lStorageService.setitemonLocalStorage('showTelePop', 'true');
               // this.tele_num = loginId;
               // if(dialCode.startsWith('+')){
               //   this.countryCode = dialCode.substring(1);

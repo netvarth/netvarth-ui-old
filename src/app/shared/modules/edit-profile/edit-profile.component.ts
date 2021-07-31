@@ -118,8 +118,8 @@ export class EditProfileComponent implements OnInit {
       email1: [''],
       countryCode_whtsap:[''],
       countryCode_telegram:[''],
-      whatsappnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
-      telegramnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
+      whatsappnumber: [''],
+      telegramnumber: [''],
     });
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
     console.log(this.curtype);

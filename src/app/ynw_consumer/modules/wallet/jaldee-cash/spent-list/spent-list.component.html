@@ -19,7 +19,8 @@
           {{details.spentToBizName}}
           </td>
           <td >
-               <span [ngClass]="details.jCashTxnType==='REFUNDED'?'refund':'spent'">{{details.jCashTxnType==='REFUNDED'?'(+)':' '}}&nbsp;<i class="fa fa-inr" aria-hidden="true" style="font-size:12px"></i>&nbsp;{{details.amount}}</span>
+               <!-- <span [ngClass]="details.jCashTxnType==='REFUNDED'?'refund':'spent'">{{details.jCashTxnType==='REFUNDED'?'(+)':' '}}&nbsp;<i class="fa fa-inr" aria-hidden="true" style="font-size:12px"></i>&nbsp;{{details.amount}}</span> -->
+                <span [ngClass]="details.jCashTxnType==='REFUNDED'?'refund':'spent'"><i class="fa fa-inr" aria-hidden="true" style="font-size:12px"></i>&nbsp;{{details.amount}}</span> 
           </td>
           <td >
             {{details.createdDate | date: newDateFormat}}

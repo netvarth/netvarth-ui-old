@@ -129,7 +129,7 @@
                       {{getAppxTime(waitlist_data)}}</span>
                   </div>
                 </div>
-                <div class="col-md-4 col-lg-4 col-xl-4 col-xs-6 stats-item"
+                <!-- <div class="col-md-4 col-lg-4 col-xl-4 col-xs-6 stats-item"
                   *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] && (waitlist_data.service.serviceType === 'virtualService')">
                   <span class="status-label">STATUS</span>
                   <span>
@@ -146,7 +146,30 @@
                       capitalizeFirst}}</small>
 
                   </span>
+                </div> -->
+                   <div class="col-md-4 col-lg-4 col-xl-4 col-xs-6 stats-item"
+                  *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst]">
+                  <span class="status-label">STATUS</span>
+                  <span>
+                    {{check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst]}}
+                  </span>
+                  <span *ngIf="waitlist_data.internalStatus"><small style="color:blue">{{waitlist_data.internalStatus |
+                    capitalizeFirst}}</small>
+
+                </span>
                 </div>
+                <!-- <div class="col-md-4 col-lg-4 col-xl-4 col-xs-6 stats-item"
+                  *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] && (waitlist_data.service.serviceType !== 'virtualService')">
+                  <span class="status-label">STATUS</span>
+                  <span>
+                    {{check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst]}}
+                  </span>
+                  <span *ngIf="waitlist_data.internalStatus"><small style="color:blue">{{waitlist_data.internalStatus |
+                      capitalizeFirst}}</small>
+
+                  </span>
+                </div> -->
+
                 <div class="col-md-4 col-lg-4 col-xl-4 col-xs-12 stats-item">
                   <span class="status-label">DATE & TIME-WINDOW</span>
                   <span>
