@@ -996,8 +996,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   getCounts() {
     this.today_waitlist_count = 0;
     this.history_waitlist_count = 0;
+    this.future_waitlist_count = 0;
     if (this.time_type !== 2) {
-      this.future_waitlist_count = 0;
       this.getFutureAppointmentsCount()
         .then(
           (result) => {
@@ -1133,7 +1133,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       Mfilter = {};
       if (queueid || this.activeUser) {
         if (this.activeUser) {
-          Mfilter['provider-eq'] = this.activeUser;
+          if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+            Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
+          } else {
+            Mfilter['provider-eq'] = this.activeUser;
+          }
         } else {
           Mfilter['schedule-eq'] = queueid;
         }
@@ -1166,7 +1170,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           if (this.activeUser && this.unassignview) {
             Mfilter['provider-eq'] = null;
           } else {
-            Mfilter['provider-eq'] = this.activeUser;
+            if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+              Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
+            } else {
+              Mfilter['provider-eq'] = this.activeUser;
+            }
           }
         } else {
           if (this.unassignview) {
@@ -1177,7 +1185,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       } else {
         if (this.activeUser) {
-          Mfilter['provider-eq'] = this.activeUser;
+          if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+            Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
+          } else {
+            Mfilter['provider-eq'] = this.activeUser;
+          }
         } else {
           Mfilter['schedule-eq'] = this.selQIds;
         }
@@ -1216,11 +1228,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     console.log('hisory', this.active_user);
     if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
-      // if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
-      //   Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.active_user.id;
-      // } else {
+      if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+        Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.active_user.id;
+      } else {
         Mfilter['provider-eq'] = this.active_user.id;
-      // }
+      }
     }
     return new Promise((resolve) => {
       this.provider_services.getHistoryAppointmentsCount(Mfilter)
@@ -1266,11 +1278,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.unassignview) {
           Mfilter['provider-eq'] = null;
         } else {
-          // if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
-          //   Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
-          // } else {
+          if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+            Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
+          } else {
             Mfilter['provider-eq'] = this.activeUser;
-          // }
+          }
         }
       }
       else {
@@ -1362,11 +1374,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.unassignview) {
           Mfilter['provider-eq'] = null;
         } else {
-          // if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
-          //   Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
-          // } else {
+          if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+            Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
+          } else {
             Mfilter['provider-eq'] = this.activeUser;
-          // }
+          }
         }
       } else {
         if (this.unassignview) {
@@ -1412,11 +1424,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log("in history");
     let Mfilter = this.setFilterForApi();
     if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
-      // if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
-      //   Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.active_user.id;
-      // } else {
+      if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+        Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.active_user.id;
+      } else {
         Mfilter['provider-eq'] = this.active_user.id;
-      // }
+      }
     }
     const promise = this.getHistoryAppointmentsCount(Mfilter);
     promise.then(

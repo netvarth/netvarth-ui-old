@@ -116,7 +116,7 @@ export class InboxOuterComponent implements OnInit {
           this.sortMessages();
           this.groupedMsgs = this.shared_functions.groupBy(this.messages, 'accountId');
           if (this.selectedProvider !== '') {
-            this.selectedUserMessages = this.groupedMsgs[this.selectedProvider];
+            this.selectedUserMessages = (this.groupedMsgs[this.selectedProvider]) ? this.groupedMsgs[this.selectedProvider] : [];
             const unreadMsgs = this.selectedUserMessages.filter(msg => !msg.read && msg.owner.id !== this.userDet.id);
             if (unreadMsgs.length > 0) {
               const ids = unreadMsgs.map(msg => msg.messageId);
@@ -136,7 +136,7 @@ export class InboxOuterComponent implements OnInit {
       );
   }
   goBack() {
-    if (this.small_device_display && this.showChat) {
+    if (this.small_device_display && this.showChat && !this.accId) {
       this.showChat = false;
     } else {
       this.location.back();
