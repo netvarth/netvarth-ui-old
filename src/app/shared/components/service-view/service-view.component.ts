@@ -495,6 +495,7 @@ export class ServiceViewComponent implements OnInit {
     this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
   }
   generateServicesAndDoctorsForLocation(providerId, locationId) {
+    this.loading = true;
     this.getWaitlistServices(locationId)
       .then((wlServices: any) => {
         this.wlServices = wlServices;
