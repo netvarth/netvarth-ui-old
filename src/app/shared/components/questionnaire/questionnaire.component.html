@@ -19,13 +19,14 @@
         [class.no-padding]="uuid && (source === 'consCheckin' || source === 'consAppt')">
         <div class="col-xl-12 force_center" [class.no-padding]="uuid">
             <div class="my-5">
-                <div class="qnrsec" *ngFor="let qnr of groupedQnr | keyvalue" [class.section-shadow]="getSectionCount() > 1">
+                <div class="qnrsec" *ngFor="let qnr of groupedQnr | keyvalue"
+                    [class.section-shadow]="getSectionCount() > 1">
                     <div class="qnr-section" *ngIf="getSectionCount() > 1">{{qnr.key}}</div>
                     <div class="form-group card mgn-0" *ngFor="let question of qnr.value">
                         <label class="col-12 quest">{{getQuestion(question).label}}
-                            <i class="fa fa-minus-circle pull-right" aria-hidden="true"
+                            <!-- <i class="fa fa-minus-circle pull-right" aria-hidden="true"
                                 *ngIf="!buttonDisable && !disableInput() && getQuestion(question).fieldDataType === 'dataGrid' && showDataGrid[getQuestion(question).labelName]"
-                                (click)="showDataGridAddSection(getQuestion(question), false)"></i>
+                                (click)="showDataGridAddSection(getQuestion(question), false)"></i> -->
                             <i class="fa fa-plus-circle pull-right" aria-hidden="true"
                                 *ngIf="!buttonDisable && !disableInput() && getQuestion(question).fieldDataType === 'dataGrid' && !showDataGrid[getQuestion(question).labelName]"
                                 (click)="showDataGridAddSection(getQuestion(question), true)"></i>
@@ -172,8 +173,12 @@
                                 <thead>
                                     <th *ngFor="let column of getQuestion(question).dataGridProperties.dataGridColumns">
                                         {{column.columnId}}</th>
-                                    <th *ngIf="!buttonDisable && !disableInput()"></th>
-                                    <th *ngIf="!buttonDisable && !disableInput()"></th>
+                                    <th
+                                        *ngIf="!buttonDisable && !disableInput() && !showDataGrid[getQuestion(question).labelName]">
+                                    </th>
+                                    <th
+                                        *ngIf="!buttonDisable && !disableInput() && !showDataGrid[getQuestion(question).labelName]">
+                                    </th>
                                 </thead>
                                 <tbody>
                                     <tr
@@ -188,11 +193,13 @@
                                                 {{data.value}}
                                             </div>
                                         </td>
-                                        <td *ngIf="!buttonDisable && !disableInput()">
+                                        <td
+                                            *ngIf="!buttonDisable && !disableInput() && !showDataGrid[getQuestion(question).labelName]">
                                             <i class="fa fa-pen"
                                                 (click)="editDataGrid(getQuestion(question), column)"></i>
                                         </td>
-                                        <td *ngIf="!buttonDisable && !disableInput()">
+                                        <td
+                                            *ngIf="!buttonDisable && !disableInput() && !showDataGrid[getQuestion(question).labelName]">
                                             <i class="fa fa-trash"
                                                 (click)="deleteDataGrid(getQuestion(question), column)"></i>
                                         </td>
