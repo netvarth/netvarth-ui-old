@@ -111,7 +111,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     });
     this.subscription = this.shared_functions.getMessage().subscribe((message) => {
       switch (message.type) {
-        case 'statuschange':
+        case 'reload':
           this.getInboxMessages();
           break;
       }

@@ -14,6 +14,7 @@ import { BookingPrivateNotesModule } from './booking-private-notes/booking-priva
 import { BookingDetailRoutingModule } from './booking-detail.routing.module';
 import { BookingDetailComponent } from './booking-detail.component';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
+import { QuestionnaireListPopupModule } from '../../questionnaire-list-popup/questionnaire-list-popup.module';
 
 @NgModule({
   declarations: [BookingDetailComponent],
@@ -31,7 +32,8 @@ import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.m
     QuestionnaireModule,
     InboxListModule,
     BookingPrivateNotesModule,
-    CapitalizeFirstPipeModule
+    CapitalizeFirstPipeModule,
+    QuestionnaireListPopupModule
   ],
   exports: [BookingDetailComponent]
 })

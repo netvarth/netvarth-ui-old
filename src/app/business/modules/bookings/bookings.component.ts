@@ -14,7 +14,7 @@ export class BookingsComponent implements OnInit {
   ngOnInit(): void {
     this.userDet = this.groupService.getitemFromGroupStorage('ynw-user');
     if (this.userDet.accountType === 'BRANCH') {
-      if (this.userDet.adminPrivilege) {
+      if (this.userDet.adminPrivilege || this.userDet.userType === 5) {
         this.admin = true;
       } else {
         this.providerId = this.userDet.id;

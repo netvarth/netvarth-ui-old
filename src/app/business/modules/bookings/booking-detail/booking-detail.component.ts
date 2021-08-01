@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
@@ -40,10 +40,12 @@ export class BookingDetailComponent implements OnInit {
     private activated_route: ActivatedRoute,
     private snackbarService: SnackbarService,
     private sharedFunctions: SharedFunctions,
-    private wordProcessor: WordProcessor
+    private wordProcessor: WordProcessor,
+    private router: Router
   ) {
     this.activated_route.queryParams.subscribe(params => {
       this.bookingType = params.type;
+      console.log('this.bookingType', this.bookingType);
       this.waitlist_id = params.uid;
       if (params.waitlistMgrSettings) {
         this.showToken = params.waitlistMgrSettings.showTokenId;
@@ -52,7 +54,7 @@ export class BookingDetailComponent implements OnInit {
 
     this.subscription = this.sharedFunctions.getMessage().subscribe((message) => {
       switch (message.type) {
-        case 'statuschange':
+        case 'reload':
           this.api_loading = true;
           if (this.bookingType === 'checkin') {
             this.getWaitlistDetail();
@@ -145,5 +147,8 @@ export class BookingDetailComponent implements OnInit {
   }
   goBack() {
     this.locationobj.back();
+  }
+  gotoQnr() {
+    this.router.navigate(['provider', 'bookings', 'details', 'questionnaires'], { queryParams: { uid: this.uuid, source: this.bookingType } });
   }
 }

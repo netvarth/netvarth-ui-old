@@ -11,6 +11,7 @@ import * as moment from 'moment';
 import { projectConstants } from '../../../../app.component';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-check-ins',
@@ -111,6 +112,7 @@ export class CheckinsComponent implements OnInit {
   filtericonTooltip = '';
   tomorrowDate;
   server_date;
+  active_user;
   constructor(private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
     private router: Router, private location: Location,
@@ -118,12 +120,14 @@ export class CheckinsComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private dateTimeProcessor: DateTimeProcessor,
     private lStorageService: LocalStorageService,
+    private groupService: GroupStorageService,
     private shared_services: SharedServices) {
     this.activated_route.queryParams.subscribe(params => {
       if (params.providerId) {
         this.providerId = JSON.parse(params.providerId);
       }
     });
+    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
       switch (message.ttype) {
         case 'todayWl':
@@ -176,7 +180,11 @@ export class CheckinsComponent implements OnInit {
   setFilters() {
     let api_filter = {};
     if (this.providerId) {
-      api_filter['provider-eq'] = this.providerId;
+      if (this.active_user.userTeams && this.active_user.userTeams.length > 0) {
+        api_filter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.providerId;
+      } else {
+        api_filter['provider-eq'] = this.providerId;
+      }
     }
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;

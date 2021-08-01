@@ -140,6 +140,7 @@ export class CheckinActionsComponent implements OnInit {
         this.checkin = this.data.checkinData;
         if (this.data.type && this.data.type === 'reschedule') {
             this.rescheduleActionClicked();
+            this.apiloading = false;
         } else {
             this.getLabel();
         }

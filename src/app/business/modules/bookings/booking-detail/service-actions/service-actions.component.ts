@@ -90,7 +90,7 @@ export class ServiceActionsComponent implements OnInit {
         });
         this.subscription = this.sharedFunctions.getMessage().subscribe((message) => {
             switch (message.type) {
-                case 'statuschange':
+                case 'reload':
                     this.setActions();
                     break;
             }
@@ -282,17 +282,17 @@ export class ServiceActionsComponent implements OnInit {
                             if (this.showTeleserviceStart) {
                                 if (action === 'DONE') {
                                     this.snackbarService.openSnackBar('Meeting has been ended');
-                                    this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                                    this.sharedFunctions.sendMessage({ type: 'reload' });
                                 } else {
                                     this.chkinTeleserviceJoinLink();
                                     if (this.waitlist_data.service.virtualCallingModes[0].callingMode === 'VideoCall') {
                                         this.router.navigate(['meeting', 'provider', this.waitlist_data.ynwUuid], { replaceUrl: true });
                                     } else {
-                                        this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                                        this.sharedFunctions.sendMessage({ type: 'reload' });
                                     }
                                 }
                             } else {
-                                this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                                this.sharedFunctions.sendMessage({ type: 'reload' });
                             }
                         }
                     },
@@ -306,17 +306,17 @@ export class ServiceActionsComponent implements OnInit {
                             if (this.showTeleserviceStart) {
                                 if (action === 'Completed') {
                                     this.snackbarService.openSnackBar('Meeting has been ended');
-                                    this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                                    this.sharedFunctions.sendMessage({ type: 'reload' });
                                 } else {
                                     this.apptTeleserviceJoinLink();
                                     if (this.waitlist_data.service.virtualCallingModes[0].callingMode === 'VideoCall') {
                                         this.router.navigate(['meeting', 'provider', this.waitlist_data.uid], { replaceUrl: true });
                                     } else {
-                                        this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                                        this.sharedFunctions.sendMessage({ type: 'reload' });
                                     }
                                 }
                             } else {
-                                this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                                this.sharedFunctions.sendMessage({ type: 'reload' });
                             }
                         }
                     },
@@ -575,7 +575,7 @@ export class ServiceActionsComponent implements OnInit {
             }
         });
         actiondialogRef.afterClosed().subscribe(data => {
-            this.sharedFunctions.sendMessage({ type: 'statuschange' });
+            this.sharedFunctions.sendMessage({ type: 'reload' });
         });
     }
     apptRescheduleActionClicked() {
@@ -590,7 +590,7 @@ export class ServiceActionsComponent implements OnInit {
             }
         });
         actiondialogRef.afterClosed().subscribe(data => {
-            this.sharedFunctions.sendMessage({ type: 'statuschange' });
+            this.sharedFunctions.sendMessage({ type: 'reload' });
         });
     }
     unBlockWaitlist() {

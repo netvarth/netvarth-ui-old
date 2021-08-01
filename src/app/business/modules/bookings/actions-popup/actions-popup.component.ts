@@ -190,16 +190,16 @@ export class ActionsPopupComponent implements OnInit {
               if (this.data.showTeleserviceStart) {
                 if (action === 'DONE') {
                   this.snackbarService.openSnackBar('Meeting has been ended');
-                  this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                  this.sharedFunctions.sendMessage({ type: 'reload' });
                 } else {
                   if (this.data.waitlist_data.service.virtualCallingModes[0].callingMode === 'VideoCall') {
                     this.router.navigate(['meeting', 'provider', this.data.waitlist_data.ynwUuid], { replaceUrl: true });
                   } else {
-                    this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                    this.sharedFunctions.sendMessage({ type: 'reload' });
                   }
                 }
               } else {
-                this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                this.sharedFunctions.sendMessage({ type: 'reload' });
               }
             }
           },
@@ -213,16 +213,16 @@ export class ActionsPopupComponent implements OnInit {
               if (this.data.showTeleserviceStart) {
                 if (action === 'Completed') {
                   this.snackbarService.openSnackBar('Meeting has been ended');
-                  this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                  this.sharedFunctions.sendMessage({ type: 'reload' });
                 } else {
                   if (this.data.waitlist_data.service.virtualCallingModes[0].callingMode === 'VideoCall') {
                     this.router.navigate(['meeting', 'provider', this.data.waitlist_data.uid], { replaceUrl: true });
                   } else {
-                    this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                    this.sharedFunctions.sendMessage({ type: 'reload' });
                   }
                 }
               } else {
-                this.sharedFunctions.sendMessage({ type: 'statuschange' });
+                this.sharedFunctions.sendMessage({ type: 'reload' });
               }
             }
           },

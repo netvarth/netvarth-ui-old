@@ -11,7 +11,7 @@
     align-items: center !important;
     min-height: auto !important;
 }
-.card.data-card .card-header i {
+.card .card-header i {
     color: #395789 !important;
     font-family: 'FontAwesome' !important;
     font-size: 13px !important;
@@ -44,7 +44,6 @@
 .qnr-hgt {
     overflow: auto !important;
     height: 317px !important;
-    padding: 10px;
 }
 .pad10 {
     padding: 0 10px !important;

@@ -7374,6 +7374,7 @@ board-box {
 
 ::-webkit-scrollbar {
   width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -7382,6 +7383,7 @@ board-box {
 
 ::-webkit-scrollbar-thumb {
   background: #cac8c8;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {

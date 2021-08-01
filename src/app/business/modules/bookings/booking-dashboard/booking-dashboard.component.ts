@@ -36,6 +36,7 @@ export class BookingDashboardComponent implements OnInit {
   qParams;
   nextWaitlist;
   nextAppt;
+  active_user;
   constructor(private provider_services: ProviderServices,
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
@@ -49,6 +50,7 @@ export class BookingDashboardComponent implements OnInit {
         this.getUserData();
       }
     });
+    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
       switch (message.ttype) {
         case 'todayWl':
@@ -145,7 +147,11 @@ export class BookingDashboardComponent implements OnInit {
     let filter = {};
     filter['apptStatus-neq'] = 'prepaymentPending,failed';
     if (this.providerId) {
-      filter['provider-eq'] = this.providerId;
+      if (this.active_user.userTeams && this.active_user.userTeams.length > 0) {
+        filter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.providerId;
+      } else {
+        filter['provider-eq'] = this.providerId;
+      }
     }
     return filter;
   }
@@ -178,7 +184,11 @@ export class BookingDashboardComponent implements OnInit {
     let filter = {};
     filter['waitlistStatus-neq'] = 'prepaymentPending,failed';
     if (this.providerId) {
-      filter['provider-eq'] = this.providerId;
+      if (this.active_user.userTeams && this.active_user.userTeams.length > 0) {
+        filter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.providerId;
+      } else {
+        filter['provider-eq'] = this.providerId;
+      }
     }
     return filter;
   }

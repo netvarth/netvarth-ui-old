@@ -11,6 +11,7 @@ import * as moment from 'moment';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-appointments',
@@ -106,6 +107,7 @@ export class AppointmentsComponent implements OnInit {
   schedules: any = [];
   server_date;
   tomorrowDate;
+  active_user;
   constructor(private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
     private router: Router, private location: Location,
@@ -113,12 +115,14 @@ export class AppointmentsComponent implements OnInit {
     private lStorageService: LocalStorageService,
     private wordProcessor: WordProcessor,
     private dateTimeProcessor: DateTimeProcessor,
+    private groupService: GroupStorageService,
     private shared_services: SharedServices) {
     this.activated_route.queryParams.subscribe(params => {
       if (params.providerId) {
         this.providerId = JSON.parse(params.providerId);
       }
     });
+    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
       switch (message.ttype) {
         case 'todayAppt':
@@ -176,7 +180,11 @@ export class AppointmentsComponent implements OnInit {
   setFilters() {
     let api_filter = {};
     if (this.providerId) {
-      api_filter['provider-eq'] = this.providerId;
+      if (this.active_user.userTeams && this.active_user.userTeams.length > 0) {
+        api_filter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.providerId;
+      } else {
+        api_filter['provider-eq'] = this.providerId;
+      }
     }
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;
