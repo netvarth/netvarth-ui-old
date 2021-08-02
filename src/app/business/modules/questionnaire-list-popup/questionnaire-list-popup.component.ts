@@ -26,6 +26,7 @@ export class QuestionnaireListPopupComponent implements OnInit {
     submitted: 'Submitted',
     unReleased: 'Unreleased'
   }
+  qparams;
   constructor(public dialogRef: MatDialogRef<QuestionnaireListPopupComponent>,
     private providerServices: ProviderServices,
     private dialog: MatDialog,
@@ -35,15 +36,12 @@ export class QuestionnaireListPopupComponent implements OnInit {
     private sharedFunctions: SharedFunctions,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.activateRoute.queryParams.subscribe(params => {
-      console.log('params', params);
+      this.qparams = params;
       if (params.source) {
         this.source = params.source;
       }
       if (params.uid) {
         this.uid = params.uid;
-      }
-      if (params.releasedQnr) {
-        this.releasedQnrs = JSON.parse(params.releasedQnr);
       }
       if (params.source === 'appt') {
         this.getApptDetails();
@@ -54,7 +52,6 @@ export class QuestionnaireListPopupComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('this.source', this.source)
     if (this.source === 'appt') {
       this.getApptQuestionnaires();
     } else if (this.source === 'checkin') {
@@ -71,6 +68,7 @@ export class QuestionnaireListPopupComponent implements OnInit {
         data => {
           this.waitlist_data = data;
           this.releasedQnrs = this.waitlist_data.releasedQnr;
+          this.loading = false;
         });
   }
 
@@ -80,19 +78,18 @@ export class QuestionnaireListPopupComponent implements OnInit {
         data => {
           this.waitlist_data = data;
           this.releasedQnrs = this.waitlist_data.releasedQnr;
+          this.loading = false;
         });
   }
   getWaitlistQuestionnaires() {
     this.providerServices.getWaitlistQuestionnaireByUid(this.uid).subscribe(data => {
       this.questionnaires = data;
-      console.log('this.questionnaires', this.questionnaires);
       this.loading = false;
     });
   }
   getApptQuestionnaires() {
     this.providerServices.getApptQuestionnaireByUid(this.uid).subscribe(data => {
       this.questionnaires = data;
-      console.log('this.questionnaires', this.questionnaires);
       this.loading = false;
     });
   }
@@ -112,6 +109,11 @@ export class QuestionnaireListPopupComponent implements OnInit {
         const status = (this.getQnrStatus(id) === 'unReleased') ? 'released' : 'unReleased';
         this.providerServices.changeQnrReleaseStatus(status, this.uid, id).subscribe(data => {
           this.loading = true;
+          if (this.qparams.source === 'appt') {
+            this.getApptDetails();
+          } else if (this.qparams.source === 'checkin') {
+            this.getWaitlistDetail();
+          }
           this.sharedFunctions.sendMessage({ type: 'reload' });
           this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
         }, error => {
@@ -144,8 +146,13 @@ export class QuestionnaireListPopupComponent implements OnInit {
       }
     });
     dialogrefd.afterClosed().subscribe(result => {
-      this.loading = true;
       if (result === 'reload') {
+        this.loading = true;
+        if (this.qparams.source === 'appt') {
+          this.getApptDetails();
+        } else if (this.qparams.source === 'checkin') {
+          this.getWaitlistDetail();
+        }
         this.sharedFunctions.sendMessage({ type: 'reload' });
       }
     });

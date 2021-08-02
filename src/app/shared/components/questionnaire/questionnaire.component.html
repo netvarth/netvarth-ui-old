@@ -24,9 +24,6 @@
                     <div class="qnr-section" *ngIf="getSectionCount() > 1">{{qnr.key}}</div>
                     <div class="form-group card mgn-0" *ngFor="let question of qnr.value">
                         <label class="col-12 quest">{{getQuestion(question).label}}
-                            <!-- <i class="fa fa-minus-circle pull-right" aria-hidden="true"
-                                *ngIf="!buttonDisable && !disableInput() && getQuestion(question).fieldDataType === 'dataGrid' && showDataGrid[getQuestion(question).labelName]"
-                                (click)="showDataGridAddSection(getQuestion(question), false)"></i> -->
                             <i class="fa fa-plus-circle pull-right" aria-hidden="true"
                                 *ngIf="!buttonDisable && !disableInput() && getQuestion(question).fieldDataType === 'dataGrid' && !showDataGrid[getQuestion(question).labelName]"
                                 (click)="showDataGridAddSection(getQuestion(question), true)"></i>
@@ -61,6 +58,7 @@
                                                 <img class="img_fit" [src]="getImg(getQuestion(question), doc)">
                                             </div>
                                             <input [disabled]="buttonDisable || disableInput()"
+                                                (blur)="onSubmit('inputChange');"
                                                 [(ngModel)]="comments[getQuestion(question).labelName + '=' + doc]">
                                             <div class="gal_action" *ngIf="!buttonDisable && !disableInput()"
                                                 (click)="changeImageSelected(getQuestion(question), doc)">
