@@ -1,10 +1,5 @@
 <section class="cons-inbox no-padding-small">
     <div class="container consumer-dashhome no-padding no-padding-small" *ngIf="!type">
-        <div class="panel-heading top-row " *ngIf="uuid && (source === 'consCheckin' || source === 'consAppt')">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                <app-header></app-header>
-            </div>
-        </div>
         <div class="card title-gb rounded-0" *ngIf="uuid">
             <h5 class="mgn-up-10 bold">{{questionnaire_heading | capitalizeFirst}} <a
                     class="pull-left mgn-rt-20 back-btn" (click)="goBack()"><i class="fa fa-arrow-left"></i></a></h5>
@@ -187,7 +182,11 @@
                                                 {{data.value | date : newTimeDateFormat}}
                                             </div>
                                             <div
-                                                *ngIf="getColumnType(getQuestion(question).dataGridProperties.dataGridColumns, data.key) !== 'date'">
+                                                *ngIf="getColumnType(getQuestion(question).dataGridProperties.dataGridColumns, data.key) === 'bool'">
+                                                {{getBoolValue(data.value)}}
+                                            </div>
+                                            <div
+                                                *ngIf="getColumnType(getQuestion(question).dataGridProperties.dataGridColumns, data.key) !== 'date' && getColumnType(getQuestion(question).dataGridProperties.dataGridColumns, data.key) !== 'bool'">
                                                 {{data.value}}
                                             </div>
                                         </td>
