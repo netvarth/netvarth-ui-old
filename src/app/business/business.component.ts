@@ -132,8 +132,12 @@ export class BusinessComponent implements OnInit {
       'waitlistMode-eq': 'ONLINE_CHECKIN'
     };
     const userDet = this.groupService.getitemFromGroupStorage('ynw-user');
-    if (userDet.accountType === 'BRANCH' && !userDet.adminPrivilege) {
-      filter['provider-eq'] = userDet.id;
+    if (userDet.accountType === 'BRANCH' && !userDet.adminPrivilege && userDet.userType !== 5) {
+      if (userDet.userTeams && userDet.userTeams.length > 0) {
+        filter['or=team-eq'] = 'id::' + userDet.userTeams + ',provider-eq=' + userDet.id;
+      } else {
+        filter['provider-eq'] = userDet.id;
+      }
     }
     this.provider_services.getTodayWaitlist(filter)
       .subscribe(

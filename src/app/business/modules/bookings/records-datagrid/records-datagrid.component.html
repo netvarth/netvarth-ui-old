@@ -17,16 +17,6 @@
                         </div>
                     </div>
                     <table class="table table-hover">
-                        <!-- <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Patient Name</th>
-                                <th scope="col">Assigned Doctor</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Diseases</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                        </thead> -->
                         <tbody>
                             <tr class="pointer-cursor" *ngFor="let record of records"
                                 (click)="actionClick('details', record)">
@@ -141,7 +131,7 @@
                                         </ng-container>
                                         <ng-container
                                             *ngIf="!record.waitlistingFor[0].firstName && !record.waitlistingFor[0].lastName && record.waitlistingFor[0].memberJaldeeId">
-                                            {{customer_label | capitalizeFirst}} id:
+                                            {{customer_label | capitalizeFirst}} Id:
                                             {{record.waitlistingFor[0].memberJaldeeId}}
                                         </ng-container>
                                     </td>
@@ -185,7 +175,7 @@
                                         </ng-container>
                                         <ng-container
                                             *ngIf="!record.appmtFor[0].firstName && !record.appmtFor[0].lastName && record.appmtFor[0].memberJaldeeId">
-                                            {{customer_label | capitalizeFirst}} id:
+                                            {{customer_label | capitalizeFirst}} Id:
                                             {{record.appmtFor[0].memberJaldeeId}}
                                         </ng-container>
                                     </td>
@@ -249,7 +239,7 @@
                                         <ng-container *ngIf="record.firstName || record.lastName">
                                             {{record.firstName}} {{record.lastName}}</ng-container>
                                         <ng-container *ngIf="!record.firstName && !record.lastName && record.jaldeeId">
-                                            {{customer_label | capitalizeFirst}} id: {{record.jaldeeId}}</ng-container>
+                                            {{customer_label | capitalizeFirst}} Id: {{record.jaldeeId}}</ng-container>
                                     </td>
                                 </ng-container>
                                 <ng-container *ngIf="source == 'donation' || source == 'donation-dashboard'">
@@ -272,7 +262,6 @@
                             <div class="no-record" *ngIf="records.length == 0">
                                 No {{heading}}
                             </div>
-                            <!-- <app-common-innerloading-spinner *ngIf="loading"> </app-common-innerloading-spinner> -->
                         </tbody>
                     </table>
                 </div>

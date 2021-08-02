@@ -86,18 +86,20 @@ export class RecordsDatagridComponent implements OnInit {
     return 'assets/images/Asset1@300x(1).png';
   }
   gotoFullView() {
-    if (this.source == 'appt') {
+    if (this.source === 'appt') {
       this.router.navigate(['provider', 'bookings', 'appointments'], { queryParams: { providerId: this.providerId } });
-    } else if (this.source == 'waitlist') {
+    } else if (this.source === 'waitlist') {
       this.router.navigate(['provider', 'bookings', 'checkins'], { queryParams: { providerId: this.providerId } });
-    } else if (this.source == 'providers') {
+    } else if (this.source === 'providers') {
       this.router.navigate(['provider', 'settings', 'general', 'users']);
-    } else if (this.source == 'customers') {
+    } else if (this.source === 'customers') {
       this.router.navigate(['provider', 'customers']);
-    } else if (this.source == 'donation') {
+    } else if (this.source === 'donation') {
       this.router.navigate(['provider', 'donations']);
-    } else if (this.source == 'order') {
+    } else if (this.source === 'order') {
       this.router.navigate(['provider', 'orders']);
+    } else if (this.source === 'bill') {
+      this.router.navigate(['provider', 'bookings', 'bills']);
     }
   }
   getUserShort(record) {
