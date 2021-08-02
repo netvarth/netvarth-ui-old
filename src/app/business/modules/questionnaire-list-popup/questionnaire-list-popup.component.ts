@@ -36,7 +36,6 @@ export class QuestionnaireListPopupComponent implements OnInit {
     private sharedFunctions: SharedFunctions,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.activateRoute.queryParams.subscribe(params => {
-      console.log('params', params);
       this.qparams = params;
       if (params.source) {
         this.source = params.source;
@@ -53,16 +52,12 @@ export class QuestionnaireListPopupComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('this.source', this.source)
-    console.log('type', this.type);
     if (this.source === 'appt') {
       this.getApptQuestionnaires();
     } else if (this.source === 'checkin') {
       this.getWaitlistQuestionnaires();
     }
-    console.log('data', this.data);
     this.selectedQnr = this.data.selectedQnr;
-    console.log('se', this.selectedQnr)
     if (this.waitlist_data && this.waitlist_data.releasedQnr) {
       this.releasedQnrs = this.waitlist_data.releasedQnr;
     }
@@ -89,14 +84,12 @@ export class QuestionnaireListPopupComponent implements OnInit {
   getWaitlistQuestionnaires() {
     this.providerServices.getWaitlistQuestionnaireByUid(this.uid).subscribe(data => {
       this.questionnaires = data;
-      console.log('this.questionnaires', this.questionnaires);
       this.loading = false;
     });
   }
   getApptQuestionnaires() {
     this.providerServices.getApptQuestionnaireByUid(this.uid).subscribe(data => {
       this.questionnaires = data;
-      console.log('this.questionnaires', this.questionnaires);
       this.loading = false;
     });
   }
