@@ -53,6 +53,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   chatId: ArrayBuffer;
   tele_num: any;
   countryCode;
+  // public errormessagetranslate = ['Invalid password.','This mobile number/email is not registered with Jaldee. Sign up now with Jaldee to avail our services.']
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -203,6 +204,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       'password': data.password,
       'mUniqueId': null
     };
+    
     this.sessionStorageService.removeitemfromSessionStorage('tabId');
     this.api_loading = true;
     if (this.data.type === 'provider') {

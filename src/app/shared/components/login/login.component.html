@@ -36,7 +36,14 @@
                 [separateDialCode]="separateDialCode" [numberFormat]="PhoneNumberFormat.National" name="phone"
                 formControlName="phone" (keyup)="resetApiErrors()">
             </ngx-intl-tel-input>
-            <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div>
+            <div class="sts-msg error" *ngIf="phoneError">
+                <div *ngIf="phoneError=='Please enter your phone number'">
+                    {{'Phone_enter_err' | translate}}
+                </div>
+                <div *ngIf="phoneError=='Phone number is invalid'">
+                    {{'Phone_invalid_err' | translate}}
+                </div>
+            </div>
         </div>
 
 
@@ -97,7 +104,15 @@
             </div>
         </div>
     </div>
-    <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+    <div *ngIf="api_error">
+
+      <div *ngFor="let msg of ('api_error_msgs.data' | translate)">
+
+        <app-field-error-display [displayError]="true" errorMsg="{{msg[api_error]}}"></app-field-error-display>
+      </div>  
+    
+        
+    </div>
 
 
 </form>

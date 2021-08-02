@@ -462,16 +462,22 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
         // }
         // );
     }
+    public disablevideo=false;
     unmuteVideo() {
+        this.disablevideo=true;
         const _this = this;
         console.log("unmuteVideo");
         // this.twilioService.unmuteVideo();
         _this.getVideoStatus().then(
-            (videoStatus) => {
+            
+            (videoStatus) => { 
+                
                 if (!videoStatus) {
                     _this.openRequestDialog('b-cam');
                 } else {
                     _this.twilioService.video = true;
+                    console.log(this.disablevideo,'disablevideo')
+                    this.disablevideo=false;
                 }
             }
         );
@@ -479,6 +485,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
 
     muteVideo() {
         // this.twilioService.muteVideo();
+        this.disablevideo=true
         console.log("muteVideo");
         console.log(this.videoTrack);
         this.removePreviewTrackToDom(this.videoTrack, 'video');

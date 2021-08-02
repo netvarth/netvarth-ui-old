@@ -1,4 +1,5 @@
 <section class="full-height">
+    fffffffffff
     <header class="main-header jaldee-header" *ngIf="twilioService.preview">
         <div class="container no-padding-small">
             <div class="row">
@@ -13,19 +14,30 @@
         <div class="container previewDiv" [ngStyle]="{'height.px': (screenHeight-100)}"
             [ngClass]="{'hide': !twilioService.preview}">
             <div class="col-md-7 col-lg-7 col-sm-7 col-xs-12 previewSubDiv no-padding">
+
+
                 <div #previewContainer [ngClass]="{'videohgt': (twilioService.camDeviceCount == 0)}"
                     id="previewContainer" class="previewContainer col-md-7 col-lg-7 col-sm-7 col-xs-12">
                 </div>
+
+
+
                 <div class="icons-preview">
                     <i title="Mute" *ngIf="twilioService.microphone" class="fa fa-microphone round mute"
                         style="opacity: 1;cursor: pointer;" (click)="muteAudio()"></i>
                     <i *ngIf="!twilioService.microphone" title="Unmute" class="fa fa-microphone-slash round  mute"
                         style="opacity: 1;cursor: pointer;" (click)="unmuteAudio()"></i>
-                    <i title="Video" *ngIf="twilioService.video" class="fa fa-video-camera round video"
+
+
+
+                    <i title="Video" *ngIf="twilioService.video && !disablevideo" class="fa fa-video-camera round video"
                         style="opacity: 1;cursor: pointer;" (click)="muteVideo()">
+
+
+
                     </i>
-                    <i *ngIf="!twilioService.video" title="No Video" class="round novideo"
-                        style="opacity: 1;cursor: pointer;" (click)="unmuteVideo()">
+                    <i *ngIf="!twilioService.video && disablevideo" title="No Video" class="round novideo"
+                        style="opacity: 1;cursor: pointer;" (click)="unmuteVideo()">{{disablevideo}}
                         <i class="fa fa-stack"><i class="fa fa-video-camera fa-stack-1x"></i>
                             <i class="fa fa-close red fa-stack-1x"></i>
                         </i>
@@ -102,10 +114,10 @@
                 <i *ngIf="!twilioService.microphone" title="Unmute" class="fa fa-microphone-slash round  mute"
                     style="opacity: 1;cursor: pointer;" (click)="unmute()"></i>
                 <i title="Video" *ngIf="twilioService.video" class="fa fa-video-camera round video"
-                    style="opacity: 1;cursor: pointer;" (click)="stopVideo()">
+                    style="opacity: 1;cursor: pointer;" (click)="stopVideo()">jjjjj
                 </i>
                 <i *ngIf="!twilioService.video" title="No Video" class="round novideo"
-                    style="opacity: 1;cursor: pointer;" (click)="startVideo()">
+                    style="opacity: 1;cursor: pointer;" (click)="startVideo()">hhhhhhhhhhhhh
                     <i class="fa fa-stack"><i class="fa fa-video-camera fa-stack-1x"></i>
                         <i class="fa fa-close red fa-stack-1x"></i>
                     </i>

@@ -138,7 +138,9 @@
     "My Account":"मेरा खाता",
     "Re-enter Email":"ईमेल पुन: दर्ज करें",
      "Family Members" :"परिवार के सदस्य",
-     "Date of Birth":"जन्म की तारीख"
+     "Date of Birth":"जन्म की तारीख",
+     "Phone_enter_err":"कृपया अपना फोन नंबर दर्ज करें",
+     "Phone_invalid_err":"फ़ोन नंबर अमान्य है"
   
 
      

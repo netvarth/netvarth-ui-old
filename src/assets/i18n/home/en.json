@@ -144,12 +144,23 @@
     "My Account":"My Account",
     "Re-enter Email":"Re-enter Email",
     "Family Members":"Family Members",
-    "Date of Birth":"Date of Birth"
+    "Date of Birth":"Date of Birth",
+    "Phone_enter_err":"Please enter your phone number",
+    "Phone_invalid_err":"Phone number is invalid",
   
 
-    
 
-    
+        "api_error_msgs":{
+            "data" :[
+                {
+                    "This mobile number/email is not registered with Jaldee. Sign up now with Jaldee to avail our services.":"This mobile number/email is not registered with Jaldee. Sign up now with Jaldee to avail our services.",
+                    "Invalid password.":"Invalid password."
+                }
+            ]
+     
+        
+        }
+
 
 
     
