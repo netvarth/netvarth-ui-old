@@ -26,6 +26,7 @@ export class QuestionnaireListPopupComponent implements OnInit {
     submitted: 'Submitted',
     unReleased: 'Unreleased'
   }
+  qparams;
   constructor(public dialogRef: MatDialogRef<QuestionnaireListPopupComponent>,
     private providerServices: ProviderServices,
     private dialog: MatDialog,
@@ -36,6 +37,7 @@ export class QuestionnaireListPopupComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.activateRoute.queryParams.subscribe(params => {
       console.log('params', params);
+      this.qparams = params;
       if (params.source) {
         this.source = params.source;
       }
@@ -112,6 +114,11 @@ export class QuestionnaireListPopupComponent implements OnInit {
         const status = (this.getQnrStatus(id) === 'unReleased') ? 'released' : 'unReleased';
         this.providerServices.changeQnrReleaseStatus(status, this.uid, id).subscribe(data => {
           this.loading = true;
+          if (this.qparams.source === 'appt') {
+            this.getApptDetails();
+          } else if (this.qparams.source === 'checkin') {
+            this.getWaitlistDetail();
+          }
           this.sharedFunctions.sendMessage({ type: 'reload' });
           this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
         }, error => {
@@ -144,8 +151,13 @@ export class QuestionnaireListPopupComponent implements OnInit {
       }
     });
     dialogrefd.afterClosed().subscribe(result => {
-      this.loading = true;
       if (result === 'reload') {
+        this.loading = true;
+        if (this.qparams.source === 'appt') {
+          this.getApptDetails();
+        } else if (this.qparams.source === 'checkin') {
+          this.getWaitlistDetail();
+        }
         this.sharedFunctions.sendMessage({ type: 'reload' });
       }
     });
