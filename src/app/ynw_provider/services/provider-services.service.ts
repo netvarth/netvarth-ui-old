@@ -1891,7 +1891,7 @@ export class ProviderServices {
     return this.servicemeta.httpPut('provider/catalog', data);
   }
   getProviderCatalogs(id?) {
-    if (id) {
+    if (id && id!=='add') {
       return this.servicemeta.httpGet('provider/catalog/' + id);
     } else {
       return this.servicemeta.httpGet('provider/catalog');
