@@ -84,7 +84,7 @@
                                             </button>
                                             <button mat-menu-item 
                                     (click)="serviceqrCodegeneraterOnlineID(service)"
-                                        >
+                                    *ngIf="service.status=='ACTIVE'">
                                         <i class="fa fa-qrcode"
                                             ></i>Share link
                                     </button>
