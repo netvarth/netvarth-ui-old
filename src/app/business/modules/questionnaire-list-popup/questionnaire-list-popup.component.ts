@@ -73,6 +73,7 @@ export class QuestionnaireListPopupComponent implements OnInit {
         data => {
           this.waitlist_data = data;
           this.releasedQnrs = this.waitlist_data.releasedQnr;
+          this.loading = false;
         });
   }
 
@@ -82,6 +83,7 @@ export class QuestionnaireListPopupComponent implements OnInit {
         data => {
           this.waitlist_data = data;
           this.releasedQnrs = this.waitlist_data.releasedQnr;
+          this.loading = false;
         });
   }
   getWaitlistQuestionnaires() {
