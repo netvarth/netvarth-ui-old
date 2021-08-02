@@ -1117,6 +1117,6 @@ export class CheckinActionsComponent implements OnInit {
     }
     showQuestionnaires() {
         this.dialogRef.close();
-        this.router.navigate(['provider', 'check-ins', 'questionnaires'], { queryParams: { source: 'checkin', uid: this.checkin.ynwUuid, releasedQnr: JSON.stringify(this.checkin.releasedQnr) } });
+        this.router.navigate(['provider', 'check-ins', 'questionnaires'], { queryParams: { source: 'checkin', uid: this.checkin.ynwUuid } });
     }
 }

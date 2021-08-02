@@ -1071,6 +1071,6 @@ export class AppointmentActionsComponent implements OnInit {
     }
     showQuestionnaires() {
         this.dialogRef.close();
-        this.router.navigate(['provider', 'appointments', 'questionnaires'], { queryParams: { source: 'appt', uid: this.appt.uid, releasedQnr: JSON.stringify(this.appt.releasedQnr) } });
+        this.router.navigate(['provider', 'appointments', 'questionnaires'], { queryParams: { source: 'appt', uid: this.appt.uid } });
     }
 }

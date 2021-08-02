@@ -23,8 +23,17 @@
 .qnr-details {
     max-height: 90vh;
     overflow: auto;
+    padding: 20px;
 }
 .qnrlist .row_data {
     font-size: 0.75rem !important;
     font-weight: 600 !important;
+}
+.bookingQnr,
+.bookingQnr div {
+    height: 100%;
+}
+.bookingQnr .card,
+.bookingQnr .content {
+    padding: 0 !important;
 }

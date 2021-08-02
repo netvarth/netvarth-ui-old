@@ -14,7 +14,8 @@ import { QuestionnaireListPopupRoutingModule } from './questionnaire-list-popup.
         QuestionnaireListPopupRoutingModule,
         LoadingSpinnerModule,
         QuestionnaireModule
-    ]
+    ],
+    exports: [QuestionnaireListPopupComponent]
 })
 
 export class QuestionnaireListPopupModule {
