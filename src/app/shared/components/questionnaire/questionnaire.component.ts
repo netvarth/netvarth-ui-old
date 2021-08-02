@@ -126,7 +126,7 @@ export class QuestionnaireComponent implements OnInit {
           this.questions = this.questionnaireList.labels[0].questions;
           this.groupQuestionsBySection();
         }
-        if (this.customerDetails && this.customerDetails[0] && this.customerDetails[0].questionnaire) {
+        if (this.customerDetails && this.customerDetails[0] && this.customerDetails[0].questionnaire && this.customerDetails[0].questionnaire.questionAnswers) {
           this.getAnswers(this.customerDetails[0].questionnaire.questionAnswers, 'get');
         }
       } else if (this.source === 'qnrDetails') {
@@ -140,11 +140,11 @@ export class QuestionnaireComponent implements OnInit {
         this.groupQuestionsBySection();
       }
     }
-    if (this.source === 'customer-details' && this.customerDetails[0]) {
+    if (this.source === 'customer-details' && this.customerDetails[0] && this.customerDetails[0].questionnaire) {
       this.questionnaireList = this.customerDetails[0].questionnaire;
       this.questions = this.customerDetails[0].questionnaire.questionAnswers;
       this.groupQuestionsBySection();
-      this.getAnswers(this.customerDetails[0].questionnaire.questionAnswers, 'get');
+      this.getAnswers(this.questions, 'get');
     }
     if (this.questionAnswers) {
       if (this.questionAnswers.files) {
@@ -166,7 +166,7 @@ export class QuestionnaireComponent implements OnInit {
         this.getAnswers(this.questionAnswers.answers.answerLine, 'init');
       }
     }
-    if (this.donationDetails) {
+    if (this.donationDetails && this.donationDetails.questionnaire) {
       this.questionnaireList = this.donationDetails.questionnaire;
       this.questions = this.questionnaireList.questionAnswers;
       this.groupQuestionsBySection();

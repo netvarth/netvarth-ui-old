@@ -137,8 +137,8 @@
         </div>
       </div>
      
-      <span class="setings">Share link</span>
-      <p>
+      <span class="setings"  *ngIf="service.status=='ACTIVE'">Share link</span>
+      <p  *ngIf="service.status=='ACTIVE'">
         <span class='assured' *ngIf="service && service.provider && service.provider.id">{{wndw_path}}{{bprofile.accEncUid}}/{{service.provider.id}}/service/{{service.id}}</span>
         <span class='assured' *ngIf="service && !service.provider">{{wndw_path}}{{bprofile.accEncUid}}/service/{{service.id}}</span>
         <span class="custid">
