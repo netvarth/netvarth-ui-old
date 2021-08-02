@@ -589,7 +589,6 @@ border-radius: 10px;
   border-radius: .50rem !important;
   margin-top: 10px !important;
   max-width: 260px !important;
-  float: left;
 }
 .textcentr{
   text-align: center;
@@ -960,7 +959,6 @@ height: 55px !important;;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
   border-radius: .50rem !important;
   margin-top: 10px !important;
-  float: left;
 }
 .selectbxstyle {
   color: #1E4079 !important;
