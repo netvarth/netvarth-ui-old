@@ -2008,7 +2008,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             let imagePath = thumbPath;
             const description = communications[comIndex].s3path;
             const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-            if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+            // if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+              if (new RegExp(this.imageAllowed.join("|")).test(thumbPathExt.toUpperCase())) {
               imagePath = communications[comIndex].s3path;
             }
             const imgobj = new Image(
@@ -2041,7 +2042,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             let imagePath = thumbPath;
             const description = communications[comIndex].s3path;
             const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-            if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+            // if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+              if (new RegExp(this.imageAllowed.join("|")).test(thumbPathExt.toUpperCase())) {
               imagePath = communications[comIndex].s3path;
             }
             const imgobj = new Image(

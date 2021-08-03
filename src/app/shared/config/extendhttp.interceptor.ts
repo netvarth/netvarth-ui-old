@@ -92,7 +92,6 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
         catchError((error, caught) => {
           this._handleErrors(error);
           if (error instanceof HttpErrorResponse) {
-            this.shared_services.callHealth(error.message);
             if (this._checkMaintanance(error)) {
               return this._ifMaintenanceOn().pipe(
                 switchMap(() => {

@@ -13,8 +13,6 @@
 
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  <!-- <script src="https://cdn.ckeditor.com/4.5.11/full/ckeditor.js"></script> -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3MdDKtIAsLrWXzKiQShq3wRXgftf5lBM&libraries=places"
     type="application/javascript"></script>
 
@@ -34,14 +32,14 @@
 </head>
 
 <body class="hold-transition sidebar-mini" style="height: auto;min-height: 100%;">
-  <link href="./assets/css/style.css" rel="stylesheet">
+  <!-- <link href="./assets/css/style.css" rel="stylesheet"> -->
   <app-root></app-root>
 </body>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </html>
 <script>
   
-  var DEBUG_MODE_ON = false; // hide browser console in production
+  var DEBUG_MODE_ON = true; // hide browser console in production
   if (!DEBUG_MODE_ON) {
     console = console || {};
     console.log = function () { };
@@ -55,53 +53,8 @@
   }
   document.addEventListener("deviceready", onDeviceReady, false);
   function alertDismissed() {
-
   }
   function onDeviceReady() {
-    if (device && device.uuid) {
-      console.log(device.uuid);
-      localStorage.setItem('authToken',JSON.stringify(device.uuid));
-    }
-    // if (typeof FCMPlugin != 'undefined') {
-    //   FCMPlugin.getToken(function (token) {
-    //     console.log(token);
-    //     localStorage.setItem("mUniqueId", token);
-    //   }, function (err) {
-    //     localStorage.setItem("mUniqueId", null);
-    //   });
-    //   FCMPlugin.onTokenRefresh(function (token) {
-    //     console.log("Token Refreshed : " + token);
-    //     localStorage.setItem("mUniqueId", token);
-    //     if (localStorage.getItem("ynw-user")) {
-    //       setPushToken(token);
-    //     }
-    //   });
-    //   FCMPlugin.onNotification(function (data) {
-    //     if (data.wasTapped) {
-    //       navigator.notification.alert(
-    //         data.message,  // message
-    //         alertDismissed,         // callback
-    //         data.title,            // title
-    //         'Ok'                  // buttonName
-    //       );
-    //     } else {
-    //       //Notification was received in foreground. Maybe the user needs to be notified.
-    //       navigator.notification.alert(
-    //         data.message,  // message
-    //         alertDismissed,         // callback
-    //         data.title,            // title
-    //         'Ok'                  // buttonName
-    //       );
-
-    //     }
-    //   }, function (msg) {
-    //     console.log('onNotification callback successfully registered: ' + msg);
-    //   },
-    //     function (err) {
-    //       console.log('Error registering onNotification callback: ' + err);
-    //     }
-    //   );
-    // };
     document.addEventListener("backbutton", function (e) {
       e.preventDefault();
       if (exitApp) {
@@ -128,4 +81,3 @@
     (window.EventTarget || Document).prototype.removeEventListener.apply(this, arguments);
   };
 </script>
-<script src="cordova.js"></script>

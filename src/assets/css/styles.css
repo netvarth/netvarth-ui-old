@@ -9,49 +9,9 @@
 @font-face {
     font-family: "Poppins";
     src: url("../fonts/Poppins/Poppins-Regular.ttf")  format('ttf');
-    /* src: url("../fonts/custom/custom-ynw.eot?#iefix") format("embedded-opentype"), url("../fonts/custom/custom-ynw.woff") format("woff"), url("../fonts/custom/custom-ynw.ttf") format("truetype"), url("../fonts/custom/custom-ynw.svg#custom-ynw") format("svg"); */
     font-weight: normal;
     font-style: normal;
 }
-/* @font-face {
-    font-family: 'Lato';
-    src: url('assets/fonts/Thin/Black/Lato-Black.woff2') format('woff2'),
-      url('assets/fonts/Thin/Black/Lato-Black.woff') format('woff');
-    font-weight: 900;
-    font-style: normal;
-  } */
-/* @font-face {
-    font-family: 'Montserrat';
-    src: url("../fonts/Montserrat-Medium.eot");
-    src: url("../fonts/Montserrat-Medium.eot?#iefix") format("embedded-opentype"), url("../fonts/Montserrat-Medium.woff2") format("woff2"), url("../fonts/Montserrat-Medium.woff") format("woff"), url("../fonts/Montserrat-Medium.ttf") format("truetype"), url("../fonts/Montserrat-Medium.svg#Montserrat-Medium") format("svg");
-    font-weight: 500;
-    font-style: normal;
-} */
-
-/* @font-face {
-    font-family: 'Montserrat';
-    src: url("../fonts/Montserrat-Light.eot");
-    src: url("../fonts/Montserrat-Light.eot?#iefix") format("embedded-opentype"), url("../fonts/Montserrat-Light.woff2") format("woff2"), url("../fonts/Montserrat-Light.woff") format("woff"), url("../fonts/Montserrat-Light.ttf") format("truetype"), url("../fonts/Montserrat-Light.svg#Montserrat-Light") format("svg");
-    font-weight: 300;
-    font-style: normal;
-} */
-
-/* @font-face {
-    font-family: 'Montserrat';
-    src: url("../fonts/Montserrat-Bold.eot");
-    src: url("../fonts/Montserrat-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/Montserrat-Bold.woff2") format("woff2"), url("../fonts/Montserrat-Bold.woff") format("woff"), url("../fonts/Montserrat-Bold.ttf") format("truetype"), url("../fonts/Montserrat-Bold.svg#Montserrat-Bold") format("svg");
-    font-weight: bold;
-    font-style: normal;
-} */
-
-/* @font-face {
-    font-family: 'Montserrat';
-    src: url("../fonts/Montserrat-Regular.eot");
-    src: url("../fonts/Montserrat-Regular.eot?#iefix") format("embedded-opentype"), url("../fonts/Montserrat-Regular.woff2") format("woff2"), url("../fonts/Montserrat-Regular.woff") format("woff"), url("../fonts/Montserrat-Regular.ttf") format("truetype"), url("../fonts/Montserrat-Regular.svg#Montserrat-Regular") format("svg");
-    font-weight: normal;
-    font-style: normal;
-} */
-
 [data-icon]:before {
     font-family: "custom-ynw" !important;
     content: attr(data-icon);
@@ -494,7 +454,6 @@ body { font-size: 1rem !important}
     border-radius: 5px;
     background: #fff;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     border: none !important;
     width: 100%;
 }
@@ -689,7 +648,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 3px;
     border-radius: 3px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     height: 40px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
@@ -992,7 +950,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 50%;
     border-radius: 50%;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     -moz-transition: all 300ms;
     -o-transition: all 300ms;
     -webkit-transition: all 300ms;
@@ -1079,7 +1036,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 30px;
     border-radius: 30px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
 }
 
 .closebtn:before {
@@ -1099,8 +1055,6 @@ body { font-size: 1rem !important}
 .closebtn:hover {
     color: #00aef2;
 }
-
-/***** Common Pages #### */
 
 .content .static-outer .static-mainheader {
     font-size: 1.875rem;
@@ -1248,7 +1202,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 30px;
     border-radius: 30px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     background: transparent;
 }
 
@@ -1361,8 +1314,6 @@ body { font-size: 1rem !important}
     color: #f24949;
     background-color: white;
 }
-
-/* All Keyframes */
 
 @keyframes rotate {
     from {
@@ -1535,7 +1486,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 5px;
     border-radius: 5px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
 }
 
 .content .card .copy .inbox-table li {
@@ -1639,7 +1589,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 30px;
     border-radius: 30px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     opacity: .9;
     font-size: 1.6rem;
 }
@@ -1673,7 +1622,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 5px;
     border-radius: 5px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     border: 1px solid #f2f2f2;
 }
 
@@ -1702,9 +1650,6 @@ body { font-size: 1rem !important}
     -o-transition: all 300ms;
     -webkit-transition: all 300ms;
     transition: all 300ms;
-    /*.result {
-              @include box-shadow(0, 0, 10px, rgba(0,0,0,.05), inset);
-          }*/
 }
 
 @media only screen and (max-width: 767px) {
@@ -1718,7 +1663,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 5px;
     border-radius: 5px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
 }
 
 .content .card .copy .inbox-table li .details .action {
@@ -2087,7 +2031,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 30px;
     border-radius: 30px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     margin-bottom: 5px;
 }
 
@@ -2188,7 +2131,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 5px;
     border-radius: 5px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     border: none !important;
     width: 100%;
     background: #fff;
@@ -2315,7 +2257,6 @@ body { font-size: 1rem !important}
 }
 
 .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .paytm-det .form-group mat-form-field .mat-form-field-wrapper, .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .form-group mat-form-field .mat-form-field-wrapper, .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter .form-group mat-form-field .mat-form-field-wrapper {
-    /*margin-bottom: 5px;*/
     padding-bottom: 0px;
 }
 
@@ -2336,7 +2277,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 0;
     border-radius: 0;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     font-family: 'Montserrat', sans-serif;
     font-weight: normal;
     font-size: 0.875rem;
@@ -2527,7 +2467,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 200px;
     border-radius: 200px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     transform: scale(1, 1) translate(-50%);
     transform-origin: 50% 50%;
 }
@@ -2686,32 +2625,24 @@ body { font-size: 1rem !important}
 }
 
 @media only screen and (max-width: 767px) {
-    /* Force table to not be like tables anymore */
     .table-outer table, .table-outer thead, .table-outer tbody, .table-outer th, .table-outer td, .table-outer tr {
         display: block;
         font-size: .875rem;
     }
-    /* Hide table headers (but not display: none;, for accessibility) */
     .table-outer thead tr {
         position: absolute;
         top: -9999px;
         left: -9999px;
     }
-    /*.table-outer tr { border: 1px solid #ccc; }*/
     .table-outer td {
-        /* Behave  like a "row" */
         border: none;
         border-bottom: 1px solid #eee;
         position: relative;
-        /*padding-left: 50%; */
         white-space: normal;
         text-align: left;
         display: flex;
     }
     .table-outer td:before {
-        /* Now like a table header */
-        /*position: absolute;*/
-        /* Top/left values mimic padding */
         top: 12px;
         left: 10px;
         width: 45%;
@@ -2720,41 +2651,30 @@ body { font-size: 1rem !important}
         text-align: left;
         font-weight: 600;
     }
-    /*
-    Label the data
-    */
     .table-outer td:before {
         content: attr(data-title);
     }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-    /* Force table to not be like tables anymore */
     .d-tbl table, .d-tbl thead, .d-tbl tbody, .d-tbl th, .d-tbl td, .d-tbl tr {
         display: block;
         font-size: .875rem;
     }
-    /* Hide table headers (but not display: none;, for accessibility) */
     .d-tbl thead tr {
         position: absolute;
         top: -9999px;
         left: -9999px;
     }
-    /*.table-outer tr { border: 1px solid #ccc; }*/
     .d-tbl td {
-        /* Behave  like a "row" */
         border: none;
         border-bottom: 1px solid #eee;
         position: relative;
-        /*padding-left: 50%; */
         white-space: normal;
         text-align: left;
         display: flex;
     }
     .d-tbl td:before {
-        /* Now like a table header */
-        /*position: absolute;*/
-        /* Top/left values mimic padding */
         top: 12px;
         left: 10px;
         width: 45%;
@@ -2763,9 +2683,6 @@ body { font-size: 1rem !important}
         text-align: left;
         font-weight: 600;
     }
-    /*
-    Label the data
-    */
     .d-tbl td:before {
         content: attr(data-title);
     }
@@ -3021,8 +2938,6 @@ body { font-size: 1rem !important}
     background-color: red;
     max-height: 242px;
 }
-
-/* Force table to not be like tables anymore */
 
 .bg-gray {
     background: #f2f2f2;
@@ -3472,7 +3387,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 20px;
     border-radius: 20px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     border: 1px solid #999999;
     font-size: .75rem;
     margin-right: 10px;
@@ -3583,7 +3497,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 50%;
     border-radius: 50%;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     background: #f8f8f8;
     display: flex;
     justify-content: center;
@@ -3911,7 +3824,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 0;
     border-radius: 0;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
 }
 
 .content .col-a .card.w-dta.active .cd-b .loc-i .loc-panl .title h3 {
@@ -4163,7 +4075,6 @@ body { font-size: 1rem !important}
 
 .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .ttd .otr .mbt {
     right: -20px;
-    /*opacity: 0;*/
     -moz-transition: all 300ms;
     -o-transition: all 300ms;
     -webkit-transition: all 300ms;
@@ -4458,7 +4369,6 @@ body { font-size: 1rem !important}
     margin: 0 20px;
     display: flex;
     border: 1px solid #dbdbdb;
-    /*border-bottom: none;*/
     margin-bottom: 15px;
 }
 
@@ -4559,18 +4469,10 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 50%;
     border-radius: 50%;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     -moz-transition: all 300ms;
     -o-transition: all 300ms;
     -webkit-transition: all 300ms;
     transition: all 300ms;
-    /*opacity: 0;*/
-    /*@include respond-to(ynw-767){
-                  opacity: 1;
-              }
-              @include respond-to(ynw-768-991){
-                  opacity: 1;
-              }*/
 }
 
 .content .col-a .card.spc-extra .mat-accordion .acc-cont .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .cont-btn .editbt:hover, .content .col-a .card.add-extra .mat-accordion .acc-cont .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .cont-btn .editbt:hover {
@@ -4633,7 +4535,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 50%;
     border-radius: 50%;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     -moz-transition: all 300ms;
     -o-transition: all 300ms;
     -webkit-transition: all 300ms;
@@ -4648,7 +4549,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 30px;
     border-radius: 30px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     border: 1px solid #999999;
     padding: 3px 10px;
     margin-right: 10px;
@@ -4660,7 +4560,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 0px;
     border-radius: 0px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     border: none;
     background: #f2f2f2;
 }
@@ -5201,7 +5100,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 5px;
     border-radius: 5px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     cursor: pointer;
     -moz-transition: all 300ms;
     -o-transition: all 300ms;
@@ -5222,7 +5120,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 24px;
     border-radius: 24px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     min-width: 20px;
     min-height: 20px;
     background: #00aef2;
@@ -5245,11 +5142,6 @@ body { font-size: 1rem !important}
 .content.w-manager .card .b-link:hover h2 {
     color: #fff;
 }
-
-/* .content.w-manager .card .b-link:hover h2 span {
-    color: #fff;
-    color: #00aef2;
-} */
 
 .content.w-manager .card app-form-success-display .sts-msg {
     -webkit-border-bottom-right-radius: 5px;
@@ -5430,7 +5322,6 @@ body { font-size: 1rem !important}
     align-items: center;
     width: 100%;
     border-top: 1px solid #f2f2f2;
-    /*padding: 0 10px;*/
 }
 
 @media only screen and (max-width: 400px) {
@@ -5510,7 +5401,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 20px;
     border-radius: 20px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     display: inline-block;
     margin-bottom: 5px;
 }
@@ -5945,7 +5835,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 24px;
     border-radius: 24px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     width: 20px;
     height: 20px;
     background: #666;
@@ -6121,7 +6010,6 @@ body { font-size: 1rem !important}
     background: transparent;
     padding-left: 20px;
     font-weight: 500;
-    /*margin-right: 15px;*/
     cursor: pointer;
 }
 
@@ -6141,7 +6029,6 @@ body { font-size: 1rem !important}
         -webkit-border-radius: 30px;
         border-radius: 30px;
         background-clip: padding-box;
-        /* stops bg color from leaking outside the border: */
     }
     .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show .enableicon:before, .content.loc-list .card .q-tbl table tbody tr td .mbt-mobile-show .disableicon:before {
         left: 4px;
@@ -6232,7 +6119,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 5px;
     border-radius: 5px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     background: #fff;
 }
 
@@ -6273,7 +6159,6 @@ body { font-size: 1rem !important}
 
 @media only screen and (max-width: 767px) {
     .dashboard .card.w-dta .head {
-        /*flex-direction: column;*/
         height: auto;
         justify-content: flex-start;
     }
@@ -6288,7 +6173,6 @@ body { font-size: 1rem !important}
 
 @media (min-width: 768px) and (max-width: 991px) {
     .dashboard .card.w-dta .head {
-        /*flex-direction: column;*/
         height: auto;
     }
 }
@@ -6324,7 +6208,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 0;
     border-radius: 0;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     background: #e6e6e6;
     border: 1px solid transparent;
     font-family: 'Montserrat', sans-serif;
@@ -6350,7 +6233,6 @@ body { font-size: 1rem !important}
     font-family: 'Montserrat', sans-serif;
     font-weight: normal;
     border: 1px solid #e6e6e6;
-    /*display: flex;*/
     align-items: center;
 }
 
@@ -6443,7 +6325,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 10px;
     border-radius: 10px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     background-color: #999999;
     color: #fff;
     text-align: center;
@@ -6467,7 +6348,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 10px;
     border-radius: 10px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     background-color: #00aef2;
     color: #fff;
     text-align: center;
@@ -6541,7 +6421,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 100px;
     border-radius: 100px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     background-color: rgba(0, 204, 150, 0.2);
     color: black;
     border: 1px solid rgba(0, 204, 150, 0.5);
@@ -6590,7 +6469,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 100px;
     border-radius: 100px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     text-align: center;
     font-weight: 500;
     cursor: pointer;
@@ -6619,7 +6497,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 50px;
     border-radius: 50px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     color: #00aef2;
     cursor: pointer;
 }
@@ -6829,14 +6706,12 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 0px;
     border-radius: 0px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
 }
 
 .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel {
     -webkit-border-radius: 0px;
     border-radius: 0px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
 }
 
 .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
@@ -6844,7 +6719,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 0px;
     border-radius: 0px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
 }
 
 .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-header.mat-expanded .mat-content i {
@@ -6865,7 +6739,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 0px;
     border-radius: 0px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
 }
 
 .dashboard .card.w-dta .dash-list .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body {
@@ -6927,7 +6800,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 0;
     border-radius: 0;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     background: rgba(255, 255, 255, 0.7);
     border: 1px solid transparent;
     font-family: 'Montserrat', sans-serif;
@@ -7072,7 +6944,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 10px;
     border-radius: 10px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     top: 50%;
     left: 4px;
     margin-top: -4px;
@@ -7137,7 +7008,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 30px;
     border-radius: 30px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     height: auto;
     text-transform: none;
     padding: 3px 10px;
@@ -7197,7 +7067,6 @@ body { font-size: 1rem !important}
 
 .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-n, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-h, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-f {
     padding: 2px 0px;
-    /*background: $cc-lightgray;*/
     color: #222223;
     position: relative;
     font-weight: 600;
@@ -7271,7 +7140,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 10px;
     border-radius: 10px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     top: 50%;
     left: 4px;
     margin-top: -4px;
@@ -7366,7 +7234,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 50px;
     border-radius: 50px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     background: #fff;
     height: 24px;
     cursor: pointer;
@@ -7417,7 +7284,6 @@ body { font-size: 1rem !important}
 }
 
 .dashboard .card.w-dta .dash-list .d-tbl .search_paging .container {
-    /*padding: 15px;*/
     padding: 0px;
 }
 
@@ -7477,7 +7343,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 30px;
     border-radius: 30px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     margin-bottom: 0px;
 }
 
@@ -7653,7 +7518,6 @@ body { font-size: 1rem !important}
 }
 
 .comn-cls .w-dta .table-outer.q-itm table tbody tr td:nth-child(1) {
-    /*width: 15%;*/
     cursor: pointer;
     color: #00aef2;
     font-weight: 500;
@@ -7678,10 +7542,6 @@ body { font-size: 1rem !important}
 .comn-cls .w-dta .table-outer.q-itm table tbody tr td:nth-child(2) {
     font-weight: 500;
 }
-
-/* .comn-cls .w-dta .table-outer.q-itm table tbody tr td:nth-child(2):before {
-    color: #222223;
-} */
 
 .comn-cls .w-dta .table-outer.q-itm table tbody tr td.tdact {
     position: relative;
@@ -7946,7 +7806,6 @@ body { font-size: 1rem !important}
 }
 
 .comn-cls .w-dta .copy .right.card .lc33 .search_paging .container {
-    /*padding: 15px;*/
     padding: 0px;
 }
 
@@ -8006,7 +7865,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 30px;
     border-radius: 30px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     margin-bottom: 0px;
 }
 
@@ -8154,7 +8012,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 50px;
     border-radius: 50px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     font-size: .75rem;
     cursor: pointer;
     position: relative;
@@ -8486,7 +8343,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 5px;
     border-radius: 5px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
 }
 
 .content.comn-cls .lbl .card .mat-accordion .mat-expansion-panel {
@@ -8494,7 +8350,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 5px;
     border-radius: 5px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
 }
 
 .content.comn-cls .lbl .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
@@ -8553,7 +8408,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 5px;
     border-radius: 5px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
 }
 
 .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li {
@@ -8743,7 +8597,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 5px;
     border-radius: 5px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
 }
 
 .content.comn-cls .lbl .card .mat-accordion.communication-history .mat-expansion-panel-content .inbox-table li .details .action {
@@ -8949,7 +8802,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 20px;
     border-radius: 20px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     left: -6px;
     top: 2px;
 }
@@ -8998,9 +8850,6 @@ body { font-size: 1rem !important}
     border: 1px solid rgba(0, 0, 0, .125);
     border-radius: .25rem;
 }
-
-/* You can add global styles to this file, and also import other style files */
-
 .search_autocompletehighlight {
     font-weight: bold;
 }
@@ -9029,8 +8878,6 @@ body { font-size: 1rem !important}
     cursor: pointer !important;
 }
 
-/* location detail page */
-
 .cst-acc .mat-expansion-panel-header {
     padding-left: 0px;
 }
@@ -9043,11 +8890,6 @@ body { font-size: 1rem !important}
 .cst-acc .mat-expansion-panel-content {
     font-family: inherit;
 }
-
-/* location detail page */
-
-/* image upload */
-
 #image_src {
     width: 26px;
     height: 26px;
@@ -9055,10 +8897,7 @@ body { font-size: 1rem !important}
     opacity: 0;
     cursor: pointer;
     filter: alpha(opacity=0);
-    /* IE 5-7 */
 }
-
-/* image upload */
 
 .commonpopupmainclass.width-100 {
     width: 100%;
@@ -9091,7 +8930,6 @@ body { font-size: 1rem !important}
     right: 25px;
     top: 0px; 
     position: absolute;
-    /* opacity: 0; */
     width: 0px;
     height: 0px;
     color: rgb(76, 76, 76);
@@ -9135,7 +8973,6 @@ p.bus-name {margin-bottom: 0 !important; margin-top:5px !important}
     border-radius: 5px;
     background: #fff;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     border: none !important;
     width: 100%;
 }
@@ -9149,4 +8986,6 @@ span.inactive{
     color:red;
 }
 
-
+body {
+    overflow: auto !important;
+}

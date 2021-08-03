@@ -9,8 +9,7 @@ import { SharedFunctions } from '../../functions/shared-functions';
 
 @Component({
   selector: 'app-consumer-add-member',
-  templateUrl: './add-member.component.html',
-  // styleUrls: ['./home.component.scss']
+  templateUrl: './add-member.component.html'
 })
 export class AddMemberComponent implements OnInit {
 

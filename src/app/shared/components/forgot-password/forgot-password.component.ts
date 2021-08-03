@@ -23,7 +23,6 @@ export class ForgotPasswordModel {
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.css']
-  // styleUrls: ['./home.component.scss']
 })
 
 export class ForgotPasswordComponent {

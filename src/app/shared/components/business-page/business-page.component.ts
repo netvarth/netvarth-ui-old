@@ -403,12 +403,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.gets3curl();
               }, (error) => {
                 console.log(error);
-                this.shared_services.callHealth(error.message);
               }
             )
           }, (error) => {
             console.log(error);
-            this.shared_services.callHealth(error.message);
           }
         )
       });
@@ -428,7 +426,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         error => {
           console.log(error);
-          this.shared_services.callHealth(error.message);
           if (error.status === 404) {
             _this.routerobj.navigate(['/not-found']);
           }
@@ -581,7 +578,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         }, (error) => {
           console.log(error);
-          this.shared_services.callHealth(error.message);
         }
       );
   }
@@ -1675,7 +1671,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           },
           (error) => {
             console.log(error);
-            _this.shared_services.callHealth(error.message);
             reject();
           }
         );

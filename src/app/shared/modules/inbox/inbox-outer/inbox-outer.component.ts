@@ -319,7 +319,8 @@ export class InboxOuterComponent implements OnInit {
       let imagePath = thumbPath;
       const description = attachements[comIndex].s3path;
       const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-      if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+      // if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+        if (new RegExp(this.imageAllowed.join("|")).test(thumbPathExt.toUpperCase())) {
         imagePath = attachements[comIndex].s3path;
       }
       const imgobj = new Image(

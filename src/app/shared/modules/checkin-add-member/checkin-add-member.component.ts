@@ -9,8 +9,7 @@ import { WordProcessor } from '../../services/word-processor.service';
 
 @Component({
   selector: 'app-checkin-consumer-add-member',
-  templateUrl: './checkin-add-member.component.html',
-  // styleUrls: ['./home.component.scss']
+  templateUrl: './checkin-add-member.component.html'
 })
 export class CheckinAddMemberComponent implements OnInit {
   fill_fol_det_cap = Messages.FILL_FOLL_DETAILS_CAP;

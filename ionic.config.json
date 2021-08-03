@@ -1,0 +1,7 @@
+{
+  "name": "heartfulness",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

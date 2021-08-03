@@ -10,8 +10,7 @@ import { WordProcessor } from '../../services/word-processor.service';
 import { SnackbarService } from '../../services/snackbar.service';
 @Component({
   selector: 'app-footer',
-  templateUrl: './footer.component.html',
-  // styleUrls: ['./home.component.scss']
+  templateUrl: './footer.component.html'
 })
 
 export class FooterComponent implements OnInit, OnDestroy, DoCheck {
