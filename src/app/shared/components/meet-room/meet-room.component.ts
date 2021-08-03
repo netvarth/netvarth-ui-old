@@ -462,6 +462,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
     }
     unmuteVideo() {
         const _this = this;
+        _this.btnClicked = true;
         console.log("unmuteVideo");
         // this.twilioService.unmuteVideo();
         _this.getVideoStatus().then(
@@ -471,6 +472,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
                 } else {
                     _this.twilioService.video = true;
                 }
+                _this.btnClicked = false;
             }
         );
     }
@@ -478,21 +480,25 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
     muteVideo() {
         // this.twilioService.muteVideo();
         console.log("muteVideo");
+        this.btnClicked = true;
         console.log(this.videoTrack);
         this.removePreviewTrackToDom(this.videoTrack, 'video');
         this.previewTracks.splice(this.previewTracks.indexOf(this.videoTrack), 1);
         this.twilioService.video = false;
-
+        this.btnClicked = false;
     }
     muteAudio() {
         console.log("muteAudio");
+        this.btnClicked = true;
         console.log(this.audioTrack);
         this.removePreviewTrackToDom(this.audioTrack, 'audio');
         this.previewTracks.splice(this.previewTracks.indexOf(this.audioTrack), 1);
         this.twilioService.microphone = false;
+        this.btnClicked = false;
     }
     unmuteAudio() {
         const _this = this;
+        _this.btnClicked = true;
         console.log("unmuteAudio");
         _this.getAudioStatus().then(
             (audioStatus) => {
@@ -502,6 +508,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
                 } else {
                     _this.twilioService.microphone = true;
                 }
+                _this.btnClicked = true;
             }
         );
     }
