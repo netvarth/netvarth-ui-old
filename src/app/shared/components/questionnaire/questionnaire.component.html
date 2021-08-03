@@ -13,7 +13,7 @@
         [class.container]="uuid && (source === 'consCheckin' || source === 'consAppt')"
         [class.no-padding]="uuid && (source === 'consCheckin' || source === 'consAppt')">
         <div class="col-xl-12 force_center" [class.no-padding]="uuid">
-            <div class="my-5">
+            <div class="">
                 <div class="qnrsec" *ngFor="let qnr of groupedQnr | keyvalue"
                     [class.section-shadow]="getSectionCount() > 1">
                     <div class="qnr-section" *ngIf="getSectionCount() > 1">{{qnr.key}}</div>
@@ -279,12 +279,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding"
+            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding submit-pad"
                 *ngIf="(uuid || source === 'customer-details' || source === 'proDonation') && !disableInput()">
                 <button class="normal-btn" mat-flat-button [class.spinner]="buttonDisable"
                     [class.spinner-darker-success]="buttonDisable" [class.spinner-center]="buttonDisable"
                     (click)="!buttonDisable && onSubmit('submit')" [disabled]="buttonDisable"
-                    [class.disabled]="buttonDisable">Update</button>
+                    [class.disabled]="buttonDisable">{{(type == 'qnr-link') ? 'Submit' : 'Update'}}</button>
             </div>
         </div>
     </div>

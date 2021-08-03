@@ -147,5 +147,13 @@
     font-size: 1rem !important;
 }
 .dz-preview input {
-    width: 120px !important;
+    width: 121px !important;
+    border: 1px solid #ccc;
+}
+.submit-pad {
+    padding: 0 10px 20px !important;
+}
+.form-group .card {
+    border: 1px solid #dadce063 !important;
+    border-radius: 8px !important;
 }
