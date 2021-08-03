@@ -661,7 +661,7 @@ border-radius: 10px;
 }
 
 .fixhght{
-  height: 15px;
+  height: 25px;
 }
 
 .content.bus-page .bus-page-header .bus-title-content .business-name,
@@ -892,7 +892,7 @@ margin-top: 6px;
  .card-body .service-details .donationAmount,
  .card-body .service-details .peopleAhead {
   margin: 0 !important;
-padding: 2px 6px;
+  padding: 2px 6px;
   font-weight: 600;
   font-size: 15px !important;
   color: #065499!important;
@@ -959,6 +959,7 @@ height: 55px !important;;
   border: 0 !important;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
   border-radius: .50rem !important;
+  max-width: 260px !important;
   margin-top: 10px !important;
   float: left;
 }
