@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild, OnDestroy, HostListener } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
@@ -250,6 +250,13 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     consumerType: string;
     newMember: any;
     readMore = false;
+
+  @HostListener('click', ['$event'])
+  clickEvent(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+  }
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
