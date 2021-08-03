@@ -37,7 +37,7 @@ import { ConsumerEmailComponent } from '../../../shared/component/consumer-email
     styleUrls: ['./consumer-appointment.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
-
+    paymentBtnDisabled=false;
     tooltipcls = '';
     add_member_cap = Messages.ADD_MEMBER_CAP;
     cancel_btn = Messages.CANCEL_BTN;
@@ -758,6 +758,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         console.log(type+this.sel_ser_det.isPrePayment +this.payEmail);
         
         if(type==='appt' && this.sel_ser_det.isPrePayment &&this.payEmail===''){
+            this.paymentBtnDisabled=true;
             const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
                 width: '40%',
                 panelClass: ['loginmainclass', 'popup-class'],
@@ -768,6 +769,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 if (result!== '' && result!==undefined) {
                     this.payEmail = result;
                     this.confirmcheckin(type);
+                }else{
+                 this.paymentBtnDisabled=false;
                 }
     
             });
