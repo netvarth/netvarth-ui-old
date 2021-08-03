@@ -481,14 +481,9 @@ export class QuestionnaireComponent implements OnInit {
     });
     let data = [];
     Object.keys(this.dataGridColumnsAnswerList).forEach(key => {
-      let newMap = {};
       let newFiled = {};
       let question = this.questions.filter(quest => this.getQuestion(quest).labelName === key);
-      if (this.source === 'customer-create' || this.source === 'qnrDetails') {
-        question = question[0];
-      } else {
-        question = question[0].question;
-      }
+      question = question[0].question;
       for (let gridAnswer of this.dataGridColumnsAnswerList[key]) {
         let columnData = [];
         Object.keys(gridAnswer).forEach(key1 => {
@@ -503,6 +498,7 @@ export class QuestionnaireComponent implements OnInit {
             });
           }
         });
+        let newMap = {};
         newMap['dataGridColumn'] = columnData;
         if (!newFiled[question.fieldDataType]) {
           newFiled[question.fieldDataType] = [];
@@ -583,7 +579,6 @@ export class QuestionnaireComponent implements OnInit {
       if (this.answers[question.labelName].length === 0) {
         this.answers[question.labelName] = '';
       }
-      this.onSubmit('inputChange');
     } else {
       if (ev.target.checked) {
         if (!this.dataGridColumns[question.labelName + '=' + column.order]) {
@@ -595,6 +590,7 @@ export class QuestionnaireComponent implements OnInit {
         this.dataGridColumns[question.labelName + '=' + column.order].splice(indx, 1);
       }
     }
+    this.onSubmit('inputChange');
   }
   isChecked(value, question, column?) {
     if (question.fieldDataType !== 'dataGrid') {
@@ -629,12 +625,12 @@ export class QuestionnaireComponent implements OnInit {
         }
         this.answers[question.labelName] = (value.toLowerCase() === 'yes') ? true : false;
       }
-      this.onSubmit('inputChange');
     } else {
       if (ev.target.checked) {
-        this.dataGridColumns[question.labelName + '=' + column.order] = (value.toLowerCase() === 'yes') ? true : false;
+        this.dataGridColumns[question.labelName + '=' + column.order] = (value === 'yes') ? true : false;
       }
     }
+    this.onSubmit('inputChange');
   }
   isBooleanChecked(value, question, column?) {
     value = (value.toLowerCase() === 'yes') ? true : false;
@@ -645,7 +641,7 @@ export class QuestionnaireComponent implements OnInit {
         return false;
       }
     } else {
-      if (this.dataGridColumns[question.labelName + '=' + column.order] === value) {
+      if (this.dataGridColumns[question.labelName + '=' + column.order] !== '' && JSON.parse(this.dataGridColumns[question.labelName + '=' + column.order]) === value) {
         return true;
       } else {
         return false;
@@ -1121,5 +1117,15 @@ export class QuestionnaireComponent implements OnInit {
   }
   getSectionCount() {
     return Object.keys(this.groupedQnr).length;
+  }
+  getBoolValue(value) {
+    if (value !== '') {
+      if (JSON.parse(value) === true) {
+        return 'Yes';
+      }
+      if (JSON.parse(value) === false) {
+        return 'No';
+      }
+    }
   }
 }

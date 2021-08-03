@@ -755,7 +755,7 @@
             </div>
             <div class="card" *ngIf="showQuestionnaire">
                 <h6 class="mgn-bt-10 quest-head pad-10">
-                    Please provide us with a little more information complete your booking
+                    Please provide us with a little more information to complete your booking
                 </h6>
                 <app-questionnaire [questionnaireList]="questionnaireList" [questionAnswers]="questionAnswers"
                     [source]="'proAppt'" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>

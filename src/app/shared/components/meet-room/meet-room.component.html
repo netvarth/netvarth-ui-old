@@ -19,25 +19,15 @@
                 </div>
                 <div class="icons-preview">
                     <i title="Mute" *ngIf="twilioService.microphone" class="fa fa-microphone round mute"
-                        style="opacity: 1;cursor: pointer;" (click)="muteAudio()"></i>
+                        style="opacity: 1;cursor: pointer;" (click)="!btnClicked && muteAudio()"></i>
                     <i *ngIf="!twilioService.microphone" title="Unmute" class="fa fa-microphone-slash round  mute"
-                        style="opacity: 1;cursor: pointer;" (click)="unmuteAudio()"></i>
-
-
-
-
-                    <i  title="Video" *ngIf="twilioService.video && mutevideo" class="fa fa-video-camera round video"
-                        style="opacity: 1;cursor: pointer;"  (click)="muteVideo()">
+                        style="opacity: 1;cursor: pointer;" (click)="!btnClicked && unmuteAudio()"></i>
+                    <i title="Video" *ngIf="twilioService.video" class="fa fa-video-camera round video"
+                        style="opacity: 1;cursor: pointer;" (click)="!btnClicked && muteVideo()">
                     </i>
-                    <i  title="Video" *ngIf="twilioService.video && !mutevideo" class="fa fa-video-camera round video"
-                    style="opacity: 1;cursor: pointer;">
-                </i>
-
-
-
-                    <i   *ngIf="!twilioService.video && unmutevideo" title="No Video" class="round novideo"
-                        style="opacity: 1;cursor: pointer;" (click)="unmuteVideo()">
-                        <i class="fa fa-stack" ><i class="fa fa-video-camera fa-stack-1x"></i>
+                    <i *ngIf="!twilioService.video" title="No Video" class="round novideo"
+                        style="opacity: 1;cursor: pointer;" (click)="!btnClicked && unmuteVideo()">
+                        <i class="fa fa-stack"><i class="fa fa-video-camera fa-stack-1x"></i>
                             <i class="fa fa-close red fa-stack-1x"></i>
                         </i>
                     </i>

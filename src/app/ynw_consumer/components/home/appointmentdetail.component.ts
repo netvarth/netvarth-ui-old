@@ -338,7 +338,7 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
     });
   }
   getReleasedQnrs(releasedQnrs) {
-    this.consumer_services.getApptQuestionnaireByUid(this.ynwUuid, this.providerId)
+    this.sharedServices.getApptQuestionnaireByUid(this.ynwUuid, this.providerId)
       .subscribe(
         (data: any) => {
           const qnrs = data.filter(function (o1) {

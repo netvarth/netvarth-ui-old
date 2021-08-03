@@ -1,24 +1,19 @@
 <section class="cons-inbox no-padding-small">
     <div class="container consumer-dashhome no-padding no-padding-small" *ngIf="!type">
-        <div class="panel-heading top-row " *ngIf="uuid && (source === 'consCheckin' || source === 'consAppt')">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                <app-header></app-header>
-            </div>
-        </div>
         <div class="card title-gb rounded-0" *ngIf="uuid">
             <h5 class="mgn-up-10 bold">{{questionnaire_heading | capitalizeFirst}} <a
                     class="pull-left mgn-rt-20 back-btn" (click)="goBack()"><i class="fa fa-arrow-left"></i></a></h5>
         </div>
     </div>
     <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-    <div class="d-flex flex-column-fluid pull-right mgn-rt-10" *ngIf="!buttonDisable && showEditBtn()">
+    <div class="d-flex flex-column-fluid pull-right mgn-rt-10 mgn-bt-20" *ngIf="!buttonDisable && showEditBtn()">
         <button class="normal-btn edit" mat-flat-button (click)="editQnr()">Edit</button>
     </div>
     <div class="d-flex flex-column-fluid width-100" [class.qnrDisableState]="disableInput()"
         [class.container]="uuid && (source === 'consCheckin' || source === 'consAppt')"
         [class.no-padding]="uuid && (source === 'consCheckin' || source === 'consAppt')">
         <div class="col-xl-12 force_center" [class.no-padding]="uuid">
-            <div class="my-5">
+            <div class="">
                 <div class="qnrsec" *ngFor="let qnr of groupedQnr | keyvalue"
                     [class.section-shadow]="getSectionCount() > 1">
                     <div class="qnr-section" *ngIf="getSectionCount() > 1">{{qnr.key}}</div>
@@ -187,7 +182,11 @@
                                                 {{data.value | date : newTimeDateFormat}}
                                             </div>
                                             <div
-                                                *ngIf="getColumnType(getQuestion(question).dataGridProperties.dataGridColumns, data.key) !== 'date'">
+                                                *ngIf="getColumnType(getQuestion(question).dataGridProperties.dataGridColumns, data.key) === 'bool'">
+                                                {{getBoolValue(data.value)}}
+                                            </div>
+                                            <div
+                                                *ngIf="getColumnType(getQuestion(question).dataGridProperties.dataGridColumns, data.key) !== 'date' && getColumnType(getQuestion(question).dataGridProperties.dataGridColumns, data.key) !== 'bool'">
                                                 {{data.value}}
                                             </div>
                                         </td>
@@ -280,12 +279,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding"
+            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding submit-pad"
                 *ngIf="(uuid || source === 'customer-details' || source === 'proDonation') && !disableInput()">
                 <button class="normal-btn" mat-flat-button [class.spinner]="buttonDisable"
                     [class.spinner-darker-success]="buttonDisable" [class.spinner-center]="buttonDisable"
                     (click)="!buttonDisable && onSubmit('submit')" [disabled]="buttonDisable"
-                    [class.disabled]="buttonDisable">Update</button>
+                    [class.disabled]="buttonDisable">{{(type == 'qnr-link') ? 'Submit' : 'Update'}}</button>
             </div>
         </div>
     </div>

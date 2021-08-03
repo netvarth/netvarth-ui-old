@@ -38,7 +38,7 @@ import { ConsumerEmailComponent } from '../../../shared/component/consumer-email
     styleUrls: ['./consumer-checkin.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css'],
 })
 export class ConsumerCheckinComponent implements OnInit, OnDestroy {
-
+    paymentBtnDisabled=false;
     tooltipcls = '';
     add_member_cap = Messages.ADD_MEMBER_CAP;
     cancel_btn = Messages.CANCEL_BTN;
@@ -703,6 +703,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     confirmcheckin(type?) {
        if(type==='checkin' && this.sel_ser_det.isPrePayment &&this.payEmail===''){
+           this.paymentBtnDisabled=true;
         const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
             width: '40%',
             panelClass: ['loginmainclass', 'popup-class'],
@@ -713,6 +714,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             if (result!== '' && result!==undefined) {
                 this.payEmail = result;
                 this.confirmcheckin(type);
+            }else{
+                this.paymentBtnDisabled=false;
             }
 
         });
