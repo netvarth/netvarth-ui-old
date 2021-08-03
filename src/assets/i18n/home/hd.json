@@ -140,7 +140,17 @@
      "Family Members" :"परिवार के सदस्य",
      "Date of Birth":"जन्म की तारीख",
      "Phone_enter_err":"कृपया अपना फोन नंबर दर्ज करें",
-     "Phone_invalid_err":"फ़ोन नंबर अमान्य है"
+     "Phone_invalid_err":"फ़ोन नंबर अमान्य है",
+     "api_error_msgs":{
+        "data" :[
+            {
+                "This mobile number/email is not registered with Jaldee. Sign up now with Jaldee to avail our services.":"यह मोबाइल नंबर/ईमेल जलदी के पास पंजीकृत नहीं है। हमारी सेवाओं का लाभ उठाने के लिए जलदी के साथ अभी साइन अप करें।",
+                "Invalid password.":"अवैध पासवर्ड।"
+            }
+        ]
+ 
+    
+    }
   
 
      

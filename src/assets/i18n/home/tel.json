@@ -1,0 +1,175 @@
+{
+    
+    "Home" :"సర్వీస్ ప్రొవైడర్ హోమ్",
+    "Log_in":"ప్రవేశించండి",
+    "Sign_up":"చేరడం",
+    "Avoid_msg":"క్యూలలో వేచి ఉండడం మానుకోండి",
+    "Book_telegram":"టెలిగ్రామ్‌లో బుక్ చేయండి",
+    "Jaldee_telehealth":"జల్డీ టెలీహెల్త్",
+    "consult_doctor":"ఎక్కడి నుండైనా మీ వైద్యుడిని సంప్రదించండి. సందర్శించండి",
+    "view_doctor":"మా వైద్యుడిని చూడటానికి మరియు వీడియో సంప్రదింపులను బుక్ చేసుకోవడానికి.",
+    "Jaldee_blog":"జల్డీ బ్లాగ్",
+    "Jaldee_blog_review":"జల్దీ మా కొత్త బ్లాగ్ ప్రారంభించినందుకు గర్వంగా ఉంది. దాన్ని తనిఖీ చేయండి! సందర్శించండి",
+    "Jaldee_Business":"జల్దీ వ్యాపారం",
+    "Jaldee_Business_review":"మీ వెబ్‌సైట్ మరియు QR కోడ్‌ను నిమిషాల్లో ఆన్‌లైన్‌లో పొందండి. సందర్శించండి",
+    "Jaldee_Business_review2":"ప్రారంభించడానికి.",
+    "How_Jaldee_work":"జల్డీ ఎలా పనిచేస్తుంది",
+    "Find":"కనుగొనండి",
+    "Doctors":"వైద్యులు",
+    "Professionals":"ప్రొఫెషనల్స్",
+    "Beauty and more":"అందం మరియు మరిన్ని",
+    "Book":"పుస్తకం",
+    "Appointment":"నియామకం",
+    "Queue Token":"క్యూ టోకెన్",
+    "Online Check-in":"ఆన్‌లైన్ చెక్-ఇన్",
+    "Get Alerts":"హెచ్చరికలను పొందండి",
+    "Reminders":"రిమైండర్లు",
+    "Current waiting time":"ప్రస్తుత నిరీక్షణ సమయం",
+    "Real-time status":"రియల్ టైమ్ స్థితి",
+    "Pay":"చెల్లించండి",
+    "Mobile pay":"మొబైల్ చెల్లింపు",
+    "Contactless receipts":"కాంటాక్ట్‌లెస్ రసీదులు",
+    "SMS/Email Pay":"SMS/ఇమెయిల్ పే",
+    "Explore Services":"సేవలను అన్వేషించండి",
+    "Healthcare":"ఆరోగ్య సంరక్షణ",
+     "Healthcare_list" :"[వైద్యులు, దంతవైద్యులు, ల్యాబ్‌లు, రేడియాలజీ, ఆయుర్వేదిక్, నేచురోపతి, హోమియోపతి, వెటర్నరీ]",
+     "Personal Care":"వ్యకిగత జాగ్రత",
+     "Personal Care_list":"[హెయిర్ సెలూన్లు, స్పా, మసాజ్, ఫిట్‌నెస్, బ్యూటీ కేర్, మరిన్ని]",
+     "Food and Beverage":"అన్నపానీయాలు",
+     "Food and Beverage_list":"[డైన్-ఇన్, టేక్అవే]",
+     "Professional":"ప్రొఫెషనల్స్",
+     "Professionals_list":"[అకౌంటెంట్లు, పన్ను కన్సల్టెంట్‌లు, న్యాయవాదులు, వాస్తుశిల్పులు, మరిన్ని]",
+     "Local business":"స్థానిక వ్యాపారము",
+     "Local business_list":"[ప్లంబర్లు, ఎలక్ట్రీషియన్లు, చిత్రకారులు, వడ్రంగులు, మరిన్ని]",
+     "Religious, Vaastu & Astrology":"మతపరమైన, వాస్తు & జ్యోతిష్యశాస్త్రం",
+     "Religious, Vaastu & Astrology_list":"[దేవాలయాలు, పూజారులు, వేడుకలు, మరిన్ని]",
+     "Get Jaldee App now":"ఇప్పుడే జల్డీ యాప్ పొందండి",
+     "Are you a":"మీరు ఒక",
+     "Service Provider?":"సేవా ప్రదాత?",
+     "Learn More":"ఇంకా నేర్చుకో",
+     "Business Owner?":"వ్యాపార యజమాని?",
+     "Jaldee":"జల్దీ",
+     "About":"గురించి",
+     "Contact":"సంప్రదించండి",
+     "Terms":"నిబంధనలు",
+     "Solutions":"పరిష్కారాలు",
+     "Banks/Finance":"బ్యాంకులు/ఫైనాన్స్",
+     "Corporates":"కార్పొరేట్‌లు",
+     "Supermarkets/Retail":"సూపర్ మార్కెట్లు/రిటైల్",
+     "Restaurants":"రెస్టారెంట్లు",
+     "Jaldify Now":"ఇప్పుడు జల్డిఫై",
+     "List your business":"మీ వ్యాపారాన్ని జాబితా చేయండి",
+     "Become Jaldee Partner":"జల్డీ భాగస్వామి అవ్వండి",
+     "Pricing":"ధర",
+     "Ask for a demo":"డెమో కోసం అడగండి",
+     "Support":"మద్దతు",
+     "Resources":"వనరులు",
+     "Videos":"వీడియోలు",
+     "Follow Us:":"మమ్మల్ని అనుసరించు:",
+     "Popular Searches":"ప్రముఖ శోధనలు",
+     "Jaldee_msg":"నాణ్యమైన సేవ పొందడానికి మీరు లైన్లలో వేచి ఉండాల్సిన అవసరం లేదు!",
+     "Not anymore!":"ఇకపై కాదు!",
+     "Jaldee Karo!":"జల్దీ కరో!",
+     "Find services nearby":"సమీపంలోని సేవలను కనుగొనండి",
+     "Get online token":"ఆన్‌లైన్ టోకెన్ పొందండి",
+     "Book an appointment":"అపాయింట్‌మెంట్ బుక్ చేయండి",
+     "Check-in to a queue from anywhere":"ఎక్కడి నుండైనా క్యూలో చెక్ ఇన్ చేయండి",
+     "Take a video call with your Doctor":"మీ డాక్టర్‌తో వీడియో కాల్ చేయండి",
+     "Book home services":"ఇంటి సేవలను బుక్ చేసుకోండి",
+     "Get real-time status alerts":"నిజ-సమయ స్థితి హెచ్చరికలను పొందండి",
+     "Check your waiting time and delay":"మీ నిరీక్షణ సమయం మరియు ఆలస్యం తనిఖీ చేయండి",
+     "Auto share your arrival time":"మీ రాక సమయాన్ని ఆటో షేర్ చేయండి",
+     "Do online enquiries before you visit":"మీరు సందర్శించడానికి ముందు ఆన్‌లైన్ విచారణలు చేయండి",
+     "Do it all while protecting your privacy":"మీ గోప్యతను కాపాడుతూ ఇవన్నీ చేయండి",
+     "Pay for your services using your phone":"మీ ఫోన్‌ని ఉపయోగించి మీ సేవలకు చెల్లించండి",
+     "Contactless receipts & billing":"కాంటాక్ట్‌లెస్ రసీదులు & బిల్లింగ్",
+     "No convenience charges, never pay here!!":"సౌకర్యవంతమైన ఛార్జీలు లేవు, ఇక్కడ ఎప్పుడూ చెల్లించవద్దు !!",
+     "Use Jaldee Mobile Apps or browser UI":"జల్డీ మొబైల్ యాప్స్ లేదా బ్రౌజర్ UI ని ఉపయోగించండి",
+     "Favorite your service providers":"మీ సర్వీసు ప్రొవైడర్లకు ఇష్టమైనది",
+     "Get coupons and discounts":"కూపన్లు మరియు డిస్కౌంట్లను పొందండి",
+
+
+
+
+
+
+
+     
+     "Mobile_num":"మీ మొబైల్ నెంబర్ ను ఎంటర్ చేయండి",
+     "Password":"పాస్వర్డ్",
+     "Login":"ప్రవేశించండి",
+    "Forgot Password":"పాస్‌వర్డ్ మర్చిపోయారా?",
+    "Sign Up":"చేరడం",
+    "Login_msg":"మీరు సేవా ప్రదాత / వ్యాపార యజమాని అయితే",
+    "Go_Jaldee_Business":"జల్డీ వ్యాపారానికి వెళ్లండి",
+
+
+    "First Name":"మొదటి పేరు",
+    "Last Name":"చివరి పేరు",
+    "Email":"ఇమెయిల్",
+    "Send OTP":"OTP పంపండి",
+
+    "My Favourites":"నా ఇష్టమైనవి",
+    "View Profile":"ప్రొఫైల్ చూడు",
+    "Home Page":"హోమ్ పేజీ",
+
+    "Find_Service_Provider":"సర్వీస్ ప్రొవైడర్‌ని కనుగొనండి",
+    "Telegram_msg":"టెలిగ్రామ్‌లో అప్‌డేషన్ పొందండి",
+    "MY BOOKINGS":"నా బుకింగ్‌లు",
+    "MY ORDERS":"నా ఆదేశాలు",
+    "My Orders":"నా ఆదేశాలు",
+    "My Bookings":"నా బుకింగ్‌లు",
+    "My Payments":"నా చెల్లింపులు",
+    "History":"చరిత్ర",
+    "No_Active_Bookings":"యాక్టివ్ బుకింగ్‌లు లేవు",
+    "TODAY":"నేడు",
+    "show_more":"ఇంకా చూపించు...",
+    "show_less":"తక్కువ చూపించు ...",
+    "UPCOMING":"రాబోతోంది",
+    "No Active Orders":"యాక్టివ్ ఆర్డర్లు లేవు",
+    "Cancel":"రద్దు చేయండి",
+    "Order details":"ఆర్డర్ వివరాలు",
+    "Rate Your Order":"మీ ఆర్డర్‌ని రేట్ చేయండి",
+    "Paid":"చెల్లించారు",
+    "Refunded":"రీఫండ్ చేయబడింది",
+    "Receipt":"రసీదు",
+    "Add to Favourites":"ఇష్టమైన వాటికి జోడించండి",
+    "My wallet":"నా పర్సు",
+    "Payments Log":"చెల్లింపుల లాగ్",
+    "No payments":"చెల్లింపులు లేవు",
+    "Change Password":"పాస్వర్డ్ మార్చండి",
+    "Old Password":"పాత పాస్‌వర్డ్",
+    "New Password":"కొత్త పాస్వర్డ్",
+    "Re-enter new password":"కొత్త పాస్‌వర్డ్‌ని మళ్లీ నమోదు చేయండి",
+    "My Account":"నా ఖాతా",
+    "Re-enter Email":"ఇమెయిల్‌ని మళ్లీ నమోదు చేయండి",
+    "Family Members":"కుటుంబ సభ్యులు",
+    "Date of Birth":"పుట్టిన తేది",
+    "Phone_enter_err":"దయచేసి మీ ఫోన్ నంబర్ నమోదు చేయండి",
+    "Phone_invalid_err":"ఫోన్ నంబర్ చెల్లదు",
+  
+
+
+        "api_error_msgs":{
+            "data" :[
+                {
+                    "This mobile number/email is not registered with Jaldee. Sign up now with Jaldee to avail our services.":"ఈ మొబైల్ నంబర్/ఇమెయిల్ జల్దీతో నమోదు చేయబడలేదు. మా సేవలను పొందడానికి జల్డీతో ఇప్పుడే సైన్ అప్ చేయండి.",
+                    "Invalid password.":"చెల్లని పాస్వర్డ్."
+                }
+            ]
+     
+        
+        }
+
+
+
+    
+  
+
+
+
+
+
+
+
+}

@@ -465,26 +465,26 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
     unmuteVideo() {
         
         const _this = this;
-        this.unmutevideo=false;
-        this.mutevideo=false
+
+        console.log("unmuteVideo");
+        this.unmutevideo=true;
+        this.mutevideo=true
         
-        setTimeout(()=>{
-            console.log("unmuteVideo");
-            this.unmutevideo=true;
-            this.mutevideo=true
-            
-            _this.getVideoStatus().then(
-         
-                (videoStatus) => {
-                    if (!videoStatus) {
-                        _this.openRequestDialog('b-cam');
-                    } else {
-                        _this.twilioService.video = true;
-                    }
+        _this.getVideoStatus().then(
+     
+            (videoStatus) => {
+                if (!videoStatus) {
+                    _this.openRequestDialog('b-cam');
+                } else {
+                    _this.twilioService.video = true;
                 }
-            );
+            }
+        );
+        setTimeout(()=>{
+            this.unmutevideo=false;
+            this.mutevideo=false
             // this.mutevideo=true;
-        },500)
+        },1000)
         
         // this.twilioService.unmuteVideo();
        
@@ -492,22 +492,18 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
 public mutevideo=true;
     muteVideo() {
         // this.twilioService.muteVideo();
-        this.mutevideo=false
-        this.unmutevideo=false
+     
+        console.log("muteVideo");
+        this.mutevideo=true
+        this.unmutevideo=true;
+        console.log(this.videoTrack);
+        this.removePreviewTrackToDom(this.videoTrack, 'video');
+        this.previewTracks.splice(this.previewTracks.indexOf(this.videoTrack), 1);
+        this.twilioService.video = false;
         setTimeout(()=>{
-            console.log("muteVideo");
-            this.mutevideo=true
-            this.unmutevideo=true;
-            console.log(this.videoTrack);
-            this.removePreviewTrackToDom(this.videoTrack, 'video');
-            this.previewTracks.splice(this.previewTracks.indexOf(this.videoTrack), 1);
-            this.twilioService.video = false;
-        },500)
-        
-        
-
-        
-
+            this.mutevideo=false
+            this.unmutevideo=false
+        },1000)
 
     }
     muteAudio() {
