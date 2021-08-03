@@ -18,6 +18,7 @@ import { LocalStorageService } from '../../../../app/shared/services/local-stora
 
 
 
+
 @Component({
   selector: 'app-virtualfields',
   templateUrl: './virtualfields.component.html',
@@ -112,7 +113,6 @@ export class VirtualFieldsComponent implements OnInit {
       }
       if (dialogData.service) {
         this.serviceDetails = dialogData.service;
-        console.log(this.serviceDetails);
       }
       if (dialogData.businessDetails) {
         if (dialogData.businessDetails.businessName) {
@@ -127,7 +127,6 @@ export class VirtualFieldsComponent implements OnInit {
     this.userId = this.lStorageService.getitemfromLocalStorage('userId');
     this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
-    console.log(this.consumer_label);
     this.getActiveUserInfo().then(data => {
       this.customer_data = data;
       this.countryCode = this.customer_data.userProfile.countryCode;
@@ -189,14 +188,13 @@ export class VirtualFieldsComponent implements OnInit {
   }
   onServiceForChange(event) {
     this.serviceFormReset();
-    console.log(event);
+
     this.is_parent = true;
     if (event !== 'new_member') {
       const chosen_Object = this.familymembers.filter(memberObj => memberObj.user === event);
       if (chosen_Object.length !== 0) {
         this.is_parent = false;
         this.chosen_person = chosen_Object[0]
-        console.log(this.chosen_person);
         this.setMemberDetails(chosen_Object[0]);
       } else {
         this.chosen_person = this.customer_data
@@ -265,14 +263,14 @@ export class VirtualFieldsComponent implements OnInit {
     if (memberObj.bookingLocation && memberObj.bookingLocation.state) {
       this.virtualForm.patchValue({ state: memberObj.bookingLocation.state });
     }
-    if (memberObj.userProfile && memberObj.userProfile.whatsAppNum) {
+    if (memberObj.userProfile && memberObj.userProfile.whatsAppNum.number) {
       this.virtualForm.patchValue({ whatsappnumber: memberObj.userProfile.whatsAppNum.number });
       this.virtualForm.patchValue({ countryCode_whtsap: memberObj.userProfile.whatsAppNum.countryCode });
     } else {
       this.virtualForm.patchValue({ whatsappnumber: this.customer_data.userProfile.primaryMobileNo });
       this.virtualForm.patchValue({ countryCode_whtsap: this.customer_data.userProfile.countryCode });
     }
-    if (memberObj.userProfile && memberObj.userProfile.telegramNum) {
+    if (memberObj.userProfile && memberObj.userProfile.telegramNum.number) {
       this.virtualForm.patchValue({ telegramnumber: memberObj.userProfile.telegramNum.number });
       this.virtualForm.patchValue({ countryCode_telegram: memberObj.userProfile.telegramNum.countryCode });
     } else {
@@ -301,11 +299,11 @@ export class VirtualFieldsComponent implements OnInit {
     }else{
       this.virtualForm.patchValue({ email: ''}); 
     }
+ 
     this.virtualForm.patchValue({ whatsappnumber: this.customer_data.userProfile.primaryMobileNo });
     this.virtualForm.patchValue({ telegramnumber: this.customer_data.userProfile.primaryMobileNo });
   }
   setparentDetails(customer) {
-
 
 
     // if (customer.userProfile && customer.userProfile.dob!==undefined) {
@@ -336,7 +334,6 @@ export class VirtualFieldsComponent implements OnInit {
     }
     if (customer.userProfile.preferredLanguages && customer.userProfile.preferredLanguages !== null) {
       const preferredLanguage = this.s3Processor.getJson(customer.userProfile.preferredLanguages);
-      console.log(preferredLanguage);
       if (preferredLanguage !== null && preferredLanguage.length > 0) {
         let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
         this.virtualForm.patchValue({ islanguage: defaultEnglish });
@@ -355,21 +352,21 @@ export class VirtualFieldsComponent implements OnInit {
     if (customer.userProfile && customer.userProfile.state) {
       this.virtualForm.patchValue({ state: customer.userProfile.state });
     }
-    if (customer.userProfile && customer.userProfile.whatsAppNum) {
+    if (customer.userProfile && customer.userProfile.whatsAppNum.number) {
       this.virtualForm.patchValue({ whatsappnumber: customer.userProfile.whatsAppNum.number });
       this.virtualForm.patchValue({ countryCode_whtsap: customer.userProfile.whatsAppNum.countryCode });
 
     } else {
-      this.virtualForm.patchValue({ whatsappnumber: customer.userProfile.primaryMobileNo });
-      this.virtualForm.patchValue({ countryCode_whtsap: customer.userProfile.countryCode });
+      this.virtualForm.patchValue({ whatsappnumber: this.customer_data.userProfile.primaryMobileNo });
+      this.virtualForm.patchValue({ countryCode_whtsap: this.customer_data.userProfile.countryCode });
     }
-    if (customer.userProfile && customer.userProfile.telegramNum) {
+    if (customer.userProfile&& customer.userProfile.telegramNum.number) {
       this.virtualForm.patchValue({ telegramnumber: customer.userProfile.telegramNum.number });
       this.virtualForm.patchValue({ countryCode_telegram: customer.userProfile.telegramNum.countryCode });
     }
     else {
-      this.virtualForm.patchValue({ telegramnumber: customer.userProfile.primaryMobileNo });
-      this.virtualForm.patchValue({ countryCode_telegram: customer.userProfile.countryCode });
+      this.virtualForm.patchValue({ telegramnumber: this.customer_data.userProfile.primaryMobileNo });
+      this.virtualForm.patchValue({ countryCode_telegram: this.customer_data.userProfile.countryCode });
     }
 
   }
@@ -423,29 +420,25 @@ export class VirtualFieldsComponent implements OnInit {
   }
   editLanguage() {
     this.iseditLanguage=true;
-    console.log(this.virtualForm.get('preferredLanguage').value);
     this.languageSelected = this.virtualForm.get('preferredLanguage').value.slice();
-    console.log(this.languageSelected);
     this.hideLanguages = false;
   }
   updateForm() {
-    console.log(this.dialogData.type);
+
     if (this.dialogData.type && this.dialogData.type === 'member') {
       this.details = this.dialogData.consumer
     } else {
       this.details = this.customer_data;
     }
     if (this.details.parent) {
-      this.setMemberDetails(this.details);
+          this.setMemberDetails(this.details);
     } else {
-      console.log(this.details);
-      this.setparentDetails(this.details);
+        this.setparentDetails(this.details);
 
     }
 
   }
   saveLanguages() {
-    console.log('save languages');
     if (this.lngknown === 'yes') {
       this.virtualForm.get('preferredLanguage').setValue(['English']);
       this.hideLanguages = true;
@@ -507,7 +500,6 @@ export class VirtualFieldsComponent implements OnInit {
     if (this.countryCode === '+91') {
       if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
         isinvalid = true;
-        console.log(isinvalid);
       }
     }
     if (this.countryCode !== '+91') {
@@ -518,17 +510,14 @@ export class VirtualFieldsComponent implements OnInit {
     }
     if (this.virtualForm.get('gender').value === '') {
       isinvalid = true;
-      console.log(isinvalid);
     }
     if (this.virtualForm.get('age').value === '') {
       isinvalid = true;
-      console.log(isinvalid);
     }
 
     if (this.virtualForm.get('islanguage').value === 'no') {
       if (this.virtualForm.get('preferredLanguage').value.length === 0) {
         isinvalid = true;
-        console.log(isinvalid);
       }
     }
    
@@ -536,11 +525,10 @@ export class VirtualFieldsComponent implements OnInit {
 
       if (this.virtualForm.get('firstName').value == '') {
         isinvalid = true;
-        console.log(isinvalid);
       }
       if (this.virtualForm.get('lastName').value == '') {
         isinvalid = true;
-        console.log(isinvalid);
+
       }
     }
     // if (this.virtualForm.get('date').value === 'dd') {
@@ -552,7 +540,7 @@ export class VirtualFieldsComponent implements OnInit {
     // if (this.virtualForm.get('year').value === 'yyyy') {
     //   isinvalid = true;
     // }
-console.log(isinvalid);
+
     return isinvalid;
   }
 
@@ -603,7 +591,7 @@ console.log(isinvalid);
     } else if(formdata.countryCode_telegram.trim().length === 0 && formdata.telegramnumber.trim().length > 0){
       this.snackbarService.openSnackBar('Please fill telegram countrycode', { 'panelClass': 'snackbarerror' });
     } else  {
-      console.log('success inisde');
+
       if (this.is_parent) {
         this.updateParentInfo(formdata).then(
           (result) => {
@@ -676,10 +664,8 @@ console.log(isinvalid);
         whatsup["number"] = formdata.whatsappnumber
         userObj['whatsAppNum'] = whatsup;
       }
-      console.log(formdata.telegramnumber.trim());
-      console.log(formdata.countryCode_telegram.trim());
+  
       if (formdata.telegramnumber !== undefined && formdata.telegramnumber.trim().length>0 &&  formdata.countryCode_telegram !== undefined&&formdata.countryCode_telegram.trim().length>0) {
-       console.log('dsfdf');
         const telegram = {}
         if (formdata.countryCode_telegram.startsWith('+')) {
           telegram["countryCode"] = formdata.countryCode_telegram
@@ -689,7 +675,7 @@ console.log(isinvalid);
         telegram["number"] = formdata.telegramnumber
         userObj['telegramNum'] = telegram;
       }
-      console.log(formdata.updateEmail);
+   
       
       if (formdata.email !== ''&& formdata.updateEmail) {
         userObj['email'] = formdata.email
@@ -727,13 +713,12 @@ console.log(isinvalid);
   }
 
   updateMemberInfo(formdata) {
-    console.log(formdata);
+   
     const _this = this;;
     const firstName = _this.chosen_person.userProfile.firstName;
     const lastName = _this.chosen_person.userProfile.lastName;
     let memberInfo: any = {};
     memberInfo.userProfile = {}
-    console.log(formdata.whatsappnumber);
     if (  formdata.whatsappnumber !== undefined &&formdata.whatsappnumber.trim().length>0  && formdata.countryCode_whtsap !== undefined && formdata.countryCode_whtsap.trim().length>0) {
       const whatsup = {}
       if (formdata.countryCode_whtsap.startsWith('+')) {
