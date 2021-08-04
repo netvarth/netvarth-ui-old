@@ -657,7 +657,7 @@
                                                         </div>
                                                     </div>
                                                 </ng-container>
-                                                <ng-container *ngIf="action=='members'">
+                                                <ng-container *ngIf="action=='members'">{{action}}
                                                     <div class="modal-body">
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-20">
@@ -1130,7 +1130,7 @@
                                                 <span *ngIf="checkJcash" class="rupee-font">{{payAmount |
                                                     currency:'&#8377;'}}
                                                 </span> -->
-                                                <button type="button" (click)="saveCheckin('appt')" id="stepThreeConfirmButton" [disabled]="paymentBtnDisabled" class="next-button btn btn-primary font-weight-bold  px-12 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
+                                                <button type="button" appPreventDoubleClick (click)="saveCheckin('appt')" id="stepThreeConfirmButton" [disabled]="paymentBtnDisabled" class="next-button btn btn-primary font-weight-bold  px-12 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
                                                     <ng-container
                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
                                                       ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
