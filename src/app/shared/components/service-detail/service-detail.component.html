@@ -98,6 +98,13 @@
                         </span>
                     </div>
                 </div>
+                <div class="outer3" *ngIf="data.serdet && data.serdet.paymentDescription">
+                        <div class="duration">
+                            <span style="font-size: small" class="data-value">
+                                    {{data.serdet.paymentDescription}}
+                            </span>
+                        </div>
+                    </div>
                 <div class="outer4"
                     *ngIf="data.serdet && data.serdet.isPrePayment && data.serdet.minPrePaymentAmount != data.serdet.totalAmount">
                     <div class="prepayment">

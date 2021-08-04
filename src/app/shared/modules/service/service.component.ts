@@ -162,7 +162,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
     qrdialogRef: any;
     wndw_path = projectConstants.PATH;
     tool_code;
-
+    showPrice;
+    priceDescription = false;
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
@@ -229,6 +230,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                     this.showConsumerNote = true;
                                     this.consumerNote = this.service_data['consumerNoteTitle'];
                                 }
+                                if (this.service_data['paymentDescription']) {
+                                    this.priceDescription = true;
+                                    this.showPrice = true;
+                                }
                                 if (!this.subdomainsettings.serviceBillable) {
                                     if (this.service_data.serviceType === 'donationService') {
                                         this.serviceForm.setValue({
@@ -247,6 +252,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                                 this.service_data['minPrePaymentAmount'] !== 0
                                             ) ? true : false,
                                             'taxable': this.service_data['taxable'] || this.serviceForm.get('taxable').value,
+                                            'paymentDescription': this.service_data['paymentDescription'] || this.serviceForm.get('paymentDescription').value,
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value
                                         });
@@ -260,7 +266,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'serviceType': this.service_data['serviceType'] || this.serviceForm.get('serviceType').value,
                                             'virtualServiceType': this.service_data['virtualServiceType'] || this.serviceForm.get('virtualServiceType').value,
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
-                                            'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value
+                                            'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value,
+                                            
                                         });
                                     }
                                     if (this.service_data.serviceType === 'virtualService') {
@@ -290,6 +297,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                                 this.service_data['minPrePaymentAmount'] !== 0
                                             ) ? true : false,
                                             'taxable': this.service_data['taxable'] || this.serviceForm.get('taxable').value,
+                                            'paymentDescription': this.service_data['paymentDescription'] || this.serviceForm.get('paymentDescription').value,
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value
                                         });
@@ -310,7 +318,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             ) ? true : false,
                                             'taxable': this.service_data['taxable'] || this.serviceForm.get('taxable').value,
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
-                                            'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value
+                                            'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value,
+                                            'paymentDescription': this.service_data['paymentDescription'] || this.serviceForm.get('paymentDescription').value,
                                         });
                                         if (this.service_data.serviceType === 'virtualService') {
                                             this.tool_name = this.service_data.virtualCallingModes[0].callingMode;
@@ -641,6 +650,14 @@ export class ServiceComponent implements OnInit, OnDestroy {
             }
         }
     }
+        onChange() {
+            if (this.priceDescription === true) {
+                this.showPrice = true;
+            }
+            else {
+                    this.showPrice = false;
+                }
+        }
     createForm() {
         if (this.active_user.accountType === 'BRANCH' && !this.is_donation) {
             this.getDepartments();
@@ -661,6 +678,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     multiples: [1, Validators.compose([Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
                     isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
                     taxable: [false],
+                    paymentDescription: [''],
                     notification: [true],
                     livetrack: [false]
                 });
@@ -679,7 +697,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
                     taxable: [false],
                     notification: [true],
-                    livetrack: [false]
+                    livetrack: [false],
+                    paymentDescription: [''],
                 });
                 this.serviceForm.get('resoucesRequired').setValue('1');
                 this.serviceForm.get('maxBookingsAllowed').setValue('1');
@@ -704,7 +723,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
                     taxable: [false],
                     notification: [true],
-                    livetrack: [false]
+                    livetrack: [false],
+                    paymentDescription: [''],
                 });
             } else {
                 this.serviceForm = this.fb.group({
@@ -716,7 +736,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     serviceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
                     virtualServiceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
                     notification: [true],
-                    livetrack: [false]
+                    livetrack: [false],
+                    paymentDescription: [''],
                 });
                 this.serviceForm.get('resoucesRequired').setValue('1');
                 this.serviceForm.get('maxBookingsAllowed').setValue('1');
