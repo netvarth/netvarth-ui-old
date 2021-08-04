@@ -114,6 +114,7 @@ import { RequestDialogComponent } from './business/shared/meeting-room/request-d
 import { VideoCallSharedComponent } from './business/modules/video-call/video-call.component';
 import { FileReaderService } from './shared/services/file-reader.service';
 import { AttachmentPopupComponent } from './shared/components/attachment-popup/attachment-popup.component';
+import { QuestionnaireLinkModule } from './shared/components/questionnaire-link/questionnaire-link.module';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -215,7 +216,8 @@ export function init_app(globalService: GlobalService) {
     ShareIconsModule,
     VirtualFieldsModule,
     MeetRoomModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    QuestionnaireLinkModule
   ],
   providers: [
     BsModalService,

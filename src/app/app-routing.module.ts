@@ -50,6 +50,7 @@ const routes: Routes = [
     { path: 'order/shoppingcart/checkout', loadChildren: () => import('./shared/modules/shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule) },
     { path: 'userchange', loadChildren: () => import('./shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },
     { path: 'order/item-details', component: ItemDetailsSharedComponent },
+    { path: 'questionnaire/:uid/:id', loadChildren: () => import('./shared/components/questionnaire-link/questionnaire-link.module').then(m => m.QuestionnaireLinkModule) },
     { path: ':id', component: BusinessPageComponent },
     { path: ':id/home', loadChildren: () => import('./shared/components/business-page-home/business-page-home.module').then(m => m.BusinessPageHomeModule) },
     { path: ':id/:userEncId', component: BusinessPageComponent },

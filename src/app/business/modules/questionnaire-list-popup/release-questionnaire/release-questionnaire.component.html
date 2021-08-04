@@ -1,0 +1,44 @@
+<h1 class="mat-dialog-title">Release
+  <button #queue mat-dialog-close class="modal_close">
+    <i class="fa fa-window-close" aria-hidden="true"></i>
+  </button>
+</h1>
+<mat-dialog-content>
+  <div class="form-group">
+    <mat-form-field>
+      <textarea matInput class="form-control" id="message" placeholder="Message *" [(ngModel)]="message"
+        maxlength="330">
+        </textarea>
+    </mat-form-field>
+    <app-field-error-display [displayError]="message === ''" errorMsg="Please enter a message.">
+    </app-field-error-display>
+  </div>
+  <div class="mgtop40 form-group">
+    Send message via
+    <div class="coupon-outer">
+      <mat-checkbox [disabled]="!isSms" class="mgright50 example-margin" [(ngModel)]="sms">
+        SMS
+      </mat-checkbox>
+      <mat-checkbox [disabled]="!isEmail" class="mgright50 example-margin" [(ngModel)]="email">Email
+      </mat-checkbox>
+      <mat-checkbox [disabled]="!isPush" class="mgright50 example-margin" [(ngModel)]="pushnotify">App
+        notification
+      </mat-checkbox>
+      <mat-checkbox *ngIf="!isTelegram" [disabled]="!isSms" class="mgright50 example-margin" [(ngModel)]="telegram">
+        Telegram
+      </mat-checkbox>
+    </div>
+    <div class="sms_credit_warn mgn-up-10" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{isSms?
+        'Purchase now': 'Upgrade now'}}</a>{{isSms? '' : ' to avoid undelivered SMS'}}</div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="mat-scrool">
+  <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
+    <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn_cap}}</button>
+    <button type="submit" mat-button [disabled]="sendBtnDisable()" class="cs-btn bt1 mr10"
+      (click)="shareQnr()">Share</button>
+  </div>
+</mat-dialog-actions>
+<app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+</app-form-success-display>
