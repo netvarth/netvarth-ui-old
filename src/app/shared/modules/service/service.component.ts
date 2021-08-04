@@ -1079,3 +1079,4 @@ getOwnership(ownerShipData,isTruncate){
     this.snackbarService.openSnackBar('Link copied to clipboard');
   }
 }
+
