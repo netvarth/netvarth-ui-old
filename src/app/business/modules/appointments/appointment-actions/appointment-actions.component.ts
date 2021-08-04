@@ -1068,7 +1068,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.provider_shared_functions.changeApptinternalStatus(this, this.appt, action);
     }
     showQnr() {
-        if (!this.data.multiSelection && this.appt.releasedQnr && this.appt.releasedQnr.length > 1) {
+        if (!this.data.multiSelection && this.appt.releasedQnr && this.appt.releasedQnr.length > 1 && this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected') {
             return true;
         }
         return false;
