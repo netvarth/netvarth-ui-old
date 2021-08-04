@@ -360,7 +360,8 @@ buttons: [
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      if (result === 'reloadlist') {
+      if (result && result === 'reloadlist') {
+        console.log('iisde');
         this.getCommunicationHistory();
       }
     });
