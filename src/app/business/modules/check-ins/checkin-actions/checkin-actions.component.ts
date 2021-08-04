@@ -539,6 +539,10 @@ export class CheckinActionsComponent implements OnInit {
         this.dialogRef.close();
         this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid, 'team'], { queryParams: { source: 'checkin' } });
     }
+    chnageLocation(){
+        this.dialogRef.close();
+        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid, 'updateloc'], { queryParams: { source: 'checkin' } }); 
+    }
     removeProvider() {
         // this.dialogRef.close();
         let msg = '';
@@ -1110,7 +1114,7 @@ export class CheckinActionsComponent implements OnInit {
         });
     }
     showQnr() {
-        if (!this.data.multiSelection && this.checkin.releasedQnr && this.checkin.releasedQnr.length > 1) {
+        if (!this.data.multiSelection && this.checkin.releasedQnr && this.checkin.releasedQnr.length > 1 && this.checkin.waitlistStatus !== 'cancelled') {
             return true;
         }
         return false;

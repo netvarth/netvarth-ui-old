@@ -382,6 +382,10 @@ export class AppointmentActionsComponent implements OnInit {
         this.dialogRef.close();
         this.router.navigate(['provider', 'check-ins', this.appt.uid, 'team'], { queryParams: { source: 'appt' } });
     }
+    chnageLocation(){
+        this.dialogRef.close();
+        this.router.navigate(['provider', 'check-ins', this.appt.uid, 'updateloc'], { queryParams: { source: 'appt' } }); 
+    }
     removeProvider() {
         let msg = '';
         msg = 'Do you want to remove this ' + this.provider_label + '?';
@@ -1064,7 +1068,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.provider_shared_functions.changeApptinternalStatus(this, this.appt, action);
     }
     showQnr() {
-        if (!this.data.multiSelection && this.appt.releasedQnr && this.appt.releasedQnr.length > 1) {
+        if (!this.data.multiSelection && this.appt.releasedQnr && this.appt.releasedQnr.length > 1 && this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected') {
             return true;
         }
         return false;

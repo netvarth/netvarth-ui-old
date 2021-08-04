@@ -122,6 +122,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http,'./assets/i18n/home/','.json');
 }
 
+import { QuestionnaireLinkModule } from './shared/components/questionnaire-link/questionnaire-link.module';
+import { PreventDoubleClickDirective } from './shared/directives/prevent-double-click.directive';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -159,7 +161,8 @@ export function init_app(globalService: GlobalService) {
     ListRecordingsDialogComponent,
     RequestDialogComponent,
     VideoCallSharedComponent,
-    AttachmentPopupComponent
+    AttachmentPopupComponent,
+    PreventDoubleClickDirective
   ],
   entryComponents: [
     SignUpComponent,
@@ -233,6 +236,8 @@ export function init_app(globalService: GlobalService) {
       },
       isolate: true,
   }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    QuestionnaireLinkModule
   ],
   providers: [
     BsModalService,

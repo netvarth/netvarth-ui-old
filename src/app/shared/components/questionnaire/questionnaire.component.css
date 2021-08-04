@@ -79,7 +79,7 @@
 }
 .gal_action {
     position: absolute;
-    top: 11px;
+    top: 20px;
     right: -10px;
     background: rgba(0,0,0,.5);
     width: 20px;
@@ -156,4 +156,11 @@
 .form-group.card {
     border: 1px solid #dadce063 !important;
     border-radius: 8px !important;
+}
+.docname {
+    width: 120px;
+    margin-bottom: 5px;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
 }

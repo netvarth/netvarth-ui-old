@@ -635,7 +635,7 @@
                           + ' ' + appt.provider.lastName}} 
                         </div>
                         <span style="color:green" *ngIf="appt.internalStatus"> {{ appt.internalStatus }}</span>
-                        <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0 && !appt.provider">
+                        <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
                           <!-- Team Name -->
                           {{getUsersList(appt.teamId)}}
                         </div>
@@ -1162,7 +1162,7 @@
                           + ' ' + appt.provider.lastName}} 
                         </div>
                         <span style="color:green" *ngIf="appt.internalStatus"> {{ appt.internalStatus }}</span>
-                        <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0  && !appt.provider">
+                        <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
                           <!-- Team Name -->
                           {{getUsersList(appt.teamId)}}
                         </div>
@@ -1737,7 +1737,7 @@
                         + ' ' + appt.provider.lastName}}
                       </div>
                       <span style="color:green" *ngIf="appt.internalStatus">- {{ appt.internalStatus }}</span>
-                      <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0  && !appt.provider">
+                      <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
                         <!-- Team Name -->
                         {{getUsersList(appt.teamId)}}
                       </div>
@@ -2369,7 +2369,7 @@
                         + ' ' + appt.provider.lastName}} 
                       </div>
                       <span style="color:green" *ngIf="appt.internalStatus"> {{ appt.internalStatus }}</span>
-                      <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0  && !appt.provider">
+                      <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
                         <!-- Team Name -->
                         {{getUsersList(appt.teamId)}}
                       </div>

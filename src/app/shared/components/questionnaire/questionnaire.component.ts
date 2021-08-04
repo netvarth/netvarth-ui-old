@@ -618,6 +618,7 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   booleanChange(ev, value, question, column?) {
+    console.log('boolchange')
     if (question.fieldDataType !== 'dataGrid') {
       if (ev.target.checked) {
         if (!this.answers[question.labelName]) {
@@ -641,7 +642,10 @@ export class QuestionnaireComponent implements OnInit {
         return false;
       }
     } else {
-      if (this.dataGridColumns[question.labelName + '=' + column.order] !== '' && JSON.parse(this.dataGridColumns[question.labelName + '=' + column.order]) === value) {
+      if (typeof this.dataGridColumns[question.labelName + '=' + column.order] === 'string') {
+        this.dataGridColumns[question.labelName + '=' + column.order] = JSON.parse(this.dataGridColumns[question.labelName + '=' + column.order])
+      }
+      if (this.dataGridColumns[question.labelName + '=' + column.order] === value) {
         return true;
       } else {
         return false;
@@ -936,12 +940,12 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
     }
-    if (this.source === 'consDonationDetails' || this.source === 'qnrDetails' || this.source === 'qnrView' || (this.type && !this.editQuestionnaire)) {
+    if (this.source === 'consDonationDetails' || this.source === 'qnrDetails' || this.source === 'qnrView' || (this.type && this.type !== 'qnr-link' && !this.editQuestionnaire)) {
       return true;
     }
   }
   showEditBtn() {
-    if (this.type) {
+    if (this.type && this.type !== 'qnr-link') {
       if (this.source === 'consCheckin' || this.source === 'proCheckin') {
         if (this.waitlistStatus !== 'checkedIn' && this.waitlistStatus !== 'arrived') {
           return false;
@@ -1039,7 +1043,7 @@ export class QuestionnaireComponent implements OnInit {
     this.editQuestionnaire = !this.editQuestionnaire;
   }
   getDocuments(question) {
-    if (question.filePropertie.maxNoOfFile > 1) {
+    if (question.filePropertie.maxNoOfFile > 1 && question.filePropertie.minNoOfFile !== question.filePropertie.maxNoOfFile) {
       return this.uploadFilesTemp[question.labelName];
     } else {
       return question.filePropertie.allowedDocuments;

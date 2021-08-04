@@ -133,9 +133,9 @@ export class CommunicationComponent implements OnInit {
       data: pass_ob
     });
     this.addnotedialogRef.afterClosed().subscribe(result => {
-     // if (result === 'reloadlist') {
-        this.dialogRef.close('reloadlist');
-     // }
+     if (result === 'reloadlist') {
+        this.dialogRef.close(result);
+     }
     });
   }
 
