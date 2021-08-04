@@ -138,7 +138,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
           break;
         case 'load_unread_count':
           if (!message.action) {
-            this.getInboxUnreadCnt();
+            if (!this.customId){
+              this.getInboxUnreadCnt();
+            }            
           } else if (message.action === 'setzero') {
             this.inboxUnreadCnt = 0;
             this.inboxCntFetched = true;
@@ -178,7 +180,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.ctype = this.shared_functions.isBusinessOwner('returntyp');
     this.inboxCntFetched = false;
     // Section which handles the periodic reload
-    if (this.ctype === 'consumer' || this.ctype === 'provider') {
+    if ((this.ctype === 'consumer' || this.ctype === 'provider') && !this.customId) {
       this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
         this.reloadHandler();
       });
@@ -187,7 +189,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       //   this.cronHandle.unsubscribe();
       // }
     }
-    if (this.ctype === 'consumer') {
+    if (this.ctype === 'consumer' && !this.customId) {
       this.getInboxUnreadCnt();
     }
   }
