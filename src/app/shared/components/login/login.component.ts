@@ -70,7 +70,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
     // private i18nService: I18nService,     
     @Inject(DOCUMENT) public document
   ) {
-    this.translate.addLangs(['en', 'hd']);
+    // this.translate.addLangs(['en', 'hd']);
+
     this.translate.setDefaultLang('en');
     this.translate.use('en'); 
     

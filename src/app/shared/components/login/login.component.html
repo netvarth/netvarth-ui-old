@@ -86,7 +86,7 @@
                     formControlName="password" autocomplete="off" (keyup)="handlekeyup($event)">
             <!-- </mat-form-field> -->
             <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'password') && show_error"
-                errorMsg="Password is required">
+                errorMsg="{{'pass_err' | translate}}" >
             </app-field-error-display>
         </div>
     </div>

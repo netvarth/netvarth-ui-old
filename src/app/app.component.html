@@ -1,6 +1,11 @@
-<a  class="pointer-cursor ">
-    <span (click)="changeLocale('en')" >English | </span>
-    <span (click)="changeLocale('hd')" > Hindi </span>
-</a>
+<mat-form-field appearance="fill">
+    <mat-label>Choose language</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let lang of languages" [value]="lang.value" (click)="changeLocale(lang.value)">
+        {{lang.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
 
 <router-outlet></router-outlet>

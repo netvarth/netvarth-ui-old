@@ -112,7 +112,7 @@ export class SignUpComponent implements OnInit {
     // private i18nService: I18nService,  
 
   ) {
-    this.translate.addLangs(['en', 'hd']);
+    // this.translate.addLangs(['en', 'hd']);
     this.translate.setDefaultLang('en');
     this.translate.use('en'); 
     this.is_provider = data.is_provider || 'true';

@@ -159,8 +159,22 @@
             ]
      
         
-        }
-
+        },
+        "f_nameerror":"First name is required",
+        "alpha_nameerror":"Only alphabets are allowed",
+        "l_nameerror":"Last name is required",
+        "email_error":"Please enter a valid email",
+        "gender_error":"Please select the gender.",
+        "date_error":"Please select the date of birth.",
+        "old_password":"Old Password Required",
+        "pass_err":"Password Required",
+        "pass_len_err":"Use minimum 8 characters with atleast one uppercase, lowercase and number",
+        "re_pass":"Re-enter Password",
+        "pass_match":"Entered passwords does not match",
+        "PROFILE_UPDATE":"Profile has been updated successfully",
+        "EMAIL_MISMATCH": "Email and Re-entered Email do not match",
+        "PASSWORD_CHANGED": "Password has been changed successfully",
+        "PASSWORD_MISMATCH": "Entered passwords does not match"
 
 
     

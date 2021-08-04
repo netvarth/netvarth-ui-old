@@ -132,6 +132,7 @@ export class ConsumerPaymentComponent implements OnInit,OnDestroy {
                     this.status = data;
                     this.status = this.status.toLowerCase();
                     if (this.status === 'success') {
+                       
                         this.snackbarService.openSnackBar(Messages.PAY_DONE_SUCCESS_CAP);
                         if (this.activeWt.service.livetrack) {
                             this.router.navigate(['consumer', 'checkin', 'track']);

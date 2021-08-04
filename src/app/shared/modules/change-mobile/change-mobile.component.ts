@@ -13,6 +13,7 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { isValidNumber  } from 'libphonenumber-js';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-change-mobile',
@@ -64,11 +65,17 @@ export class ChangeMobileComponent implements OnInit {
     private snackbarService: SnackbarService,
     private lStorageService: LocalStorageService,
     private s3Processor: S3UrlProcessor,
-  ) { }
+    public translate: TranslateService,
+  ) { 
+    this.translate.setDefaultLang('en');
+    this.translate.use('en');
+  }
   goBack () {
     this.location.back();
   }
   ngOnInit() {
+    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
     this.spForm = this.fb.group({
       countryCode:['',Validators.compose([

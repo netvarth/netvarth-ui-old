@@ -87,7 +87,7 @@ export class EditProfileComponent implements OnInit {
     public translate: TranslateService,
     // private i18nService: I18nService,
   ) {
-    this.translate.addLangs(['en', 'hd']);
+    // this.translate.addLangs(['en', 'hd']);
     this.translate.setDefaultLang('en');
     this.translate.use('en');
    this.breadcrumbs_init = [
@@ -283,7 +283,8 @@ export class EditProfileComponent implements OnInit {
         .subscribe(
           () => {
             // this.api_success = Messages.PROFILE_UPDATE;
-            this.snackbarService.openSnackBar(Messages.PROFILE_UPDATE);
+             // 
+            this.snackbarService.openSnackBar(this.translate.instant('PROFILE_UPDATE'));
             this.getProfile(this.curtype);
             const curuserdetexisting = this.groupService.getitemFromGroupStorage('ynw-user');
             curuserdetexisting['userName'] = sub_data.first_name + ' ' + sub_data.last_name;
@@ -300,7 +301,7 @@ export class EditProfileComponent implements OnInit {
           }
         );
     } else {
-      this.snackbarService.openSnackBar(Messages.EMAIL_MISMATCH, { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar(this.translate.instant('EMAIL_MISMATCH'), { 'panelClass': 'snackbarerror' });
       // this.api_error = Messages.PASSWORD_MISMATCH;
     }
   }

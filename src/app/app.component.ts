@@ -33,6 +33,14 @@ export class AppComponent implements OnInit {
     this.translate.use('en'); 
     this.changeLocale('en');
   }
+  languages = [
+    {value: 'en', viewValue: 'English'},
+    {value: 'hd', viewValue: 'Hindhi'},
+    {value: 'kan', viewValue: 'Kannada'},
+    {value: 'tel',viewValue:'Telugu'},
+    {value: 'mal',viewValue:'Malayalam'},
+    {value: 'tam',viewValue:'Tamil'}
+  ];
 
   /**
    * Init Method

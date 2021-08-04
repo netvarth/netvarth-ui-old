@@ -51,7 +51,7 @@ export class ChangePasswordComponent implements OnInit {
     public translate: TranslateService,
     // private i18nService: I18nService,
   ) {
-    this.translate.addLangs(['en', 'hd']);
+    // this.translate.addLangs(['en', 'hd']);
     this.translate.setDefaultLang('en');
     this.translate.use('en'); 
     this.isBusinessowner = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
@@ -107,7 +107,7 @@ export class ChangePasswordComponent implements OnInit {
             this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
             // ynw.password = sub_data.new_password; // change the password to the new one in the local storage variable
             this.lStorageService.setitemonLocalStorage('ynw-credentials', ynw); // saving the updation to the local storage variable
-            this.snackbarService.openSnackBar(Messages.PASSWORD_CHANGED);
+            this.snackbarService.openSnackBar(this.translate.instant('PASSWORD_CHANGED'));
             this.spForm.reset();
           },
           error => {
@@ -120,7 +120,7 @@ export class ChangePasswordComponent implements OnInit {
         );
 
     } else {
-      this.snackbarService.openSnackBar(Messages.PASSWORD_MISMATCH, { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar(this.translate.instant('PASSWORD_MISMATCH'), { 'panelClass': 'snackbarerror' });
       // this.api_error = Messages.PASSWORD_MISMATCH;
     }
 
