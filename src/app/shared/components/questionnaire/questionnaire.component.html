@@ -41,12 +41,12 @@
                             <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12 no-padding mgn-up-20"
                                 *ngIf="getDocuments(getQuestion(question)) && getDocuments(getQuestion(question)).length > 0">
                                 <div class="dropzone dropzone-default dropzone-primary dz-clickable"
-                                    [class.single-file]="getQuestion(question).filePropertie.maxNoOfFile == 1"
+                                    [class.single-file]="getQuestion(question).filePropertie.allowedDocuments.length==1"
                                     style="cursor: auto;">
                                     <ng-container *ngFor="let doc of getDocuments(getQuestion(question))">
                                         <div class="dz-preview dz-processing dz-image-preview dz-error dz-complete"
                                             *ngIf="getImg(getQuestion(question), doc)">
-                                            <ng-container *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1">
+                                            <ng-container *ngIf="getQuestion(question).filePropertie.allowedDocuments.length > 1">
                                                 {{doc}}</ng-container>
                                             <div class="dzimage pointer-cursor"
                                                 (click)="openAttachmentGallery(getQuestion(question), doc)">
@@ -62,7 +62,7 @@
                                         </div>
                                         <div class="dz-preview dz-processing dz-image-preview dz-error dz-complete"
                                             (click)="logofile1.click()" *ngIf="!getImg(getQuestion(question), doc)">
-                                            <ng-container *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1">
+                                            <ng-container *ngIf="getQuestion(question).filePropertie.allowedDocuments.length > 1">
                                                 {{doc}}</ng-container>
                                             <div class="dz-image pointer-cursor">
                                             </div>
