@@ -1767,6 +1767,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.razorModel.order_id = pData.orderId;
     this.razorModel.name = pData.providerName;
     this.razorModel.description = pData.description;
-    this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'order_prepayment', this.trackUuid, this.livetrack, this.account_id, this.cartDetails.advanceAmount);
+    this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'order_prepayment', this.trackUuid, this.livetrack, this.account_id, this.cartDetails.advanceAmount , this.customId);
+    // this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'checkin_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList, this.customId);
+
   }
 }

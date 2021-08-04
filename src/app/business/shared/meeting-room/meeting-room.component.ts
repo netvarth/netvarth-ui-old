@@ -13,6 +13,7 @@ import { TeleBookingService } from "../../../shared/services/tele-bookings-servi
 import { MediaService } from "../../../shared/services/media-service";
 import { RequestDialogComponent } from "./request-dialog/request-dialog.component";
 import * as Video from 'twilio-video';
+import { SharedServices } from "../../../shared/services/shared-services";
 @Component({
     selector: 'app-meeting-room',
     templateUrl: './meeting-room.component.html',
@@ -43,7 +44,6 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
     chatDialog: any;
     reqDialogRef: any;
     media: any;
-
     audioTrack;
     videoTrack;
     previewTracks = [];
@@ -59,7 +59,8 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
         private cd: ChangeDetectorRef,
         private dialog: MatDialog,
         private teleService: TeleBookingService,
-        private mediaService: MediaService) {
+        private mediaService: MediaService,
+        private sharedServices: SharedServices) {
         const _this = this;
         _this.twilioService.loading = false;
         _this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -217,6 +218,8 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
                 )
             }
         ).catch(error => {
+            _this.sharedServices.callHealth(error.stack).subscribe();
+            console.log(error);
             _this.openRequestDialog('both');
         });
 
@@ -466,45 +469,53 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
     }
     unmuteVideo() {
         const _this = this;
+        _this.btnClicked = true;
         console.log("unmuteVideo");
         // this.twilioService.unmuteVideo();
         _this.getVideoStatus().then(
-            (videoStatus) => {
+            (videoStatus) => {                
                 if (!videoStatus) {
                     _this.openRequestDialog('b-cam');
                 } else {
                     _this.twilioService.video = true;
-                }
+                }     
+                _this.btnClicked = false;           
             }
         );
     }
 
     muteVideo() {
         // this.twilioService.muteVideo();
+        this.btnClicked = true;
         console.log("muteVideo");
         console.log(this.videoTrack);
         this.removePreviewTrackToDom(this.videoTrack, 'video');
         this.previewTracks.splice(this.previewTracks.indexOf(this.videoTrack), 1);
         this.twilioService.video = false;
+        this.btnClicked = false;
     }
     muteAudio() {
+        this.btnClicked = true;
         console.log("muteAudio");
         console.log(this.audioTrack);
         this.removePreviewTrackToDom(this.audioTrack, 'audio');
         this.previewTracks.splice(this.previewTracks.indexOf(this.audioTrack), 1);
         this.twilioService.microphone = false;
+        this.btnClicked = false;
     }
     unmuteAudio() {
         const _this = this;
+        _this.btnClicked = true;
         console.log("unmuteAudio");
         _this.getAudioStatus().then(
-            (audioStatus) => {
+            (audioStatus) => {                
                 if (!audioStatus) {
                     _this.twilioService.microphone = false;
                     _this.openRequestDialog('b-mic');
                 } else {
                     _this.twilioService.microphone = true;
                 }
+                _this.btnClicked = false;
             }
         );
     }

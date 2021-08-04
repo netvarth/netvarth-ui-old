@@ -1,0 +1,78 @@
+<section class="container cons-inbox no-padding qnr-link">
+    <div class="comn-cls m0 p0">
+        <div class="panel-default">
+            <div class="panel-body no-padding" *ngIf="!qParams.type">
+                <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                <div class="" *ngIf="!loading">
+                    <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 details-pad">
+                        <div class="card">
+                            <div class="customer-details-head">
+                                <div>
+                                    <h2 *ngIf="!waitlist.provider">{{waitlist.providerAccount?.businessName}}
+                                    </h2>
+                                    <h2 *ngIf="waitlist.provider">
+                                        {{(waitlist.provider.businessName) ? waitlist.provider.businessName
+                                        : waitlist.provider.firstName +
+                                        ' ' + waitlist.provider.lastName}}, {{waitlist.providerAccount?.businessName}}
+                                    </h2>
+                                    <h5 *ngIf="questionnaire[0] && questionnaire[0].questionnaireId">
+                                        {{questionnaire[0].questionnaireId}}
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="customer-details">
+                                <h5
+                                    *ngIf="source == 'consCheckin' && (waitlist.waitlistingFor[0].firstName || waitlist.waitlistingFor[0].lastName)">
+                                    {{waitlist.waitlistingFor[0].firstName}}
+                                    {{waitlist.waitlistingFor[0].lastName}}
+                                </h5>
+                                <h5
+                                    *ngIf="source == 'consAppt' && (waitlist.appmtFor[0].firstName || waitlist.appmtFor[0].lastName)">
+                                    {{waitlist.appmtFor[0].firstName}}
+                                    {{waitlist.appmtFor[0].lastName}}
+                                </h5>
+                                <div class="contact-no">
+                                    <i class="fa fa-mobile icon"></i>
+                                    <span class="value">{{waitlist.service.name}}</span>
+                                </div>
+                                <!-- <div class="email" *ngIf="waitlist.token">
+                                <i class="fa fa-envelope icon"></i>
+                                <span class="value">Token: {{waitlist.token}}</span>
+                            </div> -->
+                                <div class="contact-no" *ngIf="waitlist.waitlistPhoneNumber">
+                                    <i class="fa fa-mobile icon"></i>
+                                    <span class="value">{{waitlist.countryCode}} {{waitlist.waitlistPhoneNumber}}</span>
+                                </div>
+                                <div class="email" *ngIf="source == 'consCheckin' && waitlist.waitlistingFor[0].email">
+                                    <i class="fa fa-envelope icon"></i>
+                                    <span class="value">{{waitlist.waitlistingFor[0].email}}</span>
+                                </div>
+                                <div class="email" *ngIf="source == 'consAppt' && waitlist.appmtFor[0].email">
+                                    <i class="fa fa-envelope icon"></i>
+                                    <span class="value">{{waitlist.appmtFor[0].email}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="">
+                        <app-questionnaire [questionnaireList]="questionnaire[0]" [source]="source" [uuid]="qParams.uid"
+                            [accountId]="accountId" [type]="'qnr-link'"
+                            [waitlistStatus]="(source == 'consCheckin') ? waitlist.waitlistStatus : waitlist.apptStatus"
+                            (returnAnswers)="getQuestionAnswers($event)">
+                        </app-questionnaire>
+                    </div>
+                </div>
+            </div>
+            <div class="success-sec" *ngIf="qParams.type">
+                <div class="success-head">
+                    Your response has been submitted
+                </div>
+                <div class="success-desc">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque dolorum odit quibusdam sint
+                    exercitationem dignissimos animi, consequatur eum accusantium, omnis modi. Maiores, aliquam cum.
+                    Excepturi nulla veritatis quae dignissimos placeat.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

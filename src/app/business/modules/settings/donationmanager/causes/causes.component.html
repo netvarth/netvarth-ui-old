@@ -39,7 +39,7 @@
                                 <i class="icon-edit"></i>
                                 Edit
                             </button>
-                            <button mat-menu-item 
+                            <button mat-menu-item  *ngIf="service.status=='ACTIVE'"
                             (click)="serviceqrCodegeneraterOnlineID(service)">
                                 <i class="fa fa-qrcode"
                                     ></i>Share link

@@ -464,7 +464,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.activaterouterobj.paramMap
       .subscribe(params => {
         this.accountEncId = params.get('id');
-
         if (this.accountEncId && this.accountEncId.toLowerCase() === 'heartfulnesscovidcare') {
           this.router.navigate(['heartfulnesshealthcare']);
         } else {
@@ -482,6 +481,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                   _this.provider_id = id;
                   _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
                     (uiconfig: any) => {
+                      if (uiconfig['pixelId']) {
+                        this.addScript('1424568804585712');
+                      }
                       if (uiconfig['iosApp']) {
                         this.iosConfig = true;
                         if ( uiconfig['iosApp']['icon-180']) {
@@ -3033,4 +3035,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     };
     this.routerobj.navigate(['consumer'], navigationExtras);
   }
+
+  addScript(pixelId) {
+    let script_tag = document.createElement("script");
+    script_tag.type = "text/javascript";
+    script_tag.text = "!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq.disablePushState = true;fbq('init', " + pixelId + ");fbq('track', 'PageView');";
+    document.getElementById('busPageId').appendChild(script_tag);
+  }
+
 }

@@ -107,18 +107,25 @@ export class QuestionnaireListPopupComponent implements OnInit {
     dialogrefd.afterClosed().subscribe(result => {
       if (result) {
         const status = (this.getQnrStatus(id) === 'unReleased') ? 'released' : 'unReleased';
-        this.providerServices.changeQnrReleaseStatus(status, this.uid, id).subscribe(data => {
-          this.loading = true;
-          if (this.qparams.source === 'appt') {
-            this.getApptDetails();
-          } else if (this.qparams.source === 'checkin') {
+        if (this.qparams.source === 'checkin') {
+          this.providerServices.changeWaitlistQnrReleaseStatus(status, this.uid, id).subscribe(data => {
+            this.loading = true;
             this.getWaitlistDetail();
-          }
-          this.sharedFunctions.sendMessage({ type: 'reload' });
-          this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
-        }, error => {
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        });
+            this.sharedFunctions.sendMessage({ type: 'reload' });
+            this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
+          }, error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          });
+        } else {
+          this.providerServices.changeApptQnrReleaseStatus(status, this.uid, id).subscribe(data => {
+            this.loading = true;
+            this.getApptDetails();
+            this.sharedFunctions.sendMessage({ type: 'reload' });
+            this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
+          }, error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          });
+        }
       }
     });
   }

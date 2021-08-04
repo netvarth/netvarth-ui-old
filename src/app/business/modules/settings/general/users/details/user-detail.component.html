@@ -306,15 +306,10 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                         </div>
                                     </div> -->
                                     <div class="col-md-6 col-sm-6 col-xs-12 ">
-                                            <div class="form-group mgn-up-20" *ngIf="actionparam.type === 'edit'">
+                                            <!-- <div class="form-group mgn-up-20" *ngIf="actionparam.type === 'edit'">
                                                 <label>User Type : {{type}}</label>
-                                                    <!-- <mat-form-field>
-                                                            <input matInput readonly type="text" class="form-control" value="{{type}}"
-                                                                placeholder="Usertype" 
-                                                                autocomplete="off">
-                                                        </mat-form-field> -->
-                                                </div>
-                                        <div class="form-group" *ngIf="actionparam.type !== 'edit'"> 
+                                                </div> -->
+                                        <div class="form-group"> 
                                             <mat-form-field>
                                                 <mat-select formControlName="selectedUserType"
                                                     placeholder="Choose Usertype *"

@@ -8,6 +8,8 @@ import { UserServiceChangeRoutingModule } from './user-service-change.routing.mo
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
+import { ConfirmBoxLocationComponent } from './confirm-box-location/confirm-box-location.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -20,11 +22,13 @@ import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module'
       UserServiceChangeRoutingModule,
       MatInputModule,
       FormsModule,
-      LoadingSpinnerModule
+      LoadingSpinnerModule,
+      MatDialogModule
       
     ],
     declarations: [
-       UserServiceChnageComponent 
+       UserServiceChnageComponent,
+       ConfirmBoxLocationComponent 
     ],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,

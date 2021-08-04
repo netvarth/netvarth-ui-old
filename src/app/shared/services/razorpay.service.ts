@@ -154,7 +154,18 @@ export class RazorpayService {
           this.lStorageService.removeitemfromLocalStorage('order_spId');
           this.lStorageService.removeitemfromLocalStorage('order');
           this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-          this.ngZone.run(() => this.router.navigate(['consumer'] ,{ queryParams: { 'source': 'order'}}));
+          let queryParams = {
+            'source': 'order',
+          };
+          if(uuids) {
+            queryParams['customId']= uuids;
+            queryParams['accountId']= account_id;
+          }
+          let navigationExtras: NavigationExtras = {
+            queryParams: queryParams
+          }
+          this.ngZone.run(() => this.router.navigate(['consumer'] ,navigationExtras));
+          // this.ngZone.run(() => this.router.navigate(['consumer'] ,{ queryParams: { 'source': 'order'}}));
         }
       } else {
         this.router.navigate(['provider', 'license', 'payments'], navigationExtras);

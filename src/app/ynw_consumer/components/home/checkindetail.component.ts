@@ -345,7 +345,7 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
     });
   }
   getReleasedQnrs(releasedQnrs) {
-    this.consumer_services.getWaitlistQuestionnaireByUid(this.ynwUuid, this.providerId)
+    this.sharedServices.getWaitlistQuestionnaireByUid(this.ynwUuid, this.providerId)
       .subscribe(
         (data: any) => {
           const qnrs = data.filter(function (o1) {
