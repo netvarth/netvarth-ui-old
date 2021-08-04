@@ -165,6 +165,7 @@ import { WordProcessor } from '../../services/word-processor.service';
 import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import { userContactInfoComponent } from '../../../business/modules/settings/general/users/user-contact-info/user-contact-info.component';
+import { ConfirmBoxLocationComponent } from './confirm-box-location/confirm-box-location.component';
 
 @Component({
   selector: 'app-user-service-change',
@@ -329,7 +330,8 @@ export class UserServiceChnageComponent implements OnInit {
           'countryCode':  serviceObj.countryCode || '',
           'firstName': serviceObj.firstName,
           'lastName': serviceObj.lastName,
-          'email': serviceObj.email || ''
+          'email': serviceObj.email || '',
+          'bussloc': serviceObj.bussLocations || ''
  
           // serviceObj.firstName + ' ' + serviceObj.lastName;
 
@@ -405,7 +407,12 @@ export class UserServiceChnageComponent implements OnInit {
     this.selectrow = true;
     this.selectedUser = user;
     if (this.selectrow === true && user.id) {
-      this.updateUser()
+      if(user.bussloc.length > 1){
+        this.updateUserWithLocation(user)
+      }
+      else{
+        this.updateUser()
+      }
     }
     this.removeSelection();
     if (this.service_dataSource.data[index].selected === undefined || this.service_dataSource.data[index].selected === false) {
@@ -415,6 +422,70 @@ export class UserServiceChnageComponent implements OnInit {
       this.userId = '';
       this.service_dataSource.data[index].selected = false;
     }
+  }
+  updateUserWithLocation(user) {
+    console.log(user);
+    let msg = '';
+    if (!this.selectedUser.isAvailable && (this.user.id === 136239 || this.user.id === 9341)) {
+      msg = this.selectedUser.businessName + ' seems to be unavailable now. Assign anyway ? ';
+    } else {
+      msg = 'Do you want to assign this ' + this.customer_label + ' to ' + this.selectedUser.businessName + '?';
+    }
+    const dialogrefd = this.dialog.open(ConfirmBoxLocationComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message':msg,
+        'user':user,
+        'type': 'yes/no'
+      }
+    });
+    dialogrefd.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) {
+        if (this.source == 'checkin') {
+          const post_data = {
+            'ynwUuid': this.uuid,
+            'provider': {
+              'id': this.userId
+            },
+            'location':{
+              'id':result
+            }
+          };
+        this.provider_services.updateUserWaitlist(post_data)
+            .subscribe(
+              data => {
+                this.location.back();
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              }
+            );
+        }
+        else {
+          const post_data = {
+            'uid': this.uuid,
+            'provider': {
+              'id': this.userId
+            },
+            'location':{
+              'id': result
+            }
+          };
+          this.provider_services.updateUserAppointment(post_data)
+            .subscribe(
+              data => {
+                this.location.back();
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              }
+            );
+        }
+      }
+    });
   }
   removeSelection() {
     this.service_dataSource.data.map((question) => {

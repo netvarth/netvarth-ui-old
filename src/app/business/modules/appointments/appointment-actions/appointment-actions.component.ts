@@ -382,6 +382,10 @@ export class AppointmentActionsComponent implements OnInit {
         this.dialogRef.close();
         this.router.navigate(['provider', 'check-ins', this.appt.uid, 'team'], { queryParams: { source: 'appt' } });
     }
+    chnageLocation(){
+        this.dialogRef.close();
+        this.router.navigate(['provider', 'check-ins', this.appt.uid, 'updateloc'], { queryParams: { source: 'appt' } }); 
+    }
     removeProvider() {
         let msg = '';
         msg = 'Do you want to remove this ' + this.provider_label + '?';

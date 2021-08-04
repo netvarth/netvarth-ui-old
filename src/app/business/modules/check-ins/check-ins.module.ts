@@ -39,6 +39,7 @@ import { UserServiceChangeModule } from '../../../shared/modules/user-service-ch
 import { instantQueueComponent } from './instantQ/instantQueue.component';
 import { AssignTeamModule } from '../../../shared/modules/assign-team/assign-team.module';
 import { QuestionnaireListPopupModule } from '../questionnaire-list-popup/questionnaire-list-popup.module';
+import { LocationUpdateComponent } from './location-update/location-update.component';
 
 
 @NgModule({
@@ -83,7 +84,8 @@ import { QuestionnaireListPopupModule } from '../questionnaire-list-popup/questi
         AdjustqueueDelayComponent,
         ProviderWaitlistCheckInDetailComponent,
         CheckinActionsComponent,
-        instantQueueComponent
+        instantQueueComponent,
+        LocationUpdateComponent
         // DateRangePickerJComponent
 
     ],

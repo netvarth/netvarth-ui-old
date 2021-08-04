@@ -2225,4 +2225,13 @@ export class ProviderServices {
     const url = 'provider/appointment/questionnaire/' + uid;
     return this.servicemeta.httpGet(url);
   }
+  updateBusslocWaitlist(post_data) {
+    const url = 'provider/waitlist/changeBussLoc';
+    return this.servicemeta.httpPut(url, post_data);
+  }
+  updateBusslocApptWaitlist(post_data) {
+    const url = 'provider/appointment/changeBussLoc';
+    return this.servicemeta.httpPut(url, post_data);
+  }
+ 
 }

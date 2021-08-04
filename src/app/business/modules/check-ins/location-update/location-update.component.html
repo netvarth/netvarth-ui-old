@@ -1,0 +1,74 @@
+<section class="">
+  <div class="card title-gb">
+    <h5 class="mgn-up-10 disp-flex">
+      <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToReports()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <div> Update a location of your {{customer_label}}
+        <div class="form-level-settings">Please click any location to assign</div>
+      </div>
+    </h5>
+  </div>
+</section>
+<section class="">
+  <div class="card title-gb">
+    <h6 class="mgn-up-10 disp-flex" *ngIf="filterApplied_count > 1">
+      <span></span>{{filterApplied_count}}&nbsp;&nbsp;Location Found
+    </h6>
+    <h6 class="mgn-up-10 disp-flex" *ngIf="filterApplied_count == 1">
+      <span></span>{{filterApplied_count}}&nbsp;&nbsp;Location Found
+    </h6>
+  </div>
+</section>
+<section class="customersList">
+  <div class="row p-3">
+    <div class="col-lg-12">
+      <div class="card card-custom card-stretch gutter-b no-padding">
+        <div class="card-body pt-0 pb-3 no-padding">
+          <div class="tab-content">
+            <div class="table-responsive1">
+              <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
+                <thead>
+                  <tr class="text-left text-uppercase">
+                    <th class="display-min-none" style="min-width: 250px;">Location</th>
+                    <th class="display-min-none" style="width: 30%;">Status</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="!loading">
+                  <tr class="row_data border-bottom pointer-cursor"
+                    *ngFor="let service of service_dataSource.data; let i = index;" (click)="selectedRow(i,service)">
+                    <td class="waitlist-box">
+                      <span class="mgn-up-5 d-lg-none pull-right" (click)="stopprop($event);"><a class="assign-btn"
+                          (click)="selectedRow(i,service)">Assign</a>
+                      </span>
+                      <div class="disp-flex">
+                        <div class="mgn-lt-10">
+                          <div class="username">
+                            {{service.name}}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="display-min-none">
+                      {{service.status}}
+                    </td>
+                    <!-- <td class="display-min-none">
+                          <span *ngIf="service.users.length > 0"> 
+                            <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
+                          </span>
+                          <span *ngIf="service.users.length == 0"> 
+                              <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)"></a>
+                            </span>
+                      </td> -->
+                  </tr>
+                  <tr *ngIf="service_dataSource.data.length == 0 && !loading">
+                    No locations found
+                  </tr>
+                </tbody>
+                <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
