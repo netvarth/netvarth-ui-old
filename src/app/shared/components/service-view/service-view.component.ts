@@ -243,22 +243,7 @@ export class ServiceViewComponent implements OnInit {
       );
     });
   }
-  // ngAfterViewInit() {
-  //   const _this = this;
-  //   _this.sidenav.mode = 'over';
-  //   this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
-  //     setTimeout(() => {
-  //       if (res.matches) {
-  //         _this.sidenav.mode = 'over';
-  //         _this.sidenav.close();
-  //       } else {
-  //         _this.sidenav.mode = 'side';
-  //         _this.sidenav.open();
-  //       }
-  //     }, 100);
-
-  //   });
-  // }
+  
   gets3curl() {
     let accountS3List = 'settings,appointmentsettings,terminologies,coupon,providerCoupon,location';
     let userS3List = 'providerBusinessProfile,providerVirtualFields,providerservices,providerApptServices';

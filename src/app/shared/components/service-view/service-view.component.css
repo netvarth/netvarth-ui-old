@@ -990,10 +990,6 @@ font-weight: bold;
   }
 }
 
-@media(max-width: 650px) {
-  .change ,.donatechange{
-  }
-}
 
 @media(max-width: 450px) {
   .change ,.donatechange{
