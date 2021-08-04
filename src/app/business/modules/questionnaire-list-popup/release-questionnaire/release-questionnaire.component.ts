@@ -42,39 +42,48 @@ export class ReleaseQuestionnaireComponent implements OnInit {
   ngOnInit() {
     console.log(this.data);
     if (this.data.source === 'appt') {
-      this.email = this.data.waitlist_data.providerConsumer.email;
-      if (!this.email) {
-        this.isEmail = false;
+      if (this.data.waitlist_data.providerConsumer.email) {
+        this.email = this.data.waitlist_data.providerConsumer.email;
+        this.isEmail = true;
+        this.email = true;
       }
-      this.phone = this.data.waitlist_data.providerConsumer.phoneNo;
-      if (!this.phone) {
-        this.isSms = false;
+      this.countryCode = this.data.waitlist_data.providerConsumer.countryCode;
+      if (this.data.waitlist_data.providerConsumer.phoneNo) {
+        this.phone = this.data.waitlist_data.providerConsumer.phoneNo;
+        this.isSms = true;
+        this.sms = true;
       }
-      if (!this.email && (!this.phone || (this.phone === '')) || !this.data.waitlist_dataconsumer) {
-        this.pushnotify = false;
-        this.isPush = false;
+      if ((this.email || this.phone) && this.data.waitlist_data.consumer) {
+        this.pushnotify = true;
+        this.isPush = true;
       }
     } else {
-      this.email = this.data.waitlist_data.waitlistingFor[0].email;
-      if (!this.email) {
-        this.isEmail = false;
+      if (this.data.waitlist_data.waitlistingFor[0].email) {
+        this.email = this.data.waitlist_data.waitlistingFor[0].email;
+        this.isEmail = true;
+        this.email = true;
       }
-      this.phone = this.data.waitlist_data.waitlistingFor[0].phoneNo;
-      if (!this.phone) {
-        this.isSms = false;
+      this.countryCode = this.data.waitlist_data.consumer.countryCode;
+      if (this.data.waitlist_data.consumer.phoneNo) {
+        this.phone = this.data.waitlist_data.consumer.phoneNo;
+        this.isSms = true;
+        this.sms = true;
       }
-      if (!this.email && (!this.phone || (this.phone === '')) || !this.data.waitlist_data.jaldeeConsumer) {
-        this.pushnotify = false;
-        this.isPush = false;
+      if ((this.email || this.phone) && this.data.waitlist_data.jaldeeConsumer) {
+        this.pushnotify = true;
+        this.isPush = true;
       }
     }
-    this.getTelegramChatId();
-    this.getSMSCredits();
+    if (this.countryCode && this.phone) {
+      this.getTelegramChatId();
+      this.getSMSCredits();
+    }
   }
   getTelegramChatId() {
     this.shared_services.telegramChat(this.countryCode, this.phone)
       .subscribe(
         data => {
+          console.log(data);
           if (data === null) {
             this.isTelegram = true;
           }
@@ -83,7 +92,6 @@ export class ReleaseQuestionnaireComponent implements OnInit {
           }
         },
         (error) => {
-
         }
       );
   }
