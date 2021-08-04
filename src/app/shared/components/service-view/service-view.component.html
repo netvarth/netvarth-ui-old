@@ -43,7 +43,7 @@
                                 </h3>
                                 <div class="address col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-5 no-padding single-loc"
                                     *ngIf="locationjson && locationjson.length > 0">  
-                                    <button   *ngIf="locationjson.length == 1" class="locbtn"><i class="fa fa-map-marker takeTourTitle mgn-rt-10"></i>{{selectedLocation.place | capitalizeFirst}}</button> 
+                                    <span   *ngIf="locationjson.length == 1" class="locbtn"><i class="fa fa-map-marker takeTourTitle mgn-rt-10"></i>{{selectedLocation.place | capitalizeFirst}}</span> 
                                    <div  *ngIf="locationjson.length > 1"><i class="fa fa-map-marker takeTourTitle mgn-rt-10"></i>
                                     <select class="selectbxstyle">
                                             <option *ngFor="let loc of locationjson" (click)="changeLocation(loc)">{{loc.place}}</option>

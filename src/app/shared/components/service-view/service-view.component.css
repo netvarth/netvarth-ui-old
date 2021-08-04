@@ -768,6 +768,7 @@ border-radius: 10px;
 .panel {
   margin-bottom: 0 !important;
   border: 0 !important;
+  padding-bottom: 20px!important;
 }
 .panel-heading {
   width: 100%;
