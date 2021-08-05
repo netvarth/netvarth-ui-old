@@ -119,6 +119,7 @@ export class CheckinActionsComponent implements OnInit {
     groups: any;
     showAssign = false;
     users: any = [];
+    location: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -185,6 +186,7 @@ export class CheckinActionsComponent implements OnInit {
         if (this.accountType === 'BRANCH') {
             this.getUser();
             this.getUserTeams();
+            this.getProviderLocation();
         }
     }
     getUser() {
@@ -1123,4 +1125,11 @@ export class CheckinActionsComponent implements OnInit {
         this.dialogRef.close();
         this.router.navigate(['provider', 'check-ins', 'questionnaires'], { queryParams: { source: 'checkin', uid: this.checkin.ynwUuid } });
     }
+    getProviderLocation() {
+        this.provider_services.getProviderLocations()
+          .subscribe(
+            (data: any) => {
+              this.location = data;
+            });
+      }
 }

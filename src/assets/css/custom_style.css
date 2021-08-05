@@ -14215,3 +14215,11 @@ font-weight: 700 !important;
     border-right: none !important;
     padding: 0;
 }
+.location-icon-action {
+  content: url(../images/dashboard-icons/location123.png);
+  width: 34px;
+}
+.team-icon-action {
+  content: url(../images/dashboard-icons/teamwork.png);
+  width: 34px;
+}

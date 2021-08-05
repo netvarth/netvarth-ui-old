@@ -107,6 +107,7 @@ export class AppointmentActionsComponent implements OnInit {
     statusList: any = [];
     showAssign = false;
     users: any = [];
+    location: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -162,6 +163,7 @@ export class AppointmentActionsComponent implements OnInit {
         if (this.accountType === 'BRANCH') {
             this.getUser();
             this.getUserTeams();
+            this.getProviderLocation();
         }
     }
     getUser() {
@@ -1077,4 +1079,11 @@ export class AppointmentActionsComponent implements OnInit {
         this.dialogRef.close();
         this.router.navigate(['provider', 'appointments', 'questionnaires'], { queryParams: { source: 'appt', uid: this.appt.uid } });
     }
+    getProviderLocation() {
+        this.provider_services.getProviderLocations()
+          .subscribe(
+            (data: any) => {
+              this.location = data;
+            });
+      }
 }
