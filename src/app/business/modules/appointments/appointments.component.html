@@ -562,7 +562,7 @@
                       </td> -->
                     </tr>
                   </tbody>
-                  <tbody *ngIf="startedAppts.length > 0 && (activeSchedules.length > 0 || activeUser) && !small_device_display">
+                  <tbody *ngIf="startedAppts.length > 0 && (activeSchedules.length > 0 || activeUser || (active_user.accountType === 'BRANCH' && activeSchedules.length == 0)) && !small_device_display">
                     <tr class="pointer-cursor" [class.user-tr-backclr]="appt.provider" (click)="goCheckinDetail(appt)"
                       *ngFor="let appt of startedAppts, let i=index">
                       <td class="chkWth" *ngIf="startedAppts.length > 1">
@@ -771,7 +771,7 @@
                   </tbody>
 
                   <tbody
-                    *ngIf="startedAppts.length > 0 && (activeSchedules.length > 0 || activeUser) && small_device_display">
+                    *ngIf="startedAppts.length > 0 && (activeSchedules.length > 0 || activeUser || (active_user.accountType === 'BRANCH' && activeSchedules.length == 0)) && small_device_display">
                     <div [class.user-tr-backclr]="appt.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
                       *ngFor="let appt of startedAppts, let i=index">
                       <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="startedAppts.length > 1">
@@ -792,7 +792,7 @@
               </div>
               <div class="">
                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-10"
-                  *ngIf="time_type === 1 && statusAction == 'new' && (activeSchedules.length > 0 || activeUser)">
+                  *ngIf="time_type === 1 && statusAction == 'new' && (activeSchedules.length > 0 || activeUser || (active_user.accountType === 'BRANCH' && activeSchedules.length == 0))">
                   <div class="col-md-3 col-xs-5 col-sm-4 no-padding">
                     <mat-select class="selecttype" [(ngModel)]="selected_type">
                       <mat-option [value]="'all'" (click)="handleApptSelectionType('all')">
@@ -829,7 +829,7 @@
                 </div>
                 <table class="table tbl-qboard childDetails singleDash">
                   <thead id="childActionBar"
-                    *ngIf="showSelectAll() && selected_type != 'free' && (activeSchedules.length > 0 || activeUser)">
+                    *ngIf="showSelectAll() && selected_type != 'free'">
                     <tr>
                       <th class="chkWth check-table-head" colspan="3">
                         <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
@@ -1091,7 +1091,7 @@
                     </tr>
                   </tbody>
                   <tbody
-                    *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser) && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked')) && !small_device_display">
+                    *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser || (active_user.accountType === 'BRANCH' && activeSchedules.length == 0)) && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked')) && !small_device_display">
                     <tr class="pointer-cursor" [class.user-tr-backclr]="appt.provider" (click)="goCheckinDetail(appt)"
                       *ngFor="let appt of check_in_filtered_list, let i=index">
                       <td class="chkWth" *ngIf="showSelectAll()">
@@ -1306,7 +1306,7 @@
 
 
                   <tbody
-                    *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser) && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked')) && small_device_display">
+                    *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser || (active_user.accountType === 'BRANCH' && activeSchedules.length == 0)) && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked')) && small_device_display">
                     <div [class.user-tr-backclr]="appt.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
                       *ngFor="let appt of check_in_filtered_list, let i=index">
                       <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="showSelectAll()">
@@ -1667,7 +1667,7 @@
                     </td> -->
                   </tr>
                 </tbody>
-                <tbody *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser) && !small_device_display">
+                <tbody *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser || (active_user.accountType === 'BRANCH' && activeSchedules.length == 0)) && !small_device_display">
                   <tr class="pointer-cursor" [class.user-tr-backclr]="appt.provider" (click)="goCheckinDetail(appt)"
                     *ngFor="let appt of check_in_filtered_list, let i=index">
                     <td class="chkWth" *ngIf="showSelectAll()">
@@ -1879,7 +1879,7 @@
                 </tbody>
 
                 <tbody
-                  *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser) && small_device_display">
+                  *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser || (active_user.accountType === 'BRANCH' && activeSchedules.length == 0)) && small_device_display">
                   <div [class.user-tr-backclr]="appt.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
                     *ngFor="let appt of check_in_filtered_list, let i=index">
                     <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="showSelectAll()">

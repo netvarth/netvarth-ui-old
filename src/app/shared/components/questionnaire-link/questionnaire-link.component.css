@@ -19,7 +19,6 @@
 .qnr-link .customer-details .value {
     font-size: 1.1rem !important;
     font-weight: 500 !important;
-    text-transform: capitalize !important;
 }
 .qnr-link .customer-details-head h5 {
     font-weight: 700 !important;
@@ -32,7 +31,7 @@
     white-space: nowrap !important;
 }
 .details-pad {
-    padding: 20px 10px 10px !important;
+    padding-bottom: 20px !important;
     color: #797979 !important;
 }
 .details-pad .card {

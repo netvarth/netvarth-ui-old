@@ -114,7 +114,7 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
         if (this.waitlist.questionnaires && this.waitlist.questionnaires.length > 0) {
           this.questionnaires = this.waitlist.questionnaires;
         }
-        if (this.waitlist.releasedQnr && this.waitlist.releasedQnr.length > 0) {
+        if (this.waitlist.releasedQnr && this.waitlist.releasedQnr.length > 0 && this.waitlist.waitlistStatus !== 'cancelled') {
           const releasedQnrs = this.waitlist.releasedQnr.filter(qnr => qnr.status === 'released');
           if (releasedQnrs.length > 0) {
             this.getReleasedQnrs(releasedQnrs);

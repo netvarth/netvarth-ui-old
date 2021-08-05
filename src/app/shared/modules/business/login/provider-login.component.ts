@@ -242,7 +242,7 @@ export class ProviderLoginComponent implements OnInit {
 
   createForm() {
     this.loginForm = this.fb.group({
-      emailId: ['', Validators.compose([Validators.required])],
+      emailId: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_SPACE_NOT_ALLOWED)])],
       password: ['', Validators.compose([Validators.required])]
     });
   }

@@ -48,7 +48,7 @@ export class WlCardComponent implements OnInit, OnChanges {
   ngOnInit(): void {
   }
   ngOnChanges() {
-    if (this.booking.releasedQnr && this.booking.releasedQnr.length > 0) {
+    if (this.booking.releasedQnr && this.booking.releasedQnr.length > 0 && this.booking.waitlistStatus !== 'cancelled') {
       const releasedQnrs = this.booking.releasedQnr.filter(qnr => qnr.status === 'released');
       if (releasedQnrs.length > 0) {
         this.showQnrBtn = true;

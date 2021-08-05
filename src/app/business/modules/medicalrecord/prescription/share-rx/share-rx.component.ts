@@ -101,7 +101,7 @@ export class ShareRxComponent implements OnInit {
   countryCode;
   countryCod;
   chatId: any;
-  IsTelegramDisable:any;
+  IsTelegramDisable = true;
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -176,22 +176,25 @@ export class ShareRxComponent implements OnInit {
               if(this.countryCode.startsWith('+')){
                 this.countryCod = this.countryCode.substring(1);
               }
-              this.shared_services.telegramChat(this.countryCod,this.phone)
-               .subscribe(
-                   data => { 
-                     this.chatId = data; 
-                     if(this.chatId === null){
-                      this.IsTelegramDisable = true;
-                     }
-                     else{
-                      this.IsTelegramDisable = false;
-                     }
-                    
-                   },
-                   (error) => {
-                      
-                   }
-               );
+              if(this.phon){
+                this.provider_services.telegramChat(this.countryCod,this.phone)
+                .subscribe(
+                    data => { 
+                      this.chatId = data; 
+                      if(this.chatId === null){
+                       this.IsTelegramDisable = true;
+                      }
+                      else{
+                       this.IsTelegramDisable = false;
+                      }
+                     
+                    },
+                    (error) => {
+                       
+                    }
+                );
+              }
+             
             }
 
   });

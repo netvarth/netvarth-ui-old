@@ -317,7 +317,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if(login.countryCode.startsWith('+')){
       this.countryCode = login.countryCode.substring(1);
     }
-    this.shared_services.telegramChat(this.countryCode,login.loginId)
+    this.shared_services.consumertelegramChat(this.countryCode,login.loginId)
      .subscribe(
          data => { 
            this.chatId = data; 

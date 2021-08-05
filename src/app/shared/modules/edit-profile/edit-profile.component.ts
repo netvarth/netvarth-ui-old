@@ -344,7 +344,7 @@ export class EditProfileComponent implements OnInit {
   }
  
   enableTelegram(stat){
-    this.shared_services.telegramChat(this.removePlus(this.countryCode), this.phonenoHolder).subscribe(data => {
+    this.shared_services.consumertelegramChat(this.removePlus(this.countryCode), this.phonenoHolder).subscribe(data => {
       this.chatId = data;
     })
     this.teleGramStat(stat).then(

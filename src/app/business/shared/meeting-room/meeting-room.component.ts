@@ -14,6 +14,7 @@ import { MediaService } from "../../../shared/services/media-service";
 import { RequestDialogComponent } from "./request-dialog/request-dialog.component";
 import * as Video from 'twilio-video';
 import { SharedServices } from "../../../shared/services/shared-services";
+import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 @Component({
     selector: 'app-meeting-room',
     templateUrl: './meeting-room.component.html',
@@ -48,6 +49,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
     videoTrack;
     previewTracks = [];
     previewTracksClone = [];
+    videocredits: any;
 
     constructor(private activateroute: ActivatedRoute,
         public twilioService: TwilioService,
@@ -60,6 +62,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
         private dialog: MatDialog,
         private teleService: TeleBookingService,
         private mediaService: MediaService,
+        private provider_services: ProviderServices,
         private sharedServices: SharedServices) {
         const _this = this;
         _this.twilioService.loading = false;
@@ -123,6 +126,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
      * Init method
      */
     ngOnInit(): void {
+        this.getJaldeeVideoCredits();
         this.screenWidth = window.innerWidth;
         this.screenHeight = window.innerHeight;
         const isMobile = {
@@ -181,6 +185,15 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
 
             });
     }
+    getJaldeeVideoCredits() {
+        this.provider_services.getJaldeeVideoRecording()
+        .subscribe(
+          (data) => {
+            console.log(data)
+           this.videocredits = data;
+          }
+        );
+    }
 
     /**
      * executes after the view initialization
@@ -219,8 +232,8 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
             }
         ).catch(error => {
             _this.sharedServices.callHealth(error.stack).subscribe();
-            console.log(error);
-            _this.openRequestDialog('both');
+            console.log("error"+error);
+            _this.openRequestDialog('b-both');
         });
 
     }

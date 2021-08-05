@@ -263,14 +263,14 @@ export class VirtualFieldsComponent implements OnInit {
     if (memberObj.bookingLocation && memberObj.bookingLocation.state) {
       this.virtualForm.patchValue({ state: memberObj.bookingLocation.state });
     }
-    if (memberObj.userProfile && memberObj.userProfile.whatsAppNum.number) {
+    if (memberObj.userProfile &&memberObj.userProfile.whatsAppNum && memberObj.userProfile.whatsAppNum.number) {
       this.virtualForm.patchValue({ whatsappnumber: memberObj.userProfile.whatsAppNum.number });
       this.virtualForm.patchValue({ countryCode_whtsap: memberObj.userProfile.whatsAppNum.countryCode });
     } else {
       this.virtualForm.patchValue({ whatsappnumber: this.customer_data.userProfile.primaryMobileNo });
       this.virtualForm.patchValue({ countryCode_whtsap: this.customer_data.userProfile.countryCode });
     }
-    if (memberObj.userProfile && memberObj.userProfile.telegramNum.number) {
+    if (memberObj.userProfile && memberObj.userProfile.telegramNum && memberObj.userProfile.telegramNum.number) {
       this.virtualForm.patchValue({ telegramnumber: memberObj.userProfile.telegramNum.number });
       this.virtualForm.patchValue({ countryCode_telegram: memberObj.userProfile.telegramNum.countryCode });
     } else {
@@ -352,7 +352,7 @@ export class VirtualFieldsComponent implements OnInit {
     if (customer.userProfile && customer.userProfile.state) {
       this.virtualForm.patchValue({ state: customer.userProfile.state });
     }
-    if (customer.userProfile && customer.userProfile.whatsAppNum.number) {
+    if (customer.userProfile && customer.userProfile.whatsAppNum && customer.userProfile.whatsAppNum.number) {
       this.virtualForm.patchValue({ whatsappnumber: customer.userProfile.whatsAppNum.number });
       this.virtualForm.patchValue({ countryCode_whtsap: customer.userProfile.whatsAppNum.countryCode });
 
@@ -360,7 +360,7 @@ export class VirtualFieldsComponent implements OnInit {
       this.virtualForm.patchValue({ whatsappnumber: this.customer_data.userProfile.primaryMobileNo });
       this.virtualForm.patchValue({ countryCode_whtsap: this.customer_data.userProfile.countryCode });
     }
-    if (customer.userProfile&& customer.userProfile.telegramNum.number) {
+    if (customer.userProfile&& customer.userProfile.telegramNum && customer.userProfile.telegramNum.number) {
       this.virtualForm.patchValue({ telegramnumber: customer.userProfile.telegramNum.number });
       this.virtualForm.patchValue({ countryCode_telegram: customer.userProfile.telegramNum.countryCode });
     }

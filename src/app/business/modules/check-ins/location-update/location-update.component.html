@@ -30,6 +30,7 @@
                   <tr class="text-left text-uppercase">
                     <th class="display-min-none" style="min-width: 250px;">Location</th>
                     <th class="display-min-none" style="width: 30%;">Status</th>
+                    <th *ngIf="accountType=='BRANCH'" class="display-min-none" style="width: 30%;">Team Members</th>
                   </tr>
                 </thead>
                 <tbody *ngIf="!loading">
@@ -50,6 +51,15 @@
                     <td class="display-min-none">
                       {{service.status}}
                     </td>
+                    <td class="display-min-none" *ngIf="accountType=='BRANCH'">
+                      <span> 
+                        <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
+                      </span>
+                      <!-- <span> 
+                          <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)"></a>
+                        </span> -->
+                    </td>
+
                     <!-- <td class="display-min-none">
                           <span *ngIf="service.users.length > 0"> 
                             <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
