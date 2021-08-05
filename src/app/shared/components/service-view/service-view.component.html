@@ -125,9 +125,7 @@
                             </div>
                             <div>
                                     <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-                                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10 "*ngIf="servicesAndProviders && servicesAndProviders.length == 0 && donationServices && donationServices.length == 0 &&!loading">
-                                       ---- Currently no bookings avalabile in this location ----
-                                    </div>
+                                   
                             <ng-container  *ngIf="servicesAndProviders && servicesAndProviders.length >0 && !loading">
                                     <div class="card change" *ngFor="let sp of servicesAndProviders" >
                                             <div class="card-body">
