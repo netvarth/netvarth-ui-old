@@ -551,7 +551,11 @@ export class QuestionnaireComponent implements OnInit {
         if (!this.type) {
           this.location.back();
         } else {
-          this.editQnr();
+          if (this.type === 'qnr-link') {
+            this.returnAnswers.emit('reload');
+          } else {
+            this.editQnr();
+          }
         }
       }
     } else {
