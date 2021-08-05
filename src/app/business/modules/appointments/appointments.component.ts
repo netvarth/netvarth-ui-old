@@ -1144,9 +1144,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       no_filter = true;
     }
-    if (this.selected_location && this.selected_location.id) {
-      Mfilter['location-eq'] = this.selected_location.id;
-    }
+    // if (this.selected_location && this.selected_location.id) {
+    //   Mfilter['location-eq'] = this.selected_location.id;
+    // }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     }
@@ -1196,9 +1196,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.groupService.setitemToGroupStorage('appt_future_selQ', this.selQIds);
       }
     }
-    if (this.selected_location && this.selected_location.id) {
-      Mfilter['location-eq'] = this.selected_location.id;
-    }
+    // if (this.selected_location && this.selected_location.id) {
+    //   Mfilter['location-eq'] = this.selected_location.id;
+    // }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     }
@@ -1266,9 +1266,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getTodayAppointments() {
     const Mfilter = this.setFilterForApi();
-    if (this.selected_location && this.selected_location.id) {
-      Mfilter['location-eq'] = this.selected_location.id;
-    }
+    // if (this.selected_location && this.selected_location.id) {
+    //   Mfilter['location-eq'] = this.selected_location.id;
+    // }
     if (this.groupService.getitemFromGroupStorage('appt_selQ')) {
       this.selQIds = this.groupService.getitemFromGroupStorage('appt_selQ');
     }
@@ -1366,9 +1366,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selQIds = this.groupService.getitemFromGroupStorage('appt_future_selQ');
     }
     let Mfilter = this.setFilterForApi();
-    if (this.selected_location && this.selected_location.id) {
-      Mfilter['location-eq'] = this.selected_location.id;
-    }
+    // if (this.selected_location && this.selected_location.id) {
+    //   Mfilter['location-eq'] = this.selected_location.id;
+    // }
     if (this.selQIds && this.selQIds.length > 0 || this.activeUser) {
       if (this.activeUser) {
         if (this.unassignview) {
@@ -1588,6 +1588,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       if (this.genderList.length > 0 && this.filter.gender !== 'all') {
         api_filter['gender-eq'] = this.genderList.toString();
+      }
+    }
+    if (this.time_type !== 3) {
+      if (this.selected_location && this.selected_location.id) {
+        api_filter['location-eq'] = this.selected_location.id;
       }
     }
     if (this.labelFilterData !== '') {

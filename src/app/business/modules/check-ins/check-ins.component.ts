@@ -1385,9 +1385,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selQIds = this.groupService.getitemFromGroupStorage('future_selQ');
     }
     const Mfilter = this.setFilterForApi();
-    if (this.selected_location && this.selected_location.id) {
-      Mfilter['location-eq'] = this.selected_location.id;
-    }
+    // if (this.selected_location && this.selected_location.id) {
+    //   Mfilter['location-eq'] = this.selected_location.id;
+    // }
     if (this.selQIds && this.selQIds.length > 0 || this.activeUser) {
       if (this.activeUser) {
         if (this.unassignview) {
@@ -1618,9 +1618,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     let no_filter = false;
     if (!Mfilter) {
       Mfilter = {};
-      if (this.selected_location && this.selected_location.id) {
-        Mfilter['location-eq'] = this.selected_location.id;
-      }
+      // if (this.selected_location && this.selected_location.id) {
+      //   Mfilter['location-eq'] = this.selected_location.id;
+      // }
       if (queueid && queueid !== '') {
         if (this.activeUser) {
           if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
@@ -1683,9 +1683,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
       }
     }
-    if (this.selected_location && this.selected_location.id) {
-      Mfilter['location-eq'] = this.selected_location.id;
-    }
+    // if (this.selected_location && this.selected_location.id) {
+    //   Mfilter['location-eq'] = this.selected_location.id;
+    // }
     if (this.filter.waitlist_status === 'all') {
       Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
     }
@@ -1981,6 +1981,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       if (this.genderList.length > 0 && this.filter.gender !== 'all') {
         api_filter['gender-eq'] = this.genderList.toString();
+      }
+    }
+    if (this.time_type !== 3) {
+      if (this.selected_location && this.selected_location.id) {
+        api_filter['location-eq'] = this.selected_location.id;
       }
     }
     if (this.filter.waitlist_status === 'all') {
