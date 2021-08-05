@@ -97,7 +97,7 @@ export class TeleServiceShareComponent implements OnInit {
       if(login.countryCode.startsWith('+')){
         this.countryCode = login.countryCode.substring(1);
       }
-      this.shared_services.telegramChat(this.countryCode,login.loginId)
+      this.provider_services.telegramChat(this.countryCode,login.loginId)
        .subscribe(
            data => { 
              this.chatId = data; 
@@ -127,7 +127,7 @@ export class TeleServiceShareComponent implements OnInit {
       if(this.cusmtor_countrycode.startsWith('+')){
         this.cust_countryCode = this.cusmtor_countrycode.substring(1);
       }
-      this.shared_services.telegramChat(this.cust_countryCode, this.cusmtor_phone)
+      this.provider_services.telegramChat(this.cust_countryCode, this.cusmtor_phone)
        .subscribe(
            data => { 
              this.chatId = data; 

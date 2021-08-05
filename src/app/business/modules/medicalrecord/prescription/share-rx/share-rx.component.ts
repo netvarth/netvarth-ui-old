@@ -176,7 +176,7 @@ export class ShareRxComponent implements OnInit {
               if(this.countryCode.startsWith('+')){
                 this.countryCod = this.countryCode.substring(1);
               }
-              this.shared_services.telegramChat(this.countryCod,this.phone)
+              this.provider_services.telegramChat(this.countryCod,this.phone)
                .subscribe(
                    data => { 
                      this.chatId = data; 
