@@ -1891,7 +1891,7 @@ export class ProviderServices {
     return this.servicemeta.httpPut('provider/catalog', data);
   }
   getProviderCatalogs(id?) {
-    if (id && id!=='add') {
+    if (id && id !== 'add') {
       return this.servicemeta.httpGet('provider/catalog/' + id);
     } else {
       return this.servicemeta.httpGet('provider/catalog');
@@ -2233,5 +2233,12 @@ export class ProviderServices {
     const url = 'provider/appointment/changeBussLoc';
     return this.servicemeta.httpPut(url, post_data);
   }
- 
+  sendWaitlistQnrNotification(uid, post_data) {
+    const url = 'provider/waitlist/questionnaire/notification/' + uid;
+    return this.servicemeta.httpPut(url, post_data);
+  }
+  sendApptQnrNotification(uid, post_data) {
+    const url = 'provider/appointment/questionnaire/notification/' + uid;
+    return this.servicemeta.httpPut(url, post_data);
+  }
 }
