@@ -74,6 +74,7 @@ export class LocationUpdateComponent implements OnInit {
   accountSettings;
   contactDetailsdialogRef: any;
   groups: any;
+  users: any = [];
   constructor(
     private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
@@ -97,6 +98,11 @@ export class LocationUpdateComponent implements OnInit {
   }
   ngOnInit() {
     this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.accountType = user.accountType;
+    if (this.accountType === 'BRANCH') {
+      this.getUser();
+    }
     // this.getProviders();
     this.getProviderLocations();
   }
@@ -237,13 +243,41 @@ export class LocationUpdateComponent implements OnInit {
     event.stopPropagation();
   }
   viewContactDetails(user) {
-    this.contactDetailsdialogRef = this.dialog.open(TeamMembersComponent, {
+    this.selectedUser = user;
+    // this.getUser();
+    this.getUser().then(result => {
+      console.log(result);
+      this.contactDetailsdialogRef = this.dialog.open(TeamMembersComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        userData: user
+        userData: result
       }
+    });
+
+    })
+
+    
+  }
+
+  getUser() {
+    return new Promise((resolve, reject) => {
+      const apiFilter = {};
+      if (this.selectedUser) {
+        apiFilter['businessLocs-eq'] = this.selectedUser.id.toString()
+      } else {
+        apiFilter['userType-eq'] = 'PROVIDER';
+      }
+      this.provider_services.getUsers(apiFilter).subscribe(
+        (data: any) => {
+          // this.users = data;
+          resolve(data);
+        },
+        error => {
+          reject(error);
+          this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+        });
     });
   }
 }
