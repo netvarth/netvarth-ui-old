@@ -92,28 +92,28 @@ export class TeleServiceShareComponent implements OnInit {
 
   ngOnInit() {
     this.ynw_credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
-    if (this.ynw_credentials) {
-      let login = JSON.parse(this.ynw_credentials);
-      if(login.countryCode.startsWith('+')){
-        this.countryCode = login.countryCode.substring(1);
-      }
-      this.provider_services.telegramChat(this.countryCode,login.loginId)
-       .subscribe(
-           data => { 
-             this.chatId = data; 
-             if(this.chatId === null){
-              this.IsTelegramDisable = true;
-             }
-             else{
-              this.IsTelegramDisable = false;
-             }
+    // if (this.ynw_credentials) {
+    //   let login = JSON.parse(this.ynw_credentials);
+    //   if(login.countryCode.startsWith('+')){
+    //     this.countryCode = login.countryCode.substring(1);
+    //   }
+    //   this.provider_services.telegramChat(this.countryCode,login.loginId)
+    //    .subscribe(
+    //        data => { 
+    //          this.chatId = data; 
+    //          if(this.chatId === null){
+    //           this.IsTelegramDisable = true;
+    //          }
+    //          else{
+    //           this.IsTelegramDisable = false;
+    //          }
             
-           },
-           (error) => {
+    //        },
+    //        (error) => {
               
-           }
-       );
-    }
+    //        }
+    //    );
+    // }
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     if (user.email) {
       this.providerEmail = true;

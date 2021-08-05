@@ -97,7 +97,7 @@
     <mat-checkbox class="mgright50 example-margin" [(ngModel)]="pushnotify">
       App Notification
     </mat-checkbox>
-    <mat-checkbox class="mgright50 example-margin" [(ngModel)]="telegram" *ngIf="(!providerView && !IsTelegramCustomrDisable) || (providerView && !IsTelegramDisable)" [disabled]="(!providerView && IsTelegramCustomrDisable) || (providerView && IsTelegramDisable)">
+    <mat-checkbox class="mgright50 example-margin" [(ngModel)]="telegram" *ngIf="!providerView && !IsTelegramCustomrDisable" [disabled]="(!providerView && IsTelegramCustomrDisable) || (providerView && IsTelegramDisable)">
       Telegram
     </mat-checkbox>
     <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase
