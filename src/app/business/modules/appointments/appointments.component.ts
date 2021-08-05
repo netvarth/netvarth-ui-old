@@ -997,7 +997,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.today_waitlist_count = 0;
     this.history_waitlist_count = 0;
     this.future_waitlist_count = 0;
-    if (this.time_type !== 2) {
+    if (this.time_type !== 2 && this.activeSchedules.length > 0) {
       this.getFutureAppointmentsCount()
         .then(
           (result) => {
@@ -1013,7 +1013,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         );
     }
-    if (this.time_type !== 1) {
+    if (this.time_type !== 1 && this.activeSchedules.length > 0) {
       this.getTodayAppointmentsCount()
         .then(
           (result) => {
@@ -1396,6 +1396,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.check_in_date != null) {
       Mfilter['date-eq'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_date);
     }
+    if (this.activeSchedules.length > 0 || this.activeUser) {
     const promise = this.getFutureAppointmentsCount(Mfilter);
     promise.then(
       result => {
@@ -1419,6 +1420,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               this.loading = false;
             });
       });
+    } else {
+      this.loading = false;
+    }
   }
   getHistoryAppointments() {
     console.log("in history");

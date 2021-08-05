@@ -138,37 +138,33 @@ export class ReleaseQuestionnaireComponent implements OnInit {
     return false;
   }
   shareQnr(form_data) {
-    if (!this.email && !this.sms && !this.pushnotify && !this.telegram) {
-      this.api_error = 'share message via options are not selected';
+    this.disableButton = true;
+    const postData = {
+      'medium': {
+        'email': this.email,
+        'sms': this.sms,
+        'pushNotification': this.pushnotify,
+        'telegram': this.telegram
+      },
+      'id': this.data.qnrId,
+      'message': form_data.message
+    };
+    if (this.data.source === 'appt') {
+      this.provider_services.sendApptQnrNotification(this.data.waitlist_data.uid, postData).subscribe(data => {
+        // this.api_success = 'shared';
+        this.dialogRef.close('reload');
+      }, error => {
+        this.api_error = error.error;
+        this.disableButton = false;
+      });
     } else {
-      this.disableButton = true;
-      const postData = {
-        'medium': {
-          'email': this.email,
-          'sms': this.sms,
-          'pushNotification': this.pushnotify,
-          'telegram': this.telegram
-        },
-        'id': this.data.qnrId,
-        'message': form_data.message
-      };
-      if (this.data.source === 'appt') {
-        this.provider_services.sendApptQnrNotification(this.data.waitlist_data.uid, postData).subscribe(data => {
-          // this.api_success = 'shared';
-          this.dialogRef.close('reload');
-        }, error => {
-          this.api_error = error.error;
-          this.disableButton = false;
-        });
-      } else {
-        this.provider_services.sendWaitlistQnrNotification(this.data.waitlist_data.ynwUuid, postData).subscribe(data => {
-          // this.api_success = 'shared';
-          this.dialogRef.close('reload');
-        }, error => {
-          this.api_error = error.error;
-          this.disableButton = false;
-        });
-      }
+      this.provider_services.sendWaitlistQnrNotification(this.data.waitlist_data.ynwUuid, postData).subscribe(data => {
+        // this.api_success = 'shared';
+        this.dialogRef.close('reload');
+      }, error => {
+        this.api_error = error.error;
+        this.disableButton = false;
+      });
     }
   }
   resetErrors() {
