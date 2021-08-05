@@ -59,7 +59,7 @@ export class ApptCardComponent implements OnInit, OnChanges {
   }
   ngOnChanges() {
     // this.cdref.detectChanges();
-    if (this.booking.releasedQnr && this.booking.releasedQnr.length > 0) {
+    if (this.booking.releasedQnr && this.booking.releasedQnr.length > 0 && this.booking.apptStatus !== 'Cancelled') {
       const releasedQnrs = this.booking.releasedQnr.filter(qnr => qnr.status === 'released');
       if (releasedQnrs.length > 0) {
         this.showQnrBtn = true;

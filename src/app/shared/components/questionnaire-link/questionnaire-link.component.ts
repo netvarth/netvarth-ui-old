@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
+import { projectConstantsLocal } from '../../constants/project-constants';
 import { SharedFunctions } from '../../functions/shared-functions';
+import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { SharedServices } from '../../services/shared-services';
 import { SnackbarService } from '../../services/snackbar.service';
 
@@ -17,12 +19,14 @@ export class QuestionnaireLinkComponent implements OnInit {
   waitlist: any = [];
   qParams;
   source;
+  newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
   constructor(public sharedFunctionobj: SharedFunctions,
     private sharedServices: SharedServices,
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
-    private router: Router) {
+    private router: Router,
+    private dateTimeProcessor: DateTimeProcessor) {
     this.activated_route.params.subscribe(
       (qParams) => {
         console.log(this.sharedFunctionobj.checkLogin())
@@ -58,13 +62,15 @@ export class QuestionnaireLinkComponent implements OnInit {
         type: 'consumer',
         is_provider: false,
         test_account: true,
-        moreparams: { source: 'qnrlink' }
+        moreparams: { source: 'qnrlink', bypassDefaultredirection: 1 }
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      console.log('result', result);
       if (result === 'success') {
         this.getDetails();
+      } else {
+        this.doLogin();
       }
     });
   }
@@ -119,7 +125,13 @@ export class QuestionnaireLinkComponent implements OnInit {
   getQuestionAnswers(event) {
     console.log(event);
     if (event === 'reload') {
-      this.router.navigate(['questionnaire', this.qParams.uid, this.qParams.id, 'success']);
+      this.router.navigate(['questionnaire', this.qParams.uid, this.qParams.id, this.qParams.accountId, 'success']);
+    }
+  }
+  getSingleTime(slot) {
+    if (slot) {
+      const slots = slot.split('-');
+      return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
     }
   }
 }

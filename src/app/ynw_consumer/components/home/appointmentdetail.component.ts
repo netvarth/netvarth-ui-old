@@ -110,7 +110,7 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
         if (this.appt.questionnaires && this.appt.questionnaires.length > 0) {
           this.questionnaires = this.appt.questionnaires;
         }
-        if (this.appt.releasedQnr && this.appt.releasedQnr.length > 0) {
+        if (this.appt.releasedQnr && this.appt.releasedQnr.length > 0 && this.appt.apptStatus !== 'Cancelled') {
           const releasedQnrs = this.appt.releasedQnr.filter(qnr => qnr.status === 'released');
           if (releasedQnrs.length > 0) {
             this.getReleasedQnrs(releasedQnrs);

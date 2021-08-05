@@ -618,7 +618,6 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   booleanChange(ev, value, question, column?) {
-    console.log('boolchange')
     if (question.fieldDataType !== 'dataGrid') {
       if (ev.target.checked) {
         if (!this.answers[question.labelName]) {
@@ -1123,13 +1122,12 @@ export class QuestionnaireComponent implements OnInit {
     return Object.keys(this.groupedQnr).length;
   }
   getBoolValue(value) {
-    if (value !== '') {
-      if (JSON.parse(value) === true) {
-        return 'Yes';
-      }
-      if (JSON.parse(value) === false) {
-        return 'No';
-      }
+    value = (typeof value === 'string') ? JSON.parse(value) : value;
+    if (value === true) {
+      return 'Yes';
+    }
+    if (value === false) {
+      return 'No';
     }
   }
 }
