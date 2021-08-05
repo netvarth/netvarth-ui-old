@@ -1043,7 +1043,7 @@ export class QuestionnaireComponent implements OnInit {
     this.editQuestionnaire = !this.editQuestionnaire;
   }
   getDocuments(question) {
-    if (question.filePropertie.maxNoOfFile > 1) {
+    if (question.filePropertie.maxNoOfFile > 1 && question.filePropertie.minNoOfFile !== question.filePropertie.maxNoOfFile) {
       return this.uploadFilesTemp[question.labelName];
     } else {
       return question.filePropertie.allowedDocuments;

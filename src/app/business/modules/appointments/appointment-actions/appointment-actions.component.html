@@ -55,7 +55,7 @@
         </div>
 
         <div class="action-box pointer-cursor" 
-        *ngIf="!data.multiSelection && accountType=='BRANCH' &&  !appt.provider  && groups.length > 0 && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')"
+        *ngIf="!data.multiSelection && accountType=='BRANCH' && (this.appt.schedule.provider.id === 0)  && groups.length > 0 && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')"
         (click)="assignteam()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
@@ -64,7 +64,7 @@
             </div>
         </div>
         <div class="action-box pointer-cursor" 
-        *ngIf="!data.multiSelection && accountType=='BRANCH' &&  !appt.provider && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')"
+        *ngIf="!data.multiSelection && accountType=='BRANCH' && (this.appt.schedule.provider.id === 0) && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')"
         (click)="chnageLocation()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>

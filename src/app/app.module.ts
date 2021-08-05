@@ -115,6 +115,7 @@ import { VideoCallSharedComponent } from './business/modules/video-call/video-ca
 import { FileReaderService } from './shared/services/file-reader.service';
 import { AttachmentPopupComponent } from './shared/components/attachment-popup/attachment-popup.component';
 import { QuestionnaireLinkModule } from './shared/components/questionnaire-link/questionnaire-link.module';
+import { PreventDoubleClickDirective } from './shared/directives/prevent-double-click.directive';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -152,7 +153,8 @@ export function init_app(globalService: GlobalService) {
     ListRecordingsDialogComponent,
     RequestDialogComponent,
     VideoCallSharedComponent,
-    AttachmentPopupComponent
+    AttachmentPopupComponent,
+    PreventDoubleClickDirective
   ],
   entryComponents: [
     SignUpComponent,

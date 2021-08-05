@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild, OnDestroy, HostListener } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
@@ -251,12 +251,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     newMember: any;
     readMore = false;
 
-  @HostListener('click', ['$event'])
-  clickEvent(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    
-  }
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -309,7 +303,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
                 if (params.theme) {
                     this.theme = params.theme;
-                    console.log(this.theme);
+                    
                 }
                 if (params.customId) {
                     this.customId = params.customId;
@@ -317,7 +311,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
                 if(params.virtual_info){
                     this.virtualInfo=JSON.parse(params.virtual_info);
-                    console.log(this.virtualInfo);
+          
                 }
             });
     }
@@ -423,6 +417,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.userPhone = this.appointment.phoneNumber;
                     this.countryCode = this.appointment.countryCode;  
                     this.consumerNote = this.appointment.consumerNote;
+                   
                 }
                 this.sel_loc = this.appointment.location.id;
                 this.selectedService = this.appointment.service.id;
@@ -492,14 +487,14 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             });
     }
     changeSlot() {
+      
+        
         this.action = 'slotChange';
     }
     resetApiErrors() {
         this.emailerror = null;
     }
     setVirtualTeleserviceCustomer() {
-        console.log("hoorayyy");
-        console.log(this.virtualInfo);
         if (this.virtualInfo && this.virtualInfo.email && this.virtualInfo.email !== '') {
             this.payEmail = this.virtualInfo.email;
         }
@@ -511,7 +506,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.waitlist_for.push({ id: this.newMember, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
             if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
                 this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
-                console.log(this.whatsappCountryCode);
                 this.newWhatsapp = this.virtualInfo.whatsappnumber
                 if (this.virtualInfo.countryCode_whtsap.includes('+')) {
                     this.callingModes = this.virtualInfo.countryCode_whtsap.split('+')[1] + '' + this.virtualInfo.whatsappnumber;
@@ -526,16 +520,13 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
 
         } if (this.virtualInfo && this.virtualInfo.serviceFor) {
-            console.log(this.familymembers);
-            console.log('inisdee');
+     
             this.consumerType = 'member';
             this.waitlist_for = [];
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor);
-            console.log(current_member);
             this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
             if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
                 this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
-                console.log(this.whatsappCountryCode);
                 this.newWhatsapp = this.virtualInfo.whatsappnumber
                 if (this.virtualInfo.countryCode_whtsap.includes('+')) {
                     this.callingModes = this.virtualInfo.countryCode_whtsap.split('+')[1] + '' + this.virtualInfo.whatsappnumber;
@@ -580,7 +571,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                                 if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
                                     const whtsappcountryCode = this.virtualInfo.countryCode_whtsap.split('+')[1];
                                     this.callingModes = whtsappcountryCode + '' + this.virtualInfo.whatsappnumber;
-                                    console.log(this.callingModes);
+                                 
                                 }
                             }
                         }
@@ -755,8 +746,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         });
     }
     confirmcheckin(type?) {
-        console.log(type+this.sel_ser_det.isPrePayment +this.payEmail);
-        
         if(type==='appt' && this.sel_ser_det.isPrePayment &&this.payEmail===''){
             this.paymentBtnDisabled=true;
             const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
@@ -914,12 +903,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     saveCheckin(type?) {
-        console.log('insaide'+type);
+
         if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
             if (this.waitlist_for.length !== 0) {
                 for (const list of this.waitlist_for) {
-                    console.log(list['id']);
-                    console.log(this.familymembers);
                     const memberObject = this.familymembers.filter(member => member.userProfile.id === list['id']);
                     console.log(memberObject);
                     if (list['id'] !== this.customer_data.id) {
@@ -979,7 +966,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 const retData = data;
                 this.uuidList = [];
                 let parentUid;
-                console.log(retData);
                 Object.keys(retData).forEach(key => {
                     if (key === '_prepaymentAmount') {
                         this.prepayAmount = retData['_prepaymentAmount'];
@@ -1980,13 +1966,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 this.checkJcash = true
                 this.jcashamount = this.paymentDetails.eligibleJcashAmt.jCashAmt;
                 this.jcreditamount = this.paymentDetails.eligibleJcashAmt.creditAmt;
-                console.log(this.jcashamount);
                 if( this.checkJcash && this.paymentDetails.amountRequiredNow > this.jcashamount){
                     this.payAmount = this.paymentDetails.amountRequiredNow - this.jcashamount;
-                    console.log(this.payAmount);
+
                 } else if( this.checkJcash && this.paymentDetails.amountRequiredNow <= this.jcashamount){
                     this.payAmount = 0;
-                    console.log(this.payAmount)
                 }
             },
                 error => {
@@ -2123,7 +2107,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         return length;
     }
     actionCompleted() {
-        console.log(this.action);
         if (this.action === 'slotChange') {
             this.selectedDate = this.sel_checkindate;
             this.checkFutureorToday();
@@ -2132,7 +2115,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         }
         if (this.action === 'members') {
             this.saveMemberDetails();
-            this.checkVirtualService();
         } else if (this.action === 'addmember') {
             this.handleSaveMember();
         } else if (this.action === 'note' || this.action === 'slotChange' || this.action === 'attachment') {
@@ -2141,9 +2123,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.applyCoupons();
         }
     }
-    checkVirtualService() {
-        console.log(this.waitlist_for[0]);
-    }
+   
     popupClosed() {
         this.sel_checkindate = this.selectedDate;
         this.checkFutureorToday();
@@ -2350,7 +2330,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         }
     }
      changePolicy (event) {
-        console.log(event.target.checked);
         this.checkPolicy = event.target.checked;
     }
     showText() {

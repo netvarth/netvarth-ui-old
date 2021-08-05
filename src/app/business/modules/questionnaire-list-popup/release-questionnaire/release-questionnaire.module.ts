@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
 import { FormMessageDisplayModule } from '../../../../shared/modules/form-message-display/form-message-display.module';
 import { ReleaseQuestionnaireComponent } from './release-questionnaire.component';
 
@@ -18,7 +20,9 @@ import { ReleaseQuestionnaireComponent } from './release-questionnaire.component
         ReactiveFormsModule,
         MatCheckboxModule,
         MatDialogModule,
-        MatFormFieldModule
+        MatFormFieldModule,
+        MatInputModule,
+        LoadingSpinnerModule
     ],
     exports: [ReleaseQuestionnaireComponent]
 })

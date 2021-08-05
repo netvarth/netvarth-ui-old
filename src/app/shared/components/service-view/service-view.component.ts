@@ -19,7 +19,7 @@ import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtual
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 import { SignUpComponent } from '../signup/signup.component';
-import { BreakpointObserver } from '@angular/cdk/layout';
+//import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
@@ -155,7 +155,7 @@ export class ServiceViewComponent implements OnInit {
     private groupService: GroupStorageService,
     private dateTimeProcessor: DateTimeProcessor,
     public sharedFunctionobj: SharedFunctions,
-    private observer: BreakpointObserver,
+  //  private observer: BreakpointObserver,
     private dialog: MatDialog,
     private activaterouterobj: ActivatedRoute) {
   }
@@ -243,22 +243,7 @@ export class ServiceViewComponent implements OnInit {
       );
     });
   }
-  ngAfterViewInit() {
-    const _this = this;
-    _this.sidenav.mode = 'over';
-    this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
-      setTimeout(() => {
-        if (res.matches) {
-          _this.sidenav.mode = 'over';
-          _this.sidenav.close();
-        } else {
-          _this.sidenav.mode = 'side';
-          _this.sidenav.open();
-        }
-      }, 100);
-
-    });
-  }
+  
   gets3curl() {
     let accountS3List = 'settings,appointmentsettings,terminologies,coupon,providerCoupon,location';
     let userS3List = 'providerBusinessProfile,providerVirtualFields,providerservices,providerApptServices';

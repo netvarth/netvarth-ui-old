@@ -10,11 +10,15 @@
     </select>
   </p>
   </div>
-  <div mat-dialog-actions class="paddingtop">
+  <div mat-dialog-actions class="nppadding">
   <button tabindex="-1" class="cs-btn bt2" (click)="close()">{{cancel_btn_cap}}</button>
-    <button tabindex="2" class="cs-btn bt1 reddelete" (click)="onClick(1)">{{ok_btn_cap}}</button>
+    <button tabindex="2" class="cs-btn bt1 reddelete" (click)="onClick()">{{ok_btn_cap}}</button>
+    <!-- <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error_msg}}"></app-field-error-display> -->
   </div>
-  <!-- <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display> -->
+  <div *ngIf="api_error" style="color:red" class="nopadding text-center">
+{{api_error_msg}}
+  </div>
+ 
 
 
   

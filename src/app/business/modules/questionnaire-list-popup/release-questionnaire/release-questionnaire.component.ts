@@ -5,6 +5,8 @@ import { AddproviderAddonComponent } from '../../../../ynw_provider/components/a
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { SharedServices } from '../../../../shared/services/shared-services';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 
 @Component({
   selector: 'app-release-questionnaire',
@@ -15,8 +17,6 @@ export class ReleaseQuestionnaireComponent implements OnInit {
   api_error = null;
   api_success = null;
   cancel_btn_cap = Messages.CANCEL_BTN;
-  send_btn_cap = Messages.SEND_BTN;
-  message = '';
   sms = false;
   email = false;
   pushnotify = false;
@@ -25,65 +25,66 @@ export class ReleaseQuestionnaireComponent implements OnInit {
   is_smsLow = false;
   smsWarnMsg = '';
   corpSettings;
-  isSms = false;
-  phone;
   isPush = false;
   isEmail = false;
   isTelegram = false;
+  is_noSMS = false;
   countryCode;
+  amForm: FormGroup;
+  loading = true;
   constructor(public dialogRef: MatDialogRef<ReleaseQuestionnaireComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private provider_services: ProviderServices,
     private snackbarService: SnackbarService,
     private dialog: MatDialog,
+    private fb: FormBuilder,
+    public fed_service: FormMessageDisplayService,
     private shared_services: SharedServices) {
   }
 
   ngOnInit() {
     console.log(this.data);
+    this.sms = this.data.isPhone;
+    this.email = this.data.isEmail;
     if (this.data.source === 'appt') {
-      this.email = this.data.waitlist_data.providerConsumer.email;
-      if (!this.email) {
-        this.isEmail = false;
-      }
-      this.phone = this.data.waitlist_data.providerConsumer.phoneNo;
-      if (!this.phone) {
-        this.isSms = false;
-      }
-      if (!this.email && (!this.phone || (this.phone === '')) || !this.data.waitlist_dataconsumer) {
-        this.pushnotify = false;
-        this.isPush = false;
+      this.countryCode = this.data.waitlist_data.providerConsumer.countryCode;
+      if ((this.data.isEmail || this.data.isPhone) && this.data.waitlist_data.consumer) {
+        this.pushnotify = true;
+        this.isPush = true;
       }
     } else {
-      this.email = this.data.waitlist_data.waitlistingFor[0].email;
-      if (!this.email) {
-        this.isEmail = false;
-      }
-      this.phone = this.data.waitlist_data.waitlistingFor[0].phoneNo;
-      if (!this.phone) {
-        this.isSms = false;
-      }
-      if (!this.email && (!this.phone || (this.phone === '')) || !this.data.waitlist_data.jaldeeConsumer) {
-        this.pushnotify = false;
-        this.isPush = false;
+      this.countryCode = this.data.waitlist_data.consumer.countryCode;
+      if ((this.data.isEmail || this.data.isPhone) && this.data.waitlist_data.jaldeeConsumer) {
+        this.pushnotify = true;
+        this.isPush = true;
       }
     }
-    this.getTelegramChatId();
-    this.getSMSCredits();
+    this.createForm();
+  }
+  createForm() {
+    this.amForm = this.fb.group({
+      message: ['', Validators.compose([Validators.required])]
+    });
+    if (this.countryCode && this.data.isPhone) {
+      this.getTelegramChatId();
+      this.getSMSCredits();
+    } else {
+      this.loading = false;
+    }
   }
   getTelegramChatId() {
-    this.shared_services.telegramChat(this.countryCode, this.phone)
+    let phone = (this.data.source === 'appt') ? this.data.waitlist_data.providerConsumer.phoneNo : this.data.waitlist_data.consumer.phoneNo;
+    this.shared_services.telegramChat(this.countryCode, phone)
       .subscribe(
         data => {
           if (data === null) {
-            this.isTelegram = true;
+            this.isTelegram = false;
           }
           else {
-            this.isTelegram = false;
+            this.isTelegram = true;
           }
         },
         (error) => {
-
         }
       );
   }
@@ -95,13 +96,14 @@ export class ReleaseQuestionnaireComponent implements OnInit {
         this.getLicenseCorpSettings();
       } else if (data === 0) {
         this.is_smsLow = true;
-        this.isSms = true;
+        this.is_noSMS = true;
         this.smsWarnMsg = Messages.NO_SMS_CREDIT;
         this.getLicenseCorpSettings();
       } else {
         this.is_smsLow = false;
-        this.isSms = false;
+        this.is_noSMS = false;
       }
+      this.loading = false;
     });
   }
   getLicenseCorpSettings() {
@@ -132,12 +134,47 @@ export class ReleaseQuestionnaireComponent implements OnInit {
     }
   }
   sendBtnDisable() {
-    if (this.message.trim() === '' || this.disableButton || (!this.sms && !this.email && !this.pushnotify && !this.telegram)) {
+    if (this.amForm.get('message').value.trim() === '' || !this.amForm.valid || this.disableButton || (!this.sms && !this.email && !this.pushnotify && !this.telegram)) {
       return true;
     }
     return false;
   }
-  shareQnr() {
-
+  shareQnr(form_data) {
+    if (!this.email && !this.sms && !this.pushnotify && !this.telegram) {
+      this.api_error = 'share message via options are not selected';
+    } else {
+      this.disableButton = true;
+      const postData = {
+        'medium': {
+          'email': this.email,
+          'sms': this.sms,
+          'pushNotification': this.pushnotify,
+          'telegram': this.telegram
+        },
+        'id': this.data.qnrId,
+        'message': form_data.message
+      };
+      if (this.data.source === 'appt') {
+        this.provider_services.sendApptQnrNotification(this.data.qnrId, postData).subscribe(data => {
+          // this.api_success = 'shared';
+          this.dialogRef.close('reload');
+        }, error => {
+          this.api_error = error.error;
+          this.disableButton = false;
+        });
+      } else {
+        this.provider_services.sendWaitlistQnrNotification(this.data.qnrId, postData).subscribe(data => {
+          // this.api_success = 'shared';
+          this.dialogRef.close('reload');
+        }, error => {
+          this.api_error = error.error;
+          this.disableButton = false;
+        });
+      }
+    }
+  }
+  resetErrors() {
+    this.api_error = null;
+    this.api_success = null;
   }
 }

@@ -283,6 +283,7 @@ export class BranchUserDetailComponent implements OnInit {
 
             selectedDepartment: [],
             privileges: [''],
+            bProfilePermitted: [''],
             selectedUserType: [],
             // address: [],
             // state: [],
@@ -369,6 +370,7 @@ export class BranchUserDetailComponent implements OnInit {
             'selectedDepartment': this.user_data.deptId || null,
             'selectedUserType': this.user_data.userType || null,
             'privileges': this.user_data.admin || false,
+            'bProfilePermitted': this.user_data.bProfilePermitted || false,
             'postalCode': this.user_data.pincode || null,
             'countryCode_whatsapp': (this.user_data.whatsAppNum && this.user_data.whatsAppNum.countryCode) ?  this.user_data.whatsAppNum.countryCode : '+91', 
             'whatsappumber': (this.user_data.whatsAppNum && this.user_data.whatsAppNum.number) ? this.user_data.whatsAppNum.number  : '', 
@@ -489,6 +491,9 @@ export class BranchUserDetailComponent implements OnInit {
         post_data1['admin'] = input.privileges;
         console.log(input.privileges);
         }
+        if (input.selectedUserType === 'PROVIDER') {
+            post_data1['bProfilePermitted'] = input.bProfilePermitted;
+            }
         // console.log(post_data1);
         if (this.actionparam.type === 'edit') {
             console.log(post_data1);

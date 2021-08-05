@@ -469,7 +469,14 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                             <div class="form-level-settings">This privilege will allow the user to create new user, modify existing user etc.</div>
                                         </div>
                                     </div>
-
+                                    <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 10px;" *ngIf="showPrvdrFields">
+                                        <div class="form-group">
+                                            <mat-checkbox formControlName="bProfilePermitted">
+                                                Business Profile Permitted
+                                            </mat-checkbox>
+                                            <div class="form-level-settings">This privilege will allow the user to create their own profile.</div>
+                                        </div>
+                                    </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12 mgn-up-20">
                                         <h3><a class="learnmore-pointer" (click)="advancedClick()"> Additional details</a></h3>
                                     </div>

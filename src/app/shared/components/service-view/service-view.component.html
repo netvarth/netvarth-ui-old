@@ -43,56 +43,13 @@
                                 </h3>
                                 <div class="address col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-5 no-padding single-loc"
                                     *ngIf="locationjson && locationjson.length > 0">  
-                                    <button   *ngIf="locationjson.length == 1" class="locbtn"><i class="fa fa-map-marker takeTourTitle mgn-rt-10"></i>{{selectedLocation.place | capitalizeFirst}}</button> 
+                                    <span   *ngIf="locationjson.length == 1" class="locbtn"><i class="fa fa-map-marker takeTourTitle mgn-rt-10"></i>{{selectedLocation.place | capitalizeFirst}}</span> 
                                    <div  *ngIf="locationjson.length > 1"><i class="fa fa-map-marker takeTourTitle mgn-rt-10"></i>
                                     <select class="selectbxstyle">
                                             <option *ngFor="let loc of locationjson" (click)="changeLocation(loc)">{{loc.place}}</option>
                                             </select></div>
                                             
-                                    <!-- <button  *ngIf="locationjson.length > 1" [matMenuTriggerFor]="menu" class="locbtn"><i class="fa fa-map-marker takeTourTitle mgn-rt-10"></i>{{selectedLocation.place | capitalizeFirst}}</button>
-<mat-menu #menu="matMenu">
-  <button  *ngFor="let loc of locationjson" (click)="changeLocation(loc)" mat-menu-item>{{loc.place}}</button>
-</mat-menu> -->
-                                
-                                            <!-- <div class="navbar-custom-menu ">
-                                              <ul class="nav navbar-nav">
-                                                <li class="dropdown messages-menu loc-lst queue-menu ">
-                                                  <i class="icon-location dropdown-toggle " data-toggle="dropdown"></i>
-                                                  <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
-                                                    *ngIf="selectedLocation" style="padding-top: 12px !important;">
-                                                    <span *ngIf="!small_device_display">
-                                                      {{selectedLocation.place | capitalizeFirst}}</span>
-                                                  </a>
-                                                  <ul class="dropdown-menu">
-                                                    <li>
-                                                      <ul class="menu">
-                                                        <li *ngFor="let location of locationjson;let i = index"
-                                                          [ngClass]="{'active': (location.place == selectedLocation.place)}">
-                                                          <a class="pointer-cursor" (click)="changeLocation(location)">
-                                                            <h4 *ngIf="location.place.length>='27'">
-                                                              {{ location.place.substring(0,24) | capitalizeFirst }}...</h4>
-                                                            <h4 *ngIf="location.place.length<'27'">{{ location.place | capitalizeFirst }}</h4>
-                                                          </a>
-                                                        </li>
-                                                      </ul>
-                                                    </li>
-                                                  </ul>
-                                                </li>
-                                              </ul>
-                                            </div> -->
-                                         
-                                    <!-- <h6 >
-                                            <button *ngFor="let loc of locationjson" mat-button class="menu-button"
-                                            [ngClass]="{'active': selectedLocation.id === loc.id}" (click)="changeLocation(loc)">
-                                            <a [href]="selectedLocation.googleMapUrl" target="_blank"
-                                                *ngIf="selectedLocation.googleMapUrl!=''"><i class="fa fa-map-marker mgn-rt-10"></i></a>
-                                            <span>{{loc.place}}</span>
-                                        </button>
-                                        <a [href]="locationjson[0].googleMapUrl"
-                                            target="_blank" *ngIf="locationjson[0].googleMapUrl!=''"><i
-                                                class="fa fa-map-marker"></i>&nbsp;{{locationjson[0].place |
-                                            capitalizeFirst}}</a>
-                                    </h6> -->
+                                    
                                 </div>
                             </div>
                             </div>

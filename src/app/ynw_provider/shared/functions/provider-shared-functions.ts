@@ -492,10 +492,11 @@ export class ProviderSharedFuctions {
       });
 
       Cthis.sendmsgdialogRef.afterClosed().subscribe(result => {
+        console.log(result);
         if (result === 'reloadlist') {
-          resolve();
+          resolve(result);
         } else {
-          reject();
+          reject(result);
         }
       });
     });

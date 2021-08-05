@@ -449,6 +449,24 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
  'maxlength' : 'Only 10 digits are allowed'})">
               </app-field-error-display>
             </div>
+
+            <div class="form-group">
+                <div>
+                    <label style="margin-bottom: 0 !important;">Show Price Description
+                      <!-- <mat-slide-toggle class="example-margin" [checked]="false" (change)="onChange($event)"> -->
+                          <mat-slide-toggle class="example-margin" [(ngModel)]="priceDescription" [ngModelOptions]="{standalone: true}" (change)="onChange()">
+                      </mat-slide-toggle>
+                      <!-- <div class="form-level-settings">{{frm_enable_prepayment_cap}}</div> -->
+                    </label>
+                  </div>
+              <mat-form-field *ngIf="showPrice">
+                <textarea matInput class="form-control" id="paymentDescription"
+                placeholder="{{'Any disclaimer note for price'}}"
+                  formControlName="paymentDescription"
+                  maxlength="500"> </textarea>
+              </mat-form-field>
+              <!-- <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span> -->
+            </div>
             <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
               <div>
                 <label style="margin-bottom: 0 !important;">Advance payment

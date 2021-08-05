@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { FormMessageDisplayService } from '../../form-message-display/form-message-display.service';
 
 @Component({
   selector: 'app-confirm-box-location',
@@ -15,13 +16,15 @@ export class ConfirmBoxLocationComponent implements OnInit {
   loc_list: any = [];
   user_loc: any = [];
   selelocId: any = '';
-  api_error = '';
+  api_error_msg = '';
   discountId_servie: any;
   apiloading = false;
+  api_error=false;
   constructor(public dialogRef: MatDialogRef<ConfirmBoxLocationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private provider_services: ProviderServices,
     private snackbarService: SnackbarService,
+    public fed_service: FormMessageDisplayService,
   ) {
     if (this.data.type) {
       this.ok_btn_cap = Messages.YES_BTN;
@@ -57,15 +60,18 @@ export class ConfirmBoxLocationComponent implements OnInit {
         );
     });
   }
-  onClick(data) {
-    console.log(data);
-    this.api_error = '';
+  onClick() {
+    console.log(this.selelocId);
+    console.log('inisdee' +this.selelocId);
+    this.api_error = false;
+    this.api_error_msg = ' ';
+  
     if (!this.selelocId) {
-      console.log(data);
-      this.api_error = 'please select location ';
+      console.log('first ');
+      this.api_error = true;
+      this.api_error_msg = 'please select location ';
     }
     else {
-      console.log(data);
       console.log(this.selelocId);
       this.dialogRef.close(this.selelocId);
     }

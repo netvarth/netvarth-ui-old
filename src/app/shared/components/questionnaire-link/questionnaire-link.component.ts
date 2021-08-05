@@ -17,7 +17,6 @@ export class QuestionnaireLinkComponent implements OnInit {
   waitlist: any = [];
   qParams;
   source;
-  accountId = 125699;
   constructor(public sharedFunctionobj: SharedFunctions,
     private sharedServices: SharedServices,
     private activated_route: ActivatedRoute,
@@ -70,7 +69,7 @@ export class QuestionnaireLinkComponent implements OnInit {
     });
   }
   getCheckinDetails() {
-    this.sharedServices.getCheckinByConsumerUUID(this.qParams.uid, this.accountId).subscribe(
+    this.sharedServices.getCheckinByConsumerUUID(this.qParams.uid, this.qParams.accountId).subscribe(
       (data) => {
         this.waitlist = data;
         this.getWaitlistReleasedQnrs();
@@ -81,7 +80,7 @@ export class QuestionnaireLinkComponent implements OnInit {
     );
   }
   getApptDetails() {
-    this.sharedServices.getAppointmentByConsumerUUID(this.qParams.uid, this.accountId).subscribe(
+    this.sharedServices.getAppointmentByConsumerUUID(this.qParams.uid, this.qParams.accountId).subscribe(
       (data) => {
         this.waitlist = data;
         this.getApptReleasedQnrs();
@@ -92,7 +91,7 @@ export class QuestionnaireLinkComponent implements OnInit {
     );
   }
   getWaitlistReleasedQnrs() {
-    this.sharedServices.getWaitlistQuestionnaireByUid(this.qParams.uid, this.accountId)
+    this.sharedServices.getWaitlistQuestionnaireByUid(this.qParams.uid, this.qParams.accountId)
       .subscribe(
         (data: any) => {
           this.questionnaire = data.filter(qnr => qnr.id === JSON.parse(this.qParams.id));
@@ -105,7 +104,7 @@ export class QuestionnaireLinkComponent implements OnInit {
       );
   }
   getApptReleasedQnrs() {
-    this.sharedServices.getApptQuestionnaireByUid(this.qParams.uid, this.accountId)
+    this.sharedServices.getApptQuestionnaireByUid(this.qParams.uid, this.qParams.accountId)
       .subscribe(
         (data: any) => {
           this.questionnaire = data.filter(qnr => qnr.id === JSON.parse(this.qParams.id));
