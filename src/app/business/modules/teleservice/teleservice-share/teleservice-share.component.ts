@@ -78,7 +78,7 @@ export class TeleServiceShareComponent implements OnInit {
   cusmtor_countrycode;
   cusmtor_phone;
   cust_countryCode;
-  IsTelegramCustomrDisable:any;
+  IsTelegramCustomrDisable = true;
   constructor(public dialogRef: MatDialogRef<TeleServiceShareComponent>,
     public shared_functions: SharedFunctions,
     public shared_services: SharedServices,
@@ -127,22 +127,24 @@ export class TeleServiceShareComponent implements OnInit {
       if(this.cusmtor_countrycode.startsWith('+')){
         this.cust_countryCode = this.cusmtor_countrycode.substring(1);
       }
-      this.provider_services.telegramChat(this.cust_countryCode, this.cusmtor_phone)
-       .subscribe(
-           data => { 
-             this.chatId = data; 
-             if(this.chatId === null){
-              this.IsTelegramCustomrDisable = true;
-             }
-             else{
-              this.IsTelegramCustomrDisable = false;
-             }
-            
-           },
-           (error) => {
-              
-           }
-       );
+      if(this.cusmtor_phone){
+        this.provider_services.telegramChat(this.cust_countryCode, this.cusmtor_phone)
+        .subscribe(
+            data => { 
+              this.chatId = data; 
+              if(this.chatId === null){
+               this.IsTelegramCustomrDisable = true;
+              }
+              else{
+               this.IsTelegramCustomrDisable = false;
+              }
+             
+            },
+            (error) => {
+               
+            }
+        );
+      }
     }
     
     if (this.data.waitingType === 'checkin') {
