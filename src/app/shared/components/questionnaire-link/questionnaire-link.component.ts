@@ -58,7 +58,7 @@ export class QuestionnaireLinkComponent implements OnInit {
         type: 'consumer',
         is_provider: false,
         test_account: true,
-        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+        moreparams: { source: 'qnrlink' }
       }
     });
     dialogRef.afterClosed().subscribe(result => {
