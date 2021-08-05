@@ -1300,7 +1300,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.resetPaginationData();
     this.pagination.startpageval = 1;
     this.pagination.totalCnt = 0; // no need of pagination in today
-    if (this.activeSchedules.length > 0 || this.activeUser) {
+    if (this.activeSchedules.length > 0 || this.activeUser || (this.active_user.accountType === 'BRANCH' && this.activeSchedules.length == 0)) {
       const promise = this.getTodayAppointmentsCount(Mfilter);
       promise.then(
         result => {
@@ -1396,7 +1396,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.check_in_date != null) {
       Mfilter['date-eq'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_date);
     }
-    if (this.activeSchedules.length > 0 || this.activeUser) {
+    if (this.activeSchedules.length > 0 || this.activeUser || (this.active_user.accountType === 'BRANCH' && this.activeSchedules.length == 0)) {
     const promise = this.getFutureAppointmentsCount(Mfilter);
     promise.then(
       result => {

@@ -829,7 +829,7 @@
                 </div>
                 <table class="table tbl-qboard childDetails singleDash">
                   <thead id="childActionBar"
-                    *ngIf="showSelectAll() && selected_type != 'free' && (activeSchedules.length > 0 || activeUser)">
+                    *ngIf="showSelectAll() && selected_type != 'free'">
                     <tr>
                       <th class="chkWth check-table-head" colspan="3">
                         <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
@@ -1091,7 +1091,7 @@
                     </tr>
                   </tbody>
                   <tbody
-                    *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser) && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked')) && !small_device_display">
+                    *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser || (active_user.accountType === 'BRANCH' && activeSchedules.length == 0)) && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked')) && !small_device_display">
                     <tr class="pointer-cursor" [class.user-tr-backclr]="appt.provider" (click)="goCheckinDetail(appt)"
                       *ngFor="let appt of check_in_filtered_list, let i=index">
                       <td class="chkWth" *ngIf="showSelectAll()">
