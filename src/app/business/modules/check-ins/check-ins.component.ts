@@ -1618,9 +1618,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     let no_filter = false;
     if (!Mfilter) {
       Mfilter = {};
-      // if (this.selected_location && this.selected_location.id) {
-      //   Mfilter['location-eq'] = this.selected_location.id;
-      // }
+      if (this.selected_location && this.selected_location.id) {
+        Mfilter['location-eq'] = this.selected_location.id;
+      }
       if (queueid && queueid !== '') {
         if (this.activeUser) {
           if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
@@ -1683,9 +1683,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
       }
     }
-    // if (this.selected_location && this.selected_location.id) {
-    //   Mfilter['location-eq'] = this.selected_location.id;
-    // }
+    if (this.selected_location && this.selected_location.id) {
+      Mfilter['location-eq'] = this.selected_location.id;
+    }
     if (this.filter.waitlist_status === 'all') {
       Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
     }

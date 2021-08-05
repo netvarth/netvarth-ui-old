@@ -1144,9 +1144,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       no_filter = true;
     }
-    // if (this.selected_location && this.selected_location.id) {
-    //   Mfilter['location-eq'] = this.selected_location.id;
-    // }
+    if (this.selected_location && this.selected_location.id) {
+      Mfilter['location-eq'] = this.selected_location.id;
+    }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     }
@@ -1196,9 +1196,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.groupService.setitemToGroupStorage('appt_future_selQ', this.selQIds);
       }
     }
-    // if (this.selected_location && this.selected_location.id) {
-    //   Mfilter['location-eq'] = this.selected_location.id;
-    // }
+    if (this.selected_location && this.selected_location.id) {
+      Mfilter['location-eq'] = this.selected_location.id;
+    }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
     }
