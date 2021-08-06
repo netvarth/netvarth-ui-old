@@ -20,6 +20,7 @@ export class QuestionnaireLinkComponent implements OnInit {
   qParams;
   source;
   newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
+  qnrStatus;
   constructor(public sharedFunctionobj: SharedFunctions,
     private sharedServices: SharedServices,
     private activated_route: ActivatedRoute,
@@ -101,10 +102,14 @@ export class QuestionnaireLinkComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.questionnaire = data.filter(qnr => qnr.id === JSON.parse(this.qParams.id));
+          const qnrWithStatus = this.waitlist.releasedQnr.filter(qnr => qnr.id === JSON.parse(this.qParams.id));
           console.log('this.questionnaire', this.questionnaire);
+          console.log(qnrWithStatus);
+          this.qnrStatus = qnrWithStatus[0].status;
           this.loading = false;
         },
         error => {
+          alert('error')
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
@@ -114,7 +119,10 @@ export class QuestionnaireLinkComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.questionnaire = data.filter(qnr => qnr.id === JSON.parse(this.qParams.id));
+          const qnrWithStatus = this.waitlist.releasedQnr.filter(qnr => qnr.id === JSON.parse(this.qParams.id));
           console.log('this.questionnaire', this.questionnaire);
+          console.log(qnrWithStatus);
+          this.qnrStatus = qnrWithStatus[0].status;
           this.loading = false;
         },
         error => {

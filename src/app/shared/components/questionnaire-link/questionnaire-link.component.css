@@ -37,7 +37,7 @@
     white-space: nowrap !important;
 }
 .details-pad {
-    padding-bottom: 20px !important;
+    padding: 0 10px 20px !important;
     color: #797979 !important;
 }
 .details-pad .card {

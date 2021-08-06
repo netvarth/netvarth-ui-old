@@ -3,8 +3,8 @@
         <div class="panel-default">
             <div class="panel-body no-padding" *ngIf="!qParams.type">
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-                <div class="card" *ngIf="!loading">
-                    <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 details-pad">
+                <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 card" *ngIf="!loading">
+                    <div class="details-pad">
                         <div class="">
                             <div class="customer-details-head">
                                 <div>
@@ -47,9 +47,9 @@
                                     <i class="fa fa-envelope icon"></i>
                                     <span class="value">{{waitlist.waitlistingFor[0].email}}</span>
                                 </div>
-                                <div class="email" *ngIf="source == 'consAppt' && waitlist.appmtFor[0].email">
+                                <div class="email" *ngIf="source == 'consAppt' && waitlist.providerConsumer.email">
                                     <i class="fa fa-envelope icon"></i>
-                                    <span class="value">{{waitlist.appmtFor[0].email}}</span>
+                                    <span class="value">{{waitlist.providerConsumer.email}}</span>
                                 </div>
                                 <div class="email" *ngIf="source == 'consCheckin'">
                                     <i class="fa fa-envelope icon"></i>
@@ -65,7 +65,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="">
+                    <div class="" *ngIf="questionnaire[0]">
                         <app-questionnaire [questionnaireList]="questionnaire[0]" [source]="source" [uuid]="qParams.uid"
                             [accountId]="qParams.accountId" [type]="'qnr-link'"
                             [waitlistStatus]="(source == 'consCheckin') ? waitlist.waitlistStatus : waitlist.apptStatus"
