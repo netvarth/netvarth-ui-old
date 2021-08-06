@@ -2241,6 +2241,14 @@ export class ProviderServices {
     const url = 'provider/appointment/questionnaire/notification/' + uid;
     return this.servicemeta.httpPut(url, post_data);
   }
+  unassignTeamWaitlist(post_data) {
+    const url = 'provider/waitlist/unassignTeam';
+    return this.servicemeta.httpPut(url, post_data);
+  }
+  unassignTeamAppointment(post_data) {
+    const url = 'provider/appointment/unassignTeam';
+    return this.servicemeta.httpPut(url, post_data);
+  }
   getProviderBills(filter = {}) {
     const url = 'provider/bill';
     return this.servicemeta.httpGet(url, null, filter);

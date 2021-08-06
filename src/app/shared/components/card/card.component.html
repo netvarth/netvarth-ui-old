@@ -450,8 +450,10 @@
                 </div> -->
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name" *ngIf="waitlist.waitlistingFor[0].bookingLocation && (waitlist.waitlistingFor[0].bookingLocation.district || waitlist.waitlistingFor[0].bookingLocation.state)">
                     <!-- <span class="b1">Location : </span> -->
-                    <span>{{waitlist.waitlistingFor[0].bookingLocation.district}}, 
-                        {{waitlist.waitlistingFor[0].bookingLocation.state}}</span>
+                    <!-- <span>{{waitlist.waitlistingFor[0].bookingLocation.district}}, 
+                        {{waitlist.waitlistingFor[0].bookingLocation.state}}</span> -->
+                    <span *ngIf="waitlist.waitlistingFor[0].bookingLocation.district">{{waitlist.waitlistingFor[0].bookingLocation.district}},</span>
+                    <span *ngIf="waitlist.waitlistingFor[0].bookingLocation.state">{{waitlist.waitlistingFor[0].bookingLocation.state}}</span>
                 </div>
                 <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="waitlist.waitlistingFor[0].age || waitlist.waitlistingFor[0].gender">
                     <span *ngIf="waitlist.waitlistingFor[0].age">{{getAge(waitlist.waitlistingFor[0].age)}} yrs</span>
@@ -619,8 +621,10 @@
                 </div> -->
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name" *ngIf="appointment.appmtFor[0].bookingLocation && (appointment.appmtFor[0].bookingLocation.district || appointment.appmtFor[0].bookingLocation.state)">
                     <!-- <span class="b1">Location : </span> -->
-                    <span>{{appointment.appmtFor[0].bookingLocation.district}}, 
-                        {{appointment.appmtFor[0].bookingLocation.state}}</span>
+                    <!-- <span>{{appointment.appmtFor[0].bookingLocation.district}}, 
+                        {{appointment.appmtFor[0].bookingLocation.state}}</span> -->
+                    <span *ngIf="appointment.appmtFor[0].bookingLocation.district">{{appointment.appmtFor[0].bookingLocation.district}},</span>
+                    <span *ngIf="appointment.appmtFor[0].bookingLocation.state">{{appointment.appmtFor[0].bookingLocation.state}}</span>
                 </div>
                 <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="appointment.appmtFor[0].age || appointment.appmtFor[0].gender">
                     <span *ngIf="appointment.appmtFor[0].age">{{getAge(appointment.appmtFor[0].age)}} yrs</span>

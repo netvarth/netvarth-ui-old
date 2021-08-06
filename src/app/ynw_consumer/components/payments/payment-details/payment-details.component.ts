@@ -18,6 +18,8 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
     api_loading = false;
     donationDetails: any = [];
     questionnaire_heading = Messages.QUESTIONNAIRE_CONSUMER_HEADING;
+    waitlist: any = [];
+    provider_name: any;
     constructor(public shared_functions: SharedFunctions,
         private shared_services: SharedServices,
         public locationobj: Location,
@@ -58,6 +60,10 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
                 this.payments = payments;
                 if (this.payments.txnType === 'Donation') {
                     this.getDonations(this.payments.ynwUuid);
+                } else if (this.payments.txnType === 'Appointment'){
+                    this.getApptDetails(this.payments.ynwUuid , this.payments.accountId);
+                } else if (this.payments.txnType === 'Waitlist'){
+                    this.getCheckinDetails(this.payments.ynwUuid, this.payments.accountId);
                 } else {
                     this.api_loading = false;
                 }
@@ -100,4 +106,38 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
             }
         );
     }
+    getApptDetails(uid, accountId) {
+        this.shared_services.getAppointmentByConsumerUUID(uid,accountId).subscribe(
+          (data) => {
+            this.waitlist = data;
+            console.log(this.waitlist);
+            if(this.waitlist.provider){
+                this.provider_name =  this.waitlist.providerAccount.businessName + ','+  ((this.waitlist.provider.businessName) ?
+                                       this.waitlist.provider.businessName : this.waitlist.provider.firstName + ' ' + this.waitlist.provider.lastName);               
+            } else {
+                this.provider_name = this.waitlist.providerAccount.businessName
+            }
+            console.log(this.provider_name);
+         
+       
+            this.api_loading = false;
+          },
+        );
+      }
+      getCheckinDetails(uid , accountId,) {
+        this.shared_services.getCheckinByConsumerUUID(uid, accountId).subscribe(
+          (data) => {
+            this.waitlist = data;
+            console.log(this.waitlist);
+            if(this.waitlist.provider){
+                this.provider_name =  this.waitlist.providerAccount.businessName + ','+  ((this.waitlist.provider.businessName) ?
+                                       this.waitlist.provider.businessName : this.waitlist.provider.firstName + ' ' + this.waitlist.provider.lastName);               
+            } else {
+                this.provider_name = this.waitlist.providerAccount.businessName
+            }
+            console.log(this.provider_name);
+            this.api_loading = false;
+          },
+        );
+      }
 }

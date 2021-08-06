@@ -426,6 +426,38 @@ export class AppointmentActionsComponent implements OnInit {
             }
         });
     }
+    removeTeam(){
+        let msg = '';
+        msg = 'Do you want to remove the team ?';
+        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': msg,
+                'type': 'yes/no'
+            }
+        });
+        dialogrefd.afterClosed().subscribe(result => {
+            if (result) {
+                const post_data = {
+                    'uid': this.appt.uid,
+                    'teamId': this.appt.teamId
+                };
+                this.provider_services.unassignTeamAppointment(post_data)
+                    .subscribe(
+                        data => {
+                            this.dialogRef.close('reload');
+                        },
+                        error => {
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.dialogRef.close('reload');
+                        }
+                    );
+            }
+        });
+
+    }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
         this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)
             .then(

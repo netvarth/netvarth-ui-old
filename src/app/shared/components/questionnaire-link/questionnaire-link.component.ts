@@ -30,7 +30,6 @@ export class QuestionnaireLinkComponent implements OnInit {
     private dateTimeProcessor: DateTimeProcessor) {
     this.activated_route.params.subscribe(
       (qParams) => {
-        console.log(this.sharedFunctionobj.checkLogin())
         this.qParams = qParams;
         if (!this.qParams.type) {
           if (this.sharedFunctionobj.checkLogin()) {
@@ -38,14 +37,14 @@ export class QuestionnaireLinkComponent implements OnInit {
           } else {
             this.doLogin();
           }
+        } else {
+          this.loading = false;
         }
       });
   }
   ngOnInit(): void {
   }
   getDetails() {
-    console.log(this.qParams);
-    console.log(this.source);
     if (this.qParams.uid.split('_')[1] === 'appt') {
       this.source = 'consAppt';
       this.getApptDetails();
@@ -67,7 +66,6 @@ export class QuestionnaireLinkComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('result', result);
       if (result === 'success') {
         this.getDetails();
       } else {
@@ -103,13 +101,10 @@ export class QuestionnaireLinkComponent implements OnInit {
         (data: any) => {
           this.questionnaire = data.filter(qnr => qnr.id === JSON.parse(this.qParams.id));
           const qnrWithStatus = this.waitlist.releasedQnr.filter(qnr => qnr.id === JSON.parse(this.qParams.id));
-          console.log('this.questionnaire', this.questionnaire);
-          console.log(qnrWithStatus);
           this.qnrStatus = qnrWithStatus[0].status;
           this.loading = false;
         },
         error => {
-          alert('error')
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
@@ -120,8 +115,6 @@ export class QuestionnaireLinkComponent implements OnInit {
         (data: any) => {
           this.questionnaire = data.filter(qnr => qnr.id === JSON.parse(this.qParams.id));
           const qnrWithStatus = this.waitlist.releasedQnr.filter(qnr => qnr.id === JSON.parse(this.qParams.id));
-          console.log('this.questionnaire', this.questionnaire);
-          console.log(qnrWithStatus);
           this.qnrStatus = qnrWithStatus[0].status;
           this.loading = false;
         },
@@ -131,7 +124,6 @@ export class QuestionnaireLinkComponent implements OnInit {
       );
   }
   getQuestionAnswers(event) {
-    console.log(event);
     if (event === 'reload') {
       this.router.navigate(['questionnaire', this.qParams.uid, this.qParams.id, this.qParams.accountId, 'success']);
     }

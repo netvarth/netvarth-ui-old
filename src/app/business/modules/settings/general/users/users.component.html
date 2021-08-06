@@ -672,6 +672,9 @@
                                                                           *ngIf="accountSettings.availability && service.userType === 'PROVIDER' ">
                                                                       </div>
                                                                   </div>
+                                                                  <div class="disp-flex mgn-up-5" *ngIf="service.employeeId">
+                                                                    {{service.employeeId}}&nbsp;
+                                                                </div>
                                                                   <div class="disp-flex mgn-up-5"
                                                                       *ngIf="service.city && service.state"><i
                                                                           class="fa fa-map-marker mgn-rt-5"

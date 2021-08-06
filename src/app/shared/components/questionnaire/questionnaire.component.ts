@@ -639,6 +639,9 @@ export class QuestionnaireComponent implements OnInit {
   isBooleanChecked(value, question, column?) {
     value = (value.toLowerCase() === 'yes') ? true : false;
     if (question.fieldDataType !== 'dataGrid') {
+      if (this.answers[question.labelName] !== '' && typeof this.answers[question.labelName] === 'string') {
+        this.answers[question.labelName] = JSON.parse(this.answers[question.labelName])
+      }
       if (this.answers[question.labelName] === value) {
         return true;
       } else {

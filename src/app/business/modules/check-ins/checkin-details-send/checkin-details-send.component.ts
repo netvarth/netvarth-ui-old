@@ -134,6 +134,9 @@ export class CheckinDetailsSendComponent implements OnInit {
           console.log(this.splname);
 
           }
+          if(this.data.qdata.waitlistingFor[0].memberJaldeeId){
+            this.patientid = this.data.qdata.waitlistingFor[0].memberJaldeeId;
+          }
     } else {
         this.consumer_fname = this.data.qdata.appmtFor[0].firstName + ' ' + this.data.qdata.appmtFor[0].lastName;
         if (this.data.qdata.consumer && this.data.qdata.consumer.userProfile && this.data.qdata.consumer.userProfile.emailVerified) {
