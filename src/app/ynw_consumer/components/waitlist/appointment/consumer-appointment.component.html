@@ -308,10 +308,10 @@
                                                                         </div> -->
                                                                     </div>
                                                                     <div class=""
-                                                                        *ngIf="userData && userData.userProfile && userData.userProfile.email">
+                                                                        *ngIf="newEmail">
                                                                         <i class="fa fa-envelope-o "></i>
                                                                         <span
-                                                                            class="mgn-lt-5 emailvallabel">{{userData.userProfile.email}}</span>
+                                                                            class="mgn-lt-5 emailvallabel">{{newEmail}}</span>
                                                                         <a class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
                                                                     </div>
@@ -676,7 +676,7 @@
                                                                                 <li *ngFor="let memb of familymembers"
                                                                                     class="members">
                                                                                     <mat-radio-button
-                                                                                        (change)="handleOneMemberSelect(memb.userProfile.id, memb.userProfile.firstName, memb.userProfile.lastName)"
+                                                                                        (change)="handleOneMemberSelect(memb.userProfile.id, memb.userProfile.firstName, memb.userProfile.lastName,memb.userProfile.email)"
                                                                                         [value]="memb.userProfile.id"
                                                                                         [checked]="isChecked(memb.userProfile.id)">
                                                                                         {{memb.userProfile.firstName
@@ -1077,7 +1077,7 @@
                                                 <span class="billing-head">Email</span>
                                                 <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
                                                 <span class="billing-value"
-                                                    style="word-break: break-all;">{{payEmail}}</span>
+                                                    style="word-break: break-all;">{{payEmail}} </span>
                                             </div>
 
                                         </div>

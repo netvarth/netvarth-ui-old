@@ -1063,12 +1063,20 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         return caption;
     }
-    handleOneMemberSelect(id, firstName, lastName) {
+    handleOneMemberSelect(id, firstName, lastName,email) {
+            
         this.waitlist_for = [];
+        this.newEmail=this.payEmail='';
         this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName });
-        if (this.payEmail !== '') {
-            this.waitlist_for[0]['email'] = this.payEmail;
-        }
+        if(email && email.trim()!==''){
+            this.payEmail= this.waitlist_for[0]['email'] = this.newEmail=email;
+          
+         }else if (this.userData.userProfile.email.trim() !== '') {
+                 this.waitlist_for[0]['email'] =this.newEmail= this.payEmail=this.userData.userProfile.email;
+
+         }else{
+            this.waitlist_for[0]['email'] =this.newEmail= this.payEmail='';  
+         }
         // this.getConsumerQuestionnaire();
     }
     handleMemberSelect(id, firstName, lastName, obj) {
@@ -1531,6 +1539,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         if (_this.userData.userProfile.email) {
                             _this.waitlist_for[0]['email'] = _this.userData.userProfile.email;
                             _this.payEmail = _this.userData.userProfile.email;
+                            _this.newEmail=_this.userData.userProfile.email;
                         }
                         if (_this.userEmail) {
                             _this.emailExist = true;

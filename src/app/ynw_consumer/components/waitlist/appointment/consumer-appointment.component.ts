@@ -31,6 +31,7 @@ import { DomSanitizer } from '../../../../../../node_modules/@angular/platform-b
 import { VirtualFieldsComponent } from '../../virtualfields/virtualfields.component';
 import { ConsumerEmailComponent } from '../../../shared/component/consumer-email/consumer-email.component';
 
+
 @Component({
     selector: 'app-consumer-appointment',
     templateUrl: './consumer-appointment.component.html',
@@ -1001,12 +1002,22 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.disablebutton = false;
                 });
     }
-    handleOneMemberSelect(id, firstName, lastName) {
+    handleOneMemberSelect(id, firstName, lastName,email) {
+     
         this.waitlist_for = [];
+        this.newEmail=this.payEmail='';
         this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.selectedApptTime['time'] });
-        if (this.payEmail !== '') {
-            this.waitlist_for[0]['email'] = this.payEmail;
-        }
+        if(email && email.trim()!==''){
+            this.payEmail= this.waitlist_for[0]['email'] = this.newEmail=email;
+          
+         }else if (this.userData.userProfile.email.trim() !== '') {
+                 this.waitlist_for[0]['email'] =this.newEmail= this.payEmail=this.userData.userProfile.email;
+
+         }else{
+            this.waitlist_for[0]['email'] =this.newEmail= this.payEmail='';  
+         }
+        
+         
         // this.getConsumerQuestionnaire();
     }
     handleMemberSelect(id, firstName, lastName, obj) {
@@ -1339,8 +1350,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                             }
                         }
                         if (_this.userData.userProfile.email) {
-                            _this.waitlist_for[0]['email'] = _this.userData.userProfile.email;
-                            _this.payEmail = _this.userData.userProfile.email;
+                            _this.waitlist_for[0]['email'] =_this.payEmail=_this.newEmail= _this.userData.userProfile.email;
+       
                         }
                         if (_this.userEmail) {
                             _this.emailExist = true;
@@ -1802,6 +1813,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
         }
         // }
+        console.log(this.newEmail);
+        
         if (this.newEmail && this.newEmail.trim() !== '') {
             const pattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
             const result = pattern.test(this.newEmail);
@@ -1809,7 +1822,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 this.emailerror = "Email is invalid";
                 return false;
             } else {
-                emailId = this.bookingForm.get('newEmail').value;
+            
+               // emailId = this.bookingForm.get('newEmail').value;
+               emailId=this.newEmail;
                 // if (emailId && emailId != "") {
                 //     this.payEmail = emailId;
                 //     const post_data = {
