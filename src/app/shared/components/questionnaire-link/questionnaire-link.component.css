@@ -11,6 +11,12 @@
     font-weight: bold;
     margin: 20px 0 5px;
 }
+.expired-head {
+    color: red;
+    font-size: 1.7rem;
+    font-weight: bold;
+    margin: 20px 0 5px;
+}
 .success-desc {
     color: grey;
 }

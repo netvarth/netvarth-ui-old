@@ -1,7 +1,7 @@
 <section class="container cons-inbox no-padding qnr-link" [class.success-width]="qParams.type">
     <div class="comn-cls m0 p0">
         <div class="panel-default">
-            <div class="panel-body no-padding" *ngIf="!qParams.type">
+            <div class="panel-body no-padding" *ngIf="!qParams.type && qnrStatus === 'released'">
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                 <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 card" *ngIf="!loading">
                     <div class="details-pad">
@@ -80,6 +80,24 @@
                     Your response has been submitted
                 </div>
                 <div class="success-desc">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque dolorum odit quibusdam sint
+                    exercitationem dignissimos animi, consequatur eum accusantium, omnis modi. Maiores, aliquam cum.
+                    Excepturi nulla veritatis quae dignissimos placeat.
+                </div>
+            </div>
+            <div class="success-sec" *ngIf="!qParams.type && qnrStatus !== 'released'">
+                <div class="expired-head" *ngIf="qnrStatus == 'submitted'">
+                    Already submitted
+                </div>
+                <div class="expired-head" *ngIf="qnrStatus == 'unReleased'">
+                    Link expired
+                </div>
+                <div class="success-desc" *ngIf="qnrStatus == 'submitted'">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque dolorum odit quibusdam sint
+                    exercitationem dignissimos animi, consequatur eum accusantium, omnis modi. Maiores, aliquam cum.
+                    Excepturi nulla veritatis quae dignissimos placeat.
+                </div>
+                <div class="success-desc" *ngIf="qnrStatus == 'unReleased'">
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque dolorum odit quibusdam sint
                     exercitationem dignissimos animi, consequatur eum accusantium, omnis modi. Maiores, aliquam cum.
                     Excepturi nulla veritatis quae dignissimos placeat.
