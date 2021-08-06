@@ -63,8 +63,6 @@ export class AttachmentPopupComponent implements OnInit {
         this.docfiles.push(attachment);
       }
     }
-    console.log(this.mediafiles);
-    console.log(this.docfiles);
     
   }
 
