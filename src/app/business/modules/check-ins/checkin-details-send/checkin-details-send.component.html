@@ -4,6 +4,7 @@
                         <div>
                             <div *ngIf="!showToken"><span style="font-size: x-large;">Checkin Details</span></div>
                             <div *ngIf="showToken"><span style="font-size: x-large;">Token Details</span></div><br>
+                            <p class="appt-details" *ngIf ="patientid">{{customer_label}} ID : {{patientid}}</p>
                             <p class="appt-details" *ngIf="!showToken && (consumer_fname || consumer_lname)">Checkin for : {{consumer_fname}} {{consumer_lname}}</p>
                             <p class="appt-details" *ngIf = "showToken && (consumer_fname || consumer_lname)">Token for : {{consumer_fname}} {{consumer_lname}}</p>
                             <p class="appt-details">Service : 
@@ -23,7 +24,7 @@
                 <div>
                         <div><span style="font-size: x-large;">Appointment Details</span></div><br>
                         <p class="appt-details" *ngIf ="patientid">{{customer_label}} ID : {{patientid}}</p>
-                        <p class="appt-details" *ngIf ="consumer_fname">Appointment for : {{consumer_fname}}</p>
+                        <p class="appt-details" *ngIf ="consumer_fname && consumer_fname !== undefined && consumer_fname != null && consumer_fname !== ' '">Appointment for : {{consumer_fname}}</p>
                         <p class="appt-details">Service : 
                             <i *ngIf="data.qdata.service.serviceType === 'virtualService'" [class]=iconClass></i>
                             {{serv_name}}
