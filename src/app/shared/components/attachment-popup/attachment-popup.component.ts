@@ -56,6 +56,9 @@ export class AttachmentPopupComponent implements OnInit {
       if(fileType[0] == 'video' || fileType[0] =='audio'|| fileType[0] =='image'){
         this.mediafiles.push(attachment);
       }
+      else {
+        this.docfiles.push(attachment);
+      }
      } else {
         this.docfiles.push(attachment);
       }
