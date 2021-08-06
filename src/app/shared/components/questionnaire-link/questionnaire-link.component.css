@@ -3,15 +3,21 @@
     padding: 50px;
     background: white;
     box-shadow: 5px 3px 10px rgb(0 0 0 / 20%) !important;
-    margin-top: 50px;
+    margin-top: 15%;
 }
 .success-head {
     color: #00cc96;
-    font-size: 2rem;
+    font-size: 1.7rem;
     font-weight: bold;
+    margin: 20px 0 5px;
 }
 .success-desc {
     color: grey;
+}
+@media (min-width: 992px) {
+    .success-width {
+        width: 50%;
+    }
 }
 .qnr-link .panel {
     margin-top: 20px !important;
@@ -31,7 +37,7 @@
     white-space: nowrap !important;
 }
 .details-pad {
-    padding-bottom: 20px !important;
+    padding: 0 10px 20px !important;
     color: #797979 !important;
 }
 .details-pad .card {
@@ -54,4 +60,7 @@
 }
 .customer-details i.icon.fa.fa-mobile {
     font-size: 20px !important;
+}
+.fa-check-circle {
+    font-size: 5rem;
 }

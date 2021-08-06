@@ -227,6 +227,8 @@ export class UserServiceChnageComponent implements OnInit {
   notAvailabileSelected: boolean;
   accountSettings;
   contactDetailsdialogRef: any;
+  checkin: any;
+  userDetails:any;
 
   constructor(
     private activated_route: ActivatedRoute,
@@ -248,6 +250,12 @@ export class UserServiceChnageComponent implements OnInit {
     });
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.accountType = this.user.accountType;
+    if (this.source === 'appt'){
+      this.getApptDetails();
+    } else  if (this.source == 'checkin'){
+      this.getCheckinDetails();
+    }
+  
   }
   applyFilter(filterValue: string) {
     this.selection.clear();
@@ -429,7 +437,8 @@ export class UserServiceChnageComponent implements OnInit {
     if (!this.selectedUser.isAvailable && (this.user.id === 136239 || this.user.id === 9341)) {
       msg = this.selectedUser.businessName + ' seems to be unavailable now. Assign anyway ? ';
     } else {
-      msg = 'Do you want to assign this ' + this.customer_label + ' to ' + this.selectedUser.businessName + '?';
+     msg = 'Select the location of ' + this.selectedUser.businessName + ' to whom the '+ this.customer_label + ' ,' + this.userDetails + ' will be assigned';
+      // msg = 'Do you want to assign this ' + this.customer_label + ' to ' + this.selectedUser.businessName + '?';
     }
     const dialogrefd = this.dialog.open(ConfirmBoxLocationComponent, {
       width: '50%',
@@ -730,6 +739,56 @@ export class UserServiceChnageComponent implements OnInit {
           userData: user
       }
     });
+}
+
+getApptDetails() {
+  this.provider_services.getAppointmentById(this.uuid)
+    .subscribe(
+      data => {
+        this.checkin = data;
+        console.log(this.checkin);
+        if(this.checkin.appmtFor){
+        if (this.checkin.appmtFor[0].firstName && this.checkin.appmtFor[0].firstName !== null && this.checkin.appmtFor[0].firstName !== undefined && this.checkin.appmtFor[0].firstName !== '') {
+          this.userDetails = this.checkin.appmtFor[0].firstName + ' ' + this.checkin.appmtFor[0].lastName;
+        } else {
+          if (this.checkin.appmtFor[0].memberJaldeeId) {
+            this.userDetails = this.customer_label + ' : ' + this.checkin.appmtFor[0].memberJaldeeId;
+          }
+          if (this.checkin.appmtFor[0].jaldeeId) {
+            this.userDetails = this.customer_label + ' : ' + this.checkin.appmtFor[0].jaldeeId;
+          }
+        }
+      }
+        console.log(this.userDetails);
+      
+      }, error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      }
+    );
+ }
+ getCheckinDetails() {
+  this.provider_services.getProviderWaitlistDetailById(this.uuid)
+    .subscribe(
+      data => {
+        this.checkin = data;
+        console.log(this.checkin);
+        if(this.checkin.waitlistingFor){
+          if (this.checkin.waitlistingFor[0].firstName && this.checkin.waitlistingFor[0].firstName !== null && this.checkin.waitlistingFor[0].firstName !== undefined && this.checkin.waitlistingFor[0].firstName !== '') {
+            this.userDetails = this.checkin.waitlistingFor[0].firstName + ' ' + this.checkin.waitlistingFor[0].lastName;
+          } else {
+            if (this.checkin.waitlistingFor[0].memberJaldeeId) {
+              this.userDetails = this.customer_label + 'id:' + this.checkin.waitlistingFor[0].memberJaldeeId;
+            }
+            if (this.checkin.waitlistingFor[0].jaldeeId) {
+              this.userDetails = this.customer_label + 'id:' + this.checkin.waitlistingFor[0].jaldeeId;
+            }
+          }
+        }
+        console.log(this.userDetails);
+      }, error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      }
+    );
 }
 }
 

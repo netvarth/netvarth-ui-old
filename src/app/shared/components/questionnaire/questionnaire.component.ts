@@ -1065,7 +1065,9 @@ export class QuestionnaireComponent implements OnInit {
       this.filestoUpload = [];
       this.editQnr();
       this.returnAnswers.emit('reload');
-      this.snackbarService.openSnackBar('Updated Successfully');
+      if (this.type !== 'qnr-link') {
+        this.snackbarService.openSnackBar('Updated Successfully');
+      }
     }
   }
   showDataGridAddSection(question, value) {
