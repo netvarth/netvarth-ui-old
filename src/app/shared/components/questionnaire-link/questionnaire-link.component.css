@@ -15,7 +15,7 @@
     color: grey;
 }
 @media (min-width: 992px) {
-    .qnr-link {
+    .success-width {
         width: 50%;
     }
 }
