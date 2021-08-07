@@ -457,6 +457,32 @@
                           <div class="card">
                             <div class="card-header">
                               <h2 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePhone1" aria-expanded="false">
+                                  <div>
+                                    <div style="display: inline-block !important;">
+                                      <i class="fa fa-bookmark"></i>
+                                    </div>
+                                    Employee ID
+                                  </div>
+                                  <i class="fa fa-angle-down"></i>
+                                </button>
+                              </h2>
+                            </div>
+                            <div id="collapsePhone1" class="collapse in" data-parent="#accordion1">
+                              <div class="card-body">
+                                <div class="filterTextinput filter-text-input">
+                                    <li class="filterli filter-li">
+                                        <input type="text" id="employeeId" [(ngModel)]="filter.employeeId"
+                                            #employeeId (keyup)="doSearch()"
+                                             class="filterTextbox filter-textbox" placeholder="Enter Employee ID">
+                                    </li>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                          <div class="card">
+                            <div class="card-header">
+                              <h2 class="mb-0">
                                 <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseEmail1" aria-expanded="false">
                                   <div>
                                     <div style="display: inline-block !important;">
@@ -1202,6 +1228,32 @@
                               <input type="text" id="primaryMobileNo" [(ngModel)]="filter.primaryMobileNo"
                                   #primaryMobileNo (keyup)="doSearch()"
                                    class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
+                          </li>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="card">
+                  <div class="card-header">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePhone1" aria-expanded="false">
+                        <div>
+                          <div style="display: inline-block !important;">
+                            <i class="fa fa-bookmark"></i>
+                          </div>
+                          Employee ID
+                        </div>
+                        <i class="fa fa-angle-down"></i>
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapsePhone1" class="collapse in" data-parent="#accordion1">
+                    <div class="card-body">
+                      <div class="filterTextinput filter-text-input">
+                          <li class="filterli filter-li">
+                              <input type="text" id="employeeId" [(ngModel)]="filter.employeeId"
+                                  #employeeId (keyup)="doSearch()"
+                                   class="filterTextbox filter-textbox" placeholder="Enter Employee ID">
                           </li>
                       </div>
                     </div>
