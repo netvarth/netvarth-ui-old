@@ -1,4 +1,5 @@
-<section class="container cons-inbox no-padding qnr-link" [class.success-width]="qParams.type || qnrStatus !== 'released'">
+<section class="container cons-inbox no-padding qnr-link"
+    [class.success-width]="qParams.type || qnrStatus !== 'released'">
     <div class="comn-cls m0 p0">
         <div class="panel-default">
             <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
