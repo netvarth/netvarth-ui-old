@@ -2,3 +2,7 @@
     font-weight: bold !important;
     margin-bottom: 10px !important;
 }
+::ng-deep.mat-tab-label-active { 
+    color: #0884bd !important;
+    font-weight: bold !important;
+}
