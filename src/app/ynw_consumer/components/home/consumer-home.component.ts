@@ -30,6 +30,7 @@ import { GalleryService } from '../../../shared/modules/gallery/galery-service';
 import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
+import { AttachmentPopupComponent } from '../../../shared/components/attachment-popup/attachment-popup.component';
 
 @Component({
   selector: 'app-consumer-home',
@@ -245,6 +246,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   showTeleBt = false;
   tele_popUp;
   @ViewChild('popupforApp') popUp:ElementRef;
+  showattachmentDialogRef: MatDialogRef<unknown, any>;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -2243,74 +2245,101 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       console.log(type);
       this.subs.sink = this.shared_services.getConsumerAppointmentAttachmentsByUuid(booking.uid, booking.providerAccount.id).subscribe(
         (communications: any) => {
-          this.image_list_popup_temp = [];
-          this.image_list_popup = [];
-          let count = 0;
-          for (let comIndex = 0; comIndex < communications.length; comIndex++) {
-            const thumbPath = communications[comIndex].thumbPath;
-            let imagePath = thumbPath;
-            const caption = communications[comIndex].caption;
-            const description = communications[comIndex].s3path;
-            const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-            // if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
-            //   imagePath = communications[comIndex].s3path;
-            // }
-            if (new RegExp(this.imageAllowed.join("|")).test(thumbPathExt.toUpperCase())) {
-              imagePath = communications[comIndex].s3path;
-          }
-            const imgobj = new Image(
-              count,
-              {
-                img: imagePath,
-                description: caption
-              },
-            );
-            this.image_list_popup_temp.push(imgobj);
-            count++;
-          }
-          if (count > 0) {
-            this.image_list_popup = this.image_list_popup_temp;
-            setTimeout(() => {
-              this.openImageModalRow(this.image_list_popup[0]);
-            }, 500);
-          }
+
+          this.showattachmentDialogRef = this.dialog.open(AttachmentPopupComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+              attachments: communications,
+              type: 'appt'
+            }
+          });
+          this.showattachmentDialogRef.afterClosed().subscribe(result => {
+            if (result === 'reloadlist') {
+            }
+          });
+          // this.image_list_popup_temp = [];
+          // this.image_list_popup = [];
+          // let count = 0;
+          // for (let comIndex = 0; comIndex < communications.length; comIndex++) {
+          //   const thumbPath = communications[comIndex].thumbPath;
+          //   let imagePath = thumbPath;
+          //   const caption = communications[comIndex].caption;
+          //   const description = communications[comIndex].s3path;
+          //   const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
+          //   // if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+          //   //   imagePath = communications[comIndex].s3path;
+          //   // }
+          //   if (new RegExp(this.imageAllowed.join("|")).test(thumbPathExt.toUpperCase())) {
+          //     imagePath = communications[comIndex].s3path;
+          // }
+          //   const imgobj = new Image(
+          //     count,
+          //     {
+          //       img: imagePath,
+          //       description: caption
+          //     },
+          //   );
+          //   this.image_list_popup_temp.push(imgobj);
+          //   count++;
+          // }
+          // if (count > 0) {
+          //   this.image_list_popup = this.image_list_popup_temp;
+          //   setTimeout(() => {
+          //     this.openImageModalRow(this.image_list_popup[0]);
+          //   }, 500);
+          // }
         },
         error => { }
       );
     } else if (type === 'checkin') {
       this.subs.sink = this.shared_services.getConsumerWaitlistAttachmentsByUuid(booking.ynwUuid, booking.providerAccount.id).subscribe(
         (communications: any) => {
-          this.image_list_popup_temp = [];
-          this.image_list_popup = [];
-          let count = 0;
-          for (let comIndex = 0; comIndex < communications.length; comIndex++) {
-            const thumbPath = communications[comIndex].thumbPath;
-            let imagePath = thumbPath;
-            const description = communications[comIndex].s3path;
-            const caption = communications[comIndex].caption;
-            const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-            // if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
-            //   imagePath = communications[comIndex].s3path;
-            // }
-            if (new RegExp(this.imageAllowed.join("|")).test(thumbPathExt.toUpperCase())) {
-              imagePath = communications[comIndex].s3path;
-          }
-            const imgobj = new Image(
-              count,
-              {
-                img: imagePath,
-                description: caption
-              },
-            );
-            this.image_list_popup_temp.push(imgobj);
-            count++;
-          }
-          if (count > 0) {
-            this.image_list_popup = this.image_list_popup_temp;
-            setTimeout(() => {
-              this.openImageModalRow(this.image_list_popup[0]);
-            }, 500);
-          }
+          this.showattachmentDialogRef = this.dialog.open(AttachmentPopupComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+              attachments: communications,
+              type: 'checkin'
+            }
+          });
+          this.showattachmentDialogRef.afterClosed().subscribe(result => {
+            if (result === 'reloadlist') {
+            }
+          });
+          // this.image_list_popup_temp = [];
+          // this.image_list_popup = [];
+          // let count = 0;
+          // for (let comIndex = 0; comIndex < communications.length; comIndex++) {
+          //   const thumbPath = communications[comIndex].thumbPath;
+          //   let imagePath = thumbPath;
+          //   const description = communications[comIndex].s3path;
+          //   const caption = communications[comIndex].caption;
+          //   const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
+          //   // if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+          //   //   imagePath = communications[comIndex].s3path;
+          //   // }
+          //   if (new RegExp(this.imageAllowed.join("|")).test(thumbPathExt.toUpperCase())) {
+          //     imagePath = communications[comIndex].s3path;
+          // }
+          //   const imgobj = new Image(
+          //     count,
+          //     {
+          //       img: imagePath,
+          //       description: caption
+          //     },
+          //   );
+          //   this.image_list_popup_temp.push(imgobj);
+          //   count++;
+          // }
+          // if (count > 0) {
+          //   this.image_list_popup = this.image_list_popup_temp;
+          //   setTimeout(() => {
+          //     this.openImageModalRow(this.image_list_popup[0]);
+          //   }, 500);
+          // }
         },
         error => { }
       );
