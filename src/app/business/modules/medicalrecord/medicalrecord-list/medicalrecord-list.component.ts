@@ -20,7 +20,8 @@ export class MedicalrecordListComponent implements OnInit {
   patientId: any;
   public mr_dataSource = new MatTableDataSource<any[]>([]);
   displayedColumns = ['createdDate', 'mrNo', 'serviceName', 'bookingType', 'medicalrecord', 'rx'];
-  patientDetails: ArrayBuffer;
+  // patientDetails: any;
+  patientDetails: any = [];
   customer_label = '';
   constructor(private provider_services: ProviderServices,
     private activatedRoute: ActivatedRoute,
@@ -48,8 +49,10 @@ export class MedicalrecordListComponent implements OnInit {
         res => {
           this.patientDetails = res;
           console.log(this.patientDetails);
+          this.loading = false;
         },
         error => {
+          this.loading = false;
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }

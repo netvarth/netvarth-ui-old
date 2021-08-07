@@ -5,6 +5,7 @@ import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer
 import { projectConstantsLocal } from '../../constants/project-constants';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 import { SharedServices } from '../../services/shared-services';
 import { SnackbarService } from '../../services/snackbar.service';
 
@@ -21,12 +22,14 @@ export class QuestionnaireLinkComponent implements OnInit {
   source;
   newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
   qnrStatus;
+  isBusinessOwner;
   constructor(public sharedFunctionobj: SharedFunctions,
     private sharedServices: SharedServices,
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
     private router: Router,
+    private localStorage: LocalStorageService,
     private dateTimeProcessor: DateTimeProcessor) {
     this.activated_route.params.subscribe(
       (qParams) => {
@@ -45,12 +48,18 @@ export class QuestionnaireLinkComponent implements OnInit {
   ngOnInit(): void {
   }
   getDetails() {
-    if (this.qParams.uid.split('_')[1] === 'appt') {
-      this.source = 'consAppt';
-      this.getApptDetails();
+    this.isBusinessOwner = this.localStorage.getitemfromLocalStorage('isBusinessOwner');
+    console.log('this.isBusinessOwner', this.isBusinessOwner);
+    if (this.isBusinessOwner === 'false') {
+      if (this.qParams.uid.split('_')[1] === 'appt') {
+        this.source = 'consAppt';
+        this.getApptDetails();
+      } else {
+        this.source = 'consCheckin';
+        this.getCheckinDetails();
+      }
     } else {
-      this.source = 'consCheckin';
-      this.getCheckinDetails();
+      this.loading = false;
     }
   }
   doLogin() {

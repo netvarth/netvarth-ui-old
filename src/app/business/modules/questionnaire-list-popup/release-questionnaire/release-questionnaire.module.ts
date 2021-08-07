@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
 import { FormMessageDisplayModule } from '../../../../shared/modules/form-message-display/form-message-display.module';
 import { ReleaseQuestionnaireComponent } from './release-questionnaire.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     declarations: [
@@ -22,7 +24,9 @@ import { ReleaseQuestionnaireComponent } from './release-questionnaire.component
         MatDialogModule,
         MatFormFieldModule,
         MatInputModule,
-        LoadingSpinnerModule
+        LoadingSpinnerModule,
+        MatTabsModule,
+        MatTooltipModule
     ],
     exports: [ReleaseQuestionnaireComponent]
 })

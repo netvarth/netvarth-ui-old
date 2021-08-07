@@ -88,22 +88,6 @@
               <div class="icon-text">Unassign Team </div>
            </div>
         </div>
-        <!-- <div class="action-box pointer-cursor"
-            *ngIf="(appt.apptStatus=='Confirmed' || appt.apptStatus == 'Arrived') && appt.questionnaire && appt.questionnaire.questionAnswers && appt.questionnaire.questionAnswers.length > 0"
-            (click)="gotoQuestionnaire(appt)">
-            <div class="action-box-sub">
-                <span class="add-appt-icon"></span>
-                <div class="icon-text">{{customer_label | capitalizeFirst}} info</div>
-            </div>
-        </div> -->
-
-        <!-- <div class="action-box pointer-cursor" *ngIf="showArrived"
-            (click)="!buttonClicked && changeWaitlistStatus('Arrived')">
-            <div class="action-box-sub">
-                <span class="arrived-icon"></span>
-                <div class="icon-text">Mark as Arrived</div>
-            </div>
-        </div> -->
         <div class="action-box pointer-cursor" *ngIf="showQnr()" (click)="showQuestionnaires()">
             <div class="action-box-sub">
                 <span class="start-icon"></span>
@@ -149,13 +133,6 @@
             </div>
 
         </div>
-        <!-- <div class="action-box pointer-cursor" *ngIf="appt.apptStatus == 'Started'"
-            (click)="!buttonClicked && changeWaitlistStatus('Completed')">
-            <div class="action-box-sub">
-                <span class="complete-icon"></span>
-                <div class="icon-text">Complete</div>
-            </div>
-        </div> -->
         <div class="action-box pointer-cursor"
             *ngIf="!data.multiSelection && (appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Arrived')"
             (click)="rescheduleActionClicked()">
@@ -164,13 +141,6 @@
                 <div class="icon-text">Reschedule</div>
             </div>
         </div>
-        <!-- <div class="action-box pointer-cursor" *ngIf="showCancel"
-            (click)="!buttonClicked && changeWaitlistStatus('Cancelled')">
-            <div class="action-box-sub">
-                <span class="cancel-icon"></span>
-                <div class="icon-text">Cancel appointment</div>
-            </div>
-        </div> -->
         <div class="action-box pointer-cursor" *ngIf="showSendDetails" (click)="smsCheckin()">
             <div class="action-box-sub">
                 <span class="mail-icon"></span>
@@ -207,7 +177,6 @@
         <div class="action-box pointer-cursor" (click)="sendimages()"
             *ngIf="!data.multiSelection && appt.apptStatus!=='blocked' && showAttachment">
             <div class="action-box-sub">
-                <!-- <span class="message-icon"></span> -->
                 <span><i class="material-icons">attach_file</i></span>
                 <div class="icon-text">Send Attachments</div>
             </div>
@@ -217,7 +186,6 @@
             <div class="action-box-sub">
                 <span class="medicalrecord-icon"></span>
                 <div class="icon-text">Medical Record</div>
-                <!-- <div *ngIf="appt.mrId !== 0" class="icon-text">View Medical Record</div> -->
             </div>
         </div>
         <div *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && !data.multiSelection &&  showmrrx  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
@@ -225,10 +193,8 @@
             <div class="action-box-sub">
                 <span class="mr-rx-icon"></span>
                 <div class="icon-text">Prescription</div>
-                <!-- <div *ngIf="appt.prescriptionCreated" class="icon-text">View Rx</div> -->
             </div>
         </div>
-
         <div class="action-box pointer-cursor" *ngIf="appt.apptStatus==='blocked'" (click)="unBlockAppt()">
             <div class="action-box-sub">
                 <span class="unblock-appt-icon"></span>
@@ -241,9 +207,6 @@
                 <div class="icon-text">Add {{customer_label}}</div>
             </div>
         </div>
-
-
-
         <div class="action-box pointer-cursor" *ngIf="trackStatus" (click)="locateCustomer()">
             <div class="action-box-sub">
                 <span class="locate-icon"></span>
@@ -257,8 +220,6 @@
                 <div class="icon-text">Billing</div>
             </div>
         </div>
-
-
         <div class="action-box pointer-cursor" *ngIf="appt.apptStatus!=='blocked'" (click)="showLabels()">
             <div class="action-box-sub">
                 <span class="label-icon"></span>
@@ -277,7 +238,6 @@
                 <div class="icon-text">Voice Call</div>
             </div>
         </div>
-
         <!--Added By Mani for Video Play-->
         <div *ngIf="!data.multiSelection && appt.service.serviceType === 'virtualService' && appt.s3VideoUrls"
             class="action-box pointer-cursor" (click)="viewRecordings()">

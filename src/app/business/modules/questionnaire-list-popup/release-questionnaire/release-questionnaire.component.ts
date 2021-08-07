@@ -6,6 +6,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { Messages } from '../../../../shared/constants/project-messages';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
+import { projectConstants } from '../../../../app.component';
 
 @Component({
   selector: 'app-release-questionnaire',
@@ -31,6 +32,8 @@ export class ReleaseQuestionnaireComponent implements OnInit {
   countryCode;
   amForm: FormGroup;
   loading = true;
+  qnrLink;
+  isDisable = true;
   constructor(public dialogRef: MatDialogRef<ReleaseQuestionnaireComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private provider_services: ProviderServices,
@@ -57,6 +60,9 @@ export class ReleaseQuestionnaireComponent implements OnInit {
         this.isPush = true;
       }
     }
+    const uid = (this.data.source === 'appt') ? this.data.waitlist_data.uid : this.data.waitlist_data.ynwUuid;
+    this.qnrLink = projectConstants.PATH + 'questionnaire/' + uid + '/' + this.data.qnrId + '/' + this.data.waitlist_data.providerAccount.id;
+    this.qnrLink = 'http://localhost:4200/questionnaire/' + uid + '/' + this.data.qnrId + '/' + this.data.waitlist_data.providerAccount.id;
     this.createForm();
   }
   createForm() {
@@ -151,7 +157,6 @@ export class ReleaseQuestionnaireComponent implements OnInit {
     };
     if (this.data.source === 'appt') {
       this.provider_services.sendApptQnrNotification(this.data.waitlist_data.uid, postData).subscribe(data => {
-        // this.api_success = 'shared';
         this.dialogRef.close('reload');
       }, error => {
         this.api_error = error.error;
@@ -159,7 +164,6 @@ export class ReleaseQuestionnaireComponent implements OnInit {
       });
     } else {
       this.provider_services.sendWaitlistQnrNotification(this.data.waitlist_data.ynwUuid, postData).subscribe(data => {
-        // this.api_success = 'shared';
         this.dialogRef.close('reload');
       }, error => {
         this.api_error = error.error;
@@ -170,5 +174,15 @@ export class ReleaseQuestionnaireComponent implements OnInit {
   resetErrors() {
     this.api_error = null;
     this.api_success = null;
+  }
+  copyMessageInfo(elementId) {
+    elementId.select();
+    document.execCommand('copy');
+    this.snackbarService.openSnackBar('Copied to clipboard');
+  }
+  selectInput(elementId, tooltipId) {
+    elementId.select();
+    this.isDisable = !this.isDisable;
+    tooltipId.toggle();
   }
 }

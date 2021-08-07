@@ -127,7 +127,7 @@
                         </div>
                         <!-- for Text -->
                         <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'plainText'">
-                            <input placeholder="" [(ngModel)]="answers[getQuestion(question).labelName]"
+                            <input [(ngModel)]="answers[getQuestion(question).labelName]"
                                 (input)="onSubmit('inputChange');" [disabled]="buttonDisable || disableInput()"
                                 [minlength]="getQuestion(question).plainTextPropertie.minNoOfLetter"
                                 [maxlength]="getQuestion(question).plainTextPropertie.maxNoOfLetter"
@@ -137,20 +137,16 @@
                         </div>
                         <!-- for Number -->
                         <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'number'">
-                            <input placeholder="" [(ngModel)]="answers[getQuestion(question).labelName]"
+                            <input [(ngModel)]="answers[getQuestion(question).labelName]"
                                 (input)="onSubmit('inputChange');" [min]="getQuestion(question).numberPropertie.start"
                                 [max]="getQuestion(question).numberPropertie.end"
                                 [disabled]="buttonDisable || disableInput()" class="form-control1 form-control-solid"
-                                type="number">
+                                type="number" (keypress)="isNumeric($event)">
                             <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
                                 {{apiError[getQuestion(question).labelName]}}</div>
                         </div>
                         <!-- for Date -->
                         <div class="col-12 disp-flex" *ngIf="getQuestion(question).fieldDataType === 'date'">
-                            <!-- <input class="form-control1" type="date" [(ngModel)]="answers[getQuestion(question).labelName]"
-                                id="example-date-input" (input)="onSubmit('inputChange')" [disabled]="disableInput()"
-                                min="{{getQuestion(question).dateProperties.startDate | date:'yyyy-MM-dd'}}"
-                                max="{{getQuestion(question).dateProperties.endDate | date:'yyyy-MM-dd'}}"> -->
                             <input class="form-control1" [matDatepicker]="picker"
                                 [(ngModel)]="answers[getQuestion(question).labelName]"
                                 (dateChange)="onSubmit('inputChange')" [disabled]="buttonDisable || disableInput()"
@@ -245,14 +241,14 @@
                                 </div>
                                 <!-- for Text -->
                                 <div class="col-12" *ngIf="column.dataType === 'plainText'">
-                                    <input placeholder=""
+                                    <input
                                         [(ngModel)]="dataGridColumns[getQuestion(question).labelName + '=' + column.order]"
                                         [disabled]="buttonDisable || disableInput()"
                                         class="form-control1 form-control-solid" type="text">
                                 </div>
                                 <!-- for Number -->
                                 <div class="col-12" *ngIf="column.dataType === 'number'">
-                                    <input placeholder=""
+                                    <input
                                         [(ngModel)]="dataGridColumns[getQuestion(question).labelName + '=' + column.order]"
                                         [disabled]="buttonDisable || disableInput()"
                                         [min]="column.numberPropertie.start" [max]="column.numberPropertie.end"

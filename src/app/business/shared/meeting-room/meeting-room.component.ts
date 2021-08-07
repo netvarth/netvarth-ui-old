@@ -50,6 +50,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
     previewTracks = [];
     previewTracksClone = [];
     videocredits: any;
+    videocreditShow = true;
 
     constructor(private activateroute: ActivatedRoute,
         public twilioService: TwilioService,
@@ -430,6 +431,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
      */
     joinRoom() {
         const _this = this;
+        _this.videocreditShow = false;
         _this.btnClicked = true;
         _this.loading = true;
         if (_this.consumerReady) {

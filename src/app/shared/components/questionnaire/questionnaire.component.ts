@@ -398,6 +398,9 @@ export class QuestionnaireComponent implements OnInit {
     }
     this.onSubmit('inputChange');
   }
+  isNumeric(evt) {
+    return this.sharedFunctionobj.isNumeric(evt);
+  }
   onSubmit(keytype?) {
     Object.keys(this.filestoUpload).forEach(key => {
       if (!this.answers[key]) {

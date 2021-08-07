@@ -179,7 +179,7 @@
                                                     *ngIf="appt && (appt.consumerNote == '' || !appt.consumerNote)">{{no_cus_notes_cap}}</span>
                                             </mat-tab>
 
-                                            <!-- <mat-tab label="Appointment History">
+                                        <!-- <mat-tab label="Appointment History">
                                                 <span *ngIf="apptHistory.length > 0">
                                                     <ul *ngFor="let stat of apptHistory" class="histry-font mgn-up-10">
                                                         <li>{{stat.appointmentStatus}} on {{stat.date | date:dateFormatSp}}, {{getSingleTime(stat.time)}}</li>
@@ -187,7 +187,25 @@
                                                 </span>
                                                 <span *ngIf="apptHistory.length == 0">No History</span>
                                             </mat-tab> -->
-                                        </mat-tab-group>
+                                        </mat-tab-group> 
+                                        <!-- <div class="container">
+                                        <div class="row p-2" *ngIf="appt.service && appt.service.postInfoEnabled" style="width:90%">
+                                            <h6> {{appt.service.postInfoTitle}} </h6>
+                                            <span [innerHTML]="appt.service.postInfoText">
+                                            </span>
+                                        </div>
+                                        <div class="row p-2" style="width:90%">
+                                                <h6>Messages</h6>
+                                            <app-inbox-list [messages]="communication_history"
+                                            [fromsource]="'consumer-waitlist'"
+                                            (reloadApi)="getCommunicationHistory()"></app-inbox-list>
+                                        </div>
+                                        <div class="row p-2"  *ngIf="appt && appt.consumerNote &&  appt.consumerNote !== ''" style="width:90%">
+                                            <h6>{{cust_notes_cap | capitalizeFirst}}</h6>
+                                            <span>{{appt.consumerNote}}</span>
+
+                                        </div>
+                                    </div> -->
                                     </div>
                                 </div>
                                 <!-- Questionnaire starts-->
@@ -233,6 +251,7 @@
                                     </ng-container>
                                 </div>
                                 <!-- Questionnaire end-->
+                              
                             </div>
                         </div>
                     </div>
