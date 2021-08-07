@@ -178,7 +178,7 @@
           <div class="max-hgt-20 disp-flex">
             <span  [ngClass]="{'highlightcolor': selectedTeam.id==group.id}"  class="pull-left group-name">{{group.name}}</span>
             <span class="pull-right mgn-m-up-10">
-              <button  [ngClass]="{'highlightcolor': selectedTeam.id==group.id}" type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event);">
+              <button  [ngClass]="{'highlightcolor': selectedTeam.id==group.id}" type="button" mat-icon-button [matMenuTriggerFor]="group.status=='ACTIVE' &&  menu" (click)="stopprop($event);">
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
