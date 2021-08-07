@@ -305,11 +305,30 @@ export class CustomersListComponent implements OnInit {
     }
   }
   keyPress() {
+    this.labelSelection();
     if (this.filter.jaldeeid || this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.mobile || this.filter.email || this.labelFilterData !== '') {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
     }
+  }
+  labelSelection() {
+    this.labelFilterData = '';
+    let count = 0;
+    Object.keys(this.selectedLabels).forEach(key => {
+      if (this.selectedLabels[key].length > 0) {
+        count++;
+        if (!this.labelFilterData.includes(key)) {
+          if (count === 1) {
+            this.labelFilterData = this.labelFilterData + key + '::' + this.selectedLabels[key].join(',');
+          } else {
+            this.labelFilterData = this.labelFilterData + '$' + key + '::' + this.selectedLabels[key].join(',');
+          }
+        }
+      } else {
+        delete this.selectedLabels[key];
+      }
+    });
   }
   resetFilter() {
     this.labelFilterData = '';
@@ -566,17 +585,27 @@ export class CustomersListComponent implements OnInit {
       }
     }
   }
+  // setLabelFilter(label, event) {
+  //   const value = event.checked;
+  //   if (this.selectedLabels[label.label]) {
+  //     this.selectedLabels = [];
+  //     this.labelFilterData = '';
+  //   } else {
+  //     this.selectedLabels = [];
+  //     this.selectedLabels[label.label] = [];
+  //     this.selectedLabels[label.label] = value;
+  //     this.labelFilterData = label.label + '::' + value;
+  //   }
+  //   this.keyPress();
+  // }
   setLabelFilter(label, event) {
     const value = event.checked;
-    if (this.selectedLabels[label.label]) {
-      this.selectedLabels = [];
-      this.labelFilterData = '';
-    } else {
-      this.selectedLabels = [];
-      this.selectedLabels[label.label] = [];
-      this.selectedLabels[label.label] = value;
-      this.labelFilterData = label.label + '::' + value;
-    }
+      if (this.selectedLabels[label.label]) {
+        delete this.selectedLabels[label.label];
+      } else {
+        this.selectedLabels[label.label] = [];
+        this.selectedLabels[label.label].push(value);
+      }
     this.keyPress();
   }
   getLabel() {

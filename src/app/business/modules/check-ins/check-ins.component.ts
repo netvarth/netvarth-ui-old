@@ -2283,7 +2283,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['provider', 'customers', 'find']);
   }
   showAdjustDelay() {
-    if (this.queues.length === 0) {
+    if (this.queues && this.queues.length === 0) {
       this.snackbarService.openSnackBar('Delay can be applied only for active queues', { 'panelClass': 'snackbarerror' });
       return false;
     } else {
