@@ -696,6 +696,10 @@
                                                                           <span class="b2"
                                                                               *ngIf="service.userType === 'ADMIN'">Admin</span>
                                                                       </div>
+
+                                                                     
+
+
                                                                       <div class="mgn-up-5" *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum || service.email">
                                                                           <span class="b2">
                                                                             <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
@@ -922,6 +926,9 @@
                                                                         <span class="b2"
                                                                             *ngIf="service.userType === 'ADMIN'">Admin</span>
                                                                     </div>
+                                                                    <div class=" mgn-up-5" *ngIf="service.employeeId">
+                                                                      {{service.employeeId}}
+                                                                   </div>
                                                                     <div class="mgn-up-5" *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum || service.email">
                                                                         <span class="b2">
                                                                           <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>

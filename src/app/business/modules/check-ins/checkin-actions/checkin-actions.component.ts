@@ -600,6 +600,7 @@ export class CheckinActionsComponent implements OnInit {
                 this.provider_services.unassignTeamWaitlist(post_data)
                     .subscribe(
                         data => {
+                            this.snackbarService.openSnackBar('Tam unassigned successfully', { 'panelclass': 'snackbarerror' });
                             this.dialogRef.close('reload');
                         },
                         error => {
