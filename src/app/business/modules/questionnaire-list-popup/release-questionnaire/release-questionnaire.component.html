@@ -26,9 +26,13 @@
           <i class="fa fa-cogs icon"></i>
           <span class="value">{{data.waitlist_data.service.name}}</span>
         </div>
-        <div class="contact-no" *ngIf="data.waitlist_data.waitlistPhoneNumber">
+        <div class="contact-no" *ngIf="data.source == 'consCheckin' && data.waitlist_data.waitlistPhoneNumber">
           <i class="fa fa-mobile icon"></i>
           <span class="value">{{data.waitlist_data.countryCode}} {{data.waitlist_data.waitlistPhoneNumber}}</span>
+        </div>
+        <div class="contact-no" *ngIf="data.source == 'consAppt' && data.waitlist_data.phoneNumber">
+          <i class="fa fa-mobile icon"></i>
+          <span class="value">{{data.waitlist_data.countryCode}} {{data.waitlist_data.phoneNumber}}</span>
         </div>
         <div class="email" *ngIf="data.source == 'checkin' && data.waitlist_data.waitlistingFor[0].email">
           <i class="fa fa-envelope icon"></i>
