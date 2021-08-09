@@ -1134,7 +1134,7 @@ export class QuestionnaireComponent implements OnInit {
     return Object.keys(this.groupedQnr).length;
   }
   getBoolValue(value) {
-    value = (typeof value === 'string') ? JSON.parse(value) : value;
+    value = (value !== '' && typeof value === 'string') ? JSON.parse(value) : value;
     if (value === true) {
       return 'Yes';
     }
