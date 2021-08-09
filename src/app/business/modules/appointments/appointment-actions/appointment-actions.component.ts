@@ -442,7 +442,7 @@ export class AppointmentActionsComponent implements OnInit {
                 this.provider_services.unassignTeamAppointment(post_data)
                     .subscribe(
                         data => {
-                            this.snackbarService.openSnackBar('Tam unassigned successfully', { 'panelclass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar('Team unassigned successfully', { 'panelclass': 'snackbarerror' });
                             this.dialogRef.close('reload');
                         },
                         error => {

@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
 
 @Component({
     selector: 'app-displayboards-appt',
@@ -68,6 +69,7 @@ export class DisplayboardsComponent implements OnInit {
     qbrd_used: any;
     disply_name: any;
     warningdialogRef: any;
+    removequerydisplaydialogRef: any;
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -302,12 +304,26 @@ export class DisplayboardsComponent implements OnInit {
         }
     }
     deleteDisplayboardLayout(layout) {
-        this.provider_services.deleteDisplayboardAppointment(layout.id).subscribe(
-            () => {
-                this.getLicenseUsage();
-                this.getDisplayboardLayouts();
+        this.removequerydisplaydialogRef = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+              'message': 'Do you really want to remove this Qboard?'
             }
-        );
+          });
+          this.removequerydisplaydialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.provider_services.deleteDisplayboardAppointment(layout.id).subscribe(
+                    () => {
+                        this.getLicenseUsage();
+                        this.getDisplayboardLayouts();
+                    }
+                );
+            }
+          });
+
+        
     }
     getLayout(layoutvalue) {
         let layoutActive;

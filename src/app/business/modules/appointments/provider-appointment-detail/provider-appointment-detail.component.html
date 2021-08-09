@@ -29,9 +29,7 @@
                   <!-- <span>{{waitlist_data.provider.businessName | capitalizeFirst}}
                       </span><br> -->
                   <span>{{provider_label | capitalizeFirst}} : </span>
-                  <span>
-                    {{waitlist_data.provider.firstName |
-                    capitalizeFirst}}&nbsp;{{waitlist_data.provider.lastName}}</span>
+                  <span>{{spName}}</span>
                 </div>
                 <div *ngIf="waitlist_data.provider && waitlist_data.provider.mobileNo" class="mgn-up-5 sub-user-name">
                   <i class="fa fa-mobile icon"></i>
