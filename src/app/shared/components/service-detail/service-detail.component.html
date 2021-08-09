@@ -100,9 +100,9 @@
                 </div>
                 <div class="outer3" *ngIf="data.serdet && data.serdet.paymentDescription">
                         <div class="duration">
-                            <span style="font-size: small" class="data-value">
-                                    {{data.serdet.paymentDescription}}
-                            </span>
+                            <p style="font-size: small" class="data-value" [innerHTML]="data.serdet.paymentDescription | nl2br">
+                                    <!-- {{data.serdet.paymentDescription}} -->
+                        </p>
                         </div>
                     </div>
                 <div class="outer4"
