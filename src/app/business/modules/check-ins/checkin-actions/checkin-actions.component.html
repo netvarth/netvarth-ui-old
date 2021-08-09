@@ -97,12 +97,6 @@
               <div class="icon-text">Unassign Team </div>
            </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showQnr()" (click)="showQuestionnaires()">
-            <div class="action-box-sub">
-                <span class="start-icon"></span>
-                <div class="icon-text">Questionnaires</div>
-            </div>
-        </div>
         <div class="action-box pointer-cursor" *ngIf="showCall" (click)="callingWaitlist()">
             <div class="action-box-sub" *ngIf="checkin.callingStatus">
                 <span class="callstop-icon"></span>
@@ -153,6 +147,12 @@
             <div class="action-box-sub">
                 <span class="reschedule-icon"></span>
                 <div class="icon-text">Reschedule</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="showQnr()" (click)="showQuestionnaires()">
+            <div class="action-box-sub">
+                <span class="qnr-icon"></span>
+                <div class="icon-text">Get More Info</div>
             </div>
         </div>
         <div class="action-box pointer-cursor" *ngIf="showSendDetails" (click)="smsCheckin()">

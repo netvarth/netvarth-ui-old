@@ -29,7 +29,7 @@
   }
   .bill-icon, .cancel-icon, .changestatus-icon, .label-icon, .mail-icon, 
   .message-icon, .notes-icon, .printer-icon, .viewdetails-icon,
-  .arrived-icon, .complete-icon, .waitlistcall-icon, .start-icon,
+  .arrived-icon, .complete-icon, .waitlistcall-icon, .start-icon, .qnr-icon,
   .meet-icon, .phon-icon, .reschedule-icon, .mr-rx-icon, .medicalrecord-icon {
     width: 25px !important;
   }

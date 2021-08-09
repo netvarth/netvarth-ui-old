@@ -153,7 +153,7 @@ export class QuestionnaireListPopupComponent implements OnInit {
           this.getWaitlistDetail();
         }
         this.sharedFunctions.sendMessage({ type: 'reload' });
-          this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
+        this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
       }, error => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
@@ -164,7 +164,7 @@ export class QuestionnaireListPopupComponent implements OnInit {
           this.getApptDetails();
         }
         this.sharedFunctions.sendMessage({ type: 'reload' });
-          this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
+        this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
       }, error => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });

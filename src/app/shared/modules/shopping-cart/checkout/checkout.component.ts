@@ -508,8 +508,12 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   // }
   getAmountToPay(paymentDetails) {
     let totalamountPay=paymentDetails.advanceAmount;
-    if(this.jcashamount>0 && this.checkJcash){
-      totalamountPay=paymentDetails.advanceAmount-this.jcashamount;
+    if(this.jcashamount >0 && this.checkJcash){
+      if(this.jcashamount>paymentDetails.advanceAmount){
+      totalamountPay=this.jcashamount- paymentDetails.advanceAmount;
+      }else{
+        totalamountPay=paymentDetails.advanceAmount-this.jcashamount;
+      }
     }else{
         totalamountPay=paymentDetails.advanceAmount;
       }
