@@ -177,6 +177,7 @@ export class ReleaseQuestionnaireComponent implements OnInit {
   }
   copyMessageInfo(elementId) {
     elementId.select();
+    this.isDisable = false;
     document.execCommand('copy');
     this.snackbarService.openSnackBar('Copied to clipboard');
   }

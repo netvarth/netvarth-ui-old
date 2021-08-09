@@ -651,7 +651,7 @@ export class QuestionnaireComponent implements OnInit {
         return false;
       }
     } else {
-      if (typeof this.dataGridColumns[question.labelName + '=' + column.order] === 'string') {
+      if (this.dataGridColumns[question.labelName + '=' + column.order] !== '' && typeof this.dataGridColumns[question.labelName + '=' + column.order] === 'string') {
         this.dataGridColumns[question.labelName + '=' + column.order] = JSON.parse(this.dataGridColumns[question.labelName + '=' + column.order])
       }
       if (this.dataGridColumns[question.labelName + '=' + column.order] === value) {
