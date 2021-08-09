@@ -42,3 +42,23 @@
     color: red !important;
     font-weight: 700 !important;
 }
+
+.communication .action-button {
+    color: #1E4079 !important;
+    background-color: white !important;
+    border: 1px solid #1E4079 !important;
+    font-weight: 700 !important;
+    padding: 5px !important;
+    font-size: 12px !important;
+    text-transform: uppercase !important;
+    min-width: 20% !important;
+    border-radius: 5px;
+}
+.communication .action-button:hover {
+    color: white !important;
+    background: #1E4079 !important;
+    font-weight: 500 !important;
+}
+.communication .startBt {
+    margin-top: 20px;
+}

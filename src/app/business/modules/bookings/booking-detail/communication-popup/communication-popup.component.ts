@@ -27,12 +27,11 @@ export class CommunicationPopupComponent implements OnInit {
     private router: Router, private dialog: MatDialog,
     private snackbarService: SnackbarService) {
     console.log(this.data);
-    this.whatsappCountryCode = (this.data.type === 'appointment') ? this.data.waitlist.providerConsumer.whatsAppNum.countryCode : this.data.waitlistingFor[0].whatsAppNum.countryCode;
+    this.whatsappCountryCode = (this.data.type === 'appointment') ? this.data.waitlist.providerConsumer.whatsAppNum.countryCode : this.data.waitlist.waitlistingFor[0].whatsAppNum.countryCode;
     this.whatsappNumber = (this.data.type === 'appointment') ? this.data.waitlist.providerConsumer.whatsAppNum.number : this.data.waitlist.waitlistingFor[0].whatsAppNum.number;
   }
   ngOnInit(): void {
     this.notSupported = this.wordProcessor.getProjectMesssages('WATSAPP_NOT_SUPPORTED');
-    console.log(this.notSupported);
     const isMobile = {
       Android: function () {
         return navigator.userAgent.match(/Android/i);
@@ -56,7 +55,6 @@ export class CommunicationPopupComponent implements OnInit {
     if (!isMobile.Android() && !isMobile.iOS()) {
       this.is_web = true;
     }
-    console.log(this.is_web);
     this.getJaldeeVideoCredits();
   }
   dialogClose() {
@@ -86,7 +84,10 @@ export class CommunicationPopupComponent implements OnInit {
           custId: customerId,
         }
       };
-      this.router.navigate(['meet', this.id], navigationExtras);
+      const url = this.router.serializeUrl(
+        this.router.createUrlTree(['meet/' + this.id], navigationExtras)
+      );
+      window.open(url, '_blank');
     },
       error => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
