@@ -75,7 +75,7 @@
                     </div>
                 </div>
             </div>
-            <div class="success-sec" *ngIf="!isBusinessOwner && qnrStatus == 'submitted'">
+            <div class="success-sec" *ngIf="!loading && !isBusinessOwner && qnrStatus == 'submitted'">
                 <i class="fa fa-check-circle greenc" aria-hidden="true"></i>
                 <div class="success-head">
                     Your response has been submitted
@@ -85,7 +85,7 @@
                     related queries contact your provider directly.
                 </div>
             </div>
-            <div class="success-sec" *ngIf="!loading && !isBusinessOwner && !qParams.type && qnrStatus == 'unReleased'">
+            <div class="success-sec" *ngIf="!loading && !isBusinessOwner && qnrStatus == 'unReleased'">
                 <i class="fa fa-ban red" aria-hidden="true"></i>
                 <div class="success-desc">
                     You do not seem to have access to open the link. Contact {{waitlist.providerAccount.businessName}}

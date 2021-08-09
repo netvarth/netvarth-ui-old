@@ -110,13 +110,19 @@ export class QuestionnaireLinkComponent implements OnInit {
   }
   getProviderWaitlistReleasedQnrs() {
     this.providerServices.getWaitlistQuestionnaireByUid(this.qParams.uid).subscribe((data: any) => {
-      this.getReleasedQnrs(data);
-      this.getWaitlistReleasedQnrs();
+      this.questionnaire = data.filter(qnr => qnr.id === JSON.parse(this.qParams.id));
+      if (this.questionnaire.length === 0) {
+        this.questionnaire = this.waitlist.questionnaires.filter(qnr => qnr.id === JSON.parse(this.qParams.id));
+      }
+      this.loading = false;
     });
   }
   getProviderApptReleasedQnrs() {
     this.providerServices.getApptQuestionnaireByUid(this.qParams.uid).subscribe((data: any) => {
-      this.getReleasedQnrs(data);
+      this.questionnaire = data.filter(qnr => qnr.id === JSON.parse(this.qParams.id));
+      if (this.questionnaire.length === 0) {
+        this.questionnaire = this.waitlist.questionnaires.filter(qnr => qnr.id === JSON.parse(this.qParams.id));
+      }
       this.loading = false;
     });
   }

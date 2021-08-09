@@ -50,7 +50,6 @@ export class ReleaseQuestionnaireComponent implements OnInit {
 
   ngOnInit() {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    console.log(this.data);
     this.sms = this.data.isPhone;
     this.email = this.data.isEmail;
     if (this.data.source === 'appt') {
