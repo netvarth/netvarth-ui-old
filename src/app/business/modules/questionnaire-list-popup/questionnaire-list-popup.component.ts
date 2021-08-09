@@ -6,7 +6,6 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { ReleaseQuestionnaireComponent } from './release-questionnaire/release-questionnaire.component';
 
 @Component({
   selector: 'app-questionnaire-list-popup',
@@ -95,72 +94,40 @@ export class QuestionnaireListPopupComponent implements OnInit {
     });
   }
   changeReleaseStatus(id) {
-    let isEmail;
-    let isPhone;
-    if (this.qparams.source === 'appt') {
-      isEmail = (this.waitlist_data.providerConsumer.email) ? true : false;
-      isPhone = (this.waitlist_data.providerConsumer.phoneNo && this.waitlist_data.providerConsumer.phoneNo.trim() !== '') ? true : false;
-    } else {
-      isEmail = (this.waitlist_data.waitlistingFor[0].email) ? true : false;
-      isPhone = (this.waitlist_data.consumer.phoneNo) ? true : false;
-    }
     const statusmsg = (this.getQnrStatus(id) === 'released') ? 'unrelease' : 'release';
-    if (this.getQnrStatus(id) === 'released' || (!isEmail && !isPhone)) {
-      const confirmdialogref = this.dialog.open(ConfirmBoxComponent, {
-        width: '50%',
-        panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-        disableClose: true,
-        data: {
-          'message': 'Do you want to ' + statusmsg + ' this questionnaire?',
-          'type': 'yes/no'
+    const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': 'Do you want to ' + statusmsg + ' this questionnaire?',
+        'type': 'yes/no'
+      }
+    });
+    dialogrefd.afterClosed().subscribe(result => {
+      if (result) {
+        const status = (this.getQnrStatus(id) === 'unReleased') ? 'released' : 'unReleased';
+        if (this.qparams.source === 'checkin') {
+          this.providerServices.changeWaitlistQnrReleaseStatus(status, this.uid, id).subscribe(data => {
+            this.loading = true;
+            this.getWaitlistDetail();
+            this.sharedFunctions.sendMessage({ type: 'reload' });
+            this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
+          }, error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          });
+        } else {
+          this.providerServices.changeApptQnrReleaseStatus(status, this.uid, id).subscribe(data => {
+            this.loading = true;
+            this.getApptDetails();
+            this.sharedFunctions.sendMessage({ type: 'reload' });
+            this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
+          }, error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          });
         }
-      });
-      confirmdialogref.afterClosed().subscribe(result => {
-        if (result) {
-          this.changeQnrReleaseStatus(id, statusmsg);
-        }
-      });
-    } else {
-      const dialogrefd = this.dialog.open(ReleaseQuestionnaireComponent, {
-        width: '50%',
-        panelClass: ['popup-class', 'commonpopupmainclass'],
-        disableClose: true,
-        data: {
-          waitlist_data: this.waitlist_data,
-          source: this.qparams.source,
-          qnrId: id,
-          isEmail: isEmail,
-          isPhone: isPhone
-        }
-      });
-      dialogrefd.afterClosed().subscribe(result => {
-        if (result === 'reload') {
-          this.changeQnrReleaseStatus(id, statusmsg);
-        }
-      });
-    }
-  }
-  changeQnrReleaseStatus(id, statusmsg) {
-    const status = (this.getQnrStatus(id) === 'unReleased') ? 'released' : 'unReleased';
-    if (this.qparams.source === 'checkin') {
-      this.providerServices.changeWaitlistQnrReleaseStatus(status, this.uid, id).subscribe(data => {
-        this.loading = true;
-        this.getWaitlistDetail();
-        this.sharedFunctions.sendMessage({ type: 'reload' });
-        this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
-      }, error => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      });
-    } else {
-      this.providerServices.changeApptQnrReleaseStatus(status, this.uid, id).subscribe(data => {
-        this.loading = true;
-        this.getApptDetails();
-        this.sharedFunctions.sendMessage({ type: 'reload' });
-        this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
-      }, error => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      });
-    }
+      }
+    });
   }
   getQnrStatus(id) {
     const qnrStatus = this.releasedQnrs.filter(qnr => qnr.id === id);
