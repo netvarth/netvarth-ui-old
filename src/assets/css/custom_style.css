@@ -14223,3 +14223,7 @@ font-weight: 700 !important;
   content: url(../images/dashboard-icons/teamwork.png);
   width: 34px;
 }
+.qnr-icon {
+  content: url(../images/dossier.png);
+  width: 40px;
+}

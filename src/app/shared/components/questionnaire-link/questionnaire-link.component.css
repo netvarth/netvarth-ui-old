@@ -67,6 +67,6 @@
 .customer-details i.icon.fa.fa-mobile {
     font-size: 20px !important;
 }
-.fa-check-circle {
+.fa-check-circle, .fa-ban {
     font-size: 5rem;
 }
