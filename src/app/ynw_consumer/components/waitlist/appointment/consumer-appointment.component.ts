@@ -497,7 +497,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     setVirtualTeleserviceCustomer() {
         if (this.virtualInfo && this.virtualInfo.email && this.virtualInfo.email !== '') {
-            this.payEmail = this.virtualInfo.email;
+            // this.payEmail = this.virtualInfo.email;
+            this.newEmail = this.payEmail = this.virtualInfo.email;
+
         }
         if (this.virtualInfo && this.virtualInfo.newMemberId) {
             this.waitlist_for = [];

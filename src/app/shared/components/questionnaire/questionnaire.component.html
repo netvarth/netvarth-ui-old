@@ -19,8 +19,9 @@
                     <div class="form-group card mgn-0" *ngFor="let question of qnr.value">
                         <label class="col-12 quest">{{getQuestion(question).label}}
                             <i class="fa fa-plus-circle pull-right" aria-hidden="true"
-                                *ngIf="!buttonDisable && !disableInput() && getQuestion(question).fieldDataType === 'dataGrid' && !showDataGrid[getQuestion(question).labelName]"
-                                (click)="showDataGridAddSection(getQuestion(question), true)"></i>
+                                [class.addicon]="!buttonDisable && !disableInput()"
+                                *ngIf="getQuestion(question).fieldDataType === 'dataGrid' && !showDataGrid[getQuestion(question).labelName]"
+                                (click)="!buttonDisable && !disableInput() && showDataGridAddSection(getQuestion(question), true)"></i>
                             <div class="pro-only" *ngIf="showProviderText(getQuestion(question))">For Providers</div>
                             <span class="red" *ngIf="getQuestion(question).mandatory">*</span>
                             <div class="form-level-settings" *ngIf="getQuestion(question).hint">

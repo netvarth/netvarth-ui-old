@@ -38,6 +38,7 @@ export class BranchUsersComponent implements OnInit {
         state: '',
         pinCode: '',
         primaryMobileNo: '',
+        employeeId: '',
         email: '',
         userType: '',
         available: '',
@@ -53,6 +54,7 @@ export class BranchUsersComponent implements OnInit {
         'state': false,
         'pinCode': false,
         'primaryMobileNo': false,
+        'employeeId': false,
         'email': false,
         'userType': false,
         'available': false,
@@ -394,6 +396,7 @@ export class BranchUsersComponent implements OnInit {
             'state': false,
             'pinCode': false,
             'primaryMobileNo': false,
+            'employeeId': false,
             'email': false,
             'userType': false,
             'available': false,
@@ -405,6 +408,7 @@ export class BranchUsersComponent implements OnInit {
             state: '',
             pinCode: '',
             primaryMobileNo: '',
+            employeeId: '',
             email: '',
             userType: '',
             available: '',
@@ -418,7 +422,7 @@ export class BranchUsersComponent implements OnInit {
     doSearch() {
         // this.getUsers();
         this.lStorageService.removeitemfromLocalStorage('userfilter');
-        if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pinCode || this.filter.available || this.filter.email || this.filter.primaryMobileNo || this.filter.userType || this.selectedLanguages.length > 0 || this.selectedLocations.length > 0 || this.selectedSpecialization.length > 0) {
+        if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pinCode || this.filter.available || this.filter.employeeId || this.filter.email || this.filter.primaryMobileNo || this.filter.userType || this.selectedLanguages.length > 0 || this.selectedLocations.length > 0 || this.selectedSpecialization.length > 0) {
             this.filterapplied = true;
         } else {
             this.filterapplied = false;
@@ -466,6 +470,9 @@ export class BranchUsersComponent implements OnInit {
         }
         if (this.filter.email !== '') {
             api_filter['email-eq'] = this.filter.email;
+        }
+        if (this.filter.employeeId !== '') {
+            api_filter['employeeId-eq'] = this.filter.employeeId;
         }
         if (this.filter.primaryMobileNo !== '') {
             const pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;

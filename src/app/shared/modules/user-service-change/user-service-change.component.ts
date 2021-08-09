@@ -202,6 +202,7 @@ export class UserServiceChnageComponent implements OnInit {
     state: '',
     pincode: '',
     primaryMobileNo: '',
+    employeeId: '',
     email: '',
     available: ''
   };
@@ -213,6 +214,7 @@ export class UserServiceChnageComponent implements OnInit {
     'state': false,
     'pincode': false,
     'primaryMobileNo': false,
+    'employeeId': false,
     'email': false,
     'available': false
   };
@@ -331,6 +333,7 @@ export class UserServiceChnageComponent implements OnInit {
           'locationName': serviceObj.locationName,
           'profilePicture': serviceObj.profilePicture,
           'city': serviceObj.city,
+          'employeeId': serviceObj.employeeId,
           'state': serviceObj.state,
           'currentWlCount': serviceObj.currentWlCount,
           'whatsAppNum': (serviceObj.whatsAppNum) ? serviceObj.whatsAppNum  : '', 
@@ -548,6 +551,7 @@ export class UserServiceChnageComponent implements OnInit {
       'state': false,
       'pincode': false,
       'primaryMobileNo': false,
+      'employeeId': false,
       'email': false,
       'available': false
     };
@@ -558,6 +562,7 @@ export class UserServiceChnageComponent implements OnInit {
       state: '',
       pincode: '',
       primaryMobileNo: '',
+      employeeId: '',
       email: '',
       available: ''
       
@@ -567,7 +572,7 @@ export class UserServiceChnageComponent implements OnInit {
   }
   doSearch() {
     // this.getProviders();
-    if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pincode || this.filter.email || this.filter.primaryMobileNo || this.filter.available || this.selectedLanguages.length > 0 || this.selectedSpecialization.length > 0) {
+    if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pincode || this.filter.email || this.filter.primaryMobileNo || this.filter.employeeId || this.filter.available || this.selectedLanguages.length > 0 || this.selectedSpecialization.length > 0) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -595,6 +600,9 @@ export class UserServiceChnageComponent implements OnInit {
     }
     if (this.filter.email !== '') {
       api_filter['email-eq'] = this.filter.email;
+    }
+    if (this.filter.employeeId !== '') {
+      api_filter['employeeId-eq'] = this.filter.employeeId;
     }
     if (this.filter.primaryMobileNo !== '') {
       const pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
