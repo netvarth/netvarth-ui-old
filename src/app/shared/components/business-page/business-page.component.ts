@@ -647,7 +647,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     let userS3List = 'providerBusinessProfile,providerVirtualFields,providerservices,providerApptServices';
 
     if (!this.userId) {
-      accountS3List += ',businessProfile,virtualFields,services,apptServices,apptServices,donationServices,departmentProviders' //gallery
+      accountS3List += ',businessProfile,virtualFields,services,apptServices,apptServices,donationServices,departmentProviders,gallery' //gallery
     }
 
     this.subscriptions.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,

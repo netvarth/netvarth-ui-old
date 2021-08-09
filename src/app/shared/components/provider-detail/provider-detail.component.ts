@@ -502,7 +502,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     let userS3List = 'providerBusinessProfile,providerVirtualFields,providerservices,providerApptServices';
 
     if (!this.userId) {
-      accountS3List += ',businessProfile,virtualFields,services,apptServices,donationServices,departmentProviders' //gallery
+      accountS3List += ',businessProfile,virtualFields,services,apptServices,donationServices,departmentProviders,gallery' //gallery
     }
 
     this.subscriptions.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
