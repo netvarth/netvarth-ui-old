@@ -188,6 +188,9 @@ export class QuestionnaireComponent implements OnInit {
         this.getAnswers(this.questions, 'get');
       }
     }
+    if (this.type && this.type === 'qnrLinkProvider') {
+      this.editQuestionnaire = true;
+    }
   }
   groupQuestionsBySection() {
     if (this.source === 'customer-create' || this.source === 'qnrDetails') {
