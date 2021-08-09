@@ -72,7 +72,6 @@ export class QuestionnaireListPopupComponent implements OnInit {
           this.loading = false;
         });
   }
-
   getApptDetails() {
     this.providerServices.getAppointmentById(this.uid)
       .subscribe(
@@ -97,7 +96,7 @@ export class QuestionnaireListPopupComponent implements OnInit {
   changeReleaseStatus(id) {
     let isEmail;
     let isPhone;
-    if (this.qparams.source === 'appt') {
+    if (this.source === 'appt') {
       isEmail = (this.waitlist_data.providerConsumer.email) ? true : false;
       isPhone = (this.waitlist_data.providerConsumer.phoneNo && this.waitlist_data.providerConsumer.phoneNo.trim() !== '') ? true : false;
     } else {
@@ -127,7 +126,7 @@ export class QuestionnaireListPopupComponent implements OnInit {
         disableClose: true,
         data: {
           waitlist_data: this.waitlist_data,
-          source: this.qparams.source,
+          source: this.source,
           qnrId: id,
           isEmail: isEmail,
           isPhone: isPhone
@@ -135,28 +134,37 @@ export class QuestionnaireListPopupComponent implements OnInit {
       });
       dialogrefd.afterClosed().subscribe(result => {
         if (result === 'reload') {
-          this.changeQnrReleaseStatus(id, statusmsg);
+          this.loading = true;
+          if (this.source === 'checkin') {
+            this.getWaitlistDetail();
+          } else {
+            this.getApptDetails();
+          }
         }
       });
     }
   }
   changeQnrReleaseStatus(id, statusmsg) {
     const status = (this.getQnrStatus(id) === 'unReleased') ? 'released' : 'unReleased';
-    if (this.qparams.source === 'checkin') {
+    if (this.source === 'checkin') {
       this.providerServices.changeWaitlistQnrReleaseStatus(status, this.uid, id).subscribe(data => {
         this.loading = true;
-        this.getWaitlistDetail();
+        if (this.qparams.source) {
+          this.getWaitlistDetail();
+        }
         this.sharedFunctions.sendMessage({ type: 'reload' });
-        this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
       }, error => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
     } else {
       this.providerServices.changeApptQnrReleaseStatus(status, this.uid, id).subscribe(data => {
         this.loading = true;
-        this.getApptDetails();
+        if (this.qparams.source) {
+          this.getApptDetails();
+        }
         this.sharedFunctions.sendMessage({ type: 'reload' });
-        this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
       }, error => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });

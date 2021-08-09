@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import { SharedFunctions } from '../../functions/shared-functions';
@@ -29,6 +30,7 @@ export class QuestionnaireLinkComponent implements OnInit {
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
     private router: Router,
+    private providerServices: ProviderServices,
     private localStorage: LocalStorageService,
     private dateTimeProcessor: DateTimeProcessor) {
     this.activated_route.params.subscribe(
@@ -49,8 +51,7 @@ export class QuestionnaireLinkComponent implements OnInit {
   }
   getDetails() {
     this.isBusinessOwner = this.localStorage.getitemfromLocalStorage('isBusinessOwner');
-    console.log('this.isBusinessOwner', this.isBusinessOwner);
-    if (this.isBusinessOwner === 'false') {
+    if (!JSON.parse(this.isBusinessOwner)) {
       if (this.qParams.uid.split('_')[1] === 'appt') {
         this.source = 'consAppt';
         this.getApptDetails();
@@ -59,7 +60,12 @@ export class QuestionnaireLinkComponent implements OnInit {
         this.getCheckinDetails();
       }
     } else {
-      this.loading = false;
+      this.source = 'qnrView';
+      if (this.qParams.uid.split('_')[1] === 'appt') {
+        this.getProviderApptDetails();
+      } else {
+        this.getProviderWaitlistDetail();
+      }
     }
   }
   doLogin() {
@@ -80,6 +86,34 @@ export class QuestionnaireLinkComponent implements OnInit {
       } else {
         this.doLogin();
       }
+    });
+  }
+  getProviderWaitlistDetail() {
+    this.providerServices.getProviderWaitlistDetailById(this.qParams.uid)
+      .subscribe(
+        data => {
+          this.waitlist = data;
+          this.getProviderWaitlistReleasedQnrs();
+        });
+  }
+  getProviderApptDetails() {
+    this.providerServices.getAppointmentById(this.qParams.uid)
+      .subscribe(
+        data => {
+          this.waitlist = data;
+          this.getProviderApptReleasedQnrs();
+        });
+  }
+  getProviderWaitlistReleasedQnrs() {
+    this.providerServices.getWaitlistQuestionnaireByUid(this.qParams.uid).subscribe((data: any) => {
+      this.getReleasedQnrs(data);
+      this.getWaitlistReleasedQnrs();
+    });
+  }
+  getProviderApptReleasedQnrs() {
+    this.providerServices.getApptQuestionnaireByUid(this.qParams.uid).subscribe((data: any) => {
+      this.getReleasedQnrs(data);
+      this.loading = false;
     });
   }
   getCheckinDetails() {
@@ -108,9 +142,7 @@ export class QuestionnaireLinkComponent implements OnInit {
     this.sharedServices.getWaitlistQuestionnaireByUid(this.qParams.uid, this.qParams.accountId)
       .subscribe(
         (data: any) => {
-          this.questionnaire = data.filter(qnr => qnr.id === JSON.parse(this.qParams.id));
-          const qnrWithStatus = this.waitlist.releasedQnr.filter(qnr => qnr.id === JSON.parse(this.qParams.id));
-          this.qnrStatus = qnrWithStatus[0].status;
+          this.getReleasedQnrs(data);
           this.loading = false;
         },
         error => {
@@ -122,15 +154,18 @@ export class QuestionnaireLinkComponent implements OnInit {
     this.sharedServices.getApptQuestionnaireByUid(this.qParams.uid, this.qParams.accountId)
       .subscribe(
         (data: any) => {
-          this.questionnaire = data.filter(qnr => qnr.id === JSON.parse(this.qParams.id));
-          const qnrWithStatus = this.waitlist.releasedQnr.filter(qnr => qnr.id === JSON.parse(this.qParams.id));
-          this.qnrStatus = qnrWithStatus[0].status;
+          this.getReleasedQnrs(data);
           this.loading = false;
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
+  }
+  getReleasedQnrs(data) {
+    this.questionnaire = data.filter(qnr => qnr.id === JSON.parse(this.qParams.id));
+    const qnrWithStatus = this.waitlist.releasedQnr.filter(qnr => qnr.id === JSON.parse(this.qParams.id));
+    this.qnrStatus = qnrWithStatus[0].status;
   }
   getQuestionAnswers(event) {
     if (event === 'reload') {
