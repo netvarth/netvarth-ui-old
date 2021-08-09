@@ -56,12 +56,20 @@
             </div>
         </div>
         <div class="action-box pointer-cursor"
-        *ngIf="!data.multiSelection && accountType=='BRANCH' && (checkin.queue.provider.id === 0) && groups && groups.length > 0 &&  (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')"
+        *ngIf="!data.multiSelection && accountType=='BRANCH' && (checkin.queue.provider.id === 0) && groups && groups.length > 0 &&  (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn') && checkin.teamId == 0"
         (click)="assignteam()">  
             <div class="action-box-sub">
                 <span class="team-icon-action"></span>
-                <div *ngIf="checkin.teamId == 0" class="icon-text">Assign Team</div>
-                <div *ngIf="checkin.teamId != 0"  class="icon-text">Change Team</div>
+                <div class="icon-text">Assign Team</div>
+                <!-- <div *ngIf="checkin.teamId != 0"  class="icon-text">Change Team</div> -->
+            </div>
+        </div>
+        <div class="action-box pointer-cursor"
+        *ngIf="!data.multiSelection && accountType=='BRANCH' && (checkin.queue.provider.id === 0) && groups && groups.length > 1 &&  (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn') && checkin.teamId != 0"
+        (click)="assignteam()">  
+            <div class="action-box-sub">
+                <span class="team-icon-action"></span>
+                <div class="icon-text">Change Team</div>
             </div>
         </div>
         <div class="action-box pointer-cursor"

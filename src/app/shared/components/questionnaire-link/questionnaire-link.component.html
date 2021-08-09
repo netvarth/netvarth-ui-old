@@ -32,13 +32,12 @@
                                     {{waitlist.appmtFor[0].firstName}}
                                     {{waitlist.appmtFor[0].lastName}}
                                 </h5>
+                                <div class="email" *ngIf="waitlist.token">
+                                    <span class="value">Token: {{waitlist.token}}</span>
+                                </div>
                                 <div class="contact-no">
                                     <i class="fa fa-cogs icon"></i>
                                     <span class="value">{{waitlist.service.name}}</span>
-                                </div>
-                                <div class="email" *ngIf="waitlist.token">
-                                    <i class="fa fa-envelope icon"></i>
-                                    <span class="value">Token: {{waitlist.token}}</span>
                                 </div>
                                 <div class="contact-no" *ngIf="waitlist.waitlistPhoneNumber">
                                     <i class="fa fa-mobile icon"></i>

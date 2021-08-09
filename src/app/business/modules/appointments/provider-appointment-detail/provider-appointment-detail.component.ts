@@ -105,6 +105,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   internalStatuslog: any = [];
   statusLog: any = [];
   questionnaires: any = [];
+  spName: any;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -238,6 +239,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
           });
           this.getCommunicationHistory(this.waitlist_data.uid);
           if (this.waitlist_data.provider) {
+            this.spName = (this.waitlist_data.provider.businessName) ? this.waitlist_data.provider.businessName : this.waitlist_data.provider.firstName + ' ' + this.waitlist_data.provider.lastName;
             this.spfname = this.waitlist_data.provider.firstName;
             this.splname = this.waitlist_data.provider.lastName;
           }

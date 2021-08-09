@@ -15,10 +15,10 @@
                             <p class="appt-details" *ngIf = "qstarttime">Queue : {{qname}} [{{qstarttime}} - {{qendtime}}]</p>
                             <p class="appt-details">Date: {{date | date:newDateFormat}}</p>
                             <p class="appt-details" *ngIf="tokenno">Token No : {{tokenno}} </p>
-                            <p class="appt-details" *ngIf = "spfname && splname">Service Provider: {{spfname}} {{splname}}</p>
+                            <p class="appt-details" *ngIf = "data.qdata.provider">Service Provider: {{spName}}</p>
                             <p class="appt-details">Location: {{location}}</p>
                         </div>
-                    </div>
+                    </div> 
         </div>
         <div *ngIf="data.chekintype === 'appointment'" class="example-full-width" style="padding-top: 30px;">
                 <div>
