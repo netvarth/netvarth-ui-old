@@ -14238,3 +14238,6 @@ font-weight: 700 !important;
   content: url(../images/dashboard-icons/teamwork.png);
   width: 34px;
 }
+.donationdash .card {
+  min-height: 50vh;
+}

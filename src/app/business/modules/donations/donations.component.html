@@ -6,7 +6,7 @@
     </div>
   </div>
 </section>
-<section class="waitlist-dashboard content p-4" *ngIf="!apiloading">
+<section class="waitlist-dashboard content p-4 donationdash" *ngIf="!apiloading">
   <div class="card p0">
     <!-- <div class="col-md-12 no-padding">
           <ul class="nav cust-dash jd-custom-nav">
@@ -180,9 +180,12 @@
         </i>
       </a>
     </div>
-    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20">
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20" *ngIf="donations.length > 0">
       <app-records-datagrid [source]="'donation-dashboard'" [records]="donations">
       </app-records-datagrid>
+    </div>
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20" *ngIf="donations.length === 0">
+      No Donations Found
     </div>
     <div class="search_paging" *ngIf="loadComplete">
       <app-pager *ngIf="pagination.totalCnt != 0" [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
