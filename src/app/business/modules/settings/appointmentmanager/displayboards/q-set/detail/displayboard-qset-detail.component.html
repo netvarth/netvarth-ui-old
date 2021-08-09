@@ -266,7 +266,7 @@
                     Select Label
                 </label>
                 <mat-form-field>
-                    <mat-select [(ngModel)]="labelMultiCtrl" placeholder="Labels">
+                    <mat-select [(ngModel)]="labelMultiCtrl" placeholder="Labels" [multiple]="true">
                         <ngx-mat-select-search [formControl]="labelMultiFilterCtrl" placeholderLabel="Search labels">
                         </ngx-mat-select-search>
                         <!-- <mat-option *ngFor="let label of providerLabelsList" [value]="label"
