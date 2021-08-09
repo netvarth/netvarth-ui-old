@@ -56,6 +56,7 @@ export class CheckinDetailsSendComponent implements OnInit {
     api_error = null;
     api_success = null;
   patientid: any;
+  spName: any;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
@@ -128,6 +129,7 @@ export class CheckinDetailsSendComponent implements OnInit {
         // this.spfname = this.data.qdata.provider.firstName;
         // this.splname = this.data.qdata.provider.lastName;
         if(this.data.qdata.provider){
+          this.spName = (this.data.qdata.provider.businessName) ? this.data.qdata.provider.businessName : this.data.qdata.provider.firstName + ' ' + this.data.qdata.provider.lastName;
           this.spfname = this.data.qdata.provider.firstName;
           this.splname = this.data.qdata.provider.lastName;
           console.log(this.spfname);
@@ -163,6 +165,7 @@ export class CheckinDetailsSendComponent implements OnInit {
           this.patientid = this.data.qdata.appmtFor[0].memberJaldeeId;
         }
         if(this.data.qdata.provider){
+          this.spName = (this.data.qdata.provider.businessName) ? this.data.qdata.provider.businessName : this.data.qdata.provider.firstName + ' ' + this.data.qdata.provider.lastName;
         this.spfname = this.data.qdata.provider.firstName;
         this.splname = this.data.qdata.provider.lastName;
         }

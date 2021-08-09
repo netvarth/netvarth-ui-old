@@ -70,6 +70,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     glogo = '';
     gPosition;
     customer_label = '';
+    displayboardDetails: any;
     constructor(private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
         public _sanitizer: DomSanitizer,
@@ -147,6 +148,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     initBoard() {
         this.provider_services.getDisplayboardById_Type(this.layout_id, this.type).subscribe(
             (displayboard_data: any) => {
+                this.displayboardDetails = displayboard_data;
                 if (displayboard_data.isContainer) {
                     this.inputStatusboards = displayboard_data.containerData;
                     this.showIndex = 0;
@@ -345,6 +347,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         return fieldValue;
     }
     setDisplayboards(element) {
+        console.log(element);
         const displayboard = element.queueSet;
         this.selectedDisplayboards[element.position]['board'] = displayboard;
         const Mfilter = displayboard.queryString;
