@@ -40,9 +40,13 @@
                                     <i class="fa fa-cogs icon"></i>
                                     <span class="value">{{waitlist.service.name}}</span>
                                 </div>
-                                <div class="contact-no" *ngIf="waitlist.waitlistPhoneNumber">
+                                <div class="contact-no" *ngIf="source == 'consCheckin' && wwaitlist.waitlistPhoneNumber">
                                     <i class="fa fa-mobile icon"></i>
                                     <span class="value">{{waitlist.countryCode}} {{waitlist.waitlistPhoneNumber}}</span>
+                                </div>
+                                <div class="contact-no" *ngIf="source == 'consAppt' && waitlist.phoneNumber">
+                                    <i class="fa fa-mobile icon"></i>
+                                    <span class="value">{{waitlist.countryCode}} {{waitlist.phoneNumber}}</span>
                                 </div>
                                 <div class="email" *ngIf="source == 'consCheckin' && waitlist.waitlistingFor[0].email">
                                     <i class="fa fa-envelope icon"></i>
@@ -75,7 +79,7 @@
                     </div>
                 </div>
             </div>
-            <div class="success-sec" *ngIf="!loading && !isBusinessOwner && qnrStatus == 'submitted'">
+            <div class="success-sec" *ngIf="!loading && !isBusinessOwner && (qnrStatus == 'submitted' || qParams.type)">
                 <i class="fa fa-check-circle greenc" aria-hidden="true"></i>
                 <div class="success-head">
                     Your response has been submitted
