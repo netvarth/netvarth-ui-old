@@ -25,6 +25,7 @@ export class QuestionnaireLinkComponent implements OnInit {
   qnrStatus;
   isBusinessOwner;
   type = 'qnr-link';
+  waitlistStatus;
   constructor(public sharedFunctionobj: SharedFunctions,
     private sharedServices: SharedServices,
     private activated_route: ActivatedRoute,
@@ -130,6 +131,7 @@ export class QuestionnaireLinkComponent implements OnInit {
     this.sharedServices.getCheckinByConsumerUUID(this.qParams.uid, this.qParams.accountId).subscribe(
       (data) => {
         this.waitlist = data;
+        this.waitlistStatus = this.waitlist.waitlistStatus.toLowerCase();
         this.getWaitlistReleasedQnrs();
       },
       error => {
@@ -141,6 +143,7 @@ export class QuestionnaireLinkComponent implements OnInit {
     this.sharedServices.getAppointmentByConsumerUUID(this.qParams.uid, this.qParams.accountId).subscribe(
       (data) => {
         this.waitlist = data;
+        this.waitlistStatus = this.waitlist.apptStatus.toLowerCase();
         this.getApptReleasedQnrs();
       },
       error => {
