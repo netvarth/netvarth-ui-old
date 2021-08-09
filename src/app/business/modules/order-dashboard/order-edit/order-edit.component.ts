@@ -380,17 +380,23 @@ console.log(this.orders);
       this.orderDetails = data;
       this.orderNumber = this.orderDetails.orderNumber;
       this.customerId = this.orderDetails.orderFor.id;
+      console.log(this.orderDetails)
+      console.log(this.catalogItems)
       if (this.orderDetails && this.orderDetails.orderItem && this.orderDetails.catalog.orderType !== 'SHOPPINGLIST') {
         for (const item of this.orderDetails.orderItem) {
           const itemqty: number = item.quantity;
           const itemId = item.id;
           const orderItem = this.catalogItems.find(i => i.item.itemId === itemId);
-          const itemObject = orderItem.item;
-         // this.orderList = [];
-          for (let i = 0; i < itemqty; i++) {
-            this.orderList.push({ 'item': itemObject });
+          console.log(orderItem)
+          if(orderItem){
+            const itemObject = orderItem.item;
+            for (let i = 0; i < itemqty; i++) {
+              this.orderList.push({ 'item': itemObject });
+            }
+  
           }
-
+         // this.orderList = [];
+         
         }
         this.orders = [...new Map(this.orderList.map(Item => [Item.item['itemId'], Item])).values()];
       this.orderCount = this.orders.length;
