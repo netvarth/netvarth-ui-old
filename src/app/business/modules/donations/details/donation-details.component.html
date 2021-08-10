@@ -60,7 +60,7 @@
                     </h5>
                 </div>
                 <div class="c-details">
-                    <app-questionnaire [source]="'proDonation'" [donationDetails]="donationDetails" [type]="'details'">
+                    <app-questionnaire [source]="'proDonation'" [donationDetails]="donationDetails" [type]="'details'" (returnAnswers)="getQuestionAnswers($event)">
                     </app-questionnaire>
                 </div>
             </div>

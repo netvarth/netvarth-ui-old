@@ -757,9 +757,7 @@ export class QuestionnaireComponent implements OnInit {
   }
   resubmitDonationQuestionnaire(body) {
     this.sharedService.resubmitProviderDonationQuestionnaire(this.donationDetails.uid, body).subscribe(data => {
-      this.editQnr();
-      this.snackbarService.openSnackBar('Updated Successfully');
-      this.buttonDisable = false;
+      this.successGoback();
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
