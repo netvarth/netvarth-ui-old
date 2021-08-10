@@ -271,7 +271,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                                 this.providerLabels[i]['selectedValue'] = this.displayBoardData.qBoardConditions.labels[key];
                                 this.labelMultiCtrl.push(this.providerLabels[i]);
                                 this.labelList[this.providerLabels[i].label] = this.displayBoardData.qBoardConditions.labels[key];
-                                console.log(this.labelMultiCtrl);
+                                //console.log(this.labelMultiCtrl);
                             }
                         }
                     });
