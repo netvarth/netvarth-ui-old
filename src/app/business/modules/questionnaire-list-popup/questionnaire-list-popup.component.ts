@@ -5,7 +5,6 @@ import { ProviderServices } from '../../../ynw_provider/services/provider-servic
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ReleaseQuestionnaireComponent } from './release-questionnaire/release-questionnaire.component';
 
 @Component({
@@ -27,17 +26,14 @@ export class QuestionnaireListPopupComponent implements OnInit {
     submitted: 'Submitted',
     unReleased: 'Unreleased'
   }
-  qparams;
   constructor(public dialogRef: MatDialogRef<QuestionnaireListPopupComponent>,
     private providerServices: ProviderServices,
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
     private activateRoute: ActivatedRoute,
     private location: Location,
-    private sharedFunctions: SharedFunctions,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.activateRoute.queryParams.subscribe(params => {
-      this.qparams = params;
       if (params.source) {
         this.source = params.source;
       }
@@ -149,10 +145,7 @@ export class QuestionnaireListPopupComponent implements OnInit {
     if (this.source === 'checkin') {
       this.providerServices.changeWaitlistQnrReleaseStatus(status, this.uid, id).subscribe(data => {
         this.loading = true;
-        if (this.qparams.source) {
-          this.getWaitlistDetail();
-        }
-        this.sharedFunctions.sendMessage({ type: 'reload' });
+        this.getWaitlistDetail();
         this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
       }, error => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -160,10 +153,7 @@ export class QuestionnaireListPopupComponent implements OnInit {
     } else {
       this.providerServices.changeApptQnrReleaseStatus(status, this.uid, id).subscribe(data => {
         this.loading = true;
-        if (this.qparams.source) {
-          this.getApptDetails();
-        }
-        this.sharedFunctions.sendMessage({ type: 'reload' });
+        this.getApptDetails();
         this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
       }, error => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -196,12 +186,11 @@ export class QuestionnaireListPopupComponent implements OnInit {
     dialogrefd.afterClosed().subscribe(result => {
       if (result === 'reload') {
         this.loading = true;
-        if (this.qparams.source === 'appt') {
+        if (this.source === 'appt') {
           this.getApptDetails();
-        } else if (this.qparams.source === 'checkin') {
+        } else if (this.source === 'checkin') {
           this.getWaitlistDetail();
         }
-        this.sharedFunctions.sendMessage({ type: 'reload' });
       }
     });
   }
