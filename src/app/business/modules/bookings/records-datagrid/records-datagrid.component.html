@@ -205,7 +205,7 @@
                                         {{check_in_statuses[getStatusLabel(record.apptStatus)]}}
                                     </td>
                                 </ng-container>
-                                <ng-container *ngIf="source == 'bill'">
+                                <ng-container *ngIf="source == 'bill' || source == 'customer-bill'">
                                     <td>
                                         {{record.createdDate | date : newDateFormat}}
                                     </td>
@@ -259,7 +259,7 @@
                                     </td>
                                 </ng-container>
                             </tr>
-                            <div class="no-record" *ngIf="records.length == 0">
+                            <div class="no-record" *ngIf="records && records.length == 0">
                                 No {{heading}}
                             </div>
                         </tbody>

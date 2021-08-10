@@ -48,10 +48,9 @@
     background-color: white !important;
     border: 1px solid #1E4079 !important;
     font-weight: 700 !important;
-    padding: 5px !important;
+    padding: 5px 30px !important;
     font-size: 12px !important;
     text-transform: uppercase !important;
-    min-width: 20% !important;
     border-radius: 5px;
 }
 .communication .action-button:hover {

@@ -71,6 +71,7 @@ export class ServiceActionsComponent implements OnInit {
     busnes_name = '';
     showMoreActions = false;
     groups: any = [];
+    showStatusChange = false;
     constructor(private groupService: GroupStorageService,
         private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
@@ -179,6 +180,9 @@ export class ServiceActionsComponent implements OnInit {
                     this.showAssignTeam = true;
                 }
             }
+            if (this.waitlist_data.waitlistStatus !== 'blocked' && this.waitlist_data.waitlistStatus !== 'done') {
+                this.showStatusChange = true;
+            }
         } else {
             if (this.timeType === 1 && this.waitlist_data.service.livetrack && this.waitlist_data.apptStatus === 'Confirmed' && this.waitlist_data.jaldeeApptDistanceTime && this.waitlist_data.jaldeeApptDistanceTime.jaldeeDistanceTime && (this.waitlist_data.jaldeeStartTimeType === 'ONEHOUR' || this.waitlist_data.jaldeeStartTimeType === 'AFTERSTART')) {
                 this.trackStatus = true;
@@ -217,6 +221,9 @@ export class ServiceActionsComponent implements OnInit {
                 if (this.groups.length > 0 && (this.waitlist_data.apptStatus === 'Arrived' || this.waitlist_data.apptStatus === 'Confirmed')) {
                     this.showAssignTeam = true;
                 }
+            }
+            if (this.waitlist_data.apptStatus !== 'blocked' && this.waitlist_data.apptStatus !== 'Completed') {
+                this.showStatusChange = true;
             }
         }
         if (this.showTeleserviceStart) {
@@ -787,7 +794,7 @@ export class ServiceActionsComponent implements OnInit {
     showActionsPopup(source) {
         this.dialog.open(ActionsPopupComponent, {
             width: '50%',
-            panelClass: ['newPopupClass'],
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
             disableClose: true,
             data: {
                 bookingType: this.bookingType,

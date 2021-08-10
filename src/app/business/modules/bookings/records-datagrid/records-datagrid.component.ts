@@ -43,6 +43,8 @@ export class RecordsDatagridComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.records);
+    console.log(this.source);
   }
   getSingleTime(slot) {
     const slots = slot.split('-');
@@ -59,7 +61,7 @@ export class RecordsDatagridComponent implements OnInit {
       const uid = (this.source === 'appt' || this.source === 'appt-dashboard') ? record.uid : record.ynwUuid;
       const waitlisttype = (this.source === 'appt' || this.source === 'appt-dashboard') ? 'appointment' : 'checkin';
       this.router.navigate(['provider', 'bookings', 'details'], { queryParams: { uid: uid, timetype: record.type, type: waitlisttype, waitlistMgrSettings: this.waitlistMgrSettings } });
-    } else if (this.source == 'bill') {
+    } else if (this.source == 'bill' ||this.source == 'customer-bill') {
       let source;
       if (record.type === 'Appointment') {
         source = 'appt';

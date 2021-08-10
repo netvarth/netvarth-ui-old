@@ -6,10 +6,10 @@
     <button mat-dialog-close class="modal_close" tabindex="-1" (click)="closeDialog()"><i class="fa fa-window-close"
         aria-hidden="true"></i></button>
   </h1>
-  <div class="qnr-details" *ngIf="data.status!='submitted'">
+  <div class="qnr-details" *ngIf="data.status=='unReleased'">
     <app-questionnaire [questionnaireList]="selectedQnr" [source]="'qnrView'"></app-questionnaire>
   </div>
-  <div class="qnr-details" *ngIf="data.status=='submitted'">
+  <div class="qnr-details" *ngIf="data.status!='unReleased'">
     <app-questionnaire [questionnaireList]="selectedQnr" [source]="(data.waitlistStatus) ? 'proCheckin' : 'proAppt'"
       [uuid]="uid" [type]="'details'" [waitlistStatus]="(data.waitlistStatus) ? data.waitlistStatus : data.apptStatus"
       (returnAnswers)="getQuestionAnswers($event)">
@@ -31,7 +31,7 @@
     <div class="content">
       <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small" [class.no-padding]="type">
         <div class="card no-padding-small" *ngIf="questionnaires.length === 1">
-          <app-questionnaire [questionnaireList]="questionnaires[0]"
+          <app-questionnaire [questionnaireList]="waitlist_data.questionnaires[0]"
             [source]="(waitlist_data.waitlistStatus) ? 'proCheckin' : 'proAppt'" [uuid]="uid" [type]="'details'"
             [waitlistStatus]="(waitlist_data.waitlistStatus) ? waitlist_data.waitlistStatus : waitlist_data.apptStatus">
           </app-questionnaire>

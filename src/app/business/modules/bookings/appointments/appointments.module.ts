@@ -17,8 +17,8 @@ import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.m
   declarations: [AppointmentsComponent],
   imports: [
     CommonModule,
-    RecordsDatagridModule,
     AppointmentsRoutingModule,
+    RecordsDatagridModule,
     BookingCalendarModule,
     MatTooltipModule,
     MatSelectModule,

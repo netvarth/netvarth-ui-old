@@ -22,8 +22,34 @@
   margin: 10px;
   cursor: pointer;   
   border: 1px solid #cccccc60;
+  height: 100px;
 }
 .status-box .status {
   font-weight: bold;
   font-size: 1.2rem;
+  position: relative;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  text-align: center;
+}
+@media (max-width: 595px) {
+  .status-box {
+    width: 95% !important;
+  }
+}
+.status-main {
+  overflow: scroll;
+  height: 80vh;
+}
+.stst-bx {
+  box-shadow: 5px 5px 5px 0px #cccccc60 !important;
+  border-radius: 5px;
+  padding: 10px;  
+  border: 1px solid #cccccc60;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.greycolor {
+  color:grey;
 }

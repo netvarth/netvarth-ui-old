@@ -16,8 +16,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   declarations: [CheckinsComponent],
   imports: [
     CommonModule,
-    RecordsDatagridModule,
     CheckinsRoutingModule,
+    RecordsDatagridModule,
     MatSelectModule,
     MatOptionModule,
     FormsModule,

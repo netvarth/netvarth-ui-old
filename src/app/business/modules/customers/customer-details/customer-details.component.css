@@ -123,12 +123,15 @@
   width: 100px;
   height: 100px;
   border-radius: 0.42rem;
+  margin-bottom: 10px;
 }
 .booking-details .booking-details-head {
   margin-bottom: 0px !important;
 }
-.details-hgt {
-  height: 210px;
+@media (min-width: 992px) {
+  .details-hgt {
+    height: 210px;
+  }
 }
 .records-sec .rece-act {
   padding: 0 15px;
@@ -151,7 +154,12 @@
   .no-padding-big {
     padding: 0 !important;
   }
+  .user-img img {
+    margin: 0 !important;
+    float: right;
+  }
 }
+
 .qnr-hgt {
   overflow: auto !important;
   height: 317px !important;
@@ -178,4 +186,15 @@
 }
 .main-sec {
   padding: 0 7px !important;
+}
+@media (min-width: 767px) {
+  .prt-10 {
+    padding-right: 10px !important;
+  }
+  .plt-10 {
+    padding-left: 10px !important;
+  }
+}
+.main-sec .card.card-custom {
+  box-shadow: 5px 3px 10px rgb(0 0 0 / 20%) !important;
 }

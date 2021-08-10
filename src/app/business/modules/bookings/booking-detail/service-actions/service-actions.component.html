@@ -86,7 +86,7 @@
           <i class="fa fa-unlock-alt"></i>Unblock
         </a>
         <a class="btn mb-2 action-button" (click)="showActionsPopup('status')"
-          *ngIf="(waitlist_data.waitlistStatus && waitlist_data.waitlistStatus!='blocked') || (waitlist_data.apptStatus && waitlist_data.apptStatus!='blocked')">
+          *ngIf="showStatusChange">
           <i class="fa fa-exchange"></i>Status change
         </a>
       </div>

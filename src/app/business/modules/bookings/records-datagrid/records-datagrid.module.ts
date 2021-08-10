@@ -6,11 +6,13 @@ import { MatMenuModule } from '@angular/material/menu';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
+import { RecordsDatagridRoutingModule } from './records-datagrid.routing.module';
 
 @NgModule({
   declarations: [RecordsDatagridComponent],
   imports: [
     CommonModule,
+    RecordsDatagridRoutingModule,
     MatMenuModule,
     MatIconModule,
     CapitalizeFirstPipeModule,

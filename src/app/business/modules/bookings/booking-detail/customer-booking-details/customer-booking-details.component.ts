@@ -176,7 +176,7 @@ export class CustomerBookingDetailsComponent implements OnInit {
   showCommunications() {
     this.dialog.open(CommunicationPopupComponent, {
       width: '50%',
-      panelClass: ['newPopupClass'],
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
       disableClose: true,
       data: {
         waitlist: this.waitlist_data,

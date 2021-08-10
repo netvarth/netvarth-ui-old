@@ -703,7 +703,7 @@
                                 <a (click)="editCustomerDetails()">Edit Details</a>
                             </div>
                         </div>
-                        <div class="user-img pull-right">
+                        <div class="user-img">
                             <img src="assets/images/avatar5.png" />
                         </div>
                         <div class="booking-details-body">
@@ -739,12 +739,12 @@
                 </div>
             </div>
             <div class="cards-div">
-                <div class="col-xl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding mgn-bt-20"
+                <div class="col-xl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 mgn-bt-20 no-padding prt-10"
                     *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
                     <app-booking-medical-records [customerId]="customer[0].id">
                     </app-booking-medical-records>
                 </div>
-                <div class="col-xl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding mgn-bt-20"
+                <div class="col-xl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 mgn-bt-20 no-padding plt-10"
                     *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
                     <app-booking-prescriptions></app-booking-prescriptions>
                 </div>
@@ -790,7 +790,7 @@
             </app-records-datagrid>
         </div>
         <div class="column" *ngIf="consumerBills.length > 0">
-            <app-records-datagrid [heading]="'Bills'" [source]="'bill'" [records]="consumerBills">
+            <app-records-datagrid [heading]="'Bills'" [source]="'customer-bill'" [records]="consumerBills">
             </app-records-datagrid>
         </div>
         <div class="column"

@@ -112,6 +112,7 @@ td {
 .bord-class .table-responsive {
     overflow: auto !important;
     height: 317px !important;
+    margin: 0 !important;
 }
 .card-header {
     padding: 8px 10px !important;

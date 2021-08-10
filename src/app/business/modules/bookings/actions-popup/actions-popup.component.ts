@@ -26,6 +26,7 @@ export class ActionsPopupComponent implements OnInit {
   showMsg = false;
   showTeleserviceStart = false;
   customer_label;
+  statusList: any = [];
   constructor(public dialogRef: MatDialogRef<ActionsPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private wordProcessor: WordProcessor,
@@ -43,6 +44,7 @@ export class ActionsPopupComponent implements OnInit {
   }
   ngOnInit(): void {
     if (this.data.source === 'status') {
+      this.getInternStatus();
       this.setActions();
     }
   }
@@ -157,7 +159,6 @@ export class ActionsPopupComponent implements OnInit {
   }
 
   changeWaitlistStatus(action) {
-    this.dialogClose();
     console.log(this.data.bookingType);
     if (this.data.bookingType == 'checkin') {
       this.provider_shared_functions.changeWaitlistStatus(this, this.data.waitlist_data, action);
@@ -201,6 +202,7 @@ export class ActionsPopupComponent implements OnInit {
               } else {
                 this.sharedFunctions.sendMessage({ type: 'reload' });
               }
+              this.dialogClose();
             }
           },
           error => {
@@ -224,11 +226,26 @@ export class ActionsPopupComponent implements OnInit {
               } else {
                 this.sharedFunctions.sendMessage({ type: 'reload' });
               }
+              this.dialogClose();
             }
           },
           error => {
           });
     }
+  }
+  changeWaitlistInternalStatus(action) {
+    console.log(action);
+    this.provider_shared_functions.changeWaitlistinternalStatus(this, this.data.waitlist_data, action);
+  }
+  changeWaitlistInternalStatusApi(waitlist, action) {
+    this.provider_shared_functions.changeWaitlistInternalStatusApi(this, waitlist, action)
+      .then(
+        result => {
+          this.sharedFunctions.sendMessage({ type: 'reload' });
+          this.dialogClose();
+        },
+        error => {
+        });
   }
   setActions() {
     if (this.data.bookingType === 'checkin') {
@@ -306,5 +323,12 @@ export class ActionsPopupComponent implements OnInit {
     const uid = (this.data.bookingType === 'checkin') ? this.data.waitlist_data.ynwUuid : this.data.waitlist_data.uid;
     const source = (this.data.bookingType === 'checkin') ? 'checkin' : 'appt';
     this.router.navigate(['provider', 'check-ins', uid, 'team'], { queryParams: { source: source } });
+  }
+  getInternStatus() {
+    const uid = (this.data.bookingType === 'checkin') ? this.data.waitlist_data.ynwUuid : this.data.waitlist_data.uid;
+    this.provider_services.getInternalstatList(uid).subscribe((data: any) => {
+      console.log(data);
+      this.statusList = data;
+    });
   }
 }
