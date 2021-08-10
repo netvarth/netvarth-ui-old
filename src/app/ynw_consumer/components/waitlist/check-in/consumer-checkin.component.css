@@ -1843,3 +1843,13 @@ body.modal-open {
   .note-pad {
     padding: 0px 20px !important;
   }
+  @media  (max-width: 800px)  {
+    .web{
+        display: none !important;
+    }
+  }
+  @media (min-width: 450px) {
+    .disply  {
+        display: none !important;
+    }
+  }
