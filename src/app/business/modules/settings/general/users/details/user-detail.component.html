@@ -323,7 +323,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                                     placeholder="Choose Usertype *"
                                                     (selectionChange)="onUserSelect($event)">
                                                     <mat-option *ngFor="let user of userTypesFormfill" [value]="user.value">
-                                                        {{user.name}}
+                                                        {{user.name  | capitalizeFirst}}
                                                     </mat-option>
                                                 </mat-select>
                                             </mat-form-field>

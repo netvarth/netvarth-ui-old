@@ -529,7 +529,7 @@
                                                   placeholder="Select user type" (selectionChange)="doSearch()"
                                                   style="height: 0px;padding: 2px;">
                                                   <mat-option *ngFor="let user of userTypesFormfill" [value]="user.value">
-                                                      {{user.displayName}}
+                                                      {{user.displayName | capitalizeFirst}}
                                                   </mat-option>
                                               </mat-select>
                                           </mat-form-field>

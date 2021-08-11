@@ -463,7 +463,11 @@ export class BranchUsersComponent implements OnInit {
             api_filter['pinCode-eq'] = this.filter.pinCode;
         }
         if (this.filter.userType !== '') {
-            api_filter['userType-eq'] = this.filter.userType;
+            if (this.filter.userType == 'ADMIN') {
+                api_filter['or=userType-eq'] =this.filter.userType+',isAdmin-eq='+true;  
+              } else {
+                api_filter['userType-eq'] = this.filter.userType;
+              }
         }
         if (this.filter.available !== '') {
             api_filter['available-eq'] = this.filter.available;
