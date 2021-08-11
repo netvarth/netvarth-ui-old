@@ -308,8 +308,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   privacy = false;
   pwaIOShint: boolean;
   iosConfig = false;
-
-
+  accountIdExists = false;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -387,6 +386,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.api_loading = true;
+    this.accountIdExists = false;
     this.userId = null;
     this.provider_id = null;
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
@@ -479,6 +479,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               this.getAccountIdFromEncId(this.accountEncId).then(
                 (id: any) => {
                   _this.provider_id = id;
+                  _this.customId = _this.accountEncId;
+                  _this.accEncUid = _this.accountEncId;
+                  _this.accountIdExists = true;
                   _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
                     (uiconfig: any) => {
                       if (uiconfig['pixelId']) {

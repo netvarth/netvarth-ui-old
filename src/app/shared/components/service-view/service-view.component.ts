@@ -136,6 +136,7 @@ export class ServiceViewComponent implements OnInit {
   timings: string;
   timingCaptionapt: string;
   timingsapt: string;
+  accountIdExists = false;
   loading_direct = false;
   loading = true;
   source: any;
@@ -173,6 +174,7 @@ export class ServiceViewComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.accountIdExists = false;
     this.setSystemDate();
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -184,27 +186,31 @@ export class ServiceViewComponent implements OnInit {
           this.userId = params.get('userEncId');
         } else {
           this.userId = null;
-        }
+        }       
+        const _this = this;
         this.domainConfigService.getDomainList().then(
           (domainConfig) => {
-            this.domainList = domainConfig;
-            this.getAccountIdFromEncId(this.accountEncId).then(
+            _this.domainList = domainConfig;
+            this.getAccountIdFromEncId(_this.accountEncId).then(
               (id: any) => {
-                this.provider_id = id;
-                this.domainConfigService.getUIAccountConfig(this.provider_id).subscribe(
+                _this.provider_id = id;      
+                _this.customId = _this.accountEncId;
+                _this.accEncUid = _this.accountEncId;     
+                _this.accountIdExists = true;      
+                _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
                   (uiconfig: any) => {
-                    this.accountProperties = uiconfig;
-                    if (this.small_device_display) {
-                      this.profileSettings = this.accountProperties['smallDevices'];
+                    _this.accountProperties = uiconfig;
+                    if (_this.small_device_display) {
+                      _this.profileSettings = _this.accountProperties['smallDevices'];
                     } else {
-                      this.profileSettings = this.accountProperties['normalDevices'];
+                      _this.profileSettings = _this.accountProperties['normalDevices'];
                     }
-                    if (this.accountProperties['theme']) {
-                      this.theme = this.accountProperties['theme'];
+                    if (_this.accountProperties['theme']) {
+                      _this.theme = _this.accountProperties['theme'];
                     }
-                    this.gets3curl();
+                    _this.gets3curl();
                   }, (error: any) => {
-                    this.gets3curl();
+                    _this.gets3curl();
                   }
                 )
               }, (error) => {
@@ -404,6 +410,7 @@ export class ServiceViewComponent implements OnInit {
     this.accEncUid = res['accEncUid'];
     if (!this.userId) {
       this.businessjson = res;
+      this.sector = this.businessjson.serviceSector.domain;
       this.businessId = this.accEncUid;
       this.accountId = this.businessjson.id;
       this.businessName = this.businessjson.businessName;
@@ -433,6 +440,7 @@ export class ServiceViewComponent implements OnInit {
   }
   setUserBusinessProfile(res) {
     this.businessjson = res;
+    this.sector = this.businessjson.serviceSector.domain;
     const dom = this.domainList.bdata.filter(domain => domain.id === this.businessjson.serviceSector.id);
     this.subDomainList = dom[0].subDomains;
     const subDom = this.subDomainList.filter(subdomain => subdomain.id === this.businessjson.userSubdomain);
