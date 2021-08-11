@@ -1307,8 +1307,8 @@
                                   <mat-select id="userType" #userType [(ngModel)]="filter.userType"
                                       placeholder="Select user type" (selectionChange)="doSearch()"
                                       style="height: 0px;padding: 2px;">
-                                      <mat-option *ngFor="let user of userTypesFormfill" [value]="user.name">
-                                          {{user.displayName}}
+                                      <mat-option *ngFor="let user of userTypesFormfill" [value]="user.value">
+                                          {{user.displayName | capitalizeFirst}}
                                       </mat-option>
                                   </mat-select>
                               </mat-form-field>

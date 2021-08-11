@@ -333,6 +333,7 @@ export class BranchUsersComponent implements OnInit {
                                     this.user_list_dup = this.users_list;
                                     this.api_loading = false;
                                     this.loadComplete = true;
+                                    this.user_count_filterApplied = this.users_list.length;
                                 });
                         },
                         (error: any) => {
