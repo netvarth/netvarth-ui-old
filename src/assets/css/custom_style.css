@@ -14242,6 +14242,30 @@ font-weight: 700 !important;
   content: url(../images/dossier.png);
   width: 40px;
 }
+.five-a-row{ 
+   float:left !important;
+   display:table-column !important;
+   width:33.33% !important;
+}
+
+.main-box{
+   width: 100% !important;
+   margin: 0 20px 0 0;
+   margin-left: 20px;
+}
+@media (max-width: 750px) {
+  .five-a-row{ 
+    float:left !important;
+    display:table-column !important;
+    width:50% !important;
+ }
+ 
+ .main-box{
+    width: 100% !important;
+    margin: 0 20px 0 0;
+    margin-left: 20px;
+ }
+}
 .donationdash .card {
   min-height: 50vh;
 }

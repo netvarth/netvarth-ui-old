@@ -277,8 +277,8 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                         (change)="selectdeprtservice(i,$event,department.departmentName)"
                                         [checked]="department.checked === true">{{department.departmentName}}
                                     </mat-checkbox>
-                                    <section class="schedule-section leftselectAll">
-                                        <div *ngFor="let services of department.serviceIds;let j = index">
+                                    <section class="main-box">
+                                        <div *ngFor="let services of department.serviceIds;let j = index" class="five-a-row">
                                             <mat-checkbox class="example-margin"
                                                 (change)="serviceunderdept(j,department.departmentName, i, services)"
                                                 [checked]="serviceSelection[department.departmentName][j]"
@@ -316,7 +316,23 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                     <i class="fa fa-check-square-o" *ngIf="SelServcall" (click)="deselectAllService()">
                                         {{select_All}}</i>
                                 </div>
-                                <section class="service-section leftselectAll start-endtime-wrap">
+                                <section class="service-section leftselectAll start-endtime-wrap main-box">
+                                    <div *ngFor="let service of services_list; index as i" class="five-a-row">
+                                        <mat-checkbox class="example-margin" [value]="service.id"
+                                            (change)="handleServicechecbox(i)"
+                                            [checked]="services_list[i].checked === true">
+                                            <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'" class="fa meet-icon"></i>
+                                            <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'" class="fa zoom-icon"></i>
+                                            <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'VideoCall'" class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" aria-hidden="true"></i>
+                                            <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'" class="fa phon-icon"></i>
+                                            <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'" class="fa wtsapaud-icon"></i>
+                                            <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'" class="fa wtsapvid-icon"></i>
+
+                                            {{service.name | capitalizeFirst}}
+                                        </mat-checkbox>
+                                    </div>
+                                </section>
+                                <!-- <section class="service-section leftselectAll start-endtime-wrap">
                                     <div *ngFor="let service of services_list; index as i ">
                                         <mat-checkbox class="example-margin" [value]="service.id"
                                             (change)="handleServicechecbox(i)"
@@ -331,7 +347,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                             {{service.name | capitalizeFirst}}
                                             </mat-checkbox>
                                     </div>
-                                </section>
+                                </section> -->
 
                                 <!-- <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
                                     [(ngModel)]="token_service">
