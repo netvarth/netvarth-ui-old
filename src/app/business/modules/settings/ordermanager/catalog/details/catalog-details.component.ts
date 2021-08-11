@@ -904,7 +904,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
 
     }
     onSubmit(form_data) {
-console.log('hi submit');
+console.log('hi submit' +form_data);
         
         let endDate;
         const startDate = this.convertDate(form_data.startdate);
@@ -1086,6 +1086,7 @@ console.log('hi submit');
                     // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CATALOG_CREATED'));
                     this.lStorageService.removeitemfromLocalStorage('selecteditems');
                     this.api_loading = false;
+                    this.disableButton = false;
                     this.addcatalogimagedialogRef = this.dialog.open(AddcatalogimageComponent, {
                         width: '50%',
                         panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -1101,7 +1102,7 @@ console.log('hi submit');
                     });
                 },
                 error => {
-                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
                     this.api_loading = false;
                     this.disableButton = false;
                 }
@@ -1118,10 +1119,11 @@ console.log('hi submit');
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CATALOG_UPDATED'));
                     this.lStorageService.removeitemfromLocalStorage('selecteditems');
                     this.api_loading = false;
+                    this.disableButton = false;
                     this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs']);
                 },
                 error => {
-                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
                     this.api_loading = false;
                     this.disableButton = false;
                 }
