@@ -1062,11 +1062,11 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         .subscribe(data => {
           const retData = data;
           this.checkoutDisabled = false;
-          let prepayAmount;
+          // let prepayAmount;
           const uuidList = [];
           Object.keys(retData).forEach(key => {
             if (key === '_prepaymentAmount') {
-              prepayAmount = retData['_prepaymentAmount'];
+              this.prepayAmount = retData['_prepaymentAmount'];
             } else {
               this.trackUuid = retData[key];
               uuidList.push(retData[key]);
@@ -1082,7 +1082,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           //   }
           // };
 
-          if (this.catalog_details.paymentType !== 'NONE' && prepayAmount > 0) {
+          if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
               .subscribe(res => {
                 if (this.jcashamount > 0 && this.checkJcash) {
