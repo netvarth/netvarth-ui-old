@@ -275,6 +275,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         this.subscriptions.unsubscribe();
     }
     gotoNext() {
+        console.log(this.step);
         if (this.amForm.get('orderType').value === 'SHOPPINGLIST' && this.amForm.get('advancePaymentStatus').value === 'FULLAMOUNT' && this.step === 3) {
             this.snackbarService.openSnackBar('Shopping list not supported fullamount advance payment', { 'panelClass': 'snackbarerror' });
             return;
@@ -305,16 +306,15 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         }else {
             this.step = this.step + 1;
             if(this.step===2){
+                console.log("step 2");
                this.getUpdatedItems();
+               
             }
         }
     }
     gotoPrev() {
-        if (this.step === 3 && this.amForm.get('orderType').value === 'SHOPPINGLIST') {
-            this.step = 1;
-        } else {
-            this.step = this.step - 1;
-        }
+        console.log("prev"+this.step);
+        
        
         if (this.step === 2 && this.amForm.get('orderType').value === 'SHOPPINGCART') {
             this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
@@ -348,6 +348,27 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
                 }
             }
         }
+        }
+        if (this.step === 3 && this.amForm.get('orderType').value === 'SHOPPINGLIST') {
+            this.step = 1;
+        } else {
+            this.step = this.step - 1;
+            if (this.step === 1 &&this.catalog_id == 'add') {
+                console.log(this.amForm.get('orderType').value);
+                this.catalogItemsSelected = [];
+                for (let ia = 0; ia < this.catalogItem.length; ia++) {
+                    this.seletedCatalogItems1 = {};
+                    if (this.catalogItem[ia].selected === true) {
+                        this.seletedCatalogItems1.minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + this.catalogItem[ia].itemId + '')).value || '1';
+                        this.seletedCatalogItems1.maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + this.catalogItem[ia].itemId + '')).value || '5';
+                        this.seletedCatalogItems1.item = this.catalogItem[ia];
+                        this.catalogItemsSelected.push(this.seletedCatalogItems1);
+                    }
+                }
+                console.log(this.catalogItemsSelected);
+                this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogItemsSelected);
+               
+            }
         }
     }
 
@@ -1614,6 +1635,9 @@ console.log('hi submit' +form_data);
             }
         }
       this.addItems = this.catalogItems.concat(this.catalogSelectedItemsadd);
+      if (this.catalogSelectedItemsadd.length > 0) {
+        this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogSelectedItemsadd);
+    }
         console.log(this.addItems);
         if(this.addItems.length == 0){
             this.snackbarService.openSnackBar('Please add items to catalog', { 'panelClass': 'snackbarerror' });
@@ -1622,17 +1646,7 @@ console.log('hi submit' +form_data);
             this.step=this.step +1;
             return;
         }
-        if (this.catalogSelectedItemsadd.length > 0) {
-            this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogSelectedItemsadd);
-            //   const navigationExtras: NavigationExtras = {
-            //     queryParams: { action: 'edit',
-            //                     isFrom: true }
-            //   };
-            //   this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', this.cataId], navigationExtras);
-            //  this.addItems(this.catalogSelectedItemsadd);
-        } else {
-            this.lStorageService.removeitemfromLocalStorage('selecteditems');
-        }
+       
     }
     createItem(form_data, isfrom?) {
         if (this.showPromotionalPrice && (!form_data.promotionalPrice || form_data.promotionalPrice == 0)) {
@@ -1853,6 +1867,22 @@ console.log('hi submit' +form_data);
     getUpdatedItems() {
         this.getItems().then(
             (data) => {
+                if(this.catalog_id == 'add'){
+                    this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
+                    if (this.addCatalogItems && this.addCatalogItems.length > 0) {
+                        this.selectedCount = this.addCatalogItems.length;
+                        for (const itm of this.catalogItem) {
+                            for (const selitem of this.addCatalogItems) {
+                                if (itm.itemId === selitem.item.itemId) {
+                                    itm.selected = true;
+                                    itm.id = selitem.id;
+                                    itm.minQuantity = selitem.minQuantity;
+                                    itm.maxQuantity = selitem.maxQuantity;
+                                }
+                            }
+                        }
+                    }
+                   }
                 this.getCatalog(this.catalog_id).then(
                     (catalog) => {
                         this.catalog = catalog;

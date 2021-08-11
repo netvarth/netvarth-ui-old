@@ -43,13 +43,14 @@
                                 </h3>
                                 <div class="address col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-5 no-padding single-loc"
                                     *ngIf="locationjson && locationjson.length > 0">  
-                                    <span   *ngIf="locationjson.length == 1" class="locbtn"><i class="fa fa-map-marker takeTourTitle mgn-rt-10"></i>{{selectedLocation.place | capitalizeFirst}}</span> 
-                                   <div  *ngIf="locationjson.length > 1"><i class="fa fa-map-marker takeTourTitle mgn-rt-10"></i>
+                                    <span   *ngIf="locationjson.length == 1" class="locbtn"><a [href]="selectedLocation.googleMapUrl"
+                                        target="_blank" *ngIf="selectedLocation.googleMapUrl!=''"><i class="fa fa-map-marker takeTourTitle mgn-rt-10"></i></a>{{selectedLocation.place | capitalizeFirst}}</span> 
+                                   <div  class="locbtn" *ngIf="locationjson.length > 1"><a [href]="selectedLocation.googleMapUrl"
+                                    target="_blank" *ngIf="selectedLocation.googleMapUrl!=''"><i class="fa fa-map-marker takeTourTitle mgn-rt-10"></i></a>
                                     <select class="selectbxstyle">
                                             <option *ngFor="let loc of locationjson" (click)="changeLocation(loc)">{{loc.place}}</option>
                                             </select></div>
                                             
-                                    
                                 </div>
                             </div>
                             </div>
@@ -57,6 +58,21 @@
                         
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10">
+                            <div class="service-icon pull-left"
+                            *ngIf="servicedetails.serviceType == 'virtualService'">
+                            <i class="fa phon-icon"
+                                *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                            <i class="fa meet-icon"
+                                *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                            <i class="fa zoom-icon zoom1"
+                                *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                            <i class="fa jvideo-icon jvideo-icon-m"
+                                *ngIf="servicedetails.virtualCallingModes  && servicedetails.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+                            <i class="fa wtsapaud-icon"
+                                *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'WhatsApp' && servicedetails.virtualServiceType === 'audioService'"></i>
+                            <i class="fa wtsapvid-icon"
+                                *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'WhatsApp' && servicedetails.virtualServiceType === 'videoService'"></i>
+                        </div>
                             <div class="busname" *ngIf="servicename" >{{servicename | capitalizeFirst}}<span class="deptname" *ngIf="deptname">({{deptname}})</span>
                                 </div>
                                 <div class=" textitalic"
@@ -68,6 +84,17 @@
                                         [innerHTML]="servicedetails.description | nl2br">
                                     </div>
                                 </div>
+                                <div class="outer3"
+                        *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0">
+                        <div class="textitalic">
+                            <span class="data-label">{{sector =='healthCare' ? 'Consultation' : '
+                                Service'}} Fee : </span>
+                            <span style="font-weight: bold" class="rupee-font data-value">
+                                <i class='fa fa-inr'></i>{{servicedetails.totalAmount | currency:
+                                '':''}}
+                            </span>
+                        </div>
+                    </div>
                                 <div class="outer4"
                                 *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount != servicedetails.totalAmount">
                                 <div class=" textitalic">
@@ -76,6 +103,11 @@
                                         <i class="fa fa-inr"></i>{{servicedetails.minPrePaymentAmount |
                                         currency: '':''}}
                                     </span>
+                                </div>
+                            </div>
+                            <div class="outer1 line" *ngIf="servicedetails && servicedetails.priceDynamic && servicedetails.paymentDescription">
+                                <div class="des textitalic" *ngIf="servicedetails && servicedetails.paymentDescription"
+                                    [innerHTML]="servicedetails.paymentDescription | nl2br">
                                 </div>
                             </div>
                             <div class="outer5 donation" *ngIf="servicedetails && is_donation_serv">
@@ -93,17 +125,7 @@
                                 </div>
                     
                             
-                        <div class="outer3"
-                        *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0">
-                        <div class="textitalic">
-                            <span class="data-label"> {{(sector =='healthCare') ? 'Consultation' : '
-                                Service'}} Fee : </span>
-                            <span style="font-weight: bold" class="rupee-font data-value">
-                                <i class='fa fa-inr'></i>{{servicedetails.totalAmount | currency:
-                                '':''}}
-                            </span>
-                        </div>
-                    </div>
+                        
                     <div class="textitalic tax" *ngIf="servicedetails && servicedetails.taxable">
                             <span class="data-label">Tax Applicable : </span>
                             <span style="font-weight: bold" class="data-value">

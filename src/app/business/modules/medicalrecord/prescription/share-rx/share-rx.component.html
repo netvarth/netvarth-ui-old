@@ -52,7 +52,8 @@
 </div>
 
       <div class="mgtop40 form-group"  *ngIf="!showthirdparty">
-              We will create a PDF of your prescription and will share Via
+            <span  *ngIf="!mrPrescriptionDetails[0].keyName">We will create a PDF of your prescription and will share Via</span>  
+            <span  *ngIf="mrPrescriptionDetails[0].keyName">Your prescription will share Via</span>
           <div class="coupon-outer">
               <mat-checkbox [disabled] = "(!phon || phon === 'null') || is_noSMS"  class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
                   SMS
@@ -76,7 +77,8 @@
       <div class="sms_credit_warn mgn-up-10" *ngIf="is_smsLow && !showthirdparty ">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
       <div  class="col-md-12 col-lg-12 col-xs-12 col-sm-12 form-group" *ngIf="showthirdparty">
         <!-- We will create a PDF of your prescription and will share Via sms and email. -->
-         We will create a PDF of your prescription and will share Via email. 
+        <span  *ngIf="!mrPrescriptionDetails[0].keyName">We will create a PDF of your prescription and will share Via email.</span>  
+        <span  *ngIf="mrPrescriptionDetails[0].keyName">Your prescription will share Via email.</span>
       </div>
 
   </mat-dialog-content>

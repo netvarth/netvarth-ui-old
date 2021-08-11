@@ -410,6 +410,7 @@ export class ServiceViewComponent implements OnInit {
     this.accEncUid = res['accEncUid'];
     if (!this.userId) {
       this.businessjson = res;
+      this.sector = this.businessjson.serviceSector.domain;
       this.businessId = this.accEncUid;
       this.accountId = this.businessjson.id;
       this.businessName = this.businessjson.businessName;
@@ -439,6 +440,7 @@ export class ServiceViewComponent implements OnInit {
   }
   setUserBusinessProfile(res) {
     this.businessjson = res;
+    this.sector = this.businessjson.serviceSector.domain;
     const dom = this.domainList.bdata.filter(domain => domain.id === this.businessjson.serviceSector.id);
     this.subDomainList = dom[0].subDomains;
     const subDom = this.subDomainList.filter(subdomain => subdomain.id === this.businessjson.userSubdomain);

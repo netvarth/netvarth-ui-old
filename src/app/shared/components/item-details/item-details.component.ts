@@ -128,7 +128,9 @@ export class ItemDetailsSharedComponent implements OnInit {
       this.orderList = orderList;
     }
     this.currentItemObject = JSON.parse(this.item);
+    console.log(this.currentItemObject);
     this.currentItem = this.currentItemObject.item;
+    console.log("this array"+this.currentItem);
     if (this.currentItem.showPromotionalPrice) {
       if (this.currentItem.promotionalPriceType === 'FIXED') {
         this.isPromotionalpriceFixed = true;
@@ -140,20 +142,21 @@ export class ItemDetailsSharedComponent implements OnInit {
     }
     if (this.currentItem.itemImages) {
       this.itemImages = this.currentItem.itemImages;
-      for (let imgIndex = 0; imgIndex < this.itemImages.length; imgIndex++) {
-        const imgobj = new Image(this.itemImages[imgIndex].id,
-          {
-            img: this.itemImages[imgIndex].url,
-            description: this.itemImages[imgIndex].title
-          },
-          {
-            img: this.itemImages[imgIndex].url,
-            title: this.itemImages[imgIndex].title
-          },
-        );
-        this.imagesRect = [... this.imagesRect, imgobj];
-        console.log(this.imagesRect);
-      }
+      // for (let imgIndex = 0; imgIndex < this.itemImages.length; imgIndex++) {
+      //   const imgobj = new Image(this.itemImages[imgIndex].id,
+      //     {
+      //       img: this.itemImages[imgIndex].url,
+      //       description: this.itemImages[imgIndex].title
+      //     }
+      //     ,
+      //     {
+      //       img: this.itemImages[imgIndex].url,
+      //       title: this.itemImages[imgIndex].title
+      //     },
+      //   );
+      //   this.imagesRect = [... this.imagesRect, imgobj];
+      //   console.log("this array"+this.imagesRect);
+      // }
     }
 
     this.loading = false;

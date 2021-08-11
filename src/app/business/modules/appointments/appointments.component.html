@@ -576,7 +576,7 @@
                           {{appt.appmtDate | date: newTimeDateFormat}}</div>
                         <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
                           <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
-                          <div *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</div>
+                          <span *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</span>
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name font11"
@@ -881,8 +881,8 @@
                         <td class="parent-selection parent-title td-one">
                           <div class="pull-left mgn-lt-5 date">
                             <span class="greenc bold font11">{{getSingleTime(appt.time)}}</span>
-                            <div *ngIf="this.selQIds.length > 1">
-                              S{{getScheduleIndex(apptByTimeSlot[appt.time][0].schedule.id) + 1}}</div>
+                            <span *ngIf="this.selQIds.length > 1">
+                              S{{getScheduleIndex(apptByTimeSlot[appt.time][0].schedule.id) + 1}}</span>
                           </div>
                           <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                             class="bold pull-left mgn-lt-5 name font11"
@@ -1104,7 +1104,7 @@
                           {{appt.appmtDate | date: newTimeDateFormat}}</div>
                         <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
                           <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
-                          <div *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</div>
+                          <span *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</span>
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name font11"
@@ -1680,7 +1680,7 @@
                         {{appt.appmtDate | date: newTimeDateFormat}}</div>
                       <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
                         <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
-                        <div *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</div>
+                        <span *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</span>
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                         class="bold pull-left mgn-lt-5 name font11" (click)="stopprop($event);gotoCustomerDetails(appt)"
@@ -2312,7 +2312,7 @@
                         {{appt.appmtDate | date: newTimeDateFormat}}</div>
                       <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
                         <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
-                        <div *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</div>
+                        <span *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</span>
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                         class="bold pull-left mgn-lt-5 name font11" (click)="stopprop($event);gotoCustomerDetails(appt)"
