@@ -129,6 +129,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
     jcreditamount: any;
     remainingadvanceamount;
     wallet: any;
+    splocation: any;
     constructor(
         //   private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
@@ -205,7 +206,11 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                     if (this.checkIn_type === 'order' && this.checkin.amountDue == 0 && this.checkin.orderStatus != 'Cancelled') {
                         this.billTitle = "Receipt";
                     }
-                    console.log(this.checkin);
+                    console.log(this.checkin.bill);
+                    if (this.checkin.bill.accountProfile.location && this.checkin.bill.accountProfile.location.place) {
+                        this.splocation = this.checkin.bill.accountProfile.location.place;
+                    }
+
                     //   this.getCouponList();
                     //   this.getproviderCouponList();
                     this.getWaitlistBill();
