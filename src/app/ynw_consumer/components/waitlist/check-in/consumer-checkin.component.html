@@ -1301,14 +1301,14 @@
                                          <div >
                                             <div class="web">
                                                 <div class="textcenter" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                    <span class="ser_price no-mgn-bt bold" *ngIf="sel_ser_det.price >0">Service Price : <span class="ser_price no-mgn-bt bold rupee-font">{{sel_ser_det.price | currency:'&#8377;'}}</span></span>
-                                                    <span class="ser_price no-mgn-bt bold" style="padding: 20px !important;" *ngIf="sel_ser_det.price >0">Payment required now : <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash ? payAmount : paymentDetails.amountRequiredNow)| currency:'&#8377;'}}</span></span>
+                                                    <span class="ser_price no-mgn-bt bold">Service Price : <span class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal | currency:'&#8377;'}}</span></span>
+                                                    <span class="ser_price no-mgn-bt bold" style="padding: 20px !important;" >Payment required now : <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash ? payAmount : paymentDetails.amountRequiredNow)| currency:'&#8377;'}}</span></span>
                                                 </div>
                                             </div>
                                            <div class="disply">
                                             <div class="textcenter" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                <span class="ser_price no-mgn-bt bold" *ngIf="sel_ser_det.price >0">Service Price : <span class="ser_price no-mgn-bt bold rupee-font">{{sel_ser_det.price | currency:'&#8377;'}}</span></span><br>
-                                                <span class="ser_price no-mgn-bt bold" style="padding: 20px !important;" *ngIf="sel_ser_det.price >0">Payment required now : <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash ? payAmount : paymentDetails.amountRequiredNow)| currency:'&#8377;'}}</span></span>
+                                                <span class="ser_price no-mgn-bt bold">Service Price : <span class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal | currency:'&#8377;'}}</span></span><br>
+                                                <span class="ser_price no-mgn-bt bold" style="padding: 20px !important;">Payment required now : <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash ? payAmount : paymentDetails.amountRequiredNow)| currency:'&#8377;'}}</span></span>
                                             </div>
                                            </div>
                                            
