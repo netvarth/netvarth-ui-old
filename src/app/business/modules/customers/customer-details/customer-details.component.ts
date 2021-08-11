@@ -15,6 +15,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 // import { interval as observableInterval } from 'rxjs';
 import { SubSink } from 'subsink';
+import { CommunicationPopupComponent } from '../../bookings/booking-detail/communication-popup/communication-popup.component';
 @Component({
     selector: 'app-customer-details',
     templateUrl: './customer-details.component.html',
@@ -575,5 +576,19 @@ export class CustomerDetailComponent implements OnInit {
         this.provider_services.getProviderBills(filter).subscribe(data => {
             this.consumerBills = data;
         })
+    }  
+    gotoQnr() {
+        this.router.navigate(['provider', 'customers', this.customer[0].id, 'questionnaires'], { queryParams: { uid: this.customer[0].id, source: 'customer-details' } });
     }
+    showCommunications() {
+        this.dialog.open(CommunicationPopupComponent, {
+          width: '50%',
+          panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+          disableClose: true,
+          data: {
+            waitlist: this.customer[0],
+            type: 'customer'
+          }
+        });
+      }
 }

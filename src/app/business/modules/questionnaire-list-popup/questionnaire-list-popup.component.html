@@ -23,22 +23,35 @@
     <div class="card title-gb">
       <h5 class="mgn-up-10">
         <span class="fa fa-arrow-left pointer-cursor" (click)="gotoPrev()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <span>Questionnaires</span>
+        <span>{{(questionnaires.length > 1) ? 'Questionnaires' : 'Questionnaire'}}</span>
       </h5>
     </div>
   </section>
   <section class="qnrlist" [class.bookingQnr]="type">
     <div class="content">
-      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small" [class.no-padding]="type">
+      <div class="card" *ngIf="loading">
+        <app-common-innerloading-spinner></app-common-innerloading-spinner>
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small" [class.no-padding]="type" *ngIf="!loading">
         <div class="card no-padding-small" *ngIf="questionnaires.length === 1">
           <app-questionnaire [questionnaireList]="waitlist_data.questionnaires[0]"
             [source]="(waitlist_data.waitlistStatus) ? 'proCheckin' : 'proAppt'" [uuid]="uid" [type]="'details'"
-            [waitlistStatus]="(waitlist_data.waitlistStatus) ? waitlist_data.waitlistStatus : waitlist_data.apptStatus">
+            [waitlistStatus]="(waitlist_data.waitlistStatus) ? waitlist_data.waitlistStatus : waitlist_data.apptStatus"
+            (returnAnswers)="getQuestionAnswers($event)">
+          </app-questionnaire>
+        </div>
+        <div class="card no-padding-small" *ngIf="source == 'proDonation' && waitlist_data">
+          <app-questionnaire [source]="'proDonation'" (returnAnswers)="getQuestionAnswers($event)"
+            [questionnaireList]="waitlist_data.questionnaires[0]" [type]="'details'" [uuid]="waitlist_data.uid">
+          </app-questionnaire>
+        </div>
+        <div class="card no-padding-small" *ngIf="source == 'customer-details' && waitlist_data[0]">
+          <app-questionnaire [source]="'customer-details'"
+            [type]="'details'" [customerDetails]="waitlist_data">
           </app-questionnaire>
         </div>
         <div class="card no-padding-small" *ngIf="questionnaires.length > 1">
-          <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-          <div class="table-responsive1" *ngIf="!loading">
+          <div class="table-responsive1">
             <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
               <tbody>
                 <tr class="row_data" *ngFor="let qnr of questionnaires">

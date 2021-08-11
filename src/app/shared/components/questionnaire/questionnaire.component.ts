@@ -27,19 +27,15 @@ export class QuestionnaireComponent implements OnInit {
   @Input() uuid;
   @Input() type;
   @Input() waitlistStatus;
-  @Input() donationDetails;
   @Output() returnAnswers = new EventEmitter<any>();
   answers: any = {};
   showDataGrid: any = {};
   selectedMessage: any = [];
   apiError: any = [];
   params;
-  fileuploadpreAnswers: any = {};
   loading = false;
   buttonDisable = false;
   questions: any = [];
-  selectedDocs: any = [];
-  documentsToUpload: any = [];
   subscription: Subscription;
   uploadFilesTemp: any = [];
   filestoUpload: any = [];
@@ -73,7 +69,6 @@ export class QuestionnaireComponent implements OnInit {
     ]
   };
   image_list_popup: Image[];
-  questionnaire_heading = '';
   customer_label = '';
   editQuestionnaire = false;
   audioVideoFiles: any = [];
@@ -126,8 +121,8 @@ export class QuestionnaireComponent implements OnInit {
           this.questions = this.questionnaireList.labels[0].questions;
           this.groupQuestionsBySection();
         }
-        if (this.customerDetails && this.customerDetails[0] && this.customerDetails[0].questionnaire && this.customerDetails[0].questionnaire.questionAnswers) {
-          this.getAnswers(this.customerDetails[0].questionnaire.questionAnswers, 'get');
+        if (this.customerDetails && this.customerDetails[0] && this.customerDetails[0].questionnaires && this.customerDetails[0].questionnaires.length > 0) {
+          this.getAnswers(this.customerDetails[0].questionnaires[0].questionAnswers, 'get');
         }
       } else if (this.source === 'qnrDetails') {
         this.questions = this.questionnaireList.questions;
@@ -140,9 +135,9 @@ export class QuestionnaireComponent implements OnInit {
         this.groupQuestionsBySection();
       }
     }
-    if (this.source === 'customer-details' && this.customerDetails[0] && this.customerDetails[0].questionnaire) {
-      this.questionnaireList = this.customerDetails[0].questionnaire;
-      this.questions = this.customerDetails[0].questionnaire.questionAnswers;
+    if (this.source === 'customer-details' && this.customerDetails[0] && this.customerDetails[0].questionnaires && this.customerDetails[0].questionnaires.length > 0) {
+      this.questionnaireList = this.customerDetails[0].questionnaires[0];
+      this.questions = this.customerDetails[0].questionnaires[0].questionAnswers;
       this.groupQuestionsBySection();
       this.getAnswers(this.questions, 'get');
     }
@@ -164,14 +159,6 @@ export class QuestionnaireComponent implements OnInit {
       }
       if (this.questionAnswers.answers) {
         this.getAnswers(this.questionAnswers.answers.answerLine, 'init');
-      }
-    }
-    if (this.donationDetails && this.donationDetails.questionnaire) {
-      this.questionnaireList = this.donationDetails.questionnaire;
-      this.questions = this.questionnaireList.questionAnswers;
-      this.groupQuestionsBySection();
-      if (this.questions && this.questions.length > 0) {
-        this.getAnswers(this.questions, 'get');
       }
     }
     if (this.uuid) {
@@ -756,18 +743,8 @@ export class QuestionnaireComponent implements OnInit {
     });
   }
   resubmitDonationQuestionnaire(body) {
-    this.sharedService.resubmitProviderDonationQuestionnaire(this.donationDetails.uid, body).subscribe(data => {
+    this.sharedService.resubmitProviderDonationQuestionnaire(this.uuid, body).subscribe(data => {
       this.successGoback();
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  submitDonationQuestionnaire(body) {
-    this.sharedService.submitDonationQuestionnaire(this.donationDetails.uid, body, this.accountId).subscribe(data => {
-      this.editQnr();
-      this.snackbarService.openSnackBar('Updated Successfully');
-      this.buttonDisable = false;
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -831,9 +808,6 @@ export class QuestionnaireComponent implements OnInit {
     } else {
       this.successGoback();
     }
-  }
-  goBack() {
-    this.location.back();
   }
   getQuestion(question) {
     if (this.source === 'customer-create' || this.source === 'qnrDetails') {

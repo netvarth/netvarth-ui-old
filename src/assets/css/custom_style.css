@@ -14266,6 +14266,6 @@ font-weight: 700 !important;
     margin-left: 20px;
  }
 }
-.donationdash .card {
+.donationdash .card.p0 {
   min-height: 50vh;
 }

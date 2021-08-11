@@ -734,6 +734,7 @@
                                 <i class="fa fa-map-marker icon"></i>
                                 <span class="value">{{customer[0].address}}</span>
                             </div>
+                            <button class="btn create-prescription-button" (click)="showCommunications()">Communication</button>
                         </div>
                     </div>
                 </div>
@@ -793,16 +794,19 @@
             <app-records-datagrid [heading]="'Bills'" [source]="'customer-bill'" [records]="consumerBills">
             </app-records-datagrid>
         </div>
-        <div class="column"
-            *ngIf="customer[0].questionnaire && customer[0].questionnaire.questionAnswers && customer[0].questionnaire.questionAnswers.length > 0">
+        <div class="column" *ngIf="customer[0].questionnaires && customer[0].questionnaires.length > 0">
             <div class="card">
                 <div class="card-header">
                     <div>More {{customer_label}} info</div>
+                    <i class="fa fa-external-link pointer-cursor" aria-hidden="true" (click)="gotoQnr()"></i>
                 </div>
                 <div class="qnr-hgt">
-                    <app-questionnaire [questionnaireList]="questionnaireList" [source]="'customer-details'"
+                    <!-- <app-questionnaire [questionnaireList]="questionnaireList" [source]="'customer-details'"
                         [type]="'details'" [customerDetails]="customer">
-                    </app-questionnaire>
+                    </app-questionnaire> -->
+                    <app-questionnaire-list-popup [source]="'customer-details'" [uid]="customer[0].id"
+                        [type]="'details'" [waitlist_data]="customer">
+                    </app-questionnaire-list-popup>
                 </div>
             </div>
         </div>

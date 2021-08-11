@@ -105,7 +105,7 @@ export class CustomerBookingDetailsComponent implements OnInit {
       customerId = this.waitlist_data.consumer.id;
     }
     const navigationExtras: NavigationExtras = {
-      queryParams: { action: 'edit', id: customerId }
+      queryParams: { action: 'edit', id: customerId, providerConsumer: (this.bookingType === 'donation') ? true : false }
     };
     this.router.navigate(['/provider/customers/create'], navigationExtras);
   }

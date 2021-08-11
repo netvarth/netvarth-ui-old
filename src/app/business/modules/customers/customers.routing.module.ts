@@ -7,12 +7,13 @@ import { CustomerCreateComponent } from './customer-create/customer-create.compo
 import { CustomerDetailComponent } from './customer-details/customer-details.component';
 
 const routes: Routes = [
-   { path: ':id/:type/:uid/medicalrecord/:mrId', loadChildren: () => import('../../../business/modules/medicalrecord/medicalrecord.module').then(m => m.MedicalrecordModule) },
-    {path : 'find' , component: CustomerSearchComponent },
+    { path: ':id/:type/:uid/medicalrecord/:mrId', loadChildren: () => import('../../../business/modules/medicalrecord/medicalrecord.module').then(m => m.MedicalrecordModule) },
+    { path: 'find', component: CustomerSearchComponent },
     { path: '', component: CustomersListComponent },
     { path: 'mrlist', component: MedicalrecordListComponent },
     { path: 'create', component: CustomerCreateComponent },
-    { path: ':id', component: CustomerDetailComponent}
+    { path: ':id', component: CustomerDetailComponent },
+    { path: ':id/questionnaires', loadChildren: () => import('../questionnaire-list-popup/questionnaire-list-popup.module').then(m => m.QuestionnaireListPopupModule) }
 ];
 
 @NgModule({
@@ -20,4 +21,4 @@ const routes: Routes = [
     exports: [RouterModule]
 })
 
-export class CustomersRoutingModule {}
+export class CustomersRoutingModule { }

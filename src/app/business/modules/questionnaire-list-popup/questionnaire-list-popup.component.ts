@@ -25,7 +25,8 @@ export class QuestionnaireListPopupComponent implements OnInit {
     released: 'Released',
     submitted: 'Submitted',
     unReleased: 'Unreleased'
-  }
+  };
+  qParams;
   constructor(public dialogRef: MatDialogRef<QuestionnaireListPopupComponent>,
     private providerServices: ProviderServices,
     private dialog: MatDialog,
@@ -34,6 +35,7 @@ export class QuestionnaireListPopupComponent implements OnInit {
     private location: Location,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.activateRoute.queryParams.subscribe(params => {
+      this.qParams = params;
       if (params.source) {
         this.source = params.source;
       }
@@ -44,16 +46,24 @@ export class QuestionnaireListPopupComponent implements OnInit {
         this.getApptDetails();
       } else if (params.source === 'checkin') {
         this.getWaitlistDetail();
+      } else if (params.source === 'proDonation') {
+        this.getDonationDetails();
+      } else if (params.source === 'customer-details') {
+        this.getCustomerDetails();
       }
     });
-  }
-
-  ngOnInit() {
+    console.log('params', this.qParams);
+    console.log('source', this.source);
     if (this.source === 'appt') {
       this.getApptQuestionnaires();
     } else if (this.source === 'checkin') {
       this.getWaitlistQuestionnaires();
+    } else {
+      this.loading = false;
     }
+  }
+
+  ngOnInit() {
     this.selectedQnr = this.data.selectedQnr;
     if (this.waitlist_data && this.waitlist_data.releasedQnr) {
       this.releasedQnrs = this.waitlist_data.releasedQnr;
@@ -76,6 +86,21 @@ export class QuestionnaireListPopupComponent implements OnInit {
           this.releasedQnrs = this.waitlist_data.releasedQnr;
           this.loading = false;
         });
+  }
+  getDonationDetails() {
+    this.loading = true;
+    this.providerServices.getDonationByUid(this.uid).subscribe(data => {
+      this.waitlist_data = data;
+      this.loading = false;
+    });
+  }
+  getCustomerDetails() {
+    const filter = { 'id-eq': this.uid };
+    this.providerServices.getProviderCustomers(filter).subscribe(data => {
+      this.waitlist_data = data;
+      console.log('waitlist_data', this.waitlist_data);
+      this.loading = false;
+    });;
   }
   getWaitlistQuestionnaires() {
     this.providerServices.getWaitlistQuestionnaireByUid(this.uid).subscribe(data => {
@@ -202,7 +227,19 @@ export class QuestionnaireListPopupComponent implements OnInit {
   }
   getQuestionAnswers(event) {
     if (event === 'reload') {
-      this.closeDialog('reload');
+      if (this.selectedQnr) {
+        this.closeDialog('reload');
+      } else {
+        if (this.source === 'checkin') {
+          this.getWaitlistDetail();
+        } else if (this.source === 'appt') {
+          this.getApptDetails();
+        } else if (this.source === 'proDonation') {
+          this.getDonationDetails();
+        } else if (this.source === 'customer-details') {
+          this.getCustomerDetails();
+        }
+      }
     }
   }
 }
