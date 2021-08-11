@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Location } from '@angular/common';
@@ -28,7 +28,8 @@ export class DonationDetailsComponent {
         public providerservices: ProviderServices,
         public location: Location, private dialog: MatDialog,
         public provider_shared_functions: ProviderSharedFuctions,
-        private wordProcessor: WordProcessor) {
+        private wordProcessor: WordProcessor,
+        private router: Router) {
         this.activaterouter.params.subscribe(param => {
             this.uid = param.id;
             this.getDonationDetails();
@@ -74,5 +75,8 @@ export class DonationDetailsComponent {
         if (event === 'reload') {
             this.getDonationDetails();
         }
+    }
+    gotoQnr() {
+        this.router.navigate(['provider', 'donations', this.donationDetails.uid, 'questionnaires'], { queryParams: { uid: this.donationDetails.uid, source: 'proDonation' } });
     }
 }

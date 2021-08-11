@@ -106,15 +106,15 @@
                             <!-- Questionnaire starts-->
                             <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small" *ngIf="!api_loading">
                                 <div class="card"
-                                    *ngIf="donationDetails && donationDetails.questionnaire && donationDetails.questionnaire.questionAnswers && donationDetails.questionnaire.questionAnswers.length > 0">
+                                    *ngIf="donationDetails.questionnaires && donationDetails.questionnaires.length > 0">
                                     <div class="">
                                         <h5 class="">
                                             {{questionnaire_heading}}
                                         </h5>
                                     </div>
                                     <div class="c-details">
-                                        <app-questionnaire [source]="'consDonationDetails'"
-                                            [donationDetails]="donationDetails">
+                                        <app-questionnaire [source]="'consDonationDetails'" [questionnaireList]="donationDetails.questionnaires[0]"
+                                            [uuid]="donationDetails.uid">
                                         </app-questionnaire>
                                     </div>
                                 </div>

@@ -199,7 +199,6 @@ export class CustomerDetailComponent implements OnInit {
         });
     }
     ngOnInit() {
-        this.getCustomerQnr();
     }
     onCancel() {
         if (this.source === 'checkin' || this.source === 'token') {
@@ -527,12 +526,6 @@ export class CustomerDetailComponent implements OnInit {
     }
     showHistory() {
         this.showMoreHistory = !this.showMoreHistory;
-    }
-    getCustomerQnr() {
-        this.questionnaireList = [];
-        this.provider_services.getCustomerQuestionnaire().subscribe(data => {
-            this.questionnaireList = data;
-        });
     }
     showQnr() {
         this.showQuestionnaire = !this.showQuestionnaire;

@@ -21,13 +21,14 @@ import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
 import { CustomerActionsComponent } from './customer-actions/customer-actions.component';
 import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
 import { CustomerDetailComponent } from './customer-details/customer-details.component';
-import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
 import { VoicecallConfirmBoxComponent } from './confirm-box/voicecall-confirm-box.component';
 import { VoiceConfirmComponent } from './video-confirm/voice-confirm.component';
 import { BookingMedicalRecordsModule } from '../bookings/booking-medical-records/booking-medical-records.module';
 import { BookingPrerscriptionModule } from '../bookings/booking-prescriptions/booking-prescriptions.module';
 import { InboxListModule } from '../inbox-list/inbox-list.module';
 import { RecordsDatagridModule } from '../bookings/records-datagrid/records-datagrid.module';
+import { QuestionnaireListPopupModule } from '../questionnaire-list-popup/questionnaire-list-popup.module';
+import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { RecordsDatagridModule } from '../bookings/records-datagrid/records-data
         NgbModule,
         OwlModule,
         InboxModule,
+        QuestionnaireListPopupModule,
         QuestionnaireModule,
         BookingMedicalRecordsModule,
         BookingPrerscriptionModule,

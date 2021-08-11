@@ -102,10 +102,12 @@
             <div class="card">
                 <div class="card-header">
                     <div>{{customer_label | capitalizeFirst}} info</div>
+                    <i class="fa fa-external-link pointer-cursor" aria-hidden="true" (click)="gotoQnr()"></i>
                 </div>
                 <div class="qnr-hgt">
-                    <app-questionnaire [source]="'proDonation'" [donationDetails]="donationDetails" [type]="'details'">
-                    </app-questionnaire>
+                    <app-questionnaire-list-popup [source]="'proDonation'" [uid]="donationDetails.uid"
+                        [type]="'details'" [waitlist_data]="donationDetails">
+                    </app-questionnaire-list-popup>
                 </div>
             </div>
         </div>

@@ -9,7 +9,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { HeaderModule } from '../../modules/header/header.module';
 import { LoadingSpinnerModule } from '../../modules/loading-spinner/loading-spinner.module';
 import { QuestionnaireComponent } from './questionnaire.component';
-import { QuestionnaireRoutingModule } from './questionnaire.routing.module';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 
@@ -23,7 +22,6 @@ import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
         MatDatepickerModule,
         MatCheckboxModule,
         MatSlideToggleModule,
-        QuestionnaireRoutingModule,
         HeaderModule,
         LoadingSpinnerModule,
         MatOptionModule,

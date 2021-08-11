@@ -10,11 +10,11 @@ import { PagerModule } from '../../../shared/modules/pager/pager.module';
 import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
-import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
 import { RecordsDatagridModule } from '../bookings/records-datagrid/records-datagrid.module';
 import { InboxListModule } from '../inbox-list/inbox-list.module';
 import { CustomerBookingDetailsModule } from '../bookings/booking-detail/customer-booking-details/customer-booking-details.module';
 import { BookingDocumentsModule } from '../bookings/booking-documents/booking-documents.module';
+import { QuestionnaireListPopupModule } from '../questionnaire-list-popup/questionnaire-list-popup.module';
 
 
 @NgModule({
@@ -30,8 +30,7 @@ import { BookingDocumentsModule } from '../bookings/booking-documents/booking-do
         SharedModule,
         CapitalizeFirstPipeModule,
         Nl2BrPipeModule,
-        QuestionnaireModule,
-        CapitalizeFirstPipeModule,
+        QuestionnaireListPopupModule,
         RecordsDatagridModule,
         InboxListModule,
         CustomerBookingDetailsModule,

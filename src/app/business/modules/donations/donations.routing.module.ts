@@ -8,7 +8,8 @@ const routes: Routes = [
     {
         path: '',
         children: [
-            { path: ':id', component: DonationDetailsComponent }
+            { path: ':id', component: DonationDetailsComponent },
+            { path: ':id/questionnaires', loadChildren: () => import('../questionnaire-list-popup/questionnaire-list-popup.module').then(m => m.QuestionnaireListPopupModule) }
         ]
     }
 ];
