@@ -73,7 +73,7 @@
           <input type="text" class="form-control" formControlName="address">
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'address')" [errorMsgs]="fed_service.getErrorMessage(amForm,'address',
                           {
-                            'required' : 'Please enter address',
+                            'required' : 'Address is required',
                             'pattern' : 'Only alphabets are allowed'
                           })">
           </app-field-error-display>
@@ -83,7 +83,7 @@
           <input type="text" class="form-control" formControlName="city">
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
                             {
-                              'required' : 'Please enter city name',
+                              'required' : 'City name is required',
                               'pattern' : 'Only alphabets are allowed'
                             })">
           </app-field-error-display>
@@ -96,7 +96,7 @@
           <input type="text" class="form-control" formControlName="postalCode">
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'postalCode')" [errorMsgs]="fed_service.getErrorMessage(amForm,'postalCode',
                                 {
-                                  'required' : 'Please enter Postal Code ',
+                                  'required' : 'Postal Code is required ',
                                   'minlength' : 'Enter a 6 digit Postal Code',
                                   'maxlength' : 'Enter a 6 digit Postal Code',
                                   'pattern' : 'Only numbers are allowed'
@@ -108,7 +108,7 @@
           <input type="text" class="form-control" formControlName="landMark">
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'landMark')" [errorMsgs]="fed_service.getErrorMessage(amForm,'landMark',
                                   {
-                                    'required' : 'Please enter landmark'
+                                    'required' : 'Landmark is required'
                                   })">
           </app-field-error-display>
         </div>
