@@ -14251,3 +14251,55 @@ font-weight: 700 !important;
     margin-left: 20px;
  }
 }
+
+@media (max-width: 750px) {
+  .line-h{ 
+    line-height: 2 !important;
+  }
+ }
+ .sp-head{
+   line-height: 3 !important;
+   text-align: center;
+   align-items: center;
+   margin-top: 0ch;
+ }
+ .align{
+   text-align: center !important;
+ }
+ .align-column{
+   text-align: left !important;
+ }
+ .align-column1{
+  text-align: right !important;
+  float: right;
+  line-height: .3ch;
+}
+.align-margin{
+  margin-left: 470px;
+  margin-top: 200px;
+}
+@media(max-width: 750px){
+  .sp-head{
+    line-height: 3 !important;
+    text-align: center;
+    align-items: center;
+    margin-top: 1ch;
+  }
+  .align{
+    text-align: center !important;
+  }
+  .align-column{
+    text-align: left !important;
+  }
+  .align-column1{
+   text-align: right !important;
+   float: right;
+   line-height: .3ch;
+   margin-top: -10px;
+ }
+ .align-margin{
+   margin-left: 50px;
+   margin-top: 50px;
+   line-height: .01;
+ }
+}
