@@ -61,3 +61,12 @@
 .communication .startBt {
     margin-top: 20px;
 }
+.videoname {
+    margin: auto 15px;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+.communication .wtsapvid-icon,
+.communication .phon-icon {
+    width: 45px !important;
+}

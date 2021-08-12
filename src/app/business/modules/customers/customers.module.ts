@@ -23,8 +23,7 @@ import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
 import { CustomerDetailComponent } from './customer-details/customer-details.component';
 import { VoicecallConfirmBoxComponent } from './confirm-box/voicecall-confirm-box.component';
 import { VoiceConfirmComponent } from './video-confirm/voice-confirm.component';
-import { BookingMedicalRecordsModule } from '../bookings/booking-medical-records/booking-medical-records.module';
-import { BookingPrerscriptionModule } from '../bookings/booking-prescriptions/booking-prescriptions.module';
+import { BookingMedicalRecordsRXModule } from '../bookings/booking-medical-records-rx/booking-medical-records-rx.module';
 import { InboxListModule } from '../inbox-list/inbox-list.module';
 import { RecordsDatagridModule } from '../bookings/records-datagrid/records-datagrid.module';
 import { QuestionnaireListPopupModule } from '../questionnaire-list-popup/questionnaire-list-popup.module';
@@ -51,8 +50,7 @@ import { QuestionnaireModule } from '../../../shared/components/questionnaire/qu
         InboxModule,
         QuestionnaireListPopupModule,
         QuestionnaireModule,
-        BookingMedicalRecordsModule,
-        BookingPrerscriptionModule,
+        BookingMedicalRecordsRXModule,
         InboxListModule,
         RecordsDatagridModule
     ],

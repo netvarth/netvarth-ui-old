@@ -10,7 +10,7 @@
         <div class="flx_8 video-head">
           <span class="jvideo-icon"></span>
         </div>
-        <div class="video-style">
+        <div class="videoname">
           Jaldee Video Call
         </div>
       </div>
@@ -38,11 +38,11 @@
     </div>
   </div>
   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 comm-box mgn-up-20">
-    <div class="disp-flex">
+    <div class="disp-flex mgn-bt-10">
       <div class="flx_8 whsp-head">
         <span class="wtsapvid-icon"></span>
       </div>
-      <div class="whsp-style">
+      <div class="videoname">
         Whatsapp Video Call
       </div>
     </div>
@@ -69,6 +69,13 @@
     </div>
   </div>
   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 comm-box mgn-up-20">
-    <div (click)="voiceCallConfirm()"> Voice Call</div>
+    <div class="disp-flex" (click)="voiceCallConfirm()">
+      <div class="flx_8 whsp-head">
+        <span class="phon-icon"></span>
+      </div>
+      <div class="videoname">
+        Voice Call
+      </div>
+    </div>
   </div>
 </div>

@@ -21,6 +21,7 @@ export class CommunicationPopupComponent implements OnInit {
   whatsappNumber;
   whatsappCountryCode;
   customerId;
+  number;
   constructor(public dialogRef: MatDialogRef<CommunicationPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private wordProcessor: WordProcessor,
@@ -32,10 +33,12 @@ export class CommunicationPopupComponent implements OnInit {
       this.whatsappCountryCode = this.data.waitlist.providerConsumer.whatsAppNum.countryCode;
       this.whatsappNumber = this.data.waitlist.providerConsumer.whatsAppNum.number;
       this.customerId = this.data.waitlist.providerConsumer.id;
+      this.number = this.data.waitlist.providerConsumer.countryCode + ' ' + this.data.waitlist.providerConsumer.phoneNo;
     } else if (this.data.type === 'checkin') {
       this.whatsappCountryCode = this.data.waitlist.waitlistingFor[0].whatsAppNum.countryCode;
       this.whatsappNumber = this.data.waitlist.waitlistingFor[0].whatsAppNum.number;
       this.customerId = this.data.waitlist.consumer.id;
+      this.number = this.data.waitlist.consumer.countryCode + ' ' + this.data.waitlist.consumer.phoneNo;
     } else if (this.data.type === 'donation') {
       this.whatsappCountryCode = this.data.waitlist.consumer.userProfile.whatsAppNum.countryCode;
       this.whatsappNumber = this.data.waitlist.consumer.userProfile.whatsAppNum.number;
@@ -43,6 +46,8 @@ export class CommunicationPopupComponent implements OnInit {
     } else {
       this.whatsappCountryCode = this.data.waitlist.whatsAppNum.countryCode;
       this.whatsappNumber = this.data.waitlist.whatsAppNum.number;
+      this.customerId = this.data.waitlist.id;
+      this.number = this.data.waitlist.countryCode + ' ' + this.data.waitlist.phoneNo;
     }
    
   }
@@ -79,6 +84,7 @@ export class CommunicationPopupComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.customerId = data[0].id;
+          this.number = data[0].countryCode + ' ' + data[0].phoneNo;
         });
   }
   dialogClose() {
@@ -117,23 +123,14 @@ export class CommunicationPopupComponent implements OnInit {
       });
   }
   voiceCallConfirm() {
-    let customerId;
-    let num;
-    if (this.data.type === 'appointment') {
-      customerId = this.data.waitlist.appmtFor[0].id;
-      num = this.data.waitlist.providerConsumer.countryCode + ' ' + this.data.waitlist.providerConsumer.phoneNo;
-    } else {
-      customerId = this.data.waitlist.waitlistingFor[0].id;
-      num = this.data.waitlist.consumer.countryCode + ' ' + this.data.waitlist.consumer.phoneNo;
-    }
     this.dialog.open(VoiceConfirmComponent, {
       width: '60%',
       height: '30%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        customerId: customerId,
-        customer: num,
+        customerId: this.customerId,
+        customer: this.number,
       }
     });
   }

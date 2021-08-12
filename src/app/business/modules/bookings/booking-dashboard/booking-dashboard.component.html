@@ -67,11 +67,11 @@
             </app-records-datagrid>
         </div>
         <div class="column">
-            <app-booking-medical-records [providerId]="providerId">
-            </app-booking-medical-records>
+            <app-booking-medical-records-rx [providerId]="providerId" [source]="'dashboard'" [type]="'mr'">
+            </app-booking-medical-records-rx>
         </div>
         <div class="column">
-            <app-booking-prescriptions></app-booking-prescriptions>
+            <app-booking-medical-records-rx [type]="'rx'"></app-booking-medical-records-rx>
         </div>
     </div>
 </div>

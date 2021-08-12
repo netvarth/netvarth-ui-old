@@ -27,7 +27,8 @@
 .card-body {
     padding: 12px 15px !important;
     height: 317px !important;
-    overflow: auto !important;
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
 }
 .card-body > div {
     display: flex !important;
@@ -42,7 +43,7 @@
     min-width: auto !important;
     max-width: none !important;
     margin-bottom: 6px !important;
-    padding: 5px 8px !important;
+    padding: 5px 8px;
     border: 1px solid #cdd1da !important;
     border-radius: 0.3rem !important;
 }
@@ -89,4 +90,12 @@
 .card-body .add-record .inner-card-text {
     color: #395789 !important;
     font-size: 10.5px !important;
+}
+.mrx .table-responsive1 {
+    overflow: auto !important;
+}
+.mrx .table-responsive1 td {
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    color: #717171 !important;
 }

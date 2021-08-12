@@ -6,8 +6,7 @@ import { UpcomingBookingsModule } from '../upcoming-bookings/upcoming-bookings.m
 import { RecordsDatagridModule } from '../records-datagrid/records-datagrid.module';
 import { BookingStatsModule } from '../booking-stats/booking-stats.module';
 import { BookingDocumentsModule } from '../booking-documents/booking-documents.module';
-import { BookingMedicalRecordsModule } from '../booking-medical-records/booking-medical-records.module';
-import { BookingPrerscriptionModule } from '../booking-prescriptions/booking-prescriptions.module';
+import { BookingMedicalRecordsRXModule } from '../booking-medical-records-rx/booking-medical-records-rx.module';
 import { BookingDashboardRoutingModule } from './booking-dashboard.routing.module';
 import { BookingFeedsModule } from '../booking-feeds/booking-feeds.module';
 import { BookingQuickActionsModule } from '../booking-quick-actions/booking-quick-actions.module';
@@ -25,8 +24,7 @@ import { BookingQuickActionsModule } from '../booking-quick-actions/booking-quic
     BookingFeedsModule,
     RecordsDatagridModule,
     BookingStatsModule,
-    BookingPrerscriptionModule,
-    BookingMedicalRecordsModule,
+    BookingMedicalRecordsRXModule,
     BookingDocumentsModule
   ],
   exports: [BookingDashboardComponent]

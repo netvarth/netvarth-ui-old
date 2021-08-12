@@ -3,22 +3,27 @@ import { NavigationExtras, Router } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 
 @Component({
-  selector: 'app-booking-medical-records',
-  templateUrl: './booking-medical-records.component.html',
-  styleUrls: ['./booking-medical-records.component.css']
+  selector: 'app-booking-medical-records-rx',
+  templateUrl: './booking-medical-records-rx.component.html',
+  styleUrls: ['./booking-medical-records-rx.component.css']
 })
-export class BookingMedicalRecordsComponent implements OnInit {
+export class BookingMedicalRecordsRXComponent implements OnInit {
   @Input() customerId;
   @Input() providerId;
   @Input() waitlist_data;
   @Input() source;
+  @Input() type;
   mrList: any = [];
+  rxList: any = [];
   loading = false;
+  waitlistmr: any = [];
   constructor(private provider_services: ProviderServices,
     private router: Router) { }
 
   ngOnInit(): void {
-    if (this.providerId || this.source || this.customerId || (this.waitlist_data && this.waitlist_data.waitlistStatus && this.waitlist_data.waitlistStatus !== 'blocked') || (this.waitlist_data && this.waitlist_data.apptStatus && this.waitlist_data.apptStatus !== 'blocked')) {
+    console.log('medical', this.source);
+    console.log(this.type);
+    if (this.source !== 'details' || (this.source === 'details' && (this.waitlist_data.waitlistStatus && this.waitlist_data.waitlistStatus !== 'blocked') || (this.waitlist_data.apptStatus && this.waitlist_data.apptStatus !== 'blocked'))) {
       this.getMedicalRecords();
     }
   }
@@ -34,6 +39,14 @@ export class BookingMedicalRecordsComponent implements OnInit {
     this.provider_services.GetMedicalRecordList(filter)
       .subscribe((data: any) => {
         this.mrList = data;
+        console.log('mr', this.mrList);
+        this.rxList = this.mrList.filter(mr => mr.prescriptionCreated);
+        console.log('rx', this.rxList);
+    if (this.source === 'details') {
+      const uuid = (this.waitlist_data.waitlistStatus) ? this.waitlist_data.ynwUuid : this.waitlist_data.uid;
+      this.waitlistmr = this.mrList.filter(mr => mr.uuid === uuid);
+      console.log('this.waitlistmr', this.waitlistmr)
+    }
         this.loading = false;
       });
   }
@@ -42,12 +55,6 @@ export class BookingMedicalRecordsComponent implements OnInit {
       let bookingId = (mr.uuid) ? mr.uuid : 0;
       this.router.navigate(['provider', 'customers', mr.providerConsumer.id, mr.bookingType, bookingId, 'medicalrecord', mr.id]);
     }
-    // let mrId = 0;
-    // const customerDetails = this.appt.appmtFor[0];
-    // const customerId = customerDetails.id;
-    // const bookingId = this.appt.uid;
-    // const bookingType = 'APPT';
-    // this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'clinicalnotes']);
   }
   gotoMrList() {
     const qparams = { 'calledfrom': 'list' };
