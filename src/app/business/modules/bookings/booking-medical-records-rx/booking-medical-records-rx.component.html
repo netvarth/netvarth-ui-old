@@ -6,7 +6,8 @@
     </div>
     <div class="card-body padding-tp-10 no-padding" *ngIf="!loading">
       <div>
-        <div class="add-record rounded-sm pointer-cursor" (click)="gotoMrDetails('add')" *ngIf="source!='details' || waitlistmr.length > 0">
+        <div class="add-record rounded-sm pointer-cursor" (click)="gotoMrDetails('add')"
+          *ngIf="source!='details' || (source=='details' && waitlistmr.length == 0)">
           <a class="inner-card-heading">
             Add Record
           </a>
@@ -16,7 +17,7 @@
         </div>
         <ng-container *ngIf="type == 'mr'">
           <div class="inner-card rounded-sm pointer-cursor" *ngFor="let mr of mrList" (click)="gotoMrDetails(mr)"
-            [class.greenc]="waitlistmr[0].uuid==mr.uuid">
+            [class.wtlstmr]="waitlistmr[0] && waitlistmr[0].uuid==mr.uuid">
             <a class="inner-card-heading">
               {{mr.mrNumber ? mr.mrNumber : ''}}
             </a>

@@ -42,11 +42,11 @@ export class BookingMedicalRecordsRXComponent implements OnInit {
         console.log('mr', this.mrList);
         this.rxList = this.mrList.filter(mr => mr.prescriptionCreated);
         console.log('rx', this.rxList);
-    if (this.source === 'details') {
-      const uuid = (this.waitlist_data.waitlistStatus) ? this.waitlist_data.ynwUuid : this.waitlist_data.uid;
-      this.waitlistmr = this.mrList.filter(mr => mr.uuid === uuid);
-      console.log('this.waitlistmr', this.waitlistmr)
-    }
+        if (this.source === 'details') {
+          const uuid = (this.waitlist_data.waitlistStatus) ? this.waitlist_data.ynwUuid : this.waitlist_data.uid;
+          this.waitlistmr = this.mrList.filter(mr => mr.uuid === uuid);
+          console.log('this.waitlistmr', this.waitlistmr)
+        }
         this.loading = false;
       });
   }

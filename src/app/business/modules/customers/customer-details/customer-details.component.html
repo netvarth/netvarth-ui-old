@@ -734,7 +734,8 @@
                                 <i class="fa fa-map-marker icon"></i>
                                 <span class="value">{{customer[0].address}}</span>
                             </div>
-                            <button class="btn create-prescription-button" (click)="showCommunications()">Communication</button>
+                            <button class="btn create-prescription-button"
+                                (click)="showCommunications()">Communication</button>
                         </div>
                     </div>
                 </div>
@@ -742,12 +743,14 @@
             <div class="cards-div">
                 <div class="col-xl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 mgn-bt-20 no-padding prt-10"
                     *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
-                    <app-booking-medical-records-rx [customerId]="customer[0].id" [source]="'customer-details'" [type]="'mr'">
+                    <app-booking-medical-records-rx [customerId]="customer[0].id" [source]="'customer-details'"
+                        [type]="'mr'">
                     </app-booking-medical-records-rx>
                 </div>
                 <div class="col-xl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 mgn-bt-20 no-padding plt-10"
                     *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
-                    <app-booking-medical-records-rx [type]="'rx'"></app-booking-medical-records-rx>
+                    <app-booking-medical-records-rx [customerId]="customer[0].id" [source]="'customer-details'"
+                        [type]="'rx'"></app-booking-medical-records-rx>
                 </div>
             </div>
         </div>
@@ -801,9 +804,6 @@
                     <i class="fa fa-external-link pointer-cursor" aria-hidden="true" (click)="gotoQnr()"></i>
                 </div>
                 <div class="qnr-hgt">
-                    <!-- <app-questionnaire [questionnaireList]="questionnaireList" [source]="'customer-details'"
-                        [type]="'details'" [customerDetails]="customer">
-                    </app-questionnaire> -->
                     <app-questionnaire-list-popup [source]="'customer-details'" [uid]="customer[0].id"
                         [type]="'details'" [waitlist_data]="customer">
                     </app-questionnaire-list-popup>

@@ -27,12 +27,14 @@
   <div class="appointments-and-doctors-row" *ngIf="!api_loading">
     <div class="column"
       *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
-      <app-booking-medical-records-rx [customerId]="customerId" [waitlist_data]="waitlist_data" [source]="'details'" [type]="'mr'">
+      <app-booking-medical-records-rx [customerId]="customerId" [waitlist_data]="waitlist_data" [source]="'details'"
+        [type]="'mr'">
       </app-booking-medical-records-rx>
     </div>
     <div class="column"
       *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
-      <app-booking-medical-records-rx [type]="'rx'"></app-booking-medical-records-rx>
+      <app-booking-medical-records-rx [customerId]="customerId" [waitlist_data]="waitlist_data" [source]="'details'"
+        [type]="'rx'"></app-booking-medical-records-rx>
     </div>
     <div class="column">
       <app-booking-bill [waitlist_data]="waitlist_data" [bookingType]="bookingType" [pos]="pos">

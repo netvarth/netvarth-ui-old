@@ -85,13 +85,12 @@
           class="btn mb-2 action-button" (click)="unBlockWaitlist()">
           <i class="fa fa-unlock-alt"></i>Unblock
         </a>
-        <a class="btn mb-2 action-button" (click)="showActionsPopup('status')"
-          *ngIf="showStatusChange">
+        <a class="btn mb-2 action-button" (click)="showActionsPopup('status')" *ngIf="showStatusChange">
           <i class="fa fa-exchange"></i>Status change
         </a>
       </div>
-      <div class="viewmore text-center" (click)="showActions()" *ngIf="showFirstSection"><a>View {{(showMoreActions) ? 'Less <<' : 'More >>'
-            }}</a>
+      <div class="viewmore text-center" (click)="showActions()" *ngIf="showFirstSection"><a>View {{(showMoreActions) ?
+          'Less <<' : 'More >>' }}</a>
       </div>
     </div>
     <div class="card-toolbar col-12 col-sm-12 col-lg-12 p-0 disp-grid mgn-up-10" *ngIf="showMoreActions">
