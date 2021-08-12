@@ -85,6 +85,11 @@
                         <div class="busname" *ngIf="servicename">{{servicename | capitalizeFirst}}<span class="deptname"
                                 *ngIf="deptname">({{deptname}})</span>
                         </div>
+                        <div class="outer1 line" *ngIf="servicedetails && servicedetails.description">
+                            <div class="des textitalic" *ngIf="servicedetails && servicedetails.description"
+                                [innerHTML]="servicedetails.description | nl2br">
+                            </div>
+                        </div>
                         <div class=" textitalic"
                             *ngIf="servicedetails && servicedetails.serviceDuration && !is_donation_serv">
                             <span>{{service_duration}} : {{HHMM}} </span>
