@@ -57,14 +57,14 @@
                         </div>
                         
                     </div>
-                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10">
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10" *ngIf="servicedetails">
                             <div class="service-icon pull-left"
                             *ngIf="servicedetails.serviceType == 'virtualService'">
                             <i class="fa phon-icon"
                                 *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Phone'"></i>
                             <i class="fa meet-icon"
                                 *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                            <i class="fa zoom-icon zoom1"
+                            <i class="fa zoom-icon "
                                 *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                             <i class="fa jvideo-icon jvideo-icon-m"
                                 *ngIf="servicedetails.virtualCallingModes  && servicedetails.virtualCallingModes[0].callingMode === 'VideoCall'"></i>

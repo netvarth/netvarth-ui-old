@@ -1032,11 +1032,8 @@ color: #1E4079 !important;
   /* height: 35px; */
 }
 .zoom-icon{
-  top: 0 !important;
-  padding-right: 0 !important;
-  /* margin-top: 3px !important; */
-  margin-right: 5px !important;
-}
+   padding-right: 0 !important;
+ }
 .zoom1{
   height: 35px;
 }
@@ -1049,5 +1046,10 @@ color: #1E4079 !important;
 @media(max-width: 450px) {
 .service-icon .phon-icon {
   width: 20px !important;
+}
+}
+@media(max-width: 450px) {
+.service-icon .zoom-icon {
+  width: 25px !important; 
 }
 }
