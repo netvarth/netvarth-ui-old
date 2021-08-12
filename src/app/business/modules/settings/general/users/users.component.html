@@ -182,7 +182,7 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button type="button" mat-menu-item data-toggle="modal" data-target="#exampleModalCenter"
+                <button *ngIf="group.status=='ACTIVE'" type="button" mat-menu-item data-toggle="modal" data-target="#exampleModalCenter"
                   (click)="editGroup(group)">
                   <i class="icon-edit chkin-mobic"></i>
                   Edit
@@ -222,7 +222,7 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button type="button" mat-menu-item data-toggle="modal" data-target="#exampleModalCenter"
+                <button  *ngIf="group.status=='ACTIVE'" type="button" mat-menu-item data-toggle="modal" data-target="#exampleModalCenter"
                   (click)="editGroup(group)">
                   <i class="icon-edit chkin-mobic"></i>
                   Edit

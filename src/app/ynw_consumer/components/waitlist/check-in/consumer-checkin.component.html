@@ -1330,7 +1330,7 @@
                                                 <span *ngIf="checkJcash" class="rupee-font">{{payAmount |
                                                     currency:'&#8377;'}}
                                                 </span> -->
-                                                <button type="button" (click)="saveCheckin('checkin')" id="stepThreeConfirmButton"  [disabled]="paymentBtnDisabled" class="next-button btn btn-primary font-weight-bold  px-12 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
+                                                <button type="button" appPreventDoubleClick (click)="saveCheckin('checkin')" id="stepThreeConfirmButton"  [disabled]="paymentBtnDisabled" class="next-button btn btn-primary font-weight-bold  px-12 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
                                                     <ng-container
                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
                                                       ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">

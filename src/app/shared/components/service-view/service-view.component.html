@@ -4,67 +4,76 @@
             <div class="panel panel-default">
                 <div class="panel-heading top-row">
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <a class="pull-left back-btn mgn-up-5" *ngIf="userId" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
+                        <a class="pull-left back-btn mgn-up-5" *ngIf="userId" (click)="goBack()"><i
+                                class="fa fa-arrow-left"></i></a>
                         &nbsp;
                     </div>
                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
-                        <app-header *ngIf="accountIdExists && sharedFunctionobj.checkLogin()" [includedfrom]="'pdetails'" [accountId]="accountId" [customId]="customId" [showHeaderAction]="true"></app-header>
-                        <div class="view-booking" *ngIf="accountIdExists && !sharedFunctionobj.checkLogin()" >
-                            <button class="pull-right btn btn-primary dashboard-btn" (click)="dashboardClicked()">My Bookings</button>
+                        <app-header *ngIf="accountIdExists && sharedFunctionobj.checkLogin()"
+                            [includedfrom]="'pdetails'" [accountId]="accountId" [customId]="customId"
+                            [showHeaderAction]="true"></app-header>
+                        <div class="view-booking" *ngIf="accountIdExists && !sharedFunctionobj.checkLogin()">
+                            <button class="pull-right btn btn-primary dashboard-btn" (click)="dashboardClicked()">My
+                                Bookings</button>
                         </div>
                     </div>
                 </div>
                 <!-- Cover Foto -->
-                <div *ngIf="bgCover" class="cvr-ht" [ngStyle]="{ 'background-image': (!profileSettings || (profileSettings && profileSettings['showCoverPicture'])) ? 'url(' + bgCover + ')': ''}">
+                <div *ngIf="bgCover" class="cvr-ht"
+                    [ngStyle]="{ 'background-image': (!profileSettings || (profileSettings && profileSettings['showCoverPicture'])) ? 'url(' + bgCover + ')': ''}">
                 </div>
                 <div class="panel-body">
-                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 headstyle">
-                    <div class="col-md-2 col-xs-12 col-sm-12 col-lg-2">
-                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" [ngClass]="{'cvr-dp-mgn': bgCover}">
-                            <img alt="Profile Image" src="{{bLogo}}" id="profile-image1"
-                                class="img-circle img-responsive cvr-dp pointer-cursor"
-                                [ngClass]="{'cvr-dp-bdr': bgCover}"
-                                (click)="galleryExists && openImageModalRow(image_list_popup[0])">
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 headstyle">
+                        <div class="col-md-2 col-xs-12 col-sm-12 col-lg-2">
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" [ngClass]="{'cvr-dp-mgn': bgCover}">
+                                <img alt="Profile Image" src="{{bLogo}}" id="profile-image1"
+                                    class="img-circle img-responsive cvr-dp pointer-cursor"
+                                    [ngClass]="{'cvr-dp-bdr': bgCover}"
+                                    (click)="galleryExists && openImageModalRow(image_list_popup[0])">
+                            </div>
                         </div>
-                        
-                    </div>
-                    <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8 mgn-bt-10 no-padding bus-title-content"
-                        *ngIf="businessjson">
-                        <div class="col-md-10 col-xs-12 col-sm-12 col-lg-11 no-padding"
-                            *ngIf="(!profileSettings || (profileSettings && profileSettings['showSpecialization'] || profileSettings['showProfile']))">
-                            <div class="no-padding right-padding-md-15"
-                                [ngClass]="{'col-md-12 col-sm-12':(businessjson.verifyLevel == 'BASIC' ||
+                        <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8 mgn-bt-10 no-padding bus-title-content"
+                            *ngIf="businessjson">
+                            <div class="col-md-10 col-xs-12 col-sm-12 col-lg-11 no-padding"
+                                *ngIf="(!profileSettings || (profileSettings && profileSettings['showSpecialization'] || profileSettings['showProfile']))">
+                                <div class="no-padding right-padding-md-15"
+                                    [ngClass]="{'col-md-12 col-sm-12':(businessjson.verifyLevel == 'BASIC' ||
                             businessjson.verifyLevel == 'BASIC_PLUS' || businessjson.verifyLevel == 'ADVANCED')?true:false}">
-                                <h3 class="business-name" *ngIf="businessjson.businessName">{{businessjson.businessName
-                                    | capitalizeFirst}}
-                                </h3>
-                                <h3 class="font_user_size business-user-name" *ngIf="businessjson.businessUserName">
-                                    {{businessjson.businessUserName | capitalizeFirst}}
-                                </h3>
-                                <div class="address col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-5 no-padding single-loc"
-                                    *ngIf="locationjson && locationjson.length > 0">  
-                                    <span   *ngIf="locationjson.length == 1" class="locbtn"><a [href]="selectedLocation.googleMapUrl"
-                                        target="_blank" *ngIf="selectedLocation.googleMapUrl!=''"><i class="fa fa-map-marker takeTourTitle mgn-rt-10"></i></a>{{selectedLocation.place | capitalizeFirst}}</span> 
-                                   <div  class="locbtn" *ngIf="locationjson.length > 1"><a [href]="selectedLocation.googleMapUrl"
-                                    target="_blank" *ngIf="selectedLocation.googleMapUrl!=''"><i class="fa fa-map-marker takeTourTitle mgn-rt-10"></i></a>
-                                    <select class="selectbxstyle">
-                                            <option *ngFor="let loc of locationjson" (click)="changeLocation(loc)">{{loc.place}}</option>
-                                            </select></div>
-                                            
+                                    <h3 class="business-name" *ngIf="businessjson.businessName">
+                                        {{businessjson.businessName
+                                        | capitalizeFirst}}
+                                    </h3>
+                                    <h3 class="font_user_size business-user-name" *ngIf="businessjson.businessUserName">
+                                        {{businessjson.businessUserName | capitalizeFirst}}
+                                    </h3>
+                                    <div class="address col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-5 no-padding single-loc"
+                                        *ngIf="locationjson && locationjson.length > 0">
+                                        <span *ngIf="locationjson.length == 1" class="locbtn"><a
+                                                [href]="selectedLocation.googleMapUrl" target="_blank"
+                                                *ngIf="selectedLocation.googleMapUrl!=''"><i
+                                                    class="fa fa-map-marker takeTourTitle mgn-rt-10"></i></a>{{selectedLocation.place
+                                            | capitalizeFirst}}</span>
+                                        <div class="locbtn" *ngIf="locationjson.length > 1"><a
+                                                [href]="selectedLocation.googleMapUrl" target="_blank"
+                                                *ngIf="selectedLocation.googleMapUrl!=''"><i
+                                                    class="fa fa-map-marker takeTourTitle mgn-rt-10"></i></a>
+                                            <select class="selectbxstyle">
+                                                <option *ngFor="let loc of locationjson" (click)="changeLocation(loc)">
+                                                    {{loc.place}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            </div>
                         </div>
-                        
                     </div>
-                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10">
-                            <div class="service-icon pull-left"
-                            *ngIf="servicedetails.serviceType == 'virtualService'">
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10" *ngIf="servicedetails">
+                        <div class="service-icon pull-left" *ngIf="servicedetails.serviceType == 'virtualService'">
                             <i class="fa phon-icon"
                                 *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Phone'"></i>
                             <i class="fa meet-icon"
                                 *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                            <i class="fa zoom-icon zoom1"
+                            <i class="fa zoom-icon "
                                 *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                             <i class="fa jvideo-icon jvideo-icon-m"
                                 *ngIf="servicedetails.virtualCallingModes  && servicedetails.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
@@ -73,459 +82,134 @@
                             <i class="fa wtsapvid-icon"
                                 *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'WhatsApp' && servicedetails.virtualServiceType === 'videoService'"></i>
                         </div>
-                            <div class="busname" *ngIf="servicename" >{{servicename | capitalizeFirst}}<span class="deptname" *ngIf="deptname">({{deptname}})</span>
-                                </div>
-                                <div class=" textitalic"
+                        <div class="busname" *ngIf="servicename">{{servicename | capitalizeFirst}}<span class="deptname"
+                                *ngIf="deptname">({{deptname}})</span>
+                        </div>
+                        <div class="outer1 line" *ngIf="servicedetails && servicedetails.description">
+                            <div class="des textitalic" *ngIf="servicedetails && servicedetails.description"
+                                [innerHTML]="servicedetails.description | nl2br">
+                            </div>
+                        </div>
+                        <div class=" textitalic"
                             *ngIf="servicedetails && servicedetails.serviceDuration && !is_donation_serv">
-                                <span>{{service_duration}} : {{HHMM}} </span>                           
+                            <span>{{service_duration}} : {{HHMM}} </span>
                         </div>
-                                <div class="outer1 line" *ngIf="servicedetails && servicedetails.description">
-                                    <div class="des textitalic" *ngIf="servicedetails && servicedetails.description"
-                                        [innerHTML]="servicedetails.description | nl2br">
-                                    </div>
-                                </div>
-                                <div class="outer3"
-                        *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0">
-                        <div class="textitalic">
-                            <span class="data-label">{{sector =='healthCare' ? 'Consultation' : '
-                                Service'}} Fee : </span>
-                            <span style="font-weight: bold" class="rupee-font data-value">
-                                <i class='fa fa-inr'></i>{{servicedetails.totalAmount | currency:
-                                '':''}}
-                            </span>
+                        <div class="outer1 line" *ngIf="servicedetails && servicedetails.description">
+                            <div class="des textitalic" *ngIf="servicedetails && servicedetails.description"
+                                [innerHTML]="servicedetails.description | nl2br">
+                            </div>
                         </div>
-                    </div>
-                                <div class="outer4"
-                                *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount != servicedetails.totalAmount">
-                                <div class=" textitalic">
-                                    <span class="data-label">Advance Payment : </span>
-                                    <span style="font-weight: bold" class="rupee-font data-value">
-                                        <i class="fa fa-inr"></i>{{servicedetails.minPrePaymentAmount |
-                                        currency: '':''}}
-                                    </span>
-                                </div>
+                        <div class="outer3"
+                            *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0">
+                            <div class="textitalic">
+                                <span class="data-label">{{sector =='healthCare' ? 'Consultation' : '
+                                    Service'}} Fee : </span>
+                                <span style="font-weight: bold" class="rupee-font data-value">
+                                    <i class='fa fa-inr'></i>{{servicedetails.totalAmount | currency:
+                                    '':''}}
+                                </span>
                             </div>
-                            <div class="outer1 line" *ngIf="servicedetails && servicedetails.priceDynamic && servicedetails.paymentDescription">
-                                <div class="des textitalic" *ngIf="servicedetails && servicedetails.paymentDescription"
-                                    [innerHTML]="servicedetails.paymentDescription | nl2br">
-                                </div>
+                        </div>
+                        <div class="outer4"
+                            *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount != servicedetails.totalAmount">
+                            <div class=" textitalic">
+                                <span class="data-label">Advance Payment : </span>
+                                <span style="font-weight: bold" class="rupee-font data-value">
+                                    <i class="fa fa-inr"></i>{{servicedetails.minPrePaymentAmount |
+                                    currency: '':''}}
+                                </span>
                             </div>
-                            <div class="outer5 donation" *ngIf="servicedetails && is_donation_serv">
-                                    <div class=" textitalic">
-                                        <span class="data-label">Min amount : </span>
-                                        <span class="data-value" *ngIf="servicedetails && servicedetails.minValue"
-                                            style="font-weight: bold">
-                                            {{servicedetails.minValue}}
-                                        </span>
-                                        <span *ngIf="servicedetails && servicedetails.minDonationAmount"
-                                            style="font-weight: bold" class="rupee-font data-value">
-                                            <i class="fa fa-inr"></i> {{servicedetails.minDonationAmount}}
-                                        </span>
-                                    </div>
-                                </div>
-                    
-                            
-                        
-                    <div class="textitalic tax" *ngIf="servicedetails && servicedetails.taxable">
+                        </div>
+                        <div class="outer1 line"
+                            *ngIf="servicedetails && servicedetails.priceDynamic && servicedetails.paymentDescription">
+                            <div class="des textitalic" *ngIf="servicedetails && servicedetails.paymentDescription"
+                                [innerHTML]="servicedetails.paymentDescription | nl2br">
+                            </div>
+                        </div>
+                        <div class="outer5 donation" *ngIf="servicedetails && is_donation_serv">
+                            <div class=" textitalic">
+                                <span class="data-label">Min amount : </span>
+                                <span class="data-value" *ngIf="servicedetails && servicedetails.minValue"
+                                    style="font-weight: bold">
+                                    {{servicedetails.minValue}}
+                                </span>
+                                <span *ngIf="servicedetails && servicedetails.minDonationAmount"
+                                    style="font-weight: bold" class="rupee-font data-value">
+                                    <i class="fa fa-inr"></i> {{servicedetails.minDonationAmount}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="textitalic tax" *ngIf="servicedetails && servicedetails.taxable">
                             <span class="data-label">Tax Applicable : </span>
                             <span style="font-weight: bold" class="data-value">
                                 Yes
                             </span>
                         </div>
                         <div class="outer5 donation" *ngIf="servicedetails && is_donation_serv">
-                                <div class="textitalic">
-                                    <span class="data-label">Max amount : </span>
-                                    <span class="data-value" *ngIf="servicedetails && servicedetails.maxValue"
-                                        style="font-weight: bold">
-                                        {{servicedetails.maxValue}}
-                                    </span>
-                                    <span *ngIf="servicedetails && servicedetails.maxDonationAmount"
-                                        style="font-weight: bold" class="rupee-font data-value">
-                                        <i class="fa fa-inr"></i> {{servicedetails.maxDonationAmount}}
-                                    </span>
-                                </div>
+                            <div class="textitalic">
+                                <span class="data-label">Max amount : </span>
+                                <span class="data-value" *ngIf="servicedetails && servicedetails.maxValue"
+                                    style="font-weight: bold">
+                                    {{servicedetails.maxValue}}
+                                </span>
+                                <span *ngIf="servicedetails && servicedetails.maxDonationAmount"
+                                    style="font-weight: bold" class="rupee-font data-value">
+                                    <i class="fa fa-inr"></i> {{servicedetails.maxDonationAmount}}
+                                </span>
                             </div>
-                            <div>
-                                    <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-                                   
-                            <ng-container  *ngIf="servicesAndProviders && servicesAndProviders.length >0 && !loading">
-                                    <div class="card change" *ngFor="let sp of servicesAndProviders" >
-                                            <div class="card-body">
-                                                    <div class="service-details">
-                                                           
-                                                           
-                                                            <p class="card-text peopleAhead font-normal" *ngIf="sp.type =='waitlist' && personsAheadText">{{personsAheadText}}</p>
-                                                            <p class="card-text emptySpace" *ngIf="sp.type =='appt'"></p>
-                                                            <p class="card-text emptySpace" *ngIf="sp.type =='waitlist' && !personsAheadText"></p>
-                                                            <p class="card-text availability"
-                                                                    *ngIf="timings && sp.type =='waitlist'">{{timingCaption}}
-                                                                    <br /><b>{{timings}}</b>
-                                                        </p>
-                                                                <p class="card-text availability"
-                                                                    *ngIf="timingsapt && sp.type =='appt'">{{timingCaptionapt}}
-                                                                    <br /><b>{{timingsapt}}</b>
-                                                    </p>
-                                                            <p class="card-text emptyheght" *ngIf="!timings && sp.type =='waitlist'"></p>
-                                                            <p class="card-text emptyheght" *ngIf="!timingsapt && sp.type =='appt'"></p>
-                                                           
-                                                            <div class="service-buttons">
-                                                            <button class="btn actionbtn btn-outline-warning" type="button"
-                                                                    (click)="bttonClick(sp)">{{getButtontype(sp)}}</button>
-                                                            </div>
-                                                        </div>
-                                                    <!-- <div class="textcentr cardtext">
-                                                            <p class="card-text peopleAhead font-normal"
-                                                                *ngIf="sp.type =='waitlist' && personsAheadText">{{personsAheadText}}</p>
-                                                            <p class="card-text peopleAhead font-normal"
-                                                                *ngIf="!personsAheadText"></p>
-                                                                <p class="card-text peopleAhead font-normal"
-                                                                *ngIf="sp.type =='appt'"></p>
-                                                        </div>
-                                                        <div class="textcentr cardtext ">
-                                                                <p class="card-text availability"
-                                                                    *ngIf="timings && sp.type =='waitlist'">{{timingCaption}}
-                                                                    <br /><b>{{timings}}</b>
-                                                        </p>
-                                                                <p class="card-text availability"
-                                                                    *ngIf="timingsapt && sp.type =='appt'">{{timingCaptionapt}}
-                                                                    <br /><b>{{timingsapt}}</b>
-                                                    </p>
-                                                    <p class="card-text availability " *ngIf="!timings && sp.type =='waitlist'"></p> 
-                                                            </div>
-                                                            
-                                                         <div class="textcentr cardtext">  <button
-                                                            class="btn actionbtn btn-outline-warning" type="button"
-                                                            (click)="bttonClick(sp)">{{getButtontype(sp)}}</button></div>  -->
+                        </div>
+                        <div>
+                            <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                            <ng-container *ngIf="servicesAndProviders && servicesAndProviders.length >0 && !loading">
+                                <div class="card change" *ngFor="let sp of servicesAndProviders">
+                                    <div class="card-body">
+                                        <div class="service-details">
+                                            <p class="card-text peopleAhead font-normal"
+                                                *ngIf="sp.type =='waitlist' && personsAheadText">{{personsAheadText}}
+                                            </p>
+                                            <p class="card-text emptySpace" *ngIf="sp.type =='appt'"></p>
+                                            <p class="card-text emptySpace"
+                                                *ngIf="sp.type =='waitlist' && !personsAheadText"></p>
+                                            <p class="card-text availability" *ngIf="timings && sp.type =='waitlist'">
+                                                {{timingCaption}}
+                                                <br /><b>{{timings}}</b>
+                                            </p>
+                                            <p class="card-text availability" *ngIf="timingsapt && sp.type =='appt'">
+                                                {{timingCaptionapt}}
+                                                <br /><b>{{timingsapt}}</b>
+                                            </p>
+                                            <p class="card-text emptyheght" *ngIf="!timings && sp.type =='waitlist'">
+                                            </p>
+                                            <p class="card-text emptyheght" *ngIf="!timingsapt && sp.type =='appt'"></p>
+                                            <div class="service-buttons">
+                                                <button class="btn actionbtn btn-outline-warning" type="button"
+                                                    (click)="bttonClick(sp)">{{getButtontype(sp)}}</button>
                                             </div>
-                                          </div>
-                                    <!-- <div *ngFor="let sp of servicesAndProviders">
-                                        <div
-                                            class="pad-10 col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-20 divshadow ">
-                                            <div class="col-xs-7 col-md-5">
-                                                <div class="mgn-bt-10">
-                                                    <span class="card-text peopleAhead font-normal"
-                                                        *ngIf="sp.type =='waitlist' && personsAheadText">{{personsAheadText}}</span>
-                                                    <span class="card-text emptySpace"
-                                                        *ngIf="sp.type!='donation' && !personsAheadText"></span>
-                                                </div>
-                                                <div>
-                                                    <span class="card-text availability"
-                                                        *ngIf="timings && sp.type =='waitlist'">{{timingCaption}}
-                                                        <br /><b>{{timings}}</b>
-                                                    </span>
-                                                    <span class="card-text availability"
-                                                        *ngIf="timingsapt && sp.type =='appt'">{{timingCaptionapt}}
-                                                        <br /><b>{{timingsapt}}</b>
-                                                    </span>
-                                                    <span class="card-text availability" *ngIf="!timings"></span>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-7 col-xs-5 mgn-up-10 no-padding"><button
-                                                    class="btn actionbtn btn-outline-warning" type="button"
-                                                    (click)="bttonClick(sp)">{{getButtontype(sp)}}</button></div>
                                         </div>
-                                    </div> -->
-                                </ng-container>
-                                <ng-container *ngIf="donationServices && donationServices.length >0 && !loading">
-                                        <div class="card donatechange" *ngFor="let sp of donationServices" >
-                                                <div class="card-body">
-                                                        <!-- <p class="card-text donationAmount" *ngIf="item.type=='donation'">
-                                                                <span class="rupee-font bold">Donate <i class="fa fa-inr"></i> {{service.minDonationAmount}}</span>
-                                                                <span class="rupee-font bold" *ngIf="service.maxDonationAmount != service.minDonationAmount"> or more</span>
-                                                            </p> -->
-                                                           
-                                                            <div class="textcentr cardtext ">
-                                                                    <span class="rupee-font bold">Donate <i class="fa fa-inr"></i> {{sp.item.minDonationAmount}}</span>
-                                                                    <span class="rupee-font bold" *ngIf="sp.item.maxDonationAmount != sp.item.minDonationAmount"> or more</span>
-                                                                  </div>
-                                                                  <div class="textcentr cardtext fixhght"></div>
-                                                             <div class="textcentr">  <button
-                                                                class="btn actionbtn btn-outline-warning" type="button"
-                                                                (click)="bttonClick(sp)">{{getButtontype(sp)}}</button></div> 
-                                                </div>
-                                              </div>
-                                </ng-container>
-                              
-                            </div>
-                            </div>
-                    
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="donationServices && donationServices.length >0 && !loading">
+                                <div class="card donatechange" *ngFor="let sp of donationServices">
+                                    <div class="card-body">
+                                        <div class="textcentr cardtext ">
+                                            <span class="rupee-font bold">Donate <i class="fa fa-inr"></i>
+                                                {{sp.item.minDonationAmount}}</span>
+                                            <span class="rupee-font bold"
+                                                *ngIf="sp.item.maxDonationAmount != sp.item.minDonationAmount"> or
+                                                more</span>
+                                        </div>
+                                        <div class="textcentr cardtext fixhght"></div>
+                                        <div class="textcentr"> <button class="btn actionbtn btn-outline-warning"
+                                                type="button" (click)="bttonClick(sp)">{{getButtontype(sp)}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        
-       
     </div>
 </section>
-
-
-<!-- <app-consumer-footer></app-consumer-footer> -->
-<!-- <section class="service-view-glb" *ngIf="!loading_direct" [ngClass]="accountProperties?accountProperties['theme']:''">
-    <mat-toolbar class="mat-elevation-z8">
-        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-            <a *ngIf="source" lass="pull-left back-btn mgn-up-5" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
-            &nbsp;
-            <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
-                <mat-icon *ngIf="!sidenav.opened">
-                    menu
-                </mat-icon>
-                <mat-icon *ngIf="sidenav.opened">
-                    close
-                </mat-icon>
-            </button>
-        </div>
-        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
-        </div>
-    </mat-toolbar>
-    <app-common-innerloading-spinner *ngIf="loading_direct"></app-common-innerloading-spinner>
-    <mat-sidenav-container>
-        <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-            <div *ngIf="!loading_direct">
-                <img class="avatar mat-elevation-z8" src="{{bLogo}}" />
-                <hr />
-                <h6 class="business-name" *ngIf="businessjson.businessName">{{businessjson.businessName
-                    | capitalizeFirst}}
-                </h6>
-                <h6 class="font_user_size business-user-name" *ngIf="businessjson.businessUserName">
-                    {{businessjson.businessUserName | capitalizeFirst}}
-                </h6>
-                <hr />
-                <button *ngFor="let loc of locationjson" mat-button class="menu-button"
-                    [ngClass]="{'active': selectedLocation.id === loc.id}" (click)="changeLocation(loc)">
-                    <a [href]="selectedLocation.googleMapUrl" target="_blank"
-                        *ngIf="selectedLocation.googleMapUrl!=''"><i class="fa fa-map-marker mgn-rt-10"></i></a>
-                    <span>{{loc.place}}</span>
-                </button>
-            </div>
-        </mat-sidenav>
-        <mat-sidenav-content>
-            <div class="panel-body">
-                <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 panel no-padding alice" *ngIf="!loading">
-                    <div class=" col-md-12 col-xs-12 col-sm-12 no-padding">
-                        <div class="modal-body service-detail-content service-popup-content">
-                            <div class="servicedet_outer" *ngIf="servicedetails && servicedetails.name !==''">
-                                    <div class=" col-md-12 col-xs-12 col-sm-12" *ngIf="!small_device_display">
-                                <div class=" col-md-6 col-xs-12 col-sm-6">
-                                        <div class="busname" *ngIf="servicename" [innerHTML]="servicename | capitalizeFirst">
-                                            </div>
-                                            <div class="deptname" *ngIf="deptname">({{deptname}})</div>
-                                            <div class="outer1 line" *ngIf="servicedetails && servicedetails.description">
-                                                <div class="description" *ngIf="servicedetails && servicedetails.description"
-                                                    [innerHTML]="servicedetails.description | nl2br">
-                                                </div>
-                                            </div>
-                                            <div class="outer4"
-                                            *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount != servicedetails.totalAmount">
-                                            <div class="prepayment">
-                                                <span class="data-label">Advance Payment : </span>
-                                                <span style="font-weight: bold" class="rupee-font data-value">
-                                                    <i class="fa fa-inr"></i>{{servicedetails.minPrePaymentAmount |
-                                                    currency: '':''}}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="outer5 donation" *ngIf="servicedetails && is_donation_serv">
-                                                <div class="duration">
-                                                    <span class="data-label">Min amount : </span>
-                                                    <span class="data-value" *ngIf="servicedetails && servicedetails.minValue"
-                                                        style="font-weight: bold">
-                                                        {{servicedetails.minValue}}
-                                                    </span>
-                                                    <span *ngIf="servicedetails && servicedetails.minDonationAmount"
-                                                        style="font-weight: bold" class="rupee-font data-value">
-                                                        <i class="fa fa-inr"></i> {{servicedetails.minDonationAmount}}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                </div>
-                                <div class=" col-md-6 col-xs-12 col-sm-6">
-                                        <div class="outer5 service-duration"
-                                        *ngIf="servicedetails && servicedetails.serviceDuration && !is_donation_serv">
-                                        <div class="duration">
-                                            <span>{{service_duration}} : </span>
-                                            <span style="font-weight: bold">
-                                                {{HHMM}}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="outer3"
-                                    *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0">
-                                    <div class="duration">
-                                        <span class="data-label"> {{(sector =='healthCare') ? 'Consultation' : '
-                                            Service'}} Fee : </span>
-                                        <span style="font-weight: bold" class="rupee-font data-value">
-                                            <i class='fa fa-inr'></i>{{servicedetails.totalAmount | currency:
-                                            '':''}}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="outer4 tax" *ngIf="servicedetails && servicedetails.taxable">
-                                        <span class="data-label">Tax Applicable : </span>
-                                        <span style="font-weight: bold" class="data-value">
-                                            Yes
-                                        </span>
-                                    </div>
-                                    <div class="outer5 donation" *ngIf="servicedetails && is_donation_serv">
-                                            <div class="duration">
-                                                <span class="data-label">Max amount : </span>
-                                                <span class="data-value" *ngIf="servicedetails && servicedetails.maxValue"
-                                                    style="font-weight: bold">
-                                                    {{servicedetails.maxValue}}
-                                                </span>
-                                                <span *ngIf="servicedetails && servicedetails.maxDonationAmount"
-                                                    style="font-weight: bold" class="rupee-font data-value">
-                                                    <i class="fa fa-inr"></i> {{servicedetails.maxDonationAmount}}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                    <div class="outer" *ngIf="small_device_display">
-                                        <div class="busname" *ngIf="servicename" [innerHTML]="servicename | capitalizeFirst">
-                                        </div>
-                                        <div class="deptname" *ngIf="deptname">({{deptname}})</div>
-                                        <div class="outer1 line" *ngIf="servicedetails && servicedetails.description">
-                                            <div class="description" *ngIf="servicedetails && servicedetails.description"
-                                                [innerHTML]="servicedetails.description | nl2br">
-                                            </div>
-                                        </div>
-                                        <div 
-                                            *ngIf="servicedetails && servicedetails.serviceDuration && !is_donation_serv">
-                                            <div class="duration">
-                                                <span>{{service_duration}} : </span>
-                                                <span style="font-weight: bold">
-                                                    {{HHMM}}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div 
-                                            *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0">
-                                            <div class="duration">
-                                                <span class="data-label"> {{(sector =='healthCare') ? 'Consultation' : '
-                                                    Service'}} Fee : </span>
-                                                <span style="font-weight: bold" class="rupee-font data-value">
-                                                    <i class='fa fa-inr'></i>{{servicedetails.totalAmount | currency:
-                                                    '':''}}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div 
-                                            *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount != servicedetails.totalAmount">
-                                            <div class="prepayment">
-                                                <span class="data-label">Advance Payment : </span>
-                                                <span style="font-weight: bold" class="rupee-font data-value">
-                                                    <i class="fa fa-inr"></i>{{servicedetails.minPrePaymentAmount |
-                                                    currency: '':''}}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="tax" *ngIf="servicedetails && servicedetails.taxable">
-                                            <span class="data-label">Tax Applicable : </span>
-                                            <span style="font-weight: bold" class="data-value">
-                                                Yes
-                                            </span>
-                                        </div>
-                                        <div  *ngIf="servicedetails && servicedetails.prePayment">
-                                            <div class="prepayment">
-                                                <span class="data-label">{{prepayment_amount}} : </span>
-                                                <span style="font-weight: bold" class="rupee-font data-value">
-                                                    <i class="fa fa-inr"></i>{{servicedetails.minAmount | currency: '':''}}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div  *ngIf="servicedetails && is_donation_serv">
-                                            <div class="duration">
-                                                <span class="data-label">Min amount : </span>
-                                                <span class="data-value" *ngIf="servicedetails && servicedetails.minValue"
-                                                    style="font-weight: bold">
-                                                    {{servicedetails.minValue}}
-                                                </span>
-                                                <span *ngIf="servicedetails && servicedetails.minDonationAmount"
-                                                    style="font-weight: bold" class="rupee-font data-value">
-                                                    <i class="fa fa-inr"></i> {{servicedetails.minDonationAmount}}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div  *ngIf="servicedetails && is_donation_serv">
-                                            <div class="duration">
-                                                <span class="data-label">Max amount : </span>
-                                                <span class="data-value" *ngIf="servicedetails && servicedetails.maxValue"
-                                                    style="font-weight: bold">
-                                                    {{servicedetails.maxValue}}
-                                                </span>
-                                                <span *ngIf="servicedetails && servicedetails.maxDonationAmount"
-                                                    style="font-weight: bold" class="rupee-font data-value">
-                                                    <i class="fa fa-inr"></i> {{servicedetails.maxDonationAmount}}
-                                                </span>
-                                            </div>
-                                        </div>
-                                      
-                                    </div> 
-
-                                    <div class=" col-md-12 col-xs-12 col-sm-12 ">
-                                    
-                                    <div class="mgn-up-10 mgn-lt-15"
-                                        *ngIf="servicedetails && servicedetails.minPrePaymentAmount == servicedetails.totalAmount">
-                                        Note: {{(sector=='healthCare') ? 'Consultation' : ' Service'}} fee should be
-                                        paid in advance while
-                                        booking.
-                                    </div>
-                                </div>
-                               
-                            </div>
-
-                        </div>
-                        <hr>
-                        <ng-container>
-                            <div *ngFor="let sp of servicesAndProviders">
-                                <div
-                                    class="pad-10 col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-20 divshadow ">
-                                    <div class="col-xs-7 col-md-5">
-                                        <div class="mgn-bt-10">
-                                            <span class="card-text peopleAhead font-normal"
-                                                *ngIf="sp.type =='waitlist' && personsAheadText">{{personsAheadText}}</span>
-                                            <span class="card-text emptySpace"
-                                                *ngIf="sp.type!='donation' && !personsAheadText"></span>
-                                        </div>
-                                        <div>
-                                            <span class="card-text availability"
-                                                *ngIf="timings && sp.type =='waitlist'">{{timingCaption}}
-                                                <br /><b>{{timings}}</b>
-                                            </span>
-                                            <span class="card-text availability"
-                                                *ngIf="timingsapt && sp.type =='appt'">{{timingCaptionapt}}
-                                                <br /><b>{{timingsapt}}</b>
-                                            </span>
-                                            <span class="card-text availability" *ngIf="!timings"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-7 col-xs-5 mgn-up-10 no-padding"><button
-                                            class="btn actionbtn btn-outline-warning" type="button"
-                                            (click)="bttonClick(sp)">{{getButtontype(sp)}}</button></div>
-                                </div>
-                            </div>
-                        </ng-container>
-                        <ng-container *ngIf="donationServices && donationServices.length >0">
-                            <div class="buttonsty" *ngFor="let sp of donationServices">
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-bt-10 divshadow centralign">
-                                    
-                                        <button class="btn actionbtn " type="button"
-                                            (click)="bttonClick(sp)">{{getButtontype(sp)}}</button> 
-                                       
-                                </div>
-                            </div>
-                        </ng-container>
-                    </div>
-                    <div class=" col-md-12 col-xs-12 col-sm-12 centralign">
-                    <div  class="mgn-up-10 mgn-lt-15" *ngIf="servicedetails.preInfoEnabled" >Pre Instruction
-                        <div class="infocolor"  *ngIf="servicedetails.preInfoEnabled" >
-                                <span *ngIf="servicedetails.preInfoTitle">{{servicedetails.preInfoTitle}}</span>
-                                <p *ngIf="servicedetails.preInfoText">{{servicedetails.preInfoText}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
-</section> -->

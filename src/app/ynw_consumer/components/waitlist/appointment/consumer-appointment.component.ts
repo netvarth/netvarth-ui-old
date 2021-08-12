@@ -1351,8 +1351,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                                 _this.userPhone = _this.userData.userProfile.primaryMobileNo || '';
                             }
                         }
+          
                         if (_this.userData.userProfile.email) {
-                            _this.waitlist_for[0]['email'] =_this.payEmail=_this.newEmail= _this.userData.userProfile.email;
+                           _this.payEmail=_this.newEmail= _this.userData.userProfile.email;
        
                         }
                         if (_this.userEmail) {

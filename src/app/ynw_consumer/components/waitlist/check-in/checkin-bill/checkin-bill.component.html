@@ -49,52 +49,59 @@
                                                             </button>
                                                         </div>
                                                         <div id="receipt" class="receipt">
+                                                                
                                                             <div class="bill-header mgn-up-50" *ngIf="!showPaidlist">
-                                                                <div class="section-one">
+                                                                <div class="section-one" *ngIf="splocation">
                                                                     <h3>{{bname | capitalizeFirst}}</h3>
-                                                                    <div class="details">
-                                                                        <span class="columns"> <span
-                                                                                *ngFor="let user of checkin.waitlistingFor">
-                                                                                {{user.firstName | capitalizeFirst}}
-                                                                                {{user.lastName | capitalizeFirst}}
-                                                                            </span></span>
-                                                                        <span class="columns rightalign"><span
-                                                                                class="dynamic">{{billdate | date:newDateFormat_date}}
-                                                                                {{billtime}}</span>
-                                                                        </span> <span class="columns"
-                                                                            *ngIf="billnumber"> <span
-                                                                                class="dynamic">{{bill_no_cap}} </span>
-                                                                            <span class="dynamic">{{billnumber}}</span>
-                                                                        </span> <span class="columns rightalign">
-                                                                            <span class="dynamic"
-                                                                                *ngIf="gstnumber">{{gstin_cap}} </span>
-                                                                            <span class="dynamic" *ngIf="gstnumber">{{gstnumber |
-                                                                                capitalizeFirst}}</span>
-                                                                                <span  class="columns mgn-up-10 rightalign" *ngIf="splocation && !gstnumber">
-                                                                                    <span class="dynamic">{{splocation}}</span>
-                                                                                    <span class="icon-location"></span>
-                                                                                </span>
-                                                                        </span>
-                                                                       
-                                                                        <span class="columns mgn-up-10"
-                                                                            *ngIf="checkin.provider">
-                                                                            <span class="dynamic">{{getTerminologyTerm('provider')
-                                                                                |
-                                                                                capitalizeFirst}}: </span>
-                                                                            <span
-                                                                                class="dynamic">
-                                                                                <!-- {{checkin.provider.businessName}} -->
-                                                                                {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
-                                                                                    + ' ' + checkin.provider.lastName}}</span>
-                                                                        </span>
-                                                                        <span  class="columns mgn-up-10" [ngClass]="{'rightalign': checkin.provider}" *ngIf="splocation && gstnumber">
-                                                                            <span class="dynamic">{{splocation}}</span>
+                                                                    <span class="align-margin">{{splocation}}
                                                                             <span class="icon-location"></span>
-                                                                        </span>
-                                                                        <div class="col-md-12 col-sm-12 col-lg-12 no-padding red"
-                                                                            *ngIf="bill_data.billStatus == 'Cancel'">
-                                                                            Cancelled</div>
-                                                                    </div>
+                                                                    </span>
+                                                                    <br><br><br>
+                                                                        <div class="line-h">
+                                                                               <span class="sp_head"> <span *ngFor="let user of checkin.waitlistingFor">
+                                                                                    {{user.firstName |
+                                                                                    capitalizeFirst}}
+                                                                                    {{user.lastName | capitalizeFirst}}
+                                                                                </span>
+                                                                                </span>
+                                                                            <div>
+                                                                            <span  *ngIf="billnumber">
+                                                                                <span >{{bill_no_cap}}
+                                                                                </span>
+                                                                                <span >{{billnumber}}</span>
+                                                                            </span>
+                                                                            </div>
+                                                                            </div><div>
+                                                                                <span class="align-column1" *ngIf="gstnumber">{{gstin_cap}}
+                                                                                </span>
+                                                                                <span class="align-column1" *ngIf="gstnumber">{{gstnumber
+                                                                                    |
+                                                                                    capitalizeFirst}}</span>
+                                                                            
+                                                                           </div>
+                                                                     
+                                                                    <div><span class="align-column1"><span class="align-column1">{{billdate
+                                                                            | date:newDateFormat_date}}
+                                                                            {{billtime}}</span>
+                                                                         </span>
+                                                                        </div>        
+                                                                            <span class="columns mgn-up-10" *ngIf="checkin.provider">
+                                                                                <span class="dynamic">{{getTerminologyTerm('provider')
+                                                                                    |
+                                                                                    capitalizeFirst}}: </span>
+                                                                                <span class="dynamic">
+                                                                                    <!-- {{checkin.provider.businessName}} -->
+                                                                                    {{(checkin.provider.businessName) ?
+                                                                                    checkin.provider.businessName :
+                                                                                    checkin.provider.firstName
+                                                                                    + ' ' + checkin.provider.lastName}}</span>
+                                                                            </span>
+
+                                                                            <div class="col-md-12 col-sm-12 col-lg-12 no-padding red"
+                                                                                *ngIf="bill_data.billStatus == 'Cancel'">
+                                                                                Cancell</div>
+                                                                        
+                                                                    
                                                                 </div>
                                                             </div>
                                                             <div class="bill-content">

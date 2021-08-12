@@ -963,7 +963,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(this.uuidList, parentUid);
                 }
-                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                else if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.submitQuestionnaire(parentUid);
                 } else {
                     if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
@@ -1538,7 +1538,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             }
                         }
                         if (_this.userData.userProfile.email) {
-                            _this.waitlist_for[0]['email'] = _this.userData.userProfile.email;
+                           // _this.waitlist_for[0]['email'] = _this.userData.userProfile.email;
                             _this.payEmail = _this.userData.userProfile.email;
                             _this.newEmail=_this.userData.userProfile.email;
                         }
