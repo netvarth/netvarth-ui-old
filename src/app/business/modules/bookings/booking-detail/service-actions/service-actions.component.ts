@@ -72,6 +72,7 @@ export class ServiceActionsComponent implements OnInit {
     showMoreActions = false;
     groups: any = [];
     showStatusChange = false;
+    showFirstSection = false;
     constructor(private groupService: GroupStorageService,
         private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
@@ -183,6 +184,11 @@ export class ServiceActionsComponent implements OnInit {
             if (this.waitlist_data.waitlistStatus !== 'blocked' && this.waitlist_data.waitlistStatus !== 'done') {
                 this.showStatusChange = true;
             }
+            if (this.showAssign || this.showAssignMyself || this.showUnassign || this.showAssignTeam || this.waitlist_data.waitlistStatus === 'blocked' || this.showStatusChange || this.showTeleserviceStart) {
+                this.showFirstSection = true;
+            } else {
+                this.showMoreActions = true;
+            }
         } else {
             if (this.timeType === 1 && this.waitlist_data.service.livetrack && this.waitlist_data.apptStatus === 'Confirmed' && this.waitlist_data.jaldeeApptDistanceTime && this.waitlist_data.jaldeeApptDistanceTime.jaldeeDistanceTime && (this.waitlist_data.jaldeeStartTimeType === 'ONEHOUR' || this.waitlist_data.jaldeeStartTimeType === 'AFTERSTART')) {
                 this.trackStatus = true;
@@ -224,6 +230,11 @@ export class ServiceActionsComponent implements OnInit {
             }
             if (this.waitlist_data.apptStatus !== 'blocked' && this.waitlist_data.apptStatus !== 'Completed') {
                 this.showStatusChange = true;
+            }
+            if (this.showAssign || this.showAssignMyself || this.showUnassign || this.showAssignTeam || this.waitlist_data.apptStatus === 'blocked' || this.showStatusChange || this.showTeleserviceStart) {
+                this.showFirstSection = true;
+            } else {
+                this.showMoreActions = true;
             }
         }
         if (this.showTeleserviceStart) {

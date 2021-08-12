@@ -90,7 +90,7 @@
           <i class="fa fa-exchange"></i>Status change
         </a>
       </div>
-      <div class="viewmore text-center" (click)="showActions()"><a>View {{(showMoreActions) ? 'Less <<' : 'More >>'
+      <div class="viewmore text-center" (click)="showActions()" *ngIf="showFirstSection"><a>View {{(showMoreActions) ? 'Less <<' : 'More >>'
             }}</a>
       </div>
     </div>

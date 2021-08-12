@@ -16,7 +16,7 @@
         </div>
         <ng-container *ngIf="type == 'mr'">
           <div class="inner-card rounded-sm pointer-cursor" *ngFor="let mr of mrList" (click)="gotoMrDetails(mr)"
-            [class.greenc]="uuid==mr.uuid">
+            [class.greenc]="waitlistmr[0].uuid==mr.uuid">
             <a class="inner-card-heading">
               {{mr.mrNumber ? mr.mrNumber : ''}}
             </a>
