@@ -35,6 +35,12 @@
                   </span> -->
                   <span>{{spName}}</span>
                 </div>
+                <div *ngIf="waitlist_data.teamId !== 0" class="mgn-up-5 sub-user-name">
+                  <span>Team : </span>
+                  <span>{{getUsersList(waitlist_data.teamId)}}</span>
+                </div>
+
+
                 <div *ngIf="waitlist_data.provider && waitlist_data.provider.mobileNo" class="mgn-up-5 sub-user-name">
                   <i class="fa fa-mobile icon"></i>
                   <span> {{waitlist_data.provider.countryCode}} {{waitlist_data.provider.mobileNo}}</span>

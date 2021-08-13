@@ -106,6 +106,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   statusLog: any = [];
   questionnaires: any = [];
   spName: any;
+  teams: any;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -148,6 +149,13 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       this.goBack();
     }
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
+    if (this.userDet.accountType === 'BRANCH') {
+      this.getTeams().then((data) => {
+        this.teams = data;
+        console.log(this.teams);
+      });
+    }
+
   }
   ngOnDestroy() {
     if (this.sendmsgdialogRef) {
@@ -585,6 +593,23 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     const questr = this.waitlist_data.releasedQnr.filter(questionnaire => questionnaire.id === id);
     if (questr[0]) {
       return questr[0].status;
+    }
+  }
+  getTeams() {
+    const _this = this;
+    return new Promise<void>(function (resolve) {
+      _this.provider_services.getTeamGroup().subscribe(data => {
+        _this.teams = data;
+      },
+        () => {
+          resolve();
+        });
+    });
+  }
+  getUsersList(teamid) {
+    const userObject = this.teams.filter(user => parseInt(user.id) === teamid);
+    if (userObject[0] && userObject[0].name) {
+      return userObject[0].name;
     }
   }
 }
