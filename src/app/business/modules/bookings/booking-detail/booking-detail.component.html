@@ -41,7 +41,7 @@
       </app-booking-bill>
     </div>
     <div class="column">
-      <app-booking-private-notes [uuid]="uuid" [waitlist_data]="waitlist_data" [bookingType]="bookingType">
+      <app-booking-private-notes [uuid]="uuid" [waitlistStatus]="(waitlist_data.waitlistStatus) ? waitlist_data.waitlistStatus : waitlist_data.apptStatus" [bookingType]="bookingType" [view]="'small'">
       </app-booking-private-notes>
     </div>
     <div class="column">

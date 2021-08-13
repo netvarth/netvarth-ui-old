@@ -686,7 +686,6 @@
 </section> -->
 
 
-
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
 <section class="content" *ngIf="!loading && viewCustomer">
     <div class="row main-sec">
@@ -762,39 +761,41 @@
     <div class="row records-sec">
         <div class="column" *ngIf="todayVisitDetailsArray.length > 0">
             <app-records-datagrid [records]="todayvisitDetails" [heading]="'Today'" [source]="'customer-waitlist'"
-                [timeType]="1" [showMore]="showMoreToday" (actionPerformed)="actionPerformed($event)">
+                [timeType]="1" [showMore]="showMoreToday" (actionPerformed)="actionPerformed($event)" [view]="'small'">
             </app-records-datagrid>
         </div>
         <div class="column" *ngIf="futureVisitDetailsArray.length > 0">
             <app-records-datagrid [records]="futurevisitDetails" [heading]="'Future'" [source]="'customer-waitlist'"
-                [timeType]="2" [showMore]="showMoreFuture" (actionPerformed)="actionPerformed($event)">
+                [timeType]="2" [showMore]="showMoreFuture" (actionPerformed)="actionPerformed($event)" [view]="'small'">
             </app-records-datagrid>
         </div>
         <div class="column" *ngIf="historyVisitDetailsArray.length > 0">
             <app-records-datagrid [records]="historyvisitDetails" [heading]="'History'" [source]="'customer-waitlist'"
-                [showMore]="showMoreHistory" [timeType]="3" (actionPerformed)="actionPerformed($event)">
+                [showMore]="showMoreHistory" [timeType]="3" (actionPerformed)="actionPerformed($event)"
+                [view]="'small'">
             </app-records-datagrid>
         </div>
         <div class="column" *ngIf="todayorderVisitDetailsArray.length > 0">
-            <app-records-datagrid [records]="todayordervisitDetails" [heading]="'Todays Order'"
-                [source]="'customer-order'" [showMore]="showMoreorderToday" [timeType]="1"
-                (actionPerformed)="actionPerformed($event)">
+            <app-records-datagrid [records]="todayordervisitDetails" [heading]="'Todays Order'" [source]="'order'"
+                [showMore]="showMoreorderToday" [timeType]="1" (actionPerformed)="actionPerformed($event)"
+                [view]="'small'">
             </app-records-datagrid>
         </div>
         <div class="column" *ngIf="futureorderVisitDetailsArray.length > 0">
-            <app-records-datagrid [records]="futureordervisitDetails" [heading]="'Future Order'"
-                [source]="'customer-order'" [showMore]="showMoreorderFuture" [timeType]="2"
-                (actionPerformed)="actionPerformed($event)">
+            <app-records-datagrid [records]="futureordervisitDetails" [heading]="'Future Order'" [source]="'order'"
+                [showMore]="showMoreorderFuture" [timeType]="2" (actionPerformed)="actionPerformed($event)"
+                [view]="'small'">
             </app-records-datagrid>
         </div>
         <div class="column" *ngIf="historyorderVisitDetailsArray.length > 0">
-            <app-records-datagrid [records]="historyOrdervisitDetails" [heading]="'Order History'"
-                [source]="'customer-order'" [showMore]="showMoreOrderHistory" [timeType]="3"
-                (actionPerformed)="actionPerformed($event)">
+            <app-records-datagrid [records]="historyOrdervisitDetails" [heading]="'Order History'" [source]="'order'"
+                [showMore]="showMoreOrderHistory" [timeType]="3" (actionPerformed)="actionPerformed($event)"
+                [view]="'small'">
             </app-records-datagrid>
         </div>
         <div class="column" *ngIf="consumerBills.length > 0">
-            <app-records-datagrid [heading]="'Bills'" [source]="'customer-bill'" [records]="consumerBills">
+            <app-records-datagrid [heading]="'Bills'" [source]="'bill'" [records]="consumerBills"
+                [customerId]="customer[0].id" [view]="'small'">
             </app-records-datagrid>
         </div>
         <div class="column" *ngIf="customer[0].questionnaires && customer[0].questionnaires.length > 0">

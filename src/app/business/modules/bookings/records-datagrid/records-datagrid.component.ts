@@ -2,7 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 
 @Component({
   selector: 'app-records-datagrid',
@@ -17,6 +19,8 @@ export class RecordsDatagridComponent implements OnInit {
   @Input() waitlistMgrSettings;
   @Input() timeType;
   @Input() providerId;
+  @Input() customerId;
+  @Input() view;
   @Output() actionPerformed = new EventEmitter<any>();
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   waitlistModes = {
@@ -35,16 +39,42 @@ export class RecordsDatagridComponent implements OnInit {
   check_in_statuses = projectConstantsLocal.CHECK_IN_STATUSES;
   customer_label;
   provider_label;
+  qParams;
+  loading = false;
   constructor(private dateTimeProcessor: DateTimeProcessor,
     private wordProcessor: WordProcessor,
-    private router: Router) {
+    private router: Router, private location: Location,
+    private activateRoute: ActivatedRoute,
+    private provider_services: ProviderServices) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+    this.activateRoute.queryParams.subscribe(qparams => {
+      this.qParams = qparams;
+      console.log(qparams);
+      if (qparams.heading) {
+        this.heading = qparams.heading;
+      }
+      if (qparams.source) {
+        this.source = qparams.source;
+      }
+      if (qparams.providerId) {
+        this.providerId = qparams.providerId;
+      }
+      if (qparams.customerId) {
+        this.customerId = qparams.customerId;
+      }
+    });
   }
 
   ngOnInit(): void {
     console.log(this.records);
     console.log(this.source);
+    if (!this.view) {
+      this.loading = true;
+      if (this.source == 'bill') {
+        this.getBills();
+      }
+    }
   }
   getSingleTime(slot) {
     const slots = slot.split('-');
@@ -57,11 +87,11 @@ export class RecordsDatagridComponent implements OnInit {
   actionClick(type, record?) {
     console.log(this.waitlistMgrSettings);
     console.log(this.source);
-    if (this.source == 'waitlist' || this.source === 'appt' || this.source === 'appt-dashboard' || this.source === 'waitlist-dashboard') {
-      const uid = (this.source === 'appt' || this.source === 'appt-dashboard') ? record.uid : record.ynwUuid;
-      const waitlisttype = (this.source === 'appt' || this.source === 'appt-dashboard') ? 'appointment' : 'checkin';
+    if (this.source == 'waitlist' || this.source === 'appt') {
+      const uid = (this.source === 'appt') ? record.uid : record.ynwUuid;
+      const waitlisttype = (this.source === 'appt') ? 'appointment' : 'checkin';
       this.router.navigate(['provider', 'bookings', 'details'], { queryParams: { uid: uid, timetype: record.type, type: waitlisttype, waitlistMgrSettings: this.waitlistMgrSettings } });
-    } else if (this.source == 'bill' ||this.source == 'customer-bill') {
+    } else if (this.source == 'bill') {
       let source;
       if (record.type === 'Appointment') {
         source = 'appt';
@@ -73,7 +103,7 @@ export class RecordsDatagridComponent implements OnInit {
       this.router.navigate(['provider', 'bookings', record.id]);
     } else if (this.source == 'customers') {
       this.router.navigate(['provider', 'customers', record.id]);
-    } else if (this.source == 'donation' || this.source == 'donation-dashboard') {
+    } else if (this.source == 'donation') {
       this.router.navigate(['provider', 'donations', record.uid]);
     } else if (this.source == 'order') {
       this.router.navigate(['provider', 'orders', record.uid]);
@@ -88,6 +118,14 @@ export class RecordsDatagridComponent implements OnInit {
     return 'assets/images/Asset1@300x(1).png';
   }
   gotoFullView() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        source: this.source,
+        heading: this.heading,
+        providerId: this.providerId,
+        customerId: this.customerId
+      }
+    };
     if (this.source === 'appt') {
       this.router.navigate(['provider', 'bookings', 'appointments'], { queryParams: { providerId: this.providerId } });
     } else if (this.source === 'waitlist') {
@@ -101,7 +139,8 @@ export class RecordsDatagridComponent implements OnInit {
     } else if (this.source === 'order') {
       this.router.navigate(['provider', 'orders']);
     } else if (this.source === 'bill') {
-      this.router.navigate(['provider', 'bookings', 'bills']);
+      console.log('navigationExtras', navigationExtras);
+      this.router.navigate(['provider', 'bookings', 'bills'], navigationExtras);
     }
   }
   getUserShort(record) {
@@ -123,5 +162,21 @@ export class RecordsDatagridComponent implements OnInit {
     } else if (this.source == 'providers') {
       this.router.navigate(['provider/settings/general/users/add']);
     }
+  }
+  gotoPrev() {
+    this.location.back();
+  }
+  getBills() {
+    let filter = {};
+    if (this.providerId) {
+      filter = { 'provider-eq': this.providerId };
+    }
+    if (this.customerId) {
+      filter = { 'providerConsumer-eq': this.customerId };
+    }
+    this.provider_services.getProviderBills(filter).subscribe(data => {
+      this.records = data;
+      this.loading = false;
+    })
   }
 }

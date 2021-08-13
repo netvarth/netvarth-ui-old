@@ -21,8 +21,6 @@ export class BookingMedicalRecordsRXComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    console.log('medical', this.source);
-    console.log(this.type);
     if (this.source !== 'details' || (this.source === 'details' && (this.waitlist_data.waitlistStatus && this.waitlist_data.waitlistStatus !== 'blocked') || (this.waitlist_data.apptStatus && this.waitlist_data.apptStatus !== 'blocked'))) {
       this.getMedicalRecords();
     }
@@ -39,21 +37,30 @@ export class BookingMedicalRecordsRXComponent implements OnInit {
     this.provider_services.GetMedicalRecordList(filter)
       .subscribe((data: any) => {
         this.mrList = data;
-        console.log('mr', this.mrList);
         this.rxList = this.mrList.filter(mr => mr.prescriptionCreated);
-        console.log('rx', this.rxList);
         if (this.source === 'details') {
           const uuid = (this.waitlist_data.waitlistStatus) ? this.waitlist_data.ynwUuid : this.waitlist_data.uid;
           this.waitlistmr = this.mrList.filter(mr => mr.uuid === uuid);
-          console.log('this.waitlistmr', this.waitlistmr)
         }
         this.loading = false;
       });
   }
   gotoMrDetails(mr) {
-    if (mr !== 'add') {
-      let bookingId = (mr.uuid) ? mr.uuid : 0;
-      this.router.navigate(['provider', 'customers', mr.providerConsumer.id, mr.bookingType, bookingId, 'medicalrecord', mr.id]);
+    let bookingId;
+    let bookingType;
+    const mrId = (mr.id) ? mr.id : (this.waitlistmr[0]) ? this.waitlistmr[0].id : 0;
+    const consumerId = (this.customerId) ? this.customerId : mr.providerConsumer.id;
+    if (mr.bookingType) {
+      bookingType = mr.bookingType;
+      bookingId = (mr.uuid) ? mr.uuid : 0;
+    } else {
+      bookingType = (this.source === 'customer-details') ? 'FOLLOWUP' : (this.waitlist_data.waitlistStatus) ? 'TOKEN' : 'APPT';
+      bookingId = (this.source === 'customer-details') ? 0 : (this.waitlist_data.ynwUuid) ? this.waitlist_data.ynwUuid : this.waitlist_data.uid;
+    }
+    if (this.type === 'rx') {
+      this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription']);
+    } else {
+      this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mrId]);
     }
   }
   gotoMrList() {
@@ -66,5 +73,19 @@ export class BookingMedicalRecordsRXComponent implements OnInit {
     };
     const id = (this.customerId) ? this.customerId : 'all';
     this.router.navigate(['provider', 'customers', id, 'FOLLOWUP', 0, 'medicalrecord', 0, 'list'], navigationExtras);
+  }
+  showAddRecord() {
+    if (this.source === 'dashboard') {
+      return false;
+    }
+    if (this.source === 'details') {
+      if (this.type === 'mr' && this.waitlistmr.length > 0) {
+        return false;
+      }
+      if (this.type === 'rx' && this.waitlistmr.length > 0 && this.waitlistmr[0].prescriptionCreated) {
+        return false;
+      }
+    }
+    return true;
   }
 }

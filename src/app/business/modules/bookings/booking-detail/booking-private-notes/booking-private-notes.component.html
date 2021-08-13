@@ -1,13 +1,22 @@
-<div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 p-0 m-0">
-  <div class="card card-custom data-card">
-    <div class="card-header bg-transparent">
-      <div>Private Notes</div>
-    </div>
-    <div class="card-body padding-tp-10 no-padding">
-      <div>
+<section class="" *ngIf="!view">
+  <div class="card title-gb">
+    <h5 class="mgn-up-10">
+      <span class="fa fa-arrow-left pointer-cursor" (click)="gotoPrev()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <span>Private Notes</span>
+    </h5>
+  </div>
+</section>
+<section class="" [class.smallview]="!view">
+  <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 p-0">
+    <div class="card card-custom data-card">
+      <div class="card-header bg-transparent" *ngIf="view">
+        <div>Private Notes</div>
+        <i class="fa fa-external-link pointer-cursor" aria-hidden="true" (click)="gotoView()"></i>
+      </div>
+      <div class="card-body padding-tp-10 no-padding">
         <div *ngFor="let note of providerNotes" (click)="selectNote(note)" data-toggle="modal"
           data-target="#exampleModalCenter" class="row m-0">
-          <div class="inner-card rounded-sm">
+          <div class="inner-card rounded-sm pointer-cursor">
             <div>
               <div class="inner-card-date">
                 {{note.timeStamp | date: newDateFormat}}
@@ -19,35 +28,36 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-body" *ngIf="selectedNote">
-            <div class="pad-10">
-              {{selectedNote.note}}
-              <div class="img-section mgn-up-10" *ngIf="selectedNote.attachment && selectedNote.attachment.length > 0">
-                <ul class="galul">
-                  <li *ngFor="let file of selectedNote.attachment;let i = index ">
-                    <div class="galimg_outer">
-                      <div class="gal_img">
-                        <img [src]="getImage(file)" (click)="openImage(i)">
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body" *ngIf="selectedNote">
+              <div class="pad-10">
+                {{selectedNote.note}}
+                <div class="img-section mgn-up-10"
+                  *ngIf="selectedNote.attachment && selectedNote.attachment.length > 0">
+                  <ul class="galul">
+                    <li *ngFor="let file of selectedNote.attachment;let i = index ">
+                      <div class="galimg_outer">
+                        <div class="gal_img">
+                          <img [src]="getImage(file)" (click)="openImage(i)">
+                        </div>
                       </div>
-                    </div>
-                  </li>
-                </ul>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancel</button>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancel</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
   [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
   (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>

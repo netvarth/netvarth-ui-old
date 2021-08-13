@@ -4,8 +4,8 @@
         <i (click)="gotoAuditLogs()" class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
     </div>
     <div class="card-body auditlog">
-        <div class="d-flex align-items-center mb-3 rounded p-2"
-            *ngFor="let audit of auditlog_details">
+        <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+        <div class="d-flex align-items-center mb-3 rounded p-2" *ngFor="let audit of auditlog_details">
             <span class="svg-icon svg-icon-warning mr-5">
                 <span class="svg-icon svg-icon-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"

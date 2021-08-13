@@ -4,6 +4,8 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-booking-private-notes',
@@ -13,8 +15,9 @@ import { Subscription } from 'rxjs';
 export class BookingPrivateNotesComponent implements OnInit {
   providerNotes;
   @Input() uuid;
-  @Input() waitlist_data;
+  @Input() waitlistStatus;
   @Input() bookingType;
+  @Input() view;
   selectedNote;
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
 
@@ -38,12 +41,26 @@ export class BookingPrivateNotesComponent implements OnInit {
   image_list_popup: Image[];
   subscription: Subscription;
   constructor(private provider_services: ProviderServices,
-    private sharedFunctions: SharedFunctions) {
+    private sharedFunctions: SharedFunctions,
+    private router: Router, private location: Location,
+    private activateRoute: ActivatedRoute) {
     this.subscription = this.sharedFunctions.getMessage().subscribe((message) => {
       switch (message.type) {
         case 'addnote':
           this.getWaitlistNotes();
           break;
+      }
+    });
+    this.activateRoute.queryParams.subscribe(params => {
+      console.log('params', params);
+      if (params.uuid) {
+        this.uuid = params.uuid;
+      }
+      if (params.waitlistStatus) {
+        this.waitlistStatus = params.waitlistStatus;
+      }
+      if (params.bookingType) {
+        this.bookingType = params.bookingType;
       }
     });
   }
@@ -53,7 +70,7 @@ export class BookingPrivateNotesComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    if ((this.waitlist_data.waitlistStatus && this.waitlist_data.waitlistStatus !== 'blocked') || (this.waitlist_data.apptStatus && this.waitlist_data.apptStatus !== 'blocked')) {
+    if (this.waitlistStatus !== 'blocked') {
       this.getWaitlistNotes();
     }
   }
@@ -126,5 +143,11 @@ export class BookingPrivateNotesComponent implements OnInit {
     } else {
       return img.thumbPath;
     }
+  }
+  gotoView() {
+    this.router.navigate(['provider', 'bookings', 'details', 'notes'], { queryParams: { uuid: this.uuid, bookingType: this.bookingType, waitlistStatus: this.waitlistStatus } });
+  }  
+  gotoPrev() {
+    this.location.back();
   }
 }

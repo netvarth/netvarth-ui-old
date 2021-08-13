@@ -37,7 +37,8 @@
     justify-content: space-between !important;
 }
 .card-body .inner-card,
-.card-body .add-record {
+.card-body .add-record,
+.card-body .rx-card {
     flex: none !important;
     display: inline-block !important;
     min-width: auto !important;
@@ -50,6 +51,13 @@
 .card-body .add-record {
     width: 100% !important;
     border-color: #395789 !important;
+}
+.card-body .rx-card {
+    width: 100% !important;
+}
+.rx-card .presc {
+    padding: 5px;
+    border: 1px solid #eeeeee59;
 }
 .card-body .inner-card {
     width: 48.5% !important;

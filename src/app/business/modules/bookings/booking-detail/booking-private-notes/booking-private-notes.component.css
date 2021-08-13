@@ -5,6 +5,19 @@
     border: 1.75px solid #d0d0d0 !important;
     border-radius: 10px !important;
 }
+.smallview .data-card {
+    border: none !important;
+    border-radius: 0 !important;
+}
+.smallview .card-body {
+    height: auto !important;
+}
+.smallview  .p-0 {
+    padding: 10px !important;
+}
+.smallview {
+    padding: 25px 0 !important;
+}
 .card.data-card .card-header {
     padding: 8px 10px !important;
     border-radius: 0 !important;
@@ -26,8 +39,8 @@
 }
 .card-body {
     padding: 12px 15px !important;
-    height: 317px !important;
     overflow: auto !important;
+    height: 317px !important;
 }
 .card-body > div {
     display: flex !important;

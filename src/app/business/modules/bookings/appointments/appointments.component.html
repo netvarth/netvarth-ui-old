@@ -412,7 +412,7 @@
     </div>
     <app-common-innerloading-spinner *ngIf="loading"> </app-common-innerloading-spinner>
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20" *ngIf="!loading && selectedType=='list'">
-      <app-records-datagrid [source]="'appt-dashboard'" [records]="apptToList">
+      <app-records-datagrid [source]="'appt'" [records]="apptToList" [view]="'dashboard'">
       </app-records-datagrid>
     </div>
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20" *ngIf="!loading && selectedType=='calender'">

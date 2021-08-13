@@ -8,6 +8,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { TeleServiceConfirmBoxComponent } from '../../teleservice/teleservice-confirm-box/teleservice-confirm-box.component';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 
 @Component({
   selector: 'app-actions-popup',
@@ -17,7 +18,6 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 export class ActionsPopupComponent implements OnInit {
   provider_label;
   active_user;
-  sharedFunctions: any;
   showUndo = false;
   showArrived = false;
   showCancel = false;
@@ -34,6 +34,7 @@ export class ActionsPopupComponent implements OnInit {
     private snackbarService: SnackbarService,
     private dialog: MatDialog,
     private router: Router,
+    private sharedFunctions: SharedFunctions,
     private provider_shared_functions: ProviderSharedFuctions,
     private groupService: GroupStorageService) {
     console.log(this.data);

@@ -11,13 +11,7 @@ import { SharedServices } from '../../../../shared/services/shared-services';
 export class BookingFeedsComponent implements OnInit {
   auditlog_details: any = [];
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
-  classes = [
-    'bg-light-warning',
-    'bg-light-success',
-    'bg-light-danger',
-    'bg-light-info'
-  ];
-  classIndex = 0;
+  loading = true;
   constructor(private shared_services: SharedServices,
     private router: Router) { }
 
@@ -28,20 +22,12 @@ export class BookingFeedsComponent implements OnInit {
     this.shared_services.getAuditLogs('', '', '', '', '', '')
       .subscribe(data => {
         this.auditlog_details = data;
+        this.loading = false;
       },
         error => {
           this.auditlog_details = [];
+          this.loading = false;
         });
-  }
-  getClass() {
-    if (this.classes && this.classIndex === this.classes.length) {
-      this.classIndex = 0;
-    }
-    if (this.classes[this.classIndex]) {
-      const auditclass = this.classes[this.classIndex];
-      this.classIndex++;
-      return auditclass;
-    }
   }
   gotoAuditLogs() {
     this.router.navigate(['provider/auditlog']);

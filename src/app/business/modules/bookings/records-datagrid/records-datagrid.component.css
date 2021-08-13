@@ -187,3 +187,6 @@ th {
 	border: none !important;
     text-align: inherit !important;
 }
+.smallview {
+    padding: 25px 10px !important;
+}

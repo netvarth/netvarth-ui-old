@@ -532,7 +532,7 @@
         </div>
         <app-common-innerloading-spinner *ngIf="loading"> </app-common-innerloading-spinner>
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20" *ngIf="!loading">
-            <app-records-datagrid [source]="'waitlist-dashboard'" [records]="waitlistToList" [timeType]="timeType">
+            <app-records-datagrid [source]="'waitlist'" [records]="waitlistToList" [timeType]="timeType" [view]="'dashboard'">
             </app-records-datagrid>
         </div>
     </div>

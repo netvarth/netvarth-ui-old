@@ -6,8 +6,7 @@
     </div>
     <div class="card-body padding-tp-10 no-padding" *ngIf="!loading">
       <div>
-        <div class="add-record rounded-sm pointer-cursor" (click)="gotoMrDetails('add')"
-          *ngIf="source!='details' || (source=='details' && waitlistmr.length == 0)">
+        <div class="add-record rounded-sm pointer-cursor" (click)="gotoMrDetails('add')" *ngIf="showAddRecord()">
           <a class="inner-card-heading">
             Add Record
           </a>
@@ -30,23 +29,20 @@
           </div>
         </ng-container>
         <ng-container *ngIf="type == 'rx'">
-          <div class="inner-card rounded-sm pointer-cursor no-padding" *ngFor="let prescription of rxList"
-            (click)="gotoMrDetails(prescription)">
-            <div class="table-responsive1">
-              <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
-                <tbody *ngIf="prescription.prescriptions.prescriptionsList.length > 0">
-                  <tr class="row_data" *ngFor="let rx of prescription.prescriptions.prescriptionsList">
-                    <td class="qnr-name">{{rx.dosage}}</td>
-                    <td>{{rx.duration}}</td>
-                    <td>{{rx.frequency}}</td>
-                    <td>{{rx.instructions}}</td>
-                    <td>{{rx.medicine_name}}</td>
-                  </tr>
-                </tbody>
-                <tbody *ngIf="prescription.prescriptionImages">
-                  <div>{{prescription.prescriptionImages[0].originalName}}</div>
-                </tbody>
-              </table>
+          <div class="rx-card rounded-sm pointer-cursor no-padding" *ngFor="let prescription of rxList"
+            (click)="gotoMrDetails(prescription)"
+            [class.wtlstmr]="waitlistmr[0] && waitlistmr[0].uuid==prescription.uuid">
+            <div *ngIf="prescription.prescriptions.prescriptionsList.length > 0">
+              <div class="presc" *ngFor="let rx of prescription.prescriptions.prescriptionsList">
+                <div class="inner-card-text" *ngIf="rx.medicine_name!=''">Medicine: {{rx.medicine_name}}</div>
+                <div class="inner-card-text" *ngIf="rx.duration!=''">Duration(days): {{rx.duration}}</div>
+                <div class="inner-card-text" *ngIf="rx.dosage!=''">Dosage: {{rx.dosage}}</div>
+                <div class="inner-card-text" *ngIf="rx.frequency!=''">Frequency : {{rx.frequency}}</div>
+                <div class="inner-card-text" *ngIf="rx.instructions!=''">Instructions: {{rx.instructions}}</div>
+              </div>
+            </div>
+            <div class="presc" *ngIf="prescription.prescriptionImages">
+              <div class="inner-card-text">{{prescription.prescriptionImages[0].originalName}}</div>
             </div>
           </div>
         </ng-container>
