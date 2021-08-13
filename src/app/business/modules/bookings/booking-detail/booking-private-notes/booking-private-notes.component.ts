@@ -20,7 +20,6 @@ export class BookingPrivateNotesComponent implements OnInit {
   @Input() view;
   selectedNote;
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
-
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -121,11 +120,11 @@ export class BookingPrivateNotesComponent implements OnInit {
           count++;
         }
       }
-    }
-    if (count > 0) {
-      setTimeout(() => {
-        this.openImageModalRow(this.image_list_popup[index]);
-      }, 200);
+      if (count > 0) {
+        setTimeout(() => {
+          this.openImageModalRow(this.image_list_popup[index]);
+        }, 200);
+      }
     }
   }
   checkImgType(img) {
@@ -146,7 +145,7 @@ export class BookingPrivateNotesComponent implements OnInit {
   }
   gotoView() {
     this.router.navigate(['provider', 'bookings', 'details', 'notes'], { queryParams: { uuid: this.uuid, bookingType: this.bookingType, waitlistStatus: this.waitlistStatus } });
-  }  
+  }
   gotoPrev() {
     this.location.back();
   }

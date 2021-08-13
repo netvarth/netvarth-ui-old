@@ -1,70 +1,33 @@
 <section class="" *ngIf="!widget">
   <div class="card title-gb">
     <h5 class="mgn-up-10">
-      <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;
       Documents
     </h5>
   </div>
 </section>
 <section [class.p-4]="!widget">
-<div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 m-0 p-0" [class.widgetStyle]="widget">
-  <div class="card card-custom data-card">
-    <div class="card-header bg-transparent" *ngIf="widget">
-      <div>Documents</div>
-      <i class="fa fa-external-link pointer-cursor" aria-hidden="true" (click)="gotoDocuments()"></i>
-    </div>
-    <div class="card-body padding-tp-10 no-padding">
-      <div>
-        <div class="row m-0">
-          <div class="row-data">
-            <div class="doc-name">
-              <i class="fa fa-file-text" aria-hidden="true"></i>
-              Check up results
-            </div>
-            <div class="doc-menu-icon">
-              <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-            </div>
-          </div>
+  <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 m-0 p-0"
+    [class.widgetStyle]="widget">
+    <div class="card card-custom data-card">
+      <div class="card-header bg-transparent" *ngIf="widget">
+        <div>Documents</div>
+        <i class="fa fa-external-link pointer-cursor" aria-hidden="true" (click)="gotoDocuments()"></i>
+      </div>
+      <div class="card-body pad-10">
+        <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+        <div class="document" *ngFor="let doc of documents;let i=index">
+          <img class="pointer-cursor" [src]="getImage(doc)" (click)="showImg(i)">
         </div>
-        <div class="row m-0">
-          <div class="row-data">
-            <div class="doc-name">
-              <i class="fa fa-file-text" aria-hidden="true"></i>
-              Dental X-Ray Result-2
-            </div>
-            <div class="doc-menu-icon">
-              <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-            </div>
-          </div>
-        </div>
-        <div class="row m-0">
-          <div class="row-data">
-            <div class="doc-name">
-              <i class="fa fa-file-text" aria-hidden="true"></i>
-              Medical Prescriptions
-            </div>
-            <div class="doc-menu-icon">
-              <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-            </div>
-          </div>
-        </div>
-        <div class="row m-0">
-          <div class="row-data">
-            <div class="doc-name">
-              <i class="fa fa-file-text" aria-hidden="true"></i>
-              Notes by Dr. Krishna
-            </div>
-            <div class="doc-menu-icon">
-              <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-            </div>
-          </div>
-        </div>
-        <div class="add-more pointer-cursor" (click)="sendimages()" *ngIf="waitlist_data">
+        <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 add-more pointer-cursor" (click)="sendimages()"
+          *ngIf="waitlist_data">
           <div class="add-more-icon"><i class="fa fa-plus"></i></div>
           <div class="add-more-text">New Document</div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </section>
+<ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
+  [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
+  (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>

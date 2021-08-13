@@ -55,7 +55,7 @@
             </app-records-datagrid>
         </div>
         <div class="column">
-            <app-booking-documents [bookingType]="'dashboard'"></app-booking-documents>
+            <app-booking-documents [bookingType]="'dashboard'" [widget]="true"></app-booking-documents>
         </div>
         <div class="column" *ngIf="bills && bills.length > 0">
             <app-records-datagrid [heading]="'Bills'" [source]="'bill'" [records]="bills" [view]="'small'">
