@@ -31,6 +31,11 @@
                   <span>{{provider_label | capitalizeFirst}} : </span>
                   <span>{{spName}}</span>
                 </div>
+                <div *ngIf="waitlist_data.teamId !== 0" class="mgn-up-5 sub-user-name">
+                  <span>Team : </span>
+                  <span>{{getUsersList(waitlist_data.teamId)}}</span>
+                </div>
+
                 <div *ngIf="waitlist_data.provider && waitlist_data.provider.mobileNo" class="mgn-up-5 sub-user-name">
                   <i class="fa fa-mobile icon"></i>
                   <span> {{waitlist_data.provider.countryCode}} {{waitlist_data.provider.mobileNo}}</span>
@@ -46,6 +51,10 @@
               <div class="mgn-up-10 stats-item">
                 <span class="itemHead">Booking id</span>
                 <span class="itemVal">{{waitlist_data.appointmentEncId}}</span>
+              </div>
+              <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.appointmentMode">
+                <span class="itemHead">Booking Mode</span>
+                <span class="itemVal">{{getAppointmentMode(waitlist_data.appointmentMode)}}</span>
               </div>
               <div class="mgn-up-10 stats-item"
                 *ngIf="(waitlist_data.appmtFor[0].bookingLocation) && (waitlist_data.appmtFor[0].bookingLocation.district || waitlist_data.appmtFor[0].bookingLocation.state)">
