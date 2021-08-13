@@ -107,6 +107,11 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   questionnaires: any = [];
   spName: any;
   teams: any;
+  appointmentModes = [
+    { mode: 'WALK_IN_APPOINTMENT', value: 'Walk in ' },
+    { mode: 'PHONE_IN_APPOINTMENT', value: 'Phone in ' },
+    { mode: 'ONLINE_APPOINTMENT', value: 'Online ' },
+  ];
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -611,5 +616,10 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     if (userObject[0] && userObject[0].name) {
       return userObject[0].name;
     }
+  }
+  getAppointmentMode(mode){
+    let currentmode=[];
+    currentmode=this.appointmentModes.filter(obj=>obj.mode===mode);
+    return currentmode[0].value;
   }
 }

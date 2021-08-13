@@ -100,6 +100,11 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   statusLog: any = [];
   questionnaires: any = [];
   teams: any;
+  waitlistModes = [
+    { mode: 'WALK_IN_CHECKIN', value: 'Walk in ' },
+    { mode: 'PHONE_CHECKIN', value: 'Phone in ' },
+    { mode: 'ONLINE_CHECKIN', value: 'Online ' },
+  ];
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -148,6 +153,12 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         console.log(this.teams);
       });
     }
+
+  }
+  getWaitListMode(mode) {
+    let currentmode=[];
+    currentmode=this.waitlistModes.filter(obj=>obj.mode===mode);
+    return currentmode[0].value;
 
   }
   ngOnDestroy() {
