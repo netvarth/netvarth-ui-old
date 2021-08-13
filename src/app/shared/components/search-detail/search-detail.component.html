@@ -584,12 +584,14 @@
                                               </ng-container> -->
                                             </div>
                                           </div>
+                                          <div class="pointer-cursor" (click)="claimBusiness(search_result)">
                                           <div class="claim-business pull-left centeralign"
                                               (click)="claimBusiness(search_result)"
                                               *ngIf="search_result.fields.claimable==1">
                                               <!-- <img class="img1 claim-image" src="./assets/images/claim.png"
                                                   alt="Claim your Business" /> -->
                                               <div style="display:inline-block">{{claim_my_business_cap}}</div>
+                                          </div>
                                           </div>
                                           <!-- <div class="claim-business-empty pull-left" *ngIf="search_result.fields.claimable!=1">
                                               &nbsp;
@@ -626,6 +628,7 @@
                                                 <span style="display:block">{{claim_my_business_cap}}</span>
                                             </span> -->
                                         <!-- </div> -->
+                                        
                                         <div class="col-xs-12 bottom-box mgn-up-10 link col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                             <span (click)="communicateHandler(search_result)"
                                               *ngIf="search_result.fields.claimable!=1" [matTooltipClass]="tooltipcls"
@@ -635,6 +638,7 @@
                                               <span style="display:block">{{send_messages}}</span>
                                             </span>
                                             <span>
+                                               
                                               <!-- <span class="first-time-coupon centeralign"
                                                 *ngIf="search_result.fields.claimable!=1 && search_result.fields.first_checkin_coupon_count && (stringToInt(search_result.fields.first_checkin_coupon_count))!=0 && isfirstCheckinOffer
                                                  ||search_result.fields.claimable!=1 && search_result.fields.first_checkin_provider_coupon_count && (stringToInt(search_result.fields.first_checkin_provider_coupon_count))!=0 && isfirstCheckinOfferProvider(search_result.id)"
@@ -654,7 +658,7 @@
                                                 <span style="display:block">{{coupon}}</span>
                                               </span>
                                             </span>
-  
+                                        
                                           <!-- <span class=" pic_align pull-left centeralign mgn-lt-20"
                                               (click)="claimBusiness(search_result)"
                                               *ngIf="search_result.fields.claimable==1">
