@@ -418,8 +418,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         const uid = [];
                         uid.push(this.rescheduleUserId);
                         this.consumerNoteAndFileSave(uid);
-                    }
-                    setTimeout(() => {
+                    } else {
                         let queryParams = {
                             account_id: this.account_id,
                             uuid: this.rescheduleUserId,
@@ -433,7 +432,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             queryParams: queryParams
                         };
                         this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras);
-                    }, 500);
+                    }
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1458,6 +1457,20 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                                     this.paymentOperation();
                                 }
                             }
+                        } else {
+                            let queryParams = {
+                                account_id: this.account_id,
+                                uuid: this.rescheduleUserId,
+                                type: 'waitlistreschedule',
+                                theme: this.theme
+                            }
+                            if (this.businessId) {
+                                queryParams['customId'] = this.customId;
+                            }
+                            let navigationExtras: NavigationExtras = {
+                                queryParams: queryParams
+                            };
+                            this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras);
                         }
                     },
                     error => {

@@ -940,8 +940,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.apptdisable = false;
                     if (this.selectedMessage.files.length > 0) {
                         this.consumerNoteAndFileSave(this.rescheduleUserId);
-                    }
-                    setTimeout(() => {
+                    } else {
                         let queryParams = {
                             account_id: this.account_id,
                             uuid: this.appointment.uid,
@@ -955,7 +954,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                             queryParams: queryParams
                         };
                         this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras);
-                    }, 500);
+                    }
                 },
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -1323,6 +1322,20 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         } else {
                             this.paymentOperation();
                         }
+                    } else {
+                        let queryParams = {
+                            account_id: this.account_id,
+                            uuid: this.appointment.uid,
+                            type: 'reschedule',
+                            theme: this.theme
+                        }
+                        if (this.businessId) {
+                            queryParams['customId'] = this.customId;
+                        }
+                        let navigationExtras: NavigationExtras = {
+                            queryParams: queryParams
+                        };
+                        this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras);
                     }  
                 },
                 error => {
