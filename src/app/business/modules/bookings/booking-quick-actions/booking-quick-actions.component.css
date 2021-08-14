@@ -84,9 +84,6 @@
 .card.card-custom.card-stretch.card-stretch-half.gutter-b {
     height: 400px !important;
 }
-.selectedAction .symbol-label {
-    background: #00008b2b !important;
-}
 .fade {
     opacity: 1 !important;
 }
@@ -103,4 +100,8 @@
     float: right !important;
     height: 20px !important;
     line-height: 20px !important;
+}
+.container-quick-actions .fa {
+    color: #1e4079 !important;
+    font-size: 40px !important;
 }

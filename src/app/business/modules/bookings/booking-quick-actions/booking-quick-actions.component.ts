@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 
 @Component({
@@ -30,29 +29,16 @@ export class BookingQuickActionsComponent implements OnInit {
     }, {
       name: 'reports',
       displayName: 'reports',
-      class: 'appt-icon'
+      class: 'fa fa-file'
     }, {
-      name: 'mr',
-      displayName: 'MR',
-      class: 'appt-icon'
+      name: 'orderManager',
+      displayName: 'order Manager',
+      class: 'ordermgmt-icon'
     }];
-  selectedActions: any = [];
-  selectedActionsTemp: any = [];
-  @ViewChild('closebutton') closebutton;
-  loading = true;
   constructor(private provider_services: ProviderServices,
-    private router: Router,
-    private groupService: GroupStorageService) { }
+    private router: Router) { }
 
   ngOnInit(): void {
-    if (this.groupService.getitemFromGroupStorage('actions')) {
-      this.selectedActions = this.groupService.getitemFromGroupStorage('actions');
-      this.loading = false;
-    } else {
-      this.selectedActions = this.quickActions.slice(0, 2);
-      this.groupService.setitemToGroupStorage('actions', this.selectedActions);
-      this.loading = false;
-    }
     this.getWaitlistMgr();
   }
   getWaitlistMgr() {
@@ -69,46 +55,25 @@ export class BookingQuickActionsComponent implements OnInit {
     this.router.navigate(['provider', 'check-ins', 'add'],
       { queryParams: { waitlistMode: 'WALK_IN_CHECKIN' } });
   }
-  addShortcutClicked() {
-    this.selectedActionsTemp = this.selectedActions;
-  }
-  selectAction(action) {
-    const selAction = this.selectedActionsTemp.filter(act => act.name === action.name);
-    const index = (selAction[0]) ? this.selectedActionsTemp.indexOf(selAction[0]) : -1;
-    if (index === -1) {
-      this.selectedActionsTemp.push(action);
-    } else {
-      this.selectedActionsTemp.splice(index, 1);
-    }
-    this.selectedActions = this.groupService.getitemFromGroupStorage('actions');
-  }
-  isSelected(action) {
-    const selAction = this.selectedActionsTemp.filter(act => act.name === action.name);
-    if (selAction[0]) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  addActions() {
-    this.selectedActions = this.selectedActionsTemp;
-    this.groupService.setitemToGroupStorage('actions', this.selectedActions);
-    this.closebutton.nativeElement.click();
-  }
   actionClicked(action) {
-    console.log('action', action)
     if (action === 'appt') {
       this.apptClicked();
     } else if (action === 'token') {
       this.checkinClicked();
     } else if (action === 'qManager') {
-      this.router.navigate(['provider', 'settings']);
+      this.router.navigate(['provider', 'settings', 'q-manager']);
     } else if (action === 'apptManager') {
-      this.router.navigate(['provider', 'settings']);
+      this.router.navigate(['provider', 'settings', 'appointmentmanager']);
     } else if (action === 'reports') {
-      this.router.navigate(['provider', 'settings']);
-    } else if (action === 'mr') {
-      this.router.navigate(['provider', 'settings']);
+      this.router.navigate(['provider', 'reports']);
+    } else if (action === 'orderManager') {
+      this.router.navigate(['provider', 'settings', 'ordermanager']);
     }
+  }
+  addActions() {
+
+  }
+  selectAction(action) {
+
   }
 }

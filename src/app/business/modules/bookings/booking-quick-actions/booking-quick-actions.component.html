@@ -1,9 +1,9 @@
 <div class="card card-custom container-quick-actions card-stretch card-stretch-half gutter-b">
     <div class="heading">Quick Actions
-        <a data-toggle="modal" data-target="#exampleModalCenter">Edit</a>
+        <!-- <a data-toggle="modal" data-target="#exampleModalCenter">Edit</a> -->
     </div>
-    <mat-grid-list cols="3" rowHeight="150px" [gutterSize]="'10px'" *ngIf="!loading">
-        <mat-grid-tile *ngFor="let action of selectedActions">
+    <mat-grid-list cols="3" rowHeight="150px" [gutterSize]="'10px'">
+        <mat-grid-tile *ngFor="let action of quickActions">
             <div class="symbol symbol-40 new_svg symbol-light-info" (click)="actionClicked(action.name)">
                 <span class="symbol-label">
                     <span class="{{action.class}}">
@@ -14,7 +14,7 @@
                 <div class="font-size-xs text-dark-50 wrap_it font-weight-bolder">{{action.displayName}}</div>
             </mat-grid-tile-footer>
         </mat-grid-tile>
-        <mat-grid-tile *ngIf="selectedActions.length < 6">
+        <!-- <mat-grid-tile *ngIf="selectedActions.length < 6">
             <div class="symbol symbol-40 new_svg symbol-light-success" data-toggle="modal"
                 data-target="#exampleModalCenter" (click)="addShortcutClicked()">
                 <span class="symbol-label">
@@ -34,7 +34,7 @@
             <mat-grid-tile-footer>
                 <div class="font-size-xs text-dark-50 wrap_it font-weight-bolder">Add Shortcut</div>
             </mat-grid-tile-footer>
-        </mat-grid-tile>
+        </mat-grid-tile> -->
     </mat-grid-list>
 </div>
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -43,7 +43,7 @@
         <div class="modal-content">
             <div class="modal-body container-quick-actions">
                 <mat-grid-list cols="3" rowHeight="150px" [gutterSize]="'10px'">
-                    <mat-grid-tile *ngFor="let action of quickActions" [class.selectedAction]="isSelected(action)">
+                    <mat-grid-tile *ngFor="let action of quickActions">
                         <div class="symbol symbol-40 new_svg symbol-light-info" (click)="selectAction(action)">
                             <span class="symbol-label">
                                 <span class="{{action.class}}">
