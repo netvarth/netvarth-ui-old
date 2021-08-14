@@ -43,6 +43,7 @@ export class BookingDocumentsComponent implements OnInit {
   image_list_popup: Image[];
   loading = false;
   imagesOnlyList: any = [];
+  hasAttachment = false;
   constructor(private galleryService: GalleryService,
     private shared_services: SharedServices,
     private snackbarService: SnackbarService,
@@ -86,15 +87,19 @@ export class BookingDocumentsComponent implements OnInit {
       if (qparams.uid) {
         this.uuid = qparams.uid;
       }
+      if (qparams.bookingType) {
+        this.bookingType = qparams.bookingType;
+      }
+      if (qparams.hasAttachment) {
+        this.hasAttachment = qparams.hasAttachment;
+      }
     })
   }
   ngOnInit(): void {
-    if (this.bookingType) {
-      this.widget = true;
-    } else {
-      this.widget = false;
+    if (this.waitlist_data) {
+      this.hasAttachment = this.waitlist_data.hasAttachment;
     }
-    if (this.uuid) {
+    if (this.uuid && this.hasAttachment) {
       this.loading = true;
       this.getAttachments();
     }
@@ -116,20 +121,31 @@ export class BookingDocumentsComponent implements OnInit {
     });
   }
   gotoDocuments() {
-    this.router.navigate(['provider/bookings/documents'], { queryParams: { uid: this.uuid } });
+    this.router.navigate(['provider/bookings/documents'], { queryParams: { uid: this.uuid, bookingType: this.bookingType, hasAttachment: this.hasAttachment } });
   }
   goBack() {
     this.location.back();
   }
   getAttachments() {
-    this.provider_services.getProviderWaitlistAttachmentsByUuid(this.uuid).subscribe(
-      data => {
-        console.log('data', data);
-        this.documents = data;
-        this.imagesOnlyList = this.documents.filter(doc => this.checkImgType(doc.s3path) === 'img');
-        console.log('this.imagesOnlyList', this.imagesOnlyList)
-        this.loading = false;
-      });
+    if (this.bookingType === 'checkin') {
+      this.provider_services.getProviderWaitlistAttachmentsByUuid(this.uuid).subscribe(
+        data => {
+          console.log('data', data);
+          this.documents = data;
+          this.imagesOnlyList = this.documents.filter(doc => this.checkImgType(doc.s3path) === 'img');
+          console.log('this.imagesOnlyList', this.imagesOnlyList)
+          this.loading = false;
+        });
+    } else if (this.bookingType === 'appointment') {
+      this.provider_services.getProviderAppointmentAttachmentsByUuid(this.uuid).subscribe(
+        data => {
+          console.log('data', data);
+          this.documents = data;
+          this.imagesOnlyList = this.documents.filter(doc => this.checkImgType(doc.s3path) === 'img');
+          console.log('this.imagesOnlyList', this.imagesOnlyList)
+          this.loading = false;
+        });
+    }
   }
   showImg(index) {
     this.image_list_popup = [];

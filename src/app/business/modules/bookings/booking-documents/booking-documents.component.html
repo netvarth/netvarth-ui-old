@@ -14,7 +14,7 @@
         <div>Documents</div>
         <i class="fa fa-external-link pointer-cursor" aria-hidden="true" (click)="gotoDocuments()"></i>
       </div>
-      <div class="card-body pad-10">
+      <div class="card-body pad-10" [class.cardheight]="!widget">
         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
         <div class="document" *ngFor="let doc of documents;let i=index">
           <img class="pointer-cursor" [src]="getImage(doc)" (click)="showImg(i)">

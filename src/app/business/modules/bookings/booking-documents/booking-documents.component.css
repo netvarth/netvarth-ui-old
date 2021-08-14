@@ -101,7 +101,7 @@
     display: inline-block;
     padding: 5px;
 }
-.card-body {
+.cardheight {
     min-height: 70vh !important;
 }
 .widgetStyle .pad-10 {
