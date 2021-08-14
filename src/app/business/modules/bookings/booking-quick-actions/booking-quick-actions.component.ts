@@ -33,7 +33,7 @@ export class BookingQuickActionsComponent implements OnInit {
     }, {
       name: 'orderManager',
       displayName: 'order Manager',
-      class: 'ordermgmt-icon'
+      class: 'fa fa-shopping-cart'
     }];
   constructor(private provider_services: ProviderServices,
     private router: Router) { }

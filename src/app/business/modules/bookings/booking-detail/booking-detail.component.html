@@ -45,7 +45,7 @@
       </app-booking-private-notes>
     </div>
     <div class="column">
-      <app-booking-documents [bookingType]="bookingType" [waitlist_data]="waitlist_data" [widget]="true"></app-booking-documents>
+      <app-booking-documents [source]="bookingType" [waitlist_data]="waitlist_data" [widget]="true"></app-booking-documents>
     </div>
     <div class="column" *ngIf="waitlist_data.releasedQnr && waitlist_data.releasedQnr.length > 0">
       <div class="card">

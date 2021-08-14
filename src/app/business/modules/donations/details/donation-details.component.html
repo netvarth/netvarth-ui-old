@@ -94,9 +94,6 @@
         </div>
     </div>
     <div class="appointments-and-doctors-row" *ngIf="!loading">
-        <div class="column">
-            <app-booking-documents [bookingType]="'donation'" [widget]="true"></app-booking-documents>
-        </div>
         <div class="column"
             *ngIf="donationDetails && donationDetails.questionnaire && donationDetails.questionnaire.questionAnswers && donationDetails.questionnaire.questionAnswers.length > 0">
             <div class="card">

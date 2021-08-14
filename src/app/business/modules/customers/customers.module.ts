@@ -28,6 +28,7 @@ import { InboxListModule } from '../inbox-list/inbox-list.module';
 import { RecordsDatagridModule } from '../bookings/records-datagrid/records-datagrid.module';
 import { QuestionnaireListPopupModule } from '../questionnaire-list-popup/questionnaire-list-popup.module';
 import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
+import { BookingDocumentsModule } from '../bookings/booking-documents/booking-documents.module';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { QuestionnaireModule } from '../../../shared/components/questionnaire/qu
         QuestionnaireModule,
         BookingMedicalRecordsRXModule,
         InboxListModule,
-        RecordsDatagridModule
+        RecordsDatagridModule,
+        BookingDocumentsModule
     ],
     declarations: [
         CustomersListComponent,

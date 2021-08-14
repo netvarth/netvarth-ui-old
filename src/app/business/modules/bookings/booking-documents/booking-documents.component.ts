@@ -17,11 +17,12 @@ import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig
   styleUrls: ['./booking-documents.component.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../assets/css/style.bundle.css']
 })
 export class BookingDocumentsComponent implements OnInit {
-  @Input() bookingType;
+  @Input() source;
   @Input() waitlist_data;
   @Input() widget;
+  @Input() providerId;
+  @Input() uuid;
   subscription: Subscription;
-  uuid;
   documents: any = [];
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
@@ -53,7 +54,7 @@ export class BookingDocumentsComponent implements OnInit {
     private activateRoute: ActivatedRoute) {
     this.subscription = this.galleryService.getMessage().subscribe(input => {
       if (input && input.uuid) {
-        if (this.bookingType === 'checkin') {
+        if (this.source === 'checkin') {
           this.shared_services.addProviderWaitlistAttachment(input.uuid, input.value)
             .subscribe(
               () => {
@@ -87,8 +88,8 @@ export class BookingDocumentsComponent implements OnInit {
       if (qparams.uid) {
         this.uuid = qparams.uid;
       }
-      if (qparams.bookingType) {
-        this.bookingType = qparams.bookingType;
+      if (qparams.source) {
+        this.source = qparams.source;
       }
       if (qparams.hasAttachment) {
         this.hasAttachment = qparams.hasAttachment;
@@ -116,18 +117,18 @@ export class BookingDocumentsComponent implements OnInit {
       disableClose: true,
       data: {
         source_id: 'attachment',
-        uid: (this.bookingType === 'checkin') ? this.waitlist_data.ynwUuid : this.waitlist_data.uid
+        uid: (this.source === 'checkin') ? this.waitlist_data.ynwUuid : this.waitlist_data.uid
       }
     });
   }
   gotoDocuments() {
-    this.router.navigate(['provider/bookings/documents'], { queryParams: { uid: this.uuid, bookingType: this.bookingType, hasAttachment: this.hasAttachment } });
+    this.router.navigate(['provider/bookings/documents'], { queryParams: { uid: this.uuid, source: this.source, providerId: this.providerId, hasAttachment: this.hasAttachment } });
   }
   goBack() {
     this.location.back();
   }
   getAttachments() {
-    if (this.bookingType === 'checkin') {
+    if (this.source === 'checkin') {
       this.provider_services.getProviderWaitlistAttachmentsByUuid(this.uuid).subscribe(
         data => {
           console.log('data', data);
@@ -136,7 +137,7 @@ export class BookingDocumentsComponent implements OnInit {
           console.log('this.imagesOnlyList', this.imagesOnlyList)
           this.loading = false;
         });
-    } else if (this.bookingType === 'appointment') {
+    } else if (this.source === 'appointment') {
       this.provider_services.getProviderAppointmentAttachmentsByUuid(this.uuid).subscribe(
         data => {
           console.log('data', data);
