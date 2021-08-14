@@ -32,38 +32,41 @@
     <div class="col-lg-4 col-xxl-3 pl-0 col-md-4">
         <app-booking-quick-actions></app-booking-quick-actions>
     </div>
-    <div class="col-lg-4 col-xxl-4 col-md-4 mgn-bt-15">
-        <app-booking-feeds></app-booking-feeds>
+    <div class="col-lg-4 col-xxl-4 col-md-4 mgn-bt-15" *ngIf="admin">
+        <app-records-datagrid [source]="'customers'" [records]="customers" [heading]="customer_label + 's'"
+            [view]="'small'">
+        </app-records-datagrid>
     </div>
     <div class="col-lg-12 col-xxl-12 col-md-12 appointments-and-doctors-row no-padding">
         <div class="column">
+            <app-booking-feeds></app-booking-feeds>
+        </div>
+        <div class="column" *ngIf="settings.appointment && newAppts.length > 0">
             <app-records-datagrid [source]="'appt'" [heading]="'Appointments'" [records]="newAppts"
                 [providerId]="providerId" [view]="'small'">
             </app-records-datagrid>
         </div>
-        <div class="column">
+        <div class="column" *ngIf="settings.waitlist && newWaitlists.length > 0">
             <app-records-datagrid [source]="'waitlist'" [records]="newWaitlists"
                 [heading]="(waitlistMgrSettings && waitlistMgrSettings.showTokenId) ? 'Tokens' : 'Check-ins'"
                 [waitlistMgrSettings]="waitlistMgrSettings" [providerId]="providerId" [view]="'small'">
             </app-records-datagrid>
         </div>
-        <div class="column">
+        <div class="column" *ngIf="settings.order && newOrders.length > 0">
             <app-records-datagrid [source]="'order'" [heading]="'Orders'" [records]="newOrders" [view]="'small'">
             </app-records-datagrid>
         </div>
-        <div class="column" *ngIf="admin">
+        <div class="column" *ngIf="admin && settings.donationFundRaising && donations.length > 0">
             <app-records-datagrid [source]="'donation'" [heading]="'Donations'" [records]="donations" [view]="'small'">
             </app-records-datagrid>
         </div>
-        <div class="column" *ngIf="admin">
-            <app-records-datagrid [source]="'customers'" [records]="customers" [heading]="customer_label + 's'" [view]="'small'">
-            </app-records-datagrid>
-        </div>
         <div class="column">
-            <app-booking-documents [source]="'dashboard'" [widget]="true" [providerId]="providerId"></app-booking-documents>
+            <app-booking-documents [source]="'dashboard'" [widget]="true" [providerId]="providerId">
+            </app-booking-documents>
         </div>
         <div class="column" *ngIf="bills && bills.length > 0">
-            <app-records-datagrid [heading]="'Bills'" [source]="'bill'" [records]="bills" [providerId]="providerId" [view]="'small'">
+            <app-records-datagrid [heading]="'Bills'" [source]="'bill'" [records]="bills" [providerId]="providerId"
+                [view]="'small'">
             </app-records-datagrid>
         </div>
         <div class="column">

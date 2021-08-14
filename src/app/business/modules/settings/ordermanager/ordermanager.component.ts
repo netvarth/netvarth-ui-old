@@ -139,13 +139,19 @@ export class OrdermanagerComponent implements OnInit, OnDestroy {
     this.subscriptions.sink = this.provider_services.setProviderOrderSStatus(event.checked).subscribe(data => {
       this.snackbarService.openSnackBar('Order settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
       this.getOrderStatus();
+      this.getGlobalSettingsStatus();
     }, (error) => {
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       this.getOrderStatus();
     });
   }
 }
-
+getGlobalSettingsStatus() {
+  this.provider_services.getGlobalSettings().subscribe(
+    (data: any) => {
+      this.groupService.setitemToGroupStorage('settings', data);
+    });
+}
 
 
 

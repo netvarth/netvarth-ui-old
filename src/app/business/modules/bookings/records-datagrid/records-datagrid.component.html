@@ -16,7 +16,7 @@
                 </div>
                 <div class="tableBody">
                     <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-                    <div class="table-responsive">
+                    <div class="table-responsive" [ngStyle]="{'height.px': source == 'customers' ? 365 : 317 }">
                         <div class="inner-card add-record rounded-sm pointer-cursor" (click)="gotoAdd()"
                             *ngIf="source == 'providers' || source == 'customers'">
                             <a class="inner-card-heading">
@@ -221,12 +221,18 @@
                                             {{record.createdDate | date : newDateFormat}}
                                         </td>
                                         <td>
+                                            <ng-container *ngIf="record.customer.userProfile">
+                                                {{record.customer.userProfile.firstName}}
+                                                {{record.customer.userProfile.lastName}}
+                                            </ng-container>
+                                        </td>
+                                        <td>
                                             <span class="rupee-font">
                                                 {{record.netTotal |
                                                 currency:'&#8377;' }}</span>
                                         </td>
-                                        <td>
-                                            {{record.billPaymentStatus}}
+                                        <td [class]="getPaymentClass(record.billPaymentStatus)">
+                                            {{paymentStatuses[record.billPaymentStatus]}}
                                         </td>
                                     </ng-container>
                                     <ng-container *ngIf="source == 'providers'">
@@ -239,7 +245,7 @@
                                         </td>
                                     </ng-container>
                                     <ng-container *ngIf="source == 'customers'">
-                                        <td>
+                                        <td style="width: 50px;">
                                             <div class="user-name">
                                                 <div class="user-short">
                                                     {{getUserShort(record)}}

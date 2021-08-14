@@ -65,6 +65,7 @@ export class DonationMgrComponent implements OnInit {
         () => {
           this.snackbarService.openSnackBar('Accept Donations ' + is_Donation + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getDonationStatus();
+          this.getGlobalSettingsStatus();
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -72,6 +73,12 @@ export class DonationMgrComponent implements OnInit {
         }
       );
     }
+  }
+  getGlobalSettingsStatus() {
+    this.provider_services.getGlobalSettings().subscribe(
+      (data: any) => {
+        this.groupService.setitemToGroupStorage('settings', data);
+      });
   }
   getDonationStatus() {
     this.provider_services.getGlobalSettings().subscribe(

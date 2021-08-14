@@ -6,6 +6,7 @@
                     Next Appointment</div>
             </div>
         </div>
+        <div style="width: 100px;" *ngIf="!nextAppt" class="inbox-nullimg"></div>
         <div class="d-flex align-items-center justify-content-between p-5 flex-grow-1" *ngIf="nextAppt">
             <div class="d-flex align-items-center">
                 <div class="symbol symbol-40 symbol-light-white mr-3">
@@ -42,6 +43,7 @@
                 <div class="card-label p-5 font-weight-bolder text-dark-light heading clr_grey">Next Token</div>
             </div>
         </div>
+        <div style="width: 100px;" *ngIf="!nextWaitlist" class="inbox-nullimg"></div>
         <div class="d-flex align-items-center justify-content-between p-5 flex-grow-1" *ngIf="nextWaitlist">
             <div class="d-flex align-items-center">
                 <div class="symbol symbol-40 symbol-light-dark mr-3">

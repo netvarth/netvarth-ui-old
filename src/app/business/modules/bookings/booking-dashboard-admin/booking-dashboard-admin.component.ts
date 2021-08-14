@@ -32,6 +32,7 @@ export class BookingDashboardAdminComponent implements OnInit {
   loading = true;
   nextWaitlist;
   nextAppt;
+  settings;
   constructor(private provider_services: ProviderServices,
     private groupService: GroupStorageService,
     private shared_functions: SharedFunctions,
@@ -61,6 +62,7 @@ export class BookingDashboardAdminComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    this.settings = this.groupService.getitemFromGroupStorage('settings');
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');

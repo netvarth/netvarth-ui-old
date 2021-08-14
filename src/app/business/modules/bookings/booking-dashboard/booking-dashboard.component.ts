@@ -37,6 +37,7 @@ export class BookingDashboardComponent implements OnInit {
   nextWaitlist;
   nextAppt;
   active_user;
+  settings;
   constructor(private provider_services: ProviderServices,
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
@@ -76,6 +77,7 @@ export class BookingDashboardComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    this.settings = this.groupService.getitemFromGroupStorage('settings');
     const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     this.userData = this.groupService.getitemFromGroupStorage('ynw-user');
     if (this.userData.accountType !== 'BRANCH') {

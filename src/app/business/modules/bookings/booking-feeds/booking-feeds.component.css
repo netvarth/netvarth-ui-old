@@ -1,12 +1,12 @@
 .container-booking-feeds {
     width: auto !important;
-    height: 400px !important;
     overflow: auto !important;
     border-radius: 8px !important;
 }
 .container-booking-feeds .card-body {
     overflow: auto !important;
     padding-right: 10px !important;
+    height: 317px !important;
 }
 .container-booking-feeds .date {
     font-family: "Roboto", sans-serif !important;

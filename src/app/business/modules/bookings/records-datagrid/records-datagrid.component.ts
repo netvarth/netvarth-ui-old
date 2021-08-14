@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
@@ -41,6 +41,8 @@ export class RecordsDatagridComponent implements OnInit {
   provider_label;
   qParams;
   loading = false;
+  paymentStatuses = projectConstantsLocal.BILL_PAYMENT_STATUS_WITH_DISPLAYNAME;
+  small_device_display = false;
   constructor(private dateTimeProcessor: DateTimeProcessor,
     private wordProcessor: WordProcessor,
     private router: Router, private location: Location,
@@ -65,7 +67,19 @@ export class RecordsDatagridComponent implements OnInit {
       }
     });
   }
-
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    const screenWidth = window.innerWidth;
+    if (screenWidth <= 767) {
+    } else {
+      this.small_device_display = false;
+    }
+    if (screenWidth <= 1040) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
+    }
+  }
   ngOnInit(): void {
     console.log(this.records);
     console.log(this.source);
@@ -75,6 +89,7 @@ export class RecordsDatagridComponent implements OnInit {
         this.getBills();
       }
     }
+    this.onResize();
   }
   getSingleTime(slot) {
     const slots = slot.split('-');
@@ -178,5 +193,14 @@ export class RecordsDatagridComponent implements OnInit {
       this.records = data;
       this.loading = false;
     })
+  }
+  getPaymentClass(status) {
+    if (status === 'NotPaid' || status === 'Refund') {
+      return 'red';
+    } else if (status === 'PartiallyPaid' || status === 'PartiallyRefunded') {
+      return 'orange';
+    } else if (status === 'FullyPaid' || status === 'FullyRefunded') {
+      return 'greenc';
+    }
   }
 }
