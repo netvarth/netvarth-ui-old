@@ -9,11 +9,19 @@
 <section class="" [class.smallview]="!view">
   <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 p-0">
     <div class="card card-custom data-card">
-      <div class="card-header bg-transparent" *ngIf="view">
+      <div class="card-header bg-transparent" *ngIf="view && !small_device_display">
         <div>Private Notes</div>
         <i class="fa fa-external-link pointer-cursor" aria-hidden="true" (click)="gotoView()"></i>
       </div>
-      <div class="card-body padding-tp-10 no-padding">
+      <div class="card-header collapsed" style="padding: 20px 10px !important;" *ngIf="view && small_device_display"
+        data-toggle="collapse" data-target="#notes" aria-expanded="false">
+        <div>Private Notes</div>
+        <div class="mgn-lt-auto">
+          <i (click)="gotoView()" class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
+          <i class="fa fa-angle-down"></i>
+        </div>
+      </div>
+      <div class="card-body padding-tp-10 no-padding" id="notes" [class.collapse]="view && small_device_display">
         <div *ngFor="let note of providerNotes" (click)="selectNote(note)" data-toggle="modal"
           data-target="#exampleModalCenter" class="row m-0">
           <div class="inner-card rounded-sm pointer-cursor">

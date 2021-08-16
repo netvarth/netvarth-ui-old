@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
@@ -23,6 +23,7 @@ export class DonationDetailsComponent {
     customer_label = '';
     customer;
     height;
+    small_device_display = false;
     constructor(public activaterouter: ActivatedRoute,
         public sharedFunctions: SharedFunctions,
         public providerservices: ProviderServices,
@@ -35,6 +36,16 @@ export class DonationDetailsComponent {
             this.getDonationDetails();
         });
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+        this.onResize();
+    }
+    @HostListener('window:resize', ['$event'])
+    onResize() {
+      const screenWidth = window.innerWidth;
+      if (screenWidth <= 767) {
+        this.small_device_display = true;
+      } else {
+        this.small_device_display = false;
+      }
     }
     getDonationDetails() {
         this.loading = true;

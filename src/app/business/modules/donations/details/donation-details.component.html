@@ -69,6 +69,7 @@
     <div class="clearfix"></div>
 </section> -->
 
+
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
@@ -97,11 +98,19 @@
         <div class="column"
             *ngIf="donationDetails && donationDetails.questionnaire && donationDetails.questionnaire.questionAnswers && donationDetails.questionnaire.questionAnswers.length > 0">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" *ngIf="!small_device_display">
                     <div>{{customer_label | capitalizeFirst}} info</div>
                     <i class="fa fa-external-link pointer-cursor" aria-hidden="true" (click)="gotoQnr()"></i>
                 </div>
-                <div class="qnr-hgt">
+                <div class="card-header collapsed" style="padding: 20px 10px !important;" *ngIf="small_device_display" data-toggle="collapse"
+                    data-target="#info" aria-expanded="false">
+                    <div>{{customer_label | capitalizeFirst}} info</div>
+                    <div class="mgn-lt-auto">
+                        <i (click)="gotoQnr()" class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
+                        <i class="fa fa-angle-down"></i>
+                    </div>
+                </div>
+                <div class="" id="info" [class.collapse]="small_device_display">
                     <app-questionnaire-list-popup [source]="'proDonation'" [uid]="donationDetails.uid"
                         [type]="'details'" [waitlist_data]="donationDetails">
                     </app-questionnaire-list-popup>

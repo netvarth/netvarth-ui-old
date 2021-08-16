@@ -71,10 +71,6 @@ export class RecordsDatagridComponent implements OnInit {
   onResize() {
     const screenWidth = window.innerWidth;
     if (screenWidth <= 767) {
-    } else {
-      this.small_device_display = false;
-    }
-    if (screenWidth <= 1040) {
       this.small_device_display = true;
     } else {
       this.small_device_display = false;
@@ -202,5 +198,8 @@ export class RecordsDatagridComponent implements OnInit {
     } else if (status === 'FullyPaid' || status === 'FullyRefunded') {
       return 'greenc';
     }
+  }
+  getHeading() {
+    return this.heading.replace('_', ' ');
   }
 }

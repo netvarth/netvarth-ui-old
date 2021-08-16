@@ -10,11 +10,20 @@
   <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 m-0 p-0"
     [class.widgetStyle]="widget">
     <div class="card card-custom data-card">
-      <div class="card-header bg-transparent" *ngIf="widget">
+      <div class="card-header" *ngIf="widget && !small_device_display">
         <div>Documents</div>
         <i class="fa fa-external-link pointer-cursor" aria-hidden="true" (click)="gotoDocuments()"></i>
       </div>
-      <div class="card-body pad-10" [class.cardheight]="!widget">
+      <div class="card-header collapsed" style="padding: 20px 10px !important;" *ngIf="widget && small_device_display"
+        data-toggle="collapse" data-target="#documents" aria-expanded="false">
+        <div>Documents</div>
+        <div class="mgn-lt-auto">
+          <i (click)="gotoDocuments()" class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
+          <i class="fa fa-angle-down"></i>
+        </div>
+      </div>
+      <div class="card-body pad-10" [class.cardheight]="!widget" id="documents"
+        [class.collapse]="widget && small_device_display">
         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
         <div class="document" *ngFor="let doc of documents;let i=index">
           <img class="pointer-cursor" [src]="getImage(doc)" (click)="showImg(i)">

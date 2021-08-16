@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 
@@ -17,12 +17,23 @@ export class BookingMedicalRecordsRXComponent implements OnInit {
   rxList: any = [];
   loading = false;
   waitlistmr: any = [];
+  small_device_display = false;
   constructor(private provider_services: ProviderServices,
     private router: Router) { }
 
   ngOnInit(): void {
+    this.onResize();
     if (this.source !== 'details' || (this.source === 'details' && (this.waitlist_data.waitlistStatus && this.waitlist_data.waitlistStatus !== 'blocked') || (this.waitlist_data.apptStatus && this.waitlist_data.apptStatus !== 'blocked'))) {
       this.getMedicalRecords();
+    }
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    const screenWidth = window.innerWidth;
+    if (screenWidth <= 767) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
     }
   }
   getMedicalRecords() {

@@ -252,6 +252,9 @@ textarea {
       background-color: #1e407963;
     }
 }
+.bg-transparent.collapsed {
+    padding: 20px 10px !important;
+}
 .bg-transparent {
     padding: 8px 10px !important;
     border-radius: 0 !important;
@@ -273,11 +276,14 @@ textarea {
 }
 .details-inbox .card.p0 {
     border: 1.75px solid #d0d0d0 !important;
-    min-height: 400px;
+    /* min-height: 400px; */
     box-shadow: none !important;
     padding: 0 !important;
     border-radius: 10px !important;
 }
 .details-opacity {
     opacity: 0.5;
+}
+.fa-angle-down {
+    padding-left: 20px;
 }

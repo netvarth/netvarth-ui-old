@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -45,6 +45,7 @@ export class BookingDocumentsComponent implements OnInit {
   loading = false;
   imagesOnlyList: any = [];
   hasAttachment = false;
+  small_device_display = false;
   constructor(private galleryService: GalleryService,
     private shared_services: SharedServices,
     private snackbarService: SnackbarService,
@@ -97,12 +98,22 @@ export class BookingDocumentsComponent implements OnInit {
     })
   }
   ngOnInit(): void {
+    this.onResize();
     if (this.waitlist_data) {
       this.hasAttachment = this.waitlist_data.hasAttachment;
     }
     if (this.uuid && this.hasAttachment) {
       this.loading = true;
       this.getAttachments();
+    }
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    const screenWidth = window.innerWidth;
+    if (screenWidth <= 767) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
     }
   }
   ngOnDestroy() {

@@ -48,3 +48,9 @@
 .pad10 {
     padding: 0 10px !important;
 }
+.fa-angle-down {
+    padding-left: 20px;
+}
+.collapse.in {
+    display: block;
+}

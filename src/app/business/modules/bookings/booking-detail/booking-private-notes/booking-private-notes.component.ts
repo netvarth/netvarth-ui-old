@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image } from '@ks89/angular-modal-gallery';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
@@ -39,6 +39,7 @@ export class BookingPrivateNotesComponent implements OnInit {
   };
   image_list_popup: Image[];
   subscription: Subscription;
+  small_device_display = false;
   constructor(private provider_services: ProviderServices,
     private sharedFunctions: SharedFunctions,
     private router: Router, private location: Location,
@@ -69,8 +70,18 @@ export class BookingPrivateNotesComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    this.onResize();
     if (this.waitlistStatus !== 'blocked') {
       this.getWaitlistNotes();
+    }
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    const screenWidth = window.innerWidth;
+    if (screenWidth <= 767) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
     }
   }
   getWaitlistNotes() {

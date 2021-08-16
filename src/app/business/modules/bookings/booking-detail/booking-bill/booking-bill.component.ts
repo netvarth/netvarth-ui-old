@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
@@ -20,6 +20,7 @@ export class BookingBillComponent implements OnInit {
   refund_value;
   paymentOnline;
   loading = false;
+  small_device_display = false;
   constructor(
     public provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
@@ -32,6 +33,7 @@ export class BookingBillComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    this.onResize();
     this.getPaymentSettings();
     if (this.bookingType === 'checkin') {
       if (this.pos && this.waitlist_data.waitlistStatus !== 'blocked' && (this.waitlist_data.waitlistStatus !== 'cancelled' || (this.waitlist_data.waitlistStatus === 'cancelled' && this.waitlist_data.paymentStatus !== 'NotPaid'))) {
@@ -43,6 +45,15 @@ export class BookingBillComponent implements OnInit {
         this.loading = true;
         this.getWaitlistBill();
       }
+    }
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    const screenWidth = window.innerWidth;
+    if (screenWidth <= 767) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
     }
   }
   getWaitlistBill(type?) {

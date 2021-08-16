@@ -18,13 +18,23 @@
     <div class="col-md-12 no-padding-small" [class.details-inbox]="source"
         [class.details-opacity]="!loading && source && (!customer || status=='blocked')">
         <div class="card p0">
-            <div class="bg-transparent" *ngIf="source">
+            <div class="bg-transparent" *ngIf="source && !small_device_display">
                 <div>Messages</div>
                 <i class="fa fa-external-link pointer-cursor" (click)="viewInbox()" aria-hidden="true"
                     *ngIf="selectedUserMessages && selectedUserMessages.length > 0"></i>
             </div>
-            <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-            <div class="d-flex flex-column flex-column-fluid" id="kt_content" *ngIf="!loading">
+            <div class="bg-transparent collapsed" style="padding: 20px 10px !important;" *ngIf="source && small_device_display"
+                data-toggle="collapse" data-target="#messages" aria-expanded="false" (click)="isCollapsed = !isCollapsed">
+                <div>Messages</div>
+                <div class="mgn-lt-auto">
+                    <i class="fa fa-external-link pointer-cursor" (click)="viewInbox()" aria-hidden="true"
+                        *ngIf="selectedUserMessages && selectedUserMessages.length > 0"></i>
+                    <i class="fa fa-angle-down"></i>
+                </div>
+            </div>
+            <app-common-innerloading-spinner *ngIf="!isCollapsed && loading"></app-common-innerloading-spinner>
+            <div class="d-flex flex-column flex-column-fluid" *ngIf="!loading" id="messages"
+                [class.collapse]="source && small_device_display">
                 <div class="d-flex flex-column-fluid">
                     <div class="d-flex flex-row minhgt-60" *ngIf="messages.length==0">
                         <div class="no-msg-section">
@@ -140,7 +150,7 @@
                                             {{getUserName('customer')}}</div>
                                     </div>
                                 </div>
-                                <div class="card-body no-padding-small">
+                                <div class="card-body no-padding-small" *ngIf="!isCollapsed">
                                     <div class="scroll scroll-pull over-scroll" #scrollMe
                                         [ngStyle]="{'height.px': msgHeight}">
                                         <div class="messages" *ngFor="let msg of selectedUserMessages">
@@ -235,7 +245,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-footer align-items-center no-padding">
+                                <div class="card-footer align-items-center no-padding" *ngIf="!isCollapsed">
                                     <div class="reply-section" *ngIf="replyMsg" #reply>
                                         <div class="main-sec">
                                             <div class="username">{{(replyMsg.messagestatus === 'out') ? 'You' :

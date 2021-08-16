@@ -1,10 +1,19 @@
 <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 p-0 m-0 mrx">
   <div class="card card-custom data-card">
-    <div class="card-header bg-transparent">
+    <div class="card-header bg-transparent" *ngIf="!small_device_display">
       <div>{{(type == 'mr') ? 'Medical Records' : 'Prescriptions'}}</div>
       <i class="fa fa-external-link pointer-cursor" aria-hidden="true" (click)="gotoMrList()"></i>
     </div>
-    <div class="card-body padding-tp-10 no-padding" *ngIf="!loading">
+    <div class="card-header collapsed" style="padding: 20px 10px !important;" *ngIf="small_device_display"
+      data-toggle="collapse" [attr.data-target]="'#' + type" aria-expanded="false">
+      <div>{{(type == 'mr') ? 'Medical Records' : 'Prescriptions'}}</div>
+      <div class="mgn-lt-auto">
+        <i (click)="gotoMrList()" class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
+        <i class="fa fa-angle-down"></i>
+      </div>
+    </div>
+    <div class="card-body padding-tp-10 no-padding" *ngIf="!loading" id="{{type}}"
+      [class.collapse]="small_device_display">
       <div>
         <div class="add-record rounded-sm pointer-cursor" (click)="gotoMrDetails('add')" *ngIf="showAddRecord()">
           <a class="inner-card-heading">
@@ -48,7 +57,8 @@
         </ng-container>
       </div>
     </div>
-    <div class="card-body padding-tp-10 no-padding" *ngIf="loading">
+    <div class="card-body padding-tp-10 no-padding" *ngIf="loading" id="{{type}}"
+      [class.collapse]="small_device_display">
       <app-common-innerloading-spinner> </app-common-innerloading-spinner>
     </div>
   </div>

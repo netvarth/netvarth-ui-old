@@ -189,3 +189,6 @@ th {
 .smallview {
     padding: 25px 10px !important;
 }
+.fa-angle-down {
+    padding-left: 20px;
+}

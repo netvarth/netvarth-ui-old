@@ -1,14 +1,23 @@
 <div class="booking-bill-component" [class.disabledclass]="checkDisable()">
     <div class="card billing-card">
-        <div class="card-header bg-transparent">
+        <div class="card-header" *ngIf="!small_device_display">
             <div>Billing</div>
             <i *ngIf="!checkDisable()" (click)="getWaitlistBill('view')" class="fa fa-external-link pointer-cursor"
                 aria-hidden="true"></i>
         </div>
-        <div class="mx-hgt" *ngIf="loading">
+        <div class="card-header collapsed" style="padding: 20px 10px !important;" *ngIf="small_device_display"
+            data-toggle="collapse" data-target="#billing" aria-expanded="false">
+            <div>Billing</div>
+            <div class="mgn-lt-auto">
+                <i *ngIf="!checkDisable()" (click)="getWaitlistBill('view')" class="fa fa-external-link pointer-cursor"
+                    aria-hidden="true"></i>
+                <i class="fa fa-angle-down"></i>
+            </div>
+        </div>
+        <div class="mx-hgt" *ngIf="loading" id="billing" [class.collapse]="small_device_display">
             <app-common-innerloading-spinner></app-common-innerloading-spinner>
         </div>
-        <div class="mx-hgt" *ngIf="!loading">
+        <div class="mx-hgt" *ngIf="!loading" id="billing" [class.collapse]="small_device_display">
             <div class="scroll-sec">
                 <div class="card-body">
                     <div class="outer-table-responsive table-responsive">
@@ -70,7 +79,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="card-footer bg-transparent">
+                <div class="card-footer">
                     <div class="total-amount">
                         <div class="flx_1"> Amount</div>
                         <div><i class="fa fa-inr"></i>{{bill_data.netTotal}}</div>
@@ -123,7 +132,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-footer bg-transparent">
+            <div class="card-footer">
                 <div class="actions">
                     <button (click)="getWaitlistBill('view')" class="btn view-bill-btn" [disabled]="checkDisable()">View
                         Bill</button>

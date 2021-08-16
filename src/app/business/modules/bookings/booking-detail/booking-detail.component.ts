@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
@@ -34,6 +34,7 @@ export class BookingDetailComponent implements OnInit {
   customer_label;
   showToken;
   wlStatus;
+  small_device_display = false;
   constructor(private locationobj: Location,
     private groupService: GroupStorageService,
     private provider_services: ProviderServices,
@@ -67,6 +68,7 @@ export class BookingDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.onResize();
     this.api_loading = true;
     this.getPos();
     if (this.bookingType === 'checkin') {
@@ -80,6 +82,15 @@ export class BookingDetailComponent implements OnInit {
     this.domain = this.userDet.sector;
     this.subdomain = this.userDet.subSector;
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    const screenWidth = window.innerWidth;
+    if (screenWidth <= 767) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
+    }
   }
   ngOnDestroy() {
     if (this.subscription) {

@@ -56,3 +56,6 @@
     padding: 3px !important;
     margin: 0 5px 0 10px;
 }
+.collapse.in {
+    display: block;
+}

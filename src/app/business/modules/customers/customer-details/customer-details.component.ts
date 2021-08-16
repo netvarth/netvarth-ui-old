@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
@@ -121,6 +121,7 @@ export class CustomerDetailComponent implements OnInit {
     showEndBt: boolean;
     showRejoinBt: boolean;
     consumerBills: any = [];
+    small_device_display = false;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -182,7 +183,16 @@ export class CustomerDetailComponent implements OnInit {
                 }
             }
         );
-
+        this.onResize();
+    }
+    @HostListener('window:resize', ['$event'])
+    onResize() {
+      const screenWidth = window.innerWidth;
+      if (screenWidth <= 767) {
+        this.small_device_display = true;
+      } else {
+        this.small_device_display = false;
+      }
     }
     getCustomers(customerId) {
         const _this = this;

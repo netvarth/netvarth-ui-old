@@ -776,19 +776,19 @@
             </app-records-datagrid>
         </div>
         <div class="column" *ngIf="todayorderVisitDetailsArray.length > 0">
-            <app-records-datagrid [records]="todayordervisitDetails" [heading]="'Todays Order'" [source]="'order'"
+            <app-records-datagrid [records]="todayordervisitDetails" [heading]="'Todays_Order'" [source]="'order'"
                 [showMore]="showMoreorderToday" [timeType]="1" (actionPerformed)="actionPerformed($event)"
                 [view]="'small'">
             </app-records-datagrid>
         </div>
         <div class="column" *ngIf="futureorderVisitDetailsArray.length > 0">
-            <app-records-datagrid [records]="futureordervisitDetails" [heading]="'Future Order'" [source]="'order'"
+            <app-records-datagrid [records]="futureordervisitDetails" [heading]="'Future_Order'" [source]="'order'"
                 [showMore]="showMoreorderFuture" [timeType]="2" (actionPerformed)="actionPerformed($event)"
                 [view]="'small'">
             </app-records-datagrid>
         </div>
         <div class="column" *ngIf="historyorderVisitDetailsArray.length > 0">
-            <app-records-datagrid [records]="historyOrdervisitDetails" [heading]="'Order History'" [source]="'order'"
+            <app-records-datagrid [records]="historyOrdervisitDetails" [heading]="'Order_History'" [source]="'order'"
                 [showMore]="showMoreOrderHistory" [timeType]="3" (actionPerformed)="actionPerformed($event)"
                 [view]="'small'">
             </app-records-datagrid>
@@ -800,11 +800,18 @@
         </div>
         <div class="column" *ngIf="customer[0].questionnaires && customer[0].questionnaires.length > 0">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" *ngIf="!small_device_display">
                     <div>More {{customer_label}} info</div>
                     <i class="fa fa-external-link pointer-cursor" aria-hidden="true" (click)="gotoQnr()"></i>
                 </div>
-                <div class="qnr-hgt">
+                <div class="card-header collapsed" *ngIf="small_device_display" data-toggle="collapse" data-target="#info" aria-expanded="false">
+                    <div>More {{customer_label}} info</div>
+                    <div class="mgn-lt-auto">
+                        <i (click)="gotoQnr()" class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
+                        <i class="fa fa-angle-down"></i>
+                    </div>
+                </div>
+                <div class="qnr-hgt" id="info" [class.collapse]="small_device_display">
                     <app-questionnaire-list-popup [source]="'customer-details'" [uid]="customer[0].id"
                         [type]="'details'" [waitlist_data]="customer">
                     </app-questionnaire-list-popup>

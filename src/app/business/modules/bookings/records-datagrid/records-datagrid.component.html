@@ -10,11 +10,20 @@
     <div class="operations-row" [class.bord-class]="view=='small'">
         <div class="column operations-column">
             <div class="card">
-                <div class="card-header" *ngIf="view=='small' && heading">
-                    <div>{{heading}}</div>
+                <div class="card-header" *ngIf="view=='small' && heading && !small_device_display">
+                    <div>{{getHeading()}}</div>
                     <i (click)="gotoFullView()" class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
                 </div>
-                <div class="tableBody">
+                <div class="card-header collapsed" style="padding: 20px 10px !important;" *ngIf="view=='small' && heading && small_device_display"
+                    data-toggle="collapse" [attr.data-target]="'#' + heading" aria-expanded="false">
+                    <div>{{getHeading()}}</div>
+                    <div class="mgn-lt-auto">
+                        <i (click)="gotoFullView()" class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
+                        <i class="fa fa-angle-down"></i>
+                    </div>
+                </div>
+                <div class="tableBody" id="{{heading}}"
+                    [class.collapse]="view=='small' && heading && small_device_display">
                     <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                     <div class="table-responsive" [ngStyle]="{'height.px': source == 'customers' ? 365 : 317 }">
                         <div class="inner-card add-record rounded-sm pointer-cursor" (click)="gotoAdd()"

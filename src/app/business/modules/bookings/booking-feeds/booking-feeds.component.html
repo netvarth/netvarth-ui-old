@@ -1,9 +1,17 @@
 <div class="card card-custom container-booking-feeds card-stretch card-stretch-half data-card">
-    <div class="card-header">
+    <div class="card-header" *ngIf="!small_device_display">
         <div>Your Activities</div>
         <i (click)="gotoAuditLogs()" class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
     </div>
-    <div class="card-body auditlog">
+    <div class="card-header collapsed" style="padding: 20px 10px !important;" *ngIf="small_device_display"
+        data-toggle="collapse" data-target="#activity" aria-expanded="false">
+        <div>Your Activities</div>
+        <div class="mgn-lt-auto">
+            <i (click)="gotoAuditLogs()" class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
+            <i class="fa fa-angle-down"></i>
+        </div>
+    </div>
+    <div class="card-body auditlog" id="activity" [class.collapse]="small_device_display">
         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
         <div class="d-flex align-items-center mb-3 rounded p-2" *ngFor="let audit of auditlog_details">
             <span class="svg-icon svg-icon-warning mr-5">
