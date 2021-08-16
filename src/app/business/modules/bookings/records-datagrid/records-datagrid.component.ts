@@ -40,7 +40,7 @@ export class RecordsDatagridComponent implements OnInit {
   customer_label;
   provider_label;
   qParams;
-  loading = false;
+  loading = true;
   paymentStatuses = projectConstantsLocal.BILL_PAYMENT_STATUS_WITH_DISPLAYNAME;
   small_device_display = false;
   constructor(private dateTimeProcessor: DateTimeProcessor,
@@ -80,10 +80,11 @@ export class RecordsDatagridComponent implements OnInit {
     console.log(this.records);
     console.log(this.source);
     if (!this.view) {
-      this.loading = true;
       if (this.source == 'bill') {
         this.getBills();
       }
+    } else {
+      this.loading = false;
     }
     this.onResize();
   }

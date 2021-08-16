@@ -95,7 +95,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   @Input() height;
   @Input() status;
   @ViewChild('imgsec') elementView: ElementRef;
-  isCollapsed = true;
+  isCollapsed = false;
   constructor(
     private inbox_services: InboxServices,
     private provider_services: ProviderServices,
@@ -124,6 +124,10 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
   }
   ngOnInit() {
+    if (this.source) {
+      this.isCollapsed = true;
+      this.onResize();
+    }
     this.getCustomers();
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -160,10 +164,10 @@ export class InboxListComponent implements OnInit, OnDestroy {
         () => {
         }
       );
+    this.loading = true;
     this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
       this.getInboxMessages();
     });
-    this.loading = true;
   }
   @HostListener('window:resize', ['$event'])
   onResize() {

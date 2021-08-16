@@ -9,12 +9,8 @@
 <section class="" [class.smallview]="!view">
   <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 p-0">
     <div class="card card-custom data-card">
-      <div class="card-header bg-transparent" *ngIf="view && !small_device_display">
-        <div>Private Notes</div>
-        <i class="fa fa-external-link pointer-cursor" aria-hidden="true" (click)="gotoView()"></i>
-      </div>
-      <div class="card-header collapsed" style="padding: 20px 10px !important;" *ngIf="view && small_device_display"
-        data-toggle="collapse" data-target="#notes" aria-expanded="false">
+      <div class="card-header collapsed" [ngStyle]="{'padding': view && small_device_display ? '20px 10px' : '8px 10px'}"
+        [attr.data-toggle]="view && small_device_display ? 'collapse' : ''" data-target="#notes" aria-expanded="false">
         <div>Private Notes</div>
         <div class="mgn-lt-auto">
           <i (click)="gotoView()" class="fa fa-external-link pointer-cursor mgn-rt-20" aria-hidden="true"></i>
@@ -34,6 +30,9 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="no-record" *ngIf="providerNotes.length == 0">
+          <div class="team-icon-action"></div>
         </div>
       </div>
       <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

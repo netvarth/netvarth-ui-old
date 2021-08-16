@@ -19,7 +19,6 @@
     padding: 25px 0 !important;
 }
 .card.data-card .card-header {
-    padding: 8px 10px !important;
     border-radius: 0 !important;
     font-size: 13px !important;
     text-transform: uppercase !important;
@@ -111,4 +110,8 @@
 }
 .collapse.in {
     display: block !important;
+}
+.no-record div {
+    width: 200px;
+    margin: auto;
 }

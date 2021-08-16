@@ -10,12 +10,10 @@
   <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 m-0 p-0"
     [class.widgetStyle]="widget">
     <div class="card card-custom data-card">
-      <div class="card-header" *ngIf="widget && !small_device_display">
-        <div>Documents</div>
-        <i class="fa fa-external-link pointer-cursor" aria-hidden="true" (click)="gotoDocuments()"></i>
-      </div>
-      <div class="card-header collapsed" style="padding: 20px 10px !important;" *ngIf="widget && small_device_display"
-        data-toggle="collapse" data-target="#documents" aria-expanded="false">
+      <div class="card-header collapsed"
+        [ngStyle]="{'padding': widget && small_device_display ? '20px 10px' : '8px 10px'}"
+        [attr.data-toggle]="widget && small_device_display ? 'collapse' : ''" data-target="#documents"
+        aria-expanded="false">
         <div>Documents</div>
         <div class="mgn-lt-auto">
           <i (click)="gotoDocuments()" class="fa fa-external-link pointer-cursor mgn-rt-20" aria-hidden="true"></i>

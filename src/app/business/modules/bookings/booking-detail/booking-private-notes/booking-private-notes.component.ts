@@ -13,7 +13,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./booking-private-notes.component.css', '../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../../assets/css/style.bundle.css']
 })
 export class BookingPrivateNotesComponent implements OnInit {
-  providerNotes;
+  providerNotes: any = [];
   @Input() uuid;
   @Input() waitlistStatus;
   @Input() bookingType;

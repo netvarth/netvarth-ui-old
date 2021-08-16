@@ -4,7 +4,6 @@
     padding: 0 !important;
 }
 .card.billing-card .card-header {
-    padding: 8px 10px !important;
     border-radius: calc(0.5rem - 1px) calc(0.5rem - 1px) 0 0 !important;
     border-bottom: 1.75px solid #d0d0d0 !important;
     font-size: 13px !important;

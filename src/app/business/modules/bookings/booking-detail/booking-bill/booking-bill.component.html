@@ -1,17 +1,13 @@
 <div class="booking-bill-component" [class.disabledclass]="checkDisable()">
     <div class="card billing-card">
-        <div class="card-header" *ngIf="!small_device_display">
-            <div>Billing</div>
-            <i *ngIf="!checkDisable()" (click)="getWaitlistBill('view')" class="fa fa-external-link pointer-cursor"
-                aria-hidden="true"></i>
-        </div>
-        <div class="card-header collapsed" style="padding: 20px 10px !important;" *ngIf="small_device_display"
-            data-toggle="collapse" data-target="#billing" aria-expanded="false">
+        <div class="card-header collapsed" [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
+            [attr.data-toggle]="small_device_display && !checkDisable() ? 'collapse' : ''" data-target="#billing"
+            aria-expanded="false">
             <div>Billing</div>
             <div class="mgn-lt-auto">
-                <i *ngIf="!checkDisable()" (click)="getWaitlistBill('view')" class="fa fa-external-link pointer-cursor mgn-rt-20"
-                    aria-hidden="true"></i>
-                <i class="fa fa-angle-down"></i>
+                <i *ngIf="!checkDisable()" (click)="getWaitlistBill('view')"
+                    class="fa fa-external-link pointer-cursor mgn-rt-20" aria-hidden="true"></i>
+                <i *ngIf="small_device_display && !checkDisable()" class="fa fa-angle-down"></i>
             </div>
         </div>
         <div class="mx-hgt" *ngIf="loading" id="billing" [class.collapse]="small_device_display">

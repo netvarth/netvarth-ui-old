@@ -1,11 +1,7 @@
 <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 p-0 m-0 mrx">
   <div class="card card-custom data-card">
-    <div class="card-header bg-transparent" *ngIf="!small_device_display">
-      <div>{{(type == 'mr') ? 'Medical Records' : 'Prescriptions'}}</div>
-      <i class="fa fa-external-link pointer-cursor" aria-hidden="true" (click)="gotoMrList()"></i>
-    </div>
-    <div class="card-header collapsed" style="padding: 20px 10px !important;" *ngIf="small_device_display"
-      data-toggle="collapse" [attr.data-target]="'#' + type" aria-expanded="false">
+    <div class="card-header collapsed" [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
+      [attr.data-toggle]="small_device_display ? 'collapse' : ''" [attr.data-target]="'#' + type" aria-expanded="false">
       <div>{{(type == 'mr') ? 'Medical Records' : 'Prescriptions'}}</div>
       <div class="mgn-lt-auto">
         <i (click)="gotoMrList()" class="fa fa-external-link pointer-cursor mgn-rt-20" aria-hidden="true"></i>

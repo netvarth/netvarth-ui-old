@@ -162,4 +162,14 @@ export class BookingDetailComponent implements OnInit {
   gotoQnr() {
     this.router.navigate(['provider', 'bookings', 'details', 'questionnaires'], { queryParams: { uid: this.uuid, source: this.bookingType } });
   }
+  showQnr() {
+    if (this.waitlist_data.releasedQnr && this.waitlist_data.releasedQnr.length > 0) {
+      if (this.bookingType === 'checkin' && this.waitlist_data.waitlistStatus !== 'cancelled') {
+        return true;
+      }
+      if (this.bookingType === 'appointment' && this.waitlist_data.apptStatus !== 'Cancelled') {
+        return true;
+      }
+    }
+  }
 }

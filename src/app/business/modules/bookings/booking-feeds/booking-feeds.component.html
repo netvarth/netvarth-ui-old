@@ -1,10 +1,6 @@
 <div class="card card-custom container-booking-feeds card-stretch card-stretch-half data-card">
-    <div class="card-header" *ngIf="!small_device_display">
-        <div>Your Activities</div>
-        <i (click)="gotoAuditLogs()" class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
-    </div>
-    <div class="card-header collapsed" style="padding: 20px 10px !important;" *ngIf="small_device_display"
-        data-toggle="collapse" data-target="#activity" aria-expanded="false">
+    <div class="card-header collapsed" [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
+        [attr.data-toggle]="small_device_display ? 'collapse' : ''" data-target="#activity" aria-expanded="false">
         <div>Your Activities</div>
         <div class="mgn-lt-auto">
             <i (click)="gotoAuditLogs()" class="fa fa-external-link pointer-cursor mgn-rt-20" aria-hidden="true"></i>

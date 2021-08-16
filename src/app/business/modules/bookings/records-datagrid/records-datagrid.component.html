@@ -10,23 +10,21 @@
     <div class="operations-row" [class.bord-class]="view=='small'">
         <div class="column operations-column">
             <div class="card">
-                <div class="card-header" *ngIf="view=='small' && heading && !small_device_display">
-                    <div>{{getHeading()}}</div>
-                    <i (click)="gotoFullView()" class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
-                </div>
-                <div class="card-header collapsed" style="padding: 20px 10px !important;"
-                    *ngIf="view=='small' && heading && small_device_display" data-toggle="collapse"
-                    [attr.data-target]="'#' + heading" aria-expanded="false">
+                <div class="card-header collapsed" [attr.data-target]="'#' + heading" aria-expanded="false"
+                    [ngStyle]="{'padding': view=='small' && heading && small_device_display ? '20px 10px' : '8px 10px'}"
+                    [attr.data-toggle]="view=='small' && heading && small_device_display ? 'collapse' : ''">
                     <div>{{getHeading()}}</div>
                     <div class="mgn-lt-auto">
-                        <i (click)="gotoFullView()" class="fa fa-external-link pointer-cursor mgn-rt-20" aria-hidden="true"></i>
+                        <i (click)="gotoFullView()" class="fa fa-external-link pointer-cursor mgn-rt-20"
+                            aria-hidden="true"></i>
                         <i class="fa fa-angle-down"></i>
                     </div>
                 </div>
                 <div class="tableBody" id="{{heading}}"
                     [class.collapse]="view=='small' && heading && small_device_display">
                     <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-                    <div class="table-responsive" [ngStyle]="{'height.px': source == 'customers' ? 365 : 317 }">
+                    <div class="table-responsive"
+                        [ngStyle]="{'height': (source == 'customers') ? '365px' : (view=='small') ? '317px' : 'auto' }">
                         <div class="inner-card add-record rounded-sm pointer-cursor" (click)="gotoAdd()"
                             *ngIf="source == 'providers' || source == 'customers'">
                             <a class="inner-card-heading">
@@ -289,7 +287,7 @@
                                     </ng-container>
                                 </tr>
                                 <div class="no-record" *ngIf="records && records.length == 0">
-                                    No {{heading}}
+                                    <div class="team-icon-action"></div>
                                 </div>
                             </tbody>
                         </table>

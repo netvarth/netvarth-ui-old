@@ -50,14 +50,10 @@
       <app-booking-documents [source]="bookingType" [waitlist_data]="waitlist_data" [widget]="true">
       </app-booking-documents>
     </div>
-    <div class="column" *ngIf="waitlist_data.releasedQnr && waitlist_data.releasedQnr.length > 0">
+    <div class="column" *ngIf="showQnr()">
       <div class="card">
-        <div class="card-header" *ngIf="!small_device_display">
-          <div>{{customer_label | capitalizeFirst}} info</div>
-          <i class="fa fa-external-link pointer-cursor" aria-hidden="true" (click)="gotoQnr()"></i>
-        </div>
-        <div class="card-header collapsed" style="padding: 20px 10px !important;" *ngIf="small_device_display"
-          data-toggle="collapse" data-target="#info" aria-expanded="false">
+        <div class="card-header collapsed" [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
+          [attr.data-toggle]="small_device_display ? 'collapse' : ''" data-target="#info" aria-expanded="false">
           <div>{{customer_label | capitalizeFirst}} info</div>
           <div class="mgn-lt-auto">
             <i (click)="gotoQnr()" class="fa fa-external-link pointer-cursor mgn-rt-20" aria-hidden="true"></i>
@@ -65,8 +61,8 @@
           </div>
         </div>
         <div class="qnr-hgt" id="info" [class.collapse]="small_device_display">
-          <app-questionnaire-list-popup [source]="bookingType" [uid]="uuid" [type]="'details'"
-            [waitlist_data]="waitlist_data">
+          <app-questionnaire-list-popup [source]="(bookingType === 'appointment') ? 'appt' : 'checkin'" [uid]="uuid"
+            [type]="'details'" [waitlist_data]="waitlist_data">
           </app-questionnaire-list-popup>
         </div>
       </div>

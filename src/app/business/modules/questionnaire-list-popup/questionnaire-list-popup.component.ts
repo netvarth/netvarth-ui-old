@@ -34,6 +34,7 @@ export class QuestionnaireListPopupComponent implements OnInit {
     private activateRoute: ActivatedRoute,
     private location: Location,
     @Inject(MAT_DIALOG_DATA) public data: any) {
+      console.log('source', this.source);
     this.activateRoute.queryParams.subscribe(params => {
       this.qParams = params;
       if (params.source) {
@@ -53,7 +54,11 @@ export class QuestionnaireListPopupComponent implements OnInit {
       }
     });
     console.log('params', this.qParams);
+  }
+
+  ngOnInit() {
     console.log('source', this.source);
+    this.selectedQnr = this.data.selectedQnr;
     if (this.source === 'appt') {
       this.getApptQuestionnaires();
     } else if (this.source === 'checkin') {
@@ -61,10 +66,6 @@ export class QuestionnaireListPopupComponent implements OnInit {
     } else {
       this.loading = false;
     }
-  }
-
-  ngOnInit() {
-    this.selectedQnr = this.data.selectedQnr;
     if (this.waitlist_data && this.waitlist_data.releasedQnr) {
       this.releasedQnrs = this.waitlist_data.releasedQnr;
     }

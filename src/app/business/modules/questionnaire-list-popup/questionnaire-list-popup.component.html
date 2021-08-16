@@ -46,8 +46,7 @@
           </app-questionnaire>
         </div>
         <div class="card no-padding-small" *ngIf="source == 'customer-details' && waitlist_data[0]">
-          <app-questionnaire [source]="'customer-details'"
-            [type]="'details'" [customerDetails]="waitlist_data">
+          <app-questionnaire [source]="'customer-details'" [type]="'details'" [customerDetails]="waitlist_data">
           </app-questionnaire>
         </div>
         <div class="card no-padding-small" *ngIf="questionnaires.length > 1">
