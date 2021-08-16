@@ -57,6 +57,18 @@ export class CheckinDetailsSendComponent implements OnInit {
     api_success = null;
   patientid: any;
   spName: any;
+  waitlistModes = [
+    { mode: 'WALK_IN_CHECKIN', value: 'Walk in ' },
+    { mode: 'PHONE_CHECKIN', value: 'Phone in ' },
+    { mode: 'ONLINE_CHECKIN', value: 'Online ' },
+  ];
+  appointmentModes = [
+    { mode: 'WALK_IN_APPOINTMENT', value: 'Walk in ' },
+    { mode: 'PHONE_IN_APPOINTMENT', value: 'Phone in ' },
+    { mode: 'ONLINE_APPOINTMENT', value: 'Online ' },
+  ];
+  waitlist_Mode: any;
+  appt_Mode: any;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
@@ -139,6 +151,9 @@ export class CheckinDetailsSendComponent implements OnInit {
           if(this.data.qdata.waitlistingFor[0].memberJaldeeId){
             this.patientid = this.data.qdata.waitlistingFor[0].memberJaldeeId;
           }
+          if(this.data.qdata.waitlistMode){
+            this.waitlist_Mode = this.data.qdata.waitlistMode;
+          }
     } else {
         this.consumer_fname = this.data.qdata.appmtFor[0].firstName + ' ' + this.data.qdata.appmtFor[0].lastName;
         if (this.data.qdata.consumer && this.data.qdata.consumer.userProfile && this.data.qdata.consumer.userProfile.emailVerified) {
@@ -169,7 +184,9 @@ export class CheckinDetailsSendComponent implements OnInit {
         this.spfname = this.data.qdata.provider.firstName;
         this.splname = this.data.qdata.provider.lastName;
         }
-        
+        if(this.data.qdata.appointmentMode){
+          this.appt_Mode = this.data.qdata.appointmentMode;
+        }
     }
    }
    getProviderSettings() {
@@ -293,6 +310,17 @@ export class CheckinDetailsSendComponent implements OnInit {
           }
         });
     }
+    }
+    getWaitListMode(mode) {
+      let currentmode=[];
+      currentmode=this.waitlistModes.filter(obj=>obj.mode===mode);
+      return currentmode[0].value;
+  
+    }
+    getAppointmentMode(mode){
+      let currentmode=[];
+      currentmode=this.appointmentModes.filter(obj=>obj.mode===mode);
+      return currentmode[0].value;
     }
   }
 

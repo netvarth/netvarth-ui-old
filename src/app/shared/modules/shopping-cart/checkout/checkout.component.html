@@ -560,6 +560,7 @@
                       <u>Add more</u></a>
                     <!-- Promocode applied , it will effect in the bill</a>&nbsp;&nbsp;{{selected_coupons.toString()}} -->
                   </div>
+                  
                   <span class="form-level-settings"
                     *ngIf="choose_type === 'home' && catalog_details.homeDelivery.deliveryCharge"> Delivery charge
                     &#x20B9;{{getDeliveryCharges()}} will added to the bill.</span>
@@ -567,9 +568,11 @@
                     [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
                     (buttonBeforeHook)="onButtonBeforeHook($event)" (buttonAfterHook)="onButtonAfterHook()">
                   </ks-modal-gallery>
+                  <div>
                   <span *ngIf="catalog_details.advanceAmount >0" style="font-size: small;color: red;"><i
                       class="fa fa-info-circle " aria-hidden="true"></i>An advance of <span
                       class="rupee-font">{{getAmountToPay(catalog_details) | currency:'&#8377;'}} </span>required</span>
+                  </div>
                   <div *ngIf="jcashamount>0" class="jaldeecredit">
                     <mat-checkbox [(ngModel)]="checkJcash"></mat-checkbox>
                     Use Jaldee cash balance : Rs{{jcashamount}}
