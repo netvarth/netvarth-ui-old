@@ -11,6 +11,7 @@
                                 <i *ngIf="data.qdata.service.serviceType === 'virtualService'" [class]=iconClass></i>
                                 {{serv_name}} 
                             </p>
+                            <p class="appt-details" *ngIf="waitlist_Mode" >Booking Mode :{{getWaitListMode(waitlist_Mode)}}</p>
                             <p class="appt-details" *ngIf = "deptName">Department : {{deptName}}</p>
                             <p class="appt-details" *ngIf = "qstarttime">Queue : {{qname}} [{{qstarttime}} - {{qendtime}}]</p>
                             <p class="appt-details">Date: {{date | date:newDateFormat}}</p>
@@ -30,6 +31,7 @@
                             {{serv_name}}
                             
                         </p>
+                        <p class="appt-details" *ngIf="appt_Mode" >Booking Mode :{{getAppointmentMode(appt_Mode)}}</p>
                         <p class="appt-details">Appointment Date & Time: {{date | date:newDateFormat}}, {{getSingleTime(appttime)}}</p>
                         <!-- <p *ngIf = "deptName">Department : {{deptName}}</p> -->
                         <p class="appt-details" *ngIf = "Schedulestime">Schedule : {{schedulename}} [{{Schedulestime}} - {{Scheduleetime}}]</p>
