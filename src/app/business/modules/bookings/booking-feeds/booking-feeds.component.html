@@ -3,8 +3,9 @@
         [attr.data-toggle]="small_device_display ? 'collapse' : ''" data-target="#activity" aria-expanded="false">
         <div>Your Activities</div>
         <div class="mgn-lt-auto">
-            <i (click)="gotoAuditLogs()" class="fa fa-external-link pointer-cursor mgn-rt-20" aria-hidden="true"></i>
-            <i class="fa fa-angle-down"></i>
+            <i (click)="gotoAuditLogs()" class="fa fa-external-link pointer-cursor" aria-hidden="true"
+                [class.mgn-rt-20]="small_device_display"></i>
+            <i class="fa fa-angle-down" *ngIf="small_device_display"></i>
         </div>
     </div>
     <div class="card-body auditlog" id="activity" [class.collapse]="small_device_display">

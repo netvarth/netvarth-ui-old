@@ -9,12 +9,14 @@
 <section class="" [class.smallview]="!view">
   <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 p-0">
     <div class="card card-custom data-card">
-      <div class="card-header collapsed" [ngStyle]="{'padding': view && small_device_display ? '20px 10px' : '8px 10px'}"
-        [attr.data-toggle]="view && small_device_display ? 'collapse' : ''" data-target="#notes" aria-expanded="false">
+      <div class="card-header collapsed" *ngIf="view"
+        [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
+        [attr.data-toggle]="small_device_display ? 'collapse' : ''" data-target="#notes" aria-expanded="false">
         <div>Private Notes</div>
         <div class="mgn-lt-auto">
-          <i (click)="gotoView()" class="fa fa-external-link pointer-cursor mgn-rt-20" aria-hidden="true"></i>
-          <i class="fa fa-angle-down"></i>
+          <i (click)="gotoView()" class="fa fa-external-link pointer-cursor" aria-hidden="true"
+            [class.mgn-rt-20]="small_device_display"></i>
+          <i class="fa fa-angle-down" *ngIf="small_device_display"></i>
         </div>
       </div>
       <div class="card-body padding-tp-10 no-padding" id="notes" [class.collapse]="view && small_device_display">

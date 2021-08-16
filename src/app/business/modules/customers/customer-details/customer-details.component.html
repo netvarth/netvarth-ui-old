@@ -685,7 +685,6 @@
     <div class="clearfix"></div>
 </section> -->
 
-
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
 <section class="content" *ngIf="!loading && viewCustomer">
     <div class="row main-sec">
@@ -808,9 +807,9 @@
                     aria-expanded="false">
                     <div>More {{customer_label}} info</div>
                     <div class="mgn-lt-auto">
-                        <i (click)="gotoQnr()" class="fa fa-external-link pointer-cursor mgn-rt-20"
-                            aria-hidden="true"></i>
-                        <i class="fa fa-angle-down"></i>
+                        <i (click)="gotoQnr()" class="fa fa-external-link pointer-cursor" aria-hidden="true"
+                            [class.mgn-rt-20]="small_device_display"></i>
+                        <i class="fa fa-angle-down" *ngIf="small_device_display"></i>
                     </div>
                 </div>
                 <div class="qnr-hgt" id="info" [class.collapse]="small_device_display">
