@@ -14,11 +14,12 @@
                     <div>{{getHeading()}}</div>
                     <i (click)="gotoFullView()" class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
                 </div>
-                <div class="card-header collapsed" style="padding: 20px 10px !important;" *ngIf="view=='small' && heading && small_device_display"
-                    data-toggle="collapse" [attr.data-target]="'#' + heading" aria-expanded="false">
+                <div class="card-header collapsed" style="padding: 20px 10px !important;"
+                    *ngIf="view=='small' && heading && small_device_display" data-toggle="collapse"
+                    [attr.data-target]="'#' + heading" aria-expanded="false">
                     <div>{{getHeading()}}</div>
                     <div class="mgn-lt-auto">
-                        <i (click)="gotoFullView()" class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
+                        <i (click)="gotoFullView()" class="fa fa-external-link pointer-cursor mgn-rt-20" aria-hidden="true"></i>
                         <i class="fa fa-angle-down"></i>
                     </div>
                 </div>

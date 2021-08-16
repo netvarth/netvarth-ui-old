@@ -27,7 +27,7 @@
                 data-toggle="collapse" data-target="#messages" aria-expanded="false" (click)="isCollapsed = !isCollapsed">
                 <div>Messages</div>
                 <div class="mgn-lt-auto">
-                    <i class="fa fa-external-link pointer-cursor" (click)="viewInbox()" aria-hidden="true"
+                    <i class="fa fa-external-link pointer-cursor mgn-rt-20" (click)="viewInbox()" aria-hidden="true"
                         *ngIf="selectedUserMessages && selectedUserMessages.length > 0"></i>
                     <i class="fa fa-angle-down"></i>
                 </div>
@@ -150,7 +150,7 @@
                                             {{getUserName('customer')}}</div>
                                     </div>
                                 </div>
-                                <div class="card-body no-padding-small" *ngIf="!isCollapsed">
+                                <div class="card-body no-padding-small" *ngIf="!source || (source && !isCollapsed)">
                                     <div class="scroll scroll-pull over-scroll" #scrollMe
                                         [ngStyle]="{'height.px': msgHeight}">
                                         <div class="messages" *ngFor="let msg of selectedUserMessages">
@@ -245,7 +245,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-footer align-items-center no-padding" *ngIf="!isCollapsed">
+                                <div class="card-footer align-items-center no-padding" *ngIf="!source || (source && !isCollapsed)">
                                     <div class="reply-section" *ngIf="replyMsg" #reply>
                                         <div class="main-sec">
                                             <div class="username">{{(replyMsg.messagestatus === 'out') ? 'You' :

@@ -284,6 +284,14 @@ textarea {
 .details-opacity {
     opacity: 0.5;
 }
-.fa-angle-down {
-    padding-left: 20px;
+.bg-transparent i.fa.fa-angle-down {
+  transition: 0.70s !important;
+  transform: rotate(180deg) !important;
+}
+.bg-transparent.collapsed i.fa.fa-angle-down {
+  transition: 0.70s !important;
+  transform: rotate(0deg) !important;
+}
+.collapse.in {
+    display: block !important;
 }

@@ -95,7 +95,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   @Input() height;
   @Input() status;
   @ViewChild('imgsec') elementView: ElementRef;
-  isCollapsed = false;
+  isCollapsed = true;
   constructor(
     private inbox_services: InboxServices,
     private provider_services: ProviderServices,
@@ -163,6 +163,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
       this.getInboxMessages();
     });
+    this.loading = true;
   }
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -261,7 +262,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
   }
   getInboxMessages() {
-    this.loading = true;
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
     this.inbox_services.getInbox(usertype)
       .subscribe(

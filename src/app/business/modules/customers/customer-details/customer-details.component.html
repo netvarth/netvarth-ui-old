@@ -741,17 +741,21 @@
             </div>
             <div class="cards-div">
                 <div class="col-xl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 mgn-bt-20 no-padding prt-10"
-                    *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
-                    <app-booking-medical-records-rx [customerId]="customer[0].id" [source]="'customer-details'"
-                        [type]="'mr'">
-                    </app-booking-medical-records-rx>
+                    *ngIf="todayVisitDetailsArray.length > 0">
+                    <app-records-datagrid [records]="todayvisitDetails" [heading]="'Today'"
+                        [source]="'customer-waitlist'" [timeType]="1" [showMore]="showMoreToday"
+                        (actionPerformed)="actionPerformed($event)" [view]="'small'">
+                    </app-records-datagrid>
                 </div>
                 <div class="col-xl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 mgn-bt-20 no-padding plt-10"
-                    *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
-                    <app-booking-medical-records-rx [customerId]="customer[0].id" [source]="'customer-details'"
-                        [type]="'rx'"></app-booking-medical-records-rx>
+                    *ngIf="futureVisitDetailsArray.length > 0">
+                    <app-records-datagrid [records]="futurevisitDetails" [heading]="'Future'"
+                        [source]="'customer-waitlist'" [timeType]="2" [showMore]="showMoreFuture"
+                        (actionPerformed)="actionPerformed($event)" [view]="'small'">
+                    </app-records-datagrid>
                 </div>
             </div>
+            <div class="clearfix"></div>
         </div>
         <div class="col-lg-4 col-md-4 no-padding-big mgn-bt-10">
             <app-provider-inbox-list [customer]="customer[0].jaldeeConsumer" [provider]="0" [source]="'details'">
@@ -759,15 +763,15 @@
         </div>
     </div>
     <div class="row records-sec">
-        <div class="column" *ngIf="todayVisitDetailsArray.length > 0">
-            <app-records-datagrid [records]="todayvisitDetails" [heading]="'Today'" [source]="'customer-waitlist'"
-                [timeType]="1" [showMore]="showMoreToday" (actionPerformed)="actionPerformed($event)" [view]="'small'">
-            </app-records-datagrid>
+        <div class="column"
+            *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
+            <app-booking-medical-records-rx [customerId]="customer[0].id" [source]="'customer-details'" [type]="'mr'">
+            </app-booking-medical-records-rx>
         </div>
-        <div class="column" *ngIf="futureVisitDetailsArray.length > 0">
-            <app-records-datagrid [records]="futurevisitDetails" [heading]="'Future'" [source]="'customer-waitlist'"
-                [timeType]="2" [showMore]="showMoreFuture" (actionPerformed)="actionPerformed($event)" [view]="'small'">
-            </app-records-datagrid>
+        <div class="column"
+            *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
+            <app-booking-medical-records-rx [customerId]="customer[0].id" [source]="'customer-details'" [type]="'rx'">
+            </app-booking-medical-records-rx>
         </div>
         <div class="column" *ngIf="historyVisitDetailsArray.length > 0">
             <app-records-datagrid [records]="historyvisitDetails" [heading]="'History'" [source]="'customer-waitlist'"
@@ -804,10 +808,12 @@
                     <div>More {{customer_label}} info</div>
                     <i class="fa fa-external-link pointer-cursor" aria-hidden="true" (click)="gotoQnr()"></i>
                 </div>
-                <div class="card-header collapsed" *ngIf="small_device_display" data-toggle="collapse" data-target="#info" aria-expanded="false">
+                <div class="card-header collapsed" style="padding: 20px 10px !important;" *ngIf="small_device_display"
+                    data-toggle="collapse" data-target="#info" aria-expanded="false">
                     <div>More {{customer_label}} info</div>
                     <div class="mgn-lt-auto">
-                        <i (click)="gotoQnr()" class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
+                        <i (click)="gotoQnr()" class="fa fa-external-link pointer-cursor mgn-rt-20"
+                            aria-hidden="true"></i>
                         <i class="fa fa-angle-down"></i>
                     </div>
                 </div>
@@ -819,7 +825,8 @@
             </div>
         </div>
         <div class="column">
-            <app-booking-documents [source]="'customer'" [widget]="true" [uuid]="customer[0].id"></app-booking-documents>
+            <app-booking-documents [source]="'customer'" [widget]="true" [uuid]="customer[0].id">
+            </app-booking-documents>
         </div>
     </div>
 </section>
