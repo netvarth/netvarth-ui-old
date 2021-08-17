@@ -231,6 +231,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     @ViewChild('closebutton') closebutton;
     accountId;
     readMore = false;
+    @ViewChild('consumer_donation') paytmview;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,

@@ -94,11 +94,11 @@
                             *ngIf="servicedetails && servicedetails.serviceDuration && !is_donation_serv">
                             <span>{{service_duration}} : {{HHMM}} </span>
                         </div>
-                        <div class="outer1 line" *ngIf="servicedetails && servicedetails.description">
+                        <!-- <div class="outer1 line" *ngIf="servicedetails && servicedetails.description">
                             <div class="des textitalic" *ngIf="servicedetails && servicedetails.description"
                                 [innerHTML]="servicedetails.description | nl2br">
                             </div>
-                        </div>
+                        </div> -->
                         <div class="outer3"
                             *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0">
                             <div class="textitalic">
@@ -113,7 +113,7 @@
                         <div class="outer4"
                             *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount != servicedetails.totalAmount">
                             <div class=" textitalic">
-                                <span class="data-label">Advance Payment : </span>
+                                <span class="data-label">Amount required now </span>
                                 <span style="font-weight: bold" class="rupee-font data-value">
                                     <i class="fa fa-inr"></i>{{servicedetails.minPrePaymentAmount |
                                     currency: '':''}}
@@ -126,7 +126,7 @@
                                 [innerHTML]="servicedetails.paymentDescription | nl2br">
                             </div>
                         </div>
-                        <div class="outer5 donation" *ngIf="servicedetails && is_donation_serv">
+                        <!-- <div class="outer5 donation" *ngIf="servicedetails && is_donation_serv">
                             <div class=" textitalic">
                                 <span class="data-label">Min amount : </span>
                                 <span class="data-value" *ngIf="servicedetails && servicedetails.minValue"
@@ -138,14 +138,14 @@
                                     <i class="fa fa-inr"></i> {{servicedetails.minDonationAmount}}
                                 </span>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="textitalic tax" *ngIf="servicedetails && servicedetails.taxable">
                             <span class="data-label">Tax Applicable : </span>
                             <span style="font-weight: bold" class="data-value">
                                 Yes
                             </span>
                         </div>
-                        <div class="outer5 donation" *ngIf="servicedetails && is_donation_serv">
+                        <!-- <div class="outer5 donation" *ngIf="servicedetails && is_donation_serv">
                             <div class="textitalic">
                                 <span class="data-label">Max amount : </span>
                                 <span class="data-value" *ngIf="servicedetails && servicedetails.maxValue"
@@ -157,7 +157,7 @@
                                     <i class="fa fa-inr"></i> {{servicedetails.maxDonationAmount}}
                                 </span>
                             </div>
-                        </div>
+                        </div> -->
                         <div>
                             <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                             <ng-container *ngIf="servicesAndProviders && servicesAndProviders.length >0 && !loading">

@@ -14324,3 +14324,7 @@ font-weight: 700 !important;
   max-height: 500px;
   overflow: scroll;
 }
+.loadingpaytm{
+  opacity: 1 !important;
+  background:rgba(0,0,0,.5)!important;
+}
