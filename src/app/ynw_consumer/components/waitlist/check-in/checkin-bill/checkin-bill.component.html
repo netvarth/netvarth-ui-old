@@ -71,19 +71,18 @@
                                                                                 <span >{{billnumber}}</span>
                                                                             </span>
                                                                             </div>
-                                                                            </div><div>
-                                                                                <span class="align-column1" *ngIf="gstnumber">{{gstin_cap}}
-                                                                                </span>
-                                                                                <span class="align-column1" *ngIf="gstnumber">{{gstnumber
-                                                                                    |
-                                                                                    capitalizeFirst}}</span>
-                                                                            
-                                                                           </div>
+                                                                            </div>
                                                                      
-                                                                    <div><span class="align-column1"><span class="align-column1">{{billdate
+                                                                    <div>
+                                                                            <span class="align-column1" *ngIf="gstnumber">{{gstin_cap}}: {{gstnumber
+                                                                                    |
+                                                                                    capitalizeFirst}}</span><br><span class="align-column1"><span class="align-column1">{{billdate
                                                                             | date:newDateFormat_date}}
                                                                             {{billtime}}</span>
                                                                          </span>
+                                                                      
+                                                                       
+                                                                      
                                                                         </div>        
                                                                             <span class="columns mgn-up-10" *ngIf="checkin.provider">
                                                                                 <span class="dynamic">{{getTerminologyTerm('provider')

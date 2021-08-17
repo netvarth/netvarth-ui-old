@@ -41,9 +41,11 @@
                             {{delivery_address.countryCode }} {{delivery_address.phoneNumber}}
                           </span>
                         </address>
-                <div *ngIf="orderDetails.orderNote" class="prov-wtlst-note-border shadow-none mgn-bt-10"
-                    [innerHTML]="orderDetails.orderNote | nl2br">
-                </div>
+                        <div *ngIf="orderDetails.orderNote" class="prov-wtlst-note-border shadow-none mgn-bt-10">
+                                <span style="color:#193ca4">Notes:&nbsp;</span>
+                                <span [innerHTML]="orderDetails.orderNote | nl2br"></span>
+                            </div>
+                
             </div>
             <div class="col-md-3 col-xs-12 col-sm-6 col-lg-3 no-padding">
 

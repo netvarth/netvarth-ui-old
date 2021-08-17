@@ -51,27 +51,28 @@
                                                                                 {{user.firstName | capitalizeFirst}}
                                                                                 {{user.lastName | capitalizeFirst}}
                                                                             </span></span>
-                                                                            <div>
-                                                                            <span  *ngIf="billnumber">
+                                                                            <div  *ngIf="billnumber">
+                                                                          
                                                                                 <span >{{bill_no_cap}}
                                                                                 </span>
                                                                                 <span >{{billnumber}}</span>
-                                                                            </span>
+                                                                          
                                                                             </div>
-                                                                            </div><div>
-                                                                                <span class="align-column1" *ngIf="gstnumber">{{gstin_cap}}
-                                                                                </span>
-                                                                                <span class="align-column1" *ngIf="gstnumber">{{gstnumber
-                                                                                    |
-                                                                                    capitalizeFirst}}</span>
-                                                                            
-                                                                           </div>
-                                                                     
+                                                                        
+                                                                            </div>
+                                                                            <div>
+                                                                                    <span class="align-column1" *ngIf="gstnumber">{{gstin_cap}} : {{gstnumber
+                                                                                        |
+                                                                                        capitalizeFirst}}</span>
+                                                                                
+                                                                               </div>
+                                                                               <br>
                                                                     <div><span class="align-column1"><span class="align-column1">{{billdate
                                                                             | date:newDateFormat_date}}
-                                                                            {{billtime}}</span>
+                                                                            {{billtime}} &nbsp;</span>
                                                                          </span>
-                                                                        </div>        
+                                                                        </div>  
+                                                                            
                                                                             <span class="columns mgn-up-10" *ngIf="checkin.provider">
                                                                                 <span class="dynamic">{{getTerminologyTerm('provider')
                                                                                     |
@@ -86,7 +87,7 @@
 
                                                                             <div class="col-md-12 col-sm-12 col-lg-12 no-padding red"
                                                                                 *ngIf="bill_data.billStatus == 'Cancel'">
-                                                                                Cancell</div>
+                                                                                Cancel</div>
                                                                         
                                                                     
                                                                 </div>

@@ -96,6 +96,13 @@
                                                         <div class="mt-2">
                                                         <a href="javascript:;" style="cursor:pointer" (click)="showCommunication()" >View/Send Message </a>
                                                       </div>
+                                                      <!-- <div *ngIf="waitlist.orderNote" class="txt-addrs col-sm-8 col-md-8 col-lg-5 5 col-xs-12 mgn-bt-10" style="float: initial;">
+                                                        <div > Notes : {{waitlist.orderNote}}</div>
+                                                    </div> -->
+                                                    <div *ngIf="waitlist.orderNote" class="prov-wtlst-note-border shadow-none mgn-bt-10">
+                                                            <span style="color:#193ca4">Notes:&nbsp;</span>
+                                                            <span [innerHTML]="waitlist.orderNote | nl2br"></span>
+                                                        </div>
                                             </div>
                                             <div
                                                 class="col-sm-5 col-md-5 col-lg-5  col-xl-5 col-xs-10 mgn-up-10 mgn-bt-10 l-ht-2 ">
@@ -260,9 +267,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <div *ngIf="waitlist.orderNote" class="txt-addrs col-sm-5 col-md-5 col-lg-5  col-xl-5 col-xs-12 mgn-bt-10" style="float: initial;">
-                                            <div class="odr_msg_outer"> Order Notes : {{waitlist.orderNote}}</div>
-                                        </div>
+                                      
                                     </div>
 
 
