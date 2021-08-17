@@ -108,6 +108,7 @@ export class AppointmentsComponent implements OnInit {
   server_date;
   tomorrowDate;
   active_user;
+  selected_location;
   constructor(private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
     private router: Router, private location: Location,
@@ -139,6 +140,7 @@ export class AppointmentsComponent implements OnInit {
           break;
       }
     });
+    this.selected_location = this.groupService.getitemFromGroupStorage('dashboardLocation');
   }
   ngOnDestroy() {
     if (this.subscription) {
@@ -186,6 +188,9 @@ export class AppointmentsComponent implements OnInit {
         api_filter['provider-eq'] = this.providerId;
       }
     }
+    if (this.selected_location && this.selected_location.id) {
+      api_filter['location-eq'] = this.selected_location.id;
+    }
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;
     }
@@ -224,9 +229,6 @@ export class AppointmentsComponent implements OnInit {
     if (this.timeType === 3) {
       if (this.filteredSchedule.length > 0 && this.filter.schedule !== 'all') {
         api_filter['schedule-eq'] = this.filteredSchedule.toString();
-      }
-      if (this.filterLocation.length > 0 && this.filter.location !== 'all') {
-        api_filter['location-eq'] = this.filterLocation.toString();
       }
     }
     if (this.labelFilterData !== '') {
@@ -516,32 +518,6 @@ export class AppointmentsComponent implements OnInit {
         this.allScheduleSelected = true;
       }
     }
-    if (type === 'location') {
-      if (value === 'all') {
-        this.filterLocation = [];
-        this.allLocationSelected = false;
-        if (event.checked) {
-          for (const q of this.locations) {
-            if (this.filterLocation.indexOf(q.id) === -1) {
-              this.filterLocation.push(q.id);
-            }
-          }
-          this.allLocationSelected = true;
-        }
-      } else {
-        this.allLocationSelected = false;
-        const indx = this.filterLocation.indexOf(value);
-        if (indx === -1) {
-          this.filterLocation.push(value);
-        } else {
-          this.filterLocation.splice(indx, 1);
-        }
-      }
-      if (this.filterLocation.length === this.locations.length) {
-        this.filter['location'] = 'all';
-        this.allLocationSelected = true;
-      }
-    }
     this.keyPressed();
   }
   showFilterSidebar() {
@@ -653,6 +629,9 @@ export class AppointmentsComponent implements OnInit {
         (data: any) => {
           const locations = data;
           this.locations = locations.filter(location => location.status === 'ACTIVE');
+          if (!this.groupService.getitemFromGroupStorage('dashboardLocation')) {
+            this.selected_location = this.locations[0];
+          }
         });
   }
   getProviderSchedules() {
@@ -677,5 +656,19 @@ export class AppointmentsComponent implements OnInit {
         },
         () => { }
       );
+  }
+  gotoLocations() {
+    this.router.navigate(['provider', 'settings', 'general', 'locations']);
+  }
+  onChangeLocationSelect(location) {
+    this.selected_location = location;
+    this.groupService.setitemToGroupStorage('dashboardLocation', this.selected_location);
+    this.getTodayAppts().then(data => {
+      this.getFutureAppts().then(data => {
+        this.getHistoryAppts().then(data => {
+          this.setDatas();
+        });
+      });
+    });
   }
 }

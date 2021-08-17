@@ -46,3 +46,18 @@ a, .aside-menu i {
 .fa-sign-out {
     font-family: 'FontAwesome' !important;
 }
+.collapse.in {
+    display: block !important;
+    padding-left: 35px !important;
+}
+.subsection .menu-link {
+    padding: 9px 25px !important;
+}
+.bookings-menu i.fa.fa-angle-right {
+  transition: 0.70s !important;
+  transform: rotate(90deg) !important;
+}
+.bookings-menu i.fa.fa-angle-right {
+  transition: 0.70s !important;
+  transform: rotate(0deg) !important;
+}

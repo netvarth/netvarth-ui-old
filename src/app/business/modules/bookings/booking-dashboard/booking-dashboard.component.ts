@@ -106,6 +106,11 @@ export class BookingDashboardComponent implements OnInit {
       }
     }
     this.getProviderLocations();
+    this.getProviderSettings();
+    this.getProviderBills();
+    this.initDashboard();
+  }
+  initDashboard() {
     this.getTodayWatilists().then(data => {
       this.getFutureWatilists().then(data => {
         this.getTodayAppts().then(data => {
@@ -144,8 +149,6 @@ export class BookingDashboardComponent implements OnInit {
         });
       });
     });
-    this.getProviderSettings();
-    this.getProviderBills();
   }
   getUserData() {
     this.provider_services.getUser(this.providerId)
@@ -180,7 +183,7 @@ export class BookingDashboardComponent implements OnInit {
         filter['provider-eq'] = this.providerId;
       }
     }
-    if (this.selected_location) {
+    if (this.selected_location && this.selected_location.id) {
       filter['location-eq'] = this.selected_location.id;
     }
     return filter;
@@ -304,15 +307,17 @@ export class BookingDashboardComponent implements OnInit {
           if (!this.groupService.getitemFromGroupStorage('dashboardLocation')) {
             this.selected_location = this.locations[0];
           }
-          console.log(this.selected_location);
         });
   }
   gotoLocations() {
     this.router.navigate(['provider', 'settings', 'general', 'locations']);
   }
   onChangeLocationSelect(location) {
-    console.log(location);
     this.selected_location = location;
     this.groupService.setitemToGroupStorage('dashboardLocation', this.selected_location);
+    this.initDashboard();
+    if (this.userData.accountType !== 'BRANCH') {
+      this.getDonations();
+    }
   }
 }

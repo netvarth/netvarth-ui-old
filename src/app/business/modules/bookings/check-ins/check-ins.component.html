@@ -7,6 +7,39 @@
     </div>
 </section>
 <section class="waitlist-dashboard content p-4">
+    <div class="mgn-lt-auto">
+        <nav class="navbar navbar-static-top no-margin" role="navigation">
+            <div class="navbar-custom-menu width100pc">
+                <ul class="nav navbar-nav width100pc">
+                    <li class="dropdown messages-menu loc-lst queue-menu pull-right">
+                        <i class="icon-location dropdown-toggle " data-toggle="dropdown"></i>
+                        <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
+                            *ngIf="selected_location" style="padding-top: 12px !important;">
+                            <span class="smalldisplaynone">
+                                {{selected_location.place}}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <ul class="menu">
+                                    <li *ngFor="let location of locations"
+                                        [ngClass]="{'active': (location.place == selected_location.place)}">
+                                        <a class="pointer-cursor" (click)="onChangeLocationSelect(location)">
+                                            <h4 *ngIf="location.place.length>='27'">
+                                                {{ location.place.substring(0,24) }}...</h4>
+                                            <h4 *ngIf="location.place.length<'27'">{{ location.place }}</h4>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage
+                                    Locations</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
     <div class="card p-0">
         <header class="main-header dash chkin">
             <nav class="navbar navbar-static-top jd-custom-nav" role="navigation"
@@ -532,7 +565,8 @@
         </div>
         <app-common-innerloading-spinner *ngIf="loading"> </app-common-innerloading-spinner>
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20" *ngIf="!loading">
-            <app-records-datagrid [source]="'waitlist'" [records]="waitlistToList" [timeType]="timeType" [view]="'dashboard'">
+            <app-records-datagrid [source]="'waitlist'" [records]="waitlistToList" [timeType]="timeType"
+                [view]="'dashboard'">
             </app-records-datagrid>
         </div>
     </div>

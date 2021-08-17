@@ -36,3 +36,16 @@
 .waitlist-dashboard .main-header {
     margin-bottom: 40px !important;
 }
+.navbar-nav .dropdown-menu {
+    position: absolute !important;
+    right: 0 !important;
+    left: auto !important;
+}
+.dropdown-toggle::after {
+    display: none !important;
+}
+@media (max-width: 991px) {
+    .smalldisplaynone {
+        display: none;
+    }
+}

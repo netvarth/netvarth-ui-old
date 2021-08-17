@@ -83,6 +83,9 @@ export class BookingDashboardAdminComponent implements OnInit {
     this.getProviderLocations();
     this.getConsumerBills();
     this.getProviderSettings();
+    this.initDashboard();
+  }
+  initDashboard() {
     this.getTodayWatilists().then(data => {
       this.getFutureWatilists().then(data => {
         this.getTodayAppts().then(data => {
@@ -141,7 +144,7 @@ export class BookingDashboardAdminComponent implements OnInit {
   setApptFilters() {
     let filter = {};
     filter['apptStatus-neq'] = 'prepaymentPending,failed';
-    if (this.selected_location) {
+    if (this.selected_location && this.selected_location.id) {
       filter['location-eq'] = this.selected_location.id;
     }
     return filter;
@@ -246,19 +249,19 @@ export class BookingDashboardAdminComponent implements OnInit {
       .subscribe(
         (data: any) => {
           const locations = data;
-          this.locations = locations.filter(location => location.status === 'ACTIVE'); 
+          this.locations = locations.filter(location => location.status === 'ACTIVE');
           if (!this.groupService.getitemFromGroupStorage('dashboardLocation')) {
             this.selected_location = this.locations[0];
           }
-          console.log(this.selected_location);
         });
   }
   gotoLocations() {
     this.router.navigate(['provider', 'settings', 'general', 'locations']);
   }
   onChangeLocationSelect(location) {
-    console.log(location);
     this.selected_location = location;
     this.groupService.setitemToGroupStorage('dashboardLocation', this.selected_location);
+    this.initDashboard();
+    this.getDonations();
   }
 }

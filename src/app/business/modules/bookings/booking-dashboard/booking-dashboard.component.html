@@ -7,6 +7,9 @@
         </h5>
     </div>
 </section>
+<div class="subheader header-container subheader-solid" *ngIf="qParams.userid">
+    <ng-template [ngTemplateOutlet]="locSec"></ng-template>
+</div>
 <div class="subheader header-container subheader-solid" *ngIf="!qParams.userid">
     <div class="container-fluid d-flex flex-wrap flex-sm-nowrap">
         <div class="d-flex flex-column flex-wrap mr-2">
@@ -16,7 +19,10 @@
             </h1>
         </div>
     </div>
-    <div class="pull-right">
+    <ng-template [ngTemplateOutlet]="locSec"></ng-template>
+</div>
+<ng-template #locSec>
+    <div class="mgn-lt-auto">
         <nav class="navbar navbar-static-top no-margin" role="navigation">
             <div class="navbar-custom-menu width100pc">
                 <ul class="nav navbar-nav width100pc">
@@ -40,7 +46,8 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a>
+                            <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage
+                                    Locations</a>
                             </li>
                         </ul>
                     </li>
@@ -48,7 +55,7 @@
             </div>
         </nav>
     </div>
-</div>
+</ng-template>
 <app-common-innerloading-spinner *ngIf="loading"> </app-common-innerloading-spinner>
 <div class="book-stats" *ngIf="!loading">
     <app-booking-stats [waitlistMgrSettings]="waitlistMgrSettings" [newApptsCount]="newAppts.length"

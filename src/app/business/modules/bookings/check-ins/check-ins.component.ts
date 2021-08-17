@@ -113,6 +113,7 @@ export class CheckinsComponent implements OnInit {
   tomorrowDate;
   server_date;
   active_user;
+  selected_location;
   constructor(private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
     private router: Router, private location: Location,
@@ -144,6 +145,7 @@ export class CheckinsComponent implements OnInit {
           break;
       }
     });
+    this.selected_location = this.groupService.getitemFromGroupStorage('dashboardLocation');
   }
   ngOnDestroy() {
     if (this.subscription) {
@@ -185,6 +187,9 @@ export class CheckinsComponent implements OnInit {
       } else {
         api_filter['provider-eq'] = this.providerId;
       }
+    } 
+    if (this.selected_location && this.selected_location.id) {
+      api_filter['location-eq'] = this.selected_location.id;
     }
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;
@@ -224,9 +229,6 @@ export class CheckinsComponent implements OnInit {
     if (this.timeType === 3) {
       if (this.filterQ.length > 0 && this.filter.queue !== 'all') {
         api_filter['queue-eq'] = this.filterQ.toString();
-      }
-      if (this.filterLocation.length > 0 && this.filter.location !== 'all') {
-        api_filter['location-eq'] = this.filterLocation.toString();
       }
     }
     if (this.filter.waitlist_status === 'all') {
@@ -586,32 +588,6 @@ export class CheckinsComponent implements OnInit {
         this.allQSelected = true;
       }
     }
-    if (type === 'location') {
-      if (value === 'all') {
-        this.filterLocation = [];
-        this.allLocationSelected = false;
-        if (event.checked) {
-          for (const q of this.locations) {
-            if (this.filterLocation.indexOf(q.id) === -1) {
-              this.filterLocation.push(q.id);
-            }
-          }
-          this.allLocationSelected = true;
-        }
-      } else {
-        this.allLocationSelected = false;
-        const indx = this.filterLocation.indexOf(value);
-        if (indx === -1) {
-          this.filterLocation.push(value);
-        } else {
-          this.filterLocation.splice(indx, 1);
-        }
-      }
-      if (this.filterLocation.length === this.locations.length) {
-        this.filter['location'] = 'all';
-        this.allLocationSelected = true;
-      }
-    }
     this.keyPressed();
   }
   hideFilterSidebar() {
@@ -644,6 +620,9 @@ export class CheckinsComponent implements OnInit {
     this.provider_services.getProviderLocations()
       .subscribe((data: any) => {
         this.locations = data.filter(location => location.status === 'ACTIVE');
+        if (!this.groupService.getitemFromGroupStorage('dashboardLocation')) {
+          this.selected_location = this.locations[0];
+        }
       });
   }
   getServices() {
@@ -672,5 +651,13 @@ export class CheckinsComponent implements OnInit {
       this.allLabels = data;
       this.providerLabels = this.allLabels.filter(label => label.status === 'ENABLED');
     });
+  }
+  gotoLocations() {
+    this.router.navigate(['provider', 'settings', 'general', 'locations']);
+  }
+  onChangeLocationSelect(location) {
+    this.selected_location = location;
+    this.groupService.setitemToGroupStorage('dashboardLocation', this.selected_location);
+    this.doSearch();
   }
 }
