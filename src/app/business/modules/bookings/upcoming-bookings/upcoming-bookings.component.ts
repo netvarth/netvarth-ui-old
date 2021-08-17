@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-upcoming-bookings',
@@ -10,9 +11,21 @@ export class UpcomingBookingsComponent implements OnInit {
   @Input() nextWaitlist: any = [];
   @Input() nextAppt: any = [];
   @Input() nextOrder: any = [];
-  constructor(private router: Router) { }
+  @Input() admin;
+  settings;
+  providerId;
+  constructor(private router: Router,
+    private groupService: GroupStorageService,
+    private activated_route: ActivatedRoute) {
+    this.activated_route.params.subscribe(params => {
+      if (params.userid) {
+        this.providerId = params.userid;
+      }
+    });
+  }
 
   ngOnInit(): void {
+    this.settings = this.groupService.getitemFromGroupStorage('settings');
   }
   gotoDetails(type) {
     const uid = (type === 'checkin') ? this.nextWaitlist.ynwUuid : (type === 'appointment') ? this.nextAppt.uid : this.nextOrder.uid;

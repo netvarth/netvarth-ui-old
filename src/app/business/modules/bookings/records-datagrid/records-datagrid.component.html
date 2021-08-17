@@ -16,17 +16,18 @@
                     <div>{{getHeading()}}</div>
                     <div class="mgn-lt-auto">
                         <i (click)="gotoFullView()" class="fa fa-external-link pointer-cursor" aria-hidden="true"
-                            [class.mgn-rt-20]="small_device_display"></i>
+                            [class.mgn-rt-20]="small_device_display"
+                            *ngIf="source != 'customers' || (source == 'customers' && admin)"></i>
                         <i class="fa fa-angle-down" *ngIf="small_device_display"></i>
                     </div>
                 </div>
                 <div class="tableBody" id="{{heading}}"
                     [class.collapse]="view=='small' && heading && small_device_display">
-                    <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                    <!-- <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner> -->
                     <div class="table-responsive"
                         [ngStyle]="{'height': (source == 'customers') ? '365px' : (view=='small') ? '317px' : 'auto' }">
                         <div class="inner-card add-record rounded-sm pointer-cursor" (click)="gotoAdd()"
-                            *ngIf="source == 'providers' || source == 'customers'">
+                            *ngIf="source == 'providers' || (source == 'customers' && admin)">
                             <a class="inner-card-heading">
                                 Add {{(source == 'providers') ? provider_label : customer_label}}
                             </a>
@@ -286,8 +287,10 @@
                                         </td>
                                     </ng-container>
                                 </tr>
-                                <div class="no-record" *ngIf="records && records.length == 0">
-                                    <div class="team-icon-action"></div>
+                                <div class="no-record" *ngIf="!loading && records && records.length == 0">
+                                    <div class="team-icon-action"
+                                        *ngIf="source != 'customers' || (source == 'customers' && admin)"></div>
+                                    <div class="qnr-icon" *ngIf="source == 'customers' && !admin"></div>
                                 </div>
                             </tbody>
                         </table>

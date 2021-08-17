@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
@@ -32,19 +32,24 @@ export class BookingDashboardComponent implements OnInit {
   userDetails;
   customer_label;
   subscription: Subscription;
-  admin = false;
   qParams;
   nextWaitlist;
   nextAppt;
+  nextOrder;
   active_user;
   settings;
   bdetails;
   blogo;
+  admin = false;
+  loading = true;
+  locations: any = [];
+  selected_location;
   constructor(private provider_services: ProviderServices,
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
     private activated_route: ActivatedRoute,
     private shared_functions: SharedFunctions,
+    private router: Router,
     private locationobj: Location) {
     this.activated_route.params.subscribe(params => {
       this.qParams = params;
@@ -72,6 +77,7 @@ export class BookingDashboardComponent implements OnInit {
       this.newWaitlists = this.todayWaitlists.concat(this.futureWaitlists);
       this.newAppts = this.todayAppts.concat(this.futureAppts);
     });
+    this.selected_location = this.groupService.getitemFromGroupStorage('dashboardLocation');
   }
   ngOnDestroy() {
     if (this.subscription) {
@@ -83,9 +89,11 @@ export class BookingDashboardComponent implements OnInit {
     this.bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     this.userData = this.groupService.getitemFromGroupStorage('ynw-user');
     if (this.userData.accountType !== 'BRANCH') {
-      this.admin = true;
-      this.getCustomers();
       this.getDonations();
+    }
+    if (this.userData.accountType !== 'BRANCH' || (this.userData.accountType === 'BRANCH' && this.userData.adminPrivilege)) {
+      this.getCustomers();
+      this.admin = true;
     }
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     if (this.bdetails) {
@@ -97,6 +105,7 @@ export class BookingDashboardComponent implements OnInit {
         this.blogo = this.bdetails.logo || 'assets/images/img-null.svg';
       }
     }
+    this.getProviderLocations();
     this.getTodayWatilists().then(data => {
       this.getFutureWatilists().then(data => {
         this.getTodayAppts().then(data => {
@@ -126,6 +135,9 @@ export class BookingDashboardComponent implements OnInit {
                   this.groupService.setitemToGroupStorage('newWaitlists', this.newWaitlists);
                   this.groupService.setitemToGroupStorage('newAppts', this.newAppts);
                 }
+                setTimeout(() => {
+                  this.loading = false;
+                }, 500);
               });
             });
           });
@@ -168,6 +180,9 @@ export class BookingDashboardComponent implements OnInit {
         filter['provider-eq'] = this.providerId;
       }
     }
+    if (this.selected_location) {
+      filter['location-eq'] = this.selected_location.id;
+    }
     return filter;
   }
   getTodayAppts() {
@@ -177,9 +192,8 @@ export class BookingDashboardComponent implements OnInit {
         .subscribe(
           (data: any) => {
             this.todayAppts = data;
-            if (this.todayAppts[0]) {
-              this.nextAppt = this.todayAppts[0];
-            }
+            this.nextAppt = this.todayAppts.filter(waitlist => waitlist.apptStatus === 'Confirmed' || waitlist.apptStatus === 'Arrived');
+            this.nextAppt = this.nextAppt[0];
             resolve(data);
           });
     });
@@ -205,6 +219,9 @@ export class BookingDashboardComponent implements OnInit {
         filter['provider-eq'] = this.providerId;
       }
     }
+    if (this.selected_location) {
+      filter['location-eq'] = this.selected_location.id;
+    }
     return filter;
   }
   getTodayWatilists() {
@@ -214,9 +231,8 @@ export class BookingDashboardComponent implements OnInit {
         .subscribe(
           (data: any) => {
             this.todayWaitlists = data;
-            if (this.todayWaitlists[0]) {
-              this.nextWaitlist = this.todayWaitlists[0];
-            }
+            this.nextWaitlist = this.todayWaitlists.filter(waitlist => waitlist.waitlistStatus === 'checkedIn' || waitlist.waitlistStatus === 'arrived');
+            this.nextWaitlist = this.nextWaitlist[0];
             resolve(data);
           });
     });
@@ -238,6 +254,9 @@ export class BookingDashboardComponent implements OnInit {
       this.provider_services.getProviderTodayOrders()
         .subscribe(data => {
           this.todayOrders = data;
+          if (this.todayOrders[0]) {
+            this.nextOrder = this.todayOrders[0];
+          }
           resolve(data);
         });
     });
@@ -275,5 +294,25 @@ export class BookingDashboardComponent implements OnInit {
   }
   goBack() {
     this.locationobj.back();
+  }
+  getProviderLocations() {
+    this.provider_services.getProviderLocations()
+      .subscribe(
+        (data: any) => {
+          const locations = data;
+          this.locations = locations.filter(location => location.status === 'ACTIVE');
+          if (!this.groupService.getitemFromGroupStorage('dashboardLocation')) {
+            this.selected_location = this.locations[0];
+          }
+          console.log(this.selected_location);
+        });
+  }
+  gotoLocations() {
+    this.router.navigate(['provider', 'settings', 'general', 'locations']);
+  }
+  onChangeLocationSelect(location) {
+    console.log(location);
+    this.selected_location = location;
+    this.groupService.setitemToGroupStorage('dashboardLocation', this.selected_location);
   }
 }

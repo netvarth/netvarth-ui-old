@@ -21,6 +21,7 @@ export class RecordsDatagridComponent implements OnInit {
   @Input() providerId;
   @Input() customerId;
   @Input() view;
+  @Input() admin;
   @Output() actionPerformed = new EventEmitter<any>();
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   waitlistModes = {
@@ -84,7 +85,9 @@ export class RecordsDatagridComponent implements OnInit {
         this.getBills();
       }
     } else {
-      this.loading = false;
+      setTimeout(() => {
+        this.loading = false;
+      }, 500);
     }
     this.onResize();
   }
@@ -97,8 +100,6 @@ export class RecordsDatagridComponent implements OnInit {
     return label_status;
   }
   actionClick(type, record?) {
-    console.log(this.waitlistMgrSettings);
-    console.log(this.source);
     if (this.source == 'waitlist' || this.source === 'appt') {
       const uid = (this.source === 'appt') ? record.uid : record.ynwUuid;
       const waitlisttype = (this.source === 'appt') ? 'appointment' : 'checkin';
@@ -151,7 +152,6 @@ export class RecordsDatagridComponent implements OnInit {
     } else if (this.source === 'order') {
       this.router.navigate(['provider', 'orders']);
     } else if (this.source === 'bill') {
-      console.log('navigationExtras', navigationExtras);
       this.router.navigate(['provider', 'bookings', 'bills'], navigationExtras);
     }
   }

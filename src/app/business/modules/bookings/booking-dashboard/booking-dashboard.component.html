@@ -16,23 +16,58 @@
             </h1>
         </div>
     </div>
+    <div class="pull-right">
+        <nav class="navbar navbar-static-top no-margin" role="navigation">
+            <div class="navbar-custom-menu width100pc">
+                <ul class="nav navbar-nav width100pc">
+                    <li class="dropdown messages-menu loc-lst queue-menu pull-right">
+                        <i class="icon-location dropdown-toggle " data-toggle="dropdown"></i>
+                        <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
+                            *ngIf="selected_location" style="padding-top: 12px !important;">
+                            <span class="smalldisplaynone">
+                                {{selected_location.place}}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <ul class="menu">
+                                    <li *ngFor="let location of locations"
+                                        [ngClass]="{'active': (location.place == selected_location.place)}">
+                                        <a class="pointer-cursor" (click)="onChangeLocationSelect(location)">
+                                            <h4 *ngIf="location.place.length>='27'">
+                                                {{ location.place.substring(0,24) }}...</h4>
+                                            <h4 *ngIf="location.place.length<'27'">{{ location.place }}</h4>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
 </div>
-<div class="book-stats">
+<app-common-innerloading-spinner *ngIf="loading"> </app-common-innerloading-spinner>
+<div class="book-stats" *ngIf="!loading">
     <app-booking-stats [waitlistMgrSettings]="waitlistMgrSettings" [newApptsCount]="newAppts.length"
         [customer_count]="customers.length" [newWitlistCount]="newWaitlists.length" [ordersCount]="newOrders.length"
         [donationsCount]="donations.length" [admin]="admin">
     </app-booking-stats>
 </div>
-<div class="row pt-0 px-6 pb-6 dashboard-content">
+<div class="row pt-0 px-6 pb-6 dashboard-content" *ngIf="!loading">
     <div class="col-lg-4 col-xxl-5 pr-0 col-md-4">
-        <app-upcoming-bookings [nextWaitlist]="nextWaitlist" [nextAppt]="nextAppt"></app-upcoming-bookings>
+        <app-upcoming-bookings [nextWaitlist]="nextWaitlist" [nextAppt]="nextAppt" [nextOrder]="nextOrder"
+            [admin]="admin">
+        </app-upcoming-bookings>
     </div>
     <div class="col-lg-4 col-xxl-3 pl-0 col-md-4">
         <app-booking-quick-actions></app-booking-quick-actions>
     </div>
-    <div class="col-lg-4 col-xxl-4 col-md-4 mgn-bt-15" *ngIf="admin">
+    <div class="col-lg-4 col-xxl-4 col-md-4 mgn-bt-15">
         <app-records-datagrid [source]="'customers'" [records]="customers" [heading]="customer_label + 's'"
-            [view]="'small'">
+            [view]="'small'" [admin]="admin">
         </app-records-datagrid>
     </div>
     <div class="col-lg-12 col-xxl-12 col-md-12 appointments-and-doctors-row no-padding">
@@ -50,11 +85,12 @@
                 [waitlistMgrSettings]="waitlistMgrSettings" [providerId]="providerId" [view]="'small'">
             </app-records-datagrid>
         </div>
-        <div class="column" *ngIf="settings.order && newOrders.length > 0">
+        <div class="column" *ngIf="userData.accountType !== 'BRANCH' && settings.order && newOrders.length > 0">
             <app-records-datagrid [source]="'order'" [heading]="'Orders'" [records]="newOrders" [view]="'small'">
             </app-records-datagrid>
         </div>
-        <div class="column" *ngIf="admin && settings.donationFundRaising && donations.length > 0">
+        <div class="column"
+            *ngIf="userData.accountType !== 'BRANCH' && settings.donationFundRaising && donations.length > 0">
             <app-records-datagrid [source]="'donation'" [heading]="'Donations'" [records]="donations" [view]="'small'">
             </app-records-datagrid>
         </div>

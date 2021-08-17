@@ -75,13 +75,13 @@
     font-weight: 400 !important;
     font-family: "Roboto", sans-serif !important;
     text-transform: capitalize !important;
-    font-size: 18px !important;
+    font-size: 15px !important;
 }
 .container-upcoming-bookings .cons-name {
     font-weight: 300 !important;
     font-family: "Roboto", sans-serif !important;
     text-transform: capitalize !important;
-    font-size: 18px !important;
+    font-size: 15px !important;
 }
 .container-upcoming-bookings .timings {
     font-family: "Roboto", sans-serif !important;
@@ -99,5 +99,5 @@
     height: 400px !important;
 }
 .pad-content {
-    padding: 0 10px 10px;
+    padding: 0 15px 10px;
 }

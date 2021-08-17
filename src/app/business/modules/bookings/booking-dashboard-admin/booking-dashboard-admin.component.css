@@ -67,3 +67,16 @@
     border: 1px solid rgba(52, 73, 94, 0.44) !important;
     padding: 3px !important;
 }
+.navbar-nav .dropdown-menu {
+    position: absolute !important;
+    right: 0 !important;
+    left: auto !important;
+}
+.dropdown-toggle::after {
+    display: none !important;
+}
+@media (max-width: 991px) {
+    .smalldisplaynone {
+        display: none;
+    }
+}

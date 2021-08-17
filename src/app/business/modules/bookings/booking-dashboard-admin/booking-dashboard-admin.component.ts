@@ -4,6 +4,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Subscription } from 'rxjs';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-booking-dashboard-admin',
@@ -35,10 +36,13 @@ export class BookingDashboardAdminComponent implements OnInit {
   nextOrder;
   settings;
   bdetails;
+  locations: any = [];
+  selected_location;
   constructor(private provider_services: ProviderServices,
     private groupService: GroupStorageService,
     private shared_functions: SharedFunctions,
-    private wordProcessor: WordProcessor) {
+    private wordProcessor: WordProcessor,
+    private router: Router) {
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
       switch (message.ttype) {
         case 'todayWl':
@@ -57,6 +61,7 @@ export class BookingDashboardAdminComponent implements OnInit {
       this.newWaitlists = this.todayWaitlists.concat(this.futureWaitlists);
       this.newAppts = this.todayAppts.concat(this.futureAppts);
     });
+    this.selected_location = this.groupService.getitemFromGroupStorage('dashboardLocation');
   }
   ngOnDestroy() {
     if (this.subscription) {
@@ -67,9 +72,16 @@ export class BookingDashboardAdminComponent implements OnInit {
     this.settings = this.groupService.getitemFromGroupStorage('settings');
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
-    console.log('bdetails', this.bdetails)
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.getCustomers();
+    this.getDonations();
+    this.getProviderSettings();
+    if (this.active_user.accountType === 'BRANCH') {
+      this.getUsers();
+    }
+    this.getProviderLocations();
+    this.getConsumerBills();
     this.getProviderSettings();
     this.getTodayWatilists().then(data => {
       this.getFutureWatilists().then(data => {
@@ -96,7 +108,9 @@ export class BookingDashboardAdminComponent implements OnInit {
                 this.newWaitlists = this.todayWaitlists.concat(this.futureWaitlists);
                 this.newAppts = this.todayAppts.concat(this.futureAppts);
                 this.newOrders = this.todayOrders.concat(this.futureOrders);
-                this.loading = false;
+                setTimeout(() => {
+                  this.loading = false;
+                }, 500);
                 this.groupService.setitemToGroupStorage('newWaitlists', this.newWaitlists);
                 this.groupService.setitemToGroupStorage('newAppts', this.newAppts);
               });
@@ -105,13 +119,6 @@ export class BookingDashboardAdminComponent implements OnInit {
         });
       });
     });
-    this.getCustomers();
-    this.getDonations();
-    this.getProviderSettings();
-    if (this.active_user.accountType === 'BRANCH') {
-      this.getUsers();
-    }
-    this.getConsumerBills();
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
@@ -132,9 +139,11 @@ export class BookingDashboardAdminComponent implements OnInit {
     })
   }
   setApptFilters() {
-    const filter = {
-      'apptStatus-neq': 'prepaymentPending,failed'
-    };
+    let filter = {};
+    filter['apptStatus-neq'] = 'prepaymentPending,failed';
+    if (this.selected_location) {
+      filter['location-eq'] = this.selected_location.id;
+    }
     return filter;
   }
   getTodayAppts() {
@@ -162,9 +171,11 @@ export class BookingDashboardAdminComponent implements OnInit {
     });
   }
   setWaitlistFilters() {
-    const filter = {
-      'waitlistStatus-neq': 'prepaymentPending,failed'
-    };
+    let filter = {};
+    filter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+    if (this.selected_location) {
+      filter['location-eq'] = this.selected_location.id;
+    }
     return filter;
   }
   getTodayWatilists() {
@@ -195,8 +206,9 @@ export class BookingDashboardAdminComponent implements OnInit {
     return new Promise((resolve) => {
       this.provider_services.getProviderTodayOrders()
         .subscribe(data => {
-          this.todayOrders = data;  
-          this.nextOrder = this.todayOrders[0];
+          this.todayOrders = data;
+          this.nextOrder = this.todayOrders.filter(order => order.orderStatus === 'Order Received');
+          this.nextOrder = this.nextOrder[0];
           resolve(data);
         });
     });
@@ -228,5 +240,25 @@ export class BookingDashboardAdminComponent implements OnInit {
       return this.bdetails.logo;
     }
     return 'assets/images/Asset1@300x(1).png';
+  }
+  getProviderLocations() {
+    this.provider_services.getProviderLocations()
+      .subscribe(
+        (data: any) => {
+          const locations = data;
+          this.locations = locations.filter(location => location.status === 'ACTIVE'); 
+          if (!this.groupService.getitemFromGroupStorage('dashboardLocation')) {
+            this.selected_location = this.locations[0];
+          }
+          console.log(this.selected_location);
+        });
+  }
+  gotoLocations() {
+    this.router.navigate(['provider', 'settings', 'general', 'locations']);
+  }
+  onChangeLocationSelect(location) {
+    console.log(location);
+    this.selected_location = location;
+    this.groupService.setitemToGroupStorage('dashboardLocation', this.selected_location);
   }
 }

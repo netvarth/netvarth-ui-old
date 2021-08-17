@@ -34,7 +34,9 @@
   <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 stst-bx mgn-up-20">
     <div class="bold">External Status</div>
     <p class="settings_info"> External status is public and visible for your {{customer_label}}s</p>
-    <div class="status-box" *ngIf="showInProgress" (click)="changeWaitlistStatus('STARTED')">
+    <div class="status-box"
+      *ngIf="showStart || (showTeleserviceStart && (data.waitlist_data.apptStatus != 'Started' || data.waitlist_data.waitlistStatus !== 'started'))"
+      (click)="changeWaitlistStatus('STARTED')">
       <div class="status"> Move to In progress</div>
     </div>
     <div class="status-box" *ngIf="showCancel" (click)="changeWaitlistStatus('CANCEL')">

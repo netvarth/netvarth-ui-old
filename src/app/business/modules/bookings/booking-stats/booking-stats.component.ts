@@ -34,6 +34,7 @@ export class BookingStatsComponent implements OnInit {
     autoWidth: true
   };
   settings;
+  userData;
   constructor(private wordProcessor: WordProcessor,
     private router: Router,
     private groupService: GroupStorageService,
@@ -48,6 +49,8 @@ export class BookingStatsComponent implements OnInit {
   ngOnInit(): void {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.settings = this.groupService.getitemFromGroupStorage('settings');
+    this.userData = this.groupService.getitemFromGroupStorage('ynw-user');
+    console.log('admin', this.admin)
   }
   gotoView(type) {
     if (type === 'appt') {

@@ -252,9 +252,6 @@ textarea {
       background-color: #1e407963;
     }
 }
-.bg-transparent.collapsed {
-    padding: 20px 10px !important;
-}
 .bg-transparent {
     border-radius: 0 !important;
     border-bottom: 1.75px solid #d0d0d0 !important;

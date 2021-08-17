@@ -10,6 +10,7 @@ import { BookingMedicalRecordsRXModule } from '../booking-medical-records-rx/boo
 import { BookingDashboardRoutingModule } from './booking-dashboard.routing.module';
 import { BookingFeedsModule } from '../booking-feeds/booking-feeds.module';
 import { BookingQuickActionsModule } from '../booking-quick-actions/booking-quick-actions.module';
+import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
 
 
 
@@ -25,7 +26,8 @@ import { BookingQuickActionsModule } from '../booking-quick-actions/booking-quic
     RecordsDatagridModule,
     BookingStatsModule,
     BookingMedicalRecordsRXModule,
-    BookingDocumentsModule
+    BookingDocumentsModule,
+    LoadingSpinnerModule
   ],
   exports: [BookingDashboardComponent]
 

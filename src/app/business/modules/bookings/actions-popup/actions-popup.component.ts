@@ -22,7 +22,7 @@ export class ActionsPopupComponent implements OnInit {
   showArrived = false;
   showCancel = false;
   showComplete = false;
-  showInProgress = false;
+  showStart = false;
   showMsg = false;
   showTeleserviceStart = false;
   customer_label;
@@ -41,11 +41,12 @@ export class ActionsPopupComponent implements OnInit {
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
-    console.log(this.active_user);
   }
   ngOnInit(): void {
     if (this.data.source === 'status') {
-      this.getInternStatus();
+      if (this.data.bookingType == 'checkin') {
+        this.getInternStatus();
+      }
       this.setActions();
     }
   }
@@ -160,7 +161,6 @@ export class ActionsPopupComponent implements OnInit {
   }
 
   changeWaitlistStatus(action) {
-    console.log(this.data.bookingType);
     if (this.data.bookingType == 'checkin') {
       this.provider_shared_functions.changeWaitlistStatus(this, this.data.waitlist_data, action);
     } else if (this.data.bookingType == 'appointment') {
@@ -235,7 +235,6 @@ export class ActionsPopupComponent implements OnInit {
     }
   }
   changeWaitlistInternalStatus(action) {
-    console.log(action);
     this.provider_shared_functions.changeWaitlistinternalStatus(this, this.data.waitlist_data, action);
   }
   changeWaitlistInternalStatusApi(waitlist, action) {
@@ -264,9 +263,9 @@ export class ActionsPopupComponent implements OnInit {
       }
       if ((this.data.timeType === 1 || this.data.timeType === 3) && this.data.waitlist_data.service.virtualCallingModes && (this.data.waitlist_data.waitlistStatus === 'arrived' || this.data.waitlist_data.waitlistStatus === 'checkedIn' || this.data.waitlist_data.waitlistStatus === 'started')) {
         this.showTeleserviceStart = true;
-        if (this.data.is_web && this.data.waitlist_data.waitlistStatus != 'started' && this.data.waitlist_data.service.virtualCallingModes && this.data.waitlist_data.service.virtualCallingModes[0] && (this.data.waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp' || this.data.waitlist_data.service.virtualCallingModes[0].callingMode === 'Phone')) {
-          this.showInProgress = true;
-        }
+      }
+      if ((this.data.waitlist_data.waitlistStatus === 'arrived' || this.data.waitlist_data.waitlistStatus === 'checkedIn') && this.data.timetype !== 2 && this.data.waitlist_data.service.serviceType === 'physicalService') {
+        this.showStart = true;
       }
     } else {
       if (this.data.timeType !== 3 && this.data.waitlist_data.apptStatus !== 'Completed' && this.data.waitlist_data.apptStatus !== 'Confirmed' && this.data.waitlist_data.apptStatus !== 'blocked') {
@@ -286,9 +285,9 @@ export class ActionsPopupComponent implements OnInit {
       }
       if ((this.data.timeType === 1 || this.data.timeType === 3) && this.data.waitlist_data.service.virtualCallingModes && (this.data.waitlist_data.apptStatus === 'Arrived' || this.data.waitlist_data.apptStatus === 'Confirmed' || this.data.waitlist_data.apptStatus === 'Started')) {
         this.showTeleserviceStart = true;
-        if (this.data.is_web && this.data.waitlist_data.apptStatus != 'Started' && this.data.waitlist_data.service.virtualCallingModes && this.data.waitlist_data.service.virtualCallingModes[0] && (this.data.waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp' || this.data.waitlist_data.service.virtualCallingModes[0].callingMode === 'Phone')) {
-          this.showInProgress = true;
-        }
+      }
+      if ((this.data.waitlist_data.apptStatus === 'Arrived' || this.data.waitlist_data.apptStatus === 'Confirmed') && this.data.timetype !== 2 && !this.data.waitlist_data.virtualService) {
+        this.showStart = true;
       }
     }
   }
@@ -328,7 +327,6 @@ export class ActionsPopupComponent implements OnInit {
   getInternStatus() {
     const uid = (this.data.bookingType === 'checkin') ? this.data.waitlist_data.ynwUuid : this.data.waitlist_data.uid;
     this.provider_services.getInternalstatList(uid).subscribe((data: any) => {
-      console.log(data);
       this.statusList = data;
     });
   }

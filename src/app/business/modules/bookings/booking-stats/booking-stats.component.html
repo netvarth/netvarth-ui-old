@@ -46,7 +46,7 @@
                 </svg>
             </div>
         </div>
-        <div class="item column mgn-5" *ngIf="settings.order">
+        <div class="item column mgn-5" *ngIf="!providerId && admin && settings.order">
             <div class="card pointer-cursor" (click)="gotoView('order')">
                 <div class="head">
                     Orders
@@ -70,7 +70,7 @@
                 </svg>
             </div>
         </div>
-        <div class="item column mgn-5" *ngIf="admin && settings.donationFundRaising">
+        <div class="item column mgn-5" *ngIf="!providerId && admin && settings.donationFundRaising">
             <div class="card pointer-cursor" (click)="gotoView('donation')">
                 <div class="head">
                     Donations
