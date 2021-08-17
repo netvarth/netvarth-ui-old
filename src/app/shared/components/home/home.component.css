@@ -35,9 +35,9 @@
 #cons_home_n #welcome {
     padding-top: 20px !important;
 }  
-section {
+/* section {
     height: 100vh !important;
-}
+} */
 div.loading {
     background: #eee;
     position: absolute;
