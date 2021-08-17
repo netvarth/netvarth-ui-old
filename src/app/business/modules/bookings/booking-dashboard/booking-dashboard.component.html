@@ -2,7 +2,7 @@
     <div class="card title-gb">
         <h5 class="no-margin">
             <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>
-            <img [src]="getUserImg()">
+            <img class="blogo" [src]="blogo">
             {{bname}}
         </h5>
     </div>
@@ -11,11 +11,9 @@
     <div class="container-fluid d-flex flex-wrap flex-sm-nowrap">
         <div class="d-flex flex-column flex-wrap mr-2">
             <h1 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                <b>Dashboard</b>
+                <img class="blogo" [src]="blogo">
+                <b>{{bname}}</b>
             </h1>
-            <h6>
-                Manage your complete practice from one place
-            </h6>
         </div>
     </div>
 </div>

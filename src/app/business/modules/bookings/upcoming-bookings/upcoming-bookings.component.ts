@@ -9,12 +9,17 @@ import { Router } from '@angular/router';
 export class UpcomingBookingsComponent implements OnInit {
   @Input() nextWaitlist: any = [];
   @Input() nextAppt: any = [];
+  @Input() nextOrder: any = [];
   constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
   gotoDetails(type) {
-    const uid = (type === 'checkin') ? this.nextWaitlist.ynwUuid : this.nextAppt.uid;
-    this.router.navigate(['provider', 'bookings', 'details'], { queryParams: { uid: uid, timetype: 1, type: type } });
+    const uid = (type === 'checkin') ? this.nextWaitlist.ynwUuid : (type === 'appointment') ? this.nextAppt.uid : this.nextOrder.uid;
+    if (type === 'order') {
+      this.router.navigate(['provider', 'orders', this.nextOrder.uid]);
+    } else {
+      this.router.navigate(['provider', 'bookings', 'details'], { queryParams: { uid: uid, timetype: 1, type: type } });
+    }
   }
 }

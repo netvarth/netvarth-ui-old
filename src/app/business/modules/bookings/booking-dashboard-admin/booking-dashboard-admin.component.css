@@ -57,3 +57,13 @@
 .book-stats {
     padding: 0 20px !important;
 }
+.blogo {
+    border-radius: 10px !important;
+    margin-right: 10px;
+    height: 60px !important;
+    width: 60px !important;
+    background: #fff !important;
+    position: inherit !important;
+    border: 1px solid rgba(52, 73, 94, 0.44) !important;
+    padding: 3px !important;
+}

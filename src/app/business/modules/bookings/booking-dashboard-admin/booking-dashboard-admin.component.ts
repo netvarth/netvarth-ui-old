@@ -32,7 +32,9 @@ export class BookingDashboardAdminComponent implements OnInit {
   loading = true;
   nextWaitlist;
   nextAppt;
+  nextOrder;
   settings;
+  bdetails;
   constructor(private provider_services: ProviderServices,
     private groupService: GroupStorageService,
     private shared_functions: SharedFunctions,
@@ -64,6 +66,8 @@ export class BookingDashboardAdminComponent implements OnInit {
   ngOnInit(): void {
     this.settings = this.groupService.getitemFromGroupStorage('settings');
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
+    console.log('bdetails', this.bdetails)
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.getProviderSettings();
@@ -191,7 +195,8 @@ export class BookingDashboardAdminComponent implements OnInit {
     return new Promise((resolve) => {
       this.provider_services.getProviderTodayOrders()
         .subscribe(data => {
-          this.todayOrders = data;
+          this.todayOrders = data;  
+          this.nextOrder = this.todayOrders[0];
           resolve(data);
         });
     });
@@ -217,5 +222,11 @@ export class BookingDashboardAdminComponent implements OnInit {
         data => {
           this.donations = data;
         });
+  }
+  getUserImg() {
+    if (this.bdetails && this.bdetails.logo) {
+      return this.bdetails.logo;
+    }
+    return 'assets/images/Asset1@300x(1).png';
   }
 }

@@ -38,6 +38,8 @@ export class BookingDashboardComponent implements OnInit {
   nextAppt;
   active_user;
   settings;
+  bdetails;
+  blogo;
   constructor(private provider_services: ProviderServices,
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
@@ -78,7 +80,7 @@ export class BookingDashboardComponent implements OnInit {
   }
   ngOnInit(): void {
     this.settings = this.groupService.getitemFromGroupStorage('settings');
-    const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
+    this.bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     this.userData = this.groupService.getitemFromGroupStorage('ynw-user');
     if (this.userData.accountType !== 'BRANCH') {
       this.admin = true;
@@ -86,11 +88,13 @@ export class BookingDashboardComponent implements OnInit {
       this.getDonations();
     }
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    if (bdetails) {
-      if (this.userData.accountType === 'BRANCH' && this.userData.userType !== 2) {
+    if (this.bdetails) {
+      if (this.userData.accountType === 'BRANCH' && !this.userData.adminPrivilege) {
         this.bname = this.userData.userName || 'User';
+        this.getUserData();
       } else {
-        this.bname = bdetails.bn || 'User';
+        this.bname = this.bdetails.bn || 'User';
+        this.blogo = this.bdetails.logo || 'assets/images/img-null.svg';
       }
     }
     this.getTodayWatilists().then(data => {
@@ -137,6 +141,15 @@ export class BookingDashboardComponent implements OnInit {
         res => {
           this.userDetails = res;
           this.bname = (this.userDetails.businessName) ? this.userDetails.businessName : this.userDetails.firstName + ' ' + this.userDetails.lastName;
+          if (this.userDetails.profilePicture && this.userDetails.profilePicture.url) {
+            this.blogo = this.userDetails.profilePicture.url;
+          } else {
+            if (this.qParams.userid) {
+              this.blogo = 'assets/images/Asset1@300x(1).png';
+            } else {
+              this.blogo = this.bdetails.logo || 'assets/images/img-null.svg';
+            }
+          }
         });
   }
   getProviderSettings() {
@@ -259,12 +272,6 @@ export class BookingDashboardComponent implements OnInit {
     this.provider_services.getProviderBills(filter).subscribe(data => {
       this.bills = data;
     })
-  }
-  getUserImg() {
-    if (this.userDetails && this.userDetails.profilePicture) {
-      return this.userDetails.profilePicture.url;
-    }
-    return 'assets/images/Asset1@300x(1).png';
   }
   goBack() {
     this.locationobj.back();

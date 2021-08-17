@@ -2,11 +2,9 @@
     <div class="container-fluid d-flex flex-wrap flex-sm-nowrap">
         <div class="d-flex flex-column flex-wrap mr-2">
             <h1 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                <b>Admin Dashboard</b>
+                <img class="blogo" [src]="getUserImg()">
+                <b>{{bdetails.bn}}</b>
             </h1>
-            <h6>
-                Manage your complete practice from one place
-            </h6>
         </div>
     </div>
 </div>
@@ -19,7 +17,7 @@
 </div>
 <div class="row pt-0 px-6 pb-6 dashboard-content" *ngIf="!loading">
     <div class="col-lg-4 col-xxl-5 pr-0 col-md-4">
-        <app-upcoming-bookings [nextWaitlist]="nextWaitlist" [nextAppt]="nextAppt"></app-upcoming-bookings>
+        <app-upcoming-bookings [nextWaitlist]="nextWaitlist" [nextAppt]="nextAppt" [nextOrder]="nextOrder"></app-upcoming-bookings>
     </div>
     <div class="col-lg-4 col-xxl-3 pl-0 col-md-4">
         <app-booking-quick-actions></app-booking-quick-actions>

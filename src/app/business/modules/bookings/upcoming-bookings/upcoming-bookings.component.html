@@ -1,13 +1,11 @@
 <div class="card container-upcoming-bookings card-custom card-stretch card-stretch-half gutter-b p-0">
     <div class="card-body p-0 adjust_ht bg_peacok">
-        <div class="">
-            <div class=" align-items-start flex-column">
-                <div class="card-label p-5 font-weight-bolder text-light heading clr_white">
-                    Next Appointment</div>
-            </div>
+        <div class="align-items-start flex-column">
+            <div class="card-label pad-10 font-weight-bolder text-light heading clr_white">
+                Next Appointment</div>
         </div>
         <div style="width: 100px;" *ngIf="!nextAppt" class="inbox-nullimg"></div>
-        <div class="d-flex align-items-center justify-content-between p-5 flex-grow-1" *ngIf="nextAppt">
+        <div class="d-flex align-items-center justify-content-between flex-grow-1 pad-content" *ngIf="nextAppt">
             <div class="d-flex align-items-center">
                 <div class="symbol symbol-40 symbol-light-white mr-3">
                     <div class="symbol-label">
@@ -38,13 +36,11 @@
         </div>
     </div>
     <div class="card-body p-0 adjust_ht nxt_token">
-        <div class="">
-            <div class="align-items-start flex-column">
-                <div class="card-label p-5 font-weight-bolder text-dark-light heading clr_grey">Next Token</div>
-            </div>
+        <div class="align-items-start flex-column">
+            <div class="card-label pad-10 font-weight-bolder text-dark-light heading clr_grey">Next Token</div>
         </div>
         <div style="width: 100px;" *ngIf="!nextWaitlist" class="inbox-nullimg"></div>
-        <div class="d-flex align-items-center justify-content-between p-5 flex-grow-1" *ngIf="nextWaitlist">
+        <div class="d-flex align-items-center justify-content-between flex-grow-1 pad-content" *ngIf="nextWaitlist">
             <div class="d-flex align-items-center">
                 <div class="symbol symbol-40 symbol-light-dark mr-3">
                     <div class="symbol-label">
@@ -69,6 +65,34 @@
                     {{nextWaitlist.queue.queueEndTime}}</span>
                 <a class="btn mt-2 font-weight-bolder btn-sm btn_action2 action-btn clr_white"
                     (click)="gotoDetails('checkin')">
+                    Actions
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-0 adjust_ht bg_peacok">
+        <div class="align-items-start flex-column">
+            <div class="card-label pad-10 font-weight-bolder text-light heading clr_white">
+                Next Order</div>
+        </div>
+        <div style="width: 100px;" *ngIf="!nextOrder" class="inbox-nullimg"></div>
+        <div class="d-flex align-items-center justify-content-between flex-grow-1 pad-content" *ngIf="nextOrder">
+            <div class="d-flex align-items-center">
+                <div class="symbol symbol-40 symbol-light-white mr-3">
+                    <div class="symbol-label">
+                        <img src="assets/media/004-boy-1.svg" class="h-75" alt="">
+                    </div>
+                </div>
+                <div class="d-flex flex-column font-weight-bold">
+                    <a class="ser-name mb-1 font-size-lg clr_white">{{nextOrder.orderFor.firstName}}
+                        {{nextOrder.orderFor.lastName}}</a>
+                </div>
+            </div>
+            <div class="d-flex flex-column text-right">
+                <span
+                    class="timings font-weight-bolder font-size-sm clr_white">{{nextOrder.orderTimeWindow.timeSlots[0].sTime}}
+                    - {{nextOrder.orderTimeWindow.timeSlots[0].eTime}}</span>
+                <a class="btn mt-2 font-weight-bolder btn-sm btn_action action-btn" (click)="gotoDetails('order')">
                     Actions
                 </a>
             </div>

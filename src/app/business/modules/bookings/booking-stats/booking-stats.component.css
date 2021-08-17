@@ -77,3 +77,12 @@
 .summary-row .owl-theme .checkins-nav {
     margin-top: 80px !important;
 }
+::ng-deep.checkins-nav .owl-next, 
+::ng-deep.checkins-nav .owl-prev {
+    font-size: 20px !important;
+}
+::ng-deep.checkins-nav .owl-next:hover,
+::ng-deep.checkins-nav .owl-prev:hover {
+    background: #00000017 !important;
+    border-radius: 5px !important;
+}

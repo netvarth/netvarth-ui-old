@@ -98,3 +98,6 @@
 .card.card-custom.card-stretch.card-stretch-half.gutter-b {
     height: 400px !important;
 }
+.pad-content {
+    padding: 0 10px 10px;
+}
