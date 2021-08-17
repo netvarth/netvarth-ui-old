@@ -1136,6 +1136,8 @@
                                                 Balance amount can be paid by other payment methods
                                             </div>
                                             <div class="prepayment">
+                                            <!-- <div class="prepayment" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
+                                                ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))"> -->
                                                 <!-- Payment required now : &nbsp;
                                                 <span *ngIf="!checkJcash"class="rupee-font">{{paymentDetails.amountRequiredNow |
                                                     currency:'&#8377;'}}
@@ -1157,6 +1159,17 @@
                                                     Confirm</ng-container> -->
                                                 </button>
                                             </div>
+                                            <!-- <div class="paymentdiv"  *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                <p class="jaldeecredit">
+                                                    To pay Rs {{checkJcash ? payAmount : paymentDetails.amountRequiredNow}} please select any payment options
+                                                </p>
+                                                <span type="button" class="razorpay-icon paymenticons" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" appPreventDoubleClick (click)="saveCheckin('appt')" id="stepThreeConfirmButton"  >
+                                                   
+                                                </span>&nbsp;&nbsp;
+                                                <span type="button" class="paytm-icon paymenticons"*ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" appPreventDoubleClick (click)="saveCheckin('appt','paytm')" id="stepThreeConfirmButton" >
+                                                   
+                                                </span>
+                                            </div> -->
                                             <div class="cancelpolicy  mgn-rt-5"
                                                 *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                 <div
