@@ -27,7 +27,7 @@ export class CheckinsComponent implements OnInit {
   waitlistMgrSettings;
   timeType = 1;
   waitlistToList: any = [];
-  loading = false;
+  loading = true;
   subscription: Subscription;
   check_in_statuses_filter = projectConstantsLocal.CHECK_IN_STATUSES_FILTER;
   payStatusList = [
@@ -115,6 +115,8 @@ export class CheckinsComponent implements OnInit {
   server_date;
   active_user;
   selected_location;
+  selectedType = 'list';
+  totalCheckins: any = [];
   constructor(private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
     private router: Router, private location: Location,
@@ -158,6 +160,9 @@ export class CheckinsComponent implements OnInit {
     if (this.groupService.getitemFromGroupStorage('pdtyp')) {
       this.timeType = this.groupService.getitemFromGroupStorage('pdtyp');
     }
+    if (this.groupService.getitemFromGroupStorage('checkinViewType')) {
+      this.selectedType = this.groupService.getitemFromGroupStorage('checkinViewType');
+    }
     this.setSystemDate();
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -167,7 +172,11 @@ export class CheckinsComponent implements OnInit {
     this.getQs();
     this.getServices();
     this.getLabel();
-    this.doSearch();
+    if (this.selectedType === 'calender') {
+      this.setCalenderCheckins();
+    } else {
+      this.doSearch();
+    }
   }
   setSystemDate() {
     this.shared_services.getSystemDate()
@@ -192,7 +201,7 @@ export class CheckinsComponent implements OnInit {
       } else {
         api_filter['provider-eq'] = this.providerId;
       }
-    } 
+    }
     if (this.selected_location && this.selected_location.id) {
       api_filter['location-eq'] = this.selected_location.id;
     }
@@ -264,7 +273,6 @@ export class CheckinsComponent implements OnInit {
               obj.type = 1;
               return obj;
             });
-            this.loading = false;
             this.setWaitlistForDisplay();
             resolve(data);
           });
@@ -281,7 +289,6 @@ export class CheckinsComponent implements OnInit {
               obj.type = 2;
               return obj;
             });
-            this.loading = false;
             this.setWaitlistForDisplay();
             resolve(data);
           });
@@ -298,23 +305,29 @@ export class CheckinsComponent implements OnInit {
               obj.type = 3;
               return obj;
             });
-            this.loading = false;
             this.setWaitlistForDisplay();
             resolve(data);
           });
     });
   }
   handleWaitlistType(type) {
-    this.timeType = type; 
+    this.timeType = type;
     this.groupService.setitemToGroupStorage('pdtyp', this.timeType);
     this.clearFilter();
     this.hideFilterSidebar();
   }
   refresh() {
+    if (this.selectedType === 'calender') {
+      this.loading = true;
+    }
+    this.totalCheckins = this.todayWaitlists.concat(this.futureWaitlists, this.historyWaitlists);
     this.setWaitlistForDisplay();
     if (this.filterapplied && this.timeType !== 3) {
       this.doSearch('refresh');
     }
+    setTimeout(() => {
+      this.loading = false;
+    }, 100);
   }
   setWaitlistForDisplay() {
     if (this.timeType === 1) {
@@ -330,11 +343,11 @@ export class CheckinsComponent implements OnInit {
       this.loading = true;
     }
     switch (this.timeType) {
-      case 1: this.getTodayWatilists();
+      case 1: this.getTodayWatilists().then(data => { this.loading = false; });
         break;
-      case 2: this.getFutureWatilists();
+      case 2: this.getFutureWatilists().then(data => { this.loading = false; });
         break;
-      case 3: this.getHistoryWaitlists();
+      case 3: this.getHistoryWaitlists().then(data => { this.loading = false; });
         break;
     }
   }
@@ -412,7 +425,6 @@ export class CheckinsComponent implements OnInit {
     } else {
       this.filterapplied = false;
     }
-    this.shared_functions.setFilter();
   }
   labelSelection() {
     this.labelFilterData = '';
@@ -665,7 +677,7 @@ export class CheckinsComponent implements OnInit {
     this.selected_location = location;
     this.groupService.setitemToGroupStorage('dashboardLocation', this.selected_location);
     this.doSearch();
-  }  
+  }
   showAdjustDelay() {
     if (this.queues && this.queues.length === 0) {
       this.snackbarService.openSnackBar('Delay can be applied only for active queues', { 'panelClass': 'snackbarerror' });
@@ -673,5 +685,28 @@ export class CheckinsComponent implements OnInit {
     } else {
       this.router.navigate(['provider', 'check-ins', 'adjustdelay']);
     }
+  }
+  selectViewType(view) {
+    this.loading = true;
+    this.selectedType = view;
+    this.resetFilter();
+    this.resetFilterValues();
+    this.groupService.setitemToGroupStorage('checkinViewType', this.selectedType);
+    if (this.selectedType === 'calender') {
+      this.setCalenderCheckins();
+    } else {
+      this.doSearch();
+    }
+  }
+  setCalenderCheckins() {
+    this.totalCheckins = [];
+    this.getTodayWatilists().then(data => {
+      this.getFutureWatilists().then(data => {
+        this.getHistoryWaitlists().then(data => {
+          this.totalCheckins = this.todayWaitlists.concat(this.futureWaitlists, this.historyWaitlists);
+          this.loading = false;
+        });
+      });
+    });
   }
 }

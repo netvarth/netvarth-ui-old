@@ -47,16 +47,14 @@
           <ul class="nav navbar-nav width100pc mgn-bt-20">
             <li class="dropdown notifications-menu">
               <a (click)="apptClicked('WALK_IN_APPOINTMENT')"
-                class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
-                data-toggle="dropdown">
+                class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new" data-toggle="dropdown">
                 <i class="fa fa-plus"></i>
                 <span>Appointment</span>
               </a>
             </li>
             <li class="dropdown notifications-menu">
               <a (click)="apptClicked('PHONE_IN_APPOINTMENT')"
-                class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
-                data-toggle="dropdown">
+                class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new" data-toggle="dropdown">
                 <i class="fa fa-phone" aria-hidden="true"></i>
                 Phone in
               </a>
@@ -79,7 +77,8 @@
           </mat-option>
         </mat-select>
       </div>
-      <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
+      <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar"
+        *ngIf="selectedType=='list'">
         <img src="assets/images/provider-filter-icon.png" (click)="showFilterSidebar()" [matTooltip]="filtericonTooltip"
           style="width: 22px !important; margin-top: -6px !important;">
       </a>
@@ -458,7 +457,7 @@
       </app-records-datagrid>
     </div>
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20" *ngIf="!loading && selectedType=='calender'">
-      <app-calendar [waitlists]="totalAppts" [source]="'appt'"></app-calendar>
+      <app-calendar [waitlists]="totalAppts" [source]="'appointment'"></app-calendar>
     </div>
   </div>
 </section>

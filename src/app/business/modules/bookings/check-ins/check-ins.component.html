@@ -73,7 +73,7 @@
             </nav>
         </header>
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-            <div class="pull-left">
+            <div class="pull-left" *ngIf="selectedType=='list'">
                 <mat-select class="selecttype" [(ngModel)]="timeType">
                     <mat-option [value]="1" (click)="handleWaitlistType(1)">
                         Today
@@ -86,10 +86,17 @@
                     </mat-option>
                 </mat-select>
             </div>
-            <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
+            <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar"
+                *ngIf="selectedType=='list'">
                 <img src="assets/images/provider-filter-icon.png" (click)="showFilterSidebar()"
                     [matTooltip]="filtericonTooltip" style="width: 22px !important; margin-top: -6px !important;">
             </a>
+            <div class="pull-right viewtypes">
+                View: <i class="fa fa-list-ul mgn-rt-5 pointer-cursor" [class.selectedView]="selectedType=='list'"
+                    (click)="selectViewType('list')" [matTooltip]="'List View'"></i>
+                <i class="fa fa-calendar pointer-cursor" [class.selectedView]="selectedType=='calender'"
+                    (click)="selectViewType('calender')" [matTooltip]="'Calender View'"></i>
+            </div>
         </div>
         <div *ngIf="filter_sidebar">
             <aside class="filterSidebar newfilter-sidebar">
@@ -577,10 +584,14 @@
             </aside>
         </div>
         <app-common-innerloading-spinner *ngIf="loading"> </app-common-innerloading-spinner>
-        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20" *ngIf="!loading">
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20" *ngIf="!loading && selectedType=='list'">
             <app-records-datagrid [source]="'waitlist'" [records]="waitlistToList" [timeType]="timeType"
                 [view]="'dashboard'">
             </app-records-datagrid>
+        </div>
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20 mgn-bt-20"
+            *ngIf="!loading && selectedType=='calender'">
+            <app-calendar [waitlists]="totalCheckins" [source]="'checkin'"></app-calendar>
         </div>
     </div>
 </section>

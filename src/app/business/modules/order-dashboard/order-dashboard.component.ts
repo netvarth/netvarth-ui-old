@@ -28,7 +28,7 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
   orders: any = [];
   display_dateFormat = projectConstantsLocal.DATE_FORMAT_STARTS_MONTH;
   historyOrdersCount;
-  loading = false;
+  loading = true;
   orderSelected: any = [];
   showFilterSection = false;
   filterapplied = false;
@@ -144,19 +144,19 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
     this.groupService.setitemToGroupStorage('orderTab', this.selectedTab);
     switch (type) {
       case 1: {
-        this.getProviderTodayOrders();
+        this.getProviderTodayOrders().then(data => { this.loading = false; });
         this.getProviderTodayOrdersCount();
 
         break;
       }
       case 2: {
-        this.getProviderFutureOrders();
+        this.getProviderFutureOrders().then(data => { this.loading = false; });
         this.getProviderFutureOrdersCount();
 
         break;
       }
       case 3: {
-        this.getProviderHistoryOrders();
+        this.getProviderHistoryOrders().then(data => { this.loading = false; });
         this.getProviderHistoryOrdersCount();
 
         break;
@@ -198,7 +198,6 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
   }
   getProviderTodayOrders() {
     return new Promise((resolve) => {
-      this.loading = true;
       let filter = {};
       filter = this.setFilterForApi();
 
@@ -206,7 +205,6 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
 
         .subscribe(data => {
           this.orders = data;
-          this.loading = false;
           resolve(data);
         });
     });
@@ -215,12 +213,10 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
 
   getProviderFutureOrders() {
     return new Promise((resolve) => {
-      this.loading = true;
       let filter = {};
       filter = this.setFilterForApi();
       this.subs.sink = this.providerservices.getProviderFutureOrders(filter).subscribe(data => {
         this.orders = data;
-        this.loading = false;
         resolve(data);
       });
     });
@@ -243,12 +239,10 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
   }
   getProviderHistoryOrders() {
     return new Promise((resolve) => {
-      this.loading = true;
       let filter = {};
       filter = this.setFilterForApi();
       this.subs.sink = this.providerservices.getProviderHistoryOrders(filter).subscribe(data => {
         this.historyOrders = data;
-        this.loading = false;
         resolve(data);
       });
     });
@@ -755,7 +749,11 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
     this.router.navigate(['provider', 'customers', 'find']);
   }
   selectViewType(view) {
+    this.loading = true;
     this.selectedType = view;
+    this.resetFilter();
+    this.resetFilterValues();
+    this.resetLabelFilter();
     this.groupService.setitemToGroupStorage('orderViewType', this.selectedType);
     if (this.selectedType === 'calender') {
       this.setCalenderOrders();
@@ -764,13 +762,14 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
     }
   }
   setCalenderOrders() {
+    this.totalOrders = [];
     this.getProviderTodayOrders().then(data => {
-      this.totalOrders = [];
       this.totalOrders = data;
       this.getProviderFutureOrders().then(data => {
         this.totalOrders = this.totalOrders.concat(data);
         this.getProviderHistoryOrders().then(data => {
           this.totalOrders = this.totalOrders.concat(data);
+          this.loading = false;
         });
       });
     });

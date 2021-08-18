@@ -65,7 +65,7 @@ export class CalendarComponent implements OnInit {
     if (this.source === 'order') {
       this.router.navigate(['provider', 'orders', event.meta.uid]);
     } else {
-      this.router.navigate(['provider', 'bookings', 'details'], { queryParams: { uid: event.meta.uid, timetype: event.meta.timeType, type: 'appointment' } });
+      this.router.navigate(['provider', 'bookings', 'details'], { queryParams: { uid: event.meta.uid, timetype: event.meta.timeType, type: this.source } });
     }
   }
 
@@ -110,6 +110,22 @@ export class CalendarComponent implements OnInit {
             color: colors.red,
             meta: {
               uid: waitlist.uid
+            },
+          });
+        } else if (this.source === 'checkin') {
+          let name;
+          if (waitlist.waitlistingFor[0].firstName || waitlist.waitlistingFor[0].lastName) {
+            name = waitlist.waitlistingFor[0].firstName + ' ' + waitlist.waitlistingFor[0].lastName;
+          } else {
+            name = this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + ' id: ' + waitlist.waitlistingFor[0].memberJaldeeId;
+          }
+          this.events.push({
+            start: startOfDay(new Date(waitlist.date)),
+            title: '<div class="calender-name">' + name + '</div>',
+            color: colors.red,
+            meta: {
+              uid: waitlist.ynwUuid,
+              timeType: waitlist.type
             },
           });
         }

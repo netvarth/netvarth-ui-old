@@ -27,7 +27,7 @@ export class AppointmentsComponent implements OnInit {
   selectedType = 'list';
   timeType = 1;
   apptToList: any = [];
-  loading = false;
+  loading = true;
   subscription: Subscription;
   filter_sidebar = false;
   filterapplied = false;
@@ -148,24 +148,25 @@ export class AppointmentsComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.setSystemDate();
     if (this.groupService.getitemFromGroupStorage('apptType')) {
       this.timeType = this.groupService.getitemFromGroupStorage('apptType');
     }
+    if (this.groupService.getitemFromGroupStorage('apptViewType')) {
+      this.selectedType = this.groupService.getitemFromGroupStorage('apptViewType');
+    }
+    this.setSystemDate();
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.customerIdTooltip = this.customer_label + ' Id';
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
-    this.getTodayAppts().then(data => {
-      this.getFutureAppts().then(data => {
-        this.getHistoryAppts().then(data => {
-          this.setDatas();
-        });
-      });
-    });
     this.getProviderLocations();
     this.getProviderSchedules();
     this.getServices();
     this.getLabel();
+    if (this.selectedType === 'calender') {
+      this.setCalenderAppts();
+    } else {
+      this.doSearch();
+    }
   }
   setSystemDate() {
     this.shared_services.getSystemDate()
@@ -251,76 +252,100 @@ export class AppointmentsComponent implements OnInit {
     const idFilter = 'memberJaldeeId::' + patientid;
     return idFilter;
   }
+  getTodayAppts() {
+    return new Promise((resolve) => {
+      const filter = this.setFilters();
+      this.provider_services.getTodayAppointments(filter)
+        .subscribe(
+          (data: any) => {
+            this.todayAppts = data;
+            this.todayAppts.map((obj) => {
+              obj.type = 1;
+              return obj;
+            });
+            this.setWaitlistForDisplay();
+            resolve(data);
+          });
+    });
+  }
+  getFutureAppts() {
+    return new Promise((resolve) => {
+      const filter = this.setFilters();
+      this.provider_services.getFutureAppointments(filter)
+        .subscribe(
+          (data: any) => {
+            this.futureAppts = data;
+            this.futureAppts.map((obj) => {
+              obj.type = 2;
+              return obj;
+            });
+            this.setWaitlistForDisplay();
+            resolve(data);
+          });
+    });
+  }
+  getHistoryAppts() {
+    return new Promise((resolve) => {
+      const filter = this.setFilters();
+      this.provider_services.getHistoryAppointments(filter)
+        .subscribe(
+          data => {
+            this.historyAppts = data;
+            this.historyAppts.map((obj) => {
+              obj.type = 3;
+              return obj;
+            });
+            this.setWaitlistForDisplay();
+            resolve(data);
+          });
+    });
+  }
+  handleApptSelectionType(type) {
+    this.timeType = type;
+    this.groupService.setitemToGroupStorage('apptType', this.timeType);
+    this.clearFilter();
+    this.hideFilterSidebar();
+  }
+  refresh() {
+    if (this.selectedType === 'calender') {
+      this.loading = true;
+    }
+    this.totalAppts = this.todayAppts.concat(this.futureAppts, this.historyAppts);
+    this.setWaitlistForDisplay();
+    if (this.filterapplied && this.timeType !== 3) {
+      this.doSearch('refresh');
+    }
+    setTimeout(() => {
+      this.loading = false;
+    }, 100);
+  }
+  setWaitlistForDisplay() {
+    if (this.timeType === 1) {
+      this.apptToList = this.todayAppts;
+    } else if (this.timeType === 2) {
+      this.apptToList = this.futureAppts;
+    } else {
+      this.apptToList = this.historyAppts;
+    }
+  }
   doSearch(type?) {
     if (!type) {
       this.loading = true;
     }
     switch (this.timeType) {
-      case 1: this.getTodayAppts();
+      case 1: this.getTodayAppts().then(data => { this.loading = false; });
         break;
-      case 2: this.getFutureAppts();
+      case 2: this.getFutureAppts().then(data => { this.loading = false; });
         break;
-      case 3: this.getHistoryAppts();
+      case 3: this.getHistoryAppts().then(data => { this.loading = false; });
         break;
     }
-  }
-  keyPressed() {
-    this.shared_functions.setFilter();
-    this.lStorageService.removeitemfromLocalStorage('filter');
-    this.endminday = this.filter.check_in_start_date;
-    if (this.filter.check_in_end_date) {
-      this.maxday = this.filter.check_in_end_date;
-    } else {
-      this.maxday = new Date();
-    }
-    this.labelSelection();
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
-      this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
-      || this.filter.check_in_end_date !== null || this.filter.check_in_date !== null || this.labelFilterData !== '' || this.filter.apptStatus !== 'all') {
-      this.filterapplied = true;
-    } else {
-      this.filterapplied = false;
-    }
-  }
-  labelSelection() {
-    this.labelFilterData = '';
-    let count = 0;
-    Object.keys(this.selectedLabels).forEach(key => {
-      if (this.selectedLabels[key].length > 0) {
-        count++;
-        if (!this.labelFilterData.includes(key)) {
-          if (count === 1) {
-            this.labelFilterData = this.labelFilterData + key + '::' + this.selectedLabels[key].join(',');
-          } else {
-            this.labelFilterData = this.labelFilterData + '$' + key + '::' + this.selectedLabels[key].join(',');
-          }
-        }
-      } else {
-        delete this.selectedLabels[key];
-      }
-    });
   }
   clearFilter() {
     this.resetFilter();
     this.resetFilterValues();
     this.filterapplied = false;
     this.doSearch();
-  }
-  resetFilterValues() {
-    this.services = [];
-    this.apptStatuses = [];
-    this.filteredSchedule = [];
-    this.paymentStatuses = [];
-    this.apptModes = [];
-    this.filterLocation = [];
-    this.allServiceSelected = false;
-    this.allScheduleSelected = false;
-    this.allApptStatusSelected = false;
-    this.allPayStatusSelected = false;
-    this.allModeSelected = false;
-    this.allLocationSelected = false;
-    this.selectedLabels = [];
-    this.allLabelSelected = [];
   }
   resetFilter() {
     this.filters = {
@@ -358,6 +383,56 @@ export class AppointmentsComponent implements OnInit {
       location_id: 'all'
     };
     this.labelFilterData = '';
+  }
+  resetFilterValues() {
+    this.services = [];
+    this.apptStatuses = [];
+    this.filteredSchedule = [];
+    this.paymentStatuses = [];
+    this.apptModes = [];
+    this.filterLocation = [];
+    this.allServiceSelected = false;
+    this.allScheduleSelected = false;
+    this.allApptStatusSelected = false;
+    this.allPayStatusSelected = false;
+    this.allModeSelected = false;
+    this.allLocationSelected = false;
+    this.selectedLabels = [];
+    this.allLabelSelected = [];
+  }
+  keyPressed() {
+    this.endminday = this.filter.check_in_start_date;
+    if (this.filter.check_in_end_date) {
+      this.maxday = this.filter.check_in_end_date;
+    } else {
+      this.maxday = new Date();
+    }
+    this.labelSelection();
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
+      this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
+      || this.filter.check_in_end_date !== null || this.filter.check_in_date !== null || this.labelFilterData !== '' || this.filter.apptStatus !== 'all') {
+      this.filterapplied = true;
+    } else {
+      this.filterapplied = false;
+    }
+  }
+  labelSelection() {
+    this.labelFilterData = '';
+    let count = 0;
+    Object.keys(this.selectedLabels).forEach(key => {
+      if (this.selectedLabels[key].length > 0) {
+        count++;
+        if (!this.labelFilterData.includes(key)) {
+          if (count === 1) {
+            this.labelFilterData = this.labelFilterData + key + '::' + this.selectedLabels[key].join(',');
+          } else {
+            this.labelFilterData = this.labelFilterData + '$' + key + '::' + this.selectedLabels[key].join(',');
+          }
+        }
+      } else {
+        delete this.selectedLabels[key];
+      }
+    });
   }
   setLabelFilter(label, event) {
     const value = event.checked;
@@ -523,92 +598,12 @@ export class AppointmentsComponent implements OnInit {
     }
     this.keyPressed();
   }
-  showFilterSidebar() {
-    this.filter_sidebar = true;
-    this.shared_functions.setFilter();
-  }
   hideFilterSidebar() {
     this.filter_sidebar = false;
   }
-  getTodayAppts() {
-    return new Promise((resolve) => {
-      const filter = this.setFilters();
-      this.provider_services.getTodayAppointments(filter)
-        .subscribe(
-          (data: any) => {
-            this.todayAppts = data;
-            this.todayAppts.map((obj) => {
-              obj.type = 1;
-              return obj;
-            });
-            this.loading = false;
-            this.setWaitlistForDisplay();
-            resolve(data);
-          });
-    });
-  }
-  getFutureAppts() {
-    return new Promise((resolve) => {
-      const filter = this.setFilters();
-      this.provider_services.getFutureAppointments(filter)
-        .subscribe(
-          (data: any) => {
-            this.futureAppts = data;
-            this.futureAppts.map((obj) => {
-              obj.type = 2;
-              return obj;
-            });
-            this.loading = false;
-            this.setWaitlistForDisplay();
-            resolve(data);
-          });
-    });
-  }
-  getHistoryAppts() {
-    return new Promise((resolve) => {
-      const filter = this.setFilters();
-      this.provider_services.getHistoryAppointments(filter)
-        .subscribe(
-          data => {
-            this.historyAppts = data;
-            this.historyAppts.map((obj) => {
-              obj.type = 3;
-              return obj;
-            });
-            this.loading = false;
-            this.setWaitlistForDisplay();
-            resolve(data);
-          });
-    });
-  }
-  setDatas() {
-    this.totalAppts = [];
-    this.totalAppts = this.todayAppts.concat(this.futureAppts, this.historyAppts);
-    this.handleApptSelectionType(this.timeType);
-  }
-  setWaitlistForDisplay() {
-    if (this.timeType === 1) {
-      this.apptToList = this.todayAppts;
-    } else if (this.timeType === 2) {
-      this.apptToList = this.futureAppts;
-    } else {
-      this.apptToList = this.historyAppts;
-    }
-  }
-  refresh() {
-    this.setWaitlistForDisplay();
-    if (this.filterapplied && this.timeType !== 3) {
-      this.doSearch('refresh');
-    }
-  }
-  selectViewType(view) {
-    this.selectedType = view;
-  }
-  handleApptSelectionType(type) {
-    this.timeType = type;
-    this.groupService.setitemToGroupStorage('apptType', this.timeType);
-    this.clearFilter();
-    this.hideFilterSidebar();
+  showFilterSidebar() {
+    this.filter_sidebar = true;
+    this.shared_functions.setFilter();
   }
   apptClicked(type) {
     this.router.navigate(['provider', 'appointments', 'appointment'],
@@ -620,13 +615,6 @@ export class AppointmentsComponent implements OnInit {
   isNumeric(evt) {
     return this.shared_functions.isNumeric(evt);
   }
-  getLabel() {
-    this.providerLabels = [];
-    this.provider_services.getLabelList().subscribe(data => {
-      this.allLabels = data;
-      this.providerLabels = this.allLabels.filter(label => label.status === 'ENABLED');
-    });
-  }
   getProviderLocations() {
     this.provider_services.getProviderLocations()
       .subscribe(
@@ -637,16 +625,6 @@ export class AppointmentsComponent implements OnInit {
             this.selected_location = this.locations[0];
           }
         });
-  }
-  getProviderSchedules() {
-    let filter = { 'state-eq': 'ENABLED' };
-    if (this.providerId) {
-      filter['provider-eq'] = this.providerId;
-    }
-    this.provider_services.getProviderSchedules(filter).subscribe(
-      (schedules: any) => {
-        this.schedules = schedules;
-      });
   }
   getServices() {
     let filter = { 'serviceType-neq': 'donationService', 'status-eq': 'ACTIVE' };
@@ -661,16 +639,50 @@ export class AppointmentsComponent implements OnInit {
         () => { }
       );
   }
+  getProviderSchedules() {
+    let filter = { 'state-eq': 'ENABLED' };
+    if (this.providerId) {
+      filter['provider-eq'] = this.providerId;
+    }
+    this.provider_services.getProviderSchedules(filter).subscribe(
+      (schedules: any) => {
+        this.schedules = schedules;
+      });
+  }
+  getLabel() {
+    this.providerLabels = [];
+    this.provider_services.getLabelList().subscribe(data => {
+      this.allLabels = data;
+      this.providerLabels = this.allLabels.filter(label => label.status === 'ENABLED');
+    });
+  }
   gotoLocations() {
     this.router.navigate(['provider', 'settings', 'general', 'locations']);
   }
   onChangeLocationSelect(location) {
     this.selected_location = location;
     this.groupService.setitemToGroupStorage('dashboardLocation', this.selected_location);
+    this.doSearch();
+  }
+  selectViewType(view) {
+    this.loading = true;
+    this.selectedType = view;
+    this.resetFilter();
+    this.resetFilterValues();
+    this.groupService.setitemToGroupStorage('apptViewType', this.selectedType);
+    if (this.selectedType === 'calender') {
+      this.setCalenderAppts();
+    } else {
+      this.doSearch();
+    }
+  }
+  setCalenderAppts() {
+    this.totalAppts = [];
     this.getTodayAppts().then(data => {
       this.getFutureAppts().then(data => {
         this.getHistoryAppts().then(data => {
-          this.setDatas();
+          this.totalAppts = this.todayAppts.concat(this.futureAppts, this.historyAppts);
+          this.loading = false;
         });
       });
     });

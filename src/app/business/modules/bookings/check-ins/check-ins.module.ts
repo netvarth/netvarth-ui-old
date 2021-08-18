@@ -11,6 +11,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { BookingCalendarModule } from '../calendar/calendar.module';
 
 @NgModule({
   declarations: [CheckinsComponent],
@@ -25,7 +26,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatDatepickerModule,
     MatCheckboxModule,
     CapitalizeFirstPipeModule,
-    MatTooltipModule
+    MatTooltipModule,
+    BookingCalendarModule
   ],
   exports: [CheckinsComponent]
 })
