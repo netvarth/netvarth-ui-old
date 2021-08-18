@@ -52,13 +52,15 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
                 [(ngModel)]="dob" tabindex="-1">
         </div> -->
         <label class="col-form-label" for="dob">Date of Birth </label>
-        <mat-form-field>
-                <input matInput [matDatepicker]="picker" placeholder="Date of birth"
+        <!-- <mat-form-field> -->
+             <input style="width: 80% !important; display: initial !important;" class="form-control nofocus" type="text" matInput [matDatepicker]="picker" [max]="tday" disabled
+                [(ngModel)]="dob" tabindex="-1" (dateChange)="dateChanged($event)">
+                <!-- <input matInput [matDatepicker]="picker" placeholder="Date of birth"
                     #inputdob formControlName="dob" [max]="tday" [min]="minday" disabled
-                    class="nofocus" tabindex="-1" readonly (dateChange)="dateChanged($event)">
+                    class="nofocus" tabindex="-1" readonly (dateChange)="dateChanged($event)"> -->
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker [disabled]="false"></mat-datepicker>
-            </mat-form-field>
+            <!-- </mat-form-field> -->
   
         <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile')"
     errorMsg="Please enter the mobile number.">

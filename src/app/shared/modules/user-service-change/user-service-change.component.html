@@ -321,7 +321,7 @@
                     <th class="display-min-none" style="min-width: 125px;">Phone number</th>
                     <th class="display-min-none" style="width: 30%;">Specializations</th>
                     <th class="display-min-none">Languages</th>
-                    <th class="display-min-none">Tokens count</th>
+                    <th class="display-min-none">Booking count</th>
                   </tr>
                 </thead>
                 <tbody *ngIf="!loading">
@@ -361,7 +361,7 @@
                             <div class="mgn-up-5" *ngIf="service.languages">
                               <span class="b2">{{service.languages}} </span>
                             </div>
-                            <div class="mgn-up-5" *ngIf="service.userType === 'PROVIDER'"> <span class="b1">Tokens
+                            <div class="mgn-up-5" *ngIf="service.userType === 'PROVIDER'"> <span class="b1">Booking
                                 Count:
                               </span><span class="b2">{{service.currentWlCount}} </span></div>
                           </div>
