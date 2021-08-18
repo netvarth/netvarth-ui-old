@@ -80,7 +80,7 @@ export class CalendarComponent implements OnInit {
   ngOnInit(): void {
     if (this.waitlists) {
       for (let waitlist of this.waitlists) {
-        if (this.source === 'appt') {
+        if (this.source === 'appointment') {
           let name;
           if (waitlist.appmtFor[0].firstName || waitlist.appmtFor[0].lastName) {
             name = waitlist.appmtFor[0].firstName + ' ' + waitlist.appmtFor[0].lastName;
