@@ -48,16 +48,22 @@ a, .aside-menu i {
 }
 .collapse.in {
     display: block !important;
+}
+.subsection {
     padding-left: 35px !important;
 }
 .subsection .menu-link {
     padding: 9px 25px !important;
 }
-.bookings-menu i.fa.fa-angle-right {
-  transition: 0.70s !important;
-  transform: rotate(90deg) !important;
+.bookings-menu i.menu-arrow {
+    transition: 0.70s !important;
+    transform: rotate(90deg) !important;
+    flex: none !important;
 }
-.bookings-menu i.fa.fa-angle-right {
-  transition: 0.70s !important;
-  transform: rotate(0deg) !important;
+.bookings-menu i.menu-arrow.collapsed {
+    transition: 0.70s !important;
+    transform: rotate(0deg) !important;
+}
+.subsection .menu-text {
+    padding-left: 10px !important;
 }
