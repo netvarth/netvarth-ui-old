@@ -308,7 +308,7 @@
                                                       <th class="display-min-none" style="width: 30%;">Specializations
                                                       </th>
                                                       <th class="display-min-none">Languages</th>
-                                                      <th class="display-min-none">Tokens#</th>
+                                                      <th class="display-min-none">Booking#</th>
                                                       <th class="display-min-none"></th>
                                                   </tr>
                                               </thead>
@@ -390,9 +390,9 @@
                                                                       </div>
                                                                       <div class="mgn-up-5"
                                                                           *ngIf="service.userType === 'PROVIDER'">
-                                                                          <span class="b1">Tokens Count:
+                                                                          <span class="b1">Booking Count:
                                                                           </span><span class="b2">
-                                                                              {{service.currentWlCount}}
+                                                                              {{service.currentWlCount + service.currentApptCount}}
                                                                           </span>
                                                                       </div>
                                                                   </div>
@@ -427,7 +427,7 @@
                                                       </td>
                                                       <td class="display-min-none">
                                                           <span *ngIf="service.userType === 'PROVIDER'">
-                                                              {{service.currentWlCount}}
+                                                              {{service.currentWlCount + service.currentApptCount}}
                                                           </span>
                                                       </td>
                                                       <td>
@@ -548,7 +548,7 @@
                                                     <th class="display-min-none" style="width: 30%;">Specializations
                                                     </th>
                                                     <th class="display-min-none">Languages</th>
-                                                    <th class="display-min-none">Tokens count</th>
+                                                    <th class="display-min-none">Booking count</th>
                                                     <th class="display-min-none"></th>
                                                 </tr>
                                             </thead>
@@ -617,9 +617,9 @@
                                                                     </div>
                                                                     <div class="mgn-up-5"
                                                                         *ngIf="service.userType === 'PROVIDER'">
-                                                                        <span class="b1">Tokens Count:
+                                                                        <span class="b1">Booking Count:
                                                                         </span><span class="b2">
-                                                                            {{service.currentWlCount}}
+                                                                            {{service.currentWlCount + service.currentApptCount}}
                                                                         </span>
                                                                     </div>
                                                                 </div>
@@ -654,7 +654,7 @@
                                                     </td>
                                                     <td class="display-min-none">
                                                         <span *ngIf="service.userType === 'PROVIDER'">
-                                                            {{service.currentWlCount}}
+                                                            {{service.currentWlCount + service.currentApptCount}}
                                                         </span>
                                                     </td>
                                                     <td>

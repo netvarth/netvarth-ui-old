@@ -335,7 +335,7 @@ export class UserServiceChnageComponent implements OnInit {
           'city': serviceObj.city,
           'employeeId': serviceObj.employeeId,
           'state': serviceObj.state,
-          'currentWlCount': serviceObj.currentWlCount,
+          'currentWlCount': serviceObj.currentWlCount+serviceObj.currentApptCount,
           'whatsAppNum': (serviceObj.whatsAppNum) ? serviceObj.whatsAppNum  : '', 
           'telegramNum': (serviceObj.telegramNum) ? serviceObj.telegramNum  : '', 
           'countryCode':  serviceObj.countryCode || '',
