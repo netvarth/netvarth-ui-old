@@ -71,7 +71,7 @@
           <span class="value">{{waitlist_data.waitlistingFor[0].preferredLanguage}}</span>
         </div>
         <button class="btn create-prescription-button" (click)="showCommunications()"
-          *ngIf="waitlist_data.waitlistStatus!=='blocked'">Communication</button>
+          *ngIf="waitlist_data.waitlistStatus!=='blocked' && (whatsappNumber || number || email)">Communication</button>
       </div>
     </div>
     <div class="booking-details" *ngIf="bookingType === 'appointment'">
@@ -133,7 +133,7 @@
           <span class="value">{{waitlist_data.appmtFor[0].preferredLanguage}}</span>
         </div>
         <button class="btn create-prescription-button" (click)="showCommunications()"
-          *ngIf="waitlist_data.apptStatus!=='blocked'">Communication</button>
+          *ngIf="waitlist_data.apptStatus!=='blocked' && (whatsappNumber || number || email)">Communication</button>
       </div>
     </div>
   </div>
@@ -163,7 +163,8 @@
           <i class="fa fa-map-marker icon"></i>
           <span class="value">{{waitlist_data.location.place}}</span>
         </div>
-        <button class="btn create-prescription-button" (click)="showCommunications()">Communication</button>
+        <button class="btn create-prescription-button" (click)="showCommunications()"
+        *ngIf="whatsappNumber || number || email">Communication</button>
       </div>
     </div>
   </div>

@@ -22,7 +22,7 @@ import { SubSink } from 'subsink';
   templateUrl: './order-dashboard.component.html',
   styleUrls: ['./order-dashboard.component.scss', './order-dashboard.component.css']
 })
-export class OrderDashboardComponent implements OnInit,OnDestroy {
+export class OrderDashboardComponent implements OnInit, OnDestroy {
   businessName;
   historyOrders: any = [];
   orders: any = [];
@@ -52,7 +52,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     orderStatus: false,
     orderMode: false
   };
-  todaySubscription:Subscription;
+  todaySubscription: Subscription;
   customerIdTooltip = '';
   customer_label = '';
   selected_type = 'all';
@@ -88,8 +88,10 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   ];
   allModeSelected = false;
   refreshTime: any;
-  objectKeys=Object.keys;
-  private subs=new SubSink();
+  selectedType = 'card';
+  totalOrders: any = [];
+  objectKeys = Object.keys;
+  private subs = new SubSink();
   constructor(public sharedFunctions: SharedFunctions,
     public router: Router, private dialog: MatDialog,
     public providerservices: ProviderServices,
@@ -106,6 +108,9 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     this.filterHeight = screenHeight - 60;
   }
   ngOnInit() {
+    if (this.groupService.getitemFromGroupStorage('orderViewType')) {
+      this.selectedType = this.groupService.getitemFromGroupStorage('orderViewType');
+    }
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
     const businessdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     this.businessName = businessdetails.bn;
@@ -119,11 +124,15 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     this.getPos();
     this.getLabel();
     this.getDefaultCatalogStatus();
-    this.doSearch();
+    if (this.selectedType === 'calender') {
+      this.setCalenderOrders();
+    } else {
+      this.doSearch();
+    }
     this.getProviderTodayOrdersCount();
     this.getProviderFutureOrdersCount();
     this.getProviderHistoryOrdersCount();
-    this.subs.sink= observableInterval(this.refreshTime * 500).subscribe(() => {
+    this.subs.sink = observableInterval(this.refreshTime * 500).subscribe(() => {
       this.refresh();
     });
   }
@@ -165,7 +174,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   gotoDetails(order) {
     this.router.navigate(['provider', 'orders', order.uid]);
   }
-  showActionPopup(order?,timetype?) {
+  showActionPopup(order?, timetype?) {
     if (order) {
       this.selectedOrders = order;
     }
@@ -175,7 +184,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
       disableClose: true,
       data: {
         selectedOrder: this.selectedOrders,
-        type:timetype
+        type: timetype
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
@@ -188,34 +197,38 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     event.stopPropagation();
   }
   getProviderTodayOrders() {
-    this.loading = true;
-    let filter = {};
-    filter = this.setFilterForApi();
-   
-   this.subs.sink=this.providerservices.getProviderTodayOrders(filter)
+    return new Promise((resolve) => {
+      this.loading = true;
+      let filter = {};
+      filter = this.setFilterForApi();
 
-    .subscribe(data => {
-      this.orders = data;
-      this.loading = false;
+      this.subs.sink = this.providerservices.getProviderTodayOrders(filter)
+
+        .subscribe(data => {
+          this.orders = data;
+          this.loading = false;
+          resolve(data);
+        });
     });
+  }
 
-  }  
-   
 
   getProviderFutureOrders() {
-    this.loading = true;
-    let filter = {};
-    filter = this.setFilterForApi();
-    this.subs.sink=this.providerservices.getProviderFutureOrders(filter).subscribe(data => {
-      this.orders = data;
-      this.loading = false;
+    return new Promise((resolve) => {
+      this.loading = true;
+      let filter = {};
+      filter = this.setFilterForApi();
+      this.subs.sink = this.providerservices.getProviderFutureOrders(filter).subscribe(data => {
+        this.orders = data;
+        this.loading = false;
+        resolve(data);
+      });
     });
-  
   }
   getProviderFutureOrdersCount() {
     let filter = {};
     filter = this.setFilterForApi();
-    this.subs.sink=this.providerservices.getProviderFutureOrdersCount(filter).subscribe(data => {
+    this.subs.sink = this.providerservices.getProviderFutureOrdersCount(filter).subscribe(data => {
       this.futureOrdersCount = data;
     });
 
@@ -223,28 +236,30 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   getProviderTodayOrdersCount() {
     let filter = {};
     filter = this.setFilterForApi();
-    this.subs.sink=this.providerservices.getProviderTodayOrdersCount(filter).subscribe(data => {
+    this.subs.sink = this.providerservices.getProviderTodayOrdersCount(filter).subscribe(data => {
       this.todayOrdersCount = data;
-   
-  });
+
+    });
   }
   getProviderHistoryOrders() {
-    this.loading = true;
-    let filter = {};
-    filter = this.setFilterForApi();
-    this.subs.sink=this.providerservices.getProviderHistoryOrders(filter).subscribe(data => {
-      this.historyOrders = data;
-      this.loading = false;
-   
-  });
+    return new Promise((resolve) => {
+      this.loading = true;
+      let filter = {};
+      filter = this.setFilterForApi();
+      this.subs.sink = this.providerservices.getProviderHistoryOrders(filter).subscribe(data => {
+        this.historyOrders = data;
+        this.loading = false;
+        resolve(data);
+      });
+    });
   }
   getProviderHistoryOrdersCount() {
     let filter = {};
     filter = this.setFilterForApi();
-   this.subs.sink= this.providerservices.getProviderHistoryOrdersCount(filter).subscribe(data => {
+    this.subs.sink = this.providerservices.getProviderHistoryOrdersCount(filter).subscribe(data => {
       this.historyOrdersCount = data;
-    
-  });
+
+    });
   }
   checkOrder(order, index) {
     if (!this.orderSelected[index]) {
@@ -385,7 +400,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     if (this.orderStatuses.length > 0) {
       api_filter['orderStatus-eq'] = this.orderStatuses.toString();
     }
-    if (this.orderModes.length > 0 ) {
+    if (this.orderModes.length > 0) {
       api_filter['orderMode-eq'] = this.orderModes.toString();
     }
     if (this.paymentStatuses.length > 0) {
@@ -412,7 +427,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     return api_filter;
   }
   getDefaultCatalogStatus() {
-   this.subs.sink= this.providerservices.getDefaultCatalogStatuses().subscribe(data => {
+    this.subs.sink = this.providerservices.getDefaultCatalogStatuses().subscribe(data => {
       this.orderStatusFilter = data;
     });
   }
@@ -422,7 +437,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
       this.getProviderTodayOrdersCount();
     }
     if (this.selectedTab === 2) {
-      this.getProviderFutureOrders(); 
+      this.getProviderFutureOrders();
       this.getProviderFutureOrdersCount();
     }
   }
@@ -438,7 +453,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   }
   gotoBill(order) {
     if (this.pos && (order.orderStatus !== 'Cancelled' || (order.orderStatus === 'Cancelled' && order.bill && order.bill.billPaymentStatus !== 'NotPaid'))) {
-     this.subs.sink= this.providerservices.getWaitlistBill(order.uid)
+      this.subs.sink = this.providerservices.getWaitlistBill(order.uid)
         .subscribe(
           data => {
             this.router.navigate(['provider', 'bill', order.uid], { queryParams: { source: 'order', timetype: this.selectedTab } });
@@ -454,7 +469,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   getPaymentTooltip(order) {
     if (order.bill && order.bill.billPaymentStatus) {
       return this.billPaymentStatuses[order.bill.billPaymentStatus];
-    } else if (order.advanceAmountPaid > 0 ) {
+    } else if (order.advanceAmountPaid > 0) {
       return 'Advance amount paid';
     } else {
       return 'Not Paid';
@@ -491,7 +506,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   // }
   getLabel() {
     this.providerLabels = [];
-    this.subs.sink=this.providerservices.getLabelList().subscribe(data => {
+    this.subs.sink = this.providerservices.getLabelList().subscribe(data => {
       this.allLabels = data;
       this.providerLabels = this.allLabels.filter(label => label.status === 'ENABLED');
     });
@@ -721,22 +736,43 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         order_type: phnein,
-        
+
       }
     };
-    this.router.navigate(['provider', 'orders', 'order-wizard'],navigationExtras);
+    this.router.navigate(['provider', 'orders', 'order-wizard'], navigationExtras);
   }
   newwalkInOrder(walkin) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         order_type: walkin,
-        
+
       }
     };
-    this.router.navigate(['provider', 'orders', 'order-wizard'],navigationExtras);
+    this.router.navigate(['provider', 'orders', 'order-wizard'], navigationExtras);
   }
   searchCustomer() {
     // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { appt: true } });
     this.router.navigate(['provider', 'customers', 'find']);
+  }
+  selectViewType(view) {
+    this.selectedType = view;
+    this.groupService.setitemToGroupStorage('orderViewType', this.selectedType);
+    if (this.selectedType === 'calender') {
+      this.setCalenderOrders();
+    } else {
+      this.doSearch();
+    }
+  }
+  setCalenderOrders() {
+    this.getProviderTodayOrders().then(data => {
+      this.totalOrders = [];
+      this.totalOrders = data;
+      this.getProviderFutureOrders().then(data => {
+        this.totalOrders = this.totalOrders.concat(data);
+        this.getProviderHistoryOrders().then(data => {
+          this.totalOrders = this.totalOrders.concat(data);
+        });
+      });
+    });
   }
 }

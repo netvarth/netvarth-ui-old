@@ -29,6 +29,11 @@ export class CustomerBookingDetailsComponent implements OnInit {
   addedHeight;
   provider_label;
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+  customerId;
+  whatsappCountryCode;
+  whatsappNumber;
+  number;
+  email;
   constructor(
     private provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
@@ -48,6 +53,45 @@ export class CustomerBookingDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+    if (this.bookingType === 'appointment') {
+      if (this.waitlist_data.providerConsumer.whatsAppNum) {
+        this.whatsappCountryCode = this.waitlist_data.providerConsumer.whatsAppNum.countryCode;
+        this.whatsappNumber = this.waitlist_data.providerConsumer.whatsAppNum.number;
+      }
+      this.customerId = this.waitlist_data.providerConsumer.id;
+      if (this.waitlist_data.providerConsumer.phoneNo && this.waitlist_data.providerConsumer.phoneNo.trim() !== '') {
+        this.number = this.waitlist_data.providerConsumer.countryCode + ' ' + this.waitlist_data.providerConsumer.phoneNo;
+      }
+      this.email = this.waitlist_data.providerConsumer.email_verified;
+    } else if (this.bookingType === 'checkin') {
+      if (this.waitlist_data.waitlistingFor[0].whatsAppNum) {
+        this.whatsappCountryCode = this.waitlist_data.waitlistingFor[0].whatsAppNum.countryCode;
+        this.whatsappNumber = this.waitlist_data.waitlistingFor[0].whatsAppNum.number;
+      }
+      this.customerId = this.waitlist_data.consumer.id;
+      if (this.waitlist_data.consumer.phoneNo && this.waitlist_data.consumer.phoneNo.trim() !== '') {
+        this.number = this.waitlist_data.consumer.countryCode + ' ' + this.waitlist_data.consumer.phoneNo;
+      }
+      this.email = this.waitlist_data.consumer.email_verified;
+    } else if (this.bookingType === 'donation') {
+      if (this.waitlist_data.consumer.userProfile.whatsAppNum) {
+        this.whatsappCountryCode = this.waitlist_data.consumer.userProfile.whatsAppNum.countryCode;
+        this.whatsappNumber = this.waitlist_data.consumer.userProfile.whatsAppNum.number;
+      }
+      this.getCustomers(this.waitlist_data.consumer.id);
+    }
+  }
+  getCustomers(customerId) {
+    const filter = { 'jaldeeConsumer-eq': customerId };
+    this.provider_services.getProviderCustomers(filter)
+      .subscribe(
+        (data: any) => {
+          this.customerId = data[0].id;
+          if (data[0].phoneNo && data[0].phoneNo.trim() !== '') {
+            this.number = data[0].countryCode + ' ' + data[0].phoneNo;
+          }
+          this.email = data[0].email;
+        });
   }
   savePrivateNote() {
     if (this.privateNote.trim() === '') {
@@ -179,7 +223,11 @@ export class CustomerBookingDetailsComponent implements OnInit {
       panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
       disableClose: true,
       data: {
-        waitlist: this.waitlist_data,
+        whatsappCountryCode: this.whatsappCountryCode,
+        whatsappNumber: this.whatsappNumber,
+        number: this.number,
+        customerId: this.customerId,
+        email: this.email,
         type: this.bookingType
       }
     });

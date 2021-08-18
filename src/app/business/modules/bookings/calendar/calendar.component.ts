@@ -40,6 +40,7 @@ export class CalendarComponent implements OnInit {
   events: CalendarEvent[] = [];
   activeDayIsOpen: boolean = true;
   @Input() waitlists;
+  @Input() source;
   customer_label = '';
   constructor(private router: Router,
     private dateTimeProcessor: DateTimeProcessor,
@@ -61,7 +62,11 @@ export class CalendarComponent implements OnInit {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    this.router.navigate(['provider', 'bookings', 'details'], { queryParams: { uid: event.meta.uid, timetype: event.meta.timeType, type: 'appointment' } });
+    if (this.source === 'order') {
+      this.router.navigate(['provider', 'orders', event.meta.uid]);
+    } else {
+      this.router.navigate(['provider', 'bookings', 'details'], { queryParams: { uid: event.meta.uid, timetype: event.meta.timeType, type: 'appointment' } });
+    }
   }
 
   setView(view: CalendarView) {
@@ -74,23 +79,40 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.waitlists) {
-      for (let appt of this.waitlists) {
-        let name;
-        if (appt.appmtFor[0].firstName || appt.appmtFor[0].lastName) {
-          name = appt.appmtFor[0].firstName + ' ' + appt.appmtFor[0].lastName;
-        } else {
-          name = this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + ' id: ' + appt.appmtFor[0].memberJaldeeId;
+      for (let waitlist of this.waitlists) {
+        if (this.source === 'appt') {
+          let name;
+          if (waitlist.appmtFor[0].firstName || waitlist.appmtFor[0].lastName) {
+            name = waitlist.appmtFor[0].firstName + ' ' + waitlist.appmtFor[0].lastName;
+          } else {
+            name = this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + ' id: ' + waitlist.appmtFor[0].memberJaldeeId;
+          }
+          this.events.push({
+            start: addHours(addMinutes(startOfDay(new Date(waitlist.appmtDate)), this.getTime(waitlist.appmtTime, 'start', 'minute')), this.getTime(waitlist.appmtTime, 'start', 'hour')),
+            end: addHours(addMinutes(startOfDay(new Date(waitlist.appmtDate)), this.getTime(waitlist.appmtTime, 'end', 'minute')), this.getTime(waitlist.appmtTime, 'end', 'hour')),
+            title: '<div class="calender-name">' + name + '</div><div>' + this.getSingleTime(waitlist.appmtTime) + '</div>',
+            color: colors.red,
+            meta: {
+              uid: waitlist.uid,
+              timeType: waitlist.type
+            },
+          });
+        } else if (this.source === 'order') {
+          let name;
+          if (waitlist.orderFor.firstName || waitlist.orderFor.lastName) {
+            name = waitlist.orderFor.firstName + ' ' + waitlist.orderFor.lastName;
+          } else {
+            name = this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + ' id: ' + waitlist.orderFor.jaldeeId;
+          }
+          this.events.push({
+            start: startOfDay(new Date(waitlist.orderDate)),
+            title: '<div class="calender-name">' + name + '</div>',
+            color: colors.red,
+            meta: {
+              uid: waitlist.uid
+            },
+          });
         }
-        this.events.push({
-          start: addHours(addMinutes(startOfDay(new Date(appt.appmtDate)), this.getTime(appt.appmtTime, 'start', 'minute')), this.getTime(appt.appmtTime, 'start', 'hour')),
-          end: addHours(addMinutes(startOfDay(new Date(appt.appmtDate)), this.getTime(appt.appmtTime, 'end', 'minute')), this.getTime(appt.appmtTime, 'end', 'hour')),
-          title: '<div class="calender-name">' + name + '</div><div>' + this.getSingleTime(appt.appmtTime) + '</div>',
-          color: colors.red,
-          meta: {
-            uid: appt.uid,
-            timeType: appt.type
-          },
-        })
       }
     }
   }

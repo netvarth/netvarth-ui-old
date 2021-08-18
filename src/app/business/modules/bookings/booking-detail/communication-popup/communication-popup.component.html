@@ -4,7 +4,7 @@
       aria-hidden="true"></i></button>
 </h1>
 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 communication">
-  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 comm-box">
+  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 comm-box" *ngIf="data.number || data.email">
     <div class="">
       <div class="disp-flex">
         <div class="flx_8 video-head">
@@ -37,7 +37,7 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 comm-box mgn-up-20">
+  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 comm-box mgn-up-20" *ngIf="data.whatsappNumber">
     <div class="disp-flex mgn-bt-10">
       <div class="flx_8 whsp-head">
         <span class="wtsapvid-icon"></span>
@@ -48,7 +48,7 @@
     </div>
     <div class="disp-flex whatsp">
       <label> Whatsapp # : <span class="bold">
-          {{whatsappCountryCode}} {{whatsappNumber}}</span></label>
+          {{data.whatsappCountryCode}} {{data.whatsappNumber}}</span></label>
     </div>
     <ul>
       <li>Your number will be revealed to your patient through this
@@ -68,14 +68,19 @@
       </button>
     </div>
   </div>
-  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 comm-box mgn-up-20">
-    <div class="disp-flex" (click)="voiceCallConfirm()">
+  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 comm-box mgn-up-20" *ngIf="data.number">
+    <div class="disp-flex">
       <div class="flx_8 whsp-head">
         <span class="phon-icon"></span>
       </div>
       <div class="videoname">
         Voice Call
       </div>
+    </div>
+    <div class="startBt">
+      <button type="button" class="action-button" (click)="voiceCallConfirm()">
+        Launch Meeting
+      </button>
     </div>
   </div>
 </div>

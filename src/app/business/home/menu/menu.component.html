@@ -29,50 +29,50 @@
       <ul class="menu-nav">
 
         <!-- Bookings -->
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu bookings-menu"
-          (click)="showMenuSection()">
+        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu bookings-menu collapsed"
+          (click)="showMenuSection()" data-toggle="collapse" data-target="#subSec"
+          aria-expanded="false">
           <a routerLink="bookings" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
               class="svg-icon menu-icon">
               <i class="fa fa-check-circle"></i>
             </span><span class="menu-text">
               Bookings
-            </span><i class="menu-arrow collapsed" data-toggle="collapse" data-target="#subSec"
-              aria-expanded="false"></i></a>
-            <div class="subsection collapse" id="subSec">
-              <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
-                (click)="showMenuSection()" *ngIf="apptstatus">
-                <a routerLink="bookings/appointments" routerLinkActive="active-menu" class="menu-link menu-toggle"
-                  [matTooltip]="'Appointments'">
-                  <span class="svg-icon menu-icon">
-                    <i class="fa fa-calendar"></i>
-                  </span><span class="menu-text">Appointments</span></a>
-              </li>
-              <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
-                (click)="showMenuSection()" *ngIf="checkinStatus">
-                <a routerLink="bookings/check-ins" routerLinkActive="active-menu" class="menu-link menu-toggle"
-                  [matTooltip]="showToken ? 'Tokens' : 'Check-ins'"><span class="svg-icon menu-icon">
-                    <i class="fa fa-check-circle"></i>
-                  </span><span class="menu-text">
-                    <ng-container *ngIf="showToken"> Tokens</ng-container>
-                    <ng-container *ngIf="!showToken"> Check-ins</ng-container>
-                  </span></a>
-              </li>
-              <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
-                (click)="showMenuSection()" *ngIf="orderstatus">
-                <a routerLink="orders" routerLinkActive="active-menu" class="menu-link menu-toggle"
-                  [matTooltip]="'Orders'"><span class="svg-icon menu-icon">
-                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                  </span><span class="menu-text">Orders</span></a>
-              </li>
-              <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
-                (click)="showMenuSection()" *ngIf="donationstatus">
-                <a routerLink="donations" routerLinkActive="active-menu" class="menu-link menu-toggle"
-                  [matTooltip]="'Donations'"><span class="svg-icon menu-icon">
-                    <i class="fa fa-stack fa-inr"></i>
-                  </span><span class="menu-text">Donations</span></a>
-              </li>
-            </div>
+            </span><i class="menu-arrow"></i></a>
         </li>
+        <div class="subsection collapse" id="subSec">
+          <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
+            (click)="showMenuSection()" *ngIf="apptstatus">
+            <a routerLink="bookings/appointments" routerLinkActive="active-menu" class="menu-link menu-toggle"
+              [matTooltip]="'Appointments'">
+              <span class="svg-icon menu-icon">
+                <i class="fa fa-calendar"></i>
+              </span><span class="menu-text">Appointments</span></a>
+          </li>
+          <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
+            (click)="showMenuSection()" *ngIf="checkinStatus">
+            <a routerLink="bookings/checkins" routerLinkActive="active-menu" class="menu-link menu-toggle"
+              [matTooltip]="showToken ? 'Tokens' : 'Check-ins'"><span class="svg-icon menu-icon">
+                <i class="fa fa-check-circle"></i>
+              </span><span class="menu-text">
+                <ng-container *ngIf="showToken"> Tokens</ng-container>
+                <ng-container *ngIf="!showToken"> Check-ins</ng-container>
+              </span></a>
+          </li>
+          <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
+            (click)="showMenuSection()" *ngIf="orderstatus">
+            <a routerLink="orders" routerLinkActive="active-menu" class="menu-link menu-toggle"
+              [matTooltip]="'Orders'"><span class="svg-icon menu-icon">
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+              </span><span class="menu-text">Orders</span></a>
+          </li>
+          <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
+            (click)="showMenuSection()" *ngIf="donationstatus">
+            <a routerLink="donations" routerLinkActive="active-menu" class="menu-link menu-toggle"
+              [matTooltip]="'Donations'"><span class="svg-icon menu-icon">
+                <i class="fa fa-stack fa-inr"></i>
+              </span><span class="menu-text">Donations</span></a>
+          </li>
+        </div>
 
 
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"

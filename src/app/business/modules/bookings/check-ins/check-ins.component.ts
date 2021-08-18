@@ -12,6 +12,7 @@ import { projectConstants } from '../../../../app.component';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-check-ins',
@@ -122,7 +123,8 @@ export class CheckinsComponent implements OnInit {
     private dateTimeProcessor: DateTimeProcessor,
     private lStorageService: LocalStorageService,
     private groupService: GroupStorageService,
-    private shared_services: SharedServices) {
+    private shared_services: SharedServices,
+    private snackbarService: SnackbarService) {
     this.activated_route.queryParams.subscribe(params => {
       if (params.providerId) {
         this.providerId = JSON.parse(params.providerId);
@@ -153,6 +155,9 @@ export class CheckinsComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    if (this.groupService.getitemFromGroupStorage('pdtyp')) {
+      this.timeType = this.groupService.getitemFromGroupStorage('pdtyp');
+    }
     this.setSystemDate();
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -300,7 +305,8 @@ export class CheckinsComponent implements OnInit {
     });
   }
   handleWaitlistType(type) {
-    this.timeType = type;
+    this.timeType = type; 
+    this.groupService.setitemToGroupStorage('pdtyp', this.timeType);
     this.clearFilter();
     this.hideFilterSidebar();
   }
@@ -597,9 +603,9 @@ export class CheckinsComponent implements OnInit {
     this.filter_sidebar = true;
     this.shared_functions.setFilter();
   }
-  checkinClicked() {
+  checkinClicked(type) {
     this.router.navigate(['provider', 'check-ins', 'add'],
-      { queryParams: { checkinType: 'WALK_IN_CHECKIN' } });
+      { queryParams: { checkinType: type } });
   }
   goBack() {
     this.location.back();
@@ -659,5 +665,13 @@ export class CheckinsComponent implements OnInit {
     this.selected_location = location;
     this.groupService.setitemToGroupStorage('dashboardLocation', this.selected_location);
     this.doSearch();
+  }  
+  showAdjustDelay() {
+    if (this.queues && this.queues.length === 0) {
+      this.snackbarService.openSnackBar('Delay can be applied only for active queues', { 'panelClass': 'snackbarerror' });
+      return false;
+    } else {
+      this.router.navigate(['provider', 'check-ins', 'adjustdelay']);
+    }
   }
 }

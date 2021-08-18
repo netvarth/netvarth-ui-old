@@ -47,13 +47,26 @@
                 <div class="navbar-custom-menu width100pc">
                     <ul class="nav navbar-nav width100pc mgn-bt-20">
                         <li class="dropdown notifications-menu">
-                            <a (click)="checkinClicked()"
+                            <a (click)="checkinClicked('WALK_IN_CHECKIN')"
                                 class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
                                 data-toggle="dropdown">
                                 <i class="fa fa-plus"></i>
                                 <span> {{(waitlistMgrSettings && waitlistMgrSettings.showTokenId) ? 'Token' :
                                     'Check-in'}}</span>
                             </a>
+                        </li>
+                        <li class="dropdown notifications-menu">
+                            <a (click)="checkinClicked('PHONE_CHECKIN')"
+                                class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
+                                data-toggle="dropdown">
+                                <i class="fa fa-phone" aria-hidden="true"></i>
+                                Phone in
+                            </a>
+                        </li>
+                        <li class="dropdown notifications-menu" *ngIf="timeType ==1">
+                            <a (click)="showAdjustDelay()"
+                                class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
+                                data-toggle="dropdown"><i class="fa fa-hourglass-start"></i> Delay</a>
                         </li>
                     </ul>
                 </div>

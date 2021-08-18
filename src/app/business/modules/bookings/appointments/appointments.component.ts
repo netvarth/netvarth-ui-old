@@ -149,6 +149,9 @@ export class AppointmentsComponent implements OnInit {
   }
   ngOnInit(): void {
     this.setSystemDate();
+    if (this.groupService.getitemFromGroupStorage('apptType')) {
+      this.timeType = this.groupService.getitemFromGroupStorage('apptType');
+    }
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.customerIdTooltip = this.customer_label + ' Id';
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
@@ -603,12 +606,13 @@ export class AppointmentsComponent implements OnInit {
   }
   handleApptSelectionType(type) {
     this.timeType = type;
+    this.groupService.setitemToGroupStorage('apptType', this.timeType);
     this.clearFilter();
     this.hideFilterSidebar();
   }
-  apptClicked() {
+  apptClicked(type) {
     this.router.navigate(['provider', 'appointments', 'appointment'],
-      { queryParams: { checkinType: 'WALK_IN_APPOINTMENT' } });
+      { queryParams: { checkinType: type } });
   }
   goBack() {
     this.location.back();

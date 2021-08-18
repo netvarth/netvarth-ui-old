@@ -60,7 +60,7 @@ a, .aside-menu i {
     transform: rotate(90deg) !important;
     flex: none !important;
 }
-.bookings-menu i.menu-arrow.collapsed {
+.bookings-menu.collapsed i.menu-arrow {
     transition: 0.70s !important;
     transform: rotate(0deg) !important;
 }

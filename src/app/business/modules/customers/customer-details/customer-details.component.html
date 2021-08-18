@@ -732,7 +732,7 @@
                                 <i class="fa fa-map-marker icon"></i>
                                 <span class="value">{{customer[0].address}}</span>
                             </div>
-                            <button class="btn create-prescription-button"
+                            <button class="btn create-prescription-button" *ngIf="whatsappNumber || number || email"
                                 (click)="showCommunications()">Communication</button>
                         </div>
                     </div>

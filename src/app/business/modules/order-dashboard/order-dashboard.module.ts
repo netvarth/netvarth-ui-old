@@ -21,6 +21,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ContactInfoComponent } from './order-wizard/contact-info/contact-info.component';
+import { BookingCalendarModule } from '../bookings/calendar/calendar.module';
 
 @NgModule({
   declarations: [
@@ -55,11 +56,11 @@ import { ContactInfoComponent } from './order-wizard/contact-info/contact-info.c
     ModalGalleryModule,
     MatDialogModule,
     MatChipsModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    BookingCalendarModule
   ],
   exports: [
     OrderDashboardComponent
-
   ]
 })
 export class OrderDashboardModule { }

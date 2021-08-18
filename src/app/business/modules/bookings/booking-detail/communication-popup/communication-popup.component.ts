@@ -18,10 +18,6 @@ export class CommunicationPopupComponent implements OnInit {
   meet_data: any = [];
   providerMeetingUrl;
   id;
-  whatsappNumber;
-  whatsappCountryCode;
-  customerId;
-  number;
   constructor(public dialogRef: MatDialogRef<CommunicationPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private wordProcessor: WordProcessor,
@@ -29,27 +25,6 @@ export class CommunicationPopupComponent implements OnInit {
     private router: Router, private dialog: MatDialog,
     private snackbarService: SnackbarService) {
     console.log(this.data);
-    if (this.data.type === 'appointment') {
-      this.whatsappCountryCode = this.data.waitlist.providerConsumer.whatsAppNum.countryCode;
-      this.whatsappNumber = this.data.waitlist.providerConsumer.whatsAppNum.number;
-      this.customerId = this.data.waitlist.providerConsumer.id;
-      this.number = this.data.waitlist.providerConsumer.countryCode + ' ' + this.data.waitlist.providerConsumer.phoneNo;
-    } else if (this.data.type === 'checkin') {
-      this.whatsappCountryCode = this.data.waitlist.waitlistingFor[0].whatsAppNum.countryCode;
-      this.whatsappNumber = this.data.waitlist.waitlistingFor[0].whatsAppNum.number;
-      this.customerId = this.data.waitlist.consumer.id;
-      this.number = this.data.waitlist.consumer.countryCode + ' ' + this.data.waitlist.consumer.phoneNo;
-    } else if (this.data.type === 'donation') {
-      this.whatsappCountryCode = this.data.waitlist.consumer.userProfile.whatsAppNum.countryCode;
-      this.whatsappNumber = this.data.waitlist.consumer.userProfile.whatsAppNum.number;
-      this.getCustomers(this.data.waitlist.consumer.id);
-    } else {
-      this.whatsappCountryCode = this.data.waitlist.whatsAppNum.countryCode;
-      this.whatsappNumber = this.data.waitlist.whatsAppNum.number;
-      this.customerId = this.data.waitlist.id;
-      this.number = this.data.waitlist.countryCode + ' ' + this.data.waitlist.phoneNo;
-    }
-   
   }
   ngOnInit(): void {
     this.notSupported = this.wordProcessor.getProjectMesssages('WATSAPP_NOT_SUPPORTED');
@@ -78,15 +53,6 @@ export class CommunicationPopupComponent implements OnInit {
     }
     this.getJaldeeVideoCredits();
   }
-  getCustomers(customerId) {
-    const filter = { 'jaldeeConsumer-eq': customerId };
-    this.provider_services.getProviderCustomers(filter)
-      .subscribe(
-        (data: any) => {
-          this.customerId = data[0].id;
-          this.number = data[0].countryCode + ' ' + data[0].phoneNo;
-        });
-  }
   dialogClose() {
     this.dialogRef.close();
   }
@@ -99,18 +65,18 @@ export class CommunicationPopupComponent implements OnInit {
       );
   }
   amReady() {
-    const path = 'https://wa.me/' + this.whatsappNumber;
+    const path = 'https://wa.me/' + this.data.whatsappNumber;
     window.open(path, '_blank');
   }
   gotoMeet() {
-    this.provider_services.meetReady(this.customerId).subscribe(data => {
+    this.provider_services.meetReady(this.data.customerId).subscribe(data => {
       this.meet_data = data;
       this.providerMeetingUrl = this.meet_data.providerMeetingUrl;
       const retcheckarr = this.providerMeetingUrl.split('/');
       this.id = retcheckarr[4]
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          custId: this.customerId,
+          custId: this.data.customerId,
         }
       };
       const url = this.router.serializeUrl(
@@ -129,8 +95,8 @@ export class CommunicationPopupComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        customerId: this.customerId,
-        customer: this.number,
+        customerId: this.data.customerId,
+        customer: this.data.number,
       }
     });
   }

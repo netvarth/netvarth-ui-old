@@ -46,10 +46,19 @@
         <div class="navbar-custom-menu width100pc">
           <ul class="nav navbar-nav width100pc mgn-bt-20">
             <li class="dropdown notifications-menu">
-              <a (click)="apptClicked()" class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
+              <a (click)="apptClicked('WALK_IN_APPOINTMENT')"
+                class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
                 data-toggle="dropdown">
                 <i class="fa fa-plus"></i>
                 <span>Appointment</span>
+              </a>
+            </li>
+            <li class="dropdown notifications-menu">
+              <a (click)="apptClicked('PHONE_IN_APPOINTMENT')"
+                class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
+                data-toggle="dropdown">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                Phone in
               </a>
             </li>
           </ul>
@@ -449,7 +458,7 @@
       </app-records-datagrid>
     </div>
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20" *ngIf="!loading && selectedType=='calender'">
-      <app-calendar [waitlists]="totalAppts"></app-calendar>
+      <app-calendar [waitlists]="totalAppts" [source]="'appt'"></app-calendar>
     </div>
   </div>
 </section>

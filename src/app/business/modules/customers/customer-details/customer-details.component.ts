@@ -122,6 +122,9 @@ export class CustomerDetailComponent implements OnInit {
     showRejoinBt: boolean;
     consumerBills: any = [];
     small_device_display = false;
+    whatsappCountryCode;
+    whatsappNumber;
+    number;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -200,7 +203,15 @@ export class CustomerDetailComponent implements OnInit {
         return new Promise(function (resolve, reject) {
             _this.provider_services.getProviderCustomers(filter)
                 .subscribe(
-                    data => {
+                    (data: any) => {
+                        if (data[0].whatsAppNum) {
+                            _this.whatsappCountryCode = data[0].whatsAppNum.countryCode;
+                            _this.whatsappNumber = data[0].whatsAppNum.number;
+                          }
+                          if (data[0].phoneNo && data[0].phoneNo.trim() !== '') {
+                            _this.number = data[0].countryCode + ' ' + data[0].phoneNo;
+                          }
+                          _this.email = data[0].email;
                         resolve(data);
                     },
                     () => {
@@ -592,13 +603,17 @@ export class CustomerDetailComponent implements OnInit {
     }
     showCommunications() {
         this.dialog.open(CommunicationPopupComponent, {
-          width: '50%',
-          panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
-          disableClose: true,
-          data: {
-            waitlist: this.customer[0],
-            type: 'customer'
-          }
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+            disableClose: true,
+            data: {
+                whatsappCountryCode: this.whatsappCountryCode,
+                whatsappNumber: this.whatsappNumber,
+                number: this.number,
+                customerId: this.customerId,
+                email: this.email,
+                type: 'customer'
+            }
         });
-      }
+    }
 }

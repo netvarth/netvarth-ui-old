@@ -18,14 +18,14 @@
     <div class="col-md-12 no-padding-small" [class.details-inbox]="source"
         [class.details-opacity]="!loading && source && (!customer || status=='blocked')">
         <div class="card p0">
-            <div class="bg-transparent collapsed" [ngStyle]="{'padding': source && screenWidth <= 767 ? '20px 10px' : '8px 10px'}"
-                [attr.data-toggle]="source && screenWidth <= 767 ? 'collapse' : ''" data-target="#messages" aria-expanded="false"
-                (click)="isCollapsed = !isCollapsed">
+            <div class="bg-transparent collapsed" [ngStyle]="{'padding': screenWidth <= 767 ? '20px 10px' : '8px 10px'}"
+                [attr.data-toggle]="screenWidth <= 767 ? 'collapse' : ''" data-target="#messages" aria-expanded="false"
+                (click)="isCollapsed = !isCollapsed" *ngIf="source">
                 <div>Messages</div>
                 <div class="mgn-lt-auto">
                     <i class="fa fa-external-link pointer-cursor mgn-rt-20" (click)="viewInbox()" aria-hidden="true"
                         *ngIf="selectedUserMessages && selectedUserMessages.length > 0"></i>
-                    <i class="fa fa-angle-down"></i>
+                    <i class="fa fa-angle-down" *ngIf="screenWidth <= 767"></i>
                 </div>
             </div>
             <app-common-innerloading-spinner *ngIf="!isCollapsed && loading"></app-common-innerloading-spinner>

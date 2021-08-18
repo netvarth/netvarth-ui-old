@@ -51,7 +51,15 @@
       </div>
     </div>
   </div>
-  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mgn-up-20 orderlist">
+  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+    <div class="pull-right viewtypes">
+      View: <i class="fa fa-list-ul mgn-rt-5 pointer-cursor" [class.selectedView]="selectedType=='card'"
+        (click)="selectViewType('card')" [matTooltip]="'Card View'"></i>
+      <i class="fa fa-calendar pointer-cursor" [class.selectedView]="selectedType=='calender'"
+        (click)="selectViewType('calender')" [matTooltip]="'Calender View'"></i>
+    </div>
+  </div>
+  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mgn-up-20 orderlist" *ngIf="selectedType=='card'">
     <mat-tab-group (selectedTabChange)="tabChange($event)" [selectedIndex]="selectedTab - 1">
       <mat-tab label="Today ({{todayOrdersCount}})">
         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
@@ -1614,5 +1622,9 @@
       </mat-tab>
     </mat-tab-group>
     <div class="clearfix"></div>
+  </div>
+  <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20 mgn-bt-20" *ngIf="selectedType=='calender'">
+    <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+    <app-calendar [waitlists]="totalOrders" [source]="'order'" *ngIf="!loading"></app-calendar>
   </div>
 </div>
