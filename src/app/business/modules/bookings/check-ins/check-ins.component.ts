@@ -149,7 +149,7 @@ export class CheckinsComponent implements OnInit {
           break;
       }
     });
-    this.selected_location = this.groupService.getitemFromGroupStorage('dashboardLocation');
+    this.selected_location = this.groupService.getitemFromGroupStorage('loc_id');
   }
   ngOnDestroy() {
     if (this.subscription) {
@@ -638,7 +638,7 @@ export class CheckinsComponent implements OnInit {
     this.provider_services.getProviderLocations()
       .subscribe((data: any) => {
         this.locations = data.filter(location => location.status === 'ACTIVE');
-        if (!this.groupService.getitemFromGroupStorage('dashboardLocation')) {
+        if (!this.groupService.getitemFromGroupStorage('loc_id')) {
           this.selected_location = this.locations[0];
         }
       });
@@ -675,7 +675,7 @@ export class CheckinsComponent implements OnInit {
   }
   onChangeLocationSelect(location) {
     this.selected_location = location;
-    this.groupService.setitemToGroupStorage('dashboardLocation', this.selected_location);
+    this.groupService.setitemToGroupStorage('loc_id', this.selected_location);
     this.doSearch();
   }
   showAdjustDelay() {

@@ -2,12 +2,13 @@
     <div class="container-fluid d-flex flex-wrap flex-sm-nowrap">
         <div class="d-flex flex-column flex-wrap mr-2">
             <h1 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                <img class="blogo" [src]="getUserImg()">
-                <b>{{bdetails.bn}}</b>
+                <img class="blogo" [src]="blogo">
+                <b>{{bname}}</b>
             </h1>
         </div>
     </div>
-    <div class="pull-right">
+    <div class="pull-right"
+        *ngIf="locations.length > 0 && (settings.appointment || settings.waitlist || settings.donationFundRaising)">
         <nav class="navbar navbar-static-top no-margin" role="navigation">
             <div class="navbar-custom-menu width100pc">
                 <ul class="nav navbar-nav width100pc">

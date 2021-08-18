@@ -7,7 +7,8 @@
         </h5>
     </div>
 </section>
-<div class="subheader header-container subheader-solid" *ngIf="qParams.userid">
+<div class="subheader header-container subheader-solid"
+    *ngIf="qParams.userid && locations.length > 0 && (settings.appointment || settings.waitlist || settings.donationFundRaising)">
     <ng-template [ngTemplateOutlet]="locSec"></ng-template>
 </div>
 <div class="subheader header-container subheader-solid" *ngIf="!qParams.userid">
@@ -22,7 +23,8 @@
     <ng-template [ngTemplateOutlet]="locSec"></ng-template>
 </div>
 <ng-template #locSec>
-    <div class="mgn-lt-auto">
+    <div class="mgn-lt-auto"
+        *ngIf="locations.length > 0 && (settings.appointment || settings.waitlist || settings.donationFundRaising)">
         <nav class="navbar navbar-static-top no-margin" role="navigation">
             <div class="navbar-custom-menu width100pc">
                 <ul class="nav navbar-nav width100pc">

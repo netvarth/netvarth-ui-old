@@ -315,7 +315,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.onResize();
     if (this.selectedCustomer !== '') {
       this.selectedUserMessages = (this.groupedMsgs[this.selectedCustomer]) ? this.groupedMsgs[this.selectedCustomer] : [];
-      if (!this.customerId) {
+      if (!this.customerId && this.selectedUserMessages[0]) {
         const customerDetails = this.customers.filter(customer => customer.jaldeeConsumer === this.selectedUserMessages[0].accountId);
         if (customerDetails[0]) {
           this.customerId = customerDetails[0].id;
@@ -632,7 +632,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
       if (this.selectedUserMessages[0] && this.selectedUserMessages[0].providerId !== 0) {
         filter['provider'] = this.selectedUserMessages[0].providerId;
       }
-      this.shared_service.addProvidertoConsumerNote(this.selectedUserMessages[0].accountId,
+      // 5555689565
+      const customerId = (this.customer) ? this.customer : this.selectedUserMessages[0].accountId;
+      this.shared_service.addProvidertoConsumerNote(customerId,
         dataToSend, filter)
         .subscribe(
           () => {

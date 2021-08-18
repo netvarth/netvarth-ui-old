@@ -77,7 +77,7 @@ export class BookingDashboardComponent implements OnInit {
       this.newWaitlists = this.todayWaitlists.concat(this.futureWaitlists);
       this.newAppts = this.todayAppts.concat(this.futureAppts);
     });
-    this.selected_location = this.groupService.getitemFromGroupStorage('dashboardLocation');
+    this.selected_location = this.groupService.getitemFromGroupStorage('loc_id');
   }
   ngOnDestroy() {
     if (this.subscription) {
@@ -304,8 +304,9 @@ export class BookingDashboardComponent implements OnInit {
         (data: any) => {
           const locations = data;
           this.locations = locations.filter(location => location.status === 'ACTIVE');
-          if (!this.groupService.getitemFromGroupStorage('dashboardLocation')) {
+          if (!this.groupService.getitemFromGroupStorage('loc_id')) {
             this.selected_location = this.locations[0];
+            this.groupService.setitemToGroupStorage('loc_id', this.selected_location);
           }
         });
   }
@@ -314,7 +315,7 @@ export class BookingDashboardComponent implements OnInit {
   }
   onChangeLocationSelect(location) {
     this.selected_location = location;
-    this.groupService.setitemToGroupStorage('dashboardLocation', this.selected_location);
+    this.groupService.setitemToGroupStorage('loc_id', this.selected_location);
     this.initDashboard();
     if (this.userData.accountType !== 'BRANCH') {
       this.getDonations();

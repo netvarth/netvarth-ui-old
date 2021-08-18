@@ -30,7 +30,8 @@
 
         <!-- Bookings -->
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu bookings-menu collapsed"
-          (click)="showMenuSection()" data-toggle="collapse" data-target="#subSec"
+          (click)="showMenuSection()" data-target="#subSec"
+          [attr.data-toggle]="(apptstatus || checkinStatus || orderstatus || donationstatus) ? 'collapse' : ''"
           aria-expanded="false">
           <a routerLink="bookings" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
               class="svg-icon menu-icon">

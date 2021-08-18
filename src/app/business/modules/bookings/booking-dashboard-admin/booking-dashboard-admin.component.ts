@@ -38,6 +38,8 @@ export class BookingDashboardAdminComponent implements OnInit {
   bdetails;
   locations: any = [];
   selected_location;
+  bname;
+  blogo;
   constructor(private provider_services: ProviderServices,
     private groupService: GroupStorageService,
     private shared_functions: SharedFunctions,
@@ -61,7 +63,7 @@ export class BookingDashboardAdminComponent implements OnInit {
       this.newWaitlists = this.todayWaitlists.concat(this.futureWaitlists);
       this.newAppts = this.todayAppts.concat(this.futureAppts);
     });
-    this.selected_location = this.groupService.getitemFromGroupStorage('dashboardLocation');
+    this.selected_location = this.groupService.getitemFromGroupStorage('loc_id');
   }
   ngOnDestroy() {
     if (this.subscription) {
@@ -72,6 +74,8 @@ export class BookingDashboardAdminComponent implements OnInit {
     this.settings = this.groupService.getitemFromGroupStorage('settings');
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
+    this.bname = this.bdetails.bn || 'User';
+    this.blogo = this.bdetails.logo || 'assets/images/img-null.svg';
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.getCustomers();
@@ -238,20 +242,15 @@ export class BookingDashboardAdminComponent implements OnInit {
           this.donations = data;
         });
   }
-  getUserImg() {
-    if (this.bdetails && this.bdetails.logo) {
-      return this.bdetails.logo;
-    }
-    return 'assets/images/Asset1@300x(1).png';
-  }
   getProviderLocations() {
     this.provider_services.getProviderLocations()
       .subscribe(
         (data: any) => {
           const locations = data;
           this.locations = locations.filter(location => location.status === 'ACTIVE');
-          if (!this.groupService.getitemFromGroupStorage('dashboardLocation')) {
+          if (!this.groupService.getitemFromGroupStorage('loc_id')) {
             this.selected_location = this.locations[0];
+            this.groupService.setitemToGroupStorage('loc_id', this.selected_location);
           }
         });
   }
@@ -260,7 +259,7 @@ export class BookingDashboardAdminComponent implements OnInit {
   }
   onChangeLocationSelect(location) {
     this.selected_location = location;
-    this.groupService.setitemToGroupStorage('dashboardLocation', this.selected_location);
+    this.groupService.setitemToGroupStorage('loc_id', this.selected_location);
     this.initDashboard();
     this.getDonations();
   }
