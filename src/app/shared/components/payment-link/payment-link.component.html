@@ -33,9 +33,20 @@
                                                     style="font-size: -webkit-xxx-large; font-weight: 400;">
                                                     {{this.amountDue | currency:'&#8377; '}}
                                                 </h2><br>
-                                                <h2 class="textcenter"><button class="pay" (click)="pay()">
+                                                <h2 class="textcenter">
+                                                    <button class="pay" (click)="pay()">
                                                         <h6 style="padding-top: 10px;">PAY</h6>
-                                                    </button></h2>
+                                                    </button>
+                                                    <!-- <div class="paymentdiv" >
+                                                        
+                                                        <span type="button" class="razorpay-icon paymenticons"  appPreventDoubleClick (click)="pay()" id="stepThreeConfirmButton"  >
+                                                           
+                                                        </span>&nbsp;&nbsp;
+                                                        <span type="button" class="paytm-icon paymenticons" appPreventDoubleClick (click)="pay('paytm')" id="stepThreeConfirmButton" >
+                                                           
+                                                        </span>
+                                                    </div> -->
+                                                </h2>
                                             </li>
                                             <li>
                                                 <a class="learnmore-pointer" (click)="billview()">

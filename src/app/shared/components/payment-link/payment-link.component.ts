@@ -10,10 +10,13 @@ import { WindowRefService } from '../../services/windowRef.service';
 import { Razorpaymodel } from '../razorpay/razorpay.model';
 import { WordProcessor } from '../../services/word-processor.service';
 import { GroupStorageService } from '../../services/group-storage.service';
+import { PaytmService } from '../../services/paytm.service';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
   'selector': 'app-payment-link',
-  'templateUrl': './payment-link.component.html'
+  'templateUrl': './payment-link.component.html',
+  'styleUrls': ['./payment-link.component.css']
 })
 
 export class PaymentLinkComponent implements OnInit {
@@ -124,6 +127,7 @@ export class PaymentLinkComponent implements OnInit {
     public sharedfunctionObj: SharedFunctions,
     public sharedServices: SharedServices,
     public razorpayService: RazorpayService,
+    private paytmService: PaytmService,
     public prefillmodel: RazorpayprefillModel,
     public winRef: WindowRefService,
     private wordProcessor: WordProcessor,
@@ -242,21 +246,31 @@ export class PaymentLinkComponent implements OnInit {
   }
 
 
-  pay() {
+  pay(paytype?) {
+    let paymentWay;
+        if(paytype == 'paytm'){
+            paymentWay = 'PPI';
+        } else {
+            paymentWay = 'DC';
+        }
     const postdata = {
       'uuid': this.genid,
       'amount': this.amountDue,
       'purpose': 'billPayment',
       'source': 'Desktop',
-      'paymentMode': 'DC'
+      'paymentMode': paymentWay
     };
+    
     this.provider_services.linkPayment(postdata)
       .subscribe((data: any) => {
+        console.log(data);
         this.checkIn_type = 'payment_link';
         this.origin = 'consumer';
         this.pGateway = data.paymentGateway;
         if (this.pGateway === 'RAZORPAY') {
           this.paywithRazorpay(data);
+        }else {
+          this.payWithPayTM(data);
         }
       },
         error => {
@@ -286,6 +300,19 @@ export class PaymentLinkComponent implements OnInit {
       }
     );
   }
+  payWithPayTM(pData:any) {
+   // this.loading = true;
+    this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
+}
+transactionCompleted(response) {
+  if(response.STATUS == 'TXN_SUCCESS'){
+    this.paidStatus = 'true';
+  
+  
+} else if(response.STATUS == 'TXN_FAILURE'){
+  this.paidStatus = 'false';
+}
+}
   billview() {
     this.showbill = !this.showbill;
   }
