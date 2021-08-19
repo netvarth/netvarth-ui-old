@@ -69,6 +69,7 @@ label {
 form.virtual-fields, form.virtual-fields .mat-dialog-content {
     /* height: 100vh !important; */
     max-height: 100vh !important;
+    overflow: auto !important;
 }
 .justify {
     text-align: justify !important;
