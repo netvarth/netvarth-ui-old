@@ -37,9 +37,7 @@ import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtual
   animations: [
     trigger('search_data', [
       transition('* => *', [
-
         query(':enter', style({ opacity: 0 }), { optional: true }),
-
         query(':enter', stagger('10ms', [
           animate('.4s ease-out', keyframes([
             style({ opacity: 0, transform: 'translateY(-75%)', offset: 0 }),
@@ -175,7 +173,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
   };
-
   customButtonsFontAwesomeConfig: ButtonsConfig = {
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
@@ -300,7 +297,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   profileSettings: any;
   deferredPrompt: any;
   btnInstallApp: any;
-
+  pwaEnabled = false;
   businessName;
   businessId;
   accountId: any;
@@ -484,6 +481,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                   _this.accountIdExists = true;
                   _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
                     (uiconfig: any) => {
+                      if (uiconfig['pwaEnabled']) {
+                        this.pwaEnabled = true;
+                      }
                       if (uiconfig['pixelId']) {
                         this.addScript('1424568804585712');
                       }
@@ -876,7 +876,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
       // const path = this.customAppSerice.getManifest(res, projectConstantsLocal.UIS3PATH + this.provider_id, projectConstants.PATH);
-      if (this.accountProperties) {
+      if (this.pwaEnabled) {
         const path = projectConstantsLocal.UIS3PATH + this.provider_id + '/manifest.json';
         document.getElementById('dynamic_manifest_url').setAttribute('href', path);
         this.btnInstallApp = document.getElementById("btnInstallCustomApp");
@@ -1748,6 +1748,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.changedate_req = true;
     }
     const _this = this;
+    _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
         if (status) {
@@ -1806,6 +1807,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!location.futureAppt) {
       this.futureAllowed = false;
     }
+    _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
         console.log("Login Status:" + status);
@@ -2021,6 +2023,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);
+      } else {
+        this.loading_direct = false;
       }
     });
   }
@@ -2073,6 +2077,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           }
           // this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
+      } else {
+        this.loading_direct = false;
       }
     });
   }
@@ -2296,6 +2302,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   payClicked(locid, locname, cdate, service) {
     const _this = this;
+    _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
         if (status) {
