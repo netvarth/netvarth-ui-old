@@ -710,7 +710,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
         bill_html += '	</tr>';
         bill_html += '	<tr>';
         if(this.splocation ){
-          bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.splocation + '</td>';
+          bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif; text-transform: capitalize !important;">' + this.splocation + '</td>';
         }
         bill_html += '	<tr>';
         if (this.checkin.provider) {
