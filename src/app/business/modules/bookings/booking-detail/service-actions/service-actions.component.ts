@@ -50,6 +50,9 @@ export class ServiceActionsComponent implements OnInit {
     showAssignMyself = false;
     showUnassign = false;
     showAssignTeam = false;
+    showAssignLocation = false;
+    showChangeTeam = false;
+    showUnassignTeam = false;
     trackDetail: any = [];
     customerMsg;
     newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
@@ -73,6 +76,7 @@ export class ServiceActionsComponent implements OnInit {
     groups: any = [];
     showStatusChange = false;
     showFirstSection = false;
+    locations: any = [];
     constructor(private groupService: GroupStorageService,
         private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
@@ -105,6 +109,11 @@ export class ServiceActionsComponent implements OnInit {
         }
     }
     ngOnInit(): void {
+        this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
+        if (this.active_user.accountType === 'BRANCH') {
+            this.getUserTeams();
+            this.getProviderLocation();
+        }
         const isMobile = {
             Android: function () {
                 return navigator.userAgent.match(/Android/i);
@@ -127,10 +136,6 @@ export class ServiceActionsComponent implements OnInit {
         };
         if (!isMobile.Android() && !isMobile.iOS()) {
             this.is_web = true;
-        }
-        this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
-        if (this.active_user.accountType) {
-            this.getUserTeams();
         }
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -180,6 +185,15 @@ export class ServiceActionsComponent implements OnInit {
                 if (this.groups.length > 0 && (this.waitlist_data.waitlistStatus === 'arrived' || this.waitlist_data.waitlistStatus === 'checkedIn')) {
                     this.showAssignTeam = true;
                 }
+                if (this.waitlist_data.queue.provider.id === 0 && this.locations.length > 1) {
+                    this.showAssignLocation = true;
+                }
+                if (this.waitlist_data.queue.provider.id === 0 && this.waitlist_data.teamId !== 0 && this.groups.length > 1) {
+                    this.showChangeTeam = true;
+                }
+                if (this.waitlist_data.queue.provider.id === 0 && this.groups.length > 0 && this.waitlist_data.teamId !== 0) {
+                    this.showUnassignTeam = true;
+                }
             }
             if (this.waitlist_data.waitlistStatus !== 'blocked' && this.waitlist_data.waitlistStatus !== 'done') {
                 this.showStatusChange = true;
@@ -226,6 +240,15 @@ export class ServiceActionsComponent implements OnInit {
                 }
                 if (this.groups.length > 0 && (this.waitlist_data.apptStatus === 'Arrived' || this.waitlist_data.apptStatus === 'Confirmed')) {
                     this.showAssignTeam = true;
+                }
+                if (this.waitlist_data.schedule.provider.id === 0 && this.locations.length > 1) {
+                    this.showAssignLocation = true;
+                }
+                if (this.waitlist_data.schedule.provider.id === 0 && this.waitlist_data.teamId !== 0 && this.groups.length > 1) {
+                    this.showChangeTeam = true;
+                }
+                if (this.waitlist_data.schedule.provider.id === 0 && this.groups.length > 0 && this.waitlist_data.teamId != 0) {
+                    this.showUnassignTeam = true;
                 }
             }
             if (this.waitlist_data.apptStatus !== 'blocked' && this.waitlist_data.apptStatus !== 'Completed') {
@@ -816,7 +839,10 @@ export class ServiceActionsComponent implements OnInit {
                 showAssign: this.showAssign,
                 showUnassign: this.showUnassign,
                 showAssignTeam: this.showAssignTeam,
-                showAssignMyself: this.showAssignMyself
+                showAssignMyself: this.showAssignMyself,
+                showAssignLocation: this.showAssignLocation,
+                showChangeTeam: this.showChangeTeam,
+                showUnassignTeam: this.showUnassignTeam
             }
         });
     }
@@ -839,5 +865,12 @@ export class ServiceActionsComponent implements OnInit {
         } else {
             this.router.navigate(['provider', 'appointments', 'appointment'], { queryParams: { source: 'appt-block', uid: this.waitlist_data.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: this.waitlist_data.service.id, apptMode: this.waitlist_data.appointmentMode } });
         }
+    }
+    getProviderLocation() {
+        this.provider_services.getProviderLocations()
+            .subscribe(
+                (data: any) => {
+                    this.locations = data;
+                });
     }
 }

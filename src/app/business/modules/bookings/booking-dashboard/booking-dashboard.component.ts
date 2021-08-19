@@ -88,9 +88,6 @@ export class BookingDashboardComponent implements OnInit {
     this.settings = this.groupService.getitemFromGroupStorage('settings');
     this.bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     this.userData = this.groupService.getitemFromGroupStorage('ynw-user');
-    if (this.userData.accountType !== 'BRANCH') {
-      this.getDonations();
-    }
     if (this.userData.accountType !== 'BRANCH' || (this.userData.accountType === 'BRANCH' && this.userData.adminPrivilege)) {
       this.getCustomers();
       this.admin = true;
@@ -108,9 +105,11 @@ export class BookingDashboardComponent implements OnInit {
     this.getProviderLocations();
     this.getProviderSettings();
     this.getProviderBills();
-    this.initDashboard();
   }
   initDashboard() {
+    if (this.userData.accountType !== 'BRANCH') {
+      this.getDonations();
+    }
     this.getTodayWatilists().then(data => {
       this.getFutureWatilists().then(data => {
         this.getTodayAppts().then(data => {
@@ -280,7 +279,11 @@ export class BookingDashboardComponent implements OnInit {
         });
   }
   getDonations() {
-    this.provider_services.getDonations()
+    let filter = {};
+    if (this.selected_location) {
+      filter['location-eq'] = this.selected_location.id;
+    }
+    this.provider_services.getDonations(filter)
       .subscribe(
         data => {
           this.donations = data;
@@ -308,6 +311,7 @@ export class BookingDashboardComponent implements OnInit {
             this.selected_location = this.locations[0];
             this.groupService.setitemToGroupStorage('loc_id', this.selected_location);
           }
+          this.initDashboard();
         });
   }
   gotoLocations() {
@@ -317,8 +321,5 @@ export class BookingDashboardComponent implements OnInit {
     this.selected_location = location;
     this.groupService.setitemToGroupStorage('loc_id', this.selected_location);
     this.initDashboard();
-    if (this.userData.accountType !== 'BRANCH') {
-      this.getDonations();
-    }
   }
 }

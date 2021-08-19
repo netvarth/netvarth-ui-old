@@ -23,8 +23,8 @@
                 (click)="isCollapsed = !isCollapsed" *ngIf="source">
                 <div>Messages</div>
                 <div class="mgn-lt-auto">
-                    <i class="fa fa-external-link pointer-cursor mgn-rt-20" (click)="viewInbox()" aria-hidden="true"
-                        *ngIf="selectedUserMessages && selectedUserMessages.length > 0"></i>
+                    <i class="fa fa-external-link pointer-cursor" (click)="viewInbox()" aria-hidden="true"
+                        *ngIf="selectedUserMessages && selectedUserMessages.length > 0" [class.mgn-rt-20]="screenWidth <= 767"></i>
                     <i class="fa fa-angle-down" *ngIf="screenWidth <= 767"></i>
                 </div>
             </div>

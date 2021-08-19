@@ -330,4 +330,62 @@ export class ActionsPopupComponent implements OnInit {
       this.statusList = data;
     });
   }
+  removeTeam() {
+    let msg = '';
+    msg = 'Do you want to remove the team ?';
+    const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': msg,
+        'type': 'yes/no'
+      }
+    });
+    dialogrefd.afterClosed().subscribe(result => {
+      if (result) {
+        const post_data = {
+          'uid': (this.data.bookingType === 'checkin') ? this.data.waitlist_data.uid : this.data.waitlist_data.ynwUuid,
+          'teamId': this.data.waitlist_data.teamId
+        };
+        if (this.data.bookingType === 'checkin') {
+          this.provider_services.unassignTeamWaitlist(post_data)
+            .subscribe(
+              data => {
+                this.snackbarService.openSnackBar('Team unassigned successfully', { 'panelclass': 'snackbarerror' });
+                this.sharedFunctions.sendMessage({ type: 'reload' });
+                this.dialogClose();
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.sharedFunctions.sendMessage({ type: 'reload' });
+                this.dialogClose();
+              }
+            );
+        } else {
+          this.provider_services.unassignTeamAppointment(post_data)
+            .subscribe(
+              data => {
+                this.snackbarService.openSnackBar('Team unassigned successfully', { 'panelclass': 'snackbarerror' });
+                this.sharedFunctions.sendMessage({ type: 'reload' });
+                this.dialogClose();
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.sharedFunctions.sendMessage({ type: 'reload' });
+                this.dialogClose();
+              }
+            );
+        }
+      }
+    });
+  }
+  changeLocation() {
+    this.dialogRef.close();
+    if (this.data.bookingType === 'checkin') {
+      this.router.navigate(['provider', 'check-ins', this.data.waitlist_data.ynwUuid, 'updateloc'], { queryParams: { source: 'checkin' } });
+    } else {
+      this.router.navigate(['provider', 'check-ins', this.data.waitlist_data.uid, 'updateloc'], { queryParams: { source: 'appt' } });
+    }
+  }
 }

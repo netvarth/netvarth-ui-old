@@ -64,6 +64,7 @@ export class BookingDashboardAdminComponent implements OnInit {
       this.newAppts = this.todayAppts.concat(this.futureAppts);
     });
     this.selected_location = this.groupService.getitemFromGroupStorage('loc_id');
+    console.log('cinstr ', this.selected_location);
   }
   ngOnDestroy() {
     if (this.subscription) {
@@ -78,18 +79,18 @@ export class BookingDashboardAdminComponent implements OnInit {
     this.blogo = this.bdetails.logo || 'assets/images/img-null.svg';
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.getProviderLocations();
     this.getCustomers();
-    this.getDonations();
+    console.log('init ', this.selected_location);
     this.getProviderSettings();
     if (this.active_user.accountType === 'BRANCH') {
       this.getUsers();
     }
-    this.getProviderLocations();
     this.getConsumerBills();
     this.getProviderSettings();
-    this.initDashboard();
   }
   initDashboard() {
+    this.getDonations();
     this.getTodayWatilists().then(data => {
       this.getFutureWatilists().then(data => {
         this.getTodayAppts().then(data => {
@@ -236,7 +237,12 @@ export class BookingDashboardAdminComponent implements OnInit {
         });
   }
   getDonations() {
-    this.provider_services.getDonations()
+    let filter = {};
+    console.log('ffunc ', this.selected_location);
+    if (this.selected_location) {
+      filter['location-eq'] = this.selected_location.id;
+    }
+    this.provider_services.getDonations(filter)
       .subscribe(
         data => {
           this.donations = data;
@@ -252,6 +258,7 @@ export class BookingDashboardAdminComponent implements OnInit {
             this.selected_location = this.locations[0];
             this.groupService.setitemToGroupStorage('loc_id', this.selected_location);
           }
+          this.initDashboard();
         });
   }
   gotoLocations() {
@@ -261,6 +268,5 @@ export class BookingDashboardAdminComponent implements OnInit {
     this.selected_location = location;
     this.groupService.setitemToGroupStorage('loc_id', this.selected_location);
     this.initDashboard();
-    this.getDonations();
   }
 }

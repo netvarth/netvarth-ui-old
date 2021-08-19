@@ -632,7 +632,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
       if (this.selectedUserMessages[0] && this.selectedUserMessages[0].providerId !== 0) {
         filter['provider'] = this.selectedUserMessages[0].providerId;
       }
-      // 5555689565
       const customerId = (this.customer) ? this.customer : this.selectedUserMessages[0].accountId;
       this.shared_service.addProvidertoConsumerNote(customerId,
         dataToSend, filter)

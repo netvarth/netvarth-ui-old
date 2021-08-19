@@ -29,6 +29,24 @@
       <div class="icon-text">Assign Team</div>
     </div>
   </div>
+  <div class="action-box pointer-cursor" *ngIf="data.showAssignLocation" (click)="changeLocation()">
+    <div class="action-box-sub">
+      <span class="location-icon-action"></span>
+      <div class="icon-text">Assign Location</div>
+    </div>
+  </div>
+  <div class="action-box pointer-cursor" *ngIf="data.showChangeTeam" (click)="assignteam()">
+    <div class="action-box-sub">
+      <span class="team-icon-action"></span>
+      <div class="icon-text">Change Team</div>
+    </div>
+  </div>
+  <div class="action-box pointer-cursor" *ngIf="data.showUnassignTeam" (click)="removeTeam()">
+    <div class="action-box-sub">
+      <span class="team-icon-action"></span>
+      <div class="icon-text">Unassign Team </div>
+    </div>
+  </div>
 </div>
 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 status-main" *ngIf="data.source == 'status'">
   <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 stst-bx mgn-up-20">
