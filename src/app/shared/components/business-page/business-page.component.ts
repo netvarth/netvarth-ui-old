@@ -1651,6 +1651,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   redirectToHistory() {
     const _this = this;
+    _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
         if (status) {
@@ -1678,6 +1679,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       (status) => {
         if (status) {
           _this.showCommunicate(providforCommunicate);
+
         } else {
           const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name };
           this.doLogin('consumer', passParam);
@@ -3025,6 +3027,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   dashboardClicked() {
     const _this = this;
+    _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
         if (status) {

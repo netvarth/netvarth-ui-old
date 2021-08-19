@@ -954,6 +954,7 @@ export class ServiceViewComponent implements OnInit {
       this.changedate_req = true;
     }
     const _this = this;
+    _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
         if (status) {
@@ -1012,7 +1013,7 @@ export class ServiceViewComponent implements OnInit {
     if (!location.futureAppt) {
       this.futureAllowed = false;
     }
-
+    _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
         if (status) {
@@ -1037,6 +1038,7 @@ export class ServiceViewComponent implements OnInit {
   }
   payClicked(locid, locname, cdate, service) {
     const _this = this;
+    _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
         if (status) {
@@ -1261,6 +1263,8 @@ export class ServiceViewComponent implements OnInit {
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);
+      } else {
+          this.loading_direct = false;
       }
     });
   }
@@ -1293,7 +1297,6 @@ export class ServiceViewComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'success') {
-        this.loading_direct = true;
         this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedFunctionobj.sendMessage(pdata);
@@ -1317,6 +1320,8 @@ export class ServiceViewComponent implements OnInit {
             this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
           }
         }
+      } else {
+        this.loading_direct = false;
       }
     });
   }
@@ -1378,6 +1383,7 @@ export class ServiceViewComponent implements OnInit {
   }
   dashboardClicked() {
     const _this = this;
+    _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
         if (status) {
