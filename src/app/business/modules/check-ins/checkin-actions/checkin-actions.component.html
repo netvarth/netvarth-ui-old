@@ -431,7 +431,7 @@
         <!-- <div class="form-level-settings">hints</div> -->
     </div>
   </div>
-    <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 stst-bx mgn-up-10 mgn-lt-10" *ngIf="statusList && statusList.length > 0 && checkin.waitlistStatus !== 'Cancelled'">
+    <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 stst-bx mgn-up-10 mgn-lt-10" *ngIf="statusList && statusList.length > 0 && checkin.waitlistStatus !== 'cancelled'">
         <div>Internal Status</div>
         <p class="settings_info">Internal status is only visible for users of this account. Not visible for your {{customer_label}}s</p>
         <ng-container  *ngFor="let stat of statusList, let i= index">
