@@ -111,8 +111,9 @@ export class ServiceActionsComponent implements OnInit {
     ngOnInit(): void {
         this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
         if (this.active_user.accountType === 'BRANCH') {
-            this.getUserTeams();
-            this.getProviderLocation();
+            this.getUser();
+        } else {
+            this.setActions();
         }
         const isMobile = {
             Android: function () {
@@ -139,7 +140,6 @@ export class ServiceActionsComponent implements OnInit {
         }
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-        this.setActions();
         if (this.waitlist_data.provider) {
             this.busnes_name = (this.waitlist_data.provider.businessName) ? this.waitlist_data.provider.businessName : this.waitlist_data.provider.firstName + ' ' + this.waitlist_data.provider.lastName;
         } else {
@@ -172,7 +172,6 @@ export class ServiceActionsComponent implements OnInit {
                 this.showCall = true;
             }
             if (this.active_user.accountType == 'BRANCH' && (this.waitlist_data.waitlistStatus === 'arrived' || this.waitlist_data.waitlistStatus === 'checkedIn')) {
-                this.getUser();
                 if (this.active_user && this.active_user.userType == 1 && !this.waitlist_data.provider && this.waitlist_data.queue.provider.id === 0 && this.isUserdisable) {
                     this.showAssignMyself = true;
                 }
@@ -198,7 +197,7 @@ export class ServiceActionsComponent implements OnInit {
             if (this.waitlist_data.waitlistStatus !== 'blocked' && this.waitlist_data.waitlistStatus !== 'done') {
                 this.showStatusChange = true;
             }
-            if (this.showAssign || this.showAssignMyself || this.showUnassign || this.showAssignTeam || this.waitlist_data.waitlistStatus === 'blocked' || this.showStatusChange || this.showTeleserviceStart) {
+            if (this.showAssign || this.showAssignMyself || this.showUnassign || this.showAssignTeam || this.showUnassignTeam || this.showChangeTeam || this.showAssignLocation || this.waitlist_data.waitlistStatus === 'blocked' || this.showStatusChange || this.showTeleserviceStart) {
                 this.showFirstSection = true;
             } else {
                 this.showMoreActions = true;
@@ -228,7 +227,6 @@ export class ServiceActionsComponent implements OnInit {
                 this.showCall = true;
             }
             if (this.active_user.accountType == 'BRANCH' && (this.waitlist_data.apptStatus === 'Arrived' || this.waitlist_data.apptStatus === 'Confirmed')) {
-                this.getUser();
                 if (this.active_user && this.active_user.userType == 1 && !this.waitlist_data.provider && this.waitlist_data.schedule.provider.id === 0 && this.isUserdisable) {
                     this.showAssignMyself = true;
                 }
@@ -254,7 +252,7 @@ export class ServiceActionsComponent implements OnInit {
             if (this.waitlist_data.apptStatus !== 'blocked' && this.waitlist_data.apptStatus !== 'Completed') {
                 this.showStatusChange = true;
             }
-            if (this.showAssign || this.showAssignMyself || this.showUnassign || this.showAssignTeam || this.waitlist_data.apptStatus === 'blocked' || this.showStatusChange || this.showTeleserviceStart) {
+            if (this.showAssign || this.showAssignMyself || this.showUnassign || this.showAssignTeam || this.showUnassignTeam || this.showChangeTeam || this.showAssignLocation || this.waitlist_data.apptStatus === 'blocked' || this.showStatusChange || this.showTeleserviceStart) {
                 this.showFirstSection = true;
             } else {
                 this.showMoreActions = true;
@@ -779,6 +777,7 @@ export class ServiceActionsComponent implements OnInit {
                     } else {
                         this.isUserdisable = false
                     }
+                    this.getUserTeams();
                 }, error => {
                 });
         }
@@ -849,6 +848,7 @@ export class ServiceActionsComponent implements OnInit {
     getUserTeams() {
         this.provider_services.getTeamGroup().subscribe((data: any) => {
             this.groups = data;
+            this.getProviderLocation();
         });
     }
     addCustomerDetails() {
@@ -871,6 +871,7 @@ export class ServiceActionsComponent implements OnInit {
             .subscribe(
                 (data: any) => {
                     this.locations = data;
+                    this.setActions();
                 });
     }
 }

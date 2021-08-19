@@ -73,7 +73,7 @@
           <i class="fa fa-share-alt"></i>Share {{(waitlist_data.service?.virtualServiceType ==
           'videoService')? 'video' : 'audio'}} call instructions
         </a>
-        <a *ngIf="showAssign || showAssignMyself || showUnassign || showAssignTeam" class="btn mb-2 action-button"
+        <a *ngIf="showAssign || this.showAssignMyself || showUnassign || showAssignTeam || showUnassignTeam || showChangeTeam || showAssignLocation" class="btn mb-2 action-button"
           (click)="showActionsPopup('assign')">
           <i class="fa fa-paperclip" aria-hidden="true"></i>Assign
         </a>
