@@ -1,6 +1,7 @@
-<app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+
 <section #consumer_checkin class="c-checkin-new container no-padding" [ngClass]="theme?theme:''">
-    <div class="content p0 loc-list ynw-common-form-nm" *ngIf="!loading">
+    <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
+     <div class="content p0 loc-list ynw-common-form-nm" >
         <div class="panel panel-default">
             <div class="panel-heading top-row ">
                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
@@ -10,6 +11,7 @@
                     <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'checkin'" [accountId]="businessId" [customId]="customId"></app-header>
                 </div>
             </div>
+            <app-common-innerloading-spinner *ngIf="loadingPaytm"></app-common-innerloading-spinner>
             <div class="pad-10 d-flex flex-column-fluid hf-panel-body">
                 <div class="card card-custom no-margin no-padding">
                     <div class="card-body p-0">
@@ -1361,7 +1363,7 @@
                                                 <span type="button" class="razorpay-icon paymenticons" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" appPreventDoubleClick (click)="saveCheckin('checkin')" id="stepThreeConfirmButton"  >
                                                    
                                                 </span>&nbsp;&nbsp;
-                                                <span type="button" class="paytm-icon paymenticons"*ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" appPreventDoubleClick (click)="saveCheckin('checkin','paytm')" id="stepThreeConfirmButton" >
+                                                <span type="button"  class="paytm-icon paymenticons"*ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" appPreventDoubleClick (click)="saveCheckin('checkin','paytm')" id="stepThreeConfirmButton" >
                                                    
                                                 </span>
                                             </div> -->

@@ -132,7 +132,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
     jcreditamount: any;
     remainingadvanceamount;
     wallet: any;
-    loading = false;
+    loadingPaytm = false;
     @ViewChild('consumer_checkinbill') paytmview;
     constructor(private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
@@ -464,7 +464,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
                         };
                         this.sharedServices.PayByJaldeewallet(postData)
                             .subscribe(data => {
-                                this.loading = false;
+                                this.loadingPaytm = false;
                                 this.wallet = data;
                                 if (!this.wallet.isGateWayPaymentNeeded && this.wallet.isJCashPaymentSucess) {
                                     this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
@@ -472,7 +472,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
                                 }
                             },
                                 error => {
-                                    this.loading = false;
+                                    this.loadingPaytm = false;
                                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                                 });
                     } else if (this.remainingadvanceamount > 0 && this.checkJcash) {
@@ -543,14 +543,14 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
                                 // }
                             },
                                 error => {
-                                    this.loading = false;
+                                    this.loadingPaytm = false;
                                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                                 });
 
                     }
                 },
                 error => {
-                    this.loading = false;
+                    this.loadingPaytm = false;
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
@@ -589,7 +589,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
                         },
                         error => {
                             this.resetApiError();
-                            this.loading = false;
+                            this.loadingPaytm = false;
                             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         }
                     );
@@ -611,12 +611,14 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
         this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type , this.uuid , this.accountId);
     }
     payWithPayTM(pData:any) {
-        this.loading = true;
+        this.loadingPaytm = true;
         this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
     }
     transactionCompleted(response) {
         if(response.STATUS == 'TXN_FAILURE'){
-            this.snackbarService.openSnackBar("Transaction failed");
+            this.loadingPaytm = false;
+            this.cdRef.detectChanges();
+            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
             const navigationExtras: NavigationExtras = {
                 queryParams: {
                   uuid: this.uuid,
@@ -642,6 +644,10 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
       
         //  this.ngZone.run(() => this.router.navigate(['consumer'] ,navigationExtras));
     }
+    closeloading(){
+        this.loadingPaytm = false; 
+        this.cdRef.detectChanges();
+}
     paytmPayment() {
         this.pay_data.uuid = this.uuid;
         this.pay_data.amount = this.bill_data.amountDue;

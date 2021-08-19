@@ -28,7 +28,8 @@ export class PaytmService {
                     console.log("notifyMerchant handler function called");
                     console.log("eventName => ",eventName);
                     console.log("data => ",data);
-                    referrer.loading = false;
+                    referrer.closeloading();
+                    
                   },
                   transactionStatus:function(data){
                     console.log("payment status ", data); 
@@ -38,27 +39,22 @@ export class PaytmService {
                 }
               };
         console.log(config);
-        //referrer.loading = false;
               if(window['Paytm'] && window['Paytm'].CheckoutJS){
                   window['Paytm'].CheckoutJS.onLoad(function excecuteAfterCompleteLoad() {
                       // initialze configuration using init method 
                       window['Paytm'].CheckoutJS.init(config).then(function onSuccess() {
-                        referrer.loading = false;
                           // after successfully updating configuration, invoke JS Checkout
                           window['Paytm'].CheckoutJS.invoke();
-                          //referrer.loading = false;
                       }).catch(function onError(error){
                           console.log("error => ",error);
                       });
-                     // referrer.loading = false;
                   });
-                 // referrer.loading = false;
-              } 
-              //referrer.loading = false;
+                //   setTimeout(() => {
+                //     referrer.loading = false;
+                // }, 5000);
+              }
         };
-        // setTimeout(() => {
-        //     referrer.loading = false;
-        // }, 2000);
+        
        
     }
     
