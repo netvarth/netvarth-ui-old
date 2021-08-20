@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild, OnDestroy, NgZone } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild, OnDestroy, NgZone, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
@@ -252,7 +252,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     consumerType: string;
     newMember: any;
     readMore = false;
-    loading = false;
+    loadingPaytm = false;
     @ViewChild('consumer_appointment') paytmview;
 
     constructor(public fed_service: FormMessageDisplayService,
@@ -273,6 +273,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         public prefillmodel: RazorpayprefillModel,
         private dateTimeProcessor: DateTimeProcessor,
         private s3Processor: S3UrlProcessor,
+        private cdRef: ChangeDetectorRef,
         private paytmService: PaytmService,
         @Inject(DOCUMENT) public document,
         private ngZone: NgZone,
@@ -2140,7 +2141,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'appt_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList, this.customId);
     }
     payWithPayTM(pData:any) {
-        this.loading = true;
+        this.loadingPaytm = true;
         this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
     }
     getImage(url, file) {
@@ -2271,9 +2272,15 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         };
         this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras));
      } else if(response.STATUS == 'TXN_FAILURE'){
-        this.snackbarService.openSnackBar("Transaction failed");
+        this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
         this.ngZone.run(() => this.router.navigate(['consumer']));
      }
+    }
+    closeloading(){
+        this.loadingPaytm = false; 
+        this.cdRef.detectChanges();
+        this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+        this.ngZone.run(() => this.router.navigate(['consumer']));
     }
     getConsumerQuestionnaire() {
         const consumerid = (this.waitlist_for[0].id === this.customer_data.id) ? 0 : this.waitlist_for[0].id;

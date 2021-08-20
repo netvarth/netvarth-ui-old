@@ -1,4 +1,5 @@
-<section id="consumer_donation" class="container no-padding cons-donate no-padding-small">
+<section #consumer_donation class="container no-padding cons-donate no-padding-small">
+        <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
     <div class="content p0 loc-list p-checkin ynw-common-form-nm">
         <div class="panel panel-default">
             <div class="panel-heading top-row ">
@@ -11,6 +12,7 @@
                         [accountId]="accountId" [customId]="customId"></app-header>
                 </div>
             </div>
+            <app-common-innerloading-spinner *ngIf="loadingPaytm"></app-common-innerloading-spinner>
             <div class="flex-column-fluid hf-panel-body">
                 <div class="card card-custom no-margin">
                     <div class="card-body p-0">
@@ -527,7 +529,7 @@
                                                     class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4">
                                                     CC/DC/Net Banking/UPI
                                                 </button>
-                                         <!--       <button type="button" (click)="paytmPayment()"
+                                               <!-- <button type="button" appPreventDoubleClick (click)="paytmPayment()"
                                                 class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4 mgn-lt-5">
                                                 PayTM
                                             </button> -->

@@ -133,7 +133,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
     jcreditamount: any;
     remainingadvanceamount;
     wallet: any;
-    loading = false;
+    loadingPaytm = false;
     @ViewChild('consumer_appointmentbill') paytmview;
     constructor(private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
@@ -435,7 +435,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                         };
                         this.sharedServices.PayByJaldeewallet(postData)
                             .subscribe(data => {
-                                this.loading = false;
+                                this.loadingPaytm = false;
                                 this.wallet = data;
                                 if (!this.wallet.isGateWayPaymentNeeded && this.wallet.isJCashPaymentSucess) {
                                     this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
@@ -443,7 +443,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                                 }
                             },
                                 error => {
-                                    this.loading = false;
+                                    this.loadingPaytm = false;
                                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                                 });
                     } else if (this.remainingadvanceamount > 0 && this.checkJcash) {
@@ -513,14 +513,14 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                                 // }
                             },
                                 error => {
-                                    this.loading = false;
+                                    this.loadingPaytm = false;
                                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                                 });
 
                     }
                 },
                 error => {
-                    this.loading = false;
+                    this.loadingPaytm = false;
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
@@ -559,7 +559,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                         },
                         error => {
                             this.resetApiError();
-                            this.loading = false;
+                            this.loadingPaytm = false;
                             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         }
                     );
@@ -567,13 +567,19 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
         }
     }
     payWithPayTM(pData:any) {
-        this.loading = true;
+        this.loadingPaytm = true;
         this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
+    }
+    closeloading(){
+            this.loadingPaytm = false; 
+            this.cdRef.detectChanges();
     }
     transactionCompleted(response) {
         console.log("response"+response)
         if(response.STATUS == 'TXN_FAILURE'){
-            this.snackbarService.openSnackBar("Transaction failed");
+            this.loadingPaytm = false;
+            this.cdRef.detectChanges();
+            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
             const navigationExtras: NavigationExtras = {
                 queryParams: {
                   uuid: this.uuid,
@@ -710,7 +716,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
         bill_html += '	</tr>';
         bill_html += '	<tr>';
         if(this.splocation ){
-          bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.splocation + '</td>';
+          bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif; text-transform: capitalize !important;">' + this.splocation + '</td>';
         }
         bill_html += '	<tr>';
         if (this.checkin.provider) {

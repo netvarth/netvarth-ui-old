@@ -1,5 +1,7 @@
-<section class="container p0 confirm-aptckn no-padding-small">
-    <div class="content p0 comn-cls cons-check-bill">
+
+<section #consumer_orderbill class="container p0 confirm-aptckn no-padding-small">
+        <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
+    <div class="content p0 comn-cls cons-check-bill" >
         <div class="c-outer" style="margin-bottom: 0px !important;" *ngIf="source == 'provider_history'">
             <div class="c-body">
                 <div class="bk-ctrl">
@@ -82,6 +84,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <app-common-innerloading-spinner *ngIf="loadingPaytm"></app-common-innerloading-spinner>
                                                             <div class="bill-content">
                                                                 <div class="section-three bill-responsive">
                                                                     <div class="bill-breakup">
@@ -388,8 +391,8 @@
                                                                     <button class="cs-btn bt1"  *ngIf="((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
                                                                         (click)="payuPayment()">CC/DC/Net
                                                                         Banking/UPI</button>
-                                                                    <!-- <button class="cs-btn bt1" *ngIf="paytmEnabled"
-                                                                        (click)="paytmPayment()">Paytm</button> -->
+                                                                    <!-- <button class="cs-btn bt1" *ngIf="paytmEnabled && ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
+                                                                        (click)="payuPayment('paytm')">Paytm</button> -->
                                                                     <button class="cs-btn bt1"
                                                                         (click)="cashPayment()">Cash</button>
                                                                 </div>

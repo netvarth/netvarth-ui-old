@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, OnDestroy, ViewChild, NgZone } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy, ViewChild, NgZone, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -232,6 +232,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     accountId;
     readMore = false;
     @ViewChild('consumer_donation') paytmview;
+    loadingPaytm = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -252,6 +253,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         private location: Location,
         private s3Processor: S3UrlProcessor,
         private paytmService: PaytmService,
+        private cdRef: ChangeDetectorRef,
         private ngZone: NgZone) {
         this.subs.sink = this.route.queryParams.subscribe(
             params => {
@@ -622,22 +624,34 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uid, null, this.account_id, null, null, this.customId);
     }
     payWithPayTM(pData:any) {
+        this.loadingPaytm = true;
         this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
     }
     transactionCompleted(response) {
-        this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-        let queryParams = {
-        account_id: this.account_id,
-        uuid: this.uid,
-        "details": response
-        };
-        if(this.customId) {
-        queryParams['customId']= this.customId;
-        }
-        let navigationExtras: NavigationExtras = {
-        queryParams: queryParams
-        };
-        this.ngZone.run(() => this.router.navigate(['consumer', 'donations', 'confirm'], navigationExtras));
+        if(response.STATUS == 'TXN_SUCCESS'){
+            this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+            let queryParams = {
+                account_id: this.account_id,
+                uuid: this.uid,
+                "details": response
+                };
+                if(this.customId) {
+                queryParams['customId']= this.customId;
+                }
+                let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
+                };
+                this.ngZone.run(() => this.router.navigate(['consumer', 'donations', 'confirm'], navigationExtras));
+        } else if(response.STATUS == 'TXN_FAILURE'){
+            this.loadingPaytm = false;
+            this.cdRef.detectChanges();
+            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+         }
+    }
+    closeloading(){
+        this.loadingPaytm = false; 
+        this.cdRef.detectChanges();
+        this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
     }
     addEmail() {
         this.resetApiErrors();

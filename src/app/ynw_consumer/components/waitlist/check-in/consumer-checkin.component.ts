@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild, OnDestroy, NgZone } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, OnDestroy, NgZone, ChangeDetectorRef } from '@angular/core';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
@@ -224,7 +224,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     amounttopay: any;
     wallet: any;
     payAmount: number;
-    loading = false;
+    loadingPaytm = false;
     @ViewChild('consumer_checkin') paytmview;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -249,6 +249,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         private s3Processor: S3UrlProcessor,
         private ngZone: NgZone,
         private paytmService: PaytmService,
+        private cdRef: ChangeDetectorRef,
         @Inject(DOCUMENT) public document
     ) {
         this.subs.sink = this.route.queryParams.subscribe(
@@ -1082,9 +1083,15 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         };
         this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras));
     } else if(response.STATUS == 'TXN_FAILURE'){
-        this.snackbarService.openSnackBar("Transaction failed");
+        this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
         this.ngZone.run(() => this.router.navigate(['consumer']));
      }
+    }
+    closeloading(){
+        this.loadingPaytm = false; 
+        this.cdRef.detectChanges();
+        this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+        this.ngZone.run(() => this.router.navigate(['consumer']));
     }
     showCheckinButtonCaption() {
         let caption = '';
@@ -2411,7 +2418,7 @@ console.log('inside validaity');
         this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'checkin_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList, this.customId);
     }
     payWithPayTM(pData:any) {
-        this.loading = true;
+        this.loadingPaytm = true;
         this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
     }
     getImage(url, file) {

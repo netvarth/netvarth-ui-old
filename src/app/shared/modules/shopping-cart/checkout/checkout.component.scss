@@ -475,3 +475,43 @@ display: grid !important;
     padding-top: 5px!important;
     font-size: small!important;
   }
+  .paymentdiv{
+  padding: 10px;
+  text-align: center;
+  background-color: #ffffff;
+  /* border: 1px solid #00008b26; */
+border-radius: 10px;
+/* box-shadow: rgba(45, 42, 42, 0.11) 0px 30px 30px, rgba(0, 0, 0, 0.1) 0px -12px 30px, rgba(0, 0, 0, 0.05) 0px 4px 6px; */
+box-shadow: 5px 5px 5px gainsboro;
+}
+.paymenticons{
+border-radius: 10px;
+border-bottom: 1px solid #f8f8f8;
+border-right: 1px solid #f8f8f8;
+box-shadow: 4px 4px 5px gainsboro;
+}
+.paymenticons:hover {
+  border: 2px solid darkblue;
+}
+@media (max-width: 450px) {
+    .paytm-icon {
+      width: 80px !important;
+      height: 38px !important;
+    }
+    .razorpay-icon {
+      width: 100px !important;
+    }
+  }
+  .paytm-icon {
+    content: url(../../../../../assets/images/paytm.png);
+    width: 100px;
+    padding: 10px;
+    /* height: 58px; */
+    background: white;
+  }
+  .razorpay-icon {
+    content: url(../../../../../assets/images/razorpay.png);
+    width: 150px;
+    padding: 10px;
+    background: white;
+  }
