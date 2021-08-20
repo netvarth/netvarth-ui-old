@@ -170,7 +170,13 @@ export class RecordsDatagridComponent implements OnInit {
   }
   gotoAdd() {
     if (this.source == 'customers') {
-      this.router.navigate(['provider/customers/find'], { queryParams: { source: 'bookings' } });
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          source: 'bookings',
+          id: 'add'
+        }
+      };
+      this.router.navigate(['/provider/customers/create'], navigationExtras);
     } else if (this.source == 'providers') {
       this.router.navigate(['provider/settings/general/users/add']);
     }

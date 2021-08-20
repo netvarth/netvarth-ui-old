@@ -77,6 +77,7 @@ export class ServiceActionsComponent implements OnInit {
     showStatusChange = false;
     showFirstSection = false;
     locations: any = [];
+    users: any = [];
     constructor(private groupService: GroupStorageService,
         private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
@@ -178,10 +179,10 @@ export class ServiceActionsComponent implements OnInit {
                 if (this.waitlist_data.queue.provider.id === 0 && this.waitlist_data.provider) {
                     this.showUnassign = true;
                 }
-                if (this.waitlist_data.queue.provider.id === 0) {
+                if (this.waitlist_data.queue.provider.id === 0 && this.users.length > 1) {
                     this.showAssign = true;
                 }
-                if (this.groups.length > 0 && (this.waitlist_data.waitlistStatus === 'arrived' || this.waitlist_data.waitlistStatus === 'checkedIn')) {
+                if (this.groups.length > 0 && this.waitlist_data.teamId === 0 && this.waitlist_data.queue.provider.id === 0) {
                     this.showAssignTeam = true;
                 }
                 if (this.waitlist_data.queue.provider.id === 0 && this.locations.length > 1) {
@@ -233,10 +234,10 @@ export class ServiceActionsComponent implements OnInit {
                 if (this.waitlist_data.schedule.provider.id === 0 && this.waitlist_data.provider) {
                     this.showUnassign = true;
                 }
-                if (this.waitlist_data.schedule.provider.id === 0) {
+                if (this.waitlist_data.schedule.provider.id === 0 && this.users.length > 1) {
                     this.showAssign = true;
                 }
-                if (this.groups.length > 0 && (this.waitlist_data.apptStatus === 'Arrived' || this.waitlist_data.apptStatus === 'Confirmed')) {
+                if (this.groups.length > 0 && this.waitlist_data.teamId === 0 && this.waitlist_data.schedule.provider.id === 0) {
                     this.showAssignTeam = true;
                 }
                 if (this.waitlist_data.schedule.provider.id === 0 && this.locations.length > 1) {
@@ -772,6 +773,7 @@ export class ServiceActionsComponent implements OnInit {
         if (this.active_user.id) {
             this.provider_services.getUser(this.active_user.id)
                 .subscribe((data: any) => {
+                    this.users = data;
                     if (data.status === 'ACTIVE') {
                         this.isUserdisable = true
                     } else {
