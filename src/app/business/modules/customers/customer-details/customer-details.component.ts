@@ -15,7 +15,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 // import { interval as observableInterval } from 'rxjs';
 import { SubSink } from 'subsink';
-import { CommunicationPopupComponent } from '../../bookings/booking-detail/communication-popup/communication-popup.component';
+import { CommunicationPopupComponent } from '../../bookings/communication-popup/communication-popup.component';
 @Component({
     selector: 'app-customer-details',
     templateUrl: './customer-details.component.html',
@@ -190,12 +190,12 @@ export class CustomerDetailComponent implements OnInit {
     }
     @HostListener('window:resize', ['$event'])
     onResize() {
-      const screenWidth = window.innerWidth;
-      if (screenWidth <= 767) {
-        this.small_device_display = true;
-      } else {
-        this.small_device_display = false;
-      }
+        const screenWidth = window.innerWidth;
+        if (screenWidth <= 767) {
+            this.small_device_display = true;
+        } else {
+            this.small_device_display = false;
+        }
     }
     getCustomers(customerId) {
         const _this = this;
@@ -207,11 +207,11 @@ export class CustomerDetailComponent implements OnInit {
                         if (data[0].whatsAppNum) {
                             _this.whatsappCountryCode = data[0].whatsAppNum.countryCode;
                             _this.whatsappNumber = data[0].whatsAppNum.number;
-                          }
-                          if (data[0].phoneNo && data[0].phoneNo.trim() !== '') {
+                        }
+                        if (data[0].phoneNo && data[0].phoneNo.trim() !== '') {
                             _this.number = data[0].countryCode + ' ' + data[0].phoneNo;
-                          }
-                          _this.email = data[0].email;
+                        }
+                        _this.email = data[0].email;
                         resolve(data);
                     },
                     () => {
@@ -260,7 +260,7 @@ export class CustomerDetailComponent implements OnInit {
         };
         this.router.navigate(['/provider/customers/' + this.customer[0].id], navigationExtras);
     }
-   
+
     // goMeetProvider() {
     //     const navigationExtras: NavigationExtras = {
     //         queryParams: { custId: this.customerId }
@@ -270,7 +270,7 @@ export class CustomerDetailComponent implements OnInit {
     //     this.router.navigate(['meet', this.id], navigationExtras);
     // }
     // getMeetingStatus() {
-       
+
     //     this.showStartBt = true;
     //     this.provider_services.getStatus(this.id).subscribe(
     //         (data: any) => {
@@ -559,7 +559,6 @@ export class CustomerDetailComponent implements OnInit {
         this.router.navigate(['/provider/customers/create'], navigationExtras);
     }
     actionPerformed(event) {
-        console.log(event);
         if (event.type === 'details') {
             this.gotoCustomerDetail(event.record, event.timeType);
         } else if (event.type === 'more') {
@@ -597,7 +596,7 @@ export class CustomerDetailComponent implements OnInit {
         this.provider_services.getProviderBills(filter).subscribe(data => {
             this.consumerBills = data;
         })
-    }  
+    }
     gotoQnr() {
         this.router.navigate(['provider', 'customers', this.customer[0].id, 'questionnaires'], { queryParams: { uid: this.customer[0].id, source: 'customer-details' } });
     }

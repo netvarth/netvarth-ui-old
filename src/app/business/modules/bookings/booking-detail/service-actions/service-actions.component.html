@@ -73,8 +73,8 @@
           <i class="fa fa-share-alt"></i>Share {{(waitlist_data.service?.virtualServiceType ==
           'videoService')? 'video' : 'audio'}} call instructions
         </a>
-        <a *ngIf="showAssign || this.showAssignMyself || showUnassign || showAssignTeam || showUnassignTeam || showChangeTeam || showAssignLocation" class="btn mb-2 action-button"
-          (click)="showActionsPopup('assign')">
+        <a *ngIf="showAssign || this.showAssignMyself || showUnassign || showAssignTeam || showUnassignTeam || showChangeTeam || showAssignLocation"
+          class="btn mb-2 action-button" (click)="showActionsPopup('assign')">
           <i class="fa fa-paperclip" aria-hidden="true"></i>Assign
         </a>
         <a *ngIf="waitlist_data.waitlistStatus==='blocked' || waitlist_data.apptStatus==='blocked'"
@@ -119,6 +119,14 @@
         </a>
         <a *ngIf="timeType !== 3" class="btn mb-2 action-button" (click)="printCheckin()">
           <i class="fa fa-print" aria-hidden="true"></i>Print
+        </a>
+        <a *ngIf="waitlist_data.waitlistStatus!='blocked' && waitlist_data.apptStatus!='blocked'"
+          class="btn mb-2 action-button" (click)="showLabels()">
+          <i class="fa fa-tags" aria-hidden="true"></i>Label
+        </a>
+        <a *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.s3VideoUrls"
+          class="btn mb-2 action-button" (click)="viewRecordings()">
+          <i class="fa fa-circle" aria-hidden="true"></i>View Recordings
         </a>
       </div>
     </div>

@@ -139,12 +139,11 @@ export class CheckinActionsComponent implements OnInit {
         this.apiloading = true;
         this.setMinMaxDate();
         this.checkin = this.data.checkinData;
-        if (this.data.type && this.data.type === 'reschedule') {
-            this.rescheduleActionClicked();
+        if (this.data.type) {
+            this.action = this.data.type;
             this.apiloading = false;
-        } else {
-            this.getLabel();
         }
+        this.getLabel();
         if (!this.data.multiSelection) {
             this.ynwUuid = this.checkin.ynwUuid;
             this.location_id = this.checkin.queue.location.id;

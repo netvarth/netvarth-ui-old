@@ -52,7 +52,6 @@ export class BookingPrivateNotesComponent implements OnInit {
       }
     });
     this.activateRoute.queryParams.subscribe(params => {
-      console.log('params', params);
       if (params.uuid) {
         this.uuid = params.uuid;
       }

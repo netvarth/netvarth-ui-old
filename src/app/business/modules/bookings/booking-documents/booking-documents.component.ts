@@ -85,7 +85,6 @@ export class BookingDocumentsComponent implements OnInit {
       }
     });
     this.activateRoute.queryParams.subscribe(qparams => {
-      console.log(qparams);
       if (qparams.uid) {
         this.uuid = qparams.uid;
       }
@@ -95,7 +94,7 @@ export class BookingDocumentsComponent implements OnInit {
       if (qparams.hasAttachment) {
         this.hasAttachment = qparams.hasAttachment;
       }
-    })
+    });
   }
   ngOnInit(): void {
     this.onResize();
@@ -103,7 +102,6 @@ export class BookingDocumentsComponent implements OnInit {
       this.hasAttachment = this.waitlist_data.hasAttachment;
     }
     if (this.uuid && this.hasAttachment) {
-      this.loading = true;
       this.getAttachments();
     }
   }
@@ -139,22 +137,19 @@ export class BookingDocumentsComponent implements OnInit {
     this.location.back();
   }
   getAttachments() {
+    this.loading = true;
     if (this.source === 'checkin') {
       this.provider_services.getProviderWaitlistAttachmentsByUuid(this.uuid).subscribe(
         data => {
-          console.log('data', data);
           this.documents = data;
           this.imagesOnlyList = this.documents.filter(doc => this.checkImgType(doc.s3path) === 'img');
-          console.log('this.imagesOnlyList', this.imagesOnlyList)
           this.loading = false;
         });
     } else if (this.source === 'appointment') {
       this.provider_services.getProviderAppointmentAttachmentsByUuid(this.uuid).subscribe(
         data => {
-          console.log('data', data);
           this.documents = data;
           this.imagesOnlyList = this.documents.filter(doc => this.checkImgType(doc.s3path) === 'img');
-          console.log('this.imagesOnlyList', this.imagesOnlyList)
           this.loading = false;
         });
     }

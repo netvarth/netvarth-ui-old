@@ -796,7 +796,8 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
           // check whether domain fields exists
           const statusCode = this.provider_shared_functions.getProfileStatusCode(this.bProfile);
           this.provider_datastorage.setBusinessProfileWeightage(this.bProfile);
-          this.groupService.setitemToGroupStorage('isCheckin', statusCode);
+          this.groupService.setitemToGroupStorage('isCheckin', statusCode); 
+          this.groupService.setitemToGroupStorage('bprofileStatus', this.bProfile.status);
           this.businessProfile_show = -1;
           this.loading = false;
         },

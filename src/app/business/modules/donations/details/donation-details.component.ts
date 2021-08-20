@@ -40,12 +40,12 @@ export class DonationDetailsComponent {
     }
     @HostListener('window:resize', ['$event'])
     onResize() {
-      const screenWidth = window.innerWidth;
-      if (screenWidth <= 767) {
-        this.small_device_display = true;
-      } else {
-        this.small_device_display = false;
-      }
+        const screenWidth = window.innerWidth;
+        if (screenWidth <= 767) {
+            this.small_device_display = true;
+        } else {
+            this.small_device_display = false;
+        }
     }
     getDonationDetails() {
         this.loading = true;

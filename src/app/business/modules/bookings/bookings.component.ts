@@ -6,18 +6,17 @@ import { GroupStorageService } from '../../../shared/services/group-storage.serv
   templateUrl: './bookings.component.html'
 })
 export class BookingsComponent implements OnInit {
-  userDet;
   admin = false;
   providerId;
   constructor(private groupService: GroupStorageService) { }
 
   ngOnInit(): void {
-    this.userDet = this.groupService.getitemFromGroupStorage('ynw-user');
-    if (this.userDet.accountType === 'BRANCH') {
-      if (this.userDet.adminPrivilege || this.userDet.userType === 5) {
+    const userDet = this.groupService.getitemFromGroupStorage('ynw-user');
+    if (userDet.accountType === 'BRANCH') {
+      if (userDet.adminPrivilege || userDet.userType === 5) {
         this.admin = true;
       } else {
-        this.providerId = this.userDet.id;
+        this.providerId = userDet.id;
       }
     }
   }

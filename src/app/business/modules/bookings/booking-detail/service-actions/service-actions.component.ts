@@ -20,6 +20,7 @@ import { DateFormatPipe } from '../../../../../shared/pipes/date-format/date-for
 import { TeleServiceConfirmBoxComponent } from '../../../teleservice/teleservice-confirm-box/teleservice-confirm-box.component';
 import { TeleServiceShareComponent } from '../../../teleservice/teleservice-share/teleservice-share.component';
 import { ActionsPopupComponent } from '../../actions-popup/actions-popup.component';
+import { ListRecordingsDialogComponent } from '../../../../../shared/components/list-recordings-dialog/list-recordings-dialog.component';
 
 @Component({
     selector: 'app-service-actions',
@@ -875,5 +876,48 @@ export class ServiceActionsComponent implements OnInit {
                     this.locations = data;
                     this.setActions();
                 });
+    }
+    showLabels() {
+        if (this.bookingType === 'checkin') {
+            const actiondialogRef = this.dialog.open(CheckinActionsComponent, {
+                width: '50%',
+                panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
+                disableClose: true,
+                data: {
+                    checkinData: this.waitlist_data,
+                    timetype: this.timeType,
+                    type: 'label'
+                }
+            });
+            actiondialogRef.afterClosed().subscribe(data => {
+                this.sharedFunctions.sendMessage({ type: 'reload' });
+            });
+        } else {
+            const actiondialogRef = this.dialog.open(AppointmentActionsComponent, {
+                width: '50%',
+                panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
+                disableClose: true,
+                data: {
+                    checkinData: this.waitlist_data,
+                    timetype: this.timeType,
+                    type: 'label'
+                }
+            });
+            actiondialogRef.afterClosed().subscribe(data => {
+                this.sharedFunctions.sendMessage({ type: 'reload' });
+            });
+        }
+    }
+    viewRecordings() {
+        const smsdialogRef = this.dialog.open(ListRecordingsDialogComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+                recordingUrls: this.waitlist_data.s3VideoUrls
+            }
+        });
+        smsdialogRef.afterClosed().subscribe(result => {
+        });
     }
 }

@@ -23,7 +23,6 @@
                 </div>
                 <div class="tableBody" id="{{heading}}"
                     [class.collapse]="view=='small' && heading && small_device_display">
-                    <!-- <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner> -->
                     <div class="table-responsive"
                         [ngStyle]="{'height': (source == 'customers') ? '365px' : (view=='small') ? '317px' : 'auto' }">
                         <div class="inner-card add-record rounded-sm pointer-cursor" (click)="gotoAdd()"

@@ -66,28 +66,34 @@ export class BusinessComponent implements OnInit {
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (this.shared_functions.isBusinessOwner()) {
-          this.shared_functions.getGlobalSettings()
-            .then(
-              (settings: any) => {
-                if (router.url === '\/provider') {
-                  setTimeout(() => {
-                    if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
-                      // if (settings.waitlist) {
-                      //   router.navigate(['provider', 'check-ins']);
-                      // } else if (settings.appointment) {
-                      //   router.navigate(['provider', 'appointments']);
-                      // } else if (settings.order) {
-                      //   router.navigate(['provider', 'orders']);
-                      // } else {
-                      //   router.navigate(['provider', 'settings']);
-                      // }
-                      router.navigate(['provider', 'bookings']);
-                    } else {
-                      router.navigate(['provider', 'settings']);
-                    }
-                  }, 500);
-                }
-              });
+          // this.shared_functions.getGlobalSettings()
+          //   .then(
+          //     (settings: any) => {
+          if (!this.groupService.getitemFromGroupStorage('bprofileStatus')) {
+            this.getBussinessProfileApi()
+              .then(
+                (bProfile: any) => {
+                  this.groupService.setitemToGroupStorage('bprofileStatus', bProfile.status);
+                  if (router.url === '\/provider') {
+                    setTimeout(() => {
+                      if (this.groupService.getitemFromGroupStorage('bprofileStatus') === 'ACTIVE') {
+                        // if (settings.waitlist) {
+                        //   router.navigate(['provider', 'check-ins']);
+                        // } else if (settings.appointment) {
+                        //   router.navigate(['provider', 'appointments']);
+                        // } else if (settings.order) {
+                        //   router.navigate(['provider', 'orders']);
+                        // } else {
+                        //   router.navigate(['provider', 'settings']);
+                        // }
+                        router.navigate(['provider', 'bookings']);
+                      } else {
+                        router.navigate(['provider', 'settings']);
+                      }
+                    }, 500);
+                  }
+                });
+          }
         }
       }
     });
@@ -270,6 +276,7 @@ export class BusinessComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.shared_functions.getGlobalSettings();
     this.screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
     if (this.screenWidth <= 991) {

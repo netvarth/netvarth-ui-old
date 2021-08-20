@@ -37,7 +37,6 @@ export class ActionsPopupComponent implements OnInit {
     private sharedFunctions: SharedFunctions,
     private provider_shared_functions: ProviderSharedFuctions,
     private groupService: GroupStorageService) {
-    console.log(this.data);
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 
 @Component({
@@ -35,10 +37,14 @@ export class BookingQuickActionsComponent implements OnInit {
       displayName: 'order Manager',
       class: 'fa fa-shopping-cart'
     }];
+  settings;
   constructor(private provider_services: ProviderServices,
+    private groupService: GroupStorageService,
+    private snackbarService: SnackbarService,
     private router: Router) { }
 
   ngOnInit(): void {
+    this.settings = this.groupService.getitemFromGroupStorage('settings');
     this.getWaitlistMgr();
   }
   getWaitlistMgr() {
@@ -57,9 +63,17 @@ export class BookingQuickActionsComponent implements OnInit {
   }
   actionClicked(action) {
     if (action === 'appt') {
-      this.apptClicked();
+      if (this.settings.appointment) {
+        this.apptClicked();
+      } else {
+        this.snackbarService.openSnackBar('Appointment manager not enabled', { 'panelClass': 'snackbarerror' });
+      }
     } else if (action === 'token') {
-      this.checkinClicked();
+      if (this.settings.waitlist) {
+        this.checkinClicked();
+      } else {
+        this.snackbarService.openSnackBar('QManager not enabled', { 'panelClass': 'snackbarerror' });
+      }
     } else if (action === 'qManager') {
       this.router.navigate(['provider', 'settings', 'q-manager']);
     } else if (action === 'apptManager') {

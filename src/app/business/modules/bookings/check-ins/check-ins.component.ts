@@ -676,7 +676,12 @@ export class CheckinsComponent implements OnInit {
   onChangeLocationSelect(location) {
     this.selected_location = location;
     this.groupService.setitemToGroupStorage('loc_id', this.selected_location);
-    this.doSearch();
+    this.loading = true;
+    if (this.selectedType === 'calender') {
+      this.setCalenderCheckins();
+    } else {
+      this.doSearch();
+    }
   }
   showAdjustDelay() {
     if (this.queues && this.queues.length === 0) {

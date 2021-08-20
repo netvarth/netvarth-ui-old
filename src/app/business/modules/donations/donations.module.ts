@@ -12,7 +12,7 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { RecordsDatagridModule } from '../bookings/records-datagrid/records-datagrid.module';
 import { InboxListModule } from '../inbox-list/inbox-list.module';
-import { CustomerBookingDetailsModule } from '../bookings/booking-detail/customer-booking-details/customer-booking-details.module';
+import { CustomerBookingDetailsModule } from '../bookings/customer-booking-details/customer-booking-details.module';
 import { BookingDocumentsModule } from '../bookings/booking-documents/booking-documents.module';
 import { QuestionnaireListPopupModule } from '../questionnaire-list-popup/questionnaire-list-popup.module';
 

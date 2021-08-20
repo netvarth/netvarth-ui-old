@@ -82,8 +82,10 @@ export class CalendarComponent implements OnInit {
       for (let waitlist of this.waitlists) {
         if (this.source === 'appointment') {
           let name;
-          if (waitlist.appmtFor[0].firstName || waitlist.appmtFor[0].lastName) {
-            name = waitlist.appmtFor[0].firstName + ' ' + waitlist.appmtFor[0].lastName;
+          const fname = (waitlist.appmtFor[0].firstName) ? waitlist.appmtFor[0].firstName : '';
+          const lname = (waitlist.appmtFor[0].lastName) ? waitlist.appmtFor[0].lastName : '';
+          if (fname || lname) {
+            name = fname + ' ' + lname;
           } else {
             name = this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + ' id: ' + waitlist.appmtFor[0].memberJaldeeId;
           }
@@ -99,8 +101,10 @@ export class CalendarComponent implements OnInit {
           });
         } else if (this.source === 'order') {
           let name;
-          if (waitlist.orderFor.firstName || waitlist.orderFor.lastName) {
-            name = waitlist.orderFor.firstName + ' ' + waitlist.orderFor.lastName;
+          const fname = (waitlist.orderFor.firstName) ? waitlist.orderFor.firstName : '';
+          const lname = (waitlist.orderFor.lastName) ? waitlist.orderFor.lastName : '';
+          if (fname || lname) {
+            name = fname + ' ' + lname;
           } else {
             name = this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + ' id: ' + waitlist.orderFor.jaldeeId;
           }
@@ -114,8 +118,10 @@ export class CalendarComponent implements OnInit {
           });
         } else if (this.source === 'checkin') {
           let name;
-          if (waitlist.waitlistingFor[0].firstName || waitlist.waitlistingFor[0].lastName) {
-            name = waitlist.waitlistingFor[0].firstName + ' ' + waitlist.waitlistingFor[0].lastName;
+          const fname = (waitlist.waitlistingFor[0].firstName) ? waitlist.waitlistingFor[0].firstName : '';
+          const lname = (waitlist.waitlistingFor[0].lastName) ? waitlist.waitlistingFor[0].lastName : '';
+          if (fname || lname) {
+            name = fname + ' ' + lname;
           } else {
             name = this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + ' id: ' + waitlist.waitlistingFor[0].memberJaldeeId;
           }

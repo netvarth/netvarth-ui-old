@@ -1,18 +1,18 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { SnackbarService } from '../../../../../shared/services/snackbar.service';
-import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { WordProcessor } from '../../../../../shared/services/word-processor.service';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
-import { projectConstants } from '../../../../../app.component';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { projectConstants } from '../../../../app.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CommunicationPopupComponent } from '../communication-popup/communication-popup.component';
-import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-customer-booking-details',
   templateUrl: './customer-booking-details.component.html',
-  styleUrls: ['./customer-booking-details.component.css', '../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../../assets/css/style.bundle.css']
+  styleUrls: ['./customer-booking-details.component.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../assets/css/style.bundle.css']
 })
 export class CustomerBookingDetailsComponent implements OnInit {
   @Input() waitlist_data;
@@ -209,7 +209,7 @@ export class CustomerBookingDetailsComponent implements OnInit {
   heightCalc() {
     setTimeout(() => {
       const height = this.elementView.nativeElement.offsetHeight;
-      this.addedHeight = height - 340;
+      this.addedHeight = height - 319;
       this.getHeight.emit(this.addedHeight);
     }, 200);
   }

@@ -52,7 +52,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     private provider_shared_functions: ProviderSharedFuctions,
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
-    private groupService: GroupStorageService,
+    public groupService: GroupStorageService,
     private provider_dataStorage: ProviderDataStorageService,
     private titleService: Title
   ) {

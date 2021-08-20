@@ -1,6 +1,7 @@
 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 p-0 disp-md-flex box-hgt" #details
   [class.donation-hgt]="bookingType=='donation'">
-  <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12 donation-pad bottom-border" *ngIf="bookingType === 'donation'">
+  <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12 donation-pad bottom-border records"
+    *ngIf="bookingType === 'donation'">
     <h3 class="service-name">
       {{waitlist_data.service.name}}
     </h3>
@@ -9,6 +10,10 @@
     </div>
     <div class="rupee-font">
       {{waitlist_data.donationAmount | currency:'&#8377;' }}
+    </div>
+    <div class="notes mgn-up-30" *ngIf="waitlist_data.note !== ''">
+      <label class="no-margin">{{waitlist_data.service.consumerNoteTitle}}</label>
+      <div class="consumer-notes">{{waitlist_data.note}}</div>
     </div>
   </div>
   <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12 padding-20px right-border bottom-border"
@@ -164,7 +169,7 @@
           <span class="value">{{waitlist_data.location.place}}</span>
         </div>
         <button class="btn create-prescription-button" (click)="showCommunications()"
-        *ngIf="whatsappNumber || number || email">Communication</button>
+          *ngIf="whatsappNumber || number || email">Communication</button>
       </div>
     </div>
   </div>

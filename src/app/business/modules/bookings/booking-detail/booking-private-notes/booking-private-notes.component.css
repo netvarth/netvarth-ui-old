@@ -115,3 +115,14 @@
     width: 200px;
     margin: auto;
 }
+.modal-header {
+    justify-content: flex-start !important;
+    border: none !important;
+}
+.modal-body {
+    padding-top: 0 !important;
+}
+.modal-footer {
+    padding: 10px !important;
+    border: none !important;
+}

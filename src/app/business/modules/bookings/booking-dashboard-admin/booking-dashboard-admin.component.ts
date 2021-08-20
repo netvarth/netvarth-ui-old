@@ -64,7 +64,6 @@ export class BookingDashboardAdminComponent implements OnInit {
       this.newAppts = this.todayAppts.concat(this.futureAppts);
     });
     this.selected_location = this.groupService.getitemFromGroupStorage('loc_id');
-    console.log('cinstr ', this.selected_location);
   }
   ngOnDestroy() {
     if (this.subscription) {
@@ -81,7 +80,6 @@ export class BookingDashboardAdminComponent implements OnInit {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.getProviderLocations();
     this.getCustomers();
-    console.log('init ', this.selected_location);
     this.getProviderSettings();
     if (this.active_user.accountType === 'BRANCH') {
       this.getUsers();
@@ -238,7 +236,6 @@ export class BookingDashboardAdminComponent implements OnInit {
   }
   getDonations() {
     let filter = {};
-    console.log('ffunc ', this.selected_location);
     if (this.selected_location) {
       filter['location-eq'] = this.selected_location.id;
     }

@@ -662,7 +662,12 @@ export class AppointmentsComponent implements OnInit {
   onChangeLocationSelect(location) {
     this.selected_location = location;
     this.groupService.setitemToGroupStorage('loc_id', this.selected_location);
-    this.doSearch();
+    this.loading = true;
+    if (this.selectedType === 'calender') {
+      this.setCalenderAppts();
+    } else {
+      this.doSearch();
+    }
   }
   selectViewType(view) {
     this.loading = true;

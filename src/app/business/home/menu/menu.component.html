@@ -27,12 +27,11 @@
     <div id="kt_aside_menu" data-menu-vertical="1" data-menu-scroll="1" data-menu-dropdown-timeout="500"
       class="aside-menu">
       <ul class="menu-nav">
-
         <!-- Bookings -->
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu bookings-menu collapsed"
           (click)="showMenuSection()" data-target="#subSec"
           [attr.data-toggle]="(apptstatus || checkinStatus || orderstatus || donationstatus) ? 'collapse' : ''"
-          aria-expanded="false">
+          aria-expanded="false" *ngIf="groupService.getitemFromGroupStorage('bprofileStatus') === 'ACTIVE'">
           <a routerLink="bookings" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
               class="svg-icon menu-icon">
               <i class="fa fa-check-circle"></i>

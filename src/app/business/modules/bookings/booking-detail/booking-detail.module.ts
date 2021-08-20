@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ServiceActionModule } from './service-actions/service-actions.module';
-import { CustomerBookingDetailsModule } from './customer-booking-details/customer-booking-details.module';
+import { CustomerBookingDetailsModule } from '../customer-booking-details/customer-booking-details.module';
 import { BookingMedicalRecordsRXModule } from '../booking-medical-records-rx/booking-medical-records-rx.module';
 import { BookingDocumentsModule } from '../booking-documents/booking-documents.module';
 import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';

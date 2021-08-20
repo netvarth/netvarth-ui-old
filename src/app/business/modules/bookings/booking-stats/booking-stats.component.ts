@@ -50,7 +50,6 @@ export class BookingStatsComponent implements OnInit {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.settings = this.groupService.getitemFromGroupStorage('settings');
     this.userData = this.groupService.getitemFromGroupStorage('ynw-user');
-    console.log('admin', this.admin)
   }
   gotoView(type) {
     if (type === 'appt') {

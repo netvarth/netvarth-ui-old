@@ -46,7 +46,6 @@ export class BookingDetailComponent implements OnInit {
   ) {
     this.activated_route.queryParams.subscribe(params => {
       this.bookingType = params.type;
-      console.log('this.bookingType', this.bookingType);
       this.waitlist_id = params.uid;
       if (params.waitlistMgrSettings) {
         this.showToken = params.waitlistMgrSettings.showTokenId;

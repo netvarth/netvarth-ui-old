@@ -5,8 +5,8 @@
             aria-expanded="false">
             <div>Billing</div>
             <div class="mgn-lt-auto">
-                <i *ngIf="!checkDisable()" (click)="getWaitlistBill('view')"
-                    class="fa fa-external-link pointer-cursor mgn-rt-20" aria-hidden="true"></i>
+                <i *ngIf="!checkDisable()" (click)="getWaitlistBill('view')" class="fa fa-external-link pointer-cursor"
+                    aria-hidden="true" [class.mgn-rt-20]="small_device_display && !checkDisable()"></i>
                 <i *ngIf="small_device_display && !checkDisable()" class="fa fa-angle-down"></i>
             </div>
         </div>
@@ -76,7 +76,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <div class="total-amount">
+                    <div class="total-amount bold">
                         <div class="flx_1"> Amount</div>
                         <div><i class="fa fa-inr"></i>{{bill_data.netTotal}}</div>
                     </div>
@@ -107,22 +107,22 @@
                         <div>(+)<i class="fa fa-inr"></i>{{bill_data.totalTaxAmount}}
                         </div>
                     </div>
-                    <div class="total-amount">
+                    <div class="total-amount bold">
                         <div class="flx_1">Net Total</div>
                         <div><i class="fa fa-inr"></i>{{bill_data.netRate}}
                         </div>
                     </div>
-                    <div class="total-amount" *ngIf="bill_data.totalAmountPaid > 0">
+                    <div class="total-amount bold" *ngIf="bill_data.totalAmountPaid > 0">
                         <div class="flx_1">Amount Paid</div>
                         <div><i class="fa fa-inr"></i>{{bill_data.totalAmountPaid}}
                         </div>
                     </div>
-                    <div class="total-amount" *ngIf="bill_data.amountDue >= 0">
+                    <div class="total-amount bold" *ngIf="bill_data.amountDue >= 0">
                         <div class="flx_1">Amount Due</div>
                         <div><i class="fa fa-inr"></i>{{bill_data.amountDue}}
                         </div>
                     </div>
-                    <div class="total-amount" *ngIf="bill_data.amountDue < 0">
+                    <div class="total-amount bold" *ngIf="bill_data.amountDue < 0">
                         <div class="flx_1">Refund</div>
                         <div><i class="fa fa-inr"></i>{{refund_value}}</div>
                     </div>

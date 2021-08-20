@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NavigationExtras, Router } from '@angular/router';
-import { SnackbarService } from '../../../../../shared/services/snackbar.service';
-import { WordProcessor } from '../../../../../shared/services/word-processor.service';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
-import { VoiceConfirmComponent } from '../../../customers/video-confirm/voice-confirm.component';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { VoiceConfirmComponent } from '../../customers/video-confirm/voice-confirm.component';
 
 @Component({
   selector: 'app-communication-popup',
@@ -24,7 +24,6 @@ export class CommunicationPopupComponent implements OnInit {
     private provider_services: ProviderServices,
     private router: Router, private dialog: MatDialog,
     private snackbarService: SnackbarService) {
-    console.log(this.data);
   }
   ngOnInit(): void {
     this.notSupported = this.wordProcessor.getProjectMesssages('WATSAPP_NOT_SUPPORTED');

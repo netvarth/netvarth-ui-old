@@ -117,14 +117,13 @@
     padding: 0.3rem !important;
     font-size: 14px !important;
     color: #395aa2 !important;
-    font-weight: 700 !important;
     display: flex;
 }
 .card.billing-card .card-footer .total-amount i {
     font-size: 14px !important;
     color: #395aa2 !important;
-    font-weight: 700 !important;
-    font-family: 'FontAwesome' !important;
+    font-family: 'FontAwesome' !important;    
+    font-weight: normal !important;
 }
 .card.billing-card .card-footer .actions {
     display: flex !important;

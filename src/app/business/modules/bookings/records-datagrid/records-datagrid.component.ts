@@ -53,7 +53,6 @@ export class RecordsDatagridComponent implements OnInit {
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.activateRoute.queryParams.subscribe(qparams => {
       this.qParams = qparams;
-      console.log(qparams);
       if (qparams.heading) {
         this.heading = qparams.heading;
       }
@@ -78,8 +77,6 @@ export class RecordsDatagridComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    console.log(this.records);
-    console.log(this.source);
     if (!this.view) {
       if (this.source == 'bill') {
         this.getBills();
