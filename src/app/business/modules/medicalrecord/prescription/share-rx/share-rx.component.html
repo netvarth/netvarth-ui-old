@@ -116,10 +116,10 @@
               <table class="sign-table" style="width: 100%; margin: auto;margin-bottom: 20px" *ngIf="customerDetail"> 
                   <tr>
                       <td style="padding-right: 10px; width: 60%">
-                          <label>{{customer_label | capitalizeFirst}} Name:&nbsp;</label>
-                          <span *ngIf="customerDetail.firstName">{{customerDetail.firstName | capitalizeFirst}}
+                          <label>{{customer_label | capitalizeFirst}} &nbsp;</label>
+                          <span *ngIf="customerDetail.firstName">: {{customerDetail.firstName | capitalizeFirst}}
                               {{customerDetail.lastName}}</span>
-                          <span *ngIf="!customerDetail.firstName && customerDetail.jaldeeId">{{customerDetail.jaldeeId}}</span>
+                          <span *ngIf="!customerDetail.firstName && customerDetail.jaldeeId">Id: {{customerDetail.jaldeeId}}</span>
                       </td>
                       <td><label>Gender:&nbsp;</label>
                           <span *ngIf="customerDetail.gender">{{customerDetail.gender | capitalizeFirst}}</span>
