@@ -52,8 +52,8 @@
 </div>
 
       <div class="mgtop40 form-group"  *ngIf="!showthirdparty">
-            <span  *ngIf="!mrPrescriptionDetails[0].keyName">We will create a PDF of your prescription and will share Via</span>  
-            <span  *ngIf="mrPrescriptionDetails[0].keyName">Your prescription will share Via</span>
+            <span  *ngIf="!(mrPrescriptionDetails &&  mrPrescriptionDetails[0].keyName)">We will create a PDF of your prescription and will share Via</span>  
+            <span  *ngIf="(mrPrescriptionDetails && mrPrescriptionDetails[0].keyName)">Your prescription will share Via</span>
           <div class="coupon-outer">
               <mat-checkbox [disabled] = "(!phon || phon === 'null') || is_noSMS"  class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
                   SMS
@@ -117,8 +117,9 @@
                   <tr>
                       <td style="padding-right: 10px; width: 60%">
                           <label>{{customer_label | capitalizeFirst}} Name:&nbsp;</label>
-                          <span>{{customerDetail.firstName | capitalizeFirst}}
+                          <span *ngIf="customerDetail.firstName">{{customerDetail.firstName | capitalizeFirst}}
                               {{customerDetail.lastName}}</span>
+                          <span *ngIf="!customerDetail.firstName && customerDetail.jaldeeId">{{customerDetail.jaldeeId}}</span>
                       </td>
                       <td><label>Gender:&nbsp;</label>
                           <span *ngIf="customerDetail.gender">{{customerDetail.gender | capitalizeFirst}}</span>
