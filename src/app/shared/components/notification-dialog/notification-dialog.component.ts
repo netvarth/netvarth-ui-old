@@ -3,8 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 @Component({
     selector: 'app-notification-dialog',
-    templateUrl: './notification-dialog.component.html',
-    styleUrls: ['./notification-dialog.component.css']
+    templateUrl: './notification-dialog.component.html'
 })
 export class NotificationDialogComponent {
     ok_btn_cap;
@@ -12,8 +11,8 @@ export class NotificationDialogComponent {
 
     constructor(public dialogRef: MatDialogRef<NotificationDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any) {
-        if (this.data.btnOkTitle) {
-            this.ok_btn_cap = this.data.btnOkTitle;
+        if (this.data.type) {
+            this.ok_btn_cap = '';
         }
     }
 
