@@ -1,6 +1,8 @@
-<header>
+<header #consumer_paylink>
+        <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
     <div class="content comn-cls" *ngIf="bill_data && bill_data.amountDue > 0">
         <div *ngIf="paidStatus == 'false'">
+            <app-common-innerloading-spinner *ngIf="loadingPaytm"></app-common-innerloading-spinner>
             <section>
                 <div class="content settings">
                     <div class="row">
@@ -34,10 +36,10 @@
                                                     {{this.amountDue | currency:'&#8377; '}}
                                                 </h2><br>
                                                 <h2 class="textcenter">
-                                                    <button class="pay" (click)="pay()">
+                                                    <!-- <button class="pay" (click)="pay()">
                                                         <h6 style="padding-top: 10px;">PAY</h6>
-                                                    </button>
-                                                    <!-- <div class="paymentdiv" >
+                                                    </button> -->
+                                                    <div class="paymentdiv" >
                                                         
                                                         <span type="button" class="razorpay-icon paymenticons"  appPreventDoubleClick (click)="pay()" id="stepThreeConfirmButton"  >
                                                            
@@ -45,7 +47,7 @@
                                                         <span type="button" class="paytm-icon paymenticons" appPreventDoubleClick (click)="pay('paytm')" id="stepThreeConfirmButton" >
                                                            
                                                         </span>
-                                                    </div> -->
+                                                    </div>
                                                 </h2>
                                             </li>
                                             <li>
@@ -112,7 +114,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-
+                                                                   
                                                                     <div class="bill-content">
                                                                         <div class="section-three bill-responsive">
                                                                             <div class="bill-breakup">
@@ -505,10 +507,10 @@
                     <span style="padding-right: 60px;"><b>Payment Gateway:</b>&nbsp;<span>{{pGateway}}</span></span>
                 </div>
                 <div class="pay-det-row">
-                    <span><b>Payment Ref Id:</b>&nbsp;<span>{{razorpay_payment_id}}</span></span>
+                    <span><b>Payment Ref Id:</b>&nbsp;<span>{{payment_id}}</span></span>
                 </div>
                 <div class="pay-det-row">
-                    <span><b>Transaction Id:</b>&nbsp;<span>{{razorpay_order_id}}</span></span>
+                    <span><b>Transaction Id:</b>&nbsp;<span>{{order_id}}</span></span>
                 </div>
             </div>
         </div>

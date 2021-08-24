@@ -972,6 +972,14 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.addCustomerAppointment(this.account_id, post_Data)
             .subscribe(data => {
                 const retData = data;
+                if(this.customId){
+                    console.log("businessid"+this.businessId);
+                    const accountid = this.businessId;
+                      this.shared_services.addProvidertoFavourite(accountid)
+                        .subscribe(() => {
+                        });
+                   
+                }
                 this.uuidList = [];
                 let parentUid;
                 Object.keys(retData).forEach(key => {

@@ -487,7 +487,7 @@
 
                         </div>
                       </div>
-                      <!-- <div class="paymentdiv"  *ngIf="catalog_details.advanceAmount > 0 && ((checkJcash && jcashamount < catalog_details.advanceAmount) || (!checkJcash))">
+                      <div class="paymentdiv"  *ngIf="catalog_details.advanceAmount > 0 && ((checkJcash && jcashamount < catalog_details.advanceAmount) || (!checkJcash))">
                         <p class="jaldeecredit">
                             To pay Rs {{checkJcash ? totalamountPay : catalog_details.advanceAmount}} please select any payment options
                         </p>
@@ -497,8 +497,8 @@
                         <span type="button" class="paytm-icon paymenticons"*ngIf="catalog_details.advanceAmount > 0 && ((checkJcash && jcashamount < catalog_details.advanceAmount) || (!checkJcash))" appPreventDoubleClick (click)="confirm('paytm')" id="stepThreeConfirmButton" >
                            
                         </span>
-                    </div> -->
-                    <!-- <div *ngIf="catalog_details.advanceAmount > 0 && ((checkJcash && jcashamount > catalog_details.advanceAmount) || (checkJcash && jcashamount == catalog_details.advanceAmount))">
+                    </div>
+                    <div *ngIf="catalog_details.advanceAmount > 0 && ((checkJcash && jcashamount > catalog_details.advanceAmount) || (checkJcash && jcashamount == catalog_details.advanceAmount))">
                       <button mat-flat-button (click)="confirm()" 
                         [disabled]="checkoutDisabled || !isfutureAvailableTime" class="chekout-btn">CHECKOUT &nbsp; →
                       </button>
@@ -507,12 +507,12 @@
                       <button mat-flat-button (click)="confirm()" 
                         [disabled]="checkoutDisabled || !isfutureAvailableTime" class="chekout-btn">CHECKOUT &nbsp; →
                       </button>
-                    </div> -->
-                    <div >
+                    </div>
+                    <!-- <div >
                         <button mat-flat-button (click)="confirm()" 
                           [disabled]="checkoutDisabled || !isfutureAvailableTime" class="chekout-btn">CHECKOUT &nbsp; →
                         </button>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>
@@ -605,7 +605,7 @@
                   <div *ngIf="jcashamount>0  && (checkJcash && jcashamount < catalog_details.advanceAmount)" class="hint">
                     Balance amount can be paid by other payment methods
                   </div>
-                  <!-- <div class="paymentdiv"  *ngIf="catalog_details.advanceAmount > 0 && ((checkJcash && jcashamount < catalog_details.advanceAmount) || (!checkJcash))">
+                  <div class="paymentdiv"  *ngIf="catalog_details.advanceAmount > 0 && ((checkJcash && jcashamount < catalog_details.advanceAmount) || (!checkJcash))">
                     <p class="jaldeecredit">
                         To pay Rs {{checkJcash ? totalamountPay : catalog_details.advanceAmount}} please select any payment options
                     </p>
@@ -615,19 +615,19 @@
                     <span type="button" class="paytm-icon paymenticons"*ngIf="catalog_details.advanceAmount > 0 && ((checkJcash && jcashamount < catalog_details.advanceAmount) || (!checkJcash))" appPreventDoubleClick (click)="confirm('paytm')" id="stepThreeConfirmButton" >
                        
                     </span>
-                </div> -->
-                  <!-- <div *ngIf="selectedImagelist.files.length > 0 && catalog_details.advanceAmount > 0 &&  ((checkJcash && jcashamount > catalog_details.advanceAmount) || (checkJcash && jcashamount == catalog_details.advanceAmount))">
+                </div>
+                  <div *ngIf="selectedImagelist.files.length > 0 && catalog_details.advanceAmount > 0 &&  ((checkJcash && jcashamount > catalog_details.advanceAmount) || (checkJcash && jcashamount == catalog_details.advanceAmount))">
                     <button mat-flat-button (click)="confirm()" [disabled]="checkoutDisabled || !isfutureAvailableTime"
                       class="chekout-btn">CHECKOUT &nbsp; → </button>
                   </div>
                   <div *ngIf="selectedImagelist.files.length > 0 && (catalog_details.advanceAmount == 0 || !catalog_details.advanceAmount)">
                     <button mat-flat-button (click)="confirm()" [disabled]="checkoutDisabled || !isfutureAvailableTime"
                       class="chekout-btn">CHECKOUT &nbsp; → </button>
-                  </div> -->
-                  <div *ngIf="selectedImagelist.files.length > 0 ">
+                  </div>
+                  <!-- <div *ngIf="selectedImagelist.files.length > 0 ">
                     <button mat-flat-button (click)="confirm()" [disabled]="checkoutDisabled || !isfutureAvailableTime"
                       class="chekout-btn">CHECKOUT &nbsp; → </button>
-                  </div>
+                  </div> -->
                 </div>
                 <!-- <div class="cr1">
                 <div class="ph-gal-bx col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" *ngIf="image_list_popup && image_list_popup.length > 0">

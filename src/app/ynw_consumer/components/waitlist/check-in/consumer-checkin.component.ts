@@ -951,6 +951,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             .subscribe(data => {
                 this.lStorageService.removeitemfromLocalStorage('age');
                 this.lStorageService.removeitemfromLocalStorage('userId');
+                if(this.customId){
+                    console.log("businessid"+this.businessId);
+                    const accountid = this.businessId;
+                      this.shared_services.addProvidertoFavourite(accountid)
+                        .subscribe(() => {
+                        });
+                   
+                }
                 const retData = data;
                 this.uuidList = [];
                 let parentUid;
@@ -2365,6 +2373,7 @@ console.log('inside validaity');
             this.shared_services.PayByJaldeewallet(postData)
                 .subscribe((pData: any) => {
                     if (pData.isGateWayPaymentNeeded && pData.isJCashPaymentSucess) {
+                        console.log("first"+pData);
                         if(paymentMode == 'PPI'){
                             this.payWithPayTM(pData.response);
                         }else{
@@ -2379,6 +2388,7 @@ console.log('inside validaity');
         else {
             this.subs.sink = this.shared_services.consumerPayment(this.waitlistDetails)
                 .subscribe((pData: any) => {
+                    console.log("firstrt"+pData);
                     this.pGateway = pData.paymentGateway;
                     if (this.pGateway === 'RAZORPAY') {
                         this.paywithRazorpay(pData);

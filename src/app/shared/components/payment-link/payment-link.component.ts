@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { SharedServices } from '../../services/shared-services';
@@ -12,6 +12,7 @@ import { WordProcessor } from '../../services/word-processor.service';
 import { GroupStorageService } from '../../services/group-storage.service';
 import { PaytmService } from '../../services/paytm.service';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   'selector': 'app-payment-link',
@@ -110,8 +111,8 @@ export class PaymentLinkComponent implements OnInit {
   accountId: any;
   data: any;
   razorpayDetails: any = [];
-  razorpay_order_id: any;
-  razorpay_payment_id: any;
+  order_id: any;
+  payment_id: any;
   razorpay_signature: any;
   paidStatus = 'false';
   providername: any;
@@ -120,7 +121,8 @@ export class PaymentLinkComponent implements OnInit {
   username: any;
   provider_label: any;
   customer: any;
-
+  loadingPaytm = false;
+  @ViewChild('consumer_paylink') paytmview;
   constructor(
     public provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
@@ -131,6 +133,8 @@ export class PaymentLinkComponent implements OnInit {
     public prefillmodel: RazorpayprefillModel,
     public winRef: WindowRefService,
     private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
+    private cdRef: ChangeDetectorRef,
     private groupService: GroupStorageService) {
     this.activated_route.params.subscribe(
       qparams => {
@@ -266,7 +270,7 @@ export class PaymentLinkComponent implements OnInit {
         console.log(data);
         this.checkIn_type = 'payment_link';
         this.origin = 'consumer';
-        this.pGateway = data.paymentGateway;
+        this.pGateway = data.paymentGateway || 'PAYTM';
         if (this.pGateway === 'RAZORPAY') {
           this.paywithRazorpay(data);
         }else {
@@ -274,7 +278,8 @@ export class PaymentLinkComponent implements OnInit {
         }
       },
         error => {
-          this.api_error = this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' };
+         // this.api_error = this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' };
+         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
   paywithRazorpay(data: any) {
@@ -291,8 +296,8 @@ export class PaymentLinkComponent implements OnInit {
       (response: any) => {
         if (response !== 'failure') {
           this.paidStatus = 'true';
-          this.razorpay_order_id = response.razorpay_order_id;
-          this.razorpay_payment_id = response.razorpay_payment_id;
+          this.order_id = response.razorpay_order_id;
+          this.payment_id = response.razorpay_payment_id;
           // this.razorpay_signature = response.razorpay_signature;
         } else {
           this.paidStatus = 'false';
@@ -301,17 +306,27 @@ export class PaymentLinkComponent implements OnInit {
     );
   }
   payWithPayTM(pData:any) {
-   // this.loading = true;
+    this.loadingPaytm = true;
     this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
 }
 transactionCompleted(response) {
   if(response.STATUS == 'TXN_SUCCESS'){
     this.paidStatus = 'true';
-  
+    this.order_id = response.ORDERID;
+    this.payment_id = response.TXNID;
+    this.loadingPaytm = false; 
+    this.cdRef.detectChanges();
   
 } else if(response.STATUS == 'TXN_FAILURE'){
   this.paidStatus = 'false';
+  this.loadingPaytm = false; 
+  this.cdRef.detectChanges();
 }
+}
+closeloading(){
+  this.loadingPaytm = false; 
+  this.cdRef.detectChanges();
+  this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
 }
   billview() {
     this.showbill = !this.showbill;
