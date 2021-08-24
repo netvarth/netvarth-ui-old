@@ -1,0 +1,41 @@
+.link-label {
+    font-weight: bold !important;
+    margin-bottom: 10px !important;
+}
+.copy-btn {
+    float: right;
+    margin-top: 10px;
+    color: #1e4079;
+    border: 1px solid #1e4079;
+    padding: 5px 20px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+.copy-btn:hover {
+    color: white;
+    background: #1e4079;
+}
+.customer-details {
+    margin-bottom: 30px;
+}
+.customer-details i.icon {
+    font-family: 'FontAwesome' !important;
+    font-weight: 500 !important;
+    font-size: 13px !important;
+    color: #28a1ac !important;
+    width: 20px !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-right: 5px !important;
+}
+.customer-details i.icon.fa.fa-mobile {
+    font-size: 20px !important;
+}
+.customer-details .value {
+    font-size: 1.1rem !important;
+    font-weight: 500 !important;
+    color: #797979 !important;
+}
