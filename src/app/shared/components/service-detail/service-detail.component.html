@@ -1,5 +1,9 @@
 <!-- <h1 class="mat-dialog-title service-detail-title"> -->
+        
+        
     <div class="modal-header service-detail-header">
+           
+    
         <h1 class="modal-title pull-left service-detail-title">
             <span class="name">
                 <span class="dispvalue" *ngIf="data.serdet && data.serdet.name">
@@ -31,9 +35,9 @@
             <i class="fa fa-window-close" aria-hidden="true"></i>
         </button> -->
         </h1>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="dialogRef.close()">
-            <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button"  class="cross"  class="close pull-right" aria-label="Close" (click)="dialogRef.close()">
+                <span class="cross" style="padding-left:30px" aria-hidden="true" >&times;</span>
+            </button>
     </div>
     
     <div class="modal-body service-detail-content service-popup-content"> 
