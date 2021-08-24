@@ -1867,7 +1867,8 @@ img.ordericon.home {
 .content.bus-page .bus-page-header .bus-title-content .bus-actions-small-devices .bus-actions .small-devices-coup a,
 .content.bus-page .bus-page-header .bus-title-content .bus-actions-small-devices .bus-actions .small-devices-message a {
   color: white !important;
-  background-color: #1E4079 !important;
+  /* background-color: #1E4079 !important; */
+  background-color: #FD7029 !important;
   border: 0 !important;
   font-weight: 500 !important;
   height: 35px !important;
@@ -2218,7 +2219,7 @@ img.ordericon.home {
   }
 }
 .action-btns {
-  background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
+  background: linear-gradient(45deg, #FD7029(224,152,208,1) 0%, #FD7029(180,76,154,1) 100%) !important;
   opacity: 1;
 }
 .question-value1, .question-valuearr {
