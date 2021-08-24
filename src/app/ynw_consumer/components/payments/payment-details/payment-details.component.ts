@@ -102,6 +102,9 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
         this.shared_services.getConsumerDonationByUid(uuid).subscribe(
             (donations) => {
                 this.donationDetails = donations;
+                if(this.donationDetails && this.donationDetails.providerAccount ){
+                 this.provider_name = this.donationDetails.providerAccount.businessName;
+                }
                 this.api_loading = false;
             }
         );
