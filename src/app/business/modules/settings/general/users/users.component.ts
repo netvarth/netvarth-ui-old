@@ -149,6 +149,7 @@ export class BranchUsersComponent implements OnInit {
     showcheckbox = false;
     addlocationcheck = false;
     loc_list: any = [];
+    locationsjson: any = [];
     locIds: any = [];
     newlyCreatedGroupId;
     showteams = false;
@@ -941,14 +942,18 @@ export class BranchUsersComponent implements OnInit {
         this.showcheckbox = true;
         this.addlocationcheck = true;
         this.showusers = true;
-        this.getProviderLocations();
+        // this.getProviderLocations();
     }
     getProviderLocations() {
         this.api_loading = true;
         this.provider_services.getProviderLocations()
             .subscribe(data => {
-                console.log(data);
-                this.loc_list = data;
+             this.locationsjson = data;
+            for (const loc of this.locationsjson) {
+              if (loc.status === 'ACTIVE') {
+                this.loc_list.push(loc);
+              }
+            }
                 this.api_loading = false;
                 console.log(this.loc_list);
             });
