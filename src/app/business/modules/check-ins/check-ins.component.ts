@@ -194,7 +194,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedUser: any;
   users: any = [];
   views: any = [];
-  queues: any;
+  queues: any= [];
   loading = false;
   statusMultiCtrl: any = [];
   labelMultiCtrl: any = [];
