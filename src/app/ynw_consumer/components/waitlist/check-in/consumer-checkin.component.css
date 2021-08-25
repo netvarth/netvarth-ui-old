@@ -1619,9 +1619,9 @@ button.next-button {
   border-radius: 30px !important;
   height: 50px !important;
   padding: 10px 30px !important;
-
-  background: transparent radial-gradient(closest-side at 6% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box;
-  box-shadow: 15px 15px 40px #DBA8C4;
+background: #FD7029 0% 0% no-repeat padding-box !important;
+  /* background: transparent radial-gradient(closest-side at 6% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 15px 15px 40px #DBA8C4; */
   opacity: 1;
 }
 
@@ -1635,7 +1635,8 @@ button.next-button {
   text-align: left !important;
   font: normal normal bold 18px/25px Roboto !important;
   letter-spacing: 0px !important;
-  color: #59345D !important;
+  color: #FD7029 !important;
+  /* color: #59345D !important; */
   opacity: 1 !important;
 }
 
@@ -1697,7 +1698,8 @@ button.next-button {
   text-align: center !important;
   font: normal medium 18px/22px Roboto !important;
   letter-spacing: 0px !important;
-  color: #59345D !important;
+  /* color: #59345D !important; */
+  color: #FD7029 !important;
   opacity: 1 !important;
   margin-top: 0 !important;
 }
@@ -1725,7 +1727,8 @@ button.next-button {
   text-align: left;
   font: normal normal medium 18px/22px Roboto;
   letter-spacing: 0px;
-  color: #59345D;
+  color: #FD7029 !important;
+  /* color: #59345D; */
   opacity: 1;
 }
 
@@ -1809,7 +1812,8 @@ button.next-button {
 }
 
 #tcModal .modal-dialog .modal-content .modal-header button i {
-  color: #522E5A !important;
+  color: #FD7029 !important;
+  /* color: #522E5A !important; */
 }
 
 #tcModal .modal-dialog .modal-content .modal-body {
@@ -1833,8 +1837,9 @@ button.next-button {
   border-radius: 30px !important;
   height: 50px !important;
   padding: 10px 30px !important;
-  background: transparent radial-gradient(closest-side at 6% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box !important;
-  box-shadow: 15px 15px 40px #dba8c4 !important;
+  background: #FD7029 !important;
+  /* background: transparent radial-gradient(closest-side at 6% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box !important;
+  box-shadow: 15px 15px 40px #dba8c4 !important; */
   opacity: 1 !important;
   color: white !important;
   margin: 8px 10px !important;
@@ -2169,7 +2174,8 @@ button.next-button {
   margin-right: 10px !important;
 }
 .modal-header.service-detail-header {
-  background: #522e5a 0% 0% no-repeat padding-box !important;
+  background: #FD7029 0% 0% no-repeat padding-box !important;
+  /* background: #522e5a 0% 0% no-repeat padding-box !important; */
   padding: 5px 15px 5px 10px !important;
 }
 .book-alerts .modal-content{

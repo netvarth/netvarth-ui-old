@@ -1,5 +1,6 @@
 .background-img {
-    background-image: url(../images/heartfulness/BG.jpg) !important;    
+  background: #fff;
+    /* background-image: url(../images/heartfulness/BG.jpg) !important;     */
   }
   .panel-default .panel-heading {
     border: none !important;
@@ -15,14 +16,17 @@
   }
   
   .mat-button {
-    background-color: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
+    background-color: #FD7029 !important;
+    background: #FD7029 !important;
+    /* background-color: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important; */
   }
   .panel {
       background: transparent !important;
   }
   
 .panel-heading.top-row {
-    background: #522e5a 0% 0% no-repeat padding-box !important;
+  background: #FD7029 0% 0% no-repeat padding-box !important;
+    /* background: #522e5a 0% 0% no-repeat padding-box !important; */
     height: 50px !important;
   }
   

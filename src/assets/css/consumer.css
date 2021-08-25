@@ -5277,7 +5277,8 @@
 }
 .consumer-dash .c-checkins .ng-tns-c16-8 .find-sp-btn {
   border-radius: 20px;
-  background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
+  background: #FD7029 0% 0% no-repeat padding-box !important;
+  /* background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important; */
   color: rgb(255 255 255);
   padding-left: 30px;
   padding-right: 30px;
@@ -5357,7 +5358,8 @@
   /* border: 1px solid rgb(4 62 121); */
   border-radius: 50px;
   /* color: rgb(255 255 255); */
-  background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
+  background: #FD7029 0% 0% no-repeat padding-box !important;
+  /* background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important; */
   /* min-width: 0px !important; */
   display: none;
 }
