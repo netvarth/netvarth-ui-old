@@ -40,6 +40,7 @@ import { PaytmService } from '../../../../../app/shared/services/paytm.service';
 })
 export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     paymentBtnDisabled=false;
+    isClickedOnce=false;
     tooltipcls = '';
     add_member_cap = Messages.ADD_MEMBER_CAP;
     cancel_btn = Messages.CANCEL_BTN;

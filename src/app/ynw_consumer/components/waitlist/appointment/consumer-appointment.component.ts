@@ -40,6 +40,7 @@ import { PaytmService } from '../../../../shared/services/paytm.service';
 })
 export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     paymentBtnDisabled=false;
+    isClickedOnce=false;
     tooltipcls = '';
     add_member_cap = Messages.ADD_MEMBER_CAP;
     cancel_btn = Messages.CANCEL_BTN;
@@ -756,7 +757,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     // }
     confirmcheckin(type?,paymenttype?) {
         if(type==='appt' && this.sel_ser_det.isPrePayment &&this.payEmail===''){
-            this.paymentBtnDisabled=true;
             const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
                 width: '40%',
                 panelClass: ['loginmainclass', 'popup-class'],
@@ -912,6 +912,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     saveCheckin(type?,paymenttype?) {
+        if(this.type=='appt'){
+            this.paymentBtnDisabled=true;
+        }
 
         if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
             if (this.waitlist_for.length !== 0) {
@@ -1015,6 +1018,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.apptdisable = false;
                     this.disablebutton = false;
+                    this.paymentBtnDisabled=false;
                 });
     }
     handleOneMemberSelect(id, firstName, lastName,email) {
