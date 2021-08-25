@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { Device } from '@ionic-native/device/ngx';
 import { Platform } from '@ionic/angular';
 import { LocalStorageService } from './shared/services/local-storage.service';
@@ -26,7 +25,6 @@ export class AppComponent implements OnInit {
    * @param lStorageService 
    */
   constructor(
-    private firebaseX: FirebaseX,
     private device: Device,
     private platform: Platform,
     private lStorageService: LocalStorageService,
@@ -42,11 +40,11 @@ export class AppComponent implements OnInit {
    * 
    */
   ngOnInit() {
-    if (this.device.uuid) {
+    // if (this.device.uuid) {
       // console.log(this.device.uuid);
-      this.lStorageService.setitemonLocalStorage('authToken', this.device.uuid);
-      // this.lStorageService.setitemonLocalStorage('authToken', 'abcd'.toString());
-    }
+      // this.lStorageService.setitemonLocalStorage('authToken', this.device.uuid);
+      this.lStorageService.setitemonLocalStorage('authToken', 'abcd'.toString());
+    // }
   	let token = this.lStorageService.getitemfromLocalStorage('authToken');
     if (token) {
       let regexToReplace = /\-/gi;
@@ -59,41 +57,41 @@ export class AppComponent implements OnInit {
       console.log('here');
       console.log('Device UUID is: ' + this.device.manufacturer);
 
-      this.firebaseX.grantPermission().then(hasPermission => {
-        console.log("Permission was " + (hasPermission ? "granted" : "denied"));
-      });
-      this.firebaseX.getToken()
-        .then(token => {
-          this.lStorageService.setitemonLocalStorage('mUniqueId', token);
-          console.log(`The token is ${token}`);
-        }) // save the token server-side and use it to push notifications to this device
-        .catch(error => console.error('Error getting token', error));
+      // this.firebaseX.grantPermission().then(hasPermission => {
+      //   console.log("Permission was " + (hasPermission ? "granted" : "denied"));
+      // });
+      // this.firebaseX.getToken()
+      //   .then(token => {
+      //     this.lStorageService.setitemonLocalStorage('mUniqueId', token);
+      //     console.log(`The token is ${token}`);
+      //   }) // save the token server-side and use it to push notifications to this device
+      //   .catch(error => console.error('Error getting token', error));
 
-      this.firebaseX.onMessageReceived().subscribe(message => {
-        console.log(message);
-        if (message.tap) {
-          // const dialogrefd = this.dialog.open(NotificationDialogComponent, {
-          //   width: '50%',
-          //   panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-          //   disableClose: true,
-          //   data: {
-          //     'message': message.body,
-          //     'title': "Jaldee for Business",
-          //     'btnOkTitle': 'OK'
-          //   }
-          // });
-          // dialogrefd.afterClosed().subscribe(result => {
-          //   console.log(result);
-          // });
-        }
-      });
+      // this.firebaseX.onMessageReceived().subscribe(message => {
+      //   console.log(message);
+      //   if (message.tap) {
+      //     // const dialogrefd = this.dialog.open(NotificationDialogComponent, {
+      //     //   width: '50%',
+      //     //   panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      //     //   disableClose: true,
+      //     //   data: {
+      //     //     'message': message.body,
+      //     //     'title': "Jaldee for Business",
+      //     //     'btnOkTitle': 'OK'
+      //     //   }
+      //     // });
+      //     // dialogrefd.afterClosed().subscribe(result => {
+      //     //   console.log(result);
+      //     // });
+      //   }
+      // });
 
-      this.firebaseX.onTokenRefresh()
-        .subscribe((token: string) => {
-          this.lStorageService.setitemonLocalStorage('mUniqueId', token);
-          console.log(`Got a new token ${token}`);
-        });
-      })
+      // this.firebaseX.onTokenRefresh()
+      //   .subscribe((token: string) => {
+      //     this.lStorageService.setitemonLocalStorage('mUniqueId', token);
+      //     console.log(`Got a new token ${token}`);
+      //   });
+      });
       projectConstants = this.globalService.getGlobalConstants();
       const cVersion = version.desktop;
       const pVersion = this.lStorageService.getitemfromLocalStorage('version');
@@ -105,4 +103,3 @@ export class AppComponent implements OnInit {
       }
   }
 }
-

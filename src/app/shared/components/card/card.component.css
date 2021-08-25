@@ -540,8 +540,8 @@ button.fxmenu {
     font-weight: 600;
     border-radius: 15px;
     background: #FD7029 !important;
-    /* background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important; */
-    box-shadow: 15px 15px 40px #dba8c4;
+    /* background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
+    box-shadow: 15px 15px 40px #dba8c4; */
     opacity: 1;
     margin-bottom: 20px;
     padding: 8px;
@@ -630,8 +630,8 @@ button.fxmenu {
     /* font-weight: 600; */
     border-radius: 15px;
     background: #FD7029 !important;
-    /* background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important; */
-    box-shadow: 15px 15px 40px #DBA8C4;
+    /* background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
+    box-shadow: 15px 15px 40px #DBA8C4; */
     opacity: 1;
     /* margin-bottom: 20px; */
     margin-top: 5px;

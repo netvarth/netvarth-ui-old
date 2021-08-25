@@ -180,6 +180,7 @@
  
 .modal-header.service-detail-header {
     background: #FD7029 0% 0% no-repeat padding-box !important;
+    /* background: #522e5a 0% 0% no-repeat padding-box !important; */
     padding: 5px 15px 5px 10px !important;
 }
 

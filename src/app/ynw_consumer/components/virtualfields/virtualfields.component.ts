@@ -264,14 +264,14 @@ export class VirtualFieldsComponent implements OnInit {
     if (memberObj.bookingLocation && memberObj.bookingLocation.state) {
       this.virtualForm.patchValue({ state: memberObj.bookingLocation.state });
     }
-    if (memberObj.userProfile && memberObj.userProfile.whatsAppNum) {
+    if (memberObj.userProfile && memberObj.userProfile.whatsAppNum.number) {
       this.virtualForm.patchValue({ whatsappnumber: memberObj.userProfile.whatsAppNum.number });
       this.virtualForm.patchValue({ countryCode_whtsap: memberObj.userProfile.whatsAppNum.countryCode });
     } else {
       this.virtualForm.patchValue({ whatsappnumber: this.customer_data.userProfile.primaryMobileNo });
       this.virtualForm.patchValue({ countryCode_whtsap: this.customer_data.userProfile.countryCode });
     }
-    if (memberObj.userProfile && memberObj.userProfile.telegramNum) {
+    if (memberObj.userProfile && memberObj.userProfile.telegramNum.number) {
       this.virtualForm.patchValue({ telegramnumber: memberObj.userProfile.telegramNum.number });
       this.virtualForm.patchValue({ countryCode_telegram: memberObj.userProfile.telegramNum.countryCode });
     } else {
@@ -354,21 +354,21 @@ export class VirtualFieldsComponent implements OnInit {
     if (customer.userProfile && customer.userProfile.state) {
       this.virtualForm.patchValue({ state: customer.userProfile.state });
     }
-    if (customer.userProfile && customer.userProfile.whatsAppNum) {
+    if (customer.userProfile && customer.userProfile.whatsAppNum.number) {
       this.virtualForm.patchValue({ whatsappnumber: customer.userProfile.whatsAppNum.number });
       this.virtualForm.patchValue({ countryCode_whtsap: customer.userProfile.whatsAppNum.countryCode });
 
     } else {
-      this.virtualForm.patchValue({ whatsappnumber: customer.userProfile.primaryMobileNo });
-      this.virtualForm.patchValue({ countryCode_whtsap: customer.userProfile.countryCode });
+      this.virtualForm.patchValue({ whatsappnumber: this.customer_data.userProfile.primaryMobileNo });
+      this.virtualForm.patchValue({ countryCode_whtsap: this.customer_data.userProfile.countryCode});
     }
-    if (customer.userProfile && customer.userProfile.telegramNum) {
-      this.virtualForm.patchValue({ telegramnumber: customer.userProfile.telegramNum.number });
+    if (customer.userProfile && customer.userProfile.telegramNum.number) {
+      this.virtualForm.patchValue({ telegramnumber: this.customer_data.userProfile.primaryMobileNo});
       this.virtualForm.patchValue({ countryCode_telegram: customer.userProfile.telegramNum.countryCode });
     }
     else {
       this.virtualForm.patchValue({ telegramnumber: customer.userProfile.primaryMobileNo });
-      this.virtualForm.patchValue({ countryCode_telegram: customer.userProfile.countryCode });
+      this.virtualForm.patchValue({ countryCode_telegram:this.customer_data.userProfile.countryCode});
     }
 
   }

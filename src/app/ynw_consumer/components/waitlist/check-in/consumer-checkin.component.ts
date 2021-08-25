@@ -203,7 +203,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     virtualFields: any;
     consumerType: string;
     whatsappCountryCode;
-    checkPolicy = true;
+    // checkPolicy = true;
     disablebutton = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -2140,10 +2140,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             });
         }
     }
-    changePolicy(event) {
-        console.log(event.target.checked);
-        this.checkPolicy = event.target.checked;
-    }
+    // changePolicy(event) {
+    //     console.log(event.target.checked);
+    //     this.checkPolicy = event.target.checked;
+    // }
     viewAttachments(){
         this.action = 'attachment';
         this.modal.nativeElement.click();
