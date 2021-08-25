@@ -91,8 +91,7 @@ import { QRCodeGeneratordetailComponent } from './shared/components/qrcodegenera
 import { NotificationDialogComponent } from './shared/components/notification-dialog/notification-dialog.component';
 import { IonicModule } from '@ionic/angular';
 import { Device } from '@ionic-native/device/ngx';
-import { FirebaseX } from '@ionic-native/firebase-x/ngx';
-// import { FCM } from '@ionic-native/fcm/ngx';
+// import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -172,7 +171,7 @@ export function init_app(globalService: GlobalService) {
   providers: [
     BsModalService,
     Device,
-    FirebaseX,
+    // FirebaseX,
     AuthGuardConsumer,
     AuthGuardHome,
     AuthGuardLogin,
