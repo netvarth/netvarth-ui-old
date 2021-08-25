@@ -1738,7 +1738,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.history_waitlist_count = 0;
     this.future_waitlist_count = 0;
     console.log('count', this.activeQs.length);
-    if (this.time_type !== 2 && this.activeQs.length > 0) {
+    if (this.time_type !== 2 && this.activeQs.length > 0 || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) {
       this.getFutureWLCount()
         .then(
           (result) => {
@@ -1754,7 +1754,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         );
     }
-    if (this.time_type !== 1 && this.activeQs.length > 0) {
+    if (this.time_type !== 1 && this.activeQs.length > 0 || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) {
       this.getTodayWLCount()
         .then(
           (result) => {

@@ -195,7 +195,6 @@
         </h4>
         <h6 class="qualification font-normal" *ngIf="user.qualifications && user.qualifications.length>0">
             {{user.qualifications | limitTo: [20, '...']}}
-            <!-- {{user.qualifications[0] | limitTo: [20, '...']}} -->
         </h6>
         <h6 class="qualification" *ngIf="!user.qualifications || (user.qualifications && user.qualifications.length==0)"
             style="height:17px;"></h6>
@@ -210,6 +209,10 @@
             <ng-container
                 *ngIf="(!user.apptTime || (user.apptTime && (!user.apptTime.caption || user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && user.waitingTime.caption">
                 {{user.waitingTime.caption}}<br />{{user.waitingTime.date}}
+            </ng-container>
+            <ng-container
+               *ngIf="(!user.apptTime || ((user.apptTime.caption && user.apptTime.availableSchedule && user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && !user.waitingTime.caption">
+                {{user.apptTime.caption}}<br />{{user.apptTime.date}}
             </ng-container>
         </p>
         <!-- <p class="availability user-available" *ngIf="user.locationName">{{user.locationName}}</p> -->
