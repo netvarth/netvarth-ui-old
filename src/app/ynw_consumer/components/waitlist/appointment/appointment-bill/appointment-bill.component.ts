@@ -580,15 +580,26 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
             this.loadingPaytm = false;
             this.cdRef.detectChanges();
             this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
-            const navigationExtras: NavigationExtras = {
-                queryParams: {
-                  uuid: this.uuid,
-                  accountId: this.accountId,
-                  type: 'appointment',
-                  'paidStatus': false
-                }
-              };
-              this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'bill'], navigationExtras));
+              if (this.checkIn_type === 'appt_historybill') {
+                const navigationExtras: NavigationExtras = {
+                    queryParams: {
+                        uuid: this.uuid,
+                        accountId: this.accountId,
+                      source: 'history'
+                    }
+                  };
+                this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'bill'],navigationExtras ));
+              } else {
+                const navigationExtras: NavigationExtras = {
+                    queryParams: {
+                      uuid: this.uuid,
+                      accountId: this.accountId,
+                      type: 'appointment',
+                      'paidStatus': false
+                    }
+                  };
+                this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'bill'], navigationExtras));
+              }
 
         } else if(response.STATUS == 'TXN_SUCCESS'){
             this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
@@ -600,8 +611,11 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                   'paidStatus': true
                 }
               };
+              if (this.checkIn_type === 'appt_historybill') {
+                this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'history'],{ queryParams: {'is_orderShow': 'false'}} ));
+              } else {
               this.ngZone.run(() => this.router.navigate(['consumer'] ,navigationExtras));
-            
+              }
         }
       
       
