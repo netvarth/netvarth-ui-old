@@ -147,6 +147,9 @@
 
                                   <tbody>
                                     <!--begin::Cart Content-->
+                                    <span  *ngIf="orders.length == 0">
+                                      Items are disabled or removed from the cart.
+                                    </span>
                                     <tr *ngFor="let item of orders">
                                       <td data-title="Product" class="d-flex align-items-center font-weight-bolder">
                                         <!--begin::Symbol-->

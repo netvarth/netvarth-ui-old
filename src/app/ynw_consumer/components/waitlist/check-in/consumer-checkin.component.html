@@ -1432,7 +1432,7 @@
 
                                         <div class="containerpayment" style="margin:20px;" *ngIf="sel_ser_det && sel_ser_det.isPrePayment==false && paymentLength==0|| (paymentDetails && paymentDetails.amountRequiredNow == 0)">
                                             <div class="prepayment-confirm">
-                                                <button type="button" [class.disabled]="isClickedOnce" (click)="isClickedOnce = true;$event.preventDefault();saveCheckin('checkin')" id="stepThreeConfirmButton"  class="next-button btn btn-primary font-weight-bold  px-12 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
+                                                <button type="button" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && saveCheckin('checkin')" id="stepThreeConfirmButton"  class="next-button btn btn-primary font-weight-bold  px-12 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
                                                     
                                                      Confirm <span >{{settingsjson.showTokenId?'Token ':'Checkin'}} </span></button>
                                                 
