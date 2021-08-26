@@ -910,7 +910,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         });
     }
     saveCheckin(type?,paymenttype?) {
-        console.log('insaide');
+     this.isClickedOnce=true;
         if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
             if (this.waitlist_for.length !== 0) {
                 for (const list of this.waitlist_for) {
@@ -1077,6 +1077,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
     transactionCompleted(response) {
     if(response.STATUS == 'TXN_SUCCESS'){
+        this.isClickedOnce=false;
         this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
         let multiple;
         if (this.uuidList.length > 1) {
@@ -1098,6 +1099,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         };
         this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras));
     } else if(response.STATUS == 'TXN_FAILURE'){
+        this.isClickedOnce=false;
         this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
         this.ngZone.run(() => this.router.navigate(['consumer']));
      }
@@ -2438,6 +2440,7 @@ console.log('inside validaity');
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
+        this.isClickedOnce=false;
         this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'checkin_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList, this.customId);
     }
     payWithPayTM(pData:any) {

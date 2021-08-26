@@ -1148,7 +1148,7 @@
                                                 <span *ngIf="checkJcash" class="rupee-font">{{payAmount |
                                                     currency:'&#8377;'}}
                                                 </span> -->
-                                                <button type="button"  [class.disabled]="isClickedOnce" appPreventDoubleClick (click)="isClickedOnce = true;$event.preventDefault();saveCheckin('appt')" id="stepThreeConfirmButton" [disabled]="paymentBtnDisabled" class="next-button btn btn-primary font-weight-bold  px-12 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
+                                                <button type="button"  [class.disabled]="isClickedOnce" (click)="!isClickedOnce && saveCheckin('appt')" id="stepThreeConfirmButton"  class="next-button btn btn-primary font-weight-bold  px-12 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
                                                     <ng-container
                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
                                                       ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
@@ -1158,18 +1158,18 @@
                                                      Proceed to pay <span >Rs {{checkJcash ? payAmount : paymentDetails.amountRequiredNow}}</span></ng-container> -->
                                                 <!-- <ng-container
                                                     *ngIf="paymentLength == 0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)">
-                                                    Confirm</ng-container> -->
+                                                    Confirm</ng-container>  appPreventDoubleClick  (throttledClick)="log()"-->
                                                 </button>
                                             </div>
                                             <div class="paymentdiv"  *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
                                                 <p class="jaldeecredit">
                                                     To pay Rs {{checkJcash ? payAmount : paymentDetails.amountRequiredNow}} please select any payment options
                                                 </p>
-                                                <span type="button"  class="razorpay-icon paymenticons" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"   [class.disabled]="isClickedOnce"
-                                                    (click)="isClickedOnce = true;$event.preventDefault();saveCheckin('appt')" id="stepThreeConfirmButton"  >
+                                                <span class="razorpay-icon paymenticons" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"   [class.disabled]="isClickedOnce"
+                                                    (click)="!isClickedOnce && saveCheckin('appt')" id="stepThreeConfirmButton"  >
                                                    
                                                 </span>&nbsp;&nbsp;
-                                                <span type="button" [class.disabled]="isClickedOnce" class="paytm-icon paymenticons"*ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" appPreventDoubleClick (click)="isClickedOnce = true;$event.preventDefault();saveCheckin('appt','paytm')" id="stepThreeConfirmButton" >
+                                                <span type="button" [class.disabled]="isClickedOnce" class="paytm-icon paymenticons"*ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" (click)="!isClickedOnce && saveCheckin('appt','paytm')" id="stepThreeConfirmButton" >
                                                    
                                                 </span>
                                             </div>
