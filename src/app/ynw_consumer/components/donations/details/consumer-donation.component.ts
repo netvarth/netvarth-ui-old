@@ -495,6 +495,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
 
     // }
     payuPayment() {
+        this.isClickedOnce=true;
         this.resetApi();
         if (this.sel_ser) {
 
@@ -507,6 +508,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.donate(paymentWay);
     }
     paytmPayment() {
+        this.isClickedOnce=true;
         this.resetApi();
         if (this.sel_ser) {
 
@@ -627,6 +629,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
+        this.isClickedOnce=false;
         this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uid, null, this.account_id, null, null, this.customId);
     }
     payWithPayTM(pData:any) {
