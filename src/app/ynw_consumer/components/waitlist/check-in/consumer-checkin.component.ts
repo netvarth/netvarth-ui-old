@@ -721,6 +721,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.payEmail = result;
                 this.confirmcheckin(type,paymenttype);
             }else{
+                this.isClickedOnce=false;
                 this.paymentBtnDisabled=false;
             }
 
@@ -878,6 +879,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         });
                 }
                 else {
+                    this.isClickedOnce=false;
                   this.disablebutton = true;
                 this.addCheckInConsumer(post_Data,paymenttype);
                 }
@@ -993,6 +995,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 }
             },
                 error => {
+                    this.isClickedOnce=false;
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                     this.disablebutton = false;
                     this.paytmGateway = false;   
@@ -1024,12 +1027,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                                         this.paymentOperation(paymenttype);
                                     },
                                         error => {
+                                            this.isClickedOnce=false;
                                             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                                             this.disablebutton = false;
                                         });
                             }
                         },
                             error => {
+                                this.isClickedOnce=false;
                                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                                 this.disablebutton = false;
                             });
@@ -1039,6 +1044,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
         },
             error => {
+                this.isClickedOnce=false;
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 this.disablebutton = false;
             });
@@ -1523,6 +1529,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         }
                     },
                     error => {
+                        this.isClickedOnce=false;
                         this.wordProcessor.apiErrorAutoHide(this, error);
                         this.disablebutton = false;
                     }
@@ -2294,6 +2301,7 @@ console.log('inside validaity');
                 }
             },
                 error => {
+                    this.isClickedOnce=false;
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 });
     }
@@ -2347,6 +2355,7 @@ console.log('inside validaity');
                     }
                 },
                     error => {
+                        this.isClickedOnce=false;
                         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     });
         }
@@ -2383,6 +2392,7 @@ console.log('inside validaity');
                     }
                 },
                     error => {
+                        this.isClickedOnce=false;
                         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     });
         }
@@ -2406,11 +2416,13 @@ console.log('inside validaity');
                             //     }
                             // }, 2000);
                         } else {
+                            this.isClickedOnce=false;
                             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
                         }
                     }
                 },
                     error => {
+                        this.isClickedOnce=false;
                         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.disablebutton = false;
                     });

@@ -194,6 +194,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('consumer_order') paytmview;
   totalamountPay: any;
   loadingPaytm = false;
+  isClickedOnce=false;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -875,6 +876,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.delivery_type === 'home') {
       if (this.added_address === null || this.added_address.length === 0) {
         this.checkoutDisabled = false;
+        this.isClickedOnce=false;
         this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
         return;
       } else {
@@ -1128,6 +1130,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         },
           error => {
+            this.isClickedOnce=false;
             this.checkoutDisabled = false;
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
@@ -1195,6 +1198,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         },
           error => {
+            this.isClickedOnce=false;
             this.checkoutDisabled = false;
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
@@ -1714,6 +1718,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         },
           error => {
+            this.isClickedOnce=false;
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           });
     }
@@ -1752,6 +1757,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         },
           error => {
+            this.isClickedOnce=false;
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           });
 
@@ -1776,11 +1782,13 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
               //   }
               // }, 2000);
             } else {
+              this.isClickedOnce=false;
               this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
             }
           }
         },
           error => {
+            this.isClickedOnce=false;
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
 
           });

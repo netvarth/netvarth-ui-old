@@ -233,6 +233,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     readMore = false;
     @ViewChild('consumer_donation') paytmview;
     loadingPaytm = false;
+    isClickedOnce=false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -510,6 +511,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         if (this.sel_ser) {
 
         } else {
+            this.isClickedOnce=false;
             this.snackbarService.openSnackBar('Donation service is not found', { 'panelClass': 'snackbarerror' });
             return;
         }
@@ -551,6 +553,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         if (this.api_error === null && this.donationAmount) {
             this.addDonationConsumer(post_Data, paymentWay);
         } else {
+            this.isClickedOnce=false;
             this.snackbarService.openSnackBar('Please enter valid donation amount', { 'panelClass': 'snackbarerror' });
         }
     }
@@ -566,6 +569,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 }
             },
                 error => {
+                    this.isClickedOnce=false;
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
@@ -602,11 +606,13 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                         //     }
                         // }, 2000);
                     } else {
+                        this.isClickedOnce=false;
                         this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
                     }
                 }
             },
                 error => {
+                    this.isClickedOnce=false;
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
@@ -643,12 +649,14 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 };
                 this.ngZone.run(() => this.router.navigate(['consumer', 'donations', 'confirm'], navigationExtras));
         } else if(response.STATUS == 'TXN_FAILURE'){
+            this.isClickedOnce=false;
             this.loadingPaytm = false;
             this.cdRef.detectChanges();
             this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
          }
     }
     closeloading(){
+        this.isClickedOnce=false;
         this.loadingPaytm = false; 
         this.cdRef.detectChanges();
         this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
@@ -1141,6 +1149,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             this.consumerPayment(this.uid, post_Data, paymentWay);
         },
             error => {
+                this.isClickedOnce=false;
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             });
     }

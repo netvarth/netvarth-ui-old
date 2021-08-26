@@ -20,6 +20,7 @@ import { AppointmentConfirmPopupComponent } from './appointment-confirm-popup/ap
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { QuestionnaireModule } from '../../../../shared/components/questionnaire/questionnaire.module';
 import { VirtualFieldsModule } from '../../virtualfields/virtualfields.module';
+import { PreventDoubleClickDirective } from '../../../../shared/directives/prevent-double-click.directive';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,8 @@ import { VirtualFieldsModule } from '../../virtualfields/virtualfields.module';
         ConsumerAppointmentHistoryComponent,
         ConsumerAppointmentBillComponent,
         ConfirmPageComponent,
-        AppointmentConfirmPopupComponent
+        AppointmentConfirmPopupComponent,
+        PreventDoubleClickDirective
     ],
     imports: [
         FormMessageDisplayModule,

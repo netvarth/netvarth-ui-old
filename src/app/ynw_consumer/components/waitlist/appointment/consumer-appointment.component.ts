@@ -768,6 +768,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.payEmail = result;
                     this.confirmcheckin(type,paymenttype);
                 }else{
+                 this.isClickedOnce=false;
                  this.paymentBtnDisabled=false;
                 }
     
@@ -901,8 +902,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         });
                 }
                 else {
+                this.isClickedOnce=false;
                 this.disablebutton = true;
-                    this.addCheckInConsumer(post_Data,paymenttype);
+                this.addCheckInConsumer(post_Data,paymenttype);
                 }
             } else if (this.sel_ser_det.isPrePayment ) {
                 this.addApptAdvancePayment(post_Data);
@@ -1014,6 +1016,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
             },
                 error => {
+                    this.isClickedOnce=false;
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                     // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.apptdisable = false;
@@ -1357,6 +1360,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     }  
                 },
                 error => {
+                    this.isClickedOnce=false;
                     this.wordProcessor.apiErrorAutoHide(this, error);
                     this.disablebutton = false;
                 }
@@ -2023,6 +2027,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
             },
                 error => {
+                    this.isClickedOnce=false;
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 });
     }
@@ -2070,6 +2075,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     }
                 },
                     error => {
+                        this.isClickedOnce=false;
                         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     });
         }
@@ -2106,6 +2112,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     }
                 },
                     error => {
+                        this.isClickedOnce=false;
                         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                  
                     });
@@ -2130,11 +2137,13 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                             //     }
                             // }, 2000);
                         } else {
+                            this.isClickedOnce=false;
                             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
                         }
                     }
                 },
                     error => {
+                        this.isClickedOnce=false;
                         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.disablebutton = false;
                     });
@@ -2231,12 +2240,14 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                                         this.paymentOperation(paymenttype);
                                     },
                                         error => {
+                                            this.isClickedOnce=false;
                                             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                                             this.disablebutton = false;
                                         });
                             }
                         },
                             error => {
+                                this.isClickedOnce=false;
                                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                                 this.disablebutton = false;
                             });
@@ -2246,6 +2257,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
         },
             error => {
+                this.isClickedOnce=false;
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 this.disablebutton = false;
             });
