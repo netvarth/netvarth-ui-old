@@ -146,7 +146,7 @@
                 </div>
                 <div class="modal-footer"  *ngIf="!showAddCustomerHint" >
                   <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal"
-                    #locclosebutton>Cancel</button>
+                    #locclosebutton   (click)="cancelLocationToUsers()">Cancel</button>
                   <button type="button" class="btn btn-primary font-weight-bold" 
                   (click)="assignLocationToUsers()">{{(teamEdit) ? 'Update' : 'Save'}}</button>
                 </div>
