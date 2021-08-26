@@ -2054,7 +2054,16 @@ header {
     width: 20px;
     height: 20px;
   }
-
+  .flat-icon-btn {
+    /* border: 1px solid rgb(4 62 121); */
+    border-radius: 50px;
+    border-color: #ddd !important;
+    /* color: rgb(255 255 255); */
+    background: #ddd 0% 0% no-repeat padding-box !important;
+    /* background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important; */
+    /* min-width: 0px !important; */
+    display: none;
+  }
   /* header .lgin.cust button, header .ot-bx {
       margin-top: 0px !important;
   } */
