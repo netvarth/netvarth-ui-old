@@ -219,9 +219,11 @@
                                             </div>
                                             <div
                                                 class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp border-rt check-new-group pad-rt-0">
-                                                <form [formGroup]="virtualForm"
+                                               
+                                                <form  [formGroup]="virtualForm"
                                                     class="login-form custom-login-form consumer-join-component virtual-fields"
-                                                    [ngClass]="theme?theme:''" novalidate>
+                                                    [ngClass]="theme?theme:''" novalidate >
+                                                    <fieldset  [disabled]="!editable">
                                                     <!-- <div class="mat-dialog-title">
                                                             <div class="title" style="font-size: 16px !important;">
                                                                 {{consumer_label| capitalizeFirst }} Information </div>
@@ -256,7 +258,7 @@
                                                                     <div class="form-group form-inline">
 
                                                                         <!-- <mat-form-field> -->
-                                                                        <mat-radio-group formControlName="serviceFor"
+                                                                        <mat-radio-group formControlName="serviceFor" 
                                                                             class="mgn-up-5 userGroup m-0 p-2"
                                                                             (change)="onServiceForChange($event.value)">
                                                                             <mat-radio-button
@@ -266,7 +268,7 @@
                                                                             </mat-radio-button>
                                                                             <!-- <ng-container *ngIf="familymember.length>0"> -->
                                                                             <!-- {{familymember.length}} -->
-                                                                            <mat-radio-button class="flx"
+                                                                            <mat-radio-button class="flx" 
                                                                                 [value]="member.user"
                                                                                 *ngFor="let member of familymember">
                                                                                 {{member.userProfile.firstName}}
@@ -593,7 +595,7 @@
                                                                                 class="form-control text-width"
                                                                                 id="whatsappnumber"
                                                                                 formControlName="whatsappnumber"
-                                                                                autocomplete="off">
+                                                                                autocomplete="off" style="width:50%">
                                                                             <!-- <app-field-error-display
                                 [displayError]="fed_service.isFieldValid(virtualForm,'whatsappnumber')" [errorMsgs]="fed_service.getErrorMessage(virtualForm,'whatsappnumber',
                             {
@@ -639,7 +641,7 @@
                                                                                 class="form-control text-width"
                                                                                 id="telegramnumber"
                                                                                 formControlName="telegramnumber"
-                                                                                autocomplete="off">
+                                                                                autocomplete="off" style="width:50%">
                                                                             <!-- <app-field-error-display
                                 [displayError]="fed_service.isFieldValid(virtualForm,'telegramnumber')" [errorMsgs]="fed_service.getErrorMessage(virtualForm,'telegramnumber',
                             {
@@ -655,7 +657,7 @@
                                                                     <label for="email"
                                                                         class="col-form-label">Email</label>
                                                                     <input type="email" class="form-control"
-                                                                        formControlName="email" />
+                                                                        formControlName="email" style="width:55%" />
                                                                     <mat-checkbox class="updateemail"
                                                                         formControlName="updateEmail">Update Email
                                                                         to 'My Account'</mat-checkbox>
@@ -680,9 +682,12 @@
                                                                         <span>Continue</span>
                                                                     </button>
                                                                 </div> -->
+
+                                                                
                                                             <div class="">&nbsp;</div>
                                                         </div>
                                                     </div>
+                                               </fieldset>
                                                 </form>
                                                 <!-- <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-up-10"
                                                     *ngIf="queuejson && queuejson.length == 0 && !api_loading1">
@@ -703,6 +708,11 @@
                                                 class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
                                                 (click)="goToStep('next')">
                                                 Next
+                                            </button> &nbsp;
+                                            <button type="button"
+                                                class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                (click)="goToEdit()" *ngIf="!selectedLocation">
+                                                Edit
                                             </button>
                                         </div>
                                     </div>
