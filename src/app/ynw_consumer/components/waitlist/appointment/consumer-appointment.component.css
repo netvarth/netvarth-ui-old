@@ -910,7 +910,7 @@ ul.bus-actions li a.lnk {
   transition: all .3s ease;
   cursor: pointer;
   padding: 7px !important;
-  background: #334b99 !important;
+  background: #ec8a59ee !important;
   border-radius: 20px !important;
   font-size: 1.2rem !important;
   font-weight: 500;
@@ -1553,7 +1553,7 @@ body.modal-open {
 
 .c-checkin-new .card-container-custom .chk-btns-div mat-chip.notes-and-file-chip {
   background-color: #f6f6f6 !important;
-  border: 1px solid #A986AC !important;
+  border: 1px solid #FD7029 !important;
   border-radius: 32px !important;
   opacity: 1 !important;
 }
@@ -1561,7 +1561,7 @@ body.modal-open {
  
 .c-checkin-new .card-container-custom .chk-btns-div .btns mat-chip.notes-and-file-chip a.lnk.action {
   /* color: #787878 !important; */
-  color: #661171 !important;
+  color: #ec8a59ee !important;
 }
 
 .c-checkin-new .card-container-custom .chk-btns-div .btns mat-chip.notes-and-file-chip a.lnk.action i{
@@ -1591,7 +1591,7 @@ body.modal-open {
 }
 
 .prenotes .preinfo-title {
-  color: #a888a4 !important;
+  color: #fd7029dc !important;
   font-size: 1rem !important;
   font-weight: 600 !important;
 }
@@ -1663,7 +1663,7 @@ button.next-button {
   text-align: left !important;
   /* font: normal normal bold 15px/18px Roboto !important; */
   letter-spacing: 0px !important;
-  color: #A986AC !important;
+  color: #ec8a59ee !important;
 }
 
 .billing-value {
@@ -1697,7 +1697,7 @@ button.next-button {
   text-align: center !important;
   /* font: normal normal normal 15px/18px Roboto !important; */
   letter-spacing: 0px !important;
-  color: #A986AC !important;
+  color: #FD7029 !important;
   opacity: 1 !important;
 }
 
