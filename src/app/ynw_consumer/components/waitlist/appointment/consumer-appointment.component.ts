@@ -768,7 +768,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.payEmail = result;
                     this.confirmcheckin(type,paymenttype);
                 }else{
-                 this.isClickedOnce=false;
+                 // this.isClickedOnce=false;
                  this.paymentBtnDisabled=false;
                 }
     
@@ -902,8 +902,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         });
                 }
                 else {
-                this.isClickedOnce=false;
-                this.disablebutton = true;
+                //this.isClickedOnce=false;
+                //this.disablebutton = true;
                 this.addCheckInConsumer(post_Data,paymenttype);
                 }
             } else if (this.sel_ser_det.isPrePayment ) {
@@ -914,7 +914,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     saveCheckin(type?,paymenttype?) {
+        if(type==='appt'){
        this.isClickedOnce=true;
+        }
         if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
             if (this.waitlist_for.length !== 0) {
                 for (const list of this.waitlist_for) {

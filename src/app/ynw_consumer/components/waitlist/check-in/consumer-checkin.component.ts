@@ -910,7 +910,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         });
     }
     saveCheckin(type?,paymenttype?) {
-     this.isClickedOnce=true;
+        if(type==='checkin'){
+            this.isClickedOnce=true;
+        }
+    
         if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
             if (this.waitlist_for.length !== 0) {
                 for (const list of this.waitlist_for) {
