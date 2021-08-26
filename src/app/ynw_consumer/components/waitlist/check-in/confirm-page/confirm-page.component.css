@@ -51,7 +51,7 @@
   border: 1px solid;
   padding: 10px 50px;
   border-radius: 20px;
-  background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
+  background: #fd7029ee !important;
   color: #fff!important;
   font-weight: bold;
 }
@@ -166,7 +166,7 @@
   /* font: normal normal bold 18px/22px Roboto; */
 
   margin-bottom: 20px;
-  color: #59345d;
+  color: #fd7029ee;
   text-align: center;
   letter-spacing: 0px;
   opacity: 1;
@@ -185,7 +185,7 @@
   text-align: left !important;
   font: normal normal bold 15px/18px Roboto !important;
   letter-spacing: 0px !important;
-  color: #A986AC !important;
+  color: #fd7029ee !important;
   width: 35% !important;
   display: inline-block !important;
 }
@@ -280,7 +280,7 @@
   text-align: center !important;
   /* font: normal medium 18px/22px Roboto !important; */
   letter-spacing: 0px !important;
-  color: #59345D !important;
+  color: #fd7029ee !important;
   opacity: 1 !important;
   margin-top: 0 !important;
 }
@@ -293,7 +293,7 @@
   text-align: center !important;
   /* font: normal normal normal 15px/18px Roboto !important; */
   letter-spacing: 0px !important;
-  color: #A986AC !important;
+  color: #ec8a59ee !important;
   opacity: 1 !important;
 }
 
@@ -313,7 +313,7 @@
 }
 
 .notes .preinfo-title {
-  color: #59345D !important;
+  color: #fd7029ee !important;
   font-weight: 700 !important;
   font-size: 1.2rem !important;
   text-transform: capitalize !important;
@@ -322,7 +322,7 @@
 
 .notes .value-text {
   flex: 1 !important;
-  color: #A986AC !important;
+  color: #ec8a59ee !important;
   font-weight: 700 !important;
   /* hyphens: auto !important; */
   overflow: auto !important;

@@ -5604,7 +5604,7 @@
   /* margin-top: 10px;
   margin-left: 20px; */
   color: rgb(24 62 121);
-  background: #b67ab670 !important;
+  background: #e79f7aee !important;
   padding: 15px;
 }
 .consumer-dash .card_ico {
@@ -5735,7 +5735,7 @@
     color: white;
     font-weight: 600;
     border-radius: 0 0.156em 0.156em 0;
-    background: #b67ab6;
+    background: #ec8a59ee;
     box-shadow: -1px 2px 3px rgba(0,0,0,0.5);
 }
 
@@ -5758,7 +5758,7 @@
 .consumer-dash .grid-card .ribbon:after{
   right: -1em;
   border-width: 0.99em 1em 1em 3em;
-  border-color: #b67ab6 transparent #b67ab6 #b67ab6;
+  border-color: #ec8a59ee transparent #ec8a59ee #ec8a59ee;
   z-index: -1;
   box-shadow: 0 8px 6px -6px #00000085;
 }

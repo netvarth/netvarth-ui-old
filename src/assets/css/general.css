@@ -11831,7 +11831,7 @@ input[type=number]::-webkit-outer-spin-button {
   border-bottom: 1px solid #183e7a;
 }
 .checkin-details .stats-bar {
-  background: #b67ab670 !important;
+  background: #eb9a71ee !important;
   padding: 10px;
 }
 .checkin-details .status-label {
@@ -11867,9 +11867,9 @@ input[type=number]::-webkit-outer-spin-button {
   font-size: 0.88rem;
 }
 .checkin-details .qrcode img {
-  border: 1.5px solid #b67ab670;
+  border: 1.5px solid #eb9a71ee;
   width: 130px;
-  box-shadow: 5px 5px 5px 5px #b67ab652 !important;
+  box-shadow: 5px 5px 5px 5px #eb9a71ee !important;
 }
 .checkin-details .graphics-div {
   position: absolute;

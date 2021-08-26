@@ -864,8 +864,8 @@ ul.bus-actions li a.lnk {
 
 }
 .c-checkin-new .slotdiv mat-chip.mat-chip-selected {
-  border-color: #bf6bce !important;
-  color:#bf6bce !important;
+  border-color: #ec8a59ee !important;
+  color:#ec8a59ee !important;
   border: 2px solid !important;
 }
 .c-checkin-new .slotdiv .mat-chip {
@@ -1547,7 +1547,7 @@ body.modal-open {
   text-align: left !important;
   /* font: normal normal medium 15px/18px Roboto !important; */
   letter-spacing: 0px !important;
-  color: #8D42A2 !important;
+  color: #ec8a59ee !important;
   opacity: 1 !important;
 }
 
@@ -1566,7 +1566,7 @@ body.modal-open {
 
 .c-checkin-new .card-container-custom .chk-btns-div .btns mat-chip.notes-and-file-chip a.lnk.action i{
   /* color: #958793 !important; */
-  color: #d030b9 !important;
+  color: #ec8a59ee !important;
 }
 
 .user-data-card.card-body {
