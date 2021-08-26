@@ -3037,6 +3037,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     }
                 }
             }
+            
         } else if (type === 'prev') {
             if (this.serviceType === 'virtualService' && this.bookStep == 1) {
                 this.bookStep--;
