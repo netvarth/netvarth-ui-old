@@ -255,9 +255,9 @@
   border-radius: 30px !important;
   height: 50px !important;
   padding: 10px 30px !important;
-  box-shadow: 15px 15px 40px #dba8c4 !important;
+  box-shadow: 15px 15px 40px #f3b495ee !important;
   opacity: 1 !important;
-  background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
+  background: linear-gradient(45deg, #eb9a71ee(224,152,208,1) 0%, #eb9a71ee(180,76,154,1) 100%) !important;
   border-color: unset !important;
   margin: 20px auto 10px !important;
   font-size: 16px !important;

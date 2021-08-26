@@ -188,14 +188,13 @@ export class VirtualFieldsComponent implements OnInit {
   }
   onServiceForChange(event) {
     this.serviceFormReset();
-    console.log(event);
+
     this.is_parent = true;
     if (event !== 'new_member') {
       const chosen_Object = this.familymembers.filter(memberObj => memberObj.user === event);
       if (chosen_Object.length !== 0) {
         this.is_parent = false;
         this.chosen_person = chosen_Object[0]
-        console.log(this.chosen_person);
         this.setMemberDetails(chosen_Object[0]);
       } else {
         this.chosen_person = this.customer_data
@@ -264,14 +263,14 @@ export class VirtualFieldsComponent implements OnInit {
     if (memberObj.bookingLocation && memberObj.bookingLocation.state) {
       this.virtualForm.patchValue({ state: memberObj.bookingLocation.state });
     }
-    if (memberObj.userProfile && memberObj.userProfile.whatsAppNum.number) {
+    if (memberObj.userProfile &&memberObj.userProfile.whatsAppNum && memberObj.userProfile.whatsAppNum.number) {
       this.virtualForm.patchValue({ whatsappnumber: memberObj.userProfile.whatsAppNum.number });
       this.virtualForm.patchValue({ countryCode_whtsap: memberObj.userProfile.whatsAppNum.countryCode });
     } else {
       this.virtualForm.patchValue({ whatsappnumber: this.customer_data.userProfile.primaryMobileNo });
       this.virtualForm.patchValue({ countryCode_whtsap: this.customer_data.userProfile.countryCode });
     }
-    if (memberObj.userProfile && memberObj.userProfile.telegramNum.number) {
+    if (memberObj.userProfile && memberObj.userProfile.telegramNum && memberObj.userProfile.telegramNum.number) {
       this.virtualForm.patchValue({ telegramnumber: memberObj.userProfile.telegramNum.number });
       this.virtualForm.patchValue({ countryCode_telegram: memberObj.userProfile.telegramNum.countryCode });
     } else {
@@ -300,11 +299,11 @@ export class VirtualFieldsComponent implements OnInit {
     }else{
       this.virtualForm.patchValue({ email: ''}); 
     }
+ 
     this.virtualForm.patchValue({ whatsappnumber: this.customer_data.userProfile.primaryMobileNo });
     this.virtualForm.patchValue({ telegramnumber: this.customer_data.userProfile.primaryMobileNo });
   }
   setparentDetails(customer) {
-
 
 
     // if (customer.userProfile && customer.userProfile.dob!==undefined) {
@@ -335,7 +334,6 @@ export class VirtualFieldsComponent implements OnInit {
     }
     if (customer.userProfile.preferredLanguages && customer.userProfile.preferredLanguages !== null) {
       const preferredLanguage = this.s3Processor.getJson(customer.userProfile.preferredLanguages);
-      console.log(preferredLanguage);
       if (preferredLanguage !== null && preferredLanguage.length > 0) {
         let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
         this.virtualForm.patchValue({ islanguage: defaultEnglish });
@@ -354,21 +352,21 @@ export class VirtualFieldsComponent implements OnInit {
     if (customer.userProfile && customer.userProfile.state) {
       this.virtualForm.patchValue({ state: customer.userProfile.state });
     }
-    if (customer.userProfile && customer.userProfile.whatsAppNum.number) {
+    if (customer.userProfile && customer.userProfile.whatsAppNum && customer.userProfile.whatsAppNum.number) {
       this.virtualForm.patchValue({ whatsappnumber: customer.userProfile.whatsAppNum.number });
       this.virtualForm.patchValue({ countryCode_whtsap: customer.userProfile.whatsAppNum.countryCode });
 
     } else {
       this.virtualForm.patchValue({ whatsappnumber: this.customer_data.userProfile.primaryMobileNo });
-      this.virtualForm.patchValue({ countryCode_whtsap: this.customer_data.userProfile.countryCode});
+      this.virtualForm.patchValue({ countryCode_whtsap: this.customer_data.userProfile.countryCode });
     }
-    if (customer.userProfile && customer.userProfile.telegramNum.number) {
-      this.virtualForm.patchValue({ telegramnumber: this.customer_data.userProfile.primaryMobileNo});
+    if (customer.userProfile&& customer.userProfile.telegramNum && customer.userProfile.telegramNum.number) {
+      this.virtualForm.patchValue({ telegramnumber: customer.userProfile.telegramNum.number });
       this.virtualForm.patchValue({ countryCode_telegram: customer.userProfile.telegramNum.countryCode });
     }
     else {
-      this.virtualForm.patchValue({ telegramnumber: customer.userProfile.primaryMobileNo });
-      this.virtualForm.patchValue({ countryCode_telegram:this.customer_data.userProfile.countryCode});
+      this.virtualForm.patchValue({ telegramnumber: this.customer_data.userProfile.primaryMobileNo });
+      this.virtualForm.patchValue({ countryCode_telegram: this.customer_data.userProfile.countryCode });
     }
 
   }
@@ -386,15 +384,18 @@ export class VirtualFieldsComponent implements OnInit {
       age: ['', Validators.compose([Validators.required, Validators.min(0), Validators.max(150)])],
       pincode: ['', Validators.compose([Validators.required])],
       email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
-      whatsappnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
-      telegramnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
+      // whatsappnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
+      whatsappnumber:[''],
+      telegramnumber:[''],
+      // telegramnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
       preferredLanguage: [[], Validators.compose([Validators.required])],
       islanguage: ['', Validators.compose([Validators.required])],
       gender: ['', Validators.compose([Validators.required])],
       location: ['', Validators.compose([Validators.required])],
       localarea:[''],
       state:[''],
-      country:['']
+      country:[''],
+      updateEmail:[false]
     });
 
     this.virtualForm.patchValue({ islanguage: 'yes' });
@@ -419,29 +420,25 @@ export class VirtualFieldsComponent implements OnInit {
   }
   editLanguage() {
     this.iseditLanguage=true;
-    console.log(this.virtualForm.get('preferredLanguage').value);
     this.languageSelected = this.virtualForm.get('preferredLanguage').value.slice();
-    console.log(this.languageSelected);
     this.hideLanguages = false;
   }
   updateForm() {
-    console.log(this.dialogData.type);
+
     if (this.dialogData.type && this.dialogData.type === 'member') {
       this.details = this.dialogData.consumer
     } else {
       this.details = this.customer_data;
     }
     if (this.details.parent) {
-      this.setMemberDetails(this.details);
+          this.setMemberDetails(this.details);
     } else {
-      console.log(this.details);
-      this.setparentDetails(this.details);
+        this.setparentDetails(this.details);
 
     }
 
   }
   saveLanguages() {
-    console.log('save languages');
     if (this.lngknown === 'yes') {
       this.virtualForm.get('preferredLanguage').setValue(['English']);
       this.hideLanguages = true;
@@ -500,11 +497,9 @@ export class VirtualFieldsComponent implements OnInit {
   }
   validateFields() {
     let isinvalid = false;
-    
     if (this.countryCode === '+91') {
       if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
         isinvalid = true;
-        console.log(isinvalid);
       }
     }
     if (this.countryCode !== '+91') {
@@ -515,17 +510,14 @@ export class VirtualFieldsComponent implements OnInit {
     }
     if (this.virtualForm.get('gender').value === '') {
       isinvalid = true;
-      console.log(isinvalid);
     }
     if (this.virtualForm.get('age').value === '') {
       isinvalid = true;
-      console.log(isinvalid);
     }
 
     if (this.virtualForm.get('islanguage').value === 'no') {
       if (this.virtualForm.get('preferredLanguage').value.length === 0) {
         isinvalid = true;
-        console.log(isinvalid);
       }
     }
    
@@ -533,11 +525,10 @@ export class VirtualFieldsComponent implements OnInit {
 
       if (this.virtualForm.get('firstName').value == '') {
         isinvalid = true;
-        console.log(isinvalid);
       }
       if (this.virtualForm.get('lastName').value == '') {
         isinvalid = true;
-        console.log(isinvalid);
+
       }
     }
     // if (this.virtualForm.get('date').value === 'dd') {
@@ -549,7 +540,7 @@ export class VirtualFieldsComponent implements OnInit {
     // if (this.virtualForm.get('year').value === 'yyyy') {
     //   isinvalid = true;
     // }
-console.log(isinvalid);
+
     return isinvalid;
   }
 
@@ -588,7 +579,6 @@ console.log(isinvalid);
   }
 
   onSubmit(formdata) {
-    this.submitData = formdata
     this.submitbtndisabled = true;
     formdata['phoneno'] = this.customer_data.userProfile.primaryMobileNo;
      if(this.virtualForm.controls.email.invalid){
@@ -598,10 +588,10 @@ console.log(isinvalid);
       this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
     } else if(formdata.countryCode_whtsap.trim().length === 0 && formdata.whatsappnumber.trim().length > 0){
       this.snackbarService.openSnackBar('Please fill whatsapp countrycode', { 'panelClass': 'snackbarerror' });
-    }else if(formdata.countryCode_telegram.trim().length === 0 && formdata.telegramnumber.trim().length > 0){
+    } else if(formdata.countryCode_telegram.trim().length === 0 && formdata.telegramnumber.trim().length > 0){
       this.snackbarService.openSnackBar('Please fill telegram countrycode', { 'panelClass': 'snackbarerror' });
-    }else {
-      console.log('success inisde');
+    } else  {
+
       if (this.is_parent) {
         this.updateParentInfo(formdata).then(
           (result) => {
@@ -664,7 +654,7 @@ console.log(isinvalid);
     return new Promise(function (resolve, reject) {
       const userObj = {};
       userObj['id'] = _this.customer_data.id;
-      if (formdata.whatsappnumber.trim().length>0 && formdata.whatsappnumber !== undefined && formdata.countryCode_whtsap.trim().length>0 && formdata.countryCode_whtsap !== undefined) {
+      if (  formdata.whatsappnumber !== undefined &&formdata.whatsappnumber.trim().length>0  && formdata.countryCode_whtsap !== undefined && formdata.countryCode_whtsap.trim().length>0) {
         const whatsup = {}
         if (formdata.countryCode_whtsap.startsWith('+')) {
           whatsup["countryCode"] = formdata.countryCode_whtsap
@@ -674,10 +664,8 @@ console.log(isinvalid);
         whatsup["number"] = formdata.whatsappnumber
         userObj['whatsAppNum'] = whatsup;
       }
-      console.log(formdata.telegramnumber.trim());
-      console.log(formdata.countryCode_telegram.trim());
-      if (formdata.telegramnumber.trim().length>0 && formdata.telegramnumber !== undefined && formdata.countryCode_telegram.trim().length>0 && formdata.countryCode_telegram !== undefined) {
-       console.log('dsfdf');
+  
+      if (formdata.telegramnumber !== undefined && formdata.telegramnumber.trim().length>0 &&  formdata.countryCode_telegram !== undefined&&formdata.countryCode_telegram.trim().length>0) {
         const telegram = {}
         if (formdata.countryCode_telegram.startsWith('+')) {
           telegram["countryCode"] = formdata.countryCode_telegram
@@ -687,7 +675,9 @@ console.log(isinvalid);
         telegram["number"] = formdata.telegramnumber
         userObj['telegramNum'] = telegram;
       }
-      if (formdata.email !== '') {
+   
+      
+      if (formdata.email !== ''&& formdata.updateEmail) {
         userObj['email'] = formdata.email
       }
       userObj['gender'] = formdata.gender;
@@ -723,14 +713,13 @@ console.log(isinvalid);
   }
 
   updateMemberInfo(formdata) {
-    console.log(formdata);
+   
     const _this = this;;
     const firstName = _this.chosen_person.userProfile.firstName;
     const lastName = _this.chosen_person.userProfile.lastName;
     let memberInfo: any = {};
     memberInfo.userProfile = {}
-    console.log(formdata.whatsappnumber);
-    if (formdata.whatsappnumber.trim().length>0 && formdata.whatsappnumber !== undefined && formdata.countryCode_whtsap.trim().length>0 && formdata.countryCode_whtsap !== undefined) {
+    if (  formdata.whatsappnumber !== undefined &&formdata.whatsappnumber.trim().length>0  && formdata.countryCode_whtsap !== undefined && formdata.countryCode_whtsap.trim().length>0) {
       const whatsup = {}
       if (formdata.countryCode_whtsap.startsWith('+')) {
         whatsup["countryCode"] = formdata.countryCode_whtsap
@@ -740,7 +729,7 @@ console.log(isinvalid);
       whatsup["number"] = formdata.whatsappnumber
       memberInfo.userProfile['whatsAppNum'] = whatsup;
     }
-    if (formdata.telegramnumber.trim().length>0 && formdata.telegramnumber !== undefined && formdata.countryCode_telegram.trim().length>0 || formdata.countryCode_telegram !== undefined) {
+    if (formdata.telegramnumber !== undefined && formdata.telegramnumber.trim().length>0 &&  formdata.countryCode_telegram !== undefined&&formdata.countryCode_telegram.trim().length>0) {
       const telegram = {}
       if (formdata.countryCode_telegram.startsWith('+')) {
         telegram["countryCode"] = formdata.countryCode_telegram
@@ -751,7 +740,7 @@ console.log(isinvalid);
       memberInfo.userProfile['telegramNum'] = telegram;
 
     }
-    if (formdata.email !== '') {
+    if (formdata.email !== '' && formdata.updateEmail) {
       memberInfo['userProfile']['email'] = formdata.email
     }
 
@@ -793,7 +782,8 @@ console.log(isinvalid);
     const _this = this;
     const memberInfo = {};
     memberInfo['userProfile'] = {}
-    if (formdata.whatsappnumber.trim().length>0 && formdata.whatsappnumber !== undefined && formdata.countryCode_whtsap.trim().length>0 && formdata.countryCode_whtsap !== undefined) {
+    if (  formdata.whatsappnumber !== undefined &&formdata.whatsappnumber.trim().length>0  && formdata.countryCode_whtsap !== undefined && formdata.countryCode_whtsap.trim().length>0) {
+
       const whatsup = {}
       if (formdata.countryCode_whtsap.startsWith('+')) {
         whatsup["countryCode"] = formdata.countryCode_whtsap
@@ -803,7 +793,7 @@ console.log(isinvalid);
       whatsup["number"] = formdata.whatsappumber
       memberInfo['userProfile']['whatsAppNum'] = whatsup;
     }
-    if (formdata.telegramnumber.trim().length>0 && formdata.telegramnumber !== undefined && formdata.countryCode_telegram .trim().length>0 || formdata.countryCode_telegram !== undefined) {
+    if (formdata.telegramnumber !== undefined && formdata.telegramnumber.trim().length>0 &&  formdata.countryCode_telegram !== undefined&&formdata.countryCode_telegram.trim().length>0) {
       const telegram = {}
       if (formdata.countryCode_telegram.startsWith('+')) {
         telegram["countryCode"] = formdata.countryCode_telegram
@@ -814,7 +804,7 @@ console.log(isinvalid);
       telegram["number"] = formdata.telegramnumber
       memberInfo['userProfile']['telegramNum'] = telegram;
     }
-    if (formdata.email !== '') {
+    if (formdata.email !== '' && formdata.updateEmail) {
       memberInfo['userProfile']['email'] = formdata.email
     }
 

@@ -642,7 +642,7 @@ button.fxmenu {
 }
 .booking-card.card.service .card-body .service-details .service-buttons .bookingButton:hover {
     /* color: #073B4C !important; */
-    background-color: rgba(180,76,154,1) !important;
+    background-color: #FD7029 !important;
     background-image: none !important;
     /* border-color: #b67ab670; */
 }

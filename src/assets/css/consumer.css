@@ -5498,7 +5498,7 @@
   color: blue;
 }
 .cust-book-details .mat-tab-labels {
-  background: #b67ab63d !important;
+  background: #eb9a71ee !important;
 }
 .checkin-details .histry-font {
   font-size: 0.9rem;
@@ -5507,7 +5507,7 @@
 .cust-book-details .joinMeeting {
   padding: 6px;
   font-size: 0.8rem;
-  background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
+  background: linear-gradient(45deg, #eb9a71ee(224,152,208,1) 0%, #eb9a71ee(180,76,154,1) 100%) !important;
   border-radius: 50px;
   margin-left: 10px;
   color: white;
@@ -5639,7 +5639,7 @@
   font-weight: 600;
 }
 .consumer-dash .grid-card .btns {
-  background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
+  background: linear-gradient(45deg, #eb9a71ee(224,152,208,1) 0%, #eb9a71ee(180,76,154,1) 100%) !important;
   color: white;
 }
 .consumer-dash .grid-card .mat-flat-button {
