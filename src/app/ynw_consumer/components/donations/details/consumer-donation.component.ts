@@ -659,17 +659,30 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 };
                 this.ngZone.run(() => this.router.navigate(['consumer', 'donations', 'confirm'], navigationExtras));
         } else if(response.STATUS == 'TXN_FAILURE'){
-            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
             this.isClickedOnce=false;
             this.loadingPaytm = false;
-            this.cdRef.detectChanges();            
+                this.cdRef.detectChanges();
+                this.ngZone.run(() => {
+                    const snackBar = this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+                    snackBar.onAction().subscribe(() => {
+                      snackBar.dismiss();
+                    })
+                  });
+        
+           
          }
     }
     closeloading(){
         this.isClickedOnce=false;
         this.loadingPaytm = false; 
         this.cdRef.detectChanges();
-        this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+        this.ngZone.run(() => {
+            const snackBar =  this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+            snackBar.onAction().subscribe(() => {
+              snackBar.dismiss();
+            })
+          });
+       
     }
     onReloadPage() {
         window.location.reload();
