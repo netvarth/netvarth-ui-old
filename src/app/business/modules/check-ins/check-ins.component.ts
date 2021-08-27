@@ -465,6 +465,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.getYesterdayDate();
     }
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
+    console.log(this.active_user);
     if (this.active_user.adminPrivilege || this.active_user.userType === 5) {
       this.admin = true;
     }
@@ -848,7 +849,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     _this.views = [];
     let name = '';
     if (_this.showToken) {
-      name = 'All Tokens';
+      name = 'Assigned Tokens';
     } else {
       name = 'All Check-ins';
     }
@@ -921,7 +922,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQsFromView(view, queues) {
     const qs = [];
-    if (view && view.name !== 'All Tokens') {
+    if (view && view.name !== 'Assigned Tokens') {
       for (let i = 0; i < queues.length; i++) {
         for (let j = 0; j < view.customViewConditions.queues.length; j++) {
           if (queues[i].id === view.customViewConditions.queues[j].id) {
@@ -970,7 +971,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   initView(view, source, type?) {
     const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
-    if (view.name === 'All Tokens' && !loggedUser.adminPrivilege && loggedUser.userType !== 5) {
+    if (view.name === 'Assigned Tokens' && !loggedUser.adminPrivilege && loggedUser.userType !== 5) {
       this.activeUser = loggedUser.id;
     } else {
       this.activeQs = [];
@@ -978,7 +979,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (groupbyQs['ENABLED'] && groupbyQs['ENABLED'].length > 0) {
         this.activeQs = groupbyQs['ENABLED'];
       }
-      if (view.name !== 'All Tokens') {
+      if (view.name !== 'Assigned Tokens') {
         if (groupbyQs['DISABLED'] && groupbyQs['DISABLED'].length > 0) {
           this.activeQs = this.activeQs.concat(groupbyQs['DISABLED']);
         }
