@@ -1871,3 +1871,20 @@ body.modal-open {
   .paymenticons:hover {
     border: 2px solid darkblue;
   }
+  .highlight{
+    background: #9e9e9e6e !important;
+    cursor: not-allowed !important;
+    opacity: 0.2;
+    pointer-events: none !important;
+  }
+  .incomplete-msg {
+    position: absolute !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    z-index: 4 !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-top: 60px !important;
+    color: green !important;
+    right: 0px !important;
+  }
