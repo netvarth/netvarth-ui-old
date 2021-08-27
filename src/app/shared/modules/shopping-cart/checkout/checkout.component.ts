@@ -871,6 +871,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   confirm(paytype?) {
+    this.isClickedOnce=true;
     this.checkoutDisabled = true;
     const timeslot = this.nextAvailableTime.split(' - ');
     if (this.delivery_type === 'home') {
@@ -957,6 +958,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.delivery_type === 'store') {
       if (!this.storeContact.value.phone || !this.storeContact.value.email) {
         this.checkoutDisabled = false;
+        this.isClickedOnce=false;
         this.snackbarService.openSnackBar('Please provide Contact Details', { 'panelClass': 'snackbarerror' });
         return;
       } else {
@@ -1804,6 +1806,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.razorModel.amount = pData.amount;
     this.razorModel.order_id = pData.orderId;
     this.razorModel.name = pData.providerName;
+    this.isClickedOnce=false;
     this.razorModel.description = pData.description;
     this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'order_prepayment', this.trackUuid, this.livetrack, this.account_id, this.cartDetails.advanceAmount , this.customId);
     // this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'checkin_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList, this.customId);
@@ -1815,6 +1818,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 }
 transactionCompleted(response) {
      if(response.STATUS == 'TXN_SUCCESS'){
+      this.isClickedOnce=false;
       this.lStorageService.removeitemfromLocalStorage('order_sp');
       this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
       this.lStorageService.removeitemfromLocalStorage('order_spId');
@@ -1832,11 +1836,13 @@ transactionCompleted(response) {
           }
          this.ngZone.run(() => this.router.navigate(['consumer'] ,navigationExtras));
    } else if(response.STATUS == 'TXN_FAILURE'){
+      this.isClickedOnce=false;
       this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
       this.ngZone.run(() => this.router.navigate(['consumer']));
    }
 }
 closeloading(){
+  this.isClickedOnce=false;
   this.loadingPaytm = false; 
   this.cdRef.detectChanges();
   this.ngZone.run(() => this.router.navigate(['consumer']));

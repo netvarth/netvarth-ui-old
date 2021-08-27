@@ -721,8 +721,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.payEmail = result;
                 this.confirmcheckin(type,paymenttype);
             }else{
-                this.isClickedOnce=false;
-                this.paymentBtnDisabled=false;
+                // this.isClickedOnce=false;
+                 this.paymentBtnDisabled=false;
             }
 
         });
@@ -879,8 +879,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         });
                 }
                 else {
-                    this.isClickedOnce=false;
-                  this.disablebutton = true;
+                   // this.isClickedOnce=false;
+                  //this.disablebutton = true;
                 this.addCheckInConsumer(post_Data,paymenttype);
                 }
             } else if (this.sel_ser_det.isPrePayment) {
