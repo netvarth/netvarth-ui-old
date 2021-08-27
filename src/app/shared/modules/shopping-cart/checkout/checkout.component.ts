@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener, AfterViewInit, ViewChild, ElementRef, Inject, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, AfterViewInit, ViewChild, Inject, NgZone, ChangeDetectorRef } from '@angular/core';
 // import * as itemjson from '../../assets/json/item.json';
 // import * as itemjson from '../../../../assets/json/item.json';
 import { SharedFunctions } from '../../../functions/shared-functions';
@@ -168,7 +168,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   cartDetails: any = [];
   listDetails: any = [];
   // @ViewChild('closeModal') private closeModal: ElementRef;
-   @ViewChild('firstStep', { static: false }) public nextbtn: ElementRef;
+  // @ViewChild('firstStep', { static: false }) public nextbtn: ElementRef;
   store_availables: any;
   home_availables: any;
   couponStatuses: any;
@@ -418,7 +418,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.customer_phoneNumber = this.customer_countrycode + activeUser.primaryPhoneNumber;
       console.log(this.customer_phoneNumber);
       this.getaddress();
-      this.nextbtn.nativeElement.click();
+      //this.nextbtn.nativeElement.click();
     } else {
       this.doLogin('consumer');
     }
@@ -1046,7 +1046,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         this.sharedFunctionobj.sendMessage(pdata);
         this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
         if (this.isLoggedIn()) {
-          this.nextbtn.nativeElement.click();
+         // this.nextbtn.nativeElement.click();
         }
 
       } else if (result === 'showsignup') {
@@ -1073,6 +1073,12 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_services.CreateConsumerOrder(this.account_id, dataToSend)
         .subscribe(data => {
           const retData = data;
+          if(this.customId){
+            console.log("businessid"+this.account_id);
+              this.shared_services.addProvidertoFavourite(this.account_id)
+                .subscribe(() => {
+                });
+        }
           this.checkoutDisabled = false;
           // let prepayAmount;
           const uuidList = [];
@@ -1144,6 +1150,12 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_services.CreateConsumerOrder(this.account_id, dataToSend)
         .subscribe(data => {
           const retData = data;
+          if(this.customId){
+            console.log("businessid"+this.account_id);
+              this.shared_services.addProvidertoFavourite(this.account_id)
+                .subscribe(() => {
+                });
+        }
           this.checkoutDisabled = false;
           const uuidList = [];
           Object.keys(retData).forEach(key => {
@@ -1425,14 +1437,16 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         console.log('less than 30');
         console.log(this.store_availables);
         const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
-        const availability = this.store_availables.filter(obj => obj.date === sel_check_date);
-        if (availability.length > 0) {
-          this.isfutureAvailableTime = true;
-          this.nextAvailableTimeQueue = availability[0].timeSlots;
-          this.queue = availability[0].timeSlots[0];
-          this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' + availability[0].timeSlots[0]['eTime'];
-        } else {
-          this.isfutureAvailableTime = false;
+        if(this.store_availables){
+          const availability = this.store_availables.filter(obj => obj.date === sel_check_date);
+          if (availability.length > 0) {
+            this.isfutureAvailableTime = true;
+            this.nextAvailableTimeQueue = availability[0].timeSlots;
+            this.queue = availability[0].timeSlots[0];
+            this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' + availability[0].timeSlots[0]['eTime'];
+          } else {
+            this.isfutureAvailableTime = false;
+          }
         }
       }
       else {
