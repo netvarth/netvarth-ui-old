@@ -363,7 +363,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.popupforCustomApp.nativeElement.style.display = 'block';
 
       this.btnInstallApp.addEventListener('click', (e: any) => {
-        console.log('binding');
+       // console.log('binding');
         // hide our user interface that shows our A2HS button
         this.popupforCustomApp.nativeElement.style.display = 'none';
         // Show the prompt
@@ -413,13 +413,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
       }
     };
-    console.log("Mobile:");
-    console.log(isMobile);
+  //  console.log("Mobile:");
+   // console.log(isMobile);
     if (isMobile.Android()) {
       this.playstore = true;
       this.appstore = false;
     } else if (isMobile.iOS()) {
-      console.log("IOS:");
+    //  console.log("IOS:");
       this.playstore = false;
       this.appstore = true;
     } else {
@@ -477,6 +477,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                 (id: any) => {
                   _this.provider_id = id;
                   _this.customId = _this.accountEncId;
+                  console.log("fdhf"+ _this.customId);
                   _this.accEncUid = _this.accountEncId;
                   _this.accountIdExists = true;
                   _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
@@ -850,7 +851,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   setBusinesssProfile(res) {
     this.onlinePresence = res['onlinePresence'];
-    this.customId = res['customId'];
+    console.log("response"+res);
+    console.log(res['customId']);
+    if(res['customId']){
+      this.customId = res['customId'];
+    }
     this.accEncUid = res['accEncUid'];
     if (!this.userId) {
       this.api_loading = false;
@@ -1257,7 +1262,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.checkinProviderList && this.checkinProviderList.length > 0) {
         if (this.checkinProviderList.includes(this.provider_bussiness_id)) {
           firstCheckin = false;
-          console.log('already taken');
+         // console.log('already taken');
         } else {
           firstCheckin = true;
 
@@ -1754,11 +1759,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     _this.goThroughLogin().then(
       (status) => {
         if (status) {
-          console.log("logged In");
+          //console.log("logged In");
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
           if (_this.userType === 'consumer') {
             if (service.serviceType === 'virtualService') {
-              console.log(service);
+            //  console.log(service);
               _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
                 _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.availableDate, 'checkin', service, consumerdata);
               });
@@ -1812,10 +1817,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
-        console.log("Login Status:" + status);
+      //  console.log("Login Status:" + status);
         if (status) {
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
-          console.log("User Type:" + _this.userType);
+         // console.log("User Type:" + _this.userType);
           if (_this.userType === 'consumer') {
 
             if (service.serviceType === 'virtualService') {
@@ -1835,7 +1840,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
   collectRequiredinfo(id, place, location, date, type, service?, consumerdata?) {
-    console.log("Collect Required Info");
+  //  console.log("Collect Required Info");
     const _this = this;
     let virtualFields = {};
     if (this.checkallvirtualFilledByConsumer(consumerdata)) {
@@ -1948,7 +1953,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       _this.shared_services.getProfile(_this.activeUser.id, 'consumer')
         .subscribe(
           data => {
-            console.log(data);
+            //console.log(data);
             resolve(data);
           },
           () => {
@@ -2014,7 +2019,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             this.checkout();
           }
         } else {
-          console.log(passParam);
+         // console.log(passParam);
           if (current_provider['service']['serviceType'] === 'virtualService') {
             this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
               this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
@@ -2085,8 +2090,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
   showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?) {
-    console.log("Service Checkin ");
-    console.log(service);
+   // console.log("Service Checkin ");
+   // console.log(service);
     // if (this.servicesjson[0] && this.servicesjson[0].department) {
     //   deptId = this.servicesjson[0].department;
     // }
@@ -2114,8 +2119,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
   }
   showAppointment(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?) {
-    console.log("Service Appt: ");
-    console.log(service);
+    //console.log("Service Appt: ");
+   // console.log(service);
     // let deptId;
     // if (this.servicesjson[0] && this.servicesjson[0].department) {
     //   deptId = this.servicesjson[0].department;
@@ -2638,7 +2643,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
       this.servicesAndProviders = servicesAndProviders;
-      console.log("tyuhjhj"+this.servicesAndProviders);
+     // console.log("tyuhjhj"+this.servicesAndProviders);
       // });
     } else {
       // tslint:disable-next-line:no-shadowed-variable
@@ -2689,7 +2694,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
       this.servicesAndProviders = servicesAndProviders;
-      console.log("hjhj"+this.servicesAndProviders);
+     // console.log("hjhj"+this.servicesAndProviders);
     }
     if (this.businessjson.donationFundRaising && this.onlinePresence && this.donationServicesjson.length >= 1) {
       for (let dIndex = 0; dIndex < this.donationServicesjson.length; dIndex++) {

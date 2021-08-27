@@ -254,6 +254,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     newMember: any;
     readMore = false;
     loadingPaytm = false;
+    api_loading_video;
     @ViewChild('consumer_appointment') paytmview;
 
     constructor(public fed_service: FormMessageDisplayService,
@@ -2230,6 +2231,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             };
             if (data.urls && data.urls.length > 0) {
                 for (const url of data.urls) {
+                    this.api_loading_video = true;
                     const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
                     this.provider_services.videoaudioS3Upload(file, url.url)
                         .subscribe(() => {
@@ -2243,6 +2245,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                                             this.isClickedOnce=false;
                                             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                                             this.disablebutton = false;
+                                            this.api_loading_video = false;
                                         });
                             }
                         },
@@ -2250,6 +2253,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                                 this.isClickedOnce=false;
                                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                                 this.disablebutton = false;
+                                this.api_loading_video = false;
                             });
                 }
             } else {
@@ -2260,6 +2264,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 this.isClickedOnce=false;
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 this.disablebutton = false;
+                this.api_loading_video = false;
             });
     }
     paymentOperation(paymenttype?) {
