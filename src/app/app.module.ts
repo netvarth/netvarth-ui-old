@@ -91,6 +91,7 @@ import { QRCodeGeneratordetailComponent } from './shared/components/qrcodegenera
 import { NotificationDialogComponent } from './shared/components/notification-dialog/notification-dialog.component';
 import { IonicModule } from '@ionic/angular';
 import { Device } from '@ionic-native/device/ngx';
+import { AttachmentPopupComponent } from './shared/components/attachment-popup/attachment-popup.component';
 // import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -116,7 +117,8 @@ export function init_app(globalService: GlobalService) {
     CommunicationComponent,
     DepartmentServicePageComponent,
     QRCodeGeneratordetailComponent,
-    NotificationDialogComponent
+    NotificationDialogComponent,
+    AttachmentPopupComponent
   ],
   entryComponents: [
     ConfirmBoxComponent,
@@ -127,7 +129,8 @@ export function init_app(globalService: GlobalService) {
     ForceDialogComponent,
     JdnComponent,
     UpdateProfilePopupComponent,
-    NotificationDialogComponent
+    NotificationDialogComponent,
+    AttachmentPopupComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,
