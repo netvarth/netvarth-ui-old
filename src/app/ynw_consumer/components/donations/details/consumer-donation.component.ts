@@ -564,6 +564,13 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.addCustomerDonation(post_Data, this.account_id)
             .subscribe(data => {
                 this.uid = data['uid'];
+                if(this.customId){
+                    console.log("businessid"+this.account_id);
+                      this.shared_services.addProvidertoFavourite(this.account_id)
+                        .subscribe(() => {
+                        });
+                   
+                }
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.submitQuestionnaire(this.uid, post_Data, paymentWay);
                 } else {
@@ -652,10 +659,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 };
                 this.ngZone.run(() => this.router.navigate(['consumer', 'donations', 'confirm'], navigationExtras));
         } else if(response.STATUS == 'TXN_FAILURE'){
+            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
             this.isClickedOnce=false;
             this.loadingPaytm = false;
-            this.cdRef.detectChanges();
-            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+            this.cdRef.detectChanges();            
          }
     }
     closeloading(){
@@ -664,6 +671,9 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.cdRef.detectChanges();
         this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
     }
+    onReloadPage() {
+        window.location.reload();
+     }
     addEmail() {
         this.resetApiErrors();
         this.resetApi();
