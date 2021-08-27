@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { SharedFunctions } from '../../functions/shared-functions';
-
+import { ShowuploadfileComponent } from '../showuploadfile/showuploadfile.component';
 @Component({
   selector: 'app-attachment-popup',
   templateUrl: './attachment-popup.component.html',
@@ -20,6 +20,7 @@ export class AttachmentPopupComponent implements OnInit {
 
       public dialogRef: MatDialogRef<AttachmentPopupComponent>,
     public sharedfunctionObj: SharedFunctions,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { 
   
@@ -65,24 +66,24 @@ export class AttachmentPopupComponent implements OnInit {
   }
 
   }
-  // showFile(file){
+  showFile(file){
   
 
-  //   this.fileviewdialogRef = this.dialog.open(ShowuploadfileComponent, {
-  //     width: '50%',
-  //     panelClass: ['popup-class', 'commonpopupmainclass', 'uploadfilecomponentclass'],
-  //     disableClose: true,
-  //     data: {
-  //       file: file,
+    this.fileviewdialogRef = this.dialog.open(ShowuploadfileComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'uploadfilecomponentclass'],
+      disableClose: true,
+      data: {
+        file: file,
         
-  //     }
-  //   });
-  //   this.fileviewdialogRef.afterClosed().subscribe(result => {
-  //     if (result) {
+      }
+    });
+    this.fileviewdialogRef.afterClosed().subscribe(result => {
+      if (result) {
   
-  //     }
-  //   });
-  // }
+      }
+    });
+  }
   closeDialog() {
     this.dialogRef.close();
   }
