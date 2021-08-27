@@ -1004,9 +1004,20 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div>
+                                        <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding"
+                                        data-wizard-type="step-content" data-wizard-state="current" *ngIf="bookStep === 3">
+                                        <div *ngIf="api_loading_video" class="incomplete-msg">
+                                            <div style="padding: 0 30px;">
+                                                Files are Uploading...
+                                            </div>
+                                        </div>
+                                        <app-common-innerloading-spinner *ngIf="api_loading_video">
+                                        </app-common-innerloading-spinner>
+                                    </div>                                 
                                     <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
                                         data-wizard-type="step-content" data-wizard-state="current"
-                                        *ngIf="bookStep === 3">
+                                        *ngIf="bookStep === 3" [ngClass]="{'highlight': api_loading_video}">
                                         <!-- <div class="confirm-head">Confirm your appointment details</div> -->
                                         <div class="confirm-head mgn-up-20">Review and Confirm</div>
                                         <div class="bookdetails">
@@ -1435,6 +1446,7 @@
                                             </div>
                                         </div> -->
                                     </div>
+                                </div>
                                 </div>
                             </div>
                         </div>

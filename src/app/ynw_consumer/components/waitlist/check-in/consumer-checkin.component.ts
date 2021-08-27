@@ -227,6 +227,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     payAmount: number;
     loadingPaytm = false;
     @ViewChild('consumer_checkin') paytmview;
+    api_loading_video;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -1020,6 +1021,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             };
             if (data.urls && data.urls.length > 0) {
                 for (const url of data.urls) {
+                    this.api_loading_video = true;
                     const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
                     this.provider_services.videoaudioS3Upload(file, url.url)
                         .subscribe(() => {
@@ -1033,6 +1035,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                                             this.isClickedOnce=false;
                                             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                                             this.disablebutton = false;
+                                            this.api_loading_video = true;
                                         });
                             }
                         },
@@ -1040,6 +1043,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                                 this.isClickedOnce=false;
                                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                                 this.disablebutton = false;
+                                this.api_loading_video = true;
                             });
                 }
             } else {
@@ -1050,6 +1054,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.isClickedOnce=false;
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 this.disablebutton = false;
+                this.api_loading_video = true;
             });
     }
     paymentOperation(paymenttype?) {
