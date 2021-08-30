@@ -133,6 +133,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
     remainingadvanceamount;
     wallet: any;
     loadingPaytm = false;
+    isClickedOnce=false;
     @ViewChild('consumer_checkinbill') paytmview;
     constructor(private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
@@ -446,6 +447,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
      * Perform PayU Payment
      */
     payuPayment(paymentType?) {
+        this.isClickedOnce=true;
         if (this.jcashamount > 0 && this.checkJcash) {
             this.sharedServices.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.bill_data.amountDue)
                 .subscribe(data => {
@@ -472,6 +474,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
                                 }
                             },
                                 error => {
+                                    this.isClickedOnce=false;
                                     this.loadingPaytm = false;
                                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                                 });
@@ -543,6 +546,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
                                 // }
                             },
                                 error => {
+                                    this.isClickedOnce=false;
                                     this.loadingPaytm = false;
                                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                                 });
@@ -550,6 +554,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
                     }
                 },
                 error => {
+                    this.isClickedOnce=false;
                     this.loadingPaytm = false;
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
@@ -588,6 +593,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
                             }
                         },
                         error => {
+                            this.isClickedOnce=false;
                             this.resetApiError();
                             this.loadingPaytm = false;
                             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -607,15 +613,18 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
         this.razorModel.order_id = data.orderId;
         this.razorModel.name = data.providerName;
         this.razorModel.description = data.description;
+        this.isClickedOnce=false;
         //    this.razorModel.image = data.jaldeeLogo;
         this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type , this.uuid , this.accountId);
     }
     payWithPayTM(pData:any) {
+        this.isClickedOnce=true;
         this.loadingPaytm = true;
         this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
     }
     transactionCompleted(response) {
         if(response.STATUS == 'TXN_FAILURE'){
+            this.isClickedOnce=false;
             this.loadingPaytm = false;
             this.cdRef.detectChanges();
             this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
@@ -661,10 +670,12 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
         //  this.ngZone.run(() => this.router.navigate(['consumer'] ,navigationExtras));
     }
     closeloading(){
+        this.isClickedOnce=false;
         this.loadingPaytm = false; 
         this.cdRef.detectChanges();
 }
     paytmPayment() {
+        this.isClickedOnce=true;
         this.pay_data.uuid = this.uuid;
         this.pay_data.amount = this.bill_data.amountDue;
         this.pay_data.paymentMode = 'PPI';
@@ -686,6 +697,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
                         }, 2000);
                     },
                     error => {
+                        this.isClickedOnce=false;
                         this.resetApiError();
                         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     }
