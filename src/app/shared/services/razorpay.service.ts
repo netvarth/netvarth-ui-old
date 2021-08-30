@@ -219,6 +219,15 @@ export class RazorpayService {
         this.onReloadPage();
         // this.ngZone.run(() => this.router.navigate(['consumer', 'order', 'order-bill'], navigationExtras));
       }
+      if(checkin_type==='donations'){
+        this.ngZone.run(() => {
+          const snackBar =  this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+          snackBar.onAction().subscribe(() => {
+            snackBar.dismiss();
+          })
+        });
+     
+      }
     });
     const rzp = new this.winRef.nativeWindow.Razorpay(options);
     rzp.open();

@@ -146,7 +146,7 @@
                 </div>
                 <div class="modal-footer"  *ngIf="!showAddCustomerHint" >
                   <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal"
-                    #locclosebutton>Cancel</button>
+                    #locclosebutton   (click)="cancelLocationToUsers()">Cancel</button>
                   <button type="button" class="btn btn-primary font-weight-bold" 
                   (click)="assignLocationToUsers()">{{(teamEdit) ? 'Update' : 'Save'}}</button>
                 </div>
@@ -165,14 +165,14 @@
     <div class="col-lg-3   display-min-none" *ngIf="!teamLoaded && groups.length > 0">
       <div class="card card-custom card-stretch gutter-b pitch_blu">
         <div class="card grp_label mb-2 pointer-cursor" (click)="teamSelected('all')"
-          [ngClass]="{'highlight': selectedTeam == 'all'}">
+          [ngClass]="{'highlights': selectedTeam == 'all'}">
         <span  [ngClass]="{'highlightcolor': selectedTeam == 'all'}">All Users</span>
         </div>
         <!-- <button mat-flat-button class="font-size-xs add_btn mgn-bt-10" data-toggle="modal"
           data-target="#exampleModalCenter">Create Team</button> -->
         <div class="card grp_label mb-2" *ngFor="let group of groups"
           (click)="group.status=='ACTIVE' && teamSelected(group)"
-          [ngClass]="{'highlight': selectedTeam.id==group.id}" 
+          [ngClass]="{'highlights': selectedTeam.id==group.id}" 
           [class.disabled-group]="group.status=='INACTIVE'"
           [class.pointer-cursor]="group.status=='ACTIVE'">  
           <div class="max-hgt-20 disp-flex">

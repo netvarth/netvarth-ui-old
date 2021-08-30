@@ -1,8 +1,9 @@
 <section class="">
   <div class="card title-gb">
     <h5 class="mgn-up-10" *ngIf="patientDetails[0]">
-      <span class="fa fa-arrow-left pointer-cursor" (click)="back()"></span>&nbsp;&nbsp;&nbsp;&nbsp; Medical records of
-      {{patientDetails[0].firstName}} {{patientDetails[0].lastName}}
+      <span class="fa fa-arrow-left pointer-cursor" (click)="back()"></span>&nbsp;&nbsp;&nbsp;&nbsp; Medical records of 
+      <label *ngIf="patientDetails[0].firstName ||patientDetails[0].lastName"> {{patientDetails[0].firstName}} {{patientDetails[0].lastName}}</label>
+      <label *ngIf="!patientDetails[0].firstName && !patientDetails[0].lastName">Patient id #{{patientDetails[0].jaldeeId}} </label>
     </h5>
   </div>
 </section>

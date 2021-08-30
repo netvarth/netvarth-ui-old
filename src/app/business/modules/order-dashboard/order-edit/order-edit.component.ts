@@ -384,12 +384,18 @@ console.log(this.orders);
         for (const item of this.orderDetails.orderItem) {
           const itemqty: number = item.quantity;
           const itemId = item.id;
-          const orderItem = this.catalogItems.find(i => i.item.itemId === itemId);
-          const itemObject = orderItem.item;
-         // this.orderList = [];
-          for (let i = 0; i < itemqty; i++) {
-            this.orderList.push({ 'item': itemObject });
+          if(this.catalogItems){
+            const orderItem = this.catalogItems.find(i => i.item.itemId === itemId);
+          console.log(orderItem)
+          if(orderItem){
+            const itemObject = orderItem.item;
+            for (let i = 0; i < itemqty; i++) {
+              this.orderList.push({ 'item': itemObject });
+            }
+  
           }
+          }
+          
 
         }
         this.orders = [...new Map(this.orderList.map(Item => [Item.item['itemId'], Item])).values()];
@@ -728,10 +734,10 @@ console.log(this.orders);
       if (img[0]) {
         return img[0].url;
       } else {
-        return './assets/images/order/Items.svg';
+        return '../../../../../assets/images/order/Items.svg';
       }
     } else {
-      return './assets/images/order/Items.svg';
+      return '../../../../assets/images/order/Items.svg';
     }
   }
 
@@ -993,7 +999,8 @@ console.log(this.orders);
        // console.log('less than 30'); 
        // console.log(this.store_availables);
         const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
-        const availability  = this.store_availables.filter(obj => obj.date ===  sel_check_date);          
+        if(this.store_availables){
+          const availability  = this.store_availables.filter(obj => obj.date ===  sel_check_date);          
         if(availability.length > 0){
             this.isfutureAvailableTime = true;
             this.nextAvailableTimeQueue = availability[0].timeSlots;
@@ -1002,6 +1009,7 @@ console.log(this.orders);
           } else{
             this.isfutureAvailableTime = false;
           }
+        }
         }     
       else {
         this.isfutureAvailableTime = false;
