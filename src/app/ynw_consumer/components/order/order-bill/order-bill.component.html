@@ -392,10 +392,10 @@
                                                                     *ngIf="((checkJcash && jcashamount > bill_data.amountDue) || ( checkJcash && jcashamount == bill_data.amountDue))">
                                                                      Confirm</button>
                                                                     <button class="cs-btn bt1"  *ngIf="((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
-                                                                        (click)="payuPayment()">CC/DC/Net
+                                                                    [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()">CC/DC/Net
                                                                         Banking/UPI</button>
                                                                     <button class="cs-btn bt1" *ngIf="paytmEnabled && ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
-                                                                        (click)="payuPayment('paytm')">Paytm</button>
+                                                                    [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment('paytm')">Paytm</button>
                                                                     <button class="cs-btn bt1"
                                                                         (click)="cashPayment()">Cash</button>
                                                                 </div>
