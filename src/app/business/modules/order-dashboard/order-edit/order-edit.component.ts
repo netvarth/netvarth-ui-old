@@ -386,7 +386,8 @@ console.log(this.orders);
         for (const item of this.orderDetails.orderItem) {
           const itemqty: number = item.quantity;
           const itemId = item.id;
-          const orderItem = this.catalogItems.find(i => i.item.itemId === itemId);
+          if(this.catalogItems){
+            const orderItem = this.catalogItems.find(i => i.item.itemId === itemId);
           console.log(orderItem)
           if(orderItem){
             const itemObject = orderItem.item;
@@ -395,6 +396,8 @@ console.log(this.orders);
             }
   
           }
+          }
+          
          // this.orderList = [];
          
         }
@@ -999,7 +1002,8 @@ console.log(this.orders);
        // console.log('less than 30'); 
        // console.log(this.store_availables);
         const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
-        const availability  = this.store_availables.filter(obj => obj.date ===  sel_check_date);          
+        if(this.store_availables){
+          const availability  = this.store_availables.filter(obj => obj.date ===  sel_check_date);          
         if(availability.length > 0){
             this.isfutureAvailableTime = true;
             this.nextAvailableTimeQueue = availability[0].timeSlots;
@@ -1008,6 +1012,7 @@ console.log(this.orders);
           } else{
             this.isfutureAvailableTime = false;
           }
+        }
         }     
       else {
         this.isfutureAvailableTime = false;
