@@ -527,7 +527,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
                             this.callingModes = unChangedPhnoCountryCode + '' + this.customer_data.primaryPhoneNumber;
                             if (serv.serviceType === 'virtualService' && this.virtualInfo) {
-                                if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
+                                if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.whatsappnumber !== undefined) {
                                     const whtsappcountryCode = this.virtualInfo.countryCode_whtsap.split('+')[1];
                                     this.callingModes = whtsappcountryCode + '' + this.virtualInfo.whatsappnumber;
                                     console.log(this.callingModes);
@@ -2042,8 +2042,14 @@ console.log('inside validaity');
             if (this.bookStep === 1) {
                 this.location.back();
             } else {
+                if(this.questionnaireList.labels && this.questionnaireList.labels.length > 0){
                 this.bookStep--;
+                }
+                else{
+                    this.bookStep=1;
+                }
             }
+            
         }
         if (this.action !== 'addmember') {
             this.closebutton.nativeElement.click();
