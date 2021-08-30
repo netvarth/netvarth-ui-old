@@ -663,7 +663,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             this.loadingPaytm = false;
                 this.cdRef.detectChanges();
                 this.ngZone.run(() => {
-                    const snackBar = this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+                    const snackBar = this.snackbarService.openSnackBar("Transaction Failed", { 'panelClass': 'snackbarerror' });
                     snackBar.onAction().subscribe(() => {
                       snackBar.dismiss();
                     })
