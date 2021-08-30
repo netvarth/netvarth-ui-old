@@ -1721,7 +1721,12 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             if (this.bookStep === 1) {
                 this.location.back();
             } else {
-                this.bookStep = 1;
+                if(this.questionnaireList.labels && this.questionnaireList.labels.length > 0){
+                this.bookStep--;
+                }
+                else{
+                    this.bookStep=1;
+                }
             }
         }
         if (this.action !== 'addmember') {
