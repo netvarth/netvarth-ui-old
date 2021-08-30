@@ -238,6 +238,7 @@ export class AppointmentComponent implements OnInit {
     channel;
     questionAnswers;
     bookingMode;
+    api_loading_video;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -1226,6 +1227,7 @@ export class AppointmentComponent implements OnInit {
             };
             if (data.urls && data.urls.length > 0) {
                 for (const url of data.urls) {
+                    this.api_loading_video = true;
                     const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
                     this.provider_services.videoaudioS3Upload(file, url.url)
                         .subscribe(() => {
@@ -1239,12 +1241,14 @@ export class AppointmentComponent implements OnInit {
                                         error => {
                                             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                                             this.api_loading = false;
+                                            this.api_loading_video = false;
                                         });
                             }
                         },
                             error => {
                                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                                 this.api_loading = false;
+                                this.api_loading_video = false;
                             });
                 }
             } else {
@@ -1254,6 +1258,7 @@ export class AppointmentComponent implements OnInit {
         }, error => {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             this.api_loading = false;
+            this.api_loading_video = false;
         });
     }
     handleGoBack(cstep) {

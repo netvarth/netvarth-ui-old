@@ -989,4 +989,7 @@ export class BranchUsersComponent implements OnInit {
     resetError() {
         this.apiError = '';
     }
+    cancelLocationToUsers(){
+        this.apiError = '';
+    }
 }

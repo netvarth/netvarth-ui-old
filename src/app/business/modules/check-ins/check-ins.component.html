@@ -85,7 +85,7 @@
                     Phone in
                   </a>
                 </li>
-                <li class="dropdown notifications-menu">
+                <li *ngIf="admin" class="dropdown notifications-menu">
                   <a (click)="searchCustomer()"
                     class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
                     data-toggle="dropdown">

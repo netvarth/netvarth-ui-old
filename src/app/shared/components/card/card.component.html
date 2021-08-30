@@ -107,12 +107,14 @@
                     <i class="{{action.iconClass}}"></i>{{action.displayName}}</button>
             </mat-menu> -->
             <h4 class="card-title font-weight-bold d-block">
-                <a class="d-block name module1 twoline-break">{{service.displayName}}</a>
+                <!-- <a class="d-block name module1 twoline-break">{{service.displayName}}</a> -->
+                <a class="name module1 twoline-break">{{(service.itemNameInLocal) ? service.itemNameInLocal : service.displayName}}</a>
                 <!-- <p class="module1 line-clamp1">{{service.shortDesc}}</p> -->
             </h4>
             <div style="height: 22px !important;">
-                <div *ngIf="service.shortDesc" class="short-description module1 line-clamp1">{{service.shortDesc.trim()
-                    | capitalizeFirst}}</div>
+                <!-- <div *ngIf="service.shortDesc" class="short-description module1 line-clamp1">{{service.shortDesc.trim()
+                    | capitalizeFirst}}</div> -->
+                    <div *ngIf="service.itemNameInLocal" class="short-description module1 line-clamp1">{{service.displayName}}</div>
             </div>
             <div class="col-md-12 no-padding">
                 <!-- <div class="col-md-5 no-padding">
@@ -192,7 +194,7 @@
                 capitalizeFirst | limitTo: [14, '...']}}</a> -->
         </h4>
         <h6 class="qualification font-normal" *ngIf="user.qualifications && user.qualifications.length>0">
-            {{user.qualifications[0] | limitTo: [20, '...']}}
+             {{user.qualifications | limitTo: [20, '...']}}
         </h6>
         <h6 class="qualification" *ngIf="!user.qualifications || (user.qualifications && user.qualifications.length==0)"
             style="height:17px;"></h6>
@@ -207,6 +209,10 @@
             <ng-container
                 *ngIf="(!user.apptTime || (user.apptTime && (!user.apptTime.caption || user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && user.waitingTime.caption">
                 {{user.waitingTime.caption}}<br />{{user.waitingTime.date}}
+            </ng-container>
+            <ng-container
+               *ngIf="(!user.apptTime || ((user.apptTime.caption && user.apptTime.availableSchedule && user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && !user.waitingTime.caption">
+                {{user.apptTime.caption}}<br />{{user.apptTime.date}}
             </ng-container>
         </p>
         <!-- <p class="availability user-available" *ngIf="user.locationName">{{user.locationName}}</p> -->
@@ -260,8 +266,8 @@
                 </div>
                 
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
-                    *ngIf="item.type=='checkin-dashboard' && !waitlist.waitlistingFor[0].firstName && !waitlist.waitlistingFor[0].lastName && waitlist.providerConsumer && waitlist.providerConsumer.jaldeeId">
-                    {{customer_label | capitalizeFirst}} id:&nbsp; {{waitlist.providerConsumer.jaldeeId}}</div>
+                    *ngIf="item.type=='checkin-dashboard' && !waitlist.waitlistingFor[0].firstName && !waitlist.waitlistingFor[0].lastName && waitlist.consumer && waitlist.consumer.jaldeeId">
+                    {{customer_label | capitalizeFirst}} id:&nbsp; {{waitlist.consumer.jaldeeId}}</div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item" *ngIf="time_type == 3 && waitlist.waitlistStatus">
                     <span class="started_status_clr" *ngIf="waitlist.waitlistStatus == 'started' || waitlist.waitlistStatus == 'arrived'">
                         {{waitlist.waitlistStatus | capitalizeFirst}}
@@ -287,8 +293,10 @@
                 </div> -->
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name" *ngIf="waitlist.waitlistingFor[0].bookingLocation && (waitlist.waitlistingFor[0].bookingLocation.district || waitlist.waitlistingFor[0].bookingLocation.state)">
                     <!-- <span class="b1">Location : </span> -->
-                    <span>{{waitlist.waitlistingFor[0].bookingLocation.district}}, 
-                        {{waitlist.waitlistingFor[0].bookingLocation.state}}</span>
+                    <!-- <span>{{waitlist.waitlistingFor[0].bookingLocation.district}}, 
+                        {{waitlist.waitlistingFor[0].bookingLocation.state}}</span> -->
+                    <span *ngIf="waitlist.waitlistingFor[0].bookingLocation.district">{{waitlist.waitlistingFor[0].bookingLocation.district}},</span>
+                    <span *ngIf="waitlist.waitlistingFor[0].bookingLocation.state">{{waitlist.waitlistingFor[0].bookingLocation.state}}</span>
                 </div>
                 <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="waitlist.waitlistingFor[0].age || waitlist.waitlistingFor[0].gender">
                     <span *ngIf="waitlist.waitlistingFor[0].age">{{getAge(waitlist.waitlistingFor[0].age)}} yrs</span>
@@ -456,8 +464,10 @@
                 </div> -->
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name" *ngIf="appointment.appmtFor[0].bookingLocation && (appointment.appmtFor[0].bookingLocation.district || appointment.appmtFor[0].bookingLocation.state)">
                     <!-- <span class="b1">Location : </span> -->
-                    <span>{{appointment.appmtFor[0].bookingLocation.district}}, 
-                        {{appointment.appmtFor[0].bookingLocation.state}}</span>
+                    <!-- <span>{{appointment.appmtFor[0].bookingLocation.district}}, 
+                        {{appointment.appmtFor[0].bookingLocation.state}}</span> -->
+                    <span *ngIf="appointment.appmtFor[0].bookingLocation.district">{{appointment.appmtFor[0].bookingLocation.district}},</span>
+                    <span *ngIf="appointment.appmtFor[0].bookingLocation.state">{{appointment.appmtFor[0].bookingLocation.state}}</span>
                 </div>
                 <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="appointment.appmtFor[0].age || appointment.appmtFor[0].gender">
                     <span *ngIf="appointment.appmtFor[0].age">{{getAge(appointment.appmtFor[0].age)}} yrs</span>
