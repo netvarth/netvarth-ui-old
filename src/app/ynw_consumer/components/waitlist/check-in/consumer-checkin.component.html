@@ -1495,7 +1495,7 @@
                                             class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 pl-0 width-100">
                                             <div class="mr-2">
                                                 <button type="button" style="color: white !important;"
-                                                    class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    class="next-button pay-back-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
                                                     (click)="goToStep('prev')" [disabled]="disablebutton">
                                                     <i style="color: white !important;"
                                                         class="fa fa-long-arrow-left"></i>
@@ -1511,7 +1511,7 @@
                                                     id="stepThreeConfirmButton" [class.spinner]="disablebutton"
                                                     [class.spinner-darker-success]="disablebutton"
                                                     [class.spinner-center]="disablebutton"
-                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    class="next-button pay-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
                                                     [disabled]="disablebutton">
                                                     <ng-container
                                                         *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">

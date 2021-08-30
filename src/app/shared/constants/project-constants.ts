@@ -990,13 +990,14 @@ export const projectConstantsLocal = {
     ALERT: 'Alert',
     BOOKINGS: 'Bookings'
   },
-  /** Scale */
-  // PROVIDER_ACCOUNT_ID: 126643,
-  // ACCOUNTENC_ID: '5397yl0'
-  
-  /** Production */
-  // PROVIDER_ACCOUNT_ID: 103359,
-  // ACCOUNTENC_ID: '72q2rr9'
-  PROVIDER_ACCOUNT_ID: 103847,
-  ACCOUNTENC_ID: '12r45b0'
+  // UIS3PATH: "https://jaldeeuiscale.s3.ap-south-1.amazonaws.com/",
+  UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/",
+  /** Production Medi Expat test*/
+  // PROVIDER_ACCOUNT_ID: 103847,
+  // ACCOUNTENC_ID: '12r45b0',
+  // S3UNIQUE_ID: '128495'
+  /** Production Medi Expat  Real*/
+  PROVIDER_ACCOUNT_ID: 103850,
+  ACCOUNTENC_ID: '62r15e0',
+  S3UNIQUE_ID: '128498'
 };

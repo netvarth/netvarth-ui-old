@@ -1,5 +1,5 @@
 {
-  "name": "heartfulness",
+  "name": "mediExpat",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
@@ -14,9 +14,9 @@
     "compodoc": "compodoc -p tsconfig.json",
     "build-serve": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng serve",
     "build-prod": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng build --configuration production",
-    "ionic-build": "ionic cordova build android --project=heartfulness --optimizejs --minifyjs --minifycss --prod",
-    "ionic-device": "ionic cordova run android --project=heartfulness  --optimizejs --minifyjs --minifycss --prod --device",
-    "ionic-release": "ionic cordova build android --project=heartfulness  --optimizejs --minifyjs --minifycss --prod --release",
+    "ionic-build": "ionic cordova build android --project=mediExpat --optimizejs --minifyjs --minifycss --prod",
+    "ionic-device": "ionic cordova run android --project=mediExpat  --optimizejs --minifyjs --minifycss --prod --device",
+    "ionic-release": "ionic cordova build android --project=mediExpat  --optimizejs --minifyjs --minifycss --prod --release",
     "increase-memory": "set NODE_OPTIONS=--max_old_space_size=8048"
   },
   "private": true,
@@ -44,7 +44,6 @@
     "@ionic-native/core": "^5.33.1",
     "@ionic-native/device": "^5.34.0",
     "@ionic-native/fcm": "^5.33.1",
-    "@ionic-native/firebase-x": "^5.34.0",
     "@ionic/angular": "^5.6.11",
     "@ks89/angular-modal-gallery": "^7.2.6",
     "@microsoft/signalr": "^3.1.7",
@@ -115,7 +114,7 @@
     "cordova-plugin-camera": "^5.0.2",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^2.0.2",
-    "cordova-plugin-firebasex": "^13.0.0",
+    "cordova-plugin-dialogs": "^2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
     "cordova-plugin-ionic-webview": "^4.2.1",
     "cordova-plugin-splashscreen": "^5.0.2",
@@ -155,36 +154,12 @@
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
       "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-firebasex": {
-        "FIREBASE_ANALYTICS_COLLECTION_ENABLED": "true",
-        "FIREBASE_PERFORMANCE_COLLECTION_ENABLED": "true",
-        "FIREBASE_CRASHLYTICS_COLLECTION_ENABLED": "true",
-        "ANDROID_ICON_ACCENT": "#FF00FFFF",
-        "ANDROID_FIREBASE_PERFORMANCE_MONITORING": "false",
-        "ANDROID_PLAY_SERVICES_TAGMANAGER_VERSION": "17.0.0",
-        "ANDROID_PLAY_SERVICES_AUTH_VERSION": "19.0.0",
-        "ANDROID_FIREBASE_ANALYTICS_VERSION": "19.0.0",
-        "ANDROID_FIREBASE_MESSAGING_VERSION": "22.0.0",
-        "ANDROID_FIREBASE_CONFIG_VERSION": "21.0.0",
-        "ANDROID_FIREBASE_PERF_VERSION": "20.0.1",
-        "ANDROID_FIREBASE_AUTH_VERSION": "21.0.1",
-        "ANDROID_FIREBASE_INAPPMESSAGING_VERSION": "20.0.0",
-        "ANDROID_FIREBASE_FIRESTORE_VERSION": "23.0.1",
-        "ANDROID_FIREBASE_FUNCTIONS_VERSION": "20.0.0",
-        "ANDROID_FIREBASE_IID_VERSION": "21.1.0",
-        "ANDROID_FIREBASE_INSTALLATIONS_VERSION": "17.0.0",
-        "ANDROID_FIREBASE_CRASHLYTICS_VERSION": "18.0.1",
-        "ANDROID_FIREBASE_CRASHLYTICS_NDK_VERSION": "18.0.1",
-        "ANDROID_GSON_VERSION": "2.8.7",
-        "ANDROID_FIREBASE_PERF_GRADLE_PLUGIN_VERSION": "1.4.0"
-      },
       "cordova-plugin-camera": {},
       "cordova-plugin-x-socialsharing": {},
       "phonegap-plugin-media-stream": {},
       "cordova-plugin-androidx-adapter": {},
       "cordova-plugin-androidx": {},
-      "cordova-plugin-app-launcher": {},
-      "com.razorpay.cordova": {}
+      "cordova-plugin-dialogs": {}
     },
     "platforms": [
       "android"

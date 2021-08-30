@@ -27,12 +27,12 @@
                                     <div class="bookdetails">
                                     
                                         <div class="disp-flex" *ngIf="!wtlst.provider" style="margin-bottom: 5px !important;">
-                                            <span class="billing-head">Provider</span>
+                                            <span class="billing-head">Doctor</span>
                                             <span style="line-height: normal !important;">:&nbsp;</span>
                                             <span class="billing-value">{{wtlst.providerAccount?.businessName}}</span>
                                         </div>
                                         <div class="disp-flex" *ngIf="wtlst.provider" style="margin-bottom: 5px !important;">
-                                            <span class="billing-head">Provider</span>
+                                            <span class="billing-head">Doctor</span>
                                             <span style="line-height: normal !important;">:&nbsp;</span>
                                             <span class="billing-value">{{wtlst.provider.businessName}},
                                                 {{wtlst.providerAccount?.businessName}}</span>

@@ -1625,6 +1625,11 @@ background: #FD7029 0% 0% no-repeat padding-box !important;
   opacity: 1;
 }
 
+@media (max-width: 380px) {
+  button.next-button.pay-button, button.next-button.pay-back-button {
+    padding: 10px 10px 10px 10px !important;
+  }
+}
 @media (max-width: 500px) {
   button.next-button {
     margin: auto !important;

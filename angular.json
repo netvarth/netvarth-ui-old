@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "heartfulness": {
+    "mediExpat": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -134,18 +134,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "heartfulness:build"
+            "browserTarget": "mediExpat:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "heartfulness:build:production"
+              "browserTarget": "mediExpat:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "heartfulness:build"
+            "browserTarget": "mediExpat:build"
           }
         },
         "test": {
@@ -194,30 +194,30 @@
         "ionic-cordova-serve": {
           "builder": "@ionic/angular-toolkit:cordova-serve",
           "options": {
-            "cordovaBuildTarget": "heartfulness:ionic-cordova-build",
-            "devServerTarget": "heartfulness:serve"
+            "cordovaBuildTarget": "mediExpat:ionic-cordova-build",
+            "devServerTarget": "mediExpat:serve"
           },
           "configurations": {
             "production": {
-              "cordovaBuildTarget": "heartfulness:ionic-cordova-build:production",
-              "devServerTarget": "heartfulness:serve:production"
+              "cordovaBuildTarget": "mediExpat:ionic-cordova-build:production",
+              "devServerTarget": "mediExpat:serve:production"
             }
           }
         },
         "ionic-cordova-build": {
           "builder": "@ionic/angular-toolkit:cordova-build",
           "options": {
-            "browserTarget": "heartfulness:build"
+            "browserTarget": "mediExpat:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "heartfulness:build:production"
+              "browserTarget": "mediExpat:build:production"
             }
           }
         }
       }
     },
-    "heartfulness-e2e": {
+    "mediExpat-e2e": {
       "root": "e2e",
       "sourceRoot": "e2e",
       "projectType": "application",
@@ -226,7 +226,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "heartfulness:serve"
+            "devServerTarget": "mediExpat:serve"
           }
         },
         "lint": {
@@ -243,7 +243,7 @@
       }
     }
   },
-  "defaultProject": "heartfulness",
+  "defaultProject": "mediExpat",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

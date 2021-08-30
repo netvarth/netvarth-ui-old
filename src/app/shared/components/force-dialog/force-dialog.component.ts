@@ -14,10 +14,10 @@ export class ForceDialogComponent implements OnInit {
   }
 
   forceUpdate () {
-    window.location.href = 'https://play.google.com/store/apps/details?id=com.jaldeeinc.jaldeebusiness';
+    window.location.href = this.data.versionInfo.playstore.link;
   }
   // forceUpdate () {
-  //   window.location.href = 'https://apps.apple.com/us/app/jaldee-for-business/id1475235232?ls=1';
+  //   window.location.href = '';
   // }
 }
 

@@ -4,6 +4,10 @@ import { Platform } from '@ionic/angular';
 import { LocalStorageService } from './shared/services/local-storage.service';
 import { GlobalService } from './shared/services/global-service';
 import { version } from './shared/constants/version';
+import { DomainConfigGenerator } from './shared/services/domain-config-generator.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ForceDialogComponent } from './shared/components/force-dialog/force-dialog.component';
+import { projectConstantsLocal } from './shared/constants/project-constants';
 export let projectConstants: any = {};
 
 @Component({
@@ -28,7 +32,9 @@ export class AppComponent implements OnInit {
     private device: Device,
     private platform: Platform,
     private lStorageService: LocalStorageService,
-    private globalService: GlobalService
+    private globalService: GlobalService,
+    private domainConfig: DomainConfigGenerator,
+    private dialog: MatDialog
 
   ) { }
 
@@ -40,12 +46,12 @@ export class AppComponent implements OnInit {
    * 
    */
   ngOnInit() {
-    // if (this.device.uuid) {
-      // console.log(this.device.uuid);
-      // this.lStorageService.setitemonLocalStorage('authToken', this.device.uuid);
-      this.lStorageService.setitemonLocalStorage('authToken', 'abcd'.toString());
-    // }
-  	let token = this.lStorageService.getitemfromLocalStorage('authToken');
+    if (this.device.uuid) {
+      console.log(this.device.uuid);
+      this.lStorageService.setitemonLocalStorage('authToken', this.device.uuid);
+      // this.lStorageService.setitemonLocalStorage('authToken', 'abcd'.toString());
+    }
+    let token = this.lStorageService.getitemfromLocalStorage('authToken');
     if (token) {
       let regexToReplace = /\-/gi;
       let authToken = token.replace(regexToReplace, "&");
@@ -91,15 +97,61 @@ export class AppComponent implements OnInit {
       //     this.lStorageService.setitemonLocalStorage('mUniqueId', token);
       //     console.log(`Got a new token ${token}`);
       //   });
-      });
-      projectConstants = this.globalService.getGlobalConstants();
-      const cVersion = version.desktop;
-      const pVersion = this.lStorageService.getitemfromLocalStorage('version');
-      if (pVersion && pVersion !== cVersion) {
-        this.lStorageService.clearLocalstorage();
-        this.lStorageService.setitemonLocalStorage('version', cVersion);
-      } else {
-        this.lStorageService.setitemonLocalStorage('version', cVersion);
+    });
+    projectConstants = this.globalService.getGlobalConstants();
+    const cVersion = version.desktop;
+    // projectConstantsLocal.PROVIDER_ACCOUNT_ID
+    this.getAppVersion(projectConstantsLocal.S3UNIQUE_ID).then(
+      (versionInfo) => {
+        if (versionInfo) {
+          if (version.android_version !== versionInfo['playstore']['version']) {
+            this._forceUpdate(versionInfo);
+          }
+        }
+        const pVersion = this.lStorageService.getitemfromLocalStorage('version');
+        if (pVersion && pVersion !== cVersion) {
+          this.lStorageService.clearLocalstorage();
+          this.lStorageService.setitemonLocalStorage('version', cVersion);
+        } else {
+          this.lStorageService.setitemonLocalStorage('version', cVersion);
+        }
       }
+    )
+  }
+
+  /**
+   * 
+   * @param accountId 
+   * @returns 
+   */
+  getAppVersion(accountId) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.domainConfig.getCustomAppVersion(accountId).subscribe(
+        (version) => {
+          resolve(version);
+        }, () => {
+          resolve(false);
+        });
+    });
+  }
+
+  /**
+   * 
+   */
+  private _forceUpdate(versionInfo) {
+    const dialogRef = this.dialog.open(ForceDialogComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        versionInfo: versionInfo
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+
+      }
+    });
   }
 }

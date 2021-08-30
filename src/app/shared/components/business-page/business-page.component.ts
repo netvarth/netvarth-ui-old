@@ -1431,6 +1431,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   redirectToHistory() {
     console.log("Inside redirectToHistory");
     const _this = this;
+    _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
         if (status) {
@@ -1521,6 +1522,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.changedate_req = true;
     }
     const _this = this;
+    _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
         console.log("Current Login status:" + status);
@@ -1575,7 +1577,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!location.futureAppt) {
       this.futureAllowed = false;
     }
-
+    _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
         if (status) {
@@ -1721,6 +1723,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             _this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
           }
         }
+      } else {
+        this.loading_direct = false;
       }
     });
   }
@@ -1892,6 +1896,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   payClicked(locid, locname, cdate, service) {
     const _this = this;
+    _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
         if (status) {
