@@ -70,9 +70,10 @@
                                             </div> -->
                                         </div>
                                         <div class="bill-section"
-                                            *ngIf="showRefund && payments && payments.refundDetails">
+                                            *ngIf=" payments && payments.refundDetails&& payments.refundDetails.length>0">
                                             <div class="bill-section-content">
                                                 <div class="bill-wrapper">
+                                                    <h2>Refund Details</h2>
                                                     <div class="section-four">
                                                         <div class="list-outer">
                                                             <div class="table-th">
@@ -89,7 +90,7 @@
                                                                             | capitalizeFirst}}</span>
                                                                     </div>
                                                                     <div class="td two">
-                                                                        {{refund.refundBy | capitalizeFirst }}</div>
+                                                                        {{refund.refundMode | capitalizeFirst }}</div>
                                                                     <div class="td three rupee-font">{{refund.amount |
                                                                         currency:'&#8377; ' }}</div>
                                                                 </div>

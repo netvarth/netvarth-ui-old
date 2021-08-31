@@ -170,6 +170,7 @@ export class BranchUsersComponent implements OnInit {
         this.selectedTeam = 'all';
         this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
         this.user = this.groupService.getitemFromGroupStorage('ynw-user');
+        console.log(this.user);
         this.domain = this.user.sector;
         this.api_loading = true;
         this.getUsers();
@@ -1008,5 +1009,18 @@ export class BranchUsersComponent implements OnInit {
     }
     cancelLocationToUsers(){
         this.apiError = '';
+    }
+    getBussLoc(bussloc){
+        for (let i = 0; i < bussloc.length; i++) {
+            const locations = this.locationsjson.filter(loc =>loc.id === bussloc[i]);
+            if (locations[0]) {
+                bussloc[i] = locations[0].place;
+            }
+        }
+        if (bussloc.length > 1) {
+            bussloc = bussloc.toString();
+            return bussloc.replace(/,/g, ", ");
+        }
+        return bussloc;
     }
 }
