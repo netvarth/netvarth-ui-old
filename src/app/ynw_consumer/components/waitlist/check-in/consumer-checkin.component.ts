@@ -722,8 +722,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.payEmail = result;
                 this.confirmcheckin(type,paymenttype);
             }else{
-                // this.isClickedOnce=false;
-                 this.paymentBtnDisabled=false;
+                 this.isClickedOnce=false;
+            
             }
 
         });
