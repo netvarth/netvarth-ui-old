@@ -59,7 +59,7 @@
                                                     <div class="th three amount rupee-font">{{payment.amount |
                                                         currency:'&#8377; ' }}</div>
                                                     <div class="th one">{{payment.status
-                                                        | capitalizeFirst}}</div>
+                                                        | capitalizeFirst}} <p><a [routerLink]="['consumer','payments',payment.id]">Details</a></p></div>
                                                 </div>
                                             </div>
                                             <!-- <div class="wrap">
