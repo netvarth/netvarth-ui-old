@@ -418,7 +418,7 @@
                                                                     <button class="cs-btn bt1"   (click)="payuPayment()"
                                                                     *ngIf="((checkJcash && jcashamount > bill_data.amountDue) || ( checkJcash && jcashamount == bill_data.amountDue))">
                                                                      Confirm</button>
-                                                                    <button class="cs-btn bt1"  *ngIf="((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
+                                                                    <button class="cs-btn bt1"  *ngIf="razorpayEnabled && ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
                                                                     [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()">CC/DC/Net
                                                                         Banking/UPI</button>
                                                                     <button class="cs-btn bt1" *ngIf="paytmEnabled && ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"

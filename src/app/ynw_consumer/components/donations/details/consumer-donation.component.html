@@ -525,11 +525,11 @@
                                                 </button>
                                             </div>
                                             <div>
-                                                <button type="button"  [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()"
+                                                <button type="button"  *ngIf="razorpayEnabled" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()"
                                                     class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4">
                                                     CC/DC/Net Banking/UPI
                                                 </button>
-                                               <button type="button" [class.disabled]="isClickedOnce"  (click)="!isClickedOnce && paytmPayment()"
+                                               <button type="button" *ngIf="paytmEnabled" [class.disabled]="isClickedOnce"  (click)="!isClickedOnce && paytmPayment()"
                                                 class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4 mgn-lt-5">
                                                 PayTM
                                             </button>

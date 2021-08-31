@@ -228,6 +228,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     loadingPaytm = false;
     @ViewChild('consumer_checkin') paytmview;
     api_loading_video;
+    payment_options:  any = [];
+    paytmEnabled = false;
+    razorpayEnabled = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -322,6 +325,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         };
         const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
         this.api_loading1 = true;
+        this.getPaymentModes();
         if (activeUser) {
             this.customer_data = activeUser;
         }
@@ -384,6 +388,25 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
             }
         );
+    }
+    getPaymentModes() {
+        this.paytmEnabled = false;
+        this.razorpayEnabled = false;
+        this.subs.sink = this.shared_services.getPaymentModesofProvider(this.account_id)
+            .subscribe(
+                data => {
+                    this.payment_options = data;
+                    this.payment_options.forEach(element => {
+                        if (element.name === 'PPI') {
+                            this.paytmEnabled = true;
+                        }
+                        if (element.name === 'DC' || element.name === 'CC' || element.name === 'NB'|| element.name === 'UPI' ) {
+                            this.razorpayEnabled = true;
+                        }
+                    });
+                },
+                
+            );
     }
     ngOnDestroy(): void {
         this.subs.unsubscribe();

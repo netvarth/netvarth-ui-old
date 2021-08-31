@@ -493,10 +493,10 @@
                         <p class="jaldeecredit">
                             To pay Rs {{checkJcash ? totalamountPay : catalog_details.advanceAmount}} please select any payment options
                         </p>
-                        <span type="button" class="razorpay-icon paymenticons" *ngIf="catalog_details.advanceAmount > 0 && ((checkJcash && jcashamount < catalog_details.advanceAmount) || (!checkJcash))" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm()" id="stepThreeConfirmButton"  >
+                        <span type="button" class="razorpay-icon paymenticons" *ngIf="razorpayEnabled && catalog_details.advanceAmount > 0 && ((checkJcash && jcashamount < catalog_details.advanceAmount) || (!checkJcash))" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm()" id="stepThreeConfirmButton"  >
                            
                         </span>&nbsp;&nbsp;
-                        <span type="button" class="paytm-icon paymenticons"*ngIf="catalog_details.advanceAmount > 0 && ((checkJcash && jcashamount < catalog_details.advanceAmount) || (!checkJcash))" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm('paytm')" id="stepThreeConfirmButton" >
+                        <span type="button" class="paytm-icon paymenticons"*ngIf="paytmEnabled && catalog_details.advanceAmount > 0 && ((checkJcash && jcashamount < catalog_details.advanceAmount) || (!checkJcash))" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm('paytm')" id="stepThreeConfirmButton" >
                            
                         </span>
                     </div>
@@ -611,10 +611,10 @@
                     <p class="jaldeecredit">
                         To pay Rs {{checkJcash ? totalamountPay : catalog_details.advanceAmount}} please select any payment options
                     </p>
-                    <span type="button" class="razorpay-icon paymenticons" *ngIf="catalog_details.advanceAmount > 0 && ((checkJcash && jcashamount < catalog_details.advanceAmount) || (!checkJcash))" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm()"id="stepThreeConfirmButton"  >
+                    <span type="button" class="razorpay-icon paymenticons" *ngIf="razorpayEnabled && catalog_details.advanceAmount > 0 && ((checkJcash && jcashamount < catalog_details.advanceAmount) || (!checkJcash))" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm()"id="stepThreeConfirmButton"  >
                        
                     </span>&nbsp;&nbsp;
-                    <span type="button" class="paytm-icon paymenticons"*ngIf="catalog_details.advanceAmount > 0 && ((checkJcash && jcashamount < catalog_details.advanceAmount) || (!checkJcash))" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm('paytm')" id="stepThreeConfirmButton" >
+                    <span type="button" class="paytm-icon paymenticons"*ngIf="paytmEnabled && catalog_details.advanceAmount > 0 && ((checkJcash && jcashamount < catalog_details.advanceAmount) || (!checkJcash))" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm('paytm')" id="stepThreeConfirmButton" >
                        
                     </span>
                 </div>

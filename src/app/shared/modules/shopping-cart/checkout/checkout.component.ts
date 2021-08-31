@@ -195,6 +195,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   totalamountPay: any;
   loadingPaytm = false;
   isClickedOnce=false;
+  payment_options:  any = [];
+  paytmEnabled = false;
+  razorpayEnabled = false;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -288,7 +291,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-
+    this.getPaymentModes();
     this.linear = false;
     this.orderList = this.lStorageService.getitemfromLocalStorage('order');
     if (this.orderList) {
@@ -406,6 +409,25 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   }
+  getPaymentModes() {
+    this.paytmEnabled = false;
+    this.razorpayEnabled = false;
+    this.subs.sink = this.shared_services.getPaymentModesofProvider(this.account_id)
+        .subscribe(
+            data => {
+                this.payment_options = data;
+                this.payment_options.forEach(element => {
+                    if (element.name === 'PPI') {
+                        this.paytmEnabled = true;
+                    }
+                    if (element.name === 'DC' || element.name === 'CC' || element.name === 'NB'|| element.name === 'UPI' ) {
+                        this.razorpayEnabled = true;
+                    }
+                });
+            },
+            
+        );
+}
   ngAfterViewInit() {
     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {

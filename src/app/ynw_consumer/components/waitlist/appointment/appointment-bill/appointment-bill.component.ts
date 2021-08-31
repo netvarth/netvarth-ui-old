@@ -135,6 +135,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
     wallet: any;
     loadingPaytm = false;
     isClickedOnce=false;
+    razorpayEnabled = false;
     @ViewChild('consumer_appointmentbill') paytmview;
     constructor(private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
@@ -392,14 +393,17 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
      */
     getPaymentModes() {
         this.paytmEnabled = false;
-        this.subs.sink=this.sharedServices.getPaymentModesofProvider(this.accountId)
+        this.razorpayEnabled = false;
+        this.subs.sink = this.sharedServices.getPaymentModesofProvider(this.accountId)
             .subscribe(
                 data => {
                     this.payment_options = data;
                     this.payment_options.forEach(element => {
                         if (element.name === 'PPI') {
                             this.paytmEnabled = true;
-                            return false;
+                        }
+                        if (element.name === 'DC' || element.name === 'CC' || element.name === 'NB'|| element.name === 'UPI' ) {
+                            this.razorpayEnabled = true;
                         }
                     });
                     this.payModesQueried = true;

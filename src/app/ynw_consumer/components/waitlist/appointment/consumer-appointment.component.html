@@ -1176,11 +1176,11 @@
                                                 <p class="jaldeecredit">
                                                     To pay Rs {{checkJcash ? payAmount : paymentDetails.amountRequiredNow}} please select any payment options
                                                 </p>
-                                                <span class="razorpay-icon paymenticons" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"   [class.disabled]="isClickedOnce"
+                                                <span class="razorpay-icon paymenticons" *ngIf="razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"   [class.disabled]="isClickedOnce"
                                                     (click)="!isClickedOnce && saveCheckin('appt')" id="stepThreeConfirmButton"  >
                                                    
                                                 </span>&nbsp;&nbsp;
-                                                <span type="button" [class.disabled]="isClickedOnce" class="paytm-icon paymenticons"*ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" (click)="!isClickedOnce && saveCheckin('appt','paytm')" id="stepThreeConfirmButton" >
+                                                <span type="button" [class.disabled]="isClickedOnce" class="paytm-icon paymenticons"*ngIf="paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" (click)="!isClickedOnce && saveCheckin('appt','paytm')" id="stepThreeConfirmButton" >
                                                    
                                                 </span>
                                             </div>

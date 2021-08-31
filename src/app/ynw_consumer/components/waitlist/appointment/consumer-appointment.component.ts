@@ -255,6 +255,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     readMore = false;
     loadingPaytm = false;
     api_loading_video;
+    payment_options:  any = [];
+    paytmEnabled = false;
+    razorpayEnabled = false;
     @ViewChild('consumer_appointment') paytmview;
 
     constructor(public fed_service: FormMessageDisplayService,
@@ -349,6 +352,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             loop: false,
             responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 2 }, 1200: { items: 3 } }
         };
+        this.getPaymentModes();
         const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
         if (activeUser) {
             this.isfirstCheckinOffer = activeUser.firstCheckIn;
@@ -416,6 +420,25 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
             }
         );
+    }
+    getPaymentModes() {
+        this.paytmEnabled = false;
+        this.razorpayEnabled = false;
+        this.subs.sink = this.shared_services.getPaymentModesofProvider(this.account_id)
+            .subscribe(
+                data => {
+                    this.payment_options = data;
+                    this.payment_options.forEach(element => {
+                        if (element.name === 'PPI') {
+                            this.paytmEnabled = true;
+                        }
+                        if (element.name === 'DC' || element.name === 'CC' || element.name === 'NB'|| element.name === 'UPI' ) {
+                            this.razorpayEnabled = true;
+                        }
+                    });
+                },
+                
+            );
     }
     getRescheduleApptDet() {
         this.subs.sink = this.shared_services.getAppointmentByConsumerUUID(this.rescheduleUserId, this.account_id).subscribe(

@@ -1371,11 +1371,11 @@
                                                 <p class="jaldeecredit">
                                                     To pay Rs {{checkJcash ? payAmount : paymentDetails.amountRequiredNow}} please select any payment options
                                                 </p>
-                                                <span type="button" class="razorpay-icon paymenticons" [class.disabled]="isClickedOnce"*ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" [class.disabled]="isClickedOnce"
+                                                <span type="button" class="razorpay-icon paymenticons" [class.disabled]="isClickedOnce"*ngIf="razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" [class.disabled]="isClickedOnce"
                                                     (click)="!isClickedOnce && saveCheckin('checkin')" id="stepThreeConfirmButton"  >
                                                    
                                                 </span>&nbsp;&nbsp;
-                                                <span type="button"  class="paytm-icon paymenticons" [class.disabled]="isClickedOnce" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" (click)="!isClickedOnce && saveCheckin('checkin','paytm')" id="stepThreeConfirmButton" >
+                                                <span type="button"  class="paytm-icon paymenticons" [class.disabled]="isClickedOnce" *ngIf="paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" (click)="!isClickedOnce && saveCheckin('checkin','paytm')" id="stepThreeConfirmButton" >
                                                    
                                                 </span>
                                             </div>

@@ -234,6 +234,9 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     @ViewChild('consumer_donation') paytmview;
     loadingPaytm = false;
     isClickedOnce=false;
+    payment_options:  any = [];
+    paytmEnabled = false;
+    razorpayEnabled = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -291,6 +294,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.main_heading = this.checkinLabel; // 'Check-in';
         this.maxsize = 1;
         this.step = 1;
+        this.getPaymentModes();
         this.getProfile();
         this.gets3curl();
         this.getFamilyMembers();
@@ -322,6 +326,25 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         // this.hold_sel_checkindate = this.sel_checkindate;
         // this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
         this.revealphonenumber = true;
+    }
+    getPaymentModes() {
+        this.paytmEnabled = false;
+        this.razorpayEnabled = false;
+        this.subs.sink = this.shared_services.getPaymentModesofProvider(this.account_id)
+            .subscribe(
+                data => {
+                    this.payment_options = data;
+                    this.payment_options.forEach(element => {
+                        if (element.name === 'PPI') {
+                            this.paytmEnabled = true;
+                        }
+                        if (element.name === 'DC' || element.name === 'CC' || element.name === 'NB'|| element.name === 'UPI' ) {
+                            this.razorpayEnabled = true;
+                        }
+                    });
+                },
+                
+            );
     }
     createForm() {
         this.searchForm = this.fb.group({
