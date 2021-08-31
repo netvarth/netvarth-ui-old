@@ -104,6 +104,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
     billNoteExists = false;
     showBillNotes = false;
     paytmEnabled = false;
+    razorpayEnabled = false;
     type;
     accountId;
     pid;
@@ -371,6 +372,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
      */
     getPaymentModes() {
         this.paytmEnabled = false;
+        this.razorpayEnabled = false;
         this.subs.sink = this.sharedServices.getPaymentModesofProvider(this.accountId)
             .subscribe(
                 data => {
@@ -378,7 +380,9 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                     this.payment_options.forEach(element => {
                         if (element.name === 'PPI') {
                             this.paytmEnabled = true;
-                            return false;
+                        }
+                        if (element.name === 'DC' || element.name === 'CC' || element.name === 'NB'|| element.name === 'UPI' ) {
+                            this.razorpayEnabled = true;
                         }
                     });
                     this.payModesQueried = true;

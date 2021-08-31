@@ -1040,6 +1040,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   setAccountLocations(res) {
     this.locationjson = res;
     this.location_exists = true;
+    let location;
     for (let i = 0; i < this.locationjson.length; i++) {
       const addres = this.locationjson[i].address;
       const place = this.locationjson[i].place;
@@ -1048,11 +1049,15 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       } else {
         this.locationjson['isPlaceisSame'] = false;
       }
+      if(this.locationjson[i].baseLocation){
+        console.log("gf"+JSON.stringify(this.locationjson[i]));
+         location = this.locationjson[i];
+      }
       if (this.locationjson[i].parkingType) {
         this.locationjson[i].parkingType = this.locationjson[i].parkingType.charAt(0).toUpperCase() + this.locationjson[i].parkingType.substring(1);
       }
     }
-    this.changeLocation(this.locationjson[0]);
+    this.changeLocation(location);
     this.api_loading = false;
   }
 
@@ -1385,7 +1390,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   changeLocation(loc) {
-
+console.log("fgf"+JSON.stringify(loc));
     this.selectedLocation = loc;
     this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
 

@@ -102,6 +102,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
     billNoteExists = false;
     showBillNotes = false;
     paytmEnabled = false;
+    razorpayEnabled = false;
     type;
     accountId;
     pid;
@@ -421,14 +422,17 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
      */
     getPaymentModes() {
         this.paytmEnabled = false;
-        this.sharedServices.getPaymentModesofProvider(this.accountId)
+        this.razorpayEnabled = false;
+        this.subs.sink = this.sharedServices.getPaymentModesofProvider(this.accountId)
             .subscribe(
                 data => {
                     this.payment_options = data;
                     this.payment_options.forEach(element => {
                         if (element.name === 'PPI') {
                             this.paytmEnabled = true;
-                            return false;
+                        }
+                        if (element.name === 'DC' || element.name === 'CC' || element.name === 'NB'|| element.name === 'UPI' ) {
+                            this.razorpayEnabled = true;
                         }
                     });
                     this.payModesQueried = true;
