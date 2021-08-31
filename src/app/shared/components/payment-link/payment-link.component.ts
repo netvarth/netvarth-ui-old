@@ -122,6 +122,7 @@ export class PaymentLinkComponent implements OnInit {
   provider_label: any;
   customer: any;
   loadingPaytm = false;
+  isClickedOnce=false;
   @ViewChild('consumer_paylink') paytmview;
   constructor(
     public provider_services: ProviderServices,
@@ -251,6 +252,7 @@ export class PaymentLinkComponent implements OnInit {
 
 
   pay(paytype?) {
+    this.isClickedOnce=true;
     let paymentWay;
         if(paytype == 'paytm'){
             paymentWay = 'PPI';
@@ -278,6 +280,7 @@ export class PaymentLinkComponent implements OnInit {
         }
       },
         error => {
+          this.isClickedOnce=false;
          // this.api_error = this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' };
          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
@@ -292,6 +295,7 @@ export class PaymentLinkComponent implements OnInit {
     this.razorModel.order_id = data.orderId;
     this.razorModel.name = data.providerName;
     this.razorModel.description = data.description;
+    this.isClickedOnce=false;
     this.razorpayService.payBillWithoutCredentials(this.razorModel).then(
       (response: any) => {
         if (response !== 'failure') {
@@ -306,6 +310,7 @@ export class PaymentLinkComponent implements OnInit {
     );
   }
   payWithPayTM(pData:any) {
+    this.isClickedOnce=true;
     this.loadingPaytm = true;
     this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
 }
@@ -318,12 +323,14 @@ transactionCompleted(response) {
     this.cdRef.detectChanges();
   
 } else if(response.STATUS == 'TXN_FAILURE'){
+  this.isClickedOnce=false;
   this.paidStatus = 'false';
   this.loadingPaytm = false; 
   this.cdRef.detectChanges();
 }
 }
 closeloading(){
+  this.isClickedOnce=false;
   this.loadingPaytm = false; 
   this.cdRef.detectChanges();
   this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });

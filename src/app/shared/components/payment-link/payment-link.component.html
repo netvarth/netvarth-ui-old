@@ -41,10 +41,10 @@
                                                     </button> -->
                                                     <div class="paymentdiv" >
                                                         
-                                                        <span type="button" class="razorpay-icon paymenticons"  appPreventDoubleClick (click)="pay()" id="stepThreeConfirmButton"  >
+                                                        <span type="button" class="razorpay-icon paymenticons"  [class.disabled]="isClickedOnce" (click)="!isClickedOnce && pay()" id="stepThreeConfirmButton"  >
                                                            
                                                         </span>&nbsp;&nbsp;
-                                                        <span type="button" class="paytm-icon paymenticons" appPreventDoubleClick (click)="pay('paytm')" id="stepThreeConfirmButton" >
+                                                        <span type="button" class="paytm-icon paymenticons" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && pay('paytm')" id="stepThreeConfirmButton" >
                                                            
                                                         </span>
                                                     </div>
