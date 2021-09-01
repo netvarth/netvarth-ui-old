@@ -469,6 +469,7 @@ export class ServiceViewComponent implements OnInit {
     this.locationjson = res;
     console.log(this.locationjson);
     this.location_exists = true;
+    let location;
     for (let i = 0; i < this.locationjson.length; i++) {
       const addres = this.locationjson[i].address;
       const place = this.locationjson[i].place;
@@ -477,11 +478,15 @@ export class ServiceViewComponent implements OnInit {
       } else {
         this.locationjson['isPlaceisSame'] = false;
       }
+      if(this.locationjson[i].baseLocation){
+        console.log("gf"+JSON.stringify(this.locationjson[i]));
+         location = this.locationjson[i];
+      }
       if (this.locationjson[i].parkingType) {
         this.locationjson[i].parkingType = this.locationjson[i].parkingType.charAt(0).toUpperCase() + this.locationjson[i].parkingType.substring(1);
       }
     }
-    this.changeLocation(this.locationjson[0]);
+    this.changeLocation(location);
   }
   changeLocation(loc) {
     this.selectedLocation = loc;
