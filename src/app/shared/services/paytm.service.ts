@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { projectConstantsLocal } from '../constants/project-constants';
 
 @Injectable()
 export class PaytmService {
@@ -59,7 +60,13 @@ export class PaytmService {
     }
     
     public loadPayTMScript(pData, payTMUrl,isfrom): HTMLScriptElement {
-        const url = payTMUrl + '/merchantpgpui/checkoutjs/merchants/' + pData.merchantId +'.js';
+        let payTmurl;
+        if(pData.paymentEnv == 'production'){
+            payTmurl = projectConstantsLocal.PAYTM_URL;
+        }else{
+            payTmurl = projectConstantsLocal.PAYTMLOCAL_URL; 
+        }
+        const url = payTmurl + '/merchantpgpui/checkoutjs/merchants/' + pData.merchantId +'.js';
         console.log('preparing to load...')
         let script  = document.createElement('script');
         script.id = pData.orderId;

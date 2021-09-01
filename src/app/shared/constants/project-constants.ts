@@ -336,6 +336,7 @@ export const projectConstantsLocal = {
   VALIDATOR_MAX500: 500, // max char count
   VALIDATOR_MAX_LAKH: 100,
   VALIDATOR_MOBILE_AND_EMAIL: /^(?:\d{10}|[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,4})$/,
+  VALIDATOR_SPACE_NOT_ALLOWED: /^\S*$/,
   QTY_MAX_VALUE: 100000,
   PRICE_MAX_VALUE: 100000,
   TIME_MAX_VALUE: 3600,
@@ -1036,6 +1037,8 @@ export const projectConstantsLocal = {
   WALLET_NOTES: {
     APP_SIGNUP: 'APP SIGNUP',
   },
+  PAYTMLOCAL_URL: 'https://securegw-stage.paytm.in',
+  PAYTM_URL: 'https://securegw.paytm.in',
   // UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/ui/scale/config/"
   UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/ui/prod/config/"
 };

@@ -31,6 +31,7 @@ export class PaymentComponent implements OnInit {
   razorpay_order_id: any;
   paidStatus = 'false';
   razorpay_signature: any;
+  isClickedOnce=false;
 
   constructor(
     private activated_route: ActivatedRoute,
@@ -74,11 +75,13 @@ export class PaymentComponent implements OnInit {
     ];
   }
   payuPayment() {
+    this.isClickedOnce=true;
     let paymentWay;
     paymentWay = 'DC';
     this.makeFailedPayment(paymentWay);
   }
   paytmPayment() {
+    this.isClickedOnce=true;
     let paymentWay;
     paymentWay = 'PPI';
     this.makeFailedPayment(paymentWay);
@@ -105,11 +108,13 @@ export class PaymentComponent implements OnInit {
               }
             }, 2000);
           } else {
+            this.isClickedOnce=false;
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
           }
         }
       },
         error => {
+          this.isClickedOnce=false;
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
@@ -124,6 +129,7 @@ export class PaymentComponent implements OnInit {
     this.razorModel.description = pData.description;
     this.razorModel.name = pData.providerName;
     this.razorpayService.payWithRazor(this.razorModel, this.origin);
+    this.isClickedOnce=false;
   }
   goBack() {
     if (this.paidStatus === 'true') {
