@@ -58,19 +58,19 @@
           </div>
         </div> -->
         <div class="row">
-            <div *ngIf="!bprofilePermit"
+            <!-- <div *ngIf="!bprofilePermit"
             class="incomplete-msg">
             <div style="padding: 0 30px;">
                 Business Profile is not enable by your admin
             </div>
-        </div>
+        </div> -->
             
-          <div class="card p0" [ngClass]="{'highlight': !bprofilePermit}">
+          <div class="card p0">
              
-            <span class="b-link"  (click)="bprofilePermit && gotoOnlineProfile() " >
+            <span class="b-link"  (click)="gotoOnlineProfile() " >
               <h2>My Account</h2>
               <span class="form-level-settings">Manage your profile here..
-                <a class="learnmore-pointer" id="customer-help" (click)="bprofilePermit && learnmore_clicked('jaldeeonline', $event)">Learn More
+                <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('jaldeeonline', $event)">Learn More
                 </a>
               </span><br>
               <span class="lnk setings">Jaldee Online&nbsp;&nbsp;
