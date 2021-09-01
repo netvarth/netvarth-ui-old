@@ -467,7 +467,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div
+                                                                <div  
                                                                     *ngIf="hideLanguages && virtualForm.get('preferredLanguage').value.length >0 && lngknown==='no'">
                                                                     <label class="col-form-label"
                                                                         for="preferredLanguage">{{virtualForm.get('preferredLanguage').value.length
@@ -475,13 +475,14 @@
                                                                         language'}}
                                                                     </label><br />
 
-                                                                    <div class="col-form-label"><span
+                                                                    <div class="col-form-label edtlang">
+                                                                        <span
                                                                             style="word-wrap: break-word;">{{virtualForm.get('preferredLanguage').value}}</span>
 
-                                                                        <span class="pull-right"
+                                                                        <span
                                                                             (click)="editLanguage()"><i
                                                                                 class="fa fa-edit fa-1x"
-                                                                                style="font-size: large;"></i></span>
+                                                                                style="font-size: large;" data-bs-toggle="tooltip" data-bs-placement="right" title="Edit"></i></span>
                                                                     </div>
                                                                 </div>
                                                                 <div *ngIf="!hideLanguages" class="form-group">
