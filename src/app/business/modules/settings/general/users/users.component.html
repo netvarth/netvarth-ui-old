@@ -635,7 +635,9 @@
                                                       <th class="display-min-none" style="min-width: 125px;">User Type
                                                       </th>
                                                       <!-- <th class="display-min-none" style="min-width: 125px;">Contact Info</th> -->
-                                                      <th class="display-min-none" style="width: 30%;">Specializations
+                                                      <th *ngIf="domain !== 'finance'" class="display-min-none" style="width: 30%;">Specializations
+                                                      </th>
+                                                      <th *ngIf="domain === 'finance'" class="display-min-none" style="width: 30%;">Business Locations
                                                       </th>
                                                       <th class="display-min-none">Languages</th>
                                                       <th class="display-min-none">Tokens#</th>
@@ -701,9 +703,15 @@
                                                                           </span> -->
                                                                       </div>
                                                                       <div class="mgn-up-5"
-                                                                          *ngIf="service.specialization"> <span
+                                                                          *ngIf="service.specialization && domain !== 'finance'"> <span
                                                                               class="b2">
                                                                               {{getSpecialization(service.specialization)}}
+                                                                          </span></div>
+                                                                      
+                                                                      <div class="mgn-up-5"
+                                                                          *ngIf="service.bussLocations.length > 0  && domain === 'finance'"> <span
+                                                                              class="b2">
+                                                                              {{getBussLoc(service.bussLocations)}}
                                                                           </span></div>
                                                                       <div class="mgn-up-5"
                                                                           *ngIf="service.preferredLanguages"><span
@@ -739,10 +747,15 @@
                                                             <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
                                                           </span>
                                                       </td> -->
-                                                      <td class="display-min-none">
-                                                          <span *ngIf="service.specialization">
+                                                      <td class="display-min-none" *ngIf="domain !== 'finance'">
+                                                          <span *ngIf="service.specialization   && domain !== 'finance'">
                                                               {{getSpecialization(service.specialization)}}</span>
                                                       </td>
+
+                                                      <td class="display-min-none" *ngIf="domain === 'finance'">
+                                                        <span *ngIf="service.bussLocations.length > 0  && domain === 'finance'">
+                                                          {{getBussLoc(service.bussLocations)}}</span>
+                                                    </td>
                                                       <td class="display-min-none">
                                                           <span *ngIf="service.preferredLanguages">
                                                               {{getLanguages(service.preferredLanguages)}}
@@ -868,8 +881,12 @@
                                                     <th class="display-min-none" style="min-width: 125px;">User Type
                                                     </th>
                                                     <th class="display-min-none" style="min-width: 125px;">Contact Info</th>
-                                                    <th class="display-min-none" style="width: 30%;">Specializations
+                                                    <th *ngIf="domain !== 'finance'" class="display-min-none" style="width: 30%;">Specializations
                                                     </th>
+                                                    <th *ngIf="domain === 'finance'" class="display-min-none" style="width: 30%;">Business Locations
+                                                    </th>
+
+
                                                     <th class="display-min-none">Languages</th>
                                                     <th class="display-min-none">Tokens count</th>
                                                     <th class="display-min-none"></th>
@@ -925,10 +942,20 @@
                                                                         </span>
                                                                     </div>
                                                                     <div class="mgn-up-5"
-                                                                        *ngIf="service.specialization"> <span
+                                                                        *ngIf="service.specialization && domain !== 'finance'"> <span
                                                                             class="b2">
-                                                                            {{getSpecialization(service.specialization)}}
+                                                                           {{getSpecialization(service.specialization)}}
                                                                         </span></div>
+                                                                    
+                                                                    <div class="mgn-up-5"
+                                                                        *ngIf="service.bussLocations.length > 0  && domain === 'finance'"> <span
+                                                                            class="b2">Business Locations &nbsp;
+                                                                            <i class="fa fa-map-marker mgn-rt-5" style="color: blue;" aria-hidden="true"></i>
+                                                                            {{getBussLoc(service.bussLocations)}}
+                                                                        </span></div>
+
+
+
                                                                     <div class="mgn-up-5"
                                                                         *ngIf="service.preferredLanguages"><span
                                                                             class="b2">
@@ -963,10 +990,17 @@
                                                           <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
                                                         </span>
                                                     </td>
-                                                    <td class="display-min-none">
-                                                        <span *ngIf="service.specialization">
-                                                            {{getSpecialization(service.specialization)}}</span>
-                                                    </td>
+                                                    <td class="display-min-none" *ngIf="domain !== 'finance'">
+                                                      <span *ngIf="service.specialization && domain !== 'finance'">
+                                                          {{getSpecialization(service.specialization)}}</span>
+                                                  </td>
+
+                                                  <td class="display-min-none" *ngIf="domain === 'finance'">
+                                                    <span *ngIf="service.bussLocations.length > 0  && domain === 'finance'">
+                                                      {{getBussLoc(service.bussLocations)}}</span>
+                                                  </td>
+
+
                                                     <td class="display-min-none">
                                                         <span *ngIf="service.preferredLanguages">
                                                             {{getLanguages(service.preferredLanguages)}}

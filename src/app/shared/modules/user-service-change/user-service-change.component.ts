@@ -165,6 +165,7 @@ import { WordProcessor } from '../../services/word-processor.service';
 import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import { userContactInfoComponent } from '../../../business/modules/settings/general/users/user-contact-info/user-contact-info.component';
+import { ConfirmBoxLocationComponent } from './confirm-box-location/confirm-box-location.component';
 
 @Component({
   selector: 'app-user-service-change',
@@ -201,6 +202,7 @@ export class UserServiceChnageComponent implements OnInit {
     state: '',
     pincode: '',
     primaryMobileNo: '',
+    employeeId: '',
     email: '',
     available: ''
   };
@@ -212,6 +214,7 @@ export class UserServiceChnageComponent implements OnInit {
     'state': false,
     'pincode': false,
     'primaryMobileNo': false,
+    'employeeId': false,
     'email': false,
     'available': false
   };
@@ -226,6 +229,10 @@ export class UserServiceChnageComponent implements OnInit {
   notAvailabileSelected: boolean;
   accountSettings;
   contactDetailsdialogRef: any;
+  checkin: any;
+  userDetails:any;
+  domain;
+  locationsjson: any = [];
 
   constructor(
     private activated_route: ActivatedRoute,
@@ -247,6 +254,13 @@ export class UserServiceChnageComponent implements OnInit {
     });
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.accountType = this.user.accountType;
+    this.domain = this.user.sector;
+    if (this.source === 'appt'){
+      this.getApptDetails();
+    } else  if (this.source == 'checkin'){
+      this.getCheckinDetails();
+    }
+  
   }
   applyFilter(filterValue: string) {
     this.selection.clear();
@@ -258,6 +272,7 @@ export class UserServiceChnageComponent implements OnInit {
     this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
     this.getSpokenLanguages();
     this.getSpecializations();
+    this.getProviderLocations();
   }
   getProviders() {
     let apiFilter = {};
@@ -322,14 +337,16 @@ export class UserServiceChnageComponent implements OnInit {
           'locationName': serviceObj.locationName,
           'profilePicture': serviceObj.profilePicture,
           'city': serviceObj.city,
+          'employeeId': serviceObj.employeeId,
           'state': serviceObj.state,
-          'currentWlCount': serviceObj.currentWlCount,
+          'currentWlCount': serviceObj.currentWlCount+serviceObj.currentApptCount,
           'whatsAppNum': (serviceObj.whatsAppNum) ? serviceObj.whatsAppNum  : '', 
           'telegramNum': (serviceObj.telegramNum) ? serviceObj.telegramNum  : '', 
           'countryCode':  serviceObj.countryCode || '',
           'firstName': serviceObj.firstName,
           'lastName': serviceObj.lastName,
-          'email': serviceObj.email || ''
+          'email': serviceObj.email || '',
+          'bussloc': serviceObj.bussLocations || ''
  
           // serviceObj.firstName + ' ' + serviceObj.lastName;
 
@@ -405,7 +422,12 @@ export class UserServiceChnageComponent implements OnInit {
     this.selectrow = true;
     this.selectedUser = user;
     if (this.selectrow === true && user.id) {
-      this.updateUser()
+      if(user.bussloc.length > 1){
+        this.updateUserWithLocation(user)
+      }
+      else{
+        this.updateUser()
+      }
     }
     this.removeSelection();
     if (this.service_dataSource.data[index].selected === undefined || this.service_dataSource.data[index].selected === false) {
@@ -416,6 +438,71 @@ export class UserServiceChnageComponent implements OnInit {
       this.service_dataSource.data[index].selected = false;
     }
   }
+  updateUserWithLocation(user) {
+    console.log(user);
+    let msg = '';
+    if (!this.selectedUser.isAvailable && (this.user.id === 136239 || this.user.id === 9341)) {
+      msg = this.selectedUser.businessName + ' seems to be unavailable now. Assign anyway ? ';
+    } else {
+     msg = 'Select the location of ' + this.selectedUser.businessName + ' to whom the '+ this.customer_label + ' ,' + this.userDetails + ' will be assigned';
+      // msg = 'Do you want to assign this ' + this.customer_label + ' to ' + this.selectedUser.businessName + '?';
+    }
+    const dialogrefd = this.dialog.open(ConfirmBoxLocationComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message':msg,
+        'user':user,
+        'type': 'yes/no'
+      }
+    });
+    dialogrefd.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) {
+        if (this.source == 'checkin') {
+          const post_data = {
+            'ynwUuid': this.uuid,
+            'provider': {
+              'id': this.userId
+            },
+            'location':{
+              'id':result
+            }
+          };
+        this.provider_services.updateUserWaitlist(post_data)
+            .subscribe(
+              data => {
+                this.location.back();
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              }
+            );
+        }
+        else {
+          const post_data = {
+            'uid': this.uuid,
+            'provider': {
+              'id': this.userId
+            },
+            'location':{
+              'id': result
+            }
+          };
+          this.provider_services.updateUserAppointment(post_data)
+            .subscribe(
+              data => {
+                this.location.back();
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              }
+            );
+        }
+      }
+    });
+  }
   removeSelection() {
     this.service_dataSource.data.map((question) => {
       return question.selected = false;
@@ -425,15 +512,15 @@ export class UserServiceChnageComponent implements OnInit {
     if (user.profilePicture) {
       const proImage = user.profilePicture;
       return proImage.url;
-    } else if(user.gender === 'male'){
-      return './assets/images/Asset1@300x.png';
-    }
-    else if(user.gender === 'female'){
-      return './assets/images/Asset2@300x.png';
-    }
-    else{
-      return './assets/images/Asset1@300x(1).png';
-    }
+    } else if(user.gender ==='male'){
+      return '../../.././assets/images/Asset1@300x.png';
+  }
+  else if(user.gender ==='female'){
+      return '../../.././assets/images/Asset2@300x.png';
+  }
+  else{
+      return '../../.././assets/images/Asset1@300x(1).png'; 
+  }
   }
   showMoreorLess(event, index, type) {
     event.stopPropagation();
@@ -468,6 +555,7 @@ export class UserServiceChnageComponent implements OnInit {
       'state': false,
       'pincode': false,
       'primaryMobileNo': false,
+      'employeeId': false,
       'email': false,
       'available': false
     };
@@ -478,6 +566,7 @@ export class UserServiceChnageComponent implements OnInit {
       state: '',
       pincode: '',
       primaryMobileNo: '',
+      employeeId: '',
       email: '',
       available: ''
       
@@ -487,7 +576,7 @@ export class UserServiceChnageComponent implements OnInit {
   }
   doSearch() {
     // this.getProviders();
-    if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pincode || this.filter.email || this.filter.primaryMobileNo || this.filter.available || this.selectedLanguages.length > 0 || this.selectedSpecialization.length > 0) {
+    if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pincode || this.filter.email || this.filter.primaryMobileNo || this.filter.employeeId || this.filter.available || this.selectedLanguages.length > 0 || this.selectedSpecialization.length > 0) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -515,6 +604,9 @@ export class UserServiceChnageComponent implements OnInit {
     }
     if (this.filter.email !== '') {
       api_filter['email-eq'] = this.filter.email;
+    }
+    if (this.filter.employeeId !== '') {
+      api_filter['employeeId-eq'] = this.filter.employeeId;
     }
     if (this.filter.primaryMobileNo !== '') {
       const pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
@@ -660,5 +752,75 @@ export class UserServiceChnageComponent implements OnInit {
       }
     });
 }
+
+getApptDetails() {
+  this.provider_services.getAppointmentById(this.uuid)
+    .subscribe(
+      data => {
+        this.checkin = data;
+        console.log(this.checkin);
+        if(this.checkin.appmtFor){
+        if (this.checkin.appmtFor[0].firstName && this.checkin.appmtFor[0].firstName !== null && this.checkin.appmtFor[0].firstName !== undefined && this.checkin.appmtFor[0].firstName !== '') {
+          this.userDetails = this.checkin.appmtFor[0].firstName + ' ' + this.checkin.appmtFor[0].lastName;
+        } else {
+          if (this.checkin.appmtFor[0].memberJaldeeId) {
+            this.userDetails = this.customer_label + ' : ' + this.checkin.appmtFor[0].memberJaldeeId;
+          }
+          if (this.checkin.appmtFor[0].jaldeeId) {
+            this.userDetails = this.customer_label + ' : ' + this.checkin.appmtFor[0].jaldeeId;
+          }
+        }
+      }
+        console.log(this.userDetails);
+      
+      }, error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      }
+    );
+ }
+ getCheckinDetails() {
+  this.provider_services.getProviderWaitlistDetailById(this.uuid)
+    .subscribe(
+      data => {
+        this.checkin = data;
+        console.log(this.checkin);
+        if(this.checkin.waitlistingFor){
+          if (this.checkin.waitlistingFor[0].firstName && this.checkin.waitlistingFor[0].firstName !== null && this.checkin.waitlistingFor[0].firstName !== undefined && this.checkin.waitlistingFor[0].firstName !== '') {
+            this.userDetails = this.checkin.waitlistingFor[0].firstName + ' ' + this.checkin.waitlistingFor[0].lastName;
+          } else {
+            if (this.checkin.waitlistingFor[0].memberJaldeeId) {
+              this.userDetails = this.customer_label + 'id:' + this.checkin.waitlistingFor[0].memberJaldeeId;
+            }
+            if (this.checkin.waitlistingFor[0].jaldeeId) {
+              this.userDetails = this.customer_label + 'id:' + this.checkin.waitlistingFor[0].jaldeeId;
+            }
+          }
+        }
+        console.log(this.userDetails);
+      }, error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      }
+    );
+  }
+  getProviderLocations() {
+    this.provider_services.getProviderLocations()
+        .subscribe(data => {
+         this.locationsjson = data;
+        });
+  }
+  getBussLoc(bussloc){
+    for (let i = 0; i < bussloc.length; i++) {
+        const locations = this.locationsjson.filter(loc =>loc.id === bussloc[i]);
+        if (locations[0]) {
+            bussloc[i] = locations[0].place;
+        }
+    }
+    if (bussloc.length > 1) {
+        bussloc = bussloc.toString();
+        return bussloc.replace(/,/g, ", ");
+    }
+    return bussloc;
+}
+
 }
 
