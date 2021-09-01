@@ -124,6 +124,7 @@ export class PaymentLinkComponent implements OnInit {
   loadingPaytm = false;
   isClickedOnce=false;
   @ViewChild('consumer_paylink') paytmview;
+  razorpayEnabled = false;
   constructor(
     public provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
@@ -204,10 +205,13 @@ export class PaymentLinkComponent implements OnInit {
   }
   getBillDateandTime() {
     if (this.bill_data.hasOwnProperty('createdDate')) {
+      this.billdate = this.bill_data.createdDate;
       const datearr = this.bill_data.createdDate.split(' ');
       const billdatearr = datearr[0].split('-');
-      this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
+      // this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
       this.billtime = datearr[1] + ' ' + datearr[2];
+      this.billdate = billdatearr[0] + '-' + billdatearr[1] + '-' + billdatearr[2];
+
     }
     if (this.bill_data.hasOwnProperty('gstNumber')) {
       this.gstnumber = this.bill_data.gstNumber;
