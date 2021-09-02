@@ -394,7 +394,8 @@
                                   <!-- <div class="price rupee-font">&#8377;{{getOrderFinalAmountToPay()}}</div> -->
                                   <div class="price rupee-font">{{cartDetails.netTotal| currency:'&#8377;'}}</div>
                                 </div>
-                                <span *ngIf="(!checkJcash && catalog_details.advanceAmount >0) || (this.checkJcash && catalog_details.advanceAmount > this.jcashamount)" style="font-size: small;color: red;"><i
+                                <!--<span *ngIf="(!checkJcash && catalog_details.advanceAmount >0) || (this.checkJcash && catalog_details.advanceAmount > this.jcashamount)" style="font-size: small;color: red;">-->
+                                    <span *ngIf="catalog_details.advanceAmount >0" style="font-size: small;color: red;"><i
                                     class="fa fa-info-circle " aria-hidden="true"></i>An advance of <span
                                     class="rupee-font">{{getAmountToPay(cartDetails) | currency:'&#8377;'}}
                                   </span>required</span>
