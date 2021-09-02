@@ -84,6 +84,8 @@ export class QuestionnaireComponent implements OnInit {
   newTimeDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
   qnrStatus = '';
   comments = {};
+  tday = new Date();
+  minday = new Date(1900, 0, 1);
   constructor(private sharedService: SharedServices,
     private activated_route: ActivatedRoute,
     private snackbarService: SnackbarService,
