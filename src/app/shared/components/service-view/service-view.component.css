@@ -1053,3 +1053,11 @@ color: #1E4079 !important;
   width: 25px !important; 
 }
 }
+.caroimage{
+  height: 150px!important;
+width: 150px!important;
+}
+.owl-stage-outer{
+  height:150px!important;
+  width:100%!important;
+}

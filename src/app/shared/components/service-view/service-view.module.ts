@@ -19,6 +19,7 @@ import { CardModule } from '../card/card.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ServiceViewComponent } from './service-view.component';
 import { ServiceViewRoutingModule } from './service-view.routing.module';
+import { OwlModule } from 'ngx-owl-carousel';
 @NgModule({
     imports: [
         CommonModule,
@@ -39,7 +40,8 @@ import { ServiceViewRoutingModule } from './service-view.routing.module';
         TruncateModule,
         CardModule,
         MatDialogModule,
-        ServiceViewRoutingModule
+        ServiceViewRoutingModule,
+        OwlModule
     ],
     declarations: [
         ServiceViewComponent
