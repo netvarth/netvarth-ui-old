@@ -15,7 +15,7 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <ul class="menu">
+                <ul *ngIf="selected_location" class="menu">
                   <li *ngFor="let location of locations;let i = index"
                     [ngClass]="{'active': (location.place == selected_location.place)}">
                     <a class="pointer-cursor" (click)="onChangeLocationSelect(i)">
@@ -26,7 +26,7 @@
                   </li>
                 </ul>
               </li>
-              <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
+              <li *ngIf="admin" class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
             </ul>
           </li>
         </ul>
