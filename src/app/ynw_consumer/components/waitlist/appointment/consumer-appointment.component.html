@@ -22,7 +22,7 @@
                                 <div class="col-xl-12" *ngIf="questionnaireLoaded">
                                     <div
                                         class="lbl col-sm-12 col-md-5 col-lg-4 col-xs-12 col-sm-12 no-padding displ-none">
-                                        <div class="wizard-nav" >
+                                        <div class="wizard-nav">
                                             <!-- *ngIf="type != 'reschedule'" -->
                                             <div class="wizard-steps p-8 p-lg-10">
                                                 <div class="wizard-step tab-selected wizard-mgn-30"
@@ -206,103 +206,103 @@
 
 
                                     <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
-                                        data-wizard-type="step-content" data-wizard-state="current"
-                                        *ngIf="bookStep === 0">
+                                    data-wizard-type="step-content" data-wizard-state="current"
+                                    *ngIf="bookStep === 0">
+                                    <div
+                                        class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding pull-right border-left">
                                         <div
-                                            class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding pull-right border-left">
-                                            <div
-                                                class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding check-new-group border-tp border-rt">
-                                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding border-bt"
-                                                    *ngIf="this.selectedUserParam && selectedUser">
-                                                    <div class="col-sm-2 col-xs-3 col-md-4 ">
-                                                        <img class="card-img" [src]="getPic(selectedUser)"
-                                                            alt="Profile Pic">
-                                                    </div>
-                                                    <div class="col-sm-10 col-xs-9 col-md-8 no-padding">
-                                                        <div class="">
-                                                            <h6 class="card-title mgn-up-5">
-                                                                <span
-                                                                    *ngIf="selectedUser.businessName">{{selectedUser.businessName}}</span>
-                                                                <span
-                                                                    *ngIf="!selectedUser.businessName">{{selectedUser.businessName}}</span>
-                                                            </h6>
-                                                        </div>
+                                            class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding check-new-group border-tp border-rt">
+                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding border-bt"
+                                                *ngIf="this.selectedUserParam && selectedUser">
+                                                <div class="col-sm-2 col-xs-3 col-md-4 ">
+                                                    <img class="card-img" [src]="getPic(selectedUser)"
+                                                        alt="Profile Pic">
+                                                </div>
+                                                <div class="col-sm-10 col-xs-9 col-md-8 no-padding">
+                                                    <div class="">
+                                                        <h6 class="card-title mgn-up-5">
+                                                            <span
+                                                                *ngIf="selectedUser.businessName">{{selectedUser.businessName}}</span>
+                                                            <span
+                                                                *ngIf="!selectedUser.businessName">{{selectedUser.businessName}}</span>
+                                                        </h6>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5">
-                                                        {{showCheckinButtonCaption()}} For
-                                                    </div>
-                                                    <div class="col-sm-12 col-xs-12 col-md-12">
-                                                        <div class="" *ngIf="sel_ser || type == 'waitlistreschedule'">
-                                                            <div class="service-icon pull-left"
-                                                                *ngIf="sel_ser_det.serviceType == 'virtualService'">
-                                                                <i class="fa phon-icon"
-                                                                    *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                                <i class="fa meet-icon"
-                                                                    *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                                <i class="fa zoom-icon zoom1"
-                                                                    *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                                <i class="fa jvideo-icon jvideo-icon-m jvideo-icon-mg5"
-                                                                    *ngIf="sel_ser_det.virtualCallingModes  && sel_ser_det.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
-                                                                <i class="fa wtsapaud-icon"
-                                                                    *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType === 'audioService'"></i>
-                                                                <i class="fa wtsapvid-icon"
-                                                                    *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType === 'videoService'"></i>
-                                                            </div>
-                                                            <h6 class="card-title service mgn-bt-10">
-                                                                {{sel_ser_det.name}}
-                                                            </h6>
-                                                            <div class="" style="font-size: 1rem"
-                                                                *ngIf="sel_ser_det.price && type != 'reschedule'">
-                                                                <p class="module-nomargin line-clamp no-margin"
-                                                                    *ngIf="sel_ser_det.description && !showmoreSpec"
-                                                                    (click)="showSpec()">
-                                                                    {{sel_ser_det.description}}</p>
-                                                                <p *ngIf="showmoreSpec" (click)="showSpec()">
-                                                                    {{sel_ser_det.description}}</p>
-                                                            </div>
-                                                            <div class="">
-                                                                <div class="callingmode mgn-lt-10"
-                                                                    *ngIf="sel_ser_det && sel_ser_det.serviceType==='virtualService' && type !== 'waitlistreschedule'">
-                                                                    <div class="mgn-bt-10 mgn-up-5">
-                                                                        <div class=""
-                                                                            *ngFor="let mode of sel_ser_det.virtualCallingModes;let i = index">
-                                                                            <div style="visibility: hidden;">
-                                                                                {{callingModesDisplayName[mode.callingMode]}}
-                                                                            </div>
-                                                                            <div class="cal-mod-instrct pre-check-title color-grey"
-                                                                                *ngIf="mode.callingMode">
-                                                                                {{mode.instructions}}
-                                                                            </div>
+                                            </div>
+                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10" *ngIf="hideTokenFor">
+                                                <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5">
+                                                    {{showCheckinButtonCaption()}} For
+                                                </div>
+                                                <div class="col-sm-12 col-xs-12 col-md-12">
+                                                    <div class="" *ngIf="sel_ser || type == 'waitlistreschedule'">
+                                                        <div class="service-icon pull-left"
+                                                            *ngIf="sel_ser_det.serviceType == 'virtualService'">
+                                                            <i class="fa phon-icon"
+                                                                *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                            <i class="fa meet-icon"
+                                                                *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                            <i class="fa zoom-icon zoom1"
+                                                                *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                            <i class="fa jvideo-icon jvideo-icon-m jvideo-icon-mg5"
+                                                                *ngIf="sel_ser_det.virtualCallingModes  && sel_ser_det.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+                                                            <i class="fa wtsapaud-icon"
+                                                                *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType === 'audioService'"></i>
+                                                            <i class="fa wtsapvid-icon"
+                                                                *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType === 'videoService'"></i>
+                                                        </div>
+                                                        <h6 class="card-title service mgn-bt-10">
+                                                            {{sel_ser_det.name}}
+                                                        </h6>
+                                                        <div class="" style="font-size: 1rem"
+                                                            *ngIf="sel_ser_det.price && type != 'reschedule'">
+                                                            <p class="module-nomargin line-clamp no-margin"
+                                                                *ngIf="sel_ser_det.description && !showmoreSpec"
+                                                                (click)="showSpec()">
+                                                                {{sel_ser_det.description}}</p>
+                                                            <p *ngIf="showmoreSpec" (click)="showSpec()">
+                                                                {{sel_ser_det.description}}</p>
+                                                        </div>
+                                                        <div class="">
+                                                            <div class="callingmode mgn-lt-10"
+                                                                *ngIf="sel_ser_det && sel_ser_det.serviceType==='virtualService' && type !== 'waitlistreschedule'">
+                                                                <div class="mgn-bt-10 mgn-up-5">
+                                                                    <div class=""
+                                                                        *ngFor="let mode of sel_ser_det.virtualCallingModes;let i = index">
+                                                                        <div style="visibility: hidden;">
+                                                                            {{callingModesDisplayName[mode.callingMode]}}
+                                                                        </div>
+                                                                        <div class="cal-mod-instrct pre-check-title color-grey"
+                                                                            *ngIf="mode.callingMode">
+                                                                            {{mode.instructions}}
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="prenotes mgn-bt-10"
-                                                                    *ngIf="sel_ser_det.preInfoEnabled">
-                                                                    <div class="preinfo-title">
-                                                                        {{sel_ser_det.preInfoTitle}}</div>
-                                                                    <div>{{(readMore) ? sel_ser_det.preInfoText :
-                                                                        sel_ser_det.preInfoText | slice:0:200}}
-                                                                        <a class="changeitem pointer-cursor mgn-lt-5 mgn-rt-20 pull-right"
-                                                                            (click)="showText()"
-                                                                            *ngIf="sel_ser_det.preInfoText.length > 200">
-                                                                            {{(readMore) ? 'less': 'more'}}</a>
-                                                                    </div>
+                                                            </div>
+                                                            <div class="prenotes mgn-bt-10"
+                                                                *ngIf="sel_ser_det.preInfoEnabled">
+                                                                <div class="preinfo-title">
+                                                                    {{sel_ser_det.preInfoTitle}}</div>
+                                                                <div>{{(readMore) ? sel_ser_det.preInfoText :
+                                                                    sel_ser_det.preInfoText | slice:0:200}}
+                                                                    <a class="changeitem pointer-cursor mgn-lt-5 mgn-rt-20 pull-right"
+                                                                        (click)="showText()"
+                                                                        *ngIf="sel_ser_det.preInfoText.length > 200">
+                                                                        {{(readMore) ? 'less': 'more'}}</a>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div
-                                                class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp border-rt check-new-group pad-rt-0">
+                                        </div>
+                                        <div
+                                            class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp border-rt check-new-group pad-rt-0">
 
-                                                <form [formGroup]="virtualForm"
-                                                    class="login-form custom-login-form consumer-join-component virtual-fields"
-                                                    [ngClass]="theme?theme:''" novalidate>
-                                                    <fieldset [disabled]="!editable">
-                                                        <!-- <div class="mat-dialog-title">
+                                            <form [formGroup]="virtualForm"
+                                                class="login-form custom-login-form consumer-join-component virtual-fields"
+                                                [ngClass]="theme?theme:''" novalidate>
+                                                <!-- <fieldset [disabled]="!editable"> -->
+                                                <!-- <div class="mat-dialog-title">
                                                         <div class="title" style="font-size: 16px !important;">
                                                             {{consumer_label| capitalizeFirst }} Information </div>
                                                         <button mat-dialog-close
@@ -312,13 +312,13 @@
                                                                 style="margin-top: 10px !important;"></i>
                                                         </button>
                                                     </div> -->
-                                                        <!-- step 1 for mobile number entering  *ngIf="!api_loading" -->
+                                                <!-- step 1 for mobile number entering  *ngIf="!api_loading" -->
 
-                                                        <div class="cust-loginpge-color">
-                                                            <div class="mat-dialog-content"
-                                                                style="overflow: auto !important;">
-                                                                <div *ngIf="hideLanguages">
-                                                                    <!-- <div class="">
+                                                <div class="cust-loginpge-color">
+                                                    <div class="mat-dialog-content"
+                                                        style="overflow: auto !important;">
+                                                        <div *ngIf="hideLanguages">
+                                                            <!-- <div class="">
                     <label class="col-form-label" for="name">Service Provider Name : </label>
                     <span> {{ provider }}</span>
             </div>
@@ -327,65 +327,77 @@
                     <span> {{ serviceDetails.name }} </span>
             </div> -->
 
-                                                                    <div class="mgn-up-10 ">
-                                                                        <label class="col-form-label"
-                                                                            for="name">Consultation For </label>
+                                                            <div class="mgn-up-10 ">
+                                                                <label class="col-form-label"
+                                                                    for="name">Consultation For </label>
 
 
-                                                                        <br />
-                                                                        <div class="form-group form-inline">
+                                                                <br />
+                                                                <div class="form-group form-inline">
 
-                                                                            <!-- <mat-form-field> -->
-                                                                            <mat-radio-group
-                                                                                formControlName="serviceFor"
-                                                                                class="mgn-up-5 userGroup m-0 p-2"
-                                                                                (change)="onServiceForChange($event.value)">
-                                                                                <mat-radio-button
-                                                                                    [value]="customer_data.id">
-                                                                                    {{customer_data.userProfile.firstName}}
-                                                                                    {{customer_data.userProfile.lastName}}
-                                                                                </mat-radio-button>
-                                                                                <!-- <ng-container *ngIf="familymember.length>0"> -->
-                                                                                <!-- {{familymember.length}} -->
-                                                                                <mat-radio-button class="flx"
-                                                                                    [value]="member.user"
-                                                                                    *ngFor="let member of familymember">
-                                                                                    {{member.userProfile.firstName}}
-                                                                                    &nbsp;
-                                                                                    {{member.userProfile.lastName}}
-                                                                                </mat-radio-button>
-                                                                                <!-- </ng-container> -->
-                                                                                <mat-radio-button value="new_member">
-                                                                                    Someone
-                                                                                    else</mat-radio-button>
-                                                                            </mat-radio-group>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mgn-up-10 mgn-bt-10"
-                                                                        style="font-size: 0.75rem !important;">
-                                                                        Please provide basic information about the
-                                                                        <span>{{consumer_label}}</span>
-                                                                    </div>
+                                                                    <!-- <mat-form-field> -->
+                                                                    <mat-radio-group formControlName="serviceFor"
+                                                                        class="mgn-up-5 userGroup m-0 p-2"
+                                                                        (change)="onServiceForChange($event.value)">
+                                                                        <mat-radio-button
+                                                                            [value]="customer_data.id">
+                                                                            {{customer_data.userProfile.firstName}}
+                                                                            {{customer_data.userProfile.lastName}}
+                                                                        </mat-radio-button>
+                                                                        <!-- <ng-container *ngIf="familymember.length>0"> -->
+                                                                        <!-- {{familymember.length}} -->
+                                                                        <mat-radio-button class="flx"
+                                                                            [value]="member.user"
+                                                                            *ngFor="let member of familymember">
+                                                                            {{member.userProfile.firstName}}
+                                                                            &nbsp;
+                                                                            {{member.userProfile.lastName}}
+                                                                        </mat-radio-button>
+                                                                        <!-- </ng-container> -->
+                                                                        <mat-radio-button value="new_member">
+                                                                            Someone
+                                                                            else</mat-radio-button>
+                                                                    </mat-radio-group>
+                                                                </div>
+                                                            </div>
 
-                                                                    <div class="form-group"
-                                                                        *ngIf="virtualForm.get('serviceFor').value==='new_member'">
-                                                                        <label class="col-form-label"
-                                                                            for="firstName">First
-                                                                            Name <span class="red">*</span></label>
-                                                                        <input placeholder="Enter your first name"
-                                                                            class="form-control"
-                                                                            formControlName="firstName">
-                                                                    </div>
-                                                                    <div class="form-group "
-                                                                        *ngIf="virtualForm.get('serviceFor').value==='new_member'">
-                                                                        <label class="col-form-label"
-                                                                            for="lastName">Last
-                                                                            Name <span class="red">*</span></label>
-                                                                        <input placeholder="Enter your last name"
-                                                                            class="form-control"
-                                                                            formControlName="lastName">
-                                                                    </div>
-                                                                    <!-- <div class="form-group col-xs-12 dob no-padding mgn-up-20">
+                                                            <fieldset [disabled]="!editable">
+                                                                <div class="mgn-up-10 mgn-bt-10"
+                                                                    style="font-size: 0.75rem !important; display: flex !important;justify-content: right;">
+                                                                    Please provide basic information about the
+                                                                    &nbsp;
+                                                                    <span
+                                                                        style="margin-right: 5px;padding-right: 5px;">{{consumer_label}}</span>
+                                                                    <a (click)="goToEdit()" class="gotoedit"><i
+                                                                            class="fa fa-edit fa-1x"
+                                                                            style="font-size: large;color: blue;"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="right"
+                                                                            title="Edit"></i>
+                                                                    </a>
+
+
+                                                                </div>
+
+                                                                <div class="form-group"
+                                                                    *ngIf="virtualForm.get('serviceFor').value==='new_member'">
+                                                                    <label class="col-form-label"
+                                                                        for="firstName">First
+                                                                        Name <span class="red">*</span></label>
+                                                                    <input placeholder="Enter your first name"
+                                                                        class="form-control"
+                                                                        formControlName="firstName">
+                                                                </div>
+                                                                <div class="form-group "
+                                                                    *ngIf="virtualForm.get('serviceFor').value==='new_member'">
+                                                                    <label class="col-form-label"
+                                                                        for="lastName">Last
+                                                                        Name <span class="red">*</span></label>
+                                                                    <input placeholder="Enter your last name"
+                                                                        class="form-control"
+                                                                        formControlName="lastName">
+                                                                </div>
+                                                                <!-- <div class="form-group col-xs-12 dob no-padding mgn-up-20">
                 <label class="col-form-label" for="dob">Date of Birth <span class="red">*</span></label>
                 <br />
 
@@ -414,239 +426,248 @@
             </div> -->
 
 
-                                                                    <!-- <mat-label for="gender">{{gender_cap}} <span class="red">*</span></mat-label> -->
-                                                                    <div class="form-group">
-                                                                        <label class="col-form-label"
-                                                                            for="gender">{{gender_cap}} <span
-                                                                                class="red">*</span></label>
-                                                                        <br />
-                                                                        <mat-radio-group formControlName="gender"
-                                                                            class=" m-0 p-2">
-                                                                            <mat-radio-button value="male">Male
-                                                                            </mat-radio-button>
-                                                                            <mat-radio-button value="female">Female
-                                                                            </mat-radio-button>
-                                                                            <mat-radio-button value="other">Other
-                                                                            </mat-radio-button>
-                                                                        </mat-radio-group>
-                                                                        <app-field-error-display
-                                                                            [displayError]="fed_service.isFieldValid(virtualForm,'gender')"
-                                                                            errorMsg="Please select the gender.">
-                                                                        </app-field-error-display>
-                                                                    </div>
+                                                                <!-- <mat-label for="gender">{{gender_cap}} <span class="red">*</span></mat-label> -->
+                                                                <div class="form-group">
+                                                                    <label class="col-form-label"
+                                                                        for="gender">{{gender_cap}} <span
+                                                                            class="red">*</span></label>
+                                                                    <br />
+                                                                    <mat-radio-group formControlName="gender"
+                                                                        class=" m-0 p-2">
+                                                                        <mat-radio-button value="male">Male
+                                                                        </mat-radio-button>
+                                                                        <mat-radio-button value="female">Female
+                                                                        </mat-radio-button>
+                                                                        <mat-radio-button value="other">Other
+                                                                        </mat-radio-button>
+                                                                    </mat-radio-group>
+                                                                    <app-field-error-display
+                                                                        [displayError]="fed_service.isFieldValid(virtualForm,'gender')"
+                                                                        errorMsg="Please select the gender.">
+                                                                    </app-field-error-display>
+                                                                </div>
 
-                                                                    <div class="form-group ">
-                                                                        <label class="col-form-label"
-                                                                            for="lastName">Age(in
-                                                                            years)<span class="red">*</span></label><br>
-                                                                        <input type="text" min="1" max="150"
-                                                                            class="form-control vt_dt no-padding mgn-up-5"
-                                                                            formControlName="age" style="width:50%"
-                                                                            (keypress)=isNumeric($event)>
-                                                                        <div
-                                                                            style="display: flex; justify-content: space-between;">
-                                                                            <app-field-error-display
-                                                                                [displayError]="fed_service.isFieldValid(virtualForm,'age') "
-                                                                                [errorMsgs]="fed_service.getErrorMessage(virtualForm,'age',
+                                                                <div class="form-group ">
+                                                                    <label class="col-form-label"
+                                                                        for="lastName">Age(in
+                                                                        years)<span class="red">*</span></label><br>
+                                                                    <input type="text" min="1" max="150"
+                                                                        class="form-control vt_dt no-padding mgn-up-5"
+                                                                        formControlName="age" style="width:50%"
+                                                                        (keypress)=isNumeric($event)>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-between;">
+                                                                        <app-field-error-display
+                                                                            [displayError]="fed_service.isFieldValid(virtualForm,'age') "
+                                                                            [errorMsgs]="fed_service.getErrorMessage(virtualForm,'age',
               {
                 'required' : 'Age is required',
                 'min' : 'Minimum age required is 0',
                 'max' : 'Maximum age is 150'
                
               })">
-                                                                            </app-field-error-display>
-                                                                        </div>
-                                                                    </div>
-
-
-
-                                                                    <!-- Signin Password -->
-                                                                    <div class="form-group pwd"
-                                                                        *ngIf="countryCode=='+91'">
-                                                                        <!-- <mat-form-field> -->
-                                                                        <label for="pincode"
-                                                                            class="col-form-label">Residing
-                                                                            Pincode in
-                                                                            India <span class="red">*</span></label>
-                                                                        <input type="text" placeholder="xxxxxx"
-                                                                            class="form-control vt_dt no-padding mgn-up-5"
-                                                                            id="location" formControlName="pincode"
-                                                                            (keypress)="isNumeric($event)"
-                                                                            (keyup)="showLocations($event)"
-                                                                            style="width:50%">
-                                                                        <!-- </mat-form-field> -->
-                                                                        <div
-                                                                            style="display: flex; justify-content: space-between;">
-                                                                            <app-field-error-display
-                                                                                [displayError]="fed_service.isFieldValid(virtualForm,'pincode')"
-                                                                                errorMsg="Pincode is required">
-                                                                            </app-field-error-display>
-                                                                        </div>
-                                                                        <app-common-innerloading-spinner
-                                                                            *ngIf="loading">
-                                                                        </app-common-innerloading-spinner>
-                                                                        <div *ngIf="!loading && locations"
-                                                                            class="mgn-up-10">
-                                                                            <mat-radio-group
-                                                                                aria-label="Select your location"
-                                                                                class="mgn-up-5"
-                                                                                formControlName='location'>
-                                                                                <mat-radio-button
-                                                                                    *ngFor="let location of locations.PostOffice"
-                                                                                    [value]="location">
-                                                                                    {{location.Name}},
-                                                                                    {{location.State}}
-                                                                                </mat-radio-button>
-                                                                            </mat-radio-group>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group "
-                                                                        *ngIf="countryCode!=='+91'">
-                                                                        <label class="col-form-label"
-                                                                            for="lastName">Location <span
-                                                                                class="red">*</span></label>
-                                                                        <input placeholder="Enter your location"
-                                                                            class="form-control"
-                                                                            formControlName="localarea">
-                                                                    </div>
-                                                                    <div class="form-group" *ngIf="countryCode!=='+91'">
-                                                                        <label class="col-form-label" for="firstName">
-                                                                            Residing State<span
-                                                                                class="red">*</span></label>
-                                                                        <input placeholder="Enter your state"
-                                                                            class="form-control"
-                                                                            formControlName="state">
-                                                                    </div>
-
-                                                                    <!-- Signin Password -->
-                                                                    <div class="form-group" id="plng"
-                                                                        *ngIf="lngknown==='yes'">
-                                                                        <!-- <mat-form-field> -->
-                                                                        <label class="col-form-label" for="v">Select
-                                                                            your preferred language <span
-                                                                                class="red">*</span></label>
-                                                                        <br />
-                                                                        <mat-radio-group aria-label="Select an option"
-                                                                            (change)="onChange($event)"
-                                                                            class="mgn-up-5  m-0 p-2"
-                                                                            formControlName="islanguage">
-                                                                            <mat-radio-button value="yes">English
-                                                                            </mat-radio-button>
-                                                                            <mat-radio-button value="no">Other Languages
-                                                                            </mat-radio-button>
-                                                                        </mat-radio-group>
-                                                                        <!-- </mat-form-field> -->
-                                                                        <div
-                                                                            style="display: flex; justify-content: space-between;">
-                                                                            <app-field-error-display
-                                                                                [displayError]="fed_service.isFieldValid(virtualForm,'islanguage') "
-                                                                                errorMsg="please choose one">
-                                                                            </app-field-error-display>
-                                                                        </div>
+                                                                        </app-field-error-display>
                                                                     </div>
                                                                 </div>
-                                                                <div
-                                                                    *ngIf="hideLanguages && virtualForm.get('preferredLanguage').value.length >0 && lngknown==='no'">
+
+
+
+                                                                <!-- Signin Password -->
+                                                                <div class="form-group pwd"
+                                                                    *ngIf="countryCode=='+91'">
+                                                                    <!-- <mat-form-field> -->
+                                                                    <label for="pincode"
+                                                                        class="col-form-label">Residing
+                                                                        Pincode in
+                                                                        India <span class="red">*</span></label>
+                                                                    <input type="text" placeholder="xxxxxx"
+                                                                        class="form-control vt_dt no-padding mgn-up-5"
+                                                                        id="location" formControlName="pincode"
+                                                                        (keypress)="isNumeric($event)"
+                                                                        (keyup)="showLocations($event)"
+                                                                        style="width:50%">
+                                                                    <!-- </mat-form-field> -->
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-between;">
+                                                                        <app-field-error-display
+                                                                            [displayError]="fed_service.isFieldValid(virtualForm,'pincode')"
+                                                                            errorMsg="Pincode is required">
+                                                                        </app-field-error-display>
+                                                                    </div>
+                                                                    <app-common-innerloading-spinner
+                                                                        *ngIf="loading">
+                                                                    </app-common-innerloading-spinner>
+                                                                    <div *ngIf="!loading && locations"
+                                                                        class="mgn-up-10">
+                                                                        <mat-radio-group
+                                                                            aria-label="Select your location"
+                                                                            class="mgn-up-5"
+                                                                            formControlName='location'>
+                                                                            <mat-radio-button
+                                                                                *ngFor="let location of locations.PostOffice"
+                                                                                [value]="location">
+                                                                                {{location.Name}},
+                                                                                {{location.State}}
+                                                                            </mat-radio-button>
+                                                                        </mat-radio-group>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group "
+                                                                    *ngIf="countryCode!=='+91'">
                                                                     <label class="col-form-label"
-                                                                        for="preferredLanguage">{{virtualForm.get('preferredLanguage').value.length
-                                                                        >1?'Your preferred languages': 'Your preferred
-                                                                        language'}}
-                                                                    </label><br />
+                                                                        for="lastName">Location <span
+                                                                            class="red">*</span></label>
+                                                                    <input placeholder="Enter your location"
+                                                                        class="form-control"
+                                                                        formControlName="localarea">
+                                                                </div>
+                                                                <div class="form-group" *ngIf="countryCode!=='+91'">
+                                                                    <label class="col-form-label" for="firstName">
+                                                                        Residing State<span
+                                                                            class="red">*</span></label>
+                                                                    <input placeholder="Enter your state"
+                                                                        class="form-control"
+                                                                        formControlName="state">
+                                                                </div>
 
-                                                                    <div class="col-form-label edtlang"><span
-                                                                            style="word-wrap: break-word;">{{virtualForm.get('preferredLanguage').value}}</span>
-
-                                                                        <span class="pull-right"
-                                                                            (click)="editLanguage()"><i
-                                                                                class="fa fa-edit fa-1x"
-                                                                                style="font-size: large;"></i></span>
+                                                                <!-- Signin Password -->
+                                                                <div class="form-group" id="plng"
+                                                                    *ngIf="lngknown==='yes'">
+                                                                    <!-- <mat-form-field> -->
+                                                                    <label class="col-form-label" for="v">Select
+                                                                        your preferred language <span
+                                                                            class="red">*</span></label>
+                                                                    <br />
+                                                                    <mat-radio-group aria-label="Select an option"
+                                                                        (change)="onChange($event)"
+                                                                        class="mgn-up-5  m-0 p-2"
+                                                                        formControlName="islanguage">
+                                                                        <mat-radio-button value="yes">English
+                                                                        </mat-radio-button>
+                                                                        <mat-radio-button value="no">Other Languages
+                                                                        </mat-radio-button>
+                                                                    </mat-radio-group>
+                                                                    <!-- </mat-form-field> -->
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-between;">
+                                                                        <app-field-error-display
+                                                                            [displayError]="fed_service.isFieldValid(virtualForm,'islanguage') "
+                                                                            errorMsg="please choose one">
+                                                                        </app-field-error-display>
                                                                     </div>
                                                                 </div>
-                                                                <div *ngIf="!hideLanguages" class="form-group">
-                                                                    <div class="form-group form-inline" id="plng"
-                                                                        *ngIf="iseditLanguage">
-                                                                        <!-- <mat-form-field> -->
-                                                                        <label class="col-form-label" for="v">Select
-                                                                            your preferred language <span
-                                                                                class="red">*</span></label>
-                                                                        <br />
-                                                                        <mat-radio-group aria-label="Select an option"
-                                                                            (change)="onChange($event)" class="mgn-up-5"
-                                                                            formControlName="islanguage">
-                                                                            <mat-radio-button value="yes">English
-                                                                            </mat-radio-button>
-                                                                            <mat-radio-button value="no">Other Languages
-                                                                            </mat-radio-button>
-                                                                        </mat-radio-group>
-                                                                        <!-- </mat-form-field> -->
-                                                                        <div
-                                                                            style="display: flex; justify-content: space-between;">
-                                                                            <app-field-error-display
-                                                                                [displayError]="fed_service.isFieldValid(virtualForm,'islanguage') "
-                                                                                errorMsg="please choose one">
-                                                                            </app-field-error-display>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <!-- <mat-form-field> -->
+                                                            </fieldset>
+                                                        </div>
 
-                                                                        <label *ngIf="lngknown==='no'"
-                                                                            class="col-form-label"
-                                                                            for="preferredLanguage">Choose your
-                                                                            preferred languages
-                                                                            <span class="red">*</span></label>
-                                                                        <!-- <mat-form-field>
+                                                        <div
+                                                            *ngIf="hideLanguages && virtualForm.get('preferredLanguage').value.length >0 && lngknown==='no'">
+                                                            <label class="col-form-label"
+                                                                for="preferredLanguage">{{virtualForm.get('preferredLanguage').value.length
+                                                                >1?'Your preferred languages': 'Your preferred
+                                                                language'}}
+                                                            </label><br />
+                                                            <fieldset [disabled]="!editable">
+                                                                <div class="col-form-label edtlang">
+                                                                    <span
+                                                                        style="word-wrap: break-word; padding-right: 5px;margin-right: 5px;">{{virtualForm.get('preferredLanguage').value}}</span>
+
+                                                                    <span (click)="editLanguage()"><i
+                                                                            class="fa fa-edit fa-1x"
+                                                                            style="font-size: large;"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="right"
+                                                                            title="Edit"></i></span>
+                                                                </div>
+                                                            </fieldset>
+                                                        </div>
+
+
+
+                                                        <div *ngIf="!hideLanguages" class="form-group">
+                                                            <div class="form-group" id="plng"
+                                                                *ngIf="iseditLanguage">
+                                                                <!-- <mat-form-field> -->
+                                                                <label class="col-form-label" for="v">Select
+                                                                    your preferred language <span
+                                                                        class="red">*</span></label>
+                                                                <br /> <br />
+                                                                <mat-radio-group aria-label="Select an option"
+                                                                    (change)="onChange($event)" class="mgn-up-5"
+                                                                    formControlName="islanguage">
+                                                                    <mat-radio-button value="yes">English
+                                                                    </mat-radio-button>
+                                                                    <mat-radio-button value="no">Other Languages
+                                                                    </mat-radio-button>
+                                                                </mat-radio-group><br />
+                                                                <!-- </mat-form-field> -->
+                                                                <div
+                                                                    style="display: flex; justify-content: space-between;">
+                                                                    <app-field-error-display
+                                                                        [displayError]="fed_service.isFieldValid(virtualForm,'islanguage') "
+                                                                        errorMsg="please choose one">
+                                                                    </app-field-error-display>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <!-- <mat-form-field> -->
+
+                                                                <label *ngIf="lngknown==='no'"
+                                                                    class="col-form-label"
+                                                                    for="preferredLanguage">Choose your
+                                                                    preferred languages
+                                                                    <span class="red">*</span></label>
+                                                                <!-- <mat-form-field>
                 <mat-select multiple  class="select-box" id="preferredLanguage" formControlName="preferredLanguage">
                         <mat-option *ngFor="let language of languages"
                             [value]="language" >
                             {{language}}</mat-option>
                     </mat-select>
             </mat-form-field> -->
-                                                                        <div class="form-group form-inline">
-                                                                            <div class="languagesouter"
-                                                                                *ngIf="languages.length >0 && lngknown==='no'">
-                                                                                <div *ngFor="let lang of languages">
-                                                                                    <mat-checkbox
-                                                                                        style="padding-left: 10px;"
-                                                                                        (change)="langSel(lang)"
-                                                                                        [checked]="checklangExists(lang)">
-                                                                                        {{lang}}</mat-checkbox>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="actiondiv col-md-12"
-                                                                                style="margin-top: 15px;display: inline-flex;">
-                                                                                <!-- <button type="button" (click)="cancel()" class="cs-btn bt2"
+                                                                <div class="form-group form-inline">
+                                                                    <div class="languagesouter"
+                                                                        *ngIf="languages.length >0 && lngknown==='no'">
+                                                                        <div *ngFor="let lang of languages">
+                                                                            <mat-checkbox
+                                                                                style="padding-left: 10px;"
+                                                                                (change)="langSel(lang)"
+                                                                                [checked]="checklangExists(lang)">
+                                                                                {{lang}}</mat-checkbox>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="actiondiv col-md-12"
+                                                                        style="margin-top: 15px;display: inline-flex;">
+                                                                        <!-- <button type="button" (click)="cancel()" class="cs-btn bt2"
                         [disabled]="disableButton">Cancel</button>&nbsp; -->
-                                                                                <button (click)="saveLanguages()"
-                                                                                    type="button" mat-button
-                                                                                    class="cs-btn bt1"
-                                                                                    [disabled]="disableButton">Ok</button>&nbsp;&nbsp;
-                                                                                <button
-                                                                                    (click)="cancelLanguageSelection()"
-                                                                                    type="button" mat-button
-                                                                                    class="cs-btn bt1">Cancel</button>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div
-                                                                            style="display: flex; justify-content: space-between;">
-                                                                            <app-field-error-display
-                                                                                [displayError]="fed_service.isFieldValid(virtualForm,'preferredLanguage')"
-                                                                                errorMsg="Language is required">
-                                                                            </app-field-error-display>
-                                                                        </div>
+                                                                        <button (click)="saveLanguages()"
+                                                                            type="button" mat-button
+                                                                            class="cs-btn bt1"
+                                                                            [disabled]="disableButton">Ok</button>&nbsp;&nbsp;
+                                                                        <button (click)="cancelLanguageSelection()"
+                                                                            type="button" mat-button
+                                                                            class="cs-btn bt1">Cancel</button>
                                                                     </div>
                                                                 </div>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-between;">
+                                                                    <app-field-error-display
+                                                                        [displayError]="fed_service.isFieldValid(virtualForm,'preferredLanguage')"
+                                                                        errorMsg="Language is required">
+                                                                    </app-field-error-display>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <fieldset [disabled]="!editable">
 
-                                                                <ng-container *ngIf="hideLanguages">
-                                                                    <label class="col-form-label" for="name">Contact
-                                                                        Information </label>
+                                                            <ng-container *ngIf="hideLanguages">
+                                                                <label class="col-form-label" for="name">Contact
+                                                                    Information </label>
 
-                                                                    <div class="form-level-settings smallfont">
-                                                                        Provide your contact info for alerts,status
-                                                                        updates and for any other booking related
-                                                                        communications
-                                                                    </div>
-                                                                    <!-- <div class="form-group mobile-field" >
+                                                                <div class="form-level-settings smallfont">
+                                                                    Provide your contact info for alerts,status
+                                                                    updates and for any other booking related
+                                                                    communications
+                                                                </div>
+                                                                <!-- <div class="form-group mobile-field" >
                     <label>Whatsapp #</label>
                     <div class="input-group">
                         <div class="input-group-prepend"><span class="mobPrefix">
@@ -659,39 +680,39 @@
             
               
             </div> -->
-                                                                    <div class="mgn-up-10 mgn-bt-10">
-                                                                        <label class="col-form-label" for="phone">Phone
-                                                                            # </label>
-                                                                        <br />
-                                                                        {{this.details.userProfile.countryCode}}
-                                                                        {{this.details.userProfile.primaryMobileNo}}
-                                                                    </div>
-                                                                    <div class="col-xs-12 no-padding optional">
-                                                                        <label><i class="fa fa-whatsapp"
-                                                                                style="color:green"></i> Whatsapp
-                                                                            #</label>
-                                                                        <div class="disp-flex">
-                                                                            <div class="form-group no-margin">
-                                                                                <input type="text"
-                                                                                    (keypress)="isNumericSign($event)"
-                                                                                    matInput
-                                                                                    class="form-control input-group-text"
-                                                                                    id="countryCode_whtsap"
-                                                                                    placeholder=""
-                                                                                    formControlName="countryCode_whtsap"
-                                                                                    autocomplete="off" maxlength="5"
-                                                                                    style="width:60px">
-                                                                            </div>
-                                                                            <div class="form-group width-100">
-                                                                                <input type="text"
-                                                                                    (keypress)="isNumeric($event)"
-                                                                                    matInput
-                                                                                    class="form-control text-width"
-                                                                                    id="whatsappnumber"
-                                                                                    formControlName="whatsappnumber"
-                                                                                    autocomplete="off"
-                                                                                    style="width:50%">
-                                                                                <!-- <app-field-error-display
+                                                                <div class="mgn-up-10 mgn-bt-10">
+                                                                    <label class="col-form-label" for="phone">Phone
+                                                                        # </label>
+                                                                    <br />
+                                                                    {{this.details.userProfile.countryCode}}
+                                                                    {{this.details.userProfile.primaryMobileNo}}
+                                                                </div>
+                                                                <div class="col-xs-12 no-padding optional">
+                                                                    <label><i class="fa fa-whatsapp"
+                                                                            style="color:green"></i> Whatsapp
+                                                                        #</label>
+                                                                    <div class="disp-flex">
+                                                                        <div class="form-group no-margin">
+                                                                            <input type="text"
+                                                                                (keypress)="isNumericSign($event)"
+                                                                                matInput
+                                                                                class="form-control input-group-text"
+                                                                                id="countryCode_whtsap"
+                                                                                placeholder=""
+                                                                                formControlName="countryCode_whtsap"
+                                                                                autocomplete="off" maxlength="5"
+                                                                                style="width:60px">
+                                                                        </div>
+                                                                        <div class="form-group width-100">
+                                                                            <input type="text"
+                                                                                (keypress)="isNumeric($event)"
+                                                                                matInput
+                                                                                class="form-control text-width"
+                                                                                id="whatsappnumber"
+                                                                                formControlName="whatsappnumber"
+                                                                                autocomplete="off"
+                                                                                style="width:50%">
+                                                                            <!-- <app-field-error-display
                             [displayError]="fed_service.isFieldValid(virtualForm,'whatsappnumber')" [errorMsgs]="fed_service.getErrorMessage(virtualForm,'whatsappnumber',
                         {
                         'minlength' : 'Enter a 10 digit whatsapp number',
@@ -699,10 +720,10 @@
                         'pattern' : 'Enter a 10 digit whatsapp number'
                         })">
                         </app-field-error-display> -->
-                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                    <!-- <div class="form-group mobile-field" >
+                                                                </div>
+                                                                <!-- <div class="form-group mobile-field" >
                     <label>Telegram #</label>
                     <div class="input-group">
                         <div class="input-group-prepend"><span class="mobPrefix">
@@ -714,33 +735,33 @@
                     </div>
             
             </div> -->
-                                                                    <div class=" col-xs-12 no-padding optional">
-                                                                        <label><i class="fa fa-telegram"
-                                                                                style="color:#29b6f6;"></i> Telegram
-                                                                            #</label>
-                                                                        <div class="disp-flex">
+                                                                <div class=" col-xs-12 no-padding optional">
+                                                                    <label><i class="fa fa-telegram"
+                                                                            style="color:#29b6f6;"></i> Telegram
+                                                                        #</label>
+                                                                    <div class="disp-flex">
 
-                                                                            <div class="form-group no-margin">
-                                                                                <input type="text"
-                                                                                    (keypress)="isNumericSign($event)"
-                                                                                    matInput
-                                                                                    class="form-control input-group-text"
-                                                                                    id="countryCode_telegram"
-                                                                                    placeholder=""
-                                                                                    formControlName="countryCode_telegram"
-                                                                                    autocomplete="off" maxlength="5"
-                                                                                    style="width:60px">
-                                                                            </div>
-                                                                            <div class="form-group width-100">
-                                                                                <input type="text"
-                                                                                    (keypress)="isNumeric($event)"
-                                                                                    matInput
-                                                                                    class="form-control text-width"
-                                                                                    id="telegramnumber"
-                                                                                    formControlName="telegramnumber"
-                                                                                    autocomplete="off"
-                                                                                    style="width:50%">
-                                                                                <!-- <app-field-error-display
+                                                                        <div class="form-group no-margin">
+                                                                            <input type="text"
+                                                                                (keypress)="isNumericSign($event)"
+                                                                                matInput
+                                                                                class="form-control input-group-text"
+                                                                                id="countryCode_telegram"
+                                                                                placeholder=""
+                                                                                formControlName="countryCode_telegram"
+                                                                                autocomplete="off" maxlength="5"
+                                                                                style="width:60px">
+                                                                        </div>
+                                                                        <div class="form-group width-100">
+                                                                            <input type="text"
+                                                                                (keypress)="isNumeric($event)"
+                                                                                matInput
+                                                                                class="form-control text-width"
+                                                                                id="telegramnumber"
+                                                                                formControlName="telegramnumber"
+                                                                                autocomplete="off"
+                                                                                style="width:50%">
+                                                                            <!-- <app-field-error-display
                             [displayError]="fed_service.isFieldValid(virtualForm,'telegramnumber')" [errorMsgs]="fed_service.getErrorMessage(virtualForm,'telegramnumber',
                         {
                         'minlength' : 'Enter a 10 digit telegram number',
@@ -748,30 +769,30 @@
                         'pattern' : 'Enter a 10 digit telegram number'
                         })">
                         </app-field-error-display> -->
-                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="form-group optional">
-                                                                        <label for="email"
-                                                                            class="col-form-label">Email</label>
-                                                                        <input type="email" class="form-control"
-                                                                            formControlName="email" style="width:55%" />
-                                                                        <mat-checkbox class="updateemail"
-                                                                            formControlName="updateEmail">Update Email
-                                                                            to 'My Account'</mat-checkbox>
-                                                                        <!-- <mat-form-field>
+                                                                </div>
+                                                                <div class="form-group optional">
+                                                                    <label for="email"
+                                                                        class="col-form-label">Email</label>
+                                                                    <input type="email" class="form-control"
+                                                                        formControlName="email" style="width:55%" />
+                                                                    <mat-checkbox class="updateemail"
+                                                                        formControlName="updateEmail">Update Email
+                                                                        to 'My Account'</mat-checkbox>
+                                                                    <!-- <mat-form-field>
               <input matInput type="email" class="form-control" placeholder="Email(user@xyz.com)*" formControlName="email">
        </mat-form-field> -->
-                                                                        <app-field-error-display
-                                                                            [displayError]="fed_service.isFieldValid(virtualForm,'email')"
-                                                                            [errorMsgs]="fed_service.getErrorMessage(virtualForm,'email',
+                                                                    <app-field-error-display
+                                                                        [displayError]="fed_service.isFieldValid(virtualForm,'email')"
+                                                                        [errorMsgs]="fed_service.getErrorMessage(virtualForm,'email',
                                       {
                                         'pattern' : 'Please enter valid email'
                                       })">
-                                                                        </app-field-error-display>
-                                                                    </div>
-                                                                </ng-container>
-                                                                <!-- <div class="form-group" *ngIf="hideLanguages"
+                                                                    </app-field-error-display>
+                                                                </div>
+                                                            </ng-container>
+                                                            <!-- <div class="form-group" *ngIf="hideLanguages"
                                                                 class="mgn-bt-50">
                                                                 <button
                                                                     class="cust-logpg-submt mgn-up-20 continue-button"
@@ -781,13 +802,13 @@
                                                                 </button>
                                                             </div> -->
 
+                                                        </fieldset>
+                                                        <div class="">&nbsp;</div>
+                                                    </div>
+                                                </div>
 
-                                                                <div class="">&nbsp;</div>
-                                                            </div>
-                                                        </div>
-                                                    </fieldset>
-                                                </form>
-                                                <!-- <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-up-10"
+                                            </form>
+                                            <!-- <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-up-10"
                                                 *ngIf="queuejson && queuejson.length == 0 && !api_loading1">
                                                 No timings available.
                                                 <span><a class="lnk pointer-cursor action mgn-lt-10"
@@ -795,25 +816,25 @@
                                                         data-target="#exampleModalCenter">Change Time
                                                     </a></span>
                                             </div> -->
-                                            </div>
-
-
                                         </div>
 
-                                        <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container">
-                                            <button type="button"
-                                                class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
-                                                (click)="goToStep('next')">
-                                                Next
-                                            </button> &nbsp;
-                                            <button type="button"
-                                                class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
-                                                (click)="goToEdit()" *ngIf="!selectedLocation">
-                                                Edit
-                                            </button>
-                                        </div>
+
                                     </div>
+
+                                    <div
+                                        class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container">
+                                        <button type="button"
+                                            class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                            (click)="goToStep('next')" *ngIf="hideLanguages">
+                                            Next
+                                        </button> &nbsp;
+                                        <!-- <button type="button"
+                                            class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                            (click)="goToEdit()" *ngIf="!selectedLocation">
+                                            Edit
+                                        </button> -->
+                                    </div>
+                                </div>
 
                                     <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
                                         data-wizard-type="step-content" data-wizard-state="current"
@@ -1137,6 +1158,11 @@
                                             </div>
                                             <div *ngIf="type != 'reschedule'"
                                                 class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 mgn-lt-10">
+                                                <button type="button" *ngIf="serviceType==='virtualService'"
+                                                    class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    (click)="goToStep('prev')">
+                                                    Go Back
+                                                </button>
                                                 <button type="button"
                                                     class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
                                                     (click)="goToStep('next')"

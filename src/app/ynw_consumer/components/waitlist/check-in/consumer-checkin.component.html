@@ -151,7 +151,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
+                                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10" *ngIf="hideTokenFor">
                                                     <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5">
                                                         {{showCheckinButtonCaption()}} For
                                                     </div>
@@ -223,8 +223,8 @@
                                                 <form [formGroup]="virtualForm"
                                                     class="login-form custom-login-form consumer-join-component virtual-fields"
                                                     [ngClass]="theme?theme:''" novalidate>
-                                                    <fieldset [disabled]="!editable">
-                                                        <!-- <div class="mat-dialog-title">
+                                                    <!-- <fieldset [disabled]="!editable"> -->
+                                                    <!-- <div class="mat-dialog-title">
                                                             <div class="title" style="font-size: 16px !important;">
                                                                 {{consumer_label| capitalizeFirst }} Information </div>
                                                             <button mat-dialog-close
@@ -234,13 +234,13 @@
                                                                     style="margin-top: 10px !important;"></i>
                                                             </button>
                                                         </div> -->
-                                                        <!-- step 1 for mobile number entering  *ngIf="!api_loading" -->
+                                                    <!-- step 1 for mobile number entering  *ngIf="!api_loading" -->
 
-                                                        <div class="cust-loginpge-color">
-                                                            <div class="mat-dialog-content"
-                                                                style="overflow: auto !important;">
-                                                                <div *ngIf="hideLanguages">
-                                                                    <!-- <div class="">
+                                                    <div class="cust-loginpge-color">
+                                                        <div class="mat-dialog-content"
+                                                            style="overflow: auto !important;">
+                                                            <div *ngIf="hideLanguages">
+                                                                <!-- <div class="">
                         <label class="col-form-label" for="name">Service Provider Name : </label>
                         <span> {{ provider }}</span>
                 </div>
@@ -249,44 +249,56 @@
                         <span> {{ serviceDetails.name }} </span>
                 </div> -->
 
-                                                                    <div class="mgn-up-10 ">
-                                                                        <label class="col-form-label"
-                                                                            for="name">Consultation For </label>
+                                                                <div class="mgn-up-10 ">
+                                                                    <label class="col-form-label"
+                                                                        for="name">Consultation For </label>
 
 
-                                                                        <br />
-                                                                        <div class="form-group form-inline">
+                                                                    <br />
+                                                                    <div class="form-group form-inline">
 
-                                                                            <!-- <mat-form-field> -->
-                                                                            <mat-radio-group
-                                                                                formControlName="serviceFor"
-                                                                                class="mgn-up-5 userGroup m-0 p-2"
-                                                                                (change)="onServiceForChange($event.value)">
-                                                                                <mat-radio-button
-                                                                                    [value]="customer_data.id">
-                                                                                    {{customer_data.userProfile.firstName}}
-                                                                                    {{customer_data.userProfile.lastName}}
-                                                                                </mat-radio-button>
-                                                                                <!-- <ng-container *ngIf="familymember.length>0"> -->
-                                                                                <!-- {{familymember.length}} -->
-                                                                                <mat-radio-button class="flx"
-                                                                                    [value]="member.user"
-                                                                                    *ngFor="let member of familymember">
-                                                                                    {{member.userProfile.firstName}}
-                                                                                    &nbsp;
-                                                                                    {{member.userProfile.lastName}}
-                                                                                </mat-radio-button>
-                                                                                <!-- </ng-container> -->
-                                                                                <mat-radio-button value="new_member">
-                                                                                    Someone
-                                                                                    else</mat-radio-button>
-                                                                            </mat-radio-group>
-                                                                        </div>
+                                                                        <!-- <mat-form-field> -->
+                                                                        <mat-radio-group formControlName="serviceFor"
+                                                                            class="mgn-up-5 userGroup m-0 p-2"
+                                                                            (change)="onServiceForChange($event.value)">
+                                                                            <mat-radio-button
+                                                                                [value]="customer_data.id">
+                                                                                {{customer_data.userProfile.firstName}}
+                                                                                {{customer_data.userProfile.lastName}}
+                                                                            </mat-radio-button>
+                                                                            <!-- <ng-container *ngIf="familymember.length>0"> -->
+                                                                            <!-- {{familymember.length}} -->
+                                                                            <mat-radio-button class="flx"
+                                                                                [value]="member.user"
+                                                                                *ngFor="let member of familymember">
+                                                                                {{member.userProfile.firstName}}
+                                                                                &nbsp;
+                                                                                {{member.userProfile.lastName}}
+                                                                            </mat-radio-button>
+                                                                            <!-- </ng-container> -->
+                                                                            <mat-radio-button value="new_member">
+                                                                                Someone
+                                                                                else</mat-radio-button>
+                                                                        </mat-radio-group>
                                                                     </div>
+                                                                </div>
+
+                                                                <fieldset [disabled]="!editable">
                                                                     <div class="mgn-up-10 mgn-bt-10"
-                                                                        style="font-size: 0.75rem !important;">
+                                                                        style="font-size: 0.75rem !important; display: flex !important;justify-content: right;">
                                                                         Please provide basic information about the
-                                                                        <span>{{consumer_label}}</span>
+                                                                        &nbsp;
+                                                                        <span
+                                                                            style="margin-right: 5px;padding-right: 5px;">{{consumer_label}}</span>
+                                                                        <a (click)="goToEdit()" class="gotoedit"><i
+                                                                                class="fa fa-edit fa-1x"
+                                                                                style="font-size: large;color: blue;"
+                                                                                data-bs-toggle="tooltip"
+                                                                                data-bs-placement="right"
+                                                                                title="Edit"></i>
+                                                                        </a>
+
+
                                                                     </div>
 
                                                                     <div class="form-group"
@@ -466,99 +478,107 @@
                                                                             </app-field-error-display>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div  
-                                                                    *ngIf="hideLanguages && virtualForm.get('preferredLanguage').value.length >0 && lngknown==='no'">
-                                                                    <label class="col-form-label"
-                                                                        for="preferredLanguage">{{virtualForm.get('preferredLanguage').value.length
-                                                                        >1?'Your preferred languages': 'Your preferred
-                                                                        language'}}
-                                                                    </label><br />
+                                                                </fieldset>
+                                                            </div>
 
+                                                            <div
+                                                                *ngIf="hideLanguages && virtualForm.get('preferredLanguage').value.length >0 && lngknown==='no'">
+                                                                <label class="col-form-label"
+                                                                    for="preferredLanguage">{{virtualForm.get('preferredLanguage').value.length
+                                                                    >1?'Your preferred languages': 'Your preferred
+                                                                    language'}}
+                                                                </label><br />
+                                                                <fieldset [disabled]="!editable">
                                                                     <div class="col-form-label edtlang">
                                                                         <span
-                                                                            style="word-wrap: break-word;">{{virtualForm.get('preferredLanguage').value}}</span>
+                                                                            style="word-wrap: break-word; padding-right: 5px;margin-right: 5px;">{{virtualForm.get('preferredLanguage').value}}</span>
 
-                                                                        <span
-                                                                            (click)="editLanguage()"><i
+                                                                        <span (click)="editLanguage()"><i
                                                                                 class="fa fa-edit fa-1x"
-                                                                                style="font-size: large;" data-bs-toggle="tooltip" data-bs-placement="right" title="Edit"></i></span>
+                                                                                style="font-size: large;"
+                                                                                data-bs-toggle="tooltip"
+                                                                                data-bs-placement="right"
+                                                                                title="Edit"></i></span>
+                                                                    </div>
+                                                                </fieldset>
+                                                            </div>
+
+
+
+                                                            <div *ngIf="!hideLanguages" class="form-group">
+                                                                <div class="form-group" id="plng"
+                                                                    *ngIf="iseditLanguage">
+                                                                    <!-- <mat-form-field> -->
+                                                                    <label class="col-form-label" for="v">Select
+                                                                        your preferred language <span
+                                                                            class="red">*</span></label>
+                                                                    <br /> <br />
+                                                                    <mat-radio-group aria-label="Select an option"
+                                                                        (change)="onChange($event)" class="mgn-up-5"
+                                                                        formControlName="islanguage">
+                                                                        <mat-radio-button value="yes">English
+                                                                        </mat-radio-button>
+                                                                        <mat-radio-button value="no">Other Languages
+                                                                        </mat-radio-button>
+                                                                    </mat-radio-group><br />
+                                                                    <!-- </mat-form-field> -->
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-between;">
+                                                                        <app-field-error-display
+                                                                            [displayError]="fed_service.isFieldValid(virtualForm,'islanguage') "
+                                                                            errorMsg="please choose one">
+                                                                        </app-field-error-display>
                                                                     </div>
                                                                 </div>
-                                                                <div *ngIf="!hideLanguages" class="form-group">
-                                                                    <div class="form-group form-inline" id="plng"
-                                                                        *ngIf="iseditLanguage">
-                                                                        <!-- <mat-form-field> -->
-                                                                        <label class="col-form-label" for="v">Select
-                                                                            your preferred language <span
-                                                                                class="red">*</span></label>
-                                                                        <br />
-                                                                        <mat-radio-group aria-label="Select an option"
-                                                                            (change)="onChange($event)" class="mgn-up-5"
-                                                                            formControlName="islanguage">
-                                                                            <mat-radio-button value="yes">English
-                                                                            </mat-radio-button>
-                                                                            <mat-radio-button value="no">Other Languages
-                                                                            </mat-radio-button>
-                                                                        </mat-radio-group>
-                                                                        <!-- </mat-form-field> -->
-                                                                        <div
-                                                                            style="display: flex; justify-content: space-between;">
-                                                                            <app-field-error-display
-                                                                                [displayError]="fed_service.isFieldValid(virtualForm,'islanguage') "
-                                                                                errorMsg="please choose one">
-                                                                            </app-field-error-display>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <!-- <mat-form-field> -->
+                                                                <div class="form-group">
+                                                                    <!-- <mat-form-field> -->
 
-                                                                        <label *ngIf="lngknown==='no'"
-                                                                            class="col-form-label"
-                                                                            for="preferredLanguage">Choose your
-                                                                            preferred languages
-                                                                            <span class="red">*</span></label>
-                                                                        <!-- <mat-form-field>
+                                                                    <label *ngIf="lngknown==='no'"
+                                                                        class="col-form-label"
+                                                                        for="preferredLanguage">Choose your
+                                                                        preferred languages
+                                                                        <span class="red">*</span></label>
+                                                                    <!-- <mat-form-field>
                     <mat-select multiple  class="select-box" id="preferredLanguage" formControlName="preferredLanguage">
                             <mat-option *ngFor="let language of languages"
                                 [value]="language" >
                                 {{language}}</mat-option>
                         </mat-select>
                 </mat-form-field> -->
-                                                                        <div class="form-group form-inline">
-                                                                            <div class="languagesouter"
-                                                                                *ngIf="languages.length >0 && lngknown==='no'">
-                                                                                <div *ngFor="let lang of languages">
-                                                                                    <mat-checkbox
-                                                                                        style="padding-left: 10px;"
-                                                                                        (change)="langSel(lang)"
-                                                                                        [checked]="checklangExists(lang)">
-                                                                                        {{lang}}</mat-checkbox>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="actiondiv col-md-12"
-                                                                                style="margin-top: 15px;display: inline-flex;">
-                                                                                <!-- <button type="button" (click)="cancel()" class="cs-btn bt2"
-                            [disabled]="disableButton">Cancel</button>&nbsp; -->
-                                                                                <button (click)="saveLanguages()"
-                                                                                    type="button" mat-button
-                                                                                    class="cs-btn bt1"
-                                                                                    [disabled]="disableButton">Ok</button>&nbsp;&nbsp;
-                                                                                <button
-                                                                                    (click)="cancelLanguageSelection()"
-                                                                                    type="button" mat-button
-                                                                                    class="cs-btn bt1">Cancel</button>
+                                                                    <div class="form-group form-inline">
+                                                                        <div class="languagesouter"
+                                                                            *ngIf="languages.length >0 && lngknown==='no'">
+                                                                            <div *ngFor="let lang of languages">
+                                                                                <mat-checkbox
+                                                                                    style="padding-left: 10px;"
+                                                                                    (change)="langSel(lang)"
+                                                                                    [checked]="checklangExists(lang)">
+                                                                                    {{lang}}</mat-checkbox>
                                                                             </div>
                                                                         </div>
-                                                                        <div
-                                                                            style="display: flex; justify-content: space-between;">
-                                                                            <app-field-error-display
-                                                                                [displayError]="fed_service.isFieldValid(virtualForm,'preferredLanguage')"
-                                                                                errorMsg="Language is required">
-                                                                            </app-field-error-display>
+                                                                        <div class="actiondiv col-md-12"
+                                                                            style="margin-top: 15px;display: inline-flex;">
+                                                                            <!-- <button type="button" (click)="cancel()" class="cs-btn bt2"
+                            [disabled]="disableButton">Cancel</button>&nbsp; -->
+                                                                            <button (click)="saveLanguages()"
+                                                                                type="button" mat-button
+                                                                                class="cs-btn bt1"
+                                                                                [disabled]="disableButton">Ok</button>&nbsp;&nbsp;
+                                                                            <button (click)="cancelLanguageSelection()"
+                                                                                type="button" mat-button
+                                                                                class="cs-btn bt1">Cancel</button>
                                                                         </div>
                                                                     </div>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-between;">
+                                                                        <app-field-error-display
+                                                                            [displayError]="fed_service.isFieldValid(virtualForm,'preferredLanguage')"
+                                                                            errorMsg="Language is required">
+                                                                        </app-field-error-display>
+                                                                    </div>
                                                                 </div>
+                                                            </div>
+                                                            <fieldset [disabled]="!editable">
 
                                                                 <ng-container *ngIf="hideLanguages">
                                                                     <label class="col-form-label" for="name">Contact
@@ -704,11 +724,11 @@
                                                                     </button>
                                                                 </div> -->
 
-
-                                                                <div class="">&nbsp;</div>
-                                                            </div>
+                                                            </fieldset>
+                                                            <div class="">&nbsp;</div>
                                                         </div>
-                                                    </fieldset>
+                                                    </div>
+
                                                 </form>
                                                 <!-- <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-up-10"
                                                     *ngIf="queuejson && queuejson.length == 0 && !api_loading1">
@@ -727,14 +747,14 @@
                                             class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container">
                                             <button type="button"
                                                 class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
-                                                (click)="goToStep('next')">
+                                                (click)="goToStep('next')" *ngIf="hideLanguages">
                                                 Next
                                             </button> &nbsp;
-                                            <button type="button"
+                                            <!-- <button type="button"
                                                 class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
                                                 (click)="goToEdit()" *ngIf="!selectedLocation">
                                                 Edit
-                                            </button>
+                                            </button> -->
                                         </div>
                                     </div>
                                     <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"

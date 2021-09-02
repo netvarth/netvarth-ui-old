@@ -248,6 +248,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         "Telugu"
     ];
     hideLanguages = true;
+    hideTokenFor = true;
     api_loading = true;
     // api_loading1 = true;
     // customer_data: any;
@@ -278,6 +279,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     provider: any;
     languageSelected: any = [];
     iseditLanguage = false;
+    hideNextButton = false;
 
 
 
@@ -758,8 +760,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     //   }
     editLanguage() {
         this.iseditLanguage = true;
+        this.hideNextButton = false;
+
         this.languageSelected = this.virtualForm.get('preferredLanguage').value.slice();
         this.hideLanguages = false;
+        this.hideTokenFor = false;
     }
     updateForm() {
 

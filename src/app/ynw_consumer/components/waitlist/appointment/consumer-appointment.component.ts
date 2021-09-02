@@ -279,6 +279,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         "Telugu"
     ];
     hideLanguages = true;
+    hideTokenFor = true;
     api_loading = true;
     // api_loading1 = true;
     // customer_data: any;
@@ -718,6 +719,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.iseditLanguage = true;
         this.languageSelected = this.virtualForm.get('preferredLanguage').value.slice();
         this.hideLanguages = false;
+        this.hideTokenFor = false;
     }
     updateForm() {
 
@@ -1352,7 +1354,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
                 }
                 this.currentPhone = this.virtualInfo.phoneno;
-                this.userPhone =  this.virtualInfo.whatsappnumber;
+                this.userPhone = this.virtualInfo.whatsappnumber;
                 this.changePhno = true;
             }
 
@@ -1388,7 +1390,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
                 }
                 this.currentPhone = this.virtualInfo.phoneno;
-                this.userPhone =  this.virtualInfo.whatsappnumber;
+                this.userPhone = this.virtualInfo.whatsappnumber;
                 this.changePhno = true;
             }
 
