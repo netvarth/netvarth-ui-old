@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, NgZone } from '@angular/core';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { SharedServices } from '../../services/shared-services';
@@ -137,6 +137,7 @@ export class PaymentLinkComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private cdRef: ChangeDetectorRef,
+    private ngZone: NgZone,
     private groupService: GroupStorageService) {
     this.activated_route.params.subscribe(
       qparams => {
@@ -325,12 +326,16 @@ transactionCompleted(response) {
     this.payment_id = response.TXNID;
     this.loadingPaytm = false; 
     this.cdRef.detectChanges();
+    this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+    this.ngZone.run(() =>console.log('Transaction success') );
   
 } else if(response.STATUS == 'TXN_FAILURE'){
   this.isClickedOnce=false;
   this.paidStatus = 'false';
   this.loadingPaytm = false; 
   this.cdRef.detectChanges();
+  this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+  this.ngZone.run(() =>console.log('Transaction failed') );
 }
 }
 closeloading(){
@@ -338,6 +343,7 @@ closeloading(){
   this.loadingPaytm = false; 
   this.cdRef.detectChanges();
   this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+  this.ngZone.run(() => console.log('cancelled'));
 }
   billview() {
     this.showbill = !this.showbill;
