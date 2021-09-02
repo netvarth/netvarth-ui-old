@@ -538,18 +538,20 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   // }
   getAmountToPay(paymentDetails) {
     this.totalamountPay=paymentDetails.advanceAmount;
+    //console.log(this.totalamountPay);
     // let totalamountPay=paymentDetails.advanceAmount;
-    if(this.jcashamount >0 && this.checkJcash){
-      if(this.jcashamount>paymentDetails.advanceAmount){
-      this.totalamountPay=this.jcashamount- paymentDetails.advanceAmount;
-      }else{
-        this.totalamountPay=paymentDetails.advanceAmount-this.jcashamount;
-      }
-    }else{
-      this.totalamountPay=paymentDetails.advanceAmount;
-      }
+    //if(this.jcashamount >0 && this.checkJcash){
+      //if(this.jcashamount>paymentDetails.advanceAmount){
+      //this.totalamountPay=this.jcashamount- paymentDetails.advanceAmount;
+      //}else{
+       // this.totalamountPay=paymentDetails.advanceAmount-this.jcashamount;
+      //}
+    //}else{
+     // this.totalamountPay=paymentDetails.advanceAmount;
+     // }
     
    return this.totalamountPay; 
+   console.log(this.totalamountPay);
 
   }
   OnChangeJcash(event){
