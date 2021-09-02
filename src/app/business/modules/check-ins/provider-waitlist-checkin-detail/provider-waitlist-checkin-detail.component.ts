@@ -96,8 +96,15 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   timetype;
   spName: any;
   showImages: any = [];
-  internalStatuslog:any= [];
-  statusLog: any=[];
+  internalStatuslog: any = [];
+  statusLog: any = [];
+  questionnaires: any = [];
+  teams: any;
+  waitlistModes = [
+    { mode: 'WALK_IN_CHECKIN', value: 'Walk in ' },
+    { mode: 'PHONE_CHECKIN', value: 'Phone in ' },
+    { mode: 'ONLINE_CHECKIN', value: 'Online ' },
+  ];
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -140,6 +147,19 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       this.goBack();
     }
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
+    if (this.userDet.accountType === 'BRANCH') {
+      this.getTeams().then((data) => {
+        this.teams = data;
+        console.log(this.teams);
+      });
+    }
+
+  }
+  getWaitListMode(mode) {
+    let currentmode=[];
+    currentmode=this.waitlistModes.filter(obj=>obj.mode===mode);
+    return currentmode[0].value;
+
   }
   ngOnDestroy() {
     if (this.sendmsgdialogRef) {
@@ -149,8 +169,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       this.notedialogRef.close();
     }
   }
-  checkDataNull(value){
-    return value.trim()!=="";
+  checkDataNull(value) {
+    return value.trim() !== "";
   }
   getProviderSettings() {
     this.api_loading = true;
@@ -192,6 +212,15 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       .subscribe(
         data => {
           this.waitlist_data = data;
+          if (this.waitlist_data.questionnaires && this.waitlist_data.questionnaires.length > 0) {
+            this.questionnaires = this.waitlist_data.questionnaires;
+          }
+          if (this.waitlist_data.releasedQnr && this.waitlist_data.releasedQnr.length > 0) {
+            const releasedQnrs = this.waitlist_data.releasedQnr.filter(qnr => qnr.status === 'released');
+            if (releasedQnrs.length > 0) {
+              this.getReleasedQnrs(releasedQnrs);
+            }
+          }
           if (this.waitlist_data.service.serviceType === 'virtualService') {
             switch (this.waitlist_data.service.virtualCallingModes[0].callingMode) {
               case 'Zoom': {
@@ -242,23 +271,18 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           if (this.waitlist_data.waitlistStatus !== 'blocked') {
             this.getWaitlistNotes(this.waitlist_data.ynwUuid);
           }
-          this.getCheckInHistory(this.waitlist_data.ynwUuid).then(data=>{
+          this.getCheckInHistory(this.waitlist_data.ynwUuid).then(data => {
             this.waitlist_history = data;
-            console.log(this.waitlist_history);
-            
-            this.getInternalStatusLog(this.waitlist_data.ynwUuid).then((status:any)=>{
-            this.internalStatuslog=status;
-            // for(let stat of status){
-    
-            // const newStatus={'waitlistStatus':stat.InternalStatus,'time':stat.DateTime,'user':stat.User}
-            // this.internalStatuslog.push(newStatus)
-            // }
-      
-            // this.statusLog=this.waitlist_history.concat(this.internalStatuslog);
-            //this.statusLog =  this.statusLog.sort((a,b) => 0 - (a.DateTime > b.DateTime ? -1 : 1));
-          
-            console.log(this.statusLog);
-            
+            this.getInternalStatusLog(this.waitlist_data.ynwUuid).then((status: any) => {
+              this.internalStatuslog = status;
+              // for(let stat of status){
+
+              // const newStatus={'waitlistStatus':stat.InternalStatus,'time':stat.DateTime,'user':stat.User}
+              // this.internalStatuslog.push(newStatus)
+              // }
+
+              // this.statusLog=this.waitlist_history.concat(this.internalStatuslog);
+              //this.statusLog =  this.statusLog.sort((a,b) => 0 - (a.DateTime > b.DateTime ? -1 : 1));            
             });
           });
           this.getCommunicationHistory(this.waitlist_data.ynwUuid);
@@ -274,38 +298,38 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         }
       );
   }
-  
+
   getCheckInHistory(uuid) {
     const _this = this;
-  return new Promise(function (resolve, reject) {
- 
-    _this.provider_services.getProviderWaitlistHistroy(uuid)
-      .subscribe(
-        data => {
-          resolve(data);
-        },
-        () => {
-          reject();
-        }
-      );
-  });
-}
-getInternalStatusLog(uuid){
-  const _this = this;
-  return new Promise(function (resolve, reject) {
- 
-    _this.provider_services.getProviderWaitlistinternalHistroy(uuid)
-      .subscribe(
-        data => {
-          resolve(data);
-        },
-        () => {
-          reject();
-        }
-      );
-  });
+    return new Promise(function (resolve, reject) {
 
-}
+      _this.provider_services.getProviderWaitlistHistroy(uuid)
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
+  }
+  getInternalStatusLog(uuid) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+
+      _this.provider_services.getProviderWaitlistinternalHistroy(uuid)
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
+
+  }
 
   // getWaitlistNotes() {
   //   this.provider_services.getProviderWaitlistNotes(this.waitlist_data.consumer.id)
@@ -655,7 +679,47 @@ getInternalStatusLog(uuid){
     timeDate = time.replace(/\s/, 'T');
     return timeDate;
   }
-  getFormatedDateTime(date){
+  getFormatedDateTime(date) {
     return this.dateTimeProcessor.transformToYMDFormat(date);
   }
+  getReleasedQnrs(releasedQnrs) {
+    this.provider_services.getWaitlistQuestionnaireByUid(this.waitlist_data.ynwUuid).subscribe((data: any) => {
+      const qnrs = data.filter(function (o1) {
+        return releasedQnrs.some(function (o2) {
+          return o1.id === o2.id;
+        });
+      });
+      this.questionnaires = this.questionnaires.concat(qnrs);
+    });
+  }
+  getQuestionAnswers(event) {
+    if (event === 'reload') {
+      this.getWaitlistDetail();
+    }
+  }
+  getQnrStatus(qnr) {
+    const id = (qnr.questionnaireId) ? qnr.questionnaireId : qnr.id;
+    const questr = this.waitlist_data.releasedQnr.filter(questionnaire => questionnaire.id === id);
+    if (questr[0]) {
+      return questr[0].status;
+    }
+  }
+  getTeams() {
+    const _this = this;
+    return new Promise<void>(function (resolve) {
+      _this.provider_services.getTeamGroup().subscribe(data => {
+        _this.teams = data;
+      },
+        () => {
+          resolve();
+        });
+    });
+  }
+  getUsersList(teamid) {
+    const userObject = this.teams.filter(user => parseInt(user.id) === teamid);
+    if (userObject[0] && userObject[0].name) {
+      return userObject[0].name;
+    }
+  }
+
 }

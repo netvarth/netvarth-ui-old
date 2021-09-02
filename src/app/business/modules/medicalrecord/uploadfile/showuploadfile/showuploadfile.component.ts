@@ -19,7 +19,7 @@ export class ShowuploadfileComponent implements OnInit {
     console.log(this.data);
     this.details = this.data.file;
     if (this.data.source === 'qnr') {
-      this.title = '';
+      this.title = (this.details.comments) ? this.details.comments : '';
       if (this.details.s3path) {
         this.details.url = this.details.s3path;
       } else {

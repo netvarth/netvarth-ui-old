@@ -1891,7 +1891,7 @@ export class ProviderServices {
     return this.servicemeta.httpPut('provider/catalog', data);
   }
   getProviderCatalogs(id?) {
-    if (id) {
+    if (id && id !== 'add') {
       return this.servicemeta.httpGet('provider/catalog/' + id);
     } else {
       return this.servicemeta.httpGet('provider/catalog');
@@ -2209,8 +2209,12 @@ export class ProviderServices {
     const url = 'chatbot/telegram/provider';
     return this.servicemeta.httpGet(url);
   }
-  changeQnrReleaseStatus(status, uid, id) {
+  changeWaitlistQnrReleaseStatus(status, uid, id) {
     const url = 'provider/waitlist/questionnaire/change/' + status + '/' + uid + '/' + id;
+    return this.servicemeta.httpPut(url);
+  }
+  changeApptQnrReleaseStatus(status, uid, id) {
+    const url = 'provider/appointment/questionnaire/change/' + status + '/' + uid + '/' + id;
     return this.servicemeta.httpPut(url);
   }
   getWaitlistQuestionnaireByUid(uid) {
@@ -2220,5 +2224,29 @@ export class ProviderServices {
   getApptQuestionnaireByUid(uid) {
     const url = 'provider/appointment/questionnaire/' + uid;
     return this.servicemeta.httpGet(url);
+  }
+  updateBusslocWaitlist(post_data) {
+    const url = 'provider/waitlist/changeBussLoc';
+    return this.servicemeta.httpPut(url, post_data);
+  }
+  updateBusslocApptWaitlist(post_data) {
+    const url = 'provider/appointment/changeBussLoc';
+    return this.servicemeta.httpPut(url, post_data);
+  }
+  sendWaitlistQnrNotification(uid, post_data) {
+    const url = 'provider/waitlist/questionnaire/notification/' + uid;
+    return this.servicemeta.httpPut(url, post_data);
+  }
+  sendApptQnrNotification(uid, post_data) {
+    const url = 'provider/appointment/questionnaire/notification/' + uid;
+    return this.servicemeta.httpPut(url, post_data);
+  }
+  unassignTeamWaitlist(post_data) {
+    const url = 'provider/waitlist/unassignTeam';
+    return this.servicemeta.httpPut(url, post_data);
+  }
+  unassignTeamAppointment(post_data) {
+    const url = 'provider/appointment/unassignTeam';
+    return this.servicemeta.httpPut(url, post_data);
   }
 }

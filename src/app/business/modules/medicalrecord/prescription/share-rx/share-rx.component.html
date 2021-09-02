@@ -52,7 +52,8 @@
 </div>
 
       <div class="mgtop40 form-group"  *ngIf="!showthirdparty">
-              We will create a PDF of your prescription and will share Via
+            <span  *ngIf="!(mrPrescriptionDetails &&  mrPrescriptionDetails[0].keyName)">We will create a PDF of your prescription and will share Via</span>  
+            <span  *ngIf="(mrPrescriptionDetails && mrPrescriptionDetails[0].keyName)">Your prescription will share Via</span>
           <div class="coupon-outer">
               <mat-checkbox [disabled] = "(!phon || phon === 'null') || is_noSMS"  class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
                   SMS
@@ -64,7 +65,7 @@
                   [ngModelOptions]="{standalone: true}">App
                   notification
               </mat-checkbox>
-              <mat-checkbox [disabled] = "!phon || phon === 'null'"  class="mgright50 example-margin" *ngIf="!IsTelegramDisable" [(ngModel)]="telegram" [ngModelOptions]="{standalone: true}">
+              <mat-checkbox  class="mgright50 example-margin" *ngIf="!IsTelegramDisable" [(ngModel)]="telegram" [ngModelOptions]="{standalone: true}">
                 Telegram
             </mat-checkbox>
           </div>
@@ -76,7 +77,8 @@
       <div class="sms_credit_warn mgn-up-10" *ngIf="is_smsLow && !showthirdparty ">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
       <div  class="col-md-12 col-lg-12 col-xs-12 col-sm-12 form-group" *ngIf="showthirdparty">
         <!-- We will create a PDF of your prescription and will share Via sms and email. -->
-         We will create a PDF of your prescription and will share Via email. 
+        <span  *ngIf="!mrPrescriptionDetails[0].keyName">We will create a PDF of your prescription and will share Via email.</span>  
+        <span  *ngIf="mrPrescriptionDetails[0].keyName">Your prescription will be shared Via email.</span>
       </div>
 
   </mat-dialog-content>
@@ -114,9 +116,10 @@
               <table class="sign-table" style="width: 100%; margin: auto;margin-bottom: 20px" *ngIf="customerDetail"> 
                   <tr>
                       <td style="padding-right: 10px; width: 60%">
-                          <label>{{customer_label | capitalizeFirst}} Name:&nbsp;</label>
-                          <span>{{customerDetail.firstName | capitalizeFirst}}
+                          <label>{{customer_label | capitalizeFirst}} &nbsp;</label>
+                          <span *ngIf="customerDetail.firstName">: {{customerDetail.firstName | capitalizeFirst}}
                               {{customerDetail.lastName}}</span>
+                          <span *ngIf="!customerDetail.firstName && customerDetail.jaldeeId">Id: {{customerDetail.jaldeeId}}</span>
                       </td>
                       <td><label>Gender:&nbsp;</label>
                           <span *ngIf="customerDetail.gender">{{customerDetail.gender | capitalizeFirst}}</span>

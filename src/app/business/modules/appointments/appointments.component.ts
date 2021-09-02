@@ -1009,8 +1009,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   getCounts() {
     this.today_waitlist_count = 0;
     this.history_waitlist_count = 0;
-    if (this.time_type !== 2) {
-      this.future_waitlist_count = 0;
+    this.future_waitlist_count = 0;
+    if (this.time_type !== 2 && this.activeSchedules.length > 0) {
       this.getFutureAppointmentsCount()
         .then(
           (result) => {
@@ -1026,7 +1026,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         );
     }
-    if (this.time_type !== 1) {
+    if (this.time_type !== 1 && this.activeSchedules.length > 0) {
       this.getTodayAppointmentsCount()
         .then(
           (result) => {
@@ -1146,7 +1146,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       Mfilter = {};
       if (queueid || this.activeUser) {
         if (this.activeUser) {
-          Mfilter['provider-eq'] = this.activeUser;
+          if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+            Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
+          } else {
+            Mfilter['provider-eq'] = this.activeUser;
+          }
         } else {
           Mfilter['schedule-eq'] = queueid;
         }
@@ -1179,7 +1183,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           if (this.activeUser && this.unassignview) {
             Mfilter['provider-eq'] = null;
           } else {
-            Mfilter['provider-eq'] = this.activeUser;
+            if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+              Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
+            } else {
+              Mfilter['provider-eq'] = this.activeUser;
+            }
           }
         } else {
           if (this.unassignview) {
@@ -1190,7 +1198,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       } else {
         if (this.activeUser) {
-          Mfilter['provider-eq'] = this.activeUser;
+          if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+            Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
+          } else {
+            Mfilter['provider-eq'] = this.activeUser;
+          }
         } else {
           Mfilter['schedule-eq'] = this.selQIds;
         }
@@ -1229,11 +1241,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     console.log('hisory', this.active_user);
     if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
-      // if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
-      //   Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.active_user.id;
-      // } else {
+      if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+        Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.active_user.id;
+      } else {
         Mfilter['provider-eq'] = this.active_user.id;
-      // }
+      }
     }
     return new Promise((resolve) => {
       this.provider_services.getHistoryAppointmentsCount(Mfilter)
@@ -1267,9 +1279,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getTodayAppointments() {
     const Mfilter = this.setFilterForApi();
-    if (this.selected_location && this.selected_location.id) {
-      Mfilter['location-eq'] = this.selected_location.id;
-    }
+    // if (this.selected_location && this.selected_location.id) {
+    //   Mfilter['location-eq'] = this.selected_location.id;
+    // }
     if (this.groupService.getitemFromGroupStorage('appt_selQ')) {
       this.selQIds = this.groupService.getitemFromGroupStorage('appt_selQ');
     }
@@ -1279,11 +1291,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.unassignview) {
           Mfilter['provider-eq'] = null;
         } else {
-          // if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
-          //   Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
-          // } else {
+          if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+            Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
+          } else {
             Mfilter['provider-eq'] = this.activeUser;
-          // }
+          }
         }
       }
       else {
@@ -1301,7 +1313,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.resetPaginationData();
     this.pagination.startpageval = 1;
     this.pagination.totalCnt = 0; // no need of pagination in today
-    if (this.activeSchedules.length > 0 || this.activeUser) {
+    if (this.activeSchedules.length > 0 || this.activeUser || (this.active_user.accountType === 'BRANCH' && this.activeSchedules.length == 0)) {
       const promise = this.getTodayAppointmentsCount(Mfilter);
       promise.then(
         result => {
@@ -1367,19 +1379,19 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selQIds = this.groupService.getitemFromGroupStorage('appt_future_selQ');
     }
     let Mfilter = this.setFilterForApi();
-    if (this.selected_location && this.selected_location.id) {
-      Mfilter['location-eq'] = this.selected_location.id;
-    }
+    // if (this.selected_location && this.selected_location.id) {
+    //   Mfilter['location-eq'] = this.selected_location.id;
+    // }
     if (this.selQIds && this.selQIds.length > 0 || this.activeUser) {
       if (this.activeUser) {
         if (this.unassignview) {
           Mfilter['provider-eq'] = null;
         } else {
-          // if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
-          //   Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
-          // } else {
+          if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+            Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
+          } else {
             Mfilter['provider-eq'] = this.activeUser;
-          // }
+          }
         }
       } else {
         if (this.unassignview) {
@@ -1397,6 +1409,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.check_in_date != null) {
       Mfilter['date-eq'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_date);
     }
+    if (this.activeSchedules.length > 0 || this.activeUser || (this.active_user.accountType === 'BRANCH' && this.activeSchedules.length == 0)) {
     const promise = this.getFutureAppointmentsCount(Mfilter);
     promise.then(
       result => {
@@ -1420,16 +1433,19 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               this.loading = false;
             });
       });
+    } else {
+      this.loading = false;
+    }
   }
   getHistoryAppointments() {
     console.log("in history");
     let Mfilter = this.setFilterForApi();
     if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
-      // if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
-      //   Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.active_user.id;
-      // } else {
+      if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+        Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.active_user.id;
+      } else {
         Mfilter['provider-eq'] = this.active_user.id;
-      // }
+      }
     }
     const promise = this.getHistoryAppointmentsCount(Mfilter);
     promise.then(
@@ -1589,6 +1605,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       if (this.genderList.length > 0 && this.filter.gender !== 'all') {
         api_filter['gender-eq'] = this.genderList.toString();
+      }
+    }
+    if (this.time_type !== 3) {
+      if (this.selected_location && this.selected_location.id) {
+        api_filter['location-eq'] = this.selected_location.id;
       }
     }
     if (this.labelFilterData !== '') {

@@ -27,6 +27,7 @@ import { ListRecordingsDialogComponent } from '../../../../shared/components/lis
 import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { VoiceConfirmComponent } from '../../customers/video-confirm/voice-confirm.component';
 import { Location } from '@angular/common';
+
 @Component({
     selector: 'app-appointment-actions',
     templateUrl: './appointment-actions.component.html',
@@ -105,7 +106,7 @@ export class AppointmentActionsComponent implements OnInit {
     userid: any;
     user_arr: any;
     groups: any;
-    statusList: any=[];
+    statusList: any = [];
     showAssign = false;
     users: any = [];
     location: any;
@@ -1062,9 +1063,9 @@ export class AppointmentActionsComponent implements OnInit {
             }
         });
         dialogrefd.afterClosed().subscribe(result => {
-            console.log("Result:",result)
+            console.log("Result:", result)
             console.log(this.appt.uid)
-                console.log(this.userid)
+            console.log(this.userid)
             if (result) {
                 console.log(this.appt.uid)
                 console.log(this.userid)
