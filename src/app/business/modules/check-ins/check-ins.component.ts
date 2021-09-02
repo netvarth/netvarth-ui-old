@@ -194,7 +194,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedUser: any;
   users: any = [];
   views: any = [];
-  queues: any= [];
+  queues: any = [];
   loading = false;
   statusMultiCtrl: any = [];
   labelMultiCtrl: any = [];
@@ -465,9 +465,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.getTomorrowDate();
       this.getYesterdayDate();
     }
+
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
-    console.log(this.active_user);
-    console.log(this.active_user.bussLocs);
     this.bussLocs = this.active_user.bussLocs;
     if (this.active_user.adminPrivilege || this.active_user.userType === 5) {
       this.admin = true;
@@ -1079,10 +1078,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             }
             for (const loc of locations) {
               if (loc.status === 'ACTIVE') {
-                if(loggedUser.accountType === 'BRANCH' && !loggedUser.adminPrivilege){
+                if (loggedUser.accountType === 'BRANCH' && !loggedUser.adminPrivilege) {
                   const userObject = loggedUser.bussLocs.filter(id => parseInt(id) === loc.id);
-                  if(userObject.length > 0){
-                    self.locations.push(loc);                    
+                  if (userObject.length > 0) {
+                    self.locations.push(loc);
                   }
                 } else {
                   self.locations.push(loc);
@@ -1327,11 +1326,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.selQIds = this.getActiveQIdsFromView(this.selectedView);
     }
-    console.log(this.active_user);
-    console.log('todayselq', this.selQIds);
-    console.log('user', this.activeUser);
-    console.log('admin', this.admin);
-    if (this.selQIds && this.selQIds.length > 0 || this.activeUser) {
+    console.log(this.activeUser);
+    console.log(this.selQIds);
+    if ((this.selQIds && this.selQIds.length > 0) || this.activeUser) {
       if (this.activeUser) {
         console.log(this.unassignview);
         if (this.unassignview) {
@@ -1426,32 +1423,32 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       Mfilter['date-eq'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_date);
     }
     if (this.activeQs.length > 0 || this.activeUser || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) {
-    const promise = this.getFutureWLCount(Mfilter);
-    promise.then(
-      result => {
-        this.provider_services.getFutureWaitlist(Mfilter)
-          .subscribe(
-            data => {
-              this.futureAppointments = this.shared_functions.groupBy(data, 'waitlistStatus');
-              if (this.filterapplied === true) {
-                this.noFilter = false;
-              } else {
-                this.noFilter = true;
-              }
-              this.check_in_filtered_list = this.getActiveAppointments(this.futureAppointments, this.statusAction);
-              this.setFutureCounts(this.futureAppointments);
-              this.loading = false;
-            },
-            () => {
-              this.loading = false;
-            },
-            () => {
-              this.loading = false;
-            });
-      },
-      () => {
-        this.loading = false;
-      });
+      const promise = this.getFutureWLCount(Mfilter);
+      promise.then(
+        result => {
+          this.provider_services.getFutureWaitlist(Mfilter)
+            .subscribe(
+              data => {
+                this.futureAppointments = this.shared_functions.groupBy(data, 'waitlistStatus');
+                if (this.filterapplied === true) {
+                  this.noFilter = false;
+                } else {
+                  this.noFilter = true;
+                }
+                this.check_in_filtered_list = this.getActiveAppointments(this.futureAppointments, this.statusAction);
+                this.setFutureCounts(this.futureAppointments);
+                this.loading = false;
+              },
+              () => {
+                this.loading = false;
+              },
+              () => {
+                this.loading = false;
+              });
+        },
+        () => {
+          this.loading = false;
+        });
     } else {
       this.loading = false;
     }
@@ -1635,17 +1632,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.selected_location && this.selected_location.id) {
         Mfilter['location-eq'] = this.selected_location.id;
       }
-      if (queueid && queueid !== '') {
-        if (this.activeUser) {
-          if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
-            Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
-          } else {
-            Mfilter['provider-eq'] = this.activeUser;
-          }
+      // if (queueid && queueid !== '') {
+      if (this.activeUser) {
+        if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+          Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.activeUser;
         } else {
+          Mfilter['provider-eq'] = this.activeUser;
+        }
+      } else {
+        if (queueid && queueid !== '') {
           Mfilter['queue-eq'] = queueid;
         }
       }
+      // }
       no_filter = true;
     }
     if (this.filter.waitlist_status === 'all') {
@@ -1719,7 +1718,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getHistoryWLCount(Mfilter = null) {
     if (!Mfilter) {
-    //   Mfilter = this.setFilterForApi();
+      //   Mfilter = this.setFilterForApi();
       Mfilter = {};
     }
     if (this.filter.waitlist_status === 'all') {
