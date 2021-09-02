@@ -441,6 +441,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     unmuteVideo() {
         const _this = this;
+        _this.btnClicked = true;
         console.log("unmuteVideo");
         // this.twilioService.unmuteVideo();
         _this.getVideoStatus().then(
@@ -450,12 +451,14 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
                 } else {
                     _this.twilioService.video = true;
                 }
+                _this.btnClicked = false;
             }
         );
     }
 
     muteVideo() {
         // this.twilioService.muteVideo();
+        this.btnClicked = true;
         console.log("muteVideo");
         console.log(this.videoTrack);
         this.removePreviewTrackToDom(this.videoTrack, 'video');
@@ -463,20 +466,23 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         // this.videoTrack.unpublishTracks();
         // this.videoTrack.stop();
         this.twilioService.video = false;
-
+        this.btnClicked = false;
     }
     muteAudio() {
         // this.twilioService.muteAudio();
         console.log("muteAudio");
+        this.btnClicked = true;
         console.log(this.audioTrack);
         this.removePreviewTrackToDom(this.audioTrack, 'audio');
         this.previewTracks.splice(this.previewTracks.indexOf(this.audioTrack), 1);
         // this.audioTrack.unpublishTracks();
         // this.audioTrack.stop();
         this.twilioService.microphone = false;
+        this.btnClicked = false;
     }
     unmuteAudio() {
         const _this = this;
+        _this.btnClicked = true;
         console.log("unmuteAudio");
         // this.twilioService.unmuteAudio();
         _this.getAudioStatus().then(
@@ -487,6 +493,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
                 } else {
                     _this.twilioService.microphone = true;
                 }
+                _this.btnClicked = false;
             }
         );
     }

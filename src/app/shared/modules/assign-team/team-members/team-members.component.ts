@@ -13,8 +13,14 @@ export class TeamMembersComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
 
   ) {
-
-    this.users_list = data.userData.users;
+    if (data.userData) {
+      if (data.userData.users) {
+        this.users_list = data.userData.users;
+      } else {
+        this.users_list = data.userData
+      }
+    }
+    // this.users_list = data.userData.users;
     console.log(this.users_list);
   }
 

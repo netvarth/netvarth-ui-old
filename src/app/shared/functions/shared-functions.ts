@@ -13,6 +13,7 @@ import { GroupStorageService } from '../services/group-storage.service';
 import { LocalStorageService } from '../services/local-storage.service';
 import { SessionStorageService } from '../services/session-storage.service';
 import { FileService } from '../services/file-service';
+import { projectConstants } from '../../../app/app.component';
 @Injectable()
 
 export class SharedFunctions {
@@ -511,9 +512,12 @@ export class SharedFunctions {
   imageValidation(file, source?) {
     let file_types;
     if (source === 'attachment' || source === 'consumerimages') {
-      file_types = this.fileService.getSupportedFormats('file');
+      //file_types = this.fileService.getSupportedFormats('file');
+      file_types = projectConstants.FILETYPES_UPLOAD;
+      console.log("tpe1"+file_types);
     } else {
-      file_types = this.fileService.getSupportedFormats('image');
+      file_types = projectConstants.IMAGE_FORMATS;
+      //file_types = this.fileService.getSupportedFormats('image');
     }
     const image_max_size = this.fileService.getMaximumImageSize();
     const error = [];

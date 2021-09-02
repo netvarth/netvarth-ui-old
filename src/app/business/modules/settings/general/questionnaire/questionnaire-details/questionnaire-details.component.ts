@@ -44,6 +44,10 @@ export class QuestionnaireDetailsComponent implements OnInit {
   }
   getServiceName(transactionId) {
     const filteredService = this.service_list.filter(service => service.id === transactionId);
+    if(filteredService[0].name){
     return filteredService[0].name;
+    }else{
+      return filteredService[0].id;
+    }
   }
 }

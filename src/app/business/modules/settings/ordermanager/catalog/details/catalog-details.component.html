@@ -858,7 +858,7 @@
                     <div>
                       <button *ngIf="step == 4" type="button" (click)="onSubmit(amForm.value)"
                         class="btn btn-success font-weight-bold text-uppercase px-9 py-1"
-                        [disabled]="!amForm.valid || disableButton">
+                        [disabled]="disableButton">
                         Save
                       </button>
                       <!-- <button *ngIf="step == 1 || step == 2 || step == 3" type="button"

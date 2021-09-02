@@ -277,8 +277,10 @@
                                                                                                 </div>
                                                                                         </h3>
                                                                                 </div>
+
+                                                                                <div class="col-md-6 col-xs-12 no-padding">
                                                                                 <div
-                                                                                        class="col-md-6 col-xs-12 mg-small-10 no-padding">
+                                                                                  class="col-md-12 no-padding">
                                                                                         <label class = "ttle" *ngIf="queuedata[0].showToken">
                                                                                                 Same day online tokens
                                                                                         </label>
@@ -294,6 +296,32 @@
                                                                                                         class="tstat">{{queue.onlineCheckIn ? 'On' : 'Off'}}</label>
                                                                                         </p>
                                                                                 </div>
+
+                                                                                <div
+                                                                                class="col-md-12 no-padding">
+                                                                                <label class = "ttle" *ngIf="queuedata[0].showToken">
+                                                                                        Future online tokens
+                                                                                </label>
+                                                                                <label class="ttle" *ngIf="!queuedata[0].showToken">Future
+                                                                                        online
+                                                                                        check-ins</label>
+                                                                                <!-- <label
+                                                                                        class="ttle">Future
+                                                                                        Online
+                                                                                        check-ins</label> -->
+                                                                                <mat-slide-toggle
+                                                                                        style="padding-left: 22px;"
+                                                                                        class="example-margin"
+                                                                                        [checked]="queue.futureWaitlist"
+                                                                                        (change)="changeQFutureStatus(queue)">
+                                                                                </mat-slide-toggle>
+                                                                                <p> <label
+                                                                                                class="tstat">{{queue.futureWaitlist ? 'On' : 'Off'}}</label>
+                                                                                </p>
+                                                                        </div>
+                                                                </div>
+
+                                                                        
                                                                         </div>
                                                                         <div class="col-md-1 col-xs-1 no-padding">
                                                                                 <span class="mbt">

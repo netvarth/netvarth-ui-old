@@ -156,13 +156,14 @@ export class ServiceComponent implements OnInit, OnDestroy {
     no_of_grids: number;
     screenWidth: number;
     usersdialogRef: any;
-    team:any=[];
+    team: any = [];
     userNamelist: string;
-    maxuserLength=50;
+    maxuserLength = 50;
     qrdialogRef: any;
     wndw_path = projectConstants.PATH;
     tool_code;
-
+    showPrice;
+    priceDescription = false;
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
@@ -215,6 +216,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                 this.servstatus = false;
                             }
                             if (this.action === 'edit') {
+
                                 this.createForm();
                                 if (this.service_data.serviceType === 'virtualService') {
                                     this.is_virtual_serv = true;
@@ -246,11 +248,14 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'isPrePayment': (!this.base_licence && this.service_data['minPrePaymentAmount'] &&
                                                 this.service_data['minPrePaymentAmount'] !== 0
                                             ) ? true : false,
+                                            'priceDynamic': this.service_data['priceDynamic'] ? true : false,
+                                            'paymentDescription': this.service_data['paymentDescription'] || this.serviceForm.get('paymentDescription').value,
                                             'taxable': this.service_data['taxable'] || this.serviceForm.get('taxable').value,
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value
                                         });
                                     } else {
+
                                         this.serviceForm.setValue({
                                             'name': this.service_data['name'] || this.serviceForm.get('name').value,
                                             'description': this.service_data['description'] || this.serviceForm.get('description').value,
@@ -260,20 +265,22 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'serviceType': this.service_data['serviceType'] || this.serviceForm.get('serviceType').value,
                                             'virtualServiceType': this.service_data['virtualServiceType'] || this.serviceForm.get('virtualServiceType').value,
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
-                                            'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value
+                                            'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value,
+
                                         });
                                     }
                                     if (this.service_data.serviceType === 'virtualService') {
                                         this.tool_name = this.service_data.virtualCallingModes[0].callingMode;
                                         this.tool_id = this.service_data.virtualCallingModes[0].value;
                                         this.tool_instruct = this.service_data.virtualCallingModes[0].instructions;
-                                        if(this.service_data.virtualCallingModes[0].countryCode){
-                                        this.tool_code = this.service_data.virtualCallingModes[0].countryCode;
+                                        if (this.service_data.virtualCallingModes[0].countryCode) {
+                                            this.tool_code = this.service_data.virtualCallingModes[0].countryCode;
                                         }
                                     }
 
                                 } else {
                                     if (this.service_data.serviceType === 'donationService') {
+
                                         this.serviceForm.setValue({
                                             'name': this.service_data['name'] || this.serviceForm.get('name').value,
                                             'description': this.service_data['description'] || this.serviceForm.get('description').value,
@@ -290,6 +297,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                                 this.service_data['minPrePaymentAmount'] !== 0
                                             ) ? true : false,
                                             'taxable': this.service_data['taxable'] || this.serviceForm.get('taxable').value,
+                                            'priceDynamic': this.service_data['priceDynamic'] ? true : false,
+                                            'paymentDescription': this.service_data['paymentDescription'] || this.serviceForm.get('paymentDescription').value,
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value
                                         });
@@ -310,13 +319,15 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             ) ? true : false,
                                             'taxable': this.service_data['taxable'] || this.serviceForm.get('taxable').value,
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
-                                            'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value
+                                            'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value,
+                                            'priceDynamic': this.service_data['priceDynamic'] ? true : false,
+                                            'paymentDescription': this.service_data['paymentDescription'] || this.serviceForm.get('paymentDescription').value,
                                         });
                                         if (this.service_data.serviceType === 'virtualService') {
                                             this.tool_name = this.service_data.virtualCallingModes[0].callingMode;
                                             this.tool_id = this.service_data.virtualCallingModes[0].value;
                                             this.tool_instruct = this.service_data.virtualCallingModes[0].instructions;
-                                            if(this.service_data.virtualCallingModes[0].countryCode){
+                                            if (this.service_data.virtualCallingModes[0].countryCode) {
                                                 this.tool_code = this.service_data.virtualCallingModes[0].countryCode;
                                             }
                                         }
@@ -456,17 +467,17 @@ export class ServiceComponent implements OnInit, OnDestroy {
     getUsersTeam() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-        
-          _this.provider_services.getTeamGroup().subscribe(data => {
-              _this.team=data;
+
+            _this.provider_services.getTeamGroup().subscribe(data => {
+                _this.team = data;
                 resolve(data);
-              },
-              () => {
-                reject();
-              }
+            },
+                () => {
+                    reject();
+                }
             );
-        });   
-      }
+        });
+    }
     ngOnDestroy() {
         if (this.serviceSubscription) {
             this.serviceSubscription.unsubscribe();
@@ -505,6 +516,11 @@ export class ServiceComponent implements OnInit, OnDestroy {
             );
     }
     onSubmit(form_data) {
+        // if(form_data.priceDynamic === true){
+        //     if(form_data.paymentDescription === ''){
+        //         this.snackbarService.openSnackBar('Please provide valid phone number', { 'panelClass': 'snackbarerror' });
+        //     }
+        // }
         // this.savedisabled = true;
         if (form_data.serviceType === 'virtualService') {
             //  this.tool_id = this.tool_id.trim();
@@ -531,10 +547,13 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 //    form_data['maxDonationAmount'] = 0;
                 //   form_data['multiples'] = 0;
                 form_data['isPrePayment'] = false;
+                form_data['priceDynamic'] = false;
                 form_data['taxable'] = false;
             } else {
                 form_data['isPrePayment'] = false;
                 form_data['minPrePaymentAmount'] = 0;
+                form_data['priceDynamic'] = false;
+                form_data['paymentDescription'] = '';
             }
             form_data['serviceDuration'] = 1;
             form_data['serviceType'] = 'donationService';
@@ -549,11 +568,15 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 form_data.bType = 'Waitlist';
                 form_data['totalAmount'] = 0;
                 form_data['isPrePayment'] = false;
+                form_data['priceDynamic'] = false;
                 form_data['taxable'] = false;
             } else {
                 form_data.minPrePaymentAmount = (!form_data.isPrePayment || form_data.isPrePayment === false) ?
                     0 : form_data.minPrePaymentAmount;
                 form_data.isPrePayment = (!form_data.isPrePayment || form_data.isPrePayment === false) ? false : true;
+                form_data.paymentDescription = (!form_data.priceDynamic || form_data.priceDynamic === false) ?
+                    form_data.paymentDescription : form_data.paymentDescription;
+                form_data.priceDynamic = (!form_data.priceDynamic || form_data.priceDynamic === false) ? false : true;
                 const duration = this.shared_service.getTimeinMin(this.duration);
                 form_data.serviceDuration = duration;
             }
@@ -591,7 +614,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                         this.servicesService.actionPerformed(serviceActionModel);
                     }
                 }
-            } else {
+            } 
+            else {
                 //console.log(serviceActionModel);
                 this.servicesService.actionPerformed(serviceActionModel);
             }
@@ -660,6 +684,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     maxDonationAmount: [1, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
                     multiples: [1, Validators.compose([Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
                     isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
+                    priceDynamic: [false],
+                    paymentDescription: [''],
                     taxable: [false],
                     notification: [true],
                     livetrack: [false]
@@ -677,6 +703,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     consumerNoteMandatory: [false],
                     totalAmount: [0, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
                     isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
+                    priceDynamic: [false],
+                    paymentDescription: [''],
                     taxable: [false],
                     notification: [true],
                     livetrack: [false]
@@ -702,6 +730,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     maxDonationAmount: [1, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
                     multiples: [1, Validators.compose([Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
                     isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
+                    priceDynamic: [false],
+                    paymentDescription: [''],
                     taxable: [false],
                     notification: [true],
                     livetrack: [false]
@@ -788,7 +818,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 for (let i = 0; i < this.vcallmodes.length; i++) {
                     if (this.selctd_tool === this.vcallmodes[i].callingMode) {
                         this.tool_id = this.vcallmodes[i].value;
-                        if( (this.vcallmodes[i].callingMode  === 'WhatsApp' || this.vcallmodes[i].callingMode  === 'Phone') && this.vcallmodes[i].countryCode ){
+                        if ((this.vcallmodes[i].callingMode === 'WhatsApp' || this.vcallmodes[i].callingMode === 'Phone') && this.vcallmodes[i].countryCode) {
                             this.tool_code = this.vcallmodes[i].countryCode
                         }
                         break;
@@ -812,7 +842,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
             });
     }
     getUsers() {
-        const filter={};
+        const filter = {};
         // const filter = { 'userType-eq': 'PROVIDER' };
         // if (this.departId) {
         //     filter['deptId-eq'] = this.departId.toString();
@@ -908,153 +938,157 @@ export class ServiceComponent implements OnInit, OnDestroy {
     getProviderName(users) {
         console.log(users);
         let userlst = '';
-        if(users[0]==='All'){
-         return 'All Users'
-        }else{
-        for (let user of users) {
-            let details = this.users_list.filter(usr => usr.id == parseInt(user));
-            if (details && details.length > 0) {
-                userlst = userlst + details[0].firstName + ' ' + details[0].lastName + ',';
+        if (users[0] === 'All') {
+            return 'All Users'
+        } else {
+            for (let user of users) {
+                let details = this.users_list.filter(usr => usr.id == parseInt(user));
+                if (details && details.length > 0) {
+                    userlst = userlst + details[0].firstName + ' ' + details[0].lastName + ',';
+                }
             }
+            // if(typ){
+            return userlst.replace(/,\s*$/, '');
+            // }else {
+            //     return this.userlistType(userlst.replace(/,\s*$/, ''));
+            // }
+
         }
-       // if(typ){
-            return userlst.replace(/,\s*$/, '');  
-        // }else {
-        //     return this.userlistType(userlst.replace(/,\s*$/, ''));
-        // }
-        
     }
-}
-getProviderNametruncate(users) {
-    console.log(users);
-    let userlst = '';
-    if(users[0]==='All'){
-     return 'All Users'
-    }else{
-    for (let user of users) {
-        let details = this.users_list.filter(usr => usr.id == parseInt(user));
-        if (details && details.length > 0) {
-            userlst = userlst + details[0].firstName + ' ' + details[0].lastName + ',';
+    getProviderNametruncate(users) {
+        console.log(users);
+        let userlst = '';
+        if (users[0] === 'All') {
+            return 'All Users'
+        } else {
+            for (let user of users) {
+                let details = this.users_list.filter(usr => usr.id == parseInt(user));
+                if (details && details.length > 0) {
+                    userlst = userlst + details[0].firstName + ' ' + details[0].lastName + ',';
+                }
+            } return this.truncateInst(userlst.replace(/,\s*$/, ''));
+
         }
-    }  return this.truncateInst(userlst.replace(/,\s*$/, ''));
-    
-}
-}
-getOwnership(ownerShipData,isTruncate){
-    this. userNamelist='';
-   if(ownerShipData.users &&ownerShipData.users.length>0){
- 
-        ownerShipData.users.forEach(element => {
-            const userObject =  this.users_list.filter(user => user.id === parseInt(element)); 
-            console.log(userObject);
-            this.userNamelist=this.userNamelist+userObject[0].firstName+' '+userObject[0].lastName+','
-           }); 
-            if(isTruncate){
+    }
+    getOwnership(ownerShipData, isTruncate) {
+        this.userNamelist = '';
+        if (ownerShipData.users && ownerShipData.users.length > 0) {
+
+            ownerShipData.users.forEach(element => {
+                const userObject = this.users_list.filter(user => user.id === parseInt(element));
+                console.log(userObject);
+                this.userNamelist = this.userNamelist + userObject[0].firstName + ' ' + userObject[0].lastName + ','
+            });
+            if (isTruncate) {
                 this.truncateInst(this.userNamelist.replace(/,\s*$/, ''));
-            }else{
-                this.userNamelist= this.userNamelist.replace(/,\s*$/, '')
+            } else {
+                this.userNamelist = this.userNamelist.replace(/,\s*$/, '')
                 console.log(this.userNamelist.length);
             }
-           
-       }
-       if(ownerShipData.teams &&ownerShipData.teams.length>0){
 
-        ownerShipData.teams.forEach(element => {
-            const userObject =  this.team.filter(team => team.id === parseInt(element)); 
-            console.log(userObject);
-            this.userNamelist=this.userNamelist+userObject[0].name+','
-           }); 
-           if(isTruncate){
-            this.truncateInst(this.userNamelist.replace(/,\s*$/, ''));
-        }else{
-            this.userNamelist= this.userNamelist.replace(/,\s*$/, '')
-            console.log(this.userNamelist.length);
         }
-          
-       }
-   return this.userNamelist;
+        if (ownerShipData.teams && ownerShipData.teams.length > 0) {
 
+            ownerShipData.teams.forEach(element => {
+                const userObject = this.team.filter(team => team.id === parseInt(element));
+                console.log(userObject);
+                this.userNamelist = this.userNamelist + userObject[0].name + ','
+            });
+            if (isTruncate) {
+                this.truncateInst(this.userNamelist.replace(/,\s*$/, ''));
+            } else {
+                this.userNamelist = this.userNamelist.replace(/,\s*$/, '')
+                console.log(this.userNamelist.length);
+            }
+
+        }
+        return this.userNamelist;
+
+    }
+
+    truncateInst(val) {
+        const inst = val.substr(0, this.maxuserLength);
+        return inst;
+    }
+    usersPopUp(serviceStats) {
+        this.usersdialogRef = this.dialog.open(UserlistpopupComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+                userlist: this.users_list,
+                team: this.team,
+                serviceStatus: serviceStats
+
+            }
+
+        });
+        this.usersdialogRef.afterClosed().subscribe(result => {
+            if (result) {
+            }
+        });
+    }
+    serviceqrCodegeneraterOnlineID() {
+        let pid = '';
+        let usrid = '';
+        if (!this.bprofile.customId) {
+            pid = this.bprofile.accEncUid;
+        } else {
+            pid = this.bprofile.customId;
+        }
+        if (this.service && this.service.provider && this.service.provider.id) {
+            usrid = this.service.provider.id;
+        } else {
+            usrid = '';
+        }
+        this.qrdialogRef = this.dialog.open(ServiceQRCodeGeneratordetailComponent, {
+            width: '40%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'servceqrcodesmall'],
+            disableClose: true,
+            data: {
+                accencUid: pid,
+                path: this.wndw_path,
+                serviceid: this.service.id,
+                userid: usrid
+            }
+        });
+
+        this.qrdialogRef.afterClosed().subscribe(result => {
+            if (result === 'reloadlist') {
+                this.getBusinessProfile();
+            }
+        });
+    }
+    copyInputMessage() {
+        let path;
+        let pid = '';
+        if (!this.bprofile.customId) {
+            pid = this.bprofile.accEncUid;
+        } else {
+            pid = this.bprofile.customId;
+        }
+        if (this.service && this.service.provider && this.service.provider.id) {
+            path = projectConstants.PATH + pid + '/' + this.service.provider.id + '/service/' + this.service.id;
+        } else {
+            path = projectConstants.PATH + pid + '/service/' + this.service.id;
+        }
+        // this.wpath + this.accuid +'/'+ this.userId +'/service/'+ this.serviceId ;
+        //const path = projectConstants.PATH + valuetocopy;
+        const selBox = document.createElement('textarea');
+        selBox.style.position = 'fixed';
+        selBox.style.left = '0';
+        selBox.style.top = '0';
+        selBox.style.opacity = '0';
+        selBox.value = path;
+        document.body.appendChild(selBox);
+        selBox.focus();
+        selBox.select();
+        document.execCommand('copy');
+        document.body.removeChild(selBox);
+        this.snackbarService.openSnackBar('Link copied to clipboard');
+    }
+    isNumericSign(evt) {
+        return this.sharedFunctons.isNumericSign(evt);
+    }
 }
 
-  truncateInst(val) {
-    const inst = val.substr(0, this.maxuserLength);
-    return inst;
-  }
-  usersPopUp(serviceStats){
-    this.usersdialogRef = this.dialog.open(UserlistpopupComponent, {
-        width: '50%',
-        panelClass: ['popup-class', 'commonpopupmainclass'],
-        disableClose: true,
-        data:{
-            userlist:this.users_list,
-            team:this.team,
-            serviceStatus:serviceStats
-    
-        }
-  
-      });
-      this.usersdialogRef.afterClosed().subscribe(result => {
-        if (result) {
-        }
-      });
-  }
-  serviceqrCodegeneraterOnlineID(){
-      let pid = '';
-      let usrid = '';
-      if(!this.bprofile.customId){
-        pid = this.bprofile.accEncUid;
-      } else {
-        pid = this.bprofile.customId;
-      }
-      if(this.service && this.service.provider && this.service.provider.id){
-        usrid = this.service.provider.id;
-      } else {
-        usrid = '';
-      }
-    this.qrdialogRef = this.dialog.open(ServiceQRCodeGeneratordetailComponent, {
-        width: '40%',
-        panelClass: ['popup-class', 'commonpopupmainclass','servceqrcodesmall'],
-        disableClose: true,
-        data: {
-          accencUid: pid,
-          path: this.wndw_path,
-          serviceid: this.service.id,
-          userid: usrid
-        }
-      });
-  
-      this.qrdialogRef.afterClosed().subscribe(result => {
-        if (result === 'reloadlist') {
-          this.getBusinessProfile();
-        }
-      });
-  }
-  copyInputMessage() {
-      let path;
-      let pid = '';
-      if(!this.bprofile.customId){
-        pid = this.bprofile.accEncUid;
-      } else {
-        pid = this.bprofile.customId;
-      }
-      if(this.service && this.service.provider && this.service.provider.id){
-        path = projectConstants.PATH + pid +'/'+this.service.provider.id+'/service/'+ this.service.id ;
-      } else {
-        path = projectConstants.PATH + pid +'/service/'+ this.service.id ;
-      }
-    // this.wpath + this.accuid +'/'+ this.userId +'/service/'+ this.serviceId ;
-    //const path = projectConstants.PATH + valuetocopy;
-    const selBox = document.createElement('textarea');
-    selBox.style.position = 'fixed';
-    selBox.style.left = '0';
-    selBox.style.top = '0';
-    selBox.style.opacity = '0';
-    selBox.value = path;
-    document.body.appendChild(selBox);
-    selBox.focus();
-    selBox.select();
-    document.execCommand('copy');
-    document.body.removeChild(selBox);
-    this.snackbarService.openSnackBar('Link copied to clipboard');
-  }
-}

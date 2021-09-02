@@ -68,6 +68,7 @@
                                             <div class="item">
                                                 <span class="ttle">{{service_cap}}</span> <span class="it0"
                                                     *ngFor="let service of queue_data.services">
+                                                    <!-- <span class="itm five-a-row"> -->
                                                     <span class="itm">
                                                         <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
                                                             class="fa meet-icon"></i>
