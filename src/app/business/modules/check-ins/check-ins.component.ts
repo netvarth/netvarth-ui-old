@@ -467,7 +467,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
-    this.activeUser = this.active_user.id;
+    if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
+      this.activeUser = this.active_user.id;
+    }
+    
     this.bussLocs = this.active_user.bussLocs;
     if (this.active_user.adminPrivilege || this.active_user.userType === 5) {
       this.admin = true;
