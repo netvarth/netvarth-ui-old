@@ -748,6 +748,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
   getLocationList() {
+    const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
     const self = this;
     return new Promise<void>(function (resolve, reject) {
       self.selected_location = null;
@@ -764,8 +765,19 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               self.checkDashboardVisibility();
             }
             for (const loc of locations) {
+              // if (loc.status === 'ACTIVE') {
+              //   self.locations.push(loc);
+              // }
               if (loc.status === 'ACTIVE') {
-                self.locations.push(loc);
+                if(loggedUser.accountType === 'BRANCH' && !loggedUser.adminPrivilege){
+                  const userObject = loggedUser.bussLocs.filter(id => parseInt(id) === loc.id);
+                  if(userObject.length > 0){
+                    self.locations.push(loc);                    
+                  }
+                } else {
+                  self.locations.push(loc);
+                }
+
               }
             }
             const cookie_location_id = self.groupService.getitemFromGroupStorage('provider_selected_location'); // same in provider checkin button page

@@ -353,6 +353,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   accountSettings;
   teams: any;
   yesterdayDate;
+  bussLocs: any = [];
   @ViewChild('closebutton') closebutton;
   showattachmentDialogRef: any;
   constructor(private shared_functions: SharedFunctions,
@@ -467,6 +468,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     console.log(this.active_user);
+    console.log(this.active_user.bussLocs);
+    this.bussLocs = this.active_user.bussLocs;
     if (this.active_user.adminPrivilege || this.active_user.userType === 5) {
       this.admin = true;
     }
@@ -1059,6 +1062,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     return qIds;
   }
   getLocationList() {
+    const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
     const self = this;
     return new Promise<void>(function (resolve, reject) {
       self.selected_location = null;
@@ -1076,11 +1080,20 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             }
             for (const loc of locations) {
               if (loc.status === 'ACTIVE') {
-                self.locations.push(loc);
+                if(loggedUser.accountType === 'BRANCH' && !loggedUser.adminPrivilege){
+                  const userObject = loggedUser.bussLocs.filter(id => parseInt(id) === loc.id);
+                  if(userObject.length > 0){
+                    self.locations.push(loc);                    
+                  }
+                } else {
+                  self.locations.push(loc);
+                }
+
               }
             }
+
             const cookie_location_id = self.groupService.getitemFromGroupStorage('provider_selected_location'); // same in provider checkin button page
-            if (cookie_location_id === '') {
+            if (!cookie_location_id) {
               if (self.locations[0]) {
                 self.locationSelected(self.locations[0]).then(
                   (queues: any) => {

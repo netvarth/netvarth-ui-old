@@ -26,8 +26,8 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { ListRecordingsDialogComponent } from '../../../../shared/components/list-recordings-dialog/list-recordings-dialog.component';
 import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { VoiceConfirmComponent } from '../../customers/video-confirm/voice-confirm.component';
-import { QuestionnaireListPopupComponent } from '../../questionnaire-list-popup/questionnaire-list-popup.component';
 declare let cordova: any;
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -121,6 +121,7 @@ export class CheckinActionsComponent implements OnInit {
     groups: any;
     showAssign = false;
     users: any = [];
+    location: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -133,6 +134,7 @@ export class CheckinActionsComponent implements OnInit {
         private lStorageService: LocalStorageService,
         private galleryService: GalleryService,
         private dateTimeProcessor: DateTimeProcessor,
+        public _location: Location,
         public dialogRef: MatDialogRef<CheckinActionsComponent>) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
@@ -187,6 +189,7 @@ export class CheckinActionsComponent implements OnInit {
         if (this.accountType === 'BRANCH') {
             this.getUser();
             this.getUserTeams();
+            this.getProviderLocation();
         }
     }
     getUser() {
@@ -233,7 +236,9 @@ export class CheckinActionsComponent implements OnInit {
             }
             checkin_html += '</td></tr>';
             checkin_html += '<tr><td colspan="3" style="text-align:center">' + bname.charAt(0).toUpperCase() + bname.substring(1) + '</td></tr>';
-            checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.checkin.queue.location.place + '</td></tr>';
+            // checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.checkin.queue.location.place + '</td></tr>';
+            checkin_html += '<tr><td width="48%" align="right">Location</td><td>:</td><td>' + this.checkin.queue.location.place + '</td></tr>';
+
             checkin_html += '</thead><tbody>';
             if (fname !== '' || lname !== '') {
                 checkin_html += '<tr><td width="48%" align="right">' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + '</td><td>:</td><td>' + fname + ' ' + lname + '</td></tr>';
@@ -406,6 +411,7 @@ export class CheckinActionsComponent implements OnInit {
                         this.snackbarService.openSnackBar('Check-in rescheduled to ' + this.dateformat.transformToMonthlyDate(this.checkin_date));
                     }
                     this.dialogRef.close('reload');
+                    this._location.back();
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -543,6 +549,10 @@ export class CheckinActionsComponent implements OnInit {
         this.dialogRef.close();
         this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid, 'team'], { queryParams: { source: 'checkin' } });
     }
+    chnageLocation(){
+        this.dialogRef.close();
+        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid, 'updateloc'], { queryParams: { source: 'checkin' } }); 
+    }
     removeProvider() {
         // this.dialogRef.close();
         let msg = '';
@@ -576,6 +586,39 @@ export class CheckinActionsComponent implements OnInit {
                     );
             }
         });
+    }
+    removeTeam(){
+        let msg = '';
+        msg = 'Do you want to remove the team ?';
+        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': msg,
+                'type': 'yes/no'
+            }
+        });
+        dialogrefd.afterClosed().subscribe(result => {
+            if (result) {
+                const post_data = {
+                    'ynwUuid': this.checkin.ynwUuid,
+                    'teamId': this.checkin.teamId
+                };
+                this.provider_services.unassignTeamWaitlist(post_data)
+                    .subscribe(
+                        data => {
+                            this.snackbarService.openSnackBar('Team unassigned successfully', { 'panelclass': 'snackbarerror' });
+                            this.dialogRef.close('reload');
+                        },
+                        error => {
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.dialogRef.close('reload');
+                        }
+                    );
+            }
+        });
+
     }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
         this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
@@ -1114,26 +1157,20 @@ export class CheckinActionsComponent implements OnInit {
         });
     }
     showQnr() {
-        if (!this.data.multiSelection && this.checkin.releasedQnr && this.checkin.releasedQnr.length > 0) {
-            const notSubmittedQnrs = this.checkin.releasedQnr.filter(qnr => qnr.status !== 'submitted');
-            if (notSubmittedQnrs.length > 0) {
-                return true;
-            }
+        if (!this.data.multiSelection && this.checkin.releasedQnr && this.checkin.releasedQnr.length > 1 && this.checkin.waitlistStatus !== 'cancelled') {
+            return true;
         }
         return false;
     }
     showQuestionnaires() {
         this.dialogRef.close();
-        const dialogrefd = this.dialog.open(QuestionnaireListPopupComponent, {
-            width: '50%',
-            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-            disableClose: true,
-            data: {
-                waitlist: this.checkin,
-                source: 'checkin'
-            }
-        });
-        dialogrefd.afterClosed().subscribe(result => {
-        });
+        this.router.navigate(['provider', 'check-ins', 'questionnaires'], { queryParams: { source: 'checkin', uid: this.checkin.ynwUuid } });
     }
+    getProviderLocation() {
+        this.provider_services.getProviderLocations()
+          .subscribe(
+            (data: any) => {
+              this.location = data;
+            });
+      }
 }
