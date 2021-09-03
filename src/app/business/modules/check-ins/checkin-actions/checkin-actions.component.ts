@@ -26,7 +26,6 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { ListRecordingsDialogComponent } from '../../../../shared/components/list-recordings-dialog/list-recordings-dialog.component';
 import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { VoiceConfirmComponent } from '../../customers/video-confirm/voice-confirm.component';
-import { Location } from '@angular/common';
 
 
 @Component({
@@ -133,7 +132,6 @@ export class CheckinActionsComponent implements OnInit {
         private lStorageService: LocalStorageService,
         private galleryService: GalleryService,
         private dateTimeProcessor: DateTimeProcessor,
-        public _location: Location,
         public dialogRef: MatDialogRef<CheckinActionsComponent>) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
@@ -408,7 +406,7 @@ export class CheckinActionsComponent implements OnInit {
                         this.snackbarService.openSnackBar('Check-in rescheduled to ' + this.dateformat.transformToMonthlyDate(this.checkin_date));
                     }
                     this.dialogRef.close('reload');
-                    this._location.back();
+                    // this._location.back();
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
