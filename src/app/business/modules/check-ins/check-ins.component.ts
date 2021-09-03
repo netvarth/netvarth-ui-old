@@ -354,6 +354,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   yesterdayDate;
   bussLocs: any = [];
   locId;
+  location_select: any = [];
   @ViewChild('closebutton') closebutton;
   showattachmentDialogRef: any;
   constructor(private shared_functions: SharedFunctions,
@@ -508,8 +509,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
       this.refresh();
     });
+    this.getProviderLocation();
   }
-
+  getProviderLocation() {
+    this.provider_services.getProviderLocations()
+      .subscribe(
+        (data: any) => {
+          this.location_select = data;
+        });
+  }
   getDepartments() {
     this.provider_services.getDepartments().subscribe(
       data => {
@@ -3194,7 +3202,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
-          location: this.locId,
+          location: this.location_select[0].id,
           userId: loggedUser.id,
           instaQid: this.instaQid
         }
