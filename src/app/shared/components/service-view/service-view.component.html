@@ -176,18 +176,21 @@
                                 </div>
                             </ng-container>
                         </div>
-                        <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-                            Service gallery
-                            <owl-carousel
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-5 bordertop" *ngIf="servicedetails && servicedetails.servicegallery">
+                            <h4>Service gallery</h4> 
+                            <div class="col-md-2 col-xs-4 col-sm-3 col-lg-2 mgn-up-10 " *ngFor="let image of servicedetails.servicegallery;let i = index">
+                                <img class="caroimage" [src]="image.url" />
+                            </div>
+                            <!-- <owl-carousel
      [options]="{items: 3, dots: true, navigation: false}">
      <div  *ngFor="let image of servicedetails.servicegallery;let i = index">
          <div  >
             <img class="caroimage" [src]="image.url" />
          </div>
      </div>
- </owl-carousel>
-                        </div> -->
-                    </div>
+ </owl-carousel> -->
+
+                    </div>      </div>
                 </div>
             </div>
         </div>
