@@ -135,6 +135,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         JC: [], OWN: []
     };
     showCouponWB: boolean;
+    bgColor: string;
     change_date: any;
     liveTrack = false;
     carouselOne;
@@ -156,6 +157,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     selectedUserParam;
     accountType;
     disable = false;
+    hideEditButton = false;
     selectedService: any;
     note_cap = 'Add Note';
     servicedialogRef: any;
@@ -375,9 +377,42 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         });
     }
 
+    OnNewMember(event) {
+
+       // if (this.chosen_person = 'new_member') {
+            this.hideEditButton = true;
+            this.editable = true;
+       // }
+        // else if(this.chosen_person != 'new_member' && this.is_parent==false) {
+        //     this.hideEditButton = false;
+        //     this.editable = false;
+        // }
+        this.is_parent = true;
+        if (event !== 'new_member') {
+            const chosen_Object = this.familymember.filter(memberObj => memberObj.user === event);
+            if (chosen_Object.length !== 0) {
+                this.is_parent = false;
+                this.chosen_person = chosen_Object[0]
+                this.setMemberDetails(chosen_Object[0]);
+            } else {
+                this.chosen_person = this.customer_data
+                this.setparentDetails(this.customer_data);
+            }
+        } else {
+            this.is_parent = false;
+            this.chosen_person = 'new_member'
+
+        }
+
+    }
+
     goToEdit() {
+        this.bgColor = '#C0C0C0';
+        //+(Math.random()*0xC0C0C0<<0).toString(16);
+        // '#'+(Math.random()*0xFFFFFF<<0).toString(16);
         this.virtualInfo = this.virtualForm.value;
-        this.selectedLocation = this.virtualInfo.location;
+        console.log(this.virtualInfo);
+        this.selectedLocation = this.virtualInfo.pincode;
 
         if (this.selectedLocation == '') {
             this.editable = true;
@@ -387,6 +422,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.editable = false;
             console.log("Is Editable :", this.editable);
         }
+        // if (this.chosen_person = 'new_member' && this.is_parent == false) {
+        //     this.editable = true;
+        //     this.hideEditButton=true;
+        // }
+
+
 
 
     }
@@ -533,14 +574,20 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (event !== 'new_member') {
             const chosen_Object = this.familymember.filter(memberObj => memberObj.user === event);
             if (chosen_Object.length !== 0) {
+                this.hideEditButton = false;
+                this.editable = false;
                 this.is_parent = false;
                 this.chosen_person = chosen_Object[0]
                 this.setMemberDetails(chosen_Object[0]);
             } else {
+                this.hideEditButton = false;
+                this.editable = false;
                 this.chosen_person = this.customer_data
                 this.setparentDetails(this.customer_data);
             }
         } else {
+            this.hideEditButton = true;
+            this.editable = true;
             this.is_parent = false;
             this.chosen_person = 'new_member'
 

@@ -258,10 +258,10 @@
                                                                     <div class="form-group form-inline">
 
                                                                         <!-- <mat-form-field> -->
-                                                                        <mat-radio-group formControlName="serviceFor"
+                                                                        <mat-radio-group formControlName="serviceFor" 
                                                                             class="mgn-up-5 userGroup m-0 p-2"
                                                                             (change)="onServiceForChange($event.value)">
-                                                                            <mat-radio-button
+                                                                            <mat-radio-button 
                                                                                 [value]="customer_data.id">
                                                                                 {{customer_data.userProfile.firstName}}
                                                                                 {{customer_data.userProfile.lastName}}
@@ -269,14 +269,14 @@
                                                                             <!-- <ng-container *ngIf="familymember.length>0"> -->
                                                                             <!-- {{familymember.length}} -->
                                                                             <mat-radio-button class="flx"
-                                                                                [value]="member.user"
+                                                                                [value]="member.user" 
                                                                                 *ngFor="let member of familymember">
                                                                                 {{member.userProfile.firstName}}
                                                                                 &nbsp;
                                                                                 {{member.userProfile.lastName}}
                                                                             </mat-radio-button>
-                                                                            <!-- </ng-container> -->
-                                                                            <mat-radio-button value="new_member">
+                                                                            <!-- </ng-container>  (change)="OnNewMember($event.value)"-->
+                                                                            <mat-radio-button value="new_member" >
                                                                                 Someone
                                                                                 else</mat-radio-button>
                                                                         </mat-radio-group>
@@ -290,7 +290,7 @@
                                                                         &nbsp;
                                                                         <span
                                                                             style="margin-right: 5px;padding-right: 5px;">{{consumer_label}}</span>
-                                                                        <a (click)="goToEdit()" class="gotoedit"><i
+                                                                        <a (click)="goToEdit()" *ngIf="!hideEditButton"><i
                                                                                 class="fa fa-edit fa-1x"
                                                                                 style="font-size: large;color: blue;"
                                                                                 data-bs-toggle="tooltip"
@@ -307,8 +307,8 @@
                                                                             for="firstName">First
                                                                             Name <span class="red">*</span></label>
                                                                         <input placeholder="Enter your first name"
-                                                                            class="form-control"
-                                                                            formControlName="firstName">
+                                                                            class="form-control" style="width:50%"
+                                                                            formControlName="firstName" [ngStyle]="{'background-color': bgColor}">
                                                                     </div>
                                                                     <div class="form-group "
                                                                         *ngIf="virtualForm.get('serviceFor').value==='new_member'">
@@ -316,8 +316,8 @@
                                                                             for="lastName">Last
                                                                             Name <span class="red">*</span></label>
                                                                         <input placeholder="Enter your last name"
-                                                                            class="form-control"
-                                                                            formControlName="lastName">
+                                                                            class="form-control" style="width:50%"
+                                                                            formControlName="lastName" [ngStyle]="{'background-color': bgColor}">
                                                                     </div>
                                                                     <!-- <div class="form-group col-xs-12 dob no-padding mgn-up-20">
                     <label class="col-form-label" for="dob">Date of Birth <span class="red">*</span></label>
@@ -376,7 +376,7 @@
                                                                         <input type="text" min="1" max="150"
                                                                             class="form-control vt_dt no-padding mgn-up-5"
                                                                             formControlName="age" style="width:50%"
-                                                                            (keypress)=isNumeric($event)>
+                                                                            (keypress)=isNumeric($event) [ngStyle]="{'color': bgColor}">
                                                                         <div
                                                                             style="display: flex; justify-content: space-between;">
                                                                             <app-field-error-display
@@ -407,7 +407,7 @@
                                                                             id="location" formControlName="pincode"
                                                                             (keypress)="isNumeric($event)"
                                                                             (keyup)="showLocations($event)"
-                                                                            style="width:50%">
+                                                                            style="width:50%" [ngStyle]="{'background-color': bgColor}">
                                                                         <!-- </mat-form-field> -->
                                                                         <div
                                                                             style="display: flex; justify-content: space-between;">
@@ -441,7 +441,7 @@
                                                                                 class="red">*</span></label>
                                                                         <input placeholder="Enter your location"
                                                                             class="form-control"
-                                                                            formControlName="localarea">
+                                                                            formControlName="localarea" [ngStyle]="{'background-color': bgColor}">
                                                                     </div>
                                                                     <div class="form-group" *ngIf="countryCode!=='+91'">
                                                                         <label class="col-form-label" for="firstName">
@@ -449,7 +449,7 @@
                                                                                 class="red">*</span></label>
                                                                         <input placeholder="Enter your state"
                                                                             class="form-control"
-                                                                            formControlName="state">
+                                                                            formControlName="state" [ngStyle]="{'background-color': bgColor}">
                                                                     </div>
 
                                                                     <!-- Signin Password -->
@@ -488,12 +488,12 @@
                                                                     >1?'Your preferred languages': 'Your preferred
                                                                     language'}}
                                                                 </label><br />
-                                                                <fieldset [disabled]="!editable">
+                                                                <fieldset [disabled]="!editable" >
                                                                     <div class="col-form-label edtlang">
                                                                         <span
-                                                                            style="word-wrap: break-word; padding-right: 5px;margin-right: 5px;">{{virtualForm.get('preferredLanguage').value}}</span>
+                                                                            style="word-wrap: break-word; padding-right: 5px;margin-right: 5px;" >{{virtualForm.get('preferredLanguage').value}}</span>
 
-                                                                        <span (click)="editLanguage()"><i
+                                                                        <span (click)="editLanguage()" style="color:rgb(255, 255, 255)" ><i
                                                                                 class="fa fa-edit fa-1x"
                                                                                 style="font-size: large;"
                                                                                 data-bs-toggle="tooltip"
@@ -623,7 +623,7 @@
                                                                                     placeholder=""
                                                                                     formControlName="countryCode_whtsap"
                                                                                     autocomplete="off" maxlength="5"
-                                                                                    style="width:60px">
+                                                                                    style="width:60px" [ngStyle]="{'background-color': bgColor}">
                                                                             </div>
                                                                             <div class="form-group width-100">
                                                                                 <input type="text"
@@ -633,7 +633,7 @@
                                                                                     id="whatsappnumber"
                                                                                     formControlName="whatsappnumber"
                                                                                     autocomplete="off"
-                                                                                    style="width:50%">
+                                                                                    style="width:50%" [ngStyle]="{'background-color': bgColor}">
                                                                                 <!-- <app-field-error-display
                                 [displayError]="fed_service.isFieldValid(virtualForm,'whatsappnumber')" [errorMsgs]="fed_service.getErrorMessage(virtualForm,'whatsappnumber',
                             {
@@ -672,7 +672,7 @@
                                                                                     placeholder=""
                                                                                     formControlName="countryCode_telegram"
                                                                                     autocomplete="off" maxlength="5"
-                                                                                    style="width:60px">
+                                                                                    style="width:60px" [ngStyle]="{'background-color': bgColor}">
                                                                             </div>
                                                                             <div class="form-group width-100">
                                                                                 <input type="text"
@@ -682,7 +682,7 @@
                                                                                     id="telegramnumber"
                                                                                     formControlName="telegramnumber"
                                                                                     autocomplete="off"
-                                                                                    style="width:50%">
+                                                                                    style="width:50%" [ngStyle]="{'background-color': bgColor}">
                                                                                 <!-- <app-field-error-display
                                 [displayError]="fed_service.isFieldValid(virtualForm,'telegramnumber')" [errorMsgs]="fed_service.getErrorMessage(virtualForm,'telegramnumber',
                             {
@@ -698,7 +698,7 @@
                                                                         <label for="email"
                                                                             class="col-form-label">Email</label>
                                                                         <input type="email" class="form-control"
-                                                                            formControlName="email" style="width:55%" />
+                                                                            formControlName="email" style="width:55%" [ngStyle]="{'background-color': bgColor}" />
                                                                         <mat-checkbox class="updateemail"
                                                                             formControlName="updateEmail">Update Email
                                                                             to 'My Account'</mat-checkbox>
