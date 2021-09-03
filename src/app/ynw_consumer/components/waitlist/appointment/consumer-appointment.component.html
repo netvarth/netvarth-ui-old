@@ -1174,18 +1174,27 @@
                                                     Confirm</ng-container>  appPreventDoubleClick  (throttledClick)="log()"-->
                                                 </button>
                                             </div>
-                                            <div class="paymentdiv"  *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top  width-100 hf-double-btn-container">
+                                            <div   *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
                                                 <p class="jaldeecredit">
                                                     To pay Rs {{checkJcash ? payAmount : paymentDetails.amountRequiredNow}} please select any payment options
                                                 </p>
-                                                <span class="razorpay-icon paymenticons" *ngIf="razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"   [class.disabled]="isClickedOnce"
-                                                    (click)="!isClickedOnce && saveCheckin('appt')" id="stepThreeConfirmButton"  >
+                                                <span type="button" class="razorpay-icon paymenticons" *ngIf="razorpayEnabled && paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"   [class.disabled]="isClickedOnce"
+                                                    (click)="!isClickedOnce && saveCheckin('appt')"  >
                                                    
                                                 </span>&nbsp;&nbsp;
-                                                <span type="button" [class.disabled]="isClickedOnce" class="paytm-icon paymenticons"*ngIf="paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" (click)="!isClickedOnce && saveCheckin('appt','paytm')" id="stepThreeConfirmButton" >
-                                                   
+                                                <span type="button"  class="paytm-icon paymenticons"[class.disabled]="isClickedOnce" *ngIf="paytmEnabled && razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" (click)="!isClickedOnce && saveCheckin('appt','paytm')"  >
+                                                     
                                                 </span>
+                                                <button  class="next-button btn btn-primary font-weight-bold text-uppercase " *ngIf="razorpayEnabled && !paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"   [class.disabled]="isClickedOnce"
+                                                    (click)="!isClickedOnce && saveCheckin('appt')"  >
+                                                    CC/DC/UPI
+                                                </button>
+                                                <button type="button" [class.disabled]="isClickedOnce" class="next-button btn btn-primary font-weight-bold text-uppercase "*ngIf="paytmEnabled && !razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" (click)="!isClickedOnce && saveCheckin('appt','paytm')"  >
+                                                    CC/DC/UPI  
+                                                </button>
                                             </div>
+                                        </div>
                                             <div class="cancelpolicy  mgn-rt-5"
                                                 *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                 <div

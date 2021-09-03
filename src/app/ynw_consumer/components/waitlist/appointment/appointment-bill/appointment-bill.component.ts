@@ -137,6 +137,8 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
     isClickedOnce=false;
     razorpayEnabled = false;
     @ViewChild('consumer_appointmentbill') paytmview;
+    paymentmodes: any;
+    paymode = false;
     constructor(private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
         public sharedfunctionObj: SharedFunctions,
@@ -394,28 +396,28 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
     getPaymentModes() {
         this.paytmEnabled = false;
         this.razorpayEnabled = false;
-        this.subs.sink = this.sharedServices.getPaymentModesofProvider(this.accountId)
+        this.sharedServices.getPaymentModesofProvider(this.accountId)
             .subscribe(
                 data => {
-                    this.payment_options = data;
-                    this.payment_options.forEach(element => {
-                        if (element.name === 'PPI') {
-                            this.paytmEnabled = true;
-                        }
-                        if (element.name === 'DC' || element.name === 'CC' || element.name === 'NB'|| element.name === 'UPI' ) {
-                            this.razorpayEnabled = true;
-                        }
-                    });
-                    this.payModesQueried = true;
-                    if (this.payment_options.length <= 2) {
-                        this.payModesExists = false;
-                    } else {
-                        this.payModesExists = true;
-                    }
-                },
-                () => {
-                    this.payModesQueried = true;
+                  this.paymentmodes = data;
+                   console.log("paymode"+this.paymentmodes.payGateways);
+                for(let modes of this.paymentmodes){
+                   for(let gateway of modes.payGateways){
+                       if(gateway == 'PAYTM'){
+                        this.paytmEnabled = true;
+                       }
+                       if(gateway == 'RAZORPAY'){
+                        this.razorpayEnabled = true;
+                       }
+                   }
                 }
+                console.log(this.paymode);
+                if(this.razorpayEnabled ||this.paytmEnabled){
+                    this.paymode = true;
+                }
+                    
+                },
+                
             );
     }
     /**

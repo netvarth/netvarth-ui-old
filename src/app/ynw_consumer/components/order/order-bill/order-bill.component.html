@@ -342,7 +342,7 @@
                                                         <div class="section-three other-section"
                                                             *ngIf="bill_data.billStatus !== 'Cancel' && bill_data.billStatus !== 'Settled'  && (bill_data.amountDue > 0)">
                                                             <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
-                                                                *ngIf="this.couponList.JC.length > 0 ||this.couponList.OWN.length >0 && bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && (payment_options.length>0) && (bill_data.amountDue > 0)">
+                                                                *ngIf="this.couponList.JC.length > 0 ||this.couponList.OWN.length >0 && bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && paymode && (bill_data.amountDue > 0)">
                                                                 <div
                                                                     class="title-sec col-md-12 col-sm-12 col-xs-12 no-padding">
                                                                     <span class="">Jaldee Coupon</span>
@@ -381,7 +381,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
-                                                                *ngIf=" paidStatus == 'false' && bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && (payment_options.length>0) && (bill_data.amountDue > 0)">
+                                                                *ngIf=" paidStatus == 'false' && bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && paymode && (bill_data.amountDue > 0)">
                                                                 <div
                                                                     class="title-sec col-md-12 col-sm-12 col-xs-12 no-padding">
                                                                     <!-- <span class="">Payment Options</span> -->
@@ -391,16 +391,21 @@
                                                                     <button class="cs-btn bt1"   (click)="payuPayment()"
                                                                     *ngIf="((checkJcash && jcashamount > bill_data.amountDue) || ( checkJcash && jcashamount == bill_data.amountDue))">
                                                                      Confirm</button>
-                                                                    <button class="cs-btn bt1"  *ngIf="razorpayEnabled && ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
-                                                                    [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()">CC/DC/Net
-                                                                        Banking/UPI</button>
-                                                                    <button class="cs-btn bt1" *ngIf="paytmEnabled && ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
+                                                                    <button class="cs-btn bt1"  *ngIf="razorpayEnabled && paytmEnabled && ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
+                                                                    [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()">CC/DC/UPI</button>
+                                                                    <button class="cs-btn bt1" *ngIf="paytmEnabled && razorpayEnabled&& ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
                                                                     [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment('paytm')">Paytm</button>
+                                                                    
+                                                                    <button class="cs-btn bt1"  *ngIf="razorpayEnabled && !paytmEnabled && ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
+                                                                    [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()">CC/DC/UPI</button>
+                                                                    <button class="cs-btn bt1" *ngIf="paytmEnabled && !razorpayEnabled && ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
+                                                                    [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment('paytm')">CC/DC/UPI</button>
+                                                                  
                                                                     <button class="cs-btn bt1"
                                                                         (click)="cashPayment()">Cash</button>
                                                                 </div>
                                                             </div>
-                                                            <div *ngIf="payment_options.length==0">
+                                                            <div *ngIf="!paymode">
                                                                <p>Online payment option is disabled. Contact your service provider for further assistance.</p>
                                                             </div>
                                                         </div>
