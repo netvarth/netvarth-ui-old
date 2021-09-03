@@ -353,6 +353,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   teams: any;
   yesterdayDate;
   bussLocs: any = [];
+  locId;
   @ViewChild('closebutton') closebutton;
   showattachmentDialogRef: any;
   constructor(private shared_functions: SharedFunctions,
@@ -3187,12 +3188,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
       console.log(loggedUser);
+      this.locId = this.groupService.getitemFromGroupStorage('provider_selected_location');
       this.instantdialogRef = this.dialog.open(instantQueueComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
-          location: this.selected_location,
+          location: this.locId,
           userId: loggedUser.id,
           instaQid: this.instaQid
         }
