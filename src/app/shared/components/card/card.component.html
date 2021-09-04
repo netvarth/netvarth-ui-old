@@ -194,7 +194,7 @@
                 capitalizeFirst | limitTo: [14, '...']}}</a> -->
         </h4>
         <h6 class="qualification font-normal" *ngIf="user.qualifications && user.qualifications.length>0">
-             {{user.qualifications | limitTo: [20, '...']}}
+            {{user.qualifications | limitTo: [20, '...']}}
         </h6>
         <h6 class="qualification" *ngIf="!user.qualifications || (user.qualifications && user.qualifications.length==0)"
             style="height:17px;"></h6>

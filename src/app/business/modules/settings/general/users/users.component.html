@@ -182,7 +182,7 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button type="button" mat-menu-item data-toggle="modal" data-target="#exampleModalCenter"
+                <button *ngIf="group.status=='ACTIVE'" type="button" mat-menu-item data-toggle="modal" data-target="#exampleModalCenter"
                   (click)="editGroup(group)">
                   <i class="icon-edit chkin-mobic"></i>
                   Edit
@@ -222,7 +222,7 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button type="button" mat-menu-item data-toggle="modal" data-target="#exampleModalCenter"
+                <button  *ngIf="group.status=='ACTIVE'" type="button" mat-menu-item data-toggle="modal" data-target="#exampleModalCenter"
                   (click)="editGroup(group)">
                   <i class="icon-edit chkin-mobic"></i>
                   Edit
@@ -284,337 +284,7 @@
             <!-- *** close show group name right side and add buttons and cancel buttons*** -->
 
              <!-- ***Apply  filter code***** -->
-              <aside class="filterSidebar filter-sidebar user-filter" *ngIf="filter_sidebar">
-                  <section class="sidebar filter-container" id="filterContainer" style="overflow:auto" 
-                      [ngStyle]="{'height.vh': 90, 'margin-top.px': filterapplied === true ? 95 : 44}">
-                      <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
-                          <!-- <span *ngIf="filterapplied === true" class="clearFilter reset-filter" (click)="clearFilter()"
-                              [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">
-                              Reset
-                          </span> -->
-                          <span class="filter-head-title">Filters</span>
-                          <i class="icon-filter-one-op ng-star-inserted closeFilter"
-                              (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
-                              [matTooltip]="'Close filter sidebar'"></i>
-                      </div>
-                      <ul class="sidebar-menu accordion" id="accordion1">
-                          <div class="card">
-                              <div class="card-header">
-                                <h2 class="mb-0">
-                                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName1" aria-expanded="false">
-                                    <div>
-                                      <div style="display: inline-block !important;">
-                                        <i class="fa fa-user"></i>
-                                      </div>
-                                      Name
-                                    </div>
-                                    <i class="fa fa-angle-down"></i>
-                                  </button>
-                                </h2>
-                              </div>
-                              <div id="collapseName1" class="collapse in" data-parent="#accordion1">
-                                <div class="card-body">
-                                  <div class="filterTextinput filter-text-input">
-                                      <li class="filterli filter-li">
-                                          <input type="text" id="firstName" [(ngModel)]="filter.firstName" #firstName
-                                          (keyup)="doSearch()" maxlength="20"
-                                              class="filterTextbox filter-textbox" placeholder="Enter First Name">
-                                      </li>
-                                  </div>
-                                  <div class="filterTextinput filter-text-input">
-                                      <li class="filterli filter-li">
-                                          <input type="text" id="lastName" [(ngModel)]="filter.lastName" #lastName
-                                          (keyup)="doSearch()" maxlength="10"
-                                              class="filterTextbox filter-textbox" placeholder="Enter Last Name">
-                                      </li>
-                                  </div>
-                                </div>
-                              </div>
-                          </div>
-                          <div class="card">
-                              <div class="card-header">
-                                <h2 class="mb-0">
-                                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePin1" aria-expanded="false">
-                                    <div>
-                                      <div style="display: inline-block !important;">
-                                        <i class="fa fa-location-arrow"></i>
-                                      </div>
-                                      Pincode
-                                    </div>
-                                    <i class="fa fa-angle-down"></i>
-                                  </button>
-                                </h2>
-                              </div>
-                              <div id="collapsePin1" class="collapse in" data-parent="#accordion1">
-                                <div class="card-body">
-                                  <div class="filterTextinput filter-text-input">
-                                      <li class="filterli filter-li">
-                                          <input type="text" id="pincode" [(ngModel)]="filter.pinCode" #pincode
-                                          (keyup)="doSearch()" maxlength="10"
-                                              class="filterTextbox filter-textbox" placeholder="Enter Pincode">
-                                      </li>
-                                  </div>
-                                </div>
-                              </div>
-                          </div>
-                          <div class="card">
-                              <div class="card-header">
-                                <h2 class="mb-0">
-                                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseLocation1" aria-expanded="false">
-                                    <div>
-                                      <div style="display: inline-block !important;">
-                                        <i class="fa fa-map-marker"></i>
-                                      </div>
-                                      Location
-                                    </div>
-                                    <i class="fa fa-angle-down"></i>
-                                  </button>
-                                </h2>
-                              </div>
-                              <div id="collapseLocation1" class="collapse in" data-parent="#accordion1">
-                                <div class="card-body">
-                                  <div class="filterTextinput filter-text-input">
-                                      <li class="filterli filter-li">
-                                          <input type="text" id="city" [(ngModel)]="filter.city" #city
-                                          (keyup)="doSearch()" maxlength="20"
-                                              class="filterTextbox filter-textbox" placeholder="Enter city">
-                                      </li>
-                                  </div>
-                                  <div class="filterTextinput filter-text-input">
-                                    <li class="filterli filter-li">
-                                        <input type="text" id="state" [(ngModel)]="filter.state" #state
-                                        (keyup)="doSearch()" maxlength="20"
-                                            class="filterTextbox filter-textbox" placeholder="Enter state">
-                                    </li>
-                                </div>
-                                </div>
-                              </div>
-                          </div>
-                          <div class="card" *ngIf="accountSettings.availability">
-                            <div class="card-header">
-                              <h2 class="mb-0">
-                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseAvailable1" aria-expanded="false">
-                                  <div>
-                                    <div style="display: inline-block !important;">
-                                      <i class="fa fa-clock-o"></i>
-                                    </div>
-                                    Availability
-                                  </div>
-                                  <i class="fa fa-angle-down"></i>
-                                </button>
-                              </h2>
-                            </div>
-                            <div id="collapseAvailable1" class="collapse in" data-parent="#accordion1">
-                              <div class="card-body">
-                                <div class="filterTextinput filter-checkbox-input">
-                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox class="filter-checkbox" [checked]="allSelected"
-                                      (change)="setFilterDataCheckbox('available', 'ALL')">
-                                      All</mat-checkbox>
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox class="filter-checkbox" [checked]="availabileSelected"
-                                      (change)="setFilterDataCheckbox('available', 'true')">
-                                      Available</mat-checkbox>
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox class="filter-checkbox" [checked]="notAvailabileSelected"
-                                      (change)="setFilterDataCheckbox('available', 'false')">
-                                      Not Available</mat-checkbox>
-                                  </li>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="card">
-                              <div class="card-header">
-                                <h2 class="mb-0">
-                                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePhone1" aria-expanded="false">
-                                    <div>
-                                      <div style="display: inline-block !important;">
-                                        <i class="fa fa-phone"></i>
-                                      </div>
-                                      Phone Number
-                                    </div>
-                                    <i class="fa fa-angle-down"></i>
-                                  </button>
-                                </h2>
-                              </div>
-                              <div id="collapsePhone1" class="collapse in" data-parent="#accordion1">
-                                <div class="card-body">
-                                  <div class="filterTextinput filter-text-input">
-                                      <li class="filterli filter-li">
-                                          <input type="text" id="primaryMobileNo" [(ngModel)]="filter.primaryMobileNo"
-                                              #primaryMobileNo (keyup)="doSearch()"
-                                               class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
-                                      </li>
-                                  </div>
-                                </div>
-                              </div>
-                          </div>
-                          <div class="card">
-                            <div class="card-header">
-                              <h2 class="mb-0">
-                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseEmail1" aria-expanded="false">
-                                  <div>
-                                    <div style="display: inline-block !important;">
-                                      <i class="fa fa-envelope"></i>
-                                    </div>
-                                    Email
-                                  </div>
-                                  <i class="fa fa-angle-down"></i>
-                                </button>
-                              </h2>
-                            </div>
-                            <div id="collapseEmail1" class="collapse in" data-parent="#accordion1">
-                              <div class="card-body">
-                                <div class="filterTextinput filter-text-input">
-                                    <li class="filterli filter-li">
-                                        <input type="text" id="email" [(ngModel)]="filter.email"
-                                            #email (keyup)="doSearch()"
-                                             class="filterTextbox filter-textbox" placeholder="Enter Email">
-                                    </li>
-                                </div>
-                              </div>
-                            </div>
-                        </div>
-                          <div class="card">
-                              <div class="card-header">
-                                <h2 class="mb-0">
-                                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseUType1" aria-expanded="false">
-                                    <div>
-                                      <div style="display: inline-block !important;">
-                                        <i class="fa fa-users"></i>
-                                      </div>
-                                      User Type
-                                    </div>
-                                    <i class="fa fa-angle-down"></i>
-                                  </button>
-                                </h2>
-                              </div>
-                              <div id="collapseUType1" class="collapse in" data-parent="#accordion1">
-                                <div class="card-body">
-                                  <div class="filterTextinput filter-text-input">
-                                      <li class="filterli filterDatepicker filter-li">
-                                          <mat-form-field class="userfilter">
-                                              <mat-select id="userType" #userType [(ngModel)]="filter.userType"
-                                                  placeholder="Select user type" (selectionChange)="doSearch()"
-                                                  style="height: 0px;padding: 2px;">
-                                                  <mat-option *ngFor="let user of userTypesFormfill" [value]="user.name">
-                                                      {{user.displayName}}
-                                                  </mat-option>
-                                              </mat-select>
-                                          </mat-form-field>
-                                      </li>
-                                  </div>
-                                </div>
-                              </div>
-                          </div>
-                          <div class="card">
-                              <div class="card-header">
-                                <h2 class="mb-0">
-                                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseLanguages1" aria-expanded="false">
-                                    <div>
-                                      <div style="display: inline-block !important;">
-                                        <i class="fa fa-language"></i>
-                                      </div>
-                                      Languages
-                                    </div>
-                                    <i class="fa fa-angle-down"></i>
-                                  </button>
-                                </h2>
-                              </div>
-                              <div id="collapseLanguages1" class="collapse" data-parent="#accordion1">
-                                <div class="card-body">
-                                  <div class="filterTextinput filter-checkbox-input">
-                                      <!-- <label class="filterHeaders">Languages</label> -->
-                                      <li class="filterli">
-                                          <mat-checkbox *ngFor="let language of languages_arr" class="filter-checkbox"
-                                              [checked]="selectedLanguages.indexOf(language.name) !== -1"
-                                              (change)="setFilterDataCheckbox('languages', language.name)">
-                                              {{language.displayName}}
-                                          </mat-checkbox>
-                                      </li>
-                                  </div>
-                                </div>
-                              </div>
-                          </div>
-
-
-                          <div class="card">
-                            <div class="card-header">
-                              <h2 class="mb-0">
-                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseLocation2" aria-expanded="false">
-                                  <div>
-                                    <div style="display: inline-block !important;">
-                                      <i class="fa fa-language"></i>
-                                    </div>
-                                    Locations
-                                  </div>
-                                  <i class="fa fa-angle-down"></i>
-                                </button>
-                              </h2>
-                            </div>
-                            <div id="collapseLocation2" class="collapse" data-parent="#accordion1">
-                              <div class="card-body">
-                                <div class="filterTextinput filter-checkbox-input">
-                                    <!-- <label class="filterHeaders">Languages</label> -->
-                                    <li class="filterli">
-                                        <mat-checkbox *ngFor="let loc of loc_list" class="filter-checkbox"
-                                            [checked]="selectedLocations.indexOf(loc.id) !== -1"
-                                            (change)="setFilterDataCheckbox('location', loc.id)">
-                                            <!-- {{language.displayName}} -->
-                                            {{loc.place | capitalizeFirst}} 
-                                        </mat-checkbox>
-                                    </li>
-                                </div>
-                              </div>
-                            </div>
-                        </div>
-
-
-                          <div class="card">
-                              <div class="card-header">
-                                <h2 class="mb-0">
-                                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSpecializations1" aria-expanded="false">
-                                    <div>
-                                      <div style="display: inline-block !important;">
-                                        <i class="fas fa-user-tag"></i>
-                                      </div>
-                                      Specializations
-                                    </div>
-                                    <i class="fa fa-angle-down"></i>
-                                  </button>
-                                </h2>
-                              </div>
-                              <div id="collapseSpecializations1" class="collapse" data-parent="#accordion1">
-                                <div class="card-body">
-                                  <div class="filter-checkbox-input">
-                                      <!-- <label class="filterHeaders">Specializations</label> -->
-                                      <li class="filterli">
-                                          <mat-checkbox *ngFor="let special of specialization_arr" class="filter-checkbox"
-                                              [checked]="selectedSpecialization.indexOf(special.name) !== -1"
-                                              (change)="setFilterDataCheckbox('specializations', special.name)">
-                                              {{special.displayName}}
-                                          </mat-checkbox>
-                                      </li>
-                                  </div>
-                                </div>
-                              </div>
-                          </div>
-                      </ul>
-                  </section>
-                  <div class="filter-footer" *ngIf="filterapplied === true">
-                      <button class="btn reset-btn" (click)="clearFilter()">
-                        <i class="fa fa-undo"></i>Reset
-                      </button>
-                      <button class="btn apply-btn" (click)="getUsers()">
-                        <i class="fa fa-check"></i>Apply
-                      </button>
-                  </div>
-              </aside>
+           
               <!-- *** close Apply filter code***** -->
 
               <!-- *** start users details code ***** -->
@@ -640,7 +310,7 @@
                                                       <th *ngIf="domain === 'finance'" class="display-min-none" style="width: 30%;">Business Locations
                                                       </th>
                                                       <th class="display-min-none">Languages</th>
-                                                      <th class="display-min-none">Tokens#</th>
+                                                      <th class="display-min-none">Booking#</th>
                                                       <th class="display-min-none"></th>
                                                   </tr>
                                               </thead>
@@ -674,6 +344,9 @@
                                                                           *ngIf="accountSettings.availability && service.userType === 'PROVIDER' ">
                                                                       </div>
                                                                   </div>
+                                                                  <div class="disp-flex mgn-up-5" *ngIf="service.employeeId">
+                                                                    {{service.employeeId}}&nbsp;
+                                                                </div>
                                                                   <div class="disp-flex mgn-up-5"
                                                                       *ngIf="service.city && service.state"><i
                                                                           class="fa fa-map-marker mgn-rt-5"
@@ -695,6 +368,10 @@
                                                                           <span class="b2"
                                                                               *ngIf="service.userType === 'ADMIN'">Admin</span>
                                                                       </div>
+
+                                                                     
+
+
                                                                       <div class="mgn-up-5" *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum || service.email">
                                                                           <span class="b2">
                                                                             <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
@@ -721,9 +398,9 @@
                                                                       </div>
                                                                       <div class="mgn-up-5"
                                                                           *ngIf="service.userType === 'PROVIDER'">
-                                                                          <span class="b1">Tokens Count:
+                                                                          <span class="b1">Booking Count:
                                                                           </span><span class="b2">
-                                                                              {{service.currentWlCount}}
+                                                                              {{service.currentWlCount + service.currentApptCount}}
                                                                           </span>
                                                                       </div>
                                                                   </div>
@@ -763,7 +440,7 @@
                                                       </td>
                                                       <td class="display-min-none">
                                                           <span *ngIf="service.userType === 'PROVIDER'">
-                                                              {{service.currentWlCount}}
+                                                              {{service.currentWlCount + service.currentApptCount}}
                                                           </span>
                                                       </td>
                                                       <td>
@@ -888,7 +565,7 @@
 
 
                                                     <th class="display-min-none">Languages</th>
-                                                    <th class="display-min-none">Tokens count</th>
+                                                    <th class="display-min-none">Booking count</th>
                                                     <th class="display-min-none"></th>
                                                 </tr>
                                             </thead>
@@ -936,6 +613,9 @@
                                                                         <span class="b2"
                                                                             *ngIf="service.userType === 'ADMIN'">Admin</span>
                                                                     </div>
+                                                                    <div class=" mgn-up-5" *ngIf="service.employeeId">
+                                                                      {{service.employeeId}}
+                                                                   </div>
                                                                     <div class="mgn-up-5" *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum || service.email">
                                                                         <span class="b2">
                                                                           <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
@@ -964,9 +644,9 @@
                                                                     </div>
                                                                     <div class="mgn-up-5"
                                                                         *ngIf="service.userType === 'PROVIDER'">
-                                                                        <span class="b1">Tokens Count:
+                                                                        <span class="b1">Booking Count:
                                                                         </span><span class="b2">
-                                                                            {{service.currentWlCount}}
+                                                                            {{service.currentWlCount + service.currentApptCount}}
                                                                         </span>
                                                                     </div>
                                                                 </div>
@@ -1008,7 +688,7 @@
                                                     </td>
                                                     <td class="display-min-none">
                                                         <span *ngIf="service.userType === 'PROVIDER'">
-                                                            {{service.currentWlCount}}
+                                                            {{service.currentWlCount + service.currentApptCount}}
                                                         </span>
                                                     </td>
                                                     <td>
@@ -1065,7 +745,7 @@
    <!-- *** close MObile  users content***** -->
 
     <!-- ***Apply  filter code for mobile ***** -->
-    <aside  class="filterSidebar filter-sidebar user-filter waitlist-box-check" *ngIf="filter_sidebar">
+    <aside  class="filterSidebar filter-sidebar user-filter" *ngIf="filter_sidebar">
       <section class="sidebar filter-container" id="filterContainer" style="overflow:auto" 
           [ngStyle]="{'height.vh': 90, 'margin-top.px': filterapplied === true ? 95 : 44}">
           <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
@@ -1232,6 +912,32 @@
                   </div>
               </div>
               <div class="card">
+                  <div class="card-header">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseid1" aria-expanded="false">
+                        <div>
+                          <div style="display: inline-block !important;">
+                            <i class="fa fa-bookmark"></i>
+                          </div>
+                          Employee ID
+                        </div>
+                        <i class="fa fa-angle-down"></i>
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapseid1" class="collapse in" data-parent="#accordion1">
+                    <div class="card-body">
+                      <div class="filterTextinput filter-text-input">
+                          <li class="filterli filter-li">
+                              <input type="text" id="employeeId" [(ngModel)]="filter.employeeId"
+                                  #employeeId (keyup)="doSearch()"
+                                   class="filterTextbox filter-textbox" placeholder="Enter Employee ID">
+                          </li>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="card">
                 <div class="card-header">
                   <h2 class="mb-0">
                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseEmail1" aria-expanded="false">
@@ -1279,8 +985,8 @@
                                   <mat-select id="userType" #userType [(ngModel)]="filter.userType"
                                       placeholder="Select user type" (selectionChange)="doSearch()"
                                       style="height: 0px;padding: 2px;">
-                                      <mat-option *ngFor="let user of userTypesFormfill" [value]="user.name">
-                                          {{user.displayName}}
+                                      <mat-option *ngFor="let user of userTypesFormfill" [value]="user.value">
+                                          {{user.displayName | capitalizeFirst}}
                                       </mat-option>
                                   </mat-select>
                               </mat-form-field>

@@ -4,31 +4,34 @@
                         <div>
                             <div *ngIf="!showToken"><span style="font-size: x-large;">Checkin Details</span></div>
                             <div *ngIf="showToken"><span style="font-size: x-large;">Token Details</span></div><br>
+                            <p class="appt-details" *ngIf ="patientid">{{customer_label | capitalizeFirst}} ID : {{patientid}}</p>
                             <p class="appt-details" *ngIf="!showToken && (consumer_fname || consumer_lname)">Checkin for : {{consumer_fname}} {{consumer_lname}}</p>
                             <p class="appt-details" *ngIf = "showToken && (consumer_fname || consumer_lname)">Token for : {{consumer_fname}} {{consumer_lname}}</p>
                             <p class="appt-details">Service : 
                                 <i *ngIf="data.qdata.service.serviceType === 'virtualService'" [class]=iconClass></i>
                                 {{serv_name}} 
                             </p>
+                            <p class="appt-details" *ngIf="waitlist_Mode" >Booking Mode :{{getWaitListMode(waitlist_Mode)}}</p>
                             <p class="appt-details" *ngIf = "deptName">Department : {{deptName}}</p>
                             <p class="appt-details" *ngIf = "qstarttime">Queue : {{qname}} [{{qstarttime}} - {{qendtime}}]</p>
                             <p class="appt-details">Date: {{date | date:newDateFormat}}</p>
                             <p class="appt-details" *ngIf="tokenno">Token No : {{tokenno}} </p>
-                            <p class="appt-details" *ngIf = "spfname && splname">Service Provider: {{spfname}} {{splname}}</p>
+                            <p class="appt-details" *ngIf = "data.qdata.provider">Service Provider: {{spName}}</p>
                             <p class="appt-details">Location: {{location}}</p>
                         </div>
-                    </div>
+                    </div> 
         </div>
         <div *ngIf="data.chekintype === 'appointment'" class="example-full-width" style="padding-top: 30px;">
                 <div>
                         <div><span style="font-size: x-large;">Appointment Details</span></div><br>
-                        <p class="appt-details" *ngIf ="patientid">{{customer_label}} ID : {{patientid}}</p>
-                        <p class="appt-details" *ngIf ="consumer_fname">Appointment for : {{consumer_fname}}</p>
+                        <p class="appt-details" *ngIf ="patientid">{{customer_label | capitalizeFirst}} ID : {{patientid}}</p>
+                        <p class="appt-details" *ngIf ="consumer_fname && consumer_fname !== undefined && consumer_fname != null && consumer_fname !== ' '">Appointment for : {{consumer_fname}}</p>
                         <p class="appt-details">Service : 
                             <i *ngIf="data.qdata.service.serviceType === 'virtualService'" [class]=iconClass></i>
                             {{serv_name}}
                             
                         </p>
+                        <p class="appt-details" *ngIf="appt_Mode" >Booking Mode :{{getAppointmentMode(appt_Mode)}}</p>
                         <p class="appt-details">Appointment Date & Time: {{date | date:newDateFormat}}, {{getSingleTime(appttime)}}</p>
                         <!-- <p *ngIf = "deptName">Department : {{deptName}}</p> -->
                         <p class="appt-details" *ngIf = "Schedulestime">Schedule : {{schedulename}} [{{Schedulestime}} - {{Scheduleetime}}]</p>

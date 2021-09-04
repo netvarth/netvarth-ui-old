@@ -26,7 +26,7 @@
                   </li>
                 </ul>
               </li>
-              <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
+              <li *ngIf="admin"  class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
             </ul>
           </li>
           <ng-container
@@ -464,7 +464,7 @@
                           <mat-checkbox class="filter-checkbox"
                             [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(true) !== -1"
                             (change)="setLabelFilter(lbl, $event)">
-                            {{lbl.displayName}}</mat-checkbox>
+                            {{lbl.displayName | capitalizeFirst}}</mat-checkbox>
                         </li>
                       </div>
                     </div>
@@ -1250,7 +1250,7 @@
                             <mat-checkbox class="filter-checkbox"
                               [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(true) !== -1"
                               (change)="setLabelFilter(lbl, $event)">
-                              {{lbl.displayName}}</mat-checkbox>
+                              {{lbl.displayName | capitalizeFirst}}</mat-checkbox>
                           </li>
                         </div>
                       </div>
@@ -1936,7 +1936,7 @@
                             <mat-checkbox class="filter-checkbox"
                               [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(true) !== -1"
                               (change)="setLabelFilter(lbl, $event)">
-                              {{lbl.displayName}}</mat-checkbox>
+                              {{lbl.displayName | capitalizeFirst}}</mat-checkbox>
                           </li>
                         </div>
                       </div>

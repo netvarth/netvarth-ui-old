@@ -204,7 +204,15 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                               </app-field-error-display>
                                         </div>
                                     </div>
-
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <input matInput type="text" class="form-control" id="employeeId"
+                                                    formControlName="employeeId" placeholder="Enter Employee ID"
+                                                    autocomplete="off">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
                                     <div class="clearfix"></div>
 <!-- *******User Telegram and what's up number ************ -->
                                     <!-- <div class="col-md-6 col-sm-6 col-xs-12"  style="display: flex;" *ngIf="showPrvdrFields">
@@ -306,21 +314,16 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                         </div>
                                     </div> -->
                                     <div class="col-md-6 col-sm-6 col-xs-12 ">
-                                            <div class="form-group mgn-up-20" *ngIf="actionparam.type === 'edit'">
+                                            <!-- <div class="form-group mgn-up-20" *ngIf="actionparam.type === 'edit'">
                                                 <label>User Type : {{type}}</label>
-                                                    <!-- <mat-form-field>
-                                                            <input matInput readonly type="text" class="form-control" value="{{type}}"
-                                                                placeholder="Usertype" 
-                                                                autocomplete="off">
-                                                        </mat-form-field> -->
-                                                </div>
-                                        <div class="form-group" *ngIf="actionparam.type !== 'edit'"> 
+                                                </div> -->
+                                        <div class="form-group"> 
                                             <mat-form-field>
                                                 <mat-select formControlName="selectedUserType"
                                                     placeholder="Choose Usertype *"
                                                     (selectionChange)="onUserSelect($event)">
                                                     <mat-option *ngFor="let user of userTypesFormfill" [value]="user.value">
-                                                        {{user.name}}
+                                                        {{user.name  | capitalizeFirst}}
                                                     </mat-option>
                                                 </mat-select>
                                             </mat-form-field>
@@ -474,7 +477,14 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                             <div class="form-level-settings">This privilege will allow the user to create new user, modify existing user etc.</div>
                                         </div>
                                     </div>
-
+                                    <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 10px;" *ngIf="showPrvdrFields">
+                                        <div class="form-group">
+                                            <mat-checkbox formControlName="bProfilePermitted">
+                                                Business Profile Permitted
+                                            </mat-checkbox>
+                                            <div class="form-level-settings">This privilege will allow the user to create their own profile.</div>
+                                        </div>
+                                    </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12 mgn-up-20">
                                         <h3><a class="learnmore-pointer" (click)="advancedClick()"> Additional details</a></h3>
                                     </div>

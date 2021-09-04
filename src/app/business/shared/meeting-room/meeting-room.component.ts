@@ -13,6 +13,8 @@ import { TeleBookingService } from "../../../shared/services/tele-bookings-servi
 import { MediaService } from "../../../shared/services/media-service";
 import { RequestDialogComponent } from "./request-dialog/request-dialog.component";
 import * as Video from 'twilio-video';
+import { SharedServices } from "../../../shared/services/shared-services";
+import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 @Component({
     selector: 'app-meeting-room',
     templateUrl: './meeting-room.component.html',
@@ -43,11 +45,12 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
     chatDialog: any;
     reqDialogRef: any;
     media: any;
-
     audioTrack;
     videoTrack;
     previewTracks = [];
     previewTracksClone = [];
+    videocredits: any;
+    videocreditShow = true;
 
     constructor(private activateroute: ActivatedRoute,
         public twilioService: TwilioService,
@@ -59,7 +62,9 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
         private cd: ChangeDetectorRef,
         private dialog: MatDialog,
         private teleService: TeleBookingService,
-        private mediaService: MediaService) {
+        private mediaService: MediaService,
+        private provider_services: ProviderServices,
+        private sharedServices: SharedServices) {
         const _this = this;
         _this.twilioService.loading = false;
         _this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -122,6 +127,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
      * Init method
      */
     ngOnInit(): void {
+        this.getJaldeeVideoCredits();
         this.screenWidth = window.innerWidth;
         this.screenHeight = window.innerHeight;
         const isMobile = {
@@ -180,6 +186,15 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
 
             });
     }
+    getJaldeeVideoCredits() {
+        this.provider_services.getJaldeeVideoRecording()
+        .subscribe(
+          (data) => {
+            console.log(data)
+           this.videocredits = data;
+          }
+        );
+    }
 
     /**
      * executes after the view initialization
@@ -217,7 +232,9 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
                 )
             }
         ).catch(error => {
-            _this.openRequestDialog('both');
+            _this.sharedServices.callHealth(error.stack).subscribe();
+            console.log("error"+error);
+            _this.openRequestDialog('b-both');
         });
 
     }
@@ -412,6 +429,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
      */
     joinRoom() {
         const _this = this;
+        _this.videocreditShow = false;
         _this.btnClicked = true;
         _this.loading = true;
         if (_this.consumerReady) {
@@ -464,45 +482,53 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
     }
     unmuteVideo() {
         const _this = this;
+        _this.btnClicked = true;
         console.log("unmuteVideo");
         // this.twilioService.unmuteVideo();
         _this.getVideoStatus().then(
-            (videoStatus) => {
+            (videoStatus) => {                
                 if (!videoStatus) {
                     _this.openRequestDialog('b-cam');
                 } else {
                     _this.twilioService.video = true;
-                }
+                }     
+                _this.btnClicked = false;           
             }
         );
     }
 
     muteVideo() {
         // this.twilioService.muteVideo();
+        this.btnClicked = true;
         console.log("muteVideo");
         console.log(this.videoTrack);
         this.removePreviewTrackToDom(this.videoTrack, 'video');
         this.previewTracks.splice(this.previewTracks.indexOf(this.videoTrack), 1);
         this.twilioService.video = false;
+        this.btnClicked = false;
     }
     muteAudio() {
+        this.btnClicked = true;
         console.log("muteAudio");
         console.log(this.audioTrack);
         this.removePreviewTrackToDom(this.audioTrack, 'audio');
         this.previewTracks.splice(this.previewTracks.indexOf(this.audioTrack), 1);
         this.twilioService.microphone = false;
+        this.btnClicked = false;
     }
     unmuteAudio() {
         const _this = this;
+        _this.btnClicked = true;
         console.log("unmuteAudio");
         _this.getAudioStatus().then(
-            (audioStatus) => {
+            (audioStatus) => {                
                 if (!audioStatus) {
                     _this.twilioService.microphone = false;
                     _this.openRequestDialog('b-mic');
                 } else {
                     _this.twilioService.microphone = true;
                 }
+                _this.btnClicked = false;
             }
         );
     }

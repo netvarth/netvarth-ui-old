@@ -8,6 +8,7 @@ import { PagerModule } from '../../../shared/modules/pager/pager.module';
 import { LoadingSpinnerModule } from '../../../shared/modules/loading-spinner/loading-spinner.module';
 import { CustomersRoutingModule } from './customers.routing.module';
 import { CustomersListComponent } from './list/customers-list.component';
+import { JaldeeFilterModule } from '../../../shared/modules/filter/filter.module';
 import { DateFormatPipeModule } from '../../../shared/pipes/date-format/date-format.module';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
 import { CustomerCreateComponent } from './customer-create/customer-create.component';
@@ -35,6 +36,7 @@ import { VoiceConfirmComponent } from './video-confirm/voice-confirm.component';
         PagerModule,
         LoadingSpinnerModule,
         CustomersRoutingModule,
+        JaldeeFilterModule,
         DateFormatPipeModule,
         FormMessageDisplayModule,
         CheckinAddMemberModule,

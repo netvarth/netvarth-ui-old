@@ -30,13 +30,13 @@ export class DonationDetailsComponent {
         private wordProcessor: WordProcessor) {
         this.activaterouter.params.subscribe(param => {
             this.uid = param.id;
-            this.getDonationDetails(this.uid);
+            this.getDonationDetails();
         });
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     }
-    getDonationDetails(uid) {
+    getDonationDetails() {
         this.loading = true;
-        this.providerservices.getDonationByUid(uid).subscribe(data => {
+        this.providerservices.getDonationByUid(this.uid).subscribe(data => {
             this.donationDetails = data;
             this.loading = false;
         });
@@ -67,5 +67,10 @@ export class DonationDetailsComponent {
                 () => { },
                 () => { }
             );
+    }
+    getQuestionAnswers(event) {
+        if (event === 'reload') {
+            this.getDonationDetails();
+        }
     }
 }

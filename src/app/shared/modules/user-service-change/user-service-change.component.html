@@ -191,6 +191,32 @@
       <div class="card">
         <div class="card-header">
           <h2 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePhone1" aria-expanded="false">
+              <div>
+                <div style="display: inline-block !important;">
+                  <i class="fa fa-bookmark"></i>
+                </div>
+                Employee ID
+              </div>
+              <i class="fa fa-angle-down"></i>
+            </button>
+          </h2>
+        </div>
+        <div id="collapsePhone1" class="collapse in" data-parent="#accordion1">
+          <div class="card-body">
+            <div class="filterTextinput filter-text-input">
+              <li class="filterli filter-li">
+                <input type="text" id="employeeId" [(ngModel)]="filter.employeeId" #primaryMobileNo
+                (keyup)="doSearch()" class="filterTextbox filter-textbox"
+                  placeholder="Enter Employee ID">
+              </li>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h2 class="mb-0">
             <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseEmail1" aria-expanded="false">
               <div>
                 <div style="display: inline-block !important;">
@@ -300,7 +326,7 @@
 
 
                     <th class="display-min-none">Languages</th>
-                    <th class="display-min-none">Tokens count</th>
+                    <th class="display-min-none">Booking count</th>
                   </tr>
                 </thead>
                 <tbody *ngIf="!loading">
@@ -323,6 +349,9 @@
                               *ngIf="accountSettings.availability && service.userType === 'PROVIDER' ">
                             </div>
                           </div>
+                          <div class="disp-flex mgn-up-5" *ngIf="service.employeeId">
+                            {{service.employeeId}}&nbsp;
+                        </div>
                           <div class="disp-flex mgn-up-5" *ngIf="service.city && service.state"><i
                               class="fa fa-map-marker mgn-rt-5"
                               aria-hidden="true"></i>{{service.city}},&nbsp;{{service.state}}</div>
@@ -346,7 +375,7 @@
                             <div class="mgn-up-5" *ngIf="service.languages">
                               <span class="b2">{{service.languages}} </span>
                             </div>
-                            <div class="mgn-up-5" *ngIf="service.userType === 'PROVIDER'"> <span class="b1">Tokens
+                            <div class="mgn-up-5" *ngIf="service.userType === 'PROVIDER'"> <span class="b1">Booking
                                 Count:
                               </span><span class="b2">{{service.currentWlCount}} </span></div>
                           </div>

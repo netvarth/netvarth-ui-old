@@ -146,7 +146,11 @@ export class UploadFileComponent implements OnInit {
               } else if( type[0] == 'audio') {
                 imgsrc='/assets/images/audio.png';
               }else if( type[0] == 'image') {
+                if(file.url){
+                  imgsrc=file.url;
+                }else{
                 imgsrc='/assets/images/imageexamle.png';
+                }
               }
 
     return imgsrc;

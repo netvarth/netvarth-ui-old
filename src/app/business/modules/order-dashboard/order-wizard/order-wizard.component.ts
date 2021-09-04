@@ -509,7 +509,9 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
         const minQty = this.catalog_details.catalogItem[itemIndex].minQuantity;
         const maxQty = this.catalog_details.catalogItem[itemIndex].maxQuantity;
         const showpric = this.catalog_details.showPrice;
-        this.orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.catalog_details.catalogItem[itemIndex].item, 'showpric': showpric });
+        if(this.catalog_details.catalogItem[itemIndex].item.isStockAvailable){
+          this.orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.catalog_details.catalogItem[itemIndex].item, 'showpric': showpric });
+        }
         this.itemCount++;
       }
       }

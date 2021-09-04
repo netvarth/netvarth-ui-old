@@ -28,10 +28,13 @@
         users_list.lastName}}
       </h5>
     </div>
+    <div class="itemVal" style="text-align: left;" *ngIf="users_list.employeeId">{{users_list.employeeId}}
+  </div>
     <div class="itemVal" style="text-align: left;" *ngIf="users_list.city && users_list.state"><i
         class="fa fa-map-marker mgn-rt-5" aria-hidden="true"></i>{{users_list.city}},&nbsp;{{users_list.state}}
     </div>
-    <div class="itemVal" style="text-align: left;" *ngIf="users_list.email">{{users_list.email}}
+    <div class="itemVal" style="text-align: left;" *ngIf="users_list.email">
+      <i class="fa fa-envelope-o "></i>&nbsp;{{users_list.email}}
   </div>
     <mat-grid-list cols="{{no_of_grids}}" rowHeight="100px" [gutterSize]="'30px'">
       <mat-grid-tile *ngIf="users_list.mobileNo">
@@ -59,7 +62,7 @@
                 <div>{{users_list.countryCode}} {{users_list.mobileNo}}</div>
             </div> -->
       </mat-grid-tile>
-      <mat-grid-tile *ngIf="users_list.whatsAppNum">
+      <mat-grid-tile *ngIf="(users_list.whatsAppNum | json) && (users_list.whatsAppNum | json) != '{}'">
         <div class="disp-flex">
           <div class="flx_8">
             <a href="https://wa.me/{{users_list.whatsAppNum.countryCode}}{{users_list.whatsAppNum.number}}"
@@ -78,7 +81,7 @@
             </div> -->
       </mat-grid-tile>
 
-      <mat-grid-tile *ngIf="users_list.telegramNum">
+      <mat-grid-tile *ngIf="(users_list.telegramNum | json) && (users_list.telegramNum | json) != '{}'">
         <div class="disp-flex">
           <div class="flx_8">
             <a href="https://web.telegram.org/#/login" target="blank"><i class="fa fa-telegram"
