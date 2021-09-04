@@ -1,13 +1,14 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { projectConstants } from '../../../../../app.component';
+import { projectConstants } from '../../../app.component';
 import {  Meta, Title } from '@angular/platform-browser';
-declare let cordova: any;
+
 @Component({
   selector: 'app-qrcodegenerator',
-  templateUrl: './qrcodegenerator.component.html'
+  templateUrl: './qrcodegeneratordetail.component.html',
+  styleUrls: ['./qrcodegeneratordetail.component.css']
 })
-export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
+export class QRCodeGeneratordetailComponent implements OnInit , OnDestroy {
   elementType = 'url';
   accuid: any;
   qr_code_cId = false;
@@ -21,25 +22,25 @@ export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
   window_path: any;
   customId: any;
   constructor(private changeDetectorRef: ChangeDetectorRef,
-    public dialogRef: MatDialogRef<QRCodeGeneratorComponent>,
+    public dialogRef: MatDialogRef<QRCodeGeneratordetailComponent>,
     private angular_meta: Meta,
     private titleService: Title ,
     @Inject(MAT_DIALOG_DATA) public data: any) {
 
   }
   private qrCodeParent: ElementRef;
-  @ViewChild('qrCodeOnlineId', { read: ElementRef }) set content1(content1: ElementRef) {
+  @ViewChild('qrCodeOnlineId1', { read: ElementRef }) set content1(content1: ElementRef) {
     if (content1) { // initially setter gets called with undefined
       this.qrCodeParent = content1;
     }
   }
   // private qrCodeCustId: ElementRef;
 
-  @ViewChild('qrCodeCustId') set content2(content2: ElementRef) {
-    if (content2) { // initially setter gets called with undefined
-      this.qrCodeParent = content2;
-    }
-  }
+  // @ViewChild('qrCodeCustId') set content2(content2: ElementRef) {
+  //   if (content2) { // initially setter gets called with undefined
+  //     this.qrCodeParent = content2;
+  //   }
+  // }
   // ngAfterViewChecked() {
   //     this.changeDetectorRef.detectChanges();
   // }
@@ -65,7 +66,6 @@ export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
     this.changeDetectorRef.detectChanges();
     setTimeout(() => {
       this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
-      console.log(this.qrCodePath);
       this.angular_meta.addTags([
          { property: 'og:title', content: this.data.businessName },
         { property: 'og:image', content: this.imageUrl },
@@ -96,25 +96,21 @@ export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
   //   showPasscode() {
   //     this.show_passcode = !this.show_passcode;
   //   }
-printQr(printSectionId) {
+  printQr(printSectionId) {
     const printContent = document.getElementById(printSectionId);
-    setTimeout(() => {
-        // const params = [
-        //     'height=' + screen.height,
-        //     'width=' + screen.width,
-        //     'fullscreen=yes'
-        // ].join(',');
-        // const printWindow = window.open('', '', params);
-        let printsection = '<html><head><title></title>';
-        printsection += '</head><body style="margin-top:200px">';
-        printsection += '<div style="text-align:center!important">';
-        printsection += printContent.innerHTML;
-        printsection += '</div>';
-        printsection += '</body></html>';
-        cordova.plugins.printer.print(printsection);
-        // printWindow.print();
-    });
-}
+    const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+    WindowPrt.document.write('<html><head><title></title>');
+    WindowPrt.document.write('</head><body style="border-style: dashed;width:500px;height:600px">');
+    WindowPrt.document.write('<div style="padding-left:190px;padding-top: 50px;">');
+    WindowPrt.document.write('<p style="font-size: xx-large;padding-left:24px;font-weight: 700;color: #183e7a;">Jaldee</p>');
+    WindowPrt.document.write(printContent.innerHTML);
+    WindowPrt.document.write('</div>');
+    WindowPrt.document.write('</body></html>');
+    WindowPrt.document.close();
+    WindowPrt.focus();
+    WindowPrt.print();
+    WindowPrt.close();
+  }
 
   downloadQR() {
 
