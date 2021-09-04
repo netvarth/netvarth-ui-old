@@ -1368,7 +1368,7 @@
 
                                                
                                             </div>
-                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top  width-100 hf-double-btn-container">
+                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top  width-100 hf-double-btn-container"*ngIf="razorpayEnabled && paytmEnabled">
                                             <div   *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
                                                 <p class="jaldeecredit">
                                                     To pay Rs {{checkJcash ? payAmount : paymentDetails.amountRequiredNow}} please select any payment options
@@ -1382,11 +1382,11 @@
                                             </div>
                                             </div>
                                             <div class="txt-align-center">
-                                                <button type="button" class="mgn-m-up-10 next-button btn btn-primary font-weight-bold text-uppercase " [class.disabled]="isClickedOnce"*ngIf="razorpayEnabled && !paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" [class.disabled]="isClickedOnce"
+                                                <button type="button" class="cancelCheckinBtn mgn-m-up-10 next-button btn btn-primary font-weight-bold text-uppercase " [class.disabled]="isClickedOnce"*ngIf="razorpayEnabled && !paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" [class.disabled]="isClickedOnce"
                                                     (click)="!isClickedOnce && saveCheckin('checkin')"  >
                                                     CC/DC/UPI
                                                 </button>
-                                                <button type="button"  class="mgn-m-up-10 next-button btn btn-primary font-weight-bold text-uppercase " [class.disabled]="isClickedOnce" *ngIf="paytmEnabled && !razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" (click)="!isClickedOnce && saveCheckin('checkin','paytm')" >
+                                                <button type="button"  class="cancelCheckinBtn mgn-m-up-10 next-button btn btn-primary font-weight-bold text-uppercase " [class.disabled]="isClickedOnce" *ngIf="paytmEnabled && !razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" (click)="!isClickedOnce && saveCheckin('checkin','paytm')" >
                                                     CC/DC/UPI
                                                 </button>
                                             </div>
