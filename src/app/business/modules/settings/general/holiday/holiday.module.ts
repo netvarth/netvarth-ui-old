@@ -11,6 +11,7 @@ import { HolidayListComponent } from './holiday-list/holiday-list.component';
 //import { HolidayDetailsComponent } from './holiday-details/holiday-details.component';
 import { HolidayDetailsComponentBox } from './holiday-details-box/holiday-details-box.component';
 
+
 @NgModule({
     imports: [
         HolidayRoutingmModule,

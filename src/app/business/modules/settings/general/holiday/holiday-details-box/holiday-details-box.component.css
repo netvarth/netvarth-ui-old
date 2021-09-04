@@ -66,8 +66,7 @@
     border-radius: 0.42rem !important;
     box-shadow: none !important;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
-    
-}
+    }
   @media (max-width: 992px) {
     .adddatetime-box {
       display: inline-block; 

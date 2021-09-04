@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HolidayDetailsComponentBox } from './holiday-details-box/holiday-details-box.component';
 import { HolidayListComponent } from './holiday-list/holiday-list.component';
 
+
 const routes: Routes = [
     { path: '', component: HolidayListComponent },
     //{ path: ':id', component: HolidayDetailsComponent },

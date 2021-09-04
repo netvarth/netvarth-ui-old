@@ -18,6 +18,7 @@ import { ConfirmBoxComponent } from '../../../../../../ynw_provider/shared/compo
   selector: 'app-holiday-details-box',
   templateUrl: './holiday-details-box.component.html',
   styleUrls: ['./holiday-details-box.component.css']
+  
 })
 
 export class HolidayDetailsComponentBox implements OnInit {
