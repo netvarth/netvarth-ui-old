@@ -218,8 +218,8 @@ export class instantQueueComponent implements OnInit {
             instantQInput['id'] = this.qId;
         }
         const serv = [];
-        serv.push({ 'id': this.services_list[0].id });
-        instantQInput['location'] = this.location.id;
+        console.log(this.location)
+        instantQInput['location'] = this.location;
         if (this.action !== 'edit') {
             instantQInput['services'] = serv;
         }

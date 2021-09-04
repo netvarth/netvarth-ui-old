@@ -8,7 +8,6 @@ import { ForgotPasswordAppComponent } from '../shared/components/forgot-password
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../shared/modules/common/material.module';
 import { FormMessageDisplayModule } from '../shared/modules/form-message-display/form-message-display.module';
-import { FooterModule } from '../shared/modules/footer/footer.module';
 import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
 import { LoadingSpinnerModule } from '../shared/modules/loading-spinner/loading-spinner.module';
@@ -21,7 +20,6 @@ import { JcCouponNoteComponent } from './components/jc-Coupon-note/jc-Coupon-not
     MaterialModule,
     ReactiveFormsModule,
     FormMessageDisplayModule,
-    FooterModule,
     FormsModule,
     LoadingSpinnerModule
 ],

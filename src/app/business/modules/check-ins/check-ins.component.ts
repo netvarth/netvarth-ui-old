@@ -354,6 +354,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   teams: any;
   yesterdayDate;
   bussLocs: any = [];
+  locId;
+  location_select: any = [];
   @ViewChild('closebutton') closebutton;
   showattachmentDialogRef: any;
   constructor(private shared_functions: SharedFunctions,
@@ -468,6 +470,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
+    if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
+      this.activeUser = this.active_user.id;
+    }
     this.bussLocs = this.active_user.bussLocs;
     if (this.active_user.adminPrivilege || this.active_user.userType === 5) {
       this.admin = true;
@@ -504,8 +509,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
       this.refresh();
     });
+    this.getProviderLocation();
   }
-
+  getProviderLocation() {
+    this.provider_services.getProviderLocations()
+      .subscribe(
+        (data: any) => {
+          this.location_select = data;
+        });
+  }
   getDepartments() {
     this.provider_services.getDepartments().subscribe(
       data => {
@@ -3185,12 +3197,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
       console.log(loggedUser);
+      this.locId = this.groupService.getitemFromGroupStorage('provider_selected_location');
       this.instantdialogRef = this.dialog.open(instantQueueComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
-          location: this.selected_location,
+          location: this.location_select[0].id,
           userId: loggedUser.id,
           instaQid: this.instaQid
         }
