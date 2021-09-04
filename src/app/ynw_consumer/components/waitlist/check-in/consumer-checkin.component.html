@@ -1382,11 +1382,11 @@
                                             </div>
                                             </div>
                                             <div class="txt-align-center">
-                                                <button type="button" class="cancelCheckinBtn mgn-m-up-10 next-button btn btn-primary font-weight-bold text-uppercase " [class.disabled]="isClickedOnce"*ngIf="razorpayEnabled && !paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" [class.disabled]="isClickedOnce"
+                                                <button type="button" class="cancelCheckinBtn  next-button btn btn-primary font-weight-bold text-uppercase " [class.disabled]="isClickedOnce"*ngIf="razorpayEnabled && !paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" [class.disabled]="isClickedOnce"
                                                     (click)="!isClickedOnce && saveCheckin('checkin')"  >
                                                     CC/DC/UPI
                                                 </button>
-                                                <button type="button"  class="cancelCheckinBtn mgn-m-up-10 next-button btn btn-primary font-weight-bold text-uppercase " [class.disabled]="isClickedOnce" *ngIf="paytmEnabled && !razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" (click)="!isClickedOnce && saveCheckin('checkin','paytm')" >
+                                                <button type="button"  class="cancelCheckinBtn  next-button btn btn-primary font-weight-bold text-uppercase " [class.disabled]="isClickedOnce" *ngIf="paytmEnabled && !razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" (click)="!isClickedOnce && saveCheckin('checkin','paytm')" >
                                                     CC/DC/UPI
                                                 </button>
                                             </div>

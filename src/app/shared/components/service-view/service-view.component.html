@@ -57,8 +57,8 @@
                                                 [href]="selectedLocation.googleMapUrl" target="_blank"
                                                 *ngIf="selectedLocation.googleMapUrl!=''"><i
                                                     class="fa fa-map-marker takeTourTitle mgn-rt-10"></i></a>
-                                            <select  class="selectbxstyle">
-                                                <option *ngFor="let loc of locationjson" (click)="changeLocation(loc)"  [selected]="loc.id == selectedLocation.id">
+                                            <select  class="selectbxstyle" [(ngModel)]="selectedLocation" (ngModelChange)="changeLocation($event)">
+                                                <option *ngFor="let loc of locationjson"  [ngValue]="loc" >
                                                     {{loc.place}}</option>
                                             </select>
                                         </div>
