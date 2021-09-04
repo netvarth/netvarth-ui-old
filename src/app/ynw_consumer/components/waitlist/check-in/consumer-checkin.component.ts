@@ -31,7 +31,9 @@ import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.ser
 import { SubSink } from '../../../../../../node_modules/subsink';
 import { VirtualFieldsComponent } from '../../virtualfields/virtualfields.component';
 import { ConsumerEmailComponent } from '../../../shared/component/consumer-email/consumer-email.component';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PaytmService } from '../../../../../app/shared/services/paytm.service';
+
 
 @Component({
     selector: 'app-consumer-checkin',
@@ -39,7 +41,7 @@ import { PaytmService } from '../../../../../app/shared/services/paytm.service';
     styleUrls: ['./consumer-checkin.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css'],
 })
 export class ConsumerCheckinComponent implements OnInit, OnDestroy {
-    paymentBtnDisabled=false;
+    paymentBtnDisabled = false;
     isClickedOnce=false;
     tooltipcls = '';
     add_member_cap = Messages.ADD_MEMBER_CAP;
@@ -135,6 +137,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         JC: [], OWN: []
     };
     showCouponWB: boolean;
+    bgColor: string;
     change_date: any;
     liveTrack = false;
     carouselOne;
@@ -156,6 +159,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     selectedUserParam;
     accountType;
     disable = false;
+    hideEditButton = false;
     selectedService: any;
     note_cap = 'Add Note';
     servicedialogRef: any;
@@ -179,7 +183,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     bookingForm: FormGroup;
     whatsapperror = '';
     showmoreSpec = false;
-    bookStep = 1;
+    bookStep = 0;
     locationName;
     waitlistDetails: { 'amount': number; 'paymentMode': any; 'uuid': any; 'accountId': any; 'purpose': string; };
     pGateway: any;
@@ -225,17 +229,78 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     amounttopay: any;
     wallet: any;
     payAmount: number;
-    loadingPaytm = false;
+        loadingPaytm = false;
     @ViewChild('consumer_checkin') paytmview;
     api_loading_video;
     payment_options:  any = [];
     paytmEnabled = false;
     razorpayEnabled = false;
     paymentmodes: any;
+    serviceType: any;
+    editable: boolean = false;
+
+
+
+    lngknown = 'yes';
+    virtualForm: FormGroup;
+    details: any;
+    gender_cap = Messages.GENDER_CAP;
+    selectedLocation;
+    locations;
+    consumer_label: any;
+    disableButton;
+    loading = false;
+    submitbtndisabled = false;
+    languages = [
+        "Hindi",
+        "Kannada",
+        "Malayalam",
+        "Tamil",
+        "Telugu"
+    ];
+    hideLanguages = true;
+    hideTokenFor = true;
+    api_loading = true;
+    // api_loading1 = true;
+    // customer_data: any;
+    familymember: any[];
+    new_member;
+    //private subs = new SubSink();
+    is_parent = true;
+    chosen_person: any;
+    // maxDate = moment(new Date()).format('YYYY-MM-DD')
+    //consumerType = '';
+    activeUser: any;
+    memberObject: any;
+    // theme: any;
+    //selectedDate: number;
+    selectedMonth: number;
+    selectedYear: number;
+
+    allDates: any[] = [];
+    dates: any[] = [];
+    years: number[] = [];
+    months: { value: string; name: string; }[];
+    mob_prefix_cap = '+91';
+    mandatoryEmail: any;
+    age: any;
+    userId: any;
+    //countryCode: any;
+    serviceDetails: any;
+    provider: any;
+    languageSelected: any = [];
+    iseditLanguage = false;
+    hideNextButton = false;
+
+
+
+
     constructor(public fed_service: FormMessageDisplayService,
+        @Inject(MAT_DIALOG_DATA) public dialogData: any,
         private fb: FormBuilder,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
+        private sharedServices: SharedServices,
         public router: Router,
         public route: ActivatedRoute,
         public dateformat: DateFormatPipe,
@@ -272,6 +337,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.sel_checkindate = this.selectedDate = params.sel_date;
                 this.hold_sel_checkindate = this.sel_checkindate;
                 this.tele_srv_stat = params.tel_serv_stat;
+                if (params.service_type) {
+                    this.serviceType = params.service_type;
+                    if (this.serviceType === 'virtualService') {
+                        this.bookStep = 0;
+                    } else {
+                        this.bookStep = 1;
+                    }
+                }
                 if (params.dept) {
                     this.selectedDeptParam = parseInt(params.dept);
                     this.filterDepart = true;
@@ -288,9 +361,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.getRescheduleWaitlistDet();
                 }
                 if (params.virtual_info) {
-                    this.virtualInfo = JSON.parse(params.virtual_info);
+                    //this.virtualInfo = JSON.parse(params.virtual_info);
 
                 }
+
                 if (params.theme) {
                     this.theme = params.theme;
                     console.log(this.theme);
@@ -300,7 +374,76 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.businessId = this.account_id;
                 }
             });
+
+        this.age = this.lStorageService.getitemfromLocalStorage('age');
+        this.userId = this.lStorageService.getitemfromLocalStorage('userId');
+        this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
+        this.getActiveUserInfo().then(data => {
+            this.customer_data = data;
+            this.countryCode = this.customer_data.userProfile.countryCode;
+
+            this.mandatoryEmail = this.customer_data.userProfile.email;
+            this.createForm();
+            this.getFamilyMember();
+        });
     }
+
+    OnNewMember(event) {
+
+       // if (this.chosen_person = 'new_member') {
+            this.hideEditButton = true;
+            this.editable = true;
+       // }
+        // else if(this.chosen_person != 'new_member' && this.is_parent==false) {
+        //     this.hideEditButton = false;
+        //     this.editable = false;
+        // }
+        this.is_parent = true;
+        if (event !== 'new_member') {
+            const chosen_Object = this.familymember.filter(memberObj => memberObj.user === event);
+            if (chosen_Object.length !== 0) {
+                this.is_parent = false;
+                this.chosen_person = chosen_Object[0]
+                this.setMemberDetails(chosen_Object[0]);
+            } else {
+                this.chosen_person = this.customer_data
+                this.setparentDetails(this.customer_data);
+            }
+        } else {
+            this.is_parent = false;
+            this.chosen_person = 'new_member'
+
+        }
+
+    }
+
+    goToEdit() {
+        this.bgColor = '#C0C0C0';
+        //+(Math.random()*0xC0C0C0<<0).toString(16);
+        // '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+        this.virtualInfo = this.virtualForm.value;
+        console.log(this.virtualInfo);
+        this.selectedLocation = this.virtualInfo.pincode;
+
+        if (this.selectedLocation == '') {
+            this.editable = true;
+            console.log("Is Editable :", this.editable);
+        }
+        else {
+            this.editable = false;
+            console.log("Is Editable :", this.editable);
+        }
+        // if (this.chosen_person = 'new_member' && this.is_parent == false) {
+        //     this.editable = true;
+        //     this.hideEditButton=true;
+        // }
+
+
+
+
+    }
+
     ngOnInit() {
         const _this = this;
         this.bookingForm = this.fb.group({
@@ -390,6 +533,733 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
         );
     }
+
+
+
+
+
+    //   isNumeric(evt) {
+    //     return this.sharedFunctionobj.isNumeric(evt);
+    //   }
+    isNumericSign(evt) {
+        return this.sharedFunctionobj.isNumericSign(evt);
+    }
+
+    getActiveUserInfo() {
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.sharedServices.getProfile(_this.activeUser.id, 'consumer')
+                .subscribe(
+                    data => {
+                        resolve(data);
+                    },
+                    () => {
+                        reject();
+                    }
+                );
+        });
+
+    }
+
+    getFamilyMember() {
+        this.api_loading1 = true;
+        let fn;
+        fn = this.sharedServices.getConsumerFamilyMembers();
+        this.subs.sink = fn.subscribe(data => {
+            this.familymember = [];
+            for (const mem of data) {
+                this.familymember.push(mem);
+            }
+            if (this.dialogData.id) {
+                this.virtualForm.patchValue({ 'serviceFor': this.dialogData.id });
+                this.onServiceForChange(this.dialogData.id);
+            }
+            this.api_loading1 = false;
+        },
+            () => {
+                this.api_loading1 = false;
+            });
+    }
+    onServiceForChange(event) {
+        this.serviceFormReset();
+
+        this.is_parent = true;
+        if (event !== 'new_member') {
+            const chosen_Object = this.familymember.filter(memberObj => memberObj.user === event);
+            if (chosen_Object.length !== 0) {
+                this.hideEditButton = false;
+                this.editable = false;
+                this.is_parent = false;
+                this.chosen_person = chosen_Object[0]
+                this.setMemberDetails(chosen_Object[0]);
+            } else {
+                this.hideEditButton = false;
+                this.editable = false;
+                this.chosen_person = this.customer_data
+                this.setparentDetails(this.customer_data);
+            }
+        } else {
+            this.hideEditButton = true;
+            this.editable = true;
+            this.is_parent = false;
+            this.chosen_person = 'new_member'
+
+        }
+
+    }
+
+    setMemberDetails(memberObj) {
+        this.serviceFormReset();
+        // if (memberObj.userProfile && memberObj.userProfile.dob!==undefined) {
+        //   const dob = memberObj.userProfile.dob.split('-');
+        //   this.virtualForm.patchValue({ date: dob[2] });
+        //   this.virtualForm.patchValue({ month: dob[1] });
+        //   this.virtualForm.patchValue({ year: dob[0] });
+        //   this.virtualForm.patchValue({ dob: memberObj.userProfile.dob });
+        // }else{
+        //   this.virtualForm.patchValue({ date: 'dd' });
+        //   this.virtualForm.patchValue({ month:'mm' });
+        //   this.virtualForm.patchValue({ year: 'yyyy' });
+        // }
+        if (memberObj.userProfile.age) {
+            this.virtualForm.patchValue({ age: memberObj.userProfile.age });
+        } if (memberObj.userProfile.id === this.userId && this.age) {
+            this.virtualForm.patchValue({ age: this.age });
+        }
+        if (memberObj.userProfile && memberObj.userProfile.gender) {
+            this.virtualForm.patchValue({ gender: memberObj.userProfile.gender });
+        }
+        if (memberObj.userProfile && memberObj.userProfile.email) {
+            this.virtualForm.patchValue({ email: memberObj.userProfile.email });
+        } else {
+            this.virtualForm.patchValue({ email: this.customer_data.userProfile.email });
+        }
+        if (memberObj.preferredLanguages && memberObj.preferredLanguages !== null) {
+            const preferredLanguage = this.s3Processor.getJson(memberObj.preferredLanguages);
+            if (preferredLanguage !== null && preferredLanguage.length > 0) {
+                let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
+                if (defaultEnglish === 'no') {
+                    if (memberObj.preferredLanguages.length > 0) {
+                        this.virtualForm.patchValue({ islanguage: defaultEnglish });
+                        this.lngknown = defaultEnglish;
+                    } else {
+                        this.virtualForm.patchValue({ islanguage: '' });
+                    }
+                } else {
+                    this.virtualForm.patchValue({ islanguage: defaultEnglish });
+                    this.lngknown = defaultEnglish;
+                }
+                this.virtualForm.patchValue({ preferredLanguage: preferredLanguage });
+            }
+        } else {
+            this.virtualForm.patchValue({ islanguage: 'yes' });
+        }
+        if (memberObj.bookingLocation && memberObj.bookingLocation.pincode) {
+            this.virtualForm.patchValue({ pincode: memberObj.bookingLocation.pincode });
+        }
+        if (memberObj.bookingLocation && memberObj.bookingLocation.district) {
+            this.virtualForm.patchValue({ localarea: memberObj.bookingLocation.district });
+        }
+        if (memberObj.bookingLocation && memberObj.bookingLocation.state) {
+            this.virtualForm.patchValue({ state: memberObj.bookingLocation.state });
+        }
+        if (memberObj.userProfile && memberObj.userProfile.whatsAppNum && memberObj.userProfile.whatsAppNum.number) {
+            this.virtualForm.patchValue({ whatsappnumber: memberObj.userProfile.whatsAppNum.number });
+            this.virtualForm.patchValue({ countryCode_whtsap: memberObj.userProfile.whatsAppNum.countryCode });
+        } else {
+            this.virtualForm.patchValue({ whatsappnumber: this.customer_data.userProfile.primaryMobileNo });
+            this.virtualForm.patchValue({ countryCode_whtsap: this.customer_data.userProfile.countryCode });
+        }
+        if (memberObj.userProfile && memberObj.userProfile.telegramNum && memberObj.userProfile.telegramNum.number) {
+            this.virtualForm.patchValue({ telegramnumber: memberObj.userProfile.telegramNum.number });
+            this.virtualForm.patchValue({ countryCode_telegram: memberObj.userProfile.telegramNum.countryCode });
+        } else {
+            this.virtualForm.patchValue({ telegramnumber: this.customer_data.userProfile.primaryMobileNo });
+            this.virtualForm.patchValue({ countryCode_telegram: this.customer_data.userProfile.countryCode })
+        }
+    }
+    serviceFormReset() {
+
+        // this.virtualForm.patchValue({ date: 'dd' });
+        //   this.virtualForm.patchValue({ month:'mm' });
+        //   this.virtualForm.patchValue({ year: 'yyyy' });
+        // this.virtualForm.controls['dob'].setValue('');
+        this.virtualForm.controls['countryCode_whtsap'].setValue(this.countryCode);
+        this.virtualForm.controls['countryCode_telegram'].setValue(this.countryCode);
+        this.virtualForm.controls['age'].setValue('');
+        this.virtualForm.controls['gender'].setValue('');
+        this.virtualForm.controls['islanguage'].setValue('yes');
+        this.virtualForm.controls['preferredLanguage'].setValue([]);
+        this.virtualForm.controls['pincode'].setValue('');
+        this.virtualForm.controls['localarea'].setValue('');
+        this.virtualForm.controls['state'].setValue('');
+        this.lngknown = 'yes';
+        if (this.customer_data.userProfile.email) {
+            this.virtualForm.patchValue({ email: this.customer_data.userProfile.email });
+        } else {
+            this.virtualForm.patchValue({ email: '' });
+        }
+
+        this.virtualForm.patchValue({ whatsappnumber: this.customer_data.userProfile.primaryMobileNo });
+        this.virtualForm.patchValue({ telegramnumber: this.customer_data.userProfile.primaryMobileNo });
+    }
+    setparentDetails(customer) {
+
+
+        // if (customer.userProfile && customer.userProfile.dob!==undefined) {
+
+        //   const dob = customer.userProfile.dob.split('-');
+        //   this.virtualForm.patchValue({ date: dob[2] });
+        //   this.virtualForm.patchValue({ month: dob[1] });
+        //   this.virtualForm.patchValue({ year: dob[0] });
+        //   this.virtualForm.patchValue({ dob: customer.userProfile.dob });
+        // }else{
+        //   this.virtualForm.patchValue({ date:'dd' });
+        //   this.virtualForm.patchValue({ month: 'mm' });
+        //   this.virtualForm.patchValue({ year: 'yyyy' });
+        // }
+        if (customer.userProfile.age) {
+            this.virtualForm.patchValue({ age: customer.userProfile.age });
+        }
+        if (customer.userProfile.id === this.userId && this.age) {
+            this.virtualForm.patchValue({ age: this.age });
+        }
+
+
+        if (customer.userProfile && customer.userProfile.gender) {
+            this.virtualForm.patchValue({ gender: customer.userProfile.gender });
+        }
+        if (customer.userProfile && customer.userProfile.email) {
+            this.virtualForm.patchValue({ email: customer.userProfile.email });
+        }
+        if (customer.userProfile.preferredLanguages && customer.userProfile.preferredLanguages !== null) {
+            const preferredLanguage = this.s3Processor.getJson(customer.userProfile.preferredLanguages);
+            if (preferredLanguage !== null && preferredLanguage.length > 0) {
+                let defaultEnglish = (preferredLanguage[0] === 'English') ? 'yes' : 'no';
+                this.virtualForm.patchValue({ islanguage: defaultEnglish });
+                this.lngknown = defaultEnglish;
+                this.virtualForm.patchValue({ preferredLanguage: preferredLanguage });
+            } else {
+                this.virtualForm.patchValue({ islanguage: 'yes' });
+            }
+        }
+        if (customer.userProfile && customer.userProfile.pinCode) {
+            this.virtualForm.patchValue({ pincode: customer.userProfile.pinCode });
+        }
+        if (customer.userProfile && customer.userProfile.city) {
+            this.virtualForm.patchValue({ localarea: customer.userProfile.city });
+        }
+        if (customer.userProfile && customer.userProfile.state) {
+            this.virtualForm.patchValue({ state: customer.userProfile.state });
+        }
+        if (customer.userProfile && customer.userProfile.whatsAppNum && customer.userProfile.whatsAppNum.number) {
+            this.virtualForm.patchValue({ whatsappnumber: customer.userProfile.whatsAppNum.number });
+            this.virtualForm.patchValue({ countryCode_whtsap: customer.userProfile.whatsAppNum.countryCode });
+
+        } else {
+            this.virtualForm.patchValue({ whatsappnumber: this.customer_data.userProfile.primaryMobileNo });
+            this.virtualForm.patchValue({ countryCode_whtsap: this.customer_data.userProfile.countryCode });
+        }
+        if (customer.userProfile && customer.userProfile.telegramNum && customer.userProfile.telegramNum.number) {
+            this.virtualForm.patchValue({ telegramnumber: customer.userProfile.telegramNum.number });
+            this.virtualForm.patchValue({ countryCode_telegram: customer.userProfile.telegramNum.countryCode });
+        }
+        else {
+            this.virtualForm.patchValue({ telegramnumber: this.customer_data.userProfile.primaryMobileNo });
+            this.virtualForm.patchValue({ countryCode_telegram: this.customer_data.userProfile.countryCode });
+        }
+    }
+
+    createForm() {
+        this.virtualForm = this.fb.group({
+            firstName: [''],
+            lastName: [''],
+            serviceFor: ['', Validators.compose([Validators.required])],
+            countryCode_whtsap: [this.countryCode],
+            countryCode_telegram: [this.countryCode],
+            // dob: ['', Validators.compose([Validators.required])],
+            // date: [''],
+            // month: [''],
+            // year: [''],
+            age: ['', Validators.compose([Validators.required, Validators.min(0), Validators.max(150)])],
+            pincode: ['', Validators.compose([Validators.required])],
+            email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
+            // whatsappnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
+            whatsappnumber: [''],
+            telegramnumber: [''],
+            // telegramnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
+            preferredLanguage: [[], Validators.compose([Validators.required])],
+            islanguage: ['', Validators.compose([Validators.required])],
+            gender: ['', Validators.compose([Validators.required])],
+            location: ['', Validators.compose([Validators.required])],
+            localarea: [''],
+            state: [''],
+            country: [''],
+            updateEmail: [false]
+        });
+
+        this.virtualForm.patchValue({ islanguage: 'yes' });
+        // this.virtualForm.patchValue({ date: 'dd' });
+        // this.virtualForm.patchValue({ month:'mm' });
+        // this.virtualForm.patchValue({ year: 'yyyy' });
+        if (this.dialogData.type !== 'member') {
+            this.virtualForm.patchValue({ serviceFor: this.customer_data.id });
+        } else {
+            this.virtualForm.patchValue({ serviceFor: this.dialogData.consumer });
+
+        }
+
+        if (this.dialogData) {
+
+            this.updateForm();
+        }
+        this.api_loading = false;
+    }
+    //   closeDialog() {
+    //     this.dialogRef.close();
+    //   }
+    editLanguage() {
+        this.iseditLanguage = true;
+        this.hideNextButton = false;
+
+        this.languageSelected = this.virtualForm.get('preferredLanguage').value.slice();
+        this.hideLanguages = false;
+        this.hideTokenFor = false;
+    }
+    updateForm() {
+
+        if (this.dialogData.type && this.dialogData.type === 'member') {
+            this.details = this.dialogData.consumer
+        } else {
+            this.details = this.customer_data;
+        }
+        if (this.details.parent) {
+            this.setMemberDetails(this.details);
+        } else {
+            this.setparentDetails(this.details);
+
+        }
+
+    }
+    saveLanguages() {
+        if (this.lngknown === 'yes') {
+            this.virtualForm.get('preferredLanguage').setValue(['English']);
+            this.hideLanguages = true;
+            this.languageSelected = [];
+            this.iseditLanguage = false;
+        }
+        else {
+            this.virtualForm.patchValue({ 'preferredLanguage': this.languageSelected });
+            if (this.virtualForm.get('preferredLanguage').value.length === 0) {
+                this.snackbarService.openSnackBar('Please select one', { 'panelClass': 'snackbarerror' });
+                return false;
+            }
+            this.hideLanguages = true;
+            this.languageSelected = [];
+            // let elmnt = document.getElementById("plng");
+            // elmnt.scrollIntoView()
+        }
+    }
+    cancelLanguageSelection() {
+        if (this.virtualForm.get('preferredLanguage').value.length == 0) {
+            this.virtualForm.get('preferredLanguage').setValue(['English']);
+            this.lngknown = 'yes';
+            this.virtualForm.patchValue({ islanguage: 'yes' });
+        } else {
+            this.languageSelected = [];
+
+        }
+        this.hideLanguages = true;
+        // let elmnt = document.getElementById("plng");
+        // elmnt.scrollIntoView();
+    }
+
+    langSel(sel) {
+
+        if (this.languageSelected.length > 0) {
+            const existindx = this.languageSelected.indexOf(sel);
+            if (existindx === -1) {
+                this.languageSelected.push(sel);
+            } else {
+                this.languageSelected.splice(existindx, 1);
+            }
+        } else {
+            this.languageSelected.push(sel);
+        }
+
+    }
+    checklangExists(lang) {
+        if (this.languageSelected.length > 0) {
+            const existindx = this.languageSelected.indexOf(lang);
+            if (existindx !== -1) {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+    validateFields() {
+        let isinvalid = false;
+        if (this.countryCode === '+91') {
+            if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
+                isinvalid = true;
+            }
+        }
+        if (this.countryCode !== '+91') {
+            if (this.virtualForm.get('localarea').value === '' || this.virtualForm.get('state').value === '') {
+                isinvalid = true;
+
+            }
+        }
+        if (this.virtualForm.get('gender').value === '') {
+            isinvalid = true;
+        }
+        if (this.virtualForm.get('age').value === '') {
+            isinvalid = true;
+        }
+
+        if (this.virtualForm.get('islanguage').value === 'no') {
+            if (this.virtualForm.get('preferredLanguage').value.length === 0) {
+                isinvalid = true;
+            }
+        }
+
+        if (this.virtualForm.get('serviceFor').value === 'new_member') {
+
+            if (this.virtualForm.get('firstName').value == '') {
+                isinvalid = true;
+            }
+            if (this.virtualForm.get('lastName').value == '') {
+                isinvalid = true;
+
+            }
+        }
+        // if (this.virtualForm.get('date').value === 'dd') {
+        //   isinvalid = true;
+        // }
+        // if (this.virtualForm.get('month').value === 'mm') {
+        //   isinvalid = true;
+        // }
+        // if (this.virtualForm.get('year').value === 'yyyy') {
+        //   isinvalid = true;
+        // }
+
+        return isinvalid;
+    }
+
+    fetchLocationByPincode(pincode) {
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.sharedServices.getLocationsByPincode(pincode).subscribe(
+                (locations: any) => {
+                    resolve(locations);
+                },
+                error => {
+                    resolve([]);
+                }
+            );
+        });
+    }
+
+    showLocations(event) {
+        let pincode = this.virtualForm.get('pincode').value;
+        if (pincode.length === 6) {
+            this.loading = true;
+            this.fetchLocationByPincode(pincode).then(
+                (locations: any) => {
+                    if (locations.length > 0) {
+                        this.locations = locations[0];
+                        this.virtualForm.patchValue({ location: locations[0]['PostOffice'][0] });
+                    } else {
+                        this.locations = [];
+                    }
+                    this.loading = false;
+                }
+            )
+        } else {
+            this.locations = [];
+        }
+    }
+
+    onSubmit(formdata) {
+        this.submitbtndisabled = true;
+        formdata['phoneno'] = this.customer_data.userProfile.primaryMobileNo;
+        if (this.virtualForm.controls.email.invalid) {
+            return false;
+        }
+        if (this.validateFields() === true) {
+            this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
+        } else if (formdata.countryCode_whtsap.trim().length === 0 && formdata.whatsappnumber.trim().length > 0) {
+            this.snackbarService.openSnackBar('Please fill whatsapp countrycode', { 'panelClass': 'snackbarerror' });
+        } else if (formdata.countryCode_telegram.trim().length === 0 && formdata.telegramnumber.trim().length > 0) {
+            this.snackbarService.openSnackBar('Please fill telegram countrycode', { 'panelClass': 'snackbarerror' });
+        } else {
+
+            if (this.is_parent) {
+                this.updateParentInfo(formdata).then(
+                    (result) => {
+                        if (result !== false) {
+                            this.lStorageService.setitemonLocalStorage('age', formdata.age);
+                            this.submitbtndisabled = false;
+                            //  this.dialogRef.close(formdata);
+                        }
+                    },
+                    (error) => {
+                        this.submitbtndisabled = false;
+                        return false;
+                    }
+                );
+            } else {
+                if (formdata.serviceFor === 'new_member') {
+                    this.saveMember(formdata).then(data => {
+                        if (data !== false) {
+                            this.lStorageService.setitemonLocalStorage('age', formdata.age);
+                            formdata['newMemberId'] = data;
+                            this.submitbtndisabled = false;
+                            //  this.dialogRef.close(formdata);
+                        }
+                    },
+                        () => {
+                            this.submitbtndisabled = false;
+                            return false;
+                        })
+                } else {
+                    this.updateMemberInfo(formdata).then(
+                        (data) => {
+                            if (data !== false) {
+                                this.submitbtndisabled = false;
+                                this.lStorageService.setitemonLocalStorage('age', formdata.age);
+                                //  this.dialogRef.close(formdata);
+                            }
+                        },
+                        () => {
+                            this.submitbtndisabled = false;
+                            return false;
+                        }
+                    );
+                }
+
+            }
+        }
+
+
+
+    }
+    updateParentInfo(formdata) {
+
+        const _this = this;
+        const firstName = _this.customer_data.userProfile.firstName
+        const lastName = _this.customer_data.userProfile.lastName;
+        return new Promise(function (resolve, reject) {
+            const userObj = {};
+            userObj['id'] = _this.customer_data.id;
+            if (formdata.whatsappnumber !== undefined && formdata.whatsappnumber.trim().length > 0 && formdata.countryCode_whtsap !== undefined && formdata.countryCode_whtsap.trim().length > 0) {
+                const whatsup = {}
+                if (formdata.countryCode_whtsap.startsWith('+')) {
+                    whatsup["countryCode"] = formdata.countryCode_whtsap
+                } else {
+                    whatsup["countryCode"] = '+' + formdata.countryCode_whtsap
+                }
+                whatsup["number"] = formdata.whatsappnumber
+                userObj['whatsAppNum'] = whatsup;
+            }
+
+            if (formdata.telegramnumber !== undefined && formdata.telegramnumber.trim().length > 0 && formdata.countryCode_telegram !== undefined && formdata.countryCode_telegram.trim().length > 0) {
+                const telegram = {}
+                if (formdata.countryCode_telegram.startsWith('+')) {
+                    telegram["countryCode"] = formdata.countryCode_telegram
+                } else {
+                    telegram["countryCode"] = '+' + formdata.countryCode_telegram
+                }
+                telegram["number"] = formdata.telegramnumber
+                userObj['telegramNum'] = telegram;
+            }
+
+
+            if (formdata.email !== '' && formdata.updateEmail) {
+                userObj['email'] = formdata.email
+            }
+            userObj['gender'] = formdata.gender;
+            userObj['firstName'] = firstName;
+            userObj['lastName'] = lastName;
+            // userObj['dob'] = formdata.dob;
+            userObj['pinCode'] = formdata.pincode;
+            if (formdata.islanguage === 'yes') {
+                userObj['preferredLanguages'] = ['English'];
+            } else {
+                userObj['preferredLanguages'] = formdata.preferredLanguage;
+            }
+            userObj['bookingLocation'] = {}
+            if (_this.countryCode !== '+91' && formdata.localarea !== '') {
+                userObj['bookingLocation']['district'] = formdata.localarea;
+                userObj['city'] = formdata.localarea;
+            }
+            if (_this.countryCode !== '+91' && formdata.state) {
+                userObj['bookingLocation']['state'] = formdata.state;
+                userObj['state'] = formdata.state;
+            }
+            _this.lStorageService.setitemonLocalStorage('userId', _this.customer_data.id);
+            _this.sharedServices.updateProfile(userObj, 'consumer').subscribe(
+                () => {
+
+                    resolve(true);
+                }, (error) => {
+                    _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    resolve(false);
+                }
+            )
+        });
+    }
+
+    updateMemberInfo(formdata) {
+
+        const _this = this;;
+        const firstName = _this.chosen_person.userProfile.firstName;
+        const lastName = _this.chosen_person.userProfile.lastName;
+        let memberInfo: any = {};
+        memberInfo.userProfile = {}
+        if (formdata.whatsappnumber !== undefined && formdata.whatsappnumber.trim().length > 0 && formdata.countryCode_whtsap !== undefined && formdata.countryCode_whtsap.trim().length > 0) {
+            const whatsup = {}
+            if (formdata.countryCode_whtsap.startsWith('+')) {
+                whatsup["countryCode"] = formdata.countryCode_whtsap
+            } else {
+                whatsup["countryCode"] = '+' + formdata.countryCode_whtsap
+            }
+            whatsup["number"] = formdata.whatsappnumber
+            memberInfo.userProfile['whatsAppNum'] = whatsup;
+        }
+        if (formdata.telegramnumber !== undefined && formdata.telegramnumber.trim().length > 0 && formdata.countryCode_telegram !== undefined && formdata.countryCode_telegram.trim().length > 0) {
+            const telegram = {}
+            if (formdata.countryCode_telegram.startsWith('+')) {
+                telegram["countryCode"] = formdata.countryCode_telegram
+            } else {
+                telegram["countryCode"] = '+' + formdata.countryCode_telegram
+            }
+            telegram["number"] = formdata.telegramnumber
+            memberInfo.userProfile['telegramNum'] = telegram;
+
+        }
+        if (formdata.email !== '' && formdata.updateEmail) {
+            memberInfo['userProfile']['email'] = formdata.email
+        }
+
+
+        memberInfo.bookingLocation = {}
+        memberInfo.userProfile['id'] = formdata.serviceFor;
+        memberInfo.userProfile['gender'] = formdata.gender;
+        memberInfo.userProfile['firstName'] = firstName;
+        memberInfo.userProfile['lastName'] = lastName;
+        // memberInfo.userProfile['dob'] = formdata.dob;
+        memberInfo.bookingLocation['pincode'] = formdata.pincode;
+        if (formdata.islanguage === 'yes') {
+            memberInfo['preferredLanguages'] = ['English'];
+        } else {
+            memberInfo['preferredLanguages'] = formdata.preferredLanguage;
+        }
+        if (this.countryCode !== '+91' && formdata.localarea && formdata.localarea !== '') {
+            memberInfo['bookingLocation']['district'] = formdata.localarea;
+        }
+        if (this.countryCode !== '+91' && formdata.state) {
+            memberInfo['bookingLocation']['state'] = formdata.state;
+        }
+        this.lStorageService.setitemonLocalStorage('userId', formdata.serviceFor);
+        return new Promise(function (resolve, reject) {
+            _this.sharedServices.editMember(memberInfo).subscribe(
+                () => {
+                    resolve(true);
+                }, (error) => {
+                    _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    resolve(false);
+                }
+            )
+        });
+
+
+
+    }
+    saveMember(formdata) {
+        const _this = this;
+        const memberInfo = {};
+        memberInfo['userProfile'] = {}
+        if (formdata.whatsappnumber !== undefined && formdata.whatsappnumber.trim().length > 0 && formdata.countryCode_whtsap !== undefined && formdata.countryCode_whtsap.trim().length > 0) {
+
+            const whatsup = {}
+            if (formdata.countryCode_whtsap.startsWith('+')) {
+                whatsup["countryCode"] = formdata.countryCode_whtsap
+            } else {
+                whatsup["countryCode"] = '+' + formdata.countryCode_whtsap
+            }
+            whatsup["number"] = formdata.whatsappumber
+            memberInfo['userProfile']['whatsAppNum'] = whatsup;
+        }
+        if (formdata.telegramnumber !== undefined && formdata.telegramnumber.trim().length > 0 && formdata.countryCode_telegram !== undefined && formdata.countryCode_telegram.trim().length > 0) {
+            const telegram = {}
+            if (formdata.countryCode_telegram.startsWith('+')) {
+                telegram["countryCode"] = formdata.countryCode_telegram
+            } else {
+                telegram["countryCode"] = '+' + formdata.countryCode_telegram
+            }
+            telegram["countryCode"] = formdata.countryCode_telegram
+            telegram["number"] = formdata.telegramnumber
+            memberInfo['userProfile']['telegramNum'] = telegram;
+        }
+        if (formdata.email !== '' && formdata.updateEmail) {
+            memberInfo['userProfile']['email'] = formdata.email
+        }
+
+
+        memberInfo['bookingLocation'] = {}
+        memberInfo['userProfile']['gender'] = formdata.gender;
+        memberInfo['userProfile']['firstName'] = formdata.firstName;
+        memberInfo['userProfile']['lastName'] = formdata.lastName;
+        // memberInfo['userProfile']['dob'] = formdata.dob;
+        memberInfo['bookingLocation']['pincode'] = formdata.pincode;
+        if (formdata.islanguage === 'yes') {
+            memberInfo['preferredLanguages'] = ['English'];
+        } else {
+            memberInfo['preferredLanguages'] = formdata.preferredLanguage;
+        }
+
+        if (this.countryCode !== '+91' && formdata.localarea && formdata.localarea !== '') {
+            memberInfo['bookingLocation']['district'] = formdata.localarea;
+        }
+        if (this.countryCode !== '+91' && formdata.state) {
+            memberInfo['bookingLocation']['state'] = formdata.state;
+        }
+        return new Promise(function (resolve, reject) {
+            _this.sharedServices.addMembers(memberInfo).subscribe(
+                (data) => {
+                    _this.lStorageService.setitemonLocalStorage('userId', data);
+                    resolve(data);
+                }, (error) => {
+                    _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    resolve(false);
+                }
+            )
+        });
+
+
+    }
+    onChange(event) {
+        this.lngknown = event.value
+        if (this.lngknown === 'yes') {
+            this.virtualForm.get('preferredLanguage').setValue(['English']);
+        }
+        if (this.lngknown === 'no' && this.virtualForm.get('preferredLanguage').value.length === 0) {
+            this.hideLanguages = false;
+        }
+        if (this.lngknown === 'no' && this.virtualForm.get('preferredLanguage').value.length > 0 && this.virtualForm.get('preferredLanguage').value[0] === 'English') {
+            this.virtualForm.get('preferredLanguage').setValue([]);
+            this.hideLanguages = false;
+        }
+    }
+
+
+
+    // above logic is about virtualService and virtualForm information.......
+
+
+
     getPaymentModes() {
         this.paytmEnabled = false;
         this.razorpayEnabled = false;
@@ -414,6 +1284,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 
             );
     }
+
     ngOnDestroy(): void {
         this.subs.unsubscribe();
     }
@@ -490,6 +1361,21 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 );
         });
     }
+    getBookStep() {
+        let step: any = '';
+        if (this.serviceType === 'virtualService') {
+            step = 3;
+            if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                step = 4;
+            }
+        } else {
+            step = 2;
+            if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                step = 3;
+            }
+        }
+        return step;
+    }
     getBussinessProfileApi() {
         const _this = this;
         return new Promise(function (resolve, reject) {
@@ -556,9 +1442,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
                             this.callingModes = unChangedPhnoCountryCode + '' + this.customer_data.primaryPhoneNumber;
                             if (serv.serviceType === 'virtualService' && this.virtualInfo) {
-                                if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.whatsappnumber !== undefined) {
+                                console.log(this.virtualInfo);
+                                console.log("am checking dffkjksdf");
+                                if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
                                     const whtsappcountryCode = this.virtualInfo.countryCode_whtsap.split('+')[1];
                                     this.callingModes = whtsappcountryCode + '' + this.virtualInfo.whatsappnumber;
+
                                     console.log(this.callingModes);
                                 }
                             }
@@ -737,7 +1626,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
         }
     }
-    confirmcheckin(type?,paymenttype?) {
+     confirmcheckin(type?,paymenttype?) {
        if(type==='checkin' && this.sel_ser_det.isPrePayment &&this.payEmail===''){
            this.paymentBtnDisabled=true;
         const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
@@ -975,6 +1864,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         virtualdialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this.virtualInfo = result;
+                console.log("Result :", this.virtualInfo);
                 this.setVirtualTeleserviceCustomer();
             }
 
@@ -1086,32 +1976,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.api_loading_video = true;
             });
     }
-    paymentOperation(paymenttype?) {
-        if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
-            this.payuPayment(paymenttype);
-        } else {
-            let multiple;
-            if (this.uuidList.length > 1) {
-                multiple = true;
-            } else {
-                multiple = false;
-            }
-            let queryParams = {
-                account_id: this.account_id,
-                uuid: this.uuidList,
-                multiple: multiple,
-                theme: this.theme
-            }
-            if (this.businessId) {
-                queryParams['customId'] = this.customId;
-            }
-            let navigationExtras: NavigationExtras = {
-                queryParams: queryParams
-            };
-            this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras);
-        }
-    }
-
+    
+    
     transactionCompleted(response) {
     if(response.STATUS == 'TXN_SUCCESS'){
         this.isClickedOnce=false;
@@ -1147,6 +2013,31 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
         this.ngZone.run(() => this.router.navigate(['consumer']));
     }
+   paymentOperation(paymenttype?) {
+        if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
+            this.payuPayment(paymenttype);
+        } else {
+            let multiple;
+            if (this.uuidList.length > 1) {
+                multiple = true;
+            } else {
+                multiple = false;
+            }
+            let queryParams = {
+                account_id: this.account_id,
+                uuid: this.uuidList,
+                multiple: multiple,
+                theme: this.theme
+            }
+            if (this.businessId) {
+                queryParams['customId'] = this.customId;
+            }
+            let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
+            };
+            this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras);
+        }
+    }
     showCheckinButtonCaption() {
         let caption = '';
         if (this.settingsjson.showTokenId) {
@@ -1156,20 +2047,20 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         return caption;
     }
-    handleOneMemberSelect(id, firstName, lastName,email) {
-            
-        this.waitlist_for = [];
-        this.newEmail=this.payEmail='';
-        this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName });
-        if(email && email.trim()!==''){
-            this.payEmail= this.waitlist_for[0]['email'] = this.newEmail=email;
-          
-         }else if (this.userData.userProfile.email.trim() !== '') {
-                 this.waitlist_for[0]['email'] =this.newEmail= this.payEmail=this.userData.userProfile.email;
+    handleOneMemberSelect(id, firstName, lastName, email) {
 
-         }else{
-            this.waitlist_for[0]['email'] =this.newEmail= this.payEmail='';  
-         }
+        this.waitlist_for = [];
+        this.newEmail = this.payEmail = '';
+        this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName });
+        if (email && email.trim() !== '') {
+            this.payEmail = this.waitlist_for[0]['email'] = this.newEmail = email;
+
+        } else if (this.userData.userProfile.email.trim() !== '') {
+            this.waitlist_for[0]['email'] = this.newEmail = this.payEmail = this.userData.userProfile.email;
+
+        } else {
+            this.waitlist_for[0]['email'] = this.newEmail = this.payEmail = '';
+        }
         // this.getConsumerQuestionnaire();
     }
     handleMemberSelect(id, firstName, lastName, obj) {
@@ -1311,6 +2202,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             // this.payEmail = this.virtualInfo.email;
             this.newEmail = this.payEmail = this.virtualInfo.email;
         }
+
         if (this.virtualInfo && this.virtualInfo.newMemberId) {
             this.waitlist_for = [];
             this.newMember = this.virtualInfo.newMemberId;
@@ -1329,16 +2221,32 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
                 }
                 this.currentPhone = this.virtualInfo.phoneno;
-                this.userPhone = this.virtualInfo.phoneno;
+                this.userPhone = this.virtualInfo.whatsappnumber;
                 this.changePhno = true;
             }
 
-        } if (this.virtualInfo && this.virtualInfo.serviceFor) {
+        }
+
+        if (this.virtualInfo && this.virtualInfo.serviceFor) {
             this.consumerType = 'member';
             this.waitlist_for = [];
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor);
-            console.log(current_member);
-            this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
+            console.log("FamilyMember : ", current_member);
+            if (current_member[0]['user']) {
+                this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
+            }
+            if (!current_member[0]['user']) {
+
+                this.getActiveUserInfo().then(data => {
+                    this.customer_data = data;
+                    console.log("Consumer Data :", this.customer_data)
+                    if (this.customer_data.SignedUp == true) {
+
+                        this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.userProfile.firstName, lastName: this.customer_data.userProfile.lastName });
+                    }
+                });
+
+            }
             if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
                 this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
                 console.log(this.whatsappCountryCode);
@@ -1350,12 +2258,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
                 }
                 this.currentPhone = this.virtualInfo.phoneno;
-                this.userPhone = this.virtualInfo.phoneno;
+                this.userPhone = this.virtualInfo.whatsappnumber;
                 this.changePhno = true;
             }
 
         }
-
 
     }
     calculateDate(days) {
@@ -1524,7 +2431,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.selectedMessage.caption.splice(i, 1);
         this.imgCaptions[i] = '';
     }
-    consumerNoteAndFileSave(uuids, parentUid?,paymenttype?) {
+     consumerNoteAndFileSave(uuids, parentUid?,paymenttype?) {
         const dataToSend: FormData = new FormData();
         const captions = {};
         let i = 0;
@@ -1646,9 +2553,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             }
                         }
                         if (_this.userData.userProfile.email) {
-                           // _this.waitlist_for[0]['email'] = _this.userData.userProfile.email;
+                            _this.waitlist_for[0]['email'] = _this.userData.userProfile.email;
                             _this.payEmail = _this.userData.userProfile.email;
-                            _this.newEmail=_this.userData.userProfile.email;
+                            _this.newEmail = _this.userData.userProfile.email;
                         }
                         if (_this.userEmail) {
                             _this.emailExist = true;
@@ -1951,7 +2858,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     checkCouponvalidity() {
-console.log('inside validaity');
+        console.log('inside validaity');
         if (this.waitlist_for.length !== 0) {
             for (const list of this.waitlist_for) {
                 if (list.id === this.customer_data.id) {
@@ -1967,7 +2874,9 @@ console.log('inside validaity');
                     this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
                 } else {
                     console.log(this.callingModes);
-                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
+                    const whtsappcountryCode = this.virtualInfo.countryCode_whtsap.split('+')[1];
+
+                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = whtsappcountryCode + '' + this.virtualInfo.whatsappnumber;
                 }
             }
         } else if (this.callingModes === '' || this.callingModes.length < 10) {
@@ -2068,9 +2977,9 @@ console.log('inside validaity');
     }
     goBack(type?) {
         if (type) {
-            if (this.bookStep === 1) {
+            if (this.bookStep === 1 && this.serviceType !== 'virtualService' || this.bookStep === 0) {
                 this.location.back();
-            } else {
+            }else {
                 if(this.questionnaireList.labels && this.questionnaireList.labels.length > 0){
                 this.bookStep--;
                 }
@@ -2078,8 +2987,6 @@ console.log('inside validaity');
                     this.bookStep=1;
                 }
             }
-            
-        }
         if (this.action !== 'addmember') {
             this.closebutton.nativeElement.click();
         }
@@ -2099,6 +3006,7 @@ console.log('inside validaity');
             }
         }, 500);
     }
+}
     applyPromocode() {
         this.action = 'coupons';
         this.selected_coupon = '';
@@ -2297,27 +3205,42 @@ console.log('inside validaity');
         }
     }
     goToStep(type) {
+        // console.log("Consumer : ", this.customer_data.userProfile)
+        //console.log("Patient Information :", this.virtualForm.value);
+        this.virtualInfo = this.virtualForm.value;
+
+
+        console.log("Virtual Info : ", this.virtualInfo);
         if (type === 'next') {
-            if (this.queuejson.length !== 0 && !this.api_loading1 && this.waitlist_for.length !== 0) {
-                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                    if (this.bookStep === 2) {
-                        this.validateQuestionnaire();
+            if (this.serviceType === 'virtualService' && this.bookStep == 0) {
+                this.bookStep++;
+            } else {
+                if (this.queuejson.length !== 0 && !this.api_loading1 && this.waitlist_for.length !== 0) {
+                    if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                        if (this.bookStep === 2) {
+                            this.validateQuestionnaire();
+                        } else {
+                            this.bookStep++;
+                        }
                     } else {
-                        this.bookStep++;
-                    }
-                } else {
-                    if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
-                        this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
-                    } else {
-                        this.bookStep = 3;
+                        if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
+                            this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
+                        } else {
+                            this.bookStep = 3;
+                        }
                     }
                 }
             }
+
         } else if (type === 'prev') {
-            if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+            if (this.serviceType === 'virtualService' && this.bookStep == 1) {
                 this.bookStep--;
             } else {
-                this.bookStep = 1;
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                    this.bookStep--;
+                } else {
+                    this.bookStep = 1;
+                }
             }
         } else {
             this.bookStep = type;
@@ -2325,6 +3248,87 @@ console.log('inside validaity');
         if (this.bookStep === 3) {
             this.saveCheckin('next');
         }
+
+
+        // // //for checking update parent info ....
+        this.submitbtndisabled = true;
+        // this.virtualInfo['phoneno'] = this.customer_data.userProfile.primaryMobileNo;
+        if (this.virtualForm.controls.email.invalid) {
+            return false;
+        }
+        // if (this.validateFields() === true) {
+        //     this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
+        // } 
+
+        else if (this.virtualInfo.countryCode_whtsap.trim().length === 0 && this.virtualInfo.whatsappnumber.trim().length > 0) {
+            this.snackbarService.openSnackBar('Please fill whatsapp countrycode', { 'panelClass': 'snackbarerror' });
+        } else if (this.virtualInfo.countryCode_telegram.trim().length === 0 && this.virtualInfo.telegramnumber.trim().length > 0) {
+            this.snackbarService.openSnackBar('Please fill telegram countrycode', { 'panelClass': 'snackbarerror' });
+        } else {
+
+            if (this.is_parent) {
+                this.updateParentInfo(this.virtualInfo).then(
+                    (result) => {
+                        if (result !== false) {
+                            this.lStorageService.setitemonLocalStorage('age', this.virtualInfo.age);
+                            this.submitbtndisabled = false;
+                            // this.dialogRef.close(formdata);
+                        }
+                    },
+                    (error) => {
+                        this.submitbtndisabled = false;
+                        return false;
+                    }
+                );
+            } else {
+                if (this.virtualInfo.serviceFor === 'new_member') {
+                    this.saveMember(this.virtualInfo).then(data => {
+                        if (data !== false) {
+                            this.lStorageService.setitemonLocalStorage('age', this.virtualInfo.age);
+                            this.virtualInfo['newMemberId'] = data;
+                            this.submitbtndisabled = false;
+                            // this.dialogRef.close(formdata);
+                        }
+                    },
+                        () => {
+                            this.submitbtndisabled = false;
+                            return false;
+                        })
+                } else {
+                    this.updateMemberInfo(this.virtualInfo).then(
+                        (data) => {
+                            if (data !== false) {
+                                this.submitbtndisabled = false;
+                                this.lStorageService.setitemonLocalStorage('age', this.virtualInfo.age);
+                                // this.dialogRef.close(formdata);
+                            }
+                        },
+                        () => {
+                            this.submitbtndisabled = false;
+                            return false;
+                        }
+                    );
+                }
+            }
+        }
+
+        // //this.virtualInfo = this.virtualForm.value
+        // for validating the consumer and his family members ...
+        if (this.virtualInfo) {
+            this.setVirtualTeleserviceCustomer();
+        }
+        // if(this.virtualInfo)
+        // {
+        //     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+        //     this.api_loading1 = true;
+        //     if (activeUser) {
+        //         this.customer_data = activeUser;
+        //     }
+        //     this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
+
+        // }
+
+
     }
     addWaitlistAdvancePayment(post_Data) {
         const param = { 'account': this.account_id };
@@ -2337,16 +3341,15 @@ console.log('inside validaity');
                 this.jcreditamount = this.paymentDetails.eligibleJcashAmt.creditAmt;
                 console.log(this.paymentDetails.amountRequiredNow);
                 console.log(this.jcashamount);
-                if( this.checkJcash && this.paymentDetails.amountRequiredNow > this.jcashamount){
+                if (this.checkJcash && this.paymentDetails.amountRequiredNow > this.jcashamount) {
                     this.payAmount = this.paymentDetails.amountRequiredNow - this.jcashamount;
                     console.log(this.payAmount);
-                } else if( this.checkJcash && this.paymentDetails.amountRequiredNow <= this.jcashamount){
+                } else if (this.checkJcash && this.paymentDetails.amountRequiredNow <= this.jcashamount) {
                     this.payAmount = 0;
                     console.log(this.payAmount)
                 }
             },
                 error => {
-                    this.isClickedOnce=false;
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 });
     }
@@ -2517,7 +3520,7 @@ console.log('inside validaity');
         console.log(this.action);
         if (this.action === 'timeChange') {
             if (this.queuejson[this.sel_queue_indx]) {
-            this.selectedQTime = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
+                this.selectedQTime = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
             }
             this.selectedDate = this.sel_checkindate;
             this.checkFutureorToday();
@@ -2612,12 +3615,12 @@ console.log('inside validaity');
         this.action = 'attachment';
         this.modal.nativeElement.click();
     }
-      showText() {
+    showText() {
         this.readMore = !this.readMore;
     }
-  
+
     changeJcashUse(event) {
-        if(event.checked){
+        if (event.checked) {
             this.checkJcash = true;
         } else {
             this.checkJcash = false;
