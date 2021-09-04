@@ -1,4 +1,5 @@
-<section class="c-checkin-new container no-padding no-padding-small" [ngClass]="theme?theme:''">
+<section #consumer_appointment class="c-checkin-new container no-padding no-padding-small" [ngClass]="theme?theme:''">
+    <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
     <div class="content p0 loc-list ynw-common-form-nm">
         <div class="panel panel-default">
             <div class="panel-heading top-row ">
@@ -10,6 +11,7 @@
                         [customId]="customId"></app-header>
                 </div>
             </div>
+            <app-common-innerloading-spinner *ngIf="loadingPaytm"></app-common-innerloading-spinner>
             <div class="pad-10 d-flex flex-column-fluid">
                 <div class="card card-custom">
                     <div class="card-body p-0">
@@ -23,7 +25,7 @@
                                     <div
                                         class="lbl col-sm-12 col-md-5 col-lg-4 col-xs-12 col-sm-12 no-padding displ-none">
                                         <div class="wizard-nav">
-                                            <!-- *ngIf="type != 'reschedule'" -->
+                                             *ngIf="type != 'reschedule'" 
                                             <div class="wizard-steps p-8 p-lg-10">
                                                 <div class="wizard-step tab-selected wizard-mgn-30"
                                                     data-wizard-type="step" *ngIf="serviceType === 'virtualService'">
@@ -887,8 +889,7 @@
                                                                 <h6 class="card-title service mgn-bt-10">
                                                                     {{sel_ser_det.name}}
                                                                 </h6>
-                                                                <div class="" style="font-size: 1rem;"
-                                                                    *ngIf="sel_ser_det.price && type != 'reschedule'">
+                                                                <div class="" style="font-size: 1rem;">
                                                                     <p class="module-nomargin line-clamp no-margin"
                                                                         *ngIf="sel_ser_det.description && !showmoreSpec"
                                                                         (click)="showSpec()">
@@ -1400,7 +1401,8 @@
                                                         </div>
                                                     </div>
                                                 </ng-container>
-                                                <ng-container *ngIf="action=='members'">{{action}}
+                                                <ng-container *ngIf="action=='members'">
+                                                    <!-- {{action}} -->
                                                     <div class="modal-body">
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-20">
@@ -1747,9 +1749,20 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div>
+                                        <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding"
+                                        data-wizard-type="step-content" data-wizard-state="current" *ngIf="bookStep === 3">
+                                        <div *ngIf="api_loading_video" class="incomplete-msg">
+                                            <div style="padding: 0 30px;">
+                                                Files are Uploading...
+                                            </div>
+                                        </div>
+                                        <app-common-innerloading-spinner *ngIf="api_loading_video">
+                                        </app-common-innerloading-spinner>
+                                    </div>                                 
                                     <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
                                         data-wizard-type="step-content" data-wizard-state="current"
-                                        *ngIf="bookStep === 3">
+                                        *ngIf="bookStep === 3" [ngClass]="{'highlight': api_loading_video}">
                                         <!-- <div class="confirm-head">Confirm your appointment details</div> -->
                                         <div class="confirm-head mgn-up-20">Review and Confirm</div>
                                         <div class="bookdetails">
@@ -1858,8 +1871,24 @@
                                                 <span>{{getSingleTime(selectedApptTime['time'])}}</span>
                                             </div>
                                         </div>
+                                         <div class="web">
+                                            <!--<div class="textcenter" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">-->
+                                                <div class="textcenter" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                <span class="ser_price no-mgn-bt bold">Service Price : <span class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal | currency:'&#8377;'}}</span></span>
+                                                <span class="ser_price no-mgn-bt bold" style="padding: 20px !important;">Payment required now : <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash ? payAmount : paymentDetails.amountRequiredNow)| currency:'&#8377;'}}</span></span>
+                                            </div>
+                                        </div>
+                                       <div class="disply">
+                                        <div class="textcenter" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                            <!--<div class="textcenter" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">-->
+                                            <span class="ser_price no-mgn-bt bold">Service Price : <span class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal | currency:'&#8377;'}}</span></span><br>
+                                            <span class="ser_price no-mgn-bt bold" style="padding: 20px !important;">Payment required now : <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash ? payAmount : paymentDetails.amountRequiredNow)| currency:'&#8377;'}}</span></span>
+                                        </div>
+                                       </div>
+                                       
+                                        <br>
 
-                                        <div class="containerpayment "
+                                <div class="containerpayment "
                                             *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0 && paymentDetails.amountRequiredNow > 0">
                                             <div class="jaldeecredit" *ngIf="jcashamount>0">
                                                 <mat-checkbox [(ngModel)]="checkJcash"
@@ -1871,7 +1900,9 @@
                                                 *ngIf="jcashamount>0  && (checkJcash && jcashamount < paymentDetails.amountRequiredNow)">
                                                 Balance amount can be paid by other payment methods
                                             </div>
-                                            <div class="prepayment">
+                                            <!-- <div class="prepayment"> -->
+                                            <div class="prepayment" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
+                                                ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
                                                 <!-- Payment required now : &nbsp;
                                                 <span *ngIf="!checkJcash"class="rupee-font">{{paymentDetails.amountRequiredNow |
                                                     currency:'&#8377;'}}
@@ -1879,24 +1910,43 @@
                                                 <span *ngIf="checkJcash" class="rupee-font">{{payAmount |
                                                     currency:'&#8377;'}}
                                                 </span> -->
-                                                <button type="button" appPreventDoubleClick
-                                                    (click)="saveCheckin('appt')" id="stepThreeConfirmButton"
-                                                    [disabled]="paymentBtnDisabled"
-                                                    class="next-button btn btn-primary font-weight-bold  px-12 py-4"
-                                                    [disabled]="!checkPolicy && heartfulnessAccount">
+                                                  <button type="button"  [class.disabled]="isClickedOnce" (click)="!isClickedOnce && saveCheckin('appt')" id="stepThreeConfirmButton"  class="next-button btn btn-primary font-weight-bold  px-12 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
                                                     <ng-container
-                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
+                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
                                                       ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
-                                                        Confirm Appointment</ng-container>
-                                                    <ng-container
-                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                        Proceed to pay <span>Rs {{checkJcash ? payAmount :
-                                                            paymentDetails.amountRequiredNow}}</span></ng-container>
-                                                    <!-- <ng-container
+                                                     Confirm Appointment</ng-container>
+                                                <!-- <ng-container
+                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                     Proceed to pay <span >Rs {{checkJcash ? payAmount : paymentDetails.amountRequiredNow}}</span></ng-container> -->
+                                                <!-- <ng-container
                                                     *ngIf="paymentLength == 0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)">
-                                                    Confirm</ng-container> -->
+                                                    Confirm</ng-container>  appPreventDoubleClick  (throttledClick)="log()"-->
                                                 </button>
                                             </div>
+                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top  width-100 hf-double-btn-container" *ngIf="razorpayEnabled && paytmEnabled">
+                                            <div   *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                <p class="jaldeecredit">
+                                                    To pay Rs {{checkJcash ? payAmount : paymentDetails.amountRequiredNow}} please select any payment options
+                                                </p>
+                                                <span type="button" class="razorpay-icon paymenticons" *ngIf="razorpayEnabled && paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"   [class.disabled]="isClickedOnce"
+                                                    (click)="!isClickedOnce && saveCheckin('appt')"  >
+                                                   
+                                                </span>&nbsp;&nbsp;
+                                                <span type="button"  class="paytm-icon paymenticons"[class.disabled]="isClickedOnce" *ngIf="paytmEnabled && razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" (click)="!isClickedOnce && saveCheckin('appt','paytm')"  >
+                                                     
+                                                </span>
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="txt-align-center">
+                                            <button  class="cancelCheckinBtn mgn-m-up-10 next-button btn btn-primary font-weight-bold text-uppercase " *ngIf="razorpayEnabled && !paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"   [class.disabled]="isClickedOnce"
+                                                (click)="!isClickedOnce && saveCheckin('appt')"  >
+                                                CC/DC/UPI
+                                            </button>
+                                            <button type="button" [class.disabled]="isClickedOnce" class="cancelCheckinBtn mgn-m-up-10 next-button btn btn-primary font-weight-bold text-uppercase "*ngIf="paytmEnabled && !razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" (click)="!isClickedOnce && saveCheckin('appt','paytm')"  >
+                                                CC/DC/UPI  
+                                            </button>
+                                        </div>
                                             <div class="cancelpolicy  mgn-rt-5"
                                                 *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                 <div
@@ -1962,12 +2012,13 @@
                                         <div class="containerpayment" style="margin:20px;"
                                             *ngIf="sel_ser_det && sel_ser_det.isPrePayment==false && paymentLength==0|| (paymentDetails && paymentDetails.amountRequiredNow == 0)">
                                             <div class="prepayment-confirm">
-                                                <button type="button" (click)="saveCheckin('appt')"
-                                                    id="stepThreeConfirmButton"
-                                                    class="next-button btn btn-primary font-weight-bold  px-12 py-4"
-                                                    [disabled]="!checkPolicy && heartfulnessAccount">
-
-                                                    Confirm Appointment</button>
+                             <button type="button" [class.disabled]="isClickedOnce"
+                                                (click)="!isClickedOnce && saveCheckin('appt')" id="stepThreeConfirmButton"  class="next-button btn btn-primary font-weight-bold  px-12 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
+                                                    
+                                                     Confirm Appointment</button>
+                                                
+                                                
+                                            </div>
 
 
                                             </div>
@@ -2163,6 +2214,7 @@
                                             </div>
                                         </div> -->
                                     </div>
+                                </div>
                                 </div>
                             </div>
                         </div>
