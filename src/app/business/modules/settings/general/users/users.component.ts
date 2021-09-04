@@ -149,6 +149,7 @@ export class BranchUsersComponent implements OnInit {
     showcheckbox = false;
     addlocationcheck = false;
     loc_list: any = [];
+    locationsjson: any = [];
     locIds: any = [];
     newlyCreatedGroupId;
     showteams = false;
@@ -169,6 +170,7 @@ export class BranchUsersComponent implements OnInit {
         this.selectedTeam = 'all';
         this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
         this.user = this.groupService.getitemFromGroupStorage('ynw-user');
+        console.log(this.user);
         this.domain = this.user.sector;
         this.api_loading = true;
         this.getUsers();
@@ -333,6 +335,7 @@ export class BranchUsersComponent implements OnInit {
                                     this.user_list_dup = this.users_list;
                                     this.api_loading = false;
                                     this.loadComplete = true;
+                                    this.user_count_filterApplied = this.users_list.length;
                                 });
                         },
                         (error: any) => {
@@ -463,7 +466,11 @@ export class BranchUsersComponent implements OnInit {
             api_filter['pinCode-eq'] = this.filter.pinCode;
         }
         if (this.filter.userType !== '') {
-            api_filter['userType-eq'] = this.filter.userType;
+            if (this.filter.userType == 'ADMIN') {
+                api_filter['or=userType-eq'] =this.filter.userType+',isAdmin-eq='+true;  
+              } else {
+                api_filter['userType-eq'] = this.filter.userType;
+              }
         }
         if (this.filter.available !== '') {
             api_filter['available-eq'] = this.filter.available;
@@ -936,14 +943,18 @@ export class BranchUsersComponent implements OnInit {
         this.showcheckbox = true;
         this.addlocationcheck = true;
         this.showusers = true;
-        this.getProviderLocations();
+        // this.getProviderLocations();
     }
     getProviderLocations() {
         this.api_loading = true;
         this.provider_services.getProviderLocations()
             .subscribe(data => {
-                console.log(data);
-                this.loc_list = data;
+             this.locationsjson = data;
+            for (const loc of this.locationsjson) {
+              if (loc.status === 'ACTIVE') {
+                this.loc_list.push(loc);
+              }
+            }
                 this.api_loading = false;
                 console.log(this.loc_list);
             });
@@ -995,5 +1006,21 @@ export class BranchUsersComponent implements OnInit {
     }
     resetError() {
         this.apiError = '';
+    }
+    cancelLocationToUsers(){
+        this.apiError = '';
+    }
+    getBussLoc(bussloc){
+        for (let i = 0; i < bussloc.length; i++) {
+            const locations = this.locationsjson.filter(loc =>loc.id === bussloc[i]);
+            if (locations[0]) {
+                bussloc[i] = locations[0].place;
+            }
+        }
+        if (bussloc.length > 1) {
+            bussloc = bussloc.toString();
+            return bussloc.replace(/,/g, ", ");
+        }
+        return bussloc;
     }
 }

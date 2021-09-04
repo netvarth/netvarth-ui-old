@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild, Inject, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, ChangeDetectorRef, OnDestroy, NgZone } from '@angular/core';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CheckInHistoryServices } from '../../../../shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.service';
 import { projectConstants } from '../../../../app.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
 import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -19,6 +19,7 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { SubSink } from '../../../../../../node_modules/subsink';
+import { PaytmService } from '../../../../../app/shared/services/paytm.service';
 
 @Component({
     selector: 'app-order-bill',
@@ -103,6 +104,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
     billNoteExists = false;
     showBillNotes = false;
     paytmEnabled = false;
+    razorpayEnabled = false;
     type;
     accountId;
     pid;
@@ -129,6 +131,12 @@ export class OrderBillComponent implements OnInit, OnDestroy {
     jcreditamount: any;
     remainingadvanceamount;
     wallet: any;
+    splocation: any;
+    loadingPaytm = false;
+    isClickedOnce=false;
+    @ViewChild('consumer_orderbill') paytmview;
+    paymentmodes: any;
+    paymode = false;
     constructor(
         //   private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
@@ -148,6 +156,8 @@ export class OrderBillComponent implements OnInit, OnDestroy {
         private location: Location,
         private s3Processor: S3UrlProcessor,
         public router: Router,
+        private ngZone: NgZone,
+        private paytmService: PaytmService
     ) {
         this.subs.sink = this.activated_route.queryParams.subscribe(
             params => {
@@ -205,7 +215,11 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                     if (this.checkIn_type === 'order' && this.checkin.amountDue == 0 && this.checkin.orderStatus != 'Cancelled') {
                         this.billTitle = "Receipt";
                     }
-                    console.log(this.checkin);
+                    console.log(this.checkin.bill);
+                    if (this.checkin.bill.accountProfile.location && this.checkin.bill.accountProfile.location.place) {
+                        this.splocation = this.checkin.bill.accountProfile.location.place;
+                    }
+
                     //   this.getCouponList();
                     //   this.getproviderCouponList();
                     this.getWaitlistBill();
@@ -358,34 +372,38 @@ export class OrderBillComponent implements OnInit, OnDestroy {
     /**
      * To Get Payment Modes
      */
-    getPaymentModes() {
+     getPaymentModes() {
         this.paytmEnabled = false;
-        this.subs.sink = this.sharedServices.getPaymentModesofProvider(this.accountId)
+        this.razorpayEnabled = false;
+        this.sharedServices.getPaymentModesofProvider(this.accountId)
             .subscribe(
                 data => {
-                    this.payment_options = data;
-                    this.payment_options.forEach(element => {
-                        if (element.name === 'PPI') {
-                            this.paytmEnabled = true;
-                            return false;
-                        }
-                    });
-                    this.payModesQueried = true;
-                    if (this.payment_options.length <= 2) {
-                        this.payModesExists = false;
-                    } else {
-                        this.payModesExists = true;
-                    }
-                },
-                () => {
-                    this.payModesQueried = true;
+                  this.paymentmodes = data;
+                   console.log("paymode"+this.paymentmodes.payGateways);
+                for(let modes of this.paymentmodes){
+                   for(let gateway of modes.payGateways){
+                       if(gateway == 'PAYTM'){
+                        this.paytmEnabled = true;
+                       }
+                       if(gateway == 'RAZORPAY'){
+                        this.razorpayEnabled = true;
+                       }
+                   }
                 }
+                console.log(this.paymode);
+                if(this.razorpayEnabled ||this.paytmEnabled){
+                    this.paymode = true;
+                }
+                    
+                },
+                
             );
     }
     /**
      * Perform PayU Payment
      */
-    payuPayment() {
+    payuPayment(paymentType?) {
+        this.isClickedOnce=true;
         if (this.jcashamount > 0 && this.checkJcash) {
             this.sharedServices.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.bill_data.amountDue)
                 .subscribe(data => {
@@ -404,6 +422,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                         };
                         this.sharedServices.PayByJaldeewallet(postData)
                             .subscribe(data => {
+                                this.loadingPaytm = false;
                                 this.wallet = data;
                                 if (!this.wallet.isGateWayPaymentNeeded && this.wallet.isJCashPaymentSucess) {
                                     this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
@@ -411,6 +430,8 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                                 }
                             },
                                 error => {
+                                    this.isClickedOnce=false;
+                                    this.loadingPaytm = false;
                                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                                 });
                     } else if (this.remainingadvanceamount > 0 && this.checkJcash) {
@@ -421,15 +442,28 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                             'paymentPurpose': 'billPayment',
                             'isJcashUsed': true,
                             'isreditUsed': false,
-                            'isRazorPayPayment': true,
+                            'isRazorPayPayment': false,
                             'isPayTmPayment': false,
-                            'paymentMode': 'DC'
+                            'paymentMode': null
                         };
+                        if(paymentType == 'paytm'){
+                            postData.isPayTmPayment = true;
+                            postData.isRazorPayPayment = false;
+                            postData.paymentMode = "PPI";
+                        } else {
+                            postData.isPayTmPayment = false;
+                            postData.isRazorPayPayment = true;
+                            postData.paymentMode = "DC";
+                        }
                         this.sharedServices.PayByJaldeewallet(postData)
                             .subscribe((pData: any) => {
                                 this.origin = 'consumer';
                                 if (pData.isGateWayPaymentNeeded  && pData.isJCashPaymentSucess) {
-                                    this.paywithRazorpay(pData.response);
+                                    if(paymentType == 'paytm'){
+                                        this.payWithPayTM(pData.response);
+                                    }else{
+                                        this.paywithRazorpay(pData.response);
+                                    }
                                 }
                                 // if (pData.isGateWayPaymentNeeded == true && pData.isJCashPaymentSucess == true) {
                                 //     this.pay_data.uuid = this.uuid;
@@ -467,24 +501,35 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                                 // }
                             },
                                 error => {
+                                    this.isClickedOnce=false;
+                                    this.loadingPaytm = false;
                                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                                 });
                     }
+                },
+                error => {
+                    this.isClickedOnce=false;
+                    this.loadingPaytm = false;
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
         else {
             this.pay_data.uuid = this.uuid;
             this.pay_data.amount = this.bill_data.amountDue;
-            this.pay_data.paymentMode = 'DC';
+            this.pay_data.paymentMode = null;
             this.pay_data.accountId = this.accountId;
             this.pay_data.purpose = 'billPayment';
+            if(paymentType == 'paytm'){
+                this.pay_data.paymentMode = "PPI";
+            } else {
+                this.pay_data.paymentMode = "DC";
+            }
             this.resetApiError();
             if (this.pay_data.uuid != null &&
                 this.pay_data.paymentMode != null &&
                 this.pay_data.amount !== 0) {
                 this.api_success = Messages.PAYMENT_REDIRECT;
                 this.gateway_redirection = true;
-
 
                 this.subs.sink = this.sharedServices.consumerPayment(this.pay_data)
                     .subscribe(
@@ -494,15 +539,18 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                             if (this.pGateway === 'RAZORPAY') {
                                 this.paywithRazorpay(data);
                             } else {
-                                this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
-                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-                                setTimeout(() => {
-                                    this.document.getElementById('payuform').submit();
-                                }, 2000);
+                                this.payWithPayTM(data);
+                                // this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
+                                // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                                // setTimeout(() => {
+                                //     this.document.getElementById('payuform').submit();
+                                // }, 2000);
                             }
                         },
                         error => {
+                            this.isClickedOnce=false;
                             this.resetApiError();
+                            this.loadingPaytm = false;
                             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         }
                     );
@@ -519,12 +567,54 @@ export class OrderBillComponent implements OnInit, OnDestroy {
         this.razorModel.order_id = data.orderId;
         this.razorModel.name = data.providerName;
         this.razorModel.description = data.description;
+        this.isClickedOnce=false;
         //    this.razorModel.image = data.jaldeeLogo;
         // this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type);
         this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type , this.uuid , this.accountId);
 
     }
+    payWithPayTM(pData:any) {
+        this.isClickedOnce=true;
+        this.loadingPaytm = true;
+        this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
+    }
+    closeloading(){
+        this.isClickedOnce=false;
+        this.loadingPaytm = false; 
+        this.cdRef.detectChanges();
+}
+    transactionCompleted(response) {
+        if(response.STATUS == 'TXN_FAILURE'){
+            this.isClickedOnce=false;
+             this.loadingPaytm = false;
+            this.cdRef.detectChanges();
+            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+            const navigationExtras: NavigationExtras = {
+                queryParams: {
+                  uuid: this.uuid,
+                  accountId: this.accountId,
+                  type: 'order',
+                  'paidStatus': false
+                }
+              };
+            this.ngZone.run(() => this.router.navigate(['consumer', 'order', 'order-bill'], navigationExtras));
+        } else if(response.STATUS == 'TXN_SUCCESS'){
+            this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+            const navigationExtras: NavigationExtras = {
+                queryParams: {
+                  uuid: this.uuid,
+                  accountId: this.accountId,
+                  type: 'order',
+                  'paidStatus': true
+                }
+              };
+              this.ngZone.run(() => this.router.navigate(['consumer'] ,navigationExtras));
+        }
+       
+        //  this.ngZone.run(() => this.router.navigate(['consumer'] ,navigationExtras));
+    }
     paytmPayment() {
+        this.isClickedOnce=true;
         this.pay_data.uuid = this.uuid;
         this.pay_data.amount = this.bill_data.amountDue;
         this.pay_data.paymentMode = 'PPI';
@@ -546,6 +636,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                         }, 2000);
                     },
                     error => {
+                        this.isClickedOnce=false;
                         this.resetApiError();
                         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener, AfterViewInit, ViewChild, ElementRef, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, AfterViewInit, ViewChild, Inject, NgZone, ChangeDetectorRef } from '@angular/core';
 // import * as itemjson from '../../assets/json/item.json';
 // import * as itemjson from '../../../../assets/json/item.json';
 import { SharedFunctions } from '../../../functions/shared-functions';
@@ -31,6 +31,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
 import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.model';
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
+import { PaytmService } from '../../../../../app/shared/services/paytm.service';
 
 @Component({
   selector: 'app-checkout',
@@ -167,7 +168,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   cartDetails: any = [];
   listDetails: any = [];
   // @ViewChild('closeModal') private closeModal: ElementRef;
-   @ViewChild('firstStep', { static: false }) public nextbtn: ElementRef;
+  // @ViewChild('firstStep', { static: false }) public nextbtn: ElementRef;
   store_availables: any;
   home_availables: any;
   couponStatuses: any;
@@ -190,6 +191,14 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   prepayAmount: any;
   customId: any; // To know the source whether the router came from Landing page or not
   businessId: any;
+  @ViewChild('consumer_order') paytmview;
+  totalamountPay: any;
+  loadingPaytm = false;
+  isClickedOnce=false;
+  payment_options:  any = [];
+  paytmEnabled = false;
+  razorpayEnabled = false;
+  paymentmodes: any;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -209,6 +218,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
    @Inject(DOCUMENT) public document,
     public prefillmodel: RazorpayprefillModel,
     public razorpayService: RazorpayService,
+    private ngZone: NgZone,
+    private cdRef: ChangeDetectorRef,
+    private paytmService: PaytmService
   ) {
 
 
@@ -280,7 +292,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-
+    this.getPaymentModes();
     this.linear = false;
     this.orderList = this.lStorageService.getitemfromLocalStorage('order');
     if (this.orderList) {
@@ -398,6 +410,29 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   }
+  getPaymentModes() {
+    this.paytmEnabled = false;
+    this.razorpayEnabled = false;
+    this.shared_services.getPaymentModesofProvider(this.account_id)
+        .subscribe(
+            data => {
+              this.paymentmodes = data;
+               console.log("paymode"+this.paymentmodes.payGateways);
+            for(let modes of this.paymentmodes){
+               for(let gateway of modes.payGateways){
+                   if(gateway == 'PAYTM'){
+                    this.paytmEnabled = true;
+                   }
+                   if(gateway == 'RAZORPAY'){
+                    this.razorpayEnabled = true;
+                   }
+               }
+            }
+                
+            },
+            
+        );
+}
   ngAfterViewInit() {
     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
@@ -410,7 +445,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.customer_phoneNumber = this.customer_countrycode + activeUser.primaryPhoneNumber;
       console.log(this.customer_phoneNumber);
       this.getaddress();
-      this.nextbtn.nativeElement.click();
+      //this.nextbtn.nativeElement.click();
     } else {
       this.doLogin('consumer');
     }
@@ -507,14 +542,21 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   //     });
   // }
   getAmountToPay(paymentDetails) {
-    let totalamountPay=paymentDetails.advanceAmount;
-    if(this.jcashamount>0 && this.checkJcash){
-      totalamountPay=paymentDetails.advanceAmount-this.jcashamount;
-    }else{
-        totalamountPay=paymentDetails.advanceAmount;
-      }
+    this.totalamountPay=paymentDetails.advanceAmount;
+    //console.log(this.totalamountPay);
+    // let totalamountPay=paymentDetails.advanceAmount;
+    //if(this.jcashamount >0 && this.checkJcash){
+      //if(this.jcashamount>paymentDetails.advanceAmount){
+      //this.totalamountPay=this.jcashamount- paymentDetails.advanceAmount;
+      //}else{
+       // this.totalamountPay=paymentDetails.advanceAmount-this.jcashamount;
+      //}
+    //}else{
+     // this.totalamountPay=paymentDetails.advanceAmount;
+     // }
     
-   return totalamountPay; 
+   return this.totalamountPay; 
+   console.log(this.totalamountPay);
 
   }
   OnChangeJcash(event){
@@ -857,12 +899,14 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
 
-  confirm() {
+  confirm(paytype?) {
+    this.isClickedOnce=true;
     this.checkoutDisabled = true;
     const timeslot = this.nextAvailableTime.split(' - ');
     if (this.delivery_type === 'home') {
       if (this.added_address === null || this.added_address.length === 0) {
         this.checkoutDisabled = false;
+        this.isClickedOnce=false;
         this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
         return;
       } else {
@@ -908,7 +952,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             post_Data['useCredit'] = this.checkJcredit
             post_Data['useJcash'] = this.checkJcash
           }
-          this.confirmOrder(post_Data);
+          this.confirmOrder(post_Data,paytype);
         } else {
           const post_Data = {
             'homeDelivery': true,
@@ -936,13 +980,14 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             post_Data['useCredit'] = this.checkJcredit
             post_Data['useJcash'] = this.checkJcash
           }
-          this.confirmOrder(post_Data);
+          this.confirmOrder(post_Data,paytype);
         }
       }
     }
     if (this.delivery_type === 'store') {
       if (!this.storeContact.value.phone || !this.storeContact.value.email) {
         this.checkoutDisabled = false;
+        this.isClickedOnce=false;
         this.snackbarService.openSnackBar('Please provide Contact Details', { 'panelClass': 'snackbarerror' });
         return;
       } else {
@@ -976,7 +1021,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             post_Data['useCredit'] = this.checkJcredit
             post_Data['useJcash'] = this.checkJcash
           }
-          this.confirmOrder(post_Data);
+          this.confirmOrder(post_Data,paytype);
         } else {
           const post_Data = {
             'storePickup': true,
@@ -1003,7 +1048,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             post_Data['useCredit'] = this.checkJcredit
             post_Data['useJcash'] = this.checkJcash
           }
-          this.confirmOrder(post_Data);
+          this.confirmOrder(post_Data,paytype);
         }
       }
     }
@@ -1030,7 +1075,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         this.sharedFunctionobj.sendMessage(pdata);
         this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
         if (this.isLoggedIn()) {
-          this.nextbtn.nativeElement.click();
+         // this.nextbtn.nativeElement.click();
         }
 
       } else if (result === 'showsignup') {
@@ -1038,7 +1083,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
-  confirmOrder(post_Data) {
+  confirmOrder(post_Data,paytype?) {
     const dataToSend: FormData = new FormData();
     if (this.orderType === 'SHOPPINGLIST') {
       const captions = {};
@@ -1057,12 +1102,18 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_services.CreateConsumerOrder(this.account_id, dataToSend)
         .subscribe(data => {
           const retData = data;
+          if(this.customId){
+            console.log("businessid"+this.account_id);
+              this.shared_services.addProvidertoFavourite(this.account_id)
+                .subscribe(() => {
+                });
+        }
           this.checkoutDisabled = false;
-          let prepayAmount;
+          // let prepayAmount;
           const uuidList = [];
           Object.keys(retData).forEach(key => {
             if (key === '_prepaymentAmount') {
-              prepayAmount = retData['_prepaymentAmount'];
+              this.prepayAmount = retData['_prepaymentAmount'];
             } else {
               this.trackUuid = retData[key];
               uuidList.push(retData[key]);
@@ -1078,18 +1129,18 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           //   }
           // };
 
-          if (this.catalog_details.paymentType !== 'NONE' && prepayAmount > 0) {
+          if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
               .subscribe(res => {
                 if (this.jcashamount > 0 && this.checkJcash) {
                   this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.catalog_details.advanceAmount)
                     .subscribe(data => {
                       this.remainingadvanceamount = data;
-                      this.payuPayment();
+                      this.payuPayment(paytype);
                     });
                 }
                 else {
-                  this.payuPayment();
+                  this.payuPayment(paytype);
                 }
 
                 // this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
@@ -1116,6 +1167,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         },
           error => {
+            this.isClickedOnce=false;
             this.checkoutDisabled = false;
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
@@ -1127,6 +1179,12 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_services.CreateConsumerOrder(this.account_id, dataToSend)
         .subscribe(data => {
           const retData = data;
+          if(this.customId){
+            console.log("businessid"+this.account_id);
+              this.shared_services.addProvidertoFavourite(this.account_id)
+                .subscribe(() => {
+                });
+        }
           this.checkoutDisabled = false;
           const uuidList = [];
           Object.keys(retData).forEach(key => {
@@ -1153,11 +1211,11 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
                   this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.cartDetails.advanceAmount)
                     .subscribe(data => {
                       this.remainingadvanceamount = data;
-                      this.payuPayment();
+                      this.payuPayment(paytype);
                     });
                 }
                 else {
-                  this.payuPayment();
+                  this.payuPayment(paytype);
                 }
                 // this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
               });
@@ -1183,6 +1241,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         },
           error => {
+            this.isClickedOnce=false;
             this.checkoutDisabled = false;
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
@@ -1407,14 +1466,16 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         console.log('less than 30');
         console.log(this.store_availables);
         const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
-        const availability = this.store_availables.filter(obj => obj.date === sel_check_date);
-        if (availability.length > 0) {
-          this.isfutureAvailableTime = true;
-          this.nextAvailableTimeQueue = availability[0].timeSlots;
-          this.queue = availability[0].timeSlots[0];
-          this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' + availability[0].timeSlots[0]['eTime'];
-        } else {
-          this.isfutureAvailableTime = false;
+        if(this.store_availables){
+          const availability = this.store_availables.filter(obj => obj.date === sel_check_date);
+          if (availability.length > 0) {
+            this.isfutureAvailableTime = true;
+            this.nextAvailableTimeQueue = availability[0].timeSlots;
+            this.queue = availability[0].timeSlots[0];
+            this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' + availability[0].timeSlots[0]['eTime'];
+          } else {
+            this.isfutureAvailableTime = false;
+          }
         }
       }
       else {
@@ -1625,9 +1686,13 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
   }
-  payuPayment() {
+  payuPayment(paymenttype?) {
     let paymentWay;
-    paymentWay = 'DC';
+    if(paymenttype == 'paytm'){
+        paymentWay = 'PPI';
+    } else {
+        paymentWay = 'DC';
+    }
     this.makeFailedPayment(paymentWay);
   }
   makeFailedPayment(paymentMode) {
@@ -1698,6 +1763,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         },
           error => {
+            this.isClickedOnce=false;
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           });
     }
@@ -1710,19 +1776,33 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         'paymentPurpose': 'prePayment',
         'isJcashUsed': true,
         'isreditUsed': false,
-        'isRazorPayPayment': true,
+        'isRazorPayPayment': false,
         'isPayTmPayment': false,
-        'paymentMode': 'DC'
+        'paymentMode': null
       };
+      if(paymentMode == 'PPI'){
+        postData.isPayTmPayment = true;
+        postData.isRazorPayPayment = false;
+        postData.paymentMode = "PPI";
+    } else {
+        postData.isPayTmPayment = false;
+        postData.isRazorPayPayment = true;
+        postData.paymentMode = "DC";
+    }
 
       this.shared_services.PayByJaldeewallet(postData)
         .subscribe((pData: any) => {
 
           if (pData.isGateWayPaymentNeeded == true && pData.isJCashPaymentSucess == true) {
-            this.paywithRazorpay(pData.response);
+            if(paymentMode == 'PPI'){
+              this.payWithPayTM(pData.response);
+          }else{
+              this.paywithRazorpay(pData.response);
+          }
           }
         },
           error => {
+            this.isClickedOnce=false;
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           });
 
@@ -1736,21 +1816,24 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             this.paywithRazorpay(pData);
           } else {
             if (pData['response']) {
-              this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-              this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-              setTimeout(() => {
-                if (paymentMode === 'DC') {
-                  this.document.getElementById('payuform').submit();
-                } else {
-                  this.document.getElementById('paytmform').submit();
-                }
-              }, 2000);
+              this.payWithPayTM(pData);
+              // this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+              // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+              // setTimeout(() => {
+              //   if (paymentMode === 'DC') {
+              //     this.document.getElementById('payuform').submit();
+              //   } else {
+              //     this.document.getElementById('paytmform').submit();
+              //   }
+              // }, 2000);
             } else {
+              this.isClickedOnce=false;
               this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
             }
           }
         },
           error => {
+            this.isClickedOnce=false;
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
 
           });
@@ -1766,9 +1849,46 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.razorModel.amount = pData.amount;
     this.razorModel.order_id = pData.orderId;
     this.razorModel.name = pData.providerName;
+    this.isClickedOnce=false;
     this.razorModel.description = pData.description;
     this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'order_prepayment', this.trackUuid, this.livetrack, this.account_id, this.cartDetails.advanceAmount , this.customId);
     // this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'checkin_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList, this.customId);
 
   }
+  payWithPayTM(pData:any) {
+    this.loadingPaytm = true;
+    this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
+}
+transactionCompleted(response) {
+     if(response.STATUS == 'TXN_SUCCESS'){
+      this.isClickedOnce=false;
+      this.lStorageService.removeitemfromLocalStorage('order_sp');
+      this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+      this.lStorageService.removeitemfromLocalStorage('order_spId');
+      this.lStorageService.removeitemfromLocalStorage('order');
+      this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+      let queryParams = {
+          'source': 'order',
+           };
+          if(this.customId) {
+            queryParams['customId']= this.customId;
+            queryParams['accountId']= this.account_id;
+           }
+         let navigationExtras: NavigationExtras = {
+            queryParams: queryParams
+          }
+         this.ngZone.run(() => this.router.navigate(['consumer'] ,navigationExtras));
+   } else if(response.STATUS == 'TXN_FAILURE'){
+      this.isClickedOnce=false;
+      this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+      this.ngZone.run(() => this.router.navigate(['consumer']));
+   }
+}
+closeloading(){
+  this.isClickedOnce=false;
+  this.loadingPaytm = false; 
+  this.cdRef.detectChanges();
+  this.ngZone.run(() => this.router.navigate(['consumer']));
+  this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+}
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject, OnDestroy, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Inject, OnDestroy, ViewChild, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DOCUMENT, Location } from '@angular/common';
@@ -24,6 +24,7 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { SubSink } from '../../../../../../node_modules/subsink';
+import { PaytmService } from '../../../../shared/services/paytm.service';
 @Component({
     selector: 'app-consumer-donation',
     templateUrl: './consumer-donation.component.html',
@@ -230,6 +231,13 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     @ViewChild('closebutton') closebutton;
     accountId;
     readMore = false;
+    @ViewChild('consumer_donation') paytmview;
+    loadingPaytm = false;
+    isClickedOnce=false;
+    payment_options:  any = [];
+    paytmEnabled = false;
+    razorpayEnabled = false;
+    paymentmodes: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -248,7 +256,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         public prefillmodel: RazorpayprefillModel,
         public winRef: WindowRefService,
         private location: Location,
-        private s3Processor: S3UrlProcessor) {
+        private s3Processor: S3UrlProcessor,
+        private paytmService: PaytmService,
+        private cdRef: ChangeDetectorRef,
+        private ngZone: NgZone) {
         this.subs.sink = this.route.queryParams.subscribe(
             params => {
                 // tslint:disable-next-line:radix
@@ -284,6 +295,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.main_heading = this.checkinLabel; // 'Check-in';
         this.maxsize = 1;
         this.step = 1;
+        this.getPaymentModes();
         this.getProfile();
         this.gets3curl();
         this.getFamilyMembers();
@@ -315,6 +327,29 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         // this.hold_sel_checkindate = this.sel_checkindate;
         // this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
         this.revealphonenumber = true;
+    }
+    getPaymentModes() {
+        this.paytmEnabled = false;
+        this.razorpayEnabled = false;
+        this.shared_services.getPaymentModesofProvider(this.account_id)
+            .subscribe(
+                data => {
+                  this.paymentmodes = data;
+                   console.log("paymode"+this.paymentmodes.payGateways);
+                for(let modes of this.paymentmodes){
+                   for(let gateway of modes.payGateways){
+                       if(gateway == 'PAYTM'){
+                        this.paytmEnabled = true;
+                       }
+                       if(gateway == 'RAZORPAY'){
+                        this.razorpayEnabled = true;
+                       }
+                   }
+                }
+                    
+                },
+                
+            );
     }
     createForm() {
         this.searchForm = this.fb.group({
@@ -488,6 +523,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
 
     // }
     payuPayment() {
+        this.isClickedOnce=true;
         this.resetApi();
         if (this.sel_ser) {
 
@@ -500,10 +536,12 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.donate(paymentWay);
     }
     paytmPayment() {
+        this.isClickedOnce=true;
         this.resetApi();
         if (this.sel_ser) {
 
         } else {
+            this.isClickedOnce=false;
             this.snackbarService.openSnackBar('Donation service is not found', { 'panelClass': 'snackbarerror' });
             return;
         }
@@ -545,6 +583,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         if (this.api_error === null && this.donationAmount) {
             this.addDonationConsumer(post_Data, paymentWay);
         } else {
+            this.isClickedOnce=false;
             this.snackbarService.openSnackBar('Please enter valid donation amount', { 'panelClass': 'snackbarerror' });
         }
     }
@@ -553,6 +592,13 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.addCustomerDonation(post_Data, this.account_id)
             .subscribe(data => {
                 this.uid = data['uid'];
+                if(this.customId){
+                    console.log("businessid"+this.account_id);
+                      this.shared_services.addProvidertoFavourite(this.account_id)
+                        .subscribe(() => {
+                        });
+                   
+                }
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.submitQuestionnaire(this.uid, post_Data, paymentWay);
                 } else {
@@ -560,6 +606,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 }
             },
                 error => {
+                    this.isClickedOnce=false;
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
@@ -585,24 +632,28 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                     this.paywithRazorpay(pData);
                 } else {
                     if (pData['response']) {
-                        this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-                        setTimeout(() => {
-                            if (paymentWay === 'DC') {
-                                this.document.getElementById('payuform').submit();
-                            } else {
-                                this.document.getElementById('paytmform').submit();
-                            }
-                        }, 2000);
+                        this.payWithPayTM(pData);
+                        // this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+                        // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                        // setTimeout(() => {
+                        //     if (paymentWay === 'DC') {
+                        //         this.document.getElementById('payuform').submit();
+                        //     } else {
+                        //         this.document.getElementById('paytmform').submit();
+                        //     }
+                        // }, 2000);
                     } else {
+                        this.isClickedOnce=false;
                         this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
                     }
                 }
             },
                 error => {
+                    this.isClickedOnce=false;
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
+
     paywithRazorpay(pData: any) {
         this.prefillmodel.name = pData.consumerName;
         this.prefillmodel.email = pData.ConsumerEmail;
@@ -613,8 +664,57 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
+        this.isClickedOnce=false;
         this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uid, null, this.account_id, null, null, this.customId);
     }
+    payWithPayTM(pData:any) {
+        this.loadingPaytm = true;
+        this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
+    }
+    transactionCompleted(response) {
+        if(response.STATUS == 'TXN_SUCCESS'){
+            this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+            let queryParams = {
+                account_id: this.account_id,
+                uuid: this.uid,
+                "details": response
+                };
+                if(this.customId) {
+                queryParams['customId']= this.customId;
+                }
+                let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
+                };
+                this.ngZone.run(() => this.router.navigate(['consumer', 'donations', 'confirm'], navigationExtras));
+        } else if(response.STATUS == 'TXN_FAILURE'){
+            this.isClickedOnce=false;
+            this.loadingPaytm = false;
+                this.cdRef.detectChanges();
+                this.ngZone.run(() => {
+                    const snackBar = this.snackbarService.openSnackBar("Transaction Failed", { 'panelClass': 'snackbarerror' });
+                    snackBar.onAction().subscribe(() => {
+                      snackBar.dismiss();
+                    })
+                  });
+        
+           
+         }
+    }
+    closeloading(){
+        this.isClickedOnce=false;
+        this.loadingPaytm = false; 
+        this.cdRef.detectChanges();
+        this.ngZone.run(() => {
+            const snackBar =  this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+            snackBar.onAction().subscribe(() => {
+              snackBar.dismiss();
+            })
+          });
+       
+    }
+    onReloadPage() {
+        window.location.reload();
+     }
     addEmail() {
         this.resetApiErrors();
         this.resetApi();
@@ -1103,6 +1203,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             this.consumerPayment(this.uid, post_Data, paymentWay);
         },
             error => {
+                this.isClickedOnce=false;
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             });
     }

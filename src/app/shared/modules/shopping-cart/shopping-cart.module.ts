@@ -17,6 +17,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from '../common/material.module';
 import { FormMessageDisplayModule } from '../form-message-display/form-message-display.module';
 import { GalleryModule } from '@ks89/angular-modal-gallery';
+import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
 @NgModule({
     imports: [
       CommonModule,
@@ -33,7 +34,8 @@ import { GalleryModule } from '@ks89/angular-modal-gallery';
       ReactiveFormsModule,
       MaterialModule,
       FormMessageDisplayModule,
-      GalleryModule
+      GalleryModule,
+      LoadingSpinnerModule
     ],
     exports: [
       ShoppingCartRoutingModule,

@@ -99,6 +99,12 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   internalStatuslog: any = [];
   statusLog: any = [];
   questionnaires: any = [];
+  teams: any;
+  waitlistModes = [
+    { mode: 'WALK_IN_CHECKIN', value: 'Walk in ' },
+    { mode: 'PHONE_CHECKIN', value: 'Phone in ' },
+    { mode: 'ONLINE_CHECKIN', value: 'Online ' },
+  ];
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -141,6 +147,19 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       this.goBack();
     }
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
+    if (this.userDet.accountType === 'BRANCH') {
+      this.getTeams().then((data) => {
+        this.teams = data;
+        console.log(this.teams);
+      });
+    }
+
+  }
+  getWaitListMode(mode) {
+    let currentmode=[];
+    currentmode=this.waitlistModes.filter(obj=>obj.mode===mode);
+    return currentmode[0].value;
+
   }
   ngOnDestroy() {
     if (this.sendmsgdialogRef) {
@@ -685,4 +704,22 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       return questr[0].status;
     }
   }
+  getTeams() {
+    const _this = this;
+    return new Promise<void>(function (resolve) {
+      _this.provider_services.getTeamGroup().subscribe(data => {
+        _this.teams = data;
+      },
+        () => {
+          resolve();
+        });
+    });
+  }
+  getUsersList(teamid) {
+    const userObject = this.teams.filter(user => parseInt(user.id) === teamid);
+    if (userObject[0] && userObject[0].name) {
+      return userObject[0].name;
+    }
+  }
+
 }

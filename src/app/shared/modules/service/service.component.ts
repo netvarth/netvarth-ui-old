@@ -1087,5 +1087,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
         document.body.removeChild(selBox);
         this.snackbarService.openSnackBar('Link copied to clipboard');
     }
+    isNumericSign(evt) {
+        return this.sharedFunctons.isNumericSign(evt);
+    }
 }
 

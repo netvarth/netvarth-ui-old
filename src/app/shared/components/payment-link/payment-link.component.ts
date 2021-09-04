@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, NgZone } from '@angular/core';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { SharedServices } from '../../services/shared-services';
@@ -10,10 +10,14 @@ import { WindowRefService } from '../../services/windowRef.service';
 import { Razorpaymodel } from '../razorpay/razorpay.model';
 import { WordProcessor } from '../../services/word-processor.service';
 import { GroupStorageService } from '../../services/group-storage.service';
+import { PaytmService } from '../../services/paytm.service';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   'selector': 'app-payment-link',
-  'templateUrl': './payment-link.component.html'
+  'templateUrl': './payment-link.component.html',
+  'styleUrls': ['./payment-link.component.css']
 })
 
 export class PaymentLinkComponent implements OnInit {
@@ -107,8 +111,8 @@ export class PaymentLinkComponent implements OnInit {
   accountId: any;
   data: any;
   razorpayDetails: any = [];
-  razorpay_order_id: any;
-  razorpay_payment_id: any;
+  order_id: any;
+  payment_id: any;
   razorpay_signature: any;
   paidStatus = 'false';
   providername: any;
@@ -117,16 +121,23 @@ export class PaymentLinkComponent implements OnInit {
   username: any;
   provider_label: any;
   customer: any;
-
+  loadingPaytm = false;
+  isClickedOnce=false;
+  @ViewChild('consumer_paylink') paytmview;
+  razorpayEnabled = false;
   constructor(
     public provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
     public sharedfunctionObj: SharedFunctions,
     public sharedServices: SharedServices,
     public razorpayService: RazorpayService,
+    private paytmService: PaytmService,
     public prefillmodel: RazorpayprefillModel,
     public winRef: WindowRefService,
     private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
+    private cdRef: ChangeDetectorRef,
+    private ngZone: NgZone,
     private groupService: GroupStorageService) {
     this.activated_route.params.subscribe(
       qparams => {
@@ -195,10 +206,13 @@ export class PaymentLinkComponent implements OnInit {
   }
   getBillDateandTime() {
     if (this.bill_data.hasOwnProperty('createdDate')) {
+      this.billdate = this.bill_data.createdDate;
       const datearr = this.bill_data.createdDate.split(' ');
       const billdatearr = datearr[0].split('-');
-      this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
+      // this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
       this.billtime = datearr[1] + ' ' + datearr[2];
+      this.billdate = billdatearr[0] + '-' + billdatearr[1] + '-' + billdatearr[2];
+
     }
     if (this.bill_data.hasOwnProperty('gstNumber')) {
       this.gstnumber = this.bill_data.gstNumber;
@@ -242,25 +256,38 @@ export class PaymentLinkComponent implements OnInit {
   }
 
 
-  pay() {
+  pay(paytype?) {
+    this.isClickedOnce=true;
+    let paymentWay;
+        if(paytype == 'paytm'){
+            paymentWay = 'PPI';
+        } else {
+            paymentWay = 'DC';
+        }
     const postdata = {
       'uuid': this.genid,
       'amount': this.amountDue,
       'purpose': 'billPayment',
       'source': 'Desktop',
-      'paymentMode': 'DC'
+      'paymentMode': paymentWay
     };
+    
     this.provider_services.linkPayment(postdata)
       .subscribe((data: any) => {
+        console.log(data);
         this.checkIn_type = 'payment_link';
         this.origin = 'consumer';
-        this.pGateway = data.paymentGateway;
+        this.pGateway = data.paymentGateway || 'PAYTM';
         if (this.pGateway === 'RAZORPAY') {
           this.paywithRazorpay(data);
+        }else {
+          this.payWithPayTM(data);
         }
       },
         error => {
-          this.api_error = this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' };
+          this.isClickedOnce=false;
+         // this.api_error = this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' };
+         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
   paywithRazorpay(data: any) {
@@ -273,12 +300,13 @@ export class PaymentLinkComponent implements OnInit {
     this.razorModel.order_id = data.orderId;
     this.razorModel.name = data.providerName;
     this.razorModel.description = data.description;
+    this.isClickedOnce=false;
     this.razorpayService.payBillWithoutCredentials(this.razorModel).then(
       (response: any) => {
         if (response !== 'failure') {
           this.paidStatus = 'true';
-          this.razorpay_order_id = response.razorpay_order_id;
-          this.razorpay_payment_id = response.razorpay_payment_id;
+          this.order_id = response.razorpay_order_id;
+          this.payment_id = response.razorpay_payment_id;
           // this.razorpay_signature = response.razorpay_signature;
         } else {
           this.paidStatus = 'false';
@@ -286,6 +314,37 @@ export class PaymentLinkComponent implements OnInit {
       }
     );
   }
+  payWithPayTM(pData:any) {
+    this.isClickedOnce=true;
+    this.loadingPaytm = true;
+    this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
+}
+transactionCompleted(response) {
+  if(response.STATUS == 'TXN_SUCCESS'){
+    this.paidStatus = 'true';
+    this.order_id = response.ORDERID;
+    this.payment_id = response.TXNID;
+    this.loadingPaytm = false; 
+    this.cdRef.detectChanges();
+    this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+    this.ngZone.run(() =>console.log('Transaction success') );
+  
+} else if(response.STATUS == 'TXN_FAILURE'){
+  this.isClickedOnce=false;
+  this.paidStatus = 'false';
+  this.loadingPaytm = false; 
+  this.cdRef.detectChanges();
+  this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+  this.ngZone.run(() =>console.log('Transaction failed') );
+}
+}
+closeloading(){
+  this.isClickedOnce=false;
+  this.loadingPaytm = false; 
+  this.cdRef.detectChanges();
+  this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+  this.ngZone.run(() => console.log('cancelled'));
+}
   billview() {
     this.showbill = !this.showbill;
   }

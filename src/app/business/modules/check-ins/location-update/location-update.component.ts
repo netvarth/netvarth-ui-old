@@ -75,6 +75,7 @@ export class LocationUpdateComponent implements OnInit {
   contactDetailsdialogRef: any;
   groups: any;
   users: any = [];
+  checkin: any;
   constructor(
     private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
@@ -92,6 +93,19 @@ export class LocationUpdateComponent implements OnInit {
     });
     this.activated_route.queryParams.subscribe(qparams => {
       this.source = qparams.source;
+      if (this.source === 'appt'){
+        this.getApptDetails().then(result => {
+          console.log(result);
+          this.checkin = result;
+          this.getProviderLocations();
+        })
+      } else if (this.source == 'checkin'){
+        this.getCheckinDetails().then(result => {
+          console.log(result);
+          this.checkin = result;
+          this.getProviderLocations();
+        })
+      }
     });
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.accountType = this.user.accountType;
@@ -104,7 +118,7 @@ export class LocationUpdateComponent implements OnInit {
       this.getUser();
     }
     // this.getProviders();
-    this.getProviderLocations();
+    // this.getProviderLocations();
   }
   getProviderLocations() {
     this.provider_services.getProviderLocations().subscribe((data: any) => {
@@ -118,16 +132,35 @@ export class LocationUpdateComponent implements OnInit {
   }
   setServiceDataSource(result) {
     const service_list: any = [];
+    console.log(this.checkin);
     result.forEach(serviceObj => {
-      service_list.push(
-        {
-          // 'description': serviceObj.description,
-          'id': serviceObj.id,
-          'name': serviceObj.place,
-          // 'size': serviceObj.size ,      
-          'status': serviceObj.status,
-          // 'users': serviceObj.users
-        });
+      console.log(this.checkin);
+      if((this.source == 'checkin')){
+        if(this.checkin.queue.location.id !== serviceObj.id) {
+          service_list.push(
+            {
+              // 'description': serviceObj.description,
+              'id': serviceObj.id,
+              'name': serviceObj.place,
+              // 'size': serviceObj.size ,      
+              'status': serviceObj.status,
+              // 'users': serviceObj.users
+            });
+          }
+      }
+      else{
+        if(this.checkin.location.id !== serviceObj.id) {
+          service_list.push(
+            {
+              // 'description': serviceObj.description,
+              'id': serviceObj.id,
+              'name': serviceObj.place,
+              // 'size': serviceObj.size ,      
+              'status': serviceObj.status,
+              // 'users': serviceObj.users
+            });
+          }
+      }
     });
     return service_list;
   }
@@ -280,5 +313,28 @@ export class LocationUpdateComponent implements OnInit {
         });
     });
   }
+  getApptDetails() {
+    return new Promise((resolve, reject) => { 
+      this.provider_services.getAppointmentById(this.uuid).subscribe(
+        (data: any) => {
+          resolve(data);
+        },
+        error => {
+          reject(error);
+          this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+        });
+    });
+   }
+   getCheckinDetails() {
+    return new Promise((resolve, reject) => { 
+      this.provider_services.getProviderWaitlistDetailById(this.uuid).subscribe(
+        (data: any) => {
+          resolve(data);
+        },
+        error => {
+          reject(error);
+          this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+        });
+    });
+  }
 }
-

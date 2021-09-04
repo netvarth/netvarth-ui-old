@@ -87,7 +87,7 @@ app-appt-card, app-wl-card {
   }
   
   [class~=modal] {
-    z-index: 1;
+    z-index: 1000;
   }
   
   [class~=modal] {

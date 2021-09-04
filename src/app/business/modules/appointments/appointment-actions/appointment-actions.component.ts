@@ -119,6 +119,7 @@ export class AppointmentActionsComponent implements OnInit {
         private dateTimeProcessor: DateTimeProcessor,
         private provider_shared_functions: ProviderSharedFuctions,
         public shared_services: SharedServices,
+        // public _location: Location,
         public dialogRef: MatDialogRef<AppointmentActionsComponent>) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
@@ -229,7 +230,8 @@ export class AppointmentActionsComponent implements OnInit {
             }
             checkin_html += '</td></tr>';
             checkin_html += '<tr><td colspan="3" style="text-align:center">' + bname.charAt(0).toUpperCase() + bname.substring(1) + '</td></tr>';
-            checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.appt.location.place + '</td></tr>';
+            checkin_html += '<tr><td width="48%" align="right">Location</td><td>:</td><td>' + this.appt.location.place + '</td></tr>';
+            // checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.appt.location.place + '</td></tr>';
             checkin_html += '</thead><tbody>';
             if (fname !== '' || lname !== '') {
                 checkin_html += '<tr><td width="48%" align="right">' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + '</td><td>:</td><td>' + fname + ' ' + lname + '</td></tr>';
@@ -442,7 +444,7 @@ export class AppointmentActionsComponent implements OnInit {
                 this.provider_services.unassignTeamAppointment(post_data)
                     .subscribe(
                         data => {
-                            this.snackbarService.openSnackBar('Tam unassigned successfully', { 'panelclass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar('Team unassigned successfully', { 'panelclass': 'snackbarerror' });
                             this.dialogRef.close('reload');
                         },
                         error => {
@@ -754,6 +756,7 @@ export class AppointmentActionsComponent implements OnInit {
                 () => {
                     this.snackbarService.openSnackBar('Appointment rescheduled to ' + this.dateformat.transformToMonthlyDate(this.sel_checkindate));
                     this.dialogRef.close('reload');
+                    // this._location.back();
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

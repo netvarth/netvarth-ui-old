@@ -39,6 +39,7 @@ const routes: Routes = [
       { path: 'retailStores', loadChildren: () => import('./modules/learnmore/retailstores/retailstores.module').then(m => m.RetailStoresModule) },
       { path: 'otherMiscellaneous', loadChildren: () => import('./modules/learnmore/otherMiscellaneous/otherMiscellaneous.module').then(m => m.OtherMiscellaneousModule) },
       { path: 'educationalInstitution', loadChildren: () => import('./modules/learnmore/educationInstitution/education.module').then(m => m.EducationModule) },
+      { path: 'sportsAndEntertainement', loadChildren: () => import('./modules/learnmore/sports/sports.module').then(m => m.SportsModule) },
       { path: 'license', loadChildren: () => import('../business/modules/license/license.module').then(m => m.LicenseModule) },
       { path: 'reports', loadChildren: () => import('../business/modules/reports/reports.module').then(m => m.ReportsModule) },
       { path: 'auditlog', component: ProviderSystemAuditLogComponent },

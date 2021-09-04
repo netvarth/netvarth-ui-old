@@ -1038,6 +1038,8 @@ export const projectConstantsLocal = {
     APP_SIGNUP: 'APP SIGNUP',
 
   },
-  UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/ui/scale/config/"
+  PAYTMLOCAL_URL: 'https://securegw-stage.paytm.in',
+  PAYTM_URL: 'https://securegw.paytm.in',
+  UIS3PATH: "https://jaldeeuiscale.s3.ap-south-1.amazonaws.com/"
   // UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/ui/prod/config/"
 };

@@ -11,7 +11,7 @@
     <!-- step 1 for mobile number entering  -->
     
     <div class="cust-loginpge-color" >
-        <div class="mat-dialog-content" style="overflow: auto !important;">
+        <div class="col-md-12 col-xs-12 col-sm-12" style="overflow: auto !important;">
             <div *ngIf="hideLanguages">
                 <!-- <div class="">
                         <label class="col-form-label" for="name">Service Provider Name : </label>
@@ -83,9 +83,9 @@
                         <label class="col-form-label" for="gender" >{{gender_cap}} <span class="red">*</span></label>
                         <br />
                         <mat-radio-group formControlName="gender">
-                            <mat-radio-button value="male">Male</mat-radio-button>
-                            <mat-radio-button value="female">Female</mat-radio-button>
-                            <mat-radio-button value="other">Other</mat-radio-button>
+                            <mat-radio-button  value="male">Male</mat-radio-button>
+                            <mat-radio-button class="mgn-lt-10"value="female">Female</mat-radio-button>
+                            <mat-radio-button class="mgn-lt-10" value="other">Other</mat-radio-button>
                         </mat-radio-group>
                         <app-field-error-display [displayError]="fed_service.isFieldValid(virtualForm,'gender')"
                         errorMsg="Please select the gender.">
@@ -149,7 +149,7 @@
                     <mat-radio-group aria-label="Select an option" (change)="onChange($event)" class="mgn-up-5"
                         formControlName="islanguage">
                         <mat-radio-button value="yes">English</mat-radio-button>
-                        <mat-radio-button value="no">Other Languages</mat-radio-button>
+                        <mat-radio-button class="mgn-lt-10" value="no">Other Languages</mat-radio-button>
                     </mat-radio-group>
                     <!-- </mat-form-field> -->
                     <div style="display: flex; justify-content: space-between;">
@@ -179,7 +179,7 @@
                             <mat-radio-group aria-label="Select an option" (change)="onChange($event)" class="mgn-up-5"
                                 formControlName="islanguage">
                                 <mat-radio-button value="yes">English</mat-radio-button>
-                                <mat-radio-button value="no">Other Languages</mat-radio-button>
+                                <mat-radio-button class="mgn-lt-10" value="no">Other Languages</mat-radio-button>
                             </mat-radio-group>
                             <!-- </mat-form-field> -->
                             <div style="display: flex; justify-content: space-between;">
@@ -226,7 +226,7 @@
             </div>
            
             <ng-container *ngIf="hideLanguages">
-                    <label class="col-form-label" for="name">Contact Information </label>
+                    <label class="col-form-label mgn-up-10" for="name">Contact Information </label>
     
                     <div class="form-level-settings smallfont">
                         Provide your contact info  for alerts,status updates and for any other booking related communications

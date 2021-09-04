@@ -305,7 +305,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()"
             <div class="input-group">
               <div class="input-group-prepend" *ngIf="tool_name === 'WhatsApp' || tool_name === 'Phone'">
                 <input type="text" style="max-width: 38px; padding: 0px !important;" class="serv-county-code" value="{{tool_code}}"
-                  [(ngModel)]="tool_code" [ngModelOptions]="{standalone: true}">
+                  [(ngModel)]="tool_code" [ngModelOptions]="{standalone: true}"  (keypress)="isNumericSign($event)">
               </div>
               <input type="text" style="padding: 0px !important;" type="text" class="form-control serv-phone-code"
                 autocomplete="off" value="{{tool_id}}" [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}"
@@ -441,7 +441,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()"
             <mat-form-field>
               <textarea matInput class="form-control" id="paymentDescription" placeholder="{{'Any disclaimer note for price *'}}"
                 formControlName="paymentDescription"
-                maxlength="500"> </textarea>
+                maxlength="500" rows="6" cols="1" > </textarea>
             </mat-form-field>
            
           </div>

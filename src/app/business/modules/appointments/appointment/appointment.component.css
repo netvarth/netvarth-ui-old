@@ -6,3 +6,39 @@
     height:35px !important;
     border-left: 1px solid #ccc !important;
 }
+.modal-body {
+    max-height: 70vh;
+    overflow: auto;
+  }
+.modal-body {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+  }
+  #tcModal .modal-dialog .modal-content .modal-body h6 {
+    font-weight: 700 !important;
+    text-decoration: underline !important;
+    text-underline-position: under !important;
+    text-transform: uppercase !important;
+  }
+  
+  #tcModal .modal-dialog .modal-content .modal-body p {
+    text-align: justify !important;
+  }
+  .highlight{
+    background: #9e9e9e6e !important;
+    cursor: not-allowed !important;
+    opacity: 0.2;
+    pointer-events: none !important;
+  }
+  .incomplete-msg {
+    position: absolute !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    z-index: 4 !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-top: 60px !important;
+    color: green !important;
+    right: 0px !important;
+  }
+  

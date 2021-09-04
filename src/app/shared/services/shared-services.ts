@@ -1007,7 +1007,7 @@ export class SharedServices {
     return this.servicemeta.httpGet(url);
   }
   getCartdetails(accountid, data) {
-    const url = 'consumer/orders/amount' + '?account=' + accountid;
+    const url = 'consumer/orders/amount?account=' + accountid;
     return this.servicemeta.httpPut(url, data);
   }
   addWaitlistAdvancePayment(param, body) {

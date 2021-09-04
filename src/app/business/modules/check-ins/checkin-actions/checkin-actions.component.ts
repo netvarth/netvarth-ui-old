@@ -233,7 +233,9 @@ export class CheckinActionsComponent implements OnInit {
             }
             checkin_html += '</td></tr>';
             checkin_html += '<tr><td colspan="3" style="text-align:center">' + bname.charAt(0).toUpperCase() + bname.substring(1) + '</td></tr>';
-            checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.checkin.queue.location.place + '</td></tr>';
+            // checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.checkin.queue.location.place + '</td></tr>';
+            checkin_html += '<tr><td width="48%" align="right">Location</td><td>:</td><td>' + this.checkin.queue.location.place + '</td></tr>';
+
             checkin_html += '</thead><tbody>';
             if (fname !== '' || lname !== '') {
                 checkin_html += '<tr><td width="48%" align="right">' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + '</td><td>:</td><td>' + fname + ' ' + lname + '</td></tr>';
@@ -404,6 +406,7 @@ export class CheckinActionsComponent implements OnInit {
                         this.snackbarService.openSnackBar('Check-in rescheduled to ' + this.dateformat.transformToMonthlyDate(this.checkin_date));
                     }
                     this.dialogRef.close('reload');
+                    // this._location.back();
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -600,7 +603,7 @@ export class CheckinActionsComponent implements OnInit {
                 this.provider_services.unassignTeamWaitlist(post_data)
                     .subscribe(
                         data => {
-                            this.snackbarService.openSnackBar('Tam unassigned successfully', { 'panelclass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar('Team unassigned successfully', { 'panelclass': 'snackbarerror' });
                             this.dialogRef.close('reload');
                         },
                         error => {

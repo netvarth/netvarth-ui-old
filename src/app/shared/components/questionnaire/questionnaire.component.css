@@ -138,9 +138,12 @@
 .gridSection .act-btns {
     padding: 0 20px;
 }
-.fa-plus-circle, .fa-minus-circle {
+.fa-plus-circle {
     font-size: 1.5rem !important;
+}
+.addicon {
     color: #1e4079 !important;
+    cursor: pointer;
 }
 .fa-trash, .fa-pen {
     color: black !important;

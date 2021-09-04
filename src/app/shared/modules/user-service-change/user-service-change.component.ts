@@ -231,6 +231,8 @@ export class UserServiceChnageComponent implements OnInit {
   contactDetailsdialogRef: any;
   checkin: any;
   userDetails:any;
+  domain;
+  locationsjson: any = [];
 
   constructor(
     private activated_route: ActivatedRoute,
@@ -252,6 +254,7 @@ export class UserServiceChnageComponent implements OnInit {
     });
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.accountType = this.user.accountType;
+    this.domain = this.user.sector;
     if (this.source === 'appt'){
       this.getApptDetails();
     } else  if (this.source == 'checkin'){
@@ -269,6 +272,7 @@ export class UserServiceChnageComponent implements OnInit {
     this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
     this.getSpokenLanguages();
     this.getSpecializations();
+    this.getProviderLocations();
   }
   getProviders() {
     let apiFilter = {};
@@ -335,7 +339,7 @@ export class UserServiceChnageComponent implements OnInit {
           'city': serviceObj.city,
           'employeeId': serviceObj.employeeId,
           'state': serviceObj.state,
-          'currentWlCount': serviceObj.currentWlCount,
+          'currentWlCount': serviceObj.currentWlCount+serviceObj.currentApptCount,
           'whatsAppNum': (serviceObj.whatsAppNum) ? serviceObj.whatsAppNum  : '', 
           'telegramNum': (serviceObj.telegramNum) ? serviceObj.telegramNum  : '', 
           'countryCode':  serviceObj.countryCode || '',
@@ -797,6 +801,26 @@ getApptDetails() {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
     );
+  }
+  getProviderLocations() {
+    this.provider_services.getProviderLocations()
+        .subscribe(data => {
+         this.locationsjson = data;
+        });
+  }
+  getBussLoc(bussloc){
+    for (let i = 0; i < bussloc.length; i++) {
+        const locations = this.locationsjson.filter(loc =>loc.id === bussloc[i]);
+        if (locations[0]) {
+            bussloc[i] = locations[0].place;
+        }
+    }
+    if (bussloc.length > 1) {
+        bussloc = bussloc.toString();
+        return bussloc.replace(/,/g, ", ");
+    }
+    return bussloc;
 }
+
 }
 

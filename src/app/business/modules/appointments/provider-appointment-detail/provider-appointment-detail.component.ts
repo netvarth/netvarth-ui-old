@@ -105,6 +105,13 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   internalStatuslog: any = [];
   statusLog: any = [];
   questionnaires: any = [];
+  spName: any;
+  teams: any;
+  appointmentModes = [
+    { mode: 'WALK_IN_APPOINTMENT', value: 'Walk in ' },
+    { mode: 'PHONE_IN_APPOINTMENT', value: 'Phone in ' },
+    { mode: 'ONLINE_APPOINTMENT', value: 'Online ' },
+  ];
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -147,6 +154,13 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       this.goBack();
     }
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
+    if (this.userDet.accountType === 'BRANCH') {
+      this.getTeams().then((data) => {
+        this.teams = data;
+        console.log(this.teams);
+      });
+    }
+
   }
   ngOnDestroy() {
     if (this.sendmsgdialogRef) {
@@ -238,6 +252,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
           });
           this.getCommunicationHistory(this.waitlist_data.uid);
           if (this.waitlist_data.provider) {
+            this.spName = (this.waitlist_data.provider.businessName) ? this.waitlist_data.provider.businessName : this.waitlist_data.provider.firstName + ' ' + this.waitlist_data.provider.lastName;
             this.spfname = this.waitlist_data.provider.firstName;
             this.splname = this.waitlist_data.provider.lastName;
           }
@@ -584,5 +599,27 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     if (questr[0]) {
       return questr[0].status;
     }
+  }
+  getTeams() {
+    const _this = this;
+    return new Promise<void>(function (resolve) {
+      _this.provider_services.getTeamGroup().subscribe(data => {
+        _this.teams = data;
+      },
+        () => {
+          resolve();
+        });
+    });
+  }
+  getUsersList(teamid) {
+    const userObject = this.teams.filter(user => parseInt(user.id) === teamid);
+    if (userObject[0] && userObject[0].name) {
+      return userObject[0].name;
+    }
+  }
+  getAppointmentMode(mode){
+    let currentmode=[];
+    currentmode=this.appointmentModes.filter(obj=>obj.mode===mode);
+    return currentmode[0].value;
   }
 }

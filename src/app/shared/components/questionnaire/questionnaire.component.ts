@@ -84,6 +84,8 @@ export class QuestionnaireComponent implements OnInit {
   newTimeDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
   qnrStatus = '';
   comments = {};
+  tday = new Date();
+  minday = new Date(1900, 0, 1);
   constructor(private sharedService: SharedServices,
     private activated_route: ActivatedRoute,
     private snackbarService: SnackbarService,
@@ -651,7 +653,7 @@ export class QuestionnaireComponent implements OnInit {
         return false;
       }
     } else {
-      if (typeof this.dataGridColumns[question.labelName + '=' + column.order] === 'string') {
+      if (this.dataGridColumns[question.labelName + '=' + column.order] !== '' && typeof this.dataGridColumns[question.labelName + '=' + column.order] === 'string') {
         this.dataGridColumns[question.labelName + '=' + column.order] = JSON.parse(this.dataGridColumns[question.labelName + '=' + column.order])
       }
       if (this.dataGridColumns[question.labelName + '=' + column.order] === value) {
@@ -757,9 +759,7 @@ export class QuestionnaireComponent implements OnInit {
   }
   resubmitDonationQuestionnaire(body) {
     this.sharedService.resubmitProviderDonationQuestionnaire(this.donationDetails.uid, body).subscribe(data => {
-      this.editQnr();
-      this.snackbarService.openSnackBar('Updated Successfully');
-      this.buttonDisable = false;
+      this.successGoback();
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -1134,7 +1134,7 @@ export class QuestionnaireComponent implements OnInit {
     return Object.keys(this.groupedQnr).length;
   }
   getBoolValue(value) {
-    value = (typeof value === 'string') ? JSON.parse(value) : value;
+    value = (value !== '' && typeof value === 'string') ? JSON.parse(value) : value;
     if (value === true) {
       return 'Yes';
     }
