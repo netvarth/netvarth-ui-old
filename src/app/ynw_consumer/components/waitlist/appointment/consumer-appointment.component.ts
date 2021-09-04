@@ -28,14 +28,13 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { DomSanitizer } from '../../../../../../node_modules/@angular/platform-browser';
-import { VirtualFieldsComponent } from '../../virtualfields/virtualfields.component';
 import { ConsumerEmailComponent } from '../../../shared/component/consumer-email/consumer-email.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PaytmService } from '../../../../shared/services/paytm.service';
 
 
 @Component({
-    selector: 'app-consumer-appointment',
+    selector: 'app-consumer-appointment', 
     templateUrl: './consumer-appointment.component.html',
     styleUrls: ['./consumer-appointment.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
@@ -1727,6 +1726,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
             post_Data['provider'] = { 'id': this.selectedUser.id };
         }
+        if(!this.waitlist_for[0]['apptTime']){
+            this.waitlist_for[0]['apptTime']= this.selectedApptTime['time']
+            }
         if (this.sel_ser_det.serviceType === 'virtualService') {
             for (const i in this.virtualServiceArray) {
                 if (i === 'WhatsApp') {
@@ -1741,15 +1743,14 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     post_Data['virtualService'] = { 'VideoCall': '' };
                 }
             }
-            if (this.virtualInfo) {
-                if(!this.waitlist_for[0]['apptTime']){
-                this.waitlist_for[0]['apptTime']= this.selectedApptTime['time']
-                }
+          
+               
                 // console.log(this.virtualInfo);
                 // const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
                 // const formattedDate = moment(momentDate).format("YYYY-MM-DD");
                 // console.log(formattedDate);
                 // this.waitlist_for[0]['dob'] = formattedDate;
+                if (this.virtualInfo) {
                 this.waitlist_for[0]['whatsAppNum']={
                     'countryCode': this.virtualInfo.countryCode_whtsap,
                     'number': this.virtualInfo.whatsappnumber
@@ -1787,6 +1788,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         if (this.payEmail !== '') {
             this.waitlist_for[0]['email'] = this.payEmail;
         }
+        console.log('wailistfor'+JSON.stringify(this.waitlist_for));
         post_Data['appmtFor'] = JSON.parse(JSON.stringify(this.waitlist_for));
         if (this.jcashamount > 0 && this.checkJcash) {
             post_Data['useCredit'] = this.checkJcredit
