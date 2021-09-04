@@ -331,7 +331,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     getPaymentModes() {
         this.paytmEnabled = false;
         this.razorpayEnabled = false;
-        this.shared_services.getPaymentModesofProvider(this.account_id)
+        this.shared_services.getPaymentModesofProvider(this.account_id,'donation')
             .subscribe(
                 data => {
                   this.paymentmodes = data;

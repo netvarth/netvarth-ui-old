@@ -10,6 +10,7 @@ const routes: Routes = [
     //{ path: ':id', component: HolidayDetailsComponent },
     { path: ':id', component: HolidayDetailsComponentBox },
 ];
+
 @NgModule({
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]

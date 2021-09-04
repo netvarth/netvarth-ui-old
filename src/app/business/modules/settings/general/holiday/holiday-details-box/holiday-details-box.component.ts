@@ -13,13 +13,13 @@ import { DateTimeProcessor } from '../../../../../../shared/services/datetime-pr
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmBoxComponent } from '../../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 
-
 @Component({
   selector: 'app-holiday-details-box',
   templateUrl: './holiday-details-box.component.html',
   styleUrls: ['./holiday-details-box.component.css']
   
 })
+
 
 export class HolidayDetailsComponentBox implements OnInit {
 
