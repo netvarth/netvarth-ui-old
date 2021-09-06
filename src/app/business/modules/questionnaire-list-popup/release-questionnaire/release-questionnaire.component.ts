@@ -7,6 +7,9 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { projectConstants } from '../../../../app.component';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-release-questionnaire',
@@ -15,7 +18,6 @@ import { projectConstants } from '../../../../app.component';
 })
 export class ReleaseQuestionnaireComponent implements OnInit {
   api_error = null;
-  api_success = null;
   cancel_btn_cap = Messages.CANCEL_BTN;
   sms = false;
   email = false;
@@ -33,18 +35,21 @@ export class ReleaseQuestionnaireComponent implements OnInit {
   amForm: FormGroup;
   loading = true;
   qnrLink;
-  isDisable = true;
+  newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
+  customer_label = '';
   constructor(public dialogRef: MatDialogRef<ReleaseQuestionnaireComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private provider_services: ProviderServices,
     private snackbarService: SnackbarService,
     private dialog: MatDialog,
     private fb: FormBuilder,
+    private wordProcessor: WordProcessor,
+    private dateTimeProcessor: DateTimeProcessor,
     public fed_service: FormMessageDisplayService) {
   }
 
   ngOnInit() {
-    console.log(this.data);
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.sms = this.data.isPhone;
     this.email = this.data.isEmail;
     if (this.data.source === 'appt') {
@@ -62,12 +67,11 @@ export class ReleaseQuestionnaireComponent implements OnInit {
     }
     const uid = (this.data.source === 'appt') ? this.data.waitlist_data.uid : this.data.waitlist_data.ynwUuid;
     this.qnrLink = projectConstants.PATH + 'questionnaire/' + uid + '/' + this.data.qnrId + '/' + this.data.waitlist_data.providerAccount.id;
-    // this.qnrLink = 'http://localhost:4200/questionnaire/' + uid + '/' + this.data.qnrId + '/' + this.data.waitlist_data.providerAccount.id;
     this.createForm();
   }
   createForm() {
     this.amForm = this.fb.group({
-      message: ['', Validators.compose([Validators.required])]
+      message: ['Please fill out this form', Validators.compose([Validators.required])]
     });
     if (this.countryCode && this.data.isPhone) {
       this.getTelegramChatId();
@@ -75,6 +79,10 @@ export class ReleaseQuestionnaireComponent implements OnInit {
     } else {
       this.loading = false;
     }
+  }
+  getSingleTime(slot) {
+    const slots = slot.split('-');
+    return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
   getTelegramChatId() {
     let phone = (this.data.source === 'appt') ? this.data.waitlist_data.providerConsumer.phoneNo : this.data.waitlist_data.consumer.phoneNo;
@@ -157,14 +165,14 @@ export class ReleaseQuestionnaireComponent implements OnInit {
     };
     if (this.data.source === 'appt') {
       this.provider_services.sendApptQnrNotification(this.data.waitlist_data.uid, postData).subscribe(data => {
-        this.dialogRef.close('reload');
+        this.changeQnrReleaseStatus('share');
       }, error => {
         this.api_error = error.error;
         this.disableButton = false;
       });
     } else {
       this.provider_services.sendWaitlistQnrNotification(this.data.waitlist_data.ynwUuid, postData).subscribe(data => {
-        this.dialogRef.close('reload');
+        this.changeQnrReleaseStatus('share');
       }, error => {
         this.api_error = error.error;
         this.disableButton = false;
@@ -173,16 +181,49 @@ export class ReleaseQuestionnaireComponent implements OnInit {
   }
   resetErrors() {
     this.api_error = null;
-    this.api_success = null;
   }
-  copyMessageInfo(elementId) {
-    elementId.select();
+  copyMessageInfo() {
+    this.changeQnrReleaseStatus();
+    let selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = this.qnrLink;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
     document.execCommand('copy');
+    document.body.removeChild(selBox);
     this.snackbarService.openSnackBar('Copied to clipboard');
   }
-  selectInput(elementId, tooltipId) {
-    elementId.select();
-    this.isDisable = !this.isDisable;
-    tooltipId.toggle();
+  closeDialog() {
+    this.dialogRef.close('reload');
+  }
+  changeQnrReleaseStatus(type?) {
+    const uid = (this.data.source === 'checkin') ? this.data.waitlist_data.ynwUuid : this.data.waitlist_data.uid;
+    if (this.data.source === 'checkin') {
+      this.provider_services.changeWaitlistQnrReleaseStatus('released', uid, this.data.qnrId).subscribe(data => {
+        if (type) {
+          this.snackbarService.openSnackBar('Link has been shared');
+          setTimeout(() => {
+            this.dialogRef.close('reload');
+          }, 200);
+        }
+      }, error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+    } else {
+      this.provider_services.changeApptQnrReleaseStatus('released', uid, this.data.qnrId).subscribe(data => {
+        if (type) {
+          this.snackbarService.openSnackBar('Link has been shared');
+          setTimeout(() => {
+            this.dialogRef.close('reload');
+          }, 200);
+        }
+      }, error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+    }
   }
 }

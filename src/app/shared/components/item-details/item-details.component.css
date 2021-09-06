@@ -84,10 +84,13 @@ img.ordericon.home {
   font-size: 0.9rem !important;
 }
 
-@media(max-width:575px) {
+@media only screen and (max-width: 600px) {
   .item-details-consumer .count-o {
       height: 29px !important;
   }
+  .owl-carousel .owl-item img{
+    height:100px!important;
+    }
 }
 .item-details-consumer .disabled1 {
   opacity: 0.5 !important;
@@ -101,5 +104,20 @@ img.ordericon.home {
   margin-right: 15%;
   font-weight: bold;
   border:1px solid blue;
+
+}
+
+
+.owl-carousel .owl-item img{
+  height:285px!important;
+  width:100%!important;
+}
+.imageitem{
+  position: relative;
+  overflow: hidden;
+  /* margin-bottom: 80px; *//*This is optional*/
+  display: flex;
+  flex-direction: column;
+  align-items:center; 
 
 }

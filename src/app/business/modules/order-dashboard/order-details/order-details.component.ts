@@ -126,9 +126,9 @@ export class OrderDetailsComponent implements OnInit {
     this.selectedType = type;
   }
   showOrderActions() {
-    let timeType='';
+    let timeType;
     if (this.uid.indexOf('h_') > -1){
-      timeType='history';
+      timeType = 3;
     }
     const actiondialogRef = this.dialog.open(OrderActionsComponent, {
       width: '50%',

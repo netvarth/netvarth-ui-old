@@ -15,7 +15,7 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <ul class="menu">
+                <ul *ngIf="selected_location" class="menu">
                   <li *ngFor="let location of locations;let i = index"
                     [ngClass]="{'active': (location.place == selected_location.place)}">
                     <a class="pointer-cursor" (click)="onChangeLocationSelect(i)">
@@ -26,7 +26,7 @@
                   </li>
                 </ul>
               </li>
-              <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
+              <li *ngIf="admin" class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
             </ul>
           </li>
         </ul>
@@ -576,7 +576,7 @@
                           {{appt.appmtDate | date: newTimeDateFormat}}</div>
                         <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
                           <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
-                          <div *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</div>
+                          <span *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</span>
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name font11"
@@ -721,24 +721,24 @@
                           (click)="stopprop($event);showCallingModes(appt)">
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                          <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          <i class="fa zoom-icon" style="width: 15px; " [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                           <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"
                             class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
                             [ngClass]="{'tool-pading': (!small_device_display?true:false)}" aria-hidden="true"></i>
-                          <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          <i class="fa phon-icon" style="width: 15px;" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                          <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          <i class="fa wtsapaud-icon" style="width: 15px;" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
-                          <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          <i class="fa wtsapvid-icon" style="width: 15px; "  [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
                           <span
                             *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
-                          <span
+                          <span 
                             *ngIf="!small_device_display && appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
                             {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
                           </span>
-                          <span
+                          <span 
                             *ngIf="appt.service.virtualCallingModes[0].callingMode == 'Phone' || appt.service.virtualCallingModes[0].callingMode == 'WhatsApp'">
                             {{appt.apptStatus === 'Started'? 'Resume': 'Call +' +
                             appt.virtualService[appt.service.virtualCallingModes[0].callingMode] }}
@@ -747,7 +747,7 @@
                         <a class="statusText btn-play pointer-cursor done-btn"
                           (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus('started', 'Completed', appt)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'" *ngIf="appt.apptStatus == 'Started'">
-                          <i class="dashboardcomplete-icon" style="color: green;"></i> <span
+                          <i class="dashboardcomplete-icon" style="color: green; "></i> <span
                             *ngIf="!small_device_display">
                             {{done_cap}}</span>
                         </a>
@@ -881,8 +881,8 @@
                         <td class="parent-selection parent-title td-one">
                           <div class="pull-left mgn-lt-5 date">
                             <span class="greenc bold font11">{{getSingleTime(appt.time)}}</span>
-                            <div *ngIf="this.selQIds.length > 1">
-                              S{{getScheduleIndex(apptByTimeSlot[appt.time][0].schedule.id) + 1}}</div>
+                            <span *ngIf="this.selQIds.length > 1">
+                              S{{getScheduleIndex(apptByTimeSlot[appt.time][0].schedule.id) + 1}}</span>
                           </div>
                           <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                             class="bold pull-left mgn-lt-5 name font11"
@@ -1104,7 +1104,7 @@
                           {{appt.appmtDate | date: newTimeDateFormat}}</div>
                         <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
                           <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
-                          <div *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</div>
+                          <span *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</span>
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name font11"
@@ -1680,7 +1680,7 @@
                         {{appt.appmtDate | date: newTimeDateFormat}}</div>
                       <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
                         <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
-                        <div *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</div>
+                        <span *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</span>
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                         class="bold pull-left mgn-lt-5 name font11" (click)="stopprop($event);gotoCustomerDetails(appt)"
@@ -2312,7 +2312,7 @@
                         {{appt.appmtDate | date: newTimeDateFormat}}</div>
                       <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
                         <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
-                        <div *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</div>
+                        <span *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</span>
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                         class="bold pull-left mgn-lt-5 name font11" (click)="stopprop($event);gotoCustomerDetails(appt)"

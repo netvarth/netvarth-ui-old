@@ -64,7 +64,9 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
                     this.getApptDetails(this.payments.ynwUuid , this.payments.accountId);
                 } else if (this.payments.txnType === 'Waitlist'){
                     this.getCheckinDetails(this.payments.ynwUuid, this.payments.accountId);
-                } else {
+                } else if (this.payments.txnType === 'Order'){
+                    this.getOrderDetails(this.payments.ynwUuid, this.payments.accountId);
+                }else {
                     this.api_loading = false;
                 }
             }
@@ -102,6 +104,9 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
         this.shared_services.getConsumerDonationByUid(uuid).subscribe(
             (donations) => {
                 this.donationDetails = donations;
+                if(this.donationDetails && this.donationDetails.providerAccount ){
+                 this.provider_name = this.donationDetails.providerAccount.businessName;
+                }
                 this.api_loading = false;
             }
         );
@@ -126,6 +131,23 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
       }
       getCheckinDetails(uid , accountId,) {
         this.shared_services.getCheckinByConsumerUUID(uid, accountId).subscribe(
+          (data) => {
+            this.waitlist = data;
+            console.log(this.waitlist);
+            if(this.waitlist.provider){
+                this.provider_name =  this.waitlist.providerAccount.businessName + ','+  ((this.waitlist.provider.businessName) ?
+                                       this.waitlist.provider.businessName : this.waitlist.provider.firstName + ' ' + this.waitlist.provider.lastName);               
+            } else {
+                this.provider_name = this.waitlist.providerAccount.businessName
+            }
+            console.log(this.provider_name);
+            this.api_loading = false;
+          },
+        );
+      }
+
+      getOrderDetails(uid , accountId,) {
+        this.shared_services.getOrderByConsumerUUID(uid, accountId).subscribe(
           (data) => {
             this.waitlist = data;
             console.log(this.waitlist);

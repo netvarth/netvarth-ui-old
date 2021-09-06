@@ -1,6 +1,8 @@
-<header>
+<header #consumer_paylink>
+        <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
     <div class="content comn-cls" *ngIf="bill_data && bill_data.amountDue > 0">
         <div *ngIf="paidStatus == 'false'">
+            <app-common-innerloading-spinner *ngIf="loadingPaytm"></app-common-innerloading-spinner>
             <section>
                 <div class="content settings">
                     <div class="row">
@@ -14,7 +16,7 @@
                                     <div class="box-footer no-padding">
                                         <ul class="nav nav-stacked">
                                             <span class="lnk setings">
-                                                <p style="text-align:left;"> Dear {{(firstname.trim()!=="") ? firstname : customer}},</p>
+                                                <p style="text-align:left;"> Dear {{(firstname.trim()!=="" && firstname.trim()!=="null null" ) ? firstname : customer}},</p>
                                             </span>
                                             <span class="lnk setings">
                                                 <p style="text-align:left;">Welcome to Jaldee PAY. <br> Your contactless
@@ -27,15 +29,26 @@
 
                                             <li>
                                                 <p class="textcenter"><span>{{this.businessname}}</span><br><span>
-                                                        {{this.location}}</span><br>{{billtime}}, {{bill_data.createdDate | date : 'mediumDate'}}</p>
+                                                        {{this.location}}</span><br>{{billtime}}, {{billdate | date : 'mediumDate'}}</p>
                                                 <br><br>
                                                 <h2 class="textcenter rupee-font"
                                                     style="font-size: -webkit-xxx-large; font-weight: 400;">
                                                     {{this.amountDue | currency:'&#8377; '}}
                                                 </h2><br>
-                                                <h2 class="textcenter"><button class="pay" (click)="pay()">
+                                                <h2 class="textcenter">
+                                                    <!-- <button class="pay" (click)="pay()">
                                                         <h6 style="padding-top: 10px;">PAY</h6>
-                                                    </button></h2>
+                                                    </button> -->
+                                                    <div class="paymentdiv" >
+                                                        
+                                                        <span type="button" class="razorpay-icon paymenticons"  [class.disabled]="isClickedOnce" (click)="!isClickedOnce && pay()" id="stepThreeConfirmButton"  >
+                                                           
+                                                        </span>&nbsp;&nbsp;
+                                                        <span type="button" class="paytm-icon paymenticons" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && pay('paytm')" id="stepThreeConfirmButton" >
+                                                           
+                                                        </span>
+                                                    </div>
+                                                </h2>
                                             </li>
                                             <li>
                                                 <a class="learnmore-pointer" (click)="billview()">
@@ -79,7 +92,7 @@
                                                                                     {{this.firstname}}
                                                                                 </span> <span
                                                                                     class="columns rightalign"><span
-                                                                                        class="dynamic">{{bill_data.createdDate | date : 'mediumDate'}}
+                                                                                        class="dynamic">{{billdate | date : 'mediumDate'}}
                                                                                         {{billtime}}</span>
                                                                                 </span> <span class="columns"
                                                                                     *ngIf="billnumber"> <span
@@ -101,7 +114,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-
+                                                                   
                                                                     <div class="bill-content">
                                                                         <div class="section-three bill-responsive">
                                                                             <div class="bill-breakup">
@@ -494,10 +507,10 @@
                     <span style="padding-right: 60px;"><b>Payment Gateway:</b>&nbsp;<span>{{pGateway}}</span></span>
                 </div>
                 <div class="pay-det-row">
-                    <span><b>Payment Ref Id:</b>&nbsp;<span>{{razorpay_payment_id}}</span></span>
+                    <span><b>Payment Ref Id:</b>&nbsp;<span>{{payment_id}}</span></span>
                 </div>
                 <div class="pay-det-row">
-                    <span><b>Transaction Id:</b>&nbsp;<span>{{razorpay_order_id}}</span></span>
+                    <span><b>Transaction Id:</b>&nbsp;<span>{{order_id}}</span></span>
                 </div>
             </div>
         </div>

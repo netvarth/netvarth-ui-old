@@ -1,5 +1,9 @@
 <!-- <h1 class="mat-dialog-title service-detail-title"> -->
+        
+        
     <div class="modal-header service-detail-header">
+           
+    
         <h1 class="modal-title pull-left service-detail-title">
             <span class="name">
                 <span class="dispvalue" *ngIf="data.serdet && data.serdet.name">
@@ -23,7 +27,7 @@
                     </span>
                     {{data.serdet.name | capitalizeFirst}}
     
-                </span>
+             </span>
     
             </span>
         <!-- <span *ngIf="!is_donation_serv">{{servc_detils}}</span> <span *ngIf="is_donation_serv">{{donation_dtls}}</span> -->
@@ -31,12 +35,11 @@
             <i class="fa fa-window-close" aria-hidden="true"></i>
         </button> -->
         </h1>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="dialogRef.close()">
-            <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button"  class="cross"  class="close pull-right" aria-label="Close" (click)="dialogRef.close()">
+                <span class="cross" style="padding-left:30px" aria-hidden="true" >&times;</span>
+            </button>
     </div>
-    
-    <div class="modal-body service-detail-content service-popup-content"> 
+<div class="modal-body service-detail-content service-popup-content"> 
     <!-- <mat-dialog-content class="service-detail-content service-popup-content"> -->
         <div class="servicedet_outer" *ngIf="service.name !==''">
             <!-- <div class="img-outer" *ngIf="!image_list_popup || image_list_popup.length==0">
@@ -100,9 +103,9 @@
                 </div>
                 <div class="outer3" *ngIf="data.serdet && data.serdet.paymentDescription">
                         <div class="duration">
-                            <span style="font-size: small" class="data-value">
-                                    {{data.serdet.paymentDescription}}
-                            </span>
+                            <p style="font-size: small" class="data-value" [innerHTML]="data.serdet.paymentDescription | nl2br">
+                                    <!-- {{data.serdet.paymentDescription}} -->
+                        </p>
                         </div>
                     </div>
                 <div class="outer4"

@@ -559,10 +559,10 @@ export class CustomerCreateComponent implements OnInit {
         .subscribe(
           data => {
             this.wordProcessor.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
-            this.snackbarService.openSnackBar('Updated Successfully');
+            this.snackbarService.openSnackBar('Details Updated Successfully');
             const qParams = {};
             qParams['pid'] = data;
-            if (this.questionAnswers.length > 0) {
+            if (this.questionAnswers && this.questionAnswers.length > 0) {
               this.submitQnr(form_data, this.customerId);
             } else {
               this.goBackAfterEdit(form_data, data);
@@ -624,6 +624,7 @@ export class CustomerCreateComponent implements OnInit {
     }
   }
   goBackAfterEdit(form_data, data) {
+    console.log(this.source);
     if (this.source === 'checkin' || this.source === 'token') {
       const navigationExtras: NavigationExtras = {
         queryParams: {

@@ -197,6 +197,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
           this._handleErrors(error);
           if (error instanceof HttpErrorResponse) {
             if (this._checkSessionExpiryErr(error)) {
+              this.shared_services.callHealth(error.message).subscribe();
               // const isprovider = this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true';
               //  this.shared_functions.doLogout().then (
               //    () => {
@@ -270,9 +271,10 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   updateHeader(req, url) {
     req = req.clone({ headers: req.headers.set('Accept', 'application/json'), withCredentials: true });
     req = req.clone({ headers: req.headers.append('Source', 'Desktop'), withCredentials: true });
-    req = req.clone({ headers: req.headers.append('Cache-Control', 'no-cache'), withCredentials: true });
+    req = req.clone({ headers: req.headers.append('Cache-Control', 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0'), withCredentials: true });
     req = req.clone({ headers: req.headers.append('Pragma', 'no-cache'), withCredentials: true });
     req = req.clone({ headers: req.headers.append('SameSite', 'None'), withCredentials: true });
+    req = req.clone({ headers: req.headers.append('Expires', '0'), withCredentials: true });
     // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.androidpro) });
     // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.iospro) });
     if (this.sessionStorageService.getitemfromSessionStorage('tabId')) {

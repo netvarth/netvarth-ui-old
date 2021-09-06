@@ -37,9 +37,7 @@ import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtual
   animations: [
     trigger('search_data', [
       transition('* => *', [
-
         query(':enter', style({ opacity: 0 }), { optional: true }),
-
         query(':enter', stagger('10ms', [
           animate('.4s ease-out', keyframes([
             style({ opacity: 0, transform: 'translateY(-75%)', offset: 0 }),
@@ -175,7 +173,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
   };
-
   customButtonsFontAwesomeConfig: ButtonsConfig = {
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
@@ -300,7 +297,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   profileSettings: any;
   deferredPrompt: any;
   btnInstallApp: any;
-
+  pwaEnabled = false;
   businessName;
   businessId;
   accountId: any;
@@ -308,8 +305,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   privacy = false;
   pwaIOShint: boolean;
   iosConfig = false;
-
-
+  accountIdExists = false;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -367,7 +363,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.popupforCustomApp.nativeElement.style.display = 'block';
 
       this.btnInstallApp.addEventListener('click', (e: any) => {
-        console.log('binding');
+       // console.log('binding');
         // hide our user interface that shows our A2HS button
         this.popupforCustomApp.nativeElement.style.display = 'none';
         // Show the prompt
@@ -387,6 +383,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.api_loading = true;
+    this.accountIdExists = false;
     this.userId = null;
     this.provider_id = null;
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
@@ -416,13 +413,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
       }
     };
-    console.log("Mobile:");
-    console.log(isMobile);
+  //  console.log("Mobile:");
+   // console.log(isMobile);
     if (isMobile.Android()) {
       this.playstore = true;
       this.appstore = false;
     } else if (isMobile.iOS()) {
-      console.log("IOS:");
+    //  console.log("IOS:");
       this.playstore = false;
       this.appstore = true;
     } else {
@@ -479,8 +476,15 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               this.getAccountIdFromEncId(this.accountEncId).then(
                 (id: any) => {
                   _this.provider_id = id;
+                  _this.customId = _this.accountEncId;
+                  console.log("fdhf"+ _this.customId);
+                  _this.accEncUid = _this.accountEncId;
+                  _this.accountIdExists = true;
                   _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
                     (uiconfig: any) => {
+                      if (uiconfig['pwaEnabled']) {
+                        this.pwaEnabled = true;
+                      }
                       if (uiconfig['pixelId']) {
                         this.addScript('1424568804585712');
                       }
@@ -647,7 +651,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     let userS3List = 'providerBusinessProfile,providerVirtualFields,providerservices,providerApptServices';
 
     if (!this.userId) {
-      accountS3List += ',businessProfile,virtualFields,services,apptServices,apptServices,donationServices,departmentProviders' //gallery
+      accountS3List += ',businessProfile,virtualFields,services,apptServices,apptServices,donationServices,departmentProviders,gallery' //gallery
     }
 
     this.subscriptions.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
@@ -847,7 +851,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   setBusinesssProfile(res) {
     this.onlinePresence = res['onlinePresence'];
-    this.customId = res['customId'];
+    console.log("response"+res);
+    console.log(res['customId']);
+    if(res['customId']){
+      this.customId = res['customId'];
+    }
     this.accEncUid = res['accEncUid'];
     if (!this.userId) {
       this.api_loading = false;
@@ -873,7 +881,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
       // const path = this.customAppSerice.getManifest(res, projectConstantsLocal.UIS3PATH + this.provider_id, projectConstants.PATH);
-      if (this.accountProperties) {
+      if (this.pwaEnabled) {
         const path = projectConstantsLocal.UIS3PATH + this.provider_id + '/manifest.json';
         document.getElementById('dynamic_manifest_url').setAttribute('href', path);
         this.btnInstallApp = document.getElementById("btnInstallCustomApp");
@@ -1032,6 +1040,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   setAccountLocations(res) {
     this.locationjson = res;
     this.location_exists = true;
+    let location;
     for (let i = 0; i < this.locationjson.length; i++) {
       const addres = this.locationjson[i].address;
       const place = this.locationjson[i].place;
@@ -1040,11 +1049,15 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       } else {
         this.locationjson['isPlaceisSame'] = false;
       }
+      if(this.locationjson[i].baseLocation){
+        console.log("gf"+JSON.stringify(this.locationjson[i]));
+         location = this.locationjson[i];
+      }
       if (this.locationjson[i].parkingType) {
         this.locationjson[i].parkingType = this.locationjson[i].parkingType.charAt(0).toUpperCase() + this.locationjson[i].parkingType.substring(1);
       }
     }
-    this.changeLocation(this.locationjson[0]);
+    this.changeLocation(location);
     this.api_loading = false;
   }
 
@@ -1254,7 +1267,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.checkinProviderList && this.checkinProviderList.length > 0) {
         if (this.checkinProviderList.includes(this.provider_bussiness_id)) {
           firstCheckin = false;
-          console.log('already taken');
+         // console.log('already taken');
         } else {
           firstCheckin = true;
 
@@ -1377,7 +1390,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   changeLocation(loc) {
-
+console.log("fgf"+JSON.stringify(loc));
     this.selectedLocation = loc;
     this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
 
@@ -1648,6 +1661,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   redirectToHistory() {
     const _this = this;
+    _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
         if (status) {
@@ -1675,6 +1689,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       (status) => {
         if (status) {
           _this.showCommunicate(providforCommunicate);
+
         } else {
           const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name };
           this.doLogin('consumer', passParam);
@@ -1745,14 +1760,15 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.changedate_req = true;
     }
     const _this = this;
+    _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
         if (status) {
-          console.log("logged In");
+          //console.log("logged In");
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
           if (_this.userType === 'consumer') {
             if (service.serviceType === 'virtualService') {
-              console.log(service);
+            //  console.log(service);
               _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
                 _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.availableDate, 'checkin', service, consumerdata);
               });
@@ -1803,12 +1819,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!location.futureAppt) {
       this.futureAllowed = false;
     }
+    _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
-        console.log("Login Status:" + status);
+      //  console.log("Login Status:" + status);
         if (status) {
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
-          console.log("User Type:" + _this.userType);
+         // console.log("User Type:" + _this.userType);
           if (_this.userType === 'consumer') {
 
             if (service.serviceType === 'virtualService') {
@@ -1828,7 +1845,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
   collectRequiredinfo(id, place, location, date, type, service?, consumerdata?) {
-    console.log("Collect Required Info");
+  //  console.log("Collect Required Info");
     const _this = this;
     let virtualFields = {};
     if (this.checkallvirtualFilledByConsumer(consumerdata)) {
@@ -1941,7 +1958,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       _this.shared_services.getProfile(_this.activeUser.id, 'consumer')
         .subscribe(
           data => {
-            console.log(data);
+            //console.log(data);
             resolve(data);
           },
           () => {
@@ -2007,7 +2024,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             this.checkout();
           }
         } else {
-          console.log(passParam);
+         // console.log(passParam);
           if (current_provider['service']['serviceType'] === 'virtualService') {
             this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
               this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
@@ -2018,6 +2035,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);
+      } else {
+        this.loading_direct = false;
       }
     });
   }
@@ -2070,12 +2089,14 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           }
           // this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
+      } else {
+        this.loading_direct = false;
       }
     });
   }
   showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?) {
-    console.log("Service Checkin ");
-    console.log(service);
+   // console.log("Service Checkin ");
+   // console.log(service);
     // if (this.servicesjson[0] && this.servicesjson[0].department) {
     //   deptId = this.servicesjson[0].department;
     // }
@@ -2103,8 +2124,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
   }
   showAppointment(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?) {
-    console.log("Service Appt: ");
-    console.log(service);
+    //console.log("Service Appt: ");
+   // console.log(service);
     // let deptId;
     // if (this.servicesjson[0] && this.servicesjson[0].department) {
     //   deptId = this.servicesjson[0].department;
@@ -2293,6 +2314,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   payClicked(locid, locname, cdate, service) {
     const _this = this;
+    _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
         if (status) {
@@ -2626,7 +2648,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
       this.servicesAndProviders = servicesAndProviders;
-      console.log("tyuhjhj"+this.servicesAndProviders);
+     // console.log("tyuhjhj"+this.servicesAndProviders);
       // });
     } else {
       // tslint:disable-next-line:no-shadowed-variable
@@ -2677,7 +2699,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
       this.servicesAndProviders = servicesAndProviders;
-      console.log("hjhj"+this.servicesAndProviders);
+     // console.log("hjhj"+this.servicesAndProviders);
     }
     if (this.businessjson.donationFundRaising && this.onlinePresence && this.donationServicesjson.length >= 1) {
       for (let dIndex = 0; dIndex < this.donationServicesjson.length; dIndex++) {
@@ -3015,6 +3037,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   dashboardClicked() {
     const _this = this;
+    _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
         if (status) {

@@ -1,9 +1,10 @@
 <section class="container cons-inbox no-padding qnr-link"
-    [class.success-width]="qParams.type || qnrStatus !== 'released'">
+    [class.success-width]="!isBusinessOwner && (qParams.type || qnrStatus !== 'released' || waitlistStatus == 'cancelled')">
     <div class="comn-cls m0 p0">
         <div class="panel-default">
             <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-            <div class="panel-body no-padding" *ngIf="!loading && !qParams.type && qnrStatus === 'released'">
+            <div class="panel-body no-padding"
+                *ngIf="!loading && ((!qParams.type && qnrStatus === 'released' && waitlistStatus != 'cancelled') || isBusinessOwner)">
                 <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 card">
                     <div class="details-pad">
                         <div class="">
@@ -32,17 +33,20 @@
                                     {{waitlist.appmtFor[0].firstName}}
                                     {{waitlist.appmtFor[0].lastName}}
                                 </h5>
+                                <div class="email" *ngIf="waitlist.token">
+                                    <span class="value">Token: {{waitlist.token}}</span>
+                                </div>
                                 <div class="contact-no">
                                     <i class="fa fa-cogs icon"></i>
                                     <span class="value">{{waitlist.service.name}}</span>
                                 </div>
-                                <div class="email" *ngIf="waitlist.token">
-                                    <i class="fa fa-envelope icon"></i>
-                                    <span class="value">Token: {{waitlist.token}}</span>
-                                </div>
-                                <div class="contact-no" *ngIf="waitlist.waitlistPhoneNumber">
+                                <div class="contact-no" *ngIf="source == 'consCheckin' && waitlist.waitlistPhoneNumber">
                                     <i class="fa fa-mobile icon"></i>
                                     <span class="value">{{waitlist.countryCode}} {{waitlist.waitlistPhoneNumber}}</span>
+                                </div>
+                                <div class="contact-no" *ngIf="source == 'consAppt' && waitlist.phoneNumber">
+                                    <i class="fa fa-mobile icon"></i>
+                                    <span class="value">{{waitlist.countryCode}} {{waitlist.phoneNumber}}</span>
                                 </div>
                                 <div class="email" *ngIf="source == 'consCheckin' && waitlist.waitlistingFor[0].email">
                                     <i class="fa fa-envelope icon"></i>
@@ -68,40 +72,29 @@
                     </div>
                     <div class="" *ngIf="questionnaire[0]">
                         <app-questionnaire [questionnaireList]="questionnaire[0]" [source]="source" [uuid]="qParams.uid"
-                            [accountId]="qParams.accountId" [type]="'qnr-link'"
+                            [accountId]="qParams.accountId" [type]="type"
                             [waitlistStatus]="(source == 'consCheckin') ? waitlist.waitlistStatus : waitlist.apptStatus"
                             (returnAnswers)="getQuestionAnswers($event)">
                         </app-questionnaire>
                     </div>
                 </div>
             </div>
-            <div class="success-sec" *ngIf="qParams.type">
+            <div class="success-sec" *ngIf="!loading && !isBusinessOwner && (qnrStatus == 'submitted' || qParams.type)">
                 <i class="fa fa-check-circle greenc" aria-hidden="true"></i>
-                <div class="success-head">
+                <div class="success-head mgn-bt-5">
                     Your response has been submitted
                 </div>
                 <div class="success-desc">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque dolorum odit quibusdam sint
-                    exercitationem dignissimos animi, consequatur eum accusantium, omnis modi. Maiores, aliquam cum.
-                    Excepturi nulla veritatis quae dignissimos placeat.
+                    You have successfully submitted your entries. To review your entries login to Jaldee App. For any
+                    related queries contact your provider directly.
                 </div>
             </div>
-            <div class="success-sec" *ngIf="!loading && !qParams.type && qnrStatus !== 'released'">
-                <div class="expired-head" *ngIf="qnrStatus == 'submitted'">
-                    Already submitted
-                </div>
-                <div class="expired-head" *ngIf="qnrStatus == 'unReleased'">
-                    Link expired
-                </div>
-                <div class="success-desc" *ngIf="qnrStatus == 'submitted'">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque dolorum odit quibusdam sint
-                    exercitationem dignissimos animi, consequatur eum accusantium, omnis modi. Maiores, aliquam cum.
-                    Excepturi nulla veritatis quae dignissimos placeat.
-                </div>
-                <div class="success-desc" *ngIf="qnrStatus == 'unReleased'">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque dolorum odit quibusdam sint
-                    exercitationem dignissimos animi, consequatur eum accusantium, omnis modi. Maiores, aliquam cum.
-                    Excepturi nulla veritatis quae dignissimos placeat.
+            <div class="success-sec"
+                *ngIf="!loading && !isBusinessOwner && (qnrStatus == 'unReleased' || waitlistStatus == 'cancelled')">
+                <i class="fa fa-ban red" aria-hidden="true"></i>
+                <div class="success-desc">
+                    You do not seem to have access to open the link. Contact {{waitlist.providerAccount.businessName}}
+                    directly for any concerns.
                 </div>
             </div>
         </div>

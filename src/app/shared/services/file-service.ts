@@ -18,26 +18,29 @@ export class FileService {
   ];
   // Types of files images/pdf
   FILETYPES_UPLOAD: [
-    "image/jpg",
-    "image/png",
-    "image/jpeg",
-    "application/pdf"
+    'image/jpg',
+    'image/png',
+    'image/jpeg',
+    'application/pdf'
   ];
   
   imageSize = 15000000;
   constructor() {}
-
   /**
    * Method returns supported formats of files which has to be uploaded
    * @param source image/file
    * @returns available formats
    */
   getSupportedFormats (source) {
-    if (source = "image") {
-      return this.IMAGE_FORMATS;
+    let formats;
+    if (source == 'image') {
+      formats = this.IMAGE_FORMATS;
+      //return this.IMAGE_FORMATS;
     } else {
-      return this.FILETYPES_UPLOAD;
+      formats = this.FILETYPES_UPLOAD;
+      //return this.FILETYPES_UPLOAD;
     }
+    return formats;
   }
 
   /**

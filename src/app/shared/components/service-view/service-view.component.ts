@@ -136,6 +136,7 @@ export class ServiceViewComponent implements OnInit {
   timings: string;
   timingCaptionapt: string;
   timingsapt: string;
+  accountIdExists = false;
   loading_direct = false;
   loading = true;
   source: any;
@@ -173,6 +174,7 @@ export class ServiceViewComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.accountIdExists = false;
     this.setSystemDate();
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -184,27 +186,31 @@ export class ServiceViewComponent implements OnInit {
           this.userId = params.get('userEncId');
         } else {
           this.userId = null;
-        }
+        }       
+        const _this = this;
         this.domainConfigService.getDomainList().then(
           (domainConfig) => {
-            this.domainList = domainConfig;
-            this.getAccountIdFromEncId(this.accountEncId).then(
+            _this.domainList = domainConfig;
+            this.getAccountIdFromEncId(_this.accountEncId).then(
               (id: any) => {
-                this.provider_id = id;
-                this.domainConfigService.getUIAccountConfig(this.provider_id).subscribe(
+                _this.provider_id = id;      
+                _this.customId = _this.accountEncId;
+                _this.accEncUid = _this.accountEncId;     
+                _this.accountIdExists = true;      
+                _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
                   (uiconfig: any) => {
-                    this.accountProperties = uiconfig;
-                    if (this.small_device_display) {
-                      this.profileSettings = this.accountProperties['smallDevices'];
+                    _this.accountProperties = uiconfig;
+                    if (_this.small_device_display) {
+                      _this.profileSettings = _this.accountProperties['smallDevices'];
                     } else {
-                      this.profileSettings = this.accountProperties['normalDevices'];
+                      _this.profileSettings = _this.accountProperties['normalDevices'];
                     }
-                    if (this.accountProperties['theme']) {
-                      this.theme = this.accountProperties['theme'];
+                    if (_this.accountProperties['theme']) {
+                      _this.theme = _this.accountProperties['theme'];
                     }
-                    this.gets3curl();
+                    _this.gets3curl();
                   }, (error: any) => {
-                    this.gets3curl();
+                    _this.gets3curl();
                   }
                 )
               }, (error) => {
@@ -404,6 +410,7 @@ export class ServiceViewComponent implements OnInit {
     this.accEncUid = res['accEncUid'];
     if (!this.userId) {
       this.businessjson = res;
+      this.sector = this.businessjson.serviceSector.domain;
       this.businessId = this.accEncUid;
       this.accountId = this.businessjson.id;
       this.businessName = this.businessjson.businessName;
@@ -433,6 +440,7 @@ export class ServiceViewComponent implements OnInit {
   }
   setUserBusinessProfile(res) {
     this.businessjson = res;
+    this.sector = this.businessjson.serviceSector.domain;
     const dom = this.domainList.bdata.filter(domain => domain.id === this.businessjson.serviceSector.id);
     this.subDomainList = dom[0].subDomains;
     const subDom = this.subDomainList.filter(subdomain => subdomain.id === this.businessjson.userSubdomain);
@@ -461,6 +469,7 @@ export class ServiceViewComponent implements OnInit {
     this.locationjson = res;
     console.log(this.locationjson);
     this.location_exists = true;
+    let location;
     for (let i = 0; i < this.locationjson.length; i++) {
       const addres = this.locationjson[i].address;
       const place = this.locationjson[i].place;
@@ -469,11 +478,15 @@ export class ServiceViewComponent implements OnInit {
       } else {
         this.locationjson['isPlaceisSame'] = false;
       }
+      if(this.locationjson[i].baseLocation){
+        console.log("gf"+JSON.stringify(this.locationjson[i]));
+         location = this.locationjson[i];
+      }
       if (this.locationjson[i].parkingType) {
         this.locationjson[i].parkingType = this.locationjson[i].parkingType.charAt(0).toUpperCase() + this.locationjson[i].parkingType.substring(1);
       }
     }
-    this.changeLocation(this.locationjson[0]);
+    this.changeLocation(location);
   }
   changeLocation(loc) {
     this.selectedLocation = loc;
@@ -946,6 +959,7 @@ export class ServiceViewComponent implements OnInit {
       this.changedate_req = true;
     }
     const _this = this;
+    _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
         if (status) {
@@ -1004,7 +1018,7 @@ export class ServiceViewComponent implements OnInit {
     if (!location.futureAppt) {
       this.futureAllowed = false;
     }
-
+    _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
         if (status) {
@@ -1029,6 +1043,7 @@ export class ServiceViewComponent implements OnInit {
   }
   payClicked(locid, locname, cdate, service) {
     const _this = this;
+    _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
         if (status) {
@@ -1253,6 +1268,8 @@ export class ServiceViewComponent implements OnInit {
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);
+      } else {
+          this.loading_direct = false;
       }
     });
   }
@@ -1285,7 +1302,6 @@ export class ServiceViewComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'success') {
-        this.loading_direct = true;
         this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedFunctionobj.sendMessage(pdata);
@@ -1309,6 +1325,8 @@ export class ServiceViewComponent implements OnInit {
             this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
           }
         }
+      } else {
+        this.loading_direct = false;
       }
     });
   }
@@ -1370,6 +1388,7 @@ export class ServiceViewComponent implements OnInit {
   }
   dashboardClicked() {
     const _this = this;
+    _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
         if (status) {

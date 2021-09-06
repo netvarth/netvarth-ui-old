@@ -243,12 +243,14 @@ buttons: [
   }
   checkIfFav(id) {
     let fav = false;
-    this.fav_providers_id_list.map((e) => {
-      if (e === id) {
-        fav = true;
-      }
-    });
-    return fav;
+    if (this.fav_providers_id_list) {
+      this.fav_providers_id_list.map((e) => {
+        if (e === id) {
+          fav = true;
+        }
+      });
+      return fav;
+    }
   }
   getFavouriteProvider() {
    this.subs.sink= this.sharedServices.getFavProvider()

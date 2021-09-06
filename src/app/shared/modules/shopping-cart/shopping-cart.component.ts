@@ -794,6 +794,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         console.log('less than 30'); 
         console.log(this.store_availables);
         const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
+        if(this.store_availables){
         const availability  = this.store_availables.filter(obj => obj.date ===  sel_check_date);          
         if(availability.length > 0){
             this.isfutureAvailableTime = true;
@@ -803,6 +804,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
           } else{
             this.isfutureAvailableTime = false;
           }
+        }
         }     
       else {
         this.isfutureAvailableTime = false;

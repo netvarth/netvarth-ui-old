@@ -22,23 +22,23 @@
             <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
             <div class="container" *ngIf="!loading">
               <div class="row">
-                <div class="col-md-6 col-sm-7 pad-25 no-padding-small mgn-bt-10" *ngIf="imagesRect.length> 0">
+                  <div class="col-md-12 col-sm-12 col-xs-12" >
+                <div class="col-md-6 col-sm-12 col-xs-10 pad-25 no-padding-small mgn-bt-10" *ngIf="currentItem.itemImages &&itemImages.length> 0">
                   <!-- <ks-carousel [id]="1" [images]="imagesRect"
                   [carouselConfig]="{maxHeight: '400px',minHeight: '400px', showArrows: false, objectFit: 'scale-down', keyboardEnable: false, modalGalleryEnable: false, legacyIE11Mode: false}"
                   [previewConfig]="{visible: true, breakpoints: {xSmall: 50, small: 60, medium: 70, large: 80, xLarge: 100}}"
                   [dotsConfig]="{visible: false}" [playConfig]="{autoPlay:false}">
                 </ks-carousel>  -->
 
-                  <owl-carousel [options]="{items: 1, dots: true, navigation: false}" [items]="itemImages"
+                  <owl-carousel [options]="{items: 1, dots: true, navigation: false}" 
                     [carouselClasses]="['owl-theme', 'row', 'sliding']">
                     <div class="item" *ngFor="let image of itemImages;let i = index">
-                      <div class="thumbnail-image">
-                        <img [src]="image.url" />
-                      </div>
+                        <img [src]="image.url" class="img-responsive"/>
+                     
                     </div>
                   </owl-carousel>
                 </div>
-                <div class="col-md-6 col-sm-5 no-padding">
+                <div class="col-md-6 col-sm-12 col-xs-12 no-padding">
                   <!-- <div class="col-md-12 no-padding">
                     <div class="col-md-6 no-padding mgn-up-10">
                       <p class="mgn-rt-10 m0"><img class="ordericon home"
@@ -114,6 +114,7 @@
                 <div >
                   <button class="btn pull-right btncheckout" (click)="checkout();" *ngIf="getItemQty()>0"> Checkout</button>
 
+                </div>
                 </div>
               </div>
 

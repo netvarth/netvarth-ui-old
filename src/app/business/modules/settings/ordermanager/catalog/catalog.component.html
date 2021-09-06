@@ -51,9 +51,9 @@
                                               <td data-title="End Date" class="td4 ">{{catalog.catalogSchedule.terminator.endDate | date: newDateFormat}}</td>
                                               <!-- <td data-title="Payment Type" class="td3">{{catalog.paymentType}} 
                                               </td>-->
-                                              <td data-title="Status"
-                                                  [ngClass]="{'green-text' : catalog.catalogStatus=='ACTIVE'}">
-                                                  {{catalog.catalogStatus}}</td>
+                                              <td  data-title="Status"
+                                              [ngClass]="catalog.expired ?'red-text':''">
+                                                  {{catalog.expired?'Expired':catalog.catalogStatus}}</td>
                                               <td class="action">
                                                   <span class="mbt">
                                                       <button type="button" mat-icon-button

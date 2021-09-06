@@ -21,7 +21,7 @@ export class ManualSignatureComponent implements OnInit {
   };
   smallsignaturePadOptions: Object = {
     'minWidth': 5,
-    'canvasWidth': 250,
+    'canvasWidth': 200,
     'canvasHeight': 150
   };
   display_PatientId: any;

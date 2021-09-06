@@ -29,7 +29,8 @@ import { VirtualFieldsModule } from '../../virtualfields/virtualfields.module';
         ConsumerAppointmentHistoryComponent,
         ConsumerAppointmentBillComponent,
         ConfirmPageComponent,
-        AppointmentConfirmPopupComponent
+        AppointmentConfirmPopupComponent,
+        
     ],
     imports: [
         FormMessageDisplayModule,

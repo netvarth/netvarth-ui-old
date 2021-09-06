@@ -70,6 +70,7 @@ export class EditProfileComponent implements OnInit {
   status = false ;
   boturl: any;
   telegramdialogRef: any;
+  waitlist_statusstr: string;
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
@@ -343,7 +344,8 @@ export class EditProfileComponent implements OnInit {
     );
   }
  
-  enableTelegram(stat){
+  enableTelegram(event){
+    const stat = (event.checked) ? 'ENABLED' : 'DISABLED';
     this.shared_services.consumertelegramChat(this.removePlus(this.countryCode), this.phonenoHolder).subscribe(data => {
       this.chatId = data;
     })
@@ -390,6 +392,7 @@ getTelegramstat(){
     (data:any) => {
      console.log(data);
      this.status = data.status;
+     this.waitlist_statusstr = this.status ? 'On' : 'Off';
      if(data.botUrl){
       this.boturl = data.botUrl;
      }

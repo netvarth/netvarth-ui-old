@@ -194,6 +194,7 @@ private subs=new SubSink();
       }
       case 'terminologies': {
         this.terminologiesJson = result;
+        this.wordProcessor.setTerminologies(this.terminologiesJson);
         break;
       }
     }

@@ -502,7 +502,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     let userS3List = 'providerBusinessProfile,providerVirtualFields,providerservices,providerApptServices';
 
     if (!this.userId) {
-      accountS3List += ',businessProfile,virtualFields,services,apptServices,donationServices,departmentProviders' //gallery
+      accountS3List += ',businessProfile,virtualFields,services,apptServices,donationServices,departmentProviders,gallery' //gallery
     }
 
     this.subscriptions.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
@@ -873,6 +873,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   setAccountLocations(res) {
     this.locationjson = res;
     this.location_exists = true;
+    let isBaselocation;
     for (let i = 0; i < this.locationjson.length; i++) {
       const addres = this.locationjson[i].address;
       const place = this.locationjson[i].place;
@@ -881,6 +882,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       } else {
         this.locationjson['isPlaceisSame'] = false;
       }
+      if(this.locationjson[i].baseLocation){
+        console.log("gf"+JSON.stringify(this.locationjson[i]));
+         isBaselocation = this.locationjson[i];
+      }
       if (this.locationjson[i].parkingType) {
         this.locationjson[i].parkingType = this.locationjson[i].parkingType.charAt(0).toUpperCase() + this.locationjson[i].parkingType.substring(1);
       }
@@ -888,13 +893,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     console.log(this.locId);
     console.log(this.provider_bussiness_id);
     if (this.locId) {
-      const location1 = this.locationjson.filter(loc => loc.id === this.locId);
-      console.log(location1);
+      // const location1 = this.locationjson.filter(loc => loc.id === this.locId);
+      // console.log(location1);
       const location = this.locationjson.filter(loc => loc.id === JSON.parse(this.locId));
       console.log(location);
       this.changeLocation(location[0]);
     } else {
-      this.changeLocation(this.locationjson[0]);
+      this.changeLocation(isBaselocation);
     }
     this.api_loading = false;
   }

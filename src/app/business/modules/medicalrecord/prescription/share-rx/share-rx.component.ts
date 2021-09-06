@@ -102,6 +102,7 @@ export class ShareRxComponent implements OnInit {
   countryCod;
   chatId: any;
   IsTelegramDisable = true;
+  mrPrescriptionDetails: any;
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -383,6 +384,7 @@ export class ShareRxComponent implements OnInit {
     if (this.mrId) {
       this.provider_services.getMRprescription(this.mrId)
         .subscribe((data) => {
+          this.mrPrescriptionDetails = data['prescriptionsList'];
           if(Object.keys(data).length !== 0 && data.constructor === Object){
           if (data['prescriptionsList'] && data['prescriptionsList'][0].keyName) {
             console.log(data);

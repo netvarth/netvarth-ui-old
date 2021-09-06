@@ -8,8 +8,8 @@
                         &nbsp;
                     </div>
                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
-                        <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'pdetails'" [accountId]="accountId" [customId]="customId" [showHeaderAction]="true"></app-header>
-                        <div class="view-booking" *ngIf="!sharedFunctionobj.checkLogin()" >
+                        <app-header *ngIf="accountIdExists && sharedFunctionobj.checkLogin()" [includedfrom]="'pdetails'" [accountId]="accountId" [customId]="customId" [showHeaderAction]="true"></app-header>
+                        <div class="view-booking" *ngIf="accountIdExists && !sharedFunctionobj.checkLogin()" >
                             <button class="pull-right btn btn-primary dashboard-btn" (click)="dashboardClicked()">My Bookings</button>
                         </div>
                     </div>
@@ -148,6 +148,16 @@
                                                 </div>
                                             </div>
                                             <div class="question-main-outer"
+                                            *ngIf="businessjson.languagesSpoken && businessjson.languagesSpoken.length > 0">
+                                            <div class="question-header">Languages Known</div>
+                                            <div class="specialization-value question-value1">
+                                                <ul class="comma-list">
+                                                    <li class="item" *ngFor="let languages of businessjson.languagesSpoken;let i=index">{{languages | capitalizeFirst}}</li>
+                                                 
+                                                   
+                                                </ul>
+                                            </div></div>
+                                           <!-- <div class="question-main-outer"
                                                 *ngIf="businessjson.languagesSpoken && businessjson.languagesSpoken.length > 0">
                                                 <div class="question-header">Languages Known</div>
                                                 <div
@@ -159,7 +169,7 @@
                                                         </ng-container>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> !-->
                                             <div class="question-main-outer" *ngIf="socialMedialist.length>0">
                                                 <div class="question-header">Social Media Links and Listing Sites</div>
                                                 <div class="question-value1">

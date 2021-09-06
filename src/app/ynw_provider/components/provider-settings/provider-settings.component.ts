@@ -187,8 +187,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.activated_route.queryParams.subscribe(
       qparams => {
         this.showTakeaTour = qparams.firstTimeSignup;
-        const user = this.groupService.getitemFromGroupStorage('ynw-user');
-        this.accountType = user.accountType;
+        // const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        // this.accountType = user.accountType;
         if (this.showTakeaTour) {
           this.getAccountContactInfo();
         }
@@ -234,7 +234,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   additionalInfoDomainFields: any = [];
   additionalInfoSubDomainFields: any = [];
   domain_fields;
-  domain;
+  domain:any='';
   domain_questions = [];
   subdomain_fields = [];
   image_list: any = [];
@@ -256,12 +256,16 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   customerstooltip = '';
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
+    if(user.sector){
     this.domain = user.sector;
+    }
     this.services_hint = projectConstantsLocal.DOMAIN_SERVICES_HINT[this.domain].helphint;
     if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
       this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
     } 
+    if(user.accountType){
     this.accountType = user.accountType;
+    }
     this.bprofileTooltip = this.wordProcessor.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
     this.waitlistTooltip = this.wordProcessor.getProjectMesssages('WAITLIST_TOOLTIP');
     this.licenseTooltip = this.wordProcessor.getProjectMesssages('LINCENSE_TOOLTIP');
@@ -431,7 +435,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   ngAfterViewChecked() {
     this.cdf.detectChanges();
 
-  } ngOnDestroy() {
+  }
+   ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
     if (this.subscription) {
       this.subscription.unsubscribe();
