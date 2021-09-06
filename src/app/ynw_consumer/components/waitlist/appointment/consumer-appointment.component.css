@@ -102,6 +102,11 @@ form.virtual-fields, form.virtual-fields .mat-dialog-content {
 .virtualage{
   padding-left:none;
 }
+
+.disabledDiv {
+  pointer-events: none;
+  opacity: 0.4;   }
+  
 .edtlang{
   display: flex!important;
   /* padding: inherit; */

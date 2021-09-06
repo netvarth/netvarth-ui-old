@@ -42,7 +42,7 @@ import { PaytmService } from '../../../../../app/shared/services/paytm.service';
 })
 export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     paymentBtnDisabled = false;
-    isClickedOnce=false;
+    isClickedOnce = false;
     tooltipcls = '';
     add_member_cap = Messages.ADD_MEMBER_CAP;
     cancel_btn = Messages.CANCEL_BTN;
@@ -229,10 +229,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     amounttopay: any;
     wallet: any;
     payAmount: number;
-        loadingPaytm = false;
+    loadingPaytm = false;
     @ViewChild('consumer_checkin') paytmview;
     api_loading_video;
-    payment_options:  any = [];
+    payment_options: any = [];
     paytmEnabled = false;
     razorpayEnabled = false;
     paymentmodes: any;
@@ -391,10 +391,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
     OnNewMember(event) {
 
-       // if (this.chosen_person = 'new_member') {
-            this.hideEditButton = true;
-            this.editable = true;
-       // }
+        // if (this.chosen_person = 'new_member') {
+        this.hideEditButton = true;
+        this.editable = true;
+        // }
         // else if(this.chosen_person != 'new_member' && this.is_parent==false) {
         //     this.hideEditButton = false;
         //     this.editable = false;
@@ -424,7 +424,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         // '#'+(Math.random()*0xFFFFFF<<0).toString(16);
         this.virtualInfo = this.virtualForm.value;
         console.log(this.virtualInfo);
-        this.selectedLocation = this.virtualInfo.pincode;
+        this.selectedLocation = this.virtualInfo.location;
 
         if (this.selectedLocation == '') {
             this.editable = true;
@@ -1266,22 +1266,22 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.shared_services.getPaymentModesofProvider(this.account_id)
             .subscribe(
                 data => {
-                  this.paymentmodes = data;
-                   console.log("paymode"+this.paymentmodes.payGateways);
-                for(let modes of this.paymentmodes){
-                   for(let gateway of modes.payGateways){
-                       if(gateway == 'PAYTM'){
-                        this.paytmEnabled = true;
-                       }
-                       if(gateway == 'RAZORPAY'){
-                        this.razorpayEnabled = true;
-                       }
-                   }
-                }
-               
-                    
+                    this.paymentmodes = data;
+                    console.log("paymode" + this.paymentmodes.payGateways);
+                    for (let modes of this.paymentmodes) {
+                        for (let gateway of modes.payGateways) {
+                            if (gateway == 'PAYTM') {
+                                this.paytmEnabled = true;
+                            }
+                            if (gateway == 'RAZORPAY') {
+                                this.razorpayEnabled = true;
+                            }
+                        }
+                    }
+
+
                 },
-                
+
             );
     }
 
@@ -1626,187 +1626,187 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
         }
     }
-     confirmcheckin(type?,paymenttype?) {
-       if(type==='checkin' && this.sel_ser_det.isPrePayment &&this.payEmail===''){
-           this.paymentBtnDisabled=true;
-        const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
-            width: '40%',
-            panelClass: ['loginmainclass', 'popup-class'],
-       
+    confirmcheckin(type?, paymenttype?) {
+        if (type === 'checkin' && this.sel_ser_det.isPrePayment && this.payEmail === '') {
+            this.paymentBtnDisabled = true;
+            const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
+                width: '40%',
+                panelClass: ['loginmainclass', 'popup-class'],
 
-        });
-        emaildialogRef.afterClosed().subscribe(result => {
-            if (result!== '' && result!==undefined) {
-                this.payEmail = result;
-                this.confirmcheckin(type,paymenttype);
-            }else{
-                 this.isClickedOnce=false;
-            
-            }
 
-        });
-
-       }else{
-        if (this.waitlist_for.length !== 0) {
-            for (const list of this.waitlist_for) {
-                if (list.id === this.customer_data.id) {
-                    list['id'] = 0;
-                }
-            }
-        }
-        this.virtualServiceArray = {};
-        if (this.callingModes !== '') {
-            this.is_wtsap_empty = false;
-            if (this.sel_ser_det.serviceType === 'virtualService') {
-                if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
-                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
+            });
+            emaildialogRef.afterClosed().subscribe(result => {
+                if (result !== '' && result !== undefined) {
+                    this.payEmail = result;
+                    this.confirmcheckin(type, paymenttype);
                 } else {
-                    console.log(this.callingModes);
-                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
+                    this.isClickedOnce = false;
+
                 }
-            }
-        } else if (this.callingModes === '' || this.callingModes.length < 10) {
-            if (this.sel_ser_det.serviceType === 'virtualService') {
-                for (const i in this.sel_ser_det.virtualCallingModes) {
-                    if (this.sel_ser_det.virtualCallingModes[i].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[i].callingMode === 'Phone') {
-                        this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
-                        this.is_wtsap_empty = true;
-                        break;
+
+            });
+
+        } else {
+            if (this.waitlist_for.length !== 0) {
+                for (const list of this.waitlist_for) {
+                    if (list.id === this.customer_data.id) {
+                        list['id'] = 0;
                     }
                 }
             }
-        }
-        let phNumber;
-        if (this.currentPhone && this.changePhno) {
-            phNumber = this.currentPhone;
-        } else {
-            phNumber = this.userPhone;
-        }
-        let post_Data = {
-            'queue': {
-                'id': this.queueId
-            },
-            'date': this.selectedDate,
-            'service': {
-                'id': this.sel_ser,
-                'serviceType': this.sel_ser_det.serviceType
-            },
-            'consumerNote': this.consumerNote,
-            'countryCode': this.countryCode,
-            'coupons': this.selected_coupons
-        };
-        if (this.sel_ser_det.serviceType === 'virtualService') {
-            for (const i in this.virtualServiceArray) {
-                if (i === 'WhatsApp') {
-                    post_Data['virtualService'] = this.virtualServiceArray;
-                } else if (i === 'GoogleMeet') {
-                    post_Data['virtualService'] = this.virtualServiceArray;
-                } else if (i === 'Zoom') {
-                    post_Data['virtualService'] = this.virtualServiceArray;
-                } else if (i === 'Phone') {
-                    post_Data['virtualService'] = this.virtualServiceArray;
-                } else if (i === 'VideoCall') {
-                    post_Data['virtualService'] = { 'VideoCall': '' };
+            this.virtualServiceArray = {};
+            if (this.callingModes !== '') {
+                this.is_wtsap_empty = false;
+                if (this.sel_ser_det.serviceType === 'virtualService') {
+                    if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
+                        this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
+                    } else {
+                        console.log(this.callingModes);
+                        this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
+                    }
+                }
+            } else if (this.callingModes === '' || this.callingModes.length < 10) {
+                if (this.sel_ser_det.serviceType === 'virtualService') {
+                    for (const i in this.sel_ser_det.virtualCallingModes) {
+                        if (this.sel_ser_det.virtualCallingModes[i].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[i].callingMode === 'Phone') {
+                            this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+                            this.is_wtsap_empty = true;
+                            break;
+                        }
+                    }
                 }
             }
-            //     if(this.virtualInfo){
-            //         console.log(this.virtualInfo);
-            //     const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
-            //     const formattedDate = moment(momentDate).format("YYYY-MM-DD");
-            //     console.log(formattedDate);
-            //     this.waitlist_for[0]['dob']=formattedDate;
-            //     if(this.virtualInfo.islanguage==='yes'){
-            //         this.waitlist_for[0]['preferredLanguage']=['English'];
-            //     }else{
-            //         this.waitlist_for[0]['preferredLanguage']=[this.virtualInfo.preferredLanguage];
-            //     }
-            //     const bookingLocation={};
-            //     bookingLocation['pincode']=this.virtualInfo.pincode;
-            //     this.waitlist_for[0]['bookingLocation']=bookingLocation;
-            //     if(this.virtualInfo.gender!==''){
-            //         this.waitlist_for[0]['gender']=this.virtualInfo.gender;
-            //     }
+            let phNumber;
+            if (this.currentPhone && this.changePhno) {
+                phNumber = this.currentPhone;
+            } else {
+                phNumber = this.userPhone;
+            }
+            let post_Data = {
+                'queue': {
+                    'id': this.queueId
+                },
+                'date': this.selectedDate,
+                'service': {
+                    'id': this.sel_ser,
+                    'serviceType': this.sel_ser_det.serviceType
+                },
+                'consumerNote': this.consumerNote,
+                'countryCode': this.countryCode,
+                'coupons': this.selected_coupons
+            };
+            if (this.sel_ser_det.serviceType === 'virtualService') {
+                for (const i in this.virtualServiceArray) {
+                    if (i === 'WhatsApp') {
+                        post_Data['virtualService'] = this.virtualServiceArray;
+                    } else if (i === 'GoogleMeet') {
+                        post_Data['virtualService'] = this.virtualServiceArray;
+                    } else if (i === 'Zoom') {
+                        post_Data['virtualService'] = this.virtualServiceArray;
+                    } else if (i === 'Phone') {
+                        post_Data['virtualService'] = this.virtualServiceArray;
+                    } else if (i === 'VideoCall') {
+                        post_Data['virtualService'] = { 'VideoCall': '' };
+                    }
+                }
+                //     if(this.virtualInfo){
+                //         console.log(this.virtualInfo);
+                //     const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
+                //     const formattedDate = moment(momentDate).format("YYYY-MM-DD");
+                //     console.log(formattedDate);
+                //     this.waitlist_for[0]['dob']=formattedDate;
+                //     if(this.virtualInfo.islanguage==='yes'){
+                //         this.waitlist_for[0]['preferredLanguage']=['English'];
+                //     }else{
+                //         this.waitlist_for[0]['preferredLanguage']=[this.virtualInfo.preferredLanguage];
+                //     }
+                //     const bookingLocation={};
+                //     bookingLocation['pincode']=this.virtualInfo.pincode;
+                //     this.waitlist_for[0]['bookingLocation']=bookingLocation;
+                //     if(this.virtualInfo.gender!==''){
+                //         this.waitlist_for[0]['gender']=this.virtualInfo.gender;
+                //     }
 
-            // }
-            if (this.virtualInfo) {
-                // console.log(this.virtualInfo);
-                // const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
-                // const formattedDate = moment(momentDate).format("YYYY-MM-DD");
-                // console.log(formattedDate);
-                // this.waitlist_for[0]['dob'] = formattedDate;
-                this.waitlist_for[0]['whatsAppNum']={
-                    'countryCode': this.virtualInfo.countryCode_whtsap,
-                    'number': this.virtualInfo.whatsappnumber
-                }
-                this.waitlist_for[0]['telegramNum']={
-                    'countryCode': this.virtualInfo.countryCode_telegram,
-                    'number': this.virtualInfo.telegramnumber
-                }
-                this.waitlist_for[0]['age'] = this.virtualInfo.age;
-                if (this.virtualInfo.islanguage === 'yes') {
-                    let langs = [];
-                    langs.push('English');
-                    this.waitlist_for[0]['preferredLanguage'] = langs;
-                } else {
-                    let langs = [];
-                    langs = this.virtualInfo.preferredLanguage;
-                    this.waitlist_for[0]['preferredLanguage'] = langs;
-                }
-                const bookingLocation = {};
-                bookingLocation['pincode'] = this.virtualInfo.pincode;
-                if(this.virtualInfo.pincode===''){
-               bookingLocation['district']=this.virtualInfo.localarea;
-               bookingLocation['state']=this.virtualInfo.state;
-                }
-          
-                this.waitlist_for[0]['bookingLocation'] = bookingLocation;
-                if (this.virtualInfo.gender !== '') {
-                    this.waitlist_for[0]['gender'] = this.virtualInfo.gender;
+                // }
+                if (this.virtualInfo) {
+                    // console.log(this.virtualInfo);
+                    // const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
+                    // const formattedDate = moment(momentDate).format("YYYY-MM-DD");
+                    // console.log(formattedDate);
+                    // this.waitlist_for[0]['dob'] = formattedDate;
+                    this.waitlist_for[0]['whatsAppNum'] = {
+                        'countryCode': this.virtualInfo.countryCode_whtsap,
+                        'number': this.virtualInfo.whatsappnumber
+                    }
+                    this.waitlist_for[0]['telegramNum'] = {
+                        'countryCode': this.virtualInfo.countryCode_telegram,
+                        'number': this.virtualInfo.telegramnumber
+                    }
+                    this.waitlist_for[0]['age'] = this.virtualInfo.age;
+                    if (this.virtualInfo.islanguage === 'yes') {
+                        let langs = [];
+                        langs.push('English');
+                        this.waitlist_for[0]['preferredLanguage'] = langs;
+                    } else {
+                        let langs = [];
+                        langs = this.virtualInfo.preferredLanguage;
+                        this.waitlist_for[0]['preferredLanguage'] = langs;
+                    }
+                    const bookingLocation = {};
+                    bookingLocation['pincode'] = this.virtualInfo.pincode;
+                    if (this.virtualInfo.pincode === '') {
+                        bookingLocation['district'] = this.virtualInfo.localarea;
+                        bookingLocation['state'] = this.virtualInfo.state;
+                    }
+
+                    this.waitlist_for[0]['bookingLocation'] = bookingLocation;
+                    if (this.virtualInfo.gender !== '') {
+                        this.waitlist_for[0]['gender'] = this.virtualInfo.gender;
+
+                    }
 
                 }
-                
+            }
+            if (this.payEmail !== '') {
+                this.waitlist_for[0]['email'] = this.payEmail;
+            }
+
+            post_Data['waitlistingFor'] = JSON.parse(JSON.stringify(this.waitlist_for));
+            if (this.apptTime) {
+                post_Data['appointmentTime'] = this.apptTime;
+            }
+            if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
+                post_Data['provider'] = { 'id': this.selectedUser.id };
+            }
+            if (this.partySizeRequired) {
+                this.holdenterd_partySize = this.enterd_partySize;
+                post_Data['partySize'] = Number(this.holdenterd_partySize);
+            }
+            post_Data['waitlistPhoneNumber'] = phNumber;
+            post_Data['consumer'] = { id: this.customer_data.id };
+            if (this.jcashamount > 0 && this.checkJcash) {
+                post_Data['useCredit'] = this.checkJcredit
+                post_Data['useJcash'] = this.checkJcash
+            }
+            if (!this.is_wtsap_empty) {
+                if (type === 'checkin') {
+                    if (this.jcashamount > 0 && this.checkJcash) {
+                        this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.paymentDetails.amountRequiredNow)
+                            .subscribe(data => {
+                                this.remainingadvanceamount = data;
+                                this.addCheckInConsumer(post_Data, paymenttype);
+                            });
+                    }
+                    else {
+                        // this.isClickedOnce=false;
+                        //this.disablebutton = true;
+                        this.addCheckInConsumer(post_Data, paymenttype);
+                    }
+                } else if (this.sel_ser_det.isPrePayment) {
+                    this.addWaitlistAdvancePayment(post_Data);
+                }
             }
         }
-        if (this.payEmail !== '') {
-            this.waitlist_for[0]['email'] = this.payEmail;
-        }
-      
-        post_Data['waitlistingFor'] = JSON.parse(JSON.stringify(this.waitlist_for));
-        if (this.apptTime) {
-            post_Data['appointmentTime'] = this.apptTime;
-        }
-        if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
-            post_Data['provider'] = { 'id': this.selectedUser.id };
-        }
-        if (this.partySizeRequired) {
-            this.holdenterd_partySize = this.enterd_partySize;
-            post_Data['partySize'] = Number(this.holdenterd_partySize);
-        }
-        post_Data['waitlistPhoneNumber'] = phNumber;
-        post_Data['consumer'] = { id: this.customer_data.id };
-        if (this.jcashamount > 0 && this.checkJcash) {
-            post_Data['useCredit'] = this.checkJcredit
-            post_Data['useJcash'] = this.checkJcash
-        }
-        if (!this.is_wtsap_empty) {
-            if (type === 'checkin') {
-                if (this.jcashamount > 0 && this.checkJcash) {
-                    this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.paymentDetails.amountRequiredNow)
-                        .subscribe(data => {
-                            this.remainingadvanceamount = data;
-                            this.addCheckInConsumer(post_Data,paymenttype);
-                        });
-                }
-                else {
-                   // this.isClickedOnce=false;
-                  //this.disablebutton = true;
-                this.addCheckInConsumer(post_Data,paymenttype);
-                }
-            } else if (this.sel_ser_det.isPrePayment) {
-                this.addWaitlistAdvancePayment(post_Data);
-            }
-        }
-    }
     }
     confirmVirtualServiceinfo(memberObject, type?) {
         const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
@@ -1828,11 +1828,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
         });
     }
-    saveCheckin(type?,paymenttype?) {
-        if(type==='checkin'){
-            this.isClickedOnce=true;
+    saveCheckin(type?, paymenttype?) {
+        if (type === 'checkin') {
+            this.isClickedOnce = true;
         }
-    
+
         if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
             if (this.waitlist_for.length !== 0) {
                 for (const list of this.waitlist_for) {
@@ -1842,14 +1842,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     console.log(memberObject);
                     if (list['id'] !== this.customer_data.id) {
                         // this.confirmVirtualServiceinfo(memberObject, type);
-                        this.confirmcheckin(type,paymenttype);
+                        this.confirmcheckin(type, paymenttype);
                     } else {
-                        this.confirmcheckin(type,paymenttype);
+                        this.confirmcheckin(type, paymenttype);
                     }
                 }
             }
         } else {
-            this.confirmcheckin(type,paymenttype);
+            this.confirmcheckin(type, paymenttype);
         }
 
     }
@@ -1872,18 +1872,18 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         });
 
     }
-    addCheckInConsumer(postData,paymenttype?) {
+    addCheckInConsumer(postData, paymenttype?) {
         this.subs.sink = this.shared_services.addCheckin(this.account_id, postData)
             .subscribe(data => {
                 this.lStorageService.removeitemfromLocalStorage('age');
                 this.lStorageService.removeitemfromLocalStorage('userId');
-                if(this.customId){
-                    console.log("businessid"+this.businessId);
+                if (this.customId) {
+                    console.log("businessid" + this.businessId);
                     const accountid = this.businessId;
-                      this.shared_services.addProvidertoFavourite(accountid)
+                    this.shared_services.addProvidertoFavourite(accountid)
                         .subscribe(() => {
                         });
-                   
+
                 }
                 const retData = data;
                 this.uuidList = [];
@@ -1900,10 +1900,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     parentUid = retData['parent_uuid'];
                 });
                 if (this.selectedMessage.files.length > 0) {
-                    this.consumerNoteAndFileSave(this.uuidList, parentUid,paymenttype);
+                    this.consumerNoteAndFileSave(this.uuidList, parentUid, paymenttype);
                 }
                 else if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                    this.submitQuestionnaire(parentUid,paymenttype);
+                    this.submitQuestionnaire(parentUid, paymenttype);
                 } else {
                     if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
                         this.payuPayment(paymenttype);
@@ -1918,14 +1918,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 }
             },
                 error => {
-                    this.isClickedOnce=false;
+                    this.isClickedOnce = false;
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                     this.disablebutton = false;
-                    this.paytmGateway = false;   
+                    this.paytmGateway = false;
                     this.razorpayGatway = false;
                 });
     }
-    submitQuestionnaire(uuid,paymenttype?) {
+    submitQuestionnaire(uuid, paymenttype?) {
         const dataToSend: FormData = new FormData();
         if (this.questionAnswers.files) {
             for (const pic of this.questionAnswers.files) {
@@ -1951,7 +1951,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                                         this.paymentOperation(paymenttype);
                                     },
                                         error => {
-                                            this.isClickedOnce=false;
+                                            this.isClickedOnce = false;
                                             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                                             this.disablebutton = false;
                                             this.api_loading_video = true;
@@ -1959,7 +1959,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             }
                         },
                             error => {
-                                this.isClickedOnce=false;
+                                this.isClickedOnce = false;
                                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                                 this.disablebutton = false;
                                 this.api_loading_video = true;
@@ -1970,50 +1970,50 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
         },
             error => {
-                this.isClickedOnce=false;
+                this.isClickedOnce = false;
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 this.disablebutton = false;
                 this.api_loading_video = true;
             });
     }
-    
-    
+
+
     transactionCompleted(response) {
-    if(response.STATUS == 'TXN_SUCCESS'){
-        this.isClickedOnce=false;
-        this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-        let multiple;
-        if (this.uuidList.length > 1) {
-            multiple = true;
-        } else {
-            multiple = false;
+        if (response.STATUS == 'TXN_SUCCESS') {
+            this.isClickedOnce = false;
+            this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+            let multiple;
+            if (this.uuidList.length > 1) {
+                multiple = true;
+            } else {
+                multiple = false;
+            }
+            let queryParams = {
+                account_id: this.account_id,
+                uuid: this.uuidList,
+                multiple: multiple,
+                theme: this.theme
+            }
+            if (this.businessId) {
+                queryParams['customId'] = this.customId;
+            }
+            let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
+            };
+            this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras));
+        } else if (response.STATUS == 'TXN_FAILURE') {
+            this.isClickedOnce = false;
+            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+            this.ngZone.run(() => this.router.navigate(['consumer']));
         }
-        let queryParams = {
-            account_id: this.account_id,
-            uuid: this.uuidList,
-            multiple: multiple,
-            theme: this.theme
-        }
-        if (this.businessId) {
-            queryParams['customId'] = this.customId;
-        }
-        let navigationExtras: NavigationExtras = {
-            queryParams: queryParams
-        };
-        this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras));
-    } else if(response.STATUS == 'TXN_FAILURE'){
-        this.isClickedOnce=false;
-        this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
-        this.ngZone.run(() => this.router.navigate(['consumer']));
-     }
     }
-    closeloading(){
-        this.loadingPaytm = false; 
+    closeloading() {
+        this.loadingPaytm = false;
         this.cdRef.detectChanges();
         this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
         this.ngZone.run(() => this.router.navigate(['consumer']));
     }
-   paymentOperation(paymenttype?) {
+    paymentOperation(paymenttype?) {
         if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
             this.payuPayment(paymenttype);
         } else {
@@ -2431,7 +2431,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.selectedMessage.caption.splice(i, 1);
         this.imgCaptions[i] = '';
     }
-     consumerNoteAndFileSave(uuids, parentUid?,paymenttype?) {
+    consumerNoteAndFileSave(uuids, parentUid?, paymenttype?) {
         const dataToSend: FormData = new FormData();
         const captions = {};
         let i = 0;
@@ -2453,7 +2453,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             count++;
                             if (count === uuids.length) {
                                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                                    this.submitQuestionnaire(parentUid,paymenttype);
+                                    this.submitQuestionnaire(parentUid, paymenttype);
                                 } else {
                                     this.paymentOperation(paymenttype);
                                 }
@@ -2475,7 +2475,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         }
                     },
                     error => {
-                        this.isClickedOnce=false;
+                        this.isClickedOnce = false;
                         this.wordProcessor.apiErrorAutoHide(this, error);
                         this.disablebutton = false;
                     }
@@ -2979,34 +2979,34 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (type) {
             if (this.bookStep === 1 && this.serviceType !== 'virtualService' || this.bookStep === 0) {
                 this.location.back();
-            }else {
-                if(this.questionnaireList.labels && this.questionnaireList.labels.length > 0){
-                this.bookStep--;
+            } else {
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                    this.bookStep--;
                 }
-                else{
-                    this.bookStep=1;
+                else {
+                    this.bookStep = 1;
                 }
             }
-        if (this.action !== 'addmember') {
-            this.closebutton.nativeElement.click();
+            if (this.action !== 'addmember') {
+                this.closebutton.nativeElement.click();
+            }
+            setTimeout(() => {
+                if (this.action === 'note' || this.action === 'members' || (this.action === 'service' && !this.filterDepart)
+                    || this.action === 'attachment' || this.action === 'coupons' || this.action === 'departments' ||
+                    this.action === 'phone' || this.action === 'email') {
+                    this.action = '';
+                } else if (this.action === 'addmember') {
+                    this.action = 'members';
+                } else if (this.action === 'service' && this.filterDepart) {
+                    this.action = '';
+                } else if (this.action === 'preInfo') {
+                    this.action = '';
+                } else if (this.action === 'timeChange') {
+                    this.action = '';
+                }
+            }, 500);
         }
-        setTimeout(() => {
-            if (this.action === 'note' || this.action === 'members' || (this.action === 'service' && !this.filterDepart)
-                || this.action === 'attachment' || this.action === 'coupons' || this.action === 'departments' ||
-                this.action === 'phone' || this.action === 'email') {
-                this.action = '';
-            } else if (this.action === 'addmember') {
-                this.action = 'members';
-            } else if (this.action === 'service' && this.filterDepart) {
-                this.action = '';
-            } else if (this.action === 'preInfo') {
-                this.action = '';
-            } else if (this.action === 'timeChange') {
-                this.action = '';
-            }
-        }, 500);
     }
-}
     applyPromocode() {
         this.action = 'coupons';
         this.selected_coupon = '';
@@ -3207,10 +3207,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     goToStep(type) {
         // console.log("Consumer : ", this.customer_data.userProfile)
         //console.log("Patient Information :", this.virtualForm.value);
-        this.virtualInfo = this.virtualForm.value;
+        // this.virtualInfo = this.virtualForm.value;
 
 
-        console.log("Virtual Info : ", this.virtualInfo);
+        // console.log("Virtual Info : ", this.virtualInfo);
         if (type === 'next') {
             if (this.serviceType === 'virtualService' && this.bookStep == 0) {
                 this.bookStep++;
@@ -3249,84 +3249,82 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.saveCheckin('next');
         }
 
-
-        // // //for checking update parent info ....
-        this.submitbtndisabled = true;
-        // this.virtualInfo['phoneno'] = this.customer_data.userProfile.primaryMobileNo;
-        if (this.virtualForm.controls.email.invalid) {
-            return false;
-        }
-        // if (this.validateFields() === true) {
-        //     this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
-        // } 
-
-        else if (this.virtualInfo.countryCode_whtsap.trim().length === 0 && this.virtualInfo.whatsappnumber.trim().length > 0) {
-            this.snackbarService.openSnackBar('Please fill whatsapp countrycode', { 'panelClass': 'snackbarerror' });
-        } else if (this.virtualInfo.countryCode_telegram.trim().length === 0 && this.virtualInfo.telegramnumber.trim().length > 0) {
-            this.snackbarService.openSnackBar('Please fill telegram countrycode', { 'panelClass': 'snackbarerror' });
-        } else {
-
-            if (this.is_parent) {
-                this.updateParentInfo(this.virtualInfo).then(
-                    (result) => {
-                        if (result !== false) {
-                            this.lStorageService.setitemonLocalStorage('age', this.virtualInfo.age);
-                            this.submitbtndisabled = false;
-                            // this.dialogRef.close(formdata);
-                        }
-                    },
-                    (error) => {
-                        this.submitbtndisabled = false;
-                        return false;
-                    }
-                );
-            } else {
-                if (this.virtualInfo.serviceFor === 'new_member') {
-                    this.saveMember(this.virtualInfo).then(data => {
-                        if (data !== false) {
-                            this.lStorageService.setitemonLocalStorage('age', this.virtualInfo.age);
-                            this.virtualInfo['newMemberId'] = data;
-                            this.submitbtndisabled = false;
-                            // this.dialogRef.close(formdata);
-                        }
-                    },
-                        () => {
-                            this.submitbtndisabled = false;
-                            return false;
-                        })
-                } else {
-                    this.updateMemberInfo(this.virtualInfo).then(
-                        (data) => {
-                            if (data !== false) {
-                                this.submitbtndisabled = false;
-                                this.lStorageService.setitemonLocalStorage('age', this.virtualInfo.age);
-                                // this.dialogRef.close(formdata);
-                            }
-                        },
-                        () => {
-                            this.submitbtndisabled = false;
-                            return false;
-                        }
-                    );
-                }
+        if (this.serviceType === 'virtualService') {
+            this.virtualInfo = this.virtualForm.value;
+            console.log("Virtual Info : ", this.virtualInfo);
+            if (this.virtualInfo) {
+                this.setVirtualTeleserviceCustomer();
             }
-        }
 
-        // //this.virtualInfo = this.virtualForm.value
-        // for validating the consumer and his family members ...
-        if (this.virtualInfo) {
+        }
+        else {
             this.setVirtualTeleserviceCustomer();
         }
-        // if(this.virtualInfo)
-        // {
-        //     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-        //     this.api_loading1 = true;
-        //     if (activeUser) {
-        //         this.customer_data = activeUser;
-        //     }
-        //     this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
 
+
+        // // //for checking update parent info ....
+        // this.submitbtndisabled = true;
+        // // this.virtualInfo['phoneno'] = this.customer_data.userProfile.primaryMobileNo;
+        // if (this.virtualForm.controls.email.invalid) {
+        //     return false;
         // }
+        // // if (this.validateFields() === true) {
+        // //     this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
+        // // } 
+
+        // else if (this.virtualInfo.countryCode_whtsap.trim().length === 0 && this.virtualInfo.whatsappnumber.trim().length > 0) {
+        //     this.snackbarService.openSnackBar('Please fill whatsapp countrycode', { 'panelClass': 'snackbarerror' });
+        // } else if (this.virtualInfo.countryCode_telegram.trim().length === 0 && this.virtualInfo.telegramnumber.trim().length > 0) {
+        //     this.snackbarService.openSnackBar('Please fill telegram countrycode', { 'panelClass': 'snackbarerror' });
+        // } else {
+
+        //     if (this.is_parent) {
+        //         this.updateParentInfo(this.virtualInfo).then(
+        //             (result) => {
+        //                 if (result !== false) {
+        //                     this.lStorageService.setitemonLocalStorage('age', this.virtualInfo.age);
+        //                     this.submitbtndisabled = false;
+        //                     // this.dialogRef.close(formdata);
+        //                 }
+        //             },
+        //             (error) => {
+        //                 this.submitbtndisabled = false;
+        //                 return false;
+        //             }
+        //         );
+        //     } else {
+        //         if (this.virtualInfo.serviceFor === 'new_member') {
+        //             this.saveMember(this.virtualInfo).then(data => {
+        //                 if (data !== false) {
+        //                     this.lStorageService.setitemonLocalStorage('age', this.virtualInfo.age);
+        //                     this.virtualInfo['newMemberId'] = data;
+        //                     this.submitbtndisabled = false;
+        //                     // this.dialogRef.close(formdata);
+        //                 }
+        //             },
+        //                 () => {
+        //                     this.submitbtndisabled = false;
+        //                     return false;
+        //                 })
+        //         } else {
+        //             this.updateMemberInfo(this.virtualInfo).then(
+        //                 (data) => {
+        //                     if (data !== false) {
+        //                         this.submitbtndisabled = false;
+        //                         this.lStorageService.setitemonLocalStorage('age', this.virtualInfo.age);
+        //                         // this.dialogRef.close(formdata);
+        //                     }
+        //                 },
+        //                 () => {
+        //                     this.submitbtndisabled = false;
+        //                     return false;
+        //                 }
+        //             );
+        //         }
+        //     }
+        // }
+
+
 
 
     }
@@ -3355,7 +3353,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     payuPayment(paymenttype?) {
         let paymentWay;
-        if(paymenttype == 'paytm'){
+        if (paymenttype == 'paytm') {
             paymentWay = 'PPI';
         } else {
             paymentWay = 'DC';
@@ -3403,7 +3401,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     }
                 },
                     error => {
-                        this.isClickedOnce=false;
+                        this.isClickedOnce = false;
                         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     });
         }
@@ -3419,7 +3417,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 'isPayTmPayment': false,
                 'paymentMode': null
             };
-            if(paymentMode == 'PPI'){
+            if (paymentMode == 'PPI') {
                 postData.isPayTmPayment = true;
                 postData.isRazorPayPayment = false;
                 postData.paymentMode = "PPI";
@@ -3431,23 +3429,23 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.shared_services.PayByJaldeewallet(postData)
                 .subscribe((pData: any) => {
                     if (pData.isGateWayPaymentNeeded && pData.isJCashPaymentSucess) {
-                        console.log("first"+pData);
-                        if(paymentMode == 'PPI'){
+                        console.log("first" + pData);
+                        if (paymentMode == 'PPI') {
                             this.payWithPayTM(pData.response);
-                        }else{
+                        } else {
                             this.paywithRazorpay(pData.response);
                         }
                     }
                 },
                     error => {
-                        this.isClickedOnce=false;
+                        this.isClickedOnce = false;
                         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     });
         }
         else {
             this.subs.sink = this.shared_services.consumerPayment(this.waitlistDetails)
                 .subscribe((pData: any) => {
-                    console.log("firstrt"+pData);
+                    console.log("firstrt" + pData);
                     this.pGateway = pData.paymentGateway;
                     if (this.pGateway === 'RAZORPAY') {
                         this.paywithRazorpay(pData);
@@ -3464,15 +3462,15 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             //     }
                             // }, 2000);
                         } else {
-                            this.isClickedOnce=false;
+                            this.isClickedOnce = false;
                             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
                         }
                     }
                 },
                     error => {
-                        this.isClickedOnce=false;
+                        this.isClickedOnce = false;
                         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    this.disablebutton = false;
+                        this.disablebutton = false;
                     });
         }
     }
@@ -3486,10 +3484,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
-        this.isClickedOnce=false;
+        this.isClickedOnce = false;
         this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'checkin_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList, this.customId);
     }
-    payWithPayTM(pData:any) {
+    payWithPayTM(pData: any) {
         this.loadingPaytm = true;
         this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
     }
