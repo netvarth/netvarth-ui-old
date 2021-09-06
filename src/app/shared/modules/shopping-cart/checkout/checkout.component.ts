@@ -198,6 +198,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   payment_options:  any = [];
   paytmEnabled = false;
   razorpayEnabled = false;
+  paymentmodes: any;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -412,18 +413,22 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   getPaymentModes() {
     this.paytmEnabled = false;
     this.razorpayEnabled = false;
-    this.subs.sink = this.shared_services.getPaymentModesofProvider(this.account_id)
+    this.shared_services.getPaymentModesofProvider(this.account_id)
         .subscribe(
             data => {
-                this.payment_options = data;
-                this.payment_options.forEach(element => {
-                    if (element.name === 'PPI') {
-                        this.paytmEnabled = true;
-                    }
-                    if (element.name === 'DC' || element.name === 'CC' || element.name === 'NB'|| element.name === 'UPI' ) {
-                        this.razorpayEnabled = true;
-                    }
-                });
+              this.paymentmodes = data;
+               console.log("paymode"+this.paymentmodes.payGateways);
+            for(let modes of this.paymentmodes){
+               for(let gateway of modes.payGateways){
+                   if(gateway == 'PAYTM'){
+                    this.paytmEnabled = true;
+                   }
+                   if(gateway == 'RAZORPAY'){
+                    this.razorpayEnabled = true;
+                   }
+               }
+            }
+                
             },
             
         );
