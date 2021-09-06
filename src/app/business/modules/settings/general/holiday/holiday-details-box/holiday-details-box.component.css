@@ -4,10 +4,11 @@
     height: 40px;
     padding: 5px;
     border: 1px ; 
-    background-color: #ffb6c1 ;
+    background-color :#1e4079 ;
     box-sizing: border-box;
     border-radius: 25px;
     text-align: center;
+    color:white
     
   }
   .start-box {
@@ -75,11 +76,11 @@
       height: 40px;
       padding: 5px;
       border: 1px ; 
-      background-color: #ffb6c1 ;
+      background-color:#1e4079 ;
       box-sizing: border-box;
       border-radius: 25px;
       text-align: center;
-      
+      color:white
       
     }
     .start-box {
