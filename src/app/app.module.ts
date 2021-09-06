@@ -12,12 +12,10 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
-import { RatingStarModule } from './shared/modules/ratingstar/ratingstart.module';
 import { PagerModule } from './shared/modules/pager/pager.module';
 import { AppComponent, projectConstants } from './app.component';
 import { LogoutComponent } from './shared/components/logout/logout.component';
 import { ConfirmBoxComponent } from './shared/components/confirm-box/confirm-box.component';
-import { ReturnPaymentComponent } from './shared/components/return-payment/return-payment.component';
 import { AddInboxMessagesComponent } from './shared/components/add-inbox-messages/add-inbox-messages.component';
 import { AuthGuardConsumer, AuthGuardProvider, AuthGuardHome, AuthGuardLogin} from './shared/guard/auth.guard';
 import { SharedServices } from './shared/services/shared-services';
@@ -82,6 +80,7 @@ import { RequestDialogComponent } from './business/shared/meeting-room/request-d
 import { VideoCallSharedComponent } from './business/modules/video-call/video-call.component';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { AttachmentPopupComponent } from './shared/components/attachment-popup/attachment-popup.component';
+import { PreventDoubleClickDirective } from './shared/directives/prevent-double-click.directive';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -92,7 +91,6 @@ export function init_app(globalService: GlobalService) {
     LogoutComponent,
     EqualValidator,
     ConfirmBoxComponent,
-    ReturnPaymentComponent,
     AddInboxMessagesComponent,
     RequestForComponent,
     ForceDialogComponent,
@@ -103,7 +101,8 @@ export function init_app(globalService: GlobalService) {
     NotificationDialogComponent,
     RequestDialogComponent,
     VideoCallSharedComponent,
-     AttachmentPopupComponent
+    AttachmentPopupComponent,
+    PreventDoubleClickDirective
   ],
   entryComponents: [
     ConfirmBoxComponent,
@@ -129,7 +128,6 @@ export function init_app(globalService: GlobalService) {
     AngularMultiSelectModule,
     PagerModule,
     SharedModule,
-    RatingStarModule,
     ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     Nl2BrPipeModule,
     MaintenanceModule,
