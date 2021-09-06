@@ -26,7 +26,8 @@
             <div *ngIf="amForm">
               <form *ngIf="action=='add' || action === 'edit'" [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)"
                 (keyup)="resetApiErrors()" class="ynw-common-form-nm">
-                <div class="adddatetime-box">Add Date</div> <br><br>
+                <div style="padding:5px"></div>
+                <div class="adddatetime-box">Choose unavailable date</div> <br><br>
                 <div class="col-md-8">
                   <span class="col-md-4">
                       <mat-form-field appearance="fill">
@@ -66,8 +67,8 @@
                     </mat-form-field>-->
                   </span>
                 </div><br>
-               
-                <div class="margn-time"><span class="adddatetime-box" >Add Time</span> </div><br>
+                <div style="padding:5px"></div>
+                <div class="margn-time"><span class="adddatetime-box" >Choose unavailable time</span> </div><br>
                 <div class="col-md-8">
                   <span class="col-md-4">
                     <label for="changeHourStep">{{start_time_cap}}</label>
