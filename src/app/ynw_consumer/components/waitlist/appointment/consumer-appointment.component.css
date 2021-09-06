@@ -1488,14 +1488,14 @@ ngx-intl-tel-input input {
 }
 .paytm-icon {
   content: url(../../../../../assets/images/paytm.png);
-  width: 150px;
+  width: 100px;
   padding: 10px;
-  height: 58px;
+  /* height: 58px; */
   background: white;
 }
 .razorpay-icon {
   content: url(../../../../../assets/images/razorpay.png);
-  width: 200px;
+  width: 150px;
   padding: 10px;
   background: white;
 }
@@ -1938,4 +1938,49 @@ body.modal-open {
   }
 .note-pad {
   padding: 0px 20px !important;
+}
+@media  (max-width: 800px)  {
+  .web{
+      display: none !important;
+  }
+}
+@media (min-width: 450px) {
+  .disply  {
+      display: none !important;
+  }
+}
+.paymentdiv{
+  padding: 10px;
+  text-align: center;
+  background-color: #ffffff;
+  /* border: 1px solid #00008b26; */
+border-radius: 10px;
+/* box-shadow: rgba(45, 42, 42, 0.11) 0px 30px 30px, rgba(0, 0, 0, 0.1) 0px -12px 30px, rgba(0, 0, 0, 0.05) 0px 4px 6px; */
+box-shadow: 5px 5px 5px gainsboro;
+}
+.paymenticons{
+border-radius: 10px;
+border-bottom: 1px solid #f8f8f8;
+border-right: 1px solid #f8f8f8;
+box-shadow: 4px 4px 5px gainsboro;
+}
+.paymenticons:hover {
+  border: 2px solid darkblue;
+}
+.highlight{
+  background: #9e9e9e6e !important;
+  cursor: not-allowed !important;
+  opacity: 0.2;
+  pointer-events: none !important;
+}
+.incomplete-msg {
+  position: absolute !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  z-index: 4 !important;
+  width: 100% !important;
+  text-align: center !important;
+  margin-top: 60px !important;
+  color: green !important;
+  right: 0px !important;
 }
