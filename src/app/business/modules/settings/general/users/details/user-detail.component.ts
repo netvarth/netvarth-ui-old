@@ -482,19 +482,29 @@ export class BranchUserDetailComponent implements OnInit {
                 post_data1['mobileNo'] = input.phonenumber;
             }
 
+        // if (input.selectedUserType === 'PROVIDER') {
+        //     post_data1['deptId'] = input.selectedDepartment;
+        //     // post_data1['subdomain'] = input.selectedSubDomain;
+        //     console.log(this.selectedsubDomain);
+        //     post_data1['subdomain'] = (this.selectedsubDomain[0]) ? this.selectedsubDomain[0].id : 0;
+        // }
         if (input.selectedUserType === 'PROVIDER') {
             post_data1['deptId'] = input.selectedDepartment;
+            post_data1['bProfilePermitted'] = input.bProfilePermitted;
             // post_data1['subdomain'] = input.selectedSubDomain;
             console.log(this.selectedsubDomain);
-            post_data1['subdomain'] = (this.selectedsubDomain[0]) ? this.selectedsubDomain[0].id : 0;
+            // post_data1['subdomain'] = (this.selectedsubDomain[0]) ? this.selectedsubDomain[0].id : 0;
+            if (this.selectedsubDomain[0] && this.selectedsubDomain[0].id) {
+                post_data1['subdomain'] = this.selectedsubDomain[0].id;
+            }
         }
         if (input.selectedUserType !== 'ADMIN') {
         post_data1['admin'] = input.privileges;
         console.log(input.privileges);
         }
-        if (input.selectedUserType === 'PROVIDER') {
-            post_data1['bProfilePermitted'] = input.bProfilePermitted;
-            }
+        // if (input.selectedUserType === 'PROVIDER') {
+        //     post_data1['bProfilePermitted'] = input.bProfilePermitted;
+        //     }
         // console.log(post_data1);
         if (this.actionparam.type === 'edit') {
             console.log(post_data1);
