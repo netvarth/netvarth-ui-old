@@ -2792,7 +2792,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       data: {
         accencUid: accEncUid,
         path: this.wndw_path,
-        businessName: this.businessjson.businessName
+        businessName: this.businessjson.businessName,
+        businessDesc: this.businessjson.businessDesc,
+        businessUserName: this.businessjson.businessUserName
       }
     });
 
