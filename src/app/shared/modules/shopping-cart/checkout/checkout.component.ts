@@ -292,7 +292,15 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-    this.getPaymentModes();
+    //this.getPaymentModes();
+    const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
+        this.customer_countrycode = credentials.countryCode;
+        console.log("credentioooo"+credentials.countryCode);
+        if(this.customer_countrycode == '+91'){
+            this.getPaymentModes();
+        } else {
+            this.razorpayEnabled = true;
+        }
     this.linear = false;
     this.orderList = this.lStorageService.getitemfromLocalStorage('order');
     if (this.orderList) {

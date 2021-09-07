@@ -232,6 +232,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     paytmEnabled = false;
     razorpayEnabled = false;
     paymentmodes: any;
+    customer_countrycode: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -326,7 +327,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         };
         const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
         this.api_loading1 = true;
-        this.getPaymentModes();
+        const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
+        this.customer_countrycode = credentials.countryCode;
+        console.log("credentioooo"+credentials.countryCode);
+        if(this.customer_countrycode == '+91'){
+            this.getPaymentModes();
+        } else {
+            this.razorpayEnabled = true;
+        }
         if (activeUser) {
             this.customer_data = activeUser;
         }

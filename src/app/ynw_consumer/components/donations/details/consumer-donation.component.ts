@@ -238,6 +238,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     paytmEnabled = false;
     razorpayEnabled = false;
     paymentmodes: any;
+    customer_countrycode: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -295,7 +296,15 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.main_heading = this.checkinLabel; // 'Check-in';
         this.maxsize = 1;
         this.step = 1;
-        this.getPaymentModes();
+       // this.getPaymentModes();
+       const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
+        this.customer_countrycode = credentials.countryCode;
+        console.log("credentioooo"+credentials.countryCode);
+        if(this.customer_countrycode == '+91'){
+            this.getPaymentModes();
+        } else {
+            this.razorpayEnabled = true;
+        }
         this.getProfile();
         this.gets3curl();
         this.getFamilyMembers();

@@ -260,6 +260,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     razorpayEnabled = false;
     @ViewChild('consumer_appointment') paytmview;
     paymentmodes: any;
+    customer_countrycode: any;
 
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -353,7 +354,15 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             loop: false,
             responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 2 }, 1200: { items: 3 } }
         };
-        this.getPaymentModes();
+       // this.getPaymentModes();
+       const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
+        this.customer_countrycode = credentials.countryCode;
+        console.log("credentioooo"+credentials.countryCode);
+        if(this.customer_countrycode == '+91'){
+            this.getPaymentModes();
+        } else {
+            this.razorpayEnabled = true;
+        }
         const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
         if (activeUser) {
             this.isfirstCheckinOffer = activeUser.firstCheckIn;
