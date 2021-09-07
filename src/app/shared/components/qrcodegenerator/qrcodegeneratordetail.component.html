@@ -14,7 +14,7 @@
           <div >
              <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value">
             </ngx-qrcode>
-            <span  ><span>{{wpath}}{{busername}}</span></span>
+            <span  ><span>{{wpath}}{{busername ? busername : accuid}}</span></span>
           </div>
           <!--<div class="coupon-outer">
               <button class="btn btn-info jld-lnk-btn">
