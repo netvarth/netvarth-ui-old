@@ -21,6 +21,7 @@ import { S3UrlProcessor } from '../../../../../shared/services/s3-url-processor.
 import { SubSink } from '../../../../../../../node_modules/subsink';
 import { DateFormatPipe } from '../../../../../shared/pipes/date-format/date-format.pipe';
 import { PaytmService } from '../../../../../../app/shared/services/paytm.service';
+import { LocalStorageService } from '../../../../../../app/shared/services/local-storage.service';
 
 @Component({
     selector: 'app-consumer-checkin-bill',
@@ -138,6 +139,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
     @ViewChild('consumer_checkinbill') paytmview;
     paymentmodes: any;
     paymode = false;
+    customer_countrycode: any;
     constructor(private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
         public sharedfunctionObj: SharedFunctions,
@@ -158,7 +160,8 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
         public router: Router,
         public dateformat: DateFormatPipe,
         private ngZone: NgZone,
-        private paytmService: PaytmService
+        private paytmService: PaytmService,
+        private lStorageService: LocalStorageService,
     ) {
         this.subs.sink=this.activated_route.queryParams.subscribe(
             params => {
@@ -303,7 +306,15 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
                     this.gets3curl();
                     this.getWaitlistBill();
                     this.getPrePaymentDetails();
-                    this.getPaymentModes();                    
+                   // this.getPaymentModes();  
+                   const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
+                    this.customer_countrycode = credentials.countryCode;
+                    console.log("credentioooo"+credentials.countryCode);
+                    if(this.customer_countrycode == '+91'){
+                        this.getPaymentModes();
+                    } else {
+                        this.razorpayEnabled = true;
+                    }                  
                     // if (this.provider_label === 'provider') {
                     //     this.gets3curl();
                     // }
@@ -629,6 +640,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
         this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
     }
     transactionCompleted(response) {
+        console.log(response);
         if(response.STATUS == 'TXN_FAILURE'){
             this.isClickedOnce=false;
             this.loadingPaytm = false;

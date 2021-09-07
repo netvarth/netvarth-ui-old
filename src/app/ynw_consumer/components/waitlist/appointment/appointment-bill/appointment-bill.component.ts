@@ -21,6 +21,7 @@ import { S3UrlProcessor } from '../../../../../shared/services/s3-url-processor.
 import { SubSink } from '../../../../../../../node_modules/subsink';
 import { DateFormatPipe } from '../../../../../shared/pipes/date-format/date-format.pipe';
 import { PaytmService } from '../../../../../../app/shared/services/paytm.service';
+import { LocalStorageService } from '../../../../../../app/shared/services/local-storage.service';
 
 @Component({
     selector: 'app-consumer-appointment-bill',
@@ -139,6 +140,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
     @ViewChild('consumer_appointmentbill') paytmview;
     paymentmodes: any;
     paymode = false;
+    customer_countrycode: any;
     constructor(private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
         public sharedfunctionObj: SharedFunctions,
@@ -158,7 +160,8 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
          public dateformat: DateFormatPipe,
         public router: Router,
         private ngZone: NgZone,
-        private paytmService: PaytmService
+        private paytmService: PaytmService,
+        private lStorageService: LocalStorageService,
     ) {
         this.subs.sink=this.activated_route.queryParams.subscribe(
             params => {
@@ -213,7 +216,15 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                     // this.getproviderCouponList();
                     this.getAppointmentBill();
                     this.getPrePaymentDetails();
-                    this.getPaymentModes();
+                    //this.getPaymentModes();
+                    const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
+                    this.customer_countrycode = credentials.countryCode;
+                    console.log("credentioooo"+credentials.countryCode);
+                    if(this.customer_countrycode == '+91'){
+                        this.getPaymentModes();
+                    } else {
+                        this.razorpayEnabled = true;
+                    }
                     
                     // if (this.provider_label === 'provider') {
                         
