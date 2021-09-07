@@ -1290,7 +1290,9 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       data: {
         accencUid: accEncUid,
         path: this.wndw_path,
-        businessName: this.bProfile.businessName
+        businessName: this.bProfile.businessName,
+        businessDesc: this.bProfile.businessDesc,
+        businessUserName: this.bProfile.businessUserName
       }
     });
 

@@ -10,6 +10,9 @@ import {  Meta, Title } from '@angular/platform-browser';
 export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
   elementType = 'url';
   accuid: any;
+  bname: any;
+  about: any;
+  busername: any;
   qr_code_cId = false;
   qr_code_oId = false;
   qr_value;
@@ -46,7 +49,11 @@ export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
   ngOnInit() {
     this.accuid = this.data.accencUid;
     this.wpath = this.data.path;
-
+    this.bname = this.data.businessName;
+    this.about = this.data.businessDesc;
+    this.busername = this.data.businessUserName;
+    console.log(this.bname);
+    console.log(this.about);
     this.customId = this.data.customId;
     // this.window_path = this.data.pathUrl;
     // console.log(this.wpath + this.accuid);
