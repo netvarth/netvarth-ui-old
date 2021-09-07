@@ -397,9 +397,9 @@
                                                                     [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment('paytm')">Paytm</button>
                                                                     
                                                                     <button class="cs-btn bt1"  *ngIf="razorpayEnabled && !paytmEnabled && ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
-                                                                    [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()">CC/DC/UPI</button>
+                                                                    [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()">Pay by CC/DC/UPI</button>
                                                                     <button class="cs-btn bt1" *ngIf="paytmEnabled && !razorpayEnabled && ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
-                                                                    [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment('paytm')">CC/DC/UPI</button>
+                                                                    [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment('paytm')">Pay by CC/DC/UPI</button>
                                                                   
                                                                     <button class="cs-btn bt1"
                                                                         (click)="cashPayment()">Cash</button>
