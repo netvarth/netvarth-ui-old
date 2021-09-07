@@ -1971,30 +1971,21 @@
                                                     Confirm</ng-container>  appPreventDoubleClick  (throttledClick)="log()"-->
                                                     </button>
                                                 </div>
-                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top  width-100 hf-double-btn-container"
-                                                    *ngIf="razorpayEnabled && paytmEnabled">
-                                                    <div
-                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                        <p class="jaldeecredit">
-                                                            To pay Rs {{checkJcash ? payAmount :
-                                                            paymentDetails.amountRequiredNow}} please select any payment
-                                                            options
-                                                        </p>
-                                                        <span type="button" class="razorpay-icon paymenticons"
-                                                            *ngIf="razorpayEnabled && paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
-                                                            [class.disabled]="isClickedOnce"
-                                                            (click)="!isClickedOnce && saveCheckin('appt')">
-
-                                                        </span>&nbsp;&nbsp;
-                                                        <span type="button" class="paytm-icon paymenticons"
-                                                            [class.disabled]="isClickedOnce"
-                                                            *ngIf="paytmEnabled && razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
-                                                            (click)="!isClickedOnce && saveCheckin('appt','paytm')">
-
-                                                        </span>
-
-                                                    </div>
-                                                </div>
+                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 " *ngIf="razorpayEnabled && paytmEnabled">
+                                            <div  class="txt-align-center" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                <p class="jaldeecredit">
+                                                    To pay Rs {{checkJcash ? payAmount : paymentDetails.amountRequiredNow}} please select any payment options
+                                                </p>
+                                                <span type="button" class="razorpay-icon paymenticons" *ngIf="razorpayEnabled && paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"   [class.disabled]="isClickedOnce"
+                                                    (click)="!isClickedOnce && saveCheckin('appt')"  >
+                                                   
+                                                </span>&nbsp;&nbsp;
+                                                <span type="button"  class="paytm-icon paymenticons"[class.disabled]="isClickedOnce" *ngIf="paytmEnabled && razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" (click)="!isClickedOnce && saveCheckin('appt','paytm')"  >
+                                                     
+                                                </span>
+                                               
+                                            </div>
+                                        </div>
                                                 <div class="txt-align-center">
                                                     <button
                                                         class="cancelCheckinBtn mgn-m-up-10 next-button btn btn-primary font-weight-bold text-uppercase "

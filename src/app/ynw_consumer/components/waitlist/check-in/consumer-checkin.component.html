@@ -2106,57 +2106,38 @@
                                                  Proceed to pay <span >Rs {{checkJcash ? payAmount : paymentDetails.amountRequiredNow}}</span>(payTm)</ng-container>
                                             </button> -->
 
-
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top  width-100 hf-double-btn-container"
-                                                        *ngIf="razorpayEnabled && paytmEnabled">
-                                                        <div
-                                                            *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                            <p class="jaldeecredit">
-                                                                To pay Rs {{checkJcash ? payAmount :
-                                                                paymentDetails.amountRequiredNow}} please select any
-                                                                payment options
-                                                            </p>
-                                                            <span type="button" class="razorpay-icon paymenticons"
-                                                                [class.disabled]="isClickedOnce"
-                                                                *ngIf="razorpayEnabled  && paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
-                                                                [class.disabled]="isClickedOnce"
-                                                                (click)="!isClickedOnce && saveCheckin('checkin')">
-                                                            </span>&nbsp;&nbsp;
-                                                            <span type="button" class="paytm-icon paymenticons"
-                                                                [class.disabled]="isClickedOnce"
-                                                                *ngIf="paytmEnabled && razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
-                                                                (click)="!isClickedOnce && saveCheckin('checkin','paytm')">
-
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="txt-align-center">
-                                                        <button type="button"
-                                                            class="cancelCheckinBtn mgn-m-up-10 next-button btn btn-primary font-weight-bold text-uppercase "
-                                                            [class.disabled]="isClickedOnce"
-                                                            *ngIf="razorpayEnabled && !paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
-                                                            [class.disabled]="isClickedOnce"
-                                                            (click)="!isClickedOnce && saveCheckin('checkin')">
-                                                            CC/DC/UPI
-                                                        </button>
-                                                        <button type="button"
-                                                            class="cancelCheckinBtn mgn-m-up-10 next-button btn btn-primary font-weight-bold text-uppercase "
-                                                            [class.disabled]="isClickedOnce"
-                                                            *ngIf="paytmEnabled && !razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
-                                                            (click)="!isClickedOnce && saveCheckin('checkin','paytm')">
-                                                            CC/DC/UPI
-                                                        </button>
-                                                    </div>
-                                                    <div class="cancelpolicy  mgn-rt-5"
-                                                        *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                        <div
-                                                            *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                            <a data-toggle="modal" data-target="#exampleModal"
-                                                                class="refund_policy">Cancellation Policy</a>
-                                                        </div>
-                                                    </div>
-                                                    <!-- <div class=""
+               </div>
+                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12"*ngIf="razorpayEnabled && paytmEnabled">
+                                            <div class="txt-align-center" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                <p class="jaldeecredit">
+                                                    To pay Rs {{checkJcash ? payAmount : paymentDetails.amountRequiredNow}} please select any payment options
+                                                </p>
+                                                <span type="button" class="razorpay-icon paymenticons" [class.disabled]="isClickedOnce"*ngIf="razorpayEnabled  && paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" [class.disabled]="isClickedOnce"
+                                                    (click)="!isClickedOnce && saveCheckin('checkin')"  >
+                                                </span>&nbsp;&nbsp;
+                                                <span type="button"  class="paytm-icon paymenticons" [class.disabled]="isClickedOnce" *ngIf="paytmEnabled && razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" (click)="!isClickedOnce && saveCheckin('checkin','paytm')" >
+                                                    
+                                                </span>
+                                            </div>
+                                            </div>
+                                            <div class="txt-align-center">
+                                                <button type="button" class="cancelCheckinBtn  next-button btn btn-primary font-weight-bold text-uppercase " [class.disabled]="isClickedOnce"*ngIf="razorpayEnabled && !paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" [class.disabled]="isClickedOnce"
+                                                    (click)="!isClickedOnce && saveCheckin('checkin')"  >
+                                                    CC/DC/UPI
+                                                </button>
+                                                <button type="button"  class="cancelCheckinBtn  next-button btn btn-primary font-weight-bold text-uppercase " [class.disabled]="isClickedOnce" *ngIf="paytmEnabled && !razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" (click)="!isClickedOnce && saveCheckin('checkin','paytm')" >
+                                                    CC/DC/UPI
+                                                </button>
+                                            </div>
+                                            <div class="cancelpolicy  mgn-rt-5"
+                                                *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                <div
+                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                    <a data-toggle="modal" data-target="#exampleModal"
+                                                        class="refund_policy">Cancellation Policy</a>
+                                                </div>
+                                            </div>
+                                            <!-- <div class=""
                                                 *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                 <div class="select-pay"> Payment option</div>
                                                 <div class="">
@@ -2169,6 +2150,7 @@
                                                         class="refund_policy">Cancellation Policy</a>
                                                 </div>
                                             </div> -->
+
 
 
                                                     <!-- modalbox -->

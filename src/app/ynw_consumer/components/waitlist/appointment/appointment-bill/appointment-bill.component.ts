@@ -396,7 +396,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
     getPaymentModes() {
         this.paytmEnabled = false;
         this.razorpayEnabled = false;
-        this.sharedServices.getPaymentModesofProvider(this.accountId)
+        this.sharedServices.getPaymentModesofProvider(this.accountId,'billPayment')
             .subscribe(
                 data => {
                   this.paymentmodes = data;
