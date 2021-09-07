@@ -525,14 +525,22 @@
                                                 </button>
                                             </div>
                                             <div>
-                                                <button type="button"  *ngIf="razorpayEnabled && paytmEnabled" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()"
+                                                <div class="txt-align-center" *ngIf="razorpayEnabled && paytmEnabled">
+                                                    
+                                                    <span type="button" class="razorpay-icon paymenticons" [class.disabled]="isClickedOnce"*ngIf="razorpayEnabled && paytmEnabled" 
+                                                    (click)="!isClickedOnce && payuPayment()" >
+                                                    </span>&nbsp;&nbsp;
+                                                    <span type="button"  class="paytm-icon paymenticons" [class.disabled]="isClickedOnce" *ngIf="razorpayEnabled && paytmEnabled" (click)="!isClickedOnce && paytmPayment()" >
+                                                      </span>
+                                                </div>
+                                                <!-- <button type="button"  *ngIf="razorpayEnabled && paytmEnabled" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()"
                                                     class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4">
                                                     CC/DC/UPI
                                                 </button>
                                                <button type="button" *ngIf="paytmEnabled && razorpayEnabled" [class.disabled]="isClickedOnce"  (click)="!isClickedOnce && paytmPayment()"
                                                 class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4 mgn-lt-5">
                                                 PayTM
-                                            </button>
+                                            </button> -->
                                             <button type="button"  *ngIf="razorpayEnabled && !paytmEnabled" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()"
                                             class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4">
                                             Pay by CC/DC/UPI
