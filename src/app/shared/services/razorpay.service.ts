@@ -37,6 +37,18 @@ export class RazorpayService {
   payBillWithoutCredentials(razorModel) {
     const self = this;
     razorModel.retry = false;
+    razorModel.config = {
+      display: {
+        hide: [
+          {
+          method: "netbanking"
+          },
+          {
+            method: "paylater"
+          }
+        ]
+      }
+    }
     return new Promise(function (resolve) {
       const options = razorModel;
       options.handler = ((response, error) => {
@@ -59,6 +71,18 @@ export class RazorpayService {
       escape: false
     };
     const options = razorModel;
+    razorModel.config = {
+      display: {
+        hide: [
+          {
+          method: "netbanking"
+          },
+          {
+            method: "paylater"
+          }
+        ]
+      }
+    },
     options.handler = ((response, error) => {
       options.response = response;
       clearTimeout(razorInterval);

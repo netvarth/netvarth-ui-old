@@ -2004,7 +2004,7 @@ sup {
 }
 
 .cancel-btn-color.mat-button {
-  background-color: #ddd !important
+  background-color: #ddd;
 }
 
 .delay-btn {

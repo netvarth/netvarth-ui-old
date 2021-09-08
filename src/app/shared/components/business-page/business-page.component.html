@@ -56,8 +56,8 @@
                         <img alt="Profile Image" src="{{bLogo}}">
                         <div class="name-dept">
                             <div class="bname">{{businessjson.businessName | capitalizeFirst}}</div>
-                            <div class="bname dept" *ngIf="apptServices[0]"> {{apptServices[0].deptName}}</div>
-                            <div class="bname dept" *ngIf="!apptServices[0] && wlServices[0]">
+                            <div class="bname dept" *ngIf="apptServices && apptServices[0]"> {{apptServices[0].deptName}}</div>
+                            <div class="bname dept" *ngIf="(apptServices && !apptServices[0]) && (wlServices && wlServices[0])">
                                 {{wlServices[0].deptName}}</div>
                         </div>
                     </div>
@@ -116,7 +116,7 @@
 
                     <ng-container *ngIf="!showDepartments || (showDepartments && this.userId)">
                         <div class="bus-item-N" *ngFor="let sp of servicesAndProviders">
-                            <app-card [item]="sp" [domain]="businessjson.serviceSector.domain"
+                            <app-card [item]="sp" [domain]="businessjson?.serviceSector?.domain"
                                 [terminology]='terminologiesjson' [loc]="selectedLocation"
                                 (actionPerformed)="cardClicked($event)"></app-card>
                         </div>

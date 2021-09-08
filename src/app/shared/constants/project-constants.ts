@@ -990,11 +990,15 @@ export const projectConstantsLocal = {
     ALERT: 'Alert',
     BOOKINGS: 'Bookings'
   },
+    // UIS3PATH: "https://jaldeeuiscale.s3.ap-south-1.amazonaws.com/",
+  UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/",
   /** Scale */
   PROVIDER_ACCOUNT_ID: 126643,
-  ACCOUNTENC_ID: '5397yl0'
+  ACCOUNTENC_ID: '5397yl0',
+   // S3UNIQUE_ID: '128495'
   
   /** Production */
   // PROVIDER_ACCOUNT_ID: 103359,
-  // ACCOUNTENC_ID: '72q2rr9'
+  // ACCOUNTENC_ID: '72q2rr9',
+    S3UNIQUE_ID: '128498'
 };
