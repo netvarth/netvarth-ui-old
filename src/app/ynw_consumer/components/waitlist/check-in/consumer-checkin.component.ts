@@ -330,11 +330,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
         this.customer_countrycode = credentials.countryCode;
         console.log("credentioooo"+credentials.countryCode);
-        if(this.customer_countrycode == '+91'){
-            this.getPaymentModes();
-        } else {
-            this.razorpayEnabled = true;
-        }
+        this.getPaymentModes();
+        
         if (activeUser) {
             this.customer_data = activeUser;
         }
@@ -405,8 +402,19 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                   this.paymentmodes = data;
-                   console.log("paymode"+this.paymentmodes.payGateways);
-                for(let modes of this.paymentmodes){
+                  if(this.paymentmodes[0].isJaldeeBank){
+                  
+                    if(this.customer_countrycode == '+91'){
+                      
+                        this.paytmEnabled = true;
+                    }
+                    else{
+                       
+                    this.razorpayEnabled = true;
+                    }
+                  }
+                  else{
+                     for(let modes of this.paymentmodes){
                    for(let gateway of modes.payGateways){
                        if(gateway == 'PAYTM'){
                         this.paytmEnabled = true;
@@ -415,7 +423,24 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         this.razorpayEnabled = true;
                        }
                    }
-                }
+                } 
+                  }
+                //   if(this.customer_countrycode == '+91'){
+                //     this.getPaymentModes();
+                // } else {
+                //     this.razorpayEnabled = true;
+                // }
+                   console.log("paymode"+this.paymentmodes.payGateways);
+                // for(let modes of this.paymentmodes){
+                //    for(let gateway of modes.payGateways){
+                //        if(gateway == 'PAYTM'){
+                //         this.paytmEnabled = true;
+                //        }
+                //        if(gateway == 'RAZORPAY'){
+                //         this.razorpayEnabled = true;
+                //        }
+                //    }
+                // }
                
                     
                 },

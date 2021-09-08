@@ -227,15 +227,15 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                     //   this.getproviderCouponList();
                     this.getWaitlistBill();
                     this.getPrePaymentDetails();
-                    //this.getPaymentModes();
+                    this.getPaymentModes();
                     const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
                     this.customer_countrycode = credentials.countryCode;
                     console.log("credentioooo"+credentials.countryCode);
-                    if(this.customer_countrycode == '+91'){
-                        this.getPaymentModes();
-                    } else {
-                        this.razorpayEnabled = true;
-                    }
+                    // if(this.customer_countrycode == '+91'){
+                    //     this.getPaymentModes();
+                    // } else {
+                    //     this.razorpayEnabled = true;
+                    // }
                 });
     }
     processS3s(type, res) {
@@ -390,18 +390,25 @@ export class OrderBillComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                   this.paymentmodes = data;
-                   console.log("paymode"+this.paymentmodes.payGateways);
-                for(let modes of this.paymentmodes){
-                   for(let gateway of modes.payGateways){
-                       if(gateway == 'PAYTM'){
+                  if (this.paymentmodes[0].isJaldeeBank) {
+                    if (this.customer_countrycode == '+91') {
                         this.paytmEnabled = true;
-                       }
-                       if(gateway == 'RAZORPAY'){
+                    }
+                    else {
                         this.razorpayEnabled = true;
-                       }
-                   }
+                    }
+                }else{
+                    for(let modes of this.paymentmodes){
+                        for(let gateway of modes.payGateways){
+                            if(gateway == 'PAYTM'){
+                             this.paytmEnabled = true;
+                            }
+                            if(gateway == 'RAZORPAY'){
+                             this.razorpayEnabled = true;
+                            }
+                        }
+                     }
                 }
-                console.log(this.paymode);
                 if(this.razorpayEnabled ||this.paytmEnabled){
                     this.paymode = true;
                 }

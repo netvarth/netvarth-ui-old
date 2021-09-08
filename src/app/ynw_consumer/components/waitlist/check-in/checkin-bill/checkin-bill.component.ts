@@ -27,7 +27,7 @@ import { LocalStorageService } from '../../../../../../app/shared/services/local
     selector: 'app-consumer-checkin-bill',
     templateUrl: './checkin-bill.component.html'
 })
-export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
+export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
     @ViewChild('itemservicesearch') item_service_search;
     tooltipcls = '';
     new_cap = Messages.NEW_CAP;
@@ -95,9 +95,9 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
     showPaidlist = false;
     showJCouponSection = false;
     jCoupon = '';
-    couponList : any={
-        JC:[],OWN:[]
-      };
+    couponList: any = {
+        JC: [], OWN: []
+    };
     refund_value;
     discountDisplayNotes = false;
     billNoteExists = false;
@@ -118,7 +118,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
     razorpay_payment_id: any;
     razorpayDetails: any = [];
     provider_label = '';
-    api_loading=true;
+    api_loading = true;
     newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_HH_MM_A_FORMAT;
     newDateFormat_date = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
     retval;
@@ -126,7 +126,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
     terminologiesjson;
     provider_id;
     private subs = new SubSink();
-      splocation: any;
+    splocation: any;
     checkJcash = false;
     checkJcredit = false;
     jaldeecash: any;
@@ -135,7 +135,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
     remainingadvanceamount;
     wallet: any;
     loadingPaytm = false;
-    isClickedOnce=false;
+    isClickedOnce = false;
     @ViewChild('consumer_checkinbill') paytmview;
     paymentmodes: any;
     paymode = false;
@@ -163,7 +163,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
         private paytmService: PaytmService,
         private lStorageService: LocalStorageService,
     ) {
-        this.subs.sink=this.activated_route.queryParams.subscribe(
+        this.subs.sink = this.activated_route.queryParams.subscribe(
             params => {
                 if (params.accountId) {
                     this.accountId = params.accountId;
@@ -242,15 +242,15 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
 
 
     gets3curl() {
-        this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,null, 'terminologies,coupon,providerCoupon').subscribe(
-            (accountS3s) => {            
-                if(accountS3s['terminologies']) {
+        this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id, null, 'terminologies,coupon,providerCoupon').subscribe(
+            (accountS3s) => {
+                if (accountS3s['terminologies']) {
                     this.processS3s('terminologies', accountS3s['terminologies']);
                 }
-                if(accountS3s['coupon']) {
+                if (accountS3s['coupon']) {
                     this.processS3s('coupon', accountS3s['coupon']);
                 }
-                if(accountS3s['providerCoupon']) {
+                if (accountS3s['providerCoupon']) {
                     this.processS3s('providerCoupon', accountS3s['providerCoupon']);
                 }
             });
@@ -296,7 +296,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
         const params = {
             account: this.accountId
         };
-        this.subs.sink= this.consumer_services.getWaitlistDetail(this.uuid, params)
+        this.subs.sink = this.consumer_services.getWaitlistDetail(this.uuid, params)
             .subscribe(
                 data => {
                     this.checkin = data;
@@ -306,15 +306,14 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
                     this.gets3curl();
                     this.getWaitlistBill();
                     this.getPrePaymentDetails();
-                   // this.getPaymentModes();  
-                   const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
+                    this.getPaymentModes();
+                    const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
                     this.customer_countrycode = credentials.countryCode;
-                    console.log("credentioooo"+credentials.countryCode);
-                    if(this.customer_countrycode == '+91'){
-                        this.getPaymentModes();
-                    } else {
-                        this.razorpayEnabled = true;
-                    }                  
+                    // if(this.customer_countrycode == '+91'){
+                    //     this.getPaymentModes();
+                    // } else {
+                    //     this.razorpayEnabled = true;
+                    // }                  
                     // if (this.provider_label === 'provider') {
                     //     this.gets3curl();
                     // }
@@ -326,7 +325,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
             const datearr = this.bill_data.createdDate.split(' ');
             const billdatearr = datearr[0].split('-');
             // this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
-            this.billtime = datearr[1] + ' ' + datearr[2];        
+            this.billtime = datearr[1] + ' ' + datearr[2];
             this.billdate = billdatearr[0] + '-' + billdatearr[1] + '-' + billdatearr[2];
         }
         if (this.bill_data.hasOwnProperty('gstNumber')) {
@@ -366,11 +365,11 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
         const params = {
             account: this.accountId
         };
-        this.subs.sink=this.consumer_checkin_history_service.getWaitlistBill(params, this.uuid)
+        this.subs.sink = this.consumer_checkin_history_service.getWaitlistBill(params, this.uuid)
             .subscribe(
                 data => {
                     this.bill_data = data;
-                    this.api_loading=false;
+                    this.api_loading = false;
                     for (let i = 0; i < this.bill_data.discount.length; i++) {
                         if (this.bill_data.discount[i].displayNote) {
                             this.discountDisplayNotes = true;
@@ -420,7 +419,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
         const params = {
             account: this.accountId
         };
-        this.subs.sink=this.consumer_checkin_history_service.getPaymentDetail(params, this.uuid)
+        this.subs.sink = this.consumer_checkin_history_service.getPaymentDetail(params, this.uuid)
             .subscribe(
                 data => {
                     this.pre_payment_log = data;
@@ -433,38 +432,58 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
     /**
      * To Get Payment Modes
      */
-     getPaymentModes() {
+    getPaymentModes() {
         this.paytmEnabled = false;
         this.razorpayEnabled = false;
-        this.sharedServices.getPaymentModesofProvider(this.accountId,'billPayment')
+        this.sharedServices.getPaymentModesofProvider(this.accountId, 'billPayment')
             .subscribe(
                 data => {
-                  this.paymentmodes = data;
-                   console.log("paymode"+this.paymentmodes.payGateways);
-                for(let modes of this.paymentmodes){
-                   for(let gateway of modes.payGateways){
-                       if(gateway == 'PAYTM'){
-                        this.paytmEnabled = true;
-                       }
-                       if(gateway == 'RAZORPAY'){
-                        this.razorpayEnabled = true;
-                       }
-                   }
-                }
-                console.log(this.paymode);
-                if(this.razorpayEnabled ||this.paytmEnabled){
-                    this.paymode = true;
-                }
-                    
+                    this.paymentmodes = data;
+                    if (this.paymentmodes[0].isJaldeeBank) {
+                        if (this.customer_countrycode == '+91') {
+                            this.paytmEnabled = true;
+                        }
+                        else {
+                            this.razorpayEnabled = true;
+                        }
+                    }
+                    else {
+                        for (let modes of this.paymentmodes) {
+                            for (let gateway of modes.payGateways) {
+                                if (gateway == 'PAYTM') {
+                                    this.paytmEnabled = true;
+                                }
+                                if (gateway == 'RAZORPAY') {
+                                    this.razorpayEnabled = true;
+                                }
+                            }
+                        }
+                    }
+                    console.log("paymode" + this.paymentmodes.payGateways);
+                    // for(let modes of this.paymentmodes){
+                    //    for(let gateway of modes.payGateways){
+                    //        if(gateway == 'PAYTM'){
+                    //         this.paytmEnabled = true;
+                    //        }
+                    //        if(gateway == 'RAZORPAY'){
+                    //         this.razorpayEnabled = true;
+                    //        }
+                    //    }
+                    // }
+                    console.log(this.paymode);
+                    if (this.razorpayEnabled || this.paytmEnabled) {
+                        this.paymode = true;
+                    }
+
                 },
-                
+
             );
     }
     /**
      * Perform PayU Payment
      */
     payuPayment(paymentType?) {
-        this.isClickedOnce=true;
+        this.isClickedOnce = true;
         if (this.jcashamount > 0 && this.checkJcash) {
             this.sharedServices.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.bill_data.amountDue)
                 .subscribe(data => {
@@ -491,7 +510,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
                                 }
                             },
                                 error => {
-                                    this.isClickedOnce=false;
+                                    this.isClickedOnce = false;
                                     this.loadingPaytm = false;
                                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                                 });
@@ -507,7 +526,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
                             'isPayTmPayment': false,
                             'paymentMode': null
                         };
-                        if(paymentType == 'paytm'){
+                        if (paymentType == 'paytm') {
                             postData.isPayTmPayment = true;
                             postData.isRazorPayPayment = false;
                             postData.paymentMode = "PPI";
@@ -520,9 +539,9 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
                             .subscribe((pData: any) => {
                                 this.origin = 'consumer';
                                 if (pData.isGateWayPaymentNeeded && pData.isJCashPaymentSucess) {
-                                    if(paymentType == 'paytm'){
+                                    if (paymentType == 'paytm') {
                                         this.payWithPayTM(pData.response);
-                                    }else{
+                                    } else {
                                         this.paywithRazorpay(pData.response);
                                     }
                                 }
@@ -563,18 +582,18 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
                                 // }
                             },
                                 error => {
-                                    this.isClickedOnce=false;
+                                    this.isClickedOnce = false;
                                     this.loadingPaytm = false;
                                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                                 });
 
                     }
                 },
-                error => {
-                    this.isClickedOnce=false;
-                    this.loadingPaytm = false;
-                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                });
+                    error => {
+                        this.isClickedOnce = false;
+                        this.loadingPaytm = false;
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
         }
         else {
             this.pay_data.uuid = this.uuid;
@@ -582,7 +601,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
             this.pay_data.paymentMode = null;
             this.pay_data.accountId = this.accountId;
             this.pay_data.purpose = 'billPayment';
-            if(paymentType == 'paytm'){
+            if (paymentType == 'paytm') {
                 this.pay_data.paymentMode = "PPI";
             } else {
                 this.pay_data.paymentMode = "DC";
@@ -610,7 +629,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
                             }
                         },
                         error => {
-                            this.isClickedOnce=false;
+                            this.isClickedOnce = false;
                             this.resetApiError();
                             this.loadingPaytm = false;
                             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -630,19 +649,19 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
         this.razorModel.order_id = data.orderId;
         this.razorModel.name = data.providerName;
         this.razorModel.description = data.description;
-        this.isClickedOnce=false;
+        this.isClickedOnce = false;
         //    this.razorModel.image = data.jaldeeLogo;
-        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type , this.uuid , this.accountId);
+        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uuid, this.accountId);
     }
-    payWithPayTM(pData:any) {
-        this.isClickedOnce=true;
+    payWithPayTM(pData: any) {
+        this.isClickedOnce = true;
         this.loadingPaytm = true;
         this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
     }
     transactionCompleted(response) {
         console.log(response);
-        if(response.STATUS == 'TXN_FAILURE'){
-            this.isClickedOnce=false;
+        if (response.STATUS == 'TXN_FAILURE') {
+            this.isClickedOnce = false;
             this.loadingPaytm = false;
             this.cdRef.detectChanges();
             this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
@@ -651,49 +670,49 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
                     queryParams: {
                         uuid: this.uuid,
                         accountId: this.accountId,
-                      source: 'history'
+                        source: 'history'
                     }
-                  };
-                this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'bill'],navigationExtras ));
-            }else {
+                };
+                this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras));
+            } else {
                 const navigationExtras: NavigationExtras = {
                     queryParams: {
-                      uuid: this.uuid,
-                      accountId: this.accountId,
-                      type: 'waitlist',
-                      'paidStatus': false
+                        uuid: this.uuid,
+                        accountId: this.accountId,
+                        type: 'waitlist',
+                        'paidStatus': false
                     }
-                  };
-                  this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras));
+                };
+                this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras));
             }
-            
-        } else if(response.STATUS == 'TXN_SUCCESS'){
+
+        } else if (response.STATUS == 'TXN_SUCCESS') {
             this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
             const navigationExtras: NavigationExtras = {
                 queryParams: {
-                  uuid: this.uuid,
-                  accountId: this.accountId,
-                  type: 'waitlist',
-                  'paidStatus': true
+                    uuid: this.uuid,
+                    accountId: this.accountId,
+                    type: 'waitlist',
+                    'paidStatus': true
                 }
-              };
-              if (this.checkIn_type === 'checkin_historybill') {
-                this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'history'],{ queryParams: {'is_orderShow': 'false'}} ));
-              } else {
-              this.ngZone.run(() => this.router.navigate(['consumer'] ,navigationExtras));
-              }
+            };
+            if (this.checkIn_type === 'checkin_historybill') {
+                this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'history'], { queryParams: { 'is_orderShow': 'false' } }));
+            } else {
+                this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+            }
         }
-      
-      
+
+
         //  this.ngZone.run(() => this.router.navigate(['consumer'] ,navigationExtras));
     }
-    closeloading(){
-        this.isClickedOnce=false;
-        this.loadingPaytm = false; 
+    closeloading() {
+        this.isClickedOnce = false;
+        this.loadingPaytm = false;
         this.cdRef.detectChanges();
-}
+    }
     paytmPayment() {
-        this.isClickedOnce=true;
+        this.isClickedOnce = true;
         this.pay_data.uuid = this.uuid;
         this.pay_data.amount = this.bill_data.amountDue;
         this.pay_data.paymentMode = 'PPI';
@@ -705,7 +724,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
             this.pay_data.amount !== 0) {
             this.api_success = Messages.PAYMENT_REDIRECT;
             this.gateway_redirection = true;
-            this.subs.sink=this.sharedServices.consumerPayment(this.pay_data)
+            this.subs.sink = this.sharedServices.consumerPayment(this.pay_data)
                 .subscribe(
                     data => {
                         this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
@@ -715,7 +734,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
                         }, 2000);
                     },
                     error => {
-                        this.isClickedOnce=false;
+                        this.isClickedOnce = false;
                         this.resetApiError();
                         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     }
@@ -776,7 +795,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
         bill_html += '<table width="100%">';
         bill_html += '	<tr style="line-height:20px">';
         bill_html += '<td width="50%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif;">' + this.checkin.waitlistingFor[0].firstName + ' ' + this.checkin.waitlistingFor[0].lastName + '</td>';
-        bill_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' +  this.dateformat.transformToMonthlyDate(this.billdate)  +' '+ this.billtime+ '</td>';
+        bill_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.dateformat.transformToMonthlyDate(this.billdate) + ' ' + this.billtime + '</td>';
         bill_html += '	</tr>';
         bill_html += '	<tr>';
         bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">Bill #' + this.bill_data.billId + '</td>';
@@ -786,15 +805,15 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
         }
         bill_html += '	</tr>';
         bill_html += '	<tr>';
-        if(this.splocation ){
-          bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;  text-transform: capitalize !important;">' + this.splocation + '</td>';
+        if (this.splocation) {
+            bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;  text-transform: capitalize !important;">' + this.splocation + '</td>';
         }
         bill_html += '	<tr>';
         if (this.checkin.provider) {
-            bill_html += '<td style="color:#000000; text-transform: capitalize !important; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.provider_label + ':' + 
-            // this.checkin.provider.businessName
-             ((this.checkin.provider.businessName) ? this.checkin.provider.businessName : this.checkin.provider.firstName + ' ' + this.checkin.provider.lastName)
-            + '</td>';
+            bill_html += '<td style="color:#000000; text-transform: capitalize !important; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.provider_label + ':' +
+                // this.checkin.provider.businessName
+                ((this.checkin.provider.businessName) ? this.checkin.provider.businessName : this.checkin.provider.firstName + ' ' + this.checkin.provider.lastName)
+                + '</td>';
         }
         bill_html += '</td>';
         bill_html += '	</tr>';
@@ -903,17 +922,17 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
         }
         if (this.bill_data.providerCoupon) {
             for (const [key, value] of Object.entries(this.bill_data.providerCoupon)) {
-       // for (const providerCoupon of this.bill_data.providerCoupon) {
-            bill_html += '	<tr><td>';
-            bill_html += '<table width="100%" style="color:#000000; font-size:10pt;  font-family:Ubuntu, Arial,sans-serif; padding-bottom:5px">';
-            bill_html += '	<tr style="color:#aaa">';
-            bill_html += '<td width="70%" style="text-align:right">' + key + '</td>';
-            bill_html += '<td width="30%" style="text-align:right">(-) &#x20b9;' + parseFloat(value['value']).toFixed(2) + '</td>';
-            bill_html += '	</tr>                                                                           ';
-            bill_html += '</table>';
-            bill_html += '	</td></tr>';
+                // for (const providerCoupon of this.bill_data.providerCoupon) {
+                bill_html += '	<tr><td>';
+                bill_html += '<table width="100%" style="color:#000000; font-size:10pt;  font-family:Ubuntu, Arial,sans-serif; padding-bottom:5px">';
+                bill_html += '	<tr style="color:#aaa">';
+                bill_html += '<td width="70%" style="text-align:right">' + key + '</td>';
+                bill_html += '<td width="30%" style="text-align:right">(-) &#x20b9;' + parseFloat(value['value']).toFixed(2) + '</td>';
+                bill_html += '	</tr>                                                                           ';
+                bill_html += '</table>';
+                bill_html += '	</td></tr>';
+            }
         }
-    }
         if (this.bill_data.jCoupon) {
             for (const [key, value] of Object.entries(this.bill_data.jCoupon)) {
                 bill_html += '	<tr><td>';
@@ -1066,7 +1085,7 @@ export class ConsumerCheckinBillComponent implements OnInit,OnDestroy {
         this.locationobj.back();
     }
     changeJcashUse(event) {
-        if(event.checked){
+        if (event.checked) {
             this.checkJcash = true;
         } else {
             this.checkJcash = false;
