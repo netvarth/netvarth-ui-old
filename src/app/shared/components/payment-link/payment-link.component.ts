@@ -123,6 +123,8 @@ export class PaymentLinkComponent implements OnInit {
   customer: any;
   loadingPaytm = false;
   isClickedOnce=false;
+  paymentmodes: any;
+  paymode = false;
   @ViewChild('consumer_paylink') paytmview;
   razorpayEnabled = false;
   constructor(
@@ -149,6 +151,7 @@ export class PaymentLinkComponent implements OnInit {
   ngOnInit() {
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
     const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
+    console.log(bdetails)  
     if (bdetails) {
       this.bname = bdetails.bn || '';
     }
@@ -160,6 +163,7 @@ export class PaymentLinkComponent implements OnInit {
       .subscribe(
         data => {
           this.bill_data = data;
+          console.log(this.bill_data)
           if (this.bill_data = data) {
             this.businessname = this.bill_data.accountProfile.businessName;
             this.firstname = this.bill_data.billFor.firstName;
@@ -168,7 +172,7 @@ export class PaymentLinkComponent implements OnInit {
             this.location = this.bill_data.accountProfile.location.place;
             this.billPaymentStatus = this.bill_data.billPaymentStatus;
             this.uuid = this.bill_data.uuid;
-            this.accountId = this.bill_data.id;
+            this.accountId = this.bill_data.accountId;
           }
           if (this.bill_data.accountProfile.providerBusinessName) {
             this.username = this.bill_data.accountProfile.providerBusinessName;
@@ -197,6 +201,7 @@ export class PaymentLinkComponent implements OnInit {
             this.refund_value = Math.abs(this.bill_data.amountDue);
           }
           this.getBillDateandTime();
+          this.getPaymentModes();
         },
         error => {
         },
@@ -204,6 +209,39 @@ export class PaymentLinkComponent implements OnInit {
         }
       );
   }
+  getPaymentModes() {
+    this.paytmEnabled = false;
+    this.razorpayEnabled = false;
+    this.sharedServices.getPaymentModesofProvider(this.accountId,'billPayment')
+        .subscribe(
+            data => {
+              this.paymentmodes = data;
+               console.log(this.paymentmodes[0].isJaldeeBank);
+               if(this.paymentmodes[0].isJaldeeBank){
+                this.paytmEnabled = true;
+               }
+               else{
+                for(let modes of this.paymentmodes){
+                  for(let gateway of modes.payGateways){
+                      if(gateway == 'PAYTM'){
+                       this.paytmEnabled = true;
+                      }
+                      if(gateway == 'RAZORPAY'){
+                       this.razorpayEnabled = true;
+                      }
+                  }
+               }
+               }
+            
+            console.log(this.paymode);
+            if(this.razorpayEnabled ||this.paytmEnabled){
+                this.paymode = true;
+            }
+                
+            },
+            
+        );
+}
   getBillDateandTime() {
     if (this.bill_data.hasOwnProperty('createdDate')) {
       this.billdate = this.bill_data.createdDate;

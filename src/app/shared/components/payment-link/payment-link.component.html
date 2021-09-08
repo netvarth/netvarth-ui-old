@@ -35,20 +35,30 @@
                                                     style="font-size: -webkit-xxx-large; font-weight: 400;">
                                                     {{this.amountDue | currency:'&#8377; '}}
                                                 </h2><br>
-                                                <h2 class="textcenter">
+                                                <h2 class="textcenter" *ngIf="razorpayEnabled && paytmEnabled">
                                                     <!-- <button class="pay" (click)="pay()">
                                                         <h6 style="padding-top: 10px;">PAY</h6>
                                                     </button> -->
                                                     <div class="paymentdiv" >
                                                         
-                                                        <span type="button" class="razorpay-icon paymenticons"  [class.disabled]="isClickedOnce" (click)="!isClickedOnce && pay()" id="stepThreeConfirmButton"  >
+                                                        <span type="button" *ngIf="razorpayEnabled && paytmEnabled" class="razorpay-icon paymenticons"  [class.disabled]="isClickedOnce" (click)="!isClickedOnce && pay()" id="stepThreeConfirmButton"  >
                                                            
                                                         </span>&nbsp;&nbsp;
-                                                        <span type="button" class="paytm-icon paymenticons" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && pay('paytm')" id="stepThreeConfirmButton" >
+                                                        <span type="button" *ngIf="razorpayEnabled && paytmEnabled" class="paytm-icon paymenticons" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && pay('paytm')" id="stepThreeConfirmButton" >
                                                            
                                                         </span>
                                                     </div>
                                                 </h2>
+                                               
+                                                <div class="txt-align-center">
+                                                    <button  class=" next-button btn btn-primary font-weight-bold text-uppercase " *ngIf="razorpayEnabled && !paytmEnabled"   [class.disabled]="isClickedOnce"
+                                                    click)="!isClickedOnce && pay()" >
+                                                        Pay by CC/DC/UPI
+                                                    </button>
+                                                    <button type="button" [class.disabled]="isClickedOnce" class=" next-button btn btn-primary font-weight-bold text-uppercase "*ngIf="paytmEnabled && !razorpayEnabled" (click)="!isClickedOnce && pay('paytm')" >
+                                                        Pay by CC/DC/UPI  
+                                                    </button>
+                                                </div>
                                             </li>
                                             <li>
                                                 <a class="learnmore-pointer" (click)="billview()">
