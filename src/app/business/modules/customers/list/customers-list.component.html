@@ -343,8 +343,8 @@
                           </span>
                         </div>
                         <div>
-                          <span class="text-dark-75 text-hover-primary mb-1 cust-name">{{customer.firstName}}
-                            {{customer.lastName}}</span>
+                          <span class="text-dark-75 text-hover-primary mb-1 cust-name">
+                              {{getCustomer(customer)}}</span>
                           <div>
                             <span *ngFor="let label of customer.label | keyvalue"
                               [class.appliedLabel]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>

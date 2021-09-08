@@ -898,4 +898,12 @@ export class CustomersListComponent implements OnInit {
       return false;
     }
   }
+  getCustomer(customer){
+    if ((customer.firstName && customer.lastName) && customer.firstName  !== null && customer.firstName !== undefined && customer.firstName !== '') {
+          const name = customer.firstName + ' ' + customer.lastName;
+          return name;
+    } else {
+      return '—';
+    }
+  }
 }
