@@ -478,6 +478,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.active_user.accountType === 'BRANCH') {
       this.getTeams().then((data) => {
         this.teams = data;
+        this.refresh();
       });
     }
     this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {

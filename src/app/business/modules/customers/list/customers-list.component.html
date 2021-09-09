@@ -40,10 +40,10 @@
     <div class="col-lg-4" *ngIf="!groupLoaded && groups.length > 0 && !hideGroups">
       <div class="card card-custom card-stretch gutter-b pitch_blu">
         <div class="card grp_label mb-2 pointer-cursor" (click)="customerGroupSelection('all')"
-          [ngClass]="{'highlight': selectedGroup == 'all'}">All {{customer_label | capitalizeFirst}}s</div>
+          [ngClass]="{'highlights': selectedGroup == 'all'}">All {{customer_label | capitalizeFirst}}s</div>
         <div class="card grp_label mb-2 pr-0" *ngFor="let group of groups"
           (click)="group.status=='ENABLE' && customerGroupSelection(group)"
-          [ngClass]="{'highlight': selectedGroup.id==group.id}" [class.disabled-group]="group.status=='DISABLE'"
+          [ngClass]="{'highlights': selectedGroup.id==group.id}" [class.disabled-group]="group.status=='DISABLE'"
           [class.pointer-cursor]="group.status=='ENABLE'">
           <div class="max-hgt-20 disp-flex">
             <span class="pull-left group-name">{{group.groupName}}</span>
