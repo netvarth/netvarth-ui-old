@@ -436,19 +436,19 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           else {
             if (this.customer_countrycode == '+91') {
               for (let modes of this.paymentmodes) {
-                  for (let gateway of modes.payGateways) {
-                      if (gateway == 'PAYTM') {
-                          this.paytmEnabled = true;
-                      }
-                      if (gateway == 'RAZORPAY') {
-                          this.razorpayEnabled = true;
-                      }
+                for (let gateway of modes.payGateways) {
+                  if (gateway == 'PAYTM') {
+                    this.paytmEnabled = true;
                   }
+                  if (gateway == 'RAZORPAY') {
+                    this.razorpayEnabled = true;
+                  }
+                }
               }
-          }
-          else {
+            }
+            else {
               this.razorpayEnabled = true;
-          }
+            }
           }
           console.log("paymode" + this.paymentmodes.payGateways);
 
@@ -1152,7 +1152,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           //     uuid: this.trackUuid
           //   }
           // };
-
+          console.log(this.catalog_details.paymentType + 'fddddddddddd')
+          console.log(this.prepayAmount + '11111111111')
           if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
               .subscribe(res => {
@@ -1228,6 +1229,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           //     uuid: this.trackUuid
           //   }
           // };
+          console.log(this.catalog_details.paymentType + 'fdddddddddddshop')
+          console.log(this.prepayAmount + '11111111111shop')
           if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
               .subscribe(res => {
