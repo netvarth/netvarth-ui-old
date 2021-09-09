@@ -109,6 +109,7 @@ export class PaymentLinkComponent implements OnInit {
   razorModel: Razorpaymodel;
   checkIn_type: string;
   accountId: any;
+  countryCode: any;
   data: any;
   razorpayDetails: any = [];
   order_id: any;
@@ -122,7 +123,7 @@ export class PaymentLinkComponent implements OnInit {
   provider_label: any;
   customer: any;
   loadingPaytm = false;
-  isClickedOnce=false;
+  isClickedOnce = false;
   paymentmodes: any;
   paymode = false;
   @ViewChild('consumer_paylink') paytmview;
@@ -151,7 +152,6 @@ export class PaymentLinkComponent implements OnInit {
   ngOnInit() {
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
     const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
-    console.log(bdetails)  
     if (bdetails) {
       this.bname = bdetails.bn || '';
     }
@@ -163,7 +163,6 @@ export class PaymentLinkComponent implements OnInit {
       .subscribe(
         data => {
           this.bill_data = data;
-          console.log(this.bill_data)
           if (this.bill_data = data) {
             this.businessname = this.bill_data.accountProfile.businessName;
             this.firstname = this.bill_data.billFor.firstName;
@@ -173,21 +172,23 @@ export class PaymentLinkComponent implements OnInit {
             this.billPaymentStatus = this.bill_data.billPaymentStatus;
             this.uuid = this.bill_data.uuid;
             this.accountId = this.bill_data.accountId;
+            this.countryCode = this.bill_data.billFor.countryCode;
+           
           }
           if (this.bill_data.accountProfile.providerBusinessName) {
             this.username = this.bill_data.accountProfile.providerBusinessName;
           }
-          if(this.bill_data.accountProfile.domain && this.bill_data.accountProfile.subDomain){
+          if (this.bill_data.accountProfile.domain && this.bill_data.accountProfile.subDomain) {
             const domain = this.bill_data.accountProfile.domain || null;
-            const sub_domain =  this.bill_data.accountProfile.subDomain|| null;
+            const sub_domain = this.bill_data.accountProfile.subDomain || null;
             this.provider_services.getIdTerminologies(domain, sub_domain)
-            .subscribe((data:any) => {
+              .subscribe((data: any) => {
                 this.customer = data.customer;
               },
-              error => {
-                this.api_error = this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' };
-              }
-            );
+                error => {
+                  this.api_error = this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' };
+                }
+              );
           }
           for (let i = 0; i < this.bill_data.discount.length; i++) {
             if (this.bill_data.discount[i].displayNote) {
@@ -212,36 +213,60 @@ export class PaymentLinkComponent implements OnInit {
   getPaymentModes() {
     this.paytmEnabled = false;
     this.razorpayEnabled = false;
-    this.sharedServices.getPaymentModesofProvider(this.accountId,'billPayment')
-        .subscribe(
-            data => {
-              this.paymentmodes = data;
-               console.log(this.paymentmodes[0].isJaldeeBank);
-               if(this.paymentmodes[0].isJaldeeBank){
-                this.paytmEnabled = true;
-               }
-               else{
-                for(let modes of this.paymentmodes){
-                  for(let gateway of modes.payGateways){
-                      if(gateway == 'PAYTM'){
-                       this.paytmEnabled = true;
-                      }
-                      if(gateway == 'RAZORPAY'){
-                       this.razorpayEnabled = true;
-                      }
-                  }
-               }
-               }
-            
-            console.log(this.paymode);
-            if(this.razorpayEnabled ||this.paytmEnabled){
-                this.paymode = true;
+    this.sharedServices.getPaymentModesofProvider(this.accountId, 'billPayment')
+      .subscribe(
+        data => {
+          this.paymentmodes = data;
+          if (this.paymentmodes[0].isJaldeeBank) {
+            if (this.countryCode == '91') {
+              this.paytmEnabled = true;
             }
-                
-            },
-            
-        );
-}
+            else {
+              this.razorpayEnabled = true;
+            }
+          }
+
+          else {
+            if (this.countryCode == '91') {
+              for (let modes of this.paymentmodes) {
+                for (let gateway of modes.payGateways) {
+                  if (gateway == 'PAYTM') {
+                    this.paytmEnabled = true;
+                  }
+                  if (gateway == 'RAZORPAY') {
+                    this.razorpayEnabled = true;
+                  }
+                }
+              }
+            }
+            else {
+              this.razorpayEnabled = true;
+            }
+          }
+          //  if(this.paymentmodes[0].isJaldeeBank){
+          //   this.paytmEnabled = true;
+          //  }
+          //  else{
+          //   for(let modes of this.paymentmodes){
+          //     for(let gateway of modes.payGateways){
+          //         if(gateway == 'PAYTM'){
+          //          this.paytmEnabled = true;
+          //         }
+          //         if(gateway == 'RAZORPAY'){
+          //          this.razorpayEnabled = true;
+          //         }
+          //     }
+          //  }
+          //  }
+
+          // if (this.razorpayEnabled || this.paytmEnabled) {
+          //   this.paymode = true;
+          // }
+
+        },
+
+      );
+  }
   getBillDateandTime() {
     if (this.bill_data.hasOwnProperty('createdDate')) {
       this.billdate = this.bill_data.createdDate;
@@ -295,13 +320,13 @@ export class PaymentLinkComponent implements OnInit {
 
 
   pay(paytype?) {
-    this.isClickedOnce=true;
+    this.isClickedOnce = true;
     let paymentWay;
-        if(paytype == 'paytm'){
-            paymentWay = 'PPI';
-        } else {
-            paymentWay = 'DC';
-        }
+    if (paytype == 'paytm') {
+      paymentWay = 'PPI';
+    } else {
+      paymentWay = 'DC';
+    }
     const postdata = {
       'uuid': this.genid,
       'amount': this.amountDue,
@@ -309,23 +334,22 @@ export class PaymentLinkComponent implements OnInit {
       'source': 'Desktop',
       'paymentMode': paymentWay
     };
-    
+
     this.provider_services.linkPayment(postdata)
       .subscribe((data: any) => {
-        console.log(data);
         this.checkIn_type = 'payment_link';
         this.origin = 'consumer';
         this.pGateway = data.paymentGateway || 'PAYTM';
         if (this.pGateway === 'RAZORPAY') {
           this.paywithRazorpay(data);
-        }else {
+        } else {
           this.payWithPayTM(data);
         }
       },
         error => {
-          this.isClickedOnce=false;
-         // this.api_error = this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' };
-         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.isClickedOnce = false;
+          // this.api_error = this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' };
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
   paywithRazorpay(data: any) {
@@ -338,7 +362,7 @@ export class PaymentLinkComponent implements OnInit {
     this.razorModel.order_id = data.orderId;
     this.razorModel.name = data.providerName;
     this.razorModel.description = data.description;
-    this.isClickedOnce=false;
+    this.isClickedOnce = false;
     this.razorpayService.payBillWithoutCredentials(this.razorModel).then(
       (response: any) => {
         if (response !== 'failure') {
@@ -352,37 +376,37 @@ export class PaymentLinkComponent implements OnInit {
       }
     );
   }
-  payWithPayTM(pData:any) {
-    this.isClickedOnce=true;
+  payWithPayTM(pData: any) {
+    this.isClickedOnce = true;
     this.loadingPaytm = true;
     this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
-}
-transactionCompleted(response) {
-  if(response.STATUS == 'TXN_SUCCESS'){
-    this.paidStatus = 'true';
-    this.order_id = response.ORDERID;
-    this.payment_id = response.TXNID;
-    this.loadingPaytm = false; 
+  }
+  transactionCompleted(response) {
+    if (response.STATUS == 'TXN_SUCCESS') {
+      this.paidStatus = 'true';
+      this.order_id = response.ORDERID;
+      this.payment_id = response.TXNID;
+      this.loadingPaytm = false;
+      this.cdRef.detectChanges();
+      this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+      this.ngZone.run(() => console.log('Transaction success'));
+
+    } else if (response.STATUS == 'TXN_FAILURE') {
+      this.isClickedOnce = false;
+      this.paidStatus = 'false';
+      this.loadingPaytm = false;
+      this.cdRef.detectChanges();
+      this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+      this.ngZone.run(() => console.log('Transaction failed'));
+    }
+  }
+  closeloading() {
+    this.isClickedOnce = false;
+    this.loadingPaytm = false;
     this.cdRef.detectChanges();
-    this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-    this.ngZone.run(() =>console.log('Transaction success') );
-  
-} else if(response.STATUS == 'TXN_FAILURE'){
-  this.isClickedOnce=false;
-  this.paidStatus = 'false';
-  this.loadingPaytm = false; 
-  this.cdRef.detectChanges();
-  this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
-  this.ngZone.run(() =>console.log('Transaction failed') );
-}
-}
-closeloading(){
-  this.isClickedOnce=false;
-  this.loadingPaytm = false; 
-  this.cdRef.detectChanges();
-  this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
-  this.ngZone.run(() => console.log('cancelled'));
-}
+    this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+    this.ngZone.run(() => console.log('cancelled'));
+  }
   billview() {
     this.showbill = !this.showbill;
   }
