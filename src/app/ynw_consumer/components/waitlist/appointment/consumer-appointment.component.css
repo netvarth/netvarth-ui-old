@@ -1846,3 +1846,9 @@ box-shadow: 4px 4px 5px gainsboro;
   color: green !important;
   right: 0px !important;
 }
+.changeprice {
+  color: darkred;
+  font-style: italic;
+  font-size: 0.85rem !important;
+  padding: 10px;
+ }

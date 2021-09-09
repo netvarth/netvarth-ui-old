@@ -261,6 +261,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     @ViewChild('consumer_appointment') paytmview;
     paymentmodes: any;
     customer_countrycode: any;
+    currentScheduleId: any;
+    pricelist: any;
+    changePrice: number;
 
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -487,6 +490,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 if (this.sel_checkindate !== this.todaydate) {
                     this.isFuturedate = true;
                 }
+                this.currentScheduleId = this.appointment.schedule.id;
                 this.sel_ser = this.appointment.service.id;
                 this.holdselectedTime = this.appointment.appmtTime;
                 this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
@@ -734,6 +738,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
                 if (type) {
                     this.selectedApptTime = this.apptTime;
+                    console.log("fdgfd"+JSON.stringify(this.selectedApptTime));
                 }
                 this.api_loading1 = false;
             });
@@ -2252,7 +2257,29 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.selectedDate = this.sel_checkindate;
             this.checkFutureorToday();
             this.selectedApptTime = this.apptTime;
+            console.log("action"+JSON.stringify(this.selectedApptTime));
             this.waitlist_for[0].apptTime = this.apptTime['time'];
+            if(this.type == 'reschedule' && this.appointment.service && this.appointment.service.priceDynamic){
+                this.subs.sink = this.shared_services.getAppointmentReschedulePricelist(this.appointment.service.id).subscribe(
+                    (list: any) => {
+                        this.pricelist = list;
+                        console.log("this.pricelist"+JSON.stringify(this.pricelist));
+                        let oldprice;
+                        let newprice;
+                        for(let list of this.pricelist){
+                            if(list.schedule.id == this.currentScheduleId){ // appointment scheduleid
+                                oldprice = list.price;
+                            }
+                            if(list.schedule.id == this.selectedApptTime['scheduleId']){ // rescheduledappointment scheduleid
+                                newprice = list.price;
+                            }
+                        }
+                        console.log("oldprice"+oldprice);
+                        console.log("newprice"+newprice);
+                        this.changePrice = newprice - oldprice;
+                        console.log("changeprice"+this.changePrice);
+                    });
+            }
         }
         if (this.action === 'members') {
             this.saveMemberDetails();
