@@ -475,16 +475,16 @@ export class CustomerCreateComponent implements OnInit {
   }
   updateForm() {
     this.amForm.setValue({
-      'first_name': this.customer[0].firstName || null,
-      'last_name': this.customer[0].lastName || null,
-      'email_id': this.customer[0].email || null,
-      'dob': this.customer[0].dob || null,
-      'year': this.customer[0].age.year || null,
-      'month': this.customer[0].age.month || null,
-      'gender': this.customer[0].gender || null,
-      'mobile_number': this.customer[0].phoneNo.trim() || null,
-      'customer_id': this.customer[0].jaldeeId || null,
-      'address': this.customer[0].address || null,
+      'first_name': this.customer[0].firstName || '',
+      'last_name': this.customer[0].lastName || '',
+      'email_id': this.customer[0].email || '',
+      'dob': this.customer[0].dob || '',
+      'year': this.customer[0].age.year || '',
+      'month': this.customer[0].age.month || '',
+      'gender': this.customer[0].gender || '',
+      'mobile_number': this.customer[0].phoneNo.trim() || '',
+      'customer_id': this.customer[0].jaldeeId || '',
+      'address': this.customer[0].address || '',
     });
   }
   onSubmit(form_data) {
@@ -501,7 +501,7 @@ export class CustomerCreateComponent implements OnInit {
       datebirth = this.dateTimeProcessor.transformToYMDFormat(form_data.dob);
     }
     console.log(form_data);
-    if (this.domain == 'healthCare' && (form_data.dob == ''|| form_data.year == ''||form_data.month == '' )) {
+    if (this.domain == 'healthCare' && (form_data.dob == '' && form_data.year == '' && form_data.month == '' )) {
       this.snackbarService.openSnackBar('please enter date of birth or age', { 'panelClass': 'snackbarerror' });
       this.disableButton = false;
       return;
