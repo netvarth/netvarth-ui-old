@@ -2273,7 +2273,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                             if(list.schedule.id == this.selectedApptTime['scheduleId']){ // rescheduledappointment scheduleid
                                 newprice = list.price;
                             }
-                        }
+                        } 
                         console.log("oldprice"+oldprice);
                         console.log("newprice"+newprice);
                         this.changePrice = newprice - oldprice;
