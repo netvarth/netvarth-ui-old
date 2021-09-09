@@ -155,35 +155,12 @@
                                 errorMsg="Please enter valid email.">
                             </app-field-error-display>
                         </div>
-                        <div class="col-lg-6">
-
-                            <div class="form-group normalpicker">
-                                <label for="last_name">Date of birth</label>
-                                <div class="pickerouter">
-                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker></mat-datepicker>
-                                    <input class="form-control dtepicker" type="text" matInput (click)="picker.open()"
-                                        [matDatepicker]="picker" formControlName="dob" [max]="tday" [min]="minday"
-                                        placeholder="DD/MM/YYYY" readonly>
-                                </div>
-                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dob')"
-                                    errorMsg="Please select the date of birth.">
-                                </app-field-error-display>
-                            </div>
-                            <!-- <label>Date of birth</label>
-                            <div class="input-group">
-                                <input class="form-control" type="date"  id="dob"
-                                formControlName="dob" [max]="tday" [min]="minday"/>
-                            </div>
-                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dob')"
-                                        errorMsg="Please select the date of birth.">
-                                    </app-field-error-display> -->
-                        </div>
+                        
                     </div>
-                    <span>Age</span>
+                    
                     <div class="form-group row">
-                            <div class="col-lg-6 col-md-4 col-sm-3">
-                                <label></label>
+                            <div class="col-lg-2 col-md-4 col-sm-1">
+                                <label>Age</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend"></div>
                                     <input type="number" class="form-control" id="year" (keypress)="isNumeric($event)" (keyup)="isvalid($event)"  placeholder="year"
@@ -193,18 +170,45 @@
                                     errorMsg="Please enter valid year.">
                                 </app-field-error-display>
                             </div>
-                            <div class="col-lg-6 col-md-4 col-sm-3">
-                                    <label></label>
+                            <div class="col-lg-2 col-md-4 col-sm-1" style="margin-top: 13px">
+                                    <label>       </label>
                                     <div class="input-group">
                                         <div class="input-group-prepend"></div>
                                         <input type="number" class="form-control" (keypress)="isNumeric($event)" (keyup)="isvalid($event)"  id="month" placeholder="month"
-                                            formControlName="month" autocomplete="off" />
+                                            formControlName="month" autocomplete="off" />&nbsp;&nbsp;<label stle="padding:10px 5px 10px 20px">OR</label>
                                     </div>
+                                    
                                     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'month')"
                                         errorMsg="Please enter valid Month.">
                                     </app-field-error-display>
                                 </div>
+                       
                                
+                                <div class="col-lg-2 col-md-4 col-sm-1">
+                                       
+                                        <div class="form-group normalpicker">
+                                        <label > Date of birth</label>
+                                            <div class="pickerouter">
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                                <input class="form-control dtepicker" type="text" matInput (click)="picker.open()"
+                                                    [matDatepicker]="picker" formControlName="dob" [max]="tday" [min]="minday"
+                                                    placeholder="DD/MM/YYYY" readonly>
+                                            </div>
+                                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dob')"
+                                                errorMsg="Please select the date of birth.">
+                                            </app-field-error-display>
+                                        </div>
+                                        <!-- <label>Date of birth</label>
+                                        <div class="input-group">
+                                            <input class="form-control" type="date"  id="dob"
+                                            formControlName="dob" [max]="tday" [min]="minday"/>
+                                        </div>
+                                        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dob')"
+                                                    errorMsg="Please select the date of birth.">
+                                                </app-field-error-display> -->
+                              
+                                    </div>
                                 <!-- <label>Date of birth</label>
                                 <div class="input-group">
                                     <input class="form-control" type="date"  id="dob"
