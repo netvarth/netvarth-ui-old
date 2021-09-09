@@ -414,16 +414,21 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     }
                   }
                   else{
-                     for(let modes of this.paymentmodes){
-                   for(let gateway of modes.payGateways){
-                       if(gateway == 'PAYTM'){
-                        this.paytmEnabled = true;
-                       }
-                       if(gateway == 'RAZORPAY'){
+                    if (this.customer_countrycode == '+91') {
+                        for (let modes of this.paymentmodes) {
+                            for (let gateway of modes.payGateways) {
+                                if (gateway == 'PAYTM') {
+                                    this.paytmEnabled = true;
+                                }
+                                if (gateway == 'RAZORPAY') {
+                                    this.razorpayEnabled = true;
+                                }
+                            }
+                        }
+                    }
+                    else {
                         this.razorpayEnabled = true;
-                       }
-                   }
-                } 
+                    }
                   }
                 //   if(this.customer_countrycode == '+91'){
                 //     this.getPaymentModes();

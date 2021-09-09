@@ -398,16 +398,21 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                         this.razorpayEnabled = true;
                     }
                 }else{
-                    for(let modes of this.paymentmodes){
-                        for(let gateway of modes.payGateways){
-                            if(gateway == 'PAYTM'){
-                             this.paytmEnabled = true;
-                            }
-                            if(gateway == 'RAZORPAY'){
-                             this.razorpayEnabled = true;
+                    if (this.customer_countrycode == '+91') {
+                        for (let modes of this.paymentmodes) {
+                            for (let gateway of modes.payGateways) {
+                                if (gateway == 'PAYTM') {
+                                    this.paytmEnabled = true;
+                                }
+                                if (gateway == 'RAZORPAY') {
+                                    this.razorpayEnabled = true;
+                                }
                             }
                         }
-                     }
+                    }
+                    else {
+                        this.razorpayEnabled = true;
+                    }
                 }
                 if(this.razorpayEnabled ||this.paytmEnabled){
                     this.paymode = true;
