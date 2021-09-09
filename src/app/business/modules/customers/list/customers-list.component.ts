@@ -899,8 +899,8 @@ export class CustomersListComponent implements OnInit {
     }
   }
   getCustomer(customer){
-    if ((customer.firstName && customer.lastName) && customer.firstName  !== null && customer.firstName !== undefined && customer.firstName !== '') {
-          const name = customer.firstName + ' ' + customer.lastName;
+    if (customer.firstName || customer.lastName) {
+          const name = (customer.firstName? customer.firstName : '') + ' ' + (customer.lastName? customer.lastName : '') ;
           return name;
     } else {
       return '—';
