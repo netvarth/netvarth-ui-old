@@ -54,6 +54,8 @@ export class CustomerCreateComponent implements OnInit {
   firstName: any;
   lastName: any;
   dob: any;
+  year: any;
+  month: any;
   action;
   form_data = null;
   create_new = false;
@@ -330,6 +332,7 @@ export class CustomerCreateComponent implements OnInit {
           if (data.length > 0) {
             if (data[0].userProfile) {
               this.customerDetails = data[0].userProfile;
+              //console.log("hello"+this.customerDetails);
               this.amForm.get('mobile_number').setValue(data[0].userProfile.primaryMobileNo);
               this.amForm.get('first_name').setValue(data[0].userProfile.firstName);
               this.amForm.get('last_name').setValue(data[0].userProfile.lastName);
@@ -339,6 +342,8 @@ export class CustomerCreateComponent implements OnInit {
               if (this.customerDetails.address) {
                 this.amForm.get('address').setValue(this.customerDetails.address);
               }
+              //this.amForm.get('year').setValue(data[0].userProfile.year);
+              //this.amForm.get('month').setValue(data[0].userProfile.month);
             }
             this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
             this.customerErrorMsg1 = 'The system found the record details in Jaldee.com';
@@ -435,6 +440,8 @@ export class CustomerCreateComponent implements OnInit {
         last_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
         email_id: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
         dob: [''],
+        year:[''],
+        month:[''],
         gender: [''],
         address: ['']
       });
@@ -448,6 +455,8 @@ export class CustomerCreateComponent implements OnInit {
         last_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
         email_id: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
         dob: [''],
+        year:[''],
+        month:[''],
         gender: [''],
         address: ['']
       });
@@ -469,6 +478,8 @@ export class CustomerCreateComponent implements OnInit {
       'last_name': this.customer[0].lastName || null,
       'email_id': this.customer[0].email || null,
       'dob': this.customer[0].dob || null,
+      'year': this.customer[0].age.year || null,
+      'month': this.customer[0].age.month || null,
       'gender': this.customer[0].gender || null,
       'mobile_number': this.customer[0].phoneNo.trim() || null,
       'customer_id': this.customer[0].jaldeeId || null,
@@ -494,7 +505,11 @@ export class CustomerCreateComponent implements OnInit {
         'firstName': form_data.first_name,
         'lastName': form_data.last_name,
         'dob': datebirth,
-        'gender': form_data.gender,
+        "age":{
+          'year':form_data.year,
+          'month':form_data.month
+        },
+      'gender': form_data.gender,
         'phoneNo': form_data.mobile_number,
         'address': form_data.address,
         //   }
@@ -541,12 +556,16 @@ export class CustomerCreateComponent implements OnInit {
         'firstName': form_data.first_name,
         'lastName': form_data.last_name,
         'dob': datebirth,
+        "age":{
+          'year':form_data.year,
+          'month':form_data.month
+        },
         'gender': form_data.gender,
         'phoneNo': form_data.mobile_number,
         'email': form_data.email_id,
         'address': form_data.address,
         //   }
-      }; if (form_data.mobile_number) {
+      };console.log(post_data); if (form_data.mobile_number) {
         post_data['countryCode'] = '+91';
       }
       // if (form_data.email_id && form_data.email_id !== '') {
