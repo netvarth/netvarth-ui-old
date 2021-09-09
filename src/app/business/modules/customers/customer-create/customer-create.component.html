@@ -180,24 +180,24 @@
                                     </app-field-error-display> -->
                         </div>
                     </div>
+                    <span>Age</span>
                     <div class="form-group row">
-                            <div class="col-lg-6">
-                                <label>Year</label>
+                            <div class="col-lg-6 col-md-4 col-sm-3">
+                                <label></label>
                                 <div class="input-group">
                                     <div class="input-group-prepend"></div>
-                                    <input type="email" class="form-control" id="year" placeholder="year"
+                                    <input type="number" class="form-control" id="year" (keypress)="isNumeric($event)" (keyup)="isvalid($event)"  placeholder="year"
                                         formControlName="year" autocomplete="off" />
                                 </div>
                                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'year')"
                                     errorMsg="Please enter valid year.">
                                 </app-field-error-display>
                             </div>
-                            <div class="col-lg-6">
-    
-                                    <label>Month</label>
+                            <div class="col-lg-6 col-md-4 col-sm-3">
+                                    <label></label>
                                     <div class="input-group">
                                         <div class="input-group-prepend"></div>
-                                        <input type="email" class="form-control" id="month" placeholder="month"
+                                        <input type="number" class="form-control" (keypress)="isNumeric($event)" (keyup)="isvalid($event)"  id="month" placeholder="month"
                                             formControlName="month" autocomplete="off" />
                                     </div>
                                     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'month')"

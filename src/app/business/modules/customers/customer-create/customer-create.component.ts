@@ -159,6 +159,7 @@ export class CustomerCreateComponent implements OnInit {
     this.activated_route.queryParams.subscribe(qparams => {
       const user = this.groupService.getitemFromGroupStorage('ynw-user');
       this.domain = user.sector;
+      console.log(this.domain);
       this.subdomain = user.subSector;
       this.source = qparams.source;
       this.showToken = qparams.showtoken;
@@ -498,6 +499,12 @@ export class CustomerCreateComponent implements OnInit {
     let datebirth;
     if (form_data.dob) {
       datebirth = this.dateTimeProcessor.transformToYMDFormat(form_data.dob);
+    }
+    console.log(form_data);
+    if (this.domain == 'healthCare' && (form_data.dob == ''|| form_data.year == ''||form_data.month == '' )) {
+      this.snackbarService.openSnackBar('please enter date of birth or age', { 'panelClass': 'snackbarerror' });
+      this.disableButton = false;
+      return;
     }
     if (this.action === 'add') {
       const post_data = {
@@ -1058,6 +1065,15 @@ export class CustomerCreateComponent implements OnInit {
   showHistory() {
     this.showMoreHistory = !this.showMoreHistory;
   }
+  isNumber(evt) {
+    evt.stopPropagation();
+    return this.shared_functions.isNumber(evt);
+}
+
+
+isvalid(evt) {
+    return this.shared_functions.isValid(evt);
+}
   getCustomerQnr() {
     this.questionnaireList = [];
     this.provider_services.getCustomerQuestionnaire().subscribe(data => {
