@@ -626,7 +626,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
             const navigationExtras: NavigationExtras = {
                 queryParams: {
                   uuid: this.uuid,
-                  accountId: this.accountId,
+                //  accountId: this.accountId,
                   type: 'order',
                   'paidStatus': true
                 }

@@ -647,7 +647,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
             const navigationExtras: NavigationExtras = {
                 queryParams: {
                   uuid: this.uuid,
-                  accountId: this.accountId,
+                 // accountId: this.accountId,
                   type: 'appointment',
                   'paidStatus': true
                 }
