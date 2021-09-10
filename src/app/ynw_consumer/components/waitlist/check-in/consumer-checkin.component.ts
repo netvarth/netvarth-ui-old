@@ -987,13 +987,17 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (this.virtualForm.controls.email.invalid) {
             return false;
         }
-        if (this.validateFields() === true) {
-            this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
-        } else if (formdata.countryCode_whtsap.trim().length === 0 && formdata.whatsappnumber.trim().length > 0) {
-            this.snackbarService.openSnackBar('Please fill whatsapp countrycode', { 'panelClass': 'snackbarerror' });
-        } else if (formdata.countryCode_telegram.trim().length === 0 && formdata.telegramnumber.trim().length > 0) {
-            this.snackbarService.openSnackBar('Please fill telegram countrycode', { 'panelClass': 'snackbarerror' });
-        } else {
+        // if (this.validateFields() === true) {
+        //     this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
+        // }
+        //  else if (formdata.countryCode_whtsap.trim().length === 0 && formdata.whatsappnumber.trim().length > 0) {
+        //     this.snackbarService.openSnackBar('Please fill whatsapp countrycode', { 'panelClass': 'snackbarerror' });
+        // } 
+        // else if (formdata.countryCode_telegram.trim().length === 0 && formdata.telegramnumber.trim().length > 0) {
+        //     this.snackbarService.openSnackBar('Please fill telegram countrycode', { 'panelClass': 'snackbarerror' });
+        // } 
+
+        else {
 
             if (this.is_parent) {
                 this.updateParentInfo(formdata).then(
@@ -1263,7 +1267,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     getPaymentModes() {
         this.paytmEnabled = false;
         this.razorpayEnabled = false;
-        this.shared_services.getPaymentModesofProvider(this.account_id,'prePayment')
+        this.shared_services.getPaymentModesofProvider(this.account_id, 'prePayment')
             .subscribe(
                 data => {
                     this.paymentmodes = data;
@@ -2197,18 +2201,22 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }, 2000);
     }
     setVirtualTeleserviceCustomer() {
+        this.virtualInfo = this.virtualForm.value;
         console.log(this.virtualInfo);
         if (this.virtualInfo && this.virtualInfo.email && this.virtualInfo.email !== '') {
             // this.payEmail = this.virtualInfo.email;
             this.newEmail = this.payEmail = this.virtualInfo.email;
         }
 
+
         if (this.virtualInfo && this.virtualInfo.newMemberId) {
+
             this.waitlist_for = [];
-            this.newMember = this.virtualInfo.newMemberId;
+            //this.newMember = this.virtualInfo.newMemberId;
             this.virtualInfo.serviceFor = this.virtualInfo.newMemberId;
-            const current_member = this.familymembers.filter(member => member.userProfile.id === this.newMember);
-            this.waitlist_for.push({ id: this.newMember, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
+            const current_member = this.familymembers.filter(member => member.id === this.virtualInfo.serviceFor);
+            this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member.firstName, lastName: current_member.lastName });
+
             if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
                 this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
                 console.log(this.whatsappCountryCode);
@@ -2230,11 +2238,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (this.virtualInfo && this.virtualInfo.serviceFor) {
             this.consumerType = 'member';
             this.waitlist_for = [];
+
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor);
             console.log("FamilyMember : ", current_member);
             if (current_member[0]['user']) {
                 this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
             }
+
             if (!current_member[0]['user']) {
 
                 this.getActiveUserInfo().then(data => {
@@ -2246,7 +2256,16 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     }
                 });
 
+
+
             }
+            // else {
+            //     this.virtualInfo.serviceFor = this.virtualInfo.newMemberId;
+            //     this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: this.virtualInfo.firstName, lastName: this.virtualInfo.lastName });
+            // }
+
+
+
             if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
                 this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
                 console.log(this.whatsappCountryCode);
@@ -3252,9 +3271,20 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (this.serviceType === 'virtualService') {
             this.virtualInfo = this.virtualForm.value;
             console.log("Virtual Info : ", this.virtualInfo);
-            if (this.virtualInfo) {
+
+            if (this.virtualInfo && this.virtualInfo.serviceFor === 'new_member') {
+                this.onSubmit(this.virtualInfo);
+                this.setVirtualServiceNewMember();
+            }
+            // else if(this.virtualInfo) {
+            //     this.onSubmit(this.virtualInfo);
+            //     this.setVirtualTeleserviceCustomer();
+            // }
+            else {
+                this.onSubmit(this.virtualInfo);
                 this.setVirtualTeleserviceCustomer();
             }
+
 
         }
         else {
@@ -3262,7 +3292,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
 
 
-        // // //for checking update parent info ....
+
+
+
+
+        // //for checking update parent info ....
         // this.submitbtndisabled = true;
         // // this.virtualInfo['phoneno'] = this.customer_data.userProfile.primaryMobileNo;
         // if (this.virtualForm.controls.email.invalid) {
@@ -3272,11 +3306,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         // //     this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
         // // } 
 
-        // else if (this.virtualInfo.countryCode_whtsap.trim().length === 0 && this.virtualInfo.whatsappnumber.trim().length > 0) {
-        //     this.snackbarService.openSnackBar('Please fill whatsapp countrycode', { 'panelClass': 'snackbarerror' });
-        // } else if (this.virtualInfo.countryCode_telegram.trim().length === 0 && this.virtualInfo.telegramnumber.trim().length > 0) {
-        //     this.snackbarService.openSnackBar('Please fill telegram countrycode', { 'panelClass': 'snackbarerror' });
-        // } else {
+        // // else if (this.virtualInfo.countryCode_whtsap.trim().length === 0 && this.virtualInfo.whatsappnumber.trim().length > 0) {
+        // //     this.snackbarService.openSnackBar('Please fill whatsapp countrycode', { 'panelClass': 'snackbarerror' });
+        // // } else if (this.virtualInfo.countryCode_telegram.trim().length === 0 && this.virtualInfo.telegramnumber.trim().length > 0) {
+        // //     this.snackbarService.openSnackBar('Please fill telegram countrycode', { 'panelClass': 'snackbarerror' });
+        // // } 
+
+        // else {
 
         //     if (this.is_parent) {
         //         this.updateParentInfo(this.virtualInfo).then(
@@ -3326,6 +3362,69 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
 
 
+
+    }
+
+    setVirtualServiceNewMember() {
+        // console.log(this.virtualInfo);
+        if (this.virtualInfo && this.virtualInfo.email && this.virtualInfo.email !== '') {
+            // this.payEmail = this.virtualInfo.email;
+            this.newEmail = this.payEmail = this.virtualInfo.email;
+        }
+
+
+        if (this.virtualInfo && this.virtualInfo.newMemberId) {
+            this.waitlist_for = [];
+            //this.newMember = this.virtualInfo.newMemberId;
+            this.virtualInfo.serviceFor = this.virtualInfo.newMemberId;
+            const current_member = this.familymembers.filter(member => member.id === this.virtualInfo.serviceFor);
+            console.log("New User : ", current_member);
+            this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member.firstName, lastName: current_member.lastName });
+
+            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
+                this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
+                console.log(this.whatsappCountryCode);
+                this.newWhatsapp = this.virtualInfo.whatsappnumber
+                if (this.virtualInfo.countryCode_whtsap.includes('+')) {
+                    this.callingModes = this.virtualInfo.countryCode_whtsap.split('+')[1] + '' + this.virtualInfo.whatsappnumber;
+
+                } else {
+                    this.callingModes = this.virtualInfo.countryCode_whtsap + '' + this.virtualInfo.whatsappnumber;
+
+                }
+                this.currentPhone = this.virtualInfo.phoneno;
+                this.userPhone = this.virtualInfo.whatsappnumber;
+                this.changePhno = true;
+            }
+
+        }
+
+        if (this.virtualInfo && this.virtualInfo.serviceFor) {
+            // this.consumerType = 'member';
+            this.waitlist_for = [];
+
+            // const waitlist_for = this.virtualInfo;
+            this.newMember = this.virtualInfo.newMemberId
+            console.log("New Member :", this.virtualInfo);
+            this.waitlist_for.push({ id: this.newMember, firstName: this.virtualInfo.firstName, lastName: this.virtualInfo.lastName });
+
+
+            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
+                this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
+                console.log(this.whatsappCountryCode);
+                this.newWhatsapp = this.virtualInfo.whatsappnumber
+                if (this.virtualInfo.countryCode_whtsap.includes('+')) {
+                    this.callingModes = this.virtualInfo.countryCode_whtsap.split('+')[1] + '' + this.virtualInfo.whatsappnumber;
+                } else {
+                    this.callingModes = this.virtualInfo.countryCode_whtsap + ' ' + this.virtualInfo.whatsappnumber;
+
+                }
+                this.currentPhone = this.virtualInfo.phoneno;
+                this.userPhone = this.virtualInfo.whatsappnumber;
+                this.changePhno = true;
+            }
+
+        }
 
     }
     addWaitlistAdvancePayment(post_Data) {

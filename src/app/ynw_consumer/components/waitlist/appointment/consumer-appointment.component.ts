@@ -1278,7 +1278,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     getPaymentModes() {
         this.paytmEnabled = false;
         this.razorpayEnabled = false;
-        this.shared_services.getPaymentModesofProvider(this.account_id,'prePayment')
+        this.shared_services.getPaymentModesofProvider(this.account_id, 'prePayment')
             .subscribe(
                 data => {
                     this.paymentmodes = data;
@@ -2947,14 +2947,88 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         if (this.serviceType === 'virtualService') {
             this.virtualInfo = this.virtualForm.value;
             console.log("Virtual Info : ", this.virtualInfo);
-            if (this.virtualInfo) {
+
+            if (this.virtualInfo && this.virtualInfo.serviceFor === 'new_member') {
+                this.onSubmit(this.virtualInfo);
+                this.setVirtualServiceNewMember();
+            }
+            // else if(this.virtualInfo) {
+            //     this.onSubmit(this.virtualInfo);
+            //     this.setVirtualTeleserviceCustomer();
+            // }
+            else {
+                this.onSubmit(this.virtualInfo);
                 this.setVirtualTeleserviceCustomer();
             }
+
 
         }
         else {
             this.setVirtualTeleserviceCustomer();
         }
+    }
+
+    setVirtualServiceNewMember() {
+        // console.log(this.virtualInfo);
+        if (this.virtualInfo && this.virtualInfo.email && this.virtualInfo.email !== '') {
+            // this.payEmail = this.virtualInfo.email;
+            this.newEmail = this.payEmail = this.virtualInfo.email;
+        }
+
+
+        if (this.virtualInfo && this.virtualInfo.newMemberId) {
+            this.waitlist_for = [];
+            //this.newMember = this.virtualInfo.newMemberId;
+            this.virtualInfo.serviceFor = this.virtualInfo.newMemberId;
+            const current_member = this.familymembers.filter(member => member.id === this.virtualInfo.serviceFor);
+            console.log("New User : ", current_member);
+            this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member.firstName, lastName: current_member.lastName });
+
+            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
+                this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
+                console.log(this.whatsappCountryCode);
+                this.newWhatsapp = this.virtualInfo.whatsappnumber
+                if (this.virtualInfo.countryCode_whtsap.includes('+')) {
+                    this.callingModes = this.virtualInfo.countryCode_whtsap.split('+')[1] + '' + this.virtualInfo.whatsappnumber;
+
+                } else {
+                    this.callingModes = this.virtualInfo.countryCode_whtsap + '' + this.virtualInfo.whatsappnumber;
+
+                }
+                this.currentPhone = this.virtualInfo.phoneno;
+                this.userPhone = this.virtualInfo.whatsappnumber;
+                this.changePhno = true;
+            }
+
+        }
+
+        if (this.virtualInfo && this.virtualInfo.serviceFor) {
+            // this.consumerType = 'member';
+            this.waitlist_for = [];
+
+            // const waitlist_for = this.virtualInfo;
+            this.newMember = this.virtualInfo.newMemberId
+            console.log("New Member :", this.virtualInfo);
+            this.waitlist_for.push({ id: this.newMember, firstName: this.virtualInfo.firstName, lastName: this.virtualInfo.lastName });
+
+
+            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
+                this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
+                console.log(this.whatsappCountryCode);
+                this.newWhatsapp = this.virtualInfo.whatsappnumber
+                if (this.virtualInfo.countryCode_whtsap.includes('+')) {
+                    this.callingModes = this.virtualInfo.countryCode_whtsap.split('+')[1] + '' + this.virtualInfo.whatsappnumber;
+                } else {
+                    this.callingModes = this.virtualInfo.countryCode_whtsap + ' ' + this.virtualInfo.whatsappnumber;
+
+                }
+                this.currentPhone = this.virtualInfo.phoneno;
+                this.userPhone = this.virtualInfo.whatsappnumber;
+                this.changePhno = true;
+            }
+
+        }
+
     }
     addApptAdvancePayment(post_Data) {
         const param = { 'account': this.account_id };
