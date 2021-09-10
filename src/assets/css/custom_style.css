@@ -14378,3 +14378,13 @@ pointer-events: none !important;
     margin-left: 120px;
   }
 }
+.txt-qr1{
+  color:dodgerblue !important;
+  margin-left: 250px;
+}
+@media(max-width: 750px){ 
+  .txt-qr1{
+      color:dodgerblue !important;
+      margin-left: 130px;
+    }
+  }
