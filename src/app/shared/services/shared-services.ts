@@ -1102,4 +1102,8 @@ export class SharedServices {
     const url = 'consumer/appointment/questionnaire/' + uid + '?account=' + accountId;
     return this.servicemeta.httpGet(url);
   }
+  getAppointmentReschedulePricelist(serviceid) { 
+    const url = 'consumer/appointment/schedule/' + serviceid + '/pricelist';
+    return this.servicemeta.httpGet(url);
+  }
 }

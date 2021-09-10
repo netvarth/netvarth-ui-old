@@ -493,6 +493,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         () => {
           this.getLocationList();
           this.getServiceList();
+          this.refresh();
         }
       );
     } else {

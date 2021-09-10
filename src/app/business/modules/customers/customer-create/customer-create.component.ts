@@ -54,6 +54,8 @@ export class CustomerCreateComponent implements OnInit {
   firstName: any;
   lastName: any;
   dob: any;
+  year: any;
+  month: any;
   action;
   form_data = null;
   create_new = false;
@@ -157,6 +159,7 @@ export class CustomerCreateComponent implements OnInit {
     this.activated_route.queryParams.subscribe(qparams => {
       const user = this.groupService.getitemFromGroupStorage('ynw-user');
       this.domain = user.sector;
+      console.log(this.domain);
       this.subdomain = user.subSector;
       this.source = qparams.source;
       this.showToken = qparams.showtoken;
@@ -330,6 +333,7 @@ export class CustomerCreateComponent implements OnInit {
           if (data.length > 0) {
             if (data[0].userProfile) {
               this.customerDetails = data[0].userProfile;
+              //console.log("hello"+this.customerDetails);
               this.amForm.get('mobile_number').setValue(data[0].userProfile.primaryMobileNo);
               this.amForm.get('first_name').setValue(data[0].userProfile.firstName);
               this.amForm.get('last_name').setValue(data[0].userProfile.lastName);
@@ -339,6 +343,8 @@ export class CustomerCreateComponent implements OnInit {
               if (this.customerDetails.address) {
                 this.amForm.get('address').setValue(this.customerDetails.address);
               }
+              //this.amForm.get('year').setValue(data[0].userProfile.year);
+              //this.amForm.get('month').setValue(data[0].userProfile.month);
             }
             this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
             this.customerErrorMsg1 = 'The system found the record details in Jaldee.com';
@@ -435,6 +441,8 @@ export class CustomerCreateComponent implements OnInit {
         last_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
         email_id: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
         dob: [''],
+        year:[''],
+        month:[''],
         gender: [''],
         address: ['']
       });
@@ -448,6 +456,8 @@ export class CustomerCreateComponent implements OnInit {
         last_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
         email_id: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
         dob: [''],
+        year:[''],
+        month:[''],
         gender: [''],
         address: ['']
       });
@@ -465,14 +475,16 @@ export class CustomerCreateComponent implements OnInit {
   }
   updateForm() {
     this.amForm.setValue({
-      'first_name': this.customer[0].firstName || null,
-      'last_name': this.customer[0].lastName || null,
-      'email_id': this.customer[0].email || null,
-      'dob': this.customer[0].dob || null,
-      'gender': this.customer[0].gender || null,
-      'mobile_number': this.customer[0].phoneNo.trim() || null,
-      'customer_id': this.customer[0].jaldeeId || null,
-      'address': this.customer[0].address || null,
+      'first_name': this.customer[0].firstName || '',
+      'last_name': this.customer[0].lastName || '',
+      'email_id': this.customer[0].email || '',
+      'dob': this.customer[0].dob || '',
+      'year': this.customer[0].age.year || '',
+      'month': this.customer[0].age.month || '',
+      'gender': this.customer[0].gender || '',
+      'mobile_number': this.customer[0].phoneNo.trim() || '',
+      'customer_id': this.customer[0].jaldeeId || '',
+      'address': this.customer[0].address || '',
     });
   }
   onSubmit(form_data) {
@@ -488,13 +500,23 @@ export class CustomerCreateComponent implements OnInit {
     if (form_data.dob) {
       datebirth = this.dateTimeProcessor.transformToYMDFormat(form_data.dob);
     }
+    console.log(form_data);
+    if (this.domain == 'healthCare' && (form_data.dob == '' && form_data.year == '' && form_data.month == '' )) {
+      this.snackbarService.openSnackBar('please enter date of birth or age', { 'panelClass': 'snackbarerror' });
+      this.disableButton = false;
+      return;
+    }
     if (this.action === 'add') {
       const post_data = {
         //   'userProfile': {
         'firstName': form_data.first_name,
         'lastName': form_data.last_name,
         'dob': datebirth,
-        'gender': form_data.gender,
+        "age":{
+          'year':form_data.year,
+          'month':form_data.month
+        },
+      'gender': form_data.gender,
         'phoneNo': form_data.mobile_number,
         'address': form_data.address,
         //   }
@@ -541,12 +563,16 @@ export class CustomerCreateComponent implements OnInit {
         'firstName': form_data.first_name,
         'lastName': form_data.last_name,
         'dob': datebirth,
+        "age":{
+          'year':form_data.year,
+          'month':form_data.month
+        },
         'gender': form_data.gender,
         'phoneNo': form_data.mobile_number,
         'email': form_data.email_id,
         'address': form_data.address,
         //   }
-      }; if (form_data.mobile_number) {
+      };console.log(post_data); if (form_data.mobile_number) {
         post_data['countryCode'] = '+91';
       }
       // if (form_data.email_id && form_data.email_id !== '') {
@@ -1039,6 +1065,15 @@ export class CustomerCreateComponent implements OnInit {
   showHistory() {
     this.showMoreHistory = !this.showMoreHistory;
   }
+  isNumber(evt) {
+    evt.stopPropagation();
+    return this.shared_functions.isNumber(evt);
+}
+
+
+isvalid(evt) {
+    return this.shared_functions.isValid(evt);
+}
   getCustomerQnr() {
     this.questionnaireList = [];
     this.provider_services.getCustomerQuestionnaire().subscribe(data => {

@@ -72,15 +72,16 @@
                 <div class="icon-text">Change Team</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor"
+        <!-- <div class="action-box pointer-cursor"
         *ngIf="!data.multiSelection && accountType=='BRANCH' && (checkin.queue.provider.id === 0) && (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn') && (location && location.length > 1)"
         (click)="chnageLocation()">  
             <div class="action-box-sub">
                 <span class="location-icon-action"></span>
                 <div class="icon-text">Assign Location</div>
-                <!-- <div *ngIf="checkin.teamId != 0"  class="icon-text">Change Team</div> -->
+               
             </div>
-        </div>
+        </div> -->
+         <!-- <div *ngIf="checkin.teamId != 0"  class="icon-text">Change Team</div> -->
         <div class="action-box pointer-cursor"
             *ngIf="!data.multiSelection && accountType=='BRANCH' &&  (checkin.queue.provider.id === 0) && (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn') && checkin.provider"
             (click)="removeProvider()">
