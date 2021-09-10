@@ -194,8 +194,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('consumer_order') paytmview;
   totalamountPay: any;
   loadingPaytm = false;
-  isClickedOnce=false;
-  payment_options:  any = [];
+  isClickedOnce = false;
+  payment_options: any = [];
   paytmEnabled = false;
   razorpayEnabled = false;
   paymentmodes: any;
@@ -215,7 +215,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     private s3Processor: S3UrlProcessor,
     public _sanitizer: DomSanitizer,
     private wordProcessor: WordProcessor,
-   @Inject(DOCUMENT) public document,
+    @Inject(DOCUMENT) public document,
     public prefillmodel: RazorpayprefillModel,
     public razorpayService: RazorpayService,
     private ngZone: NgZone,
@@ -239,8 +239,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         this.provider_id = params.providerId;
         if (params.customId) {
           this.customId = params.customId;
-      }
-      });      
+        }
+      });
 
 
 
@@ -293,6 +293,14 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.getPaymentModes();
+    const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
+    this.customer_countrycode = credentials.countryCode;
+    console.log("credentioooo" + credentials.countryCode);
+    // if(this.customer_countrycode == '+91'){
+    //     this.getPaymentModes();
+    // } else {
+    //     this.razorpayEnabled = true;
+    // }
     this.linear = false;
     this.orderList = this.lStorageService.getitemfromLocalStorage('order');
     if (this.orderList) {
@@ -413,26 +421,42 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   getPaymentModes() {
     this.paytmEnabled = false;
     this.razorpayEnabled = false;
-    this.shared_services.getPaymentModesofProvider(this.account_id,'prePayment')
-        .subscribe(
-            data => {
-              this.paymentmodes = data;
-               console.log("paymode"+this.paymentmodes.payGateways);
-            for(let modes of this.paymentmodes){
-               for(let gateway of modes.payGateways){
-                   if(gateway == 'PAYTM'){
-                    this.paytmEnabled = true;
-                   }
-                   if(gateway == 'RAZORPAY'){
-                    this.razorpayEnabled = true;
-                   }
-               }
+    this.shared_services.getPaymentModesofProvider(this.account_id, 'prePayment')
+      .subscribe(
+        data => {
+          this.paymentmodes = data;
+          if (this.paymentmodes[0].isJaldeeBank) {
+            if (this.customer_countrycode == '+91') {
+              this.paytmEnabled = true;
             }
-                
-            },
-            
-        );
-}
+            else {
+              this.razorpayEnabled = true;
+            }
+          }
+          else {
+            if (this.customer_countrycode == '+91') {
+              for (let modes of this.paymentmodes) {
+                for (let gateway of modes.payGateways) {
+                  if (gateway == 'PAYTM') {
+                    this.paytmEnabled = true;
+                  }
+                  if (gateway == 'RAZORPAY') {
+                    this.razorpayEnabled = true;
+                  }
+                }
+              }
+            }
+            else {
+              this.razorpayEnabled = true;
+            }
+          }
+          console.log("paymode" + this.paymentmodes.payGateways);
+
+
+        },
+
+      );
+  }
   ngAfterViewInit() {
     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
@@ -469,7 +493,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe(
         data => {
           console.log(data);
-          this.listDetails = data;      
+          this.listDetails = data;
           if (this.listDetails.eligibleJcashAmt) {
             this.checkJcash = true
             this.jcashamount = this.listDetails.eligibleJcashAmt.jCashAmt;
@@ -542,24 +566,24 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   //     });
   // }
   getAmountToPay(paymentDetails) {
-    this.totalamountPay=paymentDetails.advanceAmount;
+    this.totalamountPay = paymentDetails.advanceAmount;
     //console.log(this.totalamountPay);
     // let totalamountPay=paymentDetails.advanceAmount;
     //if(this.jcashamount >0 && this.checkJcash){
-      //if(this.jcashamount>paymentDetails.advanceAmount){
-      //this.totalamountPay=this.jcashamount- paymentDetails.advanceAmount;
-      //}else{
-       // this.totalamountPay=paymentDetails.advanceAmount-this.jcashamount;
-      //}
+    //if(this.jcashamount>paymentDetails.advanceAmount){
+    //this.totalamountPay=this.jcashamount- paymentDetails.advanceAmount;
     //}else{
-     // this.totalamountPay=paymentDetails.advanceAmount;
-     // }
-    
-   return this.totalamountPay; 
-   console.log(this.totalamountPay);
+    // this.totalamountPay=paymentDetails.advanceAmount-this.jcashamount;
+    //}
+    //}else{
+    // this.totalamountPay=paymentDetails.advanceAmount;
+    // }
+
+    return this.totalamountPay;
+    console.log(this.totalamountPay);
 
   }
-  OnChangeJcash(event){
+  OnChangeJcash(event) {
     console.log(event.checked);
 
   }
@@ -900,13 +924,13 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   confirm(paytype?) {
-    this.isClickedOnce=true;
+    this.isClickedOnce = true;
     this.checkoutDisabled = true;
     const timeslot = this.nextAvailableTime.split(' - ');
     if (this.delivery_type === 'home') {
       if (this.added_address === null || this.added_address.length === 0) {
         this.checkoutDisabled = false;
-        this.isClickedOnce=false;
+        this.isClickedOnce = false;
         this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
         return;
       } else {
@@ -952,7 +976,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             post_Data['useCredit'] = this.checkJcredit
             post_Data['useJcash'] = this.checkJcash
           }
-          this.confirmOrder(post_Data,paytype);
+          this.confirmOrder(post_Data, paytype);
         } else {
           const post_Data = {
             'homeDelivery': true,
@@ -980,14 +1004,14 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             post_Data['useCredit'] = this.checkJcredit
             post_Data['useJcash'] = this.checkJcash
           }
-          this.confirmOrder(post_Data,paytype);
+          this.confirmOrder(post_Data, paytype);
         }
       }
     }
     if (this.delivery_type === 'store') {
       if (!this.storeContact.value.phone || !this.storeContact.value.email) {
         this.checkoutDisabled = false;
-        this.isClickedOnce=false;
+        this.isClickedOnce = false;
         this.snackbarService.openSnackBar('Please provide Contact Details', { 'panelClass': 'snackbarerror' });
         return;
       } else {
@@ -1021,7 +1045,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             post_Data['useCredit'] = this.checkJcredit
             post_Data['useJcash'] = this.checkJcash
           }
-          this.confirmOrder(post_Data,paytype);
+          this.confirmOrder(post_Data, paytype);
         } else {
           const post_Data = {
             'storePickup': true,
@@ -1048,7 +1072,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             post_Data['useCredit'] = this.checkJcredit
             post_Data['useJcash'] = this.checkJcash
           }
-          this.confirmOrder(post_Data,paytype);
+          this.confirmOrder(post_Data, paytype);
         }
       }
     }
@@ -1075,7 +1099,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         this.sharedFunctionobj.sendMessage(pdata);
         this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
         if (this.isLoggedIn()) {
-         // this.nextbtn.nativeElement.click();
+          // this.nextbtn.nativeElement.click();
         }
 
       } else if (result === 'showsignup') {
@@ -1083,7 +1107,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
-  confirmOrder(post_Data,paytype?) {
+  confirmOrder(post_Data, paytype?) {
     const dataToSend: FormData = new FormData();
     if (this.orderType === 'SHOPPINGLIST') {
       const captions = {};
@@ -1102,12 +1126,12 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_services.CreateConsumerOrder(this.account_id, dataToSend)
         .subscribe(data => {
           const retData = data;
-          if(this.customId){
-            console.log("businessid"+this.account_id);
-              this.shared_services.addProvidertoFavourite(this.account_id)
-                .subscribe(() => {
-                });
-        }
+          if (this.customId) {
+            console.log("businessid" + this.account_id);
+            this.shared_services.addProvidertoFavourite(this.account_id)
+              .subscribe(() => {
+              });
+          }
           this.checkoutDisabled = false;
           // let prepayAmount;
           const uuidList = [];
@@ -1128,7 +1152,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           //     uuid: this.trackUuid
           //   }
           // };
-
+          console.log(this.catalog_details.paymentType + 'fddddddddddd')
+          console.log(this.prepayAmount + '11111111111')
           if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
               .subscribe(res => {
@@ -1152,22 +1177,22 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             this.lStorageService.removeitemfromLocalStorage('order_spId');
             this.lStorageService.removeitemfromLocalStorage('order');
             this.snackbarService.openSnackBar('Your Order placed successfully');
-            let queryParams= {
-            'source': 'order' 
+            let queryParams = {
+              'source': 'order'
             }
             if (this.customId) {
               queryParams['customId'] = this.customId;
-              queryParams['accountId'] = this.account_id; 
+              queryParams['accountId'] = this.account_id;
             }
             let navigationExtras: NavigationExtras = {
-                queryParams: queryParams
+              queryParams: queryParams
             };
-            this.router.navigate(['consumer'],  navigationExtras);
+            this.router.navigate(['consumer'], navigationExtras);
             // this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
           }
         },
           error => {
-            this.isClickedOnce=false;
+            this.isClickedOnce = false;
             this.checkoutDisabled = false;
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
@@ -1179,12 +1204,12 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_services.CreateConsumerOrder(this.account_id, dataToSend)
         .subscribe(data => {
           const retData = data;
-          if(this.customId){
-            console.log("businessid"+this.account_id);
-              this.shared_services.addProvidertoFavourite(this.account_id)
-                .subscribe(() => {
-                });
-        }
+          if (this.customId) {
+            console.log("businessid" + this.account_id);
+            this.shared_services.addProvidertoFavourite(this.account_id)
+              .subscribe(() => {
+              });
+          }
           this.checkoutDisabled = false;
           const uuidList = [];
           Object.keys(retData).forEach(key => {
@@ -1204,8 +1229,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           //     uuid: this.trackUuid
           //   }
           // };
+          console.log(this.catalog_details.paymentType + 'fdddddddddddshop')
+          console.log(this.prepayAmount + '11111111111shop')
           if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
-            this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id,  post_Data.email)
+            this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
               .subscribe(res => {
                 if (this.jcashamount > 0 && this.checkJcash) {
                   this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.cartDetails.advanceAmount)
@@ -1226,22 +1253,22 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             this.lStorageService.removeitemfromLocalStorage('order_spId');
             this.lStorageService.removeitemfromLocalStorage('order');
             this.snackbarService.openSnackBar('Your Order placed successfully');
-            let queryParams= {
-              'source': 'order' 
-              }
-              if (this.customId) {
-                queryParams['customId'] = this.customId;
-                queryParams['accountId'] = this.account_id; 
-              }
-              let navigationExtras: NavigationExtras = {
-                  queryParams: queryParams
-              };
-              this.router.navigate(['consumer'],  navigationExtras);
+            let queryParams = {
+              'source': 'order'
+            }
+            if (this.customId) {
+              queryParams['customId'] = this.customId;
+              queryParams['accountId'] = this.account_id;
+            }
+            let navigationExtras: NavigationExtras = {
+              queryParams: queryParams
+            };
+            this.router.navigate(['consumer'], navigationExtras);
             // this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
           }
         },
           error => {
-            this.isClickedOnce=false;
+            this.isClickedOnce = false;
             this.checkoutDisabled = false;
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
@@ -1466,7 +1493,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         console.log('less than 30');
         console.log(this.store_availables);
         const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
-        if(this.store_availables){
+        if (this.store_availables) {
           const availability = this.store_availables.filter(obj => obj.date === sel_check_date);
           if (availability.length > 0) {
             this.isfutureAvailableTime = true;
@@ -1688,10 +1715,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   payuPayment(paymenttype?) {
     let paymentWay;
-    if(paymenttype == 'paytm'){
-        paymentWay = 'PPI';
+    if (paymenttype == 'paytm') {
+      paymentWay = 'PPI';
     } else {
-        paymentWay = 'DC';
+      paymentWay = 'DC';
     }
     this.makeFailedPayment(paymentWay);
   }
@@ -1748,22 +1775,22 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             this.lStorageService.removeitemfromLocalStorage('order_spId');
             this.lStorageService.removeitemfromLocalStorage('order');
             this.snackbarService.openSnackBar('Your Order placed successfully');
-            let queryParams= {
-              'source': 'order' 
-              }
-              if (this.customId) {
-                queryParams['customId'] = this.customId;
-                queryParams['accountId'] = this.account_id; 
-              }
-              let navigationExtras: NavigationExtras = {
-                  queryParams: queryParams
-              };
-              this.router.navigate(['consumer'],  navigationExtras);
+            let queryParams = {
+              'source': 'order'
+            }
+            if (this.customId) {
+              queryParams['customId'] = this.customId;
+              queryParams['accountId'] = this.account_id;
+            }
+            let navigationExtras: NavigationExtras = {
+              queryParams: queryParams
+            };
+            this.router.navigate(['consumer'], navigationExtras);
             // this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
           }
         },
           error => {
-            this.isClickedOnce=false;
+            this.isClickedOnce = false;
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           });
     }
@@ -1780,29 +1807,29 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         'isPayTmPayment': false,
         'paymentMode': null
       };
-      if(paymentMode == 'PPI'){
+      if (paymentMode == 'PPI') {
         postData.isPayTmPayment = true;
         postData.isRazorPayPayment = false;
         postData.paymentMode = "PPI";
-    } else {
+      } else {
         postData.isPayTmPayment = false;
         postData.isRazorPayPayment = true;
         postData.paymentMode = "DC";
-    }
+      }
 
       this.shared_services.PayByJaldeewallet(postData)
         .subscribe((pData: any) => {
 
           if (pData.isGateWayPaymentNeeded == true && pData.isJCashPaymentSucess == true) {
-            if(paymentMode == 'PPI'){
+            if (paymentMode == 'PPI') {
               this.payWithPayTM(pData.response);
-          }else{
+            } else {
               this.paywithRazorpay(pData.response);
-          }
+            }
           }
         },
           error => {
-            this.isClickedOnce=false;
+            this.isClickedOnce = false;
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           });
 
@@ -1827,13 +1854,13 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
               //   }
               // }, 2000);
             } else {
-              this.isClickedOnce=false;
+              this.isClickedOnce = false;
               this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
             }
           }
         },
           error => {
-            this.isClickedOnce=false;
+            this.isClickedOnce = false;
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
 
           });
@@ -1849,46 +1876,46 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.razorModel.amount = pData.amount;
     this.razorModel.order_id = pData.orderId;
     this.razorModel.name = pData.providerName;
-    this.isClickedOnce=false;
+    this.isClickedOnce = false;
     this.razorModel.description = pData.description;
-    this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'order_prepayment', this.trackUuid, this.livetrack, this.account_id, this.cartDetails.advanceAmount , this.customId);
+    this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'order_prepayment', this.trackUuid, this.livetrack, this.account_id, this.cartDetails.advanceAmount, this.customId);
     // this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'checkin_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList, this.customId);
 
   }
-  payWithPayTM(pData:any) {
+  payWithPayTM(pData: any) {
     this.loadingPaytm = true;
     this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
-}
-transactionCompleted(response) {
-     if(response.STATUS == 'TXN_SUCCESS'){
-      this.isClickedOnce=false;
+  }
+  transactionCompleted(response) {
+    if (response.STATUS == 'TXN_SUCCESS') {
+      this.isClickedOnce = false;
       this.lStorageService.removeitemfromLocalStorage('order_sp');
       this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
       this.lStorageService.removeitemfromLocalStorage('order_spId');
       this.lStorageService.removeitemfromLocalStorage('order');
       this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
       let queryParams = {
-          'source': 'order',
-           };
-          if(this.customId) {
-            queryParams['customId']= this.customId;
-            queryParams['accountId']= this.account_id;
-           }
-         let navigationExtras: NavigationExtras = {
-            queryParams: queryParams
-          }
-         this.ngZone.run(() => this.router.navigate(['consumer'] ,navigationExtras));
-   } else if(response.STATUS == 'TXN_FAILURE'){
-      this.isClickedOnce=false;
+        'source': 'order',
+      };
+      if (this.customId) {
+        queryParams['customId'] = this.customId;
+        queryParams['accountId'] = this.account_id;
+      }
+      let navigationExtras: NavigationExtras = {
+        queryParams: queryParams
+      }
+      this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+    } else if (response.STATUS == 'TXN_FAILURE') {
+      this.isClickedOnce = false;
       this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
       this.ngZone.run(() => this.router.navigate(['consumer']));
-   }
-}
-closeloading(){
-  this.isClickedOnce=false;
-  this.loadingPaytm = false; 
-  this.cdRef.detectChanges();
-  this.ngZone.run(() => this.router.navigate(['consumer']));
-  this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
-}
+    }
+  }
+  closeloading() {
+    this.isClickedOnce = false;
+    this.loadingPaytm = false;
+    this.cdRef.detectChanges();
+    this.ngZone.run(() => this.router.navigate(['consumer']));
+    this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+  }
 }

@@ -161,11 +161,11 @@
     height: 870px !important;
     overflow-y: scroll !important;
   }
-  .customersList .highlight {
+  .customersList .highlights {
     background-color:#1e4079 !important;
     color: white !important;
   }
-  .customersList .highlight .selected_customers {
+  .customersList .highlights .selected_customers {
     color: white !important;
   }
   .disp-none-large {

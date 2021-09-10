@@ -688,7 +688,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const filterEnum = {};
     filterEnum['state-eq'] = 'ENABLED';
     if (date === 'all') {
-      filterEnum['location-eq'] = this.selected_location.id;
+      if(this.selected_location){
+        filterEnum['location-eq'] = this.selected_location.id;
+      }
     }
     return new Promise((resolve) => {
       _this.provider_services.getProviderSchedules(filterEnum).subscribe(
