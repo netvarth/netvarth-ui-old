@@ -1248,12 +1248,12 @@ export class ProviderCheckinComponent implements OnInit {
         this.shared_services.addProviderCheckin(post_Data)
             .subscribe((data) => {
                 const retData = data;
-                let retUuid;
+               // let retUuid;
                 let parentUid;
                 Object.keys(retData).forEach(key => {
-                    retUuid = retData[key];
+                  //  retUuid = retData[key];
                     this.trackUuid = retData[key];
-                    parentUid = retData['parent_uuid'];;
+                    parentUid = retData['parent_uuid'];
                 });
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.submitQuestionnaire(parentUid);
@@ -1266,7 +1266,7 @@ export class ProviderCheckinComponent implements OnInit {
                     }
                 }
                 if (this.selectedMessage.files.length > 0) {
-                    this.consumerNoteAndFileSave(retUuid);
+                    this.consumerNoteAndFileSave(parentUid);
                 }
                 this.showCheckin = false;
                 this.searchForm.reset();
