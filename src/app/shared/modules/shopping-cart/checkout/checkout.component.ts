@@ -493,11 +493,11 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe(
         data => {
           console.log(data);
-          this.listDetails = data;
-          if (this.listDetails.eligibleJcashAmt) {
+          this.cartDetails = data;
+          if (this.cartDetails.eligibleJcashAmt) {
             this.checkJcash = true
-            this.jcashamount = this.listDetails.eligibleJcashAmt.jCashAmt;
-            this.jcreditamount = this.listDetails.eligibleJcashAmt.creditAmt;
+            this.jcashamount = this.cartDetails.eligibleJcashAmt.jCashAmt;
+            this.jcreditamount = this.cartDetails.eligibleJcashAmt.creditAmt;
           }
         },
         error => {
