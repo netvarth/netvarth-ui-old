@@ -1036,7 +1036,6 @@ export const projectConstantsLocal = {
   },
   WALLET_NOTES: {
     APP_SIGNUP: 'APP SIGNUP',
-
   },
   PAYTMLOCAL_URL: 'https://securegw-stage.paytm.in',
   PAYTM_URL: 'https://securegw.paytm.in',
