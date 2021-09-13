@@ -81,9 +81,11 @@
                             <div class="input-group">
                                 <div class="input-group-prepend"><span class="input-group-text1"><i
                                             style="font-style: normal;font-size: small;">+91</i></span></div>
-                                <input [readonly]="action === 'edit'&& customer[0].jaldeeConsumer !=0 && customer[0].phoneNo"type="text" class="form-control" (keypress)="isNumeric($event)"
-                                    id="mobile_number" placeholder="{{mobile_cap}} " formControlName="mobile_number"
-                                    autocomplete="off" maxlength=10 />
+                                <input
+                                    [readonly]="action === 'edit'&& customer[0].jaldeeConsumer !=0 && customer[0].phoneNo"
+                                    type="text" class="form-control" (keypress)="isNumeric($event)" id="mobile_number"
+                                    placeholder="{{mobile_cap}} " formControlName="mobile_number" autocomplete="off"
+                                    maxlength=10 />
                             </div>
                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile_number')"
                                 [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',
@@ -93,7 +95,7 @@
             'maxlength' : 'Enter a 10 digit mobile number',
             'pattern' : 'Only numbers are allowed'
           })">
-        </app-field-error-display>
+                            </app-field-error-display>
                         </div>
                         <div class="col-lg-6"
                             *ngIf="customidFormat && customidFormat.customerSeriesEnum && customidFormat.customerSeriesEnum === 'MANUAL'">
@@ -155,28 +157,28 @@
                                 errorMsg="Please enter valid email.">
                             </app-field-error-display>
                         </div>
-                        
+
                     </div>
-                    
+
                     <div class="form-group row">
-                            <div class="col-lg-2 col-md-4 col-sm-1">
-                                       
-                                    <div class="form-group normalpicker">
-                                    <label > Date of birth</label>
-                                        <div class="pickerouter">
-                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                            <mat-datepicker #picker></mat-datepicker>
-                                            <input class="form-control dtepicker" type="text" matInput (click)="picker.open()"
-                                                [matDatepicker]="picker" formControlName="dob" [max]="tday" [min]="minday"
-                                                placeholder="DD/MM/YYYY" readonly>
-                                               
-                                        </div>
-                                        
-                                        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dob')"
-                                            errorMsg="Please select the date of birth.">
-                                        </app-field-error-display>
-                                    </div>
-                                    <!-- <label>Date of birth</label>
+                        <div class="col-lg-3 col-md-0 col-sm-1">
+
+                            <div class="form-group normalpicker">
+                                <label> Date of birth</label>
+                                <div class="pickerouter">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                    <input class="form-control dtepicker" type="text" matInput (click)="picker.open()"
+                                        [matDatepicker]="picker" formControlName="dob" [max]="tday" [min]="minday"
+                                        placeholder="DD/MM/YYYY" readonly>
+
+                                </div>
+
+                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dob')"
+                                    errorMsg="Please select the date of birth.">
+                                </app-field-error-display>
+                            </div>
+                            <!-- <label>Date of birth</label>
                                     <div class="input-group">
                                         <input class="form-control" type="date"  id="dob"
                                         formControlName="dob" [max]="tday" [min]="minday"/>
@@ -184,46 +186,30 @@
                                     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dob')"
                                                 errorMsg="Please select the date of birth.">
                                             </app-field-error-display> -->
-                          
-                                </div>
-                                &nbsp;&nbsp;<label class="or">OR</label>
-                            <div class="col-lg-2 col-md-4 col-sm-1">
-                                <label>Age</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend"></div>
-                                   
-                                    <input type="number" class="form-control" id="year" (keypress)="isNumeric($event)" (keyup)="isvalid($event)"  placeholder="In years"
-                                        formControlName="year" autocomplete="off" />
-                                </div>
-                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'year')"
-                                    errorMsg="Please enter valid year.">
-                                </app-field-error-display>
-                            </div>
-                            <div class="col-lg-2 col-md-4 col-sm-1" style="margin-top: 10px">
-                                    <label>       </label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend"></div>
-                                        <input type="number" class="form-control" (keypress)="isNumeric($event)" (keyup)="isvalid($event)"  id="month" placeholder="In months"
-                                            formControlName="month" autocomplete="off" />
-                                    </div>
-                                    
-                                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'month')"
-                                        errorMsg="Please enter valid Month.">
-                                    </app-field-error-display>
-                                </div>
-                       
-                               
-                                
-                                <!-- <label>Date of birth</label>
-                                <div class="input-group">
-                                    <input class="form-control" type="date"  id="dob"
-                                    formControlName="dob" [max]="tday" [min]="minday"/>
-                                </div>
-                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dob')"
-                                            errorMsg="Please select the date of birth.">
-                                        </app-field-error-display> -->
-                            
+
                         </div>
+                        &nbsp;&nbsp;<label class="or">OR</label>
+                        <div class="col-lg-3 col-md-4 col-sm-1">
+                            <label>Age</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"></div>
+                                <input type="number" class="form-control" id="age" (keypress)="isNumeric($event)"
+                                    (keyup)="isvalid($event)" formControlName="age" autocomplete="off" />
+                            </div>
+                            <!--<app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'year')"
+                                    errorMsg="Please enter valid year.">
+                                </app-field-error-display>-->
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-1">
+                            <mat-form-field style="width : 100px" appearance="none">
+                                <mat-select formControlName="ageType" style="width : 100px"
+                                    (selectionChange)="changeType('month')" [(value)]="ageType">
+                                    <mat-option value="year">Year</mat-option>
+                                    <mat-option value="month">Month</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <div class="col-lg-6">
                             <label>Address</label>
