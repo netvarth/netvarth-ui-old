@@ -104,6 +104,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
     showBillNotes = false;
     paytmEnabled = false;
     razorpayEnabled = false;
+    interNatioanalPaid = false;
     type;
     accountId;
     pid;
@@ -435,6 +436,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
     getPaymentModes() {
         this.paytmEnabled = false;
         this.razorpayEnabled = false;
+        this.interNatioanalPaid = false;
         this.sharedServices.getPaymentModesofProvider(this.accountId, 'billPayment')
             .subscribe(
                 data => {
@@ -442,6 +444,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                     if (this.paymentmodes[0].isJaldeeBank) {
                         if (this.customer_countrycode == '+91') {
                             this.paytmEnabled = true;
+                            this.interNatioanalPaid = true;
                         }
                         else {
                             this.razorpayEnabled = true;

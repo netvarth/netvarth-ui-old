@@ -231,6 +231,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     payment_options:  any = [];
     paytmEnabled = false;
     razorpayEnabled = false;
+    interNatioanalPaid = false;
     paymentmodes: any;
     customer_countrycode: any;
     constructor(public fed_service: FormMessageDisplayService,
@@ -398,6 +399,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     getPaymentModes() {
         this.paytmEnabled = false;
         this.razorpayEnabled = false;
+        this.interNatioanalPaid = false;
         this.shared_services.getPaymentModesofProvider(this.account_id,'prePayment')
             .subscribe(
                 data => {
@@ -407,6 +409,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     if(this.customer_countrycode == '+91'){
                       
                         this.paytmEnabled = true;
+                        this.interNatioanalPaid = true;
                     }
                     else{
                        

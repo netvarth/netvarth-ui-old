@@ -258,6 +258,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     payment_options: any = [];
     paytmEnabled = false;
     razorpayEnabled = false;
+   interNatioanalPaid = false;
     @ViewChild('consumer_appointment') paytmview;
     paymentmodes: any;
     customer_countrycode: any;
@@ -437,6 +438,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     getPaymentModes() {
         this.paytmEnabled = false;
         this.razorpayEnabled = false;
+        this.interNatioanalPaid = false;
         this.shared_services.getPaymentModesofProvider(this.account_id, 'prePayment')
             .subscribe(
                 data => {
@@ -446,6 +448,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         if (this.customer_countrycode == '+91') {
 
                             this.paytmEnabled = true;
+                            this.interNatioanalPaid = true;
                         }
                         else {
 

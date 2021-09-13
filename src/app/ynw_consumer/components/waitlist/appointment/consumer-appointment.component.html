@@ -1204,6 +1204,11 @@
                                                 Pay by CC/DC/UPI  
                                             </button>
                                         </div>
+                                        <div class="txt-align-center" *ngIf="interNatioanalPaid && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" >
+                                            <span [class.disabled]="isClickedOnce"  (click)="!isClickedOnce && saveCheckin('appt')" class="pointer-cursor"><a class="refund_policy">International Payment ? Click here</a></span>
+                                           
+                                           
+                                        </div>
                                             <div class="cancelpolicy  mgn-rt-5"
                                                 *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                 <div
