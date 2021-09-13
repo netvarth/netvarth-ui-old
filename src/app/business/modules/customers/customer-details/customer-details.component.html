@@ -60,7 +60,7 @@
                                             {{customer[0].gender | capitalizeFirst}}</span></span>
                                     <span *ngIf="customer[0].dob">DOB: <span class="cust-detail">
                                             {{customer[0].dob | date: newDateFormat}} </span></span>
-                                            <span *ngIf="customer[0].age">Age: <span *ngIf="customer[0].age.year"class="cust-detail">
+                                            <span *ngIf="customer[0].age.year || customer[0].age.month">Age: <span *ngIf="customer[0].age.year"class="cust-detail">
                                                 {{customer[0].age.year}}year </span><span class="cust-detail" *ngIf="customer[0].age.month">
                                                     {{customer[0].age.month}}month </span></span>
                                 </div>
