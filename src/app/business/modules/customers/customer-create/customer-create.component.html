@@ -207,7 +207,7 @@
                                 <div class="input-group-prepend"></div>
                                 <mat-form-field style="width : 100px; margin-top: -20px; height: 34px !important;" appearance="none" >
                                         <mat-label style="color: black">Age</mat-label>
-                                        <mat-select formControlName="ageType" style="width : 100px" (selectionChange)="changeType('month')"
+                                        <mat-select formControlName="ageType" style="width : 100px" (selectionChange)="changeType($event)"
                                             [(value)]="ageType">
                                             <mat-option value="year">Years</mat-option>
                                             <mat-option value="month">Months</mat-option>

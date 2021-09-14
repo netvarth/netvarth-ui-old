@@ -1338,8 +1338,8 @@ export class CustomerCreateComponent implements OnInit {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
   }
-  changeType(value) {
-    this.changetypes = value;
+  changeType(event) {
+    this.changetypes = event.value;
   }
 }
 
