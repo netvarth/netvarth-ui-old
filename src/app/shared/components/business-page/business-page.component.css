@@ -2270,3 +2270,7 @@ footer.bus-page-footer.site-footer .footer-bottom .footer-links.bd-pd-left {
 #customAppIOSPopup {
   display: none;
 }
+.morebt{
+  cursor: pointer;
+color: #1572a8;
+}
