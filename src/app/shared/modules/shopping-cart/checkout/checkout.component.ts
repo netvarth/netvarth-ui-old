@@ -1873,7 +1873,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
 
           });
-
     }
   }
   paywithRazorpay(pData: any) {
