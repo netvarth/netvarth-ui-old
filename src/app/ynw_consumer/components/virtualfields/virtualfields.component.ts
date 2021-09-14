@@ -809,7 +809,6 @@ export class VirtualFieldsComponent implements OnInit {
       memberInfo['userProfile']['email'] = formdata.email
     }
 
-
     memberInfo['bookingLocation'] = {}
     memberInfo['userProfile']['gender'] = formdata.gender;
     memberInfo['userProfile']['firstName'] = formdata.firstName;
