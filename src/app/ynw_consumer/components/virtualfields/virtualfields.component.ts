@@ -781,6 +781,7 @@ export class VirtualFieldsComponent implements OnInit {
   saveMember(formdata) {
     const _this = this;
     const memberInfo = {};
+    console.log("formdata"+formdata);
     memberInfo['userProfile'] = {}
     if (  formdata.whatsappnumber !== undefined &&formdata.whatsappnumber.trim().length>0  && formdata.countryCode_whtsap !== undefined && formdata.countryCode_whtsap.trim().length>0) {
 
@@ -790,7 +791,7 @@ export class VirtualFieldsComponent implements OnInit {
       } else {
         whatsup["countryCode"] = '+' + formdata.countryCode_whtsap
       }
-      whatsup["number"] = formdata.whatsappumber
+      whatsup["number"] = formdata.whatsappnumber
       memberInfo['userProfile']['whatsAppNum'] = whatsup;
     }
     if (formdata.telegramnumber !== undefined && formdata.telegramnumber.trim().length>0 &&  formdata.countryCode_telegram !== undefined&&formdata.countryCode_telegram.trim().length>0) {
