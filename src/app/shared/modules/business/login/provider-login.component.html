@@ -65,10 +65,7 @@
             <div class="form-group">
               <div class="d-flex justify-content-between mt-n5">
                 <label class="font-size-h6 font-weight-bolder text-dark pt-5">Password</label>
-                <a (click)="doForgotPassword()"
-                  class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5">
-                  Forgot Password ?
-                </a>
+               
               </div>
               <input class="form-control py-7 px-6 rounded-lg border-0" type="password" id="password"
                 placeholder="Enter password" formControlName="password" autocomplete="off" />
@@ -90,9 +87,16 @@
                 [class.spinner-darker-success]="api_loading" [class.spinner-center]="api_loading">
                 Login
               </button>
+              <a (click)="doForgotPassword()"
+              class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5">
+              Forgot Password ?
+            </a>
+              
+            </div>
+            <div class="pb-lg-0 pb-5">
               <button *ngIf="!qParams['src']" (click)="doSignuppage()" type="button"
-                class="btn btn-light-primary font-weight-bolder px-8 py-2 my-3 font-size-lg">Join as a service
-                provider</button>
+              class="btn btn-light-primary font-weight-bolder px-8 py-2 my-3 font-size-lg">Join as a service
+              provider</button>
             </div>
             <!--end::Action-->
           </form>
