@@ -198,6 +198,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   payment_options: any = [];
   paytmEnabled = false;
   razorpayEnabled = false;
+  interNatioanalPaid = false;
   paymentmodes: any;
   constructor(
     public sharedFunctionobj: SharedFunctions,
@@ -421,6 +422,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   getPaymentModes() {
     this.paytmEnabled = false;
     this.razorpayEnabled = false;
+    this.interNatioanalPaid = false;
     this.shared_services.getPaymentModesofProvider(this.account_id, 'prePayment')
       .subscribe(
         data => {
@@ -428,6 +430,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           if (this.paymentmodes[0].isJaldeeBank) {
             if (this.customer_countrycode == '+91') {
               this.paytmEnabled = true;
+              this.interNatioanalPaid = true;
             }
             else {
               this.razorpayEnabled = true;
