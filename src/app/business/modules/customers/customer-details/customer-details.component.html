@@ -61,8 +61,8 @@
                                     <span *ngIf="customer[0].dob">DOB: <span class="cust-detail">
                                             {{customer[0].dob | date: newDateFormat}} </span></span>
                                             <span *ngIf="customer[0].age.year || customer[0].age.month">Age: <span *ngIf="customer[0].age.year"class="cust-detail">
-                                                {{customer[0].age.year}}year </span><span class="cust-detail" *ngIf="customer[0].age.month">
-                                                    {{customer[0].age.month}}month </span></span>
+                                                {{customer[0].age.year}}&nbsp;years </span><span class="cust-detail" *ngIf="customer[0].age.month">
+                                                    {{customer[0].age.month}}&nbsp;months </span></span>
                                 </div>
                                 <div *ngIf="customer[0].address">Address: <span
                                         class="cust-detail">{{customer[0].address}}</span></div>
