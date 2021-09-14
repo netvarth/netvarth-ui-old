@@ -231,7 +231,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.storeContact = this._formBuilder.group({
 
-      phone: [this.phonenumber, Validators.required],
+      phone: ['', Validators.required],
       email: ['', Validators.required]
     });
 
@@ -468,7 +468,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.customer_countrycode = credentials.countryCode;
       this.phonenumber = activeUser.primaryPhoneNumber;
       // this.storeContact.get('phone').value(this.phonenumber);
-      this.storeContact.controls.phone.setValue(this.phonenumber);
+     // this.storeContact.controls.phone.setValue(this.phonenumber);
       this.customer_phoneNumber = this.customer_countrycode + activeUser.primaryPhoneNumber;
       console.log(this.customer_phoneNumber);
       this.getaddress();
@@ -969,8 +969,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
             },
             'orderDate': this.sel_checkindate,
-            'countryCode': this.customer_countrycode,
-            'phoneNumber': this.customer_phoneNumber,
+            //'countryCode': this.customer_countrycode,'+91'
+            'countryCode': '+91',
+           // 'phoneNumber': this.customer_phoneNumber,
+            'phoneNumber':this.selectedAddress.phoneNumber,
             'email': this.customer_email,
             'orderNote': this.orderlistNote,
             'coupons': this.selected_coupons
@@ -997,8 +999,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             },
             'orderItem': this.getOrderItems(),
             'orderDate': this.sel_checkindate,
-            'countryCode': this.customer_countrycode,
-            'phoneNumber': this.customer_phoneNumber,
+           // 'countryCode': this.customer_countrycode,
+            'countryCode': '+91',
+           // 'phoneNumber': this.customer_phoneNumber,
+            'phoneNumber':this.selectedAddress.phoneNumber,
             'email': this.customer_email,
             'orderNote': this.orderNote,
             'coupons': this.selected_coupons
@@ -1038,7 +1042,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
             },
             'orderDate': this.sel_checkindate,
-            'countryCode': this.customer_countrycode,
+           // 'countryCode': this.customer_countrycode,
+            'countryCode': '+91',
             'phoneNumber': contactNumber,
             'email': contact_email,
             'orderNote': this.orderlistNote,
@@ -1065,7 +1070,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             },
             'orderItem': this.getOrderItems(),
             'orderDate': this.sel_checkindate,
-            'countryCode': this.customer_countrycode,
+           // 'countryCode': this.customer_countrycode,
+            'countryCode': '+91',
             'phoneNumber': contactNumber,
             'email': contact_email,
             'orderNote': this.orderNote,
