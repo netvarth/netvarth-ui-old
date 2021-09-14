@@ -237,6 +237,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     payment_options:  any = [];
     paytmEnabled = false;
     razorpayEnabled = false;
+    interNatioanalPaid = false;
     paymentmodes: any;
     customer_countrycode: any;
     constructor(public fed_service: FormMessageDisplayService,
@@ -340,6 +341,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     getPaymentModes() {
         this.paytmEnabled = false;
         this.razorpayEnabled = false;
+        this.interNatioanalPaid = false;
         this.shared_services.getPaymentModesofProvider(this.account_id,'donation')
             .subscribe(
                 data => {
@@ -347,6 +349,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                   if (this.paymentmodes[0].isJaldeeBank) {
                     if (this.customer_countrycode == '+91') {
                         this.paytmEnabled = true;
+                        this.interNatioanalPaid = true;
                     }
                     else {
                         this.razorpayEnabled = true;

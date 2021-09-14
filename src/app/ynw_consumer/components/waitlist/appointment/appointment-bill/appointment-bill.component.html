@@ -431,6 +431,8 @@
                                                                     <button class="cs-btn bt1"
                                                                         (click)="cashPayment()">Cash</button>
                                                                 </div>
+                                                                <br> <br>
+                                                                <div *ngIf="interNatioanalPaid && ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"><span [class.disabled]="isClickedOnce"  (click)="!isClickedOnce && payuPayment()" class="pointer-cursor"><a>International Payment ? Click here</a></span></div>
                                                             </div>
                                                             <div *ngIf="!paymode">
                                                               <p>Online payment option is disabled. Contact your service provider for further assistance.</p>
