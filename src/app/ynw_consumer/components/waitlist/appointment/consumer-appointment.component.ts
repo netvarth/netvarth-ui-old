@@ -858,16 +858,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
             }
         }
-        // if (this.virtualForm.get('date').value === 'dd') {
-        //   isinvalid = true;
-        // }
-        // if (this.virtualForm.get('month').value === 'mm') {
-        //   isinvalid = true;
-        // }
-        // if (this.virtualForm.get('year').value === 'yyyy') {
-        //   isinvalid = true;
-        // }
-
+   
         return isinvalid;
     }
 
@@ -925,7 +916,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         if (result !== false) {
                             this.lStorageService.setitemonLocalStorage('age', formdata.age);
                             this.submitbtndisabled = false;
-                            //  this.dialogRef.close(formdata);
+                            this.setVirtualTeleserviceCustomer(formdata);
+                            this.bookStep++;
                         }
                     },
                     (error) => {
@@ -940,7 +932,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                             this.lStorageService.setitemonLocalStorage('age', formdata.age);
                             formdata['newMemberId'] = data;
                             this.submitbtndisabled = false;
-                            //  this.dialogRef.close(formdata);
+                            this.setVirtualTeleserviceCustomer(formdata);
+                            this.bookStep++;
                         }
                     },
                         () => {
@@ -953,7 +946,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                             if (data !== false) {
                                 this.submitbtndisabled = false;
                                 this.lStorageService.setitemonLocalStorage('age', formdata.age);
-                                //  this.dialogRef.close(formdata);
+                            this.setVirtualTeleserviceCustomer(formdata);
+                            this.bookStep++;
                             }
                         },
                         () => {
@@ -1385,73 +1379,41 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     resetApiErrors() {
         this.emailerror = null;
     }
-    setVirtualTeleserviceCustomer() {
-        if (this.virtualInfo && this.virtualInfo.email && this.virtualInfo.email !== '') {
-            // this.payEmail = this.virtualInfo.email;
-            this.newEmail = this.payEmail = this.virtualInfo.email;
-
-        }
-        if (this.virtualInfo && this.virtualInfo.newMemberId) {
-            this.waitlist_for = [];
-            this.newMember = this.virtualInfo.newMemberId;
-            this.virtualInfo.serviceFor = this.virtualInfo.newMemberId;
-            const current_member = this.familymembers.filter(member => member.userProfile.id === this.newMember);
-            this.waitlist_for.push({ id: this.newMember, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
-            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
-                this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
-                this.newWhatsapp = this.virtualInfo.whatsappnumber
-                if (this.virtualInfo.countryCode_whtsap.includes('+')) {
-                    this.callingModes = this.virtualInfo.countryCode_whtsap.split('+')[1] + '' + this.virtualInfo.whatsappnumber;
-
-                } else {
-                    this.callingModes = this.virtualInfo.countryCode_whtsap + '' + this.virtualInfo.whatsappnumber;
-
-                }
-                this.currentPhone = this.virtualInfo.phoneno;
-                this.userPhone = this.virtualInfo.whatsappnumber;
-                this.changePhno = true;
-            }
-
-        } if (this.virtualInfo && this.virtualInfo.serviceFor) {
-
-            this.consumerType = 'member';
-            this.waitlist_for = [];
-            const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor);
-            // this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
-
-            if (current_member[0]['user']) {
-                this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
-            }
-            if (!current_member[0]['user']) {
-
-                this.getActiveUserInfo().then(data => {
-                    this.customer_data = data;
-                    console.log("Consumer Data :", this.customer_data)
-                    if (this.customer_data.SignedUp == true) {
-
-                        this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.userProfile.firstName, lastName: this.customer_data.userProfile.lastName });
-                    }
-                });
-
-            }
-            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
-                this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
-                this.newWhatsapp = this.virtualInfo.whatsappnumber
-                if (this.virtualInfo.countryCode_whtsap.includes('+')) {
-                    this.callingModes = this.virtualInfo.countryCode_whtsap.split('+')[1] + '' + this.virtualInfo.whatsappnumber;
-                } else {
-                    this.callingModes = this.virtualInfo.countryCode_whtsap + ' ' + this.virtualInfo.whatsappnumber;
-
-                }
-                this.currentPhone = this.virtualInfo.phoneno;
-                this.userPhone = this.virtualInfo.whatsappnumber;
-                this.changePhno = true;
-            }
-
-        }
-
-
-    }
+    setVirtualTeleserviceCustomer(formdata) {
+        this.virtualInfo=formdata;
+        console.log(JSON.stringify(this.virtualInfo));
+          if (this.virtualInfo && this.virtualInfo.email && this.virtualInfo.email !== '') {
+              this.newEmail = this.payEmail = this.virtualInfo.email;
+          }
+          this.waitlist_for = [];
+          if (this.virtualInfo && this.virtualInfo.newMemberId) {
+              this.waitlist_for.push({ id: this.virtualInfo.newMemberId, firstName: this.virtualInfo.firstName, lastName: this.virtualInfo.lastName });
+          }else{
+              const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor);
+              // console.log(current_member);
+              this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName:current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
+  
+          }
+              if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
+                  this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
+                  console.log(this.whatsappCountryCode);
+                  this.newWhatsapp = this.virtualInfo.whatsappnumber
+                  if (this.virtualInfo.countryCode_whtsap.includes('+')) {
+                      this.callingModes = this.virtualInfo.countryCode_whtsap.split('+')[1] + '' + this.virtualInfo.whatsappnumber;
+  
+                  } else {
+                      this.callingModes = this.virtualInfo.countryCode_whtsap + '' + this.virtualInfo.whatsappnumber;
+  
+                  }
+                  this.currentPhone = this.virtualInfo.phoneno;
+                  this.userPhone = this.virtualInfo.phoneno;
+                  this.changePhno = true;
+              }
+  
+          
+  
+  
+      }
     setServiceDetails(curservid) {
         let serv;
         for (let i = 0; i < this.servicesjson.length; i++) {
@@ -2178,9 +2140,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         this.getConsumerQuestionnaire();
                     } else {
                         this.questionnaireLoaded = true;
-                        if (this.sel_ser_det.serviceType === 'virtualService') {
-                            this.setVirtualTeleserviceCustomer();
-                        }
+                      
                     }
                 }
                 this.api_loading1 = false;
@@ -2901,10 +2861,19 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
 
     goToStep(type) {
-        //this.virtualInfo = this.virtualForm.value;
+        this.virtualInfo = this.virtualForm.value;
         if (type === 'next') {
             if (this.serviceType === 'virtualService' && this.bookStep == 0) {
-                this.bookStep++;
+                if (this.validateFields() === true) {
+                    this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
+                  } else if(this.virtualInfo.countryCode_whtsap.trim().length === 0 && this.virtualInfo.whatsappnumber.trim().length > 0){
+                    this.snackbarService.openSnackBar('Please fill whatsapp countrycode', { 'panelClass': 'snackbarerror' });
+                  } else if(this.virtualInfo.countryCode_telegram.trim().length === 0 && this.virtualInfo.telegramnumber.trim().length > 0){
+                    this.snackbarService.openSnackBar('Please fill telegram countrycode', { 'panelClass': 'snackbarerror' });
+                  }else{
+                    this.onSubmit(this.virtualInfo);
+                    
+                  }
             }
 
             else if (!this.apptdisable && this.freeSlots.length > 0 && !this.api_loading1) {
@@ -2939,97 +2908,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         if (this.bookStep === 3) {
             this.saveCheckin('next');
         }
-        // if (this.virtualInfo) {
-        //     this.setVirtualTeleserviceCustomer();
-        // }
 
 
-        if (this.serviceType === 'virtualService') {
-            this.virtualInfo = this.virtualForm.value;
-            console.log("Virtual Info : ", this.virtualInfo);
-
-            if (this.virtualInfo && this.virtualInfo.serviceFor === 'new_member') {
-                this.onSubmit(this.virtualInfo);
-                this.setVirtualServiceNewMember();
-            }
-            // else if(this.virtualInfo) {
-            //     this.onSubmit(this.virtualInfo);
-            //     this.setVirtualTeleserviceCustomer();
-            // }
-            else {
-                this.onSubmit(this.virtualInfo);
-                this.setVirtualTeleserviceCustomer();
-            }
-
-
-        }
-        else {
-            this.setVirtualTeleserviceCustomer();
-        }
     }
 
-    setVirtualServiceNewMember() {
-        // console.log(this.virtualInfo);
-        if (this.virtualInfo && this.virtualInfo.email && this.virtualInfo.email !== '') {
-            // this.payEmail = this.virtualInfo.email;
-            this.newEmail = this.payEmail = this.virtualInfo.email;
-        }
 
-
-        if (this.virtualInfo && this.virtualInfo.newMemberId) {
-            this.waitlist_for = [];
-            //this.newMember = this.virtualInfo.newMemberId;
-            this.virtualInfo.serviceFor = this.virtualInfo.newMemberId;
-            const current_member = this.familymembers.filter(member => member.id === this.virtualInfo.serviceFor);
-            console.log("New User : ", current_member);
-            this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member.firstName, lastName: current_member.lastName });
-
-            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
-                this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
-                console.log(this.whatsappCountryCode);
-                this.newWhatsapp = this.virtualInfo.whatsappnumber
-                if (this.virtualInfo.countryCode_whtsap.includes('+')) {
-                    this.callingModes = this.virtualInfo.countryCode_whtsap.split('+')[1] + '' + this.virtualInfo.whatsappnumber;
-
-                } else {
-                    this.callingModes = this.virtualInfo.countryCode_whtsap + '' + this.virtualInfo.whatsappnumber;
-
-                }
-                this.currentPhone = this.virtualInfo.phoneno;
-                this.userPhone = this.virtualInfo.whatsappnumber;
-                this.changePhno = true;
-            }
-
-        }
-
-        if (this.virtualInfo && this.virtualInfo.serviceFor) {
-            // this.consumerType = 'member';
-            this.waitlist_for = [];
-
-            // const waitlist_for = this.virtualInfo;
-            this.newMember = this.virtualInfo.newMemberId
-            console.log("New Member :", this.virtualInfo);
-            this.waitlist_for.push({ id: this.newMember, firstName: this.virtualInfo.firstName, lastName: this.virtualInfo.lastName });
-
-
-            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
-                this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
-                console.log(this.whatsappCountryCode);
-                this.newWhatsapp = this.virtualInfo.whatsappnumber
-                if (this.virtualInfo.countryCode_whtsap.includes('+')) {
-                    this.callingModes = this.virtualInfo.countryCode_whtsap.split('+')[1] + '' + this.virtualInfo.whatsappnumber;
-                } else {
-                    this.callingModes = this.virtualInfo.countryCode_whtsap + ' ' + this.virtualInfo.whatsappnumber;
-
-                }
-                this.currentPhone = this.virtualInfo.phoneno;
-                this.userPhone = this.virtualInfo.whatsappnumber;
-                this.changePhno = true;
-            }
-
-        }
-
-    }
     addApptAdvancePayment(post_Data) {
         const param = { 'account': this.account_id };
         this.subs.sink = this.shared_services.addApptAdvancePayment(param, post_Data)
@@ -3338,9 +3221,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.shared_services.getConsumerQuestionnaire(this.sel_ser, consumerid, this.account_id).subscribe(data => {
             this.questionnaireList = data;
             this.questionnaireLoaded = true;
-            if (this.sel_ser_det.serviceType === 'virtualService') {
-                this.setVirtualTeleserviceCustomer();
-            }
+           
         });
     }
     checkCouponvalidity() {

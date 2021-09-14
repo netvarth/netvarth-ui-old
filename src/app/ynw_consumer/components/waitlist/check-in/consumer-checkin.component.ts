@@ -934,16 +934,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
             }
         }
-        // if (this.virtualForm.get('date').value === 'dd') {
-        //   isinvalid = true;
-        // }
-        // if (this.virtualForm.get('month').value === 'mm') {
-        //   isinvalid = true;
-        // }
-        // if (this.virtualForm.get('year').value === 'yyyy') {
-        //   isinvalid = true;
-        // }
-
+      
         return isinvalid;
     }
 
@@ -987,16 +978,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (this.virtualForm.controls.email.invalid) {
             return false;
         }
-        // if (this.validateFields() === true) {
-        //     this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
-        // }
-        //  else if (formdata.countryCode_whtsap.trim().length === 0 && formdata.whatsappnumber.trim().length > 0) {
-        //     this.snackbarService.openSnackBar('Please fill whatsapp countrycode', { 'panelClass': 'snackbarerror' });
-        // } 
-        // else if (formdata.countryCode_telegram.trim().length === 0 && formdata.telegramnumber.trim().length > 0) {
-        //     this.snackbarService.openSnackBar('Please fill telegram countrycode', { 'panelClass': 'snackbarerror' });
-        // } 
-
         else {
 
             if (this.is_parent) {
@@ -1005,7 +986,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         if (result !== false) {
                             this.lStorageService.setitemonLocalStorage('age', formdata.age);
                             this.submitbtndisabled = false;
-                            //  this.dialogRef.close(formdata);
+                            this.setVirtualTeleserviceCustomer(formdata);
+                            this.bookStep++;
+
                         }
                     },
                     (error) => {
@@ -1017,10 +1000,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 if (formdata.serviceFor === 'new_member') {
                     this.saveMember(formdata).then(data => {
                         if (data !== false) {
-                            this.lStorageService.setitemonLocalStorage('age', formdata.age);
+                            console.log('inisdee');
                             formdata['newMemberId'] = data;
                             this.submitbtndisabled = false;
-                            //  this.dialogRef.close(formdata);
+                           this.setVirtualTeleserviceCustomer(formdata);
+                           this.bookStep++;
                         }
                     },
                         () => {
@@ -1033,7 +1017,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             if (data !== false) {
                                 this.submitbtndisabled = false;
                                 this.lStorageService.setitemonLocalStorage('age', formdata.age);
-                                //  this.dialogRef.close(formdata);
+                                this.setVirtualTeleserviceCustomer(formdata);
+                                this.bookStep++;
                             }
                         },
                         () => {
@@ -1857,25 +1842,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
 
     }
-    virtualModal() {
-        const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
-            width: '40%',
-            panelClass: ['loginmainclass', 'popup-class', this.theme],
-            disableClose: true,
-            data: { 'id': this.virtualInfo.serviceFor, theme: this.theme }
-
-        });
-        virtualdialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.virtualInfo = result;
-                console.log("Result :", this.virtualInfo);
-                this.setVirtualTeleserviceCustomer();
-            }
-
-
-        });
-
-    }
+ 
     addCheckInConsumer(postData, paymenttype?) {
         this.subs.sink = this.shared_services.addCheckin(this.account_id, postData)
             .subscribe(data => {
@@ -2200,23 +2167,21 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.apiSuccess = '';
         }, 2000);
     }
-    setVirtualTeleserviceCustomer() {
-        this.virtualInfo = this.virtualForm.value;
-        console.log(this.virtualInfo);
+    setVirtualTeleserviceCustomer(formdata) {
+      this.virtualInfo=formdata;
+      console.log(JSON.stringify(this.virtualInfo));
         if (this.virtualInfo && this.virtualInfo.email && this.virtualInfo.email !== '') {
-            // this.payEmail = this.virtualInfo.email;
             this.newEmail = this.payEmail = this.virtualInfo.email;
         }
-
-
+        this.waitlist_for = [];
         if (this.virtualInfo && this.virtualInfo.newMemberId) {
+            this.waitlist_for.push({ id: this.virtualInfo.newMemberId, firstName: this.virtualInfo.firstName, lastName: this.virtualInfo.lastName });
+        }else{
+            const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor);
+            // console.log(current_member);
+            this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName:current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
 
-            this.waitlist_for = [];
-            //this.newMember = this.virtualInfo.newMemberId;
-            this.virtualInfo.serviceFor = this.virtualInfo.newMemberId;
-            const current_member = this.familymembers.filter(member => member.id === this.virtualInfo.serviceFor);
-            this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member.firstName, lastName: current_member.lastName });
-
+        }
             if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
                 this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
                 console.log(this.whatsappCountryCode);
@@ -2229,59 +2194,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
                 }
                 this.currentPhone = this.virtualInfo.phoneno;
-                this.userPhone = this.virtualInfo.whatsappnumber;
+                this.userPhone = this.virtualInfo.phoneno;
                 this.changePhno = true;
             }
 
-        }
+        
 
-        if (this.virtualInfo && this.virtualInfo.serviceFor) {
-            this.consumerType = 'member';
-            this.waitlist_for = [];
-
-            const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor);
-            console.log("FamilyMember : ", current_member);
-            if (current_member[0]['user']) {
-                this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
-            }
-
-            if (!current_member[0]['user']) {
-
-                this.getActiveUserInfo().then(data => {
-                    this.customer_data = data;
-                    console.log("Consumer Data :", this.customer_data)
-                    if (this.customer_data.SignedUp == true) {
-
-                        this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.userProfile.firstName, lastName: this.customer_data.userProfile.lastName });
-                    }
-                });
-
-
-
-            }
-            // else {
-            //     this.virtualInfo.serviceFor = this.virtualInfo.newMemberId;
-            //     this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: this.virtualInfo.firstName, lastName: this.virtualInfo.lastName });
-            // }
-
-
-
-            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
-                this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
-                console.log(this.whatsappCountryCode);
-                this.newWhatsapp = this.virtualInfo.whatsappnumber
-                if (this.virtualInfo.countryCode_whtsap.includes('+')) {
-                    this.callingModes = this.virtualInfo.countryCode_whtsap.split('+')[1] + '' + this.virtualInfo.whatsappnumber;
-                } else {
-                    this.callingModes = this.virtualInfo.countryCode_whtsap + ' ' + this.virtualInfo.whatsappnumber;
-
-                }
-                this.currentPhone = this.virtualInfo.phoneno;
-                this.userPhone = this.virtualInfo.whatsappnumber;
-                this.changePhno = true;
-            }
-
-        }
 
     }
     calculateDate(days) {
@@ -2406,9 +2324,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         _this.getConsumerQuestionnaire();
                     } else {
                         _this.questionnaireLoaded = true;
-                        if (_this.sel_ser_det.serviceType === 'virtualService') {
-                            _this.setVirtualTeleserviceCustomer();
-                        }
+                     
 
                     }
                 }
@@ -2694,111 +2610,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
 
 
-    // gets3curl() {
-    //     this.api_loading1 = true;
-    //     this.retval = this.sharedFunctionobj.getS3Url()
-    //         .then(
-    //             res => {
-    //                 this.s3url = res;
-    //                 this.getbusinessprofiledetails_json('businessProfile', true);
-    //                 this.getbusinessprofiledetails_json('settings', true);
-    //                 this.getbusinessprofiledetails_json('coupon', true);
-    //                 this.getbusinessprofiledetails_json('providerCoupon', true);
-    //                 if (!this.terminologiesjson) {
-    //                     this.getbusinessprofiledetails_json('terminologies', true);
-    //                 } else {
-    //                     if (this.terminologiesjson.length === 0) {
-    //                         this.getbusinessprofiledetails_json('terminologies', true);
-    //                     } else {
-    //                         this.wordProcessor.setTerminologies(this.terminologiesjson);
-    //                     }
-    //                 }
-    //                 this.api_loading1 = false;
-    //             },
-    //             () => {
-    //                 this.api_loading1 = false;
-    //             }
-    //         );
-    // }
-    // gets the various json files based on the value of "section" parameter
-    // getbusinessprofiledetails_json(section, modDateReq: boolean) {
-    //     let UTCstring = null;
-    //     if (modDateReq) {
-    //         UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
-    //     }
-    //     this.subs.sink = this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-    //         .subscribe(res => {
-    //             switch (section) {
-    //                 case 'settings':
-    //                     this.settingsjson = res;
-    //                     this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
-    //                     break;
-    //                 case 'terminologies':
-    //                     this.terminologiesjson = res;
-    //                     this.wordProcessor.setTerminologies(this.terminologiesjson);
-    //                     break;
-    //                 case 'businessProfile':
-    //                     this.businessjson = res;
-    //                     this.accountType = this.businessjson.accountType;
-    //                     if (this.accountType === 'BRANCH') {
-    //                         this.getbusinessprofiledetails_json('departmentProviders', true);
-    //                         this.getProviderDepart(this.businessjson.id);
-    //                     }
-    //                     this.domain = this.businessjson.serviceSector.domain;
-    //                     if (this.domain === 'foodJoints') {
-    //                         this.note_placeholder = 'Item No Item Name Item Quantity';
-    //                         this.note_cap = 'Add Note / Delivery address';
-    //                     } else {
-    //                         this.note_placeholder = '';
-    //                         this.note_cap = 'Add Note';
-    //                     }
-    //                     this.getPartysizeDetails(this.businessjson.serviceSector.domain, this.businessjson.serviceSubSector.subDomain);
-    //                     break;
-    //                 case 'coupon':
-    //                     if (res != undefined) {
-    //                         this.s3CouponsList.JC = res;
-    //                     } else {
-    //                         this.s3CouponsList.JC = [];
-    //                     }
-
-    //                     if (this.s3CouponsList.JC.length > 0) {
-    //                         this.showCouponWB = true;
-    //                     }
-    //                     break;
-    //                 case 'providerCoupon':
-    //                     if (res != undefined) {
-    //                         this.s3CouponsList.OWN = res;
-    //                     } else {
-    //                         this.s3CouponsList.OWN = [];
-    //                     }
-
-    //                     if (this.s3CouponsList.OWN.length > 0) {
-    //                         this.showCouponWB = true;
-    //                     }
-    //                     break
-    //                 case 'departmentProviders': {
-    //                     let deptProviders: any = [];
-    //                     deptProviders = res;
-    //                     if (!this.filterDepart) {
-    //                         this.users = deptProviders;
-    //                     } else {
-    //                         deptProviders.forEach(depts => {
-    //                             if (depts.users.length > 0) {
-    //                                 this.users = this.users.concat(depts.users);
-    //                             }
-    //                         });
-    //                     }
-    //                     if (this.selectedUserParam) {
-    //                         this.setUserDetails(this.selectedUserParam);
-    //                     }
-    //                     break;
-    //                 }
-    //             }
-    //         },
-    //             () => {
-    //             }
-    //         );
-    // }
     handleSideScreen(action) {
         this.action = action;
         this.selected_phone = this.userPhone;
@@ -3096,14 +2907,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.emailerror = '';
         this.phoneError = '';
         this.whatsapperror = '';
-        // this.currentPhone = this.selected_phone;
-        // this.userPhone = this.selected_phone;
+ 
         this.changePhno = true;
-        // if (this.editBookingFields) {
-        // if (this.newPhone && !this.newPhone.e164Number.startsWith(this.newPhone.dialCode + '55')) {
-        //     this.phoneError = 'Phone number is invalid';
-        //     return false;
-        // } else {
+   
         if (!this.countryCode || (this.countryCode && this.countryCode.trim() === '')) {
             this.snackbarService.openSnackBar('Please enter country code', { 'panelClass': 'snackbarerror' });
             return false;
@@ -3114,11 +2920,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.snackbarService.openSnackBar('Please enter phone number', { 'panelClass': 'snackbarerror' });
             return false;
         }
-        // }
-        // if (this.newWhatsapp && !this.newWhatsapp.e164Number.startsWith(this.newWhatsapp.dialCode + '55')) {
-        //     this.whatsapperror = 'WhatsApp number is invalid';
-        //     return false;
-        // } else {
+     
         if (this.sel_ser_det && this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp') {
             if (!this.whatsappCountryCode || (this.whatsappCountryCode && this.whatsappCountryCode.trim() === '')) {
                 this.snackbarService.openSnackBar('Please enter country code', { 'panelClass': 'snackbarerror' });
@@ -3144,47 +2946,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.waitlist_for[0]['email'] = this.payEmail;
             }
         }
-        // if (this.bookingForm.get('newEmail').errors) {
-        //     this.emailerror = "Email is invalid";
-        //     return false;
-        // } else {
-        //     emailId = this.newEmail;
-        // if (emailId && emailId != "") {
-        //     this.payEmail = emailId;
-        //     const post_data = {
-        //         'id': this.userData.userProfile.id || null,
-        //         'firstName': this.userData.userProfile.firstName || null,
-        //         'lastName': this.userData.userProfile.lastName || null,
-        //         'dob': this.userData.userProfile.dob || null,
-        //         'gender': this.userData.userProfile.gender || null,
-        //         'email': this.payEmail.trim() || ''
-        //     };
-        //     this.updateEmail(post_data).then(
-        //         () => {
-        //             this.closebutton.nativeElement.click();
-        //             setTimeout(() => {
-        //                 this.action = '';
-        //             }, 500);
-        //         },
-        //         error => {
-        //             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        //             this.payEmail = this.userData.userProfile.email;
-        //             return false;
-        //         }
-        //     )
-        // } else {
-        //     this.closebutton.nativeElement.click();
-        //     setTimeout(() => {
-        //         this.action = '';
-        //     }, 500);
-        // }
-        // }
-        // } else {
-        //     this.closebutton.nativeElement.click();
-        //     setTimeout(() => {
-        //         this.action = '';
-        //     }, 500);
-        // }
+        
         this.closebutton.nativeElement.click();
         setTimeout(() => {
             this.action = '';
@@ -3224,16 +2986,23 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     goToStep(type) {
-        // console.log("Consumer : ", this.customer_data.userProfile)
-        //console.log("Patient Information :", this.virtualForm.value);
-        // this.virtualInfo = this.virtualForm.value;
-
-
-        // console.log("Virtual Info : ", this.virtualInfo);
+  
+         this.virtualInfo = this.virtualForm.value;
         if (type === 'next') {
             if (this.serviceType === 'virtualService' && this.bookStep == 0) {
-                this.bookStep++;
-            } else {
+                    if (this.validateFields() === true) {
+                        this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
+                      } else if(this.virtualInfo.countryCode_whtsap.trim().length === 0 && this.virtualInfo.whatsappnumber.trim().length > 0){
+                        this.snackbarService.openSnackBar('Please fill whatsapp countrycode', { 'panelClass': 'snackbarerror' });
+                      } else if(this.virtualInfo.countryCode_telegram.trim().length === 0 && this.virtualInfo.telegramnumber.trim().length > 0){
+                        this.snackbarService.openSnackBar('Please fill telegram countrycode', { 'panelClass': 'snackbarerror' });
+                      }else{
+                        this.onSubmit(this.virtualInfo);
+                        
+                      }
+                
+              
+        } else {
                 if (this.queuejson.length !== 0 && !this.api_loading1 && this.waitlist_for.length !== 0) {
                     if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                         if (this.bookStep === 2) {
@@ -3268,165 +3037,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.saveCheckin('next');
         }
 
-        if (this.serviceType === 'virtualService') {
-            this.virtualInfo = this.virtualForm.value;
-            console.log("Virtual Info : ", this.virtualInfo);
-
-            if (this.virtualInfo && this.virtualInfo.serviceFor === 'new_member') {
-                this.onSubmit(this.virtualInfo);
-                this.setVirtualServiceNewMember();
-            }
-            // else if(this.virtualInfo) {
-            //     this.onSubmit(this.virtualInfo);
-            //     this.setVirtualTeleserviceCustomer();
-            // }
-            else {
-                this.onSubmit(this.virtualInfo);
-                this.setVirtualTeleserviceCustomer();
-            }
-
-
-        }
-        else {
-            this.setVirtualTeleserviceCustomer();
-        }
-
-
-
-
-
-
-        // //for checking update parent info ....
-        // this.submitbtndisabled = true;
-        // // this.virtualInfo['phoneno'] = this.customer_data.userProfile.primaryMobileNo;
-        // if (this.virtualForm.controls.email.invalid) {
-        //     return false;
-        // }
-        // // if (this.validateFields() === true) {
-        // //     this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
-        // // } 
-
-        // // else if (this.virtualInfo.countryCode_whtsap.trim().length === 0 && this.virtualInfo.whatsappnumber.trim().length > 0) {
-        // //     this.snackbarService.openSnackBar('Please fill whatsapp countrycode', { 'panelClass': 'snackbarerror' });
-        // // } else if (this.virtualInfo.countryCode_telegram.trim().length === 0 && this.virtualInfo.telegramnumber.trim().length > 0) {
-        // //     this.snackbarService.openSnackBar('Please fill telegram countrycode', { 'panelClass': 'snackbarerror' });
-        // // } 
-
-        // else {
-
-        //     if (this.is_parent) {
-        //         this.updateParentInfo(this.virtualInfo).then(
-        //             (result) => {
-        //                 if (result !== false) {
-        //                     this.lStorageService.setitemonLocalStorage('age', this.virtualInfo.age);
-        //                     this.submitbtndisabled = false;
-        //                     // this.dialogRef.close(formdata);
-        //                 }
-        //             },
-        //             (error) => {
-        //                 this.submitbtndisabled = false;
-        //                 return false;
-        //             }
-        //         );
-        //     } else {
-        //         if (this.virtualInfo.serviceFor === 'new_member') {
-        //             this.saveMember(this.virtualInfo).then(data => {
-        //                 if (data !== false) {
-        //                     this.lStorageService.setitemonLocalStorage('age', this.virtualInfo.age);
-        //                     this.virtualInfo['newMemberId'] = data;
-        //                     this.submitbtndisabled = false;
-        //                     // this.dialogRef.close(formdata);
-        //                 }
-        //             },
-        //                 () => {
-        //                     this.submitbtndisabled = false;
-        //                     return false;
-        //                 })
-        //         } else {
-        //             this.updateMemberInfo(this.virtualInfo).then(
-        //                 (data) => {
-        //                     if (data !== false) {
-        //                         this.submitbtndisabled = false;
-        //                         this.lStorageService.setitemonLocalStorage('age', this.virtualInfo.age);
-        //                         // this.dialogRef.close(formdata);
-        //                     }
-        //                 },
-        //                 () => {
-        //                     this.submitbtndisabled = false;
-        //                     return false;
-        //                 }
-        //             );
-        //         }
-        //     }
-        // }
-
-
-
-
+  
     }
 
-    setVirtualServiceNewMember() {
-        // console.log(this.virtualInfo);
-        if (this.virtualInfo && this.virtualInfo.email && this.virtualInfo.email !== '') {
-            // this.payEmail = this.virtualInfo.email;
-            this.newEmail = this.payEmail = this.virtualInfo.email;
-        }
-
-
-        if (this.virtualInfo && this.virtualInfo.newMemberId) {
-            this.waitlist_for = [];
-            //this.newMember = this.virtualInfo.newMemberId;
-            this.virtualInfo.serviceFor = this.virtualInfo.newMemberId;
-            const current_member = this.familymembers.filter(member => member.id === this.virtualInfo.serviceFor);
-            console.log("New User : ", current_member);
-            this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member.firstName, lastName: current_member.lastName });
-
-            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
-                this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
-                console.log(this.whatsappCountryCode);
-                this.newWhatsapp = this.virtualInfo.whatsappnumber
-                if (this.virtualInfo.countryCode_whtsap.includes('+')) {
-                    this.callingModes = this.virtualInfo.countryCode_whtsap.split('+')[1] + '' + this.virtualInfo.whatsappnumber;
-
-                } else {
-                    this.callingModes = this.virtualInfo.countryCode_whtsap + '' + this.virtualInfo.whatsappnumber;
-
-                }
-                this.currentPhone = this.virtualInfo.phoneno;
-                this.userPhone = this.virtualInfo.whatsappnumber;
-                this.changePhno = true;
-            }
-
-        }
-
-        if (this.virtualInfo && this.virtualInfo.serviceFor) {
-            // this.consumerType = 'member';
-            this.waitlist_for = [];
-
-            // const waitlist_for = this.virtualInfo;
-            this.newMember = this.virtualInfo.newMemberId
-            console.log("New Member :", this.virtualInfo);
-            this.waitlist_for.push({ id: this.newMember, firstName: this.virtualInfo.firstName, lastName: this.virtualInfo.lastName });
-
-
-            if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
-                this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
-                console.log(this.whatsappCountryCode);
-                this.newWhatsapp = this.virtualInfo.whatsappnumber
-                if (this.virtualInfo.countryCode_whtsap.includes('+')) {
-                    this.callingModes = this.virtualInfo.countryCode_whtsap.split('+')[1] + '' + this.virtualInfo.whatsappnumber;
-                } else {
-                    this.callingModes = this.virtualInfo.countryCode_whtsap + ' ' + this.virtualInfo.whatsappnumber;
-
-                }
-                this.currentPhone = this.virtualInfo.phoneno;
-                this.userPhone = this.virtualInfo.whatsappnumber;
-                this.changePhno = true;
-            }
-
-        }
-
-    }
+    
     addWaitlistAdvancePayment(post_Data) {
         const param = { 'account': this.account_id };
         this.subs.sink = this.shared_services.addWaitlistAdvancePayment(param, post_Data)
@@ -3436,14 +3050,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.checkJcash = true
                 this.jcashamount = this.paymentDetails.eligibleJcashAmt.jCashAmt;
                 this.jcreditamount = this.paymentDetails.eligibleJcashAmt.creditAmt;
-                console.log(this.paymentDetails.amountRequiredNow);
-                console.log(this.jcashamount);
                 if (this.checkJcash && this.paymentDetails.amountRequiredNow > this.jcashamount) {
                     this.payAmount = this.paymentDetails.amountRequiredNow - this.jcashamount;
-                    console.log(this.payAmount);
+
                 } else if (this.checkJcash && this.paymentDetails.amountRequiredNow <= this.jcashamount) {
                     this.payAmount = 0;
-                    console.log(this.payAmount)
                 }
             },
                 error => {
@@ -3551,15 +3162,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     } else {
                         if (pData['response']) {
                             this.payWithPayTM(pData);
-                            // this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-                            // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-                            // setTimeout(() => {
-                            //     if (paymentMode === 'DC') {
-                            //         this.document.getElementById('payuform').submit();
-                            //     } else {
-                            //         this.document.getElementById('paytmform').submit();
-                            //     }
-                            // }, 2000);
+                       
                         } else {
                             this.isClickedOnce = false;
                             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
@@ -3655,10 +3258,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.getConsumerQuestionnaire(this.sel_ser, consumerid, this.account_id).subscribe(data => {
             this.questionnaireList = data;
             this.questionnaireLoaded = true;
-            console.log(this.sel_ser);
-            if (this.sel_ser_det.serviceType === 'virtualService') {
-                this.setVirtualTeleserviceCustomer();
-            }
+          
         });
     }
     showJCCouponNote(coupon) {
