@@ -197,7 +197,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
           this._handleErrors(error);
           if (error instanceof HttpErrorResponse) {
             if (this._checkSessionExpiryErr(error)) {
-              this.shared_services.callHealth(error.message).subscribe();
+             // this.shared_services.callHealth(error.message).subscribe();
               // const isprovider = this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true';
               //  this.shared_functions.doLogout().then (
               //    () => {
@@ -246,7 +246,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               // return EMPTY;
               return throwError(error);
             } else if (error.status === 401) {
-              this.shared_functions.logout();
+              //this.shared_functions.logout();
               return EMPTY;
               // return throwError(error);
             } else if (error.status === 301) {
