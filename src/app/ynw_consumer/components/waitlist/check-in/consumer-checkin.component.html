@@ -200,10 +200,7 @@
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
                                                             Date/Time
-                                                            <span ><a class="changeitem  pointer-cursor  mgn-rt-20 mgn-bt-10 pull-right "
-                                                                 (click)="changeTime()" data-toggle="modal"
-                                                                    data-target="#exampleModalCenter">Change
-                                                                </a></span>
+                                                           
                                                         </div>
                                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding" >
                                                             <h6 class="card-title serv-time border-style" >
@@ -215,7 +212,12 @@
                                                                     {{selectedQTime}}
                                                                 </span>
                                                             </h6>
+                                                            <span class="changebt"><a class="changeitem  pointer-cursor  mgn-rt-20 mgn-bt-10"
+                                                                (click)="changeTime()" data-toggle="modal"
+                                                                   data-target="#exampleModalCenter">Change Date/Time
+                                                               </a></span>
                                                         </div>
+                                                       
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20">
                                                             Waiting in Line
@@ -1416,14 +1418,14 @@
                                                     Pay by CC/DC/UPI
                                                 </button>
                                             </div>
-                                            <div class="txt-align-center" *ngIf="interNatioanalPaid && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" >
+                                            <div class="txt-align-center pad_link" *ngIf="interNatioanalPaid && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))" >
                                                 <span [class.disabled]="isClickedOnce"  (click)="!isClickedOnce && saveCheckin('checkin')" class="pointer-cursor"><a class="refund_policy">International Payment ? Click here</a></span>
                                                
                                                
                                             </div>
                                             <div class="cancelpolicy  mgn-rt-5"
                                                 *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                <div
+                                                <div class="pad_policy"
                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                     <a data-toggle="modal" data-target="#exampleModal"
                                                         class="refund_policy">Cancellation Policy</a>

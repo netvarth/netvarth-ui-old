@@ -206,10 +206,7 @@
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
                                                             Appointment Time
-                                                            <span><a class="pointer-cursor changeitem mgn-lt-10 pull-right mgn-rt-20"
-                                                                    (click)="changeSlot()" data-toggle="modal"
-                                                                    data-target="#exampleModalCenter">Change Time
-                                                                </a></span>
+                                                           
                                                         </div>
                                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                                                             *ngIf="freeSlots && freeSlots.length != 0 && !api_loading1">
@@ -222,6 +219,10 @@
                                                                     newDateFormat}}</span><span
                                                                     *ngIf="isFuturedate">{{getSingleTime(selectedApptTime['time'])}}</span>
                                                             </h6>
+                                                            <span class="changebt"><a class="pointer-cursor changeitem mgn-lt-10 mgn-rt-20"
+                                                                (click)="changeSlot()" data-toggle="modal"
+                                                                data-target="#exampleModalCenter">Change Time
+                                                            </a></span>
                                                         </div>
                                                         <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red"
                                                             *ngIf="freeSlots && freeSlots.length == 0 && !api_loading1">
@@ -1281,7 +1282,7 @@
                                                         Pay by CC/DC/UPI
                                                     </button>
                                                 </div>
-                                                <div class="txt-align-center"
+                                                <div class="txt-align-center pad_link"
                                                     *ngIf="interNatioanalPaid && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
                                                     <span [class.disabled]="isClickedOnce"
                                                         (click)="!isClickedOnce && saveCheckin('appt')"
@@ -1292,7 +1293,7 @@
                                                 </div>
                                                 <div class="cancelpolicy  mgn-rt-5"
                                                     *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                    <div
+                                                    <div class="pad_policy"
                                                         *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                         <a data-toggle="modal" data-target="#exampleModal"
                                                             class="refund_policy">Cancellation Policy</a>

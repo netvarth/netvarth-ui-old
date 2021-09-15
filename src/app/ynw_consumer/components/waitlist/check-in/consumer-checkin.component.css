@@ -1891,3 +1891,12 @@ body.modal-open {
     color: green !important;
     right: 0px !important;
   }
+  .pad_link{
+    padding-top: 14px !important;
+  }
+  .pad_policy{
+    padding-top: 7px !important;
+  }
+  .changebt{
+    color: #1572a8 !important;
+  }
