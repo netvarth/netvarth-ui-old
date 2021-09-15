@@ -161,7 +161,7 @@
                                                                         (click)="showSpec()">
                                                                         {{sel_ser_det.description}}
                                                                         </p>
-                                                                    <p class="more" (click)="showSpec()" *ngIf="sel_ser_det.description && !showmoreSpec">Read more</p>
+                                                                    <p class="more" (click)="showSpec()" *ngIf="sel_ser_det.description.length > 200 && !showmoreSpec">Read more</p>
                                                                    
                                                                     <p *ngIf="showmoreSpec" (click)="showSpec()">
                                                                         {{sel_ser_det.description}}</p>
