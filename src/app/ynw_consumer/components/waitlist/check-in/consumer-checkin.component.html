@@ -485,7 +485,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div *ngIf="type != 'waitlistreschedule'"
+                                            <div *ngIf="type != 'waitlistreschedule' && !sel_ser_det.isPrePayment"
                                                 class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container">
                                                 <button type="button"
                                                     class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
@@ -494,6 +494,24 @@
                                                     Next
                                                 </button>
                                             </div>
+                                            <div *ngIf="type != 'waitlistreschedule' && sel_ser_det.isPrePayment && questionnaireList.labels && questionnaireList.labels.length > 0"
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container">
+                                            <button type="button"
+                                                class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                (click)="goToStep('next')"
+                                                [class.disabled]="(queuejson && queuejson.length == 0 && !api_loading1) || waitlist_for.length == 0">
+                                                Next
+                                            </button>
+                                        </div>
+                                        <div *ngIf="type != 'waitlistreschedule' && sel_ser_det.isPrePayment && !questionnaireList.labels"
+                                        class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container">
+                                        <button type="button"
+                                            class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                            (click)="goToStep('next')"
+                                            [class.disabled]="(queuejson && queuejson.length == 0 && !api_loading1) || waitlist_for.length == 0">
+                                            Proceed to Payment
+                                        </button>
+                                    </div>
                                         </div>
                                     </div>
                                     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
@@ -1075,11 +1093,18 @@
                                                     Go Back
                                                 </button>
                                             </div>
-                                            <div>
+                                            <div *ngIf="!sel_ser_det.isPrePayment">
                                                 <button type="button"
                                                     class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
                                                     (click)="goToStep('next')">
                                                     Next
+                                                </button>
+                                            </div>
+                                            <div *ngIf="sel_ser_det.isPrePayment">
+                                                <button type="button"
+                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    (click)="goToStep('next')">
+                                                    Proceed to Payment
                                                 </button>
                                             </div>
                                         </div>
