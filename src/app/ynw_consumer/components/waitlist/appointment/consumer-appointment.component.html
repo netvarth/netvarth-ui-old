@@ -206,7 +206,10 @@
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
                                                             Appointment Time
-                                                           
+                                                            <span><a class="pointer-cursor changeitem mgn-lt-10 mgn-rt-20 pull-right"
+                                                                (click)="changeSlot()" data-toggle="modal"
+                                                                data-target="#exampleModalCenter">Change Time
+                                                            </a></span>
                                                         </div>
                                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                                                             *ngIf="freeSlots && freeSlots.length != 0 && !api_loading1">
@@ -219,10 +222,7 @@
                                                                     newDateFormat}}</span><span
                                                                     *ngIf="isFuturedate">{{getSingleTime(selectedApptTime['time'])}}</span>
                                                             </h6>
-                                                            <span class="changebt"><a class="pointer-cursor changeitem mgn-lt-10 mgn-rt-20"
-                                                                (click)="changeSlot()" data-toggle="modal"
-                                                                data-target="#exampleModalCenter">Change Time
-                                                            </a></span>
+                                                           
                                                         </div>
                                                         <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red"
                                                             *ngIf="freeSlots && freeSlots.length == 0 && !api_loading1">
