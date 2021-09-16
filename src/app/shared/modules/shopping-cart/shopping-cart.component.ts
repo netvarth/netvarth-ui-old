@@ -140,6 +140,15 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
     this.subs.unsubscribe();
   }
+  isPhysicalItemsPresent(){
+    let physical_item_present=true;
+    console.log(this.catalog_details.catalogItem);
+    const virtualItems=this.catalog_details.catalogItem.filter(catalogitem=>catalogitem.item.itemType==='VIRTUAL')
+    if(virtualItems.length>0&& this.catalog_details.catalogItem.length===virtualItems){
+      physical_item_present=false;
+    }
+    return physical_item_present;
+  }
   fetchCatalog() {
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_loading = true;

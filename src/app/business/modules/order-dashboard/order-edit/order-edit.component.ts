@@ -237,7 +237,15 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     }
   }
 
-
+  isPhysicalItemsPresent(){
+    let physical_item_present=true;
+    console.log(this.catalog_details.catalogItem);
+    const virtualItems=this.catalog_details.catalogItem.filter(catalogitem=>catalogitem.item.itemType==='VIRTUAL')
+    if(virtualItems.length>0&& this.catalog_details.catalogItem.length===virtualItems){
+      physical_item_present=false;
+    }
+    return physical_item_present;
+  }
   onSubmit(form_data) {
     const timeslot = this.nextAvailableTime.split(' - ');
     this.selectedAddress = form_data;

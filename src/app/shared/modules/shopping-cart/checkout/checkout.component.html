@@ -53,7 +53,7 @@
                     </div>
 
                   </mat-step> -->
-                  <mat-step label="Step 1">
+                  <mat-step label="Step 1" [editable]="isPhysicalItemsPresent()">
                     <ng-template matStepLabel>Delivery options</ng-template>
                     <div>
                       <div *ngIf="home_delivery && store_pickup" class="d-type">Choose delivery type <br>
@@ -105,7 +105,7 @@
 
 
                   </mat-step>
-                  <mat-step label="Step 3">
+                  <mat-step label="Step 3" [editable]="isPhysicalItemsPresent()">
                     <ng-template matStepLabel *ngIf="(!home_delivery && store_pickup)||choose_type=='store'"> Contact
                       Details</ng-template>
                     <ng-template matStepLabel *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">Fill out

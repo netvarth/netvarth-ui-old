@@ -59,7 +59,7 @@ export class ItemDetailsComponent implements OnInit {
     max_num_limit = projectConstantsLocal.VALIDATOR_MAX_LAKH;
     api_loading = true;
     disableButton = false;
-
+  minDay=new Date();
     // @ViewChild('caption', { static: false }) private captionRef: ElementRef;
     customer_label;
     action;
@@ -237,6 +237,9 @@ export class ItemDetailsComponent implements OnInit {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.getTaxpercentage();
     }
+    onChangeExpiryDate(){
+        console.log('fdfff');
+    }
     getItem(itemId) {
         const _this = this;
         return new Promise(function (resolve, reject) {
@@ -266,7 +269,7 @@ export class ItemDetailsComponent implements OnInit {
         this.api_loading = false;
     }
     createForm() {
-        if (this.action === 'add') {
+   
             this.amForm = this.fb.group({
                 itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
                 itemNameInLocal: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
@@ -282,33 +285,38 @@ export class ItemDetailsComponent implements OnInit {
                 promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
                 promotionalPriceType: [],
                 promotionallabel: [],
-                customlabel: ['', Validators.compose([Validators.maxLength(this.maxNumberslabl)])]
+                customlabel: ['', Validators.compose([Validators.maxLength(this.maxNumberslabl)])],
+                expiryDate:[''],
+                itemType:[]
+
             });
             this.amForm.get('promotionalPriceType').setValue('FIXED');
             this.amForm.get('promotionallabel').setValue('ONSALE');
-        } else {
+     
             // this.itemcaption = 'Item Details';
-            this.amForm = this.fb.group({
-                itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-                itemNameInLocal: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-                itemName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-                displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-                shortDec: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-                note: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-                displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-                showOnLandingpage: [true],
-                stockAvailable: [true],
-                taxable: [false, Validators.compose([Validators.required])],
-                price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
-                promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
-                promotionalPriceType: [],
-                promotionallabel: [],
-                customlabel: ['', Validators.compose([Validators.maxLength(this.maxNumberslabl)])]
-            });
-            this.amForm.get('promotionalPriceType').setValue('FIXED');
-        }
+            // this.amForm = this.fb.group({
+            //     itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+            //     itemNameInLocal: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+            //     itemName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+            //     displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+            //     shortDec: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+            //     note: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
+            //     displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
+            //     showOnLandingpage: [true],
+            //     stockAvailable: [true],
+            //     taxable: [false, Validators.compose([Validators.required])],
+            //     price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+            //     promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+            //     promotionalPriceType: [],
+            //     promotionallabel: [],
+            //     customlabel: ['', Validators.compose([Validators.maxLength(this.maxNumberslabl)])]
+            // });
+            // this.amForm.get('promotionalPriceType').setValue('FIXED');
+            // this.amForm.get('itemType').setValue('PHYSICAL');
+       // }
         if (this.action === 'edit') {
             this.itemcaption = this.item.displayName;
+            this.save_btn_cap='Update';
             this.updateForm();
         }
     }
@@ -365,7 +373,9 @@ export class ItemDetailsComponent implements OnInit {
             'promotionalPrice': value || 0,
             'promotionalPriceType': this.item.promotionalPriceType === 'NONE' ? 'FIXED' : this.item.promotionalPriceType,
             'promotionallabel': this.item.promotionLabelType || 'ONSALE',
-            'customlabel': this.item.promotionLabel || ''
+            'customlabel': this.item.promotionLabel || '',
+            'itemType':this.item.itemType,
+            'expiryDate':this.item.expiryDate
         });
         this.showPromotionalPrice = this.item.showPromotionalPrice;
         this.curtype = this.item.promotionalPriceType === 'NONE' ? 'FIXED' : this.item.promotionalPriceType;
@@ -456,20 +466,22 @@ export class ItemDetailsComponent implements OnInit {
             }
         }
         //  this.saveImagesForPostinstructions();
-        if (this.action === 'add') {
-            const post_itemdata = {
+       
+            let post_itemdata = {
                 'itemCode': form_data.itemCode,
                 'itemNameInLocal' :form_data.itemNameInLocal,
                 'itemName': form_data.itemName,
                 'displayName': form_data.displayName,
                 'shortDesc': form_data.shortDec,
                 'itemDesc': form_data.displayDesc,
+                'itemType':form_data.itemType,
+                'expiryDate':form_data.expiryDate,
                 'note': form_data.note,
-                'taxable': form_data.taxable,
+                'taxable': form_data.taxable || false,
                 'price': form_data.price,
                 'showPromotionalPrice': this.showPromotionalPrice,
                 'isShowOnLandingpage': form_data.showOnLandingpage,
-                'isStockAvailable': form_data.stockAvailable,
+                'isStockAvailable': form_data.stockAvailable || false,
                 'promotionalPriceType': form_data.promotionalPriceType,
                 'promotionLabelType': form_data.promotionallabel,
                 'promotionLabel': form_data.customlabel || '',
@@ -486,33 +498,38 @@ export class ItemDetailsComponent implements OnInit {
             // if (form_data.promotionalPriceType === 'PCT') {
             //     post_itemdata['promotionalPrcnt'] = form_data.promotionalPrice || 0;
             // }
+            if (this.action === 'add') {
             this.addItem(post_itemdata, isfrom);
         } else if (this.action === 'edit') {
-            const post_itemdata = {
-                'itemCode': form_data.itemCode,
-                'itemNameInLocal' :form_data.itemNameInLocal,
-                'itemName': form_data.itemName,
-                'displayName': form_data.displayName,
-                'shortDesc': form_data.shortDec || '',
-                'itemDesc': form_data.displayDesc || '',
-                'note': form_data.note || '',
-                'taxable': form_data.taxable || false,
-                'price': form_data.price || 0,
-                'showPromotionalPrice': this.showPromotionalPrice,
-                'isShowOnLandingpage': form_data.showOnLandingpage || false,
-                'isStockAvailable': form_data.stockAvailable || false,
-                'promotionalPrice': form_data.promotionalPrice || 0,
-                'promotionalPriceType': form_data.promotionalPriceType,
-                'promotionLabelType': form_data.promotionallabel,
-                'promotionLabel': form_data.customlabel || '',
-                'promotionalPrcnt': form_data.promotionalPrice || 0,
-                'status': this.item.status
-            };
-            if (!this.showPromotionalPrice) {
-                post_itemdata['promotionalPriceType'] = 'NONE';
-                post_itemdata['promotionLabelType'] = 'NONE';
-            }
+            post_itemdata['status']=this.item.status;
             this.editItem(post_itemdata);
+            // const post_itemdata = {
+            //     'itemCode': form_data.itemCode,
+            //     'itemNameInLocal' :form_data.itemNameInLocal,
+            //     'itemName': form_data.itemName,
+            //     'displayName': form_data.displayName,
+            //     'shortDesc': form_data.shortDec || '',
+            //     'itemDesc': form_data.displayDesc || '',
+            //     'itemType':form_data.itemType,
+            //     'expiryDate':form_data.expiryDate,
+            //     'note': form_data.note || '',
+            //     'taxable': form_data.taxable || false,
+            //     'price': form_data.price || 0,
+            //     'showPromotionalPrice': this.showPromotionalPrice,
+            //     'isShowOnLandingpage': form_data.showOnLandingpage || false,
+            //     'isStockAvailable': form_data.stockAvailable || false,
+            //     'promotionalPrice': form_data.promotionalPrice || 0,
+            //     'promotionalPriceType': form_data.promotionalPriceType,
+            //     'promotionLabelType': form_data.promotionallabel,
+            //     'promotionLabel': form_data.customlabel || '',
+            //     'promotionalPrcnt': form_data.promotionalPrice || 0,
+            //     'status': this.item.status
+            // };
+            // if (!this.showPromotionalPrice) {
+            //     post_itemdata['promotionalPriceType'] = 'NONE';
+            //     post_itemdata['promotionLabelType'] = 'NONE';
+            // }
+           
         }
     }
     // saveandAdd(form_data) {

@@ -102,7 +102,7 @@
                     </div>
                   </div>
 
-                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-20 bdr-bt-grey">
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-20 bdr-bt-grey"  *ngIf="isPhysicalItemsPresent()">
                     <div class="oder-sumary-txt" *ngIf="home_delivery && store_pickup">
                       Delivery Type
                     </div>
@@ -125,7 +125,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 bdr-bt-grey">
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 bdr-bt-grey"  *ngIf="isPhysicalItemsPresent()">
                     <div class="oder-sumary-txt">
                       Date/Time
                       <div class="fl-right"><a (click)="changeTime()">Change</a></div>

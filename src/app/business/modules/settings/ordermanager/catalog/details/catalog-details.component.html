@@ -653,7 +653,7 @@
                       <div class="card-body p-0">
                         <div class="form-group">
                           <label>Store pickup </label> &nbsp;
-                          <mat-slide-toggle formControlName="storepickup" (change)="handlestorepickup($event)">
+                          <mat-slide-toggle formControlName="storepickup"  [disabled]="storePickUpDisabled"(change)="handlestorepickup($event)">
                           </mat-slide-toggle>
                         </div>
                         <div *ngIf="storepickupStat">
@@ -734,7 +734,7 @@
                       <div class="card-body p-0">
                         <div class="form-group">
                           <label>Home delivery </label> &nbsp;
-                          <mat-slide-toggle formControlName="homedelivery" (change)="handlehomedelivery($event)">
+                          <mat-slide-toggle formControlName="homedelivery" [disabled]="homeDeliveryDisabled"(change)="handlehomedelivery($event)">
                           </mat-slide-toggle>
                         </div>
                         <!--end::Input-->
