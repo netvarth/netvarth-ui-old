@@ -552,7 +552,8 @@ export class VirtualFieldsComponent implements OnInit {
           resolve(locations);
         },
         error => {
-          resolve([]);
+          _this.loading=false;
+          reject(error);
         }
       );
     });
@@ -565,15 +566,22 @@ export class VirtualFieldsComponent implements OnInit {
       this.fetchLocationByPincode(pincode).then(
         (locations: any) => {
           if (locations.length > 0) {
+            this.loading=false;
             this.locations = locations[0];
             this.virtualForm.patchValue({ location: locations[0]['PostOffice'][0] });
           } else {
             this.locations = [];
+          
           }
+        
+        },error=>{
+          console.log(this.loading);
           this.loading = false;
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       )
     } else {
+      this.loading=false;
       this.locations = [];
     }
   }
