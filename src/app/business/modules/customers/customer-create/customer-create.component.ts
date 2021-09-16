@@ -482,72 +482,42 @@ export class CustomerCreateComponent implements OnInit {
     }
   }
   updateForm() {
-    if(this.customer[0].age){
+    this.amForm.setValue({
+      'first_name': this.customer[0].firstName || '',
+      'last_name': this.customer[0].lastName || '',
+      'email_id': this.customer[0].email || '',
+      'dob': this.customer[0].dob || '',
+      'age': '',
+      'ageType': '',
+      'gender': this.customer[0].gender || '',
+      'mobile_number': this.customer[0].phoneNo.trim() || '',
+      'countryCode': this.customer[0].countryCode.trim() || '',
+      'customer_id': this.customer[0].jaldeeId || '',
+      'address': this.customer[0].address || '',
+    });
+
+    if (this.customer[0].age) {
       console.log(this.customer[0].age.year)
-      if (this.customer[0].age.year && this.customer[0].age.year !==0) {
+      if (this.customer[0].age.year && this.customer[0].age.year !== 0) {
         this.ageType = 'year';
-        this.amForm.setValue({
-          'first_name': this.customer[0].firstName || '',
-          'last_name': this.customer[0].lastName || '',
-          'email_id': this.customer[0].email || '',
-          'dob': this.customer[0].dob || '',
-          'age': this.customer[0].age.year || '',
-          'ageType': this.ageType || '',
-          'gender': this.customer[0].gender || '',
-          'mobile_number': this.customer[0].phoneNo.trim() || '',
-          'countryCode': this.customer[0].countryCode.trim() || '',
-          'customer_id': this.customer[0].jaldeeId || '',
-          'address': this.customer[0].address || '',
-        });
+        this.amForm.get('age').setValue(this.customer[0].age.year || '');
+        this.amForm.get('ageType').setValue(this.ageType || '');
       }
-      else if (this.customer[0].age.month && this.customer[0].age.month !==0) {
+      else if (this.customer[0].age.month && this.customer[0].age.month !== 0) {
         this.ageType = 'month';
-        this.amForm.setValue({
-          'first_name': this.customer[0].firstName || '',
-          'last_name': this.customer[0].lastName || '',
-          'email_id': this.customer[0].email || '',
-          'dob': this.customer[0].dob || '',
-          'age': this.customer[0].age.month || '',
-          'ageType': this.ageType || '',
-          'gender': this.customer[0].gender || '',
-          'mobile_number': this.customer[0].phoneNo.trim() || '',
-          'countryCode': this.customer[0].countryCode.trim() || '',
-          'customer_id': this.customer[0].jaldeeId || '',
-          'address': this.customer[0].address || '',
-        });
+        this.amForm.get('age').setValue(this.customer[0].age.month || '');
+        this.amForm.get('ageType').setValue(this.ageType || '');
       }
-      else{
+      else {
         this.ageType = 'year';
-          this.amForm.setValue({
-          'first_name': this.customer[0].firstName || '',
-          'last_name': this.customer[0].lastName || '',
-          'email_id': this.customer[0].email || '',
-          'dob': this.customer[0].dob || '',
-          'age':  '',
-          'ageType': this.ageType || '',
-          'gender': this.customer[0].gender || '',
-          'mobile_number': this.customer[0].phoneNo.trim() || '',
-          'countryCode': this.customer[0].countryCode.trim() || '',
-          'customer_id': this.customer[0].jaldeeId || '',
-          'address': this.customer[0].address || '',
-        });
+        this.amForm.get('age').setValue('');
+        this.amForm.get('ageType').setValue(this.ageType || '');
       }
     }
-    else{
+    else {
       this.ageType = 'year';
-        this.amForm.setValue({
-        'first_name': this.customer[0].firstName || '',
-        'last_name': this.customer[0].lastName || '',
-        'email_id': this.customer[0].email || '',
-        'dob': this.customer[0].dob || '',
-        'age':  '',
-        'ageType': this.ageType || '',
-        'gender': this.customer[0].gender || '',
-        'mobile_number': this.customer[0].phoneNo.trim() || '',
-        'countryCode': this.customer[0].countryCode.trim() || '',
-        'customer_id': this.customer[0].jaldeeId || '',
-        'address': this.customer[0].address || '',
-      });
+      this.amForm.get('age').setValue('');
+      this.amForm.get('ageType').setValue(this.ageType || '');
     }
   }
   onSubmit(form_data) {
