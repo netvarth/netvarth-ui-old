@@ -907,7 +907,7 @@ export class ProviderCheckinComponent implements OnInit {
             return false;
         }
         return true;
-    }
+    } 
     resetApiErrors() {
         this.emailerror = null;
         this.email1error = null;

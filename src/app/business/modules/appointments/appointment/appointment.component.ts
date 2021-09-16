@@ -2099,7 +2099,7 @@ export class AppointmentComponent implements OnInit {
                 }
             }
         });
-    }
+    } 
     validateQnr(post_Data?) {
         this.api_loading = true;
         if (!this.questionAnswers) {

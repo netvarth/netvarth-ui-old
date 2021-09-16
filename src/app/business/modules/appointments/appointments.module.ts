@@ -63,7 +63,7 @@ import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
         CheckinAddMemberModule,
         AssignTeamModule,
         QuestionnaireListPopupModule,
-        NgxIntlTelInputModule
+        NgxIntlTelInputModule 
     ],
     declarations: [
         AppointmentsComponent,

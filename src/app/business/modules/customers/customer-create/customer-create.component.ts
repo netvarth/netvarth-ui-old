@@ -456,8 +456,7 @@ export class CustomerCreateComponent implements OnInit {
       this.loading = false;
     } else {
       this.amForm = this.fb.group({
-        mobile_number: ['', Validators.compose([Validators.maxLength(10),
-        Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+        mobile_number: ['', Validators.compose([Validators.maxLength(10),Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
         countryCode: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)])],
         customer_id: [''],
         first_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
