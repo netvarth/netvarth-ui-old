@@ -862,39 +862,47 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         return isinvalid;
     }
 
-    fetchLocationByPincode(pincode) {
-        const _this = this;
-        return new Promise(function (resolve, reject) {
-            _this.sharedServices.getLocationsByPincode(pincode).subscribe(
-                (locations: any) => {
-                    resolve(locations);
-                },
-                error => {
-                    resolve([]);
-                }
-            );
-        });
-    }
-
-    showLocations(event) {
-        let pincode = this.virtualForm.get('pincode').value;
-        if (pincode.length === 6) {
-            this.loading = true;
-            this.fetchLocationByPincode(pincode).then(
-                (locations: any) => {
-                    if (locations.length > 0) {
-                        this.locations = locations[0];
-                        this.virtualForm.patchValue({ location: locations[0]['PostOffice'][0] });
-                    } else {
-                        this.locations = [];
-                    }
-                    this.loading = false;
-                }
-            )
-        } else {
-            this.locations = [];
+   fetchLocationByPincode(pincode) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.sharedServices.getLocationsByPincode(pincode).subscribe(
+        (locations: any) => {
+          resolve(locations);
+        },
+        error => {
+          _this.loading=false;
+          reject(error);
         }
+      );
+    });
+  }
+
+   showLocations(event) {
+    let pincode = this.virtualForm.get('pincode').value;
+    if (pincode.length === 6) {
+      this.loading = true;
+      this.fetchLocationByPincode(pincode).then(
+        (locations: any) => {
+          if (locations.length > 0) {
+            this.loading=false;
+            this.locations = locations[0];
+            this.virtualForm.patchValue({ location: locations[0]['PostOffice'][0] });
+          } else {
+            this.locations = [];
+          
+          }
+        
+        },error=>{
+          console.log(this.loading);
+          this.loading = false;
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      )
+    } else {
+      this.loading=false;
+      this.locations = [];
     }
+  }
 
     onSubmit(formdata) {
         this.submitbtndisabled = true;
