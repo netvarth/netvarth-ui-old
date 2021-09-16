@@ -199,6 +199,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   paytmEnabled = false;
   razorpayEnabled = false;
   paymentmodes: any;
+  isEditable=true;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -305,8 +306,12 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.orderList = this.lStorageService.getitemfromLocalStorage('order');
     if (this.orderList) {
       this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
+      this.isPhysicalItemsPresent();
 
     }
+    
+
+    
 
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_details = data;
@@ -418,6 +423,18 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   }
+  isPhysicalItemsPresent(){
+    let physical_item_present=true;
+
+    const virtualItems=this.orders.filter(orderitem=>orderitem.item.itemType==='VIRTUAL')
+    if(virtualItems.length>0&& this.orders.length===virtualItems.length){
+      physical_item_present=false;
+      this.isfutureAvailableTime = true;
+      this.isEditable=false;
+
+    }
+    return physical_item_present;
+  }
   getPaymentModes() {
     this.paytmEnabled = false;
     this.razorpayEnabled = false;
@@ -457,15 +474,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
       );
   }
-  isPhysicalItemsPresent(){
-    let physical_item_present=true;
-    console.log(this.catalog_details.catalogItem);
-    const virtualItems=this.catalog_details.catalogItem.filter(catalogitem=>catalogitem.item.itemType==='VIRTUAL')
-    if(virtualItems.length>0&& this.catalog_details.catalogItem.length===virtualItems){
-      physical_item_present=false;
-    }
-    return physical_item_present;
-  }
+
   ngAfterViewInit() {
     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
@@ -1238,8 +1247,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           //     uuid: this.trackUuid
           //   }
           // };
-          console.log(this.catalog_details.paymentType + 'fdddddddddddshop')
-          console.log(this.prepayAmount + '11111111111shop')
+
           if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
               .subscribe(res => {
