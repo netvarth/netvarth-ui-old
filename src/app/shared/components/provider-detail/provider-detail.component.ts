@@ -293,6 +293,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   nonfirstCouponCount = 0;
   wlServices;
   apptServices;
+  onlyVirtualItems=false;
   private subscriptions = new SubSink();
   consumerVirtualinfo: any;
   constructor(
@@ -2584,7 +2585,26 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
 
   }
-
+  isPhysicalItemsPresent(){
+    let physical_item_present = true;
+    const virtualItems=this.activeCatalog.catalogItem.filter(catalogItem => catalogItem.item.itemType==='VIRTUAL')
+    if(virtualItems.length>0 && this.activeCatalog.catalogItem.length===virtualItems.length){
+      physical_item_present=false;
+      this.onlyVirtualItems=true;
+    }
+    return physical_item_present;
+  }
+  checkVirtualOrPhysical(activeCatalog){
+    let  showCatalogItems=false;
+    if(this.isPhysicalItemsPresent()){
+     if(activeCatalog.nextAvailableDeliveryDetails||activeCatalog.nextAvailablePickUpDetails){
+       showCatalogItems=true;
+     }
+    }else{
+      showCatalogItems=true;
+    }
+    return showCatalogItems
+  }
 
   getConfirmation() {
     let can_remove = false;

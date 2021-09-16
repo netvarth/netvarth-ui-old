@@ -298,7 +298,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
     //   );
   }
   isPhysicalItemsPresent() {
-    let physical_item_present = true;;
+    let physical_item_present = true;
     const virtualItems = this.orders.filter(catalogitem => catalogitem.item.itemType === 'VIRTUAL')
     if (virtualItems.length > 0 && this.orders.length === virtualItems.length) {
       physical_item_present = false;
@@ -1088,8 +1088,6 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
           'id': this.customer_data.id
 
         },
-       
-       
         'countryCode': this.countryCode,
         'phoneNumber': this.customer_data.phoneNo,
         'email': this.customer_data.email,
