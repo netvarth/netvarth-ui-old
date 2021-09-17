@@ -21,7 +21,7 @@
                                     <h5 class="mgn-up-10" *ngIf="source === 'appt-block'"> <b>Find an existing
                                         {{customer_label}}</b></h5>
                                         <div class="input-group mob-container mgn-up-20">
-                                        <mat-label for="phone" class="coloroflabels">Enter {{customer_label | capitalizeFirst}} Phone#</mat-label>
+                                        <!-- <mat-label for="phone" class="coloroflabels">Enter {{customer_label | capitalizeFirst}} Phone#</mat-label> -->
                                       <ngx-intl-tel-input [cssClass]="'custom'" class="internumbox" [preferredCountries]="preferredCountries"
                                           [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
                                           [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
@@ -36,6 +36,7 @@
                                       <!-- <div class="input-group-append"><button class="create_new_button cs-btn bt3"
                                         (click)="serchCustomers(phone)">Find</button></div> -->
                             <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()"class="mgn-up-20">
+                                <div class="or-style">OR</div>
                                 <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding  mgn-up-20 sc-frm">
                                     <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding"> -->
                                         <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding mgn-bt-50 apptdate-slot"
