@@ -9,7 +9,7 @@ import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner
 import { CheckinAddMemberModule } from '../../../../shared/modules/checkin-add-member/checkin-add-member.module';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
-import { OwlModule } from 'ngx-owl-carousel';
+import { OwlModule } from 'ngx-carousel';
 import { ConsumerAppointmentLiveTrackComponent } from './livetrack/livetrack.component';
 import { ConsumerAppointmentPaymentComponent } from './payment/payment.component';
 import { ConsumerAppointmentHistoryComponent } from './history/appointment-history.component';

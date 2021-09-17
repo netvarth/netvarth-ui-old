@@ -48,11 +48,11 @@ export class AppComponent implements OnInit {
    * 
    */
   ngOnInit() {
-    if (this.device.uuid) {
+    // if (this.device.uuid) {
       // console.log(this.device.uuid);
-      this.lStorageService.setitemonLocalStorage('authToken', this.device.uuid);
-      // this.lStorageService.setitemonLocalStorage('authToken', 'abcd'.toString());
-    }
+      // this.lStorageService.setitemonLocalStorage('authToken', this.device.uuid);
+      this.lStorageService.setitemonLocalStorage('authToken', 'abcd'.toString());
+    // }
   	let token = this.lStorageService.getitemfromLocalStorage('authToken');
     if (token) {
       let regexToReplace = /\-/gi;
