@@ -785,8 +785,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       // merge two arrays without duplicates
       if (this.servicesjson && this.servicesjson.length > 0) {
         const ids = new Set(this.apptServicesjson.map(d => d.id));
-        const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
-        this.apptServicesjson = merged;
+        // const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
+        // this.apptServicesjson = merged;
       }
       for (let i = 0; i < this.apptServicesjson.length; i++) {
         if (i < 3) {
@@ -1020,8 +1020,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       // merge two arrays without duplicates
       if (this.servicesjson && this.servicesjson.length > 0) {
         const ids = new Set(this.apptServicesjson.map(d => d.id));
-        const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
-        this.apptServicesjson = merged;
+        // const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
+        // this.apptServicesjson = merged;
       }
       for (let i = 0; i < this.apptServicesjson.length; i++) {
         if (i < 3) {
