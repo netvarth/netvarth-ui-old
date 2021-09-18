@@ -2,10 +2,10 @@
     max-width: 320px !important;
 }
 
-.mob-container input {
+/* .mob-container input {
     height:35px !important;
     border-left: 1px solid #ccc !important;
-}
+} */
 .modal-body {
     max-height: 70vh;
     overflow: auto;
@@ -41,4 +41,15 @@
     color: green !important;
     right: 0px !important;
   }
-  
+  .internumbox{
+    width: 270px;
+    float: left;
+  }
+  .findcolor{
+    background-color: #1e4079;
+    border-radius: 5px;
+    width: 50px;
+  }
+  .coloroflabels{
+    color: #0F52BA !important;
+  }

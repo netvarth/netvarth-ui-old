@@ -1803,7 +1803,7 @@ body.modal-open {
   text-align: center;
   font-size: 1.3rem;
   margin-top:50px;
-  margin-left: 100px;
+  /* margin-left: 100px; */
 }
 .prepayment-confirm .btn{
   border-radius: 1.5rem!important;
@@ -1829,7 +1829,7 @@ body.modal-open {
     text-align: center;
     font-size: 1rem;
     margin-top:20px;
-    margin-left: 20px;
+    /* margin-left: 20px; */
   }
   .prepayment-confirm .btn{
     border-radius: 1rem!important;

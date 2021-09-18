@@ -50,13 +50,14 @@ export class PaytmService {
                           console.log("error => ",error);
                       });
                   });
-                //   setTimeout(() => {
-                //     referrer.loading = false;
-                // }, 5000);
+                
               }
         };
         
-       
+         setTimeout(() => {
+            window['Paytm'].CheckoutJS.close();
+            referrer.closeloading();
+                }, 600000);
     }
     
     public loadPayTMScript(pData, payTMUrl,isfrom): HTMLScriptElement {
