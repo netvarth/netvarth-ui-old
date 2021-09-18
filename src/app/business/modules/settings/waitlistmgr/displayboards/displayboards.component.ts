@@ -12,12 +12,15 @@ import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-bo
 
 @Component({
     selector: 'app-displayboards',
-    templateUrl: './displayboards.component.html'
+    templateUrl: './displayboards.component.html',
+    styleUrls: ['./displayboards.component.css']
 })
 export class DisplayboardsComponent implements OnInit {
     tooltipcls = '';
+    id;
     add_button = '';
     breadcrumb_moreoptions: any = [];
+    rowChange = false;
     breadcrumbs_init = [
         {
             title: 'Settings',
@@ -39,6 +42,7 @@ export class DisplayboardsComponent implements OnInit {
     add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
     domain: any;
     accountId;
+    tableChange = false;
     statusboard_cap = Messages.DISPLAYBOARD_HEADING;
     boardLayouts = [
         { displayName: '1x1', value: '1_1', row: 1, col: 1 },
@@ -138,6 +142,7 @@ export class DisplayboardsComponent implements OnInit {
 
             });
         } else {
+            this.tableChange = true;
             this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'add']);
         }
     }
@@ -156,35 +161,38 @@ export class DisplayboardsComponent implements OnInit {
 
             });
         } else {
-        this.action = 'addToGroup';
-        this.qBoardscaption = 'Qboard group';
-        this.qBoardsSelected = [];
-        const breadcrumbs = [];
-        this.breadcrumbs_init.map((e) => {
-            breadcrumbs.push(e);
-        });
-        breadcrumbs.push({
-            title: 'Group'
-        });
-        this.breadcrumbs = breadcrumbs;
+            this.action = 'addToGroup';
+            this.qBoardscaption = 'Qboard group';
+            this.qBoardsSelected = [];
+            const breadcrumbs = [];
+            this.breadcrumbs_init.map((e) => {
+                breadcrumbs.push(e);
+            });
+            breadcrumbs.push({
+                title: 'Group'
+            });
+            this.breadcrumbs = breadcrumbs;
 
-        if (this.qBoardSelectCount > 0) {
-            for (let i = 0; i < this.layout_list.length; i++) {
-                if (this.qBoardsSelectedIndex[i]) {
-                    const qBoard = this.layout_list[i];
-                    qBoard['refreshInterval'] = 10;
-                    this.qBoardsSelected.push(qBoard);
+            if (this.qBoardSelectCount > 0) {
+                for (let i = 0; i < this.layout_list.length; i++) {
+                    if (this.qBoardsSelectedIndex[i]) {
+                        const qBoard = this.layout_list[i];
+                        qBoard['refreshInterval'] = 10;
+                        this.qBoardsSelected.push(qBoard);
+                    }
                 }
             }
+            this.qBoardsNotSelected = this.qBoardsActive.slice();
+            if (this.qBoardsSelected.length === this.qBoardsActive.length) {
+                this.hideAddToGroup = true;
+            }
+            this.qBoardsSelected.forEach(sb => {
+                this.qBoardsNotSelected = this.removeByAttr(this.qBoardsNotSelected, 'id', sb.sbId);
+            });
         }
-        this.qBoardsNotSelected = this.qBoardsActive.slice();
-        if (this.qBoardsSelected.length === this.qBoardsActive.length) {
-            this.hideAddToGroup = true;
-        }
-        this.qBoardsSelected.forEach(sb => {
-             this.qBoardsNotSelected = this.removeByAttr( this.qBoardsNotSelected, 'id', sb.sbId);
-         });
-        }
+    }
+    onToggleData() {
+        this.rowChange = !this.rowChange;
     }
 
     listContainers() {
@@ -202,6 +210,8 @@ export class DisplayboardsComponent implements OnInit {
         };
         this.router.navigate(['provider', 'settings', 'q-manager',
             'displayboards', 'view'], navigationExtras);
+        // this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'q-set','view'],navigationExtras);
+
     }
     addToQBoardGroup(sel_QBoard, refreshInterval) {
         if (!this.sel_QBoard) {
@@ -252,7 +262,7 @@ export class DisplayboardsComponent implements OnInit {
                     qBoard['displayName'] = qboard.displayName;
                     qBoard['refreshInterval'] = sb.sbInterval;
                     this.qBoardsSelected.push(qBoard);
-                    this.qBoardsNotSelected = this.removeByAttr( this.qBoardsNotSelected, 'id', sb.sbId);
+                    this.qBoardsNotSelected = this.removeByAttr(this.qBoardsNotSelected, 'id', sb.sbId);
                 });
             });
 
@@ -276,7 +286,7 @@ export class DisplayboardsComponent implements OnInit {
     };
     removeFromGroup(qBoard) {
         if (this.qBoardsSelected.length > 1) {
-            this.qBoardsSelected = this.removeByAttr( this.qBoardsSelected, 'id', qBoard.id);
+            this.qBoardsSelected = this.removeByAttr(this.qBoardsSelected, 'id', qBoard.id);
             this.qBoardsNotSelected.push(qBoard);
         }
         if (this.qBoardsSelected.length === this.qBoardsActive.length) {
@@ -306,11 +316,24 @@ export class DisplayboardsComponent implements OnInit {
                 });
     }
     goDisplayboardLayoutDetails(layout, source?) {
+        this.id = layout.id;
+        const navigationExtras: NavigationExtras = {
+            queryParams: { id: layout.id }
+        };
+
+        // this.router.navigate(['provider', 'settings', 'q-manager',
+        //     'displayboards', `${this.id}`], navigationExtras);
+
+        console.log("Layout : ", layout.name, layout.metric, layout.metric[0].queueSet['fieldList']);
         if (source) {
-            const path = 'displayboard/' + layout.id + '?type=wl';
+            // const path = 'displayboard/' + layout.id + '?type=wl';
             // const path = projectConstants.PATH + 'displayboard/' + layout.id + '?type=wl';
-            window.open(path, '_blank');
-        } else {
+          //  window.open(path, '_blank');
+            this.router.navigate(['provider', 'settings', 'q-manager',
+            'displayboards', `${this.id}`], navigationExtras);
+        }
+
+        else {
             const navigationExtras: NavigationExtras = {
                 queryParams: { id: layout.id }
             };
@@ -324,10 +347,10 @@ export class DisplayboardsComponent implements OnInit {
             panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {
-              'message': 'Do you really want to remove this Qboard?'
+                'message': 'Do you really want to remove this Qboard?'
             }
-          });
-          this.removequerydisplaydialogRef.afterClosed().subscribe(result => {
+        });
+        this.removequerydisplaydialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this.provider_services.deleteDisplayboardWaitlist(layout.id).subscribe(
                     () => {
@@ -336,9 +359,9 @@ export class DisplayboardsComponent implements OnInit {
                     }
                 );
             }
-          });
+        });
 
-        
+
     }
     getLayout(layoutvalue) {
         let layoutActive;
@@ -398,48 +421,48 @@ export class DisplayboardsComponent implements OnInit {
                     this.api_loading = false;
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
-             } else if (this.action === 'updateGroup') {
-                const post_data = {
-                    'id': this.activeGroup.id,
-                    'name': name,
-                    'layout': '1_1',
-                    'displayName': this.displayName,
-                    'interval': this.refreshInterval,
-                    'serviceRoom': this.serviceRoom,
-                    'containerData': sbDetails,
-                    'isContainer': true
-                    };
-                this.provider_services.updateDisplayboardWaitlist(post_data).subscribe(data => {
-                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
-                    this.onCancel();
-                    this.getDisplayboardLayouts();
-                },
-                    error => {
-                        this.api_loading = false;
-                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    });
-            }
+        } else if (this.action === 'updateGroup') {
+            const post_data = {
+                'id': this.activeGroup.id,
+                'name': name,
+                'layout': '1_1',
+                'displayName': this.displayName,
+                'interval': this.refreshInterval,
+                'serviceRoom': this.serviceRoom,
+                'containerData': sbDetails,
+                'isContainer': true
+            };
+            this.provider_services.updateDisplayboardWaitlist(post_data).subscribe(data => {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
+                this.onCancel();
+                this.getDisplayboardLayouts();
+            },
+                error => {
+                    this.api_loading = false;
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+        }
     }
     redirecToQmanager() {
-        this.routerobj.navigate(['provider', 'settings' , 'q-manager' ]);
+        this.routerobj.navigate(['provider', 'settings', 'q-manager']);
     }
-      redirecToHelp() {
+    redirecToHelp() {
         this.routerobj.navigate(['/provider/' + this.domain + '/q-manager->settings-q-boards']);
     }
     getLicenseUsage() {
         this.provider_services.getLicenseUsage()
             .subscribe(
                 data => {
-                   this.use_metric = data;
-                   this.usage_metric = this.use_metric.metricUsageInfo;
-                   this.adon_info = this.usage_metric.filter(sch => sch.metricName === 'QBoards');
-                   this.adon_total = this.adon_info[0].total;
-                   this.adon_used = this.adon_info[0].used;
-                   this.disply_name = this.adon_info[0].metricName;
+                    this.use_metric = data;
+                    this.usage_metric = this.use_metric.metricUsageInfo;
+                    this.adon_info = this.usage_metric.filter(sch => sch.metricName === 'QBoards');
+                    this.adon_total = this.adon_info[0].total;
+                    this.adon_used = this.adon_info[0].used;
+                    this.disply_name = this.adon_info[0].metricName;
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
-        }
+    }
 }

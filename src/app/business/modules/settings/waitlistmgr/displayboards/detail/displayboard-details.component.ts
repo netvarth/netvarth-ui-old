@@ -1,5 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { NavigationExtras } from '@angular/router';
+
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
@@ -9,6 +11,9 @@ import { takeUntil, startWith, map } from 'rxjs/operators';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { interval as observableInterval, Subscription } from 'rxjs';
+
 
 
 interface Bank {
@@ -18,7 +23,8 @@ interface Bank {
 
 @Component({
     selector: 'app-displayboard-details',
-    templateUrl: './displayboard-details.component.html'
+    templateUrl: './displayboard-details.component.html',
+    styleUrls: ['../displayboards.component.css']
 })
 export class DisplayboardDetailComponent implements OnInit {
 
@@ -50,6 +56,53 @@ export class DisplayboardDetailComponent implements OnInit {
     private _onDestroy = new Subject<void>();
 
     amForm: FormGroup;
+    boardData: any;
+    selectedBoardData: any = [];
+    colLength;
+    selectedDisplayboards: any = {};
+    boardHeight;
+    fullHeight;
+    bname;
+    blogo = '';
+    metricElement;
+    MainBlogo;
+    bProfile: any = [];
+    qualification: any = [];
+    subDomVirtualFields: any = [];
+    accountType;
+    MainBname;
+    locId;
+    provider_id;
+    businessJson: any = [];
+
+    //refreshTime = projectConstants.INBOX_REFRESH_TIME;
+    cronHandle1: Subscription;
+
+    index;
+    bProfiles: any = [];
+    inputStatusboards: any = [];
+    tabid: any = {};
+    manageTabCalled = false;
+    s3Url;
+    showIndex = 0;
+    roomName = '';
+    is_image: boolean;
+    position: any;
+    width: any;
+    height: any;
+    isContainer = false;
+    qBoardTitle: any;
+    qBoardFooter;
+    qBoardGroupFooter: any;
+    qBoardGroupTitle: any;
+    bLogoWidth = '';
+    bLogoHeight = '';
+    gLogoWidth = '';
+    gLogoHeight = '';
+    glogo = '';
+    gPosition;
+    customer_label = '';
+    displayboardDetails: any;
     char_count = 0;
     max_char_count = 250;
     isfocused = false;
@@ -90,6 +143,7 @@ export class DisplayboardDetailComponent implements OnInit {
     boardLayoutFields = {};
     boardRows = 1;
     boardCols = 1;
+    type;
     breadcrumbs_init = [
         {
             title: 'Settings',
@@ -107,6 +161,7 @@ export class DisplayboardDetailComponent implements OnInit {
     breadcrumbs = this.breadcrumbs_init;
     actionparam = 'show';
     qsetAction;
+    tableChange = false;
     qsetId;
     showDboard = true;
     source;
@@ -119,14 +174,19 @@ export class DisplayboardDetailComponent implements OnInit {
     headerSetting = false;
     footerSetting = false;
     qBoardscaption = 'Add QBoard';
+    QBoardData: any;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
+        public _sanitizer: DomSanitizer,
+
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
         private activated_route: ActivatedRoute,
         private router: Router
     ) {
+
+
         this.activated_route.params.subscribe(params => {
             this.actionparam = params.id;
         }
@@ -135,6 +195,8 @@ export class DisplayboardDetailComponent implements OnInit {
             if (qparams.value === 'view') {
                 this.qBoardscaption = 'QBoard Details';
                 this.actionparam = qparams.value;
+                console.log("DisplayBoard Value Layout :", this.actionparam);
+
             }
         }
         );
@@ -143,6 +205,7 @@ export class DisplayboardDetailComponent implements OnInit {
                 this.layout_id = qparams.id;
                 if (this.layout_id) {
                     this.editLayoutbyId(qparams.id);
+
                 } else {
                     const breadcrumbs = [];
                     this.breadcrumbs_init.map((e) => {
@@ -154,7 +217,43 @@ export class DisplayboardDetailComponent implements OnInit {
                     this.breadcrumbs = breadcrumbs;
                 }
             });
+        this.activated_route.params.subscribe(
+            qparams => {
+                this.layout_id = qparams.id;
+                this.QBoardData = qparams.metric;
+                console.log("DisplayBoard Layout :", this.layout_id, this.QBoardData);
+            });
+        this.activated_route.queryParams.subscribe(
+            queryparams => {
+                if (queryparams.type === 'wl') {
+                    this.type = 'waitlist';
+                    console.log("DisplayBoard :", this.type)
+                } else {
+                    this.type = 'appointment';
+                }
+            });
+
     }
+
+
+    ViewDisplayboardLayout(layout) {
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                value: 'view',
+                id: layout.id
+            }
+        };
+
+        this.router.navigate(['provider', 'settings', 'q-manager',
+            'displayboards', 'view'], navigationExtras);
+        this.tableChange = !this.tableChange;
+
+        // this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'q-set','view'],navigationExtras);
+
+    }
+
+
+
     addQSet() {
         this.qsetAction = 'add';
         this.qBoardscaption = 'Add QBoard query';
@@ -162,6 +261,31 @@ export class DisplayboardDetailComponent implements OnInit {
         this.source = 'DBOARD';
         this.qsetId = null;
     }
+
+
+    goDisplayboardLayoutDetails(layout, source?) {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { id: layout.id }
+        };
+        this.router.navigate(['provider', 'settings', 'q-manager',
+            'displayboards', 'add'], navigationExtras);
+
+        console.log("Layout : ", navigationExtras);
+        // if (source) {
+        //     const path = 'displayboard/' + layout.id + '?type=wl';
+        //     // const path = projectConstants.PATH + 'displayboard/' + layout.id + '?type=wl';
+        //     window.open(path, '_blank');
+        // }
+
+        // else {
+        //     const navigationExtras: NavigationExtras = {
+        //         queryParams: { id: layout.id }
+        //     };
+        //     this.router.navigate(['provider', 'settings', 'q-manager',
+        //         'displayboards', 'view'], navigationExtras);
+        // }
+    }
+
     qSetSelected(qset) {
         if (qset.refresh) {
             this.getDisplayboardQSets();
@@ -243,12 +367,175 @@ export class DisplayboardDetailComponent implements OnInit {
     handleLayout(layout) {
         this.boardRows = layout.row;
         this.boardCols = layout.col;
+        console.log("Layout :", layout);
     }
+    onServiceForChange(layout) {
+
+        this.boardRows = layout.row;
+        this.boardCols = layout.col;
+        console.log("Layout :", layout);
+    }
+    onClickChange() {
+        this.tableChange = !this.tableChange;
+
+    }
+
+    initBoard() {
+        this.provider_services.getDisplayboardById_Type(this.layout_id, this.type).subscribe(
+            (displayboard_data: any) => {
+                this.displayboardDetails = displayboard_data;
+                if (displayboard_data.isContainer) {
+                    this.inputStatusboards = displayboard_data.containerData;
+                    this.showIndex = 0;
+                    this.isContainer = true;
+                    if (displayboard_data['headerSettings']) {
+                        this.qBoardGroupTitle = displayboard_data['headerSettings']['title1'] || '';
+                    }
+                    if (displayboard_data['footerSettings']) {
+                        this.qBoardGroupFooter = displayboard_data['footerSettings']['title1'] || '';
+                    }
+                    if (displayboard_data.logoSettings) {
+                        if (displayboard_data.logoSettings.logo) {
+                            this.is_image = true;
+                            const logoObj = displayboard_data.logoSettings.logo;
+                            this.glogo = logoObj['url'];
+                        }
+                        this.gPosition = displayboard_data.logoSettings['position'];
+                        if (displayboard_data.logoSettings.height && displayboard_data.logoSettings.width) {
+                            this.gLogoWidth = displayboard_data.logoSettings['width'];
+                            this.gLogoHeight = displayboard_data.logoSettings['height'];
+                        } else {
+                            this.gLogoWidth = '100';
+                            this.gLogoHeight = '100';
+                        }
+                    }
+                    this.getStatusboard(this.inputStatusboards[this.showIndex]);
+                    this.cronHandle1 = observableInterval(this.inputStatusboards[this.showIndex].sbInterval * 1000).subscribe(() => {
+                        if (this.showIndex === (this.inputStatusboards.length - 1)) {
+                            this.showIndex = 0;
+                        } else {
+                            ++this.showIndex;
+                        }
+                        this.getStatusboard(this.inputStatusboards[this.showIndex]);
+                    });
+                } else {
+                    this.roomName = displayboard_data['serviceRoom'];
+                    if (displayboard_data.headerSettings && displayboard_data.headerSettings['title1']) {
+                        this.qBoardTitle = this._sanitizer.bypassSecurityTrustHtml(displayboard_data.headerSettings['title1']);
+                    }
+                    if (displayboard_data.footerSettings && displayboard_data.footerSettings['title1']) {
+                        this.qBoardFooter = this._sanitizer.bypassSecurityTrustHtml(displayboard_data.footerSettings['title1']);
+                    }
+                    if (displayboard_data.logoSettings) {
+                        if (displayboard_data.logoSettings.logo) {
+                            this.is_image = true;
+                            const logoObj = displayboard_data.logoSettings.logo;
+                            this.blogo = logoObj['url'];
+                        }
+                        this.position = displayboard_data.logoSettings['position'];
+                        if (displayboard_data.logoSettings.height && displayboard_data.logoSettings.width) {
+                            this.bLogoWidth = displayboard_data.logoSettings['width'];
+                            this.bLogoHeight = displayboard_data.logoSettings['height'];
+                        } else {
+                            this.bLogoWidth = '100';
+                            this.bLogoHeight = '100';
+                        }
+                    }
+                    const layoutPosition = displayboard_data.layout.split('_');
+                    this.boardRows = layoutPosition[0];
+                    // this.onResize();
+                    this.boardCols = layoutPosition[1];
+                    displayboard_data.metric.forEach(element => {
+                        this.metricElement = element;
+                        this.selectedDisplayboards[element.position] = {};
+                        this.setDisplayboards(this.metricElement);
+                    });
+                    this.cronHandle1 = observableInterval(10000).subscribe(() => {
+                        displayboard_data.metric.forEach(element => {
+                            this.metricElement = element;
+                            this.selectedDisplayboards[element.position] = {};
+                            this.setDisplayboards(this.metricElement);
+                        });
+                    });
+                    this.api_loading = false;
+                }
+            },
+            (error) => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.router.navigate(['/']);
+            });
+    }
+
+
+    getStatusboard(boardObj) {
+        if (boardObj.sbId) {
+            this.roomName = '';
+            this.api_loading = true;
+            this.provider_services.getDisplayboardById_Type(boardObj.sbId, this.type).subscribe(
+                (displayboard_data: any) => {
+                    this.roomName = displayboard_data['serviceRoom'];
+                    if (displayboard_data.headerSettings && displayboard_data.headerSettings['title1']) {
+                        this.qBoardTitle = this._sanitizer.bypassSecurityTrustHtml(displayboard_data.headerSettings['title1']);
+                    }
+                    if (displayboard_data.footerSettings && displayboard_data.footerSettings['title1']) {
+                        this.qBoardFooter = this._sanitizer.bypassSecurityTrustHtml(displayboard_data.footerSettings['title1']);
+                    }
+                    if (displayboard_data.logoSettings) {
+                        if (displayboard_data.logoSettings.logo) {
+                            this.is_image = true;
+                            const logoObj = displayboard_data.logoSettings.logo;
+                            this.blogo = logoObj['url'];
+                        }
+                        this.position = displayboard_data.logoSettings['position'];
+                        this.bLogoWidth = displayboard_data.logoSettings['width'];
+                        this.bLogoHeight = displayboard_data.logoSettings['height'];
+                    }
+                    const layoutPosition = displayboard_data.layout.split('_');
+                    this.boardRows = layoutPosition[0];
+                    //this.onResize();
+                    this.boardCols = layoutPosition[1];
+                    displayboard_data.metric.forEach(element => {
+                        this.metricElement = element;
+                        this.selectedDisplayboards[element.position] = {};
+                        this.setDisplayboards(this.metricElement);
+                    });
+                    this.api_loading = false;
+                });
+        }
+    }
+
+    setDisplayboards(element) {
+        console.log(element);
+        const displayboard = element.queueSet;
+        this.selectedDisplayboards[element.position]['board'] = displayboard;
+        const Mfilter = displayboard.queryString;
+        if (this.type === 'waitlist') {
+            this.provider_services.getTodayWaitlistFromStringQuery(Mfilter).subscribe(
+                (waitlist: any) => {
+                    const filteredList = waitlist.filter(wt => wt.service.serviceType === 'physicalService');
+                    this.selectedDisplayboards[element.position]['checkins'] = filteredList;
+                });
+        } else {
+            this.provider_services.getTodayAppointmentsFromStringQuery(Mfilter).subscribe(
+                (waitlist: any) => {
+                    const filteredList = waitlist.filter(wt => wt.service.serviceType === 'physicalService');
+                    this.selectedDisplayboards[element.position]['checkins'] = filteredList;
+                });
+        }
+
+    }
+
+
+
+
     editLayoutbyId(id) {
         this.provider_services.getDisplayboardWaitlist(id).subscribe(data => {
             this.layoutData = data;
+            console.log("DisplayBoard Edit LayoutById :", this.layoutData);
+
             this.layout = this.getLayout(this.layoutData.layout);
             this.displayBoardData = data;
+
             const breadcrumbs = [];
             this.breadcrumbs_init.map((e) => {
                 breadcrumbs.push(e);
@@ -267,9 +554,32 @@ export class DisplayboardDetailComponent implements OnInit {
             if (this.layoutData.metric) {
                 this.layoutData.metric.forEach(element => {
                     this.boardSelectedItems[element.position] = element.sbId;
+
                     this.metricSelected[element.position] = element.sbId;
+
                 });
+                console.log("BoardSelectedItems :", this.layoutData.metric);
+                // console.log("Selected :", this.layoutData.metric[layoutPosition]);
+
+
             }
+           
+
+            for (var i = 0; i < this.layoutData.metric.length; i++) {
+
+                this.boardData = this.layoutData.metric[i];
+                for (var j = 0; j < this.boardData['queueSet']['fieldList'].length; j++) {
+                    this.colLength = this.boardData['queueSet']['fieldList'].length
+                    this.selectedBoardData[j] = this.boardData['queueSet']['fieldList'][j];
+                    // console.log("selectedBoardData ", this.selectedBoardData);
+                    console.log("Board Data", this.selectedBoardData[j]);
+
+                }
+
+            }
+
+            this.createRange(this.selectedBoardData);
+
         });
     }
     handleLayoutMetric(selectedItem, position) {
@@ -282,6 +592,7 @@ export class DisplayboardDetailComponent implements OnInit {
         this.footerSetting = true;
     }
     onSubmit() {
+
         this.metric = [];
         let name = '';
         if (this.displayName) {
@@ -300,6 +611,7 @@ export class DisplayboardDetailComponent implements OnInit {
                 'serviceRoom': this.serviceRoom,
                 'metric': this.metric,
             };
+            console.log("Data :", post_data)
             this.provider_services.createDisplayboardWaitlist(post_data).subscribe(data => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
                 this.editLayoutbyId(data);
@@ -310,6 +622,8 @@ export class DisplayboardDetailComponent implements OnInit {
                     this.api_loading = false;
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
+            // this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+
         }
         if (this.actionparam === 'edit') {
             const post_data = {
@@ -334,7 +648,10 @@ export class DisplayboardDetailComponent implements OnInit {
                     this.api_loading = false;
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
+            // this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+
         }
+
     }
     onCancel() {
         if (this.actionparam === 'edit') {
@@ -392,9 +709,12 @@ export class DisplayboardDetailComponent implements OnInit {
         this.clearQboardSelected();
     }
     redirecToQmanager() {
-        this.router.navigate(['provider', 'settings' , 'q-manager' , 'displayboards' ]);
+        this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
     }
     redirecToHelp() {
-        
+
+    }
+    toBack() {
+        this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
     }
 }
