@@ -462,6 +462,7 @@ export class AppointmentComponent implements OnInit {
         if(pN.startsWith(dialCode)) {
         loginId = pN.split(dialCode)[1];
         }
+       
         let post_data = {
             'phoneNo-eq': loginId,
             'countryCode-eq': dialCode
@@ -469,6 +470,8 @@ export class AppointmentComponent implements OnInit {
         this.provider_services.getCustomer(post_data)
         .subscribe(
             (data: any) => {
+                this.qParams['phone'] = loginId;
+                this.qParams['countryCode'] = dialCode;
                 if (data.length === 0) {
                     // if (mode === 'phone') {
                     //     const filter = { 'primaryMobileNo-eq': form_data.search_input };

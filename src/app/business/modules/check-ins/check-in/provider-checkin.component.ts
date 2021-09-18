@@ -477,6 +477,7 @@ export class ProviderCheckinComponent implements OnInit {
         .subscribe(
             (data: any) => {
                 this.qParams['phone'] = loginId;
+                this.qParams['countryCode'] = dialCode;
                 if (data.length === 0) {
                     // if (mode === 'phone') {
                     //     const filter = { 'primaryMobileNo-eq': form_data.search_input };
