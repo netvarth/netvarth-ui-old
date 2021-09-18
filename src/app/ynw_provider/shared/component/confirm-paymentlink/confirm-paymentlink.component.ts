@@ -66,6 +66,8 @@ export class ConfirmPatmentLinkComponent implements OnInit {
   corpSettings: any;
   addondialogRef: any;
   is_noSMS = false;
+  countryCode: any;
+  mobi_number: any;
   constructor(
     public dialogRef: MatDialogRef<ConfirmPatmentLinkComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -83,6 +85,7 @@ export class ConfirmPatmentLinkComponent implements OnInit {
     this.source = this.data.source;
     this.calculationMode = this.data.calc_mode;
     this.showToken = this.data.showToken;
+    this.countryCode = this.data.countryCode
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
   }
@@ -93,8 +96,15 @@ export class ConfirmPatmentLinkComponent implements OnInit {
     this.getSMSCredits();
   }
   createForm() {
+    if(this.countryCode == '+91'){
+      this.mobi_number = this.mobilenumber
+    }
+    else {
+      this.mobi_number = '';
+    }
+    console.log( this.countryCode +"hsdgkfsgdjfgdskf");
     this.amForm = this.fb.group({
-      mobile_number: [this.mobilenumber, Validators.compose([Validators.maxLength(10),
+      mobile_number: [this.mobi_number, Validators.compose([Validators.maxLength(10),
       Validators.minLength(10)])],
       email_id: [this.emailId, Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
     });

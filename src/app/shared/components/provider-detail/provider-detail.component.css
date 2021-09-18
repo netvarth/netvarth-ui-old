@@ -2008,3 +2008,7 @@ img.ordericon.home {
     display: flex !important;
   }
 }
+.morebt{
+  cursor: pointer;
+color: #1572a8;
+}

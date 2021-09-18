@@ -19,6 +19,7 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
 import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
 
 @Component({
     selector: 'app-provider-checkin',
@@ -237,6 +238,12 @@ export class ProviderCheckinComponent implements OnInit {
     questionAnswers;
     bookingMode;
     api_loading_video;
+    separateDialCode = true;
+    SearchCountryField = SearchCountryField;
+    selectedCountry = CountryISO.India;
+    PhoneNumberFormat = PhoneNumberFormat;
+    preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+    phone;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -452,6 +459,64 @@ export class ProviderCheckinComponent implements OnInit {
         if (event.key === 'Enter') {
             this.searchCustomer(form_data);
         }
+    }
+    serchCustomers(val){
+        console.log(val);
+        const dialCode = val.dialCode;
+        console.log(dialCode);
+        const pN = val.e164Number.trim();
+        let loginId = pN;
+        if(pN.startsWith(dialCode)) {
+        loginId = pN.split(dialCode)[1];
+        }
+        let post_data = {
+            'phoneNo-eq': loginId,
+            'countryCode-eq': dialCode
+        };
+        this.provider_services.getCustomer(post_data)
+        .subscribe(
+            (data: any) => {
+                this.qParams['phone'] = loginId;
+                if (data.length === 0) {
+                    // if (mode === 'phone') {
+                    //     const filter = { 'primaryMobileNo-eq': form_data.search_input };
+                    //     this.getJaldeeCustomer(filter);
+                    // } else {
+                    //     this.form_data = data;
+                    //     this.create_new = true;
+                    // }
+                    this.createNew('create');
+                } else {
+                    if (data.length > 1) {
+                        const customer = data.filter(member => !member.parent);
+                        this.customer_data = customer[0];
+                    } else {
+                        this.customer_data = data[0];
+                    }
+                    this.jaldeeId = this.customer_data.jaldeeId;
+                    if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+                        this.countryCode = this.customer_data.countryCode;
+                    } else {
+                        this.countryCode = '+91';
+                    }
+                    if (this.source === 'waitlist-block') {
+                        this.showBlockHint = true;
+                        if (this.showtoken) {
+                            this.heading = 'Confirm your Token';
+                        } else {
+                            this.heading = 'Confirm your Check-in';
+                        }
+                    } else {
+                        this.getFamilyMembers();
+                        this.initCheckIn();
+                    }
+                }
+            },
+            error => {
+                this.wordProcessor.apiErrorAutoHide(this, error);
+            }
+        );
+
     }
     searchCustomer(form_data) {
         this.emptyFielderror = false;
@@ -842,7 +907,7 @@ export class ProviderCheckinComponent implements OnInit {
             return false;
         }
         return true;
-    }
+    } 
     resetApiErrors() {
         this.emailerror = null;
         this.email1error = null;
@@ -860,6 +925,9 @@ export class ProviderCheckinComponent implements OnInit {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
                         if (this.customer_data.phoneNo) {
                             this.callingModes = this.customer_data.phoneNo.trim();
+                            if (this.callingModes.includes('*')) {
+                                this.callingModes = '';
+                            }
                             this.wtsapmode = this.customer_data.phoneNo;
                             console.log('whatsappmoe..' + this.wtsapmode);
                         }

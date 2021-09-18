@@ -1758,7 +1758,7 @@ body.modal-open {
   text-align: center;
   font-size: 1.3rem;
   margin-top:50px;
-  margin-left: 100px;
+  /* margin-left: 100px; */
 }
 .prepayment-confirm .btn{
   border-radius: 1.5rem!important;
@@ -1784,7 +1784,7 @@ body.modal-open {
     text-align: center;
     font-size: 1rem;
     margin-top:20px;
-    margin-left: 20px;
+    /* margin-left: 20px; */
   }
   .prepayment-confirm .btn{
     border-radius: 1rem!important;
@@ -1852,3 +1852,15 @@ box-shadow: 4px 4px 5px gainsboro;
   font-size: 0.85rem !important;
   padding: 10px;
  }
+ .pay_policy {
+  font-size: 0.9rem !important;
+}
+.pad_link{
+    padding-top: 14px !important;
+  }
+  .pad_policy{
+    padding-top: 7px !important;
+  }
+  .changebt{
+    color: #1572a8 !important;
+  }

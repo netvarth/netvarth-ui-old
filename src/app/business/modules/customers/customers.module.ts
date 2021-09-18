@@ -24,6 +24,7 @@ import { CustomerDetailComponent } from './customer-details/customer-details.com
 import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
 import { VoicecallConfirmBoxComponent } from './confirm-box/voicecall-confirm-box.component';
 import { VoiceConfirmComponent } from './video-confirm/voice-confirm.component';
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { VoiceConfirmComponent } from './video-confirm/voice-confirm.component';
         NgbModule,
         OwlModule,
         InboxModule,
-        QuestionnaireModule
+        QuestionnaireModule,
+        NgxIntlTelInputModule
     ],
     declarations: [
         CustomersListComponent,

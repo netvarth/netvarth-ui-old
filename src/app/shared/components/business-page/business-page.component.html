@@ -83,7 +83,9 @@
                                                     *ngIf="bNameEnd!='' && showmoreDesc"
                                                     [innerHTML]="bNameEnd | nl2br"></span>
                                                 <span class="more" *ngIf="!showmoreDesc && bNameEnd!=''"
-                                                    (click)="showDesc()">...</span>
+                                                    (click)="showDesc()">...</span> &nbsp;
+                                                    <span class="morebt" *ngIf="!showmoreDesc && bNameEnd!=''"
+                                                    (click)="showDesc()">Read more</span>
                                                 <!-- <span class="more" *ngIf="showmoreDesc" (click)="showDesc()">less</span> -->
                                             </div>
                                         </ng-container>

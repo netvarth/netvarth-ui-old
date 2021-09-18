@@ -1,5 +1,5 @@
 <section #consumer_donation class="container no-padding cons-donate no-padding-small">
-        <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
+    <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
     <div class="content p0 loc-list p-checkin ynw-common-form-nm">
         <div class="panel panel-default">
             <div class="panel-heading top-row ">
@@ -176,8 +176,11 @@
                                                                                     {{donorName}}
                                                                                 </h6>
                                                                                 <div class="">
-                                                                                    <div style="font-size: 1rem !important;" class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5 no-padding donation_label">
-                                                                                        Provide donor details for sending donation acknowledgement and related communications.
+                                                                                    <div style="font-size: 1rem !important;"
+                                                                                        class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5 no-padding donation_label">
+                                                                                        Provide donor details for
+                                                                                        sending donation acknowledgement
+                                                                                        and related communications.
                                                                                     </div>
                                                                                     <i class="fa fa-mobile "></i>
                                                                                     <span
@@ -257,10 +260,14 @@
                                                                                 *ngIf="sel_ser_det.minDonationAmount != sel_ser_det.maxDonationAmount">
                                                                                 Minimum <span class="bold rupee-font">
                                                                                     <!-- <i class="fa fa-inr"></i> -->
-                                                                                    {{sel_ser_det.minDonationAmount  | currency:'&#8377;'}}</span>
+                                                                                    {{sel_ser_det.minDonationAmount |
+                                                                                    currency:'&#8377;'}}
+                                                                                </span>
                                                                                 Maximum <span class="bold rupee-font">
                                                                                     <!-- <i class="fa fa-inr"></i> -->
-                                                                                    {{sel_ser_det.maxDonationAmount  | currency:'&#8377;'}}</span>
+                                                                                    {{sel_ser_det.maxDonationAmount |
+                                                                                    currency:'&#8377;'}}
+                                                                                </span>
                                                                             </p>
                                                                             <p class="form-level-settings applybill"
                                                                                 *ngIf="sel_ser_det.minDonationAmount == sel_ser_det.maxDonationAmount">
@@ -526,12 +533,17 @@
                                             </div>
                                             <div>
                                                 <div class="txt-align-center" *ngIf="razorpayEnabled && paytmEnabled">
-                                                    
-                                                    <span type="button" class="razorpay-icon paymenticons" [class.disabled]="isClickedOnce"*ngIf="razorpayEnabled && paytmEnabled" 
-                                                    (click)="!isClickedOnce && payuPayment()" >
+
+                                                    <span type="button" class="razorpay-icon paymenticons"
+                                                        [class.disabled]="isClickedOnce"
+                                                        *ngIf="razorpayEnabled && paytmEnabled"
+                                                        (click)="!isClickedOnce && payuPayment()">
                                                     </span>&nbsp;&nbsp;
-                                                    <span type="button"  class="paytm-icon paymenticons" [class.disabled]="isClickedOnce" *ngIf="razorpayEnabled && paytmEnabled" (click)="!isClickedOnce && paytmPayment()" >
-                                                      </span>
+                                                    <span type="button" class="paytm-icon paymenticons"
+                                                        [class.disabled]="isClickedOnce"
+                                                        *ngIf="razorpayEnabled && paytmEnabled"
+                                                        (click)="!isClickedOnce && paytmPayment()">
+                                                    </span>
                                                 </div>
                                                 <!-- <button type="button"  *ngIf="razorpayEnabled && paytmEnabled" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()"
                                                     class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4">
@@ -541,16 +553,31 @@
                                                 class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4 mgn-lt-5">
                                                 PayTM
                                             </button> -->
-                                            <button type="button"  *ngIf="razorpayEnabled && !paytmEnabled" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()"
-                                            class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4">
-                                            Pay by CC/DC/UPI
-                                        </button>
-                                       <button type="button" *ngIf="paytmEnabled && !razorpayEnabled" [class.disabled]="isClickedOnce"  (click)="!isClickedOnce && paytmPayment()"
-                                        class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4 mgn-lt-5">
-                                        Pay by CC/DC/UPI
-                                    </button>
+                                                <button type="button" *ngIf="razorpayEnabled && !paytmEnabled"
+                                                    [class.disabled]="isClickedOnce"
+                                                    (click)="!isClickedOnce && payuPayment()"
+                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4">
+                                                    Pay by CC/DC/UPI
+                                                </button>
+                                                <button type="button" *ngIf="paytmEnabled && !razorpayEnabled"
+                                                    [class.disabled]="isClickedOnce"
+                                                    (click)="!isClickedOnce && paytmPayment()"
+                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4 mgn-lt-5">
+                                                    Pay by CC/DC/UPI
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 hf-double-btn-container">
+                                            <div class="txt-align-center" *ngIf="interNatioanalPaid">
+                                               <span
+                                                    [class.disabled]="isClickedOnce"
+                                                    (click)="!isClickedOnce && payuPayment()"
+                                                    class="pointer-cursor"><a>International Payment ? Click here</a></span>
+    
                                             </div>
                                         </div>
+                                       
                                     </div>
                                 </div>
                             </div>

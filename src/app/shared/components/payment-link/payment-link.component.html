@@ -59,6 +59,9 @@
                                                         Pay by CC/DC/UPI  
                                                     </button>
                                                 </div>
+                                                <div class="txt-align-center"  *ngIf="interNatioanalPaid">
+                                                    <span [class.disabled]="isClickedOnce"   (click)="!isClickedOnce && pay()"  class="pointer-cursor"><a class="paybt">International Payment ? Click here</a></span>
+                                                </div>
                                             </li>
                                             <li>
                                                 <a class="learnmore-pointer" (click)="billview()">
