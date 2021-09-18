@@ -341,6 +341,7 @@ export class CustomerCreateComponent implements OnInit {
               this.customerDetails = data[0].userProfile;
               //console.log("hello"+this.customerDetails);
               this.amForm.get('mobile_number').setValue(data[0].userProfile.primaryMobileNo);
+              this.amForm.get('countryCode').setValue(data[0].userProfile.countryCode);
               this.amForm.get('first_name').setValue(data[0].userProfile.firstName);
               this.amForm.get('last_name').setValue(data[0].userProfile.lastName);
               if (this.customerDetails.email) {
@@ -455,8 +456,8 @@ export class CustomerCreateComponent implements OnInit {
       this.loading = false;
     } else {
       this.amForm = this.fb.group({
-        mobile_number: ['', Validators.compose([Validators.maxLength(10),
-        Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+        mobile_number: ['', Validators.compose([Validators.maxLength(10),Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+        countryCode: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)])],
         customer_id: [''],
         first_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
         last_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
@@ -480,68 +481,42 @@ export class CustomerCreateComponent implements OnInit {
     }
   }
   updateForm() {
-    if(this.customer[0].age){
+    this.amForm.setValue({
+      'first_name': this.customer[0].firstName || '',
+      'last_name': this.customer[0].lastName || '',
+      'email_id': this.customer[0].email || '',
+      'dob': this.customer[0].dob || '',
+      'age': '',
+      'ageType': '',
+      'gender': this.customer[0].gender || '',
+      'mobile_number': this.customer[0].phoneNo.trim() || '',
+      'countryCode': this.customer[0].countryCode.trim() || '',
+      'customer_id': this.customer[0].jaldeeId || '',
+      'address': this.customer[0].address || '',
+    });
+
+    if (this.customer[0].age) {
       console.log(this.customer[0].age.year)
-      if (this.customer[0].age.year && this.customer[0].age.year !==0) {
+      if (this.customer[0].age.year && this.customer[0].age.year !== 0) {
         this.ageType = 'year';
-        this.amForm.setValue({
-          'first_name': this.customer[0].firstName || '',
-          'last_name': this.customer[0].lastName || '',
-          'email_id': this.customer[0].email || '',
-          'dob': this.customer[0].dob || '',
-          'age': this.customer[0].age.year || '',
-          'ageType': this.ageType || '',
-          'gender': this.customer[0].gender || '',
-          'mobile_number': this.customer[0].phoneNo.trim() || '',
-          'customer_id': this.customer[0].jaldeeId || '',
-          'address': this.customer[0].address || '',
-        });
+        this.amForm.get('age').setValue(this.customer[0].age.year || '');
+        this.amForm.get('ageType').setValue(this.ageType || '');
       }
-      else if (this.customer[0].age.month && this.customer[0].age.month !==0) {
+      else if (this.customer[0].age.month && this.customer[0].age.month !== 0) {
         this.ageType = 'month';
-        this.amForm.setValue({
-          'first_name': this.customer[0].firstName || '',
-          'last_name': this.customer[0].lastName || '',
-          'email_id': this.customer[0].email || '',
-          'dob': this.customer[0].dob || '',
-          'age': this.customer[0].age.month || '',
-          'ageType': this.ageType || '',
-          'gender': this.customer[0].gender || '',
-          'mobile_number': this.customer[0].phoneNo.trim() || '',
-          'customer_id': this.customer[0].jaldeeId || '',
-          'address': this.customer[0].address || '',
-        });
+        this.amForm.get('age').setValue(this.customer[0].age.month || '');
+        this.amForm.get('ageType').setValue(this.ageType || '');
       }
-      else{
+      else {
         this.ageType = 'year';
-          this.amForm.setValue({
-          'first_name': this.customer[0].firstName || '',
-          'last_name': this.customer[0].lastName || '',
-          'email_id': this.customer[0].email || '',
-          'dob': this.customer[0].dob || '',
-          'age':  '',
-          'ageType': this.ageType || '',
-          'gender': this.customer[0].gender || '',
-          'mobile_number': this.customer[0].phoneNo.trim() || '',
-          'customer_id': this.customer[0].jaldeeId || '',
-          'address': this.customer[0].address || '',
-        });
+        this.amForm.get('age').setValue('');
+        this.amForm.get('ageType').setValue(this.ageType || '');
       }
     }
-    else{
+    else {
       this.ageType = 'year';
-        this.amForm.setValue({
-        'first_name': this.customer[0].firstName || '',
-        'last_name': this.customer[0].lastName || '',
-        'email_id': this.customer[0].email || '',
-        'dob': this.customer[0].dob || '',
-        'age':  '',
-        'ageType': this.ageType || '',
-        'gender': this.customer[0].gender || '',
-        'mobile_number': this.customer[0].phoneNo.trim() || '',
-        'customer_id': this.customer[0].jaldeeId || '',
-        'address': this.customer[0].address || '',
-      });
+      this.amForm.get('age').setValue('');
+      this.amForm.get('ageType').setValue(this.ageType || '');
     }
   }
   onSubmit(form_data) {
@@ -581,8 +556,8 @@ export class CustomerCreateComponent implements OnInit {
           'address': form_data.address,
           //   }
         };
-        if (form_data.mobile_number) {
-          post_data['countryCode'] = '+91';
+        if (form_data.countryCode) {
+          post_data['countryCode'] = form_data.countryCode;
         }
         if (form_data.email_id && form_data.email_id !== '') {
           post_data['email'] = form_data.email_id;
@@ -635,8 +610,8 @@ export class CustomerCreateComponent implements OnInit {
           //   }
         };
 
-        if (form_data.mobile_number) {
-          post_data['countryCode'] = '+91';
+        if (form_data.countryCode) {
+          post_data['countryCode'] = form_data.countryCode;
         }
         if (form_data.email_id && form_data.email_id !== '') {
           post_data['email'] = form_data.email_id;
@@ -704,8 +679,8 @@ export class CustomerCreateComponent implements OnInit {
         }
       }
      
-      if (form_data.mobile_number) {
-        post_data['countryCode'] = '+91';
+      if (form_data.countryCode) {
+        post_data['countryCode'] = form_data.countryCode;
       }
       // if (form_data.email_id && form_data.email_id !== '') {
       //     post_data['email'] = form_data.email_id;
@@ -916,6 +891,9 @@ export class CustomerCreateComponent implements OnInit {
   isNumeric(evt) {
     return this.shared_functions.isNumeric(evt);
   }
+  isNumericSign(evt) {
+    return this.shared_functions.isNumericSign(evt);
+}
   searchCustomer(form_data, mod?) {
     let mode = 'id';
     if (mod) {

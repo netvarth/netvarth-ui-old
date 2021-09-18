@@ -106,12 +106,17 @@
                         <div class="col-lg-6" *ngIf="haveMobile">
                             <label>Mobile</label>
                             <div class="input-group">
-                                <div class="input-group-prepend"><span class="input-group-text1"><i style="font-style: normal;font-size: small;">+91</i></span></div>
-                                <input [readonly]="action === 'edit'&& customer[0].jaldeeConsumer !=0 && customer[0].phoneNo"
+                                    <div class="countrycode">
+                                        <input type="text"  [readonly]="action === 'edit'&& customer[0].jaldeeConsumer !=0 && customer[0].phoneNo" (keypress)="isNumericSign($event)" matInput
+                                        class="form-control" id="countryCode"
+                                        placeholder="Country code " formControlName="countryCode"
+                                        autocomplete="off" maxlength="5">
+                                    </div>
+                                    <div class="mobilenumber">
+                                     <input [readonly]="action === 'edit'&& customer[0].jaldeeConsumer !=0 && customer[0].phoneNo"
                                     type="text" class="form-control" (keypress)="isNumeric($event)" id="mobile_number"
                                     placeholder="{{mobile_cap}} " formControlName="mobile_number" autocomplete="off"
-                                    maxlength=10 />
-                            </div>
+                                    maxlength=10 /></div>
                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile_number')"
                                 [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',
           {
@@ -120,7 +125,7 @@
             'maxlength' : 'Enter a 10 digit mobile number',
             'pattern' : 'Only numbers are allowed'
           })">
-                            </app-field-error-display>
+                            </app-field-error-display></div>
                         </div>
                         <div class="col-lg-6" *ngIf="customidFormat && customidFormat.customerSeriesEnum && customidFormat.customerSeriesEnum === 'MANUAL'">
                             <label>{{customerPlaceholder | capitalizeFirst}}</label>
