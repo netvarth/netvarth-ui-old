@@ -30,7 +30,6 @@ import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.m
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { PaytmService } from '../../../../../app/shared/services/paytm.service';
 
-
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -188,6 +187,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   payment_options: any = [];
   paytmEnabled = false;
   razorpayEnabled = false;
+  interNatioanalPaid = false;
   paymentmodes: any;
   isEditable = true;
   stepperIndex: string;
@@ -222,7 +222,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.storeContact = this._formBuilder.group({
 
-      phone: [this.phonenumber, Validators.required],
+      phone: ['', Validators.required],
       email: ['', Validators.required]
     });
 
@@ -425,6 +425,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   getPaymentModes() {
     this.paytmEnabled = false;
     this.razorpayEnabled = false;
+    this.interNatioanalPaid = false;
     this.shared_services.getPaymentModesofProvider(this.account_id, 'prePayment')
       .subscribe(
         data => {
@@ -432,6 +433,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           if (this.paymentmodes[0].isJaldeeBank) {
             if (this.customer_countrycode == '+91') {
               this.paytmEnabled = true;
+              this.interNatioanalPaid = true;
             }
             else {
               this.razorpayEnabled = true;
@@ -470,7 +472,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.customer_countrycode = credentials.countryCode;
       this.phonenumber = activeUser.primaryPhoneNumber;
       // this.storeContact.get('phone').value(this.phonenumber);
+     // this.storeContact.controls.phone.setValue(this.phonenumber);
+     if(this.customer_countrycode == "+91"){
       this.storeContact.controls.phone.setValue(this.phonenumber);
+    }
       this.customer_phoneNumber = activeUser.primaryPhoneNumber;
       console.log(this.customer_phoneNumber);
       this.getaddress();
@@ -1222,7 +1227,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       if (item.consumerNote) {
         consumerNote = item.consumerNote;
       }
-      this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote ,'itemType':item.item.itemType});
+      this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote });
     });
     return this.orderSummary;
   }
@@ -1776,7 +1781,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
 
           });
-
     }
   }
   paywithRazorpay(pData: any) {

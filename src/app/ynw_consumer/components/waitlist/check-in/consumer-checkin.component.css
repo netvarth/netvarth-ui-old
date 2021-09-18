@@ -1519,6 +1519,9 @@ body.modal-open {
   color: #3c8dbc !important;
   font-size: 0.9rem !important;
 }
+.pay_policy {
+  font-size: 0.9rem !important;
+}
 .refundpol .modal-footer{
   padding: 0.5rem !important;
 }
@@ -1800,7 +1803,7 @@ body.modal-open {
   text-align: center;
   font-size: 1.3rem;
   margin-top:50px;
-  margin-left: 100px;
+  /* margin-left: 100px; */
 }
 .prepayment-confirm .btn{
   border-radius: 1.5rem!important;
@@ -1826,7 +1829,7 @@ body.modal-open {
     text-align: center;
     font-size: 1rem;
     margin-top:20px;
-    margin-left: 20px;
+    /* margin-left: 20px; */
   }
   .prepayment-confirm .btn{
     border-radius: 1rem!important;
@@ -1887,4 +1890,13 @@ body.modal-open {
     margin-top: 60px !important;
     color: green !important;
     right: 0px !important;
+  }
+  .pad_link{
+    padding-top: 14px !important;
+  }
+  .pad_policy{
+    padding-top: 7px !important;
+  }
+  .changebt{
+    color: #1572a8 !important;
   }

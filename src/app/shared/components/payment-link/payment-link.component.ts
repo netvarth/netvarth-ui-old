@@ -128,6 +128,7 @@ export class PaymentLinkComponent implements OnInit {
   paymode = false;
   @ViewChild('consumer_paylink') paytmview;
   razorpayEnabled = false;
+  interNatioanalPaid = false;
   constructor(
     public provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
@@ -213,6 +214,7 @@ export class PaymentLinkComponent implements OnInit {
   getPaymentModes() {
     this.paytmEnabled = false;
     this.razorpayEnabled = false;
+    this.interNatioanalPaid = false;
     this.sharedServices.getPaymentModesofProvider(this.accountId, 'billPayment')
       .subscribe(
         data => {
@@ -220,6 +222,7 @@ export class PaymentLinkComponent implements OnInit {
           if (this.paymentmodes[0].isJaldeeBank) {
             if (this.countryCode == '91') {
               this.paytmEnabled = true;
+              this.interNatioanalPaid = true;
             }
             else {
               this.razorpayEnabled = true;

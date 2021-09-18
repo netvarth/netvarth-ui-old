@@ -114,7 +114,7 @@
                     <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
                       <mat-grid-list cols="{{no_of_grids}}" rowHeight="200px" [gutterSize]="'10px'" class="mgn-bt-20">
                         <mat-grid-tile *ngFor="let address of added_address; let i = index"
-                          (click)="highlight(i,address)" [ngClass]="{'highlight': selectedRowIndex == i}">
+                          (click)="highlight(i,address)" [ngClass]="{'highlightadress': selectedRowIndex == i}">
                           <mat-grid-tile-header>
                             <i class="fa fa-map-marker" aria-hidden="true"></i>
                             <span class="adrs-head">Address {{i+1}}</span>
@@ -509,6 +509,12 @@
                         Pay by CC/DC/UPI
                       </button>
                     </div>
+                    <br>
+                    <div class="txt-align-center" *ngIf="interNatioanalPaid && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))" >
+                      <span [class.disabled]="isClickedOnce"  (click)="!isClickedOnce && confirm()" class="pointer-cursor"><a class="paybt">International Payment ? Click here</a></span>
+                     
+                     
+                  </div>
                     <div *ngIf="cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount > cartDetails.advanceAmount) || (checkJcash && jcashamount == cartDetails.advanceAmount))">
                       <button mat-flat-button [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm()" 
                         [disabled]="checkoutDisabled || !isfutureAvailableTime" class="chekout-btn">CHECKOUT &nbsp; →
@@ -636,6 +642,13 @@
                     Pay by CC/DC/UPI  
                   </button>
                 </div>
+                <br>
+                <div class="txt-align-center" *ngIf="interNatioanalPaid && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))" >
+                  <span [class.disabled]="isClickedOnce"  (click)="!isClickedOnce && confirm()" class="pointer-cursor"><a class="paybt">International Payment ? Click here</a></span>
+                 
+                 
+              </div>
+
                   <div *ngIf="selectedImagelist.files.length > 0 && cartDetails.advanceAmount > 0 &&  ((checkJcash && jcashamount > cartDetails.advanceAmount) || (checkJcash && jcashamount == cartDetails.advanceAmount))">
                     <button mat-flat-button [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm()" [disabled]="checkoutDisabled || !isfutureAvailableTime"
                       class="chekout-btn">CHECKOUT &nbsp; → </button>

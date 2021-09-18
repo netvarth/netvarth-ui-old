@@ -101,7 +101,7 @@ flex-basis: 50% !important;
   color: #666666;
 }
 
-.highlight{
+.highlightadress{
 //   background: #42A948 !important; /* green */
 box-shadow: 0 3px 5px 0 rgba(17, 17, 17, 0.78) !important;
 border: 3px dashed #0707eca1 !important;
@@ -514,4 +514,14 @@ box-shadow: 4px 4px 5px gainsboro;
     width: 150px;
     padding: 10px;
     background: white;
+  }
+  .paymt{
+    font-weight: 600;
+    color: #282c3f;
+    font-size: 14px;
+  }
+  .paybt{
+    font-weight: 600;
+    color: #3c8dbc;
+    font-size: 14px;
   }

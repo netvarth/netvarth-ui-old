@@ -137,6 +137,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
     loadingPaytm = false;
     isClickedOnce=false;
     razorpayEnabled = false;
+    interNatioanalPaid = false;
     @ViewChild('consumer_appointmentbill') paytmview;
     paymentmodes: any;
     paymode = false;
@@ -407,6 +408,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
     getPaymentModes() {
         this.paytmEnabled = false;
         this.razorpayEnabled = false;
+        this.interNatioanalPaid = false;
         this.sharedServices.getPaymentModesofProvider(this.accountId,'billPayment')
             .subscribe(
                 data => {
@@ -414,6 +416,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                   if (this.paymentmodes[0].isJaldeeBank) {
                     if (this.customer_countrycode == '+91') {
                         this.paytmEnabled = true;
+                        this.interNatioanalPaid = true;
                     }
                     else {
                         this.razorpayEnabled = true;

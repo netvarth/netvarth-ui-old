@@ -15,6 +15,7 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 
 
 @Component({
@@ -234,6 +235,12 @@ export class CustomerSearchComponent implements OnInit {
     multiCustomerData: any;
     display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
     group;
+    separateDialCode = true;
+    SearchCountryField = SearchCountryField;
+    selectedCountry = CountryISO.India;
+    PhoneNumberFormat = PhoneNumberFormat;
+    preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+    phone;
 
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -704,16 +711,7 @@ export class CustomerSearchComponent implements OnInit {
                 (data: any) => {
                     this.loading = false;
                     if (data.length === 0) {
-                        // this.form_data = data;
-                        // if (mode === 'phone') {
-                        //     this.amForm.get('mobile_number').setValue(form_data.search_input);
-                        // }
-                        // if (mode === 'email') {
-                        //     this.amForm.get('email_id').setValue(form_data.search_input);
-                        // }
-                        // if (mode === 'id' && this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
-                        //     this.amForm.get('customer_id').setValue(form_data.search_input);
-                        // }
+                        
 
                         if (mode === 'phone') {
                             filter['phone'] = form_data.search_input;
@@ -750,6 +748,69 @@ export class CustomerSearchComponent implements OnInit {
                     this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
+    }
+    serchCustomers(val){
+        const filter = {};
+        filter['source'] = this.source;
+        this.emptyFielderror = false;
+        this.form_data = null;
+        this.create_new = false;
+        if (val === '' || null) {
+            this.emptyFielderror = true;
+            this.searchClicked = false;
+            return;
+        }
+        this.loading = true;
+        console.log(val);
+        const dialCode = val.dialCode;
+        console.log(dialCode);
+        const pN = val.e164Number.trim();
+        let loginId = pN;
+        if(pN.startsWith(dialCode)) {
+        loginId = pN.split(dialCode)[1];
+        }
+        let post_data = {
+            'phoneNo-eq': loginId,
+            'countryCode-eq': dialCode
+        };
+        this.provider_services.getCustomer(post_data)
+        .subscribe(
+            (data: any) => {
+                this.loading = false;
+                if (data.length === 0) {
+                    filter['phone'] = loginId;
+                    filter['source'] = 'clist';
+                    filter['id'] = 'add';
+                    filter['type'] = 'create';
+                    if (this.group) {
+                        filter['selectedGroup'] = this.group;
+                    }
+                    const navigationExtras: NavigationExtras = {
+                        queryParams: filter
+                    };
+                    this.router.navigate(['/provider/customers/create'], navigationExtras);
+                    this.create_new = true;
+                    this.searchClicked = true;
+                } else {
+                    if (data.length === 1) {
+                        this.foundCustomer = true;
+                        this.customer_data = data[0];
+                        this.customerPhone = this.customer_data.phoneNo;
+                        this.searchClicked = true;
+                        this.foundMultiCustomer = false;
+                    } else {
+                        this.searchClicked = true;
+                        this.foundMultiCustomer = true;
+                        this.foundCustomer = false;
+                        this.multiCustomerData = data;
+                    }
+                }
+            },
+            error => {
+                this.loading = false;
+                this.wordProcessor.apiErrorAutoHide(this, error);
+            }
+        );
     }
     editPhone() {
         this.edit = false;

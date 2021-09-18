@@ -552,7 +552,8 @@ export class VirtualFieldsComponent implements OnInit {
           resolve(locations);
         },
         error => {
-          resolve([]);
+          _this.loading=false;
+          reject(error);
         }
       );
     });
@@ -565,15 +566,22 @@ export class VirtualFieldsComponent implements OnInit {
       this.fetchLocationByPincode(pincode).then(
         (locations: any) => {
           if (locations.length > 0) {
+            this.loading=false;
             this.locations = locations[0];
             this.virtualForm.patchValue({ location: locations[0]['PostOffice'][0] });
           } else {
             this.locations = [];
+          
           }
+        
+        },error=>{
+          console.log(this.loading);
           this.loading = false;
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       )
     } else {
+      this.loading=false;
       this.locations = [];
     }
   }
@@ -782,6 +790,7 @@ export class VirtualFieldsComponent implements OnInit {
   saveMember(formdata) {
     const _this = this;
     const memberInfo = {};
+    console.log("formdata"+formdata);
     memberInfo['userProfile'] = {}
     if (  formdata.whatsappnumber !== undefined &&formdata.whatsappnumber.trim().length>0  && formdata.countryCode_whtsap !== undefined && formdata.countryCode_whtsap.trim().length>0) {
 
@@ -791,7 +800,7 @@ export class VirtualFieldsComponent implements OnInit {
       } else {
         whatsup["countryCode"] = '+' + formdata.countryCode_whtsap
       }
-      whatsup["number"] = formdata.whatsappumber
+      whatsup["number"] = formdata.whatsappnumber
       memberInfo['userProfile']['whatsAppNum'] = whatsup;
     }
     if (formdata.telegramnumber !== undefined && formdata.telegramnumber.trim().length>0 &&  formdata.countryCode_telegram !== undefined&&formdata.countryCode_telegram.trim().length>0) {
@@ -808,7 +817,6 @@ export class VirtualFieldsComponent implements OnInit {
     if (formdata.email !== '' && formdata.updateEmail) {
       memberInfo['userProfile']['email'] = formdata.email
     }
-
 
     memberInfo['bookingLocation'] = {}
     memberInfo['userProfile']['gender'] = formdata.gender;

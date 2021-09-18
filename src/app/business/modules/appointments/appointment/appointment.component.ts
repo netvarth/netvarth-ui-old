@@ -18,6 +18,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
 
 @Component({
     selector: 'app-appointment-checkin',
@@ -239,6 +240,12 @@ export class AppointmentComponent implements OnInit {
     questionAnswers;
     bookingMode;
     api_loading_video;
+    separateDialCode = true;
+    SearchCountryField = SearchCountryField;
+    selectedCountry = CountryISO.India;
+    PhoneNumberFormat = PhoneNumberFormat;
+    preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+    phone;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -329,6 +336,11 @@ export class AppointmentComponent implements OnInit {
                                 this.customer_data = customer[0];
                             } else {
                                 this.customer_data = data[0];
+                            }
+                            if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+                                this.countryCode = this.customer_data.countryCode;
+                            } else {
+                                this.countryCode = '+91';
                             }
                             this.jaldeeId = this.customer_data.jaldeeId;
                             this.getFamilyMembers();
@@ -440,6 +452,59 @@ export class AppointmentComponent implements OnInit {
         if (event.key === 'Enter') {
             this.searchCustomer(form_data);
         }
+    }
+    serchCustomers(val){
+        console.log(val);
+        const dialCode = val.dialCode;
+        console.log(dialCode);
+        const pN = val.e164Number.trim();
+        let loginId = pN;
+        if(pN.startsWith(dialCode)) {
+        loginId = pN.split(dialCode)[1];
+        }
+        let post_data = {
+            'phoneNo-eq': loginId,
+            'countryCode-eq': dialCode
+        };
+        this.provider_services.getCustomer(post_data)
+        .subscribe(
+            (data: any) => {
+                if (data.length === 0) {
+                    // if (mode === 'phone') {
+                    //     const filter = { 'primaryMobileNo-eq': form_data.search_input };
+                    //     this.getJaldeeCustomer(filter);
+                    // } else {
+                    //     this.form_data = data;
+                    //     this.create_new = true;
+                    // }
+                    this.createNew('create');
+                } else {
+                    if (data.length > 1) {
+                        const customer = data.filter(member => !member.parent);
+                        this.customer_data = customer[0];
+                    } else {
+                        this.customer_data = data[0];
+                    }
+                    this.jaldeeId = this.customer_data.jaldeeId;
+                    this.consumerPhoneNo = this.customer_data.phoneNo;
+                    if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+                        this.countryCode = this.customer_data.countryCode;
+                    } else {
+                        this.countryCode = '+91';
+                    }
+                    if (this.source === 'appt-block') {
+                        this.showBlockHint = true;
+                        this.heading = 'Confirm your Appointment';
+                    } else {
+                        this.getFamilyMembers();
+                        this.initAppointment();
+                    }
+                }
+            },
+            error => {
+                this.wordProcessor.apiErrorAutoHide(this, error);
+            }
+        );
     }
     searchCustomer(form_data) {
         this.emptyFielderror = false;
@@ -829,6 +894,10 @@ export class AppointmentComponent implements OnInit {
                 if (serv.virtualCallingModes) {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
                         this.callingModes = this.customer_data.phoneNo.trim();
+                        console.log("this.callingModes."+this.callingModes);
+                        if (this.callingModes.includes('*')) {
+                            this.callingModes = '';
+                        }
                         this.wtsapmode = this.customer_data.phoneNo;
                     }
                 }
@@ -1052,6 +1121,11 @@ export class AppointmentComponent implements OnInit {
                         this.customer_data = data[0];
                     }
                     this.jaldeeId = this.customer_data.jaldeeId;
+                    if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+                        this.countryCode = this.customer_data.countryCode;
+                    } else {
+                        this.countryCode = '+91';
+                    }
                     this.waitlist_for.push({ id: data[0].id, firstName: data[0].firstName, lastName: data[0].lastName, apptTime: this.apptTime });
                     this.saveCheckin();
                 });
@@ -2025,7 +2099,7 @@ export class AppointmentComponent implements OnInit {
                 }
             }
         });
-    }
+    } 
     validateQnr(post_Data?) {
         this.api_loading = true;
         if (!this.questionAnswers) {

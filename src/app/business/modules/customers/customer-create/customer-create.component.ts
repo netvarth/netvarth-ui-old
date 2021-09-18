@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
@@ -54,9 +55,11 @@ export class CustomerCreateComponent implements OnInit {
   firstName: any;
   lastName: any;
   dob: any;
-  year: any;
-  month: any;
+  ageType = 'year';
+  //year: any;
+  //month: any;
   action;
+  ageInfo;
   form_data = null;
   create_new = false;
   qParams = {};
@@ -137,6 +140,8 @@ export class CustomerCreateComponent implements OnInit {
   qnrSource = 'customer-create';
   loaded = true;
   heading = '';
+  changetypes;
+  selectionType;
   constructor(
     // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
     // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -309,6 +314,7 @@ export class CustomerCreateComponent implements OnInit {
     });
 
   }
+
   getCustomers(customerId) {
     const _this = this;
     const filter = { 'id-eq': customerId };
@@ -335,6 +341,7 @@ export class CustomerCreateComponent implements OnInit {
               this.customerDetails = data[0].userProfile;
               //console.log("hello"+this.customerDetails);
               this.amForm.get('mobile_number').setValue(data[0].userProfile.primaryMobileNo);
+              this.amForm.get('countryCode').setValue(data[0].userProfile.countryCode);
               this.amForm.get('first_name').setValue(data[0].userProfile.firstName);
               this.amForm.get('last_name').setValue(data[0].userProfile.lastName);
               if (this.customerDetails.email) {
@@ -441,23 +448,23 @@ export class CustomerCreateComponent implements OnInit {
         last_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
         email_id: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
         dob: [''],
-        year:[''],
-        month:[''],
+        age: [''],
+        ageType: ['year'],
         gender: [''],
         address: ['']
       });
       this.loading = false;
     } else {
       this.amForm = this.fb.group({
-        mobile_number: ['', Validators.compose([Validators.maxLength(10),
-        Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+        mobile_number: ['', Validators.compose([Validators.maxLength(10),Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+        countryCode: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)])],
         customer_id: [''],
         first_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
         last_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
         email_id: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
         dob: [''],
-        year:[''],
-        month:[''],
+        age: [''],
+        ageType: ['year'],
         gender: [''],
         address: ['']
       });
@@ -479,13 +486,38 @@ export class CustomerCreateComponent implements OnInit {
       'last_name': this.customer[0].lastName || '',
       'email_id': this.customer[0].email || '',
       'dob': this.customer[0].dob || '',
-      'year': this.customer[0].age.year || '',
-      'month': this.customer[0].age.month || '',
+      'age': '',
+      'ageType': '',
       'gender': this.customer[0].gender || '',
       'mobile_number': this.customer[0].phoneNo.trim() || '',
+      'countryCode': this.customer[0].countryCode.trim() || '',
       'customer_id': this.customer[0].jaldeeId || '',
       'address': this.customer[0].address || '',
     });
+
+    if (this.customer[0].age) {
+      console.log(this.customer[0].age.year)
+      if (this.customer[0].age.year && this.customer[0].age.year !== 0) {
+        this.ageType = 'year';
+        this.amForm.get('age').setValue(this.customer[0].age.year || '');
+        this.amForm.get('ageType').setValue(this.ageType || '');
+      }
+      else if (this.customer[0].age.month && this.customer[0].age.month !== 0) {
+        this.ageType = 'month';
+        this.amForm.get('age').setValue(this.customer[0].age.month || '');
+        this.amForm.get('ageType').setValue(this.ageType || '');
+      }
+      else {
+        this.ageType = 'year';
+        this.amForm.get('age').setValue('');
+        this.amForm.get('ageType').setValue(this.ageType || '');
+      }
+    }
+    else {
+      this.ageType = 'year';
+      this.amForm.get('age').setValue('');
+      this.amForm.get('ageType').setValue(this.ageType || '');
+    }
   }
   onSubmit(form_data) {
     this.disableButton = true;
@@ -501,79 +533,154 @@ export class CustomerCreateComponent implements OnInit {
       datebirth = this.dateTimeProcessor.transformToYMDFormat(form_data.dob);
     }
     console.log(form_data);
-    if (this.domain == 'healthCare' && (form_data.dob == '' && form_data.year == '' && form_data.month == '' )) {
+    if (this.domain == 'healthCare' && (form_data.dob == '' && form_data.age == '')) {
       this.snackbarService.openSnackBar('please enter date of birth or age', { 'panelClass': 'snackbarerror' });
       this.disableButton = false;
       return;
     }
     if (this.action === 'add') {
-      const post_data = {
-        //   'userProfile': {
-        'firstName': form_data.first_name,
-        'lastName': form_data.last_name,
-        'dob': datebirth,
-        "age":{
-          'year':form_data.year,
-          'month':form_data.month
-        },
-      'gender': form_data.gender,
-        'phoneNo': form_data.mobile_number,
-        'address': form_data.address,
-        //   }
-      };
-      if (form_data.mobile_number) {
-        post_data['countryCode'] = '+91';
-      }
-      if (form_data.email_id && form_data.email_id !== '') {
-        post_data['email'] = form_data.email_id;
-      }
-      if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
-        if (form_data.customer_id) {
-          post_data['jaldeeId'] = form_data.customer_id.trim();
-        } else {
-          post_data['jaldeeId'] = this.jld;
-        }
-      }
-      this.provider_services.createProviderCustomer(post_data)
-        .subscribe(
-          data => {
-            this.wordProcessor.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
-            this.snackbarService.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
-            const qParams = {};
-            qParams['pid'] = data;
-            this.newCustomerId = data;
-            if (this.questionAnswers) {
-              this.submitQnr(form_data, data);
-            } else {
-              if (this.source === 'appt-block' || this.source === 'waitlist-block') {
-                this.getProviderQuestionnaire(form_data);
-              } else {
-                this.goBackAfterAdd(form_data, data);
-              }
-            }
+      if (this.changetypes === 'month') {
+        const post_data = {
+
+          //   'userProfile': {
+          'firstName': form_data.first_name,
+          'lastName': form_data.last_name,
+          'dob': datebirth,
+
+          "age": {
+            'year': null,
+            'month': form_data.age
           },
-          error => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            this.disableButton = false;
-          });
-    } else if (this.action === 'edit') {
+          'gender': form_data.gender,
+          'phoneNo': form_data.mobile_number,
+          'address': form_data.address,
+          //   }
+        };
+        if (form_data.countryCode) {
+          post_data['countryCode'] = form_data.countryCode;
+        }
+        if (form_data.email_id && form_data.email_id !== '') {
+          post_data['email'] = form_data.email_id;
+        }
+        if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+          if (form_data.customer_id) {
+            post_data['jaldeeId'] = form_data.customer_id.trim();
+          } else {
+            post_data['jaldeeId'] = this.jld;
+          }
+        }
+        this.provider_services.createProviderCustomer(post_data)
+          .subscribe(
+            data => {
+              this.wordProcessor.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
+              this.snackbarService.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
+              const qParams = {};
+              qParams['pid'] = data;
+              this.newCustomerId = data;
+              if (this.questionAnswers) {
+                this.submitQnr(form_data, data);
+              } else {
+                if (this.source === 'appt-block' || this.source === 'waitlist-block') {
+                  this.getProviderQuestionnaire(form_data);
+                } else {
+                  this.goBackAfterAdd(form_data, data);
+                }
+              }
+            },
+            error => {
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              this.disableButton = false;
+            });
+      }
+      else {
+        const post_data = {
+
+          //   'userProfile': {
+          'firstName': form_data.first_name,
+          'lastName': form_data.last_name,
+          'dob': datebirth,
+
+          "age": {
+            'year': form_data.age,
+            'month': null
+          },
+          'gender': form_data.gender,
+          'phoneNo': form_data.mobile_number,
+          'address': form_data.address,
+          //   }
+        };
+
+        if (form_data.countryCode) {
+          post_data['countryCode'] = form_data.countryCode;
+        }
+        if (form_data.email_id && form_data.email_id !== '') {
+          post_data['email'] = form_data.email_id;
+        }
+        if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+          if (form_data.customer_id) {
+            post_data['jaldeeId'] = form_data.customer_id.trim();
+          } else {
+            post_data['jaldeeId'] = this.jld;
+          }
+        }
+        this.provider_services.createProviderCustomer(post_data)
+          .subscribe(
+            data => {
+              this.wordProcessor.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
+              this.snackbarService.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
+              const qParams = {};
+              qParams['pid'] = data;
+              this.newCustomerId = data;
+              if (this.questionAnswers) {
+                this.submitQnr(form_data, data);
+              } else {
+                if (this.source === 'appt-block' || this.source === 'waitlist-block') {
+                  this.getProviderQuestionnaire(form_data);
+                } else {
+                  this.goBackAfterAdd(form_data, data);
+                }
+              }
+            },
+            error => {
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              this.disableButton = false;
+            });
+      }
+
+
+    }
+    else if (this.action === 'edit') {
       const post_data = {
         //   'userProfile': {
         'id': this.customerId,
         'firstName': form_data.first_name,
         'lastName': form_data.last_name,
         'dob': datebirth,
-        "age":{
-          'year':form_data.year,
-          'month':form_data.month
-        },
         'gender': form_data.gender,
         'phoneNo': form_data.mobile_number,
         'email': form_data.email_id,
         'address': form_data.address,
         //   }
-      };console.log(post_data); if (form_data.mobile_number) {
-        post_data['countryCode'] = '+91';
+      };
+      if(form_data.age){
+        if (this.changetypes === 'month') {
+          this.ageInfo = {
+            'year': null,
+            'month': form_data.age
+          }
+          post_data['age'] = this.ageInfo;
+        }
+        else {
+          this.ageInfo = {
+            'year': form_data.age,
+            'month': null
+          }
+          post_data['age'] = this.ageInfo;
+        }
+      }
+     
+      if (form_data.countryCode) {
+        post_data['countryCode'] = form_data.countryCode;
       }
       // if (form_data.email_id && form_data.email_id !== '') {
       //     post_data['email'] = form_data.email_id;
@@ -598,6 +705,8 @@ export class CustomerCreateComponent implements OnInit {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             this.disableButton = false;
           });
+      //console.log(post_data); 
+
     }
   }
   goBackAfterAdd(form_data, data) {
@@ -782,6 +891,9 @@ export class CustomerCreateComponent implements OnInit {
   isNumeric(evt) {
     return this.shared_functions.isNumeric(evt);
   }
+  isNumericSign(evt) {
+    return this.shared_functions.isNumericSign(evt);
+}
   searchCustomer(form_data, mod?) {
     let mode = 'id';
     if (mod) {
@@ -1068,12 +1180,12 @@ export class CustomerCreateComponent implements OnInit {
   isNumber(evt) {
     evt.stopPropagation();
     return this.shared_functions.isNumber(evt);
-}
+  }
 
 
-isvalid(evt) {
+  isvalid(evt) {
     return this.shared_functions.isValid(evt);
-}
+  }
   getCustomerQnr() {
     this.questionnaireList = [];
     this.provider_services.getCustomerQuestionnaire().subscribe(data => {
@@ -1202,4 +1314,9 @@ isvalid(evt) {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
   }
+  changeType(event) {
+    this.changetypes = event.value;
+  }
 }
+
+
