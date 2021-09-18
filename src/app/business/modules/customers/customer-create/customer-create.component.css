@@ -42,7 +42,7 @@
     -moz-appearance: none;
     appearance: none;
 }
-adjust{
+.adjust{
     margin-left: -100px;
     flex: 0 0 25%;
     max-width: 50%;
@@ -80,7 +80,7 @@ adjust{
         -moz-appearance: none;
         appearance: none;
     }
-    adjust{
+    .adjust{
         margin-left: 0px;
     }
 }
