@@ -55,11 +55,11 @@ export class CustomerCreateComponent implements OnInit {
   firstName: any;
   lastName: any;
   dob: any;
-  age: any;
   ageType = 'year';
   //year: any;
   //month: any;
   action;
+  ageInfo;
   form_data = null;
   create_new = false;
   qParams = {};
@@ -480,33 +480,62 @@ export class CustomerCreateComponent implements OnInit {
     }
   }
   updateForm() {
-    if (this.customer[0].age.year) {
+    if(this.customer[0].age){
+      console.log(this.customer[0].age.year)
+      if (this.customer[0].age.year && this.customer[0].age.year !==0) {
+        this.ageType = 'year';
+        this.amForm.setValue({
+          'first_name': this.customer[0].firstName || '',
+          'last_name': this.customer[0].lastName || '',
+          'email_id': this.customer[0].email || '',
+          'dob': this.customer[0].dob || '',
+          'age': this.customer[0].age.year || '',
+          'ageType': this.ageType || '',
+          'gender': this.customer[0].gender || '',
+          'mobile_number': this.customer[0].phoneNo.trim() || '',
+          'customer_id': this.customer[0].jaldeeId || '',
+          'address': this.customer[0].address || '',
+        });
+      }
+      else if (this.customer[0].age.month && this.customer[0].age.month !==0) {
+        this.ageType = 'month';
+        this.amForm.setValue({
+          'first_name': this.customer[0].firstName || '',
+          'last_name': this.customer[0].lastName || '',
+          'email_id': this.customer[0].email || '',
+          'dob': this.customer[0].dob || '',
+          'age': this.customer[0].age.month || '',
+          'ageType': this.ageType || '',
+          'gender': this.customer[0].gender || '',
+          'mobile_number': this.customer[0].phoneNo.trim() || '',
+          'customer_id': this.customer[0].jaldeeId || '',
+          'address': this.customer[0].address || '',
+        });
+      }
+      else{
+        this.ageType = 'year';
+          this.amForm.setValue({
+          'first_name': this.customer[0].firstName || '',
+          'last_name': this.customer[0].lastName || '',
+          'email_id': this.customer[0].email || '',
+          'dob': this.customer[0].dob || '',
+          'age':  '',
+          'ageType': this.ageType || '',
+          'gender': this.customer[0].gender || '',
+          'mobile_number': this.customer[0].phoneNo.trim() || '',
+          'customer_id': this.customer[0].jaldeeId || '',
+          'address': this.customer[0].address || '',
+        });
+      }
+    }
+    else{
       this.ageType = 'year';
-    }
-    else {
-      this.ageType = 'month';
-    }
-    if (this.customer[0].age.year) {
-      this.amForm.setValue({
+        this.amForm.setValue({
         'first_name': this.customer[0].firstName || '',
         'last_name': this.customer[0].lastName || '',
         'email_id': this.customer[0].email || '',
         'dob': this.customer[0].dob || '',
-        'age': this.customer[0].age.year || '',
-        'ageType': this.ageType || '',
-        'gender': this.customer[0].gender || '',
-        'mobile_number': this.customer[0].phoneNo.trim() || '',
-        'customer_id': this.customer[0].jaldeeId || '',
-        'address': this.customer[0].address || '',
-      });
-    }
-    else {
-      this.amForm.setValue({
-        'first_name': this.customer[0].firstName || '',
-        'last_name': this.customer[0].lastName || '',
-        'email_id': this.customer[0].email || '',
-        'dob': this.customer[0].dob || '',
-        'age': this.customer[0].age.month || '',
+        'age':  '',
         'ageType': this.ageType || '',
         'gender': this.customer[0].gender || '',
         'mobile_number': this.customer[0].phoneNo.trim() || '',
@@ -529,7 +558,7 @@ export class CustomerCreateComponent implements OnInit {
       datebirth = this.dateTimeProcessor.transformToYMDFormat(form_data.dob);
     }
     console.log(form_data);
-    if (this.domain == 'healthCare' && (form_data.dob == '' && form_data.year == '' && form_data.month == '')) {
+    if (this.domain == 'healthCare' && (form_data.dob == '' && form_data.age == '')) {
       this.snackbarService.openSnackBar('please enter date of birth or age', { 'panelClass': 'snackbarerror' });
       this.disableButton = false;
       return;
@@ -605,6 +634,7 @@ export class CustomerCreateComponent implements OnInit {
           'address': form_data.address,
           //   }
         };
+
         if (form_data.mobile_number) {
           post_data['countryCode'] = '+91';
         }
@@ -645,94 +675,62 @@ export class CustomerCreateComponent implements OnInit {
 
     }
     else if (this.action === 'edit') {
-      if (this.changetypes === 'month') {
-        const post_data = {
-          //   'userProfile': {
-          'id': this.customerId,
-          'firstName': form_data.first_name,
-          'lastName': form_data.last_name,
-          'dob': datebirth,
-          "age": {
+      const post_data = {
+        //   'userProfile': {
+        'id': this.customerId,
+        'firstName': form_data.first_name,
+        'lastName': form_data.last_name,
+        'dob': datebirth,
+        'gender': form_data.gender,
+        'phoneNo': form_data.mobile_number,
+        'email': form_data.email_id,
+        'address': form_data.address,
+        //   }
+      };
+      if(form_data.age){
+        if (this.changetypes === 'month') {
+          this.ageInfo = {
             'year': null,
             'month': form_data.age
-          },
-          'gender': form_data.gender,
-          'phoneNo': form_data.mobile_number,
-          'email': form_data.email_id,
-          'address': form_data.address,
-          //   }
-        };
-        if (form_data.mobile_number) {
-          post_data['countryCode'] = '+91';
+          }
+          post_data['age'] = this.ageInfo;
         }
-        // if (form_data.email_id && form_data.email_id !== '') {
-        //     post_data['email'] = form_data.email_id;
-        // }
-        if (form_data.customer_id) {
-          post_data['jaldeeId'] = form_data.customer_id;
-        }
-        this.provider_services.updateProviderCustomer(post_data)
-          .subscribe(
-            data => {
-              this.wordProcessor.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
-              this.snackbarService.openSnackBar('Details Updated Successfully');
-              const qParams = {};
-              qParams['pid'] = data;
-              if (this.questionAnswers && this.questionAnswers.length > 0) {
-                this.submitQnr(form_data, this.customerId);
-              } else {
-                this.goBackAfterEdit(form_data, data);
-              }
-            },
-            error => {
-              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-              this.disableButton = false;
-            });
-      }
-      else {
-        const post_data = {
-          //   'userProfile': {
-          'id': this.customerId,
-          'firstName': form_data.first_name,
-          'lastName': form_data.last_name,
-          'dob': datebirth,
-          "age": {
+        else {
+          this.ageInfo = {
             'year': form_data.age,
             'month': null
+          }
+          post_data['age'] = this.ageInfo;
+        }
+      }
+     
+      if (form_data.mobile_number) {
+        post_data['countryCode'] = '+91';
+      }
+      // if (form_data.email_id && form_data.email_id !== '') {
+      //     post_data['email'] = form_data.email_id;
+      // }
+      if (form_data.customer_id) {
+        post_data['jaldeeId'] = form_data.customer_id;
+      }
+      this.provider_services.updateProviderCustomer(post_data)
+        .subscribe(
+          data => {
+            this.wordProcessor.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
+            this.snackbarService.openSnackBar('Details Updated Successfully');
+            const qParams = {};
+            qParams['pid'] = data;
+            if (this.questionAnswers && this.questionAnswers.length > 0) {
+              this.submitQnr(form_data, this.customerId);
+            } else {
+              this.goBackAfterEdit(form_data, data);
+            }
           },
-          'gender': form_data.gender,
-          'phoneNo': form_data.mobile_number,
-          'email': form_data.email_id,
-          'address': form_data.address,
-          //   }
-        };
-        if (form_data.mobile_number) {
-          post_data['countryCode'] = '+91';
-        }
-        // if (form_data.email_id && form_data.email_id !== '') {
-        //     post_data['email'] = form_data.email_id;
-        // }
-        if (form_data.customer_id) {
-          post_data['jaldeeId'] = form_data.customer_id;
-        }
-        this.provider_services.updateProviderCustomer(post_data)
-          .subscribe(
-            data => {
-              this.wordProcessor.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
-              this.snackbarService.openSnackBar('Details Updated Successfully');
-              const qParams = {};
-              qParams['pid'] = data;
-              if (this.questionAnswers && this.questionAnswers.length > 0) {
-                this.submitQnr(form_data, this.customerId);
-              } else {
-                this.goBackAfterEdit(form_data, data);
-              }
-            },
-            error => {
-              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-              this.disableButton = false;
-            });
-      } //console.log(post_data); 
+          error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.disableButton = false;
+          });
+      //console.log(post_data); 
 
     }
   }
@@ -1338,8 +1336,8 @@ export class CustomerCreateComponent implements OnInit {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
   }
-  changeType(value) {
-    this.changetypes = value;
+  changeType(event) {
+    this.changetypes = event.value;
   }
 }
 
