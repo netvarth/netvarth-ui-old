@@ -53,8 +53,8 @@
                     </div>
 
                   </mat-step> -->
-                  <mat-step label="Step 1" [editable]="isEditable">
-                    <ng-template matStepLabel>Delivery options</ng-template>
+                  <mat-step label="Step 1" *ngIf="!onlyvirtualItemsPresent">
+                    <ng-template matStepLabel>Delivery options </ng-template>
                     <div>
                       <div *ngIf="home_delivery && store_pickup" class="d-type">Choose delivery type <br>
                         <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)">
@@ -105,8 +105,8 @@
 
 
                   </mat-step>
-                  <mat-step label="Step 3" [editable]="isEditable">
-                    <ng-template matStepLabel *ngIf="(!home_delivery && store_pickup)||choose_type=='store'"> Contact
+                  <mat-step label="Step 3" >
+                    <ng-template matStepLabel *ngIf="(!home_delivery && store_pickup)||choose_type=='store' ||onlyvirtualItemsPresent"> Contact
                       Details</ng-template>
                     <ng-template matStepLabel *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">Fill out
                       your address</ng-template>
@@ -192,10 +192,6 @@
                       </form>
 
                     </ng-container>
-                  </mat-step>
-                  <mat-step label="Step 4">
-                    <h2>Electonic Delivery</h2>
-
                   </mat-step>
 
                 </mat-vertical-stepper>

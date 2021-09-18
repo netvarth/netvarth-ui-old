@@ -262,9 +262,10 @@
                                                     {{oder.orderFor.firstName}}
                                                     {{oder.orderFor.lastName}}
                                                 </div> -->
-                                                <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}},
+                                                <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}}
+                                                    <ng-container *ngIf="oder.orderTimeWindow && oder.orderTimeWindow.timeSlots[0]">,
                                                     {{oder.orderTimeWindow.timeSlots[0].sTime}} -
-                                                    {{oder.orderTimeWindow.timeSlots[0].eTime}}</div>
+                                                    {{oder.orderTimeWindow.timeSlots[0].eTime}} </ng-container></div>
                                                 <div *ngIf="oder.totalItemQuantity > 0" class="bold"><span
                                                         class="ordr_no">Qty</span>&nbsp;&nbsp;&nbsp;
                                                     <span>{{oder.totalItemQuantity}}</span>
@@ -363,9 +364,11 @@
                                                         (click)="providerDetail(oder.providerAccount,$event)">
                                                         {{oder.providerAccount.businessName || '' |
                                                         capitalizeFirst}}</span>
-                                                    <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}},
+                                                    <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}}
+                                                            <ng-container *ngIf="oder.orderTimeWindow && oder.orderTimeWindow.timeSlots[0]">,
                                                         {{oder.orderTimeWindow.timeSlots[0].sTime}} -
-                                                        {{oder.orderTimeWindow.timeSlots[0].eTime}}</div>
+                                                        {{oder.orderTimeWindow.timeSlots[0].eTime}}
+                                                    </ng-container></div>
                                                     <div *ngIf="oder.totalItemQuantity > 0" class="bold"><span
                                                             class="ordr_no">Qty</span>&nbsp;&nbsp;&nbsp;
                                                         <span>{{oder.totalItemQuantity}}</span>
@@ -465,9 +468,11 @@
                                                 <span class="sp_name"
                                                     (click)="providerDetail(oder.providerAccount,$event)">
                                                     {{oder.providerAccount.businessName || '' | capitalizeFirst}}</span>
-                                                <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}},
+                                                <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}}
+                                                        <ng-container *ngIf="oder.orderTimeWindow && oder.orderTimeWindow.timeSlots[0]">,
                                                     {{oder.orderTimeWindow.timeSlots[0].sTime}} -
-                                                    {{oder.orderTimeWindow.timeSlots[0].eTime}}</div>
+                                                    {{oder.orderTimeWindow.timeSlots[0].eTime}}
+                                                </ng-container></div>
                                                 <!-- <div class="userName">
                                                     <i class="fa fa-user for"></i>
                                                     {{oder.orderFor.firstName}}
@@ -568,9 +573,11 @@
                                                         (click)="providerDetail(oder.providerAccount,$event)">
                                                         {{oder.providerAccount.businessName || '' |
                                                         capitalizeFirst}}</span>
-                                                    <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}},
+                                                    <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}}
+                                                            <ng-container *ngIf="oder.orderTimeWindow && oder.orderTimeWindow.timeSlots[0]">,
                                                         {{oder.orderTimeWindow.timeSlots[0].sTime}} -
-                                                        {{oder.orderTimeWindow.timeSlots[0].eTime}}</div>
+                                                        {{oder.orderTimeWindow.timeSlots[0].eTime}}
+                                                    </ng-container></div>
                                                     <div *ngIf="oder.totalItemQuantity > 0" class="bold"><span
                                                             class="ordr_no">Qty</span>&nbsp;&nbsp;&nbsp;
                                                         <span>{{oder.totalItemQuantity}}</span>

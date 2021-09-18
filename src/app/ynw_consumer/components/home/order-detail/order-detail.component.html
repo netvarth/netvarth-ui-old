@@ -89,9 +89,11 @@
                                                     <div class="txt-addrs content_wrap"> 
                                                         <i class="fa fa-envelope"></i>
                                                         {{waitlist.email}}</div>
-                                                        <div class="bold font11 mgn-bt-10"> {{waitlist.orderDate | date: display_dateFormat}},
+                                                        <div class="bold font11 mgn-bt-10"> {{waitlist.orderDate | date: display_dateFormat}} 
+                                                            <ng-container *ngIf="waitlist.orderTimeWindow && waitlist.orderTimeWindow.timeSlots[0]">,
                                                             {{waitlist.orderTimeWindow.timeSlots[0].sTime}} -
-                                                            {{waitlist.orderTimeWindow.timeSlots[0].eTime}}</div>
+                                                            {{waitlist.orderTimeWindow.timeSlots[0].eTime}}
+                                                        </ng-container></div>
                                                             <div *ngIf="waitlist.homeDeliveryAddress && waitlist.homeDelivery "class="bold font11 mgn-bt-10"><i class="fa fa-address-card-o" aria-hidden="true"></i> Delivery Address</div>
                                                             <address *ngIf="waitlist.homeDeliveryAddress"> 
                                                                 <span>
