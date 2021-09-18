@@ -31,6 +31,7 @@ import { AppointmentComponent } from './appointment/appointment.component';
 import { CheckinAddMemberModule } from '../../../shared/modules/checkin-add-member/checkin-add-member.module';
 import { AssignTeamModule } from '../../../shared/modules/assign-team/assign-team.module';
 import { QuestionnaireListPopupModule } from '../questionnaire-list-popup/questionnaire-list-popup.module';
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { QuestionnaireListPopupModule } from '../questionnaire-list-popup/questi
         UserServiceChangeModule,
         CheckinAddMemberModule,
         AssignTeamModule,
-        QuestionnaireListPopupModule
+        QuestionnaireListPopupModule,
+        NgxIntlTelInputModule 
     ],
     declarations: [
         AppointmentsComponent,

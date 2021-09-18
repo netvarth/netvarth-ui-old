@@ -84,3 +84,10 @@ adjust{
         margin-left: 0px;
     }
 }
+.countrycode{
+width:40%;
+float: left;
+}
+.mobilenumber{
+width: 60%
+}

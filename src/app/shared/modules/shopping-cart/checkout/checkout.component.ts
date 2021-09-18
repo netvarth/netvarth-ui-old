@@ -469,6 +469,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.phonenumber = activeUser.primaryPhoneNumber;
       // this.storeContact.get('phone').value(this.phonenumber);
      // this.storeContact.controls.phone.setValue(this.phonenumber);
+     if(this.customer_countrycode == "+91"){
+      this.storeContact.controls.phone.setValue(this.phonenumber);
+    }
       this.customer_phoneNumber = this.customer_countrycode + activeUser.primaryPhoneNumber;
       console.log(this.customer_phoneNumber);
       this.getaddress();
