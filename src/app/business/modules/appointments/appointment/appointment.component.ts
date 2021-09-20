@@ -519,7 +519,7 @@ export class AppointmentComponent implements OnInit {
             let mode = 'id';
             this.form_data = null;
             this.create_new = false;
-            let post_data ;
+            let post_data ={};
             const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
             const isEmail = emailPattern.test(form_data.search_input);
             if (isEmail) {
@@ -550,10 +550,10 @@ export class AppointmentComponent implements OnInit {
                     };
                     break;
                 case 'id':
-                    post_data = {
-                        'jaldeeId-eq': form_data.search_input
-                    };
-                    break;
+                        post_data['or=jaldeeId-eq'] =  form_data.search_input + ',firstName-eq=' + form_data.search_input;
+                    //     'jaldeeId-eq'= form_data.search_input,'firstName'= form_data.search_input
+                    
+                     break;
             }
             this.provider_services.getCustomer(post_data)
                 .subscribe(

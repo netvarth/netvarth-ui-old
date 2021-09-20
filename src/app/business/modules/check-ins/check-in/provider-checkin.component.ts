@@ -559,11 +559,11 @@ export class ProviderCheckinComponent implements OnInit {
                         'email-eq': form_data.search_input
                     };
                     break;
-                case 'id':
-                    post_data = {
-                        'jaldeeId-eq': form_data.search_input
-                    };
-                    break;
+                    case 'id':
+                            post_data['or=jaldeeId-eq'] =  form_data.search_input + ',firstName-eq=' + form_data.search_input;
+                        //     'jaldeeId-eq'= form_data.search_input,'firstName'= form_data.search_input
+                        
+                         break;
             }
             this.provider_services.getCustomer(post_data)
                 .subscribe(
