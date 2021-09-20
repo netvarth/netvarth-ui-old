@@ -246,6 +246,7 @@ export class AppointmentComponent implements OnInit {
     PhoneNumberFormat = PhoneNumberFormat;
     preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
     phone;
+    cuntryCode: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -518,21 +519,21 @@ export class AppointmentComponent implements OnInit {
             let mode = 'id';
             this.form_data = null;
             this.create_new = false;
-            let post_data = {};
+            let post_data ;
             const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
             const isEmail = emailPattern.test(form_data.search_input);
             if (isEmail) {
                 mode = 'email';
             } else {
-                const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
-                const isNumber = phonepattern.test(form_data.search_input);
-                const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
-                const isCount10 = phonecntpattern.test(form_data.search_input);
-                if (isNumber && isCount10) {
-                    mode = 'phone';
-                } else {
+               // const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+                //const isNumber = phonepattern.test(form_data.search_input);
+                //const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+               // const isCount10 = phonecntpattern.test(form_data.search_input);
+               // if (isNumber && isCount10) {
+               //     mode = 'phone';
+               // } else {
                     mode = 'id';
-                }
+               // }
             }
             this.qParams['source'] = 'appointment';
             switch (mode) {
@@ -900,6 +901,7 @@ export class AppointmentComponent implements OnInit {
                         console.log("this.callingModes."+this.callingModes);
                         if (this.callingModes.includes('*')) {
                             this.callingModes = '';
+                            this.cuntryCode = '';
                         }
                         this.wtsapmode = this.customer_data.phoneNo;
                     }
@@ -1152,8 +1154,8 @@ export class AppointmentComponent implements OnInit {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
             } else if (!this.thirdParty && this.countryCode) {
-                const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
-                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = unChangedPhnoCountryCode + '' + this.callingModes;
+               // const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
+                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.cuntryCode + '' + this.callingModes;
             } else {
                 const thirdparty_countrycode = '91';
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = thirdparty_countrycode + '' + this.callingModes;
@@ -1190,7 +1192,7 @@ export class AppointmentComponent implements OnInit {
         if (this.sel_ser_det.serviceType === 'virtualService') {
             // post_Data['virtualService'] = this.virtualServiceArray;
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
-                if (!this.callingModes || this.callingModes.length < 10) {
+                if (!this.callingModes ) {
                     this.snackbarService.openSnackBar('Please enter a valid number to contact you', { 'panelClass': 'snackbarerror' });
                     this.is_wtsap_empty = true;
                 }
@@ -2000,9 +2002,12 @@ export class AppointmentComponent implements OnInit {
         return this.sharedFunctionobj.isNumeric(evt);
     }
     addCallingmode(index) {
-        if (this.callingModes && this.callingModes.length === 10 && this.callingModes.charAt(0) !== '0') {
+        if (!this.cuntryCode  || this.cuntryCode.charAt(0) === '0') {
+            this.snackbarService.openSnackBar('Please enter valid countrycode', { 'panelClass': 'snackbarerror' });
+        }
+        if (this.callingModes && this.callingModes.charAt(0) !== '0') {
             this.showInputSection = true;
-        } else if (!this.callingModes || this.callingModes.length < 10 || this.callingModes.charAt(0) === '0') {
+        } else if (!this.callingModes  || this.callingModes.charAt(0) === '0') {
             this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
         }
     }
