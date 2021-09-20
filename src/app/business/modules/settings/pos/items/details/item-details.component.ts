@@ -237,9 +237,7 @@ export class ItemDetailsComponent implements OnInit {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.getTaxpercentage();
     }
-    onChangeExpiryDate(){
-        console.log('fdfff');
-    }
+
     getItem(itemId) {
         const _this = this;
         return new Promise(function (resolve, reject) {
@@ -287,7 +285,7 @@ export class ItemDetailsComponent implements OnInit {
                 promotionallabel: [],
                 customlabel: ['', Validators.compose([Validators.maxLength(this.maxNumberslabl)])],
                 expiryDate:[''],
-                itemType:[]
+                itemType:['PHYSICAL']
 
             });
             this.amForm.get('promotionalPriceType').setValue('FIXED');
