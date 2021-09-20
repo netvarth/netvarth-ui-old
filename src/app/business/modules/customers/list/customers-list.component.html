@@ -233,8 +233,16 @@
                       <div class="card-body">
                         <div class="filterTextinput filter-text-input">
                           <li class="filterli filter-li">
-                            <input type="text" id="mobile" [(ngModel)]="filter.mobile" #mobile (keyup)="keyPress()"
-                              class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
+                              <ngx-intl-tel-input [cssClass]="'custom'" class="internumbox" [preferredCountries]="preferredCountries"
+                              [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                              [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
+                              [maxLength]="15" [phoneValidation]="true"
+                              [selectedCountryISO] = "selectedCountry"
+                              [separateDialCode]="separateDialCode" [numberFormat]="PhoneNumberFormat.National" name="phone"
+                              [(ngModel)]="phone" (keyup)="resetApiErrors()">
+                          </ngx-intl-tel-input>
+                           <!-- <input type="text" id="mobile" [(ngModel)]="filter.mobile" #mobile (keyup)="keyPress()"
+                              class="filterTextbox filter-textbox" placeholder="Enter Phone Number">-->
                           </li>
                         </div>
                       </div>

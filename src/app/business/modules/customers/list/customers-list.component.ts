@@ -16,6 +16,8 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input'; 
+
 @Component({
   selector: 'app-customers-list',
   templateUrl: './customers-list.component.html',
@@ -112,6 +114,15 @@ export class CustomersListComponent implements OnInit {
   small_device_display = false;
   hideGroups = false;
   customerCount;
+  emailerror = null;
+    email1error = null;
+    phoneerror = null;
+  separateDialCode = true;
+    SearchCountryField = SearchCountryField;
+    selectedCountry = CountryISO.India;
+    PhoneNumberFormat = PhoneNumberFormat;
+    preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+    phone;
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -127,6 +138,7 @@ export class CustomersListComponent implements OnInit {
     this.onResize();
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
     this.filtericonclearTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
+    
     if (this.groupService.getitemFromGroupStorage('group')) {
       this.selectedGroup = this.groupService.getitemFromGroupStorage('group');
     } else {
@@ -235,6 +247,11 @@ export class CustomersListComponent implements OnInit {
         }
       );
   }
+  resetApiErrors() {
+    this.emailerror = null;
+    this.email1error = null;
+    this.phoneerror = null;
+}
   showCustomerAction(customer) {
     const cust = [];
     cust.push(customer)
