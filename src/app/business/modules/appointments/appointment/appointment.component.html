@@ -348,24 +348,24 @@
                                                         <i *ngIf="mode.callingMode === 'Phone'"
                                                             class="fa phon-icon ph-cal" aria-hidden="true"></i>
                                                     </span>
-                                                    <span><span>  <input *ngIf="!showInputSection"
+                                                     <input *ngIf="!showInputSection"
                                                         (keypress)="isNumeric($event)"
                                                         class="form-control emailPrepay call-mode-ip "
-                                                        style="width:100px!important;" placeholder="countrycode"
+                                                        style="width:50px!important;" placeholder="countrycode"
                                                         [(ngModel)]="cuntryCode" autocomplete="off" maxlength="10"
-                                                        type="text" min="0"></span> <span> <input *ngIf="!showInputSection"
+                                                        type="text" min="0">&nbsp;<input *ngIf="!showInputSection"
                                                             (keypress)="isNumeric($event)"
                                                             class="form-control emailPrepay call-mode-ip wtsap-ip-wdth"
                                                             style="width:120px!important;" placeholder=""
                                                             [(ngModel)]="callingModes" autocomplete="off" maxlength="10"
-                                                            type="text" min="0"></span></span>
+                                                            type="text" min="0">&nbsp;
                                                     <span class="mgn-bt-10 cal-mod-edt custId-flex-form"
                                                         *ngIf="showInputSection"> {{cuntryCode}}{{callingModes}}</span>
-                                                    <div class="input-group-append mgn-up-6"
-                                                        style="padding-left: 10px;">
+                                                    <div class="input-group-append mgn-up-2"
+                                                        >
                                                         <button *ngIf="!showInputSection"
-                                                            style="background-color: #29b6f6; color: white;"
-                                                            class="btn bt3 btn-default" (click)="addCallingmode(i)"
+                                                            
+                                                            class="btn bt1 btn-primary m2" (click)="addCallingmode(i)"
                                                             type="button">Add</button>
                                                         <span class="editbt mgn-lt-20" *ngIf="showInputSection"
                                                             (click)="editCallingmodes(i)"></span>
