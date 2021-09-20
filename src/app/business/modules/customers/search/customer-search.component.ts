@@ -779,6 +779,7 @@ export class CustomerSearchComponent implements OnInit {
                 this.loading = false;
                 if (data.length === 0) {
                     filter['phone'] = loginId;
+                    filter['countryCode'] = dialCode;
                     filter['source'] = 'clist';
                     filter['id'] = 'add';
                     filter['type'] = 'create';

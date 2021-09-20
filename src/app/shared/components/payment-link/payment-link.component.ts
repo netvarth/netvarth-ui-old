@@ -219,33 +219,34 @@ export class PaymentLinkComponent implements OnInit {
       .subscribe(
         data => {
           this.paymentmodes = data;
-          if (this.paymentmodes[0].isJaldeeBank) {
-            if (this.countryCode == '91') {
-              this.paytmEnabled = true;
-              this.interNatioanalPaid = true;
-            }
-            else {
-              this.razorpayEnabled = true;
-            }
-          }
+          this.razorpayEnabled = true;
+          // if (this.paymentmodes[0].isJaldeeBank) {
+          //   if (this.countryCode == '91') {
+          //     this.paytmEnabled = true;
+          //     this.interNatioanalPaid = true;
+          //   }
+          //   else {
+          //     this.razorpayEnabled = true;
+          //   }
+          // }
 
-          else {
-            if (this.countryCode == '91') {
-              for (let modes of this.paymentmodes) {
-                for (let gateway of modes.payGateways) {
-                  if (gateway == 'PAYTM') {
-                    this.paytmEnabled = true;
-                  }
-                  if (gateway == 'RAZORPAY') {
-                    this.razorpayEnabled = true;
-                  }
-                }
-              }
-            }
-            else {
-              this.razorpayEnabled = true;
-            }
-          }
+          // else {
+          //   if (this.countryCode == '91') {
+          //     for (let modes of this.paymentmodes) {
+          //       for (let gateway of modes.payGateways) {
+          //         if (gateway == 'PAYTM') {
+          //           this.paytmEnabled = true;
+          //         }
+          //         if (gateway == 'RAZORPAY') {
+          //           this.razorpayEnabled = true;
+          //         }
+          //       }
+          //     }
+          //   }
+          //   else {
+          //     this.razorpayEnabled = true;
+          //   }
+          // }
           //  if(this.paymentmodes[0].isJaldeeBank){
           //   this.paytmEnabled = true;
           //  }
