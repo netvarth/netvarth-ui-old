@@ -1155,7 +1155,9 @@ export class AppointmentComponent implements OnInit {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
             } else if (!this.thirdParty && this.countryCode) {
-               // const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
+                    if(this.cuntryCode.includes('+')){
+                        this.cuntryCode=this.cuntryCode.slice(1);
+                    }
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.cuntryCode + '' + this.callingModes;
             } else {
                 const thirdparty_countrycode = '91';

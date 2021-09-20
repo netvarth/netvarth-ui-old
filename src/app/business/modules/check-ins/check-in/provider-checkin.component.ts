@@ -1210,11 +1210,10 @@ export class ProviderCheckinComponent implements OnInit {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
             } else if (!this.thirdParty) {
-                if (this.countryCode) {
-                    // let unChangedPhnoCountryCode = '91';
-                    // if (this.countryCode.split('+')[1] !== undefined) {
-                    //     unChangedPhnoCountryCode = this.countryCode.split('+')[1];
-                    // }
+                if (this.cuntryCode) {
+                     if(this.cuntryCode.includes('+')){
+                         this.cuntryCode=this.cuntryCode.slice(1);
+                     }
                     this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.cuntryCode + '' + this.callingModes;
                 }
             } else {
@@ -1302,7 +1301,6 @@ export class ProviderCheckinComponent implements OnInit {
         }
     }
     addWaitlistBlock(post_Data) {
-        console.log('data' + post_Data);
         this.provider_services.addWaitlistBlock(post_Data)
             .subscribe((data) => {
                 if (this.settingsjson.showTokenId) {
