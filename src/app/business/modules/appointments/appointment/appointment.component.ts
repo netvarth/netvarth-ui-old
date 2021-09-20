@@ -898,6 +898,7 @@ export class AppointmentComponent implements OnInit {
                 if (serv.virtualCallingModes) {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
                         this.callingModes = this.customer_data.phoneNo.trim();
+                        this.cuntryCode = this.customer_data.countryCode;
                         console.log("this.callingModes."+this.callingModes);
                         if (this.callingModes.includes('*')) {
                             this.callingModes = '';

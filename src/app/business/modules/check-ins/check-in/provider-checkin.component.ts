@@ -244,6 +244,7 @@ export class ProviderCheckinComponent implements OnInit {
     PhoneNumberFormat = PhoneNumberFormat;
     preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
     phone;
+    cuntryCode;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -926,8 +927,10 @@ export class ProviderCheckinComponent implements OnInit {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
                         if (this.customer_data.phoneNo) {
                             this.callingModes = this.customer_data.phoneNo.trim();
+                            this.cuntryCode = this.customer_data.countryCode;
                             if (this.callingModes.includes('*')) {
                                 this.callingModes = '';
+                                this.cuntryCode = '';
                             }
                             this.wtsapmode = this.customer_data.phoneNo;
                             console.log('whatsappmoe..' + this.wtsapmode);
@@ -1208,11 +1211,11 @@ export class ProviderCheckinComponent implements OnInit {
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
             } else if (!this.thirdParty) {
                 if (this.countryCode) {
-                    let unChangedPhnoCountryCode = '91';
-                    if (this.countryCode.split('+')[1] !== undefined) {
-                        unChangedPhnoCountryCode = this.countryCode.split('+')[1];
-                    }
-                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = unChangedPhnoCountryCode + '' + this.callingModes;
+                    // let unChangedPhnoCountryCode = '91';
+                    // if (this.countryCode.split('+')[1] !== undefined) {
+                    //     unChangedPhnoCountryCode = this.countryCode.split('+')[1];
+                    // }
+                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.cuntryCode + '' + this.callingModes;
                 }
             } else {
                 const thirdparty_countrycode = '91';
@@ -1243,7 +1246,7 @@ export class ProviderCheckinComponent implements OnInit {
         }
         if (this.sel_ser_det.serviceType === 'virtualService') {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
-                if (!this.callingModes || this.callingModes.length < 10) {
+                if (!this.callingModes) {
                     this.snackbarService.openSnackBar('Please enter a valid number to contact you', { 'panelClass': 'snackbarerror' });
                     this.is_wtsap_empty = true;
                 }
@@ -2073,9 +2076,12 @@ export class ProviderCheckinComponent implements OnInit {
         return this.sharedFunctionobj.isNumericwithoutdot(evt);
     }
     addCallingmode(index) {
-        if (this.callingModes && this.callingModes.length === 10 && this.callingModes.charAt(0) !== '0') {
+        if (!this.cuntryCode  || this.cuntryCode.charAt(0) === '0') {
+            this.snackbarService.openSnackBar('Please enter valid countrycode', { 'panelClass': 'snackbarerror' });
+        }
+        if (this.callingModes && this.callingModes.charAt(0) !== '0') {
             this.showInputSection = true;
-        } else if (!this.callingModes || this.callingModes.length < 10 || this.callingModes.charAt(0) === '0') {
+        } else if (!this.callingModes  || this.callingModes.charAt(0) === '0') {
             this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
         }
     }
