@@ -185,7 +185,14 @@ ul.bus-actions li a.lnk {
 .img-badge-big {
   display: none;
 }
-
+.cardwidth{
+  padding: 40px !important;
+}
+@media (max-width: 767px) {
+.cardwidth{
+  padding: 20px !important;
+}
+}
 @media (max-width: 767px) {
   .like-btn {
     display: inline-block !important;
