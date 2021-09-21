@@ -265,6 +265,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     currentScheduleId: any;
     pricelist: any;
     changePrice: number;
+    amountdifference: any;
 
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -2281,6 +2282,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         console.log("newprice"+newprice);
                         this.changePrice = newprice - oldprice;
                         console.log("changeprice"+this.changePrice);
+                        this.amountdifference = this.appointment.amountDue + this.changePrice;
                     });
             }
         }
