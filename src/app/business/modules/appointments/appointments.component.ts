@@ -94,6 +94,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     first_name: '',
     last_name: '',
     phone_number: '',
+    countrycode:'',
     appointmentEncId: '',
     patientId: '',
     appointmentMode: 'all',
@@ -116,6 +117,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     first_name: false,
     last_name: false,
     phone_number: false,
+    countrycode: false,
     appointmentEncId: false,
     patientId: false,
     appointmentMode: false,
@@ -869,6 +871,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       first_name: false,
       last_name: false,
       phone_number: false,
+      countrycode:false,
       appointmentEncId: false,
       patientId: false,
       appointmentMode: false,
@@ -888,6 +891,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       first_name: '',
       last_name: '',
       phone_number: '',
+      countrycode:'',
       appointmentEncId: '',
       patientId: '',
       appointmentMode: 'all',
@@ -1547,6 +1551,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.phone_number !== '') {
       api_filter['phoneNo-eq'] = this.filter.phone_number;
     }
+    if(this.filter.countrycode !== ''){
+      api_filter['countryCode-eq'] = this.filter.countrycode;
+    }
     if (this.filter.appointmentEncId !== '') {
       api_filter['appointmentEncId-eq'] = this.filter.appointmentEncId;
     }
@@ -1637,7 +1644,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.maxday = this.yesterdayDate;
     }
     this.labelSelection();
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
       this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
       || this.filter.check_in_end_date !== null || this.filter.check_in_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all'
       || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
@@ -1658,7 +1665,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.maxday = this.yesterdayDate;
     }
     this.labelSelection();
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
       this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
       || this.filter.check_in_end_date !== null || this.filter.check_in_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all'
       || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected

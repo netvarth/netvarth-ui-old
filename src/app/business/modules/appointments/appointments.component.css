@@ -890,3 +890,9 @@
 .modal-dialog {
     margin: 30px auto !important;
 }
+.countryCodewidth{
+    width:60px;
+    }
+    .phonewidth{
+      width:150px;
+    }
