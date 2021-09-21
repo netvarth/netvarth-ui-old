@@ -27,6 +27,7 @@ import { SubSink } from '../../../../../node_modules/subsink';
 import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
+
 @Component({
   selector: 'app-business-page',
   templateUrl: './business-page.component.html',
@@ -430,19 +431,28 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           mouseDrag: true,
           touchDrag: true,
           pullDrag: true,
+          autoplay:true,
           dots: true,
-          navSpeed: 700,
-          navText: ['', ''],
+          navSpeed: 100,
+          nav:true,
+          navText: [ '<i class="fa fa-caret-right"></i>', '<i class="fa fa-caret-left"></i>"' ],
           responsiveClass:true,
           responsive:{
               0:{
-                  items:1
+                item:1
+              },
+              700:{
+                item:2
+              },
+              970:{
+                  items:3
               }
           }
         };
       }
     )
   }
+
 
   /**
    * 
@@ -816,7 +826,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     setTimeout(() => {
       // merge two arrays without duplicates
       if (this.servicesjson && this.servicesjson.length > 0) {
-        const ids = new Set(this.apptServicesjson.map(d => d.id));
+        // const ids = new Set(this.apptServicesjson.map(d => d.id)); commented by me
         // const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
         // this.apptServicesjson = merged;
       }
@@ -1051,7 +1061,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     setTimeout(() => {
       // merge two arrays without duplicates
       if (this.servicesjson && this.servicesjson.length > 0) {
-        const ids = new Set(this.apptServicesjson.map(d => d.id));
+        // const ids = new Set(this.apptServicesjson.map(d => d.id));  commented by me
         // const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
         // this.apptServicesjson = merged;
       }

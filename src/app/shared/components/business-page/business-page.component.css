@@ -2306,6 +2306,7 @@ img.ordericon.home {
 }
 .recentcards {
   height: 500px;
+  border-radius: 5px;
 }
 .recentcards img {
   height: 200px;
@@ -2315,3 +2316,25 @@ img.ordericon.home {
   height: 150px;
   overflow: hidden;
 }
+.gallery-item {
+  display: inline-block;
+  position: relative;
+}
+.gallery-button {
+  /* background-color: white; */
+    padding: 5%;
+    font-size: 12px;
+   display: block;
+   position: absolute;
+   /* width: 160px; */
+   /* height: 40px; */
+   margin: auto;
+   top: -5%;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   cursor: pointer;
+ }
+
+
+

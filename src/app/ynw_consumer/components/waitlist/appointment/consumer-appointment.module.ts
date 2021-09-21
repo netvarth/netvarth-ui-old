@@ -9,10 +9,6 @@ import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner
 import { CheckinAddMemberModule } from '../../../../shared/modules/checkin-add-member/checkin-add-member.module';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
-<<<<<<< HEAD
-import { OwlModule } from 'ngx-carousel';
-=======
->>>>>>> e9e7ab5e4d8390803347b0b506ddae10f3188270
 import { ConsumerAppointmentLiveTrackComponent } from './livetrack/livetrack.component';
 import { ConsumerAppointmentPaymentComponent } from './payment/payment.component';
 import { ConsumerAppointmentHistoryComponent } from './history/appointment-history.component';

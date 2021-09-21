@@ -1,3 +1,4 @@
+
 <section class="content bus-page" style="padding-bottom: 0 !important;">
     <div class="container background-img" style="min-height: 100vh !important;">
         <div class="row pad-bt-10 bus-page-header">
@@ -146,25 +147,33 @@
             <div>
                 <h2 class="centeralign">Recent News</h2>
             </div>
+         
+           <div class="cauroselsection" style="margin: 2%;">
             <owl-carousel-o [options]="customOptions"
-                [carouselClasses]="['owl-carousel', 'owl-theme', 'row', 'sliding']">
-                <ng-template carouselSlide *ngFor="let newsFeed of newsFeeds" >
-                    <div class="recentcards card">
-                        <div>
-                            <img class="imagesectioninrecentnews" src="{{newsFeed.image}}" alt="Card image cap">
-                        </div>
-                        <div class="card-body">
-                            <div [innerHtml]="newsFeed.title | safeHtml">
-                            </div>
-                            <div [innerHtml]="newsFeed.description | safeHtml" class="recentdesc">
-                            </div>
-                            <div class="mgn-up-20">
-                                <a (click)="openNews(newsFeed.link)" class="pull-right">Read More...</a>
-                            </div>
+            [carouselClasses]="['owl-carousel', 'owl-theme', 'row', 'sliding']">
+            <ng-template carouselSlide *ngFor="let newsFeed of newsFeeds" >
+                <div class="recentcards card">
+                    <div class="gallery-item"> 
+                        <img class="imagesectioninrecentnews gallery-img" src="{{newsFeed.image}}" alt="Card image cap">
+                        <div  class="gallery-button">
+                            <button class="animate__animate animate__flash" style="background-color: white;padding: 2%;">Coronovirus updates >></button>
                         </div>
                     </div>
-                </ng-template>
-            </owl-carousel-o>
+                    <div class="card-body">
+                        <h4 [innerHtml]="newsFeed.title | safeHtml"></h4>
+                        <p [innerHtml]="newsFeed.description | safeHtml" class="recentdesc">
+                        </p>
+                        <div>
+                            <a (click)="openNews(newsFeed.link)" class="pull-right btn btn-primary" style="border-radius: 5px;"><b>Read More...</b></a>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+       
+        </owl-carousel-o>
+           </div>
         </div>
+        <br>
+        <br>
     </div>
 </section>
