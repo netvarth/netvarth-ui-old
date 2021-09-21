@@ -2296,10 +2296,16 @@ img.ordericon.home {
   font-size: 1.25rem !important;
 }
 
-
+/* @import '~animate.css/animate.min.css'; */
 ::ng-deep .commonpopupmainclass.popup-class.specialclass.service-detail-bor-rad-0 mat-dialog-container {
   border-radius: 0 !important;
 }
+.updates {
+  animation: rubberBand; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 10s; 
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}  
 
 .recentNews h2 {
   color: white !important;
