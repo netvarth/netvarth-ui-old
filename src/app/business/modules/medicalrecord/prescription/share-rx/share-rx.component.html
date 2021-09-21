@@ -130,7 +130,9 @@
                           <span *ngIf="!customerDetail.dob">..........</span>
                       </td>
                       <td *ngIf="customerDetail.age && !customerDetail.dob"><label>Age:&nbsp;</label>
-                          <span *ngIf="customerDetail.age">{{customerDetail.age}}</span>
+                        <span>  <span *ngIf="customerDetail.age.year">{{customerDetail.age.year}} years</span>
+                          <span *ngIf="customerDetail.age.month">{{customerDetail.age.month}} months</span>
+                          <span *ngIf="!customerDetail.age.year && !customerDetail.age.month">.........</span></span>
                       </td>
                       <td *ngIf="!customerDetail.age && !customerDetail.dob"><label>Dob:&nbsp;</label>
                         <span *ngIf="!customerDetail.dob">..........</span>
