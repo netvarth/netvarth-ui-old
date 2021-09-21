@@ -1,24 +1,24 @@
 import { Component, Inject, OnInit, HostListener, ViewChild } from '@angular/core';
-import { Messages } from '../../constants/project-messages';
-import { SharedFunctions } from '../../functions/shared-functions';
-import { SharedServices } from '../../services/shared-services';
+import { Messages } from '../../../constants/project-messages';
+import { SharedFunctions } from '../../../functions/shared-functions';
+import { SharedServices } from '../../../services/shared-services';
 import {
   AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy
 } from '@ks89/angular-modal-gallery';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { DomainConfigGenerator } from '../../services/domain-config-generator.service';
-import { S3UrlProcessor } from '../../services/s3-url-processor.service';
-import { WordProcessor } from '../../services/word-processor.service';
+import { DomainConfigGenerator } from '../../../services/domain-config-generator.service';
+import { S3UrlProcessor } from '../../../services/s3-url-processor.service';
+import { WordProcessor } from '../../../services/word-processor.service';
 import { Location } from '@angular/common';
-import { SearchDetailServices } from '../search-detail/search-detail-services.service';
-import { DateTimeProcessor } from '../../services/datetime-processor.service';
-import { projectConstants } from '../../../app.component';
-import { LocalStorageService } from '../../services/local-storage.service';
-import { GroupStorageService } from '../../services/group-storage.service';
-import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
+import { SearchDetailServices } from '../../search-detail/search-detail-services.service';
+import { DateTimeProcessor } from '../../../services/datetime-processor.service';
+import { projectConstants } from '../../../../app.component';
+import { LocalStorageService } from '../../../services/local-storage.service';
+import { GroupStorageService } from '../../../services/group-storage.service';
+import { VirtualFieldsComponent } from '../../../../ynw_consumer/components/virtualfields/virtualfields.component';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
-import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
-import { SignUpComponent } from '../signup/signup.component';
+import { ConsumerJoinComponent } from '../../../../ynw_consumer/components/consumer-join/join.component';
+import { SignUpComponent } from '../../signup/signup.component';
 //import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 

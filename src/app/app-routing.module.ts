@@ -5,7 +5,6 @@ import { HomeComponent } from './shared/components/home/home.component';
 import { LogoutComponent } from './shared/components/logout/logout.component';
 import { AuthGuardConsumer, AuthGuardHome, AuthGuardProvider } from './shared/guard/auth.guard';
 import { ReturnPaymentComponent } from './shared/components/return-payment/return-payment.component';
-import { BusinessPageComponent } from './shared/components/business-page/business-page.component';
 import { MaintenanceComponent } from './shared/modules/maintenance/maintenance.component';
 import { AdminLoginComponent } from './shared/components/admin/login/login.component';
 import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
@@ -51,11 +50,7 @@ const routes: Routes = [
     { path: 'userchange', loadChildren: () => import('./shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },
     { path: 'order/item-details', component: ItemDetailsSharedComponent },
     { path: 'questionnaire/:uid/:id/:accountId', loadChildren: () => import('./shared/components/questionnaire-link/questionnaire-link.module').then(m => m.QuestionnaireLinkModule) },
-    { path: ':id', component: BusinessPageComponent },
-    { path: ':id/home', loadChildren: () => import('./shared/components/business-page-home/business-page-home.module').then(m => m.BusinessPageHomeModule) },
-    { path: ':id/:userEncId', component: BusinessPageComponent },
-    { path: ':id/service/:serid', loadChildren: () => import('./shared/components/service-view/service-view.module').then(m => m.ServiceViewModule) },
-    { path: ':id/:userEncId/service/:serid', loadChildren: () => import('./shared/components/service-view/service-view.module').then(m => m.ServiceViewModule) }
+    { path: ':id', loadChildren: () => import('./shared/components/business-page/business-page.module').then(m=> m.BusinessPageModule)}
 ];
 
 @NgModule({
