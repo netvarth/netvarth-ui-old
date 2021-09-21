@@ -195,18 +195,28 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   }
 
   confirm() {
-    let timeslot = '';
+    let timeslot:any;
     let post_Data: any;
     this.placeOrderDisabled = true;
-    if (!this.onlyVirtualItems) {
-      timeslot = this.nextAvailableTime.split(' - ');
-    }
     post_Data = {
       'uid': this.orderDetails.uid,
       'countryCode': this.orderDetails.countryCode,
       'phoneNumber': this.orderDetails.phoneNumber,
       'email': this.orderDetails.email
     }
+    if (!this.onlyVirtualItems) {
+      timeslot = this.nextAvailableTime.split(' - ');
+        let timeSlot = {
+        'sTime': timeslot[0],
+        'eTime': timeslot[1]
+
+      }
+      console.log(timeSlot);
+      post_Data['timeSlot'] = timeSlot;
+      post_Data['orderDate'] = this.sel_checkindate;
+    }
+    
+  
     if (this.choose_type === 'home') {
       if (this.selectedAddress === '') {
         this.placeOrderDisabled = false;
@@ -221,18 +231,8 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     if (this.choose_type === 'store') {
       post_Data['storePickup'] = true
     }
-    if (this.onlyVirtualItems) {
-      delete post_Data['timeSlot'];
-      post_Data['orderDate'] = new Date();
-    } else {
-      let timeSlot = {
-        'sTime': timeslot[0],
-        'eTime': timeslot[1]
-
-      }
-      post_Data['timeSlot'] = timeSlot;
-      post_Data['orderDate'] = this.sel_checkindate;
-    }
+   
+     
     this.confirmOrder(post_Data);
   }
 
@@ -442,8 +442,10 @@ getOrderDetails(uid) {
 
       this.sel_checkindate = this.orderDetails.orderDate;
       // this.getAvailabilityByDate(this.sel_checkindate);
+      if(this.orderDetails.timeSlot){
       this.nextAvailableTime = this.orderDetails.timeSlot.sTime + ' - ' + this.orderDetails.timeSlot.eTime;
-      //console.log(this.nextAvailableTime);
+      }
+      //console.log(this.nextAvailableTime);  Z
       this.loading = false;
     });
 }

@@ -33,7 +33,7 @@
                             <mat-select multiple #deptsel [disabled]="buttonDisable || disableInput()"
                                 *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1 && getQuestion(question).filePropertie.minNoOfFile !== getQuestion(question).filePropertie.maxNoOfFile"
                                 [(ngModel)]="uploadFilesTemp[getQuestion(question).labelName]" class="select-box"
-                                placeholder="Select one">
+                                placeholder="Select">
                                 <mat-option
                                     *ngFor="let document of getQuestion(question).filePropertie.allowedDocuments"
                                     [value]="document" (click)="changeImageSelected(getQuestion(question), document)">

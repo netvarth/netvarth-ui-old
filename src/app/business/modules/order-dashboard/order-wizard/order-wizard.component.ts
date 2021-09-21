@@ -1118,7 +1118,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
         }
         if(this.onlyVirtualItems){
           delete post_Data['timeSlot'];
-          post_Data['orderDate']=new Date();
+
         }else{
           let timeSlot= {
             'sTime': timeslot[0],

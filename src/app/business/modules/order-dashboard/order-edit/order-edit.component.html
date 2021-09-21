@@ -147,9 +147,9 @@
 
                                   <tbody>
                                     <!--begin::Cart Content-->
-                                    <span  *ngIf="orders.length == 0">
+                                    <div  *ngIf="orders.length == 0" class="text-center text-danger">
                                       Items are disabled or removed from the cart.
-                                    </span>
+                                    </div>
                                     <tr *ngFor="let item of orders">
                                       <td data-title="Product" class="d-flex align-items-center font-weight-bolder">
                                         <!--begin::Symbol-->
@@ -308,7 +308,7 @@
                         </div>
                         <!-- </ng-container> -->
                         <!-- begin: Invoice footer-->
-                        <div class="row justify-content-center bg-gray-100 py-2 px-2 py-md-4 px-md-0 mx-0"  *ngIf="isPhysicalItemsPresent()">
+                        <div class="row justify-content-center bg-gray-100 py-2 px-2 py-md-4 px-md-0 mx-0"  *ngIf="isPhysicalItemsPresent() && orders.length!== 0">
                           <div class="col-md-10 ln-ht-2">
                             <div class="text-muted">DELIVERY TYPE&nbsp;&nbsp; <img src="assets/images/Store-pick-up.png"
                                 alt="..." *ngIf="store_pickup && !home_delivery" style="width: 60px;height:50px">
@@ -358,7 +358,7 @@
                               <div>
                                 <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4 card "
                                   *ngIf="orderDetails.homeDeliveryAddress" (click)="orderAddress()"
-                                  [ngClass]="{'highlight': selectedRowIndex == 'i'}">
+                                  [ngClass]="{'highlightaddress': selectedRowIndex == 'i'}">
                                   <div class="card-custom gutter-b address-height rounded-0 card-stretch p-2"
                                     style="line-height:none">
                                     <div class="card-body text-left pl-5 p-0 font-addrss">
@@ -730,7 +730,7 @@
                               | currency:'&#8377;'}}</span>
                           </div>
                           <div class="d-flex justify-content-between mb-3"
-                            *ngIf="choose_type === 'home' &&catalog_details && catalog_details.homeDelivery && catalog_details.homeDelivery.deliveryCharge">
+                            *ngIf="choose_type === 'home' &&catalog_details && catalog_details.homeDelivery && catalog_details.homeDelivery.deliveryCharge && isPhysicalItemsPresent()">
                             <span class="mr-15 font-weight-bold">Delivery Charge</span>
                             <span class="text-right price rupee-font">{{ getDeliveryCharge() |
                               currency:'&#8377;'}}</span>
@@ -758,7 +758,7 @@
                               currency:'&#8377;'}}</span>
                           </div>
                           <div class="d-flex justify-content-between mb-3"
-                            *ngIf="choose_type === 'home' && catalog_details.homeDelivery.deliveryCharge">
+                            *ngIf="choose_type === 'home' && catalog_details.homeDelivery.deliveryCharge && isPhysicalItemsPresent()">
                             <span class="mr-15 font-weight-bold">Delivery Charge</span>
                             <span class="text-right price rupee-font">{{orderDetails.deliveryCharge |
                               currency:'&#8377;'}}</span>
@@ -791,7 +791,7 @@
                   </div> -->
                   <div>
 
-                    <button [disabled]="placeOrderDisabled" [hidden]="!isfutureAvailableTime" *ngIf="step == 3"
+                    <button [disabled]="placeOrderDisabled" [hidden]="!isfutureAvailableTime" *ngIf="step == 3 && orders.length>0"
                       type="button" class="btn btn-success font-weight-bold text-uppercase px-9 py-1"
                       (click)="confirm()">
                       Update Order
