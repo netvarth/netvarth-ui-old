@@ -6,7 +6,6 @@ header.consumer .tp-1 {
     width: 100%;
     display: flex;
     position: relative;
-    /* More Options Dropdown */
 }
 .ml-auto, .mx-auto { margin-left: auto!important;}
 header.consumer .tp-1 .tp-l {
@@ -64,7 +63,6 @@ header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps .inbx .ot-bx {
     -webkit-border-radius: 50px;
     border-radius: 50px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -79,11 +77,9 @@ header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps .inbx .ot-bx .noti-no {
     -webkit-border-radius: 10px;
     border-radius: 10px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     background-color: #00cc96;
     color: #fff;
     text-align: center;
-    /* font-family: 'Montserrat', sans-serif; */
     font-weight: bold;
     font-size: .65rem;
     top: -5px;
@@ -236,7 +232,6 @@ header.consumer .tp-srch .sa-lc .search_location_class {
     -webkit-border-radius: 0px;
     border-radius: 0px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     position: relative;
     z-index: 2;
     font-size: 1.125em;
@@ -273,7 +268,6 @@ header.consumer .tp-srch .sa-lc .search_location_class .mat-form-field-wrapper .
     font-size: .875rem;
     padding-left: 40px;
     text-overflow: ellipsis;
-    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     font-weight: 500;
     color: #222223;
@@ -2054,7 +2048,3 @@ header {
     width: 20px;
     height: 20px;
   }
-
-  /* header .lgin.cust button, header .ot-bx {
-      margin-top: 0px !important;
-  } */

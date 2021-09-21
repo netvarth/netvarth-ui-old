@@ -25,7 +25,7 @@ import { ReturnPaymentComponent } from './shared/components/return-payment/retur
 import { AddInboxMessagesComponent } from './shared/components/add-inbox-messages/add-inbox-messages.component';
 import { ServiceDetailComponent } from './shared/components/service-detail/service-detail.component';
 import { ConsumerRateServicePopupComponent } from './shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
-import { AuthGuardConsumer, AuthGuardHome, AuthGuardLogin} from './shared/guard/auth.guard';
+import { AuthGuardConsumer, AuthGuardHome, AuthGuardLogin } from './shared/guard/auth.guard';
 import { SharedServices } from './shared/services/shared-services';
 import { SharedFunctions } from './shared/functions/shared-functions';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -33,7 +33,6 @@ import { EqualValidator } from './shared/directives/equal-validator.directive';
 import { FormMessageDisplayModule } from './shared/modules/form-message-display/form-message-display.module';
 import { FormMessageDisplayService } from './shared/modules/form-message-display/form-message-display.service';
 import { CapitalizeFirstPipeModule } from './shared/pipes/capitalize.module';
-import { OwlModule } from 'ngx-owl-carousel';
 import { HashLocationStrategy, LocationStrategy } from '../../node_modules/@angular/common';
 import { CouponsComponent } from './shared/components/coupons/coupons.component';
 import { BusinessPageComponent } from './shared/components/business-page/business-page.component';
@@ -94,6 +93,10 @@ import { Device } from '@ionic-native/device/ngx';
 import { AttachmentPopupComponent } from './shared/components/attachment-popup/attachment-popup.component';
 import { ShowuploadfileComponent } from './shared/components/showuploadfile/showuploadfile.component';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { SafeHtmlModule } from './shared/pipes/safe-html/safehtml.module';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -154,7 +157,6 @@ export function init_app(globalService: GlobalService) {
     Nl2BrPipeModule,
     MaintenanceModule,
     ScrollbarModule,
-    OwlModule,
     LoadingSpinnerModule,
     LazyModule,
     ScrollToModule.forRoot(),
@@ -172,12 +174,16 @@ export function init_app(globalService: GlobalService) {
     MatNativeDateModule,
     MatDatepickerModule,
     VirtualFieldsModule,
+    MatFormFieldModule,
+    SafeHtmlModule,
+    CarouselModule,
     IonicModule.forRoot()
   ],
   providers: [
     BsModalService,
     Device,
     FirebaseX,
+    InAppBrowser,
     AuthGuardConsumer,
     AuthGuardHome,
     AuthGuardLogin,
@@ -214,12 +220,12 @@ export function init_app(globalService: GlobalService) {
     LivetrackService,
     TeleBookingService,
     BookingService,
-    MatDatepickerModule,  
+    MatDatepickerModule,
     MatNativeDateModule,
     Title,
     CommonDataStorageService,
     SearchDetailServices,
-    {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices]},
+    { provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices] },
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

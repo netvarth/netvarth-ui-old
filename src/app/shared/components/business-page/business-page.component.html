@@ -56,8 +56,10 @@
                         <img alt="Profile Image" src="{{bLogo}}">
                         <div class="name-dept">
                             <div class="bname">{{businessjson.businessName | capitalizeFirst}}</div>
-                            <div class="bname dept" *ngIf="apptServices && apptServices[0]"> {{apptServices[0].deptName}}</div>
-                            <div class="bname dept" *ngIf="(apptServices && !apptServices[0]) && (wlServices && wlServices[0])">
+                            <div class="bname dept" *ngIf="apptServices && apptServices[0]">
+                                {{apptServices[0].deptName}}</div>
+                            <div class="bname dept"
+                                *ngIf="(apptServices && !apptServices[0]) && (wlServices && wlServices[0])">
                                 {{wlServices[0].deptName}}</div>
                         </div>
                     </div>
@@ -66,7 +68,8 @@
         </div>
         <app-common-innerloading-spinner *ngIf="loading_direct"></app-common-innerloading-spinner>
         <!-- Locations -->
-        <div class="row info-bar locations" *ngIf="locationjson.length > 1 && !api_loading && !loading && !loading_direct">
+        <div class="row info-bar locations"
+            *ngIf="locationjson.length > 1 && !api_loading && !loading && !loading_direct">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-top-20 pad-bt-10 bg-col">
                 <div class="col-md-7 col-xs-8 no-padding">
                     <h4 *ngIf="!isPlaceisSame"><a [href]="selectedLocation.googleMapUrl" target="_blank"
@@ -94,7 +97,8 @@
                 </div>
             </div>
         </div>
-        <div class="row info-bar locations" *ngIf="locationjson.length > 0 && !api_loading && !loading && !loading_direct">
+        <div class="row info-bar locations"
+            *ngIf="locationjson.length > 0 && !api_loading && !loading && !loading_direct">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                 <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12">
                     <ng-container *ngIf="showDepartments && !this.userId">
@@ -137,6 +141,30 @@
                     </ng-container>
                 </div>
             </div>
+        </div>
+        <div class="recentNews" *ngIf="newsFeeds">
+            <div>
+                <h2 class="centeralign">Recent News</h2>
+            </div>
+            <owl-carousel-o [options]="customOptions"
+                [carouselClasses]="['owl-carousel', 'owl-theme', 'row', 'sliding']">
+                <ng-template carouselSlide *ngFor="let newsFeed of newsFeeds" >
+                    <div class="recentcards card">
+                        <div>
+                            <img class="imagesectioninrecentnews" src="{{newsFeed.image}}" alt="Card image cap">
+                        </div>
+                        <div class="card-body">
+                            <div [innerHtml]="newsFeed.title | safeHtml">
+                            </div>
+                            <div [innerHtml]="newsFeed.description | safeHtml" class="recentdesc">
+                            </div>
+                            <div class="mgn-up-20">
+                                <a (click)="openNews(newsFeed.link)" class="pull-right">Read More...</a>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </owl-carousel-o>
         </div>
     </div>
 </section>

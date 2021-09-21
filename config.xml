@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.jaldee.heart" version="1.0.6" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Scale Heartfulness HealthCare</name>
+<widget android-versionCode="10006" id="com.jaldeeinc.heartfulnesss" version="1.0.6" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Heartfulness ScaleHealthCare</name>
     <description>Heartfulness HealthCare App</description>
     <author email="manikandan.velayudhan@jaldee.com" href="https://www.jaldee.com">Jaldee Soft Pvt Ltd</author>
     <content src="index.html" />

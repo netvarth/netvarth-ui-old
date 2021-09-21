@@ -2300,3 +2300,18 @@ img.ordericon.home {
 ::ng-deep .commonpopupmainclass.popup-class.specialclass.service-detail-bor-rad-0 mat-dialog-container {
   border-radius: 0 !important;
 }
+
+.recentNews h2 {
+  color: white !important;
+}
+.recentcards {
+  height: 500px;
+}
+.recentcards img {
+  height: 200px;
+}
+.recentdesc {
+  text-overflow: ellipsis;
+  height: 150px;
+  overflow: hidden;
+}
