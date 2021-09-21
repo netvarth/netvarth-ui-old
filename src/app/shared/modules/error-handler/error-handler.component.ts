@@ -9,10 +9,11 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     handleError(error: any): void {
         console.log(error);
-        this.shared_services.callHealth(error.message).subscribe();
         const chunkFailedMessage = /Loading chunk [\d]+ failed/;
         if (chunkFailedMessage.test(error.message)) {
             window.location.reload();
+        } else {
+            // this.shared_services.callHealth(error.message).subscribe();
         }
     }
 }

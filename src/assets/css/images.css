@@ -305,10 +305,6 @@ margin-top: 7px;
   content: url(../images/dashboard-icons/Reschedule-01.svg);
   width: 40px;
 }
-/* .BizyGlobe {
-  background: url(../images/BG_icon.png) no-repeat scroll 0 0/20px 20px !important;
-}
- */
 .info-lst {
   padding: 0 0 0 20px !important;
   background: url(../images/icon-bulb.svg) no-repeat scroll 0 0/15px 24px !important;
@@ -317,4 +313,3 @@ margin-top: 7px;
 .button_filter {
   background-image: url(../images/filter.png);
 }
-

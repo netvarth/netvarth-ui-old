@@ -25,6 +25,7 @@ import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
 import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-business-page',
@@ -135,6 +136,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   showMore = false;
   gender = '';
   bLogo = '';
+  newsFeeds: any = [];
   orgsocial_list;
   emaillist: any = [];
   phonelist: any = [];
@@ -285,6 +287,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   apptServices;
   private subscriptions = new SubSink();
   consumerVirtualinfo: any;
+  customOptions;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -302,7 +305,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     private domainConfigService: DomainConfigGenerator,
     // private modalService: BsModalService,
     private dateTimeProcessor: DateTimeProcessor,
-    private s3Processor: S3UrlProcessor
+    private s3Processor: S3UrlProcessor,
+    private iab: InAppBrowser
   ) {
     // this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -401,6 +405,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               (id: string) => {
                 this.provider_id = id;
                 this.gets3curl();
+                this.setNewsFeeds(this.provider_id);
               }, (error) => {
                 console.log(error);
               }
@@ -410,6 +415,33 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         )
       });
+  }
+  openNews(link) {
+    this.iab.create(link, "_system");
+  }
+  setNewsFeeds(uniqueid) {
+    const url = projectConstantsLocal.UIS3PATH + uniqueid + "/news_feed.json?"+ new Date();
+    this.shared_services.getNewsFeeds(url).subscribe(
+      (newsfeeds)=> {
+        this.newsFeeds = newsfeeds;
+        this.customOptions= {
+          loop:true,
+          margin:10,
+          mouseDrag: true,
+          touchDrag: true,
+          pullDrag: true,
+          dots: true,
+          navSpeed: 700,
+          navText: ['', ''],
+          responsiveClass:true,
+          responsive:{
+              0:{
+                  items:1
+              }
+          }
+        };
+      }
+    )
   }
 
   /**

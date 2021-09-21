@@ -33,7 +33,6 @@ import { AddManagePrivacyComponent } from './components/add-manage-privacy/add-m
 
 import { projectConstants } from '../app.component';
 import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
-import { OwlModule } from 'ngx-owl-carousel';
 import { LoadingSpinnerModule } from '../shared/modules/loading-spinner/loading-spinner.module';
 import { CheckinAddMemberModule } from '../shared/modules/checkin-add-member/checkin-add-member.module';
 import { ConsumerAppointmentModule } from './components/waitlist/appointment/consumer-appointment.module';
@@ -74,7 +73,6 @@ import { ProviderWaitlistCheckInCancelPopupComponent } from '../shared/component
     SharedModule,
     HeaderModule,
     // CheckInModule,
-    OwlModule,
     BreadCrumbModule,
     AddMemberModule,
     PagerModule,

@@ -1032,4 +1032,8 @@ export class SharedServices {
     const url = 'provider/account/settings/locations/' + pinCode;
     return this.servicemeta.httpGet(url);
   }
+
+  getNewsFeeds(url) {
+    return this.servicemeta.httpGet(url);
+  }
 }

@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:906354236471:android:106c48b50f0b288c",
         "android_client_info": {
-          "package_name": "com.jaldee.heart"
+          "package_name": "com.jaldeeinc.heartfulnesss"
         }
       },
       "oauth_client": [
@@ -35,7 +35,7 @@
               "client_id": "906354236471-3fhl34ejsgsuj3tto53bilana0rsl9n7.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.jaldee.heart"
+                "bundle_id": "com.jaldeeinc.heartfulnesss"
               }
             }
           ]
@@ -46,7 +46,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:906354236471:android:49ad839716440904",
         "android_client_info": {
-          "package_name": "com.jaldee.heart"
+          "package_name": "com.jaldeeinc.heartfulnessbusiness"
         }
       },
       "oauth_client": [
@@ -71,7 +71,7 @@
               "client_id": "906354236471-3fhl34ejsgsuj3tto53bilana0rsl9n7.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.jaldee.heart"
+                "bundle_id": "com.jaldeeinc.heartfulnesss"
               }
             }
           ]
@@ -107,7 +107,7 @@
               "client_id": "906354236471-3fhl34ejsgsuj3tto53bilana0rsl9n7.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.jaldee.heart"
+                "bundle_id": "com.jaldeeinc.heartfulnesss"
               }
             }
           ]

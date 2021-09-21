@@ -10,7 +10,6 @@ import { HeaderModule } from '../../../shared/modules/header/header.module';
 import { ConsumerOrderRoutingModule } from './order.routing.module';
 import { MaterialModule } from '../../../shared/modules/common/material.module';
 import { ItemDetailsComponent } from './item-details/item-details.component';
-import { OwlModule } from 'ngx-owl-carousel';
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { OrderBillComponent } from './order-bill/order-bill.component';
 import { OrderPaymentDetailsComponent } from './order-payment-details/order-payment-details.component';
@@ -35,7 +34,6 @@ import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery
         LoadingSpinnerModule,
         HeaderModule,
         MaterialModule,
-        OwlModule,
         MatStepperModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true })
     ],
