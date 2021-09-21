@@ -504,3 +504,9 @@
 .card.title-gb {
   border-radius: 0 !important;
 }
+.countryCodewidth{
+width:60px;
+}
+.phonewidth{
+  width:150px;
+}

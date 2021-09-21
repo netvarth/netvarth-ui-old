@@ -42,6 +42,7 @@ export class CustomersListComponent implements OnInit {
     last_name: '',
     date: null,
     mobile: '',
+    countrycode:'',
     email: '',
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1
@@ -75,6 +76,7 @@ export class CustomersListComponent implements OnInit {
     'last_name': false,
     'date': false,
     'mobile': false,
+    'countrycode':false,
     'email': false
   };
   customerselection = 0;
@@ -323,7 +325,7 @@ export class CustomersListComponent implements OnInit {
   }
   keyPress() {
     this.labelSelection();
-    if (this.filter.jaldeeid || this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.mobile || this.filter.email || this.labelFilterData !== '') {
+    if (this.filter.jaldeeid || this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.mobile || this.filter.countrycode|| this.filter.email || this.labelFilterData !== '') {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -356,6 +358,7 @@ export class CustomersListComponent implements OnInit {
       'last_name': false,
       'date': false,
       'mobile': false,
+      'countrycode':false,
       'email': false
     };
     this.filter = {
@@ -364,6 +367,7 @@ export class CustomersListComponent implements OnInit {
       last_name: '',
       date: null,
       mobile: '',
+      countrycode:'',
       email: '',
       page_count: projectConstants.PERPAGING_LIMIT,
       page: 1
@@ -402,6 +406,9 @@ export class CustomersListComponent implements OnInit {
       } else {
         this.filter.mobile = '';
       }
+    }
+    if(this.filter.countrycode !== ''){
+      api_filter['countryCode-eq'] = this.filter.countrycode;
     }
     if (this.labelFilterData !== '') {
       api_filter['label-eq'] = this.labelFilterData;
