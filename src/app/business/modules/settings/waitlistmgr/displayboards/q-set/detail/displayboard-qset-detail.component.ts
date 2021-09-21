@@ -53,6 +53,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     customer_label = '';
     displayboardDetails: any;
     position: any;
+    selectedData: any = [];
 
     cancel_btn = Messages.CANCEL_BTN;
     service_caption = Messages.SERVICES_CAP;
@@ -67,6 +68,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     @Input() action;
     @Input() qsetId;
     @Input() source;
+    @Input() selectedQueryData: any = [];
+
     @Output() idSelected = new EventEmitter<any>();
     departments: any = [];
     departmentList: any = [];
@@ -129,6 +132,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     serviceScheduleCount;
     provider_label = '';
     blogo = '';
+    displayName;
 
     accountType;
     constructor(
@@ -151,6 +155,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.activated_route.queryParams.subscribe(qparams => {
             if (qparams.value === 'view') {
                 this.actionparam = qparams.value;
+                this.layout_id = qparams.id
                 console.log("DisplayBoard Value Layout :", this.actionparam);
 
             }
@@ -159,10 +164,10 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             qparams => {
                 this.layout_id = qparams.id;
                 console.log("DisplayBoard Qset Layout :", this.layout_id);
-                if (this.layout_id) {
-                    this.editLayoutbyId(qparams.id);
 
-                }
+                this.editLayoutbyId(qparams.id);
+
+
             });
         this.activated_route.queryParams.subscribe(
             queryparams => {
@@ -270,9 +275,23 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         }
         return fieldValue;
     }
+
+    editlayout(id) {
+        this.actionparam = 'edit';
+        //this.qBoardscaption = 'Edit QBoard';
+        // this.qsetAction = id.action;
+        // this.qsetId = id.id;
+        // this.source = id.source;
+        // this.showMode = 'QSET';
+        // this.source = 'DBOARD';
+        // this.showMode = 'QSET';
+        this.editLayoutbyId(id);
+    }
     editLayoutbyId(id) {
         this.provider_services.getDisplayboardWaitlist(id).subscribe(data => {
             this.layoutData = data;
+            this.displayName = this.layoutData.displayName;
+
             console.log("DisplayBoard Edit LayoutById :", this.layoutData);
             for (var i = 0; i < this.layoutData.metric.length; i++) {
 
@@ -370,6 +389,9 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         }
     }
     ngOnChanges() {
+        this.selectedData = this.selectedQueryData;
+
+        console.log("Query Data : ", this.selectedData)
         this.api_loading = true;
         this.id = this.qsetId;
         this.actionparam = this.action;
@@ -547,6 +569,16 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         };
         this.idSelected.emit(actionObj);
     }
+
+    editDisplayboardQSet(board) {
+        // const actionObj = {
+        //     action: 'edit',
+        //     id: board.id,
+        //     source: 'QLIST'
+        // };
+        // this.idSelected.emit(actionObj);
+    }
+
     setStatusboardValue() {
         if (this.selectedCategory === 'SERVICE') {
             this.statusBoardfor = [{

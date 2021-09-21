@@ -189,13 +189,14 @@ export class DisplayboardDetailComponent implements OnInit {
 
         this.activated_route.params.subscribe(params => {
             this.actionparam = params.id;
+            this.layout_id = params.id;
         }
         );
         this.activated_route.queryParams.subscribe(qparams => {
             if (qparams.value === 'view') {
                 this.qBoardscaption = 'QBoard Details';
                 this.actionparam = qparams.value;
-                console.log("DisplayBoard Value Layout :", this.actionparam);
+               // console.log("DisplayBoard Value Layout :", this.actionparam);
 
             }
         }
@@ -203,8 +204,12 @@ export class DisplayboardDetailComponent implements OnInit {
         this.activated_route.queryParams.subscribe(
             qparams => {
                 this.layout_id = qparams.id;
+                console.log("DisplayBoard Value Layout Id:", qparams.id);
+
                 if (this.layout_id) {
                     this.editLayoutbyId(qparams.id);
+                    console.log("DisplayBoard Edit Layout :",  this.editLayoutbyId(qparams.id));
+
 
                 } else {
                     const breadcrumbs = [];
@@ -236,6 +241,8 @@ export class DisplayboardDetailComponent implements OnInit {
     }
 
 
+
+
     ViewDisplayboardLayout(layout) {
         const navigationExtras: NavigationExtras = {
             queryParams: {
@@ -247,6 +254,8 @@ export class DisplayboardDetailComponent implements OnInit {
         this.router.navigate(['provider', 'settings', 'q-manager',
             'displayboards', 'view'], navigationExtras);
         this.tableChange = !this.tableChange;
+
+       // this.editlayout(this.layout_id)
 
         // this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'q-set','view'],navigationExtras);
 
@@ -311,6 +320,12 @@ export class DisplayboardDetailComponent implements OnInit {
         this.source = 'DBOARD';
         this.showMode = 'QSETS';
     }
+
+    // qSetViewClicked() {
+    //     //this.qBoardscaption = 'QBoard queries';
+    //     this.source = 'DBOARD';
+    //     this.showMode = 'QSET';
+    // }
     getLayout(layoutvalue) {
         let layoutActive;
         for (let i = 0; i < this.boardLayouts.length; i++) {
@@ -384,6 +399,7 @@ export class DisplayboardDetailComponent implements OnInit {
         this.provider_services.getDisplayboardById_Type(this.layout_id, this.type).subscribe(
             (displayboard_data: any) => {
                 this.displayboardDetails = displayboard_data;
+                console.log("DisplayBoard Details : ",this.displayboardDetails);
                 if (displayboard_data.isContainer) {
                     this.inputStatusboards = displayboard_data.containerData;
                     this.showIndex = 0;
@@ -534,6 +550,7 @@ export class DisplayboardDetailComponent implements OnInit {
             console.log("DisplayBoard Edit LayoutById :", this.layoutData);
 
             this.layout = this.getLayout(this.layoutData.layout);
+            console.log("Layout Edit :",this.layout);
             this.displayBoardData = data;
 
             const breadcrumbs = [];
@@ -563,7 +580,7 @@ export class DisplayboardDetailComponent implements OnInit {
 
 
             }
-           
+
 
             for (var i = 0; i < this.layoutData.metric.length; i++) {
 
@@ -695,6 +712,18 @@ export class DisplayboardDetailComponent implements OnInit {
     editlayout(id) {
         this.actionparam = 'edit';
         this.qBoardscaption = 'Edit QBoard';
+        // this.qsetAction = id.action;
+        // this.qsetId = id.id;
+        // this.source = id.source;
+        // this.showMode = 'QSET';
+        // this.source = 'DBOARD';
+        // this.showMode = 'QSET';
+        this.editLayoutbyId(id);
+    }
+
+    viewQueryById(id) {
+        this.source = 'DBOARD';
+        this.showMode = 'QSET';
         this.editLayoutbyId(id);
     }
     resetApiErrors() {

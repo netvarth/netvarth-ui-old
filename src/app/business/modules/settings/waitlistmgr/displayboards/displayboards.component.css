@@ -29,6 +29,18 @@ table{
   
 
 }
+.frmCtrl{
+    
+    border: hidden;
+    border-bottom: hidden;
+    border-left: hidden;
+    border-right: hidden;
+    border-style: hidden;
+    border-bottom-color: white;
+    
+
+}
+
 .tr-row{
     border: hidden;
     margin-top: 0;

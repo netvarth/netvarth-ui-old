@@ -214,11 +214,19 @@
                                 QBoard Wizard
 
                                 <i class="fa fa-question-circle-o fa-lg text-secondary" (click)="redirecToHelp()"></i>
+                                <span class="pull-right mx-2 pointer-cursor" (click)="qSetListClicked()"
+                                    *ngIf="actionparam === 'add'">
+                                    QBoard queries<i class="fa fa-arrow-right pointer-cursor mx-2"></i>
+                                </span>
                             </p>
 
 
-                            <div class="row mx-2">
+                            <div class="row mx-2" *ngIf="actionparam !== 'view'">
                                 <div class="col-md-4 col-lg-4 col-xs-12 col-12  col-sm-12 no-padding mb-0">
+                                    <!-- <span class="editbt pull-right mx-2 my-2" (click)="editlayout(layout_id)"
+                                        *ngIf="actionparam==='view'" data-toggle="tooltip" data-placement="top"
+                                        title="Edit"></span> -->
+
                                     <form class="mx-2">
 
                                         <p class="text-secondary" style="font-size: medium;">Display name for QBoard</p>
@@ -342,9 +350,6 @@
                                 </div> <br> <br>
                                 <div class="col-md-8  col-lg-8 col-sm-12 col-xs-12 col-12 mt-0 jumbotron lft">
 
-
-
-
                                     <p class="text-center text-info pointer-cursor" (click)="onClickChange()">Preview
                                     </p>
                                     <div class="row">
@@ -395,14 +400,22 @@
 
                                                             </div>
                                                             <!-- *ngIf="!layout_id && tableChange" -->
-                                                            <div class="text-center">
+                                                            <div class="text-center"
+                                                                *ngIf="actionparam === 'add' && !tableChange">
                                                                 <button type="button" class="btn btn-primary my-5 mx-5"
-                                                                    (click)="addQSet()"
-                                                                    *ngIf="actionparam === 'add'">Create
+                                                                    (click)="addQSet()">Create
                                                                     Query</button>
                                                             </div>
 
                                                             <div class="text-center"
+                                                                *ngIf="actionparam !== 'view' && actionparam === 'edit' && !tableChange">
+                                                                <button type="button" class="btn btn-primary my-5 mx-5"
+                                                                    (click)="viewQueryById(layout_id)">View
+                                                                    Query</button>
+                                                            </div>
+
+
+                                                            <!-- <div class="text-center"
                                                                 *ngIf="qset_list.length>0 && actionparam === 'view'">
                                                                 <div class="form-group">
                                                                     <div class="row">
@@ -424,7 +437,7 @@
                                                                     </div>
                                                                 </div>
 
-                                                            </div>
+                                                            </div> -->
                                                         </td>
                                                         <!-- <td>
                                                             <div class="d-flex">
@@ -449,35 +462,60 @@
 
                                                 </tbody>
                                             </table>
-                                            <div class="card no-padding mgn-up-20"
+                                            <div class="card no-padding mgn-up-20 col-md-6 col-lg-6 col-12"
                                                 *ngIf="qset_list.length>0 && !tableChange">
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-12 col-lg-12 col-12">
-                                                            <div *ngFor="let row of createRange(boardRows)">
-                                                                <div *ngFor="let col of createRange(boardCols)"
-                                                                    class="col-md-{{12/boardCols}} col-sm-{{12/boardCols}} col-xs-{{12/boardCols}}">
-                                                                    <mat-form-field>
-                                                                        <mat-select placeholder="Choose QBoard query"
-                                                                            [(ngModel)]="boardSelectedItems[row + '_' + col]"
-                                                                            [ngModelOptions]="{standalone: true}"
-                                                                            (selectionChange)="handleLayoutMetric(boardSelectedItems[row + '_' + col], row + '_' + col)">
-                                                                            <mat-option [value]="qset.id"
-                                                                                *ngFor="let qset of qset_list">
-                                                                                {{qset.displayName |
-                                                                                capitalizeFirst}}
-                                                                            </mat-option>
-                                                                        </mat-select>
-                                                                    </mat-form-field>
-                                                                </div>
-                                                                <div class="clearfix"></div>
-                                                            </div>
-                                                        </div>
+
+                                                <div class="row mx-2" *ngFor="let row of createRange(boardRows)">
+
+
+                                                    <div *ngFor="let col of createRange(boardCols)"
+                                                        class="col-md-{{12/boardCols}} col-sm-{{12/boardCols}} col-xs-{{12/boardCols}}">
+                                                        <mat-form-field class="form-group">
+                                                            <mat-select placeholder="Choose QBoard query"
+                                                                class="form-control frmCtrl"
+                                                                [(ngModel)]="boardSelectedItems[row + '_' + col]"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                (selectionChange)="handleLayoutMetric(boardSelectedItems[row + '_' + col], row + '_' + col)">
+                                                                <mat-option [value]="qset.id"
+                                                                    *ngFor="let qset of qset_list">
+                                                                    {{qset.displayName |
+                                                                    capitalizeFirst}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
                                                     </div>
+
+
+
+
                                                 </div>
                                             </div>
 
-
+                                            <!-- <div class="col-12 col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                                <p class="text-secondary" style="font-size: medium;">Select Lable :</p>
+                                                <div class="form-group">
+                                                    
+                                                 
+            
+                                                    <mat-form-field>
+                                                        <mat-select [(ngModel)]="labelMultiCtrl" placeholder="Labels"
+                                                            [multiple]="true">
+                                                            <ngx-mat-select-search [formControl]="labelMultiFilterCtrl"
+                                                                placeholderLabel="Search labels"
+                                                                noEntriesFoundLabel="No matching label found">
+                                                            </ngx-mat-select-search>
+                                                        
+                                                            <mat-option [value]="'all'" (click)="providerLabelSelection()">
+                                                                -- Select Label --
+                                                            </mat-option>
+                                                            <mat-option *ngFor="let label of providerLabelsList" [value]="label"
+                                                                (click)="providerLabelSelection(label)">
+                                                                {{label.displayName}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div> -->
 
                                             <table *ngIf="tableChange && layout_id"
                                                 class="table table-striped table-bordered table-responsive tbl1 bg-white">
@@ -516,9 +554,11 @@
                                                         <td *ngFor="let field of selectedBoardData, let i=index">
                                                             <!-- <span>{{i}}</span>&nbsp; -->
 
-                                                            <div class="d-flex flex-column justify-content-around bg-secondary">
-                                                                <div class="p-2 bg-info flex-fill">
-                                                                    {{field.displayName}}
+                                                            <div
+                                                                class="d-flex flex-column justify-content-around bg-secondary">
+                                                                <div
+                                                                    class="p-2 bg-info d-flex flex-row flex-fill justify-content-around">
+                                                                    <span> {{field.displayName}}</span>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -541,7 +581,7 @@
 
                                                 </tbody>
                                             </table>
-
+                                            <!-- 
                                             <table class="table table-striped table-bordered responsive-table"
                                                 *ngIf="tableChange && layout_id">
                                                 <thead>
@@ -561,7 +601,7 @@
                                                     <tr>
                                                     </tr>
                                                 </tbody>
-                                            </table>
+                                            </table> -->
                                             <!-- <table class="table table-bordered table-responsive col-md-6 col-6 bg-white">
                                             <thead>
                                                 <tr class="text-center">
@@ -609,9 +649,26 @@
                                 </div>
 
                             </div>
-
-
+                          
+                            <div class="card no-padding"  *ngIf="actionparam === 'view'">
+                                <div class="row mx-2">
+                                    <div class="cl1">
+                                        <span class="editbt" (click)="editlayout(layout_id)"></span>
+                                        <div class="ot-it">
+                                            <h3>{{displayName | capitalizeFirst}}</h3>
+                                            <div class="c-ot m0">
+                                                <div class="item desfont" *ngIf="layoutData.layout">
+                                                    <span class="ttle">Layout</span>
+                                                    <span>{{(getLayout(layoutData.layout)).displayName}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+                      
                         <!--Q Selection criteria starts here-->
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="showMode == 'QSETS'">
                             <app-displayboard-qset (idSelected)="qSetSelected($event)" [source]="source">
@@ -619,7 +676,7 @@
                         </div>
                         <div class="col-md-12 co-xs-12 col-sm-12 no-padding" *ngIf="showMode == 'QSET'">
                             <app-displayboard-qset-detail [action]="qsetAction" [qsetId]="qsetId" [source]="source"
-                                (idSelected)="qSetSelected($event)">
+                                (idSelected)="qSetSelected($event)" [selectedQueryData]="selectedBoardData">
                             </app-displayboard-qset-detail>
                         </div>
                         <div class="clearfix"></div>

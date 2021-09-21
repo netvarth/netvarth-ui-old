@@ -52,6 +52,7 @@ export class DisplayboardsComponent implements OnInit {
     ];
     container_count = 0;
     accountType: any;
+    type;
     qBoardsSelectedIndex: any = [];
     qBoardSelectCount = 0;
     qBoardsSelected: any = [];
@@ -317,20 +318,23 @@ export class DisplayboardsComponent implements OnInit {
     }
     goDisplayboardLayoutDetails(layout, source?) {
         this.id = layout.id;
-        const navigationExtras: NavigationExtras = {
-            queryParams: { id: layout.id }
-        };
+        // const navigationExtras: NavigationExtras = {
+        //     queryParams: { id: layout.id }
+        // };
 
         // this.router.navigate(['provider', 'settings', 'q-manager',
         //     'displayboards', `${this.id}`], navigationExtras);
 
         console.log("Layout : ", layout.name, layout.metric, layout.metric[0].queueSet['fieldList']);
         if (source) {
-            // const path = 'displayboard/' + layout.id + '?type=wl';
+            // const path = 'provider/settings/q-manager/displayboards/' + layout.id;
             // const path = projectConstants.PATH + 'displayboard/' + layout.id + '?type=wl';
           //  window.open(path, '_blank');
+            // this.router.navigate(['provider', 'settings', 'q-manager',
+            // 'displayboards', `${this.id}`], navigationExtras);
             this.router.navigate(['provider', 'settings', 'q-manager',
-            'displayboards', `${this.id}`], navigationExtras);
+            'displayboards', `${this.id}`]);
+            // this.router.navigate([path + `?${this.type='wl'}`]);
         }
 
         else {
