@@ -39,7 +39,7 @@ import { PaytmService } from '../../../../shared/services/paytm.service';
     styleUrls: ['./consumer-appointment.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
-    paymentBtnDisabled = false;
+
     isClickedOnce = false;
     tooltipcls = '';
     add_member_cap = Messages.ADD_MEMBER_CAP;
@@ -831,8 +831,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.payEmail = result;
                     this.confirmcheckin(type, paymenttype);
                 } else {
-                    // this.isClickedOnce=false;
-                    this.paymentBtnDisabled = false;
+                     this.isClickedOnce=false;
+                   
                 }
 
             });
@@ -1083,7 +1083,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.apptdisable = false;
                     this.disablebutton = false;
-                    this.paymentBtnDisabled = false;
+                   
                 });
     }
     handleOneMemberSelect(id, firstName, lastName, email) {

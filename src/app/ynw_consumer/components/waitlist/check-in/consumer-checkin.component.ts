@@ -793,7 +793,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.confirmcheckin(type,paymenttype);
             }else{
                  this.isClickedOnce=false;
-            
+                 this.paymentBtnDisabled=false;
             }
 
         });
@@ -1074,6 +1074,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.disablebutton = false;
                     this.paytmGateway = false;   
                     this.razorpayGatway = false;
+                    this.paymentBtnDisabled=false;
                 });
     }
     submitQuestionnaire(uuid,paymenttype?) {

@@ -26,8 +26,7 @@ export class ConsumerEmailComponent implements OnInit {
   ngOnInit(): void {
 
     this.userData = this.groupService.getitemFromGroupStorage('ynw-user');
-    console.log('usrData'+JSON.stringify(this.userData));
-    console.log(this.customer);
+
 
     
   }
@@ -40,7 +39,9 @@ export class ConsumerEmailComponent implements OnInit {
     if (this.isValidEmail(this.email_id)) {
       if(this.update_email){
         this.updateConsumerAccount().then(result=>{
+          if(result&& result!==undefined){
           this.dialogRef.close(this.email_id);
+          }
         });
       }else{
       this.dialogRef.close(this.email_id);
@@ -70,12 +71,13 @@ export class ConsumerEmailComponent implements OnInit {
    _this.sharedServices.updateProfile(userObj,'consumer')
    .subscribe(data=>{
   resolve(data);
-   }),(error)=>{
-    this.apiError=true;
-    this.apiErrorTxt=error.error;
+   },(error)=>{
+    _this.apiError=true;
+    _this.apiErrorTxt=error.error;
     reject();
    }
-     });
+     );
 
+    });
   }
 }
