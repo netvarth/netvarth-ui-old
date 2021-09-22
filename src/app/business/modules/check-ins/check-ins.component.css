@@ -805,3 +805,12 @@
     .phonewidth{
       width:150px;
     }
+
+    .box {
+        margin-top: 150px !important;
+    }
+    @media (max-width: 991px) {
+        .box {
+            margin-top: 100px !important;
+        }
+    }
