@@ -2189,7 +2189,7 @@ export class ProviderCheckinComponent implements OnInit {
         });
     }
     validateQnr(post_Data?) {
-        this.api_loading = true;
+      
         if (!this.questionAnswers) {
             this.questionAnswers = {
                 answers: {
@@ -2197,9 +2197,12 @@ export class ProviderCheckinComponent implements OnInit {
                     questionnaireId: this.questionnaireList.id
                 }
             }
+            this.api_loading=false;
         }
-        if (this.questionAnswers.answers) {
+        if (this.questionAnswers &&this.questionAnswers.answers) {
+            this.api_loading = true;
             this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
+                this.api_loading=false;
                 if (data.length === 0) {
                     if (!this.showBlockHint) {
                         this.addCheckInProvider(post_Data);

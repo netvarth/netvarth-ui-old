@@ -2120,9 +2120,11 @@ export class AppointmentComponent implements OnInit {
                     questionnaireId: this.questionnaireList.id
                 }
             }
+            this.api_loading=false;
         }
         if (this.questionAnswers.answers) {
             this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
+                this.api_loading=false;
                 if (data.length === 0) {
                     if (!this.showBlockHint) {
                         this.addAppointmentInProvider(post_Data);
