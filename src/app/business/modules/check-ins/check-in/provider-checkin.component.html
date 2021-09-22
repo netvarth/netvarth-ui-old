@@ -321,12 +321,12 @@
                           </span>
                            <input *ngIf="!showInputSection"
                             (keypress)="isNumeric($event)"
-                            class="form-control emailPrepay call-mode-ip "
+                            class="form-control change emailPrepay call-mode-ip "
                             style="width:50px!important;" placeholder="+91"
                             [(ngModel)]="cuntryCode" autocomplete="off" maxlength="10"
                             type="text" min="0"> &nbsp;<input *ngIf="!showInputSection"
                                 (keypress)="isNumeric($event)"
-                                class="form-control emailPrepay call-mode-ip wtsap-ip-wdth"
+                                class="form-control change emailPrepay call-mode-ip wtsap-ip-wdth"
                                 style="width:120px!important;" placeholder="9955886655"
                                 [(ngModel)]="callingModes" autocomplete="off" maxlength="10"
                                 type="text" min="0">&nbsp;

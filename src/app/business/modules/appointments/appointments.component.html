@@ -337,10 +337,10 @@
                             <div class="filterTextinput filter-text-input" >
                                 <li class="filterli filter-li">
                                     <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode (keyup)="keyPressed()"
-                                    class="filterTextbox countryCodewidth" placeholder="+91">
+                                    class="filterTextbox change countryCodewidth" placeholder="+91">
                                   <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
                                     [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
-                                    (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox phonewidth"
+                                    (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
                                     placeholder="9955668855">
                                 </li>
                             </div>
@@ -1463,10 +1463,10 @@
                               <div class="filterTextinput filter-text-input" >
                                   <li class="filterli filter-li">
                                       <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode (keyup)="keyPressed()"
-                                      class="filterTextbox countryCodewidth" placeholder="+91">
+                                      class="filterTextbox change countryCodewidth" placeholder="+91">
                                     <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
                                       [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
-                                      (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox phonewidth"
+                                      (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
                                       placeholder="9955668855">
                                   </li>
                               </div>
@@ -2061,10 +2061,10 @@
                               <div class="filterTextinput filter-text-input" *ngIf="time_type == 3">
                                   <li class="filterli filter-li">
                                       <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode (keyup)="keyPressed()"
-                                      class="filterTextbox countryCodewidth" placeholder="+91">
+                                      class="filterTextbox change countryCodewidth" placeholder="+91">
                                     <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
                                       [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
-                                      (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox phonewidth"
+                                      (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
                                       placeholder="9955668855">
                                   </li>
                               </div>
