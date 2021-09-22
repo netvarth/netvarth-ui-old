@@ -1214,8 +1214,9 @@ export class ProviderCheckinComponent implements OnInit {
                      if(this.cuntryCode.includes('+')){
                          this.cuntryCode=this.cuntryCode.slice(1);
                      }
+                    }
                     this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.cuntryCode + '' + this.callingModes;
-                }
+                
             } else {
                 const thirdparty_countrycode = '91';
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = thirdparty_countrycode + '' + this.callingModes;
@@ -1245,11 +1246,12 @@ export class ProviderCheckinComponent implements OnInit {
         }
         if (this.sel_ser_det.serviceType === 'virtualService') {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
-                if (!this.callingModes) {
+                if (!this.callingModes ||!this.cuntryCode) {
                     this.snackbarService.openSnackBar('Please enter a valid number to contact you', { 'panelClass': 'snackbarerror' });
                     this.is_wtsap_empty = true;
                 }
             }
+            console.log("array"+this.virtualServiceArray);
             //   post_Data['virtualService'] = this.virtualServiceArray;
             for (const i in this.virtualServiceArray) {
                 if (i === 'WhatsApp') {
