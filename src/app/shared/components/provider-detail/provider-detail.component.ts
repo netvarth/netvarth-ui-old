@@ -2548,6 +2548,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             // this.orderItems = orderItems;
           }
         });
+        this.isPhysicalItemsPresent();
     }
   }
 
@@ -2594,15 +2595,14 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
     return physical_item_present;
   }
-  checkVirtualOrPhysical(activeCatalog){
+  checkVirtualOrPhysical(){
     let  showCatalogItems=false;
-    if(this.isPhysicalItemsPresent()){
-     if(activeCatalog.nextAvailableDeliveryDetails||activeCatalog.nextAvailablePickUpDetails){
-       showCatalogItems=true;
-     }
-    }else{
+    if(this.activeCatalog.nextAvailableDeliveryDetails||this.activeCatalog.nextAvailablePickUpDetails){
       showCatalogItems=true;
     }
+    if(this.onlyVirtualItems){
+       showCatalogItems=true;
+     }
     return showCatalogItems
   }
 
