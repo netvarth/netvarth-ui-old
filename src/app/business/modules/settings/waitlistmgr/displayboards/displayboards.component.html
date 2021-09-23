@@ -142,7 +142,7 @@
 
 
                                 <div class="row mx-4">
-                                    <div class="col-md-7 col-7 col-sm-7 col-lg-7 col-xs-7  no-padding">
+                                    <div class="col-md-7 col-7 col-sm-7 col-lg-7 col-xs-7 rgt  no-padding">
 
                                         <!-- <div class=" pull-left align-content-around bg-light text-info">
                                             <span class="fa fa-desktop mx-2"
@@ -166,7 +166,7 @@
                                         <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding"
                                             *ngIf="layout_list.length!==0">
                                             <div class="table-responsive">
-                                                <table class="table tbl-qboard">
+                                                <table class="table tbl-qboard listBoard">
                                                     <!-- <thead class="qBoardselected-table">
                                                         <tr>
                                                             <th></th>
@@ -187,12 +187,12 @@
                                                                 </mat-checkbox> 
                                                             </td> -->
                                                             <td *ngIf="!rowChange">
-                                                                <input type="checkbox" class="ckbx pull-left"
+                                                                <!-- <input type="checkbox" class="ckbx pull-left"
                                                                     [disabled]="layout.isContainer"
                                                                     [checked]="qBoardsSelectedIndex[i]"
                                                                     (click)="!layout.isContainer && qBoardClicked(i)"
                                                                     [value]="layout.id"
-                                                                    *ngIf="layout_list.length > 1" />
+                                                                    *ngIf="layout_list.length > 1" /> -->
                                                                 <div (click)="goDisplayboardLayoutDetails(layout, 'layout')"
                                                                     class="pull-left mgn-lt-10 align-content-around" >
                                                                     <h3 class="pointer-cursor"  data-toggle="tooltip" data-placement="top" title="QBoard">
@@ -233,13 +233,13 @@
 
 
 
-                                                                    <i class="fa fa-folder-open text-info p-1 pointer-cursor"
+                                                                    <!-- <i class="fa fa-folder-open text-info p-1 pointer-cursor"
                                                                         (click)="goDisplayboardLayoutDetails(layout, 'layout')" data-toggle="tooltip" data-placement="top" title="Open"></i>
                                                                     <a class="pointer-cursor"
                                                                         style="color: black; font-weight: 400;">
 
                                                                     </a>
-                                                                    <i class="fa fa-toggle-on p-1 pointer-cursor" data-toggle="tooltip" data-placement="top" title="Slide" (click)="onToggleData()"></i>
+                                                                    <i class="fa fa-toggle-on p-1 pointer-cursor" data-toggle="tooltip" data-placement="top" title="Slide" (click)="onToggleData()"></i> -->
 
                                                                 </span>
                                                             </td>
@@ -255,7 +255,7 @@
 
 
                                     </div>
-                                    <div class="col-md-5 col-5 col-sm-5 col-lg-5 col-xs-5 no-padding lft">
+                                    <div class="col-md-5 col-5 col-sm-5 col-lg-5 col-xs-5 no-padding">
                                         <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding">
                                             <div class="table-responsive">
                                                 <table class="table tbl-qboard">

@@ -156,28 +156,35 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             if (qparams.value === 'view') {
                 this.actionparam = qparams.value;
                 this.layout_id = qparams.id
-                console.log("DisplayBoard Value Layout :", this.actionparam);
-
+                if (this.layout_id) {
+                    console.log("DisplayBoard details  Layout :", this.layout_id);
+                    this.editLayoutbyId(this.layout_id);
+                }
             }
         });
-        this.activated_route.params.subscribe(
-            qparams => {
-                this.layout_id = qparams.id;
-                console.log("DisplayBoard Qset Layout :", this.layout_id);
+        // this.activated_route.queryParams.subscribe(qparams => {
 
-                this.editLayoutbyId(qparams.id);
+        //         this.layout_id = qparams.id
+        //         console.log("DisplayBoard Value Layout Id :", this.layout_id);
+        // });
+        // this.activated_route.params.subscribe(
+        //     qparams => {
+        //         this.layout_id = qparams.id;
+        //         console.log("DisplayBoard Qset Layout :", this.layout_id);
 
 
-            });
-        this.activated_route.queryParams.subscribe(
-            queryparams => {
-                if (queryparams.type === 'wl') {
-                    this.type = 'waitlist';
-                    console.log("DisplayBoard :", this.type)
-                } else {
-                    this.type = 'appointment';
-                }
-            });
+
+
+        //     });
+        // this.activated_route.queryParams.subscribe(
+        //     queryparams => {
+        //         if (queryparams.type === 'wl') {
+        //             this.type = 'waitlist';
+        //             console.log("DisplayBoard :", this.type)
+        //         } else {
+        //             this.type = 'appointment';
+        //         }
+        //     });
 
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -348,6 +355,20 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 }
 
             }
+            for (let i = 0; i < this.layoutData.metric.fieldList.length; i++) {
+                console.log("DisplayBoard fieldList  : ", this.layoutData.metric.fieldList)
+                for (let j = 0; j < this.defaultLabels.length; j++) {
+                    if (this.displayBoardData.fieldList[i].name === this.defaultLabels[j].name) {
+                        this.labelDisplayname[j] = this.displayBoardData.fieldList[i].displayName;
+                        this.labelOrder[j] = this.displayBoardData.fieldList[i].order;
+                        if (this.displayBoardData.fieldList[i].defaultValue) {
+                            this.labelDefaultvalue[j] = this.displayBoardData.fieldList[i].defaultValue;
+                        }
+                        this.defaultLabels[j].checked = true;
+                        this.labelSelection(j, 'edit');
+                    }
+                }
+            }
 
         });
     }
@@ -401,6 +422,10 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.getProviderQueues();
         this.getLabels();
         setTimeout(() => {
+            if (this.layout_id) {
+                this.getDisplaydashboardDetailsById(this.layout_id);
+                this.submit_btn = Messages.UPDATE_BTN;
+            }
             if (this.id) {
                 this.getDisplaydashboardbyId(this.id);
                 this.submit_btn = Messages.UPDATE_BTN;
@@ -492,6 +517,74 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.serviceIds = [];
         this.qIds = [];
     }
+    getDisplaydashboardDetailsById(id) {
+        this.provider_services.getDisplayboardQSetbyId(this.layout_id).subscribe(data => {
+            this.displayBoardData = data;
+            console.log("DisplayBoard Details By Id :", this.displayBoardData, data);
+            this.boardName = this.displayBoardData.name;
+            this.boardDisplayname = this.displayBoardData.displayName;
+            this.selectedWtlstList = this.displayBoardData.qBoardConditions.wlStatus;
+            this.selectedCategory = this.displayBoardData.queueSetFor[0].type;
+            console.log(Object.keys(this.displayBoardData.qBoardConditions.labels).length);
+            if (Object.keys(this.displayBoardData.qBoardConditions.labels).length > 0) {
+                Object.keys(this.displayBoardData.qBoardConditions.labels).forEach(key => {
+                    for (let i = 0; i < this.providerLabels.length; i++) {
+                        if (this.providerLabels[i].label === key) {
+                            this.providerLabels[i]['selectedValue'] = this.displayBoardData.qBoardConditions.labels[key];
+                            this.labelMultiCtrl.push(this.providerLabels[i]);
+                            this.labelList[this.providerLabels[i].label] = this.displayBoardData.qBoardConditions.labels[key];
+                            //console.log("selected"+this.labelMultiCtrl);
+                        }
+                    }
+                });
+            } else {
+                this.labelMultiCtrl = 'all';
+            }
+            if (this.displayBoardData.qBoardConditions.departments && this.displayBoardData.qBoardConditions.departments.length > 0) {
+                for (let j = 0; j < this.displayBoardData.qBoardConditions.departments.length; j++) {
+                    for (let i = 0; i < this.departments.length; i++) {
+                        if (this.displayBoardData.qBoardConditions.departments[j].departmentId === this.departments[i].departmentId) {
+                            if (this.deptMultiCtrl.indexOf(this.departments[i]) === -1) {
+                                this.deptMultiCtrl.push(this.departments[i]);
+                            }
+                            if (this.deptIds.indexOf(this.displayBoardData.qBoardConditions.departments[j].departmentId) === -1) {
+                                this.deptIds.push(this.displayBoardData.qBoardConditions.departments[j].departmentId);
+                            }
+                        }
+                    }
+                    if (j < this.displayBoardData.qBoardConditions.departments.length) {
+                        this.getUsers();
+                        if (this.displayBoardData.qBoardConditions.providers && this.displayBoardData.qBoardConditions.providers.length > 0) {
+                            this.getProviderServices();
+                        }
+                        setTimeout(() => {
+                            this.departmentSelection();
+                        }, 500);
+                    }
+                }
+            } else {
+                this.departmentSelection();
+            }
+            Object.keys(this.displayBoardData.sortBy).forEach(key => {
+                this.selectedSortField = key;
+                this.sortByField(key);
+            });
+            for (let i = 0; i < this.displayBoardData.fieldList.length; i++) {
+                for (let j = 0; j < this.defaultLabels.length; j++) {
+                    if (this.displayBoardData.fieldList[i].name === this.defaultLabels[j].name) {
+                        this.labelDisplayname[j] = this.displayBoardData.fieldList[i].displayName;
+                        this.labelOrder[j] = this.displayBoardData.fieldList[i].order;
+                        if (this.displayBoardData.fieldList[i].defaultValue) {
+                            this.labelDefaultvalue[j] = this.displayBoardData.fieldList[i].defaultValue;
+                        }
+                        this.defaultLabels[j].checked = true;
+                        this.labelSelection(j, 'edit');
+                    }
+                }
+            }
+        });
+    }
+
     getDisplaydashboardbyId(id) {
         this.provider_services.getDisplayboardQSetbyId(id).subscribe(data => {
             this.displayBoardData = data;
@@ -562,6 +655,13 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.source = 'QLIST';
         this.actionparam = 'edit';
         this.getDisplaydashboardbyId(id);
+    }
+    editStatusBoardById(id) {
+        //this.source = 'DBOARD';
+        // this.showMode = 'QSET';
+        // this.source = 'QLIST';
+        this.actionparam = 'edit';
+        this.getDisplaydashboardDetailsById(id);
     }
     goBack() {
         const actionObj = {

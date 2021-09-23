@@ -3,11 +3,12 @@
     border-width: 1px; 
     margin-right: 5px;
 }
-.lft{
-     border-left:solid lightgray;
+.rgt{
+     border-right:solid lightgray;
      border-width: 1px; 
      border-spacing: 2px;
      margin-top: 0%;
+    
 }
 .txt{
     font-size: small;
@@ -29,6 +30,11 @@ table{
   
 
 }
+.listBoard{
+    overflow-y: auto;
+    max-height: 300px;
+}
+
 .frmCtrl{
     
     border: hidden;

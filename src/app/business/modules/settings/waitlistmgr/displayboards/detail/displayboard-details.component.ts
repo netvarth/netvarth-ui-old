@@ -189,59 +189,71 @@ export class DisplayboardDetailComponent implements OnInit {
 
         this.activated_route.params.subscribe(params => {
             this.actionparam = params.id;
-            this.layout_id = params.id;
+            // this.layout_id = params.id;
+            // console.log("Layout_id ",this.layout_id);
         }
         );
         this.activated_route.queryParams.subscribe(qparams => {
             if (qparams.value === 'view') {
                 this.qBoardscaption = 'QBoard Details';
                 this.actionparam = qparams.value;
-               // console.log("DisplayBoard Value Layout :", this.actionparam);
+                this.layout_id = qparams.id;
+                console.log("View Layout Id :", this.layout_id);
 
             }
         }
         );
         this.activated_route.queryParams.subscribe(
             qparams => {
-                this.layout_id = qparams.id;
-                console.log("DisplayBoard Value Layout Id:", qparams.id);
+                if (qparams.value === 'view') {
+                    this.layout_id = qparams.id;
+                    console.log("DisplayBoard Value Layout Id:", qparams.id);
 
-                if (this.layout_id) {
-                    this.editLayoutbyId(qparams.id);
-                    console.log("DisplayBoard Edit Layout :",  this.editLayoutbyId(qparams.id));
+                    if (this.layout_id) {
+                        this.editLayoutbyId(qparams.id);
+                        console.log("DisplayBoard Edit Layout :", this.editLayoutbyId(qparams.id));
 
 
-                } else {
-                    const breadcrumbs = [];
-                    this.breadcrumbs_init.map((e) => {
-                        breadcrumbs.push(e);
-                    });
-                    breadcrumbs.push({
-                        title: 'Add'
-                    });
-                    this.breadcrumbs = breadcrumbs;
+                    } else {
+                        const breadcrumbs = [];
+                        this.breadcrumbs_init.map((e) => {
+                            breadcrumbs.push(e);
+                        });
+                        breadcrumbs.push({
+                            title: 'Add'
+                        });
+                        this.breadcrumbs = breadcrumbs;
+                    }
                 }
             });
-        this.activated_route.params.subscribe(
-            qparams => {
-                this.layout_id = qparams.id;
-                this.QBoardData = qparams.metric;
-                console.log("DisplayBoard Layout :", this.layout_id, this.QBoardData);
-            });
-        this.activated_route.queryParams.subscribe(
-            queryparams => {
-                if (queryparams.type === 'wl') {
-                    this.type = 'waitlist';
-                    console.log("DisplayBoard :", this.type)
-                } else {
-                    this.type = 'appointment';
-                }
-            });
+        // this.activated_route.params.subscribe(
+        //     qparams => {
+        //         this.layout_id = qparams.id;
+        //         this.QBoardData = qparams.metric;
+        //         console.log("DisplayBoard Layout :", this.layout_id, this.QBoardData);
+        //     });
+        // this.activated_route.queryParams.subscribe(
+        //     queryparams => {
+        //         if (queryparams.type === 'wl') {
+        //             this.type = 'waitlist';
+        //             console.log("DisplayBoard :", this.type)
+        //         } else {
+        //             this.type = 'appointment';
+        //         }
+        //     });
 
     }
 
 
 
+    editDisplayboardQSet(board) {
+        // const actionObj = {
+        //     action: 'edit',
+        //     id: board.id,
+        //     source: 'QLIST'
+        // };
+        // this.idSelected.emit(actionObj);
+    }
 
     ViewDisplayboardLayout(layout) {
         const navigationExtras: NavigationExtras = {
@@ -255,7 +267,7 @@ export class DisplayboardDetailComponent implements OnInit {
             'displayboards', 'view'], navigationExtras);
         this.tableChange = !this.tableChange;
 
-       // this.editlayout(this.layout_id)
+        // this.editlayout(this.layout_id)
 
         // this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'q-set','view'],navigationExtras);
 
@@ -296,6 +308,7 @@ export class DisplayboardDetailComponent implements OnInit {
     }
 
     qSetSelected(qset) {
+        console.log("Qset Id : ", qset);
         if (qset.refresh) {
             this.getDisplayboardQSets();
         }
@@ -320,6 +333,10 @@ export class DisplayboardDetailComponent implements OnInit {
         this.source = 'DBOARD';
         this.showMode = 'QSETS';
     }
+    editQuerySet(qset){
+        console.log("Query Set Id : ",qset);
+
+    }
 
     // qSetViewClicked() {
     //     //this.qBoardscaption = 'QBoard queries';
@@ -337,6 +354,7 @@ export class DisplayboardDetailComponent implements OnInit {
         return layoutActive;
     }
     ngOnInit() {
+
         this.filteredOptions = this.myControl.valueChanges.pipe(
             // tslint:disable-next-line:no-shadowed-variable
             startWith(''), map(value => this._filter(value))
@@ -399,7 +417,7 @@ export class DisplayboardDetailComponent implements OnInit {
         this.provider_services.getDisplayboardById_Type(this.layout_id, this.type).subscribe(
             (displayboard_data: any) => {
                 this.displayboardDetails = displayboard_data;
-                console.log("DisplayBoard Details : ",this.displayboardDetails);
+                console.log("DisplayBoard Details : ", this.displayboardDetails);
                 if (displayboard_data.isContainer) {
                     this.inputStatusboards = displayboard_data.containerData;
                     this.showIndex = 0;
@@ -550,7 +568,7 @@ export class DisplayboardDetailComponent implements OnInit {
             console.log("DisplayBoard Edit LayoutById :", this.layoutData);
 
             this.layout = this.getLayout(this.layoutData.layout);
-            console.log("Layout Edit :",this.layout);
+            console.log("Layout Edit :", this.layout);
             this.displayBoardData = data;
 
             const breadcrumbs = [];
@@ -601,6 +619,7 @@ export class DisplayboardDetailComponent implements OnInit {
     }
     handleLayoutMetric(selectedItem, position) {
         this.metricSelected[position] = selectedItem;
+        console.log("Qset Id Edit : ",selectedItem)
     }
     headerClick() {
         this.headerSetting = true;
@@ -634,12 +653,16 @@ export class DisplayboardDetailComponent implements OnInit {
                 this.editLayoutbyId(data);
                 this.actionparam = 'view';
                 this.qBoardscaption = 'QBoard Details';
+                this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+
             },
                 error => {
                     this.api_loading = false;
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
-            // this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+
+
+
 
         }
         if (this.actionparam === 'edit') {
@@ -710,6 +733,7 @@ export class DisplayboardDetailComponent implements OnInit {
             );
     }
     editlayout(id) {
+        console.log("Edit layout Id :", id);
         this.actionparam = 'edit';
         this.qBoardscaption = 'Edit QBoard';
         // this.qsetAction = id.action;
@@ -722,6 +746,7 @@ export class DisplayboardDetailComponent implements OnInit {
     }
 
     viewQueryById(id) {
+        console.log("View Query Id :", id);
         this.source = 'DBOARD';
         this.showMode = 'QSET';
         this.editLayoutbyId(id);
