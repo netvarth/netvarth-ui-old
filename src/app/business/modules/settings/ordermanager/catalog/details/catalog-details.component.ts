@@ -213,6 +213,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
     minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate());
     storePickUpDisabled = false;
     homeDeliveryDisabled = false;
+    onlyVirtualItems=false;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private router: Router,
@@ -1601,7 +1602,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
                 this.homedeliveryStat = false;
                 this.storePickUpDisabled = true;
                 this.homeDeliveryDisabled = true;
-
+                this.onlyVirtualItems=true;
                 this.amForm.patchValue({ storepickup: false });
                 this.amForm.patchValue({ homedelivery: false });
             }
@@ -1651,6 +1652,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         else {
 
             if (this.checkOnlyVirtualItems(this.addItems)) {
+                this.onlyVirtualItems=true;
                 this.storepickupStat = false
                 this.homedeliveryStat = false;
                 this.amForm.patchValue({ storepickup: false });

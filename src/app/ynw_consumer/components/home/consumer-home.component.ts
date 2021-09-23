@@ -2121,6 +2121,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const virtualItems = orderItems.filter(orderitem => orderitem.itemType === 'VIRTUAL')
     if (virtualItems.length > 0 && orderItems.length === virtualItems.length) {
       physical_item_present = false;
+      this.onlyVirtualItemsPresent=true;
     }
     return physical_item_present; 
 

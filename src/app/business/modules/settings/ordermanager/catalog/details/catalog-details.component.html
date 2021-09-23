@@ -648,6 +648,17 @@
                   <div class="pb-5" *ngIf="step == 4">
                     <!--begin::Section-->
                     <h4 class="mb-10 font-weight-bold text-dark">Delivery details</h4>
+                    <div class="card card-shadow card-custom card-shadowless" *ngIf="onlyVirtualItems">
+                      <div class="card-body p-0">
+                        <div class="test-center text-warning">
+                          <p>
+                              Delivery options are not applicable for catalogs that contain only virtual items. Click on SAVE to proceed.
+                              
+                          </p>
+                        </div>
+                        </div>
+                    </div>
+
 
                     <div class="card card-shadow card-custom card-shadowless">
                       <div class="card-body p-0">
