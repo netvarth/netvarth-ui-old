@@ -46,6 +46,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     customer_label = '';
     selectedUser;
     selQIds: any = [];
+    qualification;
     constructor(
         private lStorageService: LocalStorageService,
         private wordProcessor: WordProcessor,
