@@ -1,4 +1,3 @@
-
 <section class="content bus-page" style="padding-bottom: 0 !important;">
     <div class="container background-img" style="min-height: 100vh !important;">
         <div class="row pad-bt-10 bus-page-header">
@@ -147,33 +146,35 @@
             <div>
                 <h2 class="centeralign">Recent News</h2>
             </div>
-         
-           <div class="cauroselsection" style="margin: 2%;">
-            <owl-carousel-o [options]="customOptions"
-            [carouselClasses]="['owl-carousel', 'owl-theme', 'row', 'sliding']">
-            <ng-template carouselSlide *ngFor="let newsFeed of newsFeeds" >
-                <div class="recentcards card">
-                    <div class="gallery-item"> 
-                        <img class="imagesectioninrecentnews gallery-img" src="{{newsFeed.image}}" alt="Card image cap">
-                        <div  class="gallery-button">
-                            <button class="updates" style="background-color: white;padding: 2%;"><b>Coronovirus updates >></b></button>
+
+            <div class="cauroselsection mgn-bt-50">
+                <owl-carousel-o [options]="customOptions"
+                    [carouselClasses]="['owl-carousel', 'owl-theme']">
+                    <ng-template carouselSlide *ngFor="let newsFeed of newsFeeds">
+                        <div class="recentcards card item">
+                            <div class="">
+                                <img class="imagesectioninrecentnews gallery-img" src="{{newsFeed.image}}"
+                                    alt="Card image cap">
+                                <div class="gallery-button">
+                                    <button class="updates" style="background-color: white;padding: 2%;"><b>{{newsFeed.group}} >></b></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h6 [innerHtml]="newsFeed.title | safeHtml"></h6>
+                                <p [innerHtml]="newsFeed.description | safeHtml" class="recentdesc">
+                                </p>
+                                <div>
+                                    <a (click)="openNews(newsFeed.link)" *ngIf="newsFeed.linkType==='video'" class="pull-right btn btn-primary"
+                                        style="border-radius: 5px;"><b>Watch video</b></a>
+                                    <a (click)="openNews(newsFeed.link)" *ngIf="newsFeed.linkType!=='video'" class="pull-right btn btn-primary"
+                                        style="border-radius: 5px;"><b>View</b></a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <h4 [innerHtml]="newsFeed.title | safeHtml"></h4>
-                        <p [innerHtml]="newsFeed.description | safeHtml" class="recentdesc">
-                        </p>
-                        <div>
-                            <a (click)="openNews(newsFeed.link)" class="pull-right btn btn-primary" style="border-radius: 5px;"><b>Read More...</b></a>
-                        </div>
-                    </div>
-                </div>
-            </ng-template>
-       
-        </owl-carousel-o>
-           </div>
+                    </ng-template>
+
+                </owl-carousel-o>
+            </div>
         </div>
-        <br>
-        <br>
     </div>
 </section>

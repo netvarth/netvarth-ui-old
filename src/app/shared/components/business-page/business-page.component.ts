@@ -27,7 +27,6 @@ import { SubSink } from '../../../../../node_modules/subsink';
 import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
-
 @Component({
   selector: 'app-business-page',
   templateUrl: './business-page.component.html',
@@ -426,23 +425,24 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       (newsfeeds)=> {
         this.newsFeeds = newsfeeds;
         this.customOptions= {
-          loop:true,
+          loop:false,
           margin:10,
           mouseDrag: true,
           touchDrag: true,
           pullDrag: true,
           autoplay:true,
-          dots: true,
           navSpeed: 100,
-          nav:true,
-          navText: [ '<i class="fa fa-caret-right"></i>', '<i class="fa fa-caret-left"></i>"' ],
+          dots:true,
+          center: true,
+          // nav:true,
+          // navText: [ '<i class="fa fa-caret-right"></i>', '<i class="fa fa-caret-left"></i>"' ],
           responsiveClass:true,
           responsive:{
               0:{
-                item:1
+                items:2
               },
               700:{
-                item:2
+                items:3
               },
               970:{
                   items:3
@@ -452,7 +452,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     )
   }
-
 
   /**
    * 
@@ -826,9 +825,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     setTimeout(() => {
       // merge two arrays without duplicates
       if (this.servicesjson && this.servicesjson.length > 0) {
-        // const ids = new Set(this.apptServicesjson.map(d => d.id)); commented by me
-        // const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
-        // this.apptServicesjson = merged;
+        const ids = new Set(this.apptServicesjson.map(d => d.id));
+        const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
+        this.apptServicesjson = merged;
       }
       for (let i = 0; i < this.apptServicesjson.length; i++) {
         if (i < 3) {
@@ -1061,9 +1060,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     setTimeout(() => {
       // merge two arrays without duplicates
       if (this.servicesjson && this.servicesjson.length > 0) {
-        // const ids = new Set(this.apptServicesjson.map(d => d.id));  commented by me
-        // const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
-        // this.apptServicesjson = merged;
+        const ids = new Set(this.apptServicesjson.map(d => d.id));
+        const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
+        this.apptServicesjson = merged;
       }
       for (let i = 0; i < this.apptServicesjson.length; i++) {
         if (i < 3) {
