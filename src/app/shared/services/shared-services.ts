@@ -3,13 +3,21 @@ import * as CryptoJS from 'crypto-js';
 import { LocalStorageService } from './local-storage.service';
 // Import RxJs required methods
 import { ServiceMeta } from './service-meta';
+import { GroupStorageService } from './group-storage.service';
 @Injectable()
 export class SharedServices {
 
   accountId: any;
   orderdata: any;
   licenseMetrics: any = [];
-  constructor(private servicemeta: ServiceMeta, private lStorageService: LocalStorageService) {
+  userData: any;
+  constructor(private servicemeta: ServiceMeta,
+     private lStorageService: LocalStorageService,
+     private groupService:GroupStorageService) {
+       this.userData=this.groupService.getitemFromGroupStorage('ynw-user');
+  }
+  getUserData(){
+    return this.userData;
   }
   getSystemDate() {
     return this.servicemeta.httpGet('provider/server/date');
