@@ -15,7 +15,7 @@ import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-bo
     templateUrl: './displayboards.component.html',
     styleUrls: ['./displayboards.component.css']
 })
-export class DisplayboardsComponent implements OnInit,OnChanges {
+export class DisplayboardsComponent implements OnInit, OnChanges {
     tooltipcls = '';
     id;
     add_button = '';
@@ -91,17 +91,17 @@ export class DisplayboardsComponent implements OnInit,OnChanges {
             'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
         };
         this.getDisplayboardLayouts();
-       // console.log("Display Boards :")
+        // console.log("Display Boards :")
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.accountType = user.accountType;
         this.accountId = this.groupService.getitemFromGroupStorage('accountId');
         this.domain = user.sector;
         this.getLicenseUsage();
     }
-    
-    ngOnChanges(){
+
+    ngOnChanges() {
         this.getDisplayboardLayouts();
-        console.log("Display Boards :")  
+        console.log("Display Boards :")
     }
 
     getDisplayboardLayouts() {
@@ -218,6 +218,11 @@ export class DisplayboardsComponent implements OnInit,OnChanges {
                 id: layout.id
             }
         };
+
+        // if(source){
+        //     this.router.navigate(['provider', 'settings', 'q-manager',
+        //     'displayboards', 'view'], navigationExtras);
+        // }
         this.router.navigate(['provider', 'settings', 'q-manager',
             'displayboards', 'view'], navigationExtras);
         // this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'q-set','view'],navigationExtras);
@@ -326,9 +331,9 @@ export class DisplayboardsComponent implements OnInit,OnChanges {
                 });
     }
     goDisplayboardLayoutDetails(layout, source?) {
-        this.id = layout.id;
+        //this.id = layout.id;
         const navigationExtras: NavigationExtras = {
-            queryParams: { id: layout.id }
+            queryParams: { type: 'wl' }
         };
 
         // this.router.navigate(['provider', 'settings', 'q-manager',
@@ -338,9 +343,11 @@ export class DisplayboardsComponent implements OnInit,OnChanges {
         if (source) {
             // const path = 'provider/settings/q-manager/displayboards/' + layout.id;
             // const path = projectConstants.PATH + 'displayboard/' + layout.id + '?type=wl';
-          //  window.open(path, '_blank');
-            this.router.navigate(['provider', 'settings', 'q-manager',
-            'displayboards', 'view'], navigationExtras);
+            //  window.open(path, '_blank');
+            // const path = 'displayboard/' + layout.id + '?type=wl';
+            console.log("Route", 'displayboard/' + layout.id + '?type=wl')
+            this.router.navigate(['displayboard/'+layout.id],navigationExtras);
+
             // this.router.navigate(['provider', 'settings', 'q-manager',
             // 'displayboards', `${this.id}`]);
             // this.router.navigate([path + `?${this.type='wl'}`]);

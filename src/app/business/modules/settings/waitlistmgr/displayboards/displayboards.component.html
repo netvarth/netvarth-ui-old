@@ -129,6 +129,34 @@
                         <div class="copy">
                             <div class="col-md-12  col-12 col-sm-12 col-lg-12 col-xs-12 no-padding"
                                 *ngIf="action == 'list'">
+                                <div class="row">
+                                    <div class="col-md-12  col-12 col-sm-12 col-lg-12 col-xs-12 no-padding">
+
+                                        <ul class="nav jd-custom-nav chkn-dash">
+                                            <li class="dropdown notifications-menu pull-right" style="display: flex;"
+                                                [class.disabled]="qBoardSelectCount == 0"
+                                                *ngIf="layout_list.length > 1">
+                                                <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
+                                                    (click)="(qBoardSelectCount > 0) && addDisplayboardGroup()"
+                                                    [class.pointer-cursor]="(qBoardSelectCount > 0)"
+                                                    class="dropdown-toggle navbar-item-color bold ">
+                                                    <span>
+                                                        <i class="fa fa-plus"></i> New Group
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li class="dropdown notifications-menu pull-right" style="display: flex;">
+                                                <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
+                                                    (click)="addDisplayboardLayout()"
+                                                    class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                                                    <span>
+                                                        <i class="fa fa-plus"></i> {{statusboard_cap}}
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
 
                                 <p class="col-md-12  col-12 col-sm-12 col-lg-12 col-xs-12 page-header mx-2 text-info">
                                     <!-- fa fa-arrow-left  style="border-bottom:solid lightgray; border-width: 1px;"-->
@@ -177,7 +205,7 @@
                                                     <tbody>
                                                         <p *ngIf="layout_list.length === 0" class="text-center">No
                                                             {{statusboard_cap}}s created yet.</p>
-                                                            
+
                                                         <tr *ngFor="let layout of layout_list, let i=index"
                                                             [class.selected-qboard]="!layout.isContainer && qBoardsSelectedIndex[i]"
                                                             class="tr-row">
@@ -187,15 +215,16 @@
                                                                 </mat-checkbox> 
                                                             </td> -->
                                                             <td *ngIf="!rowChange">
-                                                                <!-- <input type="checkbox" class="ckbx pull-left"
+                                                                <input type="checkbox" class="ckbx pull-left"
                                                                     [disabled]="layout.isContainer"
                                                                     [checked]="qBoardsSelectedIndex[i]"
                                                                     (click)="!layout.isContainer && qBoardClicked(i)"
                                                                     [value]="layout.id"
-                                                                    *ngIf="layout_list.length > 1" /> -->
+                                                                    *ngIf="layout_list.length > 1" />
                                                                 <div (click)="goDisplayboardLayoutDetails(layout, 'layout')"
-                                                                    class="pull-left mgn-lt-10 align-content-around" >
-                                                                    <h3 class="pointer-cursor"  data-toggle="tooltip" data-placement="top" title="QBoard">
+                                                                    class="pull-left mgn-lt-10 align-content-around">
+                                                                    <h3 class="pointer-cursor" data-toggle="tooltip"
+                                                                        data-placement="top" title="QBoard">
                                                                         <i
                                                                             class="fa fa-desktop"></i>&nbsp;{{layout.displayName
                                                                         | capitalizeFirst}}
@@ -217,11 +246,12 @@
                                                                 <span class="d-flex ml-auto">
                                                                     <i class="fa fa-eye text-info p-1 pointer-cursor"
                                                                         (click)="ViewDisplayboardLayout(layout)"
-                                                                        aria-hidden="true" data-toggle="tooltip" data-placement="top" title="View"></i>
+                                                                        aria-hidden="true" data-toggle="tooltip"
+                                                                        data-placement="top" title="View"></i>
 
 
-                        
-                                                                        <!-- <button mat-menu-item
+
+                                                                    <!-- <button mat-menu-item
                                                                         (click)="editDisplayboardLayout(layout)">
                                                                         <i class="icon-edit"></i>
                                                                         Edit
@@ -229,7 +259,9 @@
 
 
                                                                     <i class="icon-delete text-info p-1 pointer-cursor"
-                                                                        (click)="deleteDisplayboardLayout(layout)" data-toggle="tooltip" data-placement="top" title="Delete"></i>
+                                                                        (click)="deleteDisplayboardLayout(layout)"
+                                                                        data-toggle="tooltip" data-placement="top"
+                                                                        title="Delete"></i>
 
 
 
@@ -279,7 +311,9 @@
                                                                 <p *ngIf="layout_list.length === 0">No
                                                                     {{statusboard_cap}}s created yet.</p>
                                                                 <span class="cs-btn bt3"
-                                                                    (click)="addDisplayboardLayout()"  data-toggle="tooltip" data-placement="top" title="Create New QBoard">CREATE
+                                                                    (click)="addDisplayboardLayout()"
+                                                                    data-toggle="tooltip" data-placement="top"
+                                                                    title="Create New QBoard">CREATE
                                                                     NEW QBOARD</span>
                                                             </div>
 

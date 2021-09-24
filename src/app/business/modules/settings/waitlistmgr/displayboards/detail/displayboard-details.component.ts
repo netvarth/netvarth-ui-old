@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit,HostListener } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { NavigationExtras } from '@angular/router';
 
@@ -62,6 +62,7 @@ export class DisplayboardDetailComponent implements OnInit {
     selectedDisplayboards: any = {};
     boardHeight;
     fullHeight;
+    colSpanLength;
     bname;
     blogo = '';
     metricElement;
@@ -244,7 +245,26 @@ export class DisplayboardDetailComponent implements OnInit {
 
     }
 
-
+    @HostListener('window:resize', ['$event'])
+    onResize(event?) {
+        const screenHeight = window.innerHeight;
+        let hgt_reduced = 200;
+        let fullhgt_reduced = 165;
+        if (this.isContainer) {
+            hgt_reduced = 320;
+            fullhgt_reduced = 270;
+        }
+        if (this.bLogoHeight === '') {
+            hgt_reduced = 136;
+            fullhgt_reduced = 86;
+        }
+        this.fullHeight = screenHeight - fullhgt_reduced;
+        if (this.boardRows > 1) {
+            this.boardHeight = (screenHeight - hgt_reduced) / 2;
+        } else {
+            this.boardHeight = (screenHeight - hgt_reduced);
+        }
+    }
 
     editDisplayboardQSet(board) {
         // const actionObj = {

@@ -86,51 +86,52 @@
                 </div>
 
                 <div class="card-body jumbotron">
-                    <div class="row roundered" style="margin-left: 2px; margin-right: 2px;">
+                    <div class="row" style="margin-left: 2px; margin-right: 2px;">
 
 
                         <div class="col-md-12 col-sm-12 col-lg-12 col-12 col-xs-12">
-                            <!-- <p class="text-info text-center">
-                                PREVIEW
-                            </p> (click)="ViewDisplayboardLayout(layout)" -->
+
                             <div class="text-center py-2">
-                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                <!-- <button type="button" class="btn btn-primary" data-toggle="modal"
                                     data-target="#myModal">
                                     Show Preview
-                                </button>
+                                </button> -->
+                                <p class="text-info text-center">
+                                    PREVIEW
+                                </p>
                             </div>
                             <!-- <div class="text-center">
                                 <button class="btn btn-outline-primary">Show Preview</button>
                             </div> -->
-                            <div class="row">
+                            <div class="row card mx-2 my-3">
                                 <!-- <p class="mx-4 text-primary">
                                         QBOARD QUERY1
                                     </p> -->
-                            </div>
-                            <table class="table table-bordered table-responsive bg-white roundered "
-                                style="box-shadow: 2px;">
-                                <!-- *ngFor="let row of createRange(boardRows)" *ngFor="let col of createRange(boardCols)"  class="col-md-{{12/boardCols}}   col-sm-{{12/boardCols}} col-xs-{{12/boardCols}} text-center" -->
 
-                                <thead>
-                                    <tr>
-                                        <th colspan="3" class="text-center text-secondary">
-                                            {{layoutData.displayName | capitalizeFirst}}
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th *ngFor="let field of selectedData, let i=index">
-                                            <span>{{i}}</span>&nbsp;
-                                            <span class="text-center">
-                                                {{field.displayName}}
-                                            </span>
-                                        </th>
+                               
+                                    <table class="table table-bordered card-body table-responsive bg-white roundered ">
+                                        <!-- *ngFor="let row of createRange(boardRows)" *ngFor="let col of createRange(boardCols)"  class="col-md-{{12/boardCols}}   col-sm-{{12/boardCols}} col-xs-{{12/boardCols}} text-center" -->
 
-                                    </tr>
+                                        <thead class="card-header">
+                                            <tr>
+                                                <th colspan="3" class="text-center text-secondary">
+                                                    {{layoutData.displayName | capitalizeFirst}}
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th *ngFor="let field of selectedData, let i=index">
+                                                    <span>{{i}}</span>&nbsp;
+                                                    <span class="text-center">
+                                                        {{field.displayName}}
+                                                    </span>
+                                                </th>
 
-                                </thead>
-                                <tbody>
+                                            </tr>
 
-                                    <!-- <tr *ngFor="let row of createRange(boardRows)">
+                                        </thead>
+                                        <tbody>
+
+                                            <!-- <tr *ngFor="let row of createRange(boardRows)">
                                         <td *ngFor="let col of createRange(boardCols)"
                                             class="col-md-{{12/boardCols}}   col-sm-{{12/boardCols}} col-xs-{{12/boardCols}} text-center">
                                            
@@ -149,7 +150,7 @@
 
                                     </tr> -->
 
-                                    <!-- <tr class="text-center" *ngFor="let fields of selectedBoardData" >
+                                            <!-- <tr class="text-center" *ngFor="let fields of selectedBoardData" >
                                         <td style="margin: 2px; padding: 2px;"> {{fields.displayName}}</td>
                                          <td style="margin: 2px; padding: 2px;">SERVICE</td>
                                         <td style="margin: 2px; padding: 2px;">LABLE</td> 
@@ -160,8 +161,10 @@
 
 
 
-                                </tbody>
-                            </table>
+                                        </tbody>
+                                    </table>
+                               
+                            </div>
                         </div>
 
 
@@ -199,9 +202,8 @@
                                             *ngIf="departments.length > 0 && filterByDept"
                                             (change)="categorySelection('DEPARTMENT')" aria-checked="true">
                                             {{department_cap}}s</mat-radio-button>
-                                        <mat-radio-button class="mgright50" [value]="'SERVICE'"
-                                            *ngIf="services_list.length > 0" (change)="categorySelection('SERVICE')"
-                                            checked>
+                                        <mat-radio-button class="mgright50" [value]="'SERVICE'" aria-checked="true"
+                                            *ngIf="services_list.length > 0" (change)="categorySelection('SERVICE')" checked>
                                             {{service_caption}}
                                         </mat-radio-button>
                                         <mat-radio-button class="mgright50" [value]="'QUEUE'"
@@ -297,11 +299,12 @@
 
                                         <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                             <mat-form-field *ngIf="services_list.length > 0">
-                                                <mat-select [(ngModel)]="servMultiCtrl" [ngModelOptions]="{standalone: true}" placeholder="Services"
+                                                <mat-select [(ngModel)]="servMultiCtrl"
+                                                    [ngModelOptions]="{standalone: true}" placeholder="Services"
                                                     [multiple]="true">
                                                     <ngx-mat-select-search [formControl]="serviceMultiFilterCtrl"
                                                         placeholderLabel="Search services"
-                                                        noEntriesFoundLabel="No matching service found" >
+                                                        noEntriesFoundLabel="No matching service found">
                                                     </ngx-mat-select-search>
                                                     <mat-option *ngFor="let service of servicesList" [value]="service"
                                                         (click)="setServiceIds(service.id)">
@@ -384,11 +387,12 @@
                                         <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                             <mat-form-field
                                                 *ngIf="display_schedule.length > 0 && serviceScheduleCount !== 0">
-                                                <mat-select [(ngModel)]="qMultiCtrl" [ngModelOptions]="{standalone: true}" placeholder="Queues"
+                                                <mat-select [(ngModel)]="qMultiCtrl"
+                                                    [ngModelOptions]="{standalone: true}" placeholder="Queues"
                                                     [multiple]="true">
                                                     <ngx-mat-select-search [formControl]="qMultiFilterCtrl"
                                                         placeholderLabel="Search queues"
-                                                        noEntriesFoundLabel="No matching queue found" >
+                                                        noEntriesFoundLabel="No matching queue found">
                                                     </ngx-mat-select-search>
                                                     <mat-option *ngFor="let schedule of display_scheduleList"
                                                         [value]="schedule"
@@ -429,11 +433,12 @@
                                         </select> -->
 
                                         <mat-form-field>
-                                            <mat-select [(ngModel)]="labelMultiCtrl" [ngModelOptions]="{standalone: true}" placeholder="Labels"
+                                            <mat-select [(ngModel)]="labelMultiCtrl"
+                                                [ngModelOptions]="{standalone: true}" placeholder="Labels"
                                                 [multiple]="true">
                                                 <ngx-mat-select-search [formControl]="labelMultiFilterCtrl"
                                                     placeholderLabel="Search labels"
-                                                    noEntriesFoundLabel="No matching label found" >
+                                                    noEntriesFoundLabel="No matching label found">
                                                 </ngx-mat-select-search>
                                                 <!-- <mat-option *ngFor="let label of providerLabelsList" [value]="label"
                                                     (click)="labelClick(label)">
@@ -865,7 +870,8 @@
                     Select Label
                 </label>
                 <mat-form-field>
-                    <mat-select [(ngModel)]="labelMultiCtrl" [ngModelOptions]="{standalone: true}" placeholder="Labels" [multiple]="true">
+                    <mat-select [(ngModel)]="labelMultiCtrl" [ngModelOptions]="{standalone: true}" placeholder="Labels"
+                        [multiple]="true">
                         <ngx-mat-select-search [formControl]="labelMultiFilterCtrl" placeholderLabel="Search labels"
                             noEntriesFoundLabel="No matching label found"></ngx-mat-select-search>
                         <!-- <mat-option *ngFor="let label of providerLabelsList" [value]="label"
