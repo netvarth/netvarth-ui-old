@@ -50,7 +50,8 @@ const routes: Routes = [
     { path: 'userchange', loadChildren: () => import('./shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },
     { path: 'order/item-details', component: ItemDetailsSharedComponent },
     { path: 'questionnaire/:uid/:id/:accountId', loadChildren: () => import('./shared/components/questionnaire-link/questionnaire-link.module').then(m => m.QuestionnaireLinkModule) },
-    { path: ':id', loadChildren: () => import('./shared/components/business-page/business-page.module').then(m=> m.BusinessPageModule)}
+    { path: ':id', loadChildren: () => import('./shared/components/business-page/business-page.module').then(m=> m.BusinessPageModule)},
+    { path: 'provideruser/:id', loadChildren: () => import('./shared/components/business-provideruser-page/business-provideruser-page.module').then(m=> m.BusinessprovideruserPageModule)}
 ];
 
 @NgModule({
