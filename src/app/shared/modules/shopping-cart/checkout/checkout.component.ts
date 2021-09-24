@@ -1881,32 +1881,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
   }
-  closeloading() {
-    this.isClickedOnce = false;
-    this.loadingPaytm = false;
-    this.cdRef.detectChanges();
-    if(this.from){
-      let queryParams = {
-        'source': 'order',
-      };
-      let navigationExtras: NavigationExtras = {
-        queryParams: queryParams
-      }
-      this.ngZone.run(() => this.router.navigate(['consumer'],navigationExtras));
-    } else {
-      let queryParams = {
-        'source': 'order',
-      };
-      if (this.customId) {
-        queryParams['customId'] = this.customId;
-        queryParams['accountId'] = this.account_id;
-      }
-      let navigationExtras: NavigationExtras = {
-        queryParams: queryParams
-      }
-      this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
-    }
-  }
+
+   
   closeloading() {
     this.isClickedOnce = false;
     this.loadingPaytm = false;
