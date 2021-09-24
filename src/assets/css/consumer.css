@@ -6782,6 +6782,18 @@ margin-top: 7px;
   background: #fcebbea1;
 
 }
+.electronic_deliver_icon {
+content: url(../images/order/digpay.png);
+position: relative;
+width: 50px;
+margin-top: 5px;
+border: 2px solid #f1b616ba;
+border-radius: 10%;
+padding: 5px;
+margin-left: 4px;
+background: #fcebbea1;
+
+}
 .consumer-dash .item-btn-div {
   margin-right: 10px;
   width: fit-content;

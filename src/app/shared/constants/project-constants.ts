@@ -1028,6 +1028,10 @@ export const projectConstantsLocal = {
     { displayName: 'Shipped', value: 'Shipped', delivery: true, pickup: false, clas: 'ordershipped' },
     { displayName: 'Cancelled', value: 'Cancelled', delivery: true, pickup: true, clas: 'ordercancelled' }
   ],
+  ITEM_TYPES:[
+    {displayName:'physical',value:'PHYSICAL'},
+    {displayName:'virtual',value:'VIRTUAL'}
+  ],
   INBOX_MSG_TYPES: {
     CHAT: 'Chat',
     ENQUIRY: 'Enquiry',
@@ -1042,4 +1046,7 @@ export const projectConstantsLocal = {
   PAYTM_URL: 'https://securegw.paytm.in',
   UIS3PATH: "https://jaldeeuiscale.s3.ap-south-1.amazonaws.com/"
   // UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/ui/prod/config/"
+
 };
+
+

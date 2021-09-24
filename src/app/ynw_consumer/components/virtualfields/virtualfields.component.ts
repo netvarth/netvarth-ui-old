@@ -729,6 +729,7 @@ export class VirtualFieldsComponent implements OnInit {
     memberInfo.userProfile = {}
     if (  formdata.whatsappnumber !== undefined &&formdata.whatsappnumber.trim().length>0  && formdata.countryCode_whtsap !== undefined && formdata.countryCode_whtsap.trim().length>0) {
       const whatsup = {}
+      console.log('hai');
       if (formdata.countryCode_whtsap.startsWith('+')) {
         whatsup["countryCode"] = formdata.countryCode_whtsap
       } else {

@@ -245,6 +245,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   chatId: any;
   showTeleBt = false;
   tele_popUp;
+  onlyVirtualItemsPresent=false;
   @ViewChild('popupforApp') popUp:ElementRef;
   showattachmentDialogRef: MatDialogRef<unknown, any>;
   constructor(private consumer_services: ConsumerServices,
@@ -2115,7 +2116,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
   }
   // Order Functions
+  isPhysicalItemsPresent(orderItems){
+    let physical_item_present = true;
+    const virtualItems = orderItems.filter(orderitem => orderitem.itemType === 'VIRTUAL')
+    if (virtualItems.length > 0 && orderItems.length === virtualItems.length) {
+      physical_item_present = false;
+      this.onlyVirtualItemsPresent=true;
+    }
+    return physical_item_present; 
 
+  }
   getTdyOrder() {
     this.orders = '';
     this.total_tdy_order = [];

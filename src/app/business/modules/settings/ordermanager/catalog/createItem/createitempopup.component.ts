@@ -61,7 +61,7 @@ uploadcatalogImages: any = [];
 action = 'add';
 disableButton = false;
 item;
-
+minDay=new Date();
 removeimgdialogRef;
 imageList: any = [];
 item_id;
@@ -128,7 +128,9 @@ private subscriptions = new SubSink();
                 promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
                 promotionalPriceType: [],
                 promotionallabel: [],
-                customlabel: []
+                customlabel: [],
+                itemType:['PHYSICAL'],
+            expiryDate:[]
     });
         this.amItemForm.get('promotionalPriceType').setValue('FIXED');
         this.amItemForm.get('promotionallabel').setValue('ONSALE');
@@ -185,8 +187,10 @@ onSubmit(form_data) {
             'promotionLabelType': form_data.promotionallabel,
             'promotionLabel': form_data.customlabel || '',
             'promotionalPrice': form_data.promotionalPrice || 0,
-            'promotionalPrcnt': form_data.promotionalPrice || 0
-        };
+            'promotionalPrcnt': form_data.promotionalPrice || 0,
+            'itemType':form_data.itemType,
+            'expiryDate':form_data.expiryDate,
+        }
         if (!this.showPromotionalPrice) {
             post_itemdata['promotionalPriceType'] = 'NONE';
             post_itemdata['promotionLabelType'] = 'NONE';

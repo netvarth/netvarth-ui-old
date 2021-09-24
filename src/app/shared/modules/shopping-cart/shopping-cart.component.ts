@@ -144,6 +144,16 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
     this.subs.unsubscribe();
   }
+  isPhysicalItemsPresent(){
+    let physical_item_present=true;
+
+    const virtualItems=this.orders.filter(orderitem=>orderitem.item.itemType==='VIRTUAL')
+    if(virtualItems.length>0&& this.orders.length===virtualItems.length){
+      physical_item_present=false;
+      this.isfutureAvailableTime = true;
+    }
+    return physical_item_present;
+  }
   fetchCatalog() {
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_loading = true;
@@ -746,47 +756,12 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       return (this.homeAvailableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
   }
-  // getAvailabilityByDate(date) {
-  //   this.sel_checkindate = date;
-  //   const cday = new Date(this.sel_checkindate);
-  //   const currentday = (cday.getDay() + 1);
-  //   if (this.choose_type === 'store') {
-  //     const storeIntervals = (this.catalog_details.pickUp.pickUpSchedule.repeatIntervals).map(Number);
 
-  //     if (storeIntervals.includes(currentday)) {
-  //       this.isfutureAvailableTime = true;
-  //       this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
-  //       // this.nextAvailableTimeQueue = this.catalog_details.nextAvailablePickUpDetails.timeSlots;
-  //       console.log(this.nextAvailableTimeQueue);
-  //       this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
-  //       this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
-  //     } else {
-  //       this.isfutureAvailableTime = false;
-  //     }
-
-  //   } else {
-  //     const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
-  //     if (homeIntervals.includes(currentday)) {
-  //       this.isfutureAvailableTime = true;
-  //       this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
-  //       // this.nextAvailableTimeQueue = this.catalog_details.nextAvailableDeliveryDetails.timeSlots;
-  //       console.log(this.nextAvailableTimeQueue);
-  //       this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
-  //       this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
-  //     } else {
-  //       this.isfutureAvailableTime = false;
-  //     }
-  //   }
-  // }
 
   getAvailabilityByDate(date) {
-    console.log(date);
-    console.log(this.storeAvailableDates);
-    console.log(this.choose_type);
     this.sel_checkindate = date;
     const cday = new Date(this.sel_checkindate);
     const currentday = (cday.getDay() + 1);
-    console.log(currentday);
     if (this.choose_type === 'store') {
       const storeIntervals = (this.catalog_details.pickUp.pickUpSchedule.repeatIntervals).map(Number);
       const last_date = moment().add(30, 'days');

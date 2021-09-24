@@ -1,11 +1,8 @@
 import { Component, OnInit, OnDestroy, HostListener, AfterViewInit, ViewChild, Inject, NgZone, ChangeDetectorRef } from '@angular/core';
-// import * as itemjson from '../../assets/json/item.json';
-// import * as itemjson from '../../../../assets/json/item.json';
 import { SharedFunctions } from '../../../functions/shared-functions';
 import { Location, DOCUMENT } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
-//  import { ConsumerServices } from '../../../ynw_consumer/services/consumer-services.service';
 import { AddAddressComponent } from './add-address/add-address.component';
 import { SharedServices } from '../../../services/shared-services';
 import { projectConstants } from '../../../../app.component';
@@ -133,13 +130,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
     buttons: [
-      // {
-      //   className: 'fa fa-trash-o',
-      //   type: ButtonType.DELETE,
-      //   ariaLabel: 'custom plus aria label',
-      //   title: 'Delete',
-      //   fontSize: '20px'
-      // },
+
       {
         className: 'inside close-image',
         type: ButtonType.CLOSE,
@@ -150,7 +141,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     ]
   };
 
-
+  onlyvirtualItemsPresent = false;
   canceldialogRef: any;
   // availableTimewindows: any = [];
   // timeWindows;
@@ -167,8 +158,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   showCouponWB: boolean;
   cartDetails: any = [];
   listDetails: any = [];
-  // @ViewChild('closeModal') private closeModal: ElementRef;
-  // @ViewChild('firstStep', { static: false }) public nextbtn: ElementRef;
   store_availables: any;
   home_availables: any;
   couponStatuses: any;
@@ -200,7 +189,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   razorpayEnabled = false;
   interNatioanalPaid = false;
   paymentmodes: any;
-  from: string;
+  isEditable = true;
+  stepperIndex: string;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -242,9 +232,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         if (params.customId) {
           this.customId = params.customId;
         }
-        if(params.isFrom && params.isFrom =='providerdetail'){
-          this.from = 'providerdetail';
-      }
       });
 
 
@@ -300,18 +287,18 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getPaymentModes();
     const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
     this.customer_countrycode = credentials.countryCode;
-    console.log("credentioooo" + credentials.countryCode);
-    // if(this.customer_countrycode == '+91'){
-    //     this.getPaymentModes();
-    // } else {
-    //     this.razorpayEnabled = true;
-    // }
     this.linear = false;
     this.orderList = this.lStorageService.getitemfromLocalStorage('order');
     if (this.orderList) {
       this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
+      if (!this.isPhysicalItemsPresent()) {
+        this.onlyvirtualItemsPresent = true;
+      }
 
     }
+
+
+
 
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_details = data;
@@ -423,6 +410,18 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   }
+  isPhysicalItemsPresent() {
+    let physical_item_present = true;
+
+    const virtualItems = this.orders.filter(orderitem => orderitem.item.itemType === 'VIRTUAL')
+    if (virtualItems.length > 0 && this.orders.length === virtualItems.length) {
+      physical_item_present = false;
+      this.isfutureAvailableTime = true;
+      this.isEditable = false;
+
+    }
+    return physical_item_present;
+  }
   getPaymentModes() {
     this.paytmEnabled = false;
     this.razorpayEnabled = false;
@@ -464,6 +463,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
       );
   }
+
   ngAfterViewInit() {
     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
@@ -476,7 +476,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
      if(this.customer_countrycode == "+91"){
       this.storeContact.controls.phone.setValue(this.phonenumber);
     }
-      this.customer_phoneNumber = this.customer_countrycode + activeUser.primaryPhoneNumber;
+      this.customer_phoneNumber = activeUser.primaryPhoneNumber;
       console.log(this.customer_phoneNumber);
       this.getaddress();
       //this.nextbtn.nativeElement.click();
@@ -934,9 +934,39 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   confirm(paytype?) {
+    let post_Data: any;
+    let timeslot: any;
     this.isClickedOnce = true;
     this.checkoutDisabled = true;
-    const timeslot = this.nextAvailableTime.split(' - ');
+    post_Data = {
+      'catalog': {
+        'id': this.catalog_details.id
+      },
+      'orderFor': {
+        'id': 0
+      },
+  
+      'orderNote': this.orderlistNote,
+      'coupons': this.selected_coupons,
+      'countryCode': this.customer_countrycode,
+    }
+    if (this.orderType !== 'SHOPPINGLIST') {
+      post_Data['orderItem']= this.getOrderItems();
+    }
+    if (this.jcashamount > 0 && this.checkJcash) {
+      post_Data['useCredit'] = this.checkJcredit
+      post_Data['useJcash'] = this.checkJcash
+    }
+    if (!this.onlyvirtualItemsPresent) {
+      timeslot = this.nextAvailableTime.split(' - ');
+      let timeSlot= {
+        'sTime': timeslot[0],
+        'eTime': timeslot[1]
+
+      }
+      post_Data['timeSlot']=timeSlot;
+      post_Data['orderDate']=this.sel_checkindate;
+    
     if (this.delivery_type === 'home') {
       if (this.added_address === null || this.added_address.length === 0) {
         this.checkoutDisabled = false;
@@ -944,9 +974,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
         return;
       } else {
-        if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
-          this.emailId = this.customer_email;
-        }
         const delivery_address = {
           'firstName': this.selectedAddress.firstName,
           'lastName': this.selectedAddress.lastName,
@@ -958,71 +985,18 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           'postalCode': this.selectedAddress.postalCode,
           'landMark': this.selectedAddress.landMark
 
-
         };
-        if (this.orderType === 'SHOPPINGLIST') {
-          const post_Data = {
-            'homeDelivery': true,
-            'homeDeliveryAddress': delivery_address,
-            'catalog': {
-              'id': this.catalog_details.id
-            },
-            'orderFor': {
-              'id': 0
-            },
-            'timeSlot': {
-              'sTime': timeslot[0],
-              'eTime': timeslot[1]
-
-            },
-            'orderDate': this.sel_checkindate,
-            //'countryCode': this.customer_countrycode,'+91'
-            'countryCode': '+91',
-           // 'phoneNumber': this.customer_phoneNumber,
-            'phoneNumber':this.selectedAddress.phoneNumber,
-            'email': this.customer_email,
-            'orderNote': this.orderlistNote,
-            'coupons': this.selected_coupons
-          };
-          if (this.jcashamount > 0 && this.checkJcash) {
-            post_Data['useCredit'] = this.checkJcredit
-            post_Data['useJcash'] = this.checkJcash
-          }
-          this.confirmOrder(post_Data, paytype);
-        } else {
-          const post_Data = {
-            'homeDelivery': true,
-            'homeDeliveryAddress': delivery_address,
-            'catalog': {
-              'id': this.catalog_details.id
-            },
-            'orderFor': {
-              'id': 0
-            },
-            'timeSlot': {
-              'sTime': timeslot[0],
-              'eTime': timeslot[1]
-
-            },
-            'orderItem': this.getOrderItems(),
-            'orderDate': this.sel_checkindate,
-           // 'countryCode': this.customer_countrycode,
-            'countryCode': '+91',
-           // 'phoneNumber': this.customer_phoneNumber,
-            'phoneNumber':this.selectedAddress.phoneNumber,
-            'email': this.customer_email,
-            'orderNote': this.orderNote,
-            'coupons': this.selected_coupons
-          };
-          if (this.jcashamount > 0 && this.checkJcash) {
-            post_Data['useCredit'] = this.checkJcredit
-            post_Data['useJcash'] = this.checkJcash
-          }
-          this.confirmOrder(post_Data, paytype);
+        if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
+          this.emailId = this.customer_email;
+        }
+            post_Data['homeDelivery']=true;
+            post_Data['homeDeliveryAddress']=delivery_address;
+       
         }
       }
     }
-    if (this.delivery_type === 'store') {
+    if (this.delivery_type === 'store' ||this.onlyvirtualItemsPresent) {
+     
       if (!this.storeContact.value.phone || !this.storeContact.value.email) {
         this.checkoutDisabled = false;
         this.isClickedOnce = false;
@@ -1031,69 +1005,19 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       } else {
         const contactNumber = this.storeContact.value.phone;
         const contact_email = this.storeContact.value.email;
-        if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
-          this.emailId = contact_email;
+        post_Data['phoneNumber']=contactNumber,
+        post_Data['email']=contact_email
+          
         }
-        if (this.orderType === 'SHOPPINGLIST') {
-          const post_Data = {
-            'storePickup': true,
-            'catalog': {
-              'id': this.catalog_details.id
-            },
-            'orderFor': {
-              'id': 0
-            },
-            'timeSlot': {
-              'sTime': timeslot[0],
-              'eTime': timeslot[1]
-
-            },
-            'orderDate': this.sel_checkindate,
-           // 'countryCode': this.customer_countrycode,
-            'countryCode': '+91',
-            'phoneNumber': contactNumber,
-            'email': contact_email,
-            'orderNote': this.orderlistNote,
-            'coupons': this.selected_coupons
-          };
-          if (this.jcashamount > 0 && this.checkJcash) {
-            post_Data['useCredit'] = this.checkJcredit
-            post_Data['useJcash'] = this.checkJcash
-          }
-          this.confirmOrder(post_Data, paytype);
-        } else {
-          const post_Data = {
-            'storePickup': true,
-            'catalog': {
-              'id': this.catalog_details.id
-            },
-            'orderFor': {
-              'id': 0
-            },
-            'timeSlot': {
-              'sTime': timeslot[0],
-              'eTime': timeslot[1]
-
-            },
-            'orderItem': this.getOrderItems(),
-            'orderDate': this.sel_checkindate,
-           // 'countryCode': this.customer_countrycode,
-            'countryCode': '+91',
-            'phoneNumber': contactNumber,
-            'email': contact_email,
-            'orderNote': this.orderNote,
-            'coupons': this.selected_coupons
-          };
-          if (this.jcashamount > 0 && this.checkJcash) {
-            post_Data['useCredit'] = this.checkJcredit
-            post_Data['useJcash'] = this.checkJcash
-          }
-          this.confirmOrder(post_Data, paytype);
+        if(this.delivery_type==='store'&& !this.onlyvirtualItemsPresent){
+          post_Data['storePickup']=true;
         }
       }
+    
+      this.confirmOrder(post_Data, paytype);
     }
 
-  }
+  
   doLogin(origin?, passParam?) {
 
     const is_test_account = true;
@@ -1160,15 +1084,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           });
 
-          // const navigationExtras: NavigationExtras = {
-          //   queryParams: {
-          //     account_id: this.account_id,
-          //     type_check: 'order_prepayment',
-          //     prepayment: prepayAmount,
-          //     uuid: this.trackUuid
-          //   }
-          // };
-          
+  
           if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
               .subscribe(res => {
@@ -1183,7 +1099,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
                   this.payuPayment(paytype);
                 }
 
-                // this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
               });
           } else {
             this.orderList = [];
@@ -1192,7 +1107,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             this.lStorageService.removeitemfromLocalStorage('order_spId');
             this.lStorageService.removeitemfromLocalStorage('order');
             this.snackbarService.openSnackBar('Your Order placed successfully');
-            if(this.from){
             let queryParams = {
               'source': 'order'
             }
@@ -1204,17 +1118,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
               queryParams: queryParams
             };
             this.router.navigate(['consumer'], navigationExtras);
-            // this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
-          } else{
-            let queryParams = {
-              'source': 'order'
-            }
-            let navigationExtras: NavigationExtras = {
-              queryParams: queryParams
-            };
-            this.router.navigate(['consumer'], navigationExtras);
           }
-        }
         },
           error => {
             this.isClickedOnce = false;
@@ -1246,16 +1150,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           });
 
-          // const navigationExtras: NavigationExtras = {
-          //   queryParams: {
-          //     account_id: this.account_id,
-          //     type_check: 'order_prepayment',
-          //     prepayment: this.prepayAmount,
-          //     uuid: this.trackUuid
-          //   }
-          // };
-          console.log(this.catalog_details.paymentType + 'fdddddddddddshop')
-          console.log(this.prepayAmount + '11111111111shop')
+
           if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
               .subscribe(res => {
@@ -1269,7 +1164,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
                 else {
                   this.payuPayment(paytype);
                 }
-                // this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
               });
           } else {
             this.orderList = [];
@@ -1278,28 +1172,17 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             this.lStorageService.removeitemfromLocalStorage('order_spId');
             this.lStorageService.removeitemfromLocalStorage('order');
             this.snackbarService.openSnackBar('Your Order placed successfully');
-            if(this.from){
-              let queryParams = {
-                'source': 'order'
-              }
-              if (this.customId) {
-                queryParams['customId'] = this.customId;
-                queryParams['accountId'] = this.account_id;
-              }
-              let navigationExtras: NavigationExtras = {
-                queryParams: queryParams
-              };
-              this.router.navigate(['consumer'], navigationExtras);
-              // this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
-            } else{
-              let queryParams = {
-                'source': 'order'
-              }
-              let navigationExtras: NavigationExtras = {
-                queryParams: queryParams
-              };
-              this.router.navigate(['consumer'], navigationExtras);
+            let queryParams = {
+              'source': 'order'
             }
+            if (this.customId) {
+              queryParams['customId'] = this.customId;
+              queryParams['accountId'] = this.account_id;
+            }
+            let navigationExtras: NavigationExtras = {
+              queryParams: queryParams
+            };
+            this.router.navigate(['consumer'], navigationExtras);
           }
         },
           error => {
@@ -1316,7 +1199,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.action = '';
     const selectqueue = queue['sTime'] + ' - ' + queue['eTime'];
     this.nextAvailableTime = selectqueue;
-    // this.nextAvailableTime = selectesTimeslot;
     const chosenDateTime = {
       delivery_type: this.choose_type,
       catlog_id: this.catalog_details.id,
@@ -1928,67 +1810,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.lStorageService.removeitemfromLocalStorage('order_spId');
       this.lStorageService.removeitemfromLocalStorage('order');
       this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-      if(this.from){
-        let queryParams = {
-          'source': 'order',
-        };
-        let navigationExtras: NavigationExtras = {
-          queryParams: queryParams
-        }
-        this.ngZone.run(() => this.router.navigate(['consumer'],navigationExtras));
-      } else {
-        let queryParams = {
-          'source': 'order',
-        };
-        if (this.customId) {
-          queryParams['customId'] = this.customId;
-          queryParams['accountId'] = this.account_id;
-        }
-        let navigationExtras: NavigationExtras = {
-          queryParams: queryParams
-        }
-        this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
-      }
-      
-    } else if (response.STATUS == 'TXN_FAILURE') {
-      this.isClickedOnce = false;
-      this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
-      if(this.from){
-        let queryParams = {
-          'source': 'order',
-        };
-        let navigationExtras: NavigationExtras = {
-          queryParams: queryParams
-        }
-        this.ngZone.run(() => this.router.navigate(['consumer'],navigationExtras));
-      } else {
-        let queryParams = {
-          'source': 'order',
-        };
-        if (this.customId) {
-          queryParams['customId'] = this.customId;
-          queryParams['accountId'] = this.account_id;
-        }
-        let navigationExtras: NavigationExtras = {
-          queryParams: queryParams
-        }
-        this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
-      }
-    }
-  }
-  closeloading() {
-    this.isClickedOnce = false;
-    this.loadingPaytm = false;
-    this.cdRef.detectChanges();
-    if(this.from){
-      let queryParams = {
-        'source': 'order',
-      };
-      let navigationExtras: NavigationExtras = {
-        queryParams: queryParams
-      }
-      this.ngZone.run(() => this.router.navigate(['consumer'],navigationExtras));
-    } else {
       let queryParams = {
         'source': 'order',
       };
@@ -2000,7 +1821,17 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         queryParams: queryParams
       }
       this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+    } else if (response.STATUS == 'TXN_FAILURE') {
+      this.isClickedOnce = false;
+      this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+      this.ngZone.run(() => this.router.navigate(['consumer']));
     }
+  }
+  closeloading() {
+    this.isClickedOnce = false;
+    this.loadingPaytm = false;
+    this.cdRef.detectChanges();
+    this.ngZone.run(() => this.router.navigate(['consumer']));
     this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
   }
 }

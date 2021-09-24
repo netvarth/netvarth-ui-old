@@ -25,13 +25,13 @@ import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.ser
 import { SubSink } from '../../../../../../node_modules/subsink';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
- 
+
 @Component({
   selector: 'app-order-wizard',
   templateUrl: './order-wizard.component.html',
   styleUrls: ['./order-wizard.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css']
 })
-export class OrderWizardComponent implements OnInit ,OnDestroy{
+export class OrderWizardComponent implements OnInit, OnDestroy {
   coupon_status: any;
   s3url: {};
   retval: Promise<void>;
@@ -74,7 +74,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   futureAvailableTime: string;
   nextAvailableTimeQueue: any;
   // isfutureAvailableTime: boolean;
-  isfutureAvailableTime=true ;
+  isfutureAvailableTime = true;
   advance_amount: any;
   deliveryCharge: any;
   home_delivery: boolean;
@@ -86,7 +86,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   server_date;
   minDate;
   choose_type: string;
-  timings_title:string;
+  timings_title: string;
   disabledConfirmbtn: boolean;
   orders: any;
   order_count = 0;
@@ -156,15 +156,16 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   };
   @ViewChild('closeModal') private closeModal: ElementRef;
   @ViewChild('closeDatepickerModal') private datepickerModal: ElementRef;
+  onlyVirtualItems=false;
   customer_label: any;
   private onDestroy$: Subject<void> = new Subject<void>();
-  api_error=false;
-  api_error_msg='';
-  iscustomerEmailPhone=false;
+  api_error = false;
+  api_error_msg = '';
+  iscustomerEmailPhone = false;
   order_Mode;
   searchby = '';
   contactDialogRef: MatDialogRef<ContactInfoComponent, any>;
-  catalogExpired=false;
+  catalogExpired = false;
   store_availables: any;
   home_availables: any;
   private subs = new SubSink();
@@ -186,56 +187,56 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     private s3Processor: S3UrlProcessor) {
 
     this.activated_route.queryParams
-    .pipe(takeUntil(this.onDestroy$))
-    .subscribe(qparams => {
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(qparams => {
 
-      if (qparams.order_type) {
-        this.order_Mode = qparams.order_type;
-      }
-      if (qparams.ph || qparams.id) {
-        const filter = {};
-        if (qparams.ph) {
-          filter['phoneNo-eq'] = qparams.ph;
+        if (qparams.order_type) {
+          this.order_Mode = qparams.order_type;
         }
-        if (qparams.id) {
-          filter['id-eq'] = qparams.id;
-        }
-        this.provider_services.getProviderCustomers(filter)
-        .pipe(takeUntil(this.onDestroy$))
-        .subscribe(
-          (data: any) => {
-            if (data.length > 1) {
-              const customer = data.filter(member => !member.parent);
-              this.customer_data = customer[0];
-              this.show_customer = true;
-            } else {
-              this.customer_data = data[0];
-              this.show_customer = true;
-            }
-            this.jaldeeId = this.customer_data.jaldeeId;
-            this.disabledNextbtn = false;
-           
-      
-              if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
-                this.countryCode = this.customer_data.countryCode;
-              } else {
-                this.countryCode = '+91';
-              }
-              if (this.customer_data.email && this.customer_data.email !== 'null') {
-                this.customer_email = this.customer_data.email;
-              } 
-             
-              if(!this.catalogExpired){
-                this.step = 2;
-                }else{
+        if (qparams.ph || qparams.id) {
+          const filter = {};
+          if (qparams.ph) {
+            filter['phoneNo-eq'] = qparams.ph;
+          }
+          if (qparams.id) {
+            filter['id-eq'] = qparams.id;
+          }
+          this.provider_services.getProviderCustomers(filter)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(
+              (data: any) => {
+                if (data.length > 1) {
+                  const customer = data.filter(member => !member.parent);
+                  this.customer_data = customer[0];
+                  this.show_customer = true;
+                } else {
+                  this.customer_data = data[0];
+                  this.show_customer = true;
+                }
+                this.jaldeeId = this.customer_data.jaldeeId;
+                this.disabledNextbtn = false;
+
+
+                if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+                  this.countryCode = this.customer_data.countryCode;
+                } else {
+                  this.countryCode = '+91';
+                }
+                if (this.customer_data.email && this.customer_data.email !== 'null') {
+                  this.customer_email = this.customer_data.email;
+                }
+
+                if (!this.catalogExpired) {
+                  this.step = 2;
+                } else {
                   this.snackbarService.openSnackBar('Catalog is not valid. Update the status or validity of the catalog to proceed', { 'panelClass': 'snackbarerror' });
                 }
-            
-          
-          }
-        );
-      }
-    });
+
+
+              }
+            );
+        }
+      });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -244,7 +245,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     let divider;
     const divident = this.screenWidth / 37.8;
     if (this.screenWidth > 1000) {
-       divider = divident / 6;
+      divider = divident / 6;
     } else if (this.screenWidth > 500 && this.screenWidth < 1000) {
       divider = divident / 4;
     } else if (this.screenWidth > 375 && this.screenWidth < 500) {
@@ -257,7 +258,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   ngOnInit() {
     this.accountId = this.groupService.getitemFromGroupStorage('accountId');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    this.searchby = 'Search by '+ this.customer_label + ' id/email/phone number';
+    this.searchby = 'Search by ' + this.customer_label + ' id/email/phone number';
     this.createForm();
     this.getCatalog();
     this.gets3curl();
@@ -271,7 +272,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   }
   gets3curl() {
     this.api_loading1 = true;
-    
+
     this.subs.sink = this.s3Processor.getJsonsbyTypes(this.accountId, null, 'coupon').subscribe(
       (accountS3s) => {
         if (accountS3s['coupon']) {
@@ -295,6 +296,15 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     //       this.api_loading1 = false;
     //     }
     //   );
+  }
+  isPhysicalItemsPresent() {
+    let physical_item_present = true;
+    const virtualItems = this.orders.filter(catalogitem => catalogitem.item.itemType === 'VIRTUAL')
+    if (virtualItems.length > 0 && this.orders.length === virtualItems.length) {
+      physical_item_present = false;
+      this.onlyVirtualItems=true;
+    }
+    return physical_item_present;
   }
   toggleterms(i) {
     if (this.couponsList[i].showme) {
@@ -406,7 +416,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     }
 
     this.provider_services.getCustomer(post_data)
-    .pipe(takeUntil(this.onDestroy$))
+      .pipe(takeUntil(this.onDestroy$))
       .subscribe(
         (data: any) => {
           this.customer_data = [];
@@ -436,15 +446,15 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
             }
             if (this.customer_data.email && this.customer_data.email !== 'null') {
               this.customer_email = this.customer_data.email;
-            } 
-           
-            if(!this.catalogExpired){
+            }
+
+            if (!this.catalogExpired) {
               this.step = 2;
-              }else{
-                this.snackbarService.openSnackBar('Your Catalog is not valid for now, It  might be disabled/Not applicable for today/expired ,please update to proceed', { 'panelClass': 'snackbarerror' });
-              }
-          
-        }
+            } else {
+              this.snackbarService.openSnackBar('Your Catalog is not valid for now, It  might be disabled/Not applicable for today/expired ,please update to proceed', { 'panelClass': 'snackbarerror' });
+            }
+
+          }
 
         },
         error => {
@@ -452,8 +462,8 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
         }
       );
   }
-  updateCustomer(id){
-    this.qParams={};
+  updateCustomer(id) {
+    this.qParams = {};
     this.qParams['checkinType'] = 'WALK_IN_ORDER';
     this.qParams['source'] = 'order';
     this.qParams['action'] = 'edit';
@@ -476,7 +486,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   }
   getDeliveryAddress() {
     this.provider_services.getDeliveryAddress(this.customer_data.id)
-    .pipe(takeUntil(this.onDestroy$))
+      .pipe(takeUntil(this.onDestroy$))
       .subscribe(data => {
         if (data !== null) {
           this.added_address = data;
@@ -494,98 +504,98 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   highlight(index, address) {
     this.selectedRowIndex = index;
     this.customer_phoneNumber = address.phoneNumber;
-  //  this.customer_email = address.email;
+    //  this.customer_email = address.email;
     this.selectedAddress = address;
   }
   getCatalog() {
-    this.getCatalogDetails().then((data:any) => {
-      if(data!==undefined &&data.length!==0){
-      this.catalog_details = data;
-      this.orderType = this.catalog_details.orderType;
-       if (this.orderType !== 'SHOPPINGLIST') {
-        this.orderItems = [];
-      for (let itemIndex = 0; itemIndex < this.catalog_details.catalogItem.length; itemIndex++) {
-        const catalogItemId = this.catalog_details.catalogItem[itemIndex].id;
-        const minQty = this.catalog_details.catalogItem[itemIndex].minQuantity;
-        const maxQty = this.catalog_details.catalogItem[itemIndex].maxQuantity;
-        const showpric = this.catalog_details.showPrice;
-        if(this.catalog_details.catalogItem[itemIndex].item.isStockAvailable){
-          this.orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.catalog_details.catalogItem[itemIndex].item, 'showpric': showpric });
-        }
-        this.itemCount++;
-      }
-      }
-      
-      
-      if (this.catalog_details) {
-        this.catalog_Id = this.catalog_details.id;
-        if (this.catalog_details.pickUp) {
-          if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails) {
-            this.store_pickup = true;
-            this.choose_type = 'store';
-            this.timings_title=" Store Pickup Timings";
-            this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
-            this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
+    this.getCatalogDetails().then((data: any) => {
+      if (data !== undefined && data.length !== 0) {
+        this.catalog_details = data;
+        this.orderType = this.catalog_details.orderType;
+        if (this.orderType !== 'SHOPPINGLIST') {
+          this.orderItems = [];
+          for (let itemIndex = 0; itemIndex < this.catalog_details.catalogItem.length; itemIndex++) {
+            const catalogItemId = this.catalog_details.catalogItem[itemIndex].id;
+            const minQty = this.catalog_details.catalogItem[itemIndex].minQuantity;
+            const maxQty = this.catalog_details.catalogItem[itemIndex].maxQuantity;
+            const showpric = this.catalog_details.showPrice;
+            if (this.catalog_details.catalogItem[itemIndex].item.isStockAvailable) {
+              this.orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.catalog_details.catalogItem[itemIndex].item, 'showpric': showpric });
+            }
+            this.itemCount++;
           }
         }
-        if (this.catalog_details.homeDelivery) {
-          if (this.catalog_details.homeDelivery.homeDelivery && this.catalog_details.nextAvailableDeliveryDetails) {
-            this.home_delivery = true;
 
-            if (!this.store_pickup) {
-              this.choose_type = 'home';
-              this.timings_title="Delivery Timings";
-              this.deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
-              this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
-              this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
 
+        if (this.catalog_details) {
+          this.catalog_Id = this.catalog_details.id;
+          if (this.catalog_details.pickUp) {
+            if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails) {
+              this.store_pickup = true;
+              this.choose_type = 'store';
+              this.timings_title = " Store Pickup Timings";
+              this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
+              this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
             }
           }
+          if (this.catalog_details.homeDelivery) {
+            if (this.catalog_details.homeDelivery.homeDelivery && this.catalog_details.nextAvailableDeliveryDetails) {
+              this.home_delivery = true;
+
+              if (!this.store_pickup) {
+                this.choose_type = 'home';
+                this.timings_title = "Delivery Timings";
+                this.deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
+                this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
+                this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+
+              }
+            }
+          }
+          this.advance_amount = this.catalog_details.advanceAmount;
         }
-        this.advance_amount = this.catalog_details.advanceAmount;
-      }
-      console.log(this.sel_checkindate);
-      this.getOrderAvailableDatesForPickup();
-      this.getOrderAvailableDatesForHome();
-      // this.getAvailabilityByDate(this.sel_checkindate);    
-      this.showfuturediv = false;
-      this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-      this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-      this.today = new Date(this.today);
-      this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-      this.minDate = new Date(this.minDate);
-      const dd = this.today.getDate();
-      const mm = this.today.getMonth() + 1; // January is 0!
-      const yyyy = this.today.getFullYear();
-      let cday = '';
-      if (dd < 10) {
-        cday = '0' + dd;
+        console.log(this.sel_checkindate);
+        this.getOrderAvailableDatesForPickup();
+        this.getOrderAvailableDatesForHome();
+        // this.getAvailabilityByDate(this.sel_checkindate);    
+        this.showfuturediv = false;
+        this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
+        this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        this.today = new Date(this.today);
+        this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        this.minDate = new Date(this.minDate);
+        const dd = this.today.getDate();
+        const mm = this.today.getMonth() + 1; // January is 0!
+        const yyyy = this.today.getFullYear();
+        let cday = '';
+        if (dd < 10) {
+          cday = '0' + dd;
+        } else {
+          cday = '' + dd;
+        }
+        let cmon;
+        if (mm < 10) {
+          cmon = '0' + mm;
+        } else {
+          cmon = '' + mm;
+        }
+        const dtoday = yyyy + '-' + cmon + '-' + cday;
+        this.todaydate = dtoday;
+        this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
+        if (this.todaydate === this.sel_checkindate) {
+          this.isFuturedate = false;
+        } else {
+          this.isFuturedate = true;
+        }
       } else {
-        cday = '' + dd;
+        this.catalogExpired = true;
+
       }
-      let cmon;
-      if (mm < 10) {
-        cmon = '0' + mm;
-      } else {
-        cmon = '' + mm;
-      }
-      const dtoday = yyyy + '-' + cmon + '-' + cday;
-      this.todaydate = dtoday;
-      this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
-      if (this.todaydate === this.sel_checkindate) {
-        this.isFuturedate = false;
-      } else {
-        this.isFuturedate = true;
-      }
-    }else{
-     this.catalogExpired=true;
-    
-    }
     });
-  
-}
-  
-  
+
+  }
+
+
   getCatalogDetails() {
     const accountId = this.accountId;
     const _this = this;
@@ -613,8 +623,8 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
 
   }
   goBack() {
-        this.router.navigate(['provider', 'orders']);
-}
+    this.router.navigate(['provider', 'orders']);
+  }
   updateForm() {
     // this.amForm.setValue({
     //   'phoneNumber': this.edit_address.phoneNumber || null,
@@ -639,7 +649,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     this.added_address.push(form_data);
     console.log('addres' + JSON.stringify(this.added_address));
     this.provider_services.updateDeliveryaddress(this.customer_data.id, this.added_address)
-    .pipe(takeUntil(this.onDestroy$))
+      .pipe(takeUntil(this.onDestroy$))
       .subscribe(
         data => {
           this.disableSave = false;
@@ -657,10 +667,10 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
       if (this.orders && this.orders.length === 0 && this.orderType !== 'SHOPPINGLIST') {
         this.snackbarService.openSnackBar('Please add items to proceed', { 'panelClass': 'snackbarerror' });
         return false;
-       }else if (this.selectedImagelist && this.selectedImagelist.files.length === 0 && this.orderType === 'SHOPPINGLIST') {
+      } else if (this.selectedImagelist && this.selectedImagelist.files.length === 0 && this.orderType === 'SHOPPINGLIST') {
         this.snackbarService.openSnackBar('Please upload shoppinglist to proceed', { 'panelClass': 'snackbarerror' });
         return false;
-       } else {
+      } else {
         this.step = this.step + 1;
       }
     } else {
@@ -673,10 +683,10 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
   }
   increment(item) {
 
-      // this.iscustomerEmailPhone=true;
-      this.addToCart(item);
-   
-    
+    // this.iscustomerEmailPhone=true;
+    this.addToCart(item);
+
+
   }
   collectContactInfo() {
     this.contactDialogRef = this.dialog.open(ContactInfoComponent, {
@@ -686,18 +696,19 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
       data: {
         phone: this.customer_data.phoneNo,
         email: this.customer_data.email
-       
+
 
       }
     });
     this.contactDialogRef.afterClosed()
-    .pipe(takeUntil(this.onDestroy$))
-    .subscribe(result => {
-      if(result){
-        this.customer_data.phoneNo=result.phone;
-        this.customer_data.email=result.email;
-      }
-    });
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(result => {
+        if (result) {
+          this.customer_data.phoneNo = result.phone;
+          this.customer_data.email = result.email;
+          this.confirm();
+        }
+      });
   }
   decrement(item) {
     this.removeFromCart(item);
@@ -775,7 +786,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     }
 
   }
- 
+
   getTotalItemPrice() {
     this.price = 0.0;
     for (const itemObj of this.orderList) {
@@ -830,12 +841,12 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     const _this = this;
 
     _this.shared_services.getAvailableDatesForPickup(this.catalog_Id, this.accountId)
-    .pipe(takeUntil(this.onDestroy$))
+      .pipe(takeUntil(this.onDestroy$))
       .subscribe((data: any) => {
-        this.store_availables  = data.filter(obj => obj.isAvailable);
+        this.store_availables = data.filter(obj => obj.isAvailable);
         console.log(this.store_availables);
         this.getAvailabilityByDate(this.sel_checkindate);
-        const availDates = this.store_availables .map(function (a) { return a.date; });
+        const availDates = this.store_availables.map(function (a) { return a.date; });
         _this.storeAvailableDates = availDates.filter(function (elem, index, self) {
           return index === self.indexOf(elem);
         });
@@ -850,7 +861,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
         this.home_availables = data.filter(obj => obj.isAvailable);
         console.log(this.home_availables);
         this.getAvailabilityByDate(this.sel_checkindate);
-        const availDates =  this.home_availables.map(function (a) { return a.date; });
+        const availDates = this.home_availables.map(function (a) { return a.date; });
         _this.homeAvailableDates = availDates.filter(function (elem, index, self) {
           return index === self.indexOf(elem);
         });
@@ -877,60 +888,60 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     if (this.choose_type === 'store') {
       const storeIntervals = (this.catalog_details.pickUp.pickUpSchedule.repeatIntervals).map(Number);
       const last_date = moment().add(30, 'days');
-      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();         
-      if ((storeIntervals.includes(currentday)) && (date > thirty_date)) {   
+      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();
+      if ((storeIntervals.includes(currentday)) && (date > thirty_date)) {
         this.isfutureAvailableTime = true;
         this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
         this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
         this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
         console.log('greater than 30');
-      } 
-      else if ((storeIntervals.includes(currentday)) && (date < thirty_date)) {  
-        console.log('less than 30'); 
+      }
+      else if ((storeIntervals.includes(currentday)) && (date < thirty_date)) {
+        console.log('less than 30');
         console.log(this.store_availables);
         const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
-        const availability  = this.store_availables.filter(obj => obj.date ===  sel_check_date);          
-        if(availability.length > 0){
-            this.isfutureAvailableTime = true;
-            this.nextAvailableTimeQueue = availability[0].timeSlots;
-            this.queue = availability[0].timeSlots[0];
-            this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' +  availability[0].timeSlots[0]['eTime'];
-          } else{
-            this.isfutureAvailableTime = false;
-          }
-        }     
+        const availability = this.store_availables.filter(obj => obj.date === sel_check_date);
+        if (availability.length > 0) {
+          this.isfutureAvailableTime = true;
+          this.nextAvailableTimeQueue = availability[0].timeSlots;
+          this.queue = availability[0].timeSlots[0];
+          this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' + availability[0].timeSlots[0]['eTime'];
+        } else {
+          this.isfutureAvailableTime = false;
+        }
+      }
       else {
         this.isfutureAvailableTime = false;
       }
-    }  
+    }
     else {
       const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
       const last_date = moment().add(30, 'days');
-      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();         
+      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();
       console.log(homeIntervals);
       console.log(JSON.stringify(homeIntervals));
-      if (homeIntervals.includes(currentday) && (date > thirty_date))  {
+      if (homeIntervals.includes(currentday) && (date > thirty_date)) {
         this.isfutureAvailableTime = true;
         this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
         this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
         this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
         console.log('greater than 30');
-      } else if( homeIntervals.includes(currentday) && (date < thirty_date)) {   
+      } else if (homeIntervals.includes(currentday) && (date < thirty_date)) {
         console.log(this.home_availables);
         const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
-        const availability  = this.home_availables.filter(obj => obj.date ===  sel_check_date);          
-        if(availability.length > 0){
-            this.isfutureAvailableTime = true;
-            this.nextAvailableTimeQueue = availability[0].timeSlots;
-            this.queue = availability[0].timeSlots[0];
-            this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' +  availability[0].timeSlots[0]['eTime'];
-      } else {
+        const availability = this.home_availables.filter(obj => obj.date === sel_check_date);
+        if (availability.length > 0) {
+          this.isfutureAvailableTime = true;
+          this.nextAvailableTimeQueue = availability[0].timeSlots;
+          this.queue = availability[0].timeSlots[0];
+          this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' + availability[0].timeSlots[0]['eTime'];
+        } else {
+          this.isfutureAvailableTime = false;
+        }
+      }
+      else {
         this.isfutureAvailableTime = false;
       }
-    }
-    else {        
-       this.isfutureAvailableTime = false;
-     }
     }
   }
   changeTime() {
@@ -1025,14 +1036,14 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
       this.store_pickup = true;
       this.choose_type = 'store';
       this.storeChecked = true;
-      this.timings_title=" Store Pickup Timings";
+      this.timings_title = " Store Pickup Timings";
       this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
       this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
       this.getAvailabilityByDate(this.sel_checkindate);
     } else {
       this.home_delivery = true;
       this.choose_type = 'home';
-      this.timings_title="Delivery Timings";
+      this.timings_title = "Delivery Timings";
       this.storeChecked = false;
       this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
       this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
@@ -1050,162 +1061,76 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
 
   }
   confirm() {
-    if(!this.iscustomerEmailPhone && (!this.customer_data.email || !this.customer_data.phoneNo ||this.customer_data.phoneNo.includes('*'))){
+    console.log('inside');
+    let post_Data={};
+    let timeslot:any;
+    if (!this.iscustomerEmailPhone && (!this.customer_data.email || !this.customer_data.phoneNo || this.customer_data.phoneNo.includes('*'))) {
       this.collectContactInfo();
-     }else{
-       this.iscustomerEmailPhone=true;
-    this.placeOrderDisabled = true;
-    console.log(this.nextAvailableTime);
-    const timeslot = this.nextAvailableTime.split(' - ');
-    if(this.orderType!=='SHOPPINGLIST'){
-      if(this.getOrderItems().length===0){
-        this.snackbarService.openSnackBar('Please add items', { 'panelClass': 'snackbarerror' });
-        this.placeOrderDisabled=false;
-        return; 
-      }
-    }
-    if (this.choose_type === 'home') {
-      if (this.added_address === null || this.added_address.length === 0) {
-        this.placeOrderDisabled = false;
-        this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
-        this.placeOrderDisabled=false;
-        return;
-      } else {
-        if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
-          this.emailId = this.customer_data.email;
-        }
-          if(this.orderType === 'SHOPPINGLIST'){
-            const post_Data = {
-              'homeDelivery': true,
-              'homeDeliveryAddress': this.selectedAddress,
-              'catalog': {
-                'id': this.catalog_details.id
-              },
-              'orderFor': {
-                'id': this.customer_data.id
-              },
-              'consumer': {
-                'id': this.customer_data.id
-    
-              },
-              'timeSlot': {
-                'sTime': timeslot[0],
-                'eTime': timeslot[1]
-               
-              },
-              'orderDate': this.sel_checkindate,
-              'countryCode': this.countryCode,
-              'phoneNumber': this.customer_data.phoneNo,
-              'email': this.customer_data.email,
-              'orderMode': this.order_Mode,
-              'orderNote': this.orderNote,
-              'coupons': this.selected_coupons
-            };
-            this.confirmOrder(post_Data);
-          }else{
-            const post_Data = {
-              'homeDelivery': true,
-              'homeDeliveryAddress': this.selectedAddress,
-              'catalog': {
-                'id': this.catalog_details.id
-              },
-              'orderFor': {
-                'id': this.customer_data.id
-              },
-              'consumer': {
-                'id': this.customer_data.id
-    
-              },
-              'timeSlot': {
-                'sTime': timeslot[0],
-                'eTime': timeslot[1]
-                // 'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
-                // 'eTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime']
-              },
-              'orderItem': this.getOrderItems(),
-              'orderDate': this.sel_checkindate,
-              'countryCode': this.countryCode,
-              'phoneNumber': this.customer_data.phoneNo,
-              'email': this.customer_data.email,
-              'orderMode': this.order_Mode,
-              'orderNote': this.orderNote,
-              'coupons': this.selected_coupons
-            };
-            this.confirmOrder(post_Data);
-
-          }
-        
+    } else {
+      this.iscustomerEmailPhone = true;
+      this.placeOrderDisabled = true;
+      if(!this.onlyVirtualItems){
+       timeslot = this.nextAvailableTime.split(' - ');
+       let timeSlot= {
+        'sTime': timeslot[0],
+        'eTime': timeslot[1]
 
       }
-    }
-    if (this.choose_type === 'store') {
-      console.log('inisde' +this.orderType);
-      
-      const contactNumber = this.customer_data.phoneNo;
-      const contact_email = this.customer_data.email;
+      post_Data['timeSlot']=timeSlot;
+      post_Data['orderDate']=this.sel_checkindate;
+      }
+      if (this.orderType !== 'SHOPPINGLIST' && this.getOrderItems().length===0) {
+          this.snackbarService.openSnackBar('Please add items', { 'panelClass': 'snackbarerror' });
+          this.placeOrderDisabled = false;
+          return;
+      }
+       post_Data={
+        'catalog': {
+          'id': this.catalog_details.id
+        },
+        'orderFor': {
+          'id': this.customer_data.id
+        },
+        'consumer': {
+          'id': this.customer_data.id
+
+        },
+        'countryCode': this.countryCode,
+        'phoneNumber': this.customer_data.phoneNo,
+        'email': this.customer_data.email,
+        'orderMode': this.order_Mode,
+        'orderNote': this.orderNote,
+        'coupons': this.selected_coupons
+      };
       if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
         this.emailId = this.customer_data.email;
       }
-        if(this.orderType === 'SHOPPINGLIST'){
-          const post_Data = {
-            'storePickup': true,
-            'catalog': {
-              'id': this.catalog_details.id
-            },
-            'orderFor': {
-              'id': this.customer_data.id
-            },
-            'consumer': {
-              'id': this.customer_data.id
-  
-            },
-            'timeSlot': {
-              'sTime': timeslot[0],
-              'eTime': timeslot[1]
-            },
-            'orderDate': this.sel_checkindate,
-            'countryCode': this.countryCode,
-            'orderMode': this.order_Mode,
-            'phoneNumber': contactNumber,
-            'email': contact_email,
-        
-          };
-          this.confirmOrder(post_Data);
-        }else {
-         
-          const post_Data = {
-            'storePickup': true,
-            'catalog': {
-              'id': this.catalog_details.id
-            },
-            'orderFor': {
-              'id': this.customer_data.id
-            },
-            'consumer': {
-              'id': this.customer_data.id
-  
-            },
-            'timeSlot': {
-              'sTime': timeslot[0],
-              'eTime': timeslot[1]
-            },
-            'orderItem': this.getOrderItems(),
-            'orderDate': this.sel_checkindate,
-            'countryCode': this.countryCode,
-            'orderMode': this.order_Mode,
-            'phoneNumber': contactNumber,
-            'email': contact_email,
-
-          };
-          this.confirmOrder(post_Data);
+      post_Data['email']=this.emailId;
+      if (this.orderType !== 'SHOPPINGLIST') {
+        post_Data['orderItem'] = this.getOrderItems()
+      }
+      if (this.choose_type === 'home'&&!this.onlyVirtualItems) {
+        if (this.added_address === null || this.added_address.length === 0) {
+          this.placeOrderDisabled = false;
+          this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
+          this.placeOrderDisabled = false;
+          return;
+        } 
+         post_Data['homeDelivery']=true,
+         post_Data['homeDeliveryAddress']= this.selectedAddress
+          
+      }
+      if (this.choose_type === 'store'&& !this.onlyVirtualItems) {
+          post_Data['storePickup'] = true
         }
+    
         
-        //  }
-      
+        
+       this.confirmOrder(post_Data);
+     
     }
   }
-  }
-  getOrderItems() {    
+  getOrderItems() {
     this.orderSummary = [];
     this.orders.forEach(item => {
       let consumerNote = '';
@@ -1236,12 +1161,12 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
       const blobpost_Data = new Blob([JSON.stringify(post_Data)], { type: 'application/json' });
       dataToSend.append('order', blobpost_Data);
       this.shared_services.CreateWalkinOrder(this.accountId, dataToSend)
-      .pipe(takeUntil(this.onDestroy$))
+        .pipe(takeUntil(this.onDestroy$))
         .subscribe(data => {
           this.placeOrderDisabled = false;
           this.snackbarService.openSnackBar('Your Order placed successfully');
           this.router.navigate(['provider', 'orders']);
-         
+
         },
           error => {
             this.placeOrderDisabled = false;
@@ -1249,11 +1174,11 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
           }
 
         );
-    }else {
+    } else {
       const blobpost_Data = new Blob([JSON.stringify(post_Data)], { type: 'application/json' });
       dataToSend.append('order', blobpost_Data);
       this.shared_services.CreateWalkinOrder(this.accountId, dataToSend)
-      .pipe(takeUntil(this.onDestroy$))
+        .pipe(takeUntil(this.onDestroy$))
         .subscribe(data => {
           this.placeOrderDisabled = false;
           this.snackbarService.openSnackBar('Your Order placed successfully');
@@ -1264,10 +1189,10 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
             this.placeOrderDisabled = false;
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
-  
+
         );
     }
-    
+
   }
   addAddress() {
     this.addressDialogRef = this.dialog.open(AddressComponent, {
@@ -1282,10 +1207,10 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
       }
     });
     this.addressDialogRef.afterClosed()
-    .pipe(takeUntil(this.onDestroy$))
-    .subscribe(result => {
-      this.getDeliveryAddress();
-    });
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(result => {
+        this.getDeliveryAddress();
+      });
   }
   updateAddress(address, index) {
     this.addressDialogRef = this.dialog.open(AddressComponent, {
@@ -1302,10 +1227,10 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
       }
     });
     this.addressDialogRef.afterClosed()
-    .pipe(takeUntil(this.onDestroy$))
-    .subscribe(result => {
-      this.getDeliveryAddress();
-    });
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(result => {
+        this.getDeliveryAddress();
+      });
   }
   deleteAddress(address, index) {
     this.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
@@ -1319,7 +1244,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     this.canceldialogRef.afterClosed().pipe(takeUntil(this.onDestroy$)).subscribe(result => {
       if (result) {
         this.added_address.splice(index, 1);
-        this.provider_services.updateDeliveryaddress(this.customer_data.id,this.added_address).pipe(takeUntil(this.onDestroy$))
+        this.provider_services.updateDeliveryaddress(this.customer_data.id, this.added_address).pipe(takeUntil(this.onDestroy$))
           .subscribe(
             data => {
               if (data) {
@@ -1344,7 +1269,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     }
     return found;
   }
-  addItem(){
+  addItem() {
     this.step = 2;
   }
   applyCoupons(jCoupon) {
@@ -1385,8 +1310,8 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
       this.api_cp_error = 'Enter a Coupon';
     }
   }
- 
-   
+
+
   imageSelect(event) {
     const input = event.target.files;
     if (input) {
@@ -1472,22 +1397,22 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
     //   }
   }
   onButtonAfterHook() { }
-  uploadShoppingList(){
+  uploadShoppingList() {
     const imglist = {
-        files: [],
-        base64: [],
-        caption: []
-      };
-      this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
-        width: '50%',
-        panelClass: ['popup-class', 'commonpopupmainclass'],
-        disableClose: true,
-        data: {
-          source: imglist,
-          type: 'add'
-        }
-      });
-      this.shoppinglistdialogRef.afterClosed()
+      files: [],
+      base64: [],
+      caption: []
+    };
+    this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        source: imglist,
+        type: 'add'
+      }
+    });
+    this.shoppinglistdialogRef.afterClosed()
       .pipe(takeUntil(this.onDestroy$))
       .subscribe(result => {
         if (result) {
@@ -1496,7 +1421,7 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
             base64: [],
             caption: []
           };
-    
+
           this.selectedImagelist = result;
           this.image_list_popup = [];
           if (this.selectedImagelist.files.length > 0) {
@@ -1511,37 +1436,37 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
           }
         }
       });
-    }
+  }
 
-    editshoppinglist() {
-      let imglist = {
-        files: [],
-        base64: [],
-        caption: []
-      };
-      imglist = this.selectedImagelist;
-      this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
-        width: '50%',
-        panelClass: ['popup-class', 'commonpopupmainclass'],
-        disableClose: true,
-        data: {
-          file: imglist.files.slice(),
-          base: imglist.base64.slice(),
-          caption:imglist.caption.slice(),
-          type: 'edit'
-        }
-      });
-      this.shoppinglistdialogRef.afterClosed()
+  editshoppinglist() {
+    let imglist = {
+      files: [],
+      base64: [],
+      caption: []
+    };
+    imglist = this.selectedImagelist;
+    this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        file: imglist.files.slice(),
+        base: imglist.base64.slice(),
+        caption: imglist.caption.slice(),
+        type: 'edit'
+      }
+    });
+    this.shoppinglistdialogRef.afterClosed()
       .pipe(takeUntil(this.onDestroy$))
       .subscribe(result => {
-      //  console.log(JSON.parse(JSON.stringify(result)));
+        //  console.log(JSON.parse(JSON.stringify(result)));
         if (result) {
           this.selectedImagelist = {
             files: [],
             base64: [],
             caption: []
           };
-         this.selectedImagelist = result;
+          this.selectedImagelist = result;
           this.image_list_popup = [];
           if (this.selectedImagelist.files.length > 0) {
             for (let i = 0; i < this.selectedImagelist.files.length; i++) {
@@ -1552,13 +1477,13 @@ export class OrderWizardComponent implements OnInit ,OnDestroy{
                 });
               this.image_list_popup.push(imgobj);
             }
-  
+
           }
         }
       });
-    }
+  }
 
- 
+
 }
 
 

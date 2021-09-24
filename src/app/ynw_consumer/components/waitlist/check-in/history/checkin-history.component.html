@@ -236,9 +236,10 @@
                                                                     src="../../../../assets/images/order/Storepickup.svg" /></div>
                                                             <!-- <i class="fa fa-shopping-cart shop_cart_icon"></i> -->
                                                         </div>
-                                                        <span> &nbsp;{{his_wait.orderDate | date: newDateFormat }},<br>
+                                                        <span> &nbsp;{{his_wait.orderDate | date: newDateFormat }}<br>
+                                                            <ng-container *ngIf="his_wait.timeSlot">
                                                             {{his_wait.timeSlot.sTime}} -
-                                                            {{his_wait.timeSlot.eTime}}</span>
+                                                            {{his_wait.timeSlot.eTime}}</ng-container></span>
                                                     </div>
                                                 </td>
                                                 <td data-title="Service Provider"

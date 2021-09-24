@@ -306,6 +306,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   pwaIOShint: boolean;
   iosConfig = false;
   accountIdExists = false;
+  onlyVirtualItems=false;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -588,7 +589,27 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       );
     });
   }
-
+  isPhysicalItemsPresent(){
+    let physical_item_present = true;
+    const virtualItems=this.activeCatalog.catalogItem.filter(catalogItem => catalogItem.item.itemType==='VIRTUAL')
+    if(virtualItems.length>0 && this.activeCatalog.catalogItem.length===virtualItems.length){
+      physical_item_present=false;
+      this.onlyVirtualItems=true;
+    }
+    return physical_item_present;
+  }
+  checkVirtualOrPhysical(){
+    console.log('checkvirtualorphysical');
+    let  showCatalogItems=false;
+    if(this.activeCatalog.nextAvailableDeliveryDetails||this.activeCatalog.nextAvailablePickUpDetails){
+      showCatalogItems=true;
+    }
+  
+    if(!this.isPhysicalItemsPresent()){
+       showCatalogItems=true;
+     }
+    return showCatalogItems
+  }
   ngAfterViewInit() {
     this.customAppIOSPopup.nativeElement.style.display = 'none';
     // const appPopupDisplayed = this.lStorageService.getitemfromLocalStorage('a_dsp');
