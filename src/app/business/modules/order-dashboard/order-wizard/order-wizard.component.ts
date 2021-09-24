@@ -1071,6 +1071,13 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
       this.placeOrderDisabled = true;
       if(!this.onlyVirtualItems){
        timeslot = this.nextAvailableTime.split(' - ');
+       let timeSlot= {
+        'sTime': timeslot[0],
+        'eTime': timeslot[1]
+
+      }
+      post_Data['timeSlot']=timeSlot;
+      post_Data['orderDate']=this.sel_checkindate;
       }
       if (this.orderType !== 'SHOPPINGLIST' && this.getOrderItems().length===0) {
           this.snackbarService.openSnackBar('Please add items', { 'panelClass': 'snackbarerror' });
@@ -1102,7 +1109,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
       if (this.orderType !== 'SHOPPINGLIST') {
         post_Data['orderItem'] = this.getOrderItems()
       }
-      if (this.choose_type === 'home') {
+      if (this.choose_type === 'home'&&!this.onlyVirtualItems) {
         if (this.added_address === null || this.added_address.length === 0) {
           this.placeOrderDisabled = false;
           this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
@@ -1113,21 +1120,12 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
          post_Data['homeDeliveryAddress']= this.selectedAddress
           
       }
-      if (this.choose_type === 'store') {
+      if (this.choose_type === 'store'&& !this.onlyVirtualItems) {
           post_Data['storePickup'] = true
         }
-        if(this.onlyVirtualItems){
-          delete post_Data['timeSlot'];
-
-        }else{
-          let timeSlot= {
-            'sTime': timeslot[0],
-            'eTime': timeslot[1]
-  
-          }
-          post_Data['timeSlot']=timeSlot;
-          post_Data['orderDate']=this.sel_checkindate;
-        }
+    
+        
+        
        this.confirmOrder(post_Data);
      
     }
