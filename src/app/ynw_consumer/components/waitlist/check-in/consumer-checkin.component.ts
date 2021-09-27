@@ -552,7 +552,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     getActiveUserInfo() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-            _this.sharedServices.getProfile(_this.activeUser.id, 'consumer')
+            _this.shared_services.getProfile(_this.activeUser.id, 'consumer')
                 .subscribe(
                     data => {
                         resolve(data);
@@ -568,7 +568,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     getFamilyMember() {
         this.api_loading1 = true;
         let fn;
-        fn = this.sharedServices.getConsumerFamilyMembers();
+        fn = this.shared_services.getConsumerFamilyMembers();
         this.subs.sink = fn.subscribe(data => {
             this.familymember = [];
             for (const mem of data) {
@@ -945,7 +945,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
   fetchLocationByPincode(pincode) {
     const _this = this;
     return new Promise(function (resolve, reject) {
-      _this.sharedServices.getLocationsByPincode(pincode).subscribe(
+      _this.shared_services.getLocationsByPincode(pincode).subscribe(
         (locations: any) => {
           resolve(locations);
         },
@@ -1100,7 +1100,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 userObj['state'] = formdata.state;
             }
             _this.lStorageService.setitemonLocalStorage('userId', _this.customer_data.id);
-            _this.sharedServices.updateProfile(userObj, 'consumer').subscribe(
+            _this.shared_services.updateProfile(userObj, 'consumer').subscribe(
                 () => {
 
                     resolve(true);
@@ -1165,7 +1165,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         this.lStorageService.setitemonLocalStorage('userId', formdata.serviceFor);
         return new Promise(function (resolve, reject) {
-            _this.sharedServices.editMember(memberInfo).subscribe(
+            _this.shared_services.editMember(memberInfo).subscribe(
                 () => {
                     resolve(true);
                 }, (error) => {
@@ -1228,7 +1228,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             memberInfo['bookingLocation']['state'] = formdata.state;
         }
         return new Promise(function (resolve, reject) {
-            _this.sharedServices.addMembers(memberInfo).subscribe(
+            _this.shared_services.addMembers(memberInfo).subscribe(
                 (data) => {
                     _this.lStorageService.setitemonLocalStorage('userId', data);
                     resolve(data);
@@ -1895,8 +1895,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         });
         virtualdialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this.virtualInfo = result;
-                this.setVirtualTeleserviceCustomer();
+                // this.virtualInfo = result;
+                // this.setVirtualTeleserviceCustomer();
             }
 
 
@@ -2423,9 +2423,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         _this.getConsumerQuestionnaire();
                     } else {
                         _this.questionnaireLoaded = true;
-                        if (_this.sel_ser_det.serviceType === 'virtualService') {
-                            _this.setVirtualTeleserviceCustomer();
-                        }
+                        // if (_this.sel_ser_det.serviceType === 'virtualService') {
+                        //     _this.setVirtualTeleserviceCustomer();
+                        // }
 
                     }
                 }
@@ -3521,10 +3521,10 @@ console.log('inside validaity');
         this.subs.sink = this.shared_services.getConsumerQuestionnaire(this.sel_ser, consumerid, this.account_id).subscribe(data => {
             this.questionnaireList = data;
             this.questionnaireLoaded = true;
-            console.log(this.sel_ser);
-            if (this.sel_ser_det.serviceType === 'virtualService') {
-                this.setVirtualTeleserviceCustomer();
-            }
+            // console.log(this.sel_ser);
+            // if (this.sel_ser_det.serviceType === 'virtualService') {
+            //     this.setVirtualTeleserviceCustomer();
+            // }
         });
     }
     showJCCouponNote(coupon) {
