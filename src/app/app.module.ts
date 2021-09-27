@@ -1,6 +1,6 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule, APP_INITIALIZER, ErrorHandler, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, APP_INITIALIZER, ErrorHandler, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, Injector } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared/modules/common/shared.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
@@ -43,7 +43,6 @@ import { OwlModule } from 'ngx-owl-carousel';
 import {  LocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
 import { CouponsComponent } from './shared/components/coupons/coupons.component';
 import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
-import { BusinessPageComponent } from './shared/components/business-page/business-page.component';
 import { ProviderAppModule } from './ynw_provider/provider-app.module';
 import { MaintenanceModule } from './shared/modules/maintenance/maintenance.module';
 import { LoadingSpinnerModule } from './shared/modules/loading-spinner/loading-spinner.module';
@@ -137,7 +136,6 @@ export function init_app(globalService: GlobalService) {
     ConsumerRateServicePopupComponent,
     CouponsComponent,
     RequestForComponent,
-    BusinessPageComponent,
     ForceDialogComponent,
     AdminLoginComponent,
     ConsumerJoinComponent,
@@ -269,7 +267,7 @@ export function init_app(globalService: GlobalService) {
     MediaService,
     Title,
     CommonDataStorageService,
-    {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices]},
+    {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices,Injector]},
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

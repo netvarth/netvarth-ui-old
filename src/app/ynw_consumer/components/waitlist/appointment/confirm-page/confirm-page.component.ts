@@ -38,6 +38,7 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
   theme: any;
   accountId;
   customId;
+  from: any;
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public sharedFunctionobj: SharedFunctions,
@@ -54,11 +55,16 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
               this.apiloading = false;
             });
         }
+        if(params.isFrom){
+          this.from = params.isFrom;
+        }
         if (params.type) {
           this.type = params.type;
         }
         if (params.customId) {
           this.customId = params.customId;
+        }
+        if(params.account_id){
           this.accountId = params.account_id;
         }
         if(params.theme){
@@ -102,6 +108,9 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
     if (this.customId) {
       queryParams['customId'] = this.customId;
     }
+    if(this.from){
+      queryParams['isFrom'] = this.from;
+    }
     let navigationExtras: NavigationExtras = {
         queryParams: queryParams
     };
@@ -117,7 +126,13 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
       let navigationExtras: NavigationExtras = {
           queryParams: queryParams
       };
-      this.router.navigate(['consumer'], navigationExtras);
+      console.log("navigationExtras appt"+JSON.stringify(navigationExtras));
+      if(this.from){
+        this.router.navigate(['consumer']);
+      }else{
+        this.router.navigate(['consumer'], navigationExtras);
+      }
+      
     }
     this.lStorageService.setitemonLocalStorage('orderStat', false);
   }

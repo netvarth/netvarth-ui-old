@@ -411,12 +411,12 @@
                                                                 <div (click)="showJCCouponNote(coupon)" [class.couponAmt]="coupon.value.value === '0.0'">{{coupon.value.value |
                                                                 currency:'&#8377;'}}</div>
                                                               </div> -->
-                                                            <div class="changeprice" *ngIf="changePrice > 0">
+                                                            <div class="changeprice" *ngIf="amountdifference > 0">
                                                                 The balance amount for the rescheduled booking will be
-                                                                ₹{{changePrice}}. Contact your provider directly for
+                                                                ₹{{amountdifference}}. Contact your provider directly for
                                                                 payment adjustments.
                                                             </div>
-                                                            <div class="changeprice" *ngIf="changePrice < 0">
+                                                            <div class="changeprice" *ngIf="amountdifference < 0">
                                                                 Contact your provider directly for payment adjustments.
                                                             </div>
                                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding">

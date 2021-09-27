@@ -32,11 +32,11 @@
           <ng-container
             *ngIf="!apiloading && (accountSettings && accountSettings.availability) && account_type == 'BRANCH' && active_user.userType == 1 && qAvailability">
             <li class="status-buttons-li make-unavailable pull-right mgn-rt-15" *ngIf="qAvailability.availableNow">
-              <span class="status-val">I'm available till {{qAvailability.timeRange.eTime}}</span>
+              <span class="status-val mgn-up-8">I'm available till {{qAvailability.timeRange.eTime}}</span>
               <span class="btn btn-danger" (click)="createInstantQ()" *ngIf="instaQid">Make me unavailable</span>
             </li>
             <li class="status-buttons-li make-available pull-right mgn-rt-15" *ngIf="!qAvailability.availableNow">
-              <span class="status-val">I'm not Available</span>
+              <span class="status-val mgn-up-8">I'm not Available</span>
               <span class="btn btn-success" (click)="createInstantQ()">Make me available</span>
             </li>
           </ng-container>
@@ -98,7 +98,7 @@
                     data-toggle="dropdown"><i class="fa fa-hourglass-start"></i> Delay</a>
                 </li>
                 <li class="dropdown customized-dd" *ngIf="time_type !==3"
-                  style="margin-left: auto !important; margin-bottom: 12px !important; margin-right: 10px !important;">
+                  style="margin-left: auto !important; margin-bottom: 12px !important; margin-right: 10px !important;" >
                   <button type="button" href="#" class="btn btn-default dropdown-toggle" data-toggle="modal"
                     data-target="#selectViewModal" *ngIf="selectedView">
                     <span style="margin-right: 10px !important;">
@@ -118,7 +118,7 @@
                   </button>
                   <div class="modal fade" id="selectViewModal" tabindex="-1" role="dialog">
                     <div class="modal-dialog" role="document">
-                      <div class="modal-content">
+                      <div class="modal-content" class="box" >
                         <div class="modal-header">
                           <h5 class="modal-title" id="selectViewModalLabel">Select View</h5>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -308,6 +308,36 @@
                             [ngModelOptions]="{standalone: true}" (keyup)="keyPressed()"
                             class="filterTextbox filter-textbox" placeholder="Enter Booking ID">
                         </li>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card" >
+                  <div class="card-header">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePhNo3"
+                        aria-expanded="false">
+                        <div>
+                          <div style="display: inline-block !important;">
+                            <i class="fa fa-phone"></i>
+                          </div>
+                          <span>&nbsp;Phone Number</span>
+                        </div>
+                        <i class="fa fa-angle-down"></i>
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapsePhNo3" class="collapse in" data-parent="#accordion3">
+                    <div class="card-body">
+                      <div class="filterTextinput filter-text-input" >
+                          <li class="filterli filter-li">
+                              <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode (keyup)="keyPressed()"
+                              class="filterTextbox change countryCodewidth" placeholder="+91">
+                            <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
+                              [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
+                              (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
+                              placeholder="9955668855">
+                          </li>
                       </div>
                     </div>
                   </div>
@@ -1098,6 +1128,36 @@
                       </div>
                     </div>
                   </div>
+                  <div class="card" >
+                    <div class="card-header">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePhNo3"
+                          aria-expanded="false">
+                          <div>
+                            <div style="display: inline-block !important;">
+                              <i class="fa fa-phone"></i>
+                            </div>
+                            <span>&nbsp;Phone Number</span>
+                          </div>
+                          <i class="fa fa-angle-down"></i>
+                        </button>
+                      </h2>
+                    </div>
+                    <div id="collapsePhNo3" class="collapse in" data-parent="#accordion3">
+                      <div class="card-body">
+                        <div class="filterTextinput filter-text-input" >
+                          <li class="filterli filter-li">
+                              <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode (keyup)="keyPressed()"
+                              class="filterTextbox change countryCodewidth" placeholder="+91">
+                            <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
+                              [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
+                              (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
+                              placeholder="9955668855">
+                          </li>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <div class="card" *ngIf="services.length > 1">
                     <div class="card-header">
                       <h2 class="mb-0">
@@ -1637,6 +1697,7 @@
                               [ngModelOptions]="{standalone: true}" (keyup)="keyPressed()"
                               class="filterTextbox filter-textbox" placeholder="Enter Booking ID">
                           </li>
+                          
                         </div>
                       </div>
                     </div>
@@ -1659,12 +1720,14 @@
                     <div id="collapsePhNo3" class="collapse in" data-parent="#accordion3">
                       <div class="card-body">
                         <div class="filterTextinput filter-text-input" *ngIf="time_type == 3">
-                          <li class="filterli filter-li">
-                            <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
-                              [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
-                              (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox filter-textbox"
-                              placeholder="Enter Phone Number">
-                          </li>
+                            <li class="filterli filter-li">
+                                <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode (keyup)="keyPressed()"
+                                class="filterTextbox change countryCodewidth" placeholder="+91">
+                              <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
+                                [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
+                                (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
+                                placeholder="9955668855">
+                            </li>
                         </div>
                       </div>
                     </div>

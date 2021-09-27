@@ -87,6 +87,7 @@ export class ItemDetailsSharedComponent implements OnInit {
   logo: any;
   userType = '';
   provider_id: any;
+  from: string;
 
   constructor(public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -111,6 +112,9 @@ export class ItemDetailsSharedComponent implements OnInit {
         if (params.logo) {
           this.logo = params.logo;
           console.log(this.logo);
+        }
+          if(params.isFrom && params.isFrom =='providerdetail'){
+            this.from = 'providerdetail';
         }
         if(params.unique_id){
           this.provider_id=params.unique_id;
@@ -182,7 +186,8 @@ export class ItemDetailsSharedComponent implements OnInit {
         queryParams: {
           account_id: this.provider_bussiness_id,
           'logo': this.logo,
-          unique_id:this.provider_id
+          unique_id:this.provider_id,
+          isFrom : this.from ? this.from : ''
         }
       };
       this.router.navigate(['order/shoppingcart'], navigationExtras);

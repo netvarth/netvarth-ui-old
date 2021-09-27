@@ -227,7 +227,8 @@
     
                                         </mat-select>
                                     </mat-form-field>
-                                <input type="number" class="input1" id="age" (keypress)="isNumeric($event)" (keyup)="isvalid($event)"
+                                   
+                                <input type="number" class="input1" id="age" min="0" max="100000" (keypress)="isNumeric($event)" (keyup)="isvalid($event)"
                                     formControlName="age" autocomplete="off" style="margin-top: -1px"/>
                                 
                                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dob')"

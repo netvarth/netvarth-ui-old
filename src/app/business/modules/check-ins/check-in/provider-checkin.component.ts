@@ -244,6 +244,7 @@ export class ProviderCheckinComponent implements OnInit {
     PhoneNumberFormat = PhoneNumberFormat;
     preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
     phone;
+    cuntryCode;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -558,11 +559,11 @@ export class ProviderCheckinComponent implements OnInit {
                         'email-eq': form_data.search_input
                     };
                     break;
-                case 'id':
-                    post_data = {
-                        'jaldeeId-eq': form_data.search_input
-                    };
-                    break;
+                    case 'id':
+                            post_data['or=jaldeeId-eq'] =  form_data.search_input + ',firstName-eq=' + form_data.search_input;
+                        //     'jaldeeId-eq'= form_data.search_input,'firstName'= form_data.search_input
+                        
+                         break;
             }
             this.provider_services.getCustomer(post_data)
                 .subscribe(
@@ -926,8 +927,10 @@ export class ProviderCheckinComponent implements OnInit {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
                         if (this.customer_data.phoneNo) {
                             this.callingModes = this.customer_data.phoneNo.trim();
+                            this.cuntryCode = this.customer_data.countryCode;
                             if (this.callingModes.includes('*')) {
                                 this.callingModes = '';
+                                this.cuntryCode = '';
                             }
                             this.wtsapmode = this.customer_data.phoneNo;
                             console.log('whatsappmoe..' + this.wtsapmode);
@@ -1207,13 +1210,13 @@ export class ProviderCheckinComponent implements OnInit {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
             } else if (!this.thirdParty) {
-                if (this.countryCode) {
-                    let unChangedPhnoCountryCode = '91';
-                    if (this.countryCode.split('+')[1] !== undefined) {
-                        unChangedPhnoCountryCode = this.countryCode.split('+')[1];
+                if (this.cuntryCode) {
+                     if(this.cuntryCode.includes('+')){
+                         this.cuntryCode=this.cuntryCode.slice(1);
+                     }
                     }
-                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = unChangedPhnoCountryCode + '' + this.callingModes;
-                }
+                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.cuntryCode + '' + this.callingModes;
+                
             } else {
                 const thirdparty_countrycode = '91';
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = thirdparty_countrycode + '' + this.callingModes;
@@ -1243,11 +1246,12 @@ export class ProviderCheckinComponent implements OnInit {
         }
         if (this.sel_ser_det.serviceType === 'virtualService') {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
-                if (!this.callingModes || this.callingModes.length < 10) {
+                if (!this.callingModes ||!this.cuntryCode) {
                     this.snackbarService.openSnackBar('Please enter a valid number to contact you', { 'panelClass': 'snackbarerror' });
                     this.is_wtsap_empty = true;
                 }
             }
+            console.log("array"+this.virtualServiceArray);
             //   post_Data['virtualService'] = this.virtualServiceArray;
             for (const i in this.virtualServiceArray) {
                 if (i === 'WhatsApp') {
@@ -1299,7 +1303,6 @@ export class ProviderCheckinComponent implements OnInit {
         }
     }
     addWaitlistBlock(post_Data) {
-        console.log('data' + post_Data);
         this.provider_services.addWaitlistBlock(post_Data)
             .subscribe((data) => {
                 if (this.settingsjson.showTokenId) {
@@ -2073,9 +2076,12 @@ export class ProviderCheckinComponent implements OnInit {
         return this.sharedFunctionobj.isNumericwithoutdot(evt);
     }
     addCallingmode(index) {
-        if (this.callingModes && this.callingModes.length === 10 && this.callingModes.charAt(0) !== '0') {
+        if (!this.cuntryCode  || this.cuntryCode.charAt(0) === '0') {
+            this.snackbarService.openSnackBar('Please enter valid countrycode', { 'panelClass': 'snackbarerror' });
+        }
+        if (this.callingModes && this.callingModes.charAt(0) !== '0') {
             this.showInputSection = true;
-        } else if (!this.callingModes || this.callingModes.length < 10 || this.callingModes.charAt(0) === '0') {
+        } else if (!this.callingModes  || this.callingModes.charAt(0) === '0') {
             this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
         }
     }
@@ -2185,7 +2191,7 @@ export class ProviderCheckinComponent implements OnInit {
         });
     }
     validateQnr(post_Data?) {
-        this.api_loading = true;
+      
         if (!this.questionAnswers) {
             this.questionAnswers = {
                 answers: {
@@ -2193,9 +2199,12 @@ export class ProviderCheckinComponent implements OnInit {
                     questionnaireId: this.questionnaireList.id
                 }
             }
+            this.api_loading=false;
         }
-        if (this.questionAnswers.answers) {
+        if (this.questionAnswers &&this.questionAnswers.answers) {
+            this.api_loading = true;
             this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
+                this.api_loading=false;
                 if (data.length === 0) {
                     if (!this.showBlockHint) {
                         this.addCheckInProvider(post_Data);

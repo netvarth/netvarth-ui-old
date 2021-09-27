@@ -39,6 +39,7 @@ export class ConfirmPageComponent implements OnInit ,OnDestroy{
   theme: any;
   accountId: any; // Business Landing Page
   customId: any;
+  from: any;
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public shared_functions: SharedFunctions,
@@ -56,6 +57,9 @@ export class ConfirmPageComponent implements OnInit ,OnDestroy{
         this.infoParams = params;
         if (this.infoParams.type === 'waitlistreschedule') {
           this.type = this.infoParams.type;
+        }
+        if(params.isFrom){
+          this.from = params.isFrom;
         }
         if (params.uuid && params.account_id) {
           this.uuids = params.uuid;
@@ -95,6 +99,9 @@ export class ConfirmPageComponent implements OnInit ,OnDestroy{
     if (this.customId) {
       queryParams['customId'] = this.customId;
     }
+    if(this.from){
+      queryParams['isFrom'] = this.from;
+    }
     let navigationExtras: NavigationExtras = {
         queryParams: queryParams
     };
@@ -110,7 +117,12 @@ export class ConfirmPageComponent implements OnInit ,OnDestroy{
       let navigationExtras: NavigationExtras = {
           queryParams: queryParams
       };
-      this.router.navigate(['consumer'], navigationExtras);
+      console.log("navigationExtras frm"+this.from);
+      if(this.from){
+        this.router.navigate(['consumer']);
+      }else{
+        this.router.navigate(['consumer'], navigationExtras);
+      }
     }
     this.lStorageService.setitemonLocalStorage('orderStat', false);
     // this.lStorageService.removeitemfromLocalStorage('inPostInfo');

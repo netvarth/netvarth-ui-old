@@ -189,6 +189,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   razorpayEnabled = false;
   interNatioanalPaid = false;
   paymentmodes: any;
+  from: string;
   isEditable = true;
   stepperIndex: string;
   constructor(
@@ -232,6 +233,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         if (params.customId) {
           this.customId = params.customId;
         }
+        if(params.isFrom && params.isFrom =='providerdetail'){
+          this.from = 'providerdetail';
+      }
       });
 
 
@@ -463,7 +467,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
       );
   }
-
   ngAfterViewInit() {
     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
@@ -1016,7 +1019,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     
       this.confirmOrder(post_Data, paytype);
     }
-
   
   doLogin(origin?, passParam?) {
 
@@ -1084,7 +1086,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           });
 
-  
+        
           if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
               .subscribe(res => {
@@ -1107,6 +1109,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             this.lStorageService.removeitemfromLocalStorage('order_spId');
             this.lStorageService.removeitemfromLocalStorage('order');
             this.snackbarService.openSnackBar('Your Order placed successfully');
+            if(this.from){
             let queryParams = {
               'source': 'order'
             }
@@ -1118,7 +1121,16 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
               queryParams: queryParams
             };
             this.router.navigate(['consumer'], navigationExtras);
+          } else{
+            let queryParams = {
+              'source': 'order'
+            }
+            let navigationExtras: NavigationExtras = {
+              queryParams: queryParams
+            };
+            this.router.navigate(['consumer'], navigationExtras);
           }
+        }
         },
           error => {
             this.isClickedOnce = false;
@@ -1172,17 +1184,28 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             this.lStorageService.removeitemfromLocalStorage('order_spId');
             this.lStorageService.removeitemfromLocalStorage('order');
             this.snackbarService.openSnackBar('Your Order placed successfully');
-            let queryParams = {
-              'source': 'order'
+            if(this.from){
+              let queryParams = {
+                'source': 'order'
+              }
+              if (this.customId) {
+                queryParams['customId'] = this.customId;
+                queryParams['accountId'] = this.account_id;
+              }
+              let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
+              };
+              this.router.navigate(['consumer'], navigationExtras);
+              // this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
+            } else{
+              let queryParams = {
+                'source': 'order'
+              }
+              let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
+              };
+              this.router.navigate(['consumer'], navigationExtras);
             }
-            if (this.customId) {
-              queryParams['customId'] = this.customId;
-              queryParams['accountId'] = this.account_id;
-            }
-            let navigationExtras: NavigationExtras = {
-              queryParams: queryParams
-            };
-            this.router.navigate(['consumer'], navigationExtras);
           }
         },
           error => {
@@ -1810,23 +1833,56 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.lStorageService.removeitemfromLocalStorage('order_spId');
       this.lStorageService.removeitemfromLocalStorage('order');
       this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-      let queryParams = {
-        'source': 'order',
-      };
-      if (this.customId) {
-        queryParams['customId'] = this.customId;
-        queryParams['accountId'] = this.account_id;
+      if(this.from){
+        let queryParams = {
+          'source': 'order',
+        };
+        let navigationExtras: NavigationExtras = {
+          queryParams: queryParams
+        }
+        this.ngZone.run(() => this.router.navigate(['consumer'],navigationExtras));
+      } else {
+        let queryParams = {
+          'source': 'order',
+        };
+        if (this.customId) {
+          queryParams['customId'] = this.customId;
+          queryParams['accountId'] = this.account_id;
+        }
+        let navigationExtras: NavigationExtras = {
+          queryParams: queryParams
+        }
+        this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
       }
-      let navigationExtras: NavigationExtras = {
-        queryParams: queryParams
-      }
-      this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+      
     } else if (response.STATUS == 'TXN_FAILURE') {
       this.isClickedOnce = false;
       this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
-      this.ngZone.run(() => this.router.navigate(['consumer']));
+      if(this.from){
+        let queryParams = {
+          'source': 'order',
+        };
+        let navigationExtras: NavigationExtras = {
+          queryParams: queryParams
+        }
+        this.ngZone.run(() => this.router.navigate(['consumer'],navigationExtras));
+      } else {
+        let queryParams = {
+          'source': 'order',
+        };
+        if (this.customId) {
+          queryParams['customId'] = this.customId;
+          queryParams['accountId'] = this.account_id;
+        }
+        let navigationExtras: NavigationExtras = {
+          queryParams: queryParams
+        }
+        this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+      }
     }
   }
+
+   
   closeloading() {
     this.isClickedOnce = false;
     this.loadingPaytm = false;

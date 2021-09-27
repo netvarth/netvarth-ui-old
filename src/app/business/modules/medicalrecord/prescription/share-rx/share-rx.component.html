@@ -55,7 +55,7 @@
             <span  *ngIf="!(mrPrescriptionDetails &&  mrPrescriptionDetails[0].keyName)">We will create a PDF of your prescription and will share Via</span>  
             <span  *ngIf="(mrPrescriptionDetails && mrPrescriptionDetails[0].keyName)">Your prescription will share Via</span>
           <div class="coupon-outer">
-              <mat-checkbox [disabled] = "(!phon || phon === 'null') || is_noSMS"  class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
+              <mat-checkbox [disabled] = "(!phon || phon === 'null') || is_noSMS || countryCode !='+91'"  class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
                   SMS
               </mat-checkbox>
               <mat-checkbox  [disabled]=" !email_id"  class="mgright50 example-margin" [(ngModel)]="email"
@@ -130,7 +130,9 @@
                           <span *ngIf="!customerDetail.dob">..........</span>
                       </td>
                       <td *ngIf="customerDetail.age && !customerDetail.dob"><label>Age:&nbsp;</label>
-                          <span *ngIf="customerDetail.age">{{customerDetail.age}}</span>
+                        <span>  <span *ngIf="customerDetail.age.year">{{customerDetail.age.year}} years</span>
+                          <span *ngIf="customerDetail.age.month">{{customerDetail.age.month}} months</span>
+                          <span *ngIf="!customerDetail.age.year && !customerDetail.age.month">.........</span></span>
                       </td>
                       <td *ngIf="!customerDetail.age && !customerDetail.dob"><label>Dob:&nbsp;</label>
                         <span *ngIf="!customerDetail.dob">..........</span>

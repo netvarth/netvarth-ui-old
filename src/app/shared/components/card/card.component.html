@@ -193,11 +193,14 @@
             <a *ngIf="!user.businessName && user.lastName && user.lastName!='undefined'">&nbsp;{{user.lastName |
                 capitalizeFirst | limitTo: [14, '...']}}</a> -->
         </h4>
-        <h6 class="qualification font-normal" *ngIf="user.qualifications && user.qualifications.length>1">
+        <h6 class="qualification font-normal" *ngIf="user.qualifications && user.qualifications.length === 1 && user.qualifications[0].length <  10">
+            {{user.qualifications[0]}}
+        </h6>
+        <h6 class="qualification font-normal" *ngIf="user.qualifications && user.qualifications.length > 1 && user.qualifications[0].length > 10">
             {{user.qualifications[0]}}...
         </h6>
-        <h6 class="qualification font-normal" *ngIf="user.qualifications && user.qualifications.length==1">
-            {{user.qualifications[0]}}
+        <h6 class="qualification font-normal" *ngIf="user.qualifications && user.qualifications.length > 1 && user.qualifications[0].length <  10">
+            {{user.qualifications}}...
         </h6>
         <h6 class="qualification" *ngIf="!user.qualifications || (user.qualifications && user.qualifications.length==0)"
             style="height:8px;"></h6>

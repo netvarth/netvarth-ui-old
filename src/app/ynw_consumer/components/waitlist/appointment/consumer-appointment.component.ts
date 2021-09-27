@@ -39,7 +39,7 @@ import { PaytmService } from '../../../../shared/services/paytm.service';
     styleUrls: ['./consumer-appointment.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
-    paymentBtnDisabled = false;
+
     isClickedOnce = false;
     tooltipcls = '';
     add_member_cap = Messages.ADD_MEMBER_CAP;
@@ -265,6 +265,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     currentScheduleId: any;
     pricelist: any;
     changePrice: number;
+    amountdifference: any;
+    from: string;
 
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -296,6 +298,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 this.googleMapUrl = params.googleMapUrl;
                 if (params.qid) {
                     this.sel_queue_id = params.qid;
+                }
+                if(params.isFrom && params.isFrom =='providerdetail'){
+                    this.from = 'providerdetail';
                 }
                 this.change_date = params.cur;
                 this.futureAppt = params.futureAppt;
@@ -830,8 +835,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.payEmail = result;
                     this.confirmcheckin(type, paymenttype);
                 } else {
-                    // this.isClickedOnce=false;
-                    this.paymentBtnDisabled = false;
+                     this.isClickedOnce=false;
+                   
                 }
 
             });
@@ -1082,7 +1087,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.apptdisable = false;
                     this.disablebutton = false;
-                    this.paymentBtnDisabled = false;
+                   
                 });
     }
     handleOneMemberSelect(id, firstName, lastName, email) {
@@ -2281,6 +2286,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         console.log("newprice"+newprice);
                         this.changePrice = newprice - oldprice;
                         console.log("changeprice"+this.changePrice);
+                        this.amountdifference = this.appointment.amountDue + this.changePrice;
                     });
             }
         }
@@ -2364,6 +2370,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 uuid: this.trackUuid,
                 theme: this.theme
             }
+            if(this.from){
+                queryParams['isFrom']= this.from;
+              }
             if (this.businessId) {
                 queryParams['customId'] = this.customId;
             }
@@ -2385,6 +2394,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             if (this.businessId) {
                 queryParams['customId'] = this.customId;
             }
+            if(this.from){
+                queryParams['isFrom']= this.from;
+              }
             let navigationExtras: NavigationExtras = {
                 queryParams: queryParams
             };
@@ -2392,14 +2404,47 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         } else if (response.STATUS == 'TXN_FAILURE') {
             this.isClickedOnce = false;
             this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
-            this.ngZone.run(() => this.router.navigate(['consumer']));
+            if(this.from){
+                this.ngZone.run(() => this.router.navigate(['consumer']));
+              } else{
+                let queryParams = {
+                    account_id: this.account_id,
+                    uuid: this.trackUuid,
+                    theme: this.theme
+                }
+                if (this.businessId) {
+                    queryParams['customId'] = this.customId;
+                }
+                
+                let navigationExtras: NavigationExtras = {
+                    queryParams: queryParams
+                };  
+                this.ngZone.run(() => this.router.navigate(['consumer'],navigationExtras));
+              }
+           
         }
     }
     closeloading() {
         this.loadingPaytm = false;
         this.cdRef.detectChanges();
         this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
-        this.ngZone.run(() => this.router.navigate(['consumer']));
+        if(this.from){
+            this.ngZone.run(() => this.router.navigate(['consumer']));
+          } else{
+            let queryParams = {
+                account_id: this.account_id,
+                uuid: this.trackUuid,
+                theme: this.theme
+            }
+            if (this.businessId) {
+                queryParams['customId'] = this.customId;
+            }
+            
+            let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
+            };  
+            this.ngZone.run(() => this.router.navigate(['consumer'],navigationExtras));
+          }
     }
     getConsumerQuestionnaire() {
         const consumerid = (this.waitlist_for[0].id === this.customer_data.id) ? 0 : this.waitlist_for[0].id;

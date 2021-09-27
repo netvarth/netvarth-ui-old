@@ -35,3 +35,21 @@
   .coloroflabels{
     color: #0F52BA !important;
   }
+  .change::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    color: rgba(202, 195, 202, 0.61);
+}
+.change:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color:  rgba(202, 195, 202, 0.61);
+    opacity: 1;
+}
+.change::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color:  rgba(202, 195, 202, 0.61);
+    opacity: 1;
+}
+.change:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: rgba(202, 195, 202, 0.61);
+}

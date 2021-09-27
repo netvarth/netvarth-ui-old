@@ -99,6 +99,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
   customId: any; // To know the source whether the router came from Landing page or not
   businessId: any;
+  from: string;
 
   constructor(
     public router: Router,
@@ -118,6 +119,9 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         if (params.unique_id) {
           this.provider_id = params.unique_id;
         }
+        if(params.isFrom && params.isFrom =='providerdetail'){
+          this.from = 'providerdetail';
+      }
         if (params.customId) {
           this.customId = params.customId;
           this.businessId = this.account_id;
@@ -569,6 +573,10 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       if (this.businessId) {
         queryParam['customId'] = this.customId;
       }
+      if(this.from){
+        queryParam['isFrom']= 'providerdetail'
+      }
+      
       const navigationExtras: NavigationExtras = {
         queryParams: queryParam,
       };

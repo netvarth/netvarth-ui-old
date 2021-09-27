@@ -16,6 +16,8 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input'; 
+
 @Component({
   selector: 'app-customers-list',
   templateUrl: './customers-list.component.html',
@@ -40,6 +42,7 @@ export class CustomersListComponent implements OnInit {
     last_name: '',
     date: null,
     mobile: '',
+    countrycode:'',
     email: '',
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1
@@ -73,6 +76,7 @@ export class CustomersListComponent implements OnInit {
     'last_name': false,
     'date': false,
     'mobile': false,
+    'countrycode':false,
     'email': false
   };
   customerselection = 0;
@@ -112,6 +116,15 @@ export class CustomersListComponent implements OnInit {
   small_device_display = false;
   hideGroups = false;
   customerCount;
+  emailerror = null;
+    email1error = null;
+    phoneerror = null;
+  separateDialCode = true;
+    SearchCountryField = SearchCountryField;
+    selectedCountry = CountryISO.India;
+    PhoneNumberFormat = PhoneNumberFormat;
+    preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+    phone;
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -127,6 +140,7 @@ export class CustomersListComponent implements OnInit {
     this.onResize();
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
     this.filtericonclearTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
+    
     if (this.groupService.getitemFromGroupStorage('group')) {
       this.selectedGroup = this.groupService.getitemFromGroupStorage('group');
     } else {
@@ -235,6 +249,11 @@ export class CustomersListComponent implements OnInit {
         }
       );
   }
+  resetApiErrors() {
+    this.emailerror = null;
+    this.email1error = null;
+    this.phoneerror = null;
+}
   showCustomerAction(customer) {
     const cust = [];
     cust.push(customer)
@@ -306,7 +325,7 @@ export class CustomersListComponent implements OnInit {
   }
   keyPress() {
     this.labelSelection();
-    if (this.filter.jaldeeid || this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.mobile || this.filter.email || this.labelFilterData !== '') {
+    if (this.filter.jaldeeid || this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.mobile || this.filter.countrycode|| this.filter.email || this.labelFilterData !== '') {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -339,6 +358,7 @@ export class CustomersListComponent implements OnInit {
       'last_name': false,
       'date': false,
       'mobile': false,
+      'countrycode':false,
       'email': false
     };
     this.filter = {
@@ -347,6 +367,7 @@ export class CustomersListComponent implements OnInit {
       last_name: '',
       date: null,
       mobile: '',
+      countrycode:'',
       email: '',
       page_count: projectConstants.PERPAGING_LIMIT,
       page: 1
@@ -385,6 +406,9 @@ export class CustomersListComponent implements OnInit {
       } else {
         this.filter.mobile = '';
       }
+    }
+    if(this.filter.countrycode !== ''){
+      api_filter['countryCode-eq'] = this.filter.countrycode;
     }
     if (this.labelFilterData !== '') {
       api_filter['label-eq'] = this.labelFilterData;

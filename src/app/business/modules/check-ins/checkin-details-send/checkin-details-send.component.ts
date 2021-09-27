@@ -69,6 +69,7 @@ export class CheckinDetailsSendComponent implements OnInit {
   ];
   waitlist_Mode: any;
   appt_Mode: any;
+  countrycode: any;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
@@ -138,6 +139,9 @@ export class CheckinDetailsSendComponent implements OnInit {
         if (this.data.qdata.waitlistingFor[0].phoneNo) {
           this.phone = this.data.qdata.waitlistingFor[0].phoneNo;
         }
+        if (this.data.qdata.waitlistingFor[0].countryCode) {
+          this.countrycode = this.data.qdata.waitlistingFor[0].countryCode;
+        }
         // this.spfname = this.data.qdata.provider.firstName;
         // this.splname = this.data.qdata.provider.lastName;
         if(this.data.qdata.provider){
@@ -173,6 +177,9 @@ export class CheckinDetailsSendComponent implements OnInit {
         if (this.data.qdata.providerConsumer.phoneNo) {
          this.phone = this.data.qdata.providerConsumer.phoneNo.trim();
         }
+        if (this.data.qdata.providerConsumer.countryCode) {
+          this.countrycode = this.data.qdata.providerConsumer.countryCode;
+         }
         if (this.data.qdata.providerConsumer.email) {
           this.consumer_email = this.data.qdata.providerConsumer.email;
         }
@@ -241,7 +248,7 @@ export class CheckinDetailsSendComponent implements OnInit {
                   );
           }
         } else {
-          if (this.sms === true && this.phone) {
+          if (this.sms === true && this.phone && this.countrycode =='+91') {
               this.provider_services.smsAppt(this.uuid).subscribe(
                 () => {
                   this.dialogRef.close();

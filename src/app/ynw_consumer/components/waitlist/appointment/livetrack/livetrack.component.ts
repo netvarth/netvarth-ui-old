@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
@@ -42,6 +42,9 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit,OnDestroy {
     state;
     enableDisabletrackdialogRef;
     private subs=new SubSink();
+    from: any;
+    customId: any;
+    theme: any;
     constructor(public router: Router,
         @Inject(MAT_DIALOG_DATA) public data: any,
         private dialog: MatDialog,
@@ -57,8 +60,21 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit,OnDestroy {
             });
         this.subs.sink=this.route.queryParams.subscribe(
             params => {
-                this.accountId = params.account_id;
+                
                 this.state = params.status;
+                if(params.isFrom){
+                    this.from = params.isFrom;
+                  }
+                  
+                  if (params.customId) {
+                    this.customId = params.customId;
+                  }
+                  if(params.account_id){
+                    this.accountId = params.account_id;
+                  }
+                  if(params.theme){
+                    this.theme=params.theme;
+                  }
                 if (this.state === 'true') {
                     this.shareLoc = true;
                     this.firstTimeClick = false;
@@ -216,7 +232,22 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit,OnDestroy {
             } else {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.providerAccount.businessName));
             }
-            this.router.navigate(['/consumer']);
+            let queryParams= {
+                account_id: this.accountId,
+                theme:this.theme 
+            }
+            if (this.customId) {
+              queryParams['customId'] = this.customId;
+            }
+            let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
+            };
+            if(this.from){
+                this.router.navigate(['/consumer']); 
+            } else {
+                this.router.navigate(['/consumer'],navigationExtras); 
+            }
+            
         }
     }
     updateLiveTrackInfo() {
@@ -312,7 +343,22 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit,OnDestroy {
   });
     }
     onCancel(){
-        this.router.navigate(['consumer']);
+        // this.router.navigate(['consumer']);
+        let queryParams= {
+            account_id: this.accountId,
+            theme:this.theme 
+        }
+        if (this.customId) {
+          queryParams['customId'] = this.customId;
+        }
+        let navigationExtras: NavigationExtras = {
+            queryParams: queryParams
+        };
+        if(this.from){
+            this.router.navigate(['/consumer']); 
+        } else {
+            this.router.navigate(['/consumer'],navigationExtras); 
+        }
     }
     notifyEvent(event) {
         if (event.checked) {

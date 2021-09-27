@@ -234,6 +234,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     interNatioanalPaid = false;
     paymentmodes: any;
     customer_countrycode: any;
+    from: string;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -267,6 +268,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.googleMapUrl = params.googleMapUrl;
                 if (params.qid) {
                     this.sel_queue_id = params.qid;
+                }
+                if(params.isFrom && params.isFrom =='providerdetail'){
+                    this.from = 'providerdetail';
                 }
                 this.change_date = params.cur;
                 this.account_id = params.account_id;
@@ -793,7 +797,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.confirmcheckin(type,paymenttype);
             }else{
                  this.isClickedOnce=false;
-            
+                 this.paymentBtnDisabled=false;
             }
 
         });
@@ -1074,6 +1078,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.disablebutton = false;
                     this.paytmGateway = false;   
                     this.razorpayGatway = false;
+                    this.paymentBtnDisabled=false;
                 });
     }
     submitQuestionnaire(uuid,paymenttype?) {
@@ -1143,6 +1148,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 multiple: multiple,
                 theme: this.theme
             }
+            if(this.from){
+                queryParams['isFrom']= this.from;
+              }
             if (this.businessId) {
                 queryParams['customId'] = this.customId;
             }
@@ -1172,6 +1180,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (this.businessId) {
             queryParams['customId'] = this.customId;
         }
+        console.log("this.from"+this.from);
+        if(this.from){
+            queryParams['isFrom']= this.from;
+          }
         let navigationExtras: NavigationExtras = {
             queryParams: queryParams
         };
@@ -1179,14 +1191,46 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     } else if(response.STATUS == 'TXN_FAILURE'){
         this.isClickedOnce=false;
         this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
-        this.ngZone.run(() => this.router.navigate(['consumer']));
+        if(this.from){
+            this.ngZone.run(() => this.router.navigate(['consumer']));
+          } else{
+            let queryParams = {
+                account_id: this.account_id,
+                uuid: this.uuidList,
+                theme: this.theme
+            }
+            if (this.businessId) {
+                queryParams['customId'] = this.customId;
+            }
+            
+            let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
+            };  
+            this.ngZone.run(() => this.router.navigate(['consumer'],navigationExtras));
+          }
      }
     }
     closeloading(){
         this.loadingPaytm = false; 
         this.cdRef.detectChanges();
         this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
-        this.ngZone.run(() => this.router.navigate(['consumer']));
+        if(this.from){
+            this.ngZone.run(() => this.router.navigate(['consumer']));
+          } else{
+            let queryParams = {
+                account_id: this.account_id,
+                uuid: this.uuidList,
+                theme: this.theme
+            }
+            if (this.businessId) {
+                queryParams['customId'] = this.customId;
+            }
+            
+            let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
+            };  
+            this.ngZone.run(() => this.router.navigate(['consumer'],navigationExtras));
+          }
     }
     showCheckinButtonCaption() {
         let caption = '';
