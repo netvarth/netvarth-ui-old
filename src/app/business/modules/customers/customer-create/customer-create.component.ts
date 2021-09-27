@@ -142,6 +142,7 @@ export class CustomerCreateComponent implements OnInit {
   heading = '';
   changetypes;
   selectionType;
+  contryCod: any;
   constructor(
     // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
     // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -188,6 +189,9 @@ export class CustomerCreateComponent implements OnInit {
       }
       if (qparams.virtualServicenumber) {
         this.virtualServicenumber = qparams.virtualServicenumber;
+      }
+      if(qparams.countryCode){
+        this.contryCod = qparams.countryCode;
       }
       if (qparams.phone) {
         this.phoneNo = qparams.phone;
@@ -475,6 +479,9 @@ export class CustomerCreateComponent implements OnInit {
     }
     if (this.phoneNo) {
       this.amForm.get('mobile_number').setValue(this.phoneNo);
+    }
+    if (this.contryCod) {
+      this.amForm.get('countryCode').setValue(this.contryCod);
     }
     if (this.email) {
       this.amForm.get('email_id').setValue(this.email);

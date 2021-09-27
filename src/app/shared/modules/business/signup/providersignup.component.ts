@@ -221,26 +221,11 @@ export class ProvidersignupComponent implements OnInit {
             this.selectedSubDomain = this.selectedDomain.subDomains[0];
           }
           this.domainIndex[0] = false;
-          // this.subdomainlist = this.selectedDomain.subDomains;
-          // this.getPackages();
-          // this.setDomain();
         },
         () => {
         }
       );
   }
-  // setDomain() { 
-  //   this.domainList = [];
-  //    const domains_sortbyorder = this.shared_functions.sortByKey(this.business_domains, 'order');
-  //    domains_sortbyorder.forEach(() => {
-  //   this.domainList.push();
-  //    });
-  //    console.log(this.domainList)
-  //     this.business_domains = this.domainList;
-  //     console.log(this.business_domains);
-
-  // }
-
   createForm() {
     this.signupForm = this.fb.group({
       phonenumber: ['', Validators.compose(
@@ -310,9 +295,6 @@ export class ProvidersignupComponent implements OnInit {
       this.signupForm.get(control_name).setValidators(Validators.required);
       this.signupForm.get(control_name).updateValueAndValidity();
     });
-  }
-  onItemSelect() {
-    // this.license_description = this.license_packages[item.value];
   }
   signUpApiProvider(user_details, source?) {
     this.resetApiErrors();
@@ -506,11 +488,9 @@ export class ProvidersignupComponent implements OnInit {
     this.joinClicked = true;
     this.api_loading = true;
     this.resetApiErrors();
-    // if (this.otp) {
     this.keyPressed();
     if (this.isValidConfirm_pw) {
-      this.saveReferralInfo().then(
-        () => {
+      this.saveReferralInfo().then(() => {
           this.setPassword();
         },
         (error) => {
@@ -639,7 +619,7 @@ export class ProvidersignupComponent implements OnInit {
               countryCode: this.selectedCountryCode,
               primaryMobileNo: this.signupForm.get('phonenumber').value || null,
               firstName: this.toCamelCase(fname) || null,
-              lastName: this.toCamelCase(lname) || null,
+              lastName: this.toCamelCase(lname) || null
             };
           }
           this.user_details['userProfile'] = userProfile;
@@ -653,7 +633,6 @@ export class ProvidersignupComponent implements OnInit {
     this.selectedDomain = domain;
     this.domainIndex = {};
     this.domainIndex[i] = false;
-    // this.active_step = 2;
   }
   saleschannelselection(hearus) {
     this.hearus = hearus;
@@ -693,8 +672,6 @@ export class ProvidersignupComponent implements OnInit {
     this.hideOtpSection = false;
     this.doshowOTPEmailContainer();
     this.resetApiErrors();
-    if (this.user_details.userProfile && this.user_details.userProfile.email) {
-    }
     this.email_otp_req = true;
     this.showOTPEmailContainer = true;
     this.showOTPContainer = false;

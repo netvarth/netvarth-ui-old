@@ -111,7 +111,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       if (!this.email_id) {
         this.email = false;
       }
-      if ((!this.phone && !this.phone_history) || this.phone === '') {
+      if ((!this.phone && !this.phone_history) || this.phone === '' || this.countryCode !='+91') {
         this.sms = false;
       }
       if ((!this.phone && !this.phone_history) || this.phone === '') {

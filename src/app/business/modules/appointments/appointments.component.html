@@ -318,6 +318,35 @@
                           </div>
                         </div>
                       </div>
+                      <div class="card" >
+                        <div class="card-header">
+                          <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePhNo3" aria-expanded="false">
+                              <div>
+                                <div style="display: inline-block !important;">
+                                  <i class="fa fa-phone"></i>
+                                </div>
+                                <span>&nbsp;Phone Number</span>
+                              </div>
+                              <i class="fa fa-angle-down"></i>
+                            </button>
+                          </h2>
+                        </div>
+                        <div id="collapsePhNo3" class="collapse in" data-parent="#accordion3">
+                          <div class="card-body">
+                            <div class="filterTextinput filter-text-input" >
+                                <li class="filterli filter-li">
+                                    <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode (keyup)="keyPressed()"
+                                    class="filterTextbox change countryCodewidth" placeholder="+91">
+                                  <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
+                                    [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
+                                    (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
+                                    placeholder="9955668855">
+                                </li>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
@@ -1415,6 +1444,35 @@
                             </div>
                           </div>
                         </div>
+                        <div class="card" >
+                          <div class="card-header">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePhNo3" aria-expanded="false">
+                                <div>
+                                  <div style="display: inline-block !important;">
+                                    <i class="fa fa-phone"></i>
+                                  </div>
+                                  <span>&nbsp;Phone Number</span>
+                                </div>
+                                <i class="fa fa-angle-down"></i>
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapsePhNo3" class="collapse in" data-parent="#accordion3">
+                            <div class="card-body">
+                              <div class="filterTextinput filter-text-input" >
+                                  <li class="filterli filter-li">
+                                      <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode (keyup)="keyPressed()"
+                                      class="filterTextbox change countryCodewidth" placeholder="+91">
+                                    <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
+                                      [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
+                                      (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
+                                      placeholder="9955668855">
+                                  </li>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                         <div class="card">
                           <div class="card-header">
                             <h2 class="mb-0">
@@ -2001,11 +2059,14 @@
                           <div id="collapsePhNo3" class="collapse in" data-parent="#accordion3">
                             <div class="card-body">
                               <div class="filterTextinput filter-text-input" *ngIf="time_type == 3">
-                                <li class="filterli filter-li">
-                                  <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number" #Fmobile
-                                    (keypress)="isNumeric($event)" (keyup)="keyPressed()"
-                                    maxlength="10" class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
-                                </li>
+                                  <li class="filterli filter-li">
+                                      <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode (keyup)="keyPressed()"
+                                      class="filterTextbox change countryCodewidth" placeholder="+91">
+                                    <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
+                                      [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
+                                      (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
+                                      placeholder="9955668855">
+                                  </li>
                               </div>
                             </div>
                           </div>
@@ -2020,7 +2081,7 @@
                                   </div>
                                   <span>&nbsp;Booking ID</span>
                                 </div>
-                                <i class="fa fa-angle-down"></i>
+                                <i class="fa fa-angle-down"></i> 
                               </button>
                             </h2>
                           </div>

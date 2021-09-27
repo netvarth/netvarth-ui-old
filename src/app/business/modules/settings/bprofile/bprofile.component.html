@@ -55,12 +55,12 @@
                                                     <div class="pro-pic-img">
                                                         <img [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url"
                                                             class="crop-img-fit">
-                                                            <input #logofile type="file" accept="image/*" style="display:none;"
-                                                            (change)="imageSelect(logofile,'blogo')">
-                                                          <div class="camera-outline custId-cursor" (click)="logofile.click()"
-                                                            style="overflow: visible !important;">
+                                                        <div class="camera-outline custId-cursor" data-toggle="modal"
+                                                            data-target="#exampleModalSizeLg"
+                                                            style="overflow: visible !important;"
+                                                            (click)="clearModalData()">
                                                             <i class="fa propic-cam-icon" aria-hidden="true"></i>
-                                                          </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -209,14 +209,14 @@
 
                                     <!-- About You -->
                                     <div class="col-md-12 col-sm-12 col-xs-12 no-padding abt-you-box" #basicInfoSection>
-                                        <div class="pad-10"><span *ngIf="aboutmefilled" class="sub-heads">About
+                                        <!-- <div class="pad-10"><span *ngIf="aboutmefilled" class="sub-heads">About
                                                 Us</span><span class="edit-txt custId-cursor" (click)="gotoAboutMe()"
-                                                *ngIf="aboutmefilled">Manage</span></div>
-                                        <div class="no-dta" *ngIf="!aboutmefilled">
+                                                *ngIf="aboutmefilled">Manage</span></div> -->
+                                        <!-- <div class="no-dta" *ngIf="!aboutmefilled">
                                             <span [ngClass]="{'no_abt_us':!aboutmefilled }" class="cs-btn bt3"
                                                 (click)="gotoAboutMe()">About
                                                 Us</span>
-                                        </div>
+                                        </div> -->
                                         <div class="busns-name">
                                             {{bProfile.businessName}}
                                         </div>
@@ -258,7 +258,7 @@
                                                             #qrCodeOnlineId>
                                                             <div
                                                                 class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
-                                                                <ngx-qrcode id="print-section" [elementType]="elementType"
+                                                                <ngx-qrcode #accQR [elementType]="elementType"
                                                                     [value]="qr_value"
                                                                     (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)"
                                                                     class="custId-cursor">
@@ -280,9 +280,11 @@
                                                                             </share-buttons>
                                                                         </div>
                                                                         <div class="dwnld-bdr custId-cursor">
-                                                                            <a class="ngx-qr-btn" [href]="qrCodePath" (click)="printQr('print-section')">
-                                                                                <i class="fa fa-cloud-download dwnld-icon"></i>
-                                                                              </a>
+                                                                            <a class="ngx-qr-btn" [href]="qrCodePath"
+                                                                                download>
+                                                                                <i
+                                                                                    class="fa fa-cloud-download dwnld-icon"></i>
+                                                                            </a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -296,7 +298,7 @@
                                                             #qrCodeOnlineId>
                                                             <div
                                                                 class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
-                                                                <ngx-qrcode id="print-section" [elementType]="elementType"
+                                                                <ngx-qrcode #custQR [elementType]="elementType"
                                                                     [value]="qr_value"
                                                                     (click)="qrCodegeneraterOnlineID(bProfile.customId)"
                                                                     class="custId-cursor">
@@ -318,9 +320,11 @@
                                                                             </share-buttons>
                                                                         </div>
                                                                         <div class="dwnld-bdr custId-cursor">
-                                                                            <a class="ngx-qr-btn" [href]="qrCodePath" (click)="printQr('print-section')">
-                                                                                <i class="fa fa-cloud-download dwnld-icon"></i>
-                                                                              </a>
+                                                                            <a class="ngx-qr-btn" [href]="qrCodePath"
+                                                                                download>
+                                                                                <i
+                                                                                    class="fa fa-cloud-download dwnld-icon"></i>
+                                                                            </a>
                                                                         </div>
                                                                     </div>
                                                                 </div>

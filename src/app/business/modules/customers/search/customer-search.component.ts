@@ -699,9 +699,7 @@ export class CustomerSearchComponent implements OnInit {
                 };
                 break;
             case 'id':
-                post_data = {
-                    'jaldeeId-eq': form_data.search_input
-                };
+                post_data['or=jaldeeId-eq'] =  form_data.search_input + ',firstName-eq=' + form_data.search_input;
                 break;
         }
         this.foundCustomer = false;
@@ -779,6 +777,7 @@ export class CustomerSearchComponent implements OnInit {
                 this.loading = false;
                 if (data.length === 0) {
                     filter['phone'] = loginId;
+                    filter['countryCode'] = dialCode;
                     filter['source'] = 'clist';
                     filter['id'] = 'add';
                     filter['type'] = 'create';

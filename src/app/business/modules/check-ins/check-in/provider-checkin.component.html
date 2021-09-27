@@ -44,7 +44,7 @@
                   <!-- <div class="form-group mgn-up-20"> -->
                       <div class="input-group mob-container">
                           <input autocomplete="off"
-                          placeholder="{{customer_label | capitalizeFirst}}  ID or Email"
+                          placeholder="{{customer_label | capitalizeFirst}} Name or ID or Email"
                           type="text" class="form-control" formControlName="search_input"
                           (keypress)="findCustomer(searchForm.value, $event)">
                       <button class="findcolor"
@@ -319,15 +319,21 @@
                             <i *ngIf="mode.callingMode === 'WhatsApp'" class="fa wtsapaud-icon wtsap-cal"></i>
                             <i *ngIf="mode.callingMode === 'Phone'" class="fa phon-icon ph-cal" aria-hidden="true"></i>
                           </span>
-                          <span>
-                            <input type="text" *ngIf="!showInputSection" (keypress)="isNumeric($event)"
-                              class="form-control emailPrepay call-mode-ip wtsap-ip-wdth" style="width:150px!important;"
-                              placeholder="" [(ngModel)]="callingModes" autocomplete="off" maxlength="10" min="0">
-                          </span>
+                           <input *ngIf="!showInputSection"
+                            (keypress)="isNumeric($event)"
+                            class="form-control change emailPrepay call-mode-ip "
+                            style="width:50px!important;" placeholder="+91"
+                            [(ngModel)]="cuntryCode" autocomplete="off" maxlength="10"
+                            type="text" min="0"> &nbsp;<input *ngIf="!showInputSection"
+                                (keypress)="isNumeric($event)"
+                                class="form-control change emailPrepay call-mode-ip wtsap-ip-wdth"
+                                style="width:120px!important;" placeholder="9955886655"
+                                [(ngModel)]="callingModes" autocomplete="off" maxlength="10"
+                                type="text" min="0">&nbsp;
                           <span class="mgn-bt-10 cal-mod-edt custId-flex-form" *ngIf="showInputSection">
-                            {{callingModes}}</span>
-                          <div class="input-group-append mgn-up-6" style="padding-left: 10px;">
-                            <button *ngIf="!showInputSection" class="btn bt3 btn-primary" (click)="addCallingmode(i)"
+                            {{cuntryCode}}{{callingModes}}</span>
+                          <div class="input-group-append mgn-up-2" >
+                            <button *ngIf="!showInputSection" class="btn bt1 btn-primary m2" (click)="addCallingmode(i)"
                               type="button">Add</button>
                             <span class="editbt mgn-lt-20" *ngIf="showInputSection"
                               (click)="editCallingmodes(i)"></span>
