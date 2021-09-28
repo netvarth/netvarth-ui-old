@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
 @NgModule({
     imports: [
        CommonModule,
@@ -26,7 +27,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
        MatFormFieldModule,
        MatOptionModule,
        MatDialogModule,
-       MatCheckboxModule
+       MatCheckboxModule,
+       MatSelectModule
     ],
     declarations: [
         ProvidersignupComponent

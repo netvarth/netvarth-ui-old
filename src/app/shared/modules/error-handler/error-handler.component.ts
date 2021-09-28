@@ -23,7 +23,7 @@ export class GlobalErrorHandler implements ErrorHandler {
         console.log(error.message);
        
         const router = this.injector.get(Router);
-        const userData = JSON.parse(this.shared_services.getUserData());
+        const userData = this.shared_services.getUserData();
 
         const userInfo: any = {};
         if (userData.userName) {
