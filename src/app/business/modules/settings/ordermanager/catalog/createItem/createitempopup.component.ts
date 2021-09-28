@@ -89,6 +89,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
 };
 private subscriptions = new SubSink();
     customer_label: any;
+    itemType='physical'
   constructor(
     public dialogRef: MatDialogRef<CreateItemPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -198,6 +199,14 @@ onSubmit(form_data) {
         
         this.addItem(post_itemdata);
     } 
+}
+itemTypeChange(event){
+   if(event.value==='VIRTUAL'){
+    this.itemType='virtual';
+   }else{
+       this.itemType='physical'
+   }
+
 }
 addItem(post_data) {
     this.disableButton = true;

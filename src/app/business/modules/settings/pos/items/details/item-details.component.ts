@@ -133,6 +133,7 @@ export class ItemDetailsComponent implements OnInit {
     imageList: any = [];
     mainImage = false;
     iscmFrom;
+    itemType='physical';
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private activated_route: ActivatedRoute,
@@ -318,6 +319,14 @@ export class ItemDetailsComponent implements OnInit {
             this.updateForm();
         }
     }
+    itemTypeChange(event){
+        if(event.value==='VIRTUAL'){
+         this.itemType='virtual';
+        }else{
+            this.itemType='physical'
+        }
+     
+     }
     setDescFocus() {
         this.isfocused = true;
         this.char_count = this.max_char_count - this.amForm.get('displayDesc').value.length;
