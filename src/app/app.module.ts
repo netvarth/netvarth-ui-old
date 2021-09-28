@@ -81,6 +81,7 @@ import { VideoCallSharedComponent } from './business/modules/video-call/video-ca
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { AttachmentPopupComponent } from './shared/components/attachment-popup/attachment-popup.component';
 import { PreventDoubleClickDirective } from './shared/directives/prevent-double-click.directive';
+import { MeetRoomModule } from './shared/components/meet-room/meet-room.module';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -143,7 +144,8 @@ export function init_app(globalService: GlobalService) {
     JoyrideModule.forRoot(),
     TruncateModule,
     CardModule,
-    IonicModule.forRoot()
+    IonicModule.forRoot(),
+    MeetRoomModule
   ],
   providers: [
     FirebaseX,
