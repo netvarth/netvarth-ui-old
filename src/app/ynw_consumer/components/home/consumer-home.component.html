@@ -210,7 +210,7 @@
                                                     [matTooltip]="'Store Pickup'"></i>
                                                 <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico"
                                                     [matTooltip]="'Home Delivery'"></i>
-                                                    <i *ngIf="!isPhysicalItemsPresent(oder.orderItem)" class="fa electronic_deliver_icon"
+                                                    <i *ngIf="!oder.storePickup &&!oder.homeDelivery &&!isPhysicalItemsPresent(oder.orderItem)" class="fa electronic_deliver_icon"
                                                     [matTooltip]="'Virtual Delivery'"></i>
                                             </div>
                                         </div>
@@ -320,8 +320,8 @@
                                                         [matTooltip]="'Store Pickup'"></i>
                                                     <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico"
                                                         [matTooltip]="'Home Delivery'"></i>
-                                                        <i *ngIf="!isPhysicalItemsPresent(oder.orderItem)" class="fa electronic_deliver_icon"
-                                                        [matTooltip]="'Virtual Delivery'"></i>
+                                                        <i *ngIf="!oder.storePickup &&!oder.homeDelivery &&!isPhysicalItemsPresent(oder.orderItem)" class="fa electronic_deliver_icon"
+                                                    [matTooltip]="'Virtual Delivery'"></i>
                                                 </div>
                                             </div>
                                             <div class="more_opt">
@@ -429,7 +429,7 @@
                                                     [matTooltip]="'Store Pickup'"></i>
                                                 <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico"
                                                     [matTooltip]="'Home Delivery'"></i>
-                                                    <i *ngIf="!isPhysicalItemsPresent(oder.orderItem)" class="fa electronic_deliver_icon"
+                                                    <i *ngIf="!oder.storePickup &&!oder.homeDelivery &&!isPhysicalItemsPresent(oder.orderItem)" class="fa electronic_deliver_icon"
                                                     [matTooltip]="'Virtual Delivery'"></i>
                                             </div>
                                         </div>
@@ -535,8 +535,8 @@
                                                         [matTooltip]="'Store Pickup'"></i>
                                                     <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico"
                                                         [matTooltip]="'Home Delivery'"></i>
-                                                        <i *ngIf="!isPhysicalItemsPresent(oder.orderItem)" class="fa electronic_deliver_icon"
-                                                    [matTooltip]="'Virtual Delivery'"></i>
+                                                        <i *ngIf="!oder.storePickup &&!oder.homeDelivery &&!isPhysicalItemsPresent(oder.orderItem)" class="fa electronic_deliver_icon"
+                                                        [matTooltip]="'Virtual Delivery'"></i>
                                                 </div>
                                             </div>
                                             <div class="more_opt">
