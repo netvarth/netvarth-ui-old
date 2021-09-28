@@ -2598,6 +2598,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   isPhysicalItemsPresent(){
     let physical_item_present = true;
     const virtualItems=this.activeCatalog.catalogItem.filter(catalogItem => catalogItem.item.itemType==='VIRTUAL')
+    console.log(virtualItems.length);
     if(virtualItems.length>0 && this.activeCatalog.catalogItem.length===virtualItems.length){
       physical_item_present=false;
       this.onlyVirtualItems=true;
@@ -2609,10 +2610,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     if(this.activeCatalog.nextAvailableDeliveryDetails||this.activeCatalog.nextAvailablePickUpDetails){
       showCatalogItems=true;
     }
-    if(this.onlyVirtualItems){
+    if(!this.isPhysicalItemsPresent()){
        showCatalogItems=true;
      }
-    return showCatalogItems
+     console.log(showCatalogItems);
+    return showCatalogItems;
   }
 
   getConfirmation() {
