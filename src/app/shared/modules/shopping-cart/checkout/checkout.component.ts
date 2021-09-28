@@ -994,6 +994,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         }
             post_Data['homeDelivery']=true;
             post_Data['homeDeliveryAddress']=delivery_address;
+            post_Data['email']=this.selectedAddress.email;
        
         }
       }
@@ -1088,6 +1089,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
         
           if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
+            console.log(post_Data.email)
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
               .subscribe(res => {
                 if (this.jcashamount > 0 && this.checkJcash) {
@@ -1250,7 +1252,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       if (item.consumerNote) {
         consumerNote = item.consumerNote;
       }
-      this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote });
+      this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote ,'itemType':item.item.itemType});
     });
     return this.orderSummary;
   }
