@@ -295,9 +295,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.orderList = this.lStorageService.getitemfromLocalStorage('order');
     if (this.orderList) {
       this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
-      if (!this.isPhysicalItemsPresent()) {
-        this.onlyvirtualItemsPresent = true;
-      }
+      this.isPhysicalItemsPresent();
+       
+      
 
     }
 
@@ -416,10 +416,13 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   isPhysicalItemsPresent() {
     let physical_item_present = true;
-
+ console.log(this.orders);
     const virtualItems = this.orders.filter(orderitem => orderitem.item.itemType === 'VIRTUAL')
+
     if (virtualItems.length > 0 && this.orders.length === virtualItems.length) {
+      console.log('insidee');
       physical_item_present = false;
+      this.onlyvirtualItemsPresent = true;
       this.isfutureAvailableTime = true;
       this.isEditable = false;
 
