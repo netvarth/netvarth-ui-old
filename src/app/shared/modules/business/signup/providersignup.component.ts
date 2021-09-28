@@ -133,7 +133,7 @@ export class ProvidersignupComponent implements OnInit {
   joinClicked = false;
   api_loading = false;
   countryCodes = projectConstantsLocal.COUNTRY_CODES;
-  selectedCountryCode;
+  // selectedCountryCode;
   images = {
     veterinaryPetcare: 'assets/images/home/pet-01.svg',
     finance: 'assets/images/home/bank-01.svg',
@@ -174,9 +174,9 @@ export class ProvidersignupComponent implements OnInit {
   @Inject(DOCUMENT) public document;
 
   ngOnInit() {
-    if (this.countryCodes.length !== 0) {
-      this.selectedCountryCode = this.countryCodes[0].value;
-    }
+    // if (this.countryCodes.length !== 0) {
+    //   this.selectedCountryCode = this.countryCodes[0].value;
+    // }
     this.active_step = 0;
     this.ynwUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.ynw_credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
@@ -228,6 +228,7 @@ export class ProvidersignupComponent implements OnInit {
     this.signupForm = this.fb.group({
       phonenumber: ['', Validators.compose(
         [Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+      selectedCountryCode:[''],
       first_name: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
       last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
       selectedDomainIndex: [''],
@@ -245,6 +246,11 @@ export class ProvidersignupComponent implements OnInit {
       if (this.claimDetails.lastName) {
         this.signupForm.get('last_name').setValue(this.claimDetails.lastName);
       }
+    }
+    if (this.countryCodes.length !== 0) {
+      this.signupForm.patchValue({
+        selectedCountryCode:this.countryCodes[0].value
+      })    
     }
   }
   createFormSpecial(step) {
@@ -408,7 +414,7 @@ export class ProvidersignupComponent implements OnInit {
   }
   setPassword() {
     const post_data = {
-      countryCode: this.selectedCountryCode,
+      countryCode: this.signupForm.get('selectedCountryCode').value,
       password: this.spForm.get('new_password').value
     };
     this.shared_services.ProviderSetPassword(this.otp, post_data)
@@ -417,7 +423,7 @@ export class ProvidersignupComponent implements OnInit {
           this.actionstarted = false;
           this.providerPwd = post_data.password;
           const login_data = {
-            'countryCode': this.selectedCountryCode,
+            'countryCode': this.signupForm.get('selectedCountryCode').value,
             'loginId': this.user_details.userProfile.primaryMobileNo,
             'password': post_data.password
           };
@@ -593,6 +599,7 @@ export class ProvidersignupComponent implements OnInit {
     this.user_details = {};
     const fname = this.signupForm.get('first_name').value.trim();
     const lname = this.signupForm.get('last_name').value.trim();
+    const countrycode = this.signupForm.get('selectedCountryCode').value;
     this.checkAccountExists().then(
       (accountExists) => {
         if (accountExists) {
@@ -600,21 +607,21 @@ export class ProvidersignupComponent implements OnInit {
           return;
         } else {
           let userProfile = {
-            countryCode: this.selectedCountryCode,
+            countryCode: countrycode,
             primaryMobileNo: null,
             firstName: null,
             lastName: null
           };
           if (this.data.moreOptions.isCreateProv) {
             userProfile = {
-              countryCode: this.selectedCountryCode,
+              countryCode: countrycode,
               primaryMobileNo: this.data.moreOptions.dataCreateProv.ph || null, // this.signupForm.get('phonenumber').value || null,
               firstName: this.toCamelCase(this.data.moreOptions.dataCreateProv.fname) || null,
               lastName: this.toCamelCase(this.data.moreOptions.dataCreateProv.lname) || null
             };
           } else {
             userProfile = {
-              countryCode: this.selectedCountryCode,
+              countryCode: countrycode,
               primaryMobileNo: this.signupForm.get('phonenumber').value || null,
               firstName: this.toCamelCase(fname) || null,
               lastName: this.toCamelCase(lname) || null
