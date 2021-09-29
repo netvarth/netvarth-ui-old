@@ -779,12 +779,14 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             } else {
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.bookStep = 'qnr';
-                } else {
-                    this.location.back();
-                }
+                } 
+                // else {
+                //     console.log("else");
+                //     this.location.back();
+                // }
             }
         }
-        if (this.action === '') {
+        if (this.action == '') {
             this.location.back();
         } else {
             setTimeout(() => {
