@@ -12884,6 +12884,10 @@ color: #fff !important;
   content: url(../images/order/Storepickup.svg) !important;
   width: 20px;
 }
+.electronic-icon {
+  content: url(../images/order/digpay.png) !important;
+  width: 20px;
+}
 .shoppingcart-icon {
   content: url(../images/order/shopping-cart.svg) !important;
   width: 20px;
