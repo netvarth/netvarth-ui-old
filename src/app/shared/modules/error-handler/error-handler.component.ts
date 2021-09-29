@@ -20,7 +20,7 @@ export class GlobalErrorHandler implements ErrorHandler {
        
         const router = this.injector.get(Router);
         const userData = this.shared_services.getUserData();
-        let ErrorObj:any;
+        let ErrorObj:any={};
         const mailError = {};
         const userInfo: any = {};
         if(userData){
