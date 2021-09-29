@@ -406,7 +406,7 @@
                                                         <!-- Home Address -->
                                                         <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
                                                             <div>
-                                                                <div [hidden]="added_address.length==0" class="col-xl-4 col-lg-6 col-md-8 col-sm-10 mt-5 mb-4 card" *ngFor="let address of added_address; let i = index" (click)="highlight(i,address)" [ngClass]="{'highlight': selectedRowIndex == i}">
+                                                                <div [hidden]="added_address.length==0" class="col-xl-4 col-lg-6 col-md-8 col-sm-10 mt-5 mb-4 card" *ngFor="let address of added_address; let i = index" (click)="highlight(i,address)" [ngClass]="{'highlightadress': selectedRowIndex == i}">
                                                                     <div class=" card-custom gutter-b rounded-0 card-stretch p-2" style="line-height:none">
                                                                         <div class="card-body text-left pl-5 p-0 font-addrss">
                                                                             <div class="adrs-data">

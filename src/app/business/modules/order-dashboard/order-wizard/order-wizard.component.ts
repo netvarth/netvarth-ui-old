@@ -299,11 +299,13 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
   }
   isPhysicalItemsPresent() {
     let physical_item_present = true;
+    if(this.orderType!=='SHOPPINGLIST'){
     const virtualItems = this.orders.filter(catalogitem => catalogitem.item.itemType === 'VIRTUAL')
     if (virtualItems.length > 0 && this.orders.length === virtualItems.length) {
       physical_item_present = false;
       this.onlyVirtualItems=true;
     }
+  }
     return physical_item_present;
   }
   toggleterms(i) {
@@ -1069,16 +1071,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
     } else {
       this.iscustomerEmailPhone = true;
       this.placeOrderDisabled = true;
-      if(!this.onlyVirtualItems){
-       timeslot = this.nextAvailableTime.split(' - ');
-       let timeSlot= {
-        'sTime': timeslot[0],
-        'eTime': timeslot[1]
-
-      }
-      post_Data['timeSlot']=timeSlot;
-      post_Data['orderDate']=this.sel_checkindate;
-      }
+    
       if (this.orderType !== 'SHOPPINGLIST' && this.getOrderItems().length===0) {
           this.snackbarService.openSnackBar('Please add items', { 'panelClass': 'snackbarerror' });
           this.placeOrderDisabled = false;
@@ -1102,6 +1095,16 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
         'orderNote': this.orderNote,
         'coupons': this.selected_coupons
       };
+      if(!this.onlyVirtualItems){
+        timeslot = this.nextAvailableTime.split(' - ');
+        let timeSlot= {
+         'sTime': timeslot[0],
+         'eTime': timeslot[1]
+ 
+       }
+       post_Data['timeSlot']=timeSlot;
+       post_Data['orderDate']=this.sel_checkindate;
+       }
       if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
         this.emailId = this.customer_data.email;
       }
