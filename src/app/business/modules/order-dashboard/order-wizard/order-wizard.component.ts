@@ -229,7 +229,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
                 if (!this.catalogExpired) {
                   this.step = 2;
                 } else {
-                  this.snackbarService.openSnackBar('Catalog is not valid. Update the status or validity of the catalog to proceed', { 'panelClass': 'snackbarerror' });
+                  this.snackbarService.openSnackBar('Catalog is not valid. Update the status or validity of the catalog/virtual items in catalog to proceed', { 'panelClass': 'snackbarerror' });
                 }
 
 
@@ -453,7 +453,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
             if (!this.catalogExpired) {
               this.step = 2;
             } else {
-              this.snackbarService.openSnackBar('Your Catalog is not valid for now, It  might be disabled/Not applicable for today/expired ,please update to proceed', { 'panelClass': 'snackbarerror' });
+              this.snackbarService.openSnackBar('Your Catalog is not valid. Update the status or validity of the catalog/virtual items if any in catalog to proceed', { 'panelClass': 'snackbarerror' });
             }
 
           }
@@ -516,6 +516,9 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
         this.orderType = this.catalog_details.orderType;
         if (this.orderType !== 'SHOPPINGLIST') {
           this.orderItems = [];
+          if(this.catalog_details.catalogItem.length===0){
+            this.catalogExpired=true;
+          }
           for (let itemIndex = 0; itemIndex < this.catalog_details.catalogItem.length; itemIndex++) {
             const catalogItemId = this.catalog_details.catalogItem[itemIndex].id;
             const minQty = this.catalog_details.catalogItem[itemIndex].minQuantity;
