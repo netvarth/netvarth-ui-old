@@ -286,11 +286,12 @@ export class ItemDetailsComponent implements OnInit {
                 promotionallabel: [],
                 customlabel: ['', Validators.compose([Validators.maxLength(this.maxNumberslabl)])],
                 expiryDate:[''],
-                itemType:['PHYSICAL']
+                itemType:[]
 
             });
             this.amForm.get('promotionalPriceType').setValue('FIXED');
             this.amForm.get('promotionallabel').setValue('ONSALE');
+            this.amForm.get('itemType').setValue('PHYSICAL');
      
             // this.itemcaption = 'Item Details';
             // this.amForm = this.fb.group({
