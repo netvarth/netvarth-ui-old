@@ -1255,7 +1255,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       if (item.consumerNote) {
         consumerNote = item.consumerNote;
       }
-      this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote ,'itemType':item.item.itemType});
+      this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote ,'itemType':item.item.itemType,'name':item.item.displayName});
     });
     return this.orderSummary;
   }
