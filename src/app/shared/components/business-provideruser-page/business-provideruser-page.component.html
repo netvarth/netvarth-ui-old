@@ -8,7 +8,7 @@
                         &nbsp;
                     </div>
                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
-                        <app-header *ngIf="accountIdExists && sharedFunctionobj.checkLogin()" [includedfrom]="'pdetails'" [accountId]="accountId" [customId]="customId" [showHeaderAction]="true"></app-header>
+                        <app-header *ngIf="accountIdExists && sharedFunctionobj.checkLogin()" [includedfrom]="'pdetails'" [accountId]="accountId"  [showHeaderAction]="true"></app-header>
                         <div class="view-booking" *ngIf="accountIdExists && !sharedFunctionobj.checkLogin()" >
                             <button class="pull-right btn btn-primary dashboard-btn" (click)="dashboardClicked()">My Bookings</button>
                         </div>
