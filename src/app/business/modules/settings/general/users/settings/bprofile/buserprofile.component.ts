@@ -29,7 +29,7 @@ import { Meta } from '@angular/platform-browser';
 @Component({
   selector: 'app-buserprofile',
   templateUrl: './buserprofile.component.html',
-  styleUrls: ['../bprofile/additionalinfo/additionalinfo.component.scss']
+  styleUrls: ['../bprofile/additionalinfo/additionalinfo.component.scss','./buserprofile.component.css']
 
 
 })
