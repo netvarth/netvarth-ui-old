@@ -47,7 +47,7 @@ export class RazorpayService {
       rzp.open();
     });
   }
-  payWithRazor(razorModel, usertype, checkin_type?, uuid?, livetrack?, account_id?, prepayment?, uuids?, from?) {
+  payWithRazor(razorModel, usertype, checkin_type?, uuid?, livetrack?, account_id?, prepayment?, uuids?, from?,isfrom?) {
     let razorInterval;
     razorModel.retry = false;
     //   theme: {
@@ -71,6 +71,9 @@ export class RazorpayService {
       if(from) {
         queryParams['customId']= from;
       }
+      if(isfrom){
+        queryParams['isFrom']= isfrom;
+      }
       let navigationExtras: NavigationExtras = {
         queryParams: queryParams
       };
@@ -93,17 +96,17 @@ export class RazorpayService {
         } else if (checkin_type === 'donations') {
           this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
           this.ngZone.run(() => this.router.navigate(['consumer', 'donations', 'confirm'], { queryParams: { 'uuid': uuid } }));
-          let queryParams = {
-            account_id: account_id,
-            uuid: uuid
-          };
-          if(from) {
-            queryParams['customId']= from;
-          }
-          let navigationExtras: NavigationExtras = {
-            queryParams: queryParams
-          };
-          this.ngZone.run(() => this.router.navigate(['consumer', 'donations', 'confirm'], navigationExtras));
+          // let queryParams = {
+          //   account_id: account_id,
+          //   uuid: uuid
+          // };
+          // if(from) {
+          //   queryParams['customId']= from;
+          // }
+          // let navigationExtras: NavigationExtras = {
+          //   queryParams: queryParams
+          // };
+         // this.ngZone.run(() => this.router.navigate(['consumer', 'donations', 'confirm'], navigationExtras));
         } else if (checkin_type === 'payment_link') {
           this.ngZone.run(() => this.router.navigate(['pay', livetrack], navigationExtras));
         } else if (checkin_type === 'checkin_prepayment') {
@@ -123,6 +126,9 @@ export class RazorpayService {
           if(from) {
             queryParams['customId']= from;
           }
+          if(isfrom){
+            queryParams['isFrom']= isfrom;
+          }
           let navigationExtras: NavigationExtras = {
             queryParams: queryParams
           }
@@ -139,6 +145,9 @@ export class RazorpayService {
           };
           if(from) {
             queryParams['customId']= from;
+          }
+          if(isfrom){
+            queryParams['isFrom']= isfrom;
           }
           let navigationExtras: NavigationExtras = {
             queryParams: queryParams
@@ -160,6 +169,9 @@ export class RazorpayService {
           if(uuids) {
             queryParams['customId']= uuids;
             queryParams['accountId']= account_id;
+          }
+          if(isfrom){
+            queryParams['isFrom']= isfrom;
           }
           let navigationExtras: NavigationExtras = {
             queryParams: queryParams
