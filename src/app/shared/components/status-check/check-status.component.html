@@ -164,10 +164,13 @@
                   <tr *ngIf="type=='order'">
                     <td width="48%" align="right" *ngIf="statusInfo.storePickup">Store pickup Time</td>
                     <td width="48%" align="right" *ngIf="statusInfo.homeDelivery">Delivery Date & Time</td>
+                    <td width="48%" align="right" *ngIf="!statusInfo.homeDelivery &&!statusInfo.storePickup">E-Delivery Date</td>
                     <td width="2%">&nbsp;:&nbsp;</td>
-                    <td> {{statusInfo.orderDate | date: newDateFormat }},
-                      {{statusInfo.timeSlot.sTime}} -
-                      {{statusInfo.timeSlot.eTime}}</td>
+                    <td> {{statusInfo.orderDate | date: newDateFormat }}
+                      <ng-container *ngIf="statusInfo.timeSlot && statusInfo.timeSlot.sTime && statusInfo.timeSlot.eTime">,
+                        {{statusInfo.timeSlot.sTime}} -
+                        {{statusInfo.timeSlot.eTime}} </ng-container>
+                      </td>
                   </tr>
                   <tr *ngIf="type=='appt'">
                     <td width="48%" align="right">Appointment Time </td>
