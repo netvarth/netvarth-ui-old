@@ -5,22 +5,15 @@ import { Router} from '@angular/router';
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
     userData: any;
-
     constructor(public shared_services: SharedServices,private injector:Injector) {
-
-
-
     }
 
 
 
 
     handleError(error: any): void {
-    
-       
         const router = this.injector.get(Router);
         const userData = this.shared_services.getUserData();
-        let ErrorObj:any={};
         const mailError = {};
         const userInfo: any = {};
         if(userData){
@@ -51,16 +44,13 @@ export class GlobalErrorHandler implements ErrorHandler {
         mailError['errorName']=error.name;
         mailError['errorMessage']=error.message;
         mailError['errorStack'] = error.stack;
-        console.log("Error Happened" + JSON.stringify(userInfo));
-        console.log(error);
-        ErrorObj.errorDetails=mailError;
         console.log('inside global error');
         const chunkFailedMessage = /Loading chunk [\d]+ failed/;
         if (chunkFailedMessage.test(error.message)) {
             window.location.reload();
         } else {
-            console.log(ErrorObj);
-            this.shared_services.callHealth(ErrorObj).subscribe();
+            console.log(JSON.stringify(mailError));
+            this.shared_services.callHealth(JSON.stringify(mailError)).subscribe();
         }
     }
 }
