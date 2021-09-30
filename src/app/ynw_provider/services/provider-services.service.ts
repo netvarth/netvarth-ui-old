@@ -2030,8 +2030,12 @@ export class ProviderServices {
     const url = 'provider/user/updateBusinessLoc';
     return this.servicemeta.httpPut(url, data);
   }
-  addCustomerToGroup(name, data) {
-    const url = 'provider/customers/group/' + name;
+  // addCustomerToGroup(name, data) {
+  //   const url = 'provider/customers/group/' + name;
+  //   return this.servicemeta.httpPost(url, data);
+  // }
+  addCustomerToGroup(data) {
+    const url = 'provider/customers/group/addGroup';
     return this.servicemeta.httpPost(url, data);
   }
   removeCustomerFromGroup(name, data) {

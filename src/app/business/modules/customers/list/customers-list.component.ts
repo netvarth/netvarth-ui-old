@@ -706,8 +706,13 @@ export class CustomersListComponent implements OnInit {
         ids.push(customer.id);
       }
     }
-    this.provider_services.addCustomerToGroup(this.selectedGroup.groupName, ids).subscribe(
-      (data: any) => {
+    const postData = {
+      'groupName': this.selectedGroup.groupName,
+      'providerConsumerIds':ids
+    };
+    // this.provider_services.addCustomerToGroup(this.selectedGroup.groupName, postData).subscribe(
+     this.provider_services.addCustomerToGroup(postData).subscribe(
+     (data: any) => {
         this.showCustomers = false;
         this.resetList();
         this.getCustomerListByGroup();
