@@ -14,7 +14,7 @@
           <div >
              <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value">
             </ngx-qrcode>
-            <span  ><span>{{wpath}}{{accuid}}</span></span>
+            <span  ><span>{{wpath}}{{accuid}}<span *ngIf="userId">/{{userId}}</span></span></span>
           </div>
           <!--<div class="coupon-outer">
               <button class="btn btn-info jld-lnk-btn">
