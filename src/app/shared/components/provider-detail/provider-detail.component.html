@@ -390,7 +390,7 @@
                                     </a>
                                 </li>    -->
                                 <li [matTooltip]="'More Info'" class="more_less more-less-button centeralign pull-right"
-                                    *ngIf="!showMore"><a class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">
+                                    *ngIf="specializationslist.length > 1 && !showMore"><a class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">
                                         <!-- More Info -->...
                                     </a></li>
                                 <li [matTooltip]="'Less Info'" class="more_less more-less-button centeralign pull-right"
