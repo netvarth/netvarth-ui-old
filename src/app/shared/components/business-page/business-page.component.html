@@ -290,18 +290,18 @@
                                     </a>
                                 </li>
                                 <li class="share" [matTooltip]="'Share'">
-                                    <a *ngIf="accountEncId" class="like-btn" (click)="qrCodegeneraterOnlineID(accountEncId)">
+                                    <a *ngIf="!providercustomId" class="like-btn" (click)="qrCodegeneraterOnlineID(provideraccEncUid)">
                                         <span *ngIf="provider_bussiness_id">
                                             <i class="fa fa-share-alt" aria-hidden="true"></i>
                                             <!-- Share -->
                                         </span>
                                     </a>
-                                    <!-- <a *ngIf="businessjson.customId" class="like-btn" (click)="qrCodegeneraterOnlineID(businessjson.customId)">
+                                    <a *ngIf="providercustomId" class="like-btn" (click)="qrCodegeneraterOnlineID(providercustomId)">
                                         <span *ngIf="provider_bussiness_id">
                                             <i class="fa fa-share-alt" aria-hidden="true"></i>
                                            
                                         </span>
-                                    </a> -->
+                                    </a>
                                 </li>
                                 <li class="share" [matTooltip]="'Coupon'"
                                     *ngIf="s3CouponList.JC.length > 0  || s3CouponList.OWN.length>0 ">
@@ -335,13 +335,13 @@
                                     </a>
                                 </li>
                                 <li class="small-devices-share centeralign">
-                                    <a *ngIf="!businessjson.customId" class="like-btn" (click)="qrCodegeneraterOnlineID(businessjson.accEncUid)">
+                                    <a *ngIf="!providercustomId" class="like-btn" (click)="qrCodegeneraterOnlineID(provideraccEncUid)">
                                         <span *ngIf="provider_bussiness_id">
                                             <i class="fa fa-share-alt" aria-hidden="true"></i>
                                             <span class="display-text">&nbsp;Share</span>
                                         </span>
                                     </a>
-                                    <a *ngIf="businessjson.customId" class="like-btn" (click)="qrCodegeneraterOnlineID(businessjson.customId)">
+                                    <a *ngIf="providercustomId" class="like-btn" (click)="qrCodegeneraterOnlineID(providercustomId)">
                                         <span *ngIf="provider_bussiness_id">
                                             <i class="fa fa-share-alt" aria-hidden="true"></i>
                                             <span class="display-text">&nbsp;Share</span>
