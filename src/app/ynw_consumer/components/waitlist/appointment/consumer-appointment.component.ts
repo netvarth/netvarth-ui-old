@@ -2244,6 +2244,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             return url;
         }
     }
+
+    viewAttachments() {
+        this.action = 'attachment';
+        this.modal.nativeElement.click();
+    }
     getThumbUrl(attachment) {
         if (attachment && attachment.s3path) {
             if (attachment.s3path.indexOf('.pdf') !== -1) {
