@@ -1476,14 +1476,14 @@
                                                         </div>
                                                     </div>
                                                     <div class="txt-align-center">
-                                                        <button type="button"
+                                                        <button type="button" 
                                                             class=" next-button btn btn-primary font-weight-bold text-uppercase "
-                                                            [class.disabled]="isClickedOnce"
-                                                            *ngIf="razorpayEnabled && !paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
-                                                            [class.disabled]="isClickedOnce"
+                                                            [class.disabled]="paymentBtnDisabled"
+                                                            *ngIf="razorpayEnabled  && !paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
                                                             (click)="!isClickedOnce && saveCheckin('checkin')">
                                                             Pay by CC/DC/UPI
                                                         </button>
+                                                        <!--[disabled]="paymentBtnDisabled && isClickedOnce" -->
                                                         <button type="button"
                                                             class="  next-button btn btn-primary font-weight-bold text-uppercase "
                                                             [class.disabled]="isClickedOnce"
@@ -1492,10 +1492,13 @@
                                                             Pay by CC/DC/UPI
                                                         </button>
                                                     </div>
-                                                    <div class="txt-align-center pad_link"
+                                                    <div class="clearfix"></div>
+
+                                                    <div class="txt-align-center pad_link" 
                                                         *ngIf="interNatioanalPaid && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                        <span [class.disabled]="isClickedOnce"
+                                                        <span [class.disabled]="paymentBtnDisabled" 
                                                             (click)="!isClickedOnce && saveCheckin('checkin')"
+
                                                             class="pointer-cursor"><a
                                                                 class="refund_policy">International Payment ? Click
                                                                 here</a></span>

@@ -1306,7 +1306,7 @@
                                                     <button
                                                         class=" next-button btn btn-primary font-weight-bold text-uppercase "
                                                         *ngIf="razorpayEnabled && !paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
-                                                        [class.disabled]="isClickedOnce"
+                                                        [class.disabled]="paymentBtnDisabled"
                                                         (click)="!isClickedOnce && saveCheckin('appt')">
                                                         Pay by CC/DC/UPI
                                                     </button>
@@ -1320,7 +1320,7 @@
                                                 <div class="clearfix"></div>
                                                 <div class="txt-align-center pad_link"
                                                     *ngIf="interNatioanalPaid && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                    <span [class.disabled]="isClickedOnce"
+                                                    <span [class.disabled]="paymentBtnDisabled"
                                                         (click)="!isClickedOnce && saveCheckin('appt')"
                                                         class="pointer-cursor"><a class="refund_policy">International
                                                             Payment ? Click here</a></span>
