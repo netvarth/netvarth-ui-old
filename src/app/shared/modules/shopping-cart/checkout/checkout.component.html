@@ -107,12 +107,12 @@
                   </mat-step>
                   <mat-step label="Step 3" >
                     <ng-template matStepLabel *ngIf="(!home_delivery && store_pickup)||choose_type=='store' ||onlyvirtualItemsPresent"> Contact
-                      Details</ng-template>
+                      Details </ng-template>
                     <ng-template matStepLabel *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">Fill out
                       your address</ng-template>
 
-                    <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
-                      <mat-grid-list cols="{{no_of_grids}}" rowHeight="200px" [gutterSize]="'10px'" class="mgn-bt-20">
+                    <ng-container *ngIf="choose_type =='home'||(home_delivery && !store_pickup) ">
+                      <mat-grid-list  *ngIf="!onlyvirtualItemsPresent" cols="{{no_of_grids}}" rowHeight="200px" [gutterSize]="'10px'" class="mgn-bt-20">
                         <mat-grid-tile *ngFor="let address of added_address; let i = index"
                           (click)="highlight(i,address)" [ngClass]="{'highlightadress': selectedRowIndex == i}">
                           <mat-grid-tile-header>
@@ -148,7 +148,7 @@
                         </mat-grid-tile>
                       </mat-grid-list>
                     </ng-container>
-                    <ng-container *ngIf="(!home_delivery && store_pickup)||choose_type=='store'">
+                    <ng-container *ngIf="(!home_delivery && store_pickup)||choose_type=='store' ||onlyvirtualItemsPresent">
                       <form [formGroup]="storeContact">
                         <!-- <mat-form-field class="example-full-width">
                          <mat-label> Contact Phone Number</mat-label>

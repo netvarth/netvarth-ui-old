@@ -3040,6 +3040,7 @@ console.log("fgf"+JSON.stringify(loc));
       data: {
         accencUid: accEncUid,
         path: this.wndw_path,
+        userId: this.userId,
         businessName: this.businessjson.businessName,
         businessDesc: this.businessjson.businessDesc,
         businessUserName: this.businessjson.businessUserName

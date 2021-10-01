@@ -229,7 +229,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
                 if (!this.catalogExpired) {
                   this.step = 2;
                 } else {
-                  this.snackbarService.openSnackBar('Catalog is not valid. Update the status or validity of the catalog to proceed', { 'panelClass': 'snackbarerror' });
+                  this.snackbarService.openSnackBar('Catalog is not valid. Update the status or validity of the catalog/virtual items in catalog to proceed', { 'panelClass': 'snackbarerror' });
                 }
 
 
@@ -299,11 +299,13 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
   }
   isPhysicalItemsPresent() {
     let physical_item_present = true;
+    if(this.orderType!=='SHOPPINGLIST'){
     const virtualItems = this.orders.filter(catalogitem => catalogitem.item.itemType === 'VIRTUAL')
     if (virtualItems.length > 0 && this.orders.length === virtualItems.length) {
       physical_item_present = false;
       this.onlyVirtualItems=true;
     }
+  }
     return physical_item_present;
   }
   toggleterms(i) {
@@ -451,7 +453,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
             if (!this.catalogExpired) {
               this.step = 2;
             } else {
-              this.snackbarService.openSnackBar('Your Catalog is not valid for now, It  might be disabled/Not applicable for today/expired ,please update to proceed', { 'panelClass': 'snackbarerror' });
+              this.snackbarService.openSnackBar('Your Catalog is not valid. Update the status or validity of the catalog/virtual items if any in catalog to proceed', { 'panelClass': 'snackbarerror' });
             }
 
           }
@@ -514,6 +516,9 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
         this.orderType = this.catalog_details.orderType;
         if (this.orderType !== 'SHOPPINGLIST') {
           this.orderItems = [];
+          if(this.catalog_details.catalogItem.length===0){
+            this.catalogExpired=true;
+          }
           for (let itemIndex = 0; itemIndex < this.catalog_details.catalogItem.length; itemIndex++) {
             const catalogItemId = this.catalog_details.catalogItem[itemIndex].id;
             const minQty = this.catalog_details.catalogItem[itemIndex].minQuantity;
@@ -1069,16 +1074,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
     } else {
       this.iscustomerEmailPhone = true;
       this.placeOrderDisabled = true;
-      if(!this.onlyVirtualItems){
-       timeslot = this.nextAvailableTime.split(' - ');
-       let timeSlot= {
-        'sTime': timeslot[0],
-        'eTime': timeslot[1]
-
-      }
-      post_Data['timeSlot']=timeSlot;
-      post_Data['orderDate']=this.sel_checkindate;
-      }
+    
       if (this.orderType !== 'SHOPPINGLIST' && this.getOrderItems().length===0) {
           this.snackbarService.openSnackBar('Please add items', { 'panelClass': 'snackbarerror' });
           this.placeOrderDisabled = false;
@@ -1102,6 +1098,16 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
         'orderNote': this.orderNote,
         'coupons': this.selected_coupons
       };
+      if(!this.onlyVirtualItems){
+        timeslot = this.nextAvailableTime.split(' - ');
+        let timeSlot= {
+         'sTime': timeslot[0],
+         'eTime': timeslot[1]
+ 
+       }
+       post_Data['timeSlot']=timeSlot;
+       post_Data['orderDate']=this.sel_checkindate;
+       }
       if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
         this.emailId = this.customer_data.email;
       }

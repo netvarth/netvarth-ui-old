@@ -133,6 +133,7 @@ export class ItemDetailsComponent implements OnInit {
     imageList: any = [];
     mainImage = false;
     iscmFrom;
+    itemType='physical';
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private activated_route: ActivatedRoute,
@@ -285,11 +286,12 @@ export class ItemDetailsComponent implements OnInit {
                 promotionallabel: [],
                 customlabel: ['', Validators.compose([Validators.maxLength(this.maxNumberslabl)])],
                 expiryDate:[''],
-                itemType:['PHYSICAL']
+                itemType:[]
 
             });
             this.amForm.get('promotionalPriceType').setValue('FIXED');
             this.amForm.get('promotionallabel').setValue('ONSALE');
+            this.amForm.get('itemType').setValue('PHYSICAL');
      
             // this.itemcaption = 'Item Details';
             // this.amForm = this.fb.group({
@@ -318,6 +320,14 @@ export class ItemDetailsComponent implements OnInit {
             this.updateForm();
         }
     }
+    itemTypeChange(event){
+        if(event.value==='VIRTUAL'){
+         this.itemType='virtual';
+        }else{
+            this.itemType='physical'
+        }
+     
+     }
     setDescFocus() {
         this.isfocused = true;
         this.char_count = this.max_char_count - this.amForm.get('displayDesc').value.length;

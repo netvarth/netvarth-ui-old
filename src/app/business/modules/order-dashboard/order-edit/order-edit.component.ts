@@ -59,7 +59,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   catalog_details: any;
   order_count: number;
   price: number;
-  orders: any[];
+  orders:any = [];
   orderList: any = [];
   catlog: any;
   catalogItem: any;
@@ -239,11 +239,13 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
 isPhysicalItemsPresent(){
   let physical_item_present = true;
+  if(this.orderDetails.orderType!=='SHOPPINGLIST'){
   const virtualItems = this.orders.filter(catalogitem => catalogitem.item.itemType === 'VIRTUAL')
   if (virtualItems.length > 0 && this.orders.length === virtualItems.length) {
     physical_item_present = false;
     this.onlyVirtualItems = true;
   }
+}
   return physical_item_present;
 }
 onSubmit(form_data) {

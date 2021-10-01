@@ -12884,6 +12884,10 @@ color: #fff !important;
   content: url(../images/order/Storepickup.svg) !important;
   width: 20px;
 }
+.electronic-icon {
+  content: url(../images/order/e-delivery.png) !important;
+  width: 20px;
+}
 .shoppingcart-icon {
   content: url(../images/order/shopping-cart.svg) !important;
   width: 20px;
@@ -14388,3 +14392,21 @@ pointer-events: none !important;
       margin-left: 130px;
     }
   }
+  .userqrdwnld-icon {
+    font-size: 1.2rem;
+    margin-left: 10px;
+    margin-top: 10px;
+    color: #2196F3;
+}
+.userqrdwnld-bdr {
+    margin-top: 4px;
+    /* font-size: 1rem; */
+    color: #2196F3;
+    background: #00ffff3b;
+    border-radius: 100px;
+    height: 40px;
+    min-width: 40px;
+    margin-left: 10px;
+    box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+}

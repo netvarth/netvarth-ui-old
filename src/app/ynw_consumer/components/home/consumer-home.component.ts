@@ -2122,6 +2122,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (virtualItems.length > 0 && orderItems.length === virtualItems.length) {
       physical_item_present = false;
       this.onlyVirtualItemsPresent=true;
+      console.log('virtual only');
     }
     return physical_item_present; 
 
@@ -2137,6 +2138,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     };
     this.subs.sink = this.consumer_services.getConsumerOrders(params).subscribe(data => {
       this.orders = data; // saving todays orders
+      console.log('orders'+JSON.stringify(this.orders));
       this.total_tdy_order = this.orders;
       if (data) {
         this.getFutureOrder();

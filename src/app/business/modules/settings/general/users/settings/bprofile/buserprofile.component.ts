@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Inject, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, Inject, AfterViewChecked, ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
 import { Messages } from '../../../../../../../shared/constants/project-messages';
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from '@ks89/angular-modal-gallery';
 import { projectConstants } from '../../../../../../../app.component';
@@ -23,11 +23,13 @@ import { GroupStorageService } from '../../../../../../../shared/services/group-
 import { LocalStorageService } from '../../../../../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../../shared/services/word-processor.service';
+import { QRCodeGeneratorComponent } from '../../../../bprofile/qrcodegenerator/qrcodegenerator.component';
+import { Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-buserprofile',
   templateUrl: './buserprofile.component.html',
-  styleUrls: ['../bprofile/additionalinfo/additionalinfo.component.scss']
+  styleUrls: ['../bprofile/additionalinfo/additionalinfo.component.scss','./buserprofile.component.css']
 
 
 })
@@ -261,7 +263,20 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   wndw_path = projectConstants.PATH;
   subdomain: any;
   maintooltip: any;
-
+  qrdialogRef: MatDialogRef<QRCodeGeneratorComponent, any>;
+  imageUrl: string;
+  qr_value: any;
+  qr_code_oId = false;
+  qrCodePath: string;
+  private qrCodeParent: ElementRef;
+  shareLink: any;
+  elementType: 'url' | 'canvas' | 'img' = 'url';
+  bProviderProfile;
+  @ViewChild('qrCodeOnlineId', { read: ElementRef }) set content1(content1: ElementRef) {
+    if (content1) { // initially setter gets called with undefined
+      this.qrCodeParent = content1;
+    }
+  }
 
 
 
@@ -283,6 +298,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
+    private angular_meta: Meta,
     private wordProcessor: WordProcessor) {
      this.maintooltip = this.wordProcessor.getProjectMesssages('BPROFILE_TOOPTIP');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -293,6 +309,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   }
 
   ngOnInit() {
+    this.bProviderProfile = [];
     this.user_datastorage.setWeightageArray([]);
     this.jaldeeonline_on_cap = Messages.JALDEEONLINE_ENABLED_MSG.replace('[customer]', this.customer_label);
     this.jaldeeonline_off_cap = Messages.JALDEE_ONLINE_DISABLED_MSG.replace('[customer]', this.customer_label);
@@ -335,6 +352,20 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
       // console.log(JSON.stringify(this.businessProfile_weightageArray));
       this.weightageValue = this.calculateWeightage(result);
     });
+    this.getproviderBussinessProfileApi()
+      .then(
+        data => {
+          this.bProviderProfile = data;
+          if (this.bProviderProfile.customId) {
+            this.generateQR(this.bProviderProfile.customId,this.userId);
+            this.qrCodegenerateOnlineID(this.bProviderProfile.customId,this.userId);
+            this.shareLink = this.wndw_path + this.bProviderProfile.customId +'/'+this.userId;
+          } else {
+            this.generateQR(this.bProviderProfile.accEncUid,this.userId);
+            this.qrCodegenerateOnlineID(this.bProviderProfile.accEncUid,this.userId);
+            this.shareLink = this.wndw_path + this.bProviderProfile.accEncUid+'/'+this.userId;
+          }
+        });
   }
   ngAfterViewChecked() {
     this.cdref.detectChanges();
@@ -409,6 +440,20 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   }
   gotoAccountSettings() {
     this.routerobj.navigate(['provider', 'profile'], {queryParams: {userId: this.userId}});
+  }
+  getproviderBussinessProfileApi() {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.provider_services.getBussinessProfile()
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
   }
   getBusinessProfile() {
     this.bProfile = [];
@@ -534,7 +579,47 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
         );
     });
   }
+  qrCodegeneraterOnlineID(accEncUid) {
+    this.qrdialogRef = this.dialog.open(QRCodeGeneratorComponent, {
+      width: '40%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        accencUid: accEncUid,
+        userId: this.userId,
+        path: this.wndw_path,
+        businessName: this.bProfile.businessName,
+        businessDesc: this.bProfile.businessDesc,
+        businessUserName: this.bProfile.businessUserName
+      }
+    });
 
+    this.qrdialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+        this.getBusinessProfile();
+      }
+    });
+  }
+  qrCodegenerateOnlineID(valuetogenerate,userid) {
+    this.imageUrl = this.wndw_path + 'assets/images/logo.png';
+    this.qr_value = projectConstants.PATH + valuetogenerate +'/'+ userid;
+    this.qr_code_oId = true;
+    this.cdref.detectChanges();
+    setTimeout(() => {
+      this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
+      console.log(this.qrCodePath);
+      this.angular_meta.addTags([
+        { property: 'og:title', content: this.bProfile.businessName },
+        { property: 'og:image', content: this.imageUrl },
+        { property: 'og:type', content: 'link' },
+        { property: 'og:description', content: this.bProfile.businessDesc },
+
+      ]);
+    }, 50);
+  }
+  generateQR(id,userid) {
+    this.qr_value = projectConstants.PATH + id +'/'+ userid;
+  }
   createForm() {
 
     this.formfields = {

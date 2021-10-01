@@ -277,6 +277,16 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.subscriptions.unsubscribe();
     }
+    isExpired(item){
+    
+        if(new Date(item.expiryDate) < new Date()){
+            console.log('expired');
+            return true;
+        }else{
+            console.log('not expired');
+            return false;
+        }
+    }
     gotoNext() {
 
         if (this.amForm.get('orderType').value === 'SHOPPINGLIST' && this.amForm.get('advancePaymentStatus').value === 'FULLAMOUNT' && this.step === 3) {
@@ -374,6 +384,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             this.subscriptions.sink = this.provider_services.getProviderfilterItems(apiFilter)
                 .subscribe(
                     data => {
+                        console.log(JSON.stringify(data));
                         this.item_list = data;
                         this.item_count = this.item_list.length;
                         this.catalogItem = data;

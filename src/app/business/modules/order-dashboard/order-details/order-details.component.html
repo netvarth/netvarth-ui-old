@@ -59,6 +59,7 @@
                         *ngIf="communication_history.length >0" matBadge="" matBadgeOverlap=true>sms</mat-icon>
                     <i class="delivery-icon pull-right" *ngIf="orderDetails.homeDelivery"></i>
                     <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup"></i>
+                    <i class="electronic-icon pull-right" *ngIf="!orderDetails.homeDelivery&&!orderDetails.storePickup"></i>
                 </div>
                 <div [class.fl-left]="small_device_display" [class.mgn-up-70]="!small_device_display"> <span
                         class="customer-action-btn pointer-cursor" (click)="showOrderActions()">Actions</span>

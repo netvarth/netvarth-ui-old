@@ -370,6 +370,10 @@
                                                         class="consumer-dash consumer-appthistory"> <i
                                                             class="delivery-icon" [matTooltip]="'Home Delivery'"
                                                             aria-hidden="true"></i> </td>
+                                                    <td *ngIf="!visit.homeDelivery &&!visit.storePickup"
+                                                        class="consumer-dash consumer-appthistory"> <i
+                                                            class="electronic-icon" [matTooltip]="'Electronic Delivery'"
+                                                            aria-hidden="true"></i> </td>
                                                     <td> {{visit.orderDate | date: newDateFormat}}
                                                         <div *ngIf="visit.orderNumber">Order#
                                                             {{visit.orderNumber}} </div>
@@ -438,6 +442,10 @@
                                                     <td *ngIf="visit.homeDelivery"
                                                         class="consumer-dash consumer-appthistory"> <i
                                                             class="delivery-icon" [matTooltip]="'Home Delivery'"
+                                                            aria-hidden="true"></i> </td>
+                                                    <td *ngIf="!visit.homeDelivery &&!visit.storePickup"
+                                                        class="consumer-dash consumer-appthistory"> <i
+                                                            class="electronic-icon" [matTooltip]="'Electronic Delivery'"
                                                             aria-hidden="true"></i> </td>
                                                     <!-- <td class="consumer-dash consumer-appthistory"> <i class="fa fa-circle-o"  [matTooltip]="'Order'" aria-hidden="true"></i>
                                                         
@@ -648,6 +656,10 @@
                                                 <td *ngIf="visit.homeDelivery"
                                                     class="consumer-dash consumer-appthistory"> <i class="delivery-icon"
                                                         [matTooltip]="'Home Delivery'" aria-hidden="true"></i> </td>
+                                                <td *ngIf="!visit.homeDelivery &&!visit.storePickup"
+                                                    class="consumer-dash consumer-appthistory"> <i
+                                                        class="electronic-icon" [matTooltip]="'Electronic Delivery'"
+                                                        aria-hidden="true"></i> </td>
                                                 <!-- <td class="consumer-dash consumer-appthistory"> <i class="fa fa-circle-o"  [matTooltip]="'Order'" aria-hidden="true"></i>
                                                     
                                                 </td> -->
@@ -661,6 +673,7 @@
                                                 <td>
                                                     <span *ngIf="visit.storePickup">Store Pickup</span>
                                                     <span *ngIf="visit.homeDelivery">Home Delivery</span>
+                                                     <span *ngIf="!visit.homeDelivery&&!visit.storePickup">Electronic Delivery</span>
                                                 </td>
                                                 <td class="hidden-xs">
                                                     <ng-container *ngIf="visit.orderMode === 'WALKIN_ORDER'">

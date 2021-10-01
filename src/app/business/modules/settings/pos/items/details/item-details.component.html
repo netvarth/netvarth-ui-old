@@ -244,9 +244,9 @@
                                     <div class="">
                                     <label class="form-control-label" for="itemType" >Item Type</label>
                                     <br />
-                                    <mat-radio-group formControlName="itemType">
+                                    <mat-radio-group formControlName="itemType" (change)="itemTypeChange($event)">
                                     <mat-radio-button  value="PHYSICAL">
-                                       Physical </mat-radio-button>
+                                       Physical </mat-radio-button>&nbsp;&nbsp;
                                        <mat-radio-button  value="VIRTUAL">
                                         Virtual </mat-radio-button>
                                     </mat-radio-group>
@@ -254,7 +254,7 @@
                     
                                 </div>   
                     
-                                                      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-2 mgn-up-20">
+                                                      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-2 mgn-up-20" *ngIf="this.amForm.get('itemType').value=='VIRTUAL'">
                                                         <div class="form-group normalpicker">
                                                             <label for="Publish From">Expiry Date
                                                                     <span style="color:red">*</span> </label>

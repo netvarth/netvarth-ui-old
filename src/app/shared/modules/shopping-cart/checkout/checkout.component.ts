@@ -295,9 +295,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.orderList = this.lStorageService.getitemfromLocalStorage('order');
     if (this.orderList) {
       this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
-      if (!this.isPhysicalItemsPresent()) {
-        this.onlyvirtualItemsPresent = true;
-      }
+      this.isPhysicalItemsPresent();
+       
+      
 
     }
 
@@ -416,10 +416,13 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   isPhysicalItemsPresent() {
     let physical_item_present = true;
-
+ console.log(this.orders);
     const virtualItems = this.orders.filter(orderitem => orderitem.item.itemType === 'VIRTUAL')
+
     if (virtualItems.length > 0 && this.orders.length === virtualItems.length) {
+      console.log('insidee');
       physical_item_present = false;
+      this.onlyvirtualItemsPresent = true;
       this.isfutureAvailableTime = true;
       this.isEditable = false;
 
@@ -994,6 +997,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         }
             post_Data['homeDelivery']=true;
             post_Data['homeDeliveryAddress']=delivery_address;
+            post_Data['email']=this.selectedAddress.email;
        
         }
       }
@@ -1088,6 +1092,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
         
           if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
+            console.log(post_Data.email)
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
               .subscribe(res => {
                 if (this.jcashamount > 0 && this.checkJcash) {
@@ -1250,7 +1255,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       if (item.consumerNote) {
         consumerNote = item.consumerNote;
       }
-      this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote });
+      this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote ,'itemType':item.item.itemType,'name':item.item.displayName});
     });
     return this.orderSummary;
   }

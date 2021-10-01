@@ -24,6 +24,7 @@ export class QRCodeGeneratordetailComponent implements OnInit , OnDestroy {
   shareLink: any;
   window_path: any;
   customId: any;
+  userId: any;
   constructor(private changeDetectorRef: ChangeDetectorRef,
     public dialogRef: MatDialogRef<QRCodeGeneratordetailComponent>,
     private angular_meta: Meta,
@@ -58,17 +59,26 @@ export class QRCodeGeneratordetailComponent implements OnInit , OnDestroy {
     this.customId = this.data.customId;
     // this.window_path = this.data.pathUrl;
     // console.log(this.wpath + this.accuid);
-    this.shareLink = this.wpath + this.accuid;
+    this.userId = this.data.userId;
+    if(this.userId){
+      this.shareLink = this.wpath + this.accuid+'/'+ this.userId ;
+    } else {
+      this.shareLink = this.wpath + this.accuid;
+    }
     // this.description = 'You can book my services by just clicking this link';
     this.description = 'For bookings use this link';
     this.imageUrl = this.wpath + 'assets/images/logo.png';
-    this.qrCodegenerateOnlineID(this.accuid);
+    this.qrCodegenerateOnlineID(this.accuid,this.userId);
   }
   ngOnDestroy() {
     this.titleService.setTitle('Jaldee');
   }
-  qrCodegenerateOnlineID(valuetogenerate) {
-    this.qr_value = projectConstants.PATH + valuetogenerate;
+  qrCodegenerateOnlineID(valuetogenerate,userid?) {
+    if(userid){
+      this.qr_value = projectConstants.PATH + valuetogenerate +'/'+ userid ;
+    } else{
+      this.qr_value = projectConstants.PATH + valuetogenerate;
+    }
     this.qr_code_oId = true;
     this.changeDetectorRef.detectChanges();
     setTimeout(() => {
