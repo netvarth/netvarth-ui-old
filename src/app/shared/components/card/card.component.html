@@ -230,7 +230,10 @@
  </p>
  <!-- <p class="availability user-available" *ngIf="user.locationName">{{user.locationName}}</p> -->
  <!-- <p class="availability user-available" *ngIf="!user.locationName"></p> -->
- <button type="button" class="btn btn-outline-warning">Book Now</button>
+ <div class="mrgn">
+    <button type="button" class="mb-0 btn btn-outline-warning">Book Now</button>
+</div>
+ <!-- <button type="button" class="btn btn-outline-warning">Book Now</button> -->
  </div></div>
 <div class="card booking-card pointer-cursor order head" *ngIf="item.type==='item-head'"
  (click)="cardActionPerformed(item.type, 'add', null, null, null, $event)">
