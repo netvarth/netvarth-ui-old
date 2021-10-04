@@ -2597,12 +2597,14 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   isPhysicalItemsPresent(){
     let physical_item_present = true;
+    if(this.activeCatalog&& this.activeCatalog.catalogItem){
     const virtualItems=this.activeCatalog.catalogItem.filter(catalogItem => catalogItem.item.itemType==='VIRTUAL')
     console.log(virtualItems.length);
     if(virtualItems.length>0 && this.activeCatalog.catalogItem.length===virtualItems.length){
       physical_item_present=false;
       this.onlyVirtualItems=true;
     }
+  }
     return physical_item_present;
   }
   checkVirtualOrPhysical(){
