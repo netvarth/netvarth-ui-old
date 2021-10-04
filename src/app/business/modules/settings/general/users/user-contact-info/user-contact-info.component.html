@@ -159,7 +159,8 @@
                 <div>{{users_list.countryCode}} {{users_list.mobileNo}}</div>
             </div> -->
       </mat-grid-tile>
-      <mat-grid-tile *ngIf="users_list.whatsAppNum">
+      <mat-grid-tile 
+      *ngIf="(users_list.whatsAppNum | json) && (users_list.whatsAppNum | json) != '{}'">
         <div class="disp-flex">
           <div class="flx_8">
             <a href="https://wa.me/{{users_list.whatsAppNum.countryCode}}{{users_list.whatsAppNum.number}}"
@@ -178,7 +179,8 @@
             </div> -->
       </mat-grid-tile>
 
-      <mat-grid-tile *ngIf="users_list.telegramNum">
+      <mat-grid-tile 
+      *ngIf="(users_list.telegramNum | json) && (users_list.telegramNum | json) != '{}'">
         <div class="disp-flex">
           <div class="flx_8">
             <a href="https://web.telegram.org/#/login" target="blank"><i class="fa fa-telegram"
