@@ -2375,3 +2375,7 @@ img.ordericon.home {
   opacity: 0.5;
   width: 12px;
 }
+.newsDetails {
+  height: 150px;
+  overflow: hidden;
+}

@@ -425,13 +425,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       (newsfeeds)=> {
         this.newsFeeds = newsfeeds;
         this.customOptions= {
-          loop:false,
+          loop:true,
           margin:10,
           mouseDrag: true,
           touchDrag: true,
           pullDrag: true,
           autoplay:true,
-          navSpeed: 100,
+          navSpeed: 200,
           dots:true,
           center: true,
           // nav:true,
