@@ -1683,7 +1683,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.action = action;
         this.selected_phone = this.userPhone;
         this.newEmail = this.payEmail;
-        this.newPhone = this.newWhatsapp = this.selected_phone;
+        this.newPhone = this.selected_phone;
     }
     showPhoneInput() {
         this.showInputSection = true;
