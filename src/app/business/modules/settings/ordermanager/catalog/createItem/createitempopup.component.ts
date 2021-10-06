@@ -170,6 +170,7 @@ onSubmit(form_data) {
         }
     }
     //  this.saveImagesForPostinstructions();
+    const expiryDate = this.convertDate(form_data.expiryDate);
     if (this.action === 'add') {
         const post_itemdata = {
             'itemCode': form_data.itemCode,
@@ -190,7 +191,7 @@ onSubmit(form_data) {
             'promotionalPrice': form_data.promotionalPrice || 0,
             'promotionalPrcnt': form_data.promotionalPrice || 0,
             'itemType':form_data.itemType,
-            'expiryDate':form_data.expiryDate,
+            'expiryDate':expiryDate,
         }
         if (!this.showPromotionalPrice) {
             post_itemdata['promotionalPriceType'] = 'NONE';
@@ -199,6 +200,21 @@ onSubmit(form_data) {
         
         this.addItem(post_itemdata);
     } 
+}
+convertDate(date?) {
+    // let today;
+    let mon;
+    let cdate;
+    if (date) {
+        cdate = new Date(date);
+    } else {
+        cdate = new Date();
+    }
+    mon = (cdate.getMonth() + 1);
+    if (mon < 10) {
+        mon = '0' + mon;
+    }
+    return (cdate.getFullYear() + '-' + mon + '-' + ('0' + cdate.getDate()).slice(-2));
 }
 itemTypeChange(event){
    if(event.value==='VIRTUAL'){
