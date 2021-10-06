@@ -266,13 +266,16 @@ export class DisplayboardDetailComponent implements OnInit {
         }
     }
 
+  
+
     editDisplayboardQSet(board) {
-        // const actionObj = {
-        //     action: 'edit',
-        //     id: board.id,
-        //     source: 'QLIST'
-        // };
-        // this.idSelected.emit(actionObj);
+        const actionObj = {
+            action: 'edit',
+            id: board.id,
+            source: 'QLIST'
+        };
+       // this.idSelected.emit(actionObj);
+       this.qSetSelected(actionObj);
     }
 
     ViewDisplayboardLayout(layout) {

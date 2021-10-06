@@ -202,6 +202,9 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         }
         return items;
     }
+
+
+    
     getFieldValue(field, checkin) {
         let fieldValue = '';
         if (field.name === 'waitlistingFor' || field.name === 'appmtFor') {

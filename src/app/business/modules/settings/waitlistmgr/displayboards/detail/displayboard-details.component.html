@@ -19,7 +19,7 @@
 
 
 
-<section class="jumbotron">
+<!-- <section class="jumbotron"> -->
     <!-- <h2 class="mx-2 px-2 text-secondary">QBoards</h2>
     <p class="mx-2 px-2 text-secondary">some text is going here</p> -->
     <div class="content loc-list displyboard ">
@@ -416,14 +416,14 @@
                                                                                     [(ngModel)]="boardSelectedItems[row + '_' + col]"
                                                                                     [ngModelOptions]="{standalone: true}"
                                                                                     (selectionChange)="handleLayoutMetric(boardSelectedItems[row + '_' + col], row + '_' + col)">
-                                                                                    <mat-option>
+                                                                                    <mat-option >
                                                                                         <button type="button"
-                                                                                            class="btn btn-primary my-5 mx-5"
-                                                                                            (click)="addQSet()">Create
-                                                                                            Query</button>
+                                                                                        class="btn btn-primary my-5 mx-5"
+                                                                                        (click)="addQSet()">Create
+                                                                                        Query</button>
                                                                                     </mat-option>
                                                                                     <mat-option [value]="qset.id"
-                                                                                        *ngFor="let qset of qset_list">
+                                                                                        *ngFor="let qset of qset_list" (click)="editDisplayboardQSet(qset)">
                                                                                         {{qset.displayName |
                                                                                         capitalizeFirst}}
                                                                                     </mat-option>
@@ -811,7 +811,7 @@
 
         <div class="clearfix"></div>
     </div>
-</section>
+<!-- </section> -->
 
 
 

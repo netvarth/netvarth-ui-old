@@ -13,7 +13,7 @@
         </h5>     
     </div>
 </section>  -->
-<section class="jumbotron">
+
 
     <!-- <h2 class="mx-3 px-3 text-secondary">QBoards</h2>
     <p class="mx-3 px-3 text-secondary">some text is going here</p> -->
@@ -110,7 +110,7 @@
 
 
         <div class="col-md-12  col-12 col-sm-12  col-lg-12 col-xs-12 no-padding-small">
-            <div class="row mr-2">
+            <div class="row mr-1">
                 <div class="col-md-12  col-12 col-sm-12 col-lg-12 col-xs-12 no-padding">
                     <div class="card" *ngIf="api_loading">
                         <app-common-innerloading-spinner></app-common-innerloading-spinner>
@@ -152,10 +152,11 @@
 
                                 <p class="col-md-12  col-12 col-sm-12 col-lg-12 col-xs-12 page-header mx-2 text-info">
                                     <!-- fa fa-arrow-left  style="border-bottom:solid lightgray; border-width: 1px;"-->
-                                    <span class=" pointer-cursor " (click)="redirecToQmanager()"></span>&nbsp;&nbsp;
+                                   <i  class="fa fa-arrow-left text-info" (click)="redirecToQmanager()"></i>
+                                    <span class=" pointer-cursor " ></span>&nbsp;&nbsp;
                                     {{qBoardscaption}}
 
-                                    <i class="fa fa-question-circle-o fa-lg text-secondary"
+                                    <i class="fa fa-question-circle-o fa-lg text-info pull-right mt-1"
                                         (click)="redirecToHelp()"></i>
                                 </p>
 
@@ -530,4 +531,3 @@
         </div>
 
     </div>
-</section>
