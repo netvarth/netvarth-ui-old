@@ -54,6 +54,7 @@ import { ConsumerGroupDialogComponent } from './shared/consumer-group-dialog/con
 import { ItemListDialogComponent } from './shared/item-list-dialog/item-list-dialog.component';
 import { ConsumerLabelDialogComponent } from './shared/consumer-label-dialog/consumer-label-dialog.component';
 import { EnquiryComponent } from './modules/enquiry/enquiry.component';
+import { JaldeeDriveModule } from './modules/jaldee-drive/jaldee-drive.module';
 
 @NgModule({
     declarations: [
@@ -101,7 +102,8 @@ import { EnquiryComponent } from './modules/enquiry/enquiry.component';
         AddProviderSchedulesModule,
         DynamicFormModule,
         JoyrideModule.forChild(),
-        InboxListModule
+        InboxListModule,
+        JaldeeDriveModule
     ],
     entryComponents: [
         AddProviderWaitlistCheckInBillComponent,

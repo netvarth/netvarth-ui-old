@@ -1,0 +1,46 @@
+<!-- <p>folder-files works!</p> -->
+<section class="">
+    <div class="card title-gb rounded-0">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()">
+
+            </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{{foldername}}
+
+        </h5>
+    </div>
+</section>
+<section>
+    <div>
+        <p-table [value]="customers" responsiveLayout="scroll">
+          <ng-template pTemplate="header">
+            <tr>
+              <!-- <th class="th">Image</th> -->
+              <th class="th" style="width:40%;">File Name</th>
+              <th class="th">Date</th>
+              <th class="th">File Type</th>
+              <th class="th">File Size</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-customer>
+            <tr>
+              <!-- <td class="td">
+                {{customer.id}}
+              </td> -->
+              <td class="td">
+                <span class="image-text">{{customer.fileName}}</span>
+              </td>
+              <td class="td">
+                <span class="image-text">{{customer.uploadedDate}}</span>
+              </td>
+              <td class="td">
+                <span>{{customer.fileType}}</span>
+              </td>
+              <td class="td">
+                <span>{{customer.fileSize}}</span>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+</section>

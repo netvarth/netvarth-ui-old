@@ -117,6 +117,8 @@ import { AttachmentPopupComponent } from './shared/components/attachment-popup/a
 import { QuestionnaireLinkModule } from './shared/components/questionnaire-link/questionnaire-link.module';
 import { PreventDoubleClickDirective } from './shared/directives/prevent-double-click.directive';
 import { PaytmService } from './shared/services/paytm.service';
+import {TableModule} from 'primeng/table';
+
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -220,7 +222,8 @@ export function init_app(globalService: GlobalService) {
     VirtualFieldsModule,
     MeetRoomModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    QuestionnaireLinkModule
+    QuestionnaireLinkModule,
+    TableModule
   ],
   providers: [
     BsModalService,

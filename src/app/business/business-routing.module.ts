@@ -42,6 +42,7 @@ const routes: Routes = [
       { path: 'sportsAndEntertainement', loadChildren: () => import('./modules/learnmore/sports/sports.module').then(m => m.SportsModule) },
       { path: 'license', loadChildren: () => import('../business/modules/license/license.module').then(m => m.LicenseModule) },
       { path: 'reports', loadChildren: () => import('../business/modules/reports/reports.module').then(m => m.ReportsModule) },
+      { path: 'drive', loadChildren: () => import('../business/modules/jaldee-drive/jaldee-drive.module').then(m => m.JaldeeDriveModule) },
       { path: 'auditlog', component: ProviderSystemAuditLogComponent },
       { path: 'alerts', component: ProviderSystemAlertComponent },
       { path: 'check-ins', loadChildren: () => import('../business/modules/check-ins/check-ins.module').then(m => m.CheckinsModule) },
