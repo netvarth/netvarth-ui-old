@@ -1,26 +1,3 @@
-<!-- Manikandan
-<form [formGroup]="loginForm" class="login-form" novalidate (ngSubmit)="loginForm.valid &&
-onSubmit(loginForm.value)">
-    <div class="form-group">
-       Login Id : {{this.loginId}}
-    </div>
-    <div class="form-group">
-        <mat-form-field>
-            <input type="password" matInput class="form-control" id="password" placeholder="Password"
-                formControlName="password" autocomplete="off" (keyup)="handlekeyup($event)">
-        </mat-form-field>
-        <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'password') && show_error"
-            errorMsg="Password is required">
-        </app-field-error-display>
-    </div>
-    <div class="mat-dialog-actions">
-        <button type="submit" mat-button [disabled]="api_loading" (click)="showError()">
-            <span *ngIf="!api_loading">Login</span>
-            <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
-            </app-common-innerloading-spinner>
-        </button>
-    </div>
-</form> -->
 <div class="col-md-12">
     <div class="row">
         <div class="col-sm-12 col-md-12">

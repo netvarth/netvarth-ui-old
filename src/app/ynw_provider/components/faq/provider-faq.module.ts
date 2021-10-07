@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../../../shared/modules/common/material.module';
-import { ProviderFaqRoutingModule } from './provider-faq-routing.module';
 import { ProviderFaqComponent } from './provider-faq.component';
-
+import { RouterModule, Routes } from '@angular/router';
+import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
+const routes: Routes = [
+    { path: '', component: ProviderFaqComponent }
+];
 @NgModule({
     imports: [
-        ProviderFaqRoutingModule,
         CommonModule,
-        SharedModule,
-        MaterialModule
+        ScrollToModule,
+        [RouterModule.forChild(routes)]
     ],
     declarations: [
         ProviderFaqComponent

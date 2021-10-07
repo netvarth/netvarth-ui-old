@@ -174,7 +174,7 @@ export class PaymentLinkComponent implements OnInit {
             this.uuid = this.bill_data.uuid;
             this.accountId = this.bill_data.accountId;
             this.countryCode = this.bill_data.billFor.countryCode;
-           
+
           }
           if (this.bill_data.accountProfile.providerBusinessName) {
             this.username = this.bill_data.accountProfile.providerBusinessName;
@@ -220,53 +220,6 @@ export class PaymentLinkComponent implements OnInit {
         data => {
           this.paymentmodes = data;
           this.razorpayEnabled = true;
-          // if (this.paymentmodes[0].isJaldeeBank) {
-          //   if (this.countryCode == '91') {
-          //     this.paytmEnabled = true;
-          //     this.interNatioanalPaid = true;
-          //   }
-          //   else {
-          //     this.razorpayEnabled = true;
-          //   }
-          // }
-
-          // else {
-          //   if (this.countryCode == '91') {
-          //     for (let modes of this.paymentmodes) {
-          //       for (let gateway of modes.payGateways) {
-          //         if (gateway == 'PAYTM') {
-          //           this.paytmEnabled = true;
-          //         }
-          //         if (gateway == 'RAZORPAY') {
-          //           this.razorpayEnabled = true;
-          //         }
-          //       }
-          //     }
-          //   }
-          //   else {
-          //     this.razorpayEnabled = true;
-          //   }
-          // }
-          //  if(this.paymentmodes[0].isJaldeeBank){
-          //   this.paytmEnabled = true;
-          //  }
-          //  else{
-          //   for(let modes of this.paymentmodes){
-          //     for(let gateway of modes.payGateways){
-          //         if(gateway == 'PAYTM'){
-          //          this.paytmEnabled = true;
-          //         }
-          //         if(gateway == 'RAZORPAY'){
-          //          this.razorpayEnabled = true;
-          //         }
-          //     }
-          //  }
-          //  }
-
-          // if (this.razorpayEnabled || this.paytmEnabled) {
-          //   this.paymode = true;
-          // }
-
         },
 
       );
@@ -302,7 +255,6 @@ export class PaymentLinkComponent implements OnInit {
         retval = dtsarr[1] + ' ' + dtsarr[2];
       }
       return retval;
-      // return dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
     } else {
       return;
     }
@@ -321,8 +273,6 @@ export class PaymentLinkComponent implements OnInit {
       this.showBillNotes = false;
     }
   }
-
-
   pay(paytype?) {
     this.isClickedOnce = true;
     let paymentWay;
@@ -394,7 +344,6 @@ export class PaymentLinkComponent implements OnInit {
       this.cdRef.detectChanges();
       this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
       this.ngZone.run(() => console.log('Transaction success'));
-
     } else if (response.STATUS == 'TXN_FAILURE') {
       this.isClickedOnce = false;
       this.paidStatus = 'false';
@@ -415,4 +364,3 @@ export class PaymentLinkComponent implements OnInit {
     this.showbill = !this.showbill;
   }
 }
-

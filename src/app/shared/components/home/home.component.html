@@ -9,26 +9,13 @@
 					<img src="assets/images/home/logo-white.png" alt="Jaldee" class="img-fluid logo" />
 				</div>
 				<div class="col-md-8 col-lg-8 site-header--links d-flex flex-wrap ">
-					<!-- <div class="download-buttons visible-xs visible-sm">
-						<span>Download Jaldee App</span>
-						<a href="#" class="cons_btn_login_top"><img src="assets/images/home/playstore-icon.png" alt="Download from Google Play Store"
-								class="" /></a>
-						<a href="#" class=""><img src="assets/images/home/applestore-icon.png" alt="Download from Apple Store"
-								class="" /></a>
-					</div> -->
 					<div class="account-links ">
 						<a (click)="providerLinkClicked()" class="pointer-cursor"><span class="bus-page-rdbtn">Service
 								Provider Home</span></a>
-						<!-- <a href="https://business.jaldee.com/" class="pointer-cursor"><span class="bus-page-rdbtn">Business
-									Partner Zone</span></a> -->
 						<a class="pointer-cursor" class="login-link"><span class="cons_btn_login_top"
 								(click)="doLogin('consumer')">Log in</span> <span class="cons_btn_join_top"
 								(click)="doSignup('consumer')">Sign up</span></a>
 					</div>
-					<!-- <div class="account-links col-xs-12 col-sm-12">
-						<a href="# " class="pointer-cursor pull-left">Business Partner Zone</a>
-						<a class="pointer-cursor" class="login-link pull-right"><span class="cons_btn_login_top" (click)="doLogin('consumer')">Log in</span> / <span class="cons_btn_join_top" (click)="doSignup('consumer')">Sign up</span></a>
-					</div> -->
 				</div>
 			</div>
 			<div class="row visible-xs visible-sm ">
@@ -36,13 +23,6 @@
 					<img src="assets/images/home/logo-white.png" alt="Jaldee" class="logo" />
 				</div>
 				<div class="col-8 col-xs-7 col-sm-7">
-					<!-- <div class="download-buttons visible-xs visible-sm">
-						<span>Download Jaldee App</span>
-						<a href="#" class="cons_btn_login_top"><img src="assets/images/home/playstore-icon.png" alt="Download from Google Play Store"
-								class="" /></a>
-						<a href="#" class=""><img src="assets/images/home/applestore-icon.png" alt="Download from Apple Store"
-								class="" /></a>
-					</div> -->
 					<div class="col-12 no-padding">
 						<div class="col-xs-12  col-sm-12 no-padding">
 							<a class="pointer-cursor" class="login-link d-block pull-right">
@@ -51,104 +31,33 @@
 						</div>
 						<div class="col-xs-12 col-sm-12 no-padding mgn-up-20">
 							<a (click)="providerLinkClicked()" class="pointer-cursor d-block pull-right">
-								<span class="bus-page-rdbtn">Service Provider Home</span></a>
-							<!-- <a href="https://business.jaldee.com/" class="pointer-cursor d-block pull-right">
-								<span class="bus-page-rdbtn">Business Partner Zone</span></a> -->
+								<span class="bus-page-rdbtn">Service Provider Home</span></a>							
 						</div>
 					</div>
-					<!-- <div class="account-links col-xs-12 col-sm-12">
-						<a href="# " class="pointer-cursor pull-left">Business Partner Zone</a>
-						<a class="pointer-cursor" class="login-link pull-right"><span class="cons_btn_login_top" (click)="doLogin('consumer')">Log in</span> / <span class="cons_btn_join_top" (click)="doSignup('consumer')">Sign up</span></a>
-					</div> -->
 				</div>
 			</div>
 		</div>
 	</header>
-
-
-
 	<main id="site-main" *ngIf="!loading">
-
 		<div id="search" class="srch">
 			<div class="container">
 				<div class="col-md-12 col-xs-12 col-sm-12 no-padding-small">
 					<div class="sa" *ngIf="domain_obtained==true">
 						<div class="account-links">
 							<h2>Avoid Waiting in Queues</h2>
-							<!-- <h5>Find Service Provider</h5> -->
 							<ng-container>
 								<app-search [showopennow]="0" [searchfields]="searchfields"
 									[domainlistpassed]="domainlist_data" [includedfrom]="'home'"></app-search>
 							</ng-container>
 						</div>
 					</div>
-				</div>
-				<!-- <div class="d-flex flex-wrap align-items-center">
-					<form id="search-form">
-						<input type="text" id="txtCity" placeholder="Bangaluru, Karnataka">
-						<input type="text" id="txtDomain" placeholder="All Domains">
-						<input type="text" id="txtKeyword"
-							placeholder="Search for doctors, professionals, beauty saloons...">
-						<button type="submit"><img src="assets/images/home/search-icon.png" alt="search"
-								class="img-fluid" /></button>
-					</form>
-					<a href="#" id="more-link">More Option</a>
-				</div> -->
-				<!-- <p class="text-center">Popular Searches</p> -->
-				<!-- <div class="service-categories d-flex d-wrap align-items-center justify-content-center">
-        		    <div class="service-icon-outer text-center">
-            		    <div class="service-icon">
-            		        <img src="assets/images/home/physician.png" alt="Physician" />
-        		        </div>
-        		        <h6>Physician</h6>
-        		    </div>
-        		    <div class="service-icon-outer text-center">
-            		    <div class="service-icon">
-            		        <img src="assets/images/home/hospital.png" alt="Hospital" />
-            		    </div>
-            		    <h6>Hospital</h6>
-        		    </div>
-        		    <div class="service-icon-outer text-center">
-            		    <div class="service-icon">
-            		        <img src="assets/images/home/dentist.png" alt="Dentist" />
-            		    </div>
-            		    <h6>Dentist</h6>
-        		    </div>
-        		    <div class="service-icon-outer text-center">
-            		    <div class="service-icon">
-            		        <img src="assets/images/home/gynecologist.png" alt="Gynecologist" />
-            		    </div>
-            		    <h6>Gynecologist</h6>
-        		    </div>
-        		    <div class="service-icon-outer text-center">
-            		    <div class="service-icon">
-            		        <img src="assets/images/home/dermatologist.png" alt="Dermatologist" />
-            		    </div>
-            		    <h6>Dermatologist</h6>
-        		    </div>
-        		    <div class="service-icon-outer text-center">
-            		    <div class="service-icon">
-            		        <img src="assets/images/home/ayurvedic.png" alt="Ayurvedic" />
-            		    </div>
-            		    <h6>Ayurvedic</h6>
-        		    </div>
-        		    <div class="service-icon-outer text-center">
-            		    <div class="service-icon">
-            		        <img src="assets/images/home/homeopathy.png" alt="Homeopathy" />
-            		    </div>
-            		    <h6>Homeopathy</h6>
-        		    </div>
-				</div> -->
-
+				</div>				
 			</div>
 		</div>
 		<section id="welcome" class="mgn-bt-30">
 			<div class="container">
 				<div class="row no-gutters align-items-end">
-					<div class="col-lg-12 text-block">
-						<!-- <h3>Welcome to</h3>
-						<img src="assets/images/home/logo-blue.png" alt="Jaldee" class="img-fluid" /> -->
-						<!-- <section id="reviews"> -->
+					<div class="col-lg-12 text-block">					
 						<div class="col-md-12">
 							<div style="text-align: center;margin-bottom: 20px;">
 								<a href="https://t.me/JaldeeBot" target="_blank" class="book_telgrm_btn"><span class="svg-icon"><i class="fa fa-telegram"></i></span>Book on Telegram</a>
@@ -156,31 +65,14 @@
 							</div>
 
 							<div class="section-header text-center">
-								<img src="assets/images/home/logo-blue.png" alt="Jaldee" />
-								<!-- <a href="#" class="book_telgrm_btn">
-									<span class="svg-icon">
-										<i class="fa fa-telegram"></i>
-
-									</span> Success</a> -->
-
-								<!-- <h2 class="section-title">Jaldee News</h2> -->
-								<!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p> -->
+								<img src="assets/images/home/logo-blue.png" alt="Jaldee" />								
 							</div>
 							<owl-carousel [options]="carouselOne" [carouselClasses]="['owl-carousel', 'owl-theme']">
 								<div class="item  review-card text-center">
-									<!-- <div class="customer-avatar">
-											<img src="assets/images/home/client.png" alt="client-avatar" />
-										</div> -->
 									<div class="customer-info">
-										<!-- <h4 class="name">John Smith</h4> -->
 										<h4 class="name">Jaldee Telehealth</h4>
 										<p class="position">&nbsp;</p>
-										<!-- <p class="position">Manager</p> -->
-									</div>
-									<!-- <div class="ratings">
-											<img src="assets/images/home/rating-idle.png" alt="ratings" class="rating-idle" />
-											<img src="assets/images/home/rating-hover.png" alt="ratings" class="rating-hover" />
-										</div> -->
+									</div>								
 									<div class="review-text">
 										<p>Consult your doctor from anywhere. Visit <a
 												routerLink="/business">telehealth.jaldee.com</a> to view
@@ -189,20 +81,10 @@
 									</div>
 								</div>
 								<div class="item review-card text-center">
-									<!-- <div class="customer-avatar">
-											<img src="assets/images/home/client.png" alt="client-avatar" />
-										</div> -->
 									<div class="customer-info">
-										<!-- <h4 class="name">John Smith</h4> -->
 										<h4 class="name">Jaldee Blog</h4>
 										<p class="position">&nbsp;</p>
-
-										<!-- <p class="position">Manager</p> -->
 									</div>
-									<!-- <div class="ratings">
-											<img src="assets/images/home/rating-idle.png" alt="ratings" class="rating-idle" />
-											<img src="assets/images/home/rating-hover.png" alt="ratings" class="rating-hover" />
-										</div> -->
 									<div class="review-text">
 										<p>Jaldee is proud to announce the launch of our new blog. Check it out! Visit
 											<a href="https://blog.jaldee.com/">blog.jaldee.com</a>.
@@ -210,19 +92,10 @@
 									</div>
 								</div>
 								<div class="item review-card text-center">
-									<!-- <div class="customer-avatar">
-											<img src="assets/images/home/client.png" alt="client-avatar" />
-										</div> -->
 									<div class="customer-info">
-										<!-- <h4 class="name">John Smith</h4> -->
 										<h4 class="name">Jaldee Business</h4>
 										<p class="position">&nbsp;</p>
-										<!-- <p class="position">Manager</p> -->
 									</div>
-									<!-- <div class="ratings">
-											<img src="assets/images/home/rating-idle.png" alt="ratings" class="rating-idle" />
-											<img src="assets/images/home/rating-hover.png" alt="ratings" class="rating-hover" />
-										</div> -->
 									<div class="review-text">
 										<p>Get your website and QR code online in minutes. Visit <a
 												routerLink="/business">business.jaldee.com</a> to get
@@ -230,25 +103,8 @@
 									</div>
 								</div>
 							</owl-carousel>
-						</div>
-						<!-- </section> -->
-						<!-- <ul>
-							<li>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-								has been the industry's standard dummy text ever since the 1500s, when an unknown
-								printer took a galley of type and scrambled it to make a type specimen book. It has
-								survived not only five centuries, but also the leap into electronic typesetting,
-								remaining essentially unchanged. It was popularised in the 1960s with the release of
-								Letraset sheets.</li>
-							<li>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-								has been the industry's standard dummy text ever since the 1500s, when an unknown
-								printer took a galley of type and scrambled it to make a type specimen book.</li>
-							<li>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-								has been the industry's standard dummy text ever since the 1500s.</li>
-						</ul> -->
+						</div>						
 					</div>
-					<!-- <div class="col-lg-6 image-block">
-						<img src="assets/images/home/welcome-1.png" alt="Jaldee" class="img-fluid" />
-					</div> -->
 				</div>
 			</div>
 		</section>
@@ -296,17 +152,7 @@
 						</ul>
 					</div>
 				</div>
-				<div class="d-flex flex-wrap video-wrapper">
-					<!-- <div class="video-text-box">
-						<h2>Lorem Ipsum</h2>
-						<p>When you choose The Derby Hearing Centre you’re guaranteed an excellent service, whether you
-							require wax removal or a new hearing aid. We take care of everything, ensuring that you’re
-							able to hear in high definition. A 5 year warranty is available on premium hearing aids, and
-							this also includes free batteries for two years. Trust in the skills of our specialists, and
-							the state-of-the-art equipment that we use. Call us today for an excellent service,
-							completely independent and we supply every hearing aid make and model available from the top
-							manufactures.</p>
-					</div> -->
+				<div class="d-flex flex-wrap video-wrapper">					
 					<div class="video-box mgn-up-50" id="video-box">
 						<img src="assets/images/home/video-poster.png" alt="Poster" class="img-fluid w-100" />
 						<span id="play-btn" (click)="playvideoClicked()"><img
@@ -315,17 +161,6 @@
 				</div>
 			</div>
 		</section>
-
-		<!-- <section id="video">
-			<div class="container">
-				<div class="section-header text-center">
-					<img src="assets/images/home/logo-blue.png" alt="Jaldee" />
-					<h2 class="section-title">Our Video</h2>
-				</div>
-				
-			</div>
-		</section> -->
-
 		<section id="services">
 			<div class="container">
 				<div class="section-header text-center">
@@ -496,18 +331,7 @@
 					<img src="assets/images/iphone.png">
 				</div>
 			</div>
-		</section>
-		<!-- <div id="grey-cta-bar">
-			<div class="container">
-				<div class="d-flex flex-wrap align-items-center">
-					<h3><span class="small">Can your Service Provider</span><br>Benefit from <span
-							style="color: #f1b51c;" class="mgn-rt-15">Jaldee?</span></h3>
-					<a href="https://docs.google.com/forms/d/1BieILn0BeFfnANtQFJiGkEM_kdqwBRG8wqhJQi2PKVc"
-						class="btn cta-btn-lg mt-4 mt-lg-0">Refer a Provider. Earn &#8377; 250/-</a>
-				</div>
-			</div>
-		</div> -->
-
+		</section>		
 		<section id="split-ctas">
 			<div class="row no-gutters">
 				<div class="cta col-lg-6">
@@ -591,23 +415,7 @@
 						<img src="assets/images/home/logo-white.png" alt="Jaldee" class="img-fluid" />
 					</div>
 
-					<div class="col-lg-4 social-menu text-center text-lg-right">
-						<!-- <span>Follow Us:</span>
-						<a class="social-icon fa fa-facebook" href="#" target="_blank" title="Follow us on Facebook"
-							rel="noopener noreferrer">
-						</a>
-						<a class="social-icon fa fa-twitter" href="#" target="_blank" title="Follow us on Twitter"
-							rel="noopener noreferrer">
-						</a>
-						<a class="social-icon fa fa-instagram" href="#" target="_blank" title="Follow us on Instagram"
-							rel="noopener noreferrer">
-						</a>
-						<a class="social-icon fa fa-google-plus" href="#" target="_blank"
-							title="Follow us on Google Plus" rel="noopener noreferrer">
-						</a>
-						<a class="social-icon fa fa-youtube-play" href="#" target="_blank"
-							title="Subscribe our Youtube Channel" rel="noopener noreferrer">
-						</a> -->
+					<div class="col-lg-4 social-menu text-center text-lg-right">						
 					</div>
 				</div>
 
@@ -632,9 +440,7 @@
 						<a class="social-icon fa fa-youtube-play"
 							href="https://www.youtube.com/channel/UCZD8V1OapzlaS5eNET9x3mg" target="_blank"
 							title="Subscribe our Youtube Channel" rel="noopener noreferrer">
-						</a>
-						<!-- <a href="#">Privacy Policy</a><span class="separator">|</span><a href="#">Privacy Shield Privacy
-							Notice</a><span class="separator">|</span><a href="#">Site Map</a> -->
+						</a>					
 					</div>
 				</div>
 			</div>

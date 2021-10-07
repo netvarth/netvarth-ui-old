@@ -1,19 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../../../../shared/modules/common/shared.module';
-import { HeaderModule } from '../../../../shared/modules/header/header.module';
-
-// import { SearchDataStorageService  } from '../../services/search-datastorage.services';
-
-import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { EducationComponent } from './education.component';
 import { EducationRoutingModule } from './education.routing.module';
-// import { HttpCommonService } from '../../services/http-common.service';
 @NgModule({
     imports: [ 
-      SharedModule,
-      HeaderModule,
-      BreadCrumbModule,
-      EducationRoutingModule
+      EducationRoutingModule,
+      MatExpansionModule,
+      CommonModule
     ],
     declarations: [EducationComponent],
     exports: [EducationComponent],
