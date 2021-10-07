@@ -9,6 +9,7 @@ import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
 import { FolderFilesComponent } from './folder-files/folder-files.component';
+import { PreviewuploadedfilesComponent } from './previewuploadedfiles/previewuploadedfiles.component';
 
 
 
@@ -17,6 +18,7 @@ import { FolderFilesComponent } from './folder-files/folder-files.component';
   declarations: [
     JaldeeDriveComponent,
     FolderFilesComponent,
+    PreviewuploadedfilesComponent,
 
   ],
   imports: [

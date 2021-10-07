@@ -9,6 +9,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
 import { Location } from '@angular/common';
 import { AddproviderAddonComponent } from '../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 import { MatDialog } from '@angular/material/dialog';
+import { PreviewuploadedfilesComponent } from '../previewuploadedfiles/previewuploadedfiles.component';
 
 @Component({
   selector: 'app-jaldee-drive',
@@ -67,40 +68,38 @@ export class JaldeeDriveComponent implements OnInit {
     'folderName': false,
   };
   filtericonTooltip = '';
-  add_button = '';
-  users_list: any = [];
-  breadcrumb_moreoptions: any = [];
+  // breadcrumb_moreoptions: any = [];
   domain;
   open_filter = false;
-  breadcrumbs = [
-    {
-      url: '/provider/settings',
-      title: 'Settings'
+  // breadcrumbs = [
+  //   {
+  //     url: '/provider/settings',
+  //     title: 'Settings'
 
-    },
-    {
-      title: Messages.GENERALSETTINGS,
-      url: '/provider/settings/general'
-    },
-    {
-      title: 'Users'
-    }
-  ];
-  userTypesFormfill: any = [
-    {
-      name: 'ASSISTANT',
-      displayName: 'Assistant'
-    },
-    {
-      name: 'PROVIDER',
-      displayName: 'Provider'
-    },
-    {
-      name: 'ADMIN',
-      displayName: 'Admin'
-    }];
+  //   },
+  //   {
+  //     title: Messages.GENERALSETTINGS,
+  //     url: '/provider/settings/general'
+  //   },
+  //   {
+  //     title: 'Users'
+  //   }
+  // ];
+  // userTypesFormfill: any = [
+  //   {
+  //     name: 'ASSISTANT',
+  //     displayName: 'Assistant'
+  //   },
+  //   {
+  //     name: 'PROVIDER',
+  //     displayName: 'Provider'
+  //   },
+  //   {
+  //     name: 'ADMIN',
+  //     displayName: 'Admin'
+  //   }];
   api_loading: boolean;
-  departments: any;
+  // departments: any;
   loadComplete = false;
   user_count: any = 0;
   pagination: any = {
@@ -167,7 +166,7 @@ export class JaldeeDriveComponent implements OnInit {
   storageleft: any;
   weightageValue = 0;
   addondialogRef: any;
-
+  fileviewdialogRef: any;
 
   constructor(
     private groupService: GroupStorageService,
@@ -505,18 +504,34 @@ export class JaldeeDriveComponent implements OnInit {
     // if (this.corpSettings && this.corpSettings.isCentralised) {
     //   this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
     // } else {
-      this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
-        width: '50%',
-        data: {
-          type: 'addons'
-        },
-        panelClass: ['popup-class', 'commonpopupmainclass'],
-        disableClose: true
-      });
-      this.addondialogRef.afterClosed().subscribe(result => {
-        if (result) {
-        }
-      });
-    
+    this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
+      width: '50%',
+      data: {
+        type: 'addons'
+      },
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true
+    });
+    this.addondialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      }
+    });
+
+  }
+  preview(file) {
+    this.fileviewdialogRef = this.dialog.open(PreviewuploadedfilesComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'uploadfilecomponentclass'],
+      disableClose: true,
+      data: {
+        file: file,
+
+      }
+    });
+    this.fileviewdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+
+      }
+    });
   }
 }

@@ -161,7 +161,7 @@
                     </tr>
                   </ng-template>
                   <ng-template pTemplate="body" let-customer>
-                    <tr>
+                    <tr style="cursor: pointer;" (click)="preview(customer)">
                       <td class="td">
                         <span class="image-text">{{customer.fileName}}</span>
                       </td>
@@ -621,8 +621,8 @@
       </ng-template>
       <ng-template pTemplate="body" let-customer>
         <tr>
-          <td class="td">
-            <span class="image-text">{{customer.fileName}}</span>
+          <td class="td" >
+            <span (click)="preview(customer)" class="image-text" >{{customer.fileName}}</span>
           </td>
           <td class="td">
             <span class="image-text">{{customer.uploadedDate}}</span>
