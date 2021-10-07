@@ -165,7 +165,7 @@ export class JaldeeDriveComponent implements OnInit {
   addUser = false;
   totalcount: any;
   storageleft: any;
-  weightageValue = 80;
+  weightageValue = 0;
   addondialogRef: any;
 
 
@@ -199,6 +199,7 @@ export class JaldeeDriveComponent implements OnInit {
       (data: any) => {
         console.log(data);
         this.storageleft = data;
+        this.weightageValue = this.storageleft.usedStorage
       }
     );
   }
@@ -514,9 +515,8 @@ export class JaldeeDriveComponent implements OnInit {
       });
       this.addondialogRef.afterClosed().subscribe(result => {
         if (result) {
-          // this.getSMSCredits();
         }
       });
-    // }
+    
   }
 }

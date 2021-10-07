@@ -49,6 +49,7 @@
           </div>
           <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 bold pad-top-10 mgn-up-10 mgn-bt-10 border-tp">
             <div>
+              <p>Choose folder to upload</p>
               <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)">
                 <mat-radio-button [value]="'private'">
                   Private folder
@@ -208,13 +209,18 @@
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
                     <div class="col-md-4">Available Space</div>
                     <div>
-                      <div align="center">
+                      <!-- <div align="center">
                         <circle-progress [percent]="10" [title]="2.2" [space]="-10" [radius]="25" [outerStrokeWidth]="3"
                           [innerStrokeWidth]="0" [outerStrokeColor]="'#152d56'" [innerStrokeColor]="'#152d56'"
                           [animation]="true" [animationDuration]="1000"></circle-progress>
+                      </div> -->
+                      <div class="col-md-4">
+                        <span>{{storageleft.remainingStorage}}</span>
                       </div>
                     </div>
-                    <div style="margin-top:5%;" class="col-md-4">GB left</div>
+                    <!-- <div  style="margin-top:5%;" class="col-md-4">GB left</div> -->
+                    <div class="col-md-4">GB left</div>
+
                   </div>
                 </div>
               </div>
@@ -223,13 +229,17 @@
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
                     <div class="col-md-4">Storage</div>
                     <div>
-                      <div align="center">
+                      <!-- <div align="center">
                         <circle-progress [percent]="22" [title]="22" [space]="-10" [radius]="25" [outerStrokeWidth]="3"
                           [innerStrokeWidth]="0" [outerStrokeColor]="'#4882c2'" [innerStrokeColor]="'#e7e8ea'"
                           [animation]="true" [animationDuration]="1000"></circle-progress>
+                      </div> -->
+                      <div class="col-md-4">
+                        <span>{{storageleft.usedStorage}}</span>
                       </div>
                     </div>
-                    <div style="margin-top:5%;" class="col-md-4">Used</div>
+                    <!-- <div style="margin-top:5%;" class="col-md-4">Used</div> -->
+                    <div class="col-md-4">Used</div>
                   </div>
                 </div>
               </div>
@@ -239,13 +249,18 @@
                     <div class="col-md-4">Total Shared</div>
                     <div>
                       <div align="center">
-                        <circle-progress [percent]="totalcount" [title]="totalcount" [space]="-10" [radius]="25"
+                        <!-- <circle-progress [percent]="totalcount" [title]="totalcount" [space]="-10" [radius]="25"
                           [outerStrokeWidth]="3" [innerStrokeWidth]="0" [outerStrokeColor]="'#4882c2'"
                           [innerStrokeColor]="'#e7e8ea'" [animation]="true" [animationDuration]="1000">
-                        </circle-progress>
+                        </circle-progress> -->
+                        <div class="col-md-4">
+                          <span>{{totalcount}}</span>
+                        </div>
+
                       </div>
                     </div>
-                    <div style="margin-top:5%;" class="col-md-4">Files</div>
+                    <!-- <div style="margin-top:5%;" class="col-md-4">Files</div> -->
+                    <div class="col-md-4">Files</div>
                   </div>
                 </div>
               </div>
@@ -467,14 +482,6 @@
   </div>
 </section>
 <section class="waitlist-box-check">
-  <!-- <div class="col-md-12 col-xs-12 col-sm-12 bus-bprof-strength no-padding">
-    <div class="progress bar-wdth  mt-2 no-padding" style="height:16px;">
-      <div class="progress-bar progress-bar-animated active" role="progressbar" [style.width.%]="weightageValue"
-        aria-valuenow="weightageValue" aria-valuemin="0" aria-valuemax="100" data-toggle="popover"></div>
-    </div>
-
-  </div> -->
-
   <div class="col-md-12 col-xs-12 col-sm-12 ">
     <div class="card no-mgn-bt card_addon txt_centr">
       <!-- <div class="txt_adon">Bill Due</div>
@@ -606,7 +613,6 @@
     <p-table [value]="customers" responsiveLayout="scroll">
       <ng-template pTemplate="header">
         <tr>
-          <!-- <th class="th">Image</th> -->
           <th class="th">File Name</th>
           <th class="th">Date</th>
           <th class="th">File Type</th>
@@ -615,9 +621,6 @@
       </ng-template>
       <ng-template pTemplate="body" let-customer>
         <tr>
-          <!-- <td class="td">
-            {{customer.id}}
-          </td> -->
           <td class="td">
             <span class="image-text">{{customer.fileName}}</span>
           </td>
@@ -634,8 +637,4 @@
       </ng-template>
     </p-table>
   </div>
-  <!-- </div>
-      </div> -->
-  <!-- </div> -->
-  <!-- </div> -->
 </section>
