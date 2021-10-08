@@ -234,6 +234,8 @@
                                                                     src="../../../../assets/images/Delivery.svg" /></div>
                                                                 <div *ngIf="his_wait.homeDelivery"><img class="ordericon pickup"
                                                                     src="../../../../assets/images/order/Storepickup.svg" /></div>
+                                                                    <div *ngIf="!his_wait.homeDelivery &&!his_wait.storePickup"><img class="ordericon pickup"
+                                                                        src="../../../../assets/images/order/e-delivery.png" style="height:40px;width:40px"/></div>
                                                             <!-- <i class="fa fa-shopping-cart shop_cart_icon"></i> -->
                                                         </div>
                                                         <span> &nbsp;{{his_wait.orderDate | date: newDateFormat }}<br>

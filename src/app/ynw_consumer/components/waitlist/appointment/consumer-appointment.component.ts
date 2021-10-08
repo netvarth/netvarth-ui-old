@@ -146,6 +146,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         base64: [],
         caption: []
     };
+    paymentBtnDisabled = false;
     editBookingFields = false;
     activeWt;
     searchForm: FormGroup;
@@ -1824,8 +1825,20 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     saveCheckin(type?, paymenttype?) {
+        // if (type === 'appt') {
+        //     this.isClickedOnce = true;
+        // }
         if (type === 'appt') {
-            this.isClickedOnce = true;
+            if (this.interNatioanalPaid) {
+                this.isClickedOnce = true
+                this.paymentBtnDisabled = false;
+
+            }
+            if (this.razorpayEnabled && !this.paytmEnabled) {
+                this.isClickedOnce = true
+                this.paymentBtnDisabled = false;
+            }
+        
         }
         if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
             if (this.waitlist_for.length !== 0) {
@@ -2513,7 +2526,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.action = action;
         this.selected_phone = this.userPhone;
         this.newEmail = this.payEmail;
-        this.newPhone = this.newWhatsapp = this.selected_phone;
+        this.newPhone = this.selected_phone;
     }
     showPhoneInput() {
         this.showInputSection = true;
@@ -3123,6 +3136,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         } else {
             return url;
         }
+    }
+
+    viewAttachments() {
+        this.action = 'attachment';
+        this.modal.nativeElement.click();
     }
     getThumbUrl(attachment) {
         if (attachment && attachment.s3path) {

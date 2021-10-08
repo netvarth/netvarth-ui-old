@@ -26,8 +26,6 @@ import { MaterialModule } from '../shared/modules/common/material.module';
 import { SharedModule } from '../shared/modules/common/shared.module';
 import { PagerModule } from '../shared/modules/pager/pager.module';
 import { LoadingSpinnerModule } from '../shared/modules/loading-spinner/loading-spinner.module';
-import { ProviderSystemAuditLogComponent } from '../ynw_provider/components/provider-system-auditlogs/provider-system-auditlogs.component';
-import { ProviderSystemAlertComponent } from '../ynw_provider/components/provider-system-alerts/provider-system-alerts.component';
 import { AddProviderBprofileSearchAdwordsComponent } from '../ynw_provider/components/add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
 import { AddProviderWaitlistCheckInBillComponent } from './modules/check-ins/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
 import { InboxModule } from '../shared/modules/inbox/inbox.module';
@@ -62,8 +60,6 @@ import { EnquiryComponent } from './modules/enquiry/enquiry.component';
         FooterNewComponent,
         BusinessHomeComponent,
         BusinessComponent,
-        ProviderSystemAuditLogComponent,
-        ProviderSystemAlertComponent,
         AddProviderBprofileSearchAdwordsComponent,
         AddProviderWaitlistCheckInBillComponent,
         GoogleMapComponent,

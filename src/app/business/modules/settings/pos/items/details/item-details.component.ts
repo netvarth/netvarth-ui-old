@@ -474,7 +474,7 @@ export class ItemDetailsComponent implements OnInit {
             }
         }
         //  this.saveImagesForPostinstructions();
-       
+            const expiryDate = this.convertDate(form_data.expiryDate);
             let post_itemdata = {
                 'itemCode': form_data.itemCode,
                 'itemNameInLocal' :form_data.itemNameInLocal,
@@ -483,7 +483,7 @@ export class ItemDetailsComponent implements OnInit {
                 'shortDesc': form_data.shortDec,
                 'itemDesc': form_data.displayDesc,
                 'itemType':form_data.itemType,
-                'expiryDate':form_data.expiryDate,
+                'expiryDate':expiryDate,
                 'note': form_data.note,
                 'taxable': form_data.taxable || false,
                 'price': form_data.price,
@@ -612,6 +612,21 @@ export class ItemDetailsComponent implements OnInit {
                     this.disableButton = false;
                 }
             );
+    }
+     convertDate(date?) {
+        // let today;
+        let mon;
+        let cdate;
+        if (date) {
+            cdate = new Date(date);
+        } else {
+            cdate = new Date();
+        }
+        mon = (cdate.getMonth() + 1);
+        if (mon < 10) {
+            mon = '0' + mon;
+        }
+        return (cdate.getFullYear() + '-' + mon + '-' + ('0' + cdate.getDate()).slice(-2));
     }
     resetApiErrors() {
         this.api_error = null;

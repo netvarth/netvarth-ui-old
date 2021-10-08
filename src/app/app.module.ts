@@ -16,7 +16,6 @@ import { SearchModule } from './shared/modules/search/search.module';
 import { RatingStarModule } from './shared/modules/ratingstar/ratingstart.module';
 import { PagerModule } from './shared/modules/pager/pager.module';
 // import { HeaderModule } from './shared/modules/header/header.module';
-// import { CheckInModule } from './shared/modules/check-in/check-in.module';
 import { ConsumerCheckinHistoryListModule } from './shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.module';
 import { AppComponent, projectConstants } from './app.component';
 import { HomeComponent } from './shared/components/home/home.component';
@@ -25,9 +24,7 @@ import { SignUpComponent } from './shared/components/signup/signup.component';
 import { LoginComponent } from './shared/components/login/login.component';
 import { SearchDetailServices } from './shared/components/search-detail/search-detail-services.service';
 import { ConfirmBoxComponent } from './shared/components/confirm-box/confirm-box.component';
-import { ReturnPaymentComponent } from './shared/components/return-payment/return-payment.component';
 import { AddInboxMessagesComponent } from './shared/components/add-inbox-messages/add-inbox-messages.component';
-import { ExistingCheckinComponent } from './shared/components/existing-checkin/existing-checkin.component';
 import { ServiceDetailComponent } from './shared/components/service-detail/service-detail.component';
 import { ConsumerRateServicePopupComponent } from './shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
 import { AuthGuardConsumer, AuthGuardProvider, AuthGuardHome, AuthGuardLogin} from './shared/guard/auth.guard';
@@ -49,11 +46,9 @@ import { LoadingSpinnerModule } from './shared/modules/loading-spinner/loading-s
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { LazyModule } from './shared/modules/lazy-load/lazy.module';
 import { ForceDialogComponent } from './shared/components/force-dialog/force-dialog.component';
-import { AdminLoginComponent } from './shared/components/admin/login/login.component';
 import { ConsumerJoinComponent } from './ynw_consumer/components/consumer-join/join.component';
 import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.module';
 import { DisplayboardLayoutContentModule } from './business/modules/displayboard-content/displayboard-content.module';
-import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
 import { SalesChannelModule } from './shared/modules/saleschannel/saleschannel.module';
 import { ForgotPasswordModule } from './shared/components/forgot-password/forgot-password.module';
 import { SetPasswwordModule } from './shared/components/set-password-form/set-password-form.module';
@@ -64,7 +59,6 @@ import { Razorpaymodel } from './shared/components/razorpay/razorpay.model';
 import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefill.model';
 import { WindowRefService } from './shared/services/windowRef.service';
 import { RazorpayService } from './shared/services/razorpay.service';
-import { PaymentLinkComponent } from './shared/components/payment-link/payment-link.component';
 import { ProviderDataStorageService } from './ynw_provider/services/provider-datastorage.service';
 import { JoyrideModule } from 'ngx-joyride';
 import { UpdateProfilePopupComponent } from './shared/components/update-profile-popup/update-profile-popup.component';
@@ -75,10 +69,7 @@ import { VoicecallDetailsSendComponent } from './business/modules/appointments/v
 import { TruncateModule } from './shared/pipes/limitTo.module';
 import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
 import { CardModule } from './shared/components/card/card.module';
-import { CheckoutSharedComponent } from './shared/components/checkout/checkout.component';
 import { MatStepperModule } from '@angular/material/stepper';
-import { AddAddressComponent } from './shared/components/checkout/add-address/add-address.component';
-import {  ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { SessionStorageService } from './shared/services/session-storage.service';
 import { CookieProcessor } from './shared/services/cookie-processor.service';
@@ -89,7 +80,6 @@ import { SnackbarService } from './shared/services/snackbar.service';
 import { ErrorMessagingService } from './shared/services/error-message.service';
 import { AuthService } from './shared/services/auth-service';
 import { CommonDataStorageService } from './shared/services/common-datastorage.service';
-import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
 import { MeetService } from './shared/services/meet-service';
 import { CommunicationComponent } from './shared/components/communication/communication.component';
 import { DateTimeProcessor } from './shared/services/datetime-processor.service';
@@ -106,14 +96,11 @@ import { environment } from '../environments/environment';
 import { ConsumerAuthService } from './shared/services/consumer-auth-service';
 import { ListRecordingsDialogComponent } from './shared/components/list-recordings-dialog/list-recordings-dialog.component';
 import { VirtualFieldsModule } from './ynw_consumer/components/virtualfields/virtualfields.module';
-import { MeetRoomComponent } from './shared/components/meet-room/meet-room.component';
-import { MeetRoomModule } from './shared/components/meet-room/meet-room.module';
 import { MediaService } from './shared/services/media-service';
 import { RequestDialogComponent } from './business/shared/meeting-room/request-dialog/request-dialog.component';
 import { VideoCallSharedComponent } from './business/modules/video-call/video-call.component';
 import { FileReaderService } from './shared/services/file-reader.service';
 import { AttachmentPopupComponent } from './shared/components/attachment-popup/attachment-popup.component';
-import { QuestionnaireLinkModule } from './shared/components/questionnaire-link/questionnaire-link.module';
 import { PreventDoubleClickDirective } from './shared/directives/prevent-double-click.directive';
 import { PaytmService } from './shared/services/paytm.service';
 export function init_app(globalService: GlobalService) {
@@ -129,25 +116,16 @@ export function init_app(globalService: GlobalService) {
     SignUpComponent,
     LoginComponent,
     ConfirmBoxComponent,
-    ReturnPaymentComponent,
     AddInboxMessagesComponent,
-    ExistingCheckinComponent,
     ServiceDetailComponent,
     ConsumerRateServicePopupComponent,
     CouponsComponent,
     RequestForComponent,
     ForceDialogComponent,
-    AdminLoginComponent,
     ConsumerJoinComponent,
-    ManageProviderComponent,
-    PaymentLinkComponent,
     VoicecallDetailsSendComponent,
     JdnComponent,
     UpdateProfilePopupComponent,
-    CheckoutSharedComponent,
-    AddAddressComponent,
-    ItemDetailsSharedComponent,
-    MeetingRoomComponent,
     CommunicationComponent,
     ListRecordingsDialogComponent,
     RequestDialogComponent,
@@ -160,7 +138,6 @@ export function init_app(globalService: GlobalService) {
     LoginComponent,
     ConfirmBoxComponent,
     AddInboxMessagesComponent,
-    ExistingCheckinComponent,
     ServiceDetailComponent,
     ConsumerRateServicePopupComponent,
     VoicecallDetailsSendComponent,
@@ -169,12 +146,9 @@ export function init_app(globalService: GlobalService) {
     ForceDialogComponent,
     JdnComponent,
     UpdateProfilePopupComponent,
-    AddAddressComponent,
     ListRecordingsDialogComponent,
-    MeetRoomComponent,
     RequestDialogComponent,
     AttachmentPopupComponent
-
   ],
   imports: [
     CapitalizeFirstPipeModule,
@@ -191,7 +165,6 @@ export function init_app(globalService: GlobalService) {
     SharedModule,
     RatingStarModule,
     HeaderModule,
-    // CheckInModule,
     ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     ConsumerCheckinHistoryListModule,
     Nl2BrPipeModule,
@@ -216,9 +189,7 @@ export function init_app(globalService: GlobalService) {
     ModalModule.forRoot(),
     ShareIconsModule,
     VirtualFieldsModule,
-    MeetRoomModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    QuestionnaireLinkModule
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     BsModalService,

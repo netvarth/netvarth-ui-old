@@ -954,7 +954,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   
       'orderNote': this.orderlistNote,
       'coupons': this.selected_coupons,
-      'countryCode': this.customer_countrycode,
+      'countryCode': '+91',
     }
     if (this.orderType !== 'SHOPPINGLIST') {
       post_Data['orderItem']= this.getOrderItems();
