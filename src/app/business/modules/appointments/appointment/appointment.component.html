@@ -15,9 +15,30 @@
                 <div class="card p0" *ngIf="!showCheckin && !showQuestionnaire">
                     <div class="copy locd">
                         <div class="lbl col-sm-12 col-md-12 col-lg-12">
-                            <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()">
-                                <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 sc-frm">
-                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                <h5 class="mgn-up-10" *ngIf="source !== 'appt-block'"><b> Find an existing
+                                        {{customer_label}} and create
+                                        appointment</b></h5> 
+                                    <h5 class="mgn-up-10" *ngIf="source === 'appt-block'"> <b>Find an existing
+                                        {{customer_label}}</b></h5>
+                                        <div class="input-group mob-container mgn-up-20">
+                                        <!-- <mat-label for="phone" class="coloroflabels">Enter {{customer_label | capitalizeFirst}} Phone#</mat-label> -->
+                                      <ngx-intl-tel-input [cssClass]="'custom'" class="internumbox" [preferredCountries]="preferredCountries"
+                                          [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                          [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
+                                          [maxLength]="15" [phoneValidation]="true"
+                                          [selectedCountryISO] = "selectedCountry"
+                                          [separateDialCode]="separateDialCode" [numberFormat]="PhoneNumberFormat.National" name="phone"
+                                          [(ngModel)]="phone" (keyup)="resetApiErrors()">
+                                      </ngx-intl-tel-input>
+                                      <button class="findcolor"
+                                      (click)="serchCustomers(phone)"><i class="fa fa-search" aria-hidden="true"></i>
+                                    </button></div>
+                                      <!-- <div class="input-group-append"><button class="create_new_button cs-btn bt3"
+                                        (click)="serchCustomers(phone)">Find</button></div> -->
+                            <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()"class="mgn-up-20">
+                                <div class="or-style">OR</div>
+                                <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding  mgn-up-20 sc-frm">
+                                    <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding"> -->
                                         <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding mgn-bt-50 apptdate-slot"
                                             *ngIf="slotTime">
                                             <div class="col-md-6 col-lg-6 col-xs-5 col-sm-6 no-padding">
@@ -25,53 +46,33 @@
                                             <div class="col-md-6 col-lg-6 col-xs-7 col-sm-6 no-padding"> Appointment
                                                 slot: {{getSingleTime(slotTime)}}</div>
                                         </div>
-                                        <div class="mgn-up-10" *ngIf="source !== 'appt-block'"> Find an existing
-                                            {{customer_label}} and create
-                                            appointment</div>
-                                        <div class="mgn-up-10" *ngIf="source === 'appt-block'"> Find an existing
-                                            {{customer_label}}</div>
+                                        
                                             
-                                        <div class="form-group mgn-up-20">
+                                        <!-- <div class="form-group mgn-up-20"> -->
                                             <div class="input-group mob-container">
                                                 <input autocomplete="off"
-                                                placeholder="{{customer_label | capitalizeFirst}} Phone# or ID or Email"
+                                                placeholder="{{customer_label | capitalizeFirst}} Name or ID or Email"
                                                 type="text" class="form-control" formControlName="search_input"
                                                 (keypress)="findCustomer(searchForm.value, $event)">
-                                            <div class="input-group-append"><button class="create_new_button cs-btn bt3"
-                                                (click)="searchCustomer(searchForm.value)">Find</button></div>
+                                            <button class="findcolor"
+                                                (click)="searchCustomer(searchForm.value)"><i class="fa fa-search p0" aria-hidden="true"></i>
+                                              </button>
+                                                <!-- <button class="create_new_button cs-btn bt3"
+                                                (click)="searchCustomer(searchForm.value)">Find</button> -->
+                                            
                                             </div>
                                             <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
                                                 <span *ngIf="emptyFielderror" class="sts-msg error">Please enter the
-                                                    {{customer_label | capitalizeFirst}} Phone# or ID or Email</span>
+                                                    {{customer_label | capitalizeFirst}} ID or Email</span>
                                                 <app-field-error-display style="color: #f24949 !important;"
                                                     [displayError]="true" *ngIf="create_new" errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list. 
                                                 Please create {{customer_label}} to take appointment">
                                                 </app-field-error-display>
                                             </div>
-                                        </div>
-                                        <!-- <div class="disp-flex">
-                                            <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
-                                                <mat-form-field>
-                                                    <input matInput autocomplete="off"
-                                                        placeholder="{{customer_label | capitalizeFirst}} Phone# or ID or Email"
-                                                        type="text" class="form-control" formControlName="search_input"
-                                                        (keypress)="findCustomer(searchForm.value, $event)">
-                                                </mat-form-field>
-                                                <span *ngIf="emptyFielderror" class="sts-msg error">Please enter the
-                                                    {{customer_label | capitalizeFirst}} Phone# or ID or Email</span>
-                                                <app-field-error-display style="color: #f24949 !important;"
-                                                    [displayError]="true" *ngIf="create_new" errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list. 
-                                                Please create {{customer_label}} to take appointment">
-                                                </app-field-error-display>
-                                            </div>
-                                            <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">>
-                                                <button class="create_new_button cs-btn bt3"
-                                                    (click)="searchCustomer(searchForm.value)">Find</button>
-                                            </div>
-                                        </div> -->
-                                    </div>
+                                        
                                 </div>
                             </form>
+                            
                             <div class="clearfix"></div>
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20" *ngIf="showBlockHint">
                                 <table
@@ -147,16 +148,16 @@
                             </div>
                             <div class="create_new mgn-bt-20 font-9" *ngIf="!showBlockHint">
                                 <div class="or-style">OR</div>
-                                <a class="underline" (click)="createNew()" *ngIf="source !== 'appt-block'">
+                                <a class="underline coloroflabels" (click)="createNew()" *ngIf="source !== 'appt-block'">
                                     Create a new {{customer_label}} and get appointment
                                 </a>
-                                <a class="underline" (click)="createNew()" *ngIf="source === 'appt-block'">
+                                <a class="underline coloroflabels" (click)="createNew()" *ngIf="source === 'appt-block'">
                                     Create a new {{customer_label}}
                                 </a>
                             </div>
                             <div class="create_new mgn-bt-20 font-9" *ngIf="source !== 'appt-block'">
                                 <div class="or-style">OR</div>
-                                <span>
+                                <span class="coloroflabels">
                                     Choose the third party listing site/app through which the {{customer_label}} came.
                                     <!-- Create an appointment for the {{customer_label}} who booked for your services on a
                                     third party listing site, choose the listing site/app -->
@@ -340,26 +341,31 @@
                                                 <div class="cal-mod-instrct" *ngIf="mode.callingMode">
                                                     {{mode.instructions}}
                                                 </div>
-                                                <div class="input-section mgn-bt-15 desfont"
+                                                <div class="input-section mgn-bt-15 desfont" 
                                                     *ngIf="mode.callingMode === 'WhatsApp' || mode.callingMode === 'Phone'">
                                                     <span> <i *ngIf="mode.callingMode === 'WhatsApp'"
                                                             class="fa wtsapaud-icon wtsap-cal"></i>
                                                         <i *ngIf="mode.callingMode === 'Phone'"
                                                             class="fa phon-icon ph-cal" aria-hidden="true"></i>
                                                     </span>
-                                                    <span> <input *ngIf="!showInputSection"
+                                                     <input *ngIf="!showInputSection"
+                                                        (keypress)="isNumeric($event)"
+                                                        class="form-control change emailPrepay call-mode-ip "
+                                                        style="width:50px!important;" placeholder="+91"
+                                                        [(ngModel)]="cuntryCode" autocomplete="off" maxlength="10"
+                                                        type="text" min="0">&nbsp;<input *ngIf="!showInputSection"
                                                             (keypress)="isNumeric($event)"
-                                                            class="form-control emailPrepay call-mode-ip wtsap-ip-wdth"
-                                                            style="width:150px!important;" placeholder=""
+                                                            class="form-control change emailPrepay call-mode-ip wtsap-ip-wdth"
+                                                            style="width:120px!important;" placeholder="9955669922"
                                                             [(ngModel)]="callingModes" autocomplete="off" maxlength="10"
-                                                            type="text" min="0"></span>
+                                                            type="text" min="0">&nbsp;
                                                     <span class="mgn-bt-10 cal-mod-edt custId-flex-form"
-                                                        *ngIf="showInputSection"> {{callingModes}}</span>
-                                                    <div class="input-group-append mgn-up-6"
-                                                        style="padding-left: 10px;">
+                                                        *ngIf="showInputSection"> {{cuntryCode}}{{callingModes}}</span>
+                                                    <div class="input-group-append mgn-up-2"
+                                                        >
                                                         <button *ngIf="!showInputSection"
-                                                            style="background-color: #29b6f6; color: white;"
-                                                            class="btn bt3 btn-default" (click)="addCallingmode(i)"
+                                                            
+                                                            class="btn bt1 btn-primary m2" (click)="addCallingmode(i)"
                                                             type="button">Add</button>
                                                         <span class="editbt mgn-lt-20" *ngIf="showInputSection"
                                                             (click)="editCallingmodes(i)"></span>
@@ -753,9 +759,20 @@
                     </div>
                 </div>
             </div>
-            <div class="card" *ngIf="showQuestionnaire">
+            <div class="card">
+                <div class="card" *ngIf="api_loading_video">
+                    <div *ngIf="api_loading_video" class="incomplete-msg">
+                      <div style="padding: 0 30px;">
+                        Files are Uploading...
+                      </div>
+                    </div>
+                    <app-common-innerloading-spinner *ngIf="api_loading_video">
+                    </app-common-innerloading-spinner>
+                  </div>
+           
+            <div class="card" *ngIf="showQuestionnaire" [ngClass]="{'highlight': api_loading_video}">
                 <h6 class="mgn-bt-10 quest-head pad-10">
-                    Please provide us with a little more information complete your booking
+                    Please provide us with a little more information to complete your booking
                 </h6>
                 <app-questionnaire [questionnaireList]="questionnaireList" [questionAnswers]="questionAnswers"
                     [source]="'proAppt'" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
@@ -784,6 +801,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+
         </div>
         <div class="clearfix"></div>
     </div>

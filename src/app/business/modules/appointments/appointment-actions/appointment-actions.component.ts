@@ -26,7 +26,6 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { ListRecordingsDialogComponent } from '../../../../shared/components/list-recordings-dialog/list-recordings-dialog.component';
 import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { VoiceConfirmComponent } from '../../customers/video-confirm/voice-confirm.component';
-import { QuestionnaireListPopupComponent } from '../../questionnaire-list-popup/questionnaire-list-popup.component';
 
 @Component({
     selector: 'app-appointment-actions',
@@ -106,9 +105,10 @@ export class AppointmentActionsComponent implements OnInit {
     userid: any;
     user_arr: any;
     groups: any;
-    statusList: any=[];
+    statusList: any = [];
     showAssign = false;
     users: any = [];
+    location: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -120,6 +120,7 @@ export class AppointmentActionsComponent implements OnInit {
         private dateTimeProcessor: DateTimeProcessor,
         private provider_shared_functions: ProviderSharedFuctions,
         public shared_services: SharedServices,
+        // public _location: Location,
         public dialogRef: MatDialogRef<AppointmentActionsComponent>) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
@@ -164,23 +165,24 @@ export class AppointmentActionsComponent implements OnInit {
         if (this.accountType === 'BRANCH') {
             this.getUser();
             this.getUserTeams();
+            this.getProviderLocation();
         }
     }
     getUser() {
-        if(this.userid){
+        if (this.userid) {
             this.provider_services.getUsers()
-            .subscribe((data: any) => {
-                this.users = data;
-              this.user_arr = this.users.filter(user => user.id === this.userid);
-              if( this.user_arr.status === 'ACTIVE'){
-                  this.isUserdisable = true
-              } else{
-                  this.isUserdisable = false
-              }
-            }
-            , error => {
-          });
-        }   
+                .subscribe((data: any) => {
+                    this.users = data;
+                    this.user_arr = this.users.filter(user => user.id === this.userid);
+                    if (this.user_arr[0].status === 'ACTIVE') {
+                        this.isUserdisable = true
+                    } else {
+                        this.isUserdisable = false
+                    }
+                }
+                    , error => {
+                    });
+        }
     }
     ngOnDestroy() {
         if (this.subscription) {
@@ -229,7 +231,8 @@ export class AppointmentActionsComponent implements OnInit {
             }
             checkin_html += '</td></tr>';
             checkin_html += '<tr><td colspan="3" style="text-align:center">' + bname.charAt(0).toUpperCase() + bname.substring(1) + '</td></tr>';
-            checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.appt.location.place + '</td></tr>';
+            checkin_html += '<tr><td width="48%" align="right">Location</td><td>:</td><td>' + this.appt.location.place + '</td></tr>';
+            // checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.appt.location.place + '</td></tr>';
             checkin_html += '</thead><tbody>';
             if (fname !== '' || lname !== '') {
                 checkin_html += '<tr><td width="48%" align="right">' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + '</td><td>:</td><td>' + fname + ' ' + lname + '</td></tr>';
@@ -385,6 +388,10 @@ export class AppointmentActionsComponent implements OnInit {
         this.dialogRef.close();
         this.router.navigate(['provider', 'check-ins', this.appt.uid, 'team'], { queryParams: { source: 'appt' } });
     }
+    chnageLocation(){
+        this.dialogRef.close();
+        this.router.navigate(['provider', 'check-ins', this.appt.uid, 'updateloc'], { queryParams: { source: 'appt' } }); 
+    }
     removeProvider() {
         let msg = '';
         msg = 'Do you want to remove this ' + this.provider_label + '?';
@@ -417,6 +424,39 @@ export class AppointmentActionsComponent implements OnInit {
                     );
             }
         });
+    }
+    removeTeam(){
+        let msg = '';
+        msg = 'Do you want to remove the team ?';
+        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': msg,
+                'type': 'yes/no'
+            }
+        });
+        dialogrefd.afterClosed().subscribe(result => {
+            if (result) {
+                const post_data = {
+                    'uid': this.appt.uid,
+                    'teamId': this.appt.teamId
+                };
+                this.provider_services.unassignTeamAppointment(post_data)
+                    .subscribe(
+                        data => {
+                            this.snackbarService.openSnackBar('Team unassigned successfully', { 'panelclass': 'snackbarerror' });
+                            this.dialogRef.close('reload');
+                        },
+                        error => {
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.dialogRef.close('reload');
+                        }
+                    );
+            }
+        });
+
     }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
         this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)
@@ -460,7 +500,7 @@ export class AppointmentActionsComponent implements OnInit {
         if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Completed' && this.appt.apptStatus !== 'Confirmed' && this.appt.apptStatus !== 'blocked' && this.appt.paymentStatus !== 'FullyRefunded') {
             this.showUndo = true;
         }
-        if (this.data.timetype === 1 && this.appt.apptStatus === 'Confirmed' && this.appt.appointmentMode !== 'WALK_IN_APPOINTMENT' &&  !this.appt.virtualService && !this.data.teleservice) {
+        if (this.data.timetype === 1 && this.appt.apptStatus === 'Confirmed' && this.appt.appointmentMode !== 'WALK_IN_APPOINTMENT' && !this.appt.virtualService && !this.data.teleservice) {
             this.showArrived = true;
         }
         if ((this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') && !this.data.teleservice) {
@@ -478,7 +518,7 @@ export class AppointmentActionsComponent implements OnInit {
         if ((this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') && this.data.timetype !== 2 && (!this.appt.virtualService) && !this.data.teleservice) {
             this.showStart = true;
         }
-        if ((this.data.timetype === 1 || this.data.timetype === 3) && this.appt.virtualService && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed' ) && !this.data.teleservice) {
+        if ((this.data.timetype === 1 || this.data.timetype === 3) && this.appt.virtualService && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') && !this.data.teleservice) {
             this.showTeleserviceStart = true;
         }
         if (this.board_count > 0 && this.data.timetype === 1 && !this.appt.virtualService && (this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Arrived') && !this.data.teleservice) {
@@ -496,7 +536,7 @@ export class AppointmentActionsComponent implements OnInit {
         if (this.data.timetype === 3) {
             this.changeService = false;
         }
-        if (this.users.length > 1 && !this.data.multiSelection && this.accountType=='BRANCH' && (this.appt.schedule.provider.id === 0) && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed')) {
+        if (this.users.length > 1 && !this.data.multiSelection && this.accountType == 'BRANCH' && (this.appt.schedule.provider.id === 0) && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed')) {
             this.showAssign = true;
         }
     }
@@ -591,13 +631,13 @@ export class AppointmentActionsComponent implements OnInit {
         const customerDetails = this.appt.appmtFor[0];
         const customerId = customerDetails.id;
         let whtasappNum;
-        if(this.appt && this.appt.virtualService && this.appt.virtualService.WhatsApp){
-         whtasappNum = this.appt.virtualService.WhatsApp;
+        if (this.appt && this.appt.virtualService && this.appt.virtualService.WhatsApp) {
+            whtasappNum = this.appt.virtualService.WhatsApp;
         }
         const navigationExtras: NavigationExtras = {
             queryParams: {
-                id : customerId,
-                phoneNum : whtasappNum,
+                id: customerId,
+                phoneNum: whtasappNum,
                 type: 'secure_video'
             }
         };
@@ -606,7 +646,7 @@ export class AppointmentActionsComponent implements OnInit {
     startVoiceCall() {
         this.closeDialog();
         this.voiceCallConfirmed()
-        
+
         // this.provider_services.voiceCallReady(customerId).subscribe(data => {
         //     this.voiceCallConfirm()
         // },
@@ -616,29 +656,29 @@ export class AppointmentActionsComponent implements OnInit {
     }
     voiceCallConfirmed() {
         // const customerDetails = this.appt;
-        const customerId =  this.appt.appmtFor[0].id;
+        const customerId = this.appt.appmtFor[0].id;
         const num = this.appt.countryCode + ' ' + this.appt.phoneNumber;
         // const customerId = customerDetails[0].id;
         const dialogref = this.dialog.open(VoiceConfirmComponent, {
-          width: '60%',
-          height: '30%',
-          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-          disableClose: true,
-          data: {
-            customerId: customerId,
-            customer : num,
-          }
+            width: '60%',
+            height: '30%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                customerId: customerId,
+                customer: num,
+            }
         });
         dialogref.afterClosed().subscribe(
-          result => {
-            this.closeDialog();
-            // if (result) {
-            // }
-          }
+            result => {
+                this.closeDialog();
+                // if (result) {
+                // }
+            }
         );
-      }
+    }
 
-      closeDialog() {
+    closeDialog() {
         this.dialogRef.close();
     }
     labels() {
@@ -718,6 +758,7 @@ export class AppointmentActionsComponent implements OnInit {
                 () => {
                     this.snackbarService.openSnackBar('Appointment rescheduled to ' + this.dateformat.transformToMonthlyDate(this.sel_checkindate));
                     this.dialogRef.close('reload');
+                    // this._location.back();
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1021,9 +1062,9 @@ export class AppointmentActionsComponent implements OnInit {
             }
         });
         dialogrefd.afterClosed().subscribe(result => {
-            console.log("Result:",result)
+            console.log("Result:", result)
             console.log(this.appt.uid)
-                console.log(this.userid)
+            console.log(this.userid)
             if (result) {
                 console.log(this.appt.uid)
                 console.log(this.userid)
@@ -1052,41 +1093,35 @@ export class AppointmentActionsComponent implements OnInit {
             this.groups = data;
         });
     }
-    getInternStatus(){
+    getInternStatus() {
         this.provider_services.getapptInternalstatList(this.appt.uid).subscribe((data: any) => {
             console.log(data);
             this.statusList = data;
         });
     }
-    changeWaitlistInternalStatus(action){
+    changeWaitlistInternalStatus(action) {
         console.log(action);
         if (action !== 'Rejected') {
             this.buttonClicked = true;
         }
-        
-       this.provider_shared_functions.changeApptinternalStatus(this, this.appt, action);
-    }      
+
+        this.provider_shared_functions.changeApptinternalStatus(this, this.appt, action);
+    }
     showQnr() {
-        if (!this.data.multiSelection && this.appt.releasedQnr && this.appt.releasedQnr.length > 0) {
-            const notSubmittedQnrs = this.appt.releasedQnr.filter(qnr => qnr.status !== 'submitted');
-            if (notSubmittedQnrs.length > 0) {
-                return true;
-            }
+        if (!this.data.multiSelection && this.appt.releasedQnr && this.appt.releasedQnr.length > 1 && this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected') {
+            return true;
         }
         return false;
     }
     showQuestionnaires() {
         this.dialogRef.close();
-        const dialogrefd = this.dialog.open(QuestionnaireListPopupComponent, {
-            width: '50%',
-            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-            disableClose: true,
-            data: {
-                waitlist: this.appt,
-                source: 'appt'
-            }
-        });
-        dialogrefd.afterClosed().subscribe(result => {
-        });
+        this.router.navigate(['provider', 'appointments', 'questionnaires'], { queryParams: { source: 'appt', uid: this.appt.uid } });
     }
+    getProviderLocation() {
+        this.provider_services.getProviderLocations()
+          .subscribe(
+            (data: any) => {
+              this.location = data;
+            });
+      }
 }

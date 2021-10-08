@@ -18,6 +18,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
 
 @Component({
     selector: 'app-appointment-checkin',
@@ -238,6 +239,14 @@ export class AppointmentComponent implements OnInit {
     channel;
     questionAnswers;
     bookingMode;
+    api_loading_video;
+    separateDialCode = true;
+    SearchCountryField = SearchCountryField;
+    selectedCountry = CountryISO.India;
+    PhoneNumberFormat = PhoneNumberFormat;
+    preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+    phone;
+    cuntryCode: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -328,6 +337,11 @@ export class AppointmentComponent implements OnInit {
                                 this.customer_data = customer[0];
                             } else {
                                 this.customer_data = data[0];
+                            }
+                            if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+                                this.countryCode = this.customer_data.countryCode;
+                            } else {
+                                this.countryCode = '+91';
                             }
                             this.jaldeeId = this.customer_data.jaldeeId;
                             this.getFamilyMembers();
@@ -440,6 +454,62 @@ export class AppointmentComponent implements OnInit {
             this.searchCustomer(form_data);
         }
     }
+    serchCustomers(val){
+        console.log(val);
+        const dialCode = val.dialCode;
+        console.log(dialCode);
+        const pN = val.e164Number.trim();
+        let loginId = pN;
+        if(pN.startsWith(dialCode)) {
+        loginId = pN.split(dialCode)[1];
+        }
+       
+        let post_data = {
+            'phoneNo-eq': loginId,
+            'countryCode-eq': dialCode
+        };
+        this.provider_services.getCustomer(post_data)
+        .subscribe(
+            (data: any) => {
+                this.qParams['phone'] = loginId;
+                this.qParams['countryCode'] = dialCode;
+                if (data.length === 0) {
+                    // if (mode === 'phone') {
+                    //     const filter = { 'primaryMobileNo-eq': form_data.search_input };
+                    //     this.getJaldeeCustomer(filter);
+                    // } else {
+                    //     this.form_data = data;
+                    //     this.create_new = true;
+                    // }
+                    this.createNew('create');
+                } else {
+                    if (data.length > 1) {
+                        const customer = data.filter(member => !member.parent);
+                        this.customer_data = customer[0];
+                    } else {
+                        this.customer_data = data[0];
+                    }
+                    this.jaldeeId = this.customer_data.jaldeeId;
+                    this.consumerPhoneNo = this.customer_data.phoneNo;
+                    if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+                        this.countryCode = this.customer_data.countryCode;
+                    } else {
+                        this.countryCode = '+91';
+                    }
+                    if (this.source === 'appt-block') {
+                        this.showBlockHint = true;
+                        this.heading = 'Confirm your Appointment';
+                    } else {
+                        this.getFamilyMembers();
+                        this.initAppointment();
+                    }
+                }
+            },
+            error => {
+                this.wordProcessor.apiErrorAutoHide(this, error);
+            }
+        );
+    }
     searchCustomer(form_data) {
         this.emptyFielderror = false;
         if (form_data && form_data.search_input === '') {
@@ -449,21 +519,21 @@ export class AppointmentComponent implements OnInit {
             let mode = 'id';
             this.form_data = null;
             this.create_new = false;
-            let post_data = {};
+            let post_data ={};
             const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
             const isEmail = emailPattern.test(form_data.search_input);
             if (isEmail) {
                 mode = 'email';
             } else {
-                const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
-                const isNumber = phonepattern.test(form_data.search_input);
-                const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
-                const isCount10 = phonecntpattern.test(form_data.search_input);
-                if (isNumber && isCount10) {
-                    mode = 'phone';
-                } else {
+               // const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+                //const isNumber = phonepattern.test(form_data.search_input);
+                //const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+               // const isCount10 = phonecntpattern.test(form_data.search_input);
+               // if (isNumber && isCount10) {
+               //     mode = 'phone';
+               // } else {
                     mode = 'id';
-                }
+               // }
             }
             this.qParams['source'] = 'appointment';
             switch (mode) {
@@ -480,10 +550,10 @@ export class AppointmentComponent implements OnInit {
                     };
                     break;
                 case 'id':
-                    post_data = {
-                        'jaldeeId-eq': form_data.search_input
-                    };
-                    break;
+                        post_data['or=jaldeeId-eq'] =  form_data.search_input + ',firstName-eq=' + form_data.search_input;
+                    //     'jaldeeId-eq'= form_data.search_input,'firstName'= form_data.search_input
+                    
+                     break;
             }
             this.provider_services.getCustomer(post_data)
                 .subscribe(
@@ -828,6 +898,12 @@ export class AppointmentComponent implements OnInit {
                 if (serv.virtualCallingModes) {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
                         this.callingModes = this.customer_data.phoneNo.trim();
+                        this.cuntryCode = this.customer_data.countryCode;
+                        console.log("this.callingModes."+this.callingModes);
+                        if (this.callingModes.includes('*')) {
+                            this.callingModes = '';
+                            this.cuntryCode = '';
+                        }
                         this.wtsapmode = this.customer_data.phoneNo;
                     }
                 }
@@ -1051,6 +1127,11 @@ export class AppointmentComponent implements OnInit {
                         this.customer_data = data[0];
                     }
                     this.jaldeeId = this.customer_data.jaldeeId;
+                    if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+                        this.countryCode = this.customer_data.countryCode;
+                    } else {
+                        this.countryCode = '+91';
+                    }
                     this.waitlist_for.push({ id: data[0].id, firstName: data[0].firstName, lastName: data[0].lastName, apptTime: this.apptTime });
                     this.saveCheckin();
                 });
@@ -1073,9 +1154,12 @@ export class AppointmentComponent implements OnInit {
         if (this.callingModes !== '' && this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes.length > 0) {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
-            } else if (!this.thirdParty && this.countryCode) {
-                const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
-                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = unChangedPhnoCountryCode + '' + this.callingModes;
+            } else if (!this.thirdParty) {
+                if(this.cuntryCode){
+                    if(this.cuntryCode.includes('+')){
+                        this.cuntryCode=this.cuntryCode.slice(1);
+                    }}
+                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.cuntryCode + '' + this.callingModes;
             } else {
                 const thirdparty_countrycode = '91';
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = thirdparty_countrycode + '' + this.callingModes;
@@ -1112,7 +1196,7 @@ export class AppointmentComponent implements OnInit {
         if (this.sel_ser_det.serviceType === 'virtualService') {
             // post_Data['virtualService'] = this.virtualServiceArray;
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
-                if (!this.callingModes || this.callingModes.length < 10) {
+                if (!this.callingModes || !this.cuntryCode) {
                     this.snackbarService.openSnackBar('Please enter a valid number to contact you', { 'panelClass': 'snackbarerror' });
                     this.is_wtsap_empty = true;
                 }
@@ -1226,6 +1310,7 @@ export class AppointmentComponent implements OnInit {
             };
             if (data.urls && data.urls.length > 0) {
                 for (const url of data.urls) {
+                    this.api_loading_video = true;
                     const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
                     this.provider_services.videoaudioS3Upload(file, url.url)
                         .subscribe(() => {
@@ -1239,12 +1324,14 @@ export class AppointmentComponent implements OnInit {
                                         error => {
                                             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                                             this.api_loading = false;
+                                            this.api_loading_video = false;
                                         });
                             }
                         },
                             error => {
                                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                                 this.api_loading = false;
+                                this.api_loading_video = false;
                             });
                 }
             } else {
@@ -1254,6 +1341,7 @@ export class AppointmentComponent implements OnInit {
         }, error => {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             this.api_loading = false;
+            this.api_loading_video = false;
         });
     }
     handleGoBack(cstep) {
@@ -1918,9 +2006,12 @@ export class AppointmentComponent implements OnInit {
         return this.sharedFunctionobj.isNumeric(evt);
     }
     addCallingmode(index) {
-        if (this.callingModes && this.callingModes.length === 10 && this.callingModes.charAt(0) !== '0') {
+        if (!this.cuntryCode  || this.cuntryCode.charAt(0) === '0') {
+            this.snackbarService.openSnackBar('Please enter valid countrycode', { 'panelClass': 'snackbarerror' });
+        }
+        if (this.callingModes && this.callingModes.charAt(0) !== '0') {
             this.showInputSection = true;
-        } else if (!this.callingModes || this.callingModes.length < 10 || this.callingModes.charAt(0) === '0') {
+        } else if (!this.callingModes  || this.callingModes.charAt(0) === '0') {
             this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
         }
     }
@@ -2020,7 +2111,7 @@ export class AppointmentComponent implements OnInit {
                 }
             }
         });
-    }
+    } 
     validateQnr(post_Data?) {
         this.api_loading = true;
         if (!this.questionAnswers) {
@@ -2030,9 +2121,11 @@ export class AppointmentComponent implements OnInit {
                     questionnaireId: this.questionnaireList.id
                 }
             }
+            this.api_loading=false;
         }
         if (this.questionAnswers.answers) {
             this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
+                this.api_loading=false;
                 if (data.length === 0) {
                     if (!this.showBlockHint) {
                         this.addAppointmentInProvider(post_Data);

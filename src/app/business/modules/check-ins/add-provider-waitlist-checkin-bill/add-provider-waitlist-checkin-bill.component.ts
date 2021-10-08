@@ -248,6 +248,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   timetype;
   showPaymentSection = true;
   jcashRefund=false;
+  countryCode: any;
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -395,6 +396,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           this.jaldeeConsumer = this.checkin.jaldeeConsumer ? true : false;
           this.emailId = this.checkin.email;
           this.mobilenumber = this.checkin.phoneNumber;
+          this.countryCode = this.checkin.countryCode;
           this.getWaitlistBill();
           this.getPrePaymentDetails()
             .then(
@@ -424,6 +426,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           this.jaldeeConsumer = this.checkin.consumer ? true : false;
           this.emailId = this.checkin.providerConsumer.email;
           this.mobilenumber = this.checkin.phoneNumber;
+          this.countryCode = this.checkin.countryCode;
           this.getWaitlistBill();
           this.getPrePaymentDetails()
             .then(
@@ -457,7 +460,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           }
           this.jaldeeConsumer = this.checkin.jaldeeConsumer ? true : false;
           this.mobilenumber = this.checkin.waitlistPhoneNumber,
-            this.emailId = this.checkin.waitlistingFor[0].email;
+          this.countryCode = this.checkin.countryCode,
+          this.emailId = this.checkin.waitlistingFor[0].email;
           this.getWaitlistBill();
           this.getPrePaymentDetails()
             .then(
@@ -479,10 +483,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       userDetails = user.firstName + ' ' + user.lastName;
     } else {
       if (user.memberJaldeeId) {
-        userDetails = this.customer_label + ' : ' + user.memberJaldeeId;
+        userDetails = this.customer_label + ' Id#'+' : ' + user.memberJaldeeId;
       }
       if (user.jaldeeId) {
-        userDetails = this.customer_label + ' : ' + user.jaldeeId;
+        userDetails = this.customer_label + ' Id#'+ ' : ' + user.jaldeeId;
       }
     }
     return userDetails;
@@ -1493,7 +1497,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       data: {
         emailId: this.emailId,
         mobilenumber: this.mobilenumber,
-        uuid: this.uuid
+        uuid: this.uuid,
+        countryCode: this.countryCode
       }
     });
   }

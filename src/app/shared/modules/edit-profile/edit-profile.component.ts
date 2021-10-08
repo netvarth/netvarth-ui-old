@@ -70,6 +70,7 @@ export class EditProfileComponent implements OnInit {
   status = false ;
   boturl: any;
   telegramdialogRef: any;
+  waitlist_statusstr: string;
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
@@ -106,8 +107,8 @@ export class EditProfileComponent implements OnInit {
       email1: [''],
       countryCode_whtsap:[''],
       countryCode_telegram:[''],
-      whatsappnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
-      telegramnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
+      whatsappnumber: [''],
+      telegramnumber: [''],
     });
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
     console.log(this.curtype);
@@ -327,49 +328,50 @@ export class EditProfileComponent implements OnInit {
     this._location.back();
     // this.router.navigate(['provider', 'settings', 'bprofile']);
   }
-  telegramInfo() {
-    // this.telegramdialogRef = this.dialog.open(TelegramInfoComponent, {
-    //   width: '70%',
-    //   height: '40%',
-    //   panelClass: ['popup-class', 'commonpopupmainclass', 'full-screen-modal', 'telegramPopupClass'],
-    //   disableClose: true,
-    // });
-    // this.telegramdialogRef.afterClosed().subscribe(
-    //   result => {
-    //     if (result) {
-    //       this.getTelegramstat();
-    //     }
-    //   }
-    // );
-  }
+  // telegramInfo() {
+  //   this.telegramdialogRef = this.dialog.open(TelegramInfoComponent, {
+  //     width: '70%',
+  //     height: '40%',
+  //     panelClass: ['popup-class', 'commonpopupmainclass', 'full-screen-modal', 'telegramPopupClass'],
+  //     disableClose: true,
+  //   });
+  //   this.telegramdialogRef.afterClosed().subscribe(
+  //     result => {
+  //       if (result) {
+  //         this.getTelegramstat();
+  //       }
+  //     }
+  //   );
+  // }
  
-  enableTelegram(stat){
-    this.shared_services.telegramChat(this.removePlus(this.countryCode), this.phonenoHolder).subscribe(data => {
-      this.chatId = data;
-    })
-    this.teleGramStat(stat).then(
-      (data) => {
-        console.log('then');
-        this.getTelegramstat();
-      },
-      error => {
-        this.telegramstat = false;
-        if(!this.telegramstat || this.chatId === null){
-          this.telegramInfo();
-          // this.telegramdialogRef = this.dialog.open(telegramPopupComponent, {
-          //   width: '50%',
-          //   panelClass: ['popup-class', 'commonpopupmainclass'],
-          //   disableClose: true,
-          //   data: this.boturl
-          // });
-          //   this.telegramdialogRef.afterClosed().subscribe(result => {
-          //   if (result) {
-          //     this.getTelegramstat();
-          //   }
-          // });
-        }
-      });
-  }
+  // enableTelegram(event){
+  //   const stat = (event.checked) ? 'ENABLED' : 'DISABLED';
+  //   this.shared_services.consumertelegramChat(this.removePlus(this.countryCode), this.phonenoHolder).subscribe(data => {
+  //     this.chatId = data;
+  //   })
+  //   this.teleGramStat(stat).then(
+  //     (data) => {
+  //       console.log('then');
+  //       this.getTelegramstat();
+  //     },
+  //     error => {
+  //       this.telegramstat = false;
+  //       if(!this.telegramstat || this.chatId === null){
+  //         this.telegramInfo();
+  //         // this.telegramdialogRef = this.dialog.open(telegramPopupComponent, {
+  //         //   width: '50%',
+  //         //   panelClass: ['popup-class', 'commonpopupmainclass'],
+  //         //   disableClose: true,
+  //         //   data: this.boturl
+  //         // });
+  //         //   this.telegramdialogRef.afterClosed().subscribe(result => {
+  //         //   if (result) {
+  //         //     this.getTelegramstat();
+  //         //   }
+  //         // });
+  //       }
+  //     });
+  // }
   teleGramStat(stat) {
     const _this = this;
     return new Promise(function (resolve, reject) {
@@ -390,6 +392,7 @@ getTelegramstat(){
     (data:any) => {
      console.log(data);
      this.status = data.status;
+     this.waitlist_statusstr = this.status ? 'On' : 'Off';
      if(data.botUrl){
       this.boturl = data.botUrl;
      }

@@ -59,8 +59,8 @@
 									<span class="text-white d-flex flex-column align-items-md-end">
 										<span class="font-weight-bolder">{{bname | capitalizeFirst}}</span>
 										<span *ngIf="spname">
-											<span class="title">{{provider_label |
-												capitalizeFirst}}:</span>
+											<!-- <span class="title">{{provider_label |
+												capitalizeFirst}}:</span> -->
 											<span class="dynamic">{{spname}}</span>
 										</span>
 										<span class="dynamic fl-right" *ngIf="location">
@@ -1157,7 +1157,7 @@
 
 										<button type="button"
 											class="btn btn-light-info  font-weight-bolder mb-2 mr-3  my-1 lh-p8 fnt-p8 full_wdth"
-											*ngIf="(refund_show && refund_show.length != 0) && bill_data.billStatus!='Settled'"
+											*ngIf="(refund_show && refund_show.length != 0) && bill_data.billStatus!='Settled' && showPaymentSection"
 											data-toggle="modal" data-target="#exampleModalSizeDefaultrefund"
 											(click)="refundBtnShow('refund')">Refund</button>
 
@@ -1171,7 +1171,7 @@
 											*ngIf="bill_data.billStatus=='Settled'">{{email_bill_cap}}</button>
 
 									</div>
-									<div class="col-md-6 col-lg-6 col-sm-6 col-xs-12" style="text-align: end;" *ngIf="showPaymentSection">
+									<div class="col-md-6 col-lg-6 col-sm-6 col-xs-12" style="text-align: end;" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus!='Settled'">
 										<button type="button"
 											class="full_wdth btn btn-temp-primary-light   font-weight-bold mr-3 my-1 lh-p8 fnt-p8 "
 											*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline && jaldeeConsumer && walkinConsumer_status"

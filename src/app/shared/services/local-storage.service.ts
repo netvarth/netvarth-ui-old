@@ -57,19 +57,19 @@ export class LocalStorageService {
      */
      public clearLocalstorage() {
         this.removeitemfromLocalStorage('ynw-credentials');
-        const uniqueId = localStorage.getItem('mUniqueId');
-        const devicename = localStorage.getItem('deviceName');
+        const uniqueId = this.getitemfromLocalStorage('mUniqueId');
+        const devicename = this.getitemfromLocalStorage('deviceName');
         for (let index = 0; index < localStorage.length; index++) {
           if (this.dont_delete_localstorage.indexOf(localStorage.key(index)) === -1) {
-            localStorage.removeItem(localStorage.key(index));
+            this.removeitemfromLocalStorage(localStorage.key(index));
             index = index - 1; // manage index after remove
           }
         }
         if (uniqueId) {
-          localStorage.setItem('mUniqueId', JSON.stringify(uniqueId));
+          this.setitemonLocalStorage('mUniqueId', uniqueId);
         }
         if (devicename) {
-          localStorage.setItem('deviceName', JSON.stringify(devicename));
+          this.setitemonLocalStorage('deviceName', devicename);
         }
       }
 }

@@ -16,6 +16,8 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input'; 
+
 @Component({
   selector: 'app-customers-list',
   templateUrl: './customers-list.component.html',
@@ -40,6 +42,7 @@ export class CustomersListComponent implements OnInit {
     last_name: '',
     date: null,
     mobile: '',
+    countrycode:'',
     email: '',
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1
@@ -73,6 +76,7 @@ export class CustomersListComponent implements OnInit {
     'last_name': false,
     'date': false,
     'mobile': false,
+    'countrycode':false,
     'email': false
   };
   customerselection = 0;
@@ -112,6 +116,15 @@ export class CustomersListComponent implements OnInit {
   small_device_display = false;
   hideGroups = false;
   customerCount;
+  emailerror = null;
+    email1error = null;
+    phoneerror = null;
+  separateDialCode = true;
+    SearchCountryField = SearchCountryField;
+    selectedCountry = CountryISO.India;
+    PhoneNumberFormat = PhoneNumberFormat;
+    preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+    phone;
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -127,6 +140,7 @@ export class CustomersListComponent implements OnInit {
     this.onResize();
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
     this.filtericonclearTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
+    
     if (this.groupService.getitemFromGroupStorage('group')) {
       this.selectedGroup = this.groupService.getitemFromGroupStorage('group');
     } else {
@@ -235,6 +249,11 @@ export class CustomersListComponent implements OnInit {
         }
       );
   }
+  resetApiErrors() {
+    this.emailerror = null;
+    this.email1error = null;
+    this.phoneerror = null;
+}
   showCustomerAction(customer) {
     const cust = [];
     cust.push(customer)
@@ -305,11 +324,30 @@ export class CustomersListComponent implements OnInit {
     }
   }
   keyPress() {
-    if (this.filter.jaldeeid || this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.mobile || this.filter.email || this.labelFilterData !== '') {
+    this.labelSelection();
+    if (this.filter.jaldeeid || this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.mobile || this.filter.countrycode|| this.filter.email || this.labelFilterData !== '') {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
     }
+  }
+  labelSelection() {
+    this.labelFilterData = '';
+    let count = 0;
+    Object.keys(this.selectedLabels).forEach(key => {
+      if (this.selectedLabels[key].length > 0) {
+        count++;
+        if (!this.labelFilterData.includes(key)) {
+          if (count === 1) {
+            this.labelFilterData = this.labelFilterData + key + '::' + this.selectedLabels[key].join(',');
+          } else {
+            this.labelFilterData = this.labelFilterData + '$' + key + '::' + this.selectedLabels[key].join(',');
+          }
+        }
+      } else {
+        delete this.selectedLabels[key];
+      }
+    });
   }
   resetFilter() {
     this.labelFilterData = '';
@@ -320,6 +358,7 @@ export class CustomersListComponent implements OnInit {
       'last_name': false,
       'date': false,
       'mobile': false,
+      'countrycode':false,
       'email': false
     };
     this.filter = {
@@ -328,6 +367,7 @@ export class CustomersListComponent implements OnInit {
       last_name: '',
       date: null,
       mobile: '',
+      countrycode:'',
       email: '',
       page_count: projectConstants.PERPAGING_LIMIT,
       page: 1
@@ -366,6 +406,9 @@ export class CustomersListComponent implements OnInit {
       } else {
         this.filter.mobile = '';
       }
+    }
+    if(this.filter.countrycode !== ''){
+      api_filter['countryCode-eq'] = this.filter.countrycode;
     }
     if (this.labelFilterData !== '') {
       api_filter['label-eq'] = this.labelFilterData;
@@ -566,17 +609,27 @@ export class CustomersListComponent implements OnInit {
       }
     }
   }
+  // setLabelFilter(label, event) {
+  //   const value = event.checked;
+  //   if (this.selectedLabels[label.label]) {
+  //     this.selectedLabels = [];
+  //     this.labelFilterData = '';
+  //   } else {
+  //     this.selectedLabels = [];
+  //     this.selectedLabels[label.label] = [];
+  //     this.selectedLabels[label.label] = value;
+  //     this.labelFilterData = label.label + '::' + value;
+  //   }
+  //   this.keyPress();
+  // }
   setLabelFilter(label, event) {
     const value = event.checked;
-    if (this.selectedLabels[label.label]) {
-      this.selectedLabels = [];
-      this.labelFilterData = '';
-    } else {
-      this.selectedLabels = [];
-      this.selectedLabels[label.label] = [];
-      this.selectedLabels[label.label] = value;
-      this.labelFilterData = label.label + '::' + value;
-    }
+      if (this.selectedLabels[label.label]) {
+        delete this.selectedLabels[label.label];
+      } else {
+        this.selectedLabels[label.label] = [];
+        this.selectedLabels[label.label].push(value);
+      }
     this.keyPress();
   }
   getLabel() {
@@ -867,6 +920,14 @@ export class CustomersListComponent implements OnInit {
       return true;
     } else {
       return false;
+    }
+  }
+  getCustomer(customer){
+    if (customer.firstName || customer.lastName) {
+          const name = (customer.firstName? customer.firstName : '') + ' ' + (customer.lastName? customer.lastName : '') ;
+          return name;
+    } else {
+      return '—';
     }
   }
 }

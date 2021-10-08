@@ -4,7 +4,7 @@
   </button>
 </h1>
 <mat-dialog-content class="pop-content">
-  <div class="col-md-12 mobile_disply p0">
+  <div class="col-md-12 mobile_disply p0" *ngIf="users_list.length > 0">
     <div class="mgn-up-10 stats-item action_style" *ngFor="let user of users_list">
       <div>
         <span class='user-img'>
@@ -17,6 +17,12 @@
             {{user.firstName + ' ' + user.lastName.substring(0,24) }}...</h4> -->
         </div>
       </div>
+    </div>
+  </div>
+  <div class="col-md-12 mobile_disply p0" *ngIf="users_list.length == 0">
+    <div>
+      <p>No team Members in this location</p>
+
     </div>
   </div>
 </mat-dialog-content>

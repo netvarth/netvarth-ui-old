@@ -40,10 +40,10 @@
     <div class="col-lg-4" *ngIf="!groupLoaded && groups.length > 0 && !hideGroups">
       <div class="card card-custom card-stretch gutter-b pitch_blu">
         <div class="card grp_label mb-2 pointer-cursor" (click)="customerGroupSelection('all')"
-          [ngClass]="{'highlight': selectedGroup == 'all'}">All {{customer_label | capitalizeFirst}}s</div>
+          [ngClass]="{'highlights': selectedGroup == 'all'}">All {{customer_label | capitalizeFirst}}s</div>
         <div class="card grp_label mb-2 pr-0" *ngFor="let group of groups"
           (click)="group.status=='ENABLE' && customerGroupSelection(group)"
-          [ngClass]="{'highlight': selectedGroup.id==group.id}" [class.disabled-group]="group.status=='DISABLE'"
+          [ngClass]="{'highlights': selectedGroup.id==group.id}" [class.disabled-group]="group.status=='DISABLE'"
           [class.pointer-cursor]="group.status=='ENABLE'">
           <div class="max-hgt-20 disp-flex">
             <span class="pull-left group-name">{{group.groupName}}</span>
@@ -233,8 +233,19 @@
                       <div class="card-body">
                         <div class="filterTextinput filter-text-input">
                           <li class="filterli filter-li">
-                            <input type="text" id="mobile" [(ngModel)]="filter.mobile" #mobile (keyup)="keyPress()"
-                              class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
+                             <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode (keyup)="keyPress()"
+                              class="filterTextbox change countryCodewidth" placeholder="+91">
+                               <input type="text" id="mobile" [(ngModel)]="filter.mobile" #mobile (keyup)="keyPress()"
+                              class="filterTextbox  change phonewidth" placeholder="9955668855">
+                              <!-- <ngx-intl-tel-input [cssClass]="'custom'" class="internumbox" [preferredCountries]="preferredCountries"
+                              [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                              [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
+                              [maxLength]="15" [phoneValidation]="true"
+                              [selectedCountryISO] = "selectedCountry"
+                              [separateDialCode]="separateDialCode" [numberFormat]="PhoneNumberFormat.National" name="phone"
+                              [(ngModel)]="phone" (keyup)="resetApiErrors()">
+                          </ngx-intl-tel-input> -->
+                          
                           </li>
                         </div>
                       </div>
@@ -343,8 +354,8 @@
                           </span>
                         </div>
                         <div>
-                          <span class="text-dark-75 text-hover-primary mb-1 cust-name">{{customer.firstName}}
-                            {{customer.lastName}}</span>
+                          <span class="text-dark-75 text-hover-primary mb-1 cust-name">
+                              {{getCustomer(customer)}}</span>
                           <div>
                             <span *ngFor="let label of customer.label | keyvalue"
                               [class.appliedLabel]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>

@@ -9,30 +9,31 @@
         </div>
 
     </header>
+   
     <div class="videocontainer no-padding">
         <div class="container previewDiv" [ngStyle]="{'height.px': (screenHeight-100)}"
             [ngClass]="{'hide': !twilioService.preview}">
-            <div class="col-md-7 col-lg-7 col-sm-7 col-xs-12 previewSubDiv no-padding">
+            <div class="col-md-7 col-lg-6 col-sm-7 col-xs-12 previewSubDiv no-padding">
                 <div #previewContainer [ngClass]="{'videohgt': (twilioService.camDeviceCount == 0)}"
                     id="previewContainer" class="previewContainer col-md-7 col-lg-7 col-sm-7 col-xs-12">
                 </div>
                 <div class="icons-preview">
-                    <i title="Mute" *ngIf="twilioService.microphone" class="fa fa-microphone round mute"
-                        style="opacity: 1;cursor: pointer;" (click)="muteAudio()"></i>
-                    <i *ngIf="!twilioService.microphone" title="Unmute" class="fa fa-microphone-slash round  mute"
-                        style="opacity: 1;cursor: pointer;" (click)="unmuteAudio()"></i>
-                    <i title="Video" *ngIf="twilioService.video" class="fa fa-video-camera round video"
-                        style="opacity: 1;cursor: pointer;" (click)="muteVideo()">
+                    <i title="Mute" *ngIf="twilioService.microphone" class="fa fa-microphone round mute "
+                        style="opacity: 1;cursor: pointer;" (click)="!btnClicked && muteAudio()"></i>
+                    <i *ngIf="!twilioService.microphone" title="Unmute" class="fa fa-microphone-slash round  mute exit"
+                        style="opacity: 1;cursor: pointer;" (click)="!btnClicked && unmuteAudio()"></i>
+                    <i title="Video" *ngIf="twilioService.video" class="fa fa-video-camera round video "
+                        style="opacity: 1;cursor: pointer;" (click)="!btnClicked && muteVideo()">
                     </i>
-                    <i *ngIf="!twilioService.video" title="No Video" class="round novideo"
-                        style="opacity: 1;cursor: pointer;" (click)="unmuteVideo()">
+                    <i *ngIf="!twilioService.video" title="No Video" class="round novideo exit"
+                        style="opacity: 1;cursor: pointer;" (click)="!btnClicked && unmuteVideo()">
                         <i class="fa fa-stack"><i class="fa fa-video-camera fa-stack-1x"></i>
                             <i class="fa fa-close red fa-stack-1x"></i>
                         </i>
                     </i>
                 </div>
             </div>
-            <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12 no-padding">
+            <div class="col-md-5 col-lg-6 col-sm-5 col-xs-12 no-padding">
                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding">
                     <div class="mgn-up-50 mgn-bt-20 centeralign col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                         <!-- <h1 *ngIf="!loading">Ready To Start ?</h1> -->
@@ -47,10 +48,22 @@
                     </div>
                     <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                     <app-common-innerloading-spinner *ngIf="!loading && twilioService.loading"></app-common-innerloading-spinner>
+                    <div class="centeralign  mgn-bt-20 col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding" *ngIf="!loading && videocreditShow">
+                        <div >
+                            <label>Remaining video minutes: <span class="bold">
+                                    &nbsp;{{videocredits}}</span>
+                            </label>
+                        </div>
+                                <span class="info-lstadd serviceadd-info">
+                            In order to increase Jaldee Video minutes, upgrade <a class="pointlist"
+                                    matTooltip="Go to Add-ons" routerLink="/provider/license/addons">Jaldee video calling
+                                    ADD-ON.</a>
+                                </span>
+                    </div>
                     <div class="centeralign join-vid-btn mgn-bt-20 col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding"
                         *ngIf="!loading">
-                        <button [disabled]="!consumerReady || btnClicked" (click)="!btnClicked && consumerReady && joinRoom()">Start Sharing Video
-                        </button> <button class="mgn-lt-5" [disabled]="btnClicked" (click)="!btnClicked && disconnect()">Exit</button>
+                        <button class="startshare" [disabled]="!consumerReady || btnClicked" (click)="!btnClicked && consumerReady && joinRoom()">Start Sharing Video
+                        </button> <button class="mgn-lt-5 exit" [disabled]="btnClicked" (click)="!btnClicked && disconnect()">Exit</button>
                         <br><br>
                         <div class="pt-0">
                             <mat-checkbox class="rec-check" [(ngModel)]="recordingFlag" [disabled]="btnClicked"

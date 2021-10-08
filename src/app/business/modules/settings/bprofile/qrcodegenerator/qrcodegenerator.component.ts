@@ -10,6 +10,9 @@ declare let cordova: any;
 export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
   elementType = 'url';
   accuid: any;
+  bname: any;
+  about: any;
+  busername: any;
   qr_code_cId = false;
   qr_code_oId = false;
   qr_value;
@@ -46,13 +49,17 @@ export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
   ngOnInit() {
     this.accuid = this.data.accencUid;
     this.wpath = this.data.path;
-
+    this.bname = this.data.businessName;
+    this.about = this.data.businessDesc;
+    this.busername = this.data.businessUserName;
+    console.log(this.bname);
+    console.log(this.about);
     this.customId = this.data.customId;
     // this.window_path = this.data.pathUrl;
     // console.log(this.wpath + this.accuid);
     this.shareLink = this.wpath + this.accuid;
     // this.description = 'You can book my services by just clicking this link';
-    this.description = 'For consultations, book using this link';
+    this.description = 'For bookings use this link';
     this.imageUrl = this.wpath + 'assets/images/logo.png';
     this.qrCodegenerateOnlineID(this.accuid);
   }

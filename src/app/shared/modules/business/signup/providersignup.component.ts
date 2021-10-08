@@ -735,7 +735,6 @@ export class ProvidersignupComponent implements OnInit {
     this.active_step = 2;
   }
   gotoTerms() {
-    // window.open('business/terms', '_blank');
     this.dialog.open(TermsStaticComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],

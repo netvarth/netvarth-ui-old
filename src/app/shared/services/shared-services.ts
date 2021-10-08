@@ -447,8 +447,8 @@ export class SharedServices {
     const url = 'consumer/waitlist/communicate/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpPost(url, body);
   }
-  getPaymentModesofProvider(provid) {
-    const url = 'consumer/payment/modes/' + provid;
+  getPaymentModesofProvider(provid,purpose?) {
+    const url = 'consumer/payment/modes/' + provid +'/'+ purpose;
     return this.servicemeta.httpGet(url);
   }
   consumerPayment(data) {
@@ -1007,7 +1007,7 @@ export class SharedServices {
     return this.servicemeta.httpGet(url);
   }
   getCartdetails(accountid, data) {
-    const url = 'consumer/orders/amount' + '?account=' + accountid;
+    const url = 'consumer/orders/amount?account=' + accountid;
     return this.servicemeta.httpPut(url, data);
   }
   addWaitlistAdvancePayment(param, body) {
@@ -1071,7 +1071,7 @@ export class SharedServices {
     const url = 'provider/donation/questionnaire/resubmit/' + uuid;
     return this.servicemeta.httpPost(url, body);
   }
-    consumerWaitlistQnrUploadStatusUpdate(uid, account, data) {
+  consumerWaitlistQnrUploadStatusUpdate(uid, account, data) {
     const url = 'consumer/waitlist/questionnaire/upload/status/' + uid + '?account=' + account;
     return this.servicemeta.httpPut(url, data);
   }
@@ -1079,19 +1079,31 @@ export class SharedServices {
     const url = 'consumer/appointment/questionnaire/upload/status/' + uid + '?account=' + account;
     return this.servicemeta.httpPut(url, data);
   }
-  telegramChat(countryCode,loginId) {
+  consumertelegramChat(countryCode, loginId) {
     const url = 'chatbot/telegram/consumer/chatId/' + countryCode + '/' + loginId;
     return this.servicemeta.httpGet(url);
   }
-getJaldeeCashandJcredit(){
-  const url = 'consumer/wallet/redeem/eligible/amt';
-  return this.servicemeta.httpGet(url); 
-}
-getRemainingPrepaymentAmount(jcash? , jcredit? , advanceamount?){
-  const url = 'consumer/wallet/redeem/remaining/amt' + '?useJcash=' + jcash  + '&useJcredit=' + jcredit + '&advancePayAmount=' + advanceamount;
-  return this.servicemeta.httpGet(url);
-}
-PayByJaldeewallet(postData){
-  return this.servicemeta.httpPost('consumer/payment/wallet', postData);
-}
+  getJaldeeCashandJcredit() {
+    const url = 'consumer/wallet/redeem/eligible/amt';
+    return this.servicemeta.httpGet(url);
+  }
+  getRemainingPrepaymentAmount(jcash?, jcredit?, advanceamount?) {
+    const url = 'consumer/wallet/redeem/remaining/amt' + '?useJcash=' + jcash + '&useJcredit=' + jcredit + '&advancePayAmount=' + advanceamount;
+    return this.servicemeta.httpGet(url);
+  }
+  PayByJaldeewallet(postData) {
+    return this.servicemeta.httpPost('consumer/payment/wallet', postData);
+  }
+  getWaitlistQuestionnaireByUid(uid, accountId) {
+    const url = 'consumer/waitlist/questionnaire/' + uid + '?account=' + accountId;
+    return this.servicemeta.httpGet(url);
+  }
+  getApptQuestionnaireByUid(uid, accountId) {
+    const url = 'consumer/appointment/questionnaire/' + uid + '?account=' + accountId;
+    return this.servicemeta.httpGet(url);
+  }
+  getAppointmentReschedulePricelist(serviceid) { 
+    const url = 'consumer/appointment/schedule/' + serviceid + '/pricelist';
+    return this.servicemeta.httpGet(url);
+  }
 }

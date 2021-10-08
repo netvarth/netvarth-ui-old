@@ -1,0 +1,18 @@
+.close-btn {
+    background-color: #ccc !important;
+}
+.centeralign {
+     text-align: center !important;
+}
+.mgn-rt-10 {
+    margin-right: 10px !important;
+}
+button.dialog-btn {
+    width:40% !important;
+}
+button .fa-window-close {
+    color: #000 !important;
+}
+.mat-dialog-actions.paddingtop button{
+    padding:10px 25px 10px 25px !important;
+}

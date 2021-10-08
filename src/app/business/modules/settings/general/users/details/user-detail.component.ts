@@ -263,6 +263,7 @@ export class BranchUserDetailComponent implements OnInit {
             first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
             last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
             gender: [''],
+            employeeId: [''],
             // phonenumber: new FormControl(undefined),
             countryCode: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)])],
             phonenumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
@@ -281,6 +282,7 @@ export class BranchUserDetailComponent implements OnInit {
 
             selectedDepartment: [],
             privileges: [''],
+            bProfilePermitted: [''],
             selectedUserType: [],
             // address: [],
             // state: [],
@@ -358,6 +360,7 @@ export class BranchUserDetailComponent implements OnInit {
             'first_name': this.user_data.firstName || null,
             'last_name': this.user_data.lastName || null,
             'gender': this.user_data.gender || null,
+            'employeeId': this.user_data.employeeId || null,
             'countryCode':  this.user_data.countryCode || '+91',
             'phonenumber': this.user_data.mobileNo || '',
             'dob': this.user_data.dob || null,
@@ -367,6 +370,7 @@ export class BranchUserDetailComponent implements OnInit {
             'selectedDepartment': this.user_data.deptId || null,
             'selectedUserType': this.user_data.userType || null,
             'privileges': this.user_data.admin || false,
+            'bProfilePermitted': this.user_data.bProfilePermitted || false,
             'postalCode': this.user_data.pincode || null,
             'countryCode_whatsapp': (this.user_data.whatsAppNum && this.user_data.whatsAppNum.countryCode) ?  this.user_data.whatsAppNum.countryCode : '+91', 
             'whatsappumber': (this.user_data.whatsAppNum && this.user_data.whatsAppNum.number) ? this.user_data.whatsAppNum.number  : '', 
@@ -429,6 +433,7 @@ export class BranchUserDetailComponent implements OnInit {
             'lastName': input.last_name.trim() || null,
             'dob': date_format || null,
             'gender': input.gender || null,
+            'employeeId': input.employeeId || null,
             'email': input.email || '',
             // 'countryCode': '+91',
             // 'mobileNo': input.phonenumber,
@@ -477,16 +482,29 @@ export class BranchUserDetailComponent implements OnInit {
                 post_data1['mobileNo'] = input.phonenumber;
             }
 
+        // if (input.selectedUserType === 'PROVIDER') {
+        //     post_data1['deptId'] = input.selectedDepartment;
+        //     // post_data1['subdomain'] = input.selectedSubDomain;
+        //     console.log(this.selectedsubDomain);
+        //     post_data1['subdomain'] = (this.selectedsubDomain[0]) ? this.selectedsubDomain[0].id : 0;
+        // }
         if (input.selectedUserType === 'PROVIDER') {
             post_data1['deptId'] = input.selectedDepartment;
+            post_data1['bProfilePermitted'] = input.bProfilePermitted;
             // post_data1['subdomain'] = input.selectedSubDomain;
             console.log(this.selectedsubDomain);
-            post_data1['subdomain'] = (this.selectedsubDomain[0]) ? this.selectedsubDomain[0].id : 0;
+            // post_data1['subdomain'] = (this.selectedsubDomain[0]) ? this.selectedsubDomain[0].id : 0;
+            if (this.selectedsubDomain[0] && this.selectedsubDomain[0].id) {
+                post_data1['subdomain'] = this.selectedsubDomain[0].id;
+            }
         }
         if (input.selectedUserType !== 'ADMIN') {
         post_data1['admin'] = input.privileges;
         console.log(input.privileges);
         }
+        // if (input.selectedUserType === 'PROVIDER') {
+        //     post_data1['bProfilePermitted'] = input.bProfilePermitted;
+        //     }
         // console.log(post_data1);
         if (this.actionparam.type === 'edit') {
             console.log(post_data1);

@@ -5,10 +5,13 @@
 /dist-server
 /tmp
 /out-tsc
+/www
 
 # dependencies
 /node_modules
 /documentation
+/platforms
+/plugins
 
 # IDEs and editors
 /.idea

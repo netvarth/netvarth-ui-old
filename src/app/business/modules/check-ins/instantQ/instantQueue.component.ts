@@ -50,6 +50,7 @@ export class instantQueueComponent implements OnInit {
         public fed_service: FormMessageDisplayService,
     ) {
         this.location = data.location;
+        console.log(this.location)
         this.userId = data.userId;
         if (data.instaQid) {
             this.instantQId = data.instaQid;
@@ -211,6 +212,7 @@ export class instantQueueComponent implements OnInit {
         };
         const instantQInput = {};
         const services = [];
+        console.log(this.servicelist)
         for (let i = 0; i < this.servicelist.length; i++) {
             services.push({ 'id': this.servicelist[i].id });
         }
@@ -218,8 +220,8 @@ export class instantQueueComponent implements OnInit {
             instantQInput['id'] = this.qId;
         }
         const serv = [];
-        serv.push({ 'id': this.services_list[0].id });
-        instantQInput['location'] = this.location.id;
+        console.log(this.location)
+        instantQInput['location'] = this.location;
         if (this.action !== 'edit') {
             instantQInput['services'] = serv;
         }

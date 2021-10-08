@@ -80,8 +80,8 @@
                                             <i class="icon-edit chkin-mobic"></i>Edit
                                         </button>
                                         <button mat-menu-item 
-                                    (click)="serviceqrCodegeneraterOnlineID(service)">
-                                        <i class="fa fa-qrcode"
+                                    (click)="serviceqrCodegeneraterOnlineID(service)"  *ngIf="service.status=='ACTIVE'" >
+                                    <i class="fa fa-qrcode"
                                             ></i>Share link
                                     </button>
                                         <button mat-menu-item (click)="changeServiceStatus(service)">

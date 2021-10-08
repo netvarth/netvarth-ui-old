@@ -245,6 +245,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     const providerId = 0;
     this.provider_services.getProviderUnreadCount('ENQUIRY', providerId).subscribe(data => {
       this.enquiryCount = data;
+      if(this.enquiryCount){
+      this.shared_functions.sendMessage({ ttype: 'enquiryCount' });
+    }
     });
   }
   getUserDetails() {
@@ -322,8 +325,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     }
   }
   reloadHandler() { // this is the function which will be called periodically to refresh the contents in various sections
-    this.getInboxUnreadCnt();
+    this.getEnquiryCount();
     this.getAlertCount();
+    this.getInboxUnreadCnt();
   }
   getInboxUnreadCnt() {
     const usertype = this.shared_functions.isBusinessOwner('returntyp');

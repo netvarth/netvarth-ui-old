@@ -209,6 +209,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
   showToken = false;
   services_cap = Messages.WAITLIST_SERVICES_CAP;
   maintooltip = '';
+  bprofilePermit;
   constructor(
     private router: Router,
     private routerobj: Router,
@@ -278,6 +279,9 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
   getUser() {
     this.provider_services.getUser(this.userId)
       .subscribe((data: any) => {
+        
+        this.bprofilePermit = data.bProfilePermitted;
+        console.log(this.bprofilePermit)
         const breadcrumbs = [];
         this.breadcrumbs_init.map((e) => {
           breadcrumbs.push(e);

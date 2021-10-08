@@ -56,6 +56,20 @@ export class CheckinDetailsSendComponent implements OnInit {
     api_error = null;
     api_success = null;
   patientid: any;
+  spName: any;
+  waitlistModes = [
+    { mode: 'WALK_IN_CHECKIN', value: 'Walk in ' },
+    { mode: 'PHONE_CHECKIN', value: 'Phone in ' },
+    { mode: 'ONLINE_CHECKIN', value: 'Online ' },
+  ];
+  appointmentModes = [
+    { mode: 'WALK_IN_APPOINTMENT', value: 'Walk in ' },
+    { mode: 'PHONE_IN_APPOINTMENT', value: 'Phone in ' },
+    { mode: 'ONLINE_APPOINTMENT', value: 'Online ' },
+  ];
+  waitlist_Mode: any;
+  appt_Mode: any;
+  countrycode: any;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
@@ -125,14 +139,24 @@ export class CheckinDetailsSendComponent implements OnInit {
         if (this.data.qdata.waitlistingFor[0].phoneNo) {
           this.phone = this.data.qdata.waitlistingFor[0].phoneNo;
         }
+        if (this.data.qdata.waitlistingFor[0].countryCode) {
+          this.countrycode = this.data.qdata.waitlistingFor[0].countryCode;
+        }
         // this.spfname = this.data.qdata.provider.firstName;
         // this.splname = this.data.qdata.provider.lastName;
         if(this.data.qdata.provider){
+          this.spName = (this.data.qdata.provider.businessName) ? this.data.qdata.provider.businessName : this.data.qdata.provider.firstName + ' ' + this.data.qdata.provider.lastName;
           this.spfname = this.data.qdata.provider.firstName;
           this.splname = this.data.qdata.provider.lastName;
           console.log(this.spfname);
           console.log(this.splname);
 
+          }
+          if(this.data.qdata.waitlistingFor[0].memberJaldeeId){
+            this.patientid = this.data.qdata.waitlistingFor[0].memberJaldeeId;
+          }
+          if(this.data.qdata.waitlistMode){
+            this.waitlist_Mode = this.data.qdata.waitlistMode;
           }
     } else {
         this.consumer_fname = this.data.qdata.appmtFor[0].firstName + ' ' + this.data.qdata.appmtFor[0].lastName;
@@ -153,6 +177,9 @@ export class CheckinDetailsSendComponent implements OnInit {
         if (this.data.qdata.providerConsumer.phoneNo) {
          this.phone = this.data.qdata.providerConsumer.phoneNo.trim();
         }
+        if (this.data.qdata.providerConsumer.countryCode) {
+          this.countrycode = this.data.qdata.providerConsumer.countryCode;
+         }
         if (this.data.qdata.providerConsumer.email) {
           this.consumer_email = this.data.qdata.providerConsumer.email;
         }
@@ -160,10 +187,13 @@ export class CheckinDetailsSendComponent implements OnInit {
           this.patientid = this.data.qdata.appmtFor[0].memberJaldeeId;
         }
         if(this.data.qdata.provider){
+          this.spName = (this.data.qdata.provider.businessName) ? this.data.qdata.provider.businessName : this.data.qdata.provider.firstName + ' ' + this.data.qdata.provider.lastName;
         this.spfname = this.data.qdata.provider.firstName;
         this.splname = this.data.qdata.provider.lastName;
         }
-        
+        if(this.data.qdata.appointmentMode){
+          this.appt_Mode = this.data.qdata.appointmentMode;
+        }
     }
    }
    getProviderSettings() {
@@ -218,7 +248,7 @@ export class CheckinDetailsSendComponent implements OnInit {
                   );
           }
         } else {
-          if (this.sms === true && this.phone) {
+          if (this.sms === true && this.phone && this.countrycode =='+91') {
               this.provider_services.smsAppt(this.uuid).subscribe(
                 () => {
                   this.dialogRef.close();
@@ -287,6 +317,17 @@ export class CheckinDetailsSendComponent implements OnInit {
           }
         });
     }
+    }
+    getWaitListMode(mode) {
+      let currentmode=[];
+      currentmode=this.waitlistModes.filter(obj=>obj.mode===mode);
+      return currentmode[0].value;
+  
+    }
+    getAppointmentMode(mode){
+      let currentmode=[];
+      currentmode=this.appointmentModes.filter(obj=>obj.mode===mode);
+      return currentmode[0].value;
     }
   }
 

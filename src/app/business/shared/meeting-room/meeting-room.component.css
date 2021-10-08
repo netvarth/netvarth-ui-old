@@ -72,10 +72,10 @@
   transform: scaleX(-1);
 }
 .videocontainer .join-vid-btn button {
-  background: linear-gradient(to right, #3c8dbc 0%, #1873f2 100%);
-  padding: 5px 20px;
-  border-radius: 10px;
-  color: #fff;
+padding: 5px 20px;
+border-radius: 10px;
+color: #fff;
+font-weight: bold;
 }
 .videocontainer .join-vid-btn button:disabled {
   background: linear-gradient(to right, grey 0%, grey 100%);
@@ -83,6 +83,7 @@
 
 .full-height {
   height: 100vh;
+  background-color: white;
 }
 .remote {
   height: 100vh;
@@ -182,4 +183,24 @@ header {
 .rec-check {
   font-weight: normal;
   font-size: small;
+}
+.split-ln-brd {
+  border: 1px;
+  border-style: dotted;
+}
+.info-lstadd{
+  font-size: .75rem !important;
+  padding: 5px 0 0 20px !important;
+  background: url(../../../../assets/images/icon-bulb.svg) no-repeat scroll 0 0/15px 24px !important;
+  }
+.info-lstadd a{
+text-decoration: underline !important;
+color: #1873f2;
+}
+.exit{
+  background: red;
+  color: white;
+}
+.startshare{
+  background:#06459c;
 }

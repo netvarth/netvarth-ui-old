@@ -154,7 +154,18 @@ export class RazorpayService {
           this.lStorageService.removeitemfromLocalStorage('order_spId');
           this.lStorageService.removeitemfromLocalStorage('order');
           this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-          this.ngZone.run(() => this.router.navigate(['consumer'] ,{ queryParams: { 'source': 'order'}}));
+          let queryParams = {
+            'source': 'order',
+          };
+          if(uuids) {
+            queryParams['customId']= uuids;
+            queryParams['accountId']= account_id;
+          }
+          let navigationExtras: NavigationExtras = {
+            queryParams: queryParams
+          }
+          this.ngZone.run(() => this.router.navigate(['consumer'] ,navigationExtras));
+          // this.ngZone.run(() => this.router.navigate(['consumer'] ,{ queryParams: { 'source': 'order'}}));
         }
       } else {
         this.router.navigate(['provider', 'license', 'payments'], navigationExtras);
@@ -218,6 +229,15 @@ export class RazorpayService {
         console.log(navigationExtras);
         this.onReloadPage();
         // this.ngZone.run(() => this.router.navigate(['consumer', 'order', 'order-bill'], navigationExtras));
+      }
+      if(checkin_type==='donations'){
+        this.ngZone.run(() => {
+          const snackBar =  this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+          snackBar.onAction().subscribe(() => {
+            snackBar.dismiss();
+          })
+        });
+     
       }
     });
     const rzp = new this.winRef.nativeWindow.Razorpay(options);

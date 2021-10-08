@@ -161,11 +161,11 @@
     height: 870px !important;
     overflow-y: scroll !important;
   }
-  .customersList .highlight {
+  .customersList .highlights {
     background-color:#1e4079 !important;
     color: white !important;
   }
-  .customersList .highlight .selected_customers {
+  .customersList .highlights .selected_customers {
     color: white !important;
   }
   .disp-none-large {
@@ -494,7 +494,7 @@
 }
 
 .filter-sidebar .filter-footer .btn.apply-btn i.fa.fa-check {
-  font-weight: 500 !important;
+  /* font-weight: 500 !important; */
   color: white !important;
   font-size: 14px !important;
 }
@@ -503,4 +503,28 @@
 }
 .card.title-gb {
   border-radius: 0 !important;
+}
+.countryCodewidth{
+width:60px;
+}
+.phonewidth{
+  width:150px;
+}
+.change::-webkit-input-placeholder {
+  /* WebKit, Blink, Edge */
+  color: rgba(202, 195, 202, 0.61);
+}
+.change:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color:  rgba(202, 195, 202, 0.61);
+  opacity: 1;
+}
+.change::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color:  rgba(202, 195, 202, 0.61);
+  opacity: 1;
+}
+.change:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: rgba(202, 195, 202, 0.61);
 }

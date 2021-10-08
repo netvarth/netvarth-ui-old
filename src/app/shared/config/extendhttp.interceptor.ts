@@ -85,8 +85,8 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       const phone_number = ynw_user.loginId;
       const password = this.lStorageService.getitemfromLocalStorage('jld');
       if (!ynw_user.mUniqueId) {
-        if (localStorage.getItem('mUniqueId')) {
-          ynw_user.mUniqueId = localStorage.getItem('mUniqueId');
+        if (this.lStorageService.getitemfromLocalStorage('mUniqueId')) {
+          ynw_user.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
           this.lStorageService.setitemonLocalStorage('ynw-credentials', ynw_user);
         }
       }

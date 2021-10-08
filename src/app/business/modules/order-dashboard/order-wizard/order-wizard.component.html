@@ -163,8 +163,12 @@
 
                                                             <!--begin::Details-->
                                                             <div class="mt-5 mb-md-0 mb-lg-1 mb-md-0 mb-lg-1 mb-lg-0 mb-1 d-flex flex-column item_info">
-                                                                <a class="font-size-h5 font-weight-bold text-dark-75 text-hover-primary mb-1 twoline-break">{{item.item.displayName}}</a>
-                                                                <span class="font-size-sm twoline-break">{{ item.item.shortDesc }}</span>
+                                                                <a class="font-size-h5 font-weight-bold text-dark-75 text-hover-primary mb-1 twoline-break">
+                                                                {{(item.item.itemNameInLocal) ? item.item.itemNameInLocal : item.item.displayName}}</a>
+                                                                <span *ngIf="item.item.itemNameInLocal && item.item.displayName" class="font-size-h5 font-weight-bold text-dark-75 text-hover-primary mb-1 twoline-break">{{item.item.displayName}}</span>
+                                                                <span *ngIf="!item.item.itemNameInLocal && item.item.displayName" class="font-size-h5 font-weight-bold text-dark-75 text-hover-primary mb-1 twoline-break">&nbsp;</span>
+                                                                <!-- <a class="font-size-h5 font-weight-bold text-dark-75 text-hover-primary mb-1 twoline-break">{{item.item.displayName}}</a>
+                                                                <span class="font-size-sm twoline-break">{{ item.item.shortDesc }}</span> -->
                                                             </div>
                                                             <div>
                                                                 <span class="strikeMe rupee-font font-weight-bolder " *ngIf="item.item.showPromotionalPrice"> {{ item.item.price  | currency:'&#8377;'}}&nbsp;&nbsp;</span>

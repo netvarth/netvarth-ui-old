@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { WordProcessor } from '../../../../app/shared/services/word-processor.service';
 
 
 @Component({
@@ -17,18 +18,21 @@ export class ConsumerGroupDialogComponent implements OnInit,OnDestroy {
   selectedGroups: any = [];
   subscription:Subscription;
   mode: any;
+  customer_label: any;
 
   constructor(
     public dialogRef: MatDialogRef<ConsumerGroupDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
-    private provider_services: ProviderServices) {
+    private provider_services: ProviderServices,
+    private wordProcessor: WordProcessor,) {
       this.mode=this.data.mode;
   }
 
   ngOnInit(): void {
     this.former_chosen_consumerGrps = this.data.groups;
     this.getConsumerGroups();
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
 
   }
  ngOnDestroy(){

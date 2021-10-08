@@ -8,9 +8,10 @@ import { LoadingSpinnerModule } from '../../../../../shared/modules/loading-spin
 import { MaterialModule } from '../../../../../shared/modules/common/material.module';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { HolidayListComponent } from './holiday-list/holiday-list.component';
-import { HolidayDetailsComponent } from './holiday-details/holiday-details.component';
+//import { HolidayDetailsComponent } from './holiday-details/holiday-details.component';
+import { HolidayDetailsComponentBox } from './holiday-details-box/holiday-details-box.component';
 
-@NgModule({
+@NgModule({ 
     imports: [
         HolidayRoutingmModule,
         BreadCrumbModule,
@@ -24,7 +25,8 @@ import { HolidayDetailsComponent } from './holiday-details/holiday-details.compo
     ],
     declarations: [
         HolidayListComponent,
-        HolidayDetailsComponent
+        //HolidayDetailsComponent
+        HolidayDetailsComponentBox
     ],
     exports: [HolidayListComponent]
 })

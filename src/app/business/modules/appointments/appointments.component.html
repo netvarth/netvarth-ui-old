@@ -15,7 +15,7 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <ul class="menu">
+                <ul *ngIf="selected_location" class="menu">
                   <li *ngFor="let location of locations;let i = index"
                     [ngClass]="{'active': (location.place == selected_location.place)}">
                     <a class="pointer-cursor" (click)="onChangeLocationSelect(i)">
@@ -26,7 +26,7 @@
                   </li>
                 </ul>
               </li>
-              <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
+              <li *ngIf="admin" class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
             </ul>
           </li>
         </ul>
@@ -318,6 +318,35 @@
                           </div>
                         </div>
                       </div>
+                      <div class="card" >
+                        <div class="card-header">
+                          <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePhNo3" aria-expanded="false">
+                              <div>
+                                <div style="display: inline-block !important;">
+                                  <i class="fa fa-phone"></i>
+                                </div>
+                                <span>&nbsp;Phone Number</span>
+                              </div>
+                              <i class="fa fa-angle-down"></i>
+                            </button>
+                          </h2>
+                        </div>
+                        <div id="collapsePhNo3" class="collapse in" data-parent="#accordion3">
+                          <div class="card-body">
+                            <div class="filterTextinput filter-text-input" >
+                                <li class="filterli filter-li">
+                                    <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode (keyup)="keyPressed()"
+                                    class="filterTextbox change countryCodewidth" placeholder="+91">
+                                  <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
+                                    [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
+                                    (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
+                                    placeholder="9955668855">
+                                </li>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
@@ -562,7 +591,7 @@
                       </td> -->
                     </tr>
                   </tbody>
-                  <tbody *ngIf="startedAppts.length > 0 && (activeSchedules.length > 0 || activeUser) && !small_device_display">
+                  <tbody *ngIf="startedAppts.length > 0 && (activeSchedules.length > 0 || activeUser || (active_user.accountType === 'BRANCH' && activeSchedules.length == 0)) && !small_device_display">
                     <tr class="pointer-cursor" [class.user-tr-backclr]="appt.provider" (click)="goCheckinDetail(appt)"
                       *ngFor="let appt of startedAppts, let i=index">
                       <td class="chkWth" *ngIf="startedAppts.length > 1">
@@ -576,7 +605,7 @@
                           {{appt.appmtDate | date: newTimeDateFormat}}</div>
                         <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
                           <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
-                          <div *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</div>
+                          <span *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</span>
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name font11"
@@ -721,24 +750,24 @@
                           (click)="stopprop($event);showCallingModes(appt)">
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                          <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          <i class="fa zoom-icon" style="width: 15px; " [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                           <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"
                             class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
                             [ngClass]="{'tool-pading': (!small_device_display?true:false)}" aria-hidden="true"></i>
-                          <i class="fa phon-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          <i class="fa phon-icon" style="width: 15px;" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                          <i class="fa wtsapaud-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          <i class="fa wtsapaud-icon" style="width: 15px;" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></i>
-                          <i class="fa wtsapvid-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          <i class="fa wtsapvid-icon" style="width: 15px; "  [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></i>
                           <span
                             *ngIf="appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'|| appt.service.virtualCallingModes[0].callingMode === 'Phone')">&nbsp;</span>
-                          <span
+                          <span 
                             *ngIf="!small_device_display && appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
                             {{appt.apptStatus === 'Started'? 'Resume':'Start'}}
                           </span>
-                          <span
+                          <span 
                             *ngIf="appt.service.virtualCallingModes[0].callingMode == 'Phone' || appt.service.virtualCallingModes[0].callingMode == 'WhatsApp'">
                             {{appt.apptStatus === 'Started'? 'Resume': 'Call +' +
                             appt.virtualService[appt.service.virtualCallingModes[0].callingMode] }}
@@ -747,7 +776,7 @@
                         <a class="statusText btn-play pointer-cursor done-btn"
                           (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus('started', 'Completed', appt)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'" *ngIf="appt.apptStatus == 'Started'">
-                          <i class="dashboardcomplete-icon" style="color: green;"></i> <span
+                          <i class="dashboardcomplete-icon" style="color: green; "></i> <span
                             *ngIf="!small_device_display">
                             {{done_cap}}</span>
                         </a>
@@ -771,7 +800,7 @@
                   </tbody>
 
                   <tbody
-                    *ngIf="startedAppts.length > 0 && (activeSchedules.length > 0 || activeUser) && small_device_display">
+                    *ngIf="startedAppts.length > 0 && (activeSchedules.length > 0 || activeUser || (active_user.accountType === 'BRANCH' && activeSchedules.length == 0)) && small_device_display">
                     <div [class.user-tr-backclr]="appt.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
                       *ngFor="let appt of startedAppts, let i=index">
                       <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="startedAppts.length > 1">
@@ -792,7 +821,7 @@
               </div>
               <div class="">
                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-10"
-                  *ngIf="time_type === 1 && statusAction == 'new' && (activeSchedules.length > 0 || activeUser)">
+                  *ngIf="time_type === 1 && statusAction == 'new' && (activeSchedules.length > 0 || activeUser || (active_user.accountType === 'BRANCH' && activeSchedules.length == 0))">
                   <div class="col-md-3 col-xs-5 col-sm-4 no-padding">
                     <mat-select class="selecttype" [(ngModel)]="selected_type">
                       <mat-option [value]="'all'" (click)="handleApptSelectionType('all')">
@@ -829,7 +858,7 @@
                 </div>
                 <table class="table tbl-qboard childDetails singleDash">
                   <thead id="childActionBar"
-                    *ngIf="showSelectAll() && selected_type != 'free' && (activeSchedules.length > 0 || activeUser)">
+                    *ngIf="showSelectAll() && selected_type != 'free'">
                     <tr>
                       <th class="chkWth check-table-head" colspan="3">
                         <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
@@ -881,8 +910,8 @@
                         <td class="parent-selection parent-title td-one">
                           <div class="pull-left mgn-lt-5 date">
                             <span class="greenc bold font11">{{getSingleTime(appt.time)}}</span>
-                            <div *ngIf="this.selQIds.length > 1">
-                              S{{getScheduleIndex(apptByTimeSlot[appt.time][0].schedule.id) + 1}}</div>
+                            <span *ngIf="this.selQIds.length > 1">
+                              S{{getScheduleIndex(apptByTimeSlot[appt.time][0].schedule.id) + 1}}</span>
                           </div>
                           <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                             class="bold pull-left mgn-lt-5 name font11"
@@ -1091,7 +1120,7 @@
                     </tr>
                   </tbody>
                   <tbody
-                    *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser) && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked')) && !small_device_display">
+                    *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser || (active_user.accountType === 'BRANCH' && activeSchedules.length == 0)) && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked')) && !small_device_display">
                     <tr class="pointer-cursor" [class.user-tr-backclr]="appt.provider" (click)="goCheckinDetail(appt)"
                       *ngFor="let appt of check_in_filtered_list, let i=index">
                       <td class="chkWth" *ngIf="showSelectAll()">
@@ -1104,7 +1133,7 @@
                           {{appt.appmtDate | date: newTimeDateFormat}}</div>
                         <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
                           <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
-                          <div *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</div>
+                          <span *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</span>
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name font11"
@@ -1306,7 +1335,7 @@
 
 
                   <tbody
-                    *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser) && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked')) && small_device_display">
+                    *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser || (active_user.accountType === 'BRANCH' && activeSchedules.length == 0)) && (statusAction != 'new' || (statusAction == 'new' && selected_type === 'booked')) && small_device_display">
                     <div [class.user-tr-backclr]="appt.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
                       *ngFor="let appt of check_in_filtered_list, let i=index">
                       <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="showSelectAll()">
@@ -1411,6 +1440,35 @@
                                     class="filterTextbox filter-textbox" (keyup)="keyPressed()"
                                     placeholder="Enter {{customerIdTooltip | capitalizeFirst}}">
                                 </li>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card" >
+                          <div class="card-header">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePhNo3" aria-expanded="false">
+                                <div>
+                                  <div style="display: inline-block !important;">
+                                    <i class="fa fa-phone"></i>
+                                  </div>
+                                  <span>&nbsp;Phone Number</span>
+                                </div>
+                                <i class="fa fa-angle-down"></i>
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapsePhNo3" class="collapse in" data-parent="#accordion3">
+                            <div class="card-body">
+                              <div class="filterTextinput filter-text-input" >
+                                  <li class="filterli filter-li">
+                                      <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode (keyup)="keyPressed()"
+                                      class="filterTextbox change countryCodewidth" placeholder="+91">
+                                    <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
+                                      [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
+                                      (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
+                                      placeholder="9955668855">
+                                  </li>
                               </div>
                             </div>
                           </div>
@@ -1667,7 +1725,7 @@
                     </td> -->
                   </tr>
                 </tbody>
-                <tbody *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser) && !small_device_display">
+                <tbody *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser || (active_user.accountType === 'BRANCH' && activeSchedules.length == 0)) && !small_device_display">
                   <tr class="pointer-cursor" [class.user-tr-backclr]="appt.provider" (click)="goCheckinDetail(appt)"
                     *ngFor="let appt of check_in_filtered_list, let i=index">
                     <td class="chkWth" *ngIf="showSelectAll()">
@@ -1680,7 +1738,7 @@
                         {{appt.appmtDate | date: newTimeDateFormat}}</div>
                       <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
                         <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
-                        <div *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</div>
+                        <span *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</span>
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                         class="bold pull-left mgn-lt-5 name font11" (click)="stopprop($event);gotoCustomerDetails(appt)"
@@ -1879,7 +1937,7 @@
                 </tbody>
 
                 <tbody
-                  *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser) && small_device_display">
+                  *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser || (active_user.accountType === 'BRANCH' && activeSchedules.length == 0)) && small_device_display">
                   <div [class.user-tr-backclr]="appt.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
                     *ngFor="let appt of check_in_filtered_list, let i=index">
                     <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="showSelectAll()">
@@ -2001,11 +2059,14 @@
                           <div id="collapsePhNo3" class="collapse in" data-parent="#accordion3">
                             <div class="card-body">
                               <div class="filterTextinput filter-text-input" *ngIf="time_type == 3">
-                                <li class="filterli filter-li">
-                                  <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number" #Fmobile
-                                    (keypress)="isNumeric($event)" (keyup)="keyPressed()"
-                                    maxlength="10" class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
-                                </li>
+                                  <li class="filterli filter-li">
+                                      <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode (keyup)="keyPressed()"
+                                      class="filterTextbox change countryCodewidth" placeholder="+91">
+                                    <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
+                                      [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
+                                      (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
+                                      placeholder="9955668855">
+                                  </li>
                               </div>
                             </div>
                           </div>
@@ -2020,7 +2081,7 @@
                                   </div>
                                   <span>&nbsp;Booking ID</span>
                                 </div>
-                                <i class="fa fa-angle-down"></i>
+                                <i class="fa fa-angle-down"></i> 
                               </button>
                             </h2>
                           </div>
@@ -2312,7 +2373,7 @@
                         {{appt.appmtDate | date: newTimeDateFormat}}</div>
                       <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
                         <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
-                        <div *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</div>
+                        <span *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</span>
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                         class="bold pull-left mgn-lt-5 name font11" (click)="stopprop($event);gotoCustomerDetails(appt)"

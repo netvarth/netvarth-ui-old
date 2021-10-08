@@ -69,3 +69,12 @@
 .content.comn-cls .lbr .card .internal-history li.internal-status:before {
     background: #79e688;
 }
+.qnr-accord .mat-expansion-panel-header {
+    margin: 10px !important;
+    padding: 0 !important;
+}
+.qnrstatus {
+    margin-left: auto;
+    font-weight: bold;
+    font-size: 0.9rem;
+}

@@ -12,12 +12,10 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
-import { RatingStarModule } from './shared/modules/ratingstar/ratingstart.module';
 import { PagerModule } from './shared/modules/pager/pager.module';
 import { AppComponent, projectConstants } from './app.component';
 import { LogoutComponent } from './shared/components/logout/logout.component';
 import { ConfirmBoxComponent } from './shared/components/confirm-box/confirm-box.component';
-import { ReturnPaymentComponent } from './shared/components/return-payment/return-payment.component';
 import { AddInboxMessagesComponent } from './shared/components/add-inbox-messages/add-inbox-messages.component';
 import { AuthGuardConsumer, AuthGuardProvider, AuthGuardHome, AuthGuardLogin} from './shared/guard/auth.guard';
 import { SharedServices } from './shared/services/shared-services';
@@ -73,13 +71,17 @@ import { TeleBookingService } from './shared/services/tele-bookings-service';
 import { BookingService } from './shared/services/booking-service';
 import { ConsumerAuthService } from './shared/services/consumer-auth-service';
 import { ListRecordingsDialogComponent } from './shared/components/list-recordings-dialog/list-recordings-dialog.component';
-import { MeetRoomComponent } from './shared/components/meet-room/meet-room.component';
-import { MeetRoomModule } from './shared/components/meet-room/meet-room.module';
+import { IonicModule } from '@ionic/angular';
+import { FirebaseX } from '@ionic-native/firebase-x/ngx';
+import { Device } from '@ionic-native/device/ngx';
+import { NotificationDialogComponent } from './shared/components/notification-dialog/notification-dialog.component';
 import { MediaService } from './shared/services/media-service';
 import { RequestDialogComponent } from './business/shared/meeting-room/request-dialog/request-dialog.component';
 import { VideoCallSharedComponent } from './business/modules/video-call/video-call.component';
-import { FileReaderService } from './shared/services/file-reader.service';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { AttachmentPopupComponent } from './shared/components/attachment-popup/attachment-popup.component';
+import { PreventDoubleClickDirective } from './shared/directives/prevent-double-click.directive';
+import { MeetRoomModule } from './shared/components/meet-room/meet-room.module';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -90,7 +92,6 @@ export function init_app(globalService: GlobalService) {
     LogoutComponent,
     EqualValidator,
     ConfirmBoxComponent,
-    ReturnPaymentComponent,
     AddInboxMessagesComponent,
     RequestForComponent,
     ForceDialogComponent,
@@ -98,9 +99,11 @@ export function init_app(globalService: GlobalService) {
     MeetingRoomComponent,
     CommunicationComponent,
     ListRecordingsDialogComponent,
+    NotificationDialogComponent,
     RequestDialogComponent,
     VideoCallSharedComponent,
-    AttachmentPopupComponent
+    AttachmentPopupComponent,
+    PreventDoubleClickDirective
   ],
   entryComponents: [
     ConfirmBoxComponent,
@@ -109,7 +112,7 @@ export function init_app(globalService: GlobalService) {
     RequestForComponent,
     ForceDialogComponent,
     ListRecordingsDialogComponent,
-    MeetRoomComponent,
+    NotificationDialogComponent,
     RequestDialogComponent,
     AttachmentPopupComponent
 
@@ -126,7 +129,6 @@ export function init_app(globalService: GlobalService) {
     AngularMultiSelectModule,
     PagerModule,
     SharedModule,
-    RatingStarModule,
     ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     Nl2BrPipeModule,
     MaintenanceModule,
@@ -142,9 +144,13 @@ export function init_app(globalService: GlobalService) {
     JoyrideModule.forRoot(),
     TruncateModule,
     CardModule,
+    IonicModule.forRoot(),
     MeetRoomModule
   ],
   providers: [
+    FirebaseX,
+    Device,
+    LocalNotifications,
     AuthGuardConsumer,
     AuthGuardProvider,
     AuthGuardHome,
@@ -161,7 +167,6 @@ export function init_app(globalService: GlobalService) {
     },
     AuthService,
     ConsumerAuthService,
-    FileReaderService,
     SharedServices,
     GlobalService,
     SharedFunctions,

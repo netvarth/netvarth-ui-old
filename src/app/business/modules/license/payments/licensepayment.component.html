@@ -6,7 +6,7 @@
         </h5>
     </div>
 </section>
-<section>
+<section #license_paylink> 
     <div class="content w-manager settings comn-cls lic-page" style="width: 100%;">
         <div class="col-md-12 no-padding-small">
             <div class="w-dta">
@@ -23,7 +23,9 @@
                                     </div> -->
                                 </div>
                                 <div class="cc-dc-nb-change">
-                                    <button class="cs-btn bt1" (click)="payuPayment()">CC/DC/Net Banking/UPI</button>
+                                    <!-- <button class="cs-btn bt1" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()">CC/DC/Net Banking/UPI</button> -->
+                                    <button class="cs-btn bt1" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && paytmPayment()">CC/DC/UPI</button>
+                                    <!-- <button class="cs-btn bt1" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()">CC/DC/Net Banking/UPI</button> -->
                                     <!-- <button class="cs-btn bt1" (click)="paytmPayment()">Paytm</button> -->
                                 </div>
                             </div>
@@ -35,13 +37,13 @@
                                         Successfully</span> </i><br><br>
                                 <div class="ivc">
                                     <div class="pay-det-row">
-                                        <span><b>Payment Gateway:</b>&nbsp;<span>{{this.pGateway}}</span></span>
+                                        <span><b>Payment Gateway:</b>&nbsp;<span>Paytm</span></span>
                                     </div>
                                     <div class="pay-det-row">
-                                        <span><b> Payment Ref Id:</b>&nbsp;<span>{{razorpay_payment_id}}</span></span>
+                                        <span><b> Payment Ref Id:</b>&nbsp;<span>{{order_id}}</span></span>
                                     </div>
                                     <div class="pay-det-row">
-                                        <span><b> Transaction Id:</b>&nbsp; <span>{{razorpay_order_id}}</span></span>
+                                        <span><b> Transaction Id:</b>&nbsp; <span>{{payment_id}}</span></span>
                                     </div>
                                 </div>
 
