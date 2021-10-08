@@ -1860,9 +1860,24 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
         });
     }
-    saveCheckin(type?,paymenttype?) {
-        if(type==='checkin'){
-            this.isClickedOnce=true;
+    saveCheckin(type?, paymenttype?) {
+        // if(type==='checkin'){
+        //     this.isClickedOnce=true;
+        // }
+
+        if (type === 'checkin') {
+
+            if (this.interNatioanalPaid) {
+                this.isClickedOnce = true
+                this.paymentBtnDisabled = false;
+
+            }
+            if (this.razorpayEnabled && !this.paytmEnabled) {
+                this.isClickedOnce = true
+                this.paymentBtnDisabled = false;
+            }
+            
+
         }
     
         if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
