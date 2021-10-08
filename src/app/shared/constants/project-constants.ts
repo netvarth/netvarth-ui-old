@@ -1035,7 +1035,7 @@ export const projectConstantsLocal = {
   INBOX_MSG_TYPES: {
     CHAT: 'Chat',
     ENQUIRY: 'Enquiry',
-    ALERT: 'Alert',
+    ALERT: 'System Generated',
     BOOKINGS: 'Bookings'
   },
   WALLET_NOTES: {

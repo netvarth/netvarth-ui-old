@@ -71,7 +71,7 @@
                                 <div class="pubs card w-dta bprof no-shadow no-padding-up" *ngIf="bProfile && !showIncompleteButton">
                                    
                                     <div
-                                        [class.all_disabled]="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || (bProfile && bProfile.specialization && bProfile.specialization.length === 0)">
+                                        [class.all_disabled]="!onlinepresence_status && !showIncompleteButton">
                                         <div>
                                             <h6 class="sub-heads">Here is your QR code and Link
                                                 <sup><span class="inactive"
@@ -83,7 +83,7 @@
                                                     'Manage' : 'Enable'}}</span> -->
                                             </h6>
                                             <div class="clearfix"></div>
-                                            <div class="bus-prof-qr-sec">
+                                            <div class="bus-prof-qr-sec" >
                                                 <div class="mgn-up-10">
                                                     <!-- If there is NO Custom ID -->
                                                     <div *ngIf="!bProviderProfile.customId">

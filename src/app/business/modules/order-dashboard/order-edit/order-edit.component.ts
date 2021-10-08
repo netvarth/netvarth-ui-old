@@ -1012,7 +1012,7 @@ getAvailabilityByDate(date) {
       // console.log('less than 30'); 
       // console.log(this.store_availables);
       const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
-      if (this.store_availables) {
+      if (this.store_availables&& this.store_availables.length>0) {
         const availability = this.store_availables.filter(obj => obj.date === sel_check_date);
         if (availability.length > 0) {
           this.isfutureAvailableTime = true;

@@ -10,7 +10,6 @@ import { ServiceDetailComponent } from '../service-detail/service-detail.compone
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 import { CouponsComponent } from '../coupons/coupons.component';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
-// import { ExistingCheckinComponent } from '../existing-checkin/existing-checkin.component';
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { SignUpComponent } from '../signup/signup.component';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
@@ -307,6 +306,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   iosConfig = false;
   accountIdExists = false;
   onlyVirtualItems=false;
+  providercustomId: any;
+  provideraccEncUid: any;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -481,6 +482,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                   console.log("fdhf"+ _this.customId);
                   _this.accEncUid = _this.accountEncId;
                   _this.accountIdExists = true;
+                  _this.getproviderBprofileDetails();
                   _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
                     (uiconfig: any) => {
                       if (uiconfig['pwaEnabled']) {
@@ -567,7 +569,17 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         // )
       });
   }
-
+  getproviderBprofileDetails(){
+    let accountS3List = 'businessProfile';
+  this.subscriptions.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
+    null, accountS3List).subscribe(
+      (accountS3s:any) => {
+        if(accountS3s.businessProfile.customId){
+          this.providercustomId = accountS3s.businessProfile.customId;
+        }
+        this.provideraccEncUid = accountS3s.businessProfile.accEncUid;
+      });
+}
   /**
    * 
    * @param encId encId/customId which represents the Account

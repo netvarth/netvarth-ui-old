@@ -1098,16 +1098,51 @@
                                                                         <span
                                                                             *ngIf="sel_ser_det.consumerNoteMandatory && type != 'reschedule'">*</span></a>
                                                                 </mat-chip>
-                                                                <mat-chip><a class="lnk action pointer-cursor"
+                                                                <span>
+                                                                    <mat-chip
+                                                                        [ngClass]="{'br-top-right-0 br-bottom-right-0 margin-right-0': getAttachLength() > 0}">
+                                                                        <a class="lnk action pointer-cursor"
+                                                                            (click)="imagefile1.click();"><input
+                                                                                #imagefile1 type="file"
+                                                                                accept="/*;capture=camera"
+                                                                                style="display:none;" multiple
+                                                                                (change)="filesSelected($event, 'close')"><i
+                                                                                class="fa fa-paperclip mgn-rt-5"
+                                                                                aria-hidden="true"></i>Upload
+                                                                            File
+                                                                            <!-- <span
+                                                                            *ngIf="getAttachLength() > 0">&nbsp;({{getAttachLength()}})</span> -->
+                                                                        </a>
+                                                                    </mat-chip>
+                                                                    <mat-chip *ngIf="getAttachLength() > 0"
+                                                                        class="br-top-left-0 br-bottom-left-0 margin-left-0">
+                                                                        <a class="lnk action pointer-cursor"
+                                                                            (click)="viewAttachments()">
+                                                                            View (<span>{{getAttachLength()}}</span>)
+                                                                        </a>
+                                                                    </mat-chip>
+                                                                </span>
+                                                                <!-- <span>
+                                                                <mat-chip>
+                                                                    <a class="lnk action pointer-cursor"
                                                                         (click)="imagefile1.click()"><input #imagefile1
                                                                             type="file" accept="/*;capture=camera"
                                                                             style="display:none;" multiple
                                                                             (change)="filesSelected($event, 'close')"><i
                                                                             class="fa fa-paperclip mgn-rt-5"
                                                                             aria-hidden="true"></i>Upload
-                                                                        File<span
-                                                                            *ngIf="getAttachLength() > 0">&nbsp;({{getAttachLength()}})</span>
-                                                                    </a></mat-chip>
+                                                                        File
+                                                                       
+                                                                    </a>
+                                                                </mat-chip>
+                                                                    <mat-chip *ngIf="getAttachLength() > 0"
+                                                                        class="br-top-left-0 br-bottom-left-0 margin-left-0">
+                                                                        <a class="lnk action pointer-cursor"
+                                                                            (click)="viewAttachments()">
+                                                                            View (<span>{{getAttachLength()}}</span>)
+                                                                        </a>
+                                                                    </mat-chip>
+                                                                </span> -->
                                                             </mat-chip-list>
                                                         </div>
                                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
@@ -2046,7 +2081,7 @@
                                                     <button
                                                         class=" next-button btn btn-primary font-weight-bold text-uppercase "
                                                         *ngIf="razorpayEnabled && !paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
-                                                        [class.disabled]="isClickedOnce"
+                                                        [class.disabled]="paymentBtnDisabled"
                                                         (click)="!isClickedOnce && saveCheckin('appt')">
                                                         Pay by CC/DC/UPI
                                                     </button>
@@ -2057,9 +2092,10 @@
                                                         Pay by CC/DC/UPI
                                                     </button>
                                                 </div>
+                                                <div class="clearfix"></div>
                                                 <div class="txt-align-center pad_link"
                                                     *ngIf="interNatioanalPaid && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                    <span [class.disabled]="isClickedOnce"
+                                                    <span [class.disabled]="paymentBtnDisabled"
                                                         (click)="!isClickedOnce && saveCheckin('appt')"
                                                         class="pointer-cursor"><a class="refund_policy">International
                                                             Payment ? Click here</a></span>

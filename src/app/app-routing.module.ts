@@ -4,18 +4,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './shared/components/home/home.component';
 import { LogoutComponent } from './shared/components/logout/logout.component';
 import { AuthGuardConsumer, AuthGuardHome, AuthGuardProvider } from './shared/guard/auth.guard';
-import { ReturnPaymentComponent } from './shared/components/return-payment/return-payment.component';
-import { MaintenanceComponent } from './shared/modules/maintenance/maintenance.component';
-import { AdminLoginComponent } from './shared/components/admin/login/login.component';
-import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
 import { ConsumerJoinComponent } from './ynw_consumer/components/consumer-join/join.component';
-import { PaymentLinkComponent } from './shared/components/payment-link/payment-link.component';
-import { CheckoutSharedComponent } from './shared/components/checkout/checkout.component';
-import { ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
-import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
-import { MeetRoomComponent } from './shared/components/meet-room/meet-room.component';
 const routes: Routes = [
-    { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent },
+    { path: 'admin/login/:accountId/:userId', loadChildren: () => import('./shared/components/admin/login/login.module').then(m => m.AdminLoginModule) },
     {
         path: 'provider', loadChildren: () => import('./business/business.module').then(m => m.BusinessModule),
         canActivate: [AuthGuardProvider]
@@ -30,35 +21,30 @@ const routes: Routes = [
     { path: 'logout', component: LogoutComponent },
     { path: 'not-found', loadChildren: () => import('./shared/modules/not-found/not-found.module').then(m => m.NotFoundModule) },
     { path: 'searchdetail', loadChildren: () => import('./shared/components/search-detail/search-detail.module').then(m => m.SearchDetailModule) },
-    { path: 'payment-return/:id', component: ReturnPaymentComponent },
     { path: 'terms', loadChildren: () => import('./shared/modules/terms-static/terms-static.module').then(m => m.TermsStaticModule) },
     { path: 'business/terms', loadChildren: () => import('./shared/modules/terms-static/terms-static.module').then(m => m.TermsStaticModule) },
-    {
-        path: 'displayboard/:id', loadChildren: () => import('./business/modules/displayboard-content/displayboard-content.module').then(m => m.DisplayboardLayoutContentModule),
-    },
-    { path: 'meet/:id', component: MeetRoomComponent },
-    { path: 'meeting/provider/:id', component: MeetingRoomComponent },
-    { path: 'meeting/:phonenumber', loadChildren: () => import('./shared/modules/tele-home/tele-home.module').then(m => m.TeleHomeModule)},
-    { path: 'maintenance', component: MaintenanceComponent },
-    { path: 'manage/:id', component: ManageProviderComponent },
-    { path: 'status/:id', loadChildren: () => import('./shared/components/status-check/check-status.module').then(m => m.CheckStatusModule)},
+    { path: 'displayboard/:id', loadChildren: () => import('./business/modules/displayboard-content/displayboard-content.module').then(m => m.DisplayboardLayoutContentModule)},
+    { path: 'meet/:id', loadChildren: () => import('./shared/components/meet-room/meet-room.module').then(m => m.MeetRoomModule) },
+    { path: 'meeting/provider/:id', loadChildren: () => import('./business/shared/meeting-room/meeting-room.module').then(m => m.MeetingRoomModule) },
+    { path: 'meeting/:phonenumber', loadChildren: () => import('./shared/modules/tele-home/tele-home.module').then(m => m.TeleHomeModule) },
+    { path: 'maintenance', loadChildren: () => import('./shared/modules/maintenance/maintenance.module').then(m => m.MaintenanceModule) },
+    { path: 'manage/:id', loadChildren: () => import('./shared/components/manage-provider/manage-provider.module').then(m => m.ManageProviderModule) },
+    { path: 'status/:id', loadChildren: () => import('./shared/components/status-check/check-status.module').then(m => m.CheckStatusModule) },
     { path: 'consumer-join', component: ConsumerJoinComponent },
-    { path: 'pay/:id', component: PaymentLinkComponent },
-    { path: 'order/checkout', component: CheckoutSharedComponent },
+    { path: 'pay/:id', loadChildren: () => import('./shared/components/payment-link/payment-link.module').then(m => m.PaymentLinkModule) },
     { path: 'order/shoppingcart', loadChildren: () => import('./shared/modules/shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule) },
     { path: 'order/shoppingcart/checkout', loadChildren: () => import('./shared/modules/shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule) },
     { path: 'userchange', loadChildren: () => import('./shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },
-    { path: 'order/item-details', component: ItemDetailsSharedComponent },
+    { path: 'order/item-details', loadChildren: () => import('./shared/components/item-details/item-details.module').then(m => m.ItemDetailsModule) },
     { path: 'questionnaire/:uid/:id/:accountId', loadChildren: () => import('./shared/components/questionnaire-link/questionnaire-link.module').then(m => m.QuestionnaireLinkModule) },
-    { path: ':id', loadChildren: () => import('./shared/components/business-page/business-page.module').then(m=> m.BusinessPageModule)},
-    { path: 'provideruser/:id', loadChildren: () => import('./shared/components/business-provideruser-page/business-provideruser-page.module').then(m=> m.BusinessprovideruserPageModule)}
+    { path: ':id', loadChildren: () => import('./shared/components/business-page/business-page.module').then(m => m.BusinessPageModule) },
+    { path: 'provideruser/:id', loadChildren: () => import('./shared/components/business-provideruser-page/business-provideruser-page.module').then(m => m.BusinessprovideruserPageModule) }
 ];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes, {
-    relativeLinkResolution: 'legacy'
-})],
+        relativeLinkResolution: 'legacy'
+    })],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }
-

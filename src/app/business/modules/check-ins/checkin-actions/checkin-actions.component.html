@@ -312,7 +312,7 @@
 <div *ngIf="action === 'reschedule'" class="reschdle">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <p>Service Provider : {{checkin.providerAccount.businessName}} </p>
+            <!-- <p>Service Provider : {{checkin.providerAccount.businessName}} </p> -->
             <p *ngIf="checkin.service.deptName">Department : {{checkin.service.deptName}} </p>
             <p *ngIf="checkin.provider">{{provider_label | capitalizeFirst}} : 
                     {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName

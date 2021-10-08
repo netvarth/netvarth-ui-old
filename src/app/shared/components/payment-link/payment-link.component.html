@@ -34,32 +34,13 @@
                                                 <h2 class="textcenter rupee-font"
                                                     style="font-size: -webkit-xxx-large; font-weight: 400;">
                                                     {{this.amountDue | currency:'&#8377; '}}
-                                                </h2><br>
-                                                <!-- <h2 class="textcenter" *ngIf="razorpayEnabled">
-                                                  
-                                                    <div class="paymentdiv" >
-                                                        
-                                                        <span type="button" *ngIf="razorpayEnabled && paytmEnabled" class="razorpay-icon paymenticons"  [class.disabled]="isClickedOnce" (click)="!isClickedOnce && pay()" id="stepThreeConfirmButton"  >
-                                                           
-                                                        </span>&nbsp;&nbsp;
-                                                        <span type="button" *ngIf="razorpayEnabled && paytmEnabled" class="paytm-icon paymenticons" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && pay('paytm')" id="stepThreeConfirmButton" >
-                                                           
-                                                        </span>
-                                                    </div>
-                                                </h2> -->
-                                               
+                                                </h2><br>                                                
                                                 <div class="txt-align-center">
                                                     <button  class=" next-button btn btn-primary font-weight-bold text-uppercase " *ngIf="razorpayEnabled"   [class.disabled]="isClickedOnce"
                                                     (click)="!isClickedOnce && pay()" >
                                                         Pay by CC/DC/UPI
-                                                    </button>
-                                                    <!-- <button type="button" [class.disabled]="isClickedOnce" class=" next-button btn btn-primary font-weight-bold text-uppercase "*ngIf="paytmEnabled && !razorpayEnabled" (click)="!isClickedOnce && pay('paytm')" >
-                                                        Pay by CC/DC/UPI  
-                                                    </button> -->
+                                                    </button>                                                   
                                                 </div>
-                                                <!-- <div class="txt-align-center"  *ngIf="interNatioanalPaid">
-                                                    <span [class.disabled]="isClickedOnce"   (click)="!isClickedOnce && pay()"  class="pointer-cursor"><a class="paybt">International Payment ? Click here</a></span>
-                                                </div> -->
                                             </li>
                                             <li>
                                                 <a class="learnmore-pointer" (click)="billview()">
@@ -78,26 +59,6 @@
                                                                     <div class="bill-header">
                                                                         <div class="section-one">
                                                                             <h3>{{this.businessname}}</h3>
-
-                                                                            <!-- <div class="details">
-                                                                    <div class="col-md-12 col-sm-12 col-lg-12 btm-pad">
-                                                                        <span class="dynamic">
-                                                                            {{this.firstname}} 
-                                                                        </span> &nbsp;  
-                                                                        <span class="dynamic">{{billdate}}
-                                                                            {{billtime}}</span>
-                                                                    </div>
-                                                                    <div class="col-md-12 col-sm-12 col-lg-12 btm-pad">
-                                                                        <span *ngIf="billnumber">
-                                                                            <span class="title">{{bill_no_cap}} </span>
-                                                                            <span class="dynamic">{{billnumber}}</span>
-                                                                        </span>
-                                                                        <span class="dynamic fl-right" *ngIf="gstnumber">
-                                                                            <span class="title">{{gstin_cap}} </span>
-                                                                            <span class="dynamic">{{gstnumber | capitalizeFirst}}</span>
-                                                                        </span>
-                                                                    </div>
-                                                                </div> -->
                                                                             <div class="details">
                                                                                 <span class="columns">
                                                                                     {{this.firstname}}

@@ -98,7 +98,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
   accountId: any;
   checkinType: any;
   qParams: {};
-  countryCode: any;
+  countryCode;
   jaldeeId: any;
   customer_data: any;
   searchForm: FormGroup;
@@ -258,7 +258,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.accountId = this.groupService.getitemFromGroupStorage('accountId');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    this.searchby = 'Search by ' + this.customer_label + ' id/email/phone number';
+    this.searchby = 'Search by ' + this.customer_label + ' id/name/email/phone number';
     this.createForm();
     this.getCatalog();
     this.gets3curl();
@@ -411,9 +411,10 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
         this.qParams['email'] = form_data.search_input;
         break;
       case 'id':
-        post_data = {
-          'jaldeeId-eq': form_data.search_input
-        };
+          post_data['or=jaldeeId-eq'] =  form_data.search_input + ',firstName-eq=' + form_data.search_input;
+        // post_data = {
+        //   'jaldeeId-eq': form_data.search_input
+        // };
         break;
     }
 
@@ -711,6 +712,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
         if (result) {
           this.customer_data.phoneNo = result.phone;
           this.customer_data.email = result.email;
+          this.countryCode = '+91';
           this.confirm();
         }
       });

@@ -10,6 +10,10 @@
     max-width: 260px !important;
     min-width: 210px !important;
 }
+.mrgn{
+    margin-top: 35px !important ;
+   
+}
 
 /* .booking-card.card.service {
     height: 274px !important;
