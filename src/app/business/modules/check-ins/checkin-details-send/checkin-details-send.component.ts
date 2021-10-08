@@ -136,11 +136,11 @@ export class CheckinDetailsSendComponent implements OnInit {
         this.qendtime = this.data.qdata.queue.queueEndTime;
 
         this.location = this.data.qdata.queue.location.place;
-        if (this.data.qdata.waitlistingFor[0].phoneNo) {
-          this.phone = this.data.qdata.waitlistingFor[0].phoneNo;
+        if (this.data.qdata.waitlistPhoneNumber) {
+          this.phone = this.data.qdata.waitlistPhoneNumber;
         }
-        if (this.data.qdata.waitlistingFor[0].countryCode) {
-          this.countrycode = this.data.qdata.waitlistingFor[0].countryCode;
+        if (this.data.qdata.countryCode) {
+          this.countrycode = this.data.qdata.countryCode;
         }
         // this.spfname = this.data.qdata.provider.firstName;
         // this.splname = this.data.qdata.provider.lastName;
