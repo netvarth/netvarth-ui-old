@@ -103,6 +103,7 @@ import { FileReaderService } from './shared/services/file-reader.service';
 import { AttachmentPopupComponent } from './shared/components/attachment-popup/attachment-popup.component';
 import { PreventDoubleClickDirective } from './shared/directives/prevent-double-click.directive';
 import { PaytmService } from './shared/services/paytm.service';
+import {TableModule} from 'primeng/table';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -189,7 +190,8 @@ export function init_app(globalService: GlobalService) {
     ModalModule.forRoot(),
     ShareIconsModule,
     VirtualFieldsModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    TableModule
   ],
   providers: [
     BsModalService,
