@@ -1,6 +1,9 @@
 .content {
     padding-top: 0px !important
   }
+  .background-img {
+    background-image: url('../../../../assets/images/space.jpg');
+  }
   
   ul.details.contact {
     font-size: 0.9rem !important;
@@ -788,7 +791,7 @@
   } */
   
   .top-row {
-    background: #f1b51c;
+    background: #16254b;
   }
   
   .bus-title-content h6 a {
@@ -811,6 +814,8 @@
     width: 100%;
     font-size: 0.75rem;
     height: 40px;
+    background: #16254b;
+
     /* font-family: poppins !important; */
   }
   

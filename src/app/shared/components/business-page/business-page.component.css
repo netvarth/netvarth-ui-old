@@ -1,7 +1,9 @@
 .content {
   padding-top: 0px !important
 }
-
+.background-img {
+  background-image: url("../../../../assets/images/space.jpg");
+}
 ul.details.contact {
   font-size: 0.9rem !important;
   display: flex;
@@ -181,6 +183,8 @@ ul.bus-actions-horiz li {
   border-radius: 40px;
   padding: .45rem .75rem;
   /* color: #3a3030; */
+  background-color: #16254b !important;
+  color: white;
   font-weight: 600;
   align-items: center;
   -webkit-box-pack: center;
@@ -788,7 +792,7 @@ ul.details.badges li {
 } */
 
 .top-row {
-  background: #f1b51c;
+  background: #16254b;
 }
 
 .bus-title-content h6 a {
@@ -811,17 +815,21 @@ ul.details.badges li {
   width: 100%;
   font-size: 0.75rem;
   height: 40px;
+  background-color: #16254b;
   /* font-family: poppins !important; */
 }
 
 .panel-heading a {
   color: #161bc9 !important;
+
 }
 
 @media(max-width:375px) {
   .panel-heading {
     padding-left: 0px !important;
     padding-right: 0 !important;
+  background-color: #16254b;
+    
   }
 }
 
@@ -1867,7 +1875,7 @@ img.ordericon.home {
 .content.bus-page .bus-page-header .bus-title-content .bus-actions-small-devices .bus-actions .small-devices-coup a,
 .content.bus-page .bus-page-header .bus-title-content .bus-actions-small-devices .bus-actions .small-devices-message a {
   color: white !important;
-  background-color: #FD7029 !important;
+  background-color: #16254b !important;
   /* background-color: #1E4079 !important; */
   border: 0 !important;
   font-weight: 500 !important;
@@ -2250,7 +2258,7 @@ img.ordericon.home {
   color: white;
   font-weight: 600;
   border-radius: 10px;
-  background: #FD7029 !important;
+  background: #16254b !important;
   /* background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important; */
   opacity: 1;
   padding: 8px;
@@ -2286,7 +2294,7 @@ img.ordericon.home {
   width: 80px;
 }
 .bSection .bname {
-  color: black;
+  color:white;
   font-size: 1.5rem;
   margin-left: 10px;
   font-weight: bold;

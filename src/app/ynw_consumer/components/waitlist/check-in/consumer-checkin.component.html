@@ -1,7 +1,7 @@
 <section class="c-checkin-new container no-padding">
     <div class="content p0 loc-list ynw-common-form-nm">
         <div class="panel panel-default">
-            <div class="panel-heading top-row ">
+            <div class="panel-heading">
                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">&nbsp;
                     <!-- <a class="pull-left back-btn mgn-up-5" (click)="goBack('back')"><i class="fa fa-arrow-left"></i></a> -->
                 </div>
@@ -526,11 +526,11 @@
                                                 </div>
                                                 <div>
                                                     <button type="button"
-                                                        class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                        class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
                                                         (click)="goToStep('next')"
-                                                        [class.disabled]="(queuejson && queuejson.length == 0 && !api_loading1) || waitlist_for.length == 0">
+                                                        [class.disabled]="(queuejson && queuejson.length == 0 && !api_loading1) || waitlist_for.length == 0" style="color: white;">
                                                         Next
-                                                        <i class="fa fa-long-arrow-right"></i>
+                                                        <i  style="color: white;" class="fa fa-long-arrow-right"></i>
                                                     </button>
                                                 </div>
                                             </div>
@@ -1511,7 +1511,7 @@
                                                     id="stepThreeConfirmButton" [class.spinner]="disablebutton"
                                                     [class.spinner-darker-success]="disablebutton"
                                                     [class.spinner-center]="disablebutton"
-                                                    class="next-button pay-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    class="next-button pay-button btn  font-weight-bold text-uppercase px-9 py-4" style="color: white;"
                                                     [disabled]="disablebutton">
                                                     <ng-container
                                                         *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">

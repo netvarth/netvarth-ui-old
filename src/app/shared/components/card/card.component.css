@@ -10,6 +10,9 @@
     min-width: 210px !important;
     border-radius: 21px !important;
 }
+.buttoncolor {
+    background-color: #16254b;
+}
 
 /* .booking-card.card.service {
     height: 274px !important;
@@ -415,6 +418,7 @@ button.fxmenu {
     padding: 2px 5px 0px 5px;
     text-align: center;
 }
+
 .booking-card.card.order.disabled .card-item-content , .booking-card.card.order.disabled .card-item-head {
     opacity: .4 !important;
     /* pointer-events: none !important; */
@@ -539,7 +543,7 @@ button.fxmenu {
     color: white;
     font-weight: 600;
     border-radius: 15px;
-    background: #FD7029 !important;
+    background: #16254b !important;
     /* background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
     box-shadow: 15px 15px 40px #dba8c4; */
     opacity: 1;
@@ -629,7 +633,7 @@ button.fxmenu {
     color: white;
     /* font-weight: 600; */
     border-radius: 15px;
-    background: #FD7029 !important;
+    background: #16254b !important;
     /* background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
     box-shadow: 15px 15px 40px #DBA8C4; */
     opacity: 1;
@@ -642,7 +646,7 @@ button.fxmenu {
 }
 .booking-card.card.service .card-body .service-details .service-buttons .bookingButton:hover {
     /* color: #073B4C !important; */
-    background-color: #FD7029 !important;
+    background-color: #16254b !important;
     background-image: none !important;
     /* border-color: #b67ab670; */
 }

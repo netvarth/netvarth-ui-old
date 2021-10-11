@@ -997,7 +997,7 @@ export const projectConstantsLocal = {
   // ACCOUNTENC_ID: '12r45b0',
   // S3UNIQUE_ID: '128495'
   /** Production Medi Expat  Real*/
-  PROVIDER_ACCOUNT_ID: 103850,
-  ACCOUNTENC_ID: '62r15e0',
-  S3UNIQUE_ID: '128498'
+  PROVIDER_ACCOUNT_ID: 127000,
+  ACCOUNTENC_ID: '93a28i3',
+  S3UNIQUE_ID: '153234'
 };
