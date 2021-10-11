@@ -1,13 +1,7 @@
-<!-- <section class="container no-padding">
-    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-</section> -->
 <section class="container no-padding cons-payments no-padding-small">
     <div class="row bill-section">
         <div class="panel panel-default">
             <div class="panel-heading top-row ">
-                <!-- <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <a class="pull-left back-btn mgn-up-5" routerLink="/"><i class="fa fa-arrow-left"></i></a>
-                </div> -->
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                     <app-header *ngIf="shared_functions.checkLogin()" [accountId]="accountId" [customId]="customId" [showHeaderAction]="true"></app-header>
                 </div>
@@ -21,9 +15,7 @@
                                         class="fa fa-arrow-left"></i></a>
                             </h5>
                         </div>
-
                         <app-innerloading-spinner *ngIf="loading"></app-innerloading-spinner>
-
                         <div class="c-outer bill-section-content" *ngIf="!loading">
                             <div class="c-body bill-wrapper">
                                 <div class="card history one section-four no-padding">
@@ -59,14 +51,9 @@
                                                     <div class="th three amount rupee-font">{{payment.amount |
                                                         currency:'&#8377; ' }}</div>
                                                     <div class="th one">{{payment.status
-                                                        | capitalizeFirst}} <p><a [routerLink]="['consumer','payments',payment.id]">Details</a></p></div>
+                                                        | capitalizeFirst}} <p><a (click)="gotoPayment(payment.id)" class="pointer-cursor">Details</a></p></div>
                                                 </div>
-                                            </div>
-                                            <!-- <div class="wrap">
-                                                <div class="two col-xs-12 col-md-3"><span class="date">{{stringtoDate(payment.paymentOn,
-                                        'date')}} </span><span class="time">{{stringtoDate(payment.paymentOn,
-											'time')}}</span></div>
-                                            </div> -->
+                                            </div>                                           
                                         </div>
                                     </div>
                                 </div>

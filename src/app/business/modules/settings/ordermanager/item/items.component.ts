@@ -29,24 +29,8 @@ export class ItemsComponent implements OnInit, OnDestroy {
     query_executed = false;
     emptyMsg = '';
     domain;
-    breadcrumb_moreoptions: any = [];
     frm_items_cap = Messages.FRM_LEVEL_ITEMS_MSG;
-    breadcrumbs_init = [
-        {
-            url: '/provider/settings',
-            title: 'Settings'
-        },
-        {
-            title: 'Jaldee Order',
-            url: '/provider/settings/ordermanager'
-        },
-        {
-            title: 'Items',
-            url: '/provider/settings/ordermanager/items'
-        }
-    ];
     item_status = projectConstants.ITEM_STATUS;
-    breadcrumbs = this.breadcrumbs_init;
     itemnameTooltip = Messages.ITEMNAME_TOOLTIP;
     additemdialogRef;
     edititemdialogRef;
@@ -74,9 +58,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
-
         this.getitems();
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
     }
     ngOnDestroy() {
@@ -136,12 +118,6 @@ export class ItemsComponent implements OnInit, OnDestroy {
           } else {
               this.editItem(actionObj['service']['item']);
           }
-        //     this.itemDetails(actionObj['service']);
-        //   } else if (actionObj['action'] === 'add') {
-        //     this.increment(actionObj['service']);
-        //   } else if (actionObj['action'] === 'remove') {
-        //     this.decrement(actionObj['service']);
-        //   }
         } else {
             this.addItem();
         }

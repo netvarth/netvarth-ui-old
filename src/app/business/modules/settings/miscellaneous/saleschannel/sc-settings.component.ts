@@ -14,20 +14,6 @@ export class SaleschannelSettingsComponent implements OnInit {
     id;
     api_error = null;
     api_success = null;
-    breadcrumb_moreoptions: any = [];
-    breadcrumbs = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: 'Miscellaneous',
-            url: '/provider/settings/miscellaneous'
-        },
-        {
-            title: 'Sales Channel'
-        }
-    ];
     domain: any;
     scCode_Ph;
     scfound;
@@ -44,7 +30,6 @@ export class SaleschannelSettingsComponent implements OnInit {
         private router: Router) {
     }
     ngOnInit() {
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.getSalesChannel();

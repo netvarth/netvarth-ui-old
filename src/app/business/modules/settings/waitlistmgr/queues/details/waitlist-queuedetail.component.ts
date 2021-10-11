@@ -961,11 +961,8 @@ export class WaitlistQueueDetailComponent implements OnInit {
 
   goToSelectionPage(selected_id?) {
     const _this = this;
-    alert(selected_id);
     this.setSelectedData().then(res => {
-      console.log(res);
       _this.selectionService.serviceSelected(res);
-      // this.report_data_service.storeSelectedValues(res);
       _this.router.navigate(['provider', 'settings', 'selectservice'], { queryParams: { data: selected_id, type: 'wl_appt' } });
     });
   }

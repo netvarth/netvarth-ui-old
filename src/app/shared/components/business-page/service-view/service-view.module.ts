@@ -4,22 +4,19 @@ import { CommonModule } from '@angular/common';
 import { HeaderModule } from '../../../modules/header/header.module';
 import { MaterialModule } from '../../../modules/common/material.module';
 import { FormsModule } from '@angular/forms';
-import { RatingStarModule } from '../../../modules/ratingstar/ratingstart.module';
+import { RatingStarModule } from '../../../modules/ratingstar/ratingstar.module';
 import { CapitalizeFirstPipeModule } from '../../../pipes/capitalize.module';
 import { PagerModule } from '../../../modules/pager/pager.module';
-import { FooterModule } from '../../../modules/footer/footer.module';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
-import { ConsumerCheckinHistoryListModule } from '../../../modules/consumer-checkin-history-list/consumer-checkin-history-list.module';
 import { LoadingSpinnerModule } from '../../../modules/loading-spinner/loading-spinner.module';
 import { SearchFormModule } from '../../search-form/search-form.module';
-import { ConsumerFooterModule } from '../../../../ynw_consumer/components/footer/footer.module';
 import { TruncateModule } from '../../../pipes/limitTo.module';
 import { CardModule } from '../../card/card.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ServiceViewComponent } from './service-view.component';
 import { ServiceViewRoutingModule } from './service-view.routing.module';
-import { OwlModule } from 'ngx-owl-carousel';
+import { CheckinHistoryListModule } from '../../../../shared/modules/consumer-checkin-history-list/components/checkin-history-list/checkin-history-list.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -29,19 +26,16 @@ import { OwlModule } from 'ngx-owl-carousel';
         RatingStarModule,
         CapitalizeFirstPipeModule,
         PagerModule,
-        FooterModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
         Nl2BrPipeModule,
-        ConsumerCheckinHistoryListModule,
+        CheckinHistoryListModule,
         RouterModule,
         LoadingSpinnerModule,
         SearchFormModule,
-        ConsumerFooterModule,
         TruncateModule,
         CardModule,
         MatDialogModule,
-        ServiceViewRoutingModule,
-        OwlModule
+        ServiceViewRoutingModule
     ],
     declarations: [
         ServiceViewComponent

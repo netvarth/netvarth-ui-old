@@ -1,12 +1,6 @@
-<!-- <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"
-        (performAction)="performActions($event)"></app-breadcrumb>
-</section> -->
 <section class="">
     <div class="card title-gb">
-        <h5 class="mgn-up-10">
-             <!-- <button type="button" class="btn default profile-back" (click)="redirecToMiscellaneous()">
-            <span class="fa fa-chevron-left">&nbsp;Back</span></button>&nbsp;&nbsp;&nbsp; -->
+        <h5 class="mgn-up-10">        
             <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToMiscellaneous()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
             JDN
             <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
@@ -50,10 +44,6 @@
                             </div>
                             <div *ngIf="rewrite !='edit'&& status !='Create'"
                                 class="col-md-12 col-xs-12 col-sm-12 mgn-up-20">
-                                <!-- <label class="col-form-label">Discount
-                                    Offered </label>
-                                <div>{{discType}}% (upto ₹
-                                    {{jdnmaxDiscounttext}})</div> -->
                                     A discount of {{discType}}% (upto {{jdnmaxDiscounttext|
                                         currency:'&#8377;'}}) will be given to your {{cust_label}}s!
                             </div>
@@ -70,16 +60,7 @@
                                         [(ngModel)]="jdnmaxDiscounttext" id="jdnmaxDiscounttext" maxlength="10"></div>
                                     </mat-radio-button>
                                 </mat-radio-group>
-                            </div>
-                            <!-- <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10 jdn_discount">
-                                <label class="col-form-label"
-                                    *ngIf="rewrite ==='edit'|| status ==='Create'">Maximum Discount
-                                    ({{rupee_symbol}})</label>
-                                <input *ngIf="rewrite ==='edit' || status ==='Create'"
-                                    [disabled]="status === 'DISABLED'" (keypress)="isNumeric($event)"
-                                    (keyup)="isvalid($event)" matInput class="form-control"
-                                    [(ngModel)]="jdnmaxDiscounttext" id="jdnmaxDiscounttext">
-                            </div> -->
+                            </div>                            
                         </ng-template>
                         <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10">
                             <label class="col-form-label"

@@ -6,7 +6,6 @@
         </h5>
     </div>
 </section>
-
 <section>
     <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8 no-padding order mgn-up-10" *ngIf="!loading">
         <div class="orderdetails col-md-11 col-xs-12 col-sm-12 col-lg-11">
@@ -22,7 +21,6 @@
                         aria-hidden="true"></i>{{orderDetails.countryCode}} {{orderDetails.phoneNumber}}</div>
                 <div *ngIf="orderDetails.email"> <i class="fa fa-envelope" aria-hidden="true"></i>{{orderDetails.email}}
                 </div>
-
                 <div class="bold font11 mgn-bt-10"> {{orderDetails.orderDate | date: display_dateFormat}}
                     <ng-container *ngIf="orderDetails.orderTimeWindow && orderDetails.orderTimeWindow.timeSlots[0]">,
                         {{orderDetails.orderTimeWindow.timeSlots[0].sTime}} -
@@ -41,7 +39,6 @@
                     <span>
                         {{delivery_address.city }} , {{delivery_address.postalCode}}
                     </span><br>
-
                     <span>
                         {{delivery_address.countryCode }} {{delivery_address.phoneNumber}}
                     </span>
@@ -50,10 +47,8 @@
                     <span style="color:#193ca4">Notes:&nbsp;</span>
                     <span [innerHTML]="orderDetails.orderNote | nl2br"></span>
                 </div>
-
             </div>
             <div class="col-md-3 col-xs-12 col-sm-6 col-lg-3 no-padding">
-
                 <div class="" *ngIf="!small_device_display">
                     <mat-icon class="msgIcon pointer" (click)="showCommunication()"
                         *ngIf="communication_history.length >0" matBadge="" matBadgeOverlap=true>sms</mat-icon>
@@ -66,7 +61,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-11 col-xs-12 col-sm-12 col-lg-11 orderdetails"
             *ngIf="orderDetails && orderDetails.orderItem && orderDetails.orderItem.length > 0 && !orderDetails.shoppingList">
             <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10 mgn-up-20">
@@ -82,7 +76,6 @@
             </div>
             <div class="gridlist col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-bt-20 mgn-up-20 order no-padding"
                 *ngIf="selectedType==='grid'">
-
                 <div class="bus-item-O" *ngFor="let item of orderItems">
                     <app-card [item]="item" (noteClicked)="showConsumerNote($event)"></app-card>
                 </div>
@@ -118,7 +111,6 @@
                 <span style="padding-left: 3px !important;">SHOPPINGLIST</span>
             </div>
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 order" *ngIf="orderDetails.shoppingList">
-                <!-- <div  class="col-sm-10 col-md-10 col-lg-10 col-xl-8 col-xs-12" > -->
                 <ul class="shoppinglist-gal">
                     <ng-container *ngFor="let file of image_list_popup;let i = index">
                         <li class="shoppinglist-li">
@@ -130,28 +122,11 @@
                             </div>
                         </li>
                     </ng-container>
-                    <!-- <li *ngIf="image_list_popup.length>2"class="shoppinglist-li">
-                    <div class="shoppinglistbx">
-                        <span class="shoppinglistmre" (click)="openImageModalRow(image_list_popup[2])"
-                            *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
-                        <div class="shoppinglistimg-h" *ngIf="(image_list_popup.length-3)>0"><img class="shoppinglistimg"
-                                *ngIf="image_list_popup[2].modal.img"
-                                [src]="image_list_popup[2].modal.img" /></div>
-
-                        <div class="shoppinglistimg-h" (click)="openImageModalRow(image_list_popup[2])"
-                            *ngIf="(image_list_popup.length-3)==0">
-                            <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
-                                *ngIf="image_list_popup[2].modal.img"
-                                [src]="image_list_popup[2].modal.img" />
-                        </div>
-                    </div>
-                </li> -->
                 </ul>
                 <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
                     [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
                     (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()">
                 </ks-modal-gallery>
-                <!-- </div> -->
             </div>
         </div>
     </div>
@@ -169,7 +144,6 @@
             </div>
         </div>
     </div>
-
 </section>
 <div class="clearfix"></div>
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>

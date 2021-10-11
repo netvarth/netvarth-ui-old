@@ -1,4 +1,4 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
 import { LocalStorageService } from '../../services/local-storage.service';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
     'templateUrl': './card.component.html',
     'styleUrls': ['./card.component.css']
 })
-export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
+export class CardComponent implements OnInit, AfterViewChecked {
     @Input() item;
     @Input() terminology;
     @Input() loc;
@@ -62,7 +62,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         console.log(this.item)
         console.log(this.type)
         console.log(this.teams);
-        if(this.type == 'appointment-dashboard'){
+        if (this.type == 'appointment-dashboard') {
             this.appointment = this.item;
             console.log(this.appointment)
         }
@@ -147,11 +147,6 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 this.user = this.item.item;
                 break;
         }
-    }
-    ngOnChanges() {
-        // this.itemQty = this.quantity;
-        // this.cdref.detectChanges();
-        // console.log(this.extras);
     }
     ngAfterViewChecked() {
         this.cdref.detectChanges();
@@ -266,7 +261,6 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     }
     getPic(user) {
         if (user.profilePicture) {
-            // alert(JSON.parse(user.profilePicture)['url']);
             return user.profilePicture['url'];
         }
         return 'assets/images/img-null.svg';
@@ -291,26 +285,9 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
             return 'Virtual Service';
         }
         else {
-            /* if(this.service.virtualServiceType == 'videoService') {
-                return this.service.virtualCallingModes[0].callingMode + " " + "Video";
-            }
-            else if(this.service.virtualServiceType == 'audioService') {
-                return this.service.virtualCallingModes[0].callingMode + " " + "Audio";
-            } */
             return ' ';
         }
     }
-    /* openCard(id, event){
-        event.stopPropagation();
-        var cardElement = document.getElementById(id);
-        if(cardElement.classList.contains('expand')){
-            cardElement.classList.remove("expand");
-        }
-        else{
-            cardElement.classList.add("expand");
-        }
-        return;
-    } */
     getDisplayname(label) {
         for (let i = 0; i < this.allLabels.length; i++) {
             if (this.allLabels[i].label === label) {
@@ -361,12 +338,8 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         age = age.split(',');
         return age[0];
     }
-    getScheduleIndex(id) {
-        // const filterSchedule = this.activeSchedules.filter(sch => sch.id === id);
-        // return this.activeSchedules.indexOf(filterSchedule[0]);
-    }
-    getUsersList(teamid){
-       const userObject =  this.teams.filter(user => parseInt(user.id) === teamid); 
-       return userObject[0].name;
+    getUsersList(teamid) {
+        const userObject = this.teams.filter(user => parseInt(user.id) === teamid);
+        return userObject[0].name;
     }
 }

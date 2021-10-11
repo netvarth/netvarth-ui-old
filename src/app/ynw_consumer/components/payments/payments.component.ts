@@ -67,7 +67,6 @@ export class ConsumerPaymentsComponent implements OnInit, OnDestroy {
         if (dt) {
             dtsarr = dt.split(' ');
             const dtarr = dtsarr[0].split('-');
-            console.log(dtarr)
             let retval = '';
             if (mod === 'all') {
                 retval = dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
@@ -79,46 +78,26 @@ export class ConsumerPaymentsComponent implements OnInit, OnDestroy {
                 retval = this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
             }
             return retval;
-            // return dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
         } else {
             return;
         }
     }
     getPayments() {
-        // const _this = this;
         this.loading = true;
         let params = {};
         if (this.accountId) {
             params['account-eq'] = this.accountId;
         }
-        // this.subsription= this.shared_services.getConsumerPayments(params).subscribe(
-        //     (paymentsRes) => {
-        //         _this.payments = paymentsRes;
-        //         console.log(_this.payments);
-        //         // if (this.accountId) {
-        //         //     this.payments = this.payments.filter(payment => payment.accountId === this.accountId);
-        //         // }
-        //         _this.loading = false;
-        //     }, (error: any) => {
-        //         console.log(error);
-        //         _this.loading = false;
-        //     }
-        // );
         this.subsription = this.shared_services.getConsumerPayments(params).subscribe(
-            (paymentsInfo: any) => {
-                console.log(paymentsInfo);
-                console.log(this.accountId);
-                // console.log(projectConstantsLocal.PROVIDER_ACCOUNT_ID);    
+            (paymentsInfo: any) => { 
                 if (this.accountId) {
                     this.payments = paymentsInfo.filter(payment => payment.accountId == this.accountId);
-                    console.log(this.payments);
                 } else {
                     this.payments = paymentsInfo;
                 }
                 this.loading = false;
             }, error => {
                 this.loading = false;
-                console.error(error);
             }
         );
     }

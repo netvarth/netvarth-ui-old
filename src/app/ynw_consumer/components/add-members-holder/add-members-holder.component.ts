@@ -13,7 +13,7 @@ import { SubSink } from 'subsink';
   templateUrl: './add-members-holder.component.html'
 })
 
-export class AddMembersHolderComponent implements OnInit,OnDestroy {
+export class AddMembersHolderComponent implements OnInit, OnDestroy {
   family_member_cap = Messages.FAMILY_MEMBER;
   cancel_btn_cap = Messages.CANCEL_BTN;
   save_btn_cap = Messages.SAVE_BTN;
@@ -23,18 +23,7 @@ export class AddMembersHolderComponent implements OnInit,OnDestroy {
   api_success = null;
   member_list: any = [];
   disableButton = false;
-  addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' ,'whatsAppNum' :{},'telegramNum':{},'email':''};
-  breadcrumbs_init = [
-    {
-      // title: Messages.DASHBOARD_TITLE,
-      url: '/consumer'
-    },
-    {
-      title: Messages.FAMILY_MEMBERS,
-      // url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/members'
-    }
-  ];
-  breadcrumbs = this.breadcrumbs_init;
+  addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '', 'whatsAppNum': {}, 'telegramNum': {}, 'email': '' };
   private subs = new SubSink();
   constructor(
     public dialogRef: MatDialogRef<AddMembersHolderComponent>,
@@ -42,7 +31,7 @@ export class AddMembersHolderComponent implements OnInit,OnDestroy {
     public shared_functions: SharedFunctions,
     private wordProcessor: WordProcessor,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-console.log(data);
+    console.log(data);
     if (data.type === 'edit') {
       this.addmemberobj.fname = data.member.userProfile.firstName || '';
       this.addmemberobj.lname = data.member.userProfile.lastName || '';
@@ -50,7 +39,6 @@ console.log(data);
       this.addmemberobj.gender = data.member.userProfile.gender || '';
       this.addmemberobj.dob = data.member.userProfile.dob || '';
       if (data.member.userProfile.whatsAppNum && data.member.userProfile.whatsAppNum.countryCode && data.member.userProfile.whatsAppNum.number) {
-
         const whatsup = {}
         if (data.member.userProfile.whatsAppNum.countryCode.startsWith('+')) {
           whatsup["countryCode"] = data.member.userProfile.whatsAppNum.countryCode
@@ -75,9 +63,9 @@ console.log(data);
 
   ngOnInit() {
   }
-ngOnDestroy(){
-  this.subs.unsubscribe();
-}
+  ngOnDestroy() {
+    this.subs.unsubscribe();
+  }
   handleReturnDetails(obj) {
     console.log(obj);
     this.resetApi();
@@ -86,16 +74,15 @@ ngOnDestroy(){
     this.addmemberobj.mobile = obj.mobile || '';
     this.addmemberobj.gender = obj.gender || '';
     this.addmemberobj.dob = obj.dob || '';
-    const whatsappObj={};
-    whatsappObj['countryCode']=obj.countryCode_whtsap;
-    whatsappObj['number']=obj.whatsappnumber;
-    this.addmemberobj.whatsAppNum=whatsappObj;
-    const telegramObj={};
-    telegramObj['countryCode']=obj.countryCode_telegram;
-    telegramObj['number']=obj.telegramnumber;
-
-    this.addmemberobj.telegramNum=telegramObj;
-    this.addmemberobj.email=obj.email;
+    const whatsappObj = {};
+    whatsappObj['countryCode'] = obj.countryCode_whtsap;
+    whatsappObj['number'] = obj.whatsappnumber;
+    this.addmemberobj.whatsAppNum = whatsappObj;
+    const telegramObj = {};
+    telegramObj['countryCode'] = obj.countryCode_telegram;
+    telegramObj['number'] = obj.telegramnumber;
+    this.addmemberobj.telegramNum = telegramObj;
+    this.addmemberobj.email = obj.email;
   }
   handleSaveMember() {
     console.log(this.addmemberobj);
@@ -105,7 +92,6 @@ ngOnDestroy(){
     const namepattern = new RegExp(projectConstantsLocal.VALIDATOR_CHARONLY);
     const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
     const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
-
     if (!namepattern.test(this.addmemberobj.lname) || this.addmemberobj.lname.trim() === '') {
       derror = Messages.LASTNAME_INVAL_MSG;
     }
@@ -118,26 +104,22 @@ ngOnDestroy(){
     if (this.addmemberobj.fname.trim() === '') {
       derror = 'Please enter the first name';
     }
-
-    if(this.addmemberobj.telegramNum['countryCode']==''&&this.addmemberobj.telegramNum['countryCode']==undefined &&this.addmemberobj.telegramNum['number']==''&&this.addmemberobj.telegramNum['number']==undefined ){
-    if(this.addmemberobj.telegramNum['countryCode']==''||this.addmemberobj.telegramNum['countryCode']==undefined){
-      derror = 'Enter valid telegram country code';  
-    }
-    if(this.addmemberobj.telegramNum['number']==''||this.addmemberobj.telegramNum['number']==undefined){
-      derror = 'Enter valid telegram number';  
-    }
-  }
-   
-    if(this.addmemberobj.whatsAppNum['countryCode']==''&&this.addmemberobj.whatsAppNum['countryCode']==undefined &&this.addmemberobj.whatsAppNum['number']==''&&this.addmemberobj.whatsAppNum['number']==undefined ){
-      if(this.addmemberobj.whatsAppNum['number']==''||this.addmemberobj.whatsAppNum['number']==undefined){
-        derror = 'Enter valid whatsapp number';  
+    if (this.addmemberobj.telegramNum['countryCode'] == '' && this.addmemberobj.telegramNum['countryCode'] == undefined && this.addmemberobj.telegramNum['number'] == '' && this.addmemberobj.telegramNum['number'] == undefined) {
+      if (this.addmemberobj.telegramNum['countryCode'] == '' || this.addmemberobj.telegramNum['countryCode'] == undefined) {
+        derror = 'Enter valid telegram country code';
       }
-      if(this.addmemberobj.whatsAppNum['countryCode']==''||this.addmemberobj.whatsAppNum['countryCode']==undefined){
-        derror = 'Enter valid whatsapp country code';  
+      if (this.addmemberobj.telegramNum['number'] == '' || this.addmemberobj.telegramNum['number'] == undefined) {
+        derror = 'Enter valid telegram number';
       }
     }
-    
-
+    if (this.addmemberobj.whatsAppNum['countryCode'] == '' && this.addmemberobj.whatsAppNum['countryCode'] == undefined && this.addmemberobj.whatsAppNum['number'] == '' && this.addmemberobj.whatsAppNum['number'] == undefined) {
+      if (this.addmemberobj.whatsAppNum['number'] == '' || this.addmemberobj.whatsAppNum['number'] == undefined) {
+        derror = 'Enter valid whatsapp number';
+      }
+      if (this.addmemberobj.whatsAppNum['countryCode'] == '' || this.addmemberobj.whatsAppNum['countryCode'] == undefined) {
+        derror = 'Enter valid whatsapp country code';
+      }
+    }
     if (derror === '') {
       if (this.addmemberobj.mobile !== '') {
         if (!phonepattern.test(this.addmemberobj.mobile)) {
@@ -147,13 +129,6 @@ ngOnDestroy(){
         }
       }
     }
-
-    /*if (derror === '' && this.addmemberobj.gender === '') {
-      derror = 'Please select the gender';
-    }
-    if (derror === '' && this.addmemberobj.dob === '') {
-      derror = 'Please select the date of birth';
-    }*/
     if (derror === '') {
       const post_data = {
         'userProfile': {
@@ -171,21 +146,20 @@ ngOnDestroy(){
       if (this.addmemberobj.dob !== '') {
         post_data.userProfile['dob'] = this.addmemberobj.dob;
       }
-      if(this.addmemberobj.whatsAppNum){
+      if (this.addmemberobj.whatsAppNum) {
         post_data.userProfile['whatsAppNum'] = this.addmemberobj.whatsAppNum;
       }
-      if(this.addmemberobj.telegramNum){
+      if (this.addmemberobj.telegramNum) {
         post_data.userProfile['telegramNum'] = this.addmemberobj.telegramNum;
       }
-      if(this.addmemberobj.email){
+      if (this.addmemberobj.email) {
         post_data.userProfile['email'] = this.addmemberobj.email;
       }
       console.log(post_data);
       if (this.data.type === 'add') {
-        this.subs.sink=this.shared_services.addMembers(post_data)
+        this.subs.sink = this.shared_services.addMembers(post_data)
           .subscribe(() => {
             this.api_success = Messages.MEMBER_CREATED;
-            // this.getFamilyMembers();
             setTimeout(() => {
               this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
@@ -196,7 +170,7 @@ ngOnDestroy(){
             });
       } else if (this.data.type === 'edit') {
         post_data.userProfile['id'] = this.data.member.user;
-        this.subs.sink=this.shared_services.editMember(post_data)
+        this.subs.sink = this.shared_services.editMember(post_data)
           .subscribe(
             () => {
               this.api_success = Messages.MEMBER_UPDATED;
@@ -210,7 +184,6 @@ ngOnDestroy(){
             }
           );
       }
-
     } else {
       this.api_error = derror;
       this.disableButton = false;

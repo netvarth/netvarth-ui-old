@@ -28,7 +28,6 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { DomSanitizer } from '../../../../../../node_modules/@angular/platform-browser';
-//import { VirtualFieldsComponent } from '../../virtualfields/virtualfields.component';
 import { ConsumerEmailComponent } from '../../../shared/component/consumer-email/consumer-email.component';
 import { PaytmService } from '../../../../shared/services/paytm.service';
 
@@ -805,24 +804,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
         }
     }
-    // confirmVirtualServiceinfo(memberObject, type?) {
-    //     const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
-    //         width: '40%',
-    //         panelClass: ['loginmainclass', 'popup-class'],
-    //         disableClose: true,
-    //         data: memberObject[0]
-
-    //     });
-    //     virtualdialogRef.afterClosed().subscribe(result => {
-    //         if (result !== '') {
-    //             this.virtualInfo = result;
-    //             this.confirmcheckin(type,paymenttype);
-
-    //         } else {
-    //             this.goToStep('prev');
-    //         }
-    //     });
-    // }
     confirmcheckin(type?, paymenttype?) {
         if (type === 'appt' && this.sel_ser_det.isPrePayment && this.payEmail === '') {
             const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {

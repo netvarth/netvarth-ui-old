@@ -279,10 +279,8 @@ export class BusinessprovideruserPageComponent implements OnInit, AfterViewInit,
   nextAvailableTime;
   customId: any;
   accEncUid: any;
-
   accountEncId: string;
   userEncId: string;
-
   // bsModalRef: BsModalRef;
   nonfirstCouponCount = 0;
   activeUser: any;
@@ -353,16 +351,13 @@ export class BusinessprovideruserPageComponent implements OnInit, AfterViewInit,
   }
   @HostListener('window:beforeinstallprompt', ['$event'])
   onBeforeInstallPrompt(e: { preventDefault: () => void; }) {
-
     // Prevent Chrome 67 and earlier from automatically showing the prompt
     e.preventDefault();
     // Stash the event so it can be triggered later.
     if (this.accountProperties) {
       this.deferredPrompt = e;
       // Update UI to notify the user they can add to home screen
-
       this.popupforCustomApp.nativeElement.style.display = 'block';
-
       this.btnInstallApp.addEventListener('click', (e: any) => {
        // console.log('binding');
         // hide our user interface that shows our A2HS button
@@ -381,7 +376,6 @@ export class BusinessprovideruserPageComponent implements OnInit, AfterViewInit,
       });
     }
   }
-
   ngOnInit() {
     this.api_loading = true;
     this.accountIdExists = false;
@@ -414,13 +408,10 @@ export class BusinessprovideruserPageComponent implements OnInit, AfterViewInit,
         return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
       }
     };
-  //  console.log("Mobile:");
-   // console.log(isMobile);
     if (isMobile.Android()) {
       this.playstore = true;
       this.appstore = false;
     } else if (isMobile.iOS()) {
-    //  console.log("IOS:");
       this.playstore = false;
       this.appstore = true;
     } else {
@@ -431,7 +422,6 @@ export class BusinessprovideruserPageComponent implements OnInit, AfterViewInit,
       this.isfirstCheckinOffer = this.activeUser.firstCheckIn;
     }
     this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA_CONSUMER;
-    // this.getInboxUnreadCnt();
     this.activaterouterobj.queryParams.subscribe(qparams => {
       if (qparams.src) {
         this.pSource = qparams.src;
@@ -556,16 +546,11 @@ export class BusinessprovideruserPageComponent implements OnInit, AfterViewInit,
                   )
                 }, (error) => {
                   console.log(error);
-                  // _this.gets3curl();
                 }
               );
             }
           )
         }
-        // alert(this.accountEncId);
-
-        //   }
-        // )
       });
   }
 

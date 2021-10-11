@@ -41,6 +41,7 @@ import { AssignTeamModule } from '../../../shared/modules/assign-team/assign-tea
 import { QuestionnaireListPopupModule } from '../questionnaire-list-popup/questionnaire-list-popup.module';
 import { LocationUpdateComponent } from './location-update/location-update.component';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { AttachmentPopupModule } from '../../../shared/components/attachment-popup/attachment-popup.module';
 
 
 @NgModule({
@@ -77,7 +78,8 @@ import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
         UserServiceChangeModule,
         AssignTeamModule,
         QuestionnaireListPopupModule,
-        NgxIntlTelInputModule
+        NgxIntlTelInputModule,
+        AttachmentPopupModule
     ],
     declarations: [
         CheckInsComponent,

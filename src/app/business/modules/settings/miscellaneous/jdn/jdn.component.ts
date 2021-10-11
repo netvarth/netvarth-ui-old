@@ -30,25 +30,11 @@ export class JDNComponent implements OnInit {
     api_success = null;
     cust_label;
     radioSelected;
-    breadcrumbs = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: 'Miscellaneous',
-            url: '/provider/settings/miscellaneous'
-        },
-        {
-            title: 'JDN'
-        }
-    ];
     jdnPercentage: any;
     maximumDiscount1: any;
     maximumDiscount2: any;
     maximumDiscount3: any;
     rupee_symbol = '₹';
-    breadcrumb_moreoptions: any = [];
     btn_msg = '';
     jdnerr = false;
     constructor(
@@ -65,7 +51,6 @@ export class JDNComponent implements OnInit {
         const user_data = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user_data.sector;
         const sub_domain = user_data.subSector || null;
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.shared_services.getFeatures(sub_domain)
             .subscribe(data => {
                 this.jdn = data;
@@ -123,7 +108,7 @@ export class JDNComponent implements OnInit {
             let len;
             if (typeof this.jdnmaxDiscounttext === 'string') {
                 len = this.jdnmaxDiscounttext.split('.').length;
-              }
+            }
             if (len > 2) {
                 this.snackbarService.openSnackBar('Please enter valid JDN amount', { 'panelClass': 'snackbarerror' });
                 this.jdnerr = true;
@@ -139,16 +124,16 @@ export class JDNComponent implements OnInit {
         }
         if (!this.jdnerr) {
             this.shared_services.addJdn(post_data)
-            .subscribe(
-                (data) => {
-                    this.btn_msg = Messages.UNSUBSCRIBE;
-                    this.api_success = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('JDN_CREATED'), { 'panelclass': 'snackbarerror' });
-                    this.getJdnDetails();
-                },
-                error => {
-                    this.api_error = this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                }
-            );
+                .subscribe(
+                    (data) => {
+                        this.btn_msg = Messages.UNSUBSCRIBE;
+                        this.api_success = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('JDN_CREATED'), { 'panelclass': 'snackbarerror' });
+                        this.getJdnDetails();
+                    },
+                    error => {
+                        this.api_error = this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    }
+                );
         }
     }
 
@@ -181,7 +166,7 @@ export class JDNComponent implements OnInit {
             let len;
             if (typeof this.jdnmaxDiscounttext === 'string') {
                 len = this.jdnmaxDiscounttext.split('.').length;
-              }
+            }
             if (len > 2) {
                 this.snackbarService.openSnackBar('Please enter valid JDN amount', { 'panelClass': 'snackbarerror' });
                 this.jdnerr = true;
@@ -197,16 +182,16 @@ export class JDNComponent implements OnInit {
         }
         if (!this.jdnerr) {
             this.shared_services.updateJdn(put_data)
-            .subscribe(
-                (data) => {
-                    this.api_success = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('JDN_UPDATED'), { 'panelclass': 'snackbarerror' });
-                    this.getJdnDetails();
-                    this.rewrite = stat;
-                },
-                error => {
-                    this.api_error = this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                }
-            );
+                .subscribe(
+                    (data) => {
+                        this.api_success = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('JDN_UPDATED'), { 'panelclass': 'snackbarerror' });
+                        this.getJdnDetails();
+                        this.rewrite = stat;
+                    },
+                    error => {
+                        this.api_error = this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    }
+                );
         }
     }
     disableJDN() {
@@ -246,7 +231,7 @@ export class JDNComponent implements OnInit {
             data: {
                 'message': confirm_msg,
                 'heading': 'Confirm',
-                'type':'JDN'
+                'type': 'JDN'
 
             }
         });
@@ -279,7 +264,6 @@ export class JDNComponent implements OnInit {
                 }
             });
     }
-
     resetApiErrors() {
         this.api_error = null;
         this.api_success = null;
@@ -291,10 +275,9 @@ export class JDNComponent implements OnInit {
         return this.shared_functions.isNumeric(evt);
     }
     redirecToMiscellaneous() {
-        this.routerobj.navigate(['provider', 'settings' , 'miscellaneous']);
+        this.routerobj.navigate(['provider', 'settings', 'miscellaneous']);
     }
     redirecToHelp() {
         this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->jdn']);
     }
 }
-

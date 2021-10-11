@@ -44,7 +44,7 @@ import { ProviderStartTourComponent } from '../ynw_provider/components/provider-
 import { UpdateEmailComponent } from './modules/update-email/update-email.component';
 import { HelpPopUpComponent } from './home/header/help-pop-up/help-pop-up.component';
 import { ShoppinglistuploadComponent } from '../shared/components/shoppinglistupload/shoppinglistupload.component';
-import { InboxListModule } from './modules/inbox-list/inbox-list.module';
+// import { InboxListModule } from './modules/inbox-list/inbox-list.module';
 import { ServiceListDialogComponent } from './shared/service-list-dialog/service-list-dialog.component';
 import { DepartmentListDialogComponent } from './shared/department-list-dialog/department-list-dialog.component';
 import { UsersListDialogComponent } from './shared/users-list-dialog/users-list-dialog.component';
@@ -97,7 +97,7 @@ import { EnquiryComponent } from './modules/enquiry/enquiry.component';
         AddProviderSchedulesModule,
         DynamicFormModule,
         JoyrideModule.forChild(),
-        InboxListModule
+        // InboxListModule
     ],
     entryComponents: [
         AddProviderWaitlistCheckInBillComponent,

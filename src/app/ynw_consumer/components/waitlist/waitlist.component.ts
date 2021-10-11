@@ -38,17 +38,13 @@ export class WaitlistComponent implements OnInit, OnDestroy {
   remove_fav_cap = Messages.REMOVE_FAV;
   cancel_checkin_cap = Messages.CANCEL_CHECKIN;
   comm_history_cap = Messages.COMMU_HISTORY_CAP;
-
-
   estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
   nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
-
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   canceldialogRef;
   remfavdialogRef;
-
   public searchfields: SearchFields = new SearchFields();
-private subs=new SubSink();
+  private subs = new SubSink();
   constructor(private consumer_services: ConsumerServices,
     private shared_functions: SharedFunctions,
     private router: Router,
@@ -58,7 +54,7 @@ private subs=new SubSink();
     private snackbarService: SnackbarService) { }
 
   ngOnInit() {
-    this.subs.sink=this.route.params
+    this.subs.sink = this.route.params
       .subscribe((data) => {
         this.provider_id = data.provider_id;
         this.waitlist_id = data.uuid;
@@ -83,7 +79,7 @@ private subs=new SubSink();
     const params = {
       account: this.provider_id
     };
-    this.subs.sink=this.consumer_services.getWaitlistDetail(this.waitlist_id, params)
+    this.subs.sink = this.consumer_services.getWaitlistDetail(this.waitlist_id, params)
       .subscribe(
         data => {
           this.waitlist_detail = data;
@@ -91,9 +87,7 @@ private subs=new SubSink();
           const today = new Date();
           today.setHours(0, 0, 0, 0);
           waitlist_date.setHours(0, 0, 0, 0);
-
           this.waitlist_detail.history = false;
-
           if (today.valueOf() > waitlist_date.valueOf()) {
             this.waitlist_detail.history = true;
           }
@@ -111,11 +105,9 @@ private subs=new SubSink();
     pass_ob['user_id'] = waitlist.providerAccount.id;
     pass_ob['name'] = waitlist.providerAccount.businessName;
     this.addNote(pass_ob);
-
   }
 
   addNote(pass_ob) {
-
     const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -126,16 +118,13 @@ private subs=new SubSink();
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
-
       }
     });
   }
-
   doCancelWaitlist(waitlist) {
     if (!waitlist.ynwUuid || !waitlist.providerAccount.id) {
       return false;
     }
-
     this.shared_functions.doCancelWaitlist(waitlist, this)
       .then(
         data => {
@@ -150,16 +139,13 @@ private subs=new SubSink();
   }
 
   doDeleteFavProvider(fav) {
-
     if (!fav.id) {
       return false;
     }
-
     this.shared_functions.doDeleteFavProvider(fav, this)
       .then(
         data => {
           if (data === 'reloadlist') {
-
           }
         },
         error => {
@@ -171,26 +157,21 @@ private subs=new SubSink();
     if (!id) {
       return false;
     }
-
-    this.subs.sink=this.shared_services.addProvidertoFavourite(id)
+    this.subs.sink = this.shared_services.addProvidertoFavourite(id)
       .subscribe(
         () => {
-
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
-
-
   getCommunicationHistory() {
-    this.subs.sink=this.consumer_services.getConsumerCommunications(this.waitlist_detail.providerAccount.id)
+    this.subs.sink = this.consumer_services.getConsumerCommunications(this.waitlist_detail.providerAccount.id)
       .subscribe(
         data => {
           const history: any = data;
           this.communication_history = [];
-
           for (const his of history) {
             if (his.waitlistId === this.waitlist_detail.ynwUuid) {
               this.communication_history.push(his);
@@ -203,7 +184,6 @@ private subs=new SubSink();
         }
       );
   }
-
   sortMessages() {
     this.communication_history.sort(function (message1, message2) {
       if (message1.timeStamp < message2.timeStamp) {
@@ -214,7 +194,5 @@ private subs=new SubSink();
         return 0;
       }
     });
-
   }
-
 }

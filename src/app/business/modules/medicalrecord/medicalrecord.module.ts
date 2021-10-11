@@ -34,6 +34,7 @@ import { UploadFileComponent } from './uploadfile/uploadfile.component';
 import { MrfileuploadpopupComponent } from './uploadfile/mrfileuploadpopup/mrfileuploadpopup.component';
 import { ShowuploadfileComponent } from './uploadfile/showuploadfile/showuploadfile.component';
 import { AddNoteComponent } from './prescription/add-note/add-note.component';
+import { ShowuploadfileModule } from './uploadfile/showuploadfile/showuploadfile.module';
 
 // import { SignaturePadModule } from '@ng-plus/signature-pad';
 
@@ -57,7 +58,6 @@ import { AddNoteComponent } from './prescription/add-note/add-note.component';
               UploadSignatureComponent,
               UploadFileComponent,
               MrfileuploadpopupComponent,
-              ShowuploadfileComponent,
               AddNoteComponent
               // SignaturePadModule
             ],
@@ -74,7 +74,8 @@ import { AddNoteComponent } from './prescription/add-note/add-note.component';
     MatMenuModule,
     MatTableModule,
     SignaturePadModule,
-    ModalGalleryModule
+    ModalGalleryModule,
+    ShowuploadfileModule
   ],
   entryComponents: [
   LastVisitComponent,

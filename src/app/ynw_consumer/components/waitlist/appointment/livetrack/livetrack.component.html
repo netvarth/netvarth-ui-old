@@ -1,6 +1,5 @@
 <section class="container no-padding confirm-aptckn no-padding-small">
     <div class="content p0 loc-list p-checkin lv-trk ynw-common-form-nm">
-
         <div class="panel panel-default">
             <div class="panel-heading top-row ">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
@@ -8,7 +7,6 @@
                 </div>
             </div>
             <div class="panel-body no-padding">
-
                 <div class="col-md-12 no-padding">
                     <div class="card p0">
                         <div class="copy locd">
@@ -19,7 +17,6 @@
                                             <div class="successmsg">Your appointment for {{activeWt.service.name}} is
                                                 successful !!
                                             </div>
-
                                             <div class="mgn-up-20">Allow {{activeWt.providerAccount.businessName}} to
                                                 track your
                                                 <span class="bold">Estimated Time of Arrival <span class="mgn-lt-30">
@@ -27,13 +24,8 @@
                                                             (change)=locationEnableDisable($event)>
                                                         </mat-slide-toggle>
                                                     </span></span>
-
                                             </div>
-                                            <div class="mgn-up-20" *ngIf="shareLoc">Automatically track your ETA
-                                                <!-- <span class="mgn-lt-10">
-                                            <mat-slide-toggle [(ngModel)]="notifyAutomatic"
-                                                (change)=notifyEvent($event)></mat-slide-toggle>
-                                        </span> -->
+                                            <div class="mgn-up-20" *ngIf="shareLoc">Automatically track your ETA                                               
                                                 <div><span class="info-lst form-level-settings"
                                                         *ngIf="notifyAutomatic">In
                                                         "Automatic tracking" Jaldee

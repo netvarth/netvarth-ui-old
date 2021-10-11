@@ -563,10 +563,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           )
         }
-        // alert(this.accountEncId);
-
-        //   }
-        // )
       });
   }
   getproviderBprofileDetails(){

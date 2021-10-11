@@ -25,14 +25,6 @@ export class RatingStarComponent implements OnInit, OnChanges {
     }
   }
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-    /*const log: string[] = [];
-    for (const propName in changes) {
-      if (propName === 'ratingval') {
-        const changedProp = changes[propName];
-        const to = JSON.stringify(changedProp.currentValue) || '';
-        this.curratval = to;
-      }
-    }*/
   }
   handle_ratingclick(val) {
     const retobj = { 'cloudindex': this.cloudindex, 'selectedrating': val };

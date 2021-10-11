@@ -485,16 +485,6 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
-  // getAlertById(date) {
-  //   this.shared_service.getAlertsTotalCnt('false', date)
-  //     .subscribe(() => {
-  //       this.getAlertCount();
-  //       this.getAlerts();
-  //     },
-  //       error => {
-  //       });
-  // }
-
   gotoBranch() {
     const accountid = this.sessionStorageService.getitemfromSessionStorage('accountid');
     this.lStorageService.removeitemfromLocalStorage(accountid);

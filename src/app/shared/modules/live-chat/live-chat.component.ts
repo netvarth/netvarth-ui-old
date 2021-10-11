@@ -8,7 +8,7 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { SubSink } from 'subsink';
 import { TeleBookingService } from '../../services/tele-bookings-service';
 import * as Video from 'twilio-video';
-import { RequestDialogComponent } from '../../../business/shared/meeting-room/request-dialog/request-dialog.component';
+import { RequestDialogComponent } from '../request-dialog/request-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MediaService } from '../../services/media-service';
 @Component({

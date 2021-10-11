@@ -12,7 +12,6 @@ import { WordProcessor } from '../../services/word-processor.service';
   templateUrl: './consumer-rate-service-popup.html'
 })
 export class ConsumerRateServicePopupComponent implements OnInit {
-
   api_error = null;
   api_success = null;
   message = null;
@@ -33,7 +32,7 @@ export class ConsumerRateServicePopupComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public sharedfunctionObj: SharedFunctions,
-private wordProcessor: WordProcessor
+    private wordProcessor: WordProcessor
   ) {
     this.waitlist = data.detail;
     this.type = data.isFrom;
@@ -46,11 +45,9 @@ private wordProcessor: WordProcessor
       this.uuid = this.waitlist.uid;
     }
   }
-
   ngOnInit() {
     this.getRateByUser();
   }
-
   getRateByUser() {
     let params;
     if (this.type === 'appointment') {
@@ -64,13 +61,11 @@ private wordProcessor: WordProcessor
         'uId-eq': this.uuid
       };
     } else {
-        params = {
-          'account-eq': this.waitlist.providerAccount.id,
-          'uId-eq': this.uuid
-        };
-      }
-    
-
+      params = {
+        'account-eq': this.waitlist.providerAccount.id,
+        'uId-eq': this.uuid
+      };
+    }
     this.shared_services.getConsumerRateService(params, this.type)
       .subscribe(
         data => {
@@ -89,11 +84,8 @@ private wordProcessor: WordProcessor
           this.load_complete = true;
         });
   }
-
   setRate() {
-
     this.resetApiErrors();
-
     const params = {
       account: this.waitlist.providerAccount.id
     };
@@ -105,22 +97,19 @@ private wordProcessor: WordProcessor
         'feedback': this.message
       };
     } else {
-    post_data = {
-      'uuid': this.uuid,
-      'stars': this.rate_value,
-      'feedback': this.message
-    };
+      post_data = {
+        'uuid': this.uuid,
+        'stars': this.rate_value,
+        'feedback': this.message
+      };
     }
-
     if (this.newrating) {
       this.addRateService(params, post_data);
     } else {
       this.updateRateService(params, post_data);
     }
   }
-
   addRateService(params, post_data) {
-
     this.shared_services.postConsumerRateService(params, post_data, this.type)
       .subscribe(
         () => {
@@ -133,9 +122,7 @@ private wordProcessor: WordProcessor
           this.wordProcessor.apiErrorAutoHide(this, error);
         });
   }
-
   updateRateService(params, post_data) {
-
     this.shared_services.updateConsumerRateService(params, post_data, this.type)
       .subscribe(
         () => {
@@ -143,17 +130,14 @@ private wordProcessor: WordProcessor
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
-          // this.dialogRef.close('reloadlist');
         },
         error => {
           this.wordProcessor.apiErrorAutoHide(this, error);
         });
   }
-
   handleratingClick(val) {
     this.rate_value = val.selectedrating;
   }
-
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;

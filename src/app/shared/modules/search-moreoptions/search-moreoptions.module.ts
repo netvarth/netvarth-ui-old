@@ -1,15 +1,20 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { ClickOutsideModule } from 'ng4-click-outside';
-import { RatingStarModule  } from '../../../shared/modules/ratingstar/ratingstart.module';
-
+import { RatingStarModule  } from '../ratingstar/ratingstar.module';
 import { SearchDataStorageService  } from '../../services/search-datastorage.services';
-
 import { SearchMoreOptionsComponent } from './search-moreoptions.component';
-// import { HttpCommonService } from '../../services/http-common.service';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
     imports: [
-      SharedModule,
+      MatDialogModule,
+      MatSlideToggleModule,
+      MatButtonModule,
+      MatProgressSpinnerModule,
+      MatCheckboxModule,
       RatingStarModule,
       ClickOutsideModule
     ],

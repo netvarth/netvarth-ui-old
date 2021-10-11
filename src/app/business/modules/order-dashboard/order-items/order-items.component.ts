@@ -5,7 +5,6 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
-
 @Component({
   selector: 'app-order-items',
   templateUrl: './order-items.component.html',
@@ -18,8 +17,6 @@ export class OrderItemsComponent implements OnInit {
   itemCount: any;
   orderList: any = [];
   loading = true;
- 
-
   constructor(public dialogRef: MatDialogRef<OrderItemsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public shared_functions: SharedFunctions,
@@ -28,14 +25,12 @@ export class OrderItemsComponent implements OnInit {
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService
   ) { }
-
   ngOnInit() {
     const cuser = this.groupService.getitemFromGroupStorage('accountId');
     this.account_id = cuser;
     this.orderList = JSON.parse(this.lStorageService.getitemfromLocalStorage('order'));
     this.fetchCatalog();
   }
- 
   fetchCatalog() {
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_details = data;
@@ -66,8 +61,6 @@ export class OrderItemsComponent implements OnInit {
         );
     });
   }
-
-
   cardClicked(actionObj) {
     if (actionObj['type'] === 'item') {
       if (actionObj['action'] === 'add') {
@@ -86,11 +79,9 @@ export class OrderItemsComponent implements OnInit {
   addToCart(itemObj) {
     this.orderList.push(itemObj);
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
-   
   }
   removeFromCart(itemObj) {
     const item = itemObj.item;
-
     for (const i in this.orderList) {
       if (this.orderList[i].item.itemId === item.itemId) {
         this.orderList.splice(i, 1);
@@ -103,6 +94,4 @@ export class OrderItemsComponent implements OnInit {
       }
     }
   }
-
-
 }

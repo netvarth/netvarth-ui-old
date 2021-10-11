@@ -14,7 +14,6 @@ export class MeetService {
         return this.servicemeta.httpPut('provider/appointment/videocall/ready/', post_data);
     }
     isConsumerReadyMeet(post_data) {
-        // alert('1')
         return this.servicemeta.httpPut('provider/video/adhoc/ready', post_data);
     }
     getStatus(uuid) {

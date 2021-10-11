@@ -1,18 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-//import { FormMessageDisplayService } from '../../../../../../modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../shared/services/shared-services';
-//import { SharedFunctions } from '../../functions/shared-functions';
-//import { Messages } from '../../constants/project-messages';
-//import { projectConstants } from '../../../app.component';
 import { Location } from '@angular/common';
-//import { WordProcessor } from '../../../shared/services/word-processor.service';
-//import { SnackbarService } from '../../../shared/services/snackbar.service';
-//import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { telegramPopupComponent } from './telegrampopup/telegrampopup.component';
 import { MatDialog } from '@angular/material/dialog';
+import { TelegramPopupComponent } from './telegrampopup/telegrampopup.component';
 
 @Component({
   selector: 'app-notification',
@@ -20,8 +13,6 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./notification.component.css'],
 })
 export class NotificationComponent implements OnInit {
-
-  
   spForm: FormGroup;
   api_error = null;
   api_success = null;
@@ -35,37 +26,25 @@ export class NotificationComponent implements OnInit {
   usertype;
   submit_data = { 'phonenumber': null };
   telegramdialogRef: any;
-  telegramstat = true ;
-  status = false ;
+  telegramstat = true;
+  status = false;
   boturl: any;
-  // breadcrumbs_init = [
-  //   {
-  //     title: this.changemob_cap,
-  //     url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/change-mobile'
-  //   }
-  // ];
-  // breadcrumbs = this.breadcrumbs_init;
-
   constructor(
-    
     public shared_services: SharedServices,
     public router: Router,
     public dialog: MatDialog,
     private location: Location,
-  //  private wordProcessor: WordProcessor,
-  //  private snackbarService: SnackbarService,
-   // private lStorageService: LocalStorageService,
     public shared_functions: SharedFunctions
   ) { }
-  goBack () {
+  goBack() {
     this.location.back();
   }
   ngOnInit() {
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
     this.getTelegramstat();
-   
+
   }
-  enableTelegram(stat){
+  enableTelegram(stat) {
     this.teleGramStat(stat).then(
       (data) => {
         console.log('then');
@@ -73,14 +52,14 @@ export class NotificationComponent implements OnInit {
       },
       error => {
         this.telegramstat = false;
-        if(!this.telegramstat){
-          this.telegramdialogRef = this.dialog.open(telegramPopupComponent, {
+        if (!this.telegramstat) {
+          this.telegramdialogRef = this.dialog.open(TelegramPopupComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
             disableClose: true,
             data: this.boturl
           });
-            this.telegramdialogRef.afterClosed().subscribe(result => {
+          this.telegramdialogRef.afterClosed().subscribe(result => {
             if (result) {
               this.getTelegramstat();
             }
@@ -88,39 +67,35 @@ export class NotificationComponent implements OnInit {
         }
       });
   }
-
   teleGramStat(stat) {
     const _this = this;
     return new Promise(function (resolve, reject) {
       _this.shared_services.enableTelegramNoti(stat)
-            .subscribe(
-                data => {
-                    resolve(data);
-                },
-                (error) => {
-                    reject(error);
-                }
-            );
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
     });
-}
-  getTelegramstat(){
-    this.shared_services.getTelegramstat()
-    .subscribe(
-      (data:any) => {
-       console.log(data);
-       this.status = data.status;
-       if(data.botUrl){
-        this.boturl = data.botUrl;
-       }
-       
-      },
-      error => {
-        console.log(error);
-      }
-    );
   }
-  
-  
+  getTelegramstat() {
+    this.shared_services.getTelegramstat()
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          this.status = data.status;
+          if (data.botUrl) {
+            this.boturl = data.botUrl;
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
+  }
   redirecToSettings() {
     this.router.navigate(['provider', 'settings', 'bprofile']);
   }

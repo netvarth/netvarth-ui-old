@@ -20,18 +20,15 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      {
-        path: 'new-report', component: NewReportComponent
-      },
+      { path: 'new-report', component: NewReportComponent },
       { path: 'user-report', component: UserReportComponent},
       { path: 'user-details', component: UserDetailReportComponent},   
-    
       { path: 'service', component: ServiceSelectionComponent },
       { path: 'schedule', component: ScheduleSelectionComponent },
       { path: 'queue', component: QueueSelectionComponent },
       { path: 'generated-report', component: GeneratedReportComponent },
       { path: 'customer', component: CustomerSelectionComponent },
-      { path: 'user', component: UserSelectionComponent },
+      { path: 'user', component: UserSelectionComponent }
     ]
   }
 

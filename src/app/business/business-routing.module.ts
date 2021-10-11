@@ -4,13 +4,9 @@ import { ProviderResolver } from '../ynw_provider/services/provider-resolver.ser
 import { BusinessHomeComponent } from './home/business-home.component';
 import { AuthGuardProviderHome, AuthGuardLogin } from '../shared/guard/auth.guard';
 import { BusinessComponent } from './business.component';
-import { EditProfileComponent } from '../shared/modules/edit-profile/edit-profile.component';
 import { AddProviderWaitlistCheckInBillComponent } from './modules/check-ins/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
-import { ChangePasswordComponent } from '../shared/modules/change-password/change-password.component';
-import { ChangeMobileComponent } from '../shared/modules/change-mobile/change-mobile.component';
 import { ProviderbWizardComponent } from '../ynw_provider/components/provider-bwizard/provider-bwizard.component';
 import { EnquiryComponent } from './modules/enquiry/enquiry.component';
-import { VideoCallSharedComponent } from './modules/video-call/video-call.component';
 
 const routes: Routes = [
   {
@@ -22,9 +18,9 @@ const routes: Routes = [
       { path: 'telehealth', loadChildren: () => import('./modules/teleservice/teleservice.module').then(m => m.TeleServiceModule) },
       { path: 'bill/:id', component: AddProviderWaitlistCheckInBillComponent },
       { path: 'settings', loadChildren: () => import('../ynw_provider/components/provider-settings/provider-settings.module').then(m => m.ProviderSettingsModule) },
-      { path: 'profile', component: EditProfileComponent, canActivate: [AuthGuardLogin] },
-      { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuardLogin] },
-      { path: 'change-mobile', component: ChangeMobileComponent, canActivate: [AuthGuardLogin] },
+      { path: 'profile', loadChildren: ()=> import('../shared/modules/edit-profile/edit-profile.module').then(m=>m.EditProfileModule), canActivate: [AuthGuardLogin] },
+      { path: 'change-password', loadChildren: ()=>import('../shared/modules/change-password/change-password.module').then(m=>m.ChangePasswordModule), canActivate: [AuthGuardLogin] },
+      { path: 'change-mobile', loadChildren: ()=>import('../shared/modules/change-mobile/change-mobile.module').then(m=>m.ChangeMobileModule), canActivate: [AuthGuardLogin] },
       { path: 'inbox', loadChildren: () => import('./modules/inbox-list/inbox-list.module').then(m => m.InboxListModule) },
       { path: 'finance', loadChildren: () => import('./modules/learnmore/finance/finance.module').then(m => m.FinanceModule) },
       { path: 'foodJoints', loadChildren: () => import('./modules/learnmore/foodjoints/foodjoints.module').then(m => m.FoodjointsModule) },
@@ -49,7 +45,7 @@ const routes: Routes = [
       { path: 'donations', loadChildren: () => import('./modules/donations/donations.module').then(m => m.DonationsModule) },
       { path: 'enquiry', component: EnquiryComponent },
       { path: 'enquiry/chat', loadChildren: () => import('./modules/inbox-list/inbox-list.module').then(m => m.InboxListModule) },
-      { path: 'secure-video', component: VideoCallSharedComponent },
+      { path: 'secure-video', loadChildren: () => import('./modules/video-call/video-call.module').then(m=>m.VideoCallModule) },
     ]
   }
 ];

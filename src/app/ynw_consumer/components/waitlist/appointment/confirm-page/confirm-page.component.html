@@ -116,16 +116,7 @@
                                 <div class="txt-align-center" style="font-weight: 600;"> Check your status at:
                                     <a href="{{path}}status/{{appointment.appointmentEncId}}" target="_blank">
                                         {{path}}status/{{appointment.appointmentEncId}}</a>
-                                </div>
-                                <!-- <div class="txt-align-center mgn-up-10"
-                            *ngIf="appointment.consumer && appointment.consumer.userProfile.emailVerified"> A booking
-                            confirmation has been sent to your email
-                            address.</div> -->
-                                <!-- <div class="update-email"
-                            *ngIf="appointment.consumer && !appointment.consumer.userProfile.emailVerified">
-                            <input placeholder="Email" [(ngModel)]="email"><span class="email-btn"
-                                (click)="updateEmail()">Ok</span>
-                        </div> -->
+                                </div>                               
                                 <div class="notes"
                                     *ngIf="appointment.service && appointment.service.postInfoEnabled && appointment.service.postInfoTitle">
                                     <div class="preinfo-title">{{appointment.service.postInfoTitle}} </div>

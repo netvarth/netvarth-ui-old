@@ -7,14 +7,13 @@
     <div>
         <div class="outer">
             <div class="outer1 ">
-                <!-- <p class="form-level-settings">Enjoy provider discount upto 20% for every visit. Discount will be
-                    applied to the bill instantly.</p> -->
                 <div class="outer4" *ngIf="jdnDetailList.displayNote">
                     {{jdnDetailList.displayNote}}
                 </div>
                 <div class="name" *ngIf="jdnDetailList.discPercentage">
-                    You will get a discount of <strong>{{jdnDetailList.discPercentage}}% (upto <span class="rupee-font">{{jdnDetailList.discMax |
-                        currency:'&#8377;'}}</span>)</strong> for every visit.
+                    You will get a discount of <strong>{{jdnDetailList.discPercentage}}% (upto <span
+                            class="rupee-font">{{jdnDetailList.discMax |
+                            currency:'&#8377;'}}</span>)</strong> for every visit.
                 </div>
             </div>
             <div class="outer3" *ngIf="jdnDetailList.label">
@@ -22,8 +21,7 @@
                     <span class="dispvalue">Label: </span>
                     <span>{{jdnDetailList.label}}</span>
                 </div>
-            </div>            
-
+            </div>
         </div>
     </div>
 </mat-dialog-content>

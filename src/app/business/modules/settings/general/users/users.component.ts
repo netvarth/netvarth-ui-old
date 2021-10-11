@@ -182,17 +182,7 @@ export class BranchUsersComponent implements OnInit {
         this.getSpecializations();
         this.getTeams();
         this.getProviderLocations();
-        // this.addCustomerToGroup();
         this.userTypesFormfill = [{ value: 'ASSISTANT', displayName: 'Assistant' }, { value: 'PROVIDER', displayName: this.provider_label }, { value: 'ADMIN', displayName: 'Admin' }];
-        // if (this.domain === 'healthCare') {
-        //     this.userTypesFormfill = [{ name: 'ASSISTANT', displayName: 'Assistant' }, { name: 'PROVIDER', displayName: 'Doctor' }, { name: 'ADMIN', displayName: 'Admin' }];
-        // }
-        // if (this.domain === 'finance') {
-        //     this.userTypesFormfill = [{ name: 'ASSISTANT', displayName: 'Assistant' }, { name: 'PROVIDER', displayName: 'Staff Member' }, { name: 'ADMIN', displayName: 'Admin' }];
-        // }
-        // if (this.domain === 'educationalInstitution') {
-        //     this.userTypesFormfill = [{ name: 'ASSISTANT', displayName: 'Assistant' }, { name: 'PROVIDER', displayName: 'Mentor' }, { name: 'ADMIN', displayName: 'Admin' }];
-        // }
     }
     getTeams(groupId?) {
         this.teamLoaded = true;

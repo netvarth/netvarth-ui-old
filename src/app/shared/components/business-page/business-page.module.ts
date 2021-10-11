@@ -9,6 +9,10 @@ import { BusinessPageComponent } from "./business-page.component";
 import { BusinessPageRoutingModule } from "./business-page.routing.module";
 import { CardModule } from "../card/card.module"
 import { HeaderModule } from "../../../shared/modules/header/header.module"
+import { AddInboxMessagesModule } from "../add-inbox-messages/add-inbox-messages.module";
+import { JDNDetailModule } from "../jdn-detail/jdn-detail.module";
+import { CouponsModule } from "../coupons/coupons.module";
+import { ServiceDetailModule } from "../service-detail/service-detail.module";
 @NgModule({
     imports: [
         CommonModule,
@@ -19,7 +23,11 @@ import { HeaderModule } from "../../../shared/modules/header/header.module"
         GalleryModule,
         LoadingSpinnerModule,
         CardModule,
-        HeaderModule
+        HeaderModule,
+        AddInboxMessagesModule,
+        JDNDetailModule,
+        CouponsModule,
+        ServiceDetailModule
     ],
     declarations: [
         BusinessPageComponent,

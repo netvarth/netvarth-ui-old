@@ -14,6 +14,7 @@ import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { HeaderModule } from '../header/header.module';
 import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
+import { AddInboxMessagesModule } from '../../components/add-inbox-messages/add-inbox-messages.module';
 @NgModule({
     imports: [
         CapitalizeFirstPipeModule,
@@ -28,6 +29,7 @@ import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery
         Nl2BrPipeModule,
         HeaderModule,
         LoadingSpinnerModule,
+        AddInboxMessagesModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true })
     ],
     entryComponents: [

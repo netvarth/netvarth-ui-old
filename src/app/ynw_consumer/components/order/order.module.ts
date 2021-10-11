@@ -17,6 +17,7 @@ import { OrderPaymentDetailsComponent } from './order-payment-details/order-paym
 import { MatStepperModule } from '@angular/material/stepper';
 import { PaymentComponent } from './payment/payment.component';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
+import { AddInboxMessagesModule } from '../../../shared/components/add-inbox-messages/add-inbox-messages.module';
 @NgModule({
     declarations: [
         ItemDetailsComponent,
@@ -37,6 +38,7 @@ import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery
         MaterialModule,
         OwlModule,
         MatStepperModule,
+        AddInboxMessagesModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true })
     ],
     exports: [

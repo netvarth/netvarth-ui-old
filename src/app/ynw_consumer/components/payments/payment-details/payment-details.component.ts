@@ -13,7 +13,6 @@ import { Messages } from '../../../../shared/constants/project-messages';
 })
 export class ConsumerPaymentDetailsComponent implements OnInit {
     payments: any = [];
-    breadcrumbs;
     showRefund = false;
     api_loading = false;
     donationDetails: any = [];
@@ -37,19 +36,6 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
             });
     }
     ngOnInit() {
-        this.breadcrumbs = [
-            {
-                title: 'My Jaldee',
-                url: 'consumer'
-            },
-            {
-                title: 'Payment Logs',
-                url: 'consumer/payments'
-            },
-            {
-                title: 'Payment details'
-            }
-        ];
     }
     gotoPrev() {
         this.locationobj.back();
@@ -60,13 +46,13 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
                 this.payments = payments;
                 if (this.payments.txnType === 'Donation') {
                     this.getDonations(this.payments.ynwUuid);
-                } else if (this.payments.txnType === 'Appointment'){
-                    this.getApptDetails(this.payments.ynwUuid , this.payments.accountId);
-                } else if (this.payments.txnType === 'Waitlist'){
+                } else if (this.payments.txnType === 'Appointment') {
+                    this.getApptDetails(this.payments.ynwUuid, this.payments.accountId);
+                } else if (this.payments.txnType === 'Waitlist') {
                     this.getCheckinDetails(this.payments.ynwUuid, this.payments.accountId);
-                } else if (this.payments.txnType === 'Order'){
+                } else if (this.payments.txnType === 'Order') {
                     this.getOrderDetails(this.payments.ynwUuid, this.payments.accountId);
-                }else {
+                } else {
                     this.api_loading = false;
                 }
             }
@@ -82,7 +68,6 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
                 retval = dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
             } else if (mod === 'date') {
                 retval = this.dateformat.transformToMonthlyDate(dtarr[0] + '/' + dtarr[1] + '/' + dtarr[2]);
-                // retval = dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0];
             } else if (mod === 'time') {
                 retval = dtsarr[1] + ' ' + dtsarr[2];
                 const slots = retval.split('-');
@@ -104,62 +89,59 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
         this.shared_services.getConsumerDonationByUid(uuid).subscribe(
             (donations) => {
                 this.donationDetails = donations;
-                if(this.donationDetails && this.donationDetails.providerAccount ){
-                 this.provider_name = this.donationDetails.providerAccount.businessName;
+                if (this.donationDetails && this.donationDetails.providerAccount) {
+                    this.provider_name = this.donationDetails.providerAccount.businessName;
                 }
                 this.api_loading = false;
             }
         );
     }
     getApptDetails(uid, accountId) {
-        this.shared_services.getAppointmentByConsumerUUID(uid,accountId).subscribe(
-          (data) => {
-            this.waitlist = data;
-            console.log(this.waitlist);
-            if(this.waitlist.provider){
-                this.provider_name =  this.waitlist.providerAccount.businessName + ','+  ((this.waitlist.provider.businessName) ?
-                                       this.waitlist.provider.businessName : this.waitlist.provider.firstName + ' ' + this.waitlist.provider.lastName);               
-            } else {
-                this.provider_name = this.waitlist.providerAccount.businessName
-            }
-            console.log(this.provider_name);
-         
-       
-            this.api_loading = false;
-          },
+        this.shared_services.getAppointmentByConsumerUUID(uid, accountId).subscribe(
+            (data) => {
+                this.waitlist = data;
+                console.log(this.waitlist);
+                if (this.waitlist.provider) {
+                    this.provider_name = this.waitlist.providerAccount.businessName + ',' + ((this.waitlist.provider.businessName) ?
+                        this.waitlist.provider.businessName : this.waitlist.provider.firstName + ' ' + this.waitlist.provider.lastName);
+                } else {
+                    this.provider_name = this.waitlist.providerAccount.businessName
+                }
+                console.log(this.provider_name);
+                this.api_loading = false;
+            },
         );
-      }
-      getCheckinDetails(uid , accountId,) {
+    }
+    getCheckinDetails(uid, accountId,) {
         this.shared_services.getCheckinByConsumerUUID(uid, accountId).subscribe(
-          (data) => {
-            this.waitlist = data;
-            console.log(this.waitlist);
-            if(this.waitlist.provider){
-                this.provider_name =  this.waitlist.providerAccount.businessName + ','+  ((this.waitlist.provider.businessName) ?
-                                       this.waitlist.provider.businessName : this.waitlist.provider.firstName + ' ' + this.waitlist.provider.lastName);               
-            } else {
-                this.provider_name = this.waitlist.providerAccount.businessName
-            }
-            console.log(this.provider_name);
-            this.api_loading = false;
-          },
+            (data) => {
+                this.waitlist = data;
+                console.log(this.waitlist);
+                if (this.waitlist.provider) {
+                    this.provider_name = this.waitlist.providerAccount.businessName + ',' + ((this.waitlist.provider.businessName) ?
+                        this.waitlist.provider.businessName : this.waitlist.provider.firstName + ' ' + this.waitlist.provider.lastName);
+                } else {
+                    this.provider_name = this.waitlist.providerAccount.businessName
+                }
+                console.log(this.provider_name);
+                this.api_loading = false;
+            },
         );
-      }
-
-      getOrderDetails(uid , accountId,) {
+    }
+    getOrderDetails(uid, accountId,) {
         this.shared_services.getOrderByConsumerUUID(uid, accountId).subscribe(
-          (data) => {
-            this.waitlist = data;
-            console.log(this.waitlist);
-            if(this.waitlist.provider){
-                this.provider_name =  this.waitlist.providerAccount.businessName + ','+  ((this.waitlist.provider.businessName) ?
-                                       this.waitlist.provider.businessName : this.waitlist.provider.firstName + ' ' + this.waitlist.provider.lastName);               
-            } else {
-                this.provider_name = this.waitlist.providerAccount.businessName
-            }
-            console.log(this.provider_name);
-            this.api_loading = false;
-          },
+            (data) => {
+                this.waitlist = data;
+                console.log(this.waitlist);
+                if (this.waitlist.provider) {
+                    this.provider_name = this.waitlist.providerAccount.businessName + ',' + ((this.waitlist.provider.businessName) ?
+                        this.waitlist.provider.businessName : this.waitlist.provider.firstName + ' ' + this.waitlist.provider.lastName);
+                } else {
+                    this.provider_name = this.waitlist.providerAccount.businessName
+                }
+                console.log(this.provider_name);
+                this.api_loading = false;
+            },
         );
-      }
+    }
 }

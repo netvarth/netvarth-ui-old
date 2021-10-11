@@ -57,25 +57,8 @@ export class ItemDetailsComponent implements OnInit {
     max_num_limit = projectConstantsLocal.VALIDATOR_MAX_LAKH;
     api_loading = true;
     disableButton = false;
-
-    // @ViewChild('caption', { static: false }) private captionRef: ElementRef;
     customer_label;
     action;
-    breadcrumbs_init = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: 'Jaldee Billing',
-            url: '/provider/settings/pos'
-        },
-        {
-            title: 'Items',
-            url: '/provider/settings/pos/items'
-        }
-    ];
-    breadcrumbs = this.breadcrumbs_init;
     image_list: any = [];
     item;
     taxDetails: any = [];
@@ -145,14 +128,6 @@ export class ItemDetailsComponent implements OnInit {
                 this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
                 if (this.item_id) {
                     if (this.item_id === 'add') {
-                        const breadcrumbs = [];
-                        this.breadcrumbs_init.map((e) => {
-                            breadcrumbs.push(e);
-                        });
-                        breadcrumbs.push({
-                            title: 'Add'
-                        });
-                        this.breadcrumbs = breadcrumbs;
                         this.action = 'add';
                         this.createForm();
                         this.api_loading = false;
@@ -170,26 +145,10 @@ export class ItemDetailsComponent implements OnInit {
                                             this.loadImages(this.item.itemImages);
                                         }
                                         this.itemname = this.item.displayName;
-                                        if (this.action === 'edit') {
-                                            const breadcrumbs = [];
-                                            this.breadcrumbs_init.map((e) => {
-                                                breadcrumbs.push(e);
-                                            });
-                                            breadcrumbs.push({
-                                                title: this.itemname
-                                            });
-                                            this.breadcrumbs = breadcrumbs;
+                                        if (this.action === 'edit') {                                            
                                             this.createForm();
                                         } else if (this.action === 'view') {
                                             this.itemcaption = 'Item Details';
-                                            const breadcrumbs = [];
-                                            this.breadcrumbs_init.map((e) => {
-                                                breadcrumbs.push(e);
-                                            });
-                                            breadcrumbs.push({
-                                                title: this.itemname
-                                            });
-                                            this.breadcrumbs = breadcrumbs;
                                         }
                                     }
                                 );

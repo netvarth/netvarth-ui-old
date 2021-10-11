@@ -13,7 +13,6 @@ import { NotificationListBoxComponent } from '../../shared/component/notificatio
 import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { ConsumerRateServicePopupComponent } from '../../../shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
-import { AddManagePrivacyComponent } from '../add-manage-privacy/add-manage-privacy.component';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { CouponsComponent } from '../../../shared/components/coupons/coupons.component';
@@ -307,12 +306,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       divider = divident / 1;
     }
     this.no_of_grids = Math.round(divident / divider);
-    // console.log(this.screenWidth);
-    // console.log(this.no_of_grids);
   }
 
   ngOnInit() {
-    // console.log(this.bookingStatusClasses);
     this.usr_details = this.groupService.getitemFromGroupStorage('ynw-user');
     this.login_details = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
     this.tele_popUp = this.lStorageService.getitemfromLocalStorage('showTelePop');
@@ -430,9 +426,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
 
     this.subs.sink = this.galleryService.getMessage().subscribe(input => {
-      // console.log(input);
       if (input && input.accountId && input.uuid && input.type === 'appt') {
-        // console.log(input);
         this.shared_services.addConsumerAppointmentAttachment(input.accountId, input.uuid, input.value)
           .subscribe(
             () => {
@@ -628,13 +622,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           this.getAppointmentFuture();
           // more case
           this.todayBookings = [];
-          console.log(this.todayBookings);
           this.todayBookings_more = [];
           // tslint:disable-next-line:no-shadowed-variable
           for (let i = 0; i < this.today_totalbookings.length; i++) {
             if (i <= 2) {
               this.todayBookings.push(this.today_totalbookings[i]);
-              console.log(this.todayBookings);
             } else {
               this.todayBookings_more.push(this.today_totalbookings[i]);
             }
@@ -888,7 +880,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return mom_date;
   }
   getFavouriteProvider() {
-    // console.log('In Get Favourites');
     const _this = this;
     // return new Promise(function (resolve, reject) {
     _this.loadcomplete.fav_provider = false;
@@ -1293,9 +1284,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   providerDetail(provider, event) {
-    console.log('In ProviderDetail');
-    // console.log('order');
-    // event.stopPropagation();
     if (this.customId) {
       this.gotoDetails();
     } else {
@@ -1577,19 +1565,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.open_fav_div = open_fav_div;
     }, 500);
-  }
-  providerManagePrivacy(provider, i) {
-    this.privacydialogRef = this.dialog.open(AddManagePrivacyComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class'],
-      disableClose: true,
-      data: { 'provider': provider }
-    });
-    this.privacydialogRef.afterClosed().subscribe(result => {
-      if (result.message === 'reloadlist') {
-        this.fav_providers[i]['revealPhoneNumber'] = result.data.revealPhoneNumber;
-      }
-    });
   }
   openCoupons() {
     this.coupondialogRef = this.dialog.open(CouponsComponent, {
@@ -1908,7 +1883,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['consumer', 'appointment'], navigationExtras);
   }
   gotoHistory() {
-    console.log(this.showOrder);
     let queryParams = {
       is_orderShow: this.showOrder
     }
@@ -1919,7 +1893,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const navigationExtras: NavigationExtras = {
       queryParams: queryParams
     }
-    this.router.navigate(['consumer', 'checkin', 'history'], navigationExtras);
+    this.router.navigate(['consumer', 'history'], navigationExtras);
   }
   gotoApptmentHistory() {
     let queryParams = {};
@@ -2122,7 +2096,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (virtualItems.length > 0 && orderItems.length === virtualItems.length) {
       physical_item_present = false;
       this.onlyVirtualItemsPresent=true;
-      console.log('virtual only');
     }
     return physical_item_present; 
 
@@ -2138,7 +2111,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     };
     this.subs.sink = this.consumer_services.getConsumerOrders(params).subscribe(data => {
       this.orders = data; // saving todays orders
-      console.log('orders'+JSON.stringify(this.orders));
       this.total_tdy_order = this.orders;
       if (data) {
         this.getFutureOrder();
@@ -2217,8 +2189,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
   }
   sendAttachment(booking, type) {
-    console.log(booking);
-    console.log(type);
     const pass_ob = {};
     pass_ob['user_id'] = booking.providerAccount.id;
     if (type === 'appt') {
@@ -2235,7 +2205,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   addattachment(pass_ob) {
-    console.log(pass_ob);
     this.galleryDialog = this.dialog.open(GalleryImportComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -2254,10 +2223,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   viewAttachment(booking, type) {
     if (type === 'appt') {
-      console.log(type);
       this.subs.sink = this.shared_services.getConsumerAppointmentAttachmentsByUuid(booking.uid, booking.providerAccount.id).subscribe(
         (communications: any) => {
-
           this.showattachmentDialogRef = this.dialog.open(AttachmentPopupComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -2271,37 +2238,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             if (result === 'reloadlist') {
             }
           });
-          // this.image_list_popup_temp = [];
-          // this.image_list_popup = [];
-          // let count = 0;
-          // for (let comIndex = 0; comIndex < communications.length; comIndex++) {
-          //   const thumbPath = communications[comIndex].thumbPath;
-          //   let imagePath = thumbPath;
-          //   const caption = communications[comIndex].caption;
-          //   const description = communications[comIndex].s3path;
-          //   const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-          //   // if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
-          //   //   imagePath = communications[comIndex].s3path;
-          //   // }
-          //   if (new RegExp(this.imageAllowed.join("|")).test(thumbPathExt.toUpperCase())) {
-          //     imagePath = communications[comIndex].s3path;
-          // }
-          //   const imgobj = new Image(
-          //     count,
-          //     {
-          //       img: imagePath,
-          //       description: caption
-          //     },
-          //   );
-          //   this.image_list_popup_temp.push(imgobj);
-          //   count++;
-          // }
-          // if (count > 0) {
-          //   this.image_list_popup = this.image_list_popup_temp;
-          //   setTimeout(() => {
-          //     this.openImageModalRow(this.image_list_popup[0]);
-          //   }, 500);
-          // }
         },
         error => { }
       );
@@ -2367,7 +2303,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   onButtonBeforeHook() { }
   onButtonAfterHook() { }
   gotoQuestionnaire(booking) {
-    console.log(booking);
     let uuid;
     let type;
     if (booking.waitlistingFor) {
@@ -2388,7 +2323,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   cardClicked(actionObj) {
-    console.log(actionObj);
     switch (actionObj['type']) {
       case 'appt':
         this.performApptActions(actionObj['action'], actionObj['booking'], actionObj['event'], actionObj['timetype']);

@@ -59,15 +59,15 @@ export class EditProfileComponent implements OnInit {
   domain;
   breadcrumb_moreoptions: any = [];
 
- 
+
   loading = false;
   breadcrumbs_init: { title: string; url: string; }[];
   breadcrumbs: { title: string; url: string; }[];
   tele_arr: any = [];
   chatId;
   val: any = [];
-  telegramstat = true ;
-  status = false ;
+  telegramstat = true;
+  status = false;
   boturl: any;
   telegramdialogRef: any;
   waitlist_statusstr: string;
@@ -83,18 +83,17 @@ export class EditProfileComponent implements OnInit {
     public dialog: MatDialog,
     private snackbarService: SnackbarService
   ) {
-   this.breadcrumbs_init = [
+    this.breadcrumbs_init = [
       {
         title: Messages.USER_PROF_CAP,
         url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/profile'
       }
     ];
     this.breadcrumbs = this.breadcrumbs_init;
-   }
-  goBack () {
+  }
+  goBack() {
     this.location.back();
   }
-
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
@@ -105,15 +104,14 @@ export class EditProfileComponent implements OnInit {
       dob: [''],
       email: [''],
       email1: [''],
-      countryCode_whtsap:[''],
-      countryCode_telegram:[''],
+      countryCode_whtsap: [''],
+      countryCode_telegram: [''],
       whatsappnumber: [''],
       telegramnumber: [''],
     });
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
     console.log(this.curtype);
     this.getProfile(this.curtype);
-    // const tday = new Date();
     const month = (this.tday.getMonth() + 1);
     let dispmonth = '';
     if (month < 10) {
@@ -127,7 +125,6 @@ export class EditProfileComponent implements OnInit {
   }
   getProfile(typ) {
     this.loading = true;
-
     this.shared_functions.getProfile()
       .then(
         data => {
@@ -144,16 +141,16 @@ export class EditProfileComponent implements OnInit {
             this.phonenoHolder = data['userProfile']['primaryMobileNo'] || '';
             console.log(this.phonenoHolder);
             this.countryCode = data['userProfile']['countryCode'] || '';
-            if(data['userProfile']['whatsAppNum']){
+            if (data['userProfile']['whatsAppNum']) {
               this.editProfileForm.patchValue({
-              countryCode_whtsap:data['userProfile']['whatsAppNum']['countryCode'],
-              whatsappnumber:data['userProfile']['whatsAppNum']['number'],
+                countryCode_whtsap: data['userProfile']['whatsAppNum']['countryCode'],
+                whatsappnumber: data['userProfile']['whatsAppNum']['number'],
               });
             }
-            if(data['userProfile']['telegramNum']){
+            if (data['userProfile']['telegramNum']) {
               this.editProfileForm.patchValue({
-              countryCode_telegram:data['userProfile']['telegramNum']['countryCode'],
-              telegramnumber:data['userProfile']['telegramNum']['number'],
+                countryCode_telegram: data['userProfile']['telegramNum']['countryCode'],
+                telegramnumber: data['userProfile']['telegramNum']['number'],
               });
             }
           } else if (typ === 'provider') {
@@ -169,8 +166,6 @@ export class EditProfileComponent implements OnInit {
             this.phonenoHolder = data['basicInfo']['mobile'] || '';
             console.log(this.phonenoHolder)
             this.countryCode = data['basicInfo']['countryCode'] || '';
-
-
           }
         },
         error => {
@@ -221,7 +216,7 @@ export class EditProfileComponent implements OnInit {
           'firstName': sub_data.first_name.trim() || null,
           'lastName': sub_data.last_name.trim() || null,
           'dob': date_format || null,
-          'gender': (sub_data.gender!=='')?sub_data.gender:null || null,
+          'gender': (sub_data.gender !== '') ? sub_data.gender : null || null,
           'email': sub_data.email || ''
         };
         if (sub_data.whatsappnumber !== '' && sub_data.whatsappnumber !== undefined && sub_data.countryCode_whtsap !== '' && sub_data.countryCode_whtsap !== undefined) {
@@ -233,7 +228,7 @@ export class EditProfileComponent implements OnInit {
           }
           whatsup["number"] = sub_data.whatsappnumber
           post_data['whatsAppNum'] = whatsup;
-        }else{
+        } else {
           const whatsup = {}
           whatsup["countryCode"] = sub_data.countryCode_whtsap
           whatsup["number"] = sub_data.whatsappnumber
@@ -248,7 +243,7 @@ export class EditProfileComponent implements OnInit {
           }
           telegram["number"] = sub_data.telegramnumber
           post_data['telegramNum'] = telegram;
-        }else{
+        } else {
           const telegram = {}
           telegram["countryCode"] = sub_data.countryCode_telegram
           telegram["number"] = sub_data.telegramnumber
@@ -262,7 +257,7 @@ export class EditProfileComponent implements OnInit {
             'firstName': sub_data.first_name.trim() || null,
             'lastName': sub_data.last_name.trim() || null,
             'dob': date_format || null,
-            'gender': (sub_data.gender!=='')? sub_data.gender:null || null,
+            'gender': (sub_data.gender !== '') ? sub_data.gender : null || null,
             'email': sub_data.email || ''
           }
         };
@@ -271,7 +266,6 @@ export class EditProfileComponent implements OnInit {
       this.shared_services.updateProfile(post_data, passtyp)
         .subscribe(
           () => {
-            // this.api_success = Messages.PROFILE_UPDATE;
             this.snackbarService.openSnackBar(Messages.PROFILE_UPDATE);
             this.getProfile(this.curtype);
             const curuserdetexisting = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -284,13 +278,11 @@ export class EditProfileComponent implements OnInit {
             this.shared_functions.sendMessage(pdata);
           },
           error => {
-            // this.api_error = error.error;
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
     } else {
       this.snackbarService.openSnackBar(Messages.EMAIL_MISMATCH, { 'panelClass': 'snackbarerror' });
-      // this.api_error = Messages.PASSWORD_MISMATCH;
     }
   }
 
@@ -326,7 +318,6 @@ export class EditProfileComponent implements OnInit {
   }
   redirecToSettings() {
     this._location.back();
-    // this.router.navigate(['provider', 'settings', 'bprofile']);
   }
   telegramInfo() {
     this.telegramdialogRef = this.dialog.open(TelegramInfoComponent, {
@@ -343,8 +334,8 @@ export class EditProfileComponent implements OnInit {
       }
     );
   }
- 
-  enableTelegram(event){
+
+  enableTelegram(event) {
     const stat = (event.checked) ? 'ENABLED' : 'DISABLED';
     this.shared_services.consumertelegramChat(this.removePlus(this.countryCode), this.phonenoHolder).subscribe(data => {
       this.chatId = data;
@@ -356,19 +347,8 @@ export class EditProfileComponent implements OnInit {
       },
       error => {
         this.telegramstat = false;
-        if(!this.telegramstat || this.chatId === null){
+        if (!this.telegramstat || this.chatId === null) {
           this.telegramInfo();
-          // this.telegramdialogRef = this.dialog.open(telegramPopupComponent, {
-          //   width: '50%',
-          //   panelClass: ['popup-class', 'commonpopupmainclass'],
-          //   disableClose: true,
-          //   data: this.boturl
-          // });
-          //   this.telegramdialogRef.afterClosed().subscribe(result => {
-          //   if (result) {
-          //     this.getTelegramstat();
-          //   }
-          // });
         }
       });
   }
@@ -376,37 +356,36 @@ export class EditProfileComponent implements OnInit {
     const _this = this;
     return new Promise(function (resolve, reject) {
       _this.shared_services.enableTelegramNoti(stat)
-            .subscribe(
-                data => {
-                    resolve(data);
-                },
-                (error) => {
-                    reject(error);
-                }
-            );
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
     });
-}
-getTelegramstat(){
-  this.shared_services.getTelegramstat()
-  .subscribe(
-    (data:any) => {
-     console.log(data);
-     this.status = data.status;
-     this.waitlist_statusstr = this.status ? 'On' : 'Off';
-     if(data.botUrl){
-      this.boturl = data.botUrl;
-     }
-     
-    },
-    error => {
-      console.log(error);
-    }
-  );
-}
-removePlus(countryCode) {
-  if (countryCode.startsWith('+')) {
-    countryCode = countryCode.substring(1);
   }
-  return countryCode;
-}
+  getTelegramstat() {
+    this.shared_services.getTelegramstat()
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          this.status = data.status;
+          this.waitlist_statusstr = this.status ? 'On' : 'Off';
+          if (data.botUrl) {
+            this.boturl = data.botUrl;
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
+  }
+  removePlus(countryCode) {
+    if (countryCode.startsWith('+')) {
+      countryCode = countryCode.substring(1);
+    }
+    return countryCode;
+  }
 }

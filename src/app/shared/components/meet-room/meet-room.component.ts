@@ -13,7 +13,7 @@ import { Location } from "@angular/common";
 import { WordProcessor } from "../../services/word-processor.service";
 import { MediaService } from "../../services/media-service";
 import * as Video from 'twilio-video';
-import { RequestDialogComponent } from "../../../business/shared/meeting-room/request-dialog/request-dialog.component";
+import { RequestDialogComponent } from "../../modules/request-dialog/request-dialog.component";
 @Component({
     selector: 'app-meet-room',
     templateUrl: './meet-room.component.html',

@@ -11,8 +11,6 @@ import { OtpFormModule } from '../../modules/otp-form/otp-form.module';
 import { SetPasswwordModule } from '../set-password-form/set-password-form.module';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
-
-
 @NgModule({
     imports: [
         CommonModule,

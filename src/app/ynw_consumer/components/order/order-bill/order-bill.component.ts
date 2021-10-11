@@ -3,7 +3,6 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { DomSanitizer } from '@angular/platform-browser';
-import { CheckInHistoryServices } from '../../../../shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.service';
 import { projectConstants } from '../../../../app.component';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
@@ -21,6 +20,7 @@ import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.ser
 import { SubSink } from '../../../../../../node_modules/subsink';
 import { PaytmService } from '../../../../../app/shared/services/paytm.service';
 import { LocalStorageService } from '../../../../../app/shared/services/local-storage.service';
+import { CheckInHistoryServices } from '../../../../shared/modules/consumer-checkin-history-list/components/checkin-history-list/checkin-history-list.service';
 
 @Component({
     selector: 'app-order-bill',

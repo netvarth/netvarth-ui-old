@@ -3,7 +3,6 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { DomSanitizer } from '@angular/platform-browser';
-import { CheckInHistoryServices } from '../../../../../shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.service';
 import { projectConstants } from '../../../../../app.component';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
@@ -22,6 +21,7 @@ import { SubSink } from '../../../../../../../node_modules/subsink';
 import { DateFormatPipe } from '../../../../../shared/pipes/date-format/date-format.pipe';
 import { PaytmService } from '../../../../../../app/shared/services/paytm.service';
 import { LocalStorageService } from '../../../../../../app/shared/services/local-storage.service';
+import { CheckInHistoryServices } from '../../../../../shared/modules/consumer-checkin-history-list/components/checkin-history-list/checkin-history-list.service';
 
 @Component({
     selector: 'app-consumer-appointment-bill',
@@ -656,7 +656,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                 }
               };
               if (this.checkIn_type === 'appt_historybill') {
-                this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'history'],{ queryParams: {'is_orderShow': 'false'}} ));
+                this.ngZone.run(() => this.router.navigate(['consumer', 'history'],{ queryParams: {'is_orderShow': 'false'}} ));
               } else {
               this.ngZone.run(() => this.router.navigate(['consumer'] ,navigationExtras));
               }

@@ -61,38 +61,26 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.evnt = routerobj.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (routerobj.url === '\/') {
-        if (this.shared_functions.isBusinessOwner('returntyp') === 'consumer') {
-          routerobj.navigate(['consumer']);
+          if (this.shared_functions.isBusinessOwner('returntyp') === 'consumer') {
+            routerobj.navigate(['consumer']);
+          }
         }
       }
-      }
     });
-   }
-ngOnDestroy() {
-  const a = document.getElementById("fb-root");
-  if (a) {
-  a.classList.remove('visible_chat');
   }
-  // alert('destroy');
-  // let a = document.getElementById('fb-root');
-  //   a.setAttribute('style', 'visibility:hidden !important');
-}
-ngAfterViewInit() {
-  // alert('init');
-  // let a = document.getElementById('hubspot-messages-iframe-container');
-  // a.setAttribute('style', 'visibility:visible !important');
-}
+  ngOnDestroy() {
+    const a = document.getElementById("fb-root");
+    if (a) {
+      a.classList.remove('visible_chat');
+    }
+  }
+  ngAfterViewInit() {
+  }
   ngOnInit() {
-
     const a = document.getElementById("fb-root");
     if (a) {
       a.classList.add('visible_chat');
     }
-  
-
-
-
-
     this.titleService.setTitle('Jaldee - Avoid Waiting in Line');
     this.metaService.addTags([
       { name: 'description', content: 'www.jaldee.com is a web portal connecting service providers with customers. Jaldee is an all India platform listing thousands of doctors/professionals/technicians and all service areas including healthcare, homecare, personal care and legal/financial care. The motto of Jaldee is \"seamless connectivity of service providers/business enterprises with potential customers.\" Elimination of queues, wiping out unproductive & boring waiting times, is the motivation & aim of Jaldee.' }
@@ -141,8 +129,6 @@ ngAfterViewInit() {
       nav: true
     };
     this.carouselOne = {
-      // nav: true,
-      // navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
       dots: true,
       loop: true,
       autoplay: true,
@@ -161,7 +147,6 @@ ngAfterViewInit() {
       this.handleScroll('home');
     }, 500);
   }
-
   handleScroll(target) {
     this.triggerScrollTo(target);
   }
@@ -181,7 +166,6 @@ ngAfterViewInit() {
       { 'caption': 'Ayurvedic Medicine', 'kw': 'AyurvedicMedicine', 'kwautoname': 'Ayurvedic Medicine', 'kwtyp': 'special' },
       { 'caption': 'Dentists', 'kw': 'dentists', 'kwautoname': 'Dentists', 'kwtyp': 'subdom' }
     ];
-
     this.special_info['personalCare'] = [
       { 'caption': 'Beauty Care for Men', 'kw': 'BeautyCareForMen', 'kwautoname': 'Beauty Care for Men', 'kwtyp': 'special' },
       { 'caption': 'Beauty Care for Women', 'kw': 'BeautyCareForWomen', 'kwautoname': 'Beauty Care for Women', 'kwtyp': 'special' },
@@ -219,7 +203,6 @@ ngAfterViewInit() {
   playvideoClicked() {
     document.getElementById('video-box').innerHTML = '<iframe width="100%"  src="https://www.youtube-nocookie.com/embed/qF4gLhQW2CE?controls=1&rel=0&autoplay=1" height= "514px" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
   }
-
   setSystemDate() {
     this.shared_service.getSystemDate()
       .subscribe(
@@ -261,7 +244,7 @@ ngAfterViewInit() {
     }
   }
   domainClicked(type) {
-    this.handle_home_domain_click({'domain' : type});
+    this.handle_home_domain_click({ 'domain': type });
   }
   handle_home_domain_click(obj) {
     this.keywordholder = { 'autoname': '', 'name': '', 'domain': '', 'subdomain': '', 'typ': '' };
@@ -275,9 +258,7 @@ ngAfterViewInit() {
     this.keywordholder.domain = kwdomain || '';
     this.keywordholder.subdomain = kwsubdomain || '';
     this.keywordholder.typ = kwtyp;
-
     this.selected_domain = kwdomain;
-
     this.handle_search();
   }
   handle_search() {
@@ -304,9 +285,6 @@ ngAfterViewInit() {
     this.routerobj.navigate(['/searchdetail', passparam]);
   }
   doSignup(origin?) {
-    if (origin === 'provider') {
-      // cClass = 'commonpopupmainclass';
-    }
     const dialogRef = this.dialog.open(SignUpComponent, {
       width: '50%',
       panelClass: ['signupmainclass', 'popup-class'],
@@ -315,14 +293,10 @@ ngAfterViewInit() {
         is_provider: this.checkProvider(origin)
       }
     });
-
     dialogRef.afterClosed().subscribe(() => {
     });
   }
   doLogin(origin?) {
-    if (origin === 'provider') {
-      // cClass = 'commonpopupmainclass';
-    }
     const dialogRef = this.dialog.open(LoginComponent, {
       width: '50%',
       panelClass: ['loginmainclass', 'popup-class'],
@@ -333,16 +307,10 @@ ngAfterViewInit() {
       }
     });
     dialogRef.afterClosed().subscribe((result) => {
-      if(result){
+      if (result) {
         this.loading = true;
       }
     });
-  }
-  doWatchVideo() {
-    // alert('Clicked watch video');
-  }
-  doLearnMore() {
-    // alert('Clicked learn more');
   }
   doSignuppage() {
     this.routerobj.navigate(['/business']);
@@ -350,17 +318,10 @@ ngAfterViewInit() {
   checkProvider(type) {
     return (type === 'consumer') ? 'false' : 'true';
   }
-  // checkinDetailsView() {
-  //   this.routerobj.navigate(['/waitlist-details/ecid']);
-  // }
   knowCheckinStatus() {
     this.routerobj.navigate(['status/new']);
   }
   providerLinkClicked() {
     this.routerobj.navigate(['/business/healthcare']);
   }
-  // knowApptStatus () {
-  //   this.routerobj.navigate(['appt/status/new']);
-  // }
 }
-

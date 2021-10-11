@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ConsumerServices } from '../../services/consumer-services.service';
@@ -7,7 +7,6 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
-import { AddManagePrivacyComponent } from '../add-manage-privacy/add-manage-privacy.component';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
@@ -15,11 +14,13 @@ import { DateTimeProcessor } from '../../../shared/services/datetime-processor.s
 import { S3UrlProcessor } from '../../../shared/services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { ManagePrivacyComponent } from '../manage-privacy/manage-privacy.component';
 
 @Component({
   selector: 'app-myfavourites',
   templateUrl: './myfavourites.component.html',
   styleUrls: ['./myfavourites.component.css'],
+  encapsulation: ViewEncapsulation.None,
   animations: [
     trigger('hideShowAnimator', [
       state('true', style({ opacity: 1, height: '100%' })),
@@ -199,33 +200,7 @@ private subs=new SubSink();
       }
     }
   }
-  // getbusinessprofiledetails_json(provider_id, section, modDateReq: boolean, index) {
-  //   let UTCstring = null;
-  //   if (section === 'settings' && this.fav_providers[index] && this.fav_providers[index]['settings']) {
-  //     return false;
-  //   }
-  //   if (modDateReq) {
-  //     UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
-  //   }
-  //   this.subs.sink=this.shared_services.getbusinessprofiledetails_json(provider_id, this.s3url, section, UTCstring)
-  //     .subscribe(res => {
-  //       switch (section) {
-  //         case 'settings': {
-  //           this.fav_providers[index]['settings'] = res;
-  //           break;
-  //         }
-  //         case 'terminologies': {
-  //           this.terminologiesJson = res;
-  //           break;
-  //         }
-  //       }
-  //     },
-  //       error => {
-  //       }
-  //     );
-  // }
-
-  getWaitingTime(provids_locid, index) {
+   getWaitingTime(provids_locid, index) {
     if (provids_locid.length > 0) {
       const post_provids_locid: any = [];
       for (let i = 0; i < provids_locid.length; i++) {
@@ -424,7 +399,7 @@ private subs=new SubSink();
   }
 
   providerManagePrivacy(provider, i) {
-    this.privacydialogRef = this.dialog.open(AddManagePrivacyComponent, {
+    this.privacydialogRef = this.dialog.open(ManagePrivacyComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class'],
       disableClose: true,

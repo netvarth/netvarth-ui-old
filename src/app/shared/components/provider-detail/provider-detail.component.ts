@@ -296,7 +296,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   consumerVirtualinfo: any;
   constructor(
     private activaterouterobj: ActivatedRoute,
-    // private providerdetailserviceobj: ProviderDetailService,
     public sharedFunctionobj: SharedFunctions,
     private shared_services: SharedServices,
     private routerobj: Router,
@@ -309,15 +308,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     public wordProcessor: WordProcessor,
     private domainConfigService: DomainConfigGenerator,
-    // private modalService: BsModalService,
     private dateTimeProcessor: DateTimeProcessor,
     private s3Processor: S3UrlProcessor
   ) {
-    // this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
-    // this.s3CouponList=new Array[2];
   }
   ngOnInit() {
     this.api_loading = true;
@@ -398,16 +394,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.domainConfigService.getDomainList();
     this.activaterouterobj.paramMap
       .subscribe(params => {
-
         this.accountEncId = params.get('id');
-
         if (params.get('userEncId')) {
           this.userEncId = params.get('userEncId');
           this.userId = this.userEncId;
         } else {
           this.userId = null;
         }
-
         this.domainConfigService.getDomainList().then(
           (domainConfig) => {
             this.domainList = domainConfig;
@@ -587,17 +580,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             if (accountS3s['departmentProviders']) {
               this.processS3s('departmentProviders', accountS3s['departmentProviders']);
             }
-            // this.processS3s('terminologies', accountS3s['terminologies']);
-            // this.processS3s('coupon', accountS3s['coupon']);
-            // this.processS3s('providerCoupon', accountS3s['providerCoupon']);
-            // this.processS3s('location', accountS3s['location']);
-            // this.processS3s('businessProfile', accountS3s['businessProfile']);
-            // this.processS3s('virtualFields', accountS3s['virtualFields']);
-            // this.processS3s('services', accountS3s['services']);
-            // this.processS3s('apptServices', accountS3s['apptServices']);
-            // this.processS3s('donationServices', accountS3s['donationServices']);
-            // this.processS3s('departmentProviders', accountS3s['departmentProviders']);
-
             if (accountS3s['gallery']) {
               this.processS3s('gallery', accountS3s['gallery']);
             } else {
@@ -1534,7 +1516,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   redirectToHistory() {
     if (this.sharedFunctionobj.checkLogin()) {
-      this.routerobj.navigate(['consumer', 'checkin', 'history'], { queryParams: { accountId: this.businessjson.id } });
+      this.routerobj.navigate(['consumer', 'history'], { queryParams: { accountId: this.businessjson.id } });
     } else { // show consumer login
       const passParam = { callback: 'history' };
       this.doLogin('consumer', passParam);
