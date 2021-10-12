@@ -13,7 +13,6 @@
             {{customerDetails.lastName}}</span><br>
           <label>{{customer_label | capitalizeFirst}} Id :</label> <span> {{display_PatientId}}</span><br *ngIf="display_PatientId">
           <label *ngIf="customerDetails.dob">DOB :</label><span>
-            <!-- {{customerDetails.dob | date:display_dateFormat}} -->
             {{customerDetails.dob  | date:newDateFormat}}</span><br *ngIf="customerDetails.dob">
           <label *ngIf="customerDetails.gender">Gender :</label><span>
             {{customerDetails.gender | capitalizeFirst}}</span>
@@ -25,7 +24,6 @@
         <div class="clearfix"></div>
         <hr>
       </div>
-
       <h6 class="mgn-lt-15">Enter {{displayTitle}} <span class="word-hint">(1000 words)</span></h6>
       <div class="col-md-12 col-sm-12 col-xs-12 mr-area">
         <textarea [(ngModel)]="edit_data" name="paragraph_text" maxlength="1000" cols="30" rows="5"></textarea>

@@ -31,15 +31,10 @@ import { AddProviderWaitlistCheckInBillComponent } from './modules/check-ins/add
 import { InboxModule } from '../shared/modules/inbox/inbox.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { GoogleMapComponent } from '../ynw_provider/components/googlemap/googlemap.component';
-import { ProviderbWizardComponent } from '../ynw_provider/components/provider-bwizard/provider-bwizard.component';
 import { AddProviderSchedulesModule } from '../ynw_provider/components/add-provider-schedule/add-provider-schedule.module';
 import { DynamicFormModule } from './modules/dynamic-form/dynamic-form.module';
-import { ConfirmBoxComponent } from '../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { ConfirmPaymentBoxComponent } from '../ynw_provider/shared/component/confirm-paymentbox/confirm-paymentbox.component';
 import { ProviderWaitlistCheckInCancelPopupComponent } from './modules/check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
-import { ShowMessageComponent } from './modules/show-messages/show-messages.component';
-import { ConfirmPatmentLinkComponent } from '../ynw_provider/shared/component/confirm-paymentlink/confirm-paymentlink.component';
-import { JoyrideModule } from 'ngx-joyride';
 import { ProviderStartTourComponent } from '../ynw_provider/components/provider-start-tour/provider-start-tour.component';
 import { UpdateEmailComponent } from './modules/update-email/update-email.component';
 import { HelpPopUpComponent } from './home/header/help-pop-up/help-pop-up.component';
@@ -52,6 +47,7 @@ import { ConsumerGroupDialogComponent } from './shared/consumer-group-dialog/con
 import { ItemListDialogComponent } from './shared/item-list-dialog/item-list-dialog.component';
 import { ConsumerLabelDialogComponent } from './shared/consumer-label-dialog/consumer-label-dialog.component';
 import { EnquiryComponent } from './modules/enquiry/enquiry.component';
+import { JoyrideModule } from 'ngx-joyride';
 
 @NgModule({
     declarations: [
@@ -63,12 +59,8 @@ import { EnquiryComponent } from './modules/enquiry/enquiry.component';
         AddProviderBprofileSearchAdwordsComponent,
         AddProviderWaitlistCheckInBillComponent,
         GoogleMapComponent,
-        ProviderbWizardComponent,
-        ConfirmBoxComponent,
         ConfirmPaymentBoxComponent,
-        ConfirmPatmentLinkComponent,
         ProviderWaitlistCheckInCancelPopupComponent,
-        ShowMessageComponent,
         ProviderStartTourComponent,
         UpdateEmailComponent,
         HelpPopUpComponent,
@@ -96,18 +88,15 @@ import { EnquiryComponent } from './modules/enquiry/enquiry.component';
         Nl2BrPipeModule,
         AddProviderSchedulesModule,
         DynamicFormModule,
-        JoyrideModule.forChild(),
+        JoyrideModule.forRoot(),
         // InboxListModule
     ],
     entryComponents: [
         AddProviderWaitlistCheckInBillComponent,
         AddProviderBprofileSearchAdwordsComponent,
         GoogleMapComponent,
-        ConfirmBoxComponent,
         ConfirmPaymentBoxComponent,
-        ConfirmPatmentLinkComponent,
         ProviderWaitlistCheckInCancelPopupComponent,
-        ShowMessageComponent,
         ProviderStartTourComponent,
         UpdateEmailComponent,
         HelpPopUpComponent,

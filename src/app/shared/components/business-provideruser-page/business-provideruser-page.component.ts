@@ -16,7 +16,7 @@ import { SearchDetailServices } from '../search-detail/search-detail-services.se
 import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 import { Location } from '@angular/common';
-import { VisualizeComponent } from '../../../business/modules/visualizer/visualize.component';
+import { VisualizeComponent } from '../../modules/visualizer/visualize.component';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import { Meta, Title } from '@angular/platform-browser';
 import { LocalStorageService } from '../../services/local-storage.service';

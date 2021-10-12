@@ -9,7 +9,6 @@ import { ProviderBprofileSearchAdwordsComponent } from '../../../ynw_provider/co
 import { ProviderPaymentHistoryComponent } from '../../../ynw_provider/components/provider-payment-history/provider-payment-history.component';
 import { PagerModule } from '../../../shared/modules/pager/pager.module';
 import { AddonsComponent } from './addons/addons.component';
-import { AddproviderAddonComponent } from '../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 import { ProviderAddonAuditlogsComponent } from '../../../ynw_provider/components/provider-addon-auditlogs/provider-addon-auditlogs.component';
 import { KeywordsComponent } from './keywords/keywords.component';
 import { UpgradeLicenseComponent } from '../../../ynw_provider/components/upgrade-license/upgrade-license.component';
@@ -21,6 +20,7 @@ import { InvoiceStatusComponent } from './invoicestatus/invoicestatus.component'
 import { ViewPrevStatementComponent } from './statements/viewprevstatement.component';
 import { PaymentComponent } from './payments/licensepayment.component';
 import { AddonDetailComponent } from './addons/addon-detail/addon-detail.component';
+import { AddProviderAddonsModule } from '../../../ynw_provider/components/add-provider-addons/add-provider-addons.module';
 
 @NgModule({
     imports: [
@@ -30,7 +30,8 @@ import { AddonDetailComponent } from './addons/addon-detail/addon-detail.compone
         BreadCrumbModule,
         LicenseRoutingModule,
         PagerModule,
-        CapitalizeFirstPipeModule
+        CapitalizeFirstPipeModule,
+        AddProviderAddonsModule
 
     ],
     declarations: [
@@ -39,7 +40,6 @@ import { AddonDetailComponent } from './addons/addon-detail/addon-detail.compone
         AddonsComponent,
         PaymentComponent,
         ProviderPaymentHistoryComponent,
-        AddproviderAddonComponent,
         ProviderAddonAuditlogsComponent,
         KeywordsComponent,
         InvoiceStatusComponent,
@@ -51,7 +51,6 @@ import { AddonDetailComponent } from './addons/addon-detail/addon-detail.compone
         AddonDetailComponent
     ],
     entryComponents: [
-        AddproviderAddonComponent,
         ProviderAddonAuditlogsComponent,
         UpgradeLicenseComponent,
         ProviderAuditLogComponent,

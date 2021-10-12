@@ -113,11 +113,11 @@ export class ItemDetailsSharedComponent implements OnInit {
           this.logo = params.logo;
           console.log(this.logo);
         }
-          if(params.isFrom && params.isFrom =='providerdetail'){
-            this.from = 'providerdetail';
+        if (params.isFrom && params.isFrom == 'providerdetail') {
+          this.from = 'providerdetail';
         }
-        if(params.unique_id){
-          this.provider_id=params.unique_id;
+        if (params.unique_id) {
+          this.provider_id = params.unique_id;
         }
       });
   }
@@ -134,7 +134,7 @@ export class ItemDetailsSharedComponent implements OnInit {
     this.currentItemObject = JSON.parse(this.item);
     console.log(this.currentItemObject);
     this.currentItem = this.currentItemObject.item;
-    console.log("this array"+this.currentItem);
+    console.log("this array" + this.currentItem);
     if (this.currentItem.showPromotionalPrice) {
       if (this.currentItem.promotionalPriceType === 'FIXED') {
         this.isPromotionalpriceFixed = true;
@@ -146,21 +146,6 @@ export class ItemDetailsSharedComponent implements OnInit {
     }
     if (this.currentItem.itemImages) {
       this.itemImages = this.currentItem.itemImages;
-      // for (let imgIndex = 0; imgIndex < this.itemImages.length; imgIndex++) {
-      //   const imgobj = new Image(this.itemImages[imgIndex].id,
-      //     {
-      //       img: this.itemImages[imgIndex].url,
-      //       description: this.itemImages[imgIndex].title
-      //     }
-      //     ,
-      //     {
-      //       img: this.itemImages[imgIndex].url,
-      //       title: this.itemImages[imgIndex].title
-      //     },
-      //   );
-      //   this.imagesRect = [... this.imagesRect, imgobj];
-      //   console.log("this array"+this.imagesRect);
-      // }
     }
 
     this.loading = false;
@@ -169,16 +154,6 @@ export class ItemDetailsSharedComponent implements OnInit {
 
 
   checkout() {
-    // this.lStorageService.setitemonLocalStorage('order', this.orderList);
-    // const navigationExtras: NavigationExtras = {
-    //   queryParams: {
-    //     account_id: this.provider_bussiness_id,
-    //     'logo': this.logo
-
-    //   }
-
-    // };
-    // this.router.navigate(['order/shoppingcart'], navigationExtras);
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
       this.lStorageService.setitemonLocalStorage('order', this.orderList);
@@ -186,8 +161,8 @@ export class ItemDetailsSharedComponent implements OnInit {
         queryParams: {
           account_id: this.provider_bussiness_id,
           'logo': this.logo,
-          unique_id:this.provider_id,
-          isFrom : this.from ? this.from : ''
+          unique_id: this.provider_id,
+          isFrom: this.from ? this.from : ''
         }
       };
       this.router.navigate(['order/shoppingcart'], navigationExtras);
@@ -225,7 +200,7 @@ export class ItemDetailsSharedComponent implements OnInit {
       }
     });
   }
-   doSignup(passParam?) {
+  doSignup(passParam?) {
     const dialogRef = this.dialog.open(SignUpComponent, {
       width: '50%',
       panelClass: ['signupmainclass', 'popup-class'],
@@ -256,10 +231,6 @@ export class ItemDetailsSharedComponent implements OnInit {
     }
     return qty;
   }
-  // getItemQty() {
-  //   const qty = this.orderList.filter(i => i.itemId === this.currentItem.itemId).length;
-  //   return qty;
-  // }
   increment() {
     this.addToCart();
   }
@@ -271,27 +242,6 @@ export class ItemDetailsSharedComponent implements OnInit {
   decrement() {
     this.removeFromCart();
   }
-  // addToCart() {
-  //   const spId = this.lStorageService.getitemfromLocalStorage('order_spId');
-  //   if (spId === null) {
-  //     this.lStorageService.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
-  //   } else {
-  //     if (this.orderList !== null && this.orderList.length !== 0) {
-  //       if (spId !== this.provider_bussiness_id) {
-  //         if (this.getConfirmation()) {
-  //           this.lStorageService.removeitemfromLocalStorage('order');
-  //         }
-  //       }
-  //     }
-  //   }
-  //   this.orderList.push(this.currentItemObject);
-  //   console.log(this.orderList);
-  //   this.lStorageService.setitemonLocalStorage('order', this.orderList);
-  //   this.getItemQty();
-  //   this.updateCartCount();
-
-  // }
-
   // OrderItem add to cart
   addToCart() {
     const spId = this.lStorageService.getitemfromLocalStorage('order_spId');
@@ -361,26 +311,6 @@ export class ItemDetailsSharedComponent implements OnInit {
     this.getItemQty();
     this.updateCartCount();
   }
-
-
-  // addRandomImage() {
-  //   const imageToCopy: Image = this.imagesRect[Math.floor(Math.random() * this.imagesRect.length)];
-  //   const newImage: Image = new Image(this.imagesRect.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
-  //   this.imagesRect = [...this.imagesRect, newImage];
-  // }
-
-  // onChangeAutoPlay() {
-  //   this.autoPlay = !this.autoPlay;
-  // }
-
-  // onChangeShowArrows() {
-  //   this.showArrows = !this.showArrows;
-  // }
-
-  // onChangeShowDots() {
-  //   this.showDots = !this.showDots;
-  // }
-
   // output evets
   onShow(event: ImageEvent) {
     console.log('show', event);
@@ -393,5 +323,4 @@ export class ItemDetailsSharedComponent implements OnInit {
   onLastImage(event: ImageEvent) {
     console.log('lastImage', event);
   }
-
 }

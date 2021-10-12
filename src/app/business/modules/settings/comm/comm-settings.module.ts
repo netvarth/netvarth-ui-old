@@ -1,34 +1,29 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../../../../shared/modules/common/material.module';
-import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
-import { FormMessageDisplayModule } from '../../../../shared/modules/form-message-display/form-message-display.module';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
-import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
-import { CommSettingsRoutingModule } from './comm-settings.routing.module';
 import { CommSettingsComponent } from './comm-settings.component';
-import { UpdateNotificationComponent } from './update-notification/update-notification.component';
-import { JaldeeVideoSettingsComponent } from '../jaldee-video/jaldee-video-settings.component';
-
+import { RouterModule, Routes } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { UpdateNotificationModule } from './update-notification/update-notification.module';
+import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
+import { FormsModule } from '@angular/forms';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTooltipModule } from '@angular/material/tooltip';
+const routes: Routes = [
+    { path: '', component: CommSettingsComponent },
+    { path: 'jaldeevideo', loadChildren: ()=> import('../jaldee-video/jaldee-video-settings.module').then(m=>m.JaldeeVideoSettingsModule) },
+    { path: 'notifications', loadChildren: () => import('../comm/notifications/notifications.module').then(m => m.NotificationsModule) }
+];
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule,
-        CapitalizeFirstPipeModule,
-        FormMessageDisplayModule,
         MatSlideToggleModule,
+        MatTooltipModule,
+        CapitalizeFirstPipeModule,
         FormsModule,
-        ReactiveFormsModule,
-        LoadingSpinnerModule,
-        BreadCrumbModule,
-        CommSettingsRoutingModule
+        UpdateNotificationModule,
+        [RouterModule.forChild(routes)]
     ],
     declarations: [
-        CommSettingsComponent,
-        UpdateNotificationComponent,
-        JaldeeVideoSettingsComponent
+        CommSettingsComponent
     ],
     exports: [
         CommSettingsComponent

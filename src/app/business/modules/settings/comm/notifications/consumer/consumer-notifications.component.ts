@@ -15,24 +15,7 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
   templateUrl: './consumer-notifications.component.html'
 })
 export class ConsumerNotificationsComponent implements OnInit {
-
-  breadcrumb_moreoptions: any = [];
   isCheckin;
-  breadcrumbs_init = [
-    {
-      url: '/provider/settings',
-      title: 'Settings'
-    },
-    {
-      title: 'Communications And Notifications',
-      url: '/provider/settings/comm',
-    },
-    {
-      title: 'Notifications',
-      url: '/provider/settings/comm/notifications',
-    }
-  ];
-  breadcrumbs = this.breadcrumbs_init;
   SelchkinNotify = false;
   SelchkincnclNotify = false;
   sms = false;
@@ -160,7 +143,6 @@ export class ConsumerNotificationsComponent implements OnInit {
     }
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
-    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
     this.getNotificationSettings();
     this.getNotificationList();
@@ -169,14 +151,6 @@ export class ConsumerNotificationsComponent implements OnInit {
     this.getOrderStatus();
     this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
     this.mode_of_notify = Messages.FRM_LVL_CUSTMR_NOTIFY_MODE.replace('[customer]', this.customer_label);
-    const breadcrumbs = [];
-    this.breadcrumbs_init.map((e) => {
-      breadcrumbs.push(e);
-    });
-    breadcrumbs.push({
-      title: this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1)
-    });
-    this.breadcrumbs = breadcrumbs;
     this.getProviderSettings();
   }
   getProviderSettings() {
@@ -187,9 +161,6 @@ export class ConsumerNotificationsComponent implements OnInit {
       }, () => {
       });
   }
-  // isNumeric(evt) {
-  //   return this.sharedfunctionObj.isNumeric(evt);
-  // }
   isvalid(evt) {
     return this.sharedFunctions.isValid(evt);
   }

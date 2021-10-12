@@ -21,7 +21,6 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
   adwords_cap = Messages.SEARCH_ADWORDS_CAP;
   sorry_cap = Messages.SEARCH_SORRY_CAP;
   not_have_any_adwords_msg = Messages.SEARCH_NOT_HAVE_ANY_ADWORD_MSG;
-
   adword_list: any = [];
   showadword_list: any = [];
   adwordsmaxcount: any = 0;
@@ -34,7 +33,6 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
   startpageval = 1;
   perpage = 5;
   adwordshowmore = false;
-
   remadwdialogRef;
   adwdialogRef;
   active_user;
@@ -134,7 +132,6 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
         }
       });
     } else {
-      // this.snackbarService.openSnackBar(Messages.ADWORD_EXCEED_LIMIT, { 'panelClass': 'snackbarerror' });
       this.warningdialogRef = this.dialog.open(ShowMessageComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'popup-class'],
@@ -198,14 +195,6 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
   learnmore_clicked(mod, e) {
     e.stopPropagation();
     this.routerobj.navigate(['/provider/' + this.domain + '/license->' + mod]);
-    // this.routerobj.navigate(['/provider/learnmore/license->' + mod]);
-    // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-    // this.sharedfunctionObj.sendMessage(pdata);
   }
-  // getMode(mod) {
-  //   let moreOptions = {};
-  //   moreOptions = { 'show_learnmore': true, 'scrollKey': 'license', 'subKey': mod };
-  //   return moreOptions;
-  // }
 }
 

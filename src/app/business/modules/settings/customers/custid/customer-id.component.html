@@ -1,13 +1,6 @@
-<!-- <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"
-        (performAction)="performActions($event)"></app-breadcrumb>
-</section> -->
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10"> 
-         <!-- <button type="button" class="btn default profile-back" (click)="redirecToCustomers()">
-            <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp; -->
-
             <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToCustomers()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {{cust_domain_name |capitalizeFirst}} Id Format
             <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i> 
@@ -21,7 +14,6 @@
                 <div class="card pos">
                     <label>{{cust_domain_name |capitalizeFirst}} Id Format</label>
                     <p class="form-level-settings">Choose one of the two {{cust_domain_name}} series options.</p>
- 
                     <mat-radio-group [(ngModel)]='custIdFormat' ngDefaultControl (change)="formatChanged()">
                         <mat-radio-button value="{{formats.manual.value}}"></mat-radio-button>
                         <label for="">{{formats.manual.displayName}}</label><br><br>
@@ -32,10 +24,7 @@
                             [disabled]="custIdFormat === formats.manual.value" value="{{formats.pattern.value}}">
                         </mat-radio-button>
                         <label for="">{{formats.auto.displayName}}</label>
-                        <!-- <mat-radio-button value="{{formats.pattern.value}}"></mat-radio-button>
-                        <label for="">{{formats.pattern.displayName}}</label><br> -->
                     </mat-radio-group>
-
                     <div *ngIf="custIdFormat == 'AUTO' || custIdFormat === 'PATTERN'"
                         class="mgn-up-10 ynw-common-form-nm">
                         <div class="col-md-3 col-sm-6 col-xs-6">
@@ -62,7 +51,6 @@
                         <button *ngIf="inputChanged" type="button" (click)="updateCustIdConfig()"
                             class="cs-btn bt1">Update</button>
                     </div>
-
                 </div>
             </div>
         </div>

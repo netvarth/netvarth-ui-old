@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
 import { ConfirmBoxLocationComponent } from './confirm-box-location/confirm-box-location.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmBoxModule } from '../../../ynw_provider/shared/component/confirm-box/confirm-box.module';
 
 
 
@@ -23,8 +24,8 @@ import { MatDialogModule } from '@angular/material/dialog';
       MatInputModule,
       FormsModule,
       LoadingSpinnerModule,
-      MatDialogModule
-      
+      MatDialogModule,
+      ConfirmBoxModule
     ],
     declarations: [
        UserServiceChnageComponent,

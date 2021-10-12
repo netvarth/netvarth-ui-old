@@ -15,25 +15,7 @@ import { SnackbarService } from '../../../../../../../../shared/services/snackba
   templateUrl: './consumer-notifications.component.html'
 })
 export class ConsumerNotificationUserComponent implements OnInit {
-
-  breadcrumb_moreoptions: any = [];
   isCheckin;
-  breadcrumbs_init = [
-    {
-      url: '/provider/settings',
-      title: 'Settings'
-    },
-    {
-      title: Messages.GENERALSETTINGS,
-      url: '/provider/settings/general'
-    },
-    {
-      url: '/provider/settings/general/users',
-      title: 'Users'
-
-    },
-  ];
-  breadcrumbs = this.breadcrumbs_init;
   SelchkinNotify = false;
   SelchkincnclNotify = false;
   sms = false;
@@ -151,9 +133,7 @@ export class ConsumerNotificationUserComponent implements OnInit {
     this.domain = user.sector;
     this.activatedRoot.params.subscribe(params => {
       this.userId = + params.id;
-      this.getUser();
     });
-    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
     this.getNotificationSettings();
     this.getNotificationList();
@@ -168,31 +148,6 @@ export class ConsumerNotificationUserComponent implements OnInit {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
       }, () => {
-      });
-  }
-  getUser() {
-    this.provider_services.getUser(this.userId)
-      .subscribe((data: any) => {
-        const breadcrumbs = [];
-        this.breadcrumbs_init.map((e) => {
-          breadcrumbs.push(e);
-        });
-        breadcrumbs.push({
-          title: data.firstName,
-          url: '/provider/settings/general/users/add?type=edit&val=' + this.userId
-        });
-        breadcrumbs.push({
-          title: 'Settings',
-          url: '/provider/settings/general/users/' + this.userId + '/settings'
-        });
-        breadcrumbs.push({
-          title: 'Notifications',
-          url: '/provider/settings/general/users/' + this.userId + '/settings/notifications'
-        });
-        breadcrumbs.push({
-          title: this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1)
-        });
-        this.breadcrumbs = breadcrumbs;
       });
   }
   isvalid(evt) {

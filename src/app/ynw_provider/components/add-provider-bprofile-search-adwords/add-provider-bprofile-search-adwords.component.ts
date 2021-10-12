@@ -17,7 +17,6 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 })
 
 export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
-
   adword_cap = Messages.ADWORD_CAP;
   cancel_btn_cap = Messages.CANCEL_BTN;
   save_btn_cap = Messages.SAVE_BTN;
@@ -27,7 +26,6 @@ export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
   amForm: FormGroup;
   api_error = null;
   api_success = null;
-
   constructor(
     public dialogRef: MatDialogRef<AddProviderBprofileSearchAdwordsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -38,11 +36,9 @@ export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor
   ) { }
-
   ngOnInit() {
     this.createForm();
   }
-
   createForm() {
     this.amForm = this.fb.group({
       adwordname: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])]
@@ -56,7 +52,6 @@ export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     } else {
       this.resetApiErrors();
-      // form_data.adwordname = form_data.adwordname.replace(' ', projectConstants.ADWORDSPLIT);
       this.addAdword(form_data.adwordname.trim());
     }
   }
@@ -81,7 +76,6 @@ export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
         }
       );
   }
-
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;

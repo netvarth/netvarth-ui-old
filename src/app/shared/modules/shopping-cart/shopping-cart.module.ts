@@ -18,6 +18,7 @@ import { MaterialModule } from '../common/material.module';
 import { FormMessageDisplayModule } from '../form-message-display/form-message-display.module';
 import { GalleryModule } from '@ks89/angular-modal-gallery';
 import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
+import { ConfirmBoxModule } from '../../components/confirm-box/confirm-box.module';
 @NgModule({
     imports: [
       CommonModule,
@@ -35,7 +36,8 @@ import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module'
       MaterialModule,
       FormMessageDisplayModule,
       GalleryModule,
-      LoadingSpinnerModule
+      LoadingSpinnerModule,
+      ConfirmBoxModule
     ],
     exports: [
       ShoppingCartRoutingModule,

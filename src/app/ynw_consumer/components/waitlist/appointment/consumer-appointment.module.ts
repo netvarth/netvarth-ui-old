@@ -7,13 +7,13 @@ import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner
 import { CheckinAddMemberModule } from '../../../../shared/modules/checkin-add-member/checkin-add-member.module';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { HeaderModule } from '../../../../shared/modules/header/header.module';
-import { AppointmentConfirmPopupComponent } from './appointment-confirm-popup/appointment-confirm-popup.component';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { QuestionnaireModule } from '../../../../shared/components/questionnaire/questionnaire.module';
 import { VirtualFieldsModule } from '../../virtualfields/virtualfields.module';
 import { ConsumerEmailModule } from '../../../../ynw_consumer/shared/component/consumer-email/consumer-email.module';
 import { RouterModule, Routes } from '@angular/router';
 import { ServiceDetailModule } from '../../../../shared/components/service-detail/service-detail.module';
+import { JcCouponNoteModule } from '../../../../ynw_provider/components/jc-coupon-note/jc-coupon-note.module';
 const routes: Routes = [
     { path: '', component: ConsumerAppointmentComponent},
     { path: 'payment/:id',loadChildren: ()=>import('./payment/payment.module').then(m=>m.ConsumerApptPaymentModule) },
@@ -24,9 +24,7 @@ const routes: Routes = [
 ];
 @NgModule({
     declarations: [
-        ConsumerAppointmentComponent,
-        AppointmentConfirmPopupComponent,
-        
+        ConsumerAppointmentComponent
     ],
     imports: [
         FormMessageDisplayModule,
@@ -42,10 +40,8 @@ const routes: Routes = [
         VirtualFieldsModule,
         ConsumerEmailModule,
         ServiceDetailModule,
+        JcCouponNoteModule,
         [RouterModule.forChild(routes)]
-    ],
-    entryComponents: [
-        AppointmentConfirmPopupComponent,
     ],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,

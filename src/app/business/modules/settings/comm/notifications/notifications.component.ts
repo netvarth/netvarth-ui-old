@@ -14,21 +14,7 @@ export class NotificationsComponent implements OnInit {
     smsGlobalStatus;
     notificationStatus;
     smsGlobalStatusStr;
-    breadcrumbs_init = [
-        {
-            url: '/provider/settings',
-            title: 'Settings'
-        },
-        {
-            title: 'Communications And Notifications',
-            url: '/provider/settings/comm',
-        },
-        {
-            title: 'Notifications'
-        }
-    ];
     domain;
-    breadcrumbs = this.breadcrumbs_init;
     smsCredits;
     genrl_notification_cap = '';
     frm_cust_notification_cap = '';
@@ -60,7 +46,6 @@ export class NotificationsComponent implements OnInit {
         this.accountType = user_data.accountType;
         this.domain = user_data.sector || null;
         this.sub_domain = user_data.subSector || null;
-        // console.log(this.sub_domain);
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.getSMSglobalSettings();
@@ -72,7 +57,6 @@ export class NotificationsComponent implements OnInit {
         this.frm_providr_notification_cap = Messages.FRM_LEVEL_PROVIDER_NOTIFICATION_MSG.replace('[customer]', this.customer_label);
         this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
-
     }
     gotoConsumer() {
         this.router.navigate(['provider', 'settings', 'comm', 'notifications', 'consumer']);
@@ -101,7 +85,6 @@ export class NotificationsComponent implements OnInit {
             this.smsGlobalStatus = data['enableSms'];
             this.smsGlobalStatusStr = (this.smsGlobalStatus) ? 'On' : 'Off';
             this.notificationStatus = data['sendNotification'];
-            // this.smsGlobalStatusStr = (this.notificationStatus) ? 'On' : 'Off';
         });
     }
     handlenotificationSettings(event) {
@@ -135,7 +118,6 @@ export class NotificationsComponent implements OnInit {
                     (data: any) => {
                         this.isCorp = data.isCorp;
                         this.isMultilevel = data.isMultilevel;
-                        // console.log(this.isMultilevel);
                     },
                     error => {
                         reject(error);

@@ -91,7 +91,7 @@ export class SignUpComponent implements OnInit {
   selectedCountry = CountryISO.India;
   countrySelected = 'in';
   PhoneNumberFormat = PhoneNumberFormat;
-	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+  preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
   phoneError: string;
   constructor(
     public dialogRef: MatDialogRef<SignUpComponent>,
@@ -106,10 +106,9 @@ export class SignUpComponent implements OnInit {
   ) {
     this.is_provider = data.is_provider || 'true';
   }
-
   ngOnInit() {
     if (this.countryCodes.length !== 0) {
-      this.selectedCountryCode =this.countryCodes[0].value;
+      this.selectedCountryCode = this.countryCodes[0].value;
     }
     this.ynwUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.ynw_credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
@@ -147,7 +146,6 @@ export class SignUpComponent implements OnInit {
         data => {
           this.business_domains = data;
           this.getPackages();
-          // this.setDomain(0);
         },
         () => {
         }
@@ -162,7 +160,6 @@ export class SignUpComponent implements OnInit {
             this.signupForm.get('package_id').setValue(this.packages[0].pkgId);
             this.license_description = this.license_packages[this.packages[0].pkgId];
           }
-
           if (this.data.claimData !== undefined) { // case of claimmable
             const domainid = this.getDomainIndex(this.data.claimData.sector);
             this.domainIsthere = domainid;
@@ -170,7 +167,6 @@ export class SignUpComponent implements OnInit {
               if (this.data.claimData.sector === this.business_domains[i].domain) {
                 this.signupForm.get('selectedDomainIndex').setValue(this.business_domains[i].displayName);
                 this.activeDomainIndex = i;
-
               }
             }
             this.setDomain(domainid);
@@ -202,7 +198,6 @@ export class SignUpComponent implements OnInit {
     }
     return 0;
   }
-
   createForm(step) {
     this.step = step;
     switch (step) {
@@ -231,7 +226,6 @@ export class SignUpComponent implements OnInit {
         selectedSubDomains: [0, Validators.compose([Validators.required])],
         package_id: ['', Validators.compose([Validators.required])],
         terms_condition: ['true'],
-
       });
         this.signupForm.get('is_provider').setValue(this.is_provider);
         this.changeType();
@@ -251,14 +245,12 @@ export class SignUpComponent implements OnInit {
         selectedSubDomains: [{ value: 0, disabled: true }, Validators.compose([Validators.required])],
         package_id: ['', Validators.compose([Validators.required])],
         terms_condition: ['false'],
-
       });
         this.signupForm.get('is_provider').setValue(this.is_provider);
         this.changeType();
         break;
     }
   }
-
   changeType() {
     this.resetApiErrors();
     this.is_provider = this.signupForm.get('is_provider').value;
@@ -287,7 +279,6 @@ export class SignUpComponent implements OnInit {
     this.selectedDomain = this.business_domains[i] || null;
     this.setSubDomains(i);
   }
-
   setSubDomains(i) {
     this.subDomainList = [];
     const sub_domains = (this.business_domains[i]) ? this.business_domains[i]['subDomains'] : [];
@@ -300,11 +291,7 @@ export class SignUpComponent implements OnInit {
     });
     this.signupForm.get('selectedSubDomains').setValue(0);
   }
-
-  onItemSelect() {
-    // this.license_description = this.license_packages[item.value];
-  }
-  countryChanged (event) {
+  countryChanged(event) {
     this.countrySelected = event.iso2;
   }
   onSubmit(acc_id?) {
@@ -314,7 +301,6 @@ export class SignUpComponent implements OnInit {
     console.log(this.signupForm.get('phonenumber'));
     const fname = this.signupForm.get('first_name').value.trim();
     const lname = this.signupForm.get('last_name').value.trim();
-    // const eMail = this.signupForm.get('email').value.trim();
     if (!this.signupForm.get('phonenumber').value) {
       this.api_error = 'Phone number required';
       if (document.getElementById('phonenumber')) {
@@ -322,20 +308,17 @@ export class SignUpComponent implements OnInit {
       }
       return false;
     }
-    if (this.countrySelected!='in' && !this.signupForm.get('email').value) {
+    if (this.countrySelected != 'in' && !this.signupForm.get('email').value) {
       this.api_error = 'Email Id required';
       if (document.getElementById('email')) {
         document.getElementById('email').focus();
       }
       return false;
-    } else {
-
     }
     const phoneNumber = this.signupForm.get('phonenumber').value.e164Number;
     const dialCode = this.signupForm.get('phonenumber').value.dialCode;
-
     let loginId = phoneNumber;
-    if(phoneNumber.startsWith(dialCode)) {
+    if (phoneNumber.startsWith(dialCode)) {
       loginId = phoneNumber.split(dialCode)[1];
     }
     let userProfile = {
@@ -343,11 +326,10 @@ export class SignUpComponent implements OnInit {
       primaryMobileNo: loginId || null,
       firstName: this.toCamelCase(fname) || null,
       lastName: this.toCamelCase(lname) || null
-      // email: eMail
     };
     if (this.countrySelected !== 'in') {
       userProfile['email'] = this.signupForm.get('email').value.trim();
-  }
+    }
     if (this.data.moreOptions.isCreateProv) {
       userProfile = {
         countryCode: this.selectedCountryCode,
@@ -355,19 +337,7 @@ export class SignUpComponent implements OnInit {
         firstName: this.toCamelCase(this.data.moreOptions.dataCreateProv.fname) || null,
         lastName: this.toCamelCase(this.data.moreOptions.dataCreateProv.lname) || null
       };
-    } 
-    // else {
-      // userProfile['firstName'] = this.toCamelCase(fname) || null;
-      // userProfile['lastName'] = this.toCamelCase(lname) || null;
-      // userProfile = {
-      //   countryCode: dialCode,
-      //   primaryMobileNo: loginId || null,
-      //   firstName: this.toCamelCase(fname) || null,
-      //   lastName: this.toCamelCase(lname) || null,
-      // };
-    // }
-
-
+    }
     if (fname === '') {
       this.api_error = 'First name is required';
       if (document.getElementById('first_name')) {
@@ -382,51 +352,11 @@ export class SignUpComponent implements OnInit {
       }
       return;
     }
-    // const isAdmin = (this.signupForm.get('is_provider').value === 'true') ? true : false;
-    // if (isAdmin) {
-    //   const sector = this.selectedDomain.domain || '';
-    //   // const ob = this.signupForm.get('selectedSubDomains').value;
-    //   // const sub_Sector = ob.map(el =>  el.value );
-    //   if (this.data.claimData !== undefined) { // claimmable
-    //     this.user_details = {
-    //       userProfile: userProfile,
-    //       sector: this.business_domains[this.activeDomainIndex].domain,
-    //       subSector: this.subDomainList[this.activeSubDomainIndex].value,
-    //       isAdmin: isAdmin, // checked this to find provider or customer
-    //       // licPkgId: this.signupForm.get('package_id').value || null,
-    //       licPkgId: 9 || null,
-    //       accountId: this.data.claimData.accountId
-    //     };
-    //   } else if (acc_id) {
-    //     this.user_details = {
-    //       userProfile: userProfile,
-    //       sector: this.selectedDomain.domain,
-    //       subSector: this.subDomainList[this.signupForm.get('selectedSubDomains').value].value,
-    //       isAdmin: isAdmin, // checked this to find provider or customer
-    //       // licPkgId: this.signupForm.get('package_id').value || null,
-    //       licPkgId: 9 || null,
-    //       accountId: acc_id
-    //     };
-    //   } else {
-    //     const sub_Sector = this.subDomainList[this.signupForm.get('selectedSubDomains').value].value;
-    //     this.user_details = {
-    //       userProfile: userProfile,
-    //       sector: sector,
-    //       subSector: sub_Sector,
-    //       isAdmin: isAdmin, // checked this to find provider or customer
-    //       // licPkgId: this.signupForm.get('package_id').value || null
-    //       licPkgId: 9 || null
-    //     };
-    //   }
-    //   this.signUpApiProvider(this.user_details);
-    // } else {
-      this.user_details = {
-        userProfile: userProfile
-      };
-      this.signUpApiConsumer(this.user_details);
-    // }
+    this.user_details = {
+      userProfile: userProfile
+    };
+    this.signUpApiConsumer(this.user_details);
   }
-
   signUpApiConsumer(user_details) {
     this.resendemailotpsuccess = false;
     console.log(user_details);
@@ -436,178 +366,64 @@ export class SignUpComponent implements OnInit {
           this.actionstarted = false;
           this.createForm(2);
           this.resendemailotpsuccess = true;
-          // if (user_details.userProfile && (user_details.userProfile.email || user_details.userProfile.countryCode!='+91')) {
-          //   this.setMessage('email', user_details.userProfile.email);
-          // } else {
-          //   this.setMessage('mobile', user_details.userProfile.primaryMobileNo);
-          // }
         },
         error => {
           this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
         }
       );
   }
-
-  // signUpApiProvider(user_details) {
-  //   this.resetApiErrors();
-  //   this.resendemailotpsuccess = false;
-  //   this.shared_services.signUpProvider(user_details)
-  //     .subscribe(
-  //       () => {
-  //         this.actionstarted = false;
-  //         this.lStorageService.setitemonLocalStorage('unClaimAccount', false);
-  //         this.createForm(2);
-  //         this.resendemailotpsuccess = true;
-  //         if (user_details.userProfile &&
-  //           user_details.userProfile.email) {
-  //           this.setMessage('email', user_details.userProfile.email);
-  //         } else {
-  //           this.setMessage('mobile', user_details.userProfile.primaryMobileNo);
-  //         }
-  //       },
-  //       error => {
-  //         this.actionstarted = false;
-  //         if (this.lStorageService.getitemfromLocalStorage('unClaimAccount')) {
-  //           this.onSubmit(error.error);
-  //         } else {
-  //           this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
-  //         }
-  //       }
-  //     );
-  // }
   onOtpSubmit(submit_data) {
     this.actionstarted = true;
     this.resetApiErrors();
-    // if (this.is_provider === 'true') {
-    //   this.shared_services.OtpSignUpProviderValidate(submit_data.phone_otp)
-    //     .subscribe(
-    //       () => {
-    //         this.actionstarted = false;
-    //         this.otp = submit_data.phone_otp;
-    //         this.createForm(3);
-    //       },
-    //       error => {
-    //         this.actionstarted = false;
-    //         this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
-    //       }
-    //     );
-    // } else {
-      this.shared_services.OtpSignUpConsumerValidate(submit_data.phone_otp)
-        .subscribe(
-          () => {
-            this.actionstarted = false;
-            this.otp = submit_data.phone_otp;
-            this.createForm(4);
-          },
-          error => {
-            this.actionstarted = false;
-            this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
-          }
-        );
-    // }
+    this.shared_services.OtpSignUpConsumerValidate(submit_data.phone_otp)
+      .subscribe(
+        () => {
+          this.actionstarted = false;
+          this.otp = submit_data.phone_otp;
+          this.createForm(4);
+        },
+        error => {
+          this.actionstarted = false;
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+        }
+      );
   }
-  // skipHearus() {
-  //   this.resetApiErrors();
-  //   this.createForm(4);
-  // }
-  // onReferalSubmit(sccode) {
-  //   this.scfound = false;
-  //   this.scCode = null;
-  //   if (sccode) {
-  //     this.scCode = sccode;
-  //     this.scfound = true;
-  //   }
-  // }
-  // submitHearus(hearus) {
-  //   this.actionstarted = true;
-  //   this.resetApiErrors();
-  //   const post_data = {
-  //     'hearBy': hearus,
-  //   };
-  //   if (hearus === 'SalesReps') {
-  //     post_data['scCode'] = this.scCode;
-  //   }
-  //   this.shared_services.saveReferralInfo(this.otp, post_data)
-  //     .subscribe(
-  //       () => {
-  //         this.actionstarted = false;
-  //         this.createForm(4);
-  //       },
-  //       error => {
-  //         this.actionstarted = false;
-  //         this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
-  //       }
-  //     );
-  // }
   onPasswordSubmit(submit_data) {
     this.actionstarted = true;
     this.resetApiErrors();
     const ob = this;
     const dialCode = this.signupForm.get('phonenumber').value.dialCode;
-    const post_data = { 
-      countryCode : dialCode,
-      password: submit_data.new_password };
-    // if (this.is_provider === 'true') {
-    //   this.shared_services.ProviderSetPassword(this.otp, post_data)
-    //     .subscribe(
-    //       () => {
-    //         this.actionstarted = false;
-    //         const login_data = {
-    //           'countryCode': this.selectedCountryCode,
-    //           'loginId': this.user_details.userProfile.primaryMobileNo,
-    //           'password': post_data.password
-    //         };
-    //         this.dialogRef.close();
-    //         if (this.ynw_credentials != null) {
-    //           this.shared_functions.doLogout().then(() => {
-    //             this.lStorageService.setitemonLocalStorage('new_provider', 'true');
-    //             this.shared_functions.providerLogin(login_data);
-    //             const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
-    //             this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
-    //           });
-    //         } else {
-    //           this.lStorageService.setitemonLocalStorage('new_provider', 'true');
-    //           this.shared_functions.providerLogin(login_data);
-    //           const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
-    //           this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
-    //         }
-    //       },
-    //       error => {
-    //         this.actionstarted = false;
-    //         this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
-    //       }
-    //     );
-    // } else {
-      this.shared_services.ConsumerSetPassword(this.otp, post_data)
-        .subscribe(
-          () => {
-            this.actionstarted = false;
-            const login_data = {
-              'countryCode': dialCode,
-              'loginId': this.user_details.userProfile.primaryMobileNo,
-              'password': post_data.password
-            };
-            // this.dialogRef.close();
-            this.shared_functions.consumerLogin(login_data, this.moreParams)
-              .then(
-                () => {
-                  const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
-                  this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
-                  this.lStorageService.setitemonLocalStorage('qrp', post_data.password);
-                  this.dialogRef.close('success');
-                },
-                error => {
-                  ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
-                  // this.api_loading = false;
-                }
-              );
-          },
-          error => {
-            this.actionstarted = false;
-            this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
-          }
-        );
-    // }
+    const post_data = {
+      countryCode: dialCode,
+      password: submit_data.new_password
+    };
+    this.shared_services.ConsumerSetPassword(this.otp, post_data)
+      .subscribe(
+        () => {
+          this.actionstarted = false;
+          const login_data = {
+            'countryCode': dialCode,
+            'loginId': this.user_details.userProfile.primaryMobileNo,
+            'password': post_data.password
+          };
+          this.shared_functions.consumerLogin(login_data, this.moreParams)
+            .then(
+              () => {
+                const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
+                this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+                this.lStorageService.setitemonLocalStorage('qrp', post_data.password);
+                this.dialogRef.close('success');
+              },
+              error => {
+                ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+              }
+            );
+        },
+        error => {
+          this.actionstarted = false;
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+        }
+      );
   }
   resetApiErrors() {
     this.api_error = null;
@@ -615,24 +431,8 @@ export class SignUpComponent implements OnInit {
   }
   resendOtp(user_details) {
     console.log(user_details);
-    // if (user_details.isAdmin) {
-    //   this.signUpApiProvider(user_details);
-    // } else {
-      this.signUpApiConsumer(user_details);
-    // }
-
+    this.signUpApiConsumer(user_details);
   }
-  // clickedPackage(item) {
-  //   // this.selectedpackage = e;
-  //   this.license_description = this.license_packages[item.value];
-  // }
-  // isSelectedClass(id) {
-  //   if (id === this.signupForm.get('package_id').value) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
   setMessage(type, data) {
     this.api_error = '';
     if (type === 'email') {
@@ -678,13 +478,4 @@ export class SignUpComponent implements OnInit {
     this.dialogRef.close();
     this.router.navigate(['/business']);
   }
-  // corporate_branch(){
-  //   this.CorporateBranch = 'co_branch';
-  // }
-  // corporate(){
-  //   this.action = true;
-  // }
-  // bank(){
-  //   this.bank_action = true;
-  // }
 }

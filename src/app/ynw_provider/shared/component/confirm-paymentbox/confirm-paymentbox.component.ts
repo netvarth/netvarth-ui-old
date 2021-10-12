@@ -7,15 +7,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./confirm-paymentbox.component.css']
 })
 
-
 export class ConfirmPaymentBoxComponent {
-
   constructor(public dialogRef: MatDialogRef<ConfirmPaymentBoxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   onClick(data) {
     this.dialogRef.close(data);
   }
-
 }
-

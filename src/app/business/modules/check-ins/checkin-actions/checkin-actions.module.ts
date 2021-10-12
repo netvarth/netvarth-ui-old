@@ -10,6 +10,7 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatInputModule } from "@angular/material/input";
 import { MatChipsModule } from "@angular/material/chips";
 import { NgxQRCodeModule } from "ngx-qrcode2";
+import { ConfirmBoxModule } from "../../../../ynw_provider/shared/component/confirm-box/confirm-box.module";
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import { NgxQRCodeModule } from "ngx-qrcode2";
         MatDatepickerModule,
         MatInputModule,
         MatChipsModule,
-        NgxQRCodeModule
+        NgxQRCodeModule,
+        ConfirmBoxModule
     ],
     exports: [
         CheckinActionsComponent

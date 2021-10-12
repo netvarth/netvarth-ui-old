@@ -5,6 +5,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { NgxQRCodeModule } from "ngx-qrcode2";
+import { ConsumerJoinModule } from "../../../ynw_consumer/components/consumer-join/join.component.module";
 import { AddInboxMessagesModule } from "../../components/add-inbox-messages/add-inbox-messages.module";
 import { CapitalizeFirstPipeModule } from "../../pipes/capitalize.module";
 import { LoadingSpinnerModule } from "../loading-spinner/loading-spinner.module";
@@ -25,7 +26,8 @@ import { TeleHomeComponent } from "./tele-home.component";
         MatTooltipModule,
         MatIconModule,
         NgxQRCodeModule,
-        AddInboxMessagesModule
+        AddInboxMessagesModule,
+        ConsumerJoinModule
     ],
     exports: [
         TeleHomeComponent

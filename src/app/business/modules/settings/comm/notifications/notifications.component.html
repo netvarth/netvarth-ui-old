@@ -1,15 +1,9 @@
-<!-- <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"
-        (performAction)="performActions($event)"></app-breadcrumb>
-</section> -->
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
-             <!-- <button type="button" class="btn default profile-back" (click)="goBack()">
-                <span class="fa fa-chevron-left">&nbsp;Back</span>
-            </button>&nbsp;&nbsp;&nbsp; -->
             <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Notifications</h5>
+            Notifications
+        </h5>
     </div>
 </section>
 <section>
@@ -35,7 +29,6 @@
                         <div class=" col-md-12 col-xs-12 col-sm-12 mgn-up-20 " style="padding-bottom: 10px;">
                             <label style="display: flex">Remaining SMS Credits: <span class="bold">
                                     &nbsp;{{smsCredits}}</span> </label>
-                            <!-- <span class="form-level-settings">{{genrl_notification_cap}}</span> -->
                             <ul class="info-lst serviceadd-info">
                                 <li>{{genrl_notification_cap}} <a class="pointlist" matTooltip="Go to Add-ons"
                                         routerLink="/provider/license/addons">Jaldee Messaging ADD-ON.</a>
@@ -57,13 +50,15 @@
             </div>
             <div class="row">
                 <div class="card p0">
-                    <span class="b-link" (click)="gotoProvider()"  *ngIf="sub_domain == ('hospital'|| 'dentalHosp' ||'alternateMedicineHosp'||'veterinaryhospital' )&& accountType == 'BRANCH' && isMultilevel">
+                    <span class="b-link" (click)="gotoProvider()"
+                        *ngIf="sub_domain == ('hospital'|| 'dentalHosp' ||'alternateMedicineHosp'||'veterinaryhospital' )&& accountType == 'BRANCH' && isMultilevel">
                         <h2>Hospital</h2>
                         <span class="form-level-settings">{{frm_providr_notification_cap}} <a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('notifications', $event)">Learn
                                 More</a></span>
                     </span>
-                    <span class="b-link" (click)="gotoProvider()"  *ngIf="sub_domain !== ('hospital'|| 'dentalHosp' ||'alternateMedicineHosp'||'veterinaryhospital') ">
+                    <span class="b-link" (click)="gotoProvider()"
+                        *ngIf="sub_domain !== ('hospital'|| 'dentalHosp' ||'alternateMedicineHosp'||'veterinaryhospital') ">
                         <h2>{{provdr_domain_name|capitalizeFirst}}</h2>
                         <span class="form-level-settings">{{frm_providr_notification_cap}} <a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('notifications', $event)">Learn

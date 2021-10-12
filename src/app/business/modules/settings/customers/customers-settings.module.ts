@@ -1,35 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../../../../shared/modules/common/material.module';
-import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
-import { FormMessageDisplayModule } from '../../../../shared/modules/form-message-display/form-message-display.module';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
-import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
 import { CustomersSettingsComponent } from './customers-settings.component';
-import { CustomersSettingsRoutingModule } from './customers-settings.routing.module';
-import { CustomerIdSettingsComponent } from './custid/customer-id.component';
-
+import { RouterModule, Routes } from '@angular/router';
+import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
+const routes: Routes = [
+    {path: '', component: CustomersSettingsComponent},
+    {path: 'custid', loadChildren: ()=> import('./custid/customer-id.module').then(m=>m.CustomerIdSettingsModule)}
+];
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule,
         CapitalizeFirstPipeModule,
-        FormMessageDisplayModule,
-        MatSlideToggleModule,
-        FormsModule,
-        ReactiveFormsModule,
-        LoadingSpinnerModule,
-        BreadCrumbModule,
-        CustomersSettingsRoutingModule
+        [RouterModule.forChild(routes)]
     ],
-    declarations: [
-        CustomersSettingsComponent,
-        CustomerIdSettingsComponent
-    ],
-    exports: [
-        CustomersSettingsComponent
-    ]
+    declarations: [ CustomersSettingsComponent ],
+    exports: [ CustomersSettingsComponent ]
 })
 export class CustomersSettingsModule {}

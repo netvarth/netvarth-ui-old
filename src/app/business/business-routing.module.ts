@@ -5,7 +5,6 @@ import { BusinessHomeComponent } from './home/business-home.component';
 import { AuthGuardProviderHome, AuthGuardLogin } from '../shared/guard/auth.guard';
 import { BusinessComponent } from './business.component';
 import { AddProviderWaitlistCheckInBillComponent } from './modules/check-ins/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
-import { ProviderbWizardComponent } from '../ynw_provider/components/provider-bwizard/provider-bwizard.component';
 import { EnquiryComponent } from './modules/enquiry/enquiry.component';
 
 const routes: Routes = [
@@ -39,7 +38,7 @@ const routes: Routes = [
       { path: 'auditlog', loadChildren: () => import('../business/modules/provider-system-auditlogs/provider-system-auditlogs.module').then(m => m.ProviderSystemAuditLogsModule) },
       { path: 'alerts', loadChildren: () => import('../business/modules/provider-system-alerts/provider-system-alerts.module').then(m => m.ProviderSystemAlertsModule) },
       { path: 'check-ins', loadChildren: () => import('../business/modules/check-ins/check-ins.module').then(m => m.CheckinsModule) },
-      { path: 'bwizard', component: ProviderbWizardComponent },
+      { path: 'bwizard', loadChildren: () => import('../ynw_provider/components/provider-bwizard/provider-bwizard.module').then(m=>m.ProviderBwizardModule)},
       { path: 'appointments', loadChildren: () => import('./modules/appointments/appointments.module').then(m => m.AppointmentsModule) },
       { path: 'orders', loadChildren: () => import('./modules/order-dashboard/order-dashboard.module').then(m => m.OrderDashboardModule) },
       { path: 'donations', loadChildren: () => import('./modules/donations/donations.module').then(m => m.DonationsModule) },

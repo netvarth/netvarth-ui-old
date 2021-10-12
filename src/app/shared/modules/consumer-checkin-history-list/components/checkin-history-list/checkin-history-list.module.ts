@@ -7,8 +7,6 @@ import { RateServiceModule } from "../../../../../shared/components/consumer-rat
 import { PagerModule } from "../../../pager/pager.module";
 import { CheckinPaymentModule } from "../checkin-payment/checkin-payment.module";
 import { ConsumerCheckInHistoryListComponent } from "./checkin-history-list.component";
-import { CheckInHistoryServices } from "./checkin-history-list.service";
-
 @NgModule({
     imports: [
         CommonModule,
@@ -22,9 +20,6 @@ import { CheckInHistoryServices } from "./checkin-history-list.service";
     exports: [ConsumerCheckInHistoryListComponent],
     declarations: [
         ConsumerCheckInHistoryListComponent
-    ],
-    providers: [
-        CheckInHistoryServices
-      ]
+    ]
 })
 export class CheckinHistoryListModule {}

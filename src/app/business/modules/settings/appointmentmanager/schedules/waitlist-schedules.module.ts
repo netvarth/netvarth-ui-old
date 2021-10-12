@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
 import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
+import { ShowMessagesModule } from '../../../show-messages/show-messages.module';
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import { FormMessageDisplayModule } from '../../../../../shared/modules/form-mes
         ReactiveFormsModule,
         NgbTimepickerModule,
         CapitalizeFirstPipeModule,
-        FormMessageDisplayModule
+        FormMessageDisplayModule,
+        ShowMessagesModule
     ],
     declarations: [
         WaitlistSchedulesComponent,

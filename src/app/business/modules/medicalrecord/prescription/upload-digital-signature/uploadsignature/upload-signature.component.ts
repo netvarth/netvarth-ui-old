@@ -1,11 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { projectConstants } from '../../../../../../app.component';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { MatDialog } from '@angular/material/dialog';
-import { SignaturePad } from 'angular2-signaturepad';
 import { ConfirmBoxComponent } from '../../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
@@ -15,12 +14,6 @@ import { WordProcessor } from '../../../../../../shared/services/word-processor.
   templateUrl: './upload-signature.component.html'
 })
 export class UploadSignatureComponent implements OnInit {
-  @ViewChild(SignaturePad) signaturePad: SignaturePad;
-  signaturePadOptions: Object = {
-    'minWidth': 5,
-    'canvasWidth': 500,
-    'canvasHeight': 300
-  };
   display_PatientId: any;
   today = new Date();
   patientDetails;
@@ -64,7 +57,6 @@ export class UploadSignatureComponent implements OnInit {
     public dialog: MatDialog,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor
-    //private medicalrecord_service: MedicalrecordService
     ) {
       const medicalrecordId = this.activatedRoot.parent.snapshot.params['mrId'];
       this.mrId = parseInt(medicalrecordId, 0);

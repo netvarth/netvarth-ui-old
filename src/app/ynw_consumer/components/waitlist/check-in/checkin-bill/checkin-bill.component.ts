@@ -6,7 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { projectConstants } from '../../../../../app.component';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
-import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
+import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-coupon-note/jc-coupon-note.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConsumerServices } from '../../../../../ynw_consumer/services/consumer-services.service';
 import { RazorpayprefillModel } from '../../../../../shared/components/razorpay/razorpayprefill.model';

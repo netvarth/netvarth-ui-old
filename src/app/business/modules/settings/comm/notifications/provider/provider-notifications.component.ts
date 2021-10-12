@@ -17,24 +17,7 @@ import { SnackbarService } from '../../../../../../shared/services/snackbar.serv
 })
 export class ProviderNotificationsComponent implements OnInit {
 
-  breadcrumb_moreoptions: any = [];
   isCheckin;
-  breadcrumbs_init = [
-    {
-      url: '/provider/settings',
-      title: 'Settings'
-    },
-    {
-      title: 'Communications And Notifications',
-      url: '/provider/settings/comm',
-    },
-    {
-      title: 'Notifications',
-      url: '/provider/settings/comm/notifications',
-    }
-  ];
-  breadcrumbs = this.breadcrumbs_init;
-
   sms = false;
   email = false;
   cheknPushph = false;
@@ -65,7 +48,6 @@ export class ProviderNotificationsComponent implements OnInit {
   cancelsms = false;
   cancelemail = false;
   cancelpush = false;
-
   notifyphonenumber = '';
   notifycheknPushphonenumber = '';
   notifycheknCancelPushphonenumber = '';
@@ -179,11 +161,8 @@ export class ProviderNotificationsComponent implements OnInit {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.accountType = user.accountType;
-    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
     this.getGlobalSettingsStatus();
-    // this.getNotificationList();
-    // this.getSMSCredits();
     this.getOrderStatus();
     this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
     if (this.crumbtitle === 'Hospital') {
@@ -191,14 +170,6 @@ export class ProviderNotificationsComponent implements OnInit {
     } else {
       this.breadcrmbTitle = this.provider_label + ' Notifications';
     }
-    const breadcrumbs = [];
-    this.breadcrumbs_init.map((e) => {
-      breadcrumbs.push(e);
-    });
-    breadcrumbs.push({
-      title: this.breadcrmbTitle
-    });
-    this.breadcrumbs = breadcrumbs;
     this.getProviderSettings();
   }
   getProviderSettings() {

@@ -16,26 +16,8 @@ import { SnackbarService } from '../../../../../../../../shared/services/snackba
   templateUrl: './provider-notifications.component.html'
 })
 export class ProviderNotificationUserComponent implements OnInit {
-
-  breadcrumb_moreoptions: any = [];
   isCheckin;
-  breadcrumbs_init = [
-    {
-      url: '/provider/settings',
-      title: 'Settings'
-    },
-    {
-      title: Messages.GENERALSETTINGS,
-      url: '/provider/settings/general'
-    },
-    {
-      url: '/provider/settings/general/users',
-      title: 'Users'
-
-    },
-  ];
   mode_of_notify = '';
-  breadcrumbs = this.breadcrumbs_init;
   SelchkinNotify = false;
   SelchkincnclNotify = false;
   sms = false;
@@ -122,7 +104,6 @@ export class ProviderNotificationUserComponent implements OnInit {
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
-    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
     this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
     // this.mode_of_notify = Messages.FRM_LVL_CUSTMR_NOTIFY_MODE.replace('[customer]', this.customer_label);
@@ -148,27 +129,7 @@ export class ProviderNotificationUserComponent implements OnInit {
       .subscribe((data: any) => {
         if (data.countryCode !== '91') {
           this.isInternationalUser = true;
-        }
-        const breadcrumbs = [];
-        this.breadcrumbs_init.map((e) => {
-          breadcrumbs.push(e);
-        });
-        breadcrumbs.push({
-          title: data.firstName,
-          url: '/provider/settings/general/users/add?type=edit&val=' + this.userId
-        });
-        breadcrumbs.push({
-          title: 'Settings',
-          url: '/provider/settings/general/users/' + this.userId + '/settings'
-        });
-        breadcrumbs.push({
-          title: 'Notifications',
-          url: '/provider/settings/general/users/' + this.userId + '/settings/notifications'
-        });
-        breadcrumbs.push({
-          title: this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1)
-        });
-        this.breadcrumbs = breadcrumbs;
+        }        
       });
   }
   getGlobalSettingsStatus() {

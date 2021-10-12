@@ -154,7 +154,6 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
   }
 
   deleteTempImagefrmdb(img, index) {
-
     this.removedsigndialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],

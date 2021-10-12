@@ -34,6 +34,7 @@ import { QuestionnaireListPopupModule } from '../questionnaire-list-popup/questi
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { AttachmentPopupModule } from '../../../shared/components/attachment-popup/attachment-popup.module';
 import { VoicecallDetailsSendModule } from './voicecall-details-send/voicecall-details-send.module';
+import { ConfirmBoxModule } from '../../../ynw_provider/shared/component/confirm-box/confirm-box.module';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { VoicecallDetailsSendModule } from './voicecall-details-send/voicecall-d
         QuestionnaireListPopupModule,
         NgxIntlTelInputModule,
         AttachmentPopupModule,
-        VoicecallDetailsSendModule
+        VoicecallDetailsSendModule,
+        ConfirmBoxModule
     ],
     declarations: [
         AppointmentsComponent,

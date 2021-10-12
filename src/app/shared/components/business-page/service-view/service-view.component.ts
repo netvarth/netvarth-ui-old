@@ -19,7 +19,6 @@ import { VirtualFieldsComponent } from '../../../../ynw_consumer/components/virt
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { ConsumerJoinComponent } from '../../../../ynw_consumer/components/consumer-join/join.component';
 import { SignUpComponent } from '../../signup/signup.component';
-//import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({

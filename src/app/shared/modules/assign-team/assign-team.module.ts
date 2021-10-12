@@ -10,6 +10,7 @@ import { AssignTeam } from './assign-team.component';
 import { AssignTeamRoutingModule } from './assign-team.routing.module';
 import { TeamMembersComponent } from './team-members/team-members.component';
 import { MaterialModule } from '../common/material.module';
+import { ConfirmBoxModule } from '../../../ynw_provider/shared/component/confirm-box/confirm-box.module';
 
 
 
@@ -25,7 +26,7 @@ import { MaterialModule } from '../common/material.module';
       LoadingSpinnerModule,
       CommonModule,
         MaterialModule,
-     
+     ConfirmBoxModule
       
     ],
     declarations: [

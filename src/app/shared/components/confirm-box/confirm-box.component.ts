@@ -9,19 +9,17 @@ import { Messages } from '../../constants/project-messages';
   templateUrl: './confirm-box.component.html',
   styleUrls: ['./confirm-box.component.css']
 })
-
 export class ConfirmBoxComponent implements OnInit {
-
-
   ok_btn_cap = Messages.YES_BTN;
   cancel_btn_cap = Messages.NO_BTN;
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   deptName;
   showError = false;
   okCancelBtn = false;
-  constructor(public dialogRef: MatDialogRef<ConfirmBoxComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
-
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmBoxComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
   ngOnInit() {
     console.log(this.data);
     if (this.data.type) {
@@ -33,7 +31,6 @@ export class ConfirmBoxComponent implements OnInit {
       this.cancel_btn_cap = Messages.CANCEL_BTN;
     }
   }
-
   onClick(data) {
     if (this.data.filterByDept && data) {
       const param = {};
@@ -45,7 +42,6 @@ export class ConfirmBoxComponent implements OnInit {
         this.showError = true;
       }
     } else {
-     // data={'data':data};
       this.dialogRef.close(data);
     }
   }

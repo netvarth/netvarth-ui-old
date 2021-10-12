@@ -13,6 +13,7 @@ import { LoadingSpinnerModule } from "../../../shared/modules/loading-spinner/lo
 import { CapitalizeFirstPipeModule } from "../../../shared/pipes/capitalize.module";
 import { ConsumerHistoryComponent } from "./history.component";
 import { ViewRxModule } from "../home/view-rx/view-rx.module";
+import { CheckInHistoryServices } from "../../../shared/modules/consumer-checkin-history-list/components/checkin-history-list/checkin-history-list.service";
 const routes: Routes = [
     { path: '', component: ConsumerHistoryComponent }
 ];
@@ -37,6 +38,9 @@ const routes: Routes = [
     ],
     declarations:[
         ConsumerHistoryComponent
+    ],
+    providers: [
+        CheckInHistoryServices
     ]
 })
 export class ConsumerHistoryModule{}

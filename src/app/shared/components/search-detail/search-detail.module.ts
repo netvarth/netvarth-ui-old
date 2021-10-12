@@ -26,6 +26,7 @@ import { AddInboxMessagesModule } from '../add-inbox-messages/add-inbox-messages
 import { JDNDetailModule } from '../jdn-detail/jdn-detail.module';
 import { CouponsModule } from '../coupons/coupons.module';
 import { ServiceDetailModule } from '../service-detail/service-detail.module';
+import { LoginModule } from '../login/login.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -52,7 +53,8 @@ import { ServiceDetailModule } from '../service-detail/service-detail.module';
         AddInboxMessagesModule,
         JDNDetailModule,
         CouponsModule,
-        ServiceDetailModule
+        ServiceDetailModule,
+        LoginModule
     ],
     declarations: [
         SearchDetailComponent,

@@ -15,6 +15,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatButtonModule } from "@angular/material/button";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
+import { ConfirmBoxModule } from "../../../../../../shared/components/confirm-box/confirm-box.module";
 const routes: Routes = [
     { path: '', component: ItemDetailsComponent }
 ]
@@ -34,6 +35,7 @@ const routes: Routes = [
         MatButtonModule,
         FormsModule,
         ReactiveFormsModule,
+        ConfirmBoxModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
         [RouterModule.forChild(routes)]
     ],

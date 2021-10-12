@@ -8,7 +8,6 @@ import { projectConstants } from '../../../../app.component';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
-
 @Component({
   selector: 'app-activity-log',
   templateUrl: './activity-log.component.html',
@@ -18,17 +17,13 @@ export class ActivityLogComponent implements OnInit {
   auditLogs: any = {};
   activity_log_count: any;
   activity_log: any = [];
-
   mrId;
-  // loading = true;
   public auditlogs_dataSource = new MatTableDataSource<any>([]);
-  // auditlogs_displayedColumns = ['Action'];
   auditlogs_displayedColumns = ['Action', 'Date/Time', 'userName'];
   aditlogs: any = {};
   action: any;
   loading = true;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
-
   constructor(
     public dialogRef: MatDialogRef<ActivityLogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -39,33 +34,19 @@ export class ActivityLogComponent implements OnInit {
     private snackbarService: SnackbarService
   ) {
     this.mrId = this.data.mrId;
-
   }
-
   ngOnInit() {
     this.getMedicalRecordUsingMR(this.mrId);
-
   }
   getDate(dateTime) {
     return this.datePipe.transformToDateWithTime(new Date(dateTime));
   }
-  // getDateTime(auditlogs) {
-  //   console.log(auditlogs);
-  //   let date = '';
-  //     date = auditlogs.DateTime;
-  //     console.log(date);
-  //   return  this.datePipe.transformToDateWithTime(date);
-  
-  // }
   getMedicalRecordUsingMR(mrId) {
-
-
     this.provider_services.getMRAudits(mrId)
       .subscribe((data: any) => {
         this.loading = false;
         if (data) {
           this.auditlogs_dataSource = data;
-
         }
       },
         error => {
@@ -73,4 +54,3 @@ export class ActivityLogComponent implements OnInit {
         });
   }
 }
-

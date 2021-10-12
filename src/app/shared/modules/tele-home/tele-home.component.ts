@@ -65,7 +65,6 @@ export class TeleHomeComponent implements OnInit {
         if (qparams.pwd) {
           this.password = qparams.pwd;
         }
-        // this.password = qparams.pwd;
       });
   }
   ngOnInit() {
@@ -73,7 +72,6 @@ export class TeleHomeComponent implements OnInit {
     if (this.phoneObj.length > 0) {
       this.phone = this.phoneObj[0].number.nationalNumber;
       this.countryCode = this.phoneObj[0].number.countryCallingCode;
-
       if (this.password) {
         this.authService.goThroughConsumerLogin(this.phone, this.countryCode, this.password).then(
           () => {
@@ -97,15 +95,9 @@ export class TeleHomeComponent implements OnInit {
           this.doLogin('consumer');
         }
       }
-
-
-
-
     } else {
       this.snackbarService.openSnackBar("Meeting Room not available for this number", { 'panelClass': 'snackbarerror' });
     }
-
-
   }
   doLogin(origin?, passParam?) {
     const is_test_account = true;
@@ -133,7 +125,6 @@ export class TeleHomeComponent implements OnInit {
       }
     });
   }
-
   /**
    * 
    */
@@ -161,14 +152,12 @@ export class TeleHomeComponent implements OnInit {
           this.api_loading = false;
         });
   }
-
   /**
    * 
    */
   startVideo() {
     this.router.navigate(['meeting', this.phoneNumber, this.videoCall.uid]);
   }
-
   /**
    * 
    * @param booking 
@@ -186,7 +175,6 @@ export class TeleHomeComponent implements OnInit {
       this.router.navigate(['consumer', 'checkindetails'], navigationExtras);
     }
   }
-
   /**
    * 
    * @param booking 
@@ -199,21 +187,6 @@ export class TeleHomeComponent implements OnInit {
     };
     this.router.navigate(['meeting', this.countryCode + "" + this.phone, booking.id], navigationExtras);
   }
-
-  // cancelBooking(booking) {
-
-  //     this.shared_functions.doCancelWaitlist(booking, this)
-  //       .then(
-  //         data => {
-  //           this.gBookings = {};
-  //           this.getVideo();
-  //         },
-  //         error => {
-  //           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //         }
-  //       );
-  // }
-
   /**
    * 
    * @param booking 

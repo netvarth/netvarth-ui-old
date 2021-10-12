@@ -55,7 +55,6 @@
                                                                             </span></span>
                                                                         <span class="columns rightalign"><span
                                                                                 class="dynamic">
-
                                                                                 {{billdate | date:newDateFormat_date}}
                                                                                 {{billtime}}</span>
                                                                         </span> <span class="columns"
@@ -79,11 +78,7 @@
                                                                         </span>
                                                                         <div class="col-md-12 col-sm-12 col-lg-12 no-padding red"
                                                                             *ngIf="bill_data.billStatus == 'Cancel'">
-                                                                            Cancelled</div>
-                                                                        <!-- <span class="columns mgn-up-10" *ngIf="checkin.orderNumber"> <span
-                                                                            class="dynamic">Order Id </span>
-                                                                        <span class="dynamic">{{checkin.orderNumber}}</span>
-                                                                    </span> -->
+                                                                            Cancelled</div>                                                                        
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -99,7 +94,6 @@
                                                                                         {{service.serviceName | capitalizeFirst}}
                                                                                         <span
                                                                                             class="rupee-font">{{service.price | currency:'&#8377; '}}</span>
-
                                                                                         <span
                                                                                             [matTooltipClass]="tooltipcls"
                                                                                             [matTooltip]="'Taxable'"
@@ -279,9 +273,7 @@
                                                                                         Amount Due
                                                                                     </div>
                                                                                     <div class="price rupee-font">
-                                                                                        {{checkJcash ? ((bill_data.amountDue - jcashamount) | currency:'&#8377;' ): (bill_data.amountDue  | currency:'&#8377;') }}
-                                                                                        <!-- {{bill_data.amountDue | currency:'&#8377; '}} -->
-                                                                                    </div>
+                                                                                        {{checkJcash ? ((bill_data.amountDue - jcashamount) | currency:'&#8377;' ): (bill_data.amountDue  | currency:'&#8377;') }}                                                                                    </div>
                                                                                 </div>
                                                                                 <div class="c-row one two-col"
                                                                                     *ngIf="bill_data.amountDue < 0">

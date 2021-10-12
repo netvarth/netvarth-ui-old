@@ -14,6 +14,8 @@ import { WaitlistMgrRoutingModule } from './waitlistmgr.routing.module';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { WaitlistQueuesModule } from './queues/waitlist-queues.module';
 import { SelectionService } from '../../../../shared/services/selectionService';
+import { ShowMessagesModule } from '../../show-messages/show-messages.module';
+import { ConfirmBoxModule } from '../../../../shared/components/confirm-box/confirm-box.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -29,7 +31,9 @@ import { SelectionService } from '../../../../shared/services/selectionService';
         ModalGalleryModule,
         GalleryModule,
         NgbTimepickerModule,
-        WaitlistQueuesModule
+        WaitlistQueuesModule,
+        ShowMessagesModule,
+        ConfirmBoxModule
     ],
     declarations: [
         WaitlistMgrComponent

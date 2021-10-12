@@ -7,180 +7,92 @@
             <div class="pt-top" style="padding-top: 50px;padding-bottom: 80px;">
                 <h1 style="font-size: xx-large;line-height: 2;">Welcome {{userdet.userName}}!</h1>
                 <p style="font-size: 1.4rem;line-height: 2;">{{frm_wiz_one_cap}}</p>
-                <!-- <p>{{frm_wiz_two_cap}}</p>
-                <p>{{frm_wiz_three_cap}}</p> -->
                 <p style="font-size: 1.4rem;">{{frm_wiz_four_cap}}</p>
             </div>
             <div class="pt-btm" style="padding-top: 80px;">
                 <span class="cs-btn lg-btn" (click)="skipMe()">{{get_start_cap}} <i class="icon icon-angle-right"></i>
-                </span> </div>
+                </span>
+            </div>
         </div>
         <div *ngIf="active_step==0 && !loading_active && !expressSignupClicked && bProfile && subDomainLinks[bProfile.serviceSubSector.subDomain]"
             class="express-signup step0 col-12 col-sm-12 col-lg-12 ml-auto mr-auto no-padding">
             <div></div>
             <!-- <h2 style="margin: 0px !important;">Welcome to Jaldee Business</h2> -->
             <div class="col-md-12">
-
-
-
-
-      <div id="hero-area" class="hero-area-bg">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12 col-sm-12">
-              <div class="contents text-center">
-                <h2 class="head-title wow fadeInUp">WELCOME TO JALDEE BUSINESS</h2>
-                <div class="header-button wow fadeInUp" data-wow-delay="0.3s">
-                  <a class="btn btn-common" (click)="expressSignup()">Take me to assisted account setup</a>
-                </div>
-                <div class="mgn-up-10">
-                    <!-- <a>No Thanks</a> -->
-                    <!-- <span class="no-thanks"> No, thanks </span> -->
-                    <a class="underline" (click)="skipMe()"> I'll explore myself </a>
-                    <!-- <button type="button" class="noThanksBtn">No Thanks</button>
-                    <button type="button" class="exploreBtn" (click)="skipMe()" >I'll explore myself</button> -->
-                   
-                </div>
-              </div>
-              <div class="img-thumb text-center wow fadeInUp" data-wow-delay="0.6s">
-                <img class="img-fluid" src="../../../../assets/images/hero-1.png" alt="">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-     
-    <div id="feature">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-6 col-md-12 col-sm-12">
-            <div class="text-wrapper">
-              <div>
-                <p class="mb-4">Save your time and just relax. Jaldee team can create your profile and make your account live for free. Jaldee team offers you free Jaldee support and consultation. You just need to do the following:-</p>
-                <a class="btn btn-common" style="color: white;" (click)="showSection('why-jaldee')">Why Jaldee business?</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-12 col-sm-12 padding-none feature-bg">
-            <div class="feature-thumb">
-              <div class="feature-item wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-                <div class="icon">
-                  <i class="figure-icon"></i>
-                </div>
-                <div class="feature-content">
-                  <h3>What you have to do</h3>
-                  <p>You fill the form - 5 to 10 minutes of your time.  </p>
-                </div>
-              </div>
-              <div class="feature-item wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="500ms">
-                <div class="icon">
-                  <i class="company-icon"></i>
-                </div>
-                <div class="feature-content">
-                 <h3>Jaldee team support</h3>
-                  <p>Jaldee team will set up your account. Jaldee team will contact you in 48 hours. </p>
-                </div>
-              </div>
-              <div class="feature-item wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="700ms">
-                <div class="icon">
-                  <i class="group-icon"></i>
-                </div>
-                <div class="feature-content">
-                 <h3>Account Integration</h3>
-                  <p>Jaldee team will share the best practices and how to use Jaldee for your maximum benefit. </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
-                <!-- <div class="limiter col-lg-12 col-xl-12 col-md-12 no-padding">
-                   
-                    <div>
-                        <div class="available-app-area">
-                            <div class="col-lg-4 col-xl-12 col-md-4 no-padding">
-                                <div>
-                                    <h1 class="welcome_text">Welcome to Jaldee Business</h1>
-    
+                <div id="hero-area" class="hero-area-bg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="contents text-center">
+                                    <h2 class="head-title wow fadeInUp">WELCOME TO JALDEE BUSINESS</h2>
+                                    <div class="header-button wow fadeInUp" data-wow-delay="0.3s">
+                                        <a class="btn btn-common" (click)="expressSignup()">Take me to assisted account
+                                            setup</a>
+                                    </div>
+                                    <div class="mgn-up-10">                                       
+                                        <a class="underline" (click)="skipMe()"> I'll explore myself </a>                                        
+                                    </div>
+                                </div>
+                                <div class="img-thumb text-center wow fadeInUp" data-wow-delay="0.6s">
+                                    <img class="img-fluid" src="../../../../assets/images/hero-1.png" alt="">
                                 </div>
                             </div>
-                            <div class="col-lg-8 col-xl-12 col-md-8 no-padding">
-                                <div class="welcome_page_card mgn-bt-30">
-                                    <div class="login"><strong>Assisted Account Setup</strong></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="feature">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12 col-sm-12">
+                                <div class="text-wrapper">
                                     <div>
-                                        <a class="underline pull-right mgn-bt-10" (click)="showSection('why-jaldee')">
-                                            Why Jaldee business?
-                                        </a> </div>
-                                        <div class="col-12 col-sm-12 col-lg-12 col-sm-12 col-xs-12 no-padding">
-                                            <div>
-                                                Save your time and just relax. Jaldee team can create your profile and make your account
-                                            live for free.
-                                            Jaldee team offers you free Jaldee support and consultation.
-                                            You just need to do the following:-
-                                            </div>
-                                            
-                                            <div class="wizard-list mgn-up-10">
-                                                <div class="mgn-bt-5">
-                                                    1. You fill the form - 5 to 10 minutes of your time.
-                                                </div>
-                                                <div class="mgn-bt-5">
-                                                    2. Jaldee team will set up your account. Jaldee team will contact you in 48 hours.
-                                                </div>
-                                                <div class="mgn-bt-5">
-                                                    3. Jaldee team will share the best practices and how to use Jaldee for your maximum
-                                                    benefit.
-                                                </div>
-                                            </div>
-                                            <div class="express-button border-botm mgn-up-50"> <button
-                                                    class="mgn-bt-30 mat-button" (click)="expressSignup()"> Take me to Assisted Account
-                                                    Setup
-                                                </button> </div>
-                                                <div class="mgn-up-10 pull-left">
-                                                    <button type="button" class="noThanksBtn">NO THANKS</button>
-                                                    <button type="button" class="exploreBtn" (click)="skipMe()" >I'll explore myself</button>
-                                                   
-                                                </div>
+                                        <p class="mb-4">Save your time and just relax. Jaldee team can create your
+                                            profile and make your account live for free. Jaldee team offers you free
+                                            Jaldee support and consultation. You just need to do the following:-</p>
+                                        <a class="btn btn-common" style="color: white;"
+                                            (click)="showSection('why-jaldee')">Why Jaldee business?</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12 col-sm-12 padding-none feature-bg">
+                                <div class="feature-thumb">
+                                    <div class="feature-item wow fadeInDown" data-wow-duration="1000ms"
+                                        data-wow-delay="300ms">
+                                        <div class="icon">
+                                            <i class="figure-icon"></i>
                                         </div>
-                                  </div>
+                                        <div class="feature-content">
+                                            <h3>What you have to do</h3>
+                                            <p>You fill the form - 5 to 10 minutes of your time. </p>
+                                        </div>
+                                    </div>
+                                    <div class="feature-item wow fadeInDown" data-wow-duration="1000ms"
+                                        data-wow-delay="500ms">
+                                        <div class="icon">
+                                            <i class="company-icon"></i>
+                                        </div>
+                                        <div class="feature-content">
+                                            <h3>Jaldee team support</h3>
+                                            <p>Jaldee team will set up your account. Jaldee team will contact you in 48
+                                                hours. </p>
+                                        </div>
+                                    </div>
+                                    <div class="feature-item wow fadeInDown" data-wow-duration="1000ms"
+                                        data-wow-delay="700ms">
+                                        <div class="icon">
+                                            <i class="group-icon"></i>
+                                        </div>
+                                        <div class="feature-content">
+                                            <h3>Account Integration</h3>
+                                            <p>Jaldee team will share the best practices and how to use Jaldee for your
+                                                maximum benefit. </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                  </div> -->
-                <!-- <h3 class="mgn-up-10 txt-align-center"> Assisted Account Setup </h3>
-                <div>
-                    <a class="underline pull-right mgn-bt-10" (click)="showSection('why-jaldee')">
-                        Why Jaldee business?
-                    </a> </div>
-                <div class="col-12 col-sm-12 col-lg-12 col-sm-12 col-xs-12 no-padding">
-                    Save your time and just relax. Jaldee team can create your profile and make your account
-                    live for free.
-                    Jaldee team offers you free Jaldee support and consultation.
-                    You just need to do the following:-
-                    <div class="wizard-list mgn-up-10">
-                        <div class="mgn-bt-5">
-                            1. You fill the form - 5 to 10 minutes of your time.
-                        </div>
-                        <div class="mgn-bt-5">
-                            2. Jaldee team will set up your account. Jaldee team will contact you in 48 hours.
-                        </div>
-                        <div class="mgn-bt-5">
-                            3. Jaldee team will share the best practices and how to use Jaldee for your maximum
-                            benefit.
-                        </div>
-                    </div>
-                    <div class="express-button border-botm mgn-up-50"> <button
-                            class="mgn-bt-30 mat-button" (click)="expressSignup()"> Take me to Assisted Account
-                            Setup
-                        </button> </div>
-                        <div class="txt-align-center mgn-up-10">
-                            <span class="no-thanks"> No, thanks </span>
-                            <a class="underline" (click)="skipMe()"> I'll explore myself </a>
-                        </div>
-                </div> -->
+                </div>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -194,7 +106,8 @@
                 <div class="express-button mgn-up-20">
                     <button class="mgn-bt-10 mat-button" (click)="providerLogout()">
                         Ok, thanks
-                    </button> </div>
+                    </button>
+                </div>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -208,7 +121,7 @@
                 <div class="content row">
                     <div class="form-group">
                         <P class="form-level-settings">
-                            {{frm_wiz_five_cap}}{{frm_wiz_five1_cap |  capitalizeFirst}}{{frm_wiz_five2_cap}} </P>
+                            {{frm_wiz_five_cap}}{{frm_wiz_five1_cap | capitalizeFirst}}{{frm_wiz_five2_cap}} </P>
                         <label>{{business_name_cap}}</label>
                         <input type="text" class="form-control" id="bnameId" maxlength="50"
                             [(ngModel)]="wizard_data_holder['name']" name="providername"
@@ -269,7 +182,8 @@
                                     <mat-form-field>
                                         <input matInput type="text" class="form-control" id="blatId"
                                             [(ngModel)]="wizard_data_holder['lat']" name="lat" placeholder="Latitude"
-                                            autocomplete="off" (keyup)="handlekeyup('coord_error')"></mat-form-field>
+                                            autocomplete="off" (keyup)="handlekeyup('coord_error')">
+                                    </mat-form-field>
                                     <div class="sts-msg error" *ngIf="laterror_Exists">{{lati_error}}</div>
                                 </div>
                                 <div class="col-md-6 col-12 no-padding-small">
@@ -356,7 +270,7 @@
                         </ul>
                         <span class="cs-btn bt3" (click)="changeSchedule_clicked()"
                             *ngIf="ischange_schedule_clicked == false">{{(display_schedule.length>0)
-                                ? 'Change Schedule': 'Add Schedule'}}</span>
+                            ? 'Change Schedule': 'Add Schedule'}}</span>
                     </div>
                     <app-provider-schedule [Isource]="'wizard'" *ngIf="ischange_schedule_clicked == true"
                         [existingSchedules]="schedule_arr" providerStatus="INACTIVE"
@@ -417,8 +331,8 @@
                             <div class="form-group">
                                 <label>Description</label>
                                 <textarea class="form-control" id="description" placeholder="Briefly describe service"
-                                    formControlName="description" (keyup)="setCharCount()"
-                                    (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500"> </textarea>
+                                    formControlName="description" (keyup)="setCharCount()" (focus)="setDescFocus()"
+                                    (blur)="lostDescFocus()" maxlength="500"> </textarea>
                                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'description')"
                                     [errorMsg]="fed_service.getErrorMessage(amForm,'description',
           {
@@ -433,37 +347,11 @@
                             <div class="form-group" *ngIf="isServiceBillable">
                                 <ng-container class="example-full-width">
                                     <label class="col-form-label">{{est_duration_cap}} (Hours : Minutes) *</label>
-                                    <!-- <mat-form-field> -->
-                                    <!-- <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
-                                    maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" id="estimated_duration"
-                                    placeholder="{{est_duration_cap}}*" formControlName="serviceDuration" autocomplete="off"> -->
                                     <ngb-timepicker [(ngModel)]="duration" (keyup)="isvalid($event)"
                                         formControlName="serviceDuration">
-                                    </ngb-timepicker>
-                                    <!-- </mat-form-field> -->
-                                    <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'serviceDuration')"
-                                [errorMsgs]="fed_service.getErrorMessage(serviceForm,'serviceDuration',
-                {'required' : 'Please enter estimated duration.',
-                'pattern' : 'Estimated duration should be an integer value (e.g. 1, 10, 15 etc)',
-                'maxlength' : 'Only 10 digits are allowed'
-              })"> </app-field-error-display> -->
+                                    </ngb-timepicker>                                   
                                 </ng-container>
                             </div>
-                            <!-- <div class="form-group" *ngIf="isServiceBillable">
-                            <label>{{est_duration_cap}} *</label>
-                            <input min="0" max={{maxlimit}} (keypress)="isNumeric($event)" (keyup)="isvalid($event)"
-                                type="text" class="form-control number-ip-sm" id="estimated_duration"
-                                placeholder="{{est_duration_cap}}" formControlName="serviceDuration"
-                                autocomplete="off">
-                            <app-field-error-display
-                                [displayError]="fed_service.isFieldValid(amForm,'serviceDuration')" [errorMsgs]="fed_service.getErrorMessage(amForm,'serviceDuration',
-          {'required' : 'Please enter estimated duration.',
-          'pattern' : 'Estimated duration should be an integer value (e.g. 1, 10, 15 etc)',
-          'maxlength' : 'Only 10 digits are allowed'
-        })">
-
-                            </app-field-error-display>
-                        </div> -->
                             <div class="form-group" *ngIf="isServiceBillable">
                                 <label>{{service_price_cap}} ({{rupee_symbol}})</label>
                                 <input min="0" max={{maxlimit}} (keypress)="isNumeric($event)" (keyup)="isvalid($event)"
@@ -629,8 +517,6 @@
                                                 [origin]="origins"
                                                 *ngIf="que_type=='subdomain_questions' && field.length > 0">
                                             </app-dynamic-form>
-                                            <!-- <app-field-error-display [displayError]="true" *ngIf="api_error"
-                                                    errorMsg="{{api_error}}"></app-field-error-display> -->
                                         </div>
                                     </ng-container>
                                     <ng-container *ngSwitchCase="'DataGrid'">
@@ -686,9 +572,7 @@
                                                 [questions]="field" (cancelClick)="handlegridCancel($event)"
                                                 [origin]="origins"
                                                 *ngIf="que_type=='subdomain_questions' && field.length > 0">
-                                            </app-dynamic-form>
-                                            <!-- <app-field-error-display [displayError]="true" *ngIf="api_error"
-                                                    errorMsg="{{api_error}}"></app-field-error-display> -->
+                                            </app-dynamic-form>                                           
                                         </div>
                                     </ng-container>
                                 </ng-container>
@@ -723,9 +607,7 @@
                                                 [questions]="field" (cancelClick)="handleCancel($event)"
                                                 [origin]="origins"
                                                 *ngIf="que_type=='domain_questions' && field.length > 0">
-                                            </app-dynamic-form>
-                                            <!-- <app-field-error-display [displayError]="true" *ngIf="api_error"
-                                                    errorMsg="{{api_error}}"></app-field-error-display> -->
+                                            </app-dynamic-form>                                            
                                         </div>
                                     </ng-container>
                                     <ng-container *ngSwitchCase="'DataGrid'">
@@ -780,9 +662,7 @@
                                                     [questions]="field" (cancelClick)="handlegridCancel($event)"
                                                     [origin]="origins"
                                                     *ngIf="que_type=='domain_questions' && field.length > 0">
-                                                </app-dynamic-form>
-                                                <!-- <app-field-error-display [displayError]="true" *ngIf="api_error"
-                                                        errorMsg="{{api_error}}"></app-field-error-display> -->
+                                                </app-dynamic-form>                                                
                                             </div>
                                         </div>
                                     </ng-container>

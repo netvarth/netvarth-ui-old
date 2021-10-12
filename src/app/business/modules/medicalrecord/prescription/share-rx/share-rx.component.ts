@@ -3,7 +3,6 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dial
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
-// import { MedicalrecordService } from '../../medicalrecord.service';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { MedicalrecordService } from '../../medicalrecord.service';
@@ -52,7 +51,7 @@ export class ShareRxComponent implements OnInit {
   consumer_email: any;
   api_loading = false;
   phone = '';
-  phon= '';
+  phon = '';
   SEND_MESSAGE = '';
   settings: any = [];
   showToken = false;
@@ -84,7 +83,7 @@ export class ShareRxComponent implements OnInit {
   accountType: any;
   userbname: any;
   loading = true;
-  signature_loading=true;
+  signature_loading = true;
   showthirdparty = false;
   thirdpartyphone = '';
   thirdpartyemail = '';
@@ -123,7 +122,7 @@ export class ShareRxComponent implements OnInit {
     this.mrId = this.data.mrId;
     this.type = this.data.type;
     this.patientId = this.data.patientId;
-    if(this.data.docname){
+    if (this.data.docname) {
       this.doctorName = this.data.docname;
     }
     console.log(this.data.docname);
@@ -132,12 +131,11 @@ export class ShareRxComponent implements OnInit {
 
   }
   ngOnInit() {
-
     const cnow = new Date();
     const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
     this.cacheavoider = dd;
     this.sharewith = 0;
-    this.msgreceivers = [{ 'id': 0, 'name': 'Patient' },{ 'id': 1, 'name': 'Thirdparty' }];
+    this.msgreceivers = [{ 'id': 0, 'name': 'Patient' }, { 'id': 1, 'name': 'Thirdparty' }];
     this.createForm();
     this.getMrprescription();
     this.getBussinessProfileApi();
@@ -153,7 +151,7 @@ export class ShareRxComponent implements OnInit {
     this.amForm = this.fb.group({
       message: ['', Validators.compose([Validators.required])]
     });
-    
+
   }
   back() {
     this.dialogRef.close();
@@ -167,39 +165,39 @@ export class ShareRxComponent implements OnInit {
           console.log(response);
           this.customerDetail = response[0];
           console.log(this.customerDetail)
-           if (this.customerDetail.email) {
-              this.email_id = this.customerDetail.email;
+          if (this.customerDetail.email) {
+            this.email_id = this.customerDetail.email;
+          }
+          if (this.customerDetail.phoneNo) {
+            this.countryCode = this.customerDetail.countryCode;
+            this.phone = this.customerDetail.phoneNo;
+            this.phon = this.phone.replace(/\s/g, "");
+            if (this.countryCode.startsWith('+')) {
+              this.countryCod = this.countryCode.substring(1);
             }
-            if (this.customerDetail.phoneNo) {
-              this.countryCode = this.customerDetail.countryCode;
-              this.phone = this.customerDetail.phoneNo;
-              this.phon = this.phone.replace(/\s/g, "");
-              if(this.countryCode.startsWith('+')){
-                this.countryCod = this.countryCode.substring(1);
-              }
-              if(this.phon){
-                this.provider_services.telegramChat(this.countryCod,this.phone)
+            if (this.phon) {
+              this.provider_services.telegramChat(this.countryCod, this.phone)
                 .subscribe(
-                    data => { 
-                      this.chatId = data; 
-                      if(this.chatId === null){
-                       this.IsTelegramDisable = true;
-                      }
-                      else{
-                       this.IsTelegramDisable = false;
-                      }
-                     
-                    },
-                    (error) => {
-                       
+                  data => {
+                    this.chatId = data;
+                    if (this.chatId === null) {
+                      this.IsTelegramDisable = true;
                     }
+                    else {
+                      this.IsTelegramDisable = false;
+                    }
+
+                  },
+                  (error) => {
+
+                  }
                 );
-              }
-             
             }
 
-  });
-}
+          }
+
+        });
+  }
   onSubmit(formdata) {
     this.disable = true;
     this.sharebtnloading = true;
@@ -214,13 +212,13 @@ export class ShareRxComponent implements OnInit {
     console.log(formdata);
     console.log(this.sharewith);
     console.log(this.customid);
-    if (this.sharewith !== 0 ) {
-     // if (this.thirdpartyphone === '' && this.thirdpartyemail === '') {
-       if(this.thirdpartyemail===''){
+    if (this.sharewith !== 0) {
+      // if (this.thirdpartyphone === '' && this.thirdpartyemail === '') {
+      if (this.thirdpartyemail === '') {
         this.api_error = 'Please enter  email';
         this.disable = false;
         this.sharebtnloading = false;
-                return;
+        return;
       }
       if (this.thirdpartyphone !== '') {
         const curphone = this.thirdpartyphone;
@@ -249,26 +247,25 @@ export class ShareRxComponent implements OnInit {
         const result2 = pattern2.test(curemail);
         if (!result2) {
           this.api_error = this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID');
-          // 'Please enter a valid email id';
           this.disable = false;
           this.sharebtnloading = false;
           return;
         }
       }
     }
-    if (this.sharewith === 0 ) {
+    if (this.sharewith === 0) {
       if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
         this.api_error = 'share via options are not selected';
-        setTimeout(()=>{
-         this.api_error='';
-        },3000)
+        setTimeout(() => {
+          this.api_error = '';
+        }, 3000)
         this.disable = false;
         this.sharebtnloading = false;
         return;
       }
     }
     if (this.type === 'adddrug') {
-      if (this.sharewith !== 0 ) {
+      if (this.sharewith !== 0) {
         const passData = {
           'message': formdata.message,
           'html': rxview,
@@ -314,7 +311,7 @@ export class ShareRxComponent implements OnInit {
           });
       }
     } else {
-      if (this.sharewith !== 0 ) {
+      if (this.sharewith !== 0) {
         const passData = {
           'message': formdata.message,
           'html': '',
@@ -370,12 +367,6 @@ export class ShareRxComponent implements OnInit {
       this.showthirdparty = true;
     } else {
       this.showthirdparty = false;
-      // if (this.customerDetail.email) {
-      //   this.email_id = this.customerDetail.email;
-      // }
-      // if (this.customerDetail.phoneNo) {
-      //   this.phone = this.customerDetail.phoneNo;
-      // }
     }
 
   }
@@ -388,17 +379,17 @@ export class ShareRxComponent implements OnInit {
       this.provider_services.getMRprescription(this.mrId)
         .subscribe((data) => {
           this.mrPrescriptionDetails = data['prescriptionsList'];
-          if(Object.keys(data).length !== 0 && data.constructor === Object){
-          if (data['prescriptionsList'] && data['prescriptionsList'][0].keyName) {
-            console.log(data);
-            this.signature_loading=false;
-          } else {
-            this.drugList = data['prescriptionsList'];
-            this.note = data['notes'];
-            this.signature_loading=false;
-            this.getDigitalSign();
-          }
-          this.getProviderLogo();
+          if (Object.keys(data).length !== 0 && data.constructor === Object) {
+            if (data['prescriptionsList'] && data['prescriptionsList'][0].keyName) {
+              console.log(data);
+              this.signature_loading = false;
+            } else {
+              this.drugList = data['prescriptionsList'];
+              this.note = data['notes'];
+              this.signature_loading = false;
+              this.getDigitalSign();
+            }
+            this.getProviderLogo();
           }
         },
           error => {
@@ -413,7 +404,6 @@ export class ShareRxComponent implements OnInit {
           this.blogo = data;
         },
         () => {
-
         }
       );
   }
@@ -429,7 +419,6 @@ export class ShareRxComponent implements OnInit {
           console.log(this.signurl);
         },
           error => {
-            // this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
   }
@@ -437,8 +426,7 @@ export class ShareRxComponent implements OnInit {
     let logourl = '';
     console.log(this.signurl);
     if (this.signurl) {
-      // logourl = (this.signurl) ? this.signurl + '?' + this.cacheavoider : '';
-      logourl=(this.signurl) ? this.signurl  : '';
+      logourl = (this.signurl) ? this.signurl : '';
     }
     console.log(this.shared_functions.showlogoicon(logourl));
     return this.shared_functions.showlogoicon(logourl);
@@ -449,8 +437,7 @@ export class ShareRxComponent implements OnInit {
     this.profimg_exists = false;
     if (this.blogo[0]) {
       this.profimg_exists = true;
-      //logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + this.cacheavoider : '';
-      logourl = (this.blogo[0].url) ? this.blogo[0].url  : '';
+      logourl = (this.blogo[0].url) ? this.blogo[0].url : '';
     }
     return this.shared_functions.showlogoicon(logourl);
   }
@@ -462,7 +449,7 @@ export class ShareRxComponent implements OnInit {
           this.userbname = this.userdata.businessName;
           console.log(this.userdata);
         },
-      );
+        );
     }
   }
   getBussinessProfileApi() {
@@ -480,49 +467,48 @@ export class ShareRxComponent implements OnInit {
   }
   getSMSCredits() {
     this.provider_services.getSMSCredits().subscribe(data => {
-        this.smsCredits = data;
-        if (this.smsCredits < 5 && this.smsCredits > 0) {
-          this.is_smsLow = true;
-          this.smsWarnMsg = Messages.LOW_SMS_CREDIT;
-          this.getLicenseCorpSettings();
-        } else if (this.smsCredits === 0) {
-          
-          this.is_smsLow = true;
-          this.is_noSMS = true;
-          this.smsWarnMsg = Messages.NO_SMS_CREDIT;
-          this.getLicenseCorpSettings();
-        } else {
-          this.is_smsLow = false;
-          this.is_noSMS = false;
-        }
+      this.smsCredits = data;
+      if (this.smsCredits < 5 && this.smsCredits > 0) {
+        this.is_smsLow = true;
+        this.smsWarnMsg = Messages.LOW_SMS_CREDIT;
+        this.getLicenseCorpSettings();
+      } else if (this.smsCredits === 0) {
+
+        this.is_smsLow = true;
+        this.is_noSMS = true;
+        this.smsWarnMsg = Messages.NO_SMS_CREDIT;
+        this.getLicenseCorpSettings();
+      } else {
+        this.is_smsLow = false;
+        this.is_noSMS = false;
+      }
     });
   }
   getLicenseCorpSettings() {
     this.provider_servicesobj.getLicenseCorpSettings().subscribe(
-        (data: any) => {
-            this.corpSettings = data;
-        }
+      (data: any) => {
+        this.corpSettings = data;
+      }
     );
   }
   gotoSmsAddon() {
     this.dialogRef.close();
     if (this.corpSettings && this.corpSettings.isCentralised) {
       this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
-  } else {
+    } else {
       this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
-          width: '50%',
-          data: {
-              type: 'addons'
-          },
-          panelClass: ['popup-class', 'commonpopupmainclass'],
-          disableClose: true
+        width: '50%',
+        data: {
+          type: 'addons'
+        },
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true
       });
       this.addondialogRef.afterClosed().subscribe(result => {
         if (result) {
-         this.getSMSCredits();
+          this.getSMSCredits();
         }
       });
-  }
+    }
   }
 }
-

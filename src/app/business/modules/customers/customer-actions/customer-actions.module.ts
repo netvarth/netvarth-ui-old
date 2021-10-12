@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatDialogModule } from "@angular/material/dialog";
 import { LoadingSpinnerModule } from "../../../../shared/modules/loading-spinner/loading-spinner.module";
+import { LastVisitModule } from "../../medicalrecord/last-visit/last-visit.module";
 import { CustomerActionsComponent } from "./customer-actions.component";
 
 @NgModule({
@@ -10,7 +11,8 @@ import { CustomerActionsComponent } from "./customer-actions.component";
         MatDialogModule,
         CommonModule,
         MatCheckboxModule,
-        LoadingSpinnerModule
+        LoadingSpinnerModule,
+        LastVisitModule
     ],
     exports: [CustomerActionsComponent],
     declarations: [CustomerActionsComponent]

@@ -15,15 +15,6 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 })
 export class CommSettingsComponent implements OnInit, AfterViewInit {
     domain: any;
-    breadcrumbs = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: 'Communications And Notifications'
-        }
-    ];
     virtualCallingMode_status: any;
     virtualCallingMode_statusstr: string;
     customer_label = '';
@@ -48,8 +39,8 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
     constructor(private router: Router, public dialog: MatDialog,
         private provider_services: ProviderServices,
         private wordProcessor: WordProcessor,
-    private groupService: GroupStorageService,
-    private snackbarService: SnackbarService,
+        private groupService: GroupStorageService,
+        private snackbarService: SnackbarService,
         public route: ActivatedRoute) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -166,7 +157,7 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
     getVirtualCallingModesList() {
         this.provider_services.getVirtualCallingModes().subscribe(
             (data: any) => {
-                this.virtualCallModesList = data.virtualCallingModes;               
+                this.virtualCallModesList = data.virtualCallingModes;
             });
     }
     showPopup(mode) {
@@ -229,18 +220,18 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
     }
     getJaldeeVideoCredits() {
         this.provider_services.getJaldeeVideoRecording()
-        .subscribe(
-          (data) => {
-            console.log(data)
-           this.videocredits = data;
-          }
-        );
+            .subscribe(
+                (data) => {
+                    console.log(data)
+                    this.videocredits = data;
+                }
+            );
     }
-    getJaldeeRecordingStatus(){
+    getJaldeeRecordingStatus() {
         this.getRecordingStatus().then(
-            (recordStatus)=> {
-              this.jaldeeVideoRecord_status = recordStatus;
-              this.jaldeeVideoRecord_statusstr = (this.jaldeeVideoRecord_status) ? 'On' : 'Off';
+            (recordStatus) => {
+                this.jaldeeVideoRecord_status = recordStatus;
+                this.jaldeeVideoRecord_statusstr = (this.jaldeeVideoRecord_status) ? 'On' : 'Off';
             }
         );
     }
@@ -251,7 +242,7 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
                 () => {
                     this.snackbarService.openSnackBar('Jaldee Video settings' + ' updated successfully', { ' panelclass': 'snackbarerror' });
                     this.getRecordingStatus().then(
-                        (recordStatus)=> {
+                        (recordStatus) => {
                             this.jaldeeVideoRecord_status = recordStatus;
                             this.jaldeeVideoRecord_statusstr = (this.jaldeeVideoRecord_status) ? 'On' : 'Off';
                         }
@@ -260,7 +251,7 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.getRecordingStatus().then(
-                        (recordStatus)=> {
+                        (recordStatus) => {
                             this.jaldeeVideoRecord_status = recordStatus;
                             this.jaldeeVideoRecord_statusstr = (this.jaldeeVideoRecord_status) ? 'On' : 'Off';
                         }
@@ -270,12 +261,12 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
     }
     getRecordingStatus() {
         return new Promise((resolve, reject) => {
-        this.provider_services.getGlobalSettings().subscribe(
-            (data: any) => {                
-                resolve(data.videoRecording);                
-            }, (error)=>{
-                reject(error);
-            });
+            this.provider_services.getGlobalSettings().subscribe(
+                (data: any) => {
+                    resolve(data.videoRecording);
+                }, (error) => {
+                    reject(error);
+                });
         });
     }
 }

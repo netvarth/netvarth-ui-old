@@ -13,6 +13,7 @@ import { OwlModule } from 'ngx-owl-carousel';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { FormsModule } from '@angular/forms';
 import { OrdermanagerComponent } from './ordermanager.component';
+import { ShowMessagesModule } from '../../show-messages/show-messages.module';
 
 
 
@@ -31,7 +32,7 @@ import { OrdermanagerComponent } from './ordermanager.component';
       Nl2BrPipeModule,
       OwlModule,
       CapitalizeFirstPipeModule,
-      
+      ShowMessagesModule
   ],
   declarations: [
     OrdermanagerComponent,

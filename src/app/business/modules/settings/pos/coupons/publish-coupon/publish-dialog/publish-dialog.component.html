@@ -12,43 +12,39 @@
     <div class="row mgn-up-20" formGroupName="couponRules">
       <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-2 mgn-up-20">
         <div class="form-group normalpicker">
-            <label for="Publish From">Publish From </label>
-            <div class="pickerouter">
-                <mat-datepicker-toggle matSuffix [for]="publishedFrom"></mat-datepicker-toggle>
-                <mat-datepicker #publishedFrom></mat-datepicker>
-                <input class="form-control dtepicker" type="text" matInput
-                    (click)="publishedFrom.open()" [matDatepicker]="publishedFrom" formControlName="publishedFrom"
-                    [min]="minDay" placeholder="DD/MM/YYYY" readonly (dateChange)="onChangePublishFromDate()">
-            </div>
-            <app-field-error-display  style="color: #f24949 !important;"  [displayError]=startDaterequired
+          <label for="Publish From">Publish From </label>
+          <div class="pickerouter">
+            <mat-datepicker-toggle matSuffix [for]="publishedFrom"></mat-datepicker-toggle>
+            <mat-datepicker #publishedFrom></mat-datepicker>
+            <input class="form-control dtepicker" type="text" matInput (click)="publishedFrom.open()"
+              [matDatepicker]="publishedFrom" formControlName="publishedFrom" [min]="minDay" placeholder="DD/MM/YYYY"
+              readonly (dateChange)="onChangePublishFromDate()">
+          </div>
+          <app-field-error-display style="color: #f24949 !important;" [displayError]=startDaterequired
             errorMsg="Please choose Start Date">
-        </app-field-error-display>
+          </app-field-error-display>
         </div>
       </div>
       <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 mgn-up-20">
-          <div class="form-group normalpicker">
-              <label for="Publish To">Publish To </label>
-              <div class="pickerouter">
-                  <mat-datepicker-toggle matSuffix [for]="publishedTo"></mat-datepicker-toggle>
-                  <mat-datepicker #publishedTo></mat-datepicker>
-                  <input class="form-control dtepicker" type="text" matInput
-                      (click)="publishedTo.open()" [matDatepicker]="publishedTo" formControlName="publishedTo"
-                      [min]="minDay" placeholder="DD/MM/YYYY" readonly (dateChange)="onChangePublishToDate()">
-              </div>
-              <app-field-error-display  style="color: #f24949 !important;"  [displayError]=endDaterequired
-              errorMsg="Please choose Start Date">
+        <div class="form-group normalpicker">
+          <label for="Publish To">Publish To </label>
+          <div class="pickerouter">
+            <mat-datepicker-toggle matSuffix [for]="publishedTo"></mat-datepicker-toggle>
+            <mat-datepicker #publishedTo></mat-datepicker>
+            <input class="form-control dtepicker" type="text" matInput (click)="publishedTo.open()"
+              [matDatepicker]="publishedTo" formControlName="publishedTo" [min]="minDay" placeholder="DD/MM/YYYY"
+              readonly (dateChange)="onChangePublishToDate()">
+          </div>
+          <app-field-error-display style="color: #f24949 !important;" [displayError]=endDaterequired
+            errorMsg="Please choose Start Date">
           </app-field-error-display>
           <app-field-error-display [displayError]=endDateInvalidError
-          errorMsg="End Date should be greater than  or equal to start Date">
-      </app-field-error-display>
-            
-          </div>
-        
+            errorMsg="End Date should be greater than  or equal to start Date">
+          </app-field-error-display>
+        </div>
       </div>
-
     </div>
   </mat-dialog-content>
-
   <mat-dialog-actions>
     <div class="col-md-10 no-padding mgn-up-10 glbl-seting-heder">
       <button type="button" class="cs-btn bt2 " (click)="close()"> Cancel</button>
@@ -57,5 +53,4 @@
   </mat-dialog-actions>
 </form>
 <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
-
 <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">

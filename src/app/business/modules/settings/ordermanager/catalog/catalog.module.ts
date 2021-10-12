@@ -20,6 +20,7 @@ import { EditcatalogitemPopupComponent } from './editcatalogitempopup/editcatalo
 import { AddcatalogimageComponent } from './addcatalogimage/addcatalogimage.component';
 import { TimewindowPopupComponent } from './timewindowpopup/timewindowpopup.component';
 import { CreateItemPopupComponent } from './createItem/createitempopup.component';
+import { ConfirmBoxModule } from '../../../../../shared/components/confirm-box/confirm-box.module';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { CreateItemPopupComponent } from './createItem/createitempopup.component
         CKEditorModule,
         TruncateModule,
         CapitalizeFirstPipeModule,
-        NgbTimepickerModule
+        NgbTimepickerModule,
+        ConfirmBoxModule
     ],
     entryComponents: [
         EditcatalogitemPopupComponent,

@@ -8,6 +8,7 @@ import { EditProfileComponent } from './edit-profile.component';
 import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
 import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
 import { HeaderModule } from '../header/header.module';
+import { TelegramInfoModule } from '../../../ynw_consumer/components/telegram-info/telegram-info.module';
 const routes: Routes = [
     { path: '', component: EditProfileComponent }
 ];
@@ -21,7 +22,8 @@ const routes: Routes = [
         BreadCrumbModule,
         LoadingSpinnerModule,
         HeaderModule,
-        FormsModule
+        FormsModule,
+        TelegramInfoModule
     ],
     declarations: [
         EditProfileComponent

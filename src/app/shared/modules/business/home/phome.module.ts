@@ -6,19 +6,18 @@ import { PhomeComponent } from './phome.component';
 import { OwlModule } from 'ngx-owl-carousel';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PricingModule } from '../pricing/pricing.module';
-// import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
 import { ContactusModule } from '../contactus/contactus.module';
 import { LazyModule } from '../../lazy-load/lazy.module';
 import { FormMessageDisplayModule } from '../../form-message-display/form-message-display.module';
 import { ProvidersignupModule } from '../signup/providersignup.module';
 import { ForgotPasswordModule } from '../../../../shared/components/forgot-password/forgot-password.module';
-// import { MaterialModule } from '../../common/material.module';
 import { FooterModule } from '../../footer/footer.module';
 import { HeaderModule } from '../../header/header.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ServicePageHealthcareComponent } from '../service-page-healthcare/service-page-healthcare.component';
+import { LoginModule } from '../../../../shared/components/login/login.module';
+import { ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 
-// import { ContactusComponent } from './contactus/contactus.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -27,7 +26,6 @@ import { ServicePageHealthcareComponent } from '../service-page-healthcare/servi
         FooterModule,
         PhomeRoutingModule,
         RouterModule,
-        // MaterialModule,
         LazyModule,
         FormsModule,
         FormMessageDisplayModule,
@@ -36,16 +34,19 @@ import { ServicePageHealthcareComponent } from '../service-page-healthcare/servi
         ProvidersignupModule,
         ForgotPasswordModule,
         ContactusModule,
-        MatFormFieldModule
+        MatFormFieldModule,
+        LoginModule
     ],
     declarations: [
         PhomeComponent,
         ServicePageHealthcareComponent
-        // ContactusComponent
-       ],
-         entryComponents: [
-        ],
-        exports: [PhomeComponent]
+    ],
+    providers: [
+        ScrollToService
+    ],
+    entryComponents: [
+    ],
+    exports: [PhomeComponent]
 })
 
 export class PhomeModule { }

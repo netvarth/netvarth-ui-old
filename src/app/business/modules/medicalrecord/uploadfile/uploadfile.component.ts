@@ -5,7 +5,6 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { MrfileuploadpopupComponent } from './mrfileuploadpopup/mrfileuploadpopup.component';
@@ -46,7 +45,6 @@ export class UploadFileComponent implements OnInit {
   showSave = true;
   sharedialogRef;
   uploadImages: any = [];
-
   upload_status = 'Added to list';
   disable = false;
   heading = 'Uploaded Files';
@@ -55,25 +53,7 @@ export class UploadFileComponent implements OnInit {
   navigationExtras: NavigationExtras;
   removeprescriptiondialogRef;
   imagesviewdialogRef;
-  image_list_popup: Image[];
   uploadfiledialogRef;
-  customPlainGalleryRowConfig: PlainGalleryConfig = {
-    strategy: PlainGalleryStrategy.CUSTOM,
-    layout: new AdvancedLayout(-1, true)
-  };
-  customButtonsFontAwesomeConfig: ButtonsConfig = {
-    visible: true,
-    strategy: ButtonsStrategy.CUSTOM,
-    buttons: [
-      {
-        className: 'inside close-image',
-        type: ButtonType.CLOSE,
-        ariaLabel: 'custom close aria label',
-        title: 'Close',
-        fontSize: '20px'
-      }
-    ]
-  };
   customer_label = '';
   msgDisplay = 'media';
   loading = false;
@@ -94,11 +74,7 @@ export class UploadFileComponent implements OnInit {
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private medicalrecord_service: MedicalrecordService) {
-      this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-
-
-    
-
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
   @HostListener('window:scroll', ['$event'])
   scrollHandler() {
@@ -113,7 +89,7 @@ export class UploadFileComponent implements OnInit {
     }
     this.topHeight = qHeader + tabHeader;
     if (header) {
- 
+
     }
     if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 100) {
       this.windowScrolled = true;
@@ -123,7 +99,6 @@ export class UploadFileComponent implements OnInit {
   }
 
   ngOnInit() {
-
     const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
     this.mrId = parseInt(medicalrecordId, 0);
     this.patientId = this.activatedRoute.parent.snapshot.params['id'];
@@ -136,25 +111,21 @@ export class UploadFileComponent implements OnInit {
 
   }
   getImageSource(file) {
-    let imgsrc='/assets/images/pdf.png';
-   // console.log(file);
+    let imgsrc = '/assets/images/pdf.png';
     let type = '';
-              type = file.type.split("/");
-             // console.log(type[0]);
-              if(type[0] == 'video'){
-                imgsrc='/assets/images/video.png';
-              } else if( type[0] == 'audio') {
-                imgsrc='/assets/images/audio.png';
-              }else if( type[0] == 'image') {
-                if(file.url){
-                  imgsrc=file.url;
-                }else{
-                imgsrc='/assets/images/imageexamle.png';
-                }
-              }
-
+    type = file.type.split("/");
+    if (type[0] == 'video') {
+      imgsrc = '/assets/images/video.png';
+    } else if (type[0] == 'audio') {
+      imgsrc = '/assets/images/audio.png';
+    } else if (type[0] == 'image') {
+      if (file.url) {
+        imgsrc = file.url;
+      } else {
+        imgsrc = '/assets/images/imageexamle.png';
+      }
+    }
     return imgsrc;
-
   }
   goBack() {
     this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
@@ -165,27 +136,25 @@ export class UploadFileComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-          'message': 'Do you really want to delete this file?'
+        'message': 'Do you really want to delete this file?'
       }
-  });
-  this.subscriptions.sink = this.removefiledialogRef.afterClosed().subscribe(result => {
+    });
+    this.subscriptions.sink = this.removefiledialogRef.afterClosed().subscribe(result => {
       if (result) {
-      
-              this.subscriptions.sink = this.provider_services.deleteMRFile(this.mrId,file.uid)
-                  .subscribe((data) => {
-                    this.getMedicalRecordUsingId(this.mrId);
-                  },
-                      error => {
-                          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                      });
-          } 
-      
-  });
+        this.subscriptions.sink = this.provider_services.deleteMRFile(this.mrId, file.uid)
+          .subscribe((data) => {
+            this.getMedicalRecordUsingId(this.mrId);
+          },
+            error => {
+              this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            });
+      }
+
+    });
   }
   getPatientDetails(uid) {
-
     const filter = { 'id-eq': uid };
-    this.subscriptions.sink=this.provider_services.getCustomer(filter)
+    this.subscriptions.sink = this.provider_services.getCustomer(filter)
       .subscribe(
         (data: any) => {
           const response = data;
@@ -198,19 +167,16 @@ export class UploadFileComponent implements OnInit {
           }
           this.medicalrecord_service.setPatientDetails(this.patientDetails);
           this.loading = false;
-
-
         },
         error => {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
-
   getMedicalRecordUsingId(mrId) {
     this.loading = true;
-    this.mediafiles=[];
-    this.docfiles=[];
-   this.subscriptions.sink= this.provider_services.GetMedicalRecord(mrId)
+    this.mediafiles = [];
+    this.docfiles = [];
+    this.subscriptions.sink = this.provider_services.GetMedicalRecord(mrId)
       .subscribe((data: any) => {
         if (data) {
           if (data.mrVideoAudio) {
@@ -219,14 +185,14 @@ export class UploadFileComponent implements OnInit {
             for (let file of this.uploadFiles) {
               let type = '';
               type = file.type.split("/");
-             // console.log(type[0]);
-              if(type[0] == 'video' || type[0] =='audio'|| type[0] =='image'){
+              // console.log(type[0]);
+              if (type[0] == 'video' || type[0] == 'audio' || type[0] == 'image') {
                 this.mediafiles.push(file);
               } else {
                 this.docfiles.push(file);
               }
-          }
-          this.loading = false;
+            }
+            this.loading = false;
           }
         }
       },
@@ -234,9 +200,6 @@ export class UploadFileComponent implements OnInit {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
- 
-  
-
   uploadpopup() {
     this.uploadfiledialogRef = this.dialog.open(MrfileuploadpopupComponent, {
       width: '50%',
@@ -251,41 +214,33 @@ export class UploadFileComponent implements OnInit {
     });
     this.uploadfiledialogRef.afterClosed().subscribe(result => {
       if (result) {
-       
       }
     });
   }
+  showFile(file) {
+    this.fileviewdialogRef = this.dialog.open(ShowuploadfileComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'uploadfilecomponentclass'],
+      disableClose: true,
+      data: {
+        file: file,
+        source: 'mr'
+      }
+    });
+    this.fileviewdialogRef.afterClosed().subscribe(result => {
+      if (result) {
 
- 
-showFile(file){
-  //let type = file.type.split("/");
-  //console.log(type[0]);
-  this.fileviewdialogRef = this.dialog.open(ShowuploadfileComponent, {
-    width: '50%',
-    panelClass: ['popup-class', 'commonpopupmainclass', 'uploadfilecomponentclass'],
-    disableClose: true,
-    data: {
-      file: file,
-      source: 'mr'
-    }
-  });
-  this.fileviewdialogRef.afterClosed().subscribe(result => {
-    if (result) {
-
-    }
-  });
-}
-  
-
+      }
+    });
+  }
   somethingChanged() {
     this.showSave = true;
   }
   changemsgDisplayType(type) {
     this.msgDisplay = type;
-    
+
   }
-   scrollToTop() {
-    // this.chekinSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  scrollToTop() {
     window.scroll({
       top: 0,
       left: 0,
@@ -293,8 +248,5 @@ showFile(file){
     });
   }
   tabChange(event) {
-   
-    //this.loading = true;
   }
-
 }

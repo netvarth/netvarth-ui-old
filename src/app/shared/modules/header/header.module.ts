@@ -1,30 +1,34 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MaterialModule } from '../common/material.module';
-// import { SearchModule } from '../search/search.module';
 import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
-
-// import { MatMenuModule } from '@angular/material/menu';
-// import { MatIconModule } from '@angular/material/icon';
 import { LazyModule } from '../../modules/lazy-load/lazy.module';
-
 import { HeaderComponent } from './header.component';
-// import { SearchPopularMoreoptionsModule } from '../search-popular-moreoptions/search-popular-moreoptions.module';
 import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
+import { LoginModule } from '../../components/login/login.module';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
     imports: [
         CapitalizeFirstPipeModule,
         CommonModule,
         RouterModule,
-        MaterialModule,
-        // SearchModule,
-        // SearchPopularMoreoptionsModule,
         LoadingSpinnerModule,
-        LazyModule
-        // MatMenuModule,
-        //  MatIconModule
+        LazyModule,
+        LoginModule,
+        MatDialogModule,
+        ScrollToModule,
+        MatProgressSpinnerModule,
+        MatTooltipModule,
+        MatIconModule,
+        MatMenuModule,
+        MatButtonModule
     ],
     declarations: [HeaderComponent],
     exports: [HeaderComponent]

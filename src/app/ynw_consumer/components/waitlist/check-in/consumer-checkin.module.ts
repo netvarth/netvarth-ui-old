@@ -2,7 +2,6 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/cor
 import { ConsumerCheckinComponent } from './consumer-checkin.component';
 import { CommonModule } from '@angular/common';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
-import { CheckinConfirmPopupComponent } from './checkin-confirm-popup/checkin-confirm-popup.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -10,6 +9,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RouterModule, Routes } from '@angular/router';
 import { ServiceDetailModule } from '../../../../shared/components/service-detail/service-detail.module';
+import { JcCouponNoteModule } from '../../../../ynw_provider/components/jc-coupon-note/jc-coupon-note.module';
 const routes: Routes = [
     { path: '', component: ConsumerCheckinComponent},
     { path: 'payment/:id', loadChildren: ()=> import('./payment/payment.module').then(m=>m.ConsumerCheckinPaymentModule) },
@@ -19,8 +19,7 @@ const routes: Routes = [
 ];
 @NgModule({
     declarations: [
-        ConsumerCheckinComponent,
-        CheckinConfirmPopupComponent
+        ConsumerCheckinComponent
     ],
     imports: [
         CommonModule,
@@ -31,10 +30,8 @@ const routes: Routes = [
         MatTooltipModule,
         MatCheckboxModule,
         ServiceDetailModule,
+        JcCouponNoteModule,
         [RouterModule.forChild(routes)]
-    ],
-    entryComponents: [
-        CheckinConfirmPopupComponent
     ],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,

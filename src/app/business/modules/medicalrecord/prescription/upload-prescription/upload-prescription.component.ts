@@ -82,7 +82,7 @@ export class UploadPrescriptionComponent implements OnInit {
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private medicalrecord_service: MedicalrecordService) {
-      this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.activatedRoute.queryParams.subscribe(queryParams => {
       if (queryParams.mode) {
         const type = queryParams.mode;
@@ -91,9 +91,7 @@ export class UploadPrescriptionComponent implements OnInit {
         }
       }
     });
-
   }
-
   ngOnInit() {
     this.patientDetails = this.medicalrecord_service.getPatientDetails();
     if (this.patientDetails.memberJaldeeId) {
@@ -109,37 +107,33 @@ export class UploadPrescriptionComponent implements OnInit {
     if (this.mrId) {
       this.getMrprescription(this.mrId);
     }
-
-
   }
   goBack() {
     this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
   }
-
   getMrprescription(mrId) {
     this.provider_services.getMRprescription(mrId)
       .subscribe((data) => {
-        if(Object.keys(data).length !== 0 && data.constructor === Object){
-        this.uploadImages = data['prescriptionsList'];
-        console.log(data);
-        this.image_list_popup = [];
-        for (const pic of this.uploadImages) {
-          const imgdet = { 'name': pic.originalName, 'keyName': pic.keyName, 'size': pic.imageSize, 'view': true , 'url': pic.url , 'type': pic.type};
-          this.selectedMessage.files.push(imgdet);
-          const imgobj = new Image(0,
-            { // modal
-              img: imgdet.url,
-              description: ''
-            });
-          this.image_list_popup.push(imgobj);
+        if (Object.keys(data).length !== 0 && data.constructor === Object) {
+          this.uploadImages = data['prescriptionsList'];
+          console.log(data);
+          this.image_list_popup = [];
+          for (const pic of this.uploadImages) {
+            const imgdet = { 'name': pic.originalName, 'keyName': pic.keyName, 'size': pic.imageSize, 'view': true, 'url': pic.url, 'type': pic.type };
+            this.selectedMessage.files.push(imgdet);
+            const imgobj = new Image(0,
+              { // modal
+                img: imgdet.url,
+                description: ''
+              });
+            this.image_list_popup.push(imgobj);
+          }
+          console.log(this.selectedMessage.files);
         }
-        console.log(this.selectedMessage.files);
-      }
-    },
+      },
         error => {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
-
   }
   openImageModalRow(image: Image) {
     console.log(image);
@@ -153,7 +147,6 @@ export class UploadPrescriptionComponent implements OnInit {
   onButtonBeforeHook() {
   }
   onButtonAfterHook() { }
-
   filesSelected(event) {
     const input = event.target.files;
     if (input) {
@@ -188,7 +181,6 @@ export class UploadPrescriptionComponent implements OnInit {
     imgsize = Math.round((val / 1024));
     return imgsize;
   }
-
   showimgPopup(file) {
     console.log(file);
     if (file.view) {
@@ -206,10 +198,8 @@ export class UploadPrescriptionComponent implements OnInit {
       });
     } else {
       console.log("in else");
-      const fileselected = { url: '', title: '' } ;
-      //fileselected.url 
-     // const blob = this.sharedfunctionObj.b64toBlobforSign() ;
-     fileselected.url = this.selectedMessage.base64[0];
+      const fileselected = { url: '', title: '' };
+      fileselected.url = this.selectedMessage.base64[0];
       fileselected.title = 'Upload Prescription';
       console.log(fileselected);
       this.imagesviewdialogRef = this.dialog.open(ImagesviewComponent, {
@@ -225,16 +215,11 @@ export class UploadPrescriptionComponent implements OnInit {
       });
     }
   }
-
- 
-
   saveImages() {
     this.disable = true;
-
     for (let ia = 0; ia < this.selectedMessage.files.length; ia++) {
       if (this.selectedMessage.files[ia].view !== true) {
         this.temarry.files.push(this.selectedMessage.files[ia]);
-
       }
     }
     console.log(this.temarry.files);
@@ -258,7 +243,7 @@ export class UploadPrescriptionComponent implements OnInit {
     if (this.mrId) {
       this.uploadMrPrescription(this.mrId, submit_data);
     } else {
-      let passingId ;
+      let passingId;
       if (this.bookingType === 'FOLLOWUP') {
         passingId = this.patientId;
       } else {
@@ -275,7 +260,6 @@ export class UploadPrescriptionComponent implements OnInit {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
-
   }
   uploadMrPrescription(id, submit_data) {
     this.provider_services.uploadMRprescription(id, submit_data)
@@ -292,14 +276,13 @@ export class UploadPrescriptionComponent implements OnInit {
   }
   deleteTempImage(img, index) {
     this.showSave = true;
-
     this.removeprescriptiondialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
         'message': 'Do you really want to remove the prescription?',
-        'type':'prescription'
+        'type': 'prescription'
       }
     });
     this.removeprescriptiondialogRef.afterClosed().subscribe(result => {
@@ -318,10 +301,7 @@ export class UploadPrescriptionComponent implements OnInit {
         }
       }
     });
-
-   
   }
-
   somethingChanged() {
     this.showSave = true;
   }
@@ -335,17 +315,10 @@ export class UploadPrescriptionComponent implements OnInit {
         userId: this.userId
       }
     });
-
     this.sharedialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log(result);
-
-
       }
-
-
     });
-
   }
-
 }

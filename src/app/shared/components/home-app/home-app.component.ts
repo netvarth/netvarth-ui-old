@@ -36,8 +36,6 @@ export class HomeAppComponent implements OnInit, OnDestroy {
   signup_here = '';
   evnt;
   constructor(
-    // public dialogRef: MatDialogRef<LoginComponent>,
-    // @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
@@ -48,11 +46,6 @@ export class HomeAppComponent implements OnInit, OnDestroy {
     private groupService: GroupStorageService,
     @Inject(DOCUMENT) public document
   ) {
-    // if (this.shared_functions.checkLogin()) {
-    //   this.shared_functions.logout();
-    // }
-    // this.test_provider = data.test_account;
-    // this.is_provider = data.is_provider || 'true';
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (router.url === '\/') {
@@ -82,21 +75,10 @@ export class HomeAppComponent implements OnInit, OnDestroy {
     });
   }
   ngOnInit() {
-    // this.moreParams = this.data.moreparams;
     const body = document.getElementsByTagName('body')[0];
     body.classList.add('parent-cont');
     this.createForm();
     this.api_loading = false;
-    // if (this.data.is_provider === 'true') {
-    //   this.signup_here = 'Want to become a Service Provider? ';
-    // } else if (this.data.is_provider === 'false') {
-    //   this.signup_here = 'Want to become a Jaldee Customer? ';
-    // }
-    // if (this.data.type === 'provider') {
-    //   this.heading = 'Service Provider Login';
-    // } else if (this.data.type === 'consumer') {
-    //   this.heading = 'Jaldee Customer Login';
-    // }
   }
   ngOnDestroy() {
     const body = document.getElementsByTagName('body')[0];
@@ -152,7 +134,6 @@ export class HomeAppComponent implements OnInit, OnDestroy {
     };
     const cVersion = version.desktop;
     this.api_loading = true;
-    // if (this.data.type === 'provider') {
     post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
     this.shared_functions.doLogout().then(
       ()=> {
@@ -161,11 +142,7 @@ export class HomeAppComponent implements OnInit, OnDestroy {
           () => {
             this.lStorageService.setitemonLocalStorage('version', cVersion);
             this.router.navigate(['/provider']);
-           // this.dialogRef.close();
-          //  const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
-          //  this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
            setTimeout(() => {
-             // this.dialogRef.close();
            }, projectConstants.TIMEOUT_DELAY_SMALL);
           },
           error => {
@@ -185,21 +162,8 @@ export class HomeAppComponent implements OnInit, OnDestroy {
     this.step = 1;
   }
   handleSignup() {
-    //   if (this.moreParams && (this.moreParams['source'] === 'searchlist_checkin' || this.moreParams['source'] === 'business_page')) {
-    //     this.dialogRef.close('showsignup');
-    //   } else {
-    //     this.dialogRef.close('showsignupfromlogin'); // closing the signin window
-    //   }
   }
   doSignup() {
-    // const dialogReflog = this.dialog.open(SignUpComponent, {
-    //   width: '50%',
-    //   panelClass: ['signupmainclass', 'popup-class'],
-    //   disableClose: true,
-    //   data: { is_provider: 'true' }
-    // });
-    // dialogReflog.afterClosed().subscribe(() => {
-    // });
     this.router.navigate(['business/signup']);
   }
   handlekeyup(ev) {

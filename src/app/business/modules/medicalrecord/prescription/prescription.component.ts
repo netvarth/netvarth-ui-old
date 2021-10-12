@@ -243,23 +243,6 @@ export class PrescriptionComponent implements OnInit {
     this.addDrugdialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.saveRx(result);
-    //     setTimeout(() => {       
-    //     const addnotedialogRef = this.dialog.open(AddNoteComponent, {
-    //       width: '50%',
-    //       panelClass: ['popup-class', 'commonpopupmainclass'],
-    //       disableClose: true,
-    //       data: {
-    //         message:''
-    //       }
-    //   });
-    //   addnotedialogRef.afterClosed().subscribe(result1 => {
-    //       if(result1){
-    //         console.log(result1);
-    //         this.note = result1.message;
-    //       }
-    //       
-    //   });
-    // }, 500);
       }
     });
   }

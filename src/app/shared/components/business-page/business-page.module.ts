@@ -13,6 +13,8 @@ import { AddInboxMessagesModule } from "../add-inbox-messages/add-inbox-messages
 import { JDNDetailModule } from "../jdn-detail/jdn-detail.module";
 import { CouponsModule } from "../coupons/coupons.module";
 import { ServiceDetailModule } from "../service-detail/service-detail.module";
+import { ConsumerJoinModule } from "../../../ynw_consumer/components/consumer-join/join.component.module";
+import { ConfirmBoxModule } from "../confirm-box/confirm-box.module";
 @NgModule({
     imports: [
         CommonModule,
@@ -27,7 +29,9 @@ import { ServiceDetailModule } from "../service-detail/service-detail.module";
         AddInboxMessagesModule,
         JDNDetailModule,
         CouponsModule,
-        ServiceDetailModule
+        ServiceDetailModule,
+        ConsumerJoinModule,
+        ConfirmBoxModule
     ],
     declarations: [
         BusinessPageComponent,

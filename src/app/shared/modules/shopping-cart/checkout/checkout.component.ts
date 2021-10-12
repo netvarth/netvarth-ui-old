@@ -20,7 +20,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
 import { Messages } from '../../../constants/project-messages';
 import { FormMessageDisplayService } from '../../form-message-display/form-message-display.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
-import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
+import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-coupon-note/jc-coupon-note.component';
 import { S3UrlProcessor } from '../../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../../node_modules/subsink';
 import { DomSanitizer } from '@angular/platform-browser';

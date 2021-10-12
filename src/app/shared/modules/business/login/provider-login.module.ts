@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { providerLoginRoutingModule } from './provider-login.routing.module';
 import { MatInputModule } from '@angular/material/input';
+import { LoginModule } from '../../../../shared/components/login/login.module';
 @NgModule({
     imports: [
        CommonModule,
@@ -20,7 +21,8 @@ import { MatInputModule } from '@angular/material/input';
        MatFormFieldModule,
        MatInputModule,
        MatDialogModule,
-       providerLoginRoutingModule
+       providerLoginRoutingModule,
+       LoginModule
     ],
     declarations: [
         ProviderLoginComponent

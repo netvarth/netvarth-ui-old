@@ -22,7 +22,8 @@ const routes: Routes = [
         MatButtonModule,
         ConfirmBoxModule,
         CapitalizeFirstPipeModule,
-        CommonModule
+        CommonModule,
+        ConfirmBoxModule
     ],
     declarations: [
         MembersComponent

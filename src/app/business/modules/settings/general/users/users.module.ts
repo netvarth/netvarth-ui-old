@@ -15,6 +15,7 @@ import { PagerModule } from '../../../../../shared/modules/pager/pager.module';
 import { OrderModule } from 'ngx-order-pipe';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { userContactInfoComponent } from './user-contact-info/user-contact-info.component';
+import { ShowMessagesModule } from '../../../show-messages/show-messages.module';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { userContactInfoComponent } from './user-contact-info/user-contact-info.
         Nl2BrPipeModule,
         PagerModule,
         OrderModule,
-        NgxIntlTelInputModule
+        NgxIntlTelInputModule,
+        ShowMessagesModule
 
     ],
     providers: [UserDataStorageService],

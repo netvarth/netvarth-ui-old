@@ -14,8 +14,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { ConfirmPaymentBoxComponent } from '../../../../ynw_provider/shared/component/confirm-paymentbox/confirm-paymentbox.component';
 import { ActivatedRoute } from '@angular/router';
-import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
-import { ConfirmPatmentLinkComponent } from '../../../../ynw_provider/shared/component/confirm-paymentlink/confirm-paymentlink.component';
+import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-coupon-note/jc-coupon-note.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
@@ -1490,17 +1489,17 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
   }
   paymentlink() {
-    this.dialog.open(ConfirmPatmentLinkComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        emailId: this.emailId,
-        mobilenumber: this.mobilenumber,
-        uuid: this.uuid,
-        countryCode: this.countryCode
-      }
-    });
+    // this.dialog.open(ConfirmPaymentLinkComponent, {
+    //   width: '50%',
+    //   panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+    //   disableClose: true,
+    //   data: {
+    //     emailId: this.emailId,
+    //     mobilenumber: this.mobilenumber,
+    //     uuid: this.uuid,
+    //     countryCode: this.countryCode
+    //   }
+    // });
   }
 
   changeDate(time) {

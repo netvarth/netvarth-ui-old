@@ -9,6 +9,7 @@ import { FormMessageDisplayModule } from '../../../../../shared/modules/form-mes
 import { DiscountRoutingModule } from './discount.routing.module';
 import { DiscountComponent } from './discount.component';
 import { DiscountDetailsComponent } from './details/discountdetails.component';
+import { ConfirmBoxModule } from '../../../../../shared/components/confirm-box/confirm-box.module';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { DiscountDetailsComponent } from './details/discountdetails.component';
         GalleryModule,
         LoadingSpinnerModule,
         FormMessageDisplayModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        ConfirmBoxModule
     ],
     exports: [DiscountComponent]
 })

@@ -14,8 +14,6 @@ import { WordProcessor } from '../../../../../shared/services/word-processor.ser
 })
 
 export class AddNoteComponent implements OnInit {
-
-  
   provider_note_cap = Messages.PROVIDER_NOTE_CAP;
   note_placeholder = 'Instructions';
   cancel_btn = Messages.CANCEL_BTN;
@@ -23,7 +21,7 @@ export class AddNoteComponent implements OnInit {
   amForm: FormGroup;
   api_error = null;
   api_success = null;
-  checkin_id = null; 
+  checkin_id = null;
   message = '';
   source = 'add';
   provider_label = '';
@@ -43,14 +41,12 @@ export class AddNoteComponent implements OnInit {
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
     private wordProcessor: WordProcessor
-    
   ) {
-      if(this.data.message){
-        this.message = this.data.message;
-      }
+    if (this.data.message) {
+      this.message = this.data.message;
+    }
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
   }
-
   ngOnInit() {
     this.createForm();
   }
@@ -62,7 +58,6 @@ export class AddNoteComponent implements OnInit {
   onSubmit(form_data) {
     this.disableButton = true;
     console.log(form_data);
-    // const post_data = form_data.message.trim() || '';
     if (form_data.message === '') {
       this.api_error = 'Please enter your note';
       setTimeout(() => {
@@ -72,14 +67,9 @@ export class AddNoteComponent implements OnInit {
       return;
     }
     this.dialogRef.close(form_data);
-
-
-    
   }
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
   }
-  
- 
 }

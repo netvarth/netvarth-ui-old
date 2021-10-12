@@ -15,25 +15,6 @@
             <div *ngIf="includedfrom !='phome'" class="lgo col-md-3 col-xs-5 pull-left">
                 <a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee Logo"></a>
             </div>
-            <!-- <div *ngIf="includedfrom =='phome'" class="pull-right">
-                <span class="visible-xs visible-sm hamburg">
-                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <a class="mob-nav-item" (click)="gotoproducts()"> Jaldee Products</a>
-                        <a class="mob-nav-item" (click)="gotoPricing()">Jaldee Pricing</a>
-                        <a class="mob-nav-item" (click)="gotocontactus()">Contact us</a>
-                    </mat-menu>
-                </span>
-                <ul class="navul" class="hidden-xs hidden-sm">
-                    <li class="navli" (click)="gotoproducts()"> Jaldee Products</li>
-                    <li class="navli" (click)="gotoPricing()">Jaldee Pricing</li>
-                    <li class="navli" (click)="gotosales()">Jaldee Sales</li>
-                    <li class="navli" (click)="gotocontactus()">Contact us</li>
-
-                </ul>
-            </div> -->
             <div class="tc1 col-md-3 col-xs-7 no-padding-small ml-auto"
                 *ngIf="!shared_functions.checkLogin() && includedfrom !='phome'">
                 <div class="topsignouter mgn-ntop-10" [matTooltipClass]="tooltipcls" [matTooltip]="custsignTooltip"><button
@@ -257,10 +238,6 @@
                                             <i class="icon-mobile"></i>
                                             <span>{{change_mobile}}</span>
                                         </button>
-                                        <!-- <button mat-menu-item (click)="redirectto('notification')">
-                                            <i class="icon-mobile"></i>
-                                            <span>Notifications</span>
-                                        </button> -->
                                         <button mat-menu-item (click)="redirectto('members')" *ngIf="!accountId">
                                             <i class="icon-members"></i>
                                             <span>{{family_members}}</span>

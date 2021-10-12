@@ -12,7 +12,6 @@ import { FooterModule } from '../shared/modules/footer/footer.module';
 import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
 import { LoadingSpinnerModule } from '../shared/modules/loading-spinner/loading-spinner.module';
-import { JcCouponNoteComponent } from './components/jc-Coupon-note/jc-Coupon-note.component';
 
 @NgModule({
   imports: [
@@ -29,16 +28,14 @@ import { JcCouponNoteComponent } from './components/jc-Coupon-note/jc-Coupon-not
     HomeAppComponent,
     OtpFormAppComponent,
     SetPasswordAppComponent,
-    ForgotPasswordAppComponent,
-    JcCouponNoteComponent
+    ForgotPasswordAppComponent
   ],
   exports: [],
   entryComponents: [
     HomeAppComponent,
     OtpFormAppComponent,
     SetPasswordAppComponent,
-    ForgotPasswordAppComponent,
-    JcCouponNoteComponent
+    ForgotPasswordAppComponent
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   providers : [

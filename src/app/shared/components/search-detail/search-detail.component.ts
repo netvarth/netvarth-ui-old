@@ -181,23 +181,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   selectedDepartment;
   appttime_arr: any = [];
   tooltipcls = '';
-  // customPlainGalleryRowConfig: PlainGalleryConfig = {
-  //   strategy: PlainGalleryStrategy.CUSTOM,
-  //   layout: new AdvancedLayout(-1, true)
-  // };
-  // customButtonsFontAwesomeConfig: ButtonsConfig = {
-  //   visible: true,
-  //   strategy: ButtonsStrategy.CUSTOM,
-  //   buttons: [
-  //     {
-  //       className: 'inside close-image',
-  //       type: ButtonType.CLOSE,
-  //       ariaLabel: 'custom close aria label',
-  //       title: 'Close',
-  //       fontSize: '20px'
-  //     }
-  //   ]
-  // };
   futureAllowed = true;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   checkinProviderList: any = [];
@@ -357,6 +340,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     });
   }
   setEnvironment(bypassotherfunction?) {
+
     if (this.subsector !== '' && this.subsector !== undefined && this.subsector !== 'undefined') {
       const domainobtain = this.getdomainofaSubdomain(this.subsector);
       if (domainobtain !== undefined && domainobtain) {

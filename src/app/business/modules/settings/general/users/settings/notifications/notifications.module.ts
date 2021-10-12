@@ -1,34 +1,21 @@
 import { NgModule } from '@angular/core';
-import { BreadCrumbModule } from '../../../../../../../shared/modules/breadcrumb/breadcrumb.module';
-import { MaterialModule } from '../../../../../../../shared/modules/common/material.module';
-import { FormMessageDisplayModule } from '../../../../../../../shared/modules/form-message-display/form-message-display.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoadingSpinnerModule } from '../../../../../../../shared/modules/loading-spinner/loading-spinner.module';
-import { CapitalizeFirstPipeModule } from '../../../../../../../shared/pipes/capitalize.module';
-import { CommonModule } from '@angular/common';
 import { NotificationsUserComponent } from './notifications.component';
-import { NotificationsRoutingUserModule } from './notifications.routing.module';
-import { ConsumerNotificationUserComponent } from './consumer/consumer-notifications.component';
-import { ProviderNotificationUserComponent } from './provider/provider-notifications.component';
-import { UpdateProviderNotificationsComponent } from './update-provider-notifications/update-provider-notifications.component';
-
+import { RouterModule, Routes } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { CapitalizeFirstPipeModule } from '../../../../../../../shared/pipes/capitalize.module';
+const routes: Routes = [
+  { path: '', component: NotificationsUserComponent},
+  { path: 'consumer', loadChildren: ()=> import('./consumer/consumer-notifications.module').then(m=>m.ConsumerNotificationUserModule)},
+  { path: 'provider', loadChildren: ()=> import('./provider/provider-notifications.module').then(m=>m.ProviderNotificationsUserModule)}
+];
 @NgModule({
   declarations: [
-    NotificationsUserComponent,
-    ProviderNotificationUserComponent,
-    ConsumerNotificationUserComponent,
-    UpdateProviderNotificationsComponent
+    NotificationsUserComponent
   ],
   imports: [
-    NotificationsRoutingUserModule,
-    BreadCrumbModule,
-    MaterialModule,
-    FormMessageDisplayModule,
-    FormsModule,
-    ReactiveFormsModule,
-    LoadingSpinnerModule,
-    CapitalizeFirstPipeModule,
-    CommonModule
+    [RouterModule.forChild(routes)],
+    CommonModule,
+    CapitalizeFirstPipeModule
   ],
   exports: [NotificationsUserComponent]
 })

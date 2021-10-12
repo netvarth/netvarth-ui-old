@@ -11,13 +11,12 @@ import { AddproviderAddonComponent } from '../../../../ynw_provider/components/a
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
-
 @Component({
   selector: 'app-confirm-paymentlink',
   templateUrl: './confirm-paymentlink.component.html'
 })
 
-export class ConfirmPatmentLinkComponent implements OnInit {
+export class ConfirmPaymentLinkComponent implements OnInit {
 
   mob_cap = Messages.MOBILE_NUMBER_CAP;
   first_name_cap = Messages.FIRST_NAME_CAP;
@@ -69,7 +68,7 @@ export class ConfirmPatmentLinkComponent implements OnInit {
   countryCode: any;
   mobi_number: any;
   constructor(
-    public dialogRef: MatDialogRef<ConfirmPatmentLinkComponent>,
+    public dialogRef: MatDialogRef<ConfirmPaymentLinkComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
@@ -96,13 +95,13 @@ export class ConfirmPatmentLinkComponent implements OnInit {
     this.getSMSCredits();
   }
   createForm() {
-    if(this.countryCode == '+91'){
+    if (this.countryCode == '+91') {
       this.mobi_number = this.mobilenumber
     }
     else {
       this.mobi_number = '';
     }
-    console.log( this.countryCode +"hsdgkfsgdjfgdskf");
+    console.log(this.countryCode + "hsdgkfsgdjfgdskf");
     this.amForm = this.fb.group({
       mobile_number: [this.mobi_number, Validators.compose([Validators.maxLength(10),
       Validators.minLength(10)])],
@@ -130,12 +129,6 @@ export class ConfirmPatmentLinkComponent implements OnInit {
       return this.shared_functions.isNumeric(evt);
     }
   }
-  // addmobile() {
-  //   this.alternatemobile = true;
-  // }
-  // addemail() {
-  //   this.alternateemail = true;
-  // }
   onClick(data) {
     this.dialogRef.close(data);
   }
@@ -160,61 +153,57 @@ export class ConfirmPatmentLinkComponent implements OnInit {
       this.provider_services.Paymentlink(this.pay_link)
         .subscribe(() => {
           this.dialogRef.close();
-          // this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_link);
-          this.snackbarService.openSnackBar( Messages.PROVIDER_BILL_PAYMENT_link.replace('[customer]', this.customer_label));
-         ;
+          this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_link.replace('[customer]', this.customer_label));
+          ;
         },
           error => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           });
     }
   }
-
   getSMSCredits() {
     this.provider_services.getSMSCredits().subscribe(data => {
-        this.smsCredits = data;
-        if (this.smsCredits < 5 && this.smsCredits > 0) {
-          this.is_smsLow = true;
-          this.smsWarnMsg = Messages.LOW_SMS_CREDIT;
-          this.getLicenseCorpSettings();
-        } else if (this.smsCredits === 0) {
-          this.is_smsLow = true;
-          this.is_noSMS = true;
-          this.smsWarnMsg = Messages.NO_SMS_CREDIT;
-          this.getLicenseCorpSettings();
-        } else {
-          this.is_smsLow = false;
-          this.is_noSMS = false;
-        }
+      this.smsCredits = data;
+      if (this.smsCredits < 5 && this.smsCredits > 0) {
+        this.is_smsLow = true;
+        this.smsWarnMsg = Messages.LOW_SMS_CREDIT;
+        this.getLicenseCorpSettings();
+      } else if (this.smsCredits === 0) {
+        this.is_smsLow = true;
+        this.is_noSMS = true;
+        this.smsWarnMsg = Messages.NO_SMS_CREDIT;
+        this.getLicenseCorpSettings();
+      } else {
+        this.is_smsLow = false;
+        this.is_noSMS = false;
+      }
     });
   }
   getLicenseCorpSettings() {
     this.provider_servicesobj.getLicenseCorpSettings().subscribe(
-        (data: any) => {
-            this.corpSettings = data;
-        }
+      (data: any) => {
+        this.corpSettings = data;
+      }
     );
-}
+  }
   gotoSmsAddon() {
     this.dialogRef.close();
     if (this.corpSettings && this.corpSettings.isCentralised) {
       this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
-  } else {
+    } else {
       this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
-          width: '50%',
-          data: {
-              type: 'addons'
-          },
-          panelClass: ['popup-class', 'commonpopupmainclass'],
-          disableClose: true
+        width: '50%',
+        data: {
+          type: 'addons'
+        },
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true
       });
       this.addondialogRef.afterClosed().subscribe(result => {
         if (result) {
-         this.getSMSCredits();
+          this.getSMSCredits();
         }
       });
+    }
   }
-  }
-
 }
-

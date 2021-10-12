@@ -17,6 +17,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ServiceViewComponent } from './service-view.component';
 import { ServiceViewRoutingModule } from './service-view.routing.module';
 import { CheckinHistoryListModule } from '../../../../shared/modules/consumer-checkin-history-list/components/checkin-history-list/checkin-history-list.module';
+import { ConsumerJoinModule } from '../../../../ynw_consumer/components/consumer-join/join.component.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -35,7 +36,8 @@ import { CheckinHistoryListModule } from '../../../../shared/modules/consumer-ch
         TruncateModule,
         CardModule,
         MatDialogModule,
-        ServiceViewRoutingModule
+        ServiceViewRoutingModule,
+        ConsumerJoinModule
     ],
     declarations: [
         ServiceViewComponent

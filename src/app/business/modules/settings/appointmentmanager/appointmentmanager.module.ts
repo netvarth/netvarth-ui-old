@@ -15,6 +15,7 @@ import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { CheckinAddMemberModule } from '../../../../shared/modules/checkin-add-member/checkin-add-member.module';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { QuestionnaireModule } from '../../../../shared/components/questionnaire/questionnaire.module';
+import { ShowMessagesModule } from '../../show-messages/show-messages.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -31,7 +32,8 @@ import { QuestionnaireModule } from '../../../../shared/components/questionnaire
         OwlModule,
         CapitalizeFirstPipeModule,
         CheckinAddMemberModule,
-        QuestionnaireModule
+        QuestionnaireModule,
+        ShowMessagesModule
     ],
     declarations: [
         AppointmentmanagerComponent

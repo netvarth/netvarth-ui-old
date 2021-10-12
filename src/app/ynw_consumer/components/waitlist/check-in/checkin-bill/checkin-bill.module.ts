@@ -9,6 +9,7 @@ import { CapitalizeFirstPipeModule } from "../../../../../shared/pipes/capitaliz
 import { HeaderModule } from "../../../../../shared/modules/header/header.module";
 import { LoadingSpinnerModule } from "../../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { ConsumerCheckinBillComponent } from "./checkin-bill.component";
+import { JcCouponNoteModule } from "../../../../../ynw_provider/components/jc-coupon-note/jc-coupon-note.module";
 const routes: Routes = [
     { path: '', component: ConsumerCheckinBillComponent }
 ];
@@ -22,6 +23,7 @@ const routes: Routes = [
         HeaderModule,
         MatCheckboxModule,
         FormsModule,
+        JcCouponNoteModule,
         CapitalizeFirstPipeModule
     ],
     exports:[ConsumerCheckinBillComponent],

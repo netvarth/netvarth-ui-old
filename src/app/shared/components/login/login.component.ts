@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
@@ -21,7 +21,7 @@ import { WordProcessor } from '../../services/word-processor.service';
   selector: 'app-login',
   templateUrl: './login.component.html'
 })
-export class LoginComponent implements OnInit, AfterViewInit {
+export class LoginComponent implements OnInit {
   mobile_no_cap = Messages.MOBILE_NUMBER_CAP;
   mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
   password_cap = Messages.PASSWORD_CAP;
@@ -34,8 +34,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
   is_provider = 'true';
   step = 1;
   moreParams = [];
-  // countryCodes = projectConstantsLocal.CONSUMER_COUNTRY_CODES;
-  // selectedCountryCode;
   api_loading = true;
   show_error = false;
   test_provider = null;
@@ -47,7 +45,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   SearchCountryField = SearchCountryField;
   selectedCountry = CountryISO.India;
   PhoneNumberFormat = PhoneNumberFormat;
-	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+  preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
   phoneError: string;
   chatId: ArrayBuffer;
   tele_num: any;
@@ -72,15 +70,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.test_provider = data.test_account;
     this.is_provider = data.is_provider || 'true';
   }
-  ngAfterViewInit() {
-   
-    // this.loginForm.controls.phone.setDialCode();
-    // this.cd.detectChanges();
-  }
   ngOnInit() {
-    // if (this.countryCodes.length !== 0) {
-    //   this.selectedCountryCode =this.countryCodes[0].value;
-    // }
     this.moreParams = this.data.moreparams;
     this.createForm();
     this.api_loading = false;
@@ -114,7 +104,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this.phoneError = 'Phone number is invalid';
       return false;
     }
-    // const pN = this.loginForm.get('phone').value.e164Number;
     const pW = this.document.getElementById('password').value;
     if (pW === '') {
       if (this.document.getElementById('password')) {
@@ -135,12 +124,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
       }
     }
     let loginId = pN;
-    if(pN.startsWith(dialCode)) {
+    if (pN.startsWith(dialCode)) {
       loginId = pN.split(dialCode)[1];
     }
-    // if (email !== '') {
-    //   loginId = email;
-    // }
     const ob = this;
     const post_data = {
       'countryCode': dialCode,
@@ -152,14 +138,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.api_loading = true;
     if (this.data.type === 'provider') {
       post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
-      // this.shared_functions.clearSessionStorage();
       this.sessionStorageService.clearSessionStorage();
       this.shared_functions.providerLogin(post_data)
         .then(
           () => {
             const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
             this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
-            // this.dialogRef.close();
             setTimeout(() => {
               this.dialogRef.close();
             }, projectConstants.TIMEOUT_DELAY_SMALL);
@@ -183,22 +167,21 @@ export class LoginComponent implements OnInit, AfterViewInit {
               const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
               this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
               this.lStorageService.setitemonLocalStorage('qrp', data.password);
-              
+
               this.dialogRef.close('success');
               this.lStorageService.setitemonLocalStorage('showTelePop', 'true');
             },
             error => {
-             if (error.status === 401 && error.error === 'Session already exists.') {
-               this.shared_functions.doLogout().then( () => {
-                 this.onSubmit(data);
-               });
-             } else {
-              ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
-            }
+              if (error.status === 401 && error.error === 'Session already exists.') {
+                this.shared_functions.doLogout().then(() => {
+                  this.onSubmit(data);
+                });
+              } else {
+                ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+              }
               this.api_loading = false;
             }
           );
-         
       }
     }
   }
@@ -241,5 +224,3 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/business']);
   }
 }
-
-

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LogoutComponent } from './shared/components/logout/logout.component';
 import { AuthGuardConsumer, AuthGuardHome, AuthGuardProvider } from './shared/guard/auth.guard';
-import { ConsumerJoinComponent } from './ynw_consumer/components/consumer-join/join.component';
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', loadChildren: () => import('./shared/components/admin/login/login.module').then(m => m.AdminLoginModule) },
     {
@@ -28,7 +27,6 @@ const routes: Routes = [
     { path: 'maintenance', loadChildren: () => import('./shared/modules/maintenance/maintenance.module').then(m => m.MaintenanceModule) },
     { path: 'manage/:id', loadChildren: () => import('./shared/components/manage-provider/manage-provider.module').then(m => m.ManageProviderModule) },
     { path: 'status/:id', loadChildren: () => import('./shared/components/status-check/check-status.module').then(m => m.CheckStatusModule) },
-    { path: 'consumer-join', component: ConsumerJoinComponent },
     { path: 'pay/:id', loadChildren: () => import('./shared/components/payment-link/payment-link.module').then(m => m.PaymentLinkModule) },
     { path: 'order/shoppingcart', loadChildren: () => import('./shared/modules/shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule) },
     { path: 'order/shoppingcart/checkout', loadChildren: () => import('./shared/modules/shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule) },

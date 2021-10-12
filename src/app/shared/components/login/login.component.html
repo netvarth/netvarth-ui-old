@@ -16,10 +16,8 @@
         </div>
         <div class="form-group">
             <mat-label for="password">Password</mat-label>
-            <!-- <mat-form-field> -->
                 <input type="password"  class="form-control" id="password" placeholder=""
                     formControlName="password" autocomplete="off" (keyup)="handlekeyup($event)">
-            <!-- </mat-form-field> -->
             <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'password') && show_error"
                 errorMsg="Password is required">
             </app-field-error-display>
@@ -34,7 +32,6 @@
         <a style="float: right; margin-top:10px;" class="forgotpass" (click)="doForgotPassword()">Forgot Password ?</a>
         <a style="float: right; margin-top:10px; padding-right: 20px" class="forgotpass" (click)="handleSignup()">Sign
             Up</a>
-        <!-- <div class="newuser" (click)="">{{signup_here}}<span>Signup here</span></div> -->
         <div *ngIf="is_provider=='false'">If you are a Service Provider / Business Owner
             <div><a style="cursor:pointer" class="normal-link" (click)="goBusinessClicked()">Go to Jaldee Business</a>
             </div>

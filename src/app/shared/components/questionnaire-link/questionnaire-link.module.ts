@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ConsumerJoinModule } from '../../../ynw_consumer/components/consumer-join/join.component.module';
 import { LoadingSpinnerModule } from '../../modules/loading-spinner/loading-spinner.module';
 import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 import { QuestionnaireModule } from '../questionnaire/questionnaire.module';
@@ -15,7 +16,8 @@ import { QuestionnaireLinkRoutingModule } from './questionnaire-link.routing.mod
         QuestionnaireLinkRoutingModule,
         LoadingSpinnerModule,
         QuestionnaireModule,
-        CapitalizeFirstPipeModule
+        CapitalizeFirstPipeModule,
+        ConsumerJoinModule
     ],
     exports: [QuestionnaireLinkComponent]
 })

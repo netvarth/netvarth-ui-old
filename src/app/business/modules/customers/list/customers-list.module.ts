@@ -13,6 +13,7 @@ import { VoicecallDetailsSendModule } from "../../appointments/voicecall-details
 import { CustomersActionsModule } from "../customer-actions/customer-actions.module";
 import { CustomersListComponent } from "./customers-list.component";
 import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
+import { LastVisitModule } from "../../medicalrecord/last-visit/last-visit.module";
 
 @NgModule({
     imports: [
@@ -28,7 +29,8 @@ import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.m
         CustomersActionsModule,
         ConfirmBoxModule,
         LoadingSpinnerModule,
-        CapitalizeFirstPipeModule
+        CapitalizeFirstPipeModule,
+        LastVisitModule
     ],
     exports: [CustomersListComponent],
     declarations: [CustomersListComponent]

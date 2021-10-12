@@ -13,6 +13,7 @@ import { CreateCouponComponent } from './create-coupon/create-coupon.component';
 import { PublishCouponComponent } from './publish-coupon/publish-coupon.component';
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
 import { PublishDialogComponent } from './publish-coupon/publish-dialog/publish-dialog.component';
+import { ConfirmBoxModule } from '../../../../../shared/components/confirm-box/confirm-box.module';
 
 @NgModule({
     declarations: [
@@ -32,7 +33,8 @@ import { PublishDialogComponent } from './publish-coupon/publish-dialog/publish-
         LoadingSpinnerModule,
         FormMessageDisplayModule,
         ReactiveFormsModule,
-        CapitalizeFirstPipeModule
+        CapitalizeFirstPipeModule,
+        ConfirmBoxModule
     ],
     entryComponents: [
         PublishDialogComponent,

@@ -42,6 +42,7 @@ import { QuestionnaireListPopupModule } from '../questionnaire-list-popup/questi
 import { LocationUpdateComponent } from './location-update/location-update.component';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { AttachmentPopupModule } from '../../../shared/components/attachment-popup/attachment-popup.module';
+import { ConfirmBoxModule } from '../../../ynw_provider/shared/component/confirm-box/confirm-box.module';
 
 
 @NgModule({
@@ -79,7 +80,8 @@ import { AttachmentPopupModule } from '../../../shared/components/attachment-pop
         AssignTeamModule,
         QuestionnaireListPopupModule,
         NgxIntlTelInputModule,
-        AttachmentPopupModule
+        AttachmentPopupModule,
+        ConfirmBoxModule
     ],
     declarations: [
         CheckInsComponent,
