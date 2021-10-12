@@ -990,13 +990,13 @@ export const projectConstantsLocal = {
     ALERT: 'Alert',
     BOOKINGS: 'Bookings'
   },
-  // UIS3PATH: "https://jaldeeuiscale.s3.ap-south-1.amazonaws.com/",
-  UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/",
-  /** Production Medi Expat test*/
+  UIS3PATH: "https://jaldeeuiscale.s3.ap-south-1.amazonaws.com/",
+  // UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/",
+  /** Production viswasamadha test*/
   // PROVIDER_ACCOUNT_ID: 103847,
   // ACCOUNTENC_ID: '12r45b0',
   // S3UNIQUE_ID: '128495'
-  /** Production Medi Expat  Real*/
+  /** Production viswasamadha Real*/
   PROVIDER_ACCOUNT_ID: 127000,
   ACCOUNTENC_ID: '93a28i3',
   S3UNIQUE_ID: '153234'
