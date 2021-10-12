@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "mediExpat": {
+    "viswasampada": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -134,18 +134,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "mediExpat:build"
+            "browserTarget": "viswasampada:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "mediExpat:build:production"
+              "browserTarget": "viswasampada:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mediExpat:build"
+            "browserTarget": "viswasampada:build"
           }
         },
         "test": {
@@ -194,30 +194,30 @@
         "ionic-cordova-serve": {
           "builder": "@ionic/angular-toolkit:cordova-serve",
           "options": {
-            "cordovaBuildTarget": "mediExpat:ionic-cordova-build",
-            "devServerTarget": "mediExpat:serve"
+            "cordovaBuildTarget": "viswasampada:ionic-cordova-build",
+            "devServerTarget": "viswasampada:serve"
           },
           "configurations": {
             "production": {
-              "cordovaBuildTarget": "mediExpat:ionic-cordova-build:production",
-              "devServerTarget": "mediExpat:serve:production"
+              "cordovaBuildTarget": "viswasampada:ionic-cordova-build:production",
+              "devServerTarget": "viswasampada:serve:production"
             }
           }
         },
         "ionic-cordova-build": {
           "builder": "@ionic/angular-toolkit:cordova-build",
           "options": {
-            "browserTarget": "mediExpat:build"
+            "browserTarget": "viswasampada:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "mediExpat:build:production"
+              "browserTarget": "viswasampada:build:production"
             }
           }
         }
       }
     },
-    "mediExpat-e2e": {
+    "viswasampada-e2e": {
       "root": "e2e",
       "sourceRoot": "e2e",
       "projectType": "application",
@@ -226,7 +226,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "mediExpat:serve"
+            "devServerTarget": "viswasampada:serve"
           }
         },
         "lint": {
@@ -243,7 +243,7 @@
       }
     }
   },
-  "defaultProject": "mediExpat",
+  "defaultProject": "viswasampada",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
