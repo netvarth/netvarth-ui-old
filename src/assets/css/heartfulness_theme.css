@@ -16,8 +16,8 @@
   }
   
   .mat-button {
-    background-color: #FD7029 !important;
-    background: #FD7029 !important;
+    background-color: #16254b !important;
+    background: #16254b !important;
     /* background-color: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important; */
   }
   .panel {
@@ -25,7 +25,7 @@
   }
   
 .panel-heading.top-row {
-  background: #FD7029 0% 0% no-repeat padding-box !important;
+  background: #16254b 0% 0% no-repeat padding-box !important;
     /* background: #522e5a 0% 0% no-repeat padding-box !important; */
     height: 50px !important;
   }

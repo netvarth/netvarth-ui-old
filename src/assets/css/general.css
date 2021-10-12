@@ -11258,7 +11258,7 @@ img.busN-logo {
 }
 
 .panel-heading.top-row {
-  background: #f1b51c !important;
+  background: #16254b !important;
 }
 
 .consumer-appthistory .table>tbody>tr>td, .consumer-appthistory .table>tbody>tr>th, .consumer-appthistory .table>tfoot>tr>td, .consumer-appthistory .table>tfoot>tr>th, .consumer-appthistory .table>thead>tr>td, .consumer-appthistory .table>thead>tr>th {
@@ -11831,7 +11831,8 @@ input[type=number]::-webkit-outer-spin-button {
   border-bottom: 1px solid #183e7a;
 }
 .checkin-details .stats-bar {
-  background: #eb9a71ee !important;
+  background: #16254b !important;
+  color: white;
   padding: 10px;
 }
 .checkin-details .status-label {
@@ -11867,9 +11868,9 @@ input[type=number]::-webkit-outer-spin-button {
   font-size: 0.88rem;
 }
 .checkin-details .qrcode img {
-  border: 1.5px solid #eb9a71ee;
+  border: 1.5px solid #16254b;
   width: 130px;
-  box-shadow: 5px 5px 5px 5px #eb9a71ee !important;
+  box-shadow: 5px 5px 5px 5px #16254b !important;
 }
 .checkin-details .graphics-div {
   position: absolute;

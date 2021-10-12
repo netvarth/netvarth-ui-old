@@ -1,4 +1,4 @@
-123232
+
 <section class="container no-padding-small cust-book-details">
     <div class="content p0 comn-cls checkin-details">
         <div class="row">
@@ -207,11 +207,11 @@
                                                     [fromsource]="'consumer-waitlist'"
                                                     (reloadApi)="getCommunicationHistory()"></app-inbox-list>
                                             </mat-tab>
-                                            <mat-tab label="Patient Note">
+                                            <mat-tab label="Trainer Note">
                                                 <div class="pad-10"
                                                     *ngIf="waitlist && waitlist.consumerNote && waitlist.consumerNote !== ''">{{waitlist.consumerNote}}</div>
                                                     <div class="pad-10"
-                                                    *ngIf="waitlist && (waitlist.consumerNote === '' || !waitlist.consumerNote)">No patient note found</div>
+                                                    *ngIf="waitlist && (waitlist.consumerNote === '' || !waitlist.consumerNote)">No trainer note found</div>
                                             </mat-tab>
 
                                             <!-- <mat-tab label="{{titlename}} History">
