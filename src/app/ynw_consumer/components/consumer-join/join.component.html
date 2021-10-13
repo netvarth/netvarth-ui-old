@@ -39,7 +39,7 @@
                                     autocomplete="off" (keyup)="handlekeyup($event)">
                                 <!-- </mat-form-field> -->
                                 <div style="display: flex; justify-content: space-between;">
-                                    <app-field-error-display
+                                    <app-field-error-display 
                                         [displayError]="fed_service.isFieldValid(loginForm,'password') && showError"
                                         errorMsg="Password is required">
                                     </app-field-error-display>
@@ -81,7 +81,7 @@
                                 <mat-label for="password">First Name *</mat-label>
                                 <input type="text" class="form-control" id="first_name" formControlName="first_name"
                                     (keypress)="resetApiErrors()" autocomplete="off" (blur)="onFieldBlur('first_name')">
-                                <app-field-error-display
+                                <app-field-error-display 
                                     [displayError]="fed_service.isFieldValid(loginForm,'first_name')" [errorMsgs]="fed_service.getErrorMessage(loginForm,'first_name',
                                             {
                                             'required' : 'First name is required',
@@ -93,7 +93,7 @@
                                 <mat-label for="password">Last Name *</mat-label>
                                 <input type="text" class="form-control" id="last_name" formControlName="last_name"
                                     autocomplete="off" (keypress)="resetApiErrors()" (blur)="onFieldBlur('last_name')">
-                                <app-field-error-display
+                                <app-field-error-display 
                                     [displayError]="fed_service.isFieldValid(loginForm,'last_name')" [errorMsgs]="fed_service.getErrorMessage(loginForm,'last_name',
                                         {
                                             'required' : 'Last name is required',

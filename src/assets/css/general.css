@@ -98,7 +98,7 @@ html {
   }
   
   .sts-msg.error {
-    color: #16254b !important;
+    color: red !important;
     background-color: transparent !important;
   }
   .service-detail-content.service-popup-content.mat-dialog-content {
@@ -3464,7 +3464,7 @@ figcaption {
 }
 
 .custmId .sts-msg.error {
-  color: #16254b !important;
+  color: red !important;
 }
 
 .custmIdOk {
@@ -4030,7 +4030,7 @@ footer.dashb .stp-box .alerts .stp-tbl .table tr.high td .pointr {
 }
 
 .paytm-det .sts-msg.error, .cc-det .sts-msg.error {
-  color: #16254b !important;
+  color: red !important;
 }
 
 .label-margin {
@@ -4319,7 +4319,7 @@ i.notavail {
 }
 
 .form-group .sts-msg.error {
-  color: #16254b;
+  color: red;
 }
 
 .bottom-actions-root {
@@ -7162,7 +7162,7 @@ input.jdn_ip {
 
 .pro-schedule .schedule_outer .schedulesub_outer app-field-error-display .sts-msg.error {
   padding: 10px 0px 0;
-  color: #16254b;
+  color: red;
   font-size: .75rem;
   font-weight: 500;
   text-align: left;
@@ -7519,7 +7519,7 @@ label.notifi-togl {
 
 .mobile-error app-field-error-display .sts-msg.error {
   background: white !important;
-  color: #16254b !important;
+  color: red !important;
   padding: 0px !important;
 }
 
@@ -11837,7 +11837,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .checkin-details .status-label {
   font-size: 0.7rem;
-  color: #183e7a;
+  color: white;
   font-weight: 600;
 }
 .checkin-details .stats-item {
@@ -11861,7 +11861,7 @@ input[type=number]::-webkit-outer-spin-button {
   }
 }
 .checkin-details .mat-tab-label .mat-tab-label-content {
-  color: #183e7a;
+  color: white;
   font-weight: 600;
 }
 .checkin-details .item-label-val {

@@ -327,6 +327,7 @@
 
 .service-detail-content.service-popup-content .sts-msg.error {
     text-align: left !important;
+    color: red;
 }
 
 .service-detail-content.service-popup-content .ok-button{

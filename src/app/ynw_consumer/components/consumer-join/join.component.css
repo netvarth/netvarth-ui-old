@@ -6,6 +6,9 @@
 .cust-logpg-submt {
     background-color:#16254b ;
 }
+.error {
+    color: red;
+}
 .modal-title.service-detail-title {
     display: flex;
     align-items: stretch;

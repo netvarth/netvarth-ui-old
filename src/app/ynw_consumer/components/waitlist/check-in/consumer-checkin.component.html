@@ -1043,6 +1043,7 @@
                                                             {{add_member_cap}}
                                                         </div>
                                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
+                                                            
                                                             <app-checkin-consumer-add-member [calledFrom]="'checkin'"
                                                                 (returnDetails)="handleReturnDetails($event)">
                                                             </app-checkin-consumer-add-member>
@@ -1055,13 +1056,14 @@
                                                     <button type="button" matButton
                                                         class="btn btn-primary font-weight-bold ok-button"
                                                         (click)="actionCompleted()">Ok</button>
+                                                        <div class="error-section" *ngIf="apiError !== ''">
+                                                            {{apiError}}
+                                                        </div>
+                                                        <div class="error-section success-section" *ngIf="apiSuccess !== ''">
+                                                            {{apiSuccess}}
+                                                        </div>
                                                 </div>
-                                                <div class="error-section" *ngIf="apiError !== ''">
-                                                    {{apiError}}
-                                                </div>
-                                                <div class="error-section success-section" *ngIf="apiSuccess !== ''">
-                                                    {{apiSuccess}}
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
