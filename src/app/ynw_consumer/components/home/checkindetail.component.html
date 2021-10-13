@@ -51,7 +51,7 @@
                                                 {{waitlist.queue.location.place | capitalizeFirst}}
                                             </a>
                                             <div *ngIf="waitlist.provider" class="mgn-up-10 usr-name">
-                                                <span>Provider : </span>
+                                                <span>Trainer : </span>
                                                 <span>
                                                     {{waitlist.provider.businessName | capitalizeFirst}}
                                                     <!-- {{waitlist.provider.firstName | capitalizeFirst}}
@@ -207,11 +207,11 @@
                                                     [fromsource]="'consumer-waitlist'"
                                                     (reloadApi)="getCommunicationHistory()"></app-inbox-list>
                                             </mat-tab>
-                                            <mat-tab label="Trainer Note">
+                                            <mat-tab label="Student Note">
                                                 <div class="pad-10"
                                                     *ngIf="waitlist && waitlist.consumerNote && waitlist.consumerNote !== ''">{{waitlist.consumerNote}}</div>
                                                     <div class="pad-10"
-                                                    *ngIf="waitlist && (waitlist.consumerNote === '' || !waitlist.consumerNote)">No trainer note found</div>
+                                                    *ngIf="waitlist && (waitlist.consumerNote === '' || !waitlist.consumerNote)">No student note found</div>
                                             </mat-tab>
 
                                             <!-- <mat-tab label="{{titlename}} History">
