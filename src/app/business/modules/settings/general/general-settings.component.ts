@@ -186,27 +186,6 @@ export class GeneralSettingsComponent implements OnInit {
                 });
         this.loading = false;
     }
-    // handle_liveTracking(event) {
-    //     const is_livetrack = (event.checked) ? 'Enable' : 'Disable';
-    //     this.provider_services.setLivetrack(is_livetrack)
-    //         .subscribe(
-    //             () => {
-    //                 this.snackbarService.openSnackBar('Live tracking ' + is_livetrack + 'd successfully', { ' panelclass': 'snackbarerror' });
-    //                 this.getLiveTrackStatus();
-    //             },
-    //             error => {
-    //                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //                 this.getLiveTrackStatus();
-    //             }
-    //         );
-    // }
-    // getLiveTrackStatus() {
-    //     this.provider_services.getGlobalSettings().subscribe(
-    //         (data: any) => {
-    //             this.livetrack_status = data.livetrack;
-    //             this.livetrack_statusstr = (this.livetrack_status) ? 'On' : 'Off';
-    //         });
-    // }
     doRemoveservice() {
         if (this.filterByDept) {
             this.message = 'All services created will be moved to the department named \'Default\'. You can either rename the \'Default\' department for customer visibility or add new departments and assign respective services';

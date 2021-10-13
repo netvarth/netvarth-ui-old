@@ -1,12 +1,6 @@
-<!-- <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-</section> -->
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
-             <!-- <button type="button" class="btn default profile-back" (click)="redirecToDepartments()">
-                <span class="fa fa-chevron-left">&nbsp;Back</span>
-            </button>&nbsp;&nbsp;&nbsp; -->
             <span class="fa fa-arrow-left pointer-cursor"  (click)="redirecToDepartments()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
             {{deptcaption}}
         </h5>
@@ -43,15 +37,7 @@
                                                 <mat-select (click)="deptclicked()"
                                                     placeholder="Choose Services under Department"
                                                     [formControl]="deptServices" multiple>
-                                                    <div class="dept_position">
-                                                        <!-- <mat-select-trigger>
-                                                        {{deptServices.value ? deptServices.value[0].name : ''}}
-                                                        <span *ngIf="deptServices.value?.length > 1"
-                                                            class="example-additional-selection">
-                                                            (+{{deptServices.value.length - 1}}
-                                                            {{deptServices.value?.length === 2 ? 'other' : 'others'}})
-                                                        </span>
-                                                    </mat-select-trigger> -->
+                                                    <div class="dept_position">                                                       
                                                         <mat-option *ngFor="let service of srvcArry" [value]="service">
                                                             {{service.name}}</mat-option>
                                                     </div>

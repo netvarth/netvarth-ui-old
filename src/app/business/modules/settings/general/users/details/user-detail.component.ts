@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder} from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
@@ -58,21 +58,6 @@ export class BranchUserDetailComponent implements OnInit {
     minday = new Date(1900, 0, 1);
     showPrvdrFields = false;
     type;
-    breadcrumbs_init = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: Messages.GENERALSETTINGS,
-            url: '/provider/settings/general'
-        },
-        {
-            title: 'Users',
-            url: '/provider/settings/general/users'
-        }
-    ];
-    breadcrumbs = this.breadcrumbs_init;
     actionparam;
     subDomainList: any = [];
     business_domains;
@@ -89,18 +74,16 @@ export class BranchUserDetailComponent implements OnInit {
     subsector;
     sector;
     selectedsubDomain: any = [];
-    // selected_dept;
     usercaption = 'Add User';
     showloc = false;
     locationDetails: any;
     locations: any = [];
     editloc = true;
-
     separateDialCode = true;
     SearchCountryField = SearchCountryField;
     selectedCountry = CountryISO.India;
     PhoneNumberFormat = PhoneNumberFormat;
-	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+    preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
     telegramCountry;
     whatsappCountry;
     countrycode;
@@ -131,15 +114,6 @@ export class BranchUserDetailComponent implements OnInit {
         if (this.actionparam.val) {
             this.userId = this.actionparam.val;
             this.getUserData();
-        } else {
-            const breadcrumbs = [];
-            this.breadcrumbs_init.map((e) => {
-                breadcrumbs.push(e);
-            });
-            breadcrumbs.push({
-                title: 'Add'
-            });
-            this.breadcrumbs = breadcrumbs;
         }
         const bConfig = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -150,28 +124,16 @@ export class BranchUserDetailComponent implements OnInit {
         console.log(this.sector);
         console.log(this.subsector);
         this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: this.provider_label }, { value: 'ADMIN', name: 'Admin' }];
-        // if (this.sector !== 'healthCare' && this.sector !== 'finance') {
-        //     this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: 'Provider' }, { value: 'ADMIN', name: 'Admin' }];
-        // }
-        // if (this.sector === 'finance') {
-        //     this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: 'Staff Member' }, { value: 'ADMIN', name: 'Admin' }];
-        // }
-        // if (this.sector === 'educationalInstitution') {
-        //     this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: 'MENTOR' }, { value: 'ADMIN', name: 'Admin' }];
-        // }
         if (bConfig && bConfig.bdata) {
             console.log("");
             for (let i = 0; i < bConfig.bdata.length; i++) {
                 if (user.sector === bConfig.bdata[i].domain) {
                     for (let j = 0; j < bConfig.bdata[i].subDomains.length; j++) {
-                        //  if (!bConfig.bdata[i].subDomains[j].isMultilevel) {
                         this.subDomains.push(bConfig.bdata[i].subDomains[j]);
-                        //  }
                     }
                     break;
                 }
             }
-            // this.userForm.get('selectedSubDomain').setValue(this.subDomains[0].id);
         } else {
             this.shared_services.bussinessDomains()
                 .subscribe(
@@ -206,20 +168,10 @@ export class BranchUserDetailComponent implements OnInit {
                 if (subdomain.subDomain === this.subsector) {
                     this.selectedsubDomain.push(subdomain);
                 }
-                //  else if (subdomain.subDomain === this.subsector) {
-                //     this.selectedsubDomain.push(subdomain);
-                // } else if (subdomain.subDomain === this.subsector) {
-                //     this.selectedsubDomain.push(subdomain);
-                // }
             } else if (this.sector === 'finance') {
                 if (subdomain.subDomain === this.subsector) {
                     this.selectedsubDomain.push(subdomain);
-                } 
-                // else if (subdomain.subDomain === this.subsector) {
-                //     this.selectedsubDomain.push(subdomain);
-                // } else if (subdomain.subDomain === this.subsector) {
-                //     this.selectedsubDomain.push(subdomain);
-                // }
+                }
             } else if (this.sector === 'veterinaryPetcare') {
                 if (this.subsector === 'veterinaryhospital') {
                     if (subdomain.subDomain === 'veterinarydoctor') {
@@ -230,32 +182,26 @@ export class BranchUserDetailComponent implements OnInit {
             else if (this.sector === 'retailStores') {
                 if (subdomain.subDomain === this.subsector) {
                     this.selectedsubDomain.push(subdomain);
-                } 
-                // else if (subdomain.subDomain === this.subsector) {
-                //     this.selectedsubDomain.push(subdomain);
-                // } else if (subdomain.subDomain === this.subsector) {
-                //     this.selectedsubDomain.push(subdomain);
-                // }
+                }
             } else if (this.sector === 'educationalInstitution') {
                 if (this.subsector === 'educationalTrainingInstitute') {
                     if (subdomain.subDomain === 'educationalTrainingInstitute') {
                         this.selectedsubDomain.push(subdomain);
                     }
-                }else if (this.subsector === 'schools') {
+                } else if (this.subsector === 'schools') {
                     if (subdomain.subDomain === 'schools') {
                         this.selectedsubDomain.push(subdomain);
                     }
-                }else if (this.subsector === 'colleges') {
+                } else if (this.subsector === 'colleges') {
                     if (subdomain.subDomain === 'colleges') {
                         this.selectedsubDomain.push(subdomain);
                     }
                 }
-                
-              }else if(this.sector=== 'sportsAndEntertainement'){
+            } else if (this.sector === 'sportsAndEntertainement') {
                 if (subdomain.subDomain === this.subsector) {
                     this.selectedsubDomain.push(subdomain);
-                } 
-              }
+                }
+            }
         }
     }
     createForm() {
@@ -264,46 +210,34 @@ export class BranchUserDetailComponent implements OnInit {
             last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
             gender: [''],
             employeeId: [''],
-            // phonenumber: new FormControl(undefined),
             countryCode: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)])],
             phonenumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
             dob: [''],
             email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
             countryCode_whatsapp: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)])],
             whatsappumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
-            countryCode_telegram : ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)])],
+            countryCode_telegram: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)])],
             telegramnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
-
-            //  password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
-            // selectedSubDomain: [],
-            // location : ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
-            postalCode: ['', Validators.compose([Validators.required,Validators.maxLength(6), Validators.minLength(6), Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
-
-
+            postalCode: ['', Validators.compose([Validators.required, Validators.maxLength(6), Validators.minLength(6), Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
             selectedDepartment: [],
             privileges: [''],
             bProfilePermitted: [''],
-            selectedUserType: [],
-            // address: [],
-            // state: [],
-            // city: []
+            selectedUserType: []
         });
         this.userForm.patchValue({
-            countryCode: '+91'|| null,
-            countryCode_whatsapp: '+91'|| null,
-            countryCode_telegram: '+91'|| null
-          });
+            countryCode: '+91' || null,
+            countryCode_whatsapp: '+91' || null,
+            countryCode_telegram: '+91' || null
+        });
         this.userForm.get('selectedUserType').setValue(this.userTypesFormfill[0].value);
         this.getWaitlistMgr();
     }
     getUserData() {
-        console.log("hi");
         if (this.userId) {
             this.provider_services.getUser(this.userId)
                 .subscribe(
                     res => {
                         this.user_data = res;
-                        console.log("hi");
                         if (this.actionparam.type === 'edit') {
                             this.usercaption = 'User Details';
                             this.type = this.user_data.userType;
@@ -322,24 +256,10 @@ export class BranchUserDetailComponent implements OnInit {
                                     this.type = 'Mentor';
                                 }
                             }
-                            // this.createForm();
-                            console.log("check");
                             this.updateForm();
-                            console.log("check");
                         }
-                        const breadcrumbs = [];
-                        this.breadcrumbs_init.map((e) => {
-                            breadcrumbs.push(e);
-                        });
-                        breadcrumbs.push({
-                            title: this.user_data.firstName
-                        });
-                        this.breadcrumbs = breadcrumbs;
                     }
                 );
-            // if (this.actionparam.type === 'edit') {
-            //     this.createForm();
-            //     }
         }
     }
     updateForm() {
@@ -347,48 +267,28 @@ export class BranchUserDetailComponent implements OnInit {
         if (this.user_data.userType === 'PROVIDER') {
             this.showPrvdrFields = true;
         }
-        // if(this.user_data.telegramNum){
-        //  this.telegramCountry  = this.user_data.telegramNum.countryCode.split('+')
-        // }
-        // if(this.user_data.whatsAppNum){
-        //     this.whatsappCountry  = this.user_data.whatsAppNum.countryCode.split('+')
-        // }
         console.log(this.user_data);
         console.log(this.userForm);
-       
         this.userForm.setValue({
             'first_name': this.user_data.firstName || null,
             'last_name': this.user_data.lastName || null,
             'gender': this.user_data.gender || null,
             'employeeId': this.user_data.employeeId || null,
-            'countryCode':  this.user_data.countryCode || '+91',
+            'countryCode': this.user_data.countryCode || '+91',
             'phonenumber': this.user_data.mobileNo || '',
             'dob': this.user_data.dob || null,
             'email': this.user_data.email || null,
-            // 'password': this.user_data.commonPassword || this.userForm.get('password').value,
-            // 'selectedSubDomain': this.user_data.subdomain || null,
             'selectedDepartment': this.user_data.deptId || null,
             'selectedUserType': this.user_data.userType || null,
             'privileges': this.user_data.admin || false,
             'bProfilePermitted': this.user_data.bProfilePermitted || false,
             'postalCode': this.user_data.pincode || null,
-            'countryCode_whatsapp': (this.user_data.whatsAppNum && this.user_data.whatsAppNum.countryCode) ?  this.user_data.whatsAppNum.countryCode : '+91', 
-            'whatsappumber': (this.user_data.whatsAppNum && this.user_data.whatsAppNum.number) ? this.user_data.whatsAppNum.number  : '', 
-            'countryCode_telegram': (this.user_data.telegramNum && this.user_data.telegramNum.countryCode) ?  this.user_data.telegramNum.countryCode : '+91', 
-            'telegramnumber': (this.user_data.telegramNum && this.user_data.telegramNum.number) ?  this.user_data.telegramNum.number : '', 
-
-            // 'address': this.user_data.address || null,
-            // 'state': this.user_data.state || null,
-            // 'city': this.user_data.city || null
-      
+            'countryCode_whatsapp': (this.user_data.whatsAppNum && this.user_data.whatsAppNum.countryCode) ? this.user_data.whatsAppNum.countryCode : '+91',
+            'whatsappumber': (this.user_data.whatsAppNum && this.user_data.whatsAppNum.number) ? this.user_data.whatsAppNum.number : '',
+            'countryCode_telegram': (this.user_data.telegramNum && this.user_data.telegramNum.countryCode) ? this.user_data.telegramNum.countryCode : '+91',
+            'telegramnumber': (this.user_data.telegramNum && this.user_data.telegramNum.number) ? this.user_data.telegramNum.number : '',
         });
         console.log(this.userForm);
-       
-
-        // if(this.user_data.pincode) {
-        //     this.blurPincodeQty(this.user_data.pincode);
-        // }
-
     }
     onUserSelect(event) {
         this.type = event.value;
@@ -397,11 +297,8 @@ export class BranchUserDetailComponent implements OnInit {
         } else {
             this.showPrvdrFields = false;
         }
-
     }
     onSubmit(input) {
-        // const dialCode = input.phonenumber.dialCode;
-        // const pN = input.phonenumber.e164Number.trim();
         let date_format = null;
         if (input.dob !== null && input.dob !== '') {
             const date = new Date(input.dob);
@@ -419,12 +316,6 @@ export class BranchUserDetailComponent implements OnInit {
         if (input.last_name.trim() === '') {
             this.lnameerror = 'Last name is required';
         }
-        // if (input.selectedUserType === 'PROVIDER') {
-        //     if (input.selectedSubDomain === null) {
-        //         this.subdomainerror = 'Service specialization or Occupation is required';
-        //         return;
-        //     }
-        // }
         if (this.fnameerror !== null || this.lnameerror !== null || this.emailerror !== null) {
             return;
         }
@@ -435,77 +326,53 @@ export class BranchUserDetailComponent implements OnInit {
             'gender': input.gender || null,
             'employeeId': input.employeeId || null,
             'email': input.email || '',
-            // 'countryCode': '+91',
-            // 'mobileNo': input.phonenumber,
-            // 'address': input.address,
-            // 'city': input.city,
-            // 'state': input.state,
-            // 'deptId': input.selectedDepartment,
-            // 'isAdmin' :
             'userType': input.selectedUserType,
-            'pincode': input.postalCode,           
+            'pincode': input.postalCode,
         };
-        if(input.whatsappumber !==''){
-            if(input.countryCode_whatsapp.startsWith('+')){
+        if (input.whatsappumber !== '') {
+            if (input.countryCode_whatsapp.startsWith('+')) {
                 this.whatsappCountry = input.countryCode_whatsapp
             }
-            else{
-                this.whatsappCountry = '+'+input.countryCode_whatsapp
+            else {
+                this.whatsappCountry = '+' + input.countryCode_whatsapp
             }
             const whatsup = {}
-            whatsup["countryCode"] =  this.whatsappCountry
-            whatsup["number"] =   input.whatsappumber
-            post_data1['whatsAppNum']= whatsup;
+            whatsup["countryCode"] = this.whatsappCountry
+            whatsup["number"] = input.whatsappumber
+            post_data1['whatsAppNum'] = whatsup;
         }
-        if(input.telegramnumber !==''){
-            if(input.countryCode_telegram.startsWith('+')){
+        if (input.telegramnumber !== '') {
+            if (input.countryCode_telegram.startsWith('+')) {
                 this.telegramCountry = input.countryCode_telegram
-            } else{
-                this.telegramCountry = '+'+input.countryCode_telegram
+            } else {
+                this.telegramCountry = '+' + input.countryCode_telegram
             }
             const telegram = {}
-            telegram["countryCode"] =  this.telegramCountry
+            telegram["countryCode"] = this.telegramCountry
             telegram["number"] = input.telegramnumber
-            post_data1['telegramNum']= telegram;     
+            post_data1['telegramNum'] = telegram;
         }
-        // let phone = pN;
-        // if(pN.startsWith(dialCode)) {
-        //     phone = pN.split(dialCode)[1];
-        //   }
-        if(input.phonenumber !==''){
-            if(input.countryCode.startsWith('+')){
+        if (input.phonenumber !== '') {
+            if (input.countryCode.startsWith('+')) {
                 this.countrycode = input.countryCode
-            }  else{
-                this.countrycode = '+'+input.countryCode
+            } else {
+                this.countrycode = '+' + input.countryCode
             }
-                post_data1['countryCode'] =  this.countrycode,
+            post_data1['countryCode'] = this.countrycode,
                 post_data1['mobileNo'] = input.phonenumber;
-            }
-
-        // if (input.selectedUserType === 'PROVIDER') {
-        //     post_data1['deptId'] = input.selectedDepartment;
-        //     // post_data1['subdomain'] = input.selectedSubDomain;
-        //     console.log(this.selectedsubDomain);
-        //     post_data1['subdomain'] = (this.selectedsubDomain[0]) ? this.selectedsubDomain[0].id : 0;
-        // }
+        }
         if (input.selectedUserType === 'PROVIDER') {
             post_data1['deptId'] = input.selectedDepartment;
             post_data1['bProfilePermitted'] = input.bProfilePermitted;
-            // post_data1['subdomain'] = input.selectedSubDomain;
             console.log(this.selectedsubDomain);
-            // post_data1['subdomain'] = (this.selectedsubDomain[0]) ? this.selectedsubDomain[0].id : 0;
             if (this.selectedsubDomain[0] && this.selectedsubDomain[0].id) {
                 post_data1['subdomain'] = this.selectedsubDomain[0].id;
             }
         }
         if (input.selectedUserType !== 'ADMIN') {
-        post_data1['admin'] = input.privileges;
-        console.log(input.privileges);
+            post_data1['admin'] = input.privileges;
+            console.log(input.privileges);
         }
-        // if (input.selectedUserType === 'PROVIDER') {
-        //     post_data1['bProfilePermitted'] = input.bProfilePermitted;
-        //     }
-        // console.log(post_data1);
         if (this.actionparam.type === 'edit') {
             console.log(post_data1);
             this.provider_services.updateUser(post_data1, this.userId).subscribe(() => {
@@ -519,20 +386,17 @@ export class BranchUserDetailComponent implements OnInit {
             console.log(post_data1);
             this.provider_services.createUser(post_data1).subscribe(() => {
                 this.userAddConfirm()
-              
+
             },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
-                
+
         }
     }
     onCancel() {
         this.router.navigate(['provider', 'settings', 'general', 'users']);
     }
-    // onlineProfile() {
-    //     this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'bprofile']);
-    // }
     resetApiErrors() {
         this.emailerror = null;
         this.fnameerror = null;
@@ -556,7 +420,6 @@ export class BranchUserDetailComponent implements OnInit {
     advancedClick() {
         (this.showAdvancedSection) ? this.showAdvancedSection = false : this.showAdvancedSection = true;
     }
-
     getWaitlistMgr() {
         this.provider_services.getWaitlistMgr()
             .subscribe(
@@ -616,47 +479,43 @@ export class BranchUserDetailComponent implements OnInit {
     }
     keyPressed(event) {
         this.editloc = false;
-        if(event.length == 6) {
+        if (event.length == 6) {
             this.blurPincodeQty(event);
-        } else{
+        } else {
             this.locations = [];
         }
     }
-    blurPincodeQty(val){  
+    blurPincodeQty(val) {
         this.locations = [];
-        if(val.length < 6 ){
+        if (val.length < 6) {
             this.snackbarService.openSnackBar('Please enter valid Pincode', { 'panelClass': 'snackbarerror' });
         } else {
-            if(val.length== 6){
-              this.provider_services.getlocationbypincode(val)
-            .subscribe(
-                data => {
-                    this.locationDetails = data;
-                    // this.locations = this.locationDetails[0].PostOffice;
-                    this.showloc = true;
-                    this.editloc = false;
-                },
-                error => {
-                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                });
+            if (val.length == 6) {
+                this.provider_services.getlocationbypincode(val)
+                    .subscribe(
+                        data => {
+                            this.locationDetails = data;
+                            this.showloc = true;
+                            this.editloc = false;
+                        },
+                        error => {
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        });
             }
         }
     }
     userAddConfirm() {
         const dialogref = this.dialog.open(UserConfirmBoxComponent, {
-          width: '60%',
-          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-          disableClose: true,
-          data: {
-            // profile: this.profile
-          }
+            width: '60%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+            }
         });
         dialogref.afterClosed().subscribe(
-          result => {
-            this.router.navigate(['provider', 'settings', 'general', 'users']);
-            // if (result) {
-            // }
-          }
+            result => {
+                this.router.navigate(['provider', 'settings', 'general', 'users']);
+            }
         );
-      }
+    }
 }

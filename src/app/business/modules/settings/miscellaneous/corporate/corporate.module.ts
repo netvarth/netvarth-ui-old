@@ -1,26 +1,29 @@
 import { NgModule } from '@angular/core';
-import { BreadCrumbModule } from '../../../../../shared/modules/breadcrumb/breadcrumb.module';
-import { MaterialModule } from '../../../../../shared/modules/common/material.module';
 import { CommonModule } from '@angular/common';
 import { LoadingSpinnerModule } from '../../../../../shared/modules/loading-spinner/loading-spinner.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
 import { CorporateSettingsComponent } from './corporate-settings.component';
-import { CorporateRoutingModule } from './corporate.routing.module';
-
+import { RouterModule, Routes } from '@angular/router';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+const routes: Routes = [
+    { path: '', component: CorporateSettingsComponent }
+];
 @NgModule({
     declarations: [
         CorporateSettingsComponent
     ],
     imports: [
-        CorporateRoutingModule,
-        BreadCrumbModule,
-        MaterialModule,
         CommonModule,
         FormMessageDisplayModule,
         FormsModule,
         LoadingSpinnerModule,
-        ReactiveFormsModule
+        MatRadioModule,
+        MatFormFieldModule,
+        MatInputModule,
+        [RouterModule.forChild(routes)]
     ],
     entryComponents: [],
     exports: [CorporateSettingsComponent]

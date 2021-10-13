@@ -10,7 +10,7 @@ import { CapitalizeFirstPipeModule } from '../../../../../../shared/pipes/capita
 import { FormMessageDisplayModule } from '../../../../../../shared/modules/form-message-display/form-message-display.module';
 import { ManageSettingsComponent } from './manage-settings.component';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
-import { WaitlistQueuesModule } from './queues/waitlist-queues.module';
+import { WaitlistQueuesModule } from './queues/list/waitlist-queues.module';
 import { NotificationUserModule } from './notifications/notifications.module';
 import { ManageSettingsRoutingModule } from './manage-settings.routing.module';
 @NgModule({

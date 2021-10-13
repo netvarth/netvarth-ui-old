@@ -1,14 +1,8 @@
-<!-- <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-</section> -->
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10"> 
             <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToQmanager()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {{qBoardscaption}}
-          <!-- <button type="button" style="float: right;" class="btn default profile-back" (click)= "redirecToHelp()">
-               Help
-          </button>  -->
           <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
         </h5>     
     </div>
@@ -50,21 +44,7 @@
                                                 [ngModelOptions]="{standalone: true}" autocomplete="off">
                                         </mat-form-field>
                                     </div>
-                                    <!-- <div class="lbl col-md-12">
-                                            <mat-checkbox class="terms-margin" (change)="nestedQboardSelected($event)"
-                                                [value]=true></mat-checkbox>
-                                            <span class="nested-qboard">Nested QBoard
-                                            </span>
-                                        </div> -->
                                 </ng-container>
-                                <!-- <div *ngIf="qboardSelected" class="form-group col-md-6">
-                                        <mat-form-field>
-                                            <input matInput type="text" class="form-control" id="refreshInterval1"
-                                                placeholder="Enter refresh interval in seconds *"
-                                                [(ngModel)]="refreshInterval" [ngModelOptions]="{standalone: true}"
-                                                autocomplete="off">
-                                        </mat-form-field>
-                                    </div> -->
                                 <!-- qboard adding -->
                                 <div *ngIf="!qboardSelected">
                                     <div class="form-group col-md-6 col-xs-12 col-sm-6">

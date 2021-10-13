@@ -32,25 +32,8 @@ export class HolidayListComponent implements OnInit, OnDestroy {
   emptyMsg = '';
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
-
-  breadcrumb_moreoptions: any = [];
   frm_non_wrkg_cap = Messages.FRM_LEVEL_NON_WORKING_MSG;
   isCheckin;
-  breadcrumbs_init = [
-    {
-      url: '/provider/settings',
-      title: 'Settings'
-    },
-    {
-      url: '/provider/settings/general',
-      title: Messages.GENERALSETTINGS
-    },
-    {
-      title: 'Non Working Day/Hour',
-      url: '/provider/settings/general/holidays'
-    }
-  ];
-  breadcrumbs = this.breadcrumbs_init;
   addholdialogRef;
   editholdialogRef;
   remholdialogRef;
@@ -76,7 +59,6 @@ export class HolidayListComponent implements OnInit, OnDestroy {
     this.accountType = user.accountType;
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getNonworkingdays();
-    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');   
   }
 

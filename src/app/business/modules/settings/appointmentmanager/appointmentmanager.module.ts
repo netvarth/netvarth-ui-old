@@ -1,39 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
-import { MaterialModule } from '../../../../shared/modules/common/material.module';
-import { FormsModule } from '@angular/forms';
-import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
-import { FormMessageDisplayModule } from '../../../../shared/modules/form-message-display/form-message-display.module';
-import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
-import { SharedModule } from '../../../../shared/modules/common/shared.module';
-import { SalesChannelModule } from '../../../../shared/modules/saleschannel/saleschannel.module';
 import { AppointmentmanagerComponent } from './appointmentmanager.component';
-import { AppointmentmanagerRoutingModule } from './appointmentmanager.routing.module';
-import { OwlModule } from 'ngx-owl-carousel';
-import { Nl2BrPipeModule } from 'nl2br-pipe';
-import { CheckinAddMemberModule } from '../../../../shared/modules/checkin-add-member/checkin-add-member.module';
-import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
-import { QuestionnaireModule } from '../../../../shared/components/questionnaire/questionnaire.module';
 import { ShowMessagesModule } from '../../show-messages/show-messages.module';
+import { RouterModule, Routes } from '@angular/router';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormsModule } from '@angular/forms';
+const routes: Routes = [
+    { path: '', component: AppointmentmanagerComponent },
+    { path: 'schedules', loadChildren: () => import('./schedules/list/waitlist-schedules.module').then(m => m.WaitlistSchedulesModule) },
+    {path: 'services', loadChildren: () => import('./services/list/waitlist-services.module').then(m => m.WaitlistServicesModule)},
+    {path: 'displayboards', loadChildren: () => import('./displayboards/displayboards.module').then(m => m.DisplayboardsModule)}
+];
 @NgModule({
     imports: [
         CommonModule,
-        BreadCrumbModule,
-        AppointmentmanagerRoutingModule,
-        MaterialModule,
         FormsModule,
-        LoadingSpinnerModule,
-        FormMessageDisplayModule,
-        NgbTimepickerModule,
-        SharedModule,
-        SalesChannelModule,
-        Nl2BrPipeModule,
-        OwlModule,
-        CapitalizeFirstPipeModule,
-        CheckinAddMemberModule,
-        QuestionnaireModule,
-        ShowMessagesModule
+        MatSlideToggleModule,
+        MatCheckboxModule,
+        ShowMessagesModule,
+        [RouterModule.forChild(routes)]
     ],
     declarations: [
         AppointmentmanagerComponent

@@ -102,19 +102,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             <div class="form-group" *ngIf="subdomainsettings.serviceBillable">
                 <ng-container class="example-full-width">
                     <label class="col-form-label">{{est_duration_cap}} (Hours : Minutes) *</label>
-                    <!-- <mat-form-field> -->
-                    <!-- <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
-                        maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" id="estimated_duration"
-                        placeholder="{{est_duration_cap}}*" formControlName="serviceDuration" autocomplete="off"> -->
                     <ngb-timepicker [(ngModel)]="duration" (keyup)="isvalid($event)" formControlName="serviceDuration">
                     </ngb-timepicker>
-                    <!-- </mat-form-field> -->
-                    <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'serviceDuration')"
-                    [errorMsgs]="fed_service.getErrorMessage(serviceForm,'serviceDuration',
-    {'required' : 'Please enter estimated duration.',
-    'pattern' : 'Estimated duration should be an integer value (e.g. 1, 10, 15 etc)',
-    'maxlength' : 'Only 10 digits are allowed'
-  })"> </app-field-error-display> -->
                 </ng-container>
             </div>
             <div class="form-group" *ngIf="subdomainsettings.serviceBillable">
@@ -131,19 +120,12 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
     'maxlength' : 'Only 10 digits are allowed'})">
                 </app-field-error-display>
             </div>
-
             <a class="learnmore-pointer" (click)="advancedClick()"> Advanced settings</a>
             <div class="row" style="margin-top: 20px; margin-left: 10px;" *ngIf="showAdvancedSettings">
-                <!-- <mat-accordion>
-                            <mat-expansion-panel> -->
-                <!-- <mat-expansion-panel-header class="advancedheader">
-                                <mat-panel-title>Advanced</mat-panel-title></mat-expansion-panel-header> -->
-
                 <div class="form-group inline" style="margin-top: 10px" *ngIf="subdomainsettings.serviceBillable">
                     <label class="col-form-label">{{enable_prepayment_cap}}</label>
                     <mat-slide-toggle class="example-margin" formControlName="isPrePayment"
                         (change)="changePrepayment()">
-
                     </mat-slide-toggle>
                 </div>
                 <ng-container *ngIf="subdomainsettings.serviceBillable">
@@ -177,9 +159,6 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     <mat-radio-button value="pushMsg">{{push_message_cap}}</mat-radio-button>
                     <mat-radio-button value="email">{{service_email_cap}}</mat-radio-button>
                 </mat-radio-group>
-
-                <!-- </mat-expansion-panel>
-</mat-accordion> -->
             </div>
             <div class="actiondiv" style="margin-top: 10px;">
                 <div style="margin-bottom:30px;display: inline-flex;">

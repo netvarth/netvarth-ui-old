@@ -36,21 +36,6 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
   queue_id = null;
   queue_data;
   display_schedule: any = [];
-  breadcrumbs_init = [
-    {
-      title: 'Settings',
-      url: '/provider/settings'
-    },
-    {
-      url: '/provider/settings/appointmentmanager',
-      title: 'Jaldee Appointment Manager'
-    },
-    {
-      url: '/provider/settings/appointmentmanager/schedules',
-      title: 'Schedules (Working Hours)'
-    }
-  ];
-  breadcrumbs = this.breadcrumbs_init;
   customer_label = '';
   appointment = false;
   api_loading = false;
@@ -156,15 +141,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
       if (this.queue_id !== 'add') {
         this.getScheduleDetail();
       } else {
-        this.action = this.queue_id;
-        const breadcrumbs = [];
-        this.breadcrumbs_init.map((e) => {
-          breadcrumbs.push(e);
-        });
-        breadcrumbs.push({
-          title: 'Add'
-        });
-        this.breadcrumbs = breadcrumbs;
+        this.action = this.queue_id;        
         this.createForm();
       }
     }, 500);
@@ -286,15 +263,6 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
           }
           this.display_schedule = [];
           this.display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(schedule_arr);
-          // remove multiple end breadcrumb on edit function
-          const breadcrumbs = [];
-          this.breadcrumbs_init.map((e) => {
-            breadcrumbs.push(e);
-          });
-          breadcrumbs.push({
-            title: this.queue_data.name
-          });
-          this.breadcrumbs = breadcrumbs;
           this.api_loading = false;
           if (this.action === 'edit') {
             this.Schedulescaption = 'Edit Schedule';

@@ -1,16 +1,12 @@
-<!-- <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-</section> -->
 <section class="">
     <div class="card title-gb">
-        <h5 class="mgn-up-10"> 
-            <!-- <button type="button" class="btn default profile-back" (click)="redirecToLicenseInvoice()">
-                <span class="fa fa-chevron-left">&nbsp;Back</span>
-            </button>&nbsp;&nbsp;&nbsp; -->
-            <span class="fa fa-arrow-left pointer-cursor"(click)="redirecToLicenseInvoice()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Payment History</h5>
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToLicenseInvoice()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Payment History
+        </h5>
     </div>
- </section>
+</section>
 <section>
     <div class="content comn-cls paymenthistory">
         <div class="col-md-12 no-padding-small">
@@ -32,15 +28,18 @@
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let invoice of payment_history">
-                                                <td><i *ngIf="invoice.isPeriodic" class="fa fa-calendar" aria-hidden="true"></i></td>
-                                            <td class="td1" data-title="Date">{{invoice.paymentDate | date: newDateFormat
+                                            <td><i *ngIf="invoice.isPeriodic" class="fa fa-calendar"
+                                                    aria-hidden="true"></i></td>
+                                            <td class="td1" data-title="Date">{{invoice.paymentDate | date:
+                                                newDateFormat
                                                 }}</td>
                                             <td class="td2  rupee-font" data-title="Amount">
                                                 <strong>{{invoice.amount | currency:'&#8377;'}}</strong>
                                             </td>
                                             <td class="td3" data-title="Period">
-                                                {{invoice.periodFrom | date: newDateFormat }} - {{invoice.periodTo | date:
-                                                    newDateFormat }}
+                                                {{invoice.periodFrom | date: newDateFormat }} - {{invoice.periodTo |
+                                                date:
+                                                newDateFormat }}
                                             </td>
                                             <td class="td4" data-title="Invoice">
                                                 <span class="icon-invoice" (click)="getInvoice(invoice)"></span>
@@ -48,18 +47,16 @@
                                         </tr>
                                     </tbody>
                                 </table>
-
                                 <div class="search_paging">
                                     <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
-                                        (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
+                                        (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
+                                    </app-pager>
                                 </div>
-
                             </div>
                         </div>
                         <div *ngIf="load_complete==1 && payment_history.length == 0">
                             {{no_transaction}}.
                         </div>
-
                     </div>
                 </div>
             </div>

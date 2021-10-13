@@ -20,23 +20,6 @@ export class DepartmentListComponent implements OnInit {
     loading = true;
     tooltipcls = projectConstants.TOOLTIP_CLS;
     add_button = Messages.ADD_DEPT;
-    breadcrumbs = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: Messages.GENERALSETTINGS,
-            url: '/provider/settings/general'
-        },
-        {
-            title: 'Departments',
-            url: '/provider/settings/general/departments'
-        },
-        {
-            title: 'Department List'
-        }
-    ];
     isCheckin;
     domain: any;
 

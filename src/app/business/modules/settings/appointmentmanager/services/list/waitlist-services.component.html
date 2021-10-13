@@ -1,16 +1,11 @@
-<!-- <section>
-    <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
-        [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
-</section> -->
 <section class="">
     <div class="card title-gb">
-        <h5 class="mgn-up-10"> 
-         <!-- <button type="button" class="btn default profile-back"  (click)="redirecToApptmanager()">
-            <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp; -->
-            <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToApptmanager()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToApptmanager()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {{services_cap}}
-            <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i> 
-        </h5>     
+            <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
+        </h5>
     </div>
 </section>
 <section class="qservices">
@@ -20,7 +15,8 @@
                 <table class="table childDetails singleDash" style="font-size: .875rem;">
                     <thead id="childActionBar" class="qBoardselected-table">
                         <tr>
-                            <th colspan="5"><a style="float: right;" (click)="addservice()"><span><i class="fa fa-plus"></i>Add Service</span></a></th>
+                            <th colspan="5"><a style="float: right;" (click)="addservice()"><span><i
+                                            class="fa fa-plus"></i>Add Service</span></a></th>
                         </tr>
                     </thead>
                     <tbody *ngIf="!api_loading && service_list.length === 0">
@@ -42,20 +38,17 @@
                                 <span
                                     *ngIf="service.serviceType==='virtualService' && service.virtualServiceType === 'audioService'"
                                     class="link"> <i class="fa fa-volume-up cal-mod-font" aria-hidden="true"></i></span>
-                                <!-- <span
-                                    *ngIf="service.serviceType==='virtualService' && service.virtualServiceType === 'videoService'"
-                                    class="link"> <i class="fa fa-video-camera cal-mod-font"
-                                        aria-hidden="true"></i></span>&nbsp; -->
                                 <span>
-                                    <span *ngIf="service.serviceType === 'virtualService' && (service.virtualCallingModes[0].callingMode === 'Phone'||service.virtualCallingModes[0].callingMode === 'GoogleMeet')">&nbsp;</span>
-                                    <i class="fa phon-icon" 
+                                    <span
+                                        *ngIf="service.serviceType === 'virtualService' && (service.virtualCallingModes[0].callingMode === 'Phone'||service.virtualCallingModes[0].callingMode === 'GoogleMeet')">&nbsp;</span>
+                                    <i class="fa phon-icon"
                                         *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                     <i class="fa meet-icon"
                                         *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                     <i class="fa zoom-icon"
                                         *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                    <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'VideoCall'" 
-                                    class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" aria-hidden="true"></i> 
+                                    <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'VideoCall'"
+                                        class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5" aria-hidden="true"></i>
                                     <i class="fa wtsapaud-icon"
                                         *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"></i>
                                     <i class="fa wtsapvid-icon"
@@ -63,9 +56,9 @@
                                 </span>
                             </td>
                             <td class="no-padding-small pad-rt-5">
-                                <span *ngIf="service.provider" class="setings">{{service.provider.firstName}}</span> &nbsp;
+                                <span *ngIf="service.provider" class="setings">{{service.provider.firstName}}</span>
+                                &nbsp;
                                 <span *ngIf="service.provider" class="setings">{{service.provider.lastName}}</span>
-                                <!-- <span *ngIf="!service.provider" class="setings">Global Service</span> -->
                             </td>
                             <td class="no-padding-small pad-rt-5">
                                 {{service.deptName | capitalizeFirst}}
@@ -78,25 +71,14 @@
                                         </button>
                                     </span>
                                     <mat-menu #appMenu="matMenu">
-                                        <button mat-menu-item 
-                                        (click)="editService(service)"
-                                        *ngIf="service.status=='ACTIVE'">
-                                        <i class="icon-edit chkin-mobic"
-                                            ></i>Edit
-                                    </button>
-                                    <button mat-menu-item 
-                                    (click)="serviceqrCodegeneraterOnlineID(service)"
-                                    *ngIf="service.status=='ACTIVE'">
-                                        <i class="fa fa-qrcode"
-                                            ></i>Share link
-                                    </button>
-                                    <!-- <button mat-menu-item [class.disabled]="!is_virtual_enbl && service.serviceType === 'virtualService'"
-                                    (click)="(is_virtual_enbl && service.serviceType === 'virtualService') && editService(service)"
-                                    *ngIf="service.status=='ACTIVE'&& service.serviceType === 'virtualService'">
-                                    <i class="icon-edit chkin-mobic"
-                                        *ngIf="is_virtual_enbl && service.serviceType === 'virtualService'"></i>
-                                         <i [matTooltip]="'Please turn on Teleservice in settings'" *ngIf="!is_virtual_enbl && service.serviceType === 'virtualService'" class="material-icons" style="cursor: help;">help</i>Edit
-                                </button> -->
+                                        <button mat-menu-item (click)="editService(service)"
+                                            *ngIf="service.status=='ACTIVE'">
+                                            <i class="icon-edit chkin-mobic"></i>Edit
+                                        </button>
+                                        <button mat-menu-item (click)="serviceqrCodegeneraterOnlineID(service)"
+                                            *ngIf="service.status=='ACTIVE'">
+                                            <i class="fa fa-qrcode"></i>Share link
+                                        </button>
                                         <button mat-menu-item (click)="changeServiceStatus(service)">
                                             <i *ngIf="service.status=='INACTIVE' || !service.status"
                                                 class="icon-enable phone-in-icon" [matTooltip]="'Enable Service'"></i>
@@ -120,9 +102,6 @@
                 </table>
             </div>
         </div>
-        <!-- <div class="card" *ngIf="!api_loading && service_list.length === 0">
-            No services added.
-        </div> -->
         <div class="clearfix"></div>
     </div>
 </section>

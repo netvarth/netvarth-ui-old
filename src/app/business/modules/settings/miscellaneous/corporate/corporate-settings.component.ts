@@ -18,19 +18,6 @@ export class CorporateSettingsComponent implements OnInit {
     save_btn_cap = Messages.SAVE_BTN;
     accountType;
     domain;
-    breadcrumbs = [
-        {
-            url: '/provider/settings',
-            title: 'Settings'
-        },
-        {
-            url: '/provider/settings/miscellaneous',
-            title: 'Miscellaneous'
-        },
-        {
-            title: 'Corporate Settings'
-        }
-    ];
     loading: boolean;
     corpInfo;
     corpType;

@@ -44,16 +44,6 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         totalCnt: 0,
         perPage: this.page_count
     };
-    breadcrumbs_init = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: 'Jaldee Appointment Manager',
-            url: '/provider/settings/appointmentmanager'
-        },
-    ];
     order = 'status';
     use_metric;
     usage_metric: any;
@@ -89,36 +79,11 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
             });
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-       if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
-            const breadcrumbs = [];
-            this.breadcrumbs_init.map((e) => {
-                breadcrumbs.push(e);
-            });
-            breadcrumbs.push({
-                title: Messages.WAITLIST_HEALTHCARE_SERVICES,
-            });
-            this.breadcrumbs = breadcrumbs;
-        } else {
-            const breadcrumbs = [];
-            this.breadcrumbs_init.map((e) => {
-                breadcrumbs.push(e);
-            });
-            breadcrumbs.push({
-                title: Messages.WAITLIST_SERVICES_CAP,
-            });
-            this.breadcrumbs = breadcrumbs;
-        }
         this.api_loading = true;
         this.getBusinessProfile();
         this.getDomainSubdomainSettings();
         this.getServiceCount();
         this.getLicenseUsage();
-        // this.getServices();
-        this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'appointmentmanager->services', 'classname': 'b-service',
-            'actions': [{ 'title': this.add_new_serv_cap, 'type': 'addservice' },
-            { 'title': 'Help', 'type': 'learnmore' }]
-        };
     }
 
     ngOnDestroy() {

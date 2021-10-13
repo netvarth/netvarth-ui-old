@@ -25,8 +25,6 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     status;
     image_list: any = [];
     serviceExists = true;
-    breadcrumbs;
-    breadcrumbs_init;
     subscription: Subscription; // for gallery
     infoSubscription: Subscription;
     serviceSubscription: Subscription; // from service module
@@ -50,53 +48,10 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         private groupService: GroupStorageService) {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
-            this.breadcrumbs_init = [
-                {
-                    title: 'Settings',
-                    url: '/provider/settings'
-                },
-                {
-                    title: Messages.WAITLIST_MANAGE_CAP,
-                    url: '/provider/settings/q-manager'
-                },
-                {
-                    title: Messages.WAITLIST_HEALTHCARE_SERVICES,
-                    url: '/provider/settings/q-manager/services'
-                }
-            ];
-            this.breadcrumbs = this.breadcrumbs_init;
-        } else {
-            this.breadcrumbs_init = [
-                {
-                    title: 'Settings',
-                    url: '/provider/settings'
-                },
-                {
-                    title: Messages.WAITLIST_MANAGE_CAP,
-                    url: '/provider/settings/q-manager'
-                },
-                {
-                    title: Messages.WAITLIST_SERVICES_CAP,
-                    url: '/provider/settings/q-manager/services'
-                }
-            ];
-            this.breadcrumbs = this.breadcrumbs_init;
-        }
         this.activated_route.params.subscribe(
             (params) => {
                 this.service_id = params.id;
                 this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-                if (this.service_id === 'add') {
-                    const breadcrumbs = [];
-                    this.breadcrumbs_init.map((e) => {
-                        breadcrumbs.push(e);
-                    });
-                    breadcrumbs.push({
-                        title: 'Add'
-                    });
-                    this.breadcrumbs = breadcrumbs;
-                }
             }
         );
         this.activated_route.queryParams.subscribe(
@@ -240,15 +195,6 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                     this.servicecaption = 'Service Details';
                     this.status = this.serviceParams['service'].status;
                     this.setGalleryImages(this.serviceParams['service'].servicegallery || []);
-                    // remove multiple end breadcrumb on edit function
-                    const breadcrumbs = [];
-                    this.breadcrumbs_init.map((e) => {
-                        breadcrumbs.push(e);
-                    });
-                    breadcrumbs.push({
-                        title: this.serviceParams['service'].name
-                    });
-                    this.breadcrumbs = breadcrumbs;
                     this.api_loading = false;
                     if (this.actionparam === 'edit') {
                         this.servicecaption = 'Edit Service';

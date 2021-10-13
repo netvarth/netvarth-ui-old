@@ -1,7 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Messages } from '../../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
@@ -18,21 +17,7 @@ import { SnackbarService } from '../../../../../shared/services/snackbar.service
 export class DepartmentsComponent implements OnInit {
     departments: any = [];
     deptObj;
-    breadcrumb_moreoptions: any = [];
     loading = true;
-    breadcrumbs = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: Messages.GENERALSETTINGS,
-            url: '/provider/settings/general'
-        },
-        {
-            title: 'Departments'
-        }
-    ];
     isCheckin;
     domain: any;
     account_type;
@@ -60,10 +45,6 @@ export class DepartmentsComponent implements OnInit {
         this.getWaitlistMgr();
         this.getDepartmentsCount();
         this.getDepartments();
-        this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'general->departments', 'subKey': 'timewindow', 'classname': 'b-queue',
-            'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
-        };
     }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
@@ -147,7 +128,6 @@ export class DepartmentsComponent implements OnInit {
         this.provider_services.updateDepartment(post_data)
             .subscribe(
                 () => {
-                    // this.getDepartmentDetails();
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

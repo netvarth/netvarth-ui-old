@@ -1,44 +1,48 @@
 import { NgModule } from '@angular/core';
-import { UsersRoutingModule } from './users.routing.module';
 import { BranchUsersComponent } from './users.component';
-import { BreadCrumbModule } from '../../../../../shared/modules/breadcrumb/breadcrumb.module';
-import { MaterialModule } from '../../../../../shared/modules/common/material.module';
-import { CommonModule } from '@angular/common';
 import { LoadingSpinnerModule } from '../../../../../shared/modules/loading-spinner/loading-spinner.module';
-import { BranchUserDetailComponent } from './details/user-detail.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
-import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { UserDataStorageService } from './settings/user-datastorage.service';
-import { PagerModule } from '../../../../../shared/modules/pager/pager.module';
-import { OrderModule } from 'ngx-order-pipe';
-import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
-import { userContactInfoComponent } from './user-contact-info/user-contact-info.component';
 import { ShowMessagesModule } from '../../../show-messages/show-messages.module';
-
-
+import { UserContactInfoModule } from './user-contact-info/user-contact-info.module';
+import { RouterModule, Routes } from '@angular/router';
+import { ConfirmBoxModule } from '../../../../../shared/components/confirm-box/confirm-box.module';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { CommonModule } from '@angular/common';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import {  MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { FormsModule } from '@angular/forms';
+import { OrderModule } from 'ngx-order-pipe';
+const routes: Routes = [
+    { path: '', component: BranchUsersComponent },
+    { path: ':id', loadChildren: ()=> import('./details/user-detail.module').then(m=>m.BranchUserDetailModule)},
+    { path: ':id/settings', loadChildren: () => import('./settings/manage-settings.module').then(m => m.ManageSettingsModule)}
+];
 @NgModule({
     declarations: [
-        BranchUsersComponent,
-        BranchUserDetailComponent,
-        userContactInfoComponent
+        BranchUsersComponent
     ],
     imports: [
-        UsersRoutingModule,
-        BreadCrumbModule,
-        MaterialModule,
         CommonModule,
-        FormMessageDisplayModule,
         FormsModule,
-        LoadingSpinnerModule,
-        ReactiveFormsModule,
+        MatTooltipModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatIconModule,
+        MatSelectModule,
+        MatOptionModule,
+        ConfirmBoxModule,
+        ShowMessagesModule,
+        UserContactInfoModule,
         CapitalizeFirstPipeModule,
-        Nl2BrPipeModule,
-        PagerModule,
+        LoadingSpinnerModule,
         OrderModule,
-        NgxIntlTelInputModule,
-        ShowMessagesModule
+        [RouterModule.forChild(routes)]
 
     ],
     providers: [UserDataStorageService],

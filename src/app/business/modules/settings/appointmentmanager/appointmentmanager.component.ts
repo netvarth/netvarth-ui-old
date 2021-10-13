@@ -82,7 +82,6 @@ export class AppointmentmanagerComponent implements OnInit {
         this.provider_services.getBussinessProfile()
             .subscribe(
                 data => {
-                    // console.log(data);
                     this.bProfile = data;
                     if (this.bProfile.baseLocation) {
                         this.locationExists = true;
@@ -106,9 +105,6 @@ export class AppointmentmanagerComponent implements OnInit {
     gotodisplayboards() {
         this.router.navigate(['provider', 'settings', 'appointmentmanager', 'displayboards']);
     }
-    // gotoAppointments(){
-    //     this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointment']);
-    // }
     performActions(action) {
         if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager']);
@@ -189,7 +185,6 @@ export class AppointmentmanagerComponent implements OnInit {
                 }
             );
     }
-
     handle_futureapptliststatus(event) {
         const is_check = (event.checked) ? 'Enable' : 'Disable';
         this.provider_services.setFutureAppointmentStatus(is_check)
@@ -213,7 +208,6 @@ export class AppointmentmanagerComponent implements OnInit {
                     this.futureDateApptlist = data['futureAppt'] || false;
                     this.apptlist_statusstr = (this.apptlist_status) ? 'On' : 'Off';
                     this.futureapptlist_statusstr = (this.futureDateApptlist) ? 'On' : 'Off';
-                    // this.filterbydepartment = data['filterByDept'];
                 });
 
     }
@@ -226,7 +220,6 @@ export class AppointmentmanagerComponent implements OnInit {
                 });
     }
     getSchedulesCount() {
-        // const filter = { 'scope-eq': 'account' };
         const filter = { 'state-eq': 'ENABLED' };
         this.provider_services.getSchedulesCount(filter)
             .subscribe(

@@ -15,8 +15,11 @@ import { ConfirmBoxComponent } from '../../../../../../ynw_provider/shared/compo
 
 @Component({
   selector: 'app-holiday-details',
-  templateUrl: './holiday-details.component.html'
+  templateUrl: './holiday-details.component.html',
+  styleUrls: ['./holiday-details.component.css']
+  
 })
+
 
 export class HolidayDetailsComponent implements OnInit {
 
@@ -41,23 +44,7 @@ export class HolidayDetailsComponent implements OnInit {
   api_loading = true;
   api_loading1 = true;
   maxcharDesc = projectConstantsLocal.VALIDATOR_MAX100;
-
-  breadcrumbs_init = [
-    {
-      url: '/provider/settings',
-      title: 'Settings'
-    },
-    {
-      url: '/provider/settings/general',
-      title: Messages.GENERALSETTINGS
-    },
-    {
-      title: 'Non Working Day/Hour',
-      url: '/provider/settings/general/holidays'
-    }
-  ];
-
-  breadcrumbs = this.breadcrumbs_init;
+  frm_non_wrkg_cap = Messages.FRM_LEVEL_NON_WORKING_MSG;
   customer_label;
   holiday_id;
   action;
@@ -83,15 +70,7 @@ export class HolidayDetailsComponent implements OnInit {
           this.holiday_id = params.id;
           this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
           if (this.holiday_id) {
-            if (this.holiday_id === 'add') {
-              const breadcrumbs = [];
-              this.breadcrumbs_init.map((e) => {
-                breadcrumbs.push(e);
-              });
-              breadcrumbs.push({
-                title: 'Add'
-              });
-              this.breadcrumbs = breadcrumbs;
+            if (this.holiday_id === 'add') {              
               this.action = 'add';
               this.createForm();
             } else {
