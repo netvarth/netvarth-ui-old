@@ -782,7 +782,7 @@ export const Messages = {
   'PUSH_MESSAGE_CAP': 'App Notification',
   'SERVICE_EMAIL_CAP': 'Email',
   'GALLERY_CAP': 'Gallery',
-  'SELECT_IMAGE_CAP': 'Click here to select the image files',
+  'SELECT_IMAGE_CAP': 'Click here to select the  files',
   'GO_TO_SERVICE_CAP': 'Add the new service to working hours',
 
   // App-ynw_provider-components-add-provider-service-gallery
