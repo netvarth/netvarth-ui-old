@@ -1254,7 +1254,7 @@ ul.bus-actions li.more_less a.lnk {
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: #f5c84d !important;
+  background-color: #16254b !important;
   color: black;
   font-weight:bold;
   text-align: center;
@@ -2227,7 +2227,7 @@ img.ordericon.home {
   }
 }
 .action-btns {
-  background: linear-gradient(45deg, #FD7029(224,152,208,1) 0%, #FD7029(180,76,154,1) 100%) !important;
+  background: linear-gradient(45deg, #16254b(224,152,208,1) 0%, #16254b(180,76,154,1) 100%) !important;
   /* background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important; */
   opacity: 1;
 }

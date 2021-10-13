@@ -78,7 +78,7 @@ html {
     }
   }
   ::-moz-selection {
-    background: #f24949;
+    background: #16254b;
     text-shadow: none;
     color: #fff;
   }
@@ -98,7 +98,7 @@ html {
   }
   
   .sts-msg.error {
-    color: #f24949 !important;
+    color: #16254b !important;
     background-color: transparent !important;
   }
   .service-detail-content.service-popup-content.mat-dialog-content {
@@ -205,7 +205,7 @@ button:focus {
   outline: none;
 }
 .text-primary {
-  color: #f24949 !important;
+  color: #16254b !important;
 }
 
 .bill-section .bill-section-content {
@@ -2132,7 +2132,7 @@ sup {
 }
 
 .content .col-a .card .pubs.w-dta .ctrl .ct-fl .error {
-  color: #f24949;
+  color: #16254b;
 }
 
 .content .col-a .card .pubs.w-dta .ctrl .ct-fl {
@@ -2476,7 +2476,7 @@ sup {
 }
 
 .content.comn-cls .lbr .card .c-history li.cancelled:before, .content.comn-cls .lbr .card .appthistory .c-history li.Rejected:before, .content.comn-cls .lbr .card .appthistory .c-history li.Cancelled:before {
-  background: #f24949;
+  background: #16254b;
 }
 
 .content .c-outer .c-body .srlst .top-sect .tp-l .tp1 .pro-img img {
@@ -2982,7 +2982,7 @@ body {
 }
 
 .dashboard .card.w-dta .dash-list .table tbody tr td.payment .paid-n {
-  color: #f24949;
+  color: #16254b;
 }
 
 .dashboard .card.w-dta .dash-list .table tbody tr td.payment .paid-n:after {
@@ -3070,11 +3070,11 @@ body {
 }
 
 .dashboard .card.w-dta .dash-list .table tbody tr td.checkin_status .cancelled, .dashboard .chkins .checkin_status .cancelled {
-  color: #f24949;
+  color: #16254b;
 }
 
 .dashboard .card.w-dta .dash-list .table tbody tr td.checkin_status .cancelled:before, .dashboard .chkins .checkin_status .cancelled:before {
-  background: #f24949;
+  background: #16254b;
 }
 
 .dashboard .card.w-dta .dash-list .table tbody tr td.checkin_status .checkedIn, .dashboard .chkins .checkin_status .checkedIn {
@@ -3148,8 +3148,8 @@ body {
 }
 
 .dashboard .card.w-dta .dash-list .table tbody tr td.mre .mbt-mobile-show .cancel_cls {
-  border-color: #f24949;
-  color: #f24949;
+  border-color: #16254b;
+  color: white;
 }
 
 @media only screen and (max-width: 767px) {
@@ -3464,7 +3464,7 @@ figcaption {
 }
 
 .custmId .sts-msg.error {
-  color: #f24949 !important;
+  color: #16254b !important;
 }
 
 .custmIdOk {
@@ -4030,7 +4030,7 @@ footer.dashb .stp-box .alerts .stp-tbl .table tr.high td .pointr {
 }
 
 .paytm-det .sts-msg.error, .cc-det .sts-msg.error {
-  color: #f24949 !important;
+  color: #16254b !important;
 }
 
 .label-margin {
@@ -4250,7 +4250,7 @@ i.notavail {
 }
 
 .qerrmsg {
-  color: #f24949 !important;
+  color: #16254b !important;
 }
 
 @media (max-width: 1199px) {
@@ -4319,7 +4319,7 @@ i.notavail {
 }
 
 .form-group .sts-msg.error {
-  color: #f24949;
+  color: #16254b;
 }
 
 .bottom-actions-root {
@@ -5183,7 +5183,7 @@ i.notavail {
 }
 
 .dashboard .card.w-dta .checkin_status .cancelled {
-  color: #f24949;
+  color: #16254b;
 }
 
 .navbar-custom-menu .navbar-nav>li>a>i {
@@ -7162,7 +7162,7 @@ input.jdn_ip {
 
 .pro-schedule .schedule_outer .schedulesub_outer app-field-error-display .sts-msg.error {
   padding: 10px 0px 0;
-  color: #f24949;
+  color: #16254b;
   font-size: .75rem;
   font-weight: 500;
   text-align: left;
@@ -7519,7 +7519,7 @@ label.notifi-togl {
 
 .mobile-error app-field-error-display .sts-msg.error {
   background: white !important;
-  color: #f24949 !important;
+  color: #16254b !important;
   padding: 0px !important;
 }
 
@@ -10231,7 +10231,7 @@ a {
 
 .Off {
   font-weight: bold;
-  color: #f24949;
+  color: #16254b;
 }
 
 .chkins-sect .adj-hgt.table-responsive {
@@ -10814,7 +10814,7 @@ image-cropper img {
 }
 
 .teleservicePopup .btn-red {
-  background: #f24949 !important;
+  background: #16254b !important;
 }
 
 .teleservicePopup .btn-grn {
@@ -12870,7 +12870,7 @@ padding-left: 15px !important;
 }
 .paybill {
     margin-left: 10px;
-    background: #f24949;
+    background: #16254b;
     font-weight: 500;
     text-transform: uppercase;
     color: #fff;

@@ -494,7 +494,7 @@ header.consumer .tp-srch .sa-src .search_keyword_class.mat-focused .mat-form-fie
 }
 
 header.consumer .tp-srch .plr0i #search_button {
-    background: #f24949;
+    background: #16254b;
     color: #fff;
     width: 100px;
     line-height: 18px;
@@ -1647,15 +1647,15 @@ footer.dashb .stp-box .alerts .stp-tbl .table tr.success td {
 }
 
 footer.dashb .stp-box .alerts .stp-tbl .table tr.warning td {
-    color: #fda60d;
+    color: #16254b;
 }
 
 footer.dashb .stp-box .alerts .stp-tbl .table tr.high td {
-    color: #f24949;
+    color: #16254b;
 }
 
 footer.dashb .stp-box .alerts .stp-tbl .table tr.error td {
-    color: #f24949;
+    color: #16254b;
 }
 
 footer.dashb .stp-box .alerts.tray .stp-tbl .table td.td1 {
@@ -1756,7 +1756,7 @@ footer .sect1 .ft-cpy .sbi-bt li a span {
     border-radius: 50%;
     background-clip: padding-box;
     /* stops bg color from leaking outside the border: */
-    background: #f24949;
+    background: #16254b;
     width: 44px;
     height: 44px;
     display: inline-block;
@@ -2020,7 +2020,7 @@ header {
     border-radius: 50%;
     background-clip: padding-box;
     /* stops bg color from leaking outside the border: */
-    background: #f24949;
+    background: #16254b;
     width: 20px;
     height: 20px;
     display: inline-block;
