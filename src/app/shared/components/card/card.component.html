@@ -1,4 +1,43 @@
 <!-- Card -->
+<!-- ***START OF NEW CARD*** -->
+<div class="row  removeotherstyling" > 
+    <div class="col-lg-6">
+        <div class="card" style="margin:2%;width: 500px;">
+            <div class="row" >
+                <div class="col-lg-8 col-xs-10 col-md-8" style="background-color: lightgrey;padding: 2%;border-radius: 5%;font-size: 12px;">
+                    <div class="row">
+                        <div class="col-lg-2 col-xs-0"></div>
+                        <!-- <div class="col-lg-10 col-xs-12 col-md-8">Service Duration by 10 Mins</div> -->
+                    </div>
+                    
+                </div>
+                <div class="col-lg-2 col-sm-0 col-md-0" style="padding: 2%;"></div>
+                <div class="col-lg-2  col-xs-2 col-md-2">
+                    ...
+                </div>
+            </div>
+
+            <div class="row" >
+                <div class="col-lg-4 col-xs-1 col-md-4">
+                <img class="img-circle border imagesectionincards text-xs-center" src="assets/images/donation.png"> 
+                </div>
+                <div class="col-lg-6 col-xs-12 col-md-6" style="margin-top: 2%;">
+                        <h2>Consultation</h2>
+                        <h4 style="color: lightblue;">Next Avaliable Time</h4>
+                        <h4 style="color: lightblue;"> Today 1:40pm</h4>
+
+                </div>
+
+
+            </div>
+            <button href="#" class="btn btn-primary" style="width: 100%;border-radius: 5px;">Get Appointment</button>
+
+        </div>
+
+    </div>
+</div> 
+<!-- *** END OF NEW CARD ***  -->
+card1
 <div class="card booking-card pointer-cursor service" [ngClass]="theme?theme:''"
  *ngIf="(service && service.serviceAvailability) || item.type=='donation'"
  (click)="cardActionPerformed(item.type, null, service, loc, null, $event)">
@@ -72,6 +111,7 @@
  </div>
  </div>
 </div>
+card2
 <div *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'">
  <div [id]="'item-' + service.itemId" class="card booking-card pointer-cursor order items height-301"
  [class.disabled]="service['status'] && service['status']=='INACTIVE' || (!service.isStockAvailable && item.type=='item')"
@@ -181,6 +221,7 @@
  <!-- <div class="outstock" *ngIf="!service.isStockAvailable && item.type=='item'">
  Out of stock</div> -->
 </div>
+card3
 <div class="card booking-card booking-card-user pointer-cursor user" *ngIf="item.type=='provider'"
  (click)="cardActionPerformed(item.type, null, null, null, user.id, $event)">
  <div class="card-item-head">
@@ -235,6 +276,7 @@
 </div>
  <!-- <button type="button" class="btn btn-outline-warning">Book Now</button> -->
  </div></div>
+ card4
 <div class="card booking-card pointer-cursor order head" *ngIf="item.type==='item-head'"
  (click)="cardActionPerformed(item.type, 'add', null, null, null, $event)">
  <div class="card-item-head">
@@ -245,7 +287,9 @@
  <a class="pointer-cursor"><b>Add Item</b> </a>
  </h4>
  </div>
+
 </div>
+card5
 <div class="card booking-card order" *ngIf="item.type=='order-details-item'">
  <div class="card-item-head">
  <img class="card-img img-responsive" [src]="getItemImg(service)" alt="Profile Pic" />
@@ -264,6 +308,7 @@
  </div>
  </div>
 </div>
+card6
 <ng-container *ngIf="item.type=='checkin-dashboard' || item.type=='appt-dashboard'">
  <div class="col-xs-12 col-sm-12 no-padding" (click)="gotoDetails()" [class.history]="time_type==3">
  <div class="main-sec">
@@ -430,7 +475,7 @@
  View Less <i class="fa fa-caret-up"></i>
  </div> -->
 </ng-container>
-
+card7
 <ng-container *ngIf="type=='appointment-dashboard'">
  <div class="col-xs-12 col-sm-12 no-padding mgn-lt-5" (click)="gotoDetails()" [class.history]="time_type==3">
  <div class="main-sec">

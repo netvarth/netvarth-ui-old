@@ -1,3 +1,42 @@
+
+
+
+/* ***NEW CARD STYLINGS *** */
+.imagesectionincards {
+    width:130px !important;
+    height: 130px !important;
+    margin-top: -10% !important;
+    margin-left: -25% !important;
+    box-shadow: #00000029 -3pt 22pt 6pt !important;
+    border: 5px solid white !important;
+  }
+  .border {
+    background: orange !important;
+    padding: 4px 4px !important;
+    position: relative !important;
+  }
+  .removeotherstyling{
+    all: initial !important;
+    /* width: 1000px; */
+    
+  }
+  @media screen and (min-device-width : 320px) 
+  and (max-device-width : 768px){
+  * {
+    font-size: 12px !important;
+  }
+  .text-xs-center {
+    text-align: center !important;
+  }
+  }
+   
+  /* ***END OF NEW CARD STYLINGS *** */
+
+
+
+
+
+
 .booking-card.card.service, .booking-card.card.user {
     width: 100% !important;
     font-weight: 400 !important;
@@ -84,8 +123,9 @@ font-weight: 500;
     position: relative !important;
     display: -ms-flexbox !important;
     display: flex !important;
-    -ms-flex-direction: column !important;
-    flex-direction: column !important;
+    flex-flow: row wrap;
+    /* -ms-flex-direction: column !i/mportant; */
+    flex-direction: row !important;
     min-width: 0 !important;
     word-wrap: break-word !important;
     background-color: #fff !important;
