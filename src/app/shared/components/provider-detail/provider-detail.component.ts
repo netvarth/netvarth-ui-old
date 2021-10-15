@@ -9,7 +9,9 @@ import { trigger, style, transition, animate, keyframes, query, stagger } from '
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 import { CouponsComponent } from '../coupons/coupons.component';
+// import { ProviderDetailService } from '../provider-detail/provider-detail.service';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
+import { ExistingCheckinComponent } from '../existing-checkin/existing-checkin.component';
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { SignUpComponent } from '../signup/signup.component';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
@@ -1686,15 +1688,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       console.log(service.serviceType);
       if (service.serviceType === 'virtualService') {
         console.log('checkin');
-        // this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-        //   this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
-        // });
+        this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+          this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
+        });
 
-        this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer');
-
-
-      }
-      else {
+      } else {
         this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer');
       }
 
@@ -1743,10 +1741,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     if (this.userType === 'consumer') {
       console.log(service.serviceType);
       if (service.serviceType === 'virtualService') {
-        // this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-        //   this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'appt', current_provider['service'], consumerdata);
-        // });
-        this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
+        this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+          this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'appt', current_provider['service'], consumerdata);
+        });
 
       }
       else {
@@ -1819,8 +1816,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
               this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
             });
-
-            this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'waitlist', current_provider['service']);
 
           } else {
             this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'waitlist', current_provider['service']);
@@ -1947,7 +1942,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       account_id: this.provider_bussiness_id,
       tel_serv_stat: this.businessjson.virtualServices,
       user: this.userId,
-      service_type: service.serviceType,
       service_id: service.id,
       virtual_info: JSON.stringify(virtualinfo)
     };
@@ -1976,7 +1970,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       user: this.userId,
       futureAppt: this.futureAllowed,
       service_id: service.id,
-      service_type: service.serviceType,
       sel_date: curdate,
       virtual_info: JSON.stringify(virtualinfo)
     };
@@ -2001,6 +1994,28 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   onButtonBeforeHook() {
   }
   onButtonAfterHook() { }
+  // Edited//
+  showExistingCheckin(locId, locName, index) {
+    this.extChecindialogRef = this.dialog.open(ExistingCheckinComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'popup-class'],
+      disableClose: true,
+      data: {
+        locId: locId,
+        locName: locName,
+        terminologies: this.terminologiesjson,
+        settings: this.settingsjson
+      }
+    });
+
+    this.extChecindialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.getExistingCheckinsByLocation(locId, index);
+      }
+    });
+  }
+
+
   showServiceDetail(serv, busname) {
     let servData;
     if (serv.serviceType && serv.serviceType === 'donationService') {

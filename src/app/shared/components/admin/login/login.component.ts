@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
@@ -22,12 +23,14 @@ export class AdminLoginComponent implements OnInit {
   forgot_password_cap = Messages.FORGOT_PASS_CAP;
   new_user_cap = Messages.NEW_USER_CAP;
   sign_up_here_cap = Messages.SIGNUP_HERE_CAP;
+  loginForm: FormGroup;
   api_loading = true;
   loginId = null;
   accountId: string;
   password = null;
   type;
   constructor(
+    private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -45,13 +48,19 @@ export class AdminLoginComponent implements OnInit {
           this.shared_functions.logoutNoRedirect();
         }
       });
-    this.activated_route.queryParams.subscribe(
-      params => {
-        this.type = params.type;
-      });
+      this.activated_route.queryParams.subscribe(
+        params => {
+          this.type = params.type;
+        });
   }
   ngOnInit() {
+    this.createForm();
     this.api_loading = false;
+  }
+  createForm() {
+    this.loginForm = this.fb.group({
+      password: ['', Validators.compose([Validators.required])],
+    });
   }
   login(data) {
     const pW = this.password;
@@ -68,8 +77,8 @@ export class AdminLoginComponent implements OnInit {
         () => {
           const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
           this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
-          this.provider_dataStorage.setWeightageArray([]);
-          this.lStorageService.setitemonLocalStorage('popupShown', 'false');
+           this.provider_dataStorage.setWeightageArray([]);
+           this.lStorageService.setitemonLocalStorage('popupShown', 'false');
           this.api_loading = false;
           this.router.navigate(['home']);
           // this.dialogRef.close();

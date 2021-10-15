@@ -1,5 +1,6 @@
 
 import { NgModule, OnInit,  NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { CommonModule } from '@angular/common';
 import { LoadingSpinnerModule } from '../../../shared/modules/loading-spinner/loading-spinner.module';
 import { ReportsComponent } from './reports.component';
@@ -25,16 +26,11 @@ import { MatOptionModule } from '@angular/material/core';
 import { UserSelectionComponent } from './new-report/user-selection/user-selection.component';
 import { UserReportComponent } from './user-report/user-report.component';
 import { UserDetailReportComponent } from './user-report/user-detail-report/user-detail-report.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   imports: [
+      SharedModule,
       CommonModule,
-      FormsModule,
-      ReactiveFormsModule,
       LoadingSpinnerModule,
       ReportsRoutingModule,
       CapitalizeFirstPipeModule,
@@ -45,10 +41,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
       MatDatepickerModule,
       MatListModule,
       MatSelectModule,
-      MatOptionModule,
-      MatExpansionModule,
-      MatCheckboxModule,
-      MatProgressSpinnerModule
+      MatOptionModule
+
+
   ],
   declarations: [
     ReportsComponent,

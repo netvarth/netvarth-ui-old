@@ -11,6 +11,12 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 
 export class HealthCareComponent implements OnInit {
   @Input() target: string;
+  breadcrumbs = [
+    {
+      title: 'Help'
+    }
+  ];
+  // here..
   activePrice = '';
   // here code
   active_user;

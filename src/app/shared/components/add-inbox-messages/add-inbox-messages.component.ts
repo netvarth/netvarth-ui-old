@@ -252,7 +252,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     });
   }
   onSubmit(form_data) {
-    console.log("Form Data :", form_data);
     this.resetApiErrors();
     const blankvalidate = projectConstantsLocal.VALIDATOR_BLANK;
     const dataToSend: FormData = new FormData();
@@ -265,14 +264,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         i++;
       }
     }
-    // if(this.typeOfMsg === 'single'){
-    //   if(this.data.source === 'provider-waitlist'){
-    //     if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
-    //       this.api_error = 'share message via options are not selected';
-    //       return this.api_error;
-    //     }
-    //   }
-    // }
     const foruuid = [];
     foruuid.push(this.uuid);
     const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
@@ -445,7 +436,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               );
           }
         } else {
-          // IsTelegramDisable && !this.telegram  && !this.telegram (IsTelegramDisable && !this.telegram)
           if (this.data.source === 'provider-waitlist') {
             if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
               this.api_error = 'share message via options are not selected';
