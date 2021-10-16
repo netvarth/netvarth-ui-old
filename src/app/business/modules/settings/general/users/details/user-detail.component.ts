@@ -204,7 +204,7 @@ export class BranchUserDetailComponent implements OnInit {
                     }
                 }
                 else if (this.subsector === 'hoslisticHealth') {
-                    if (subdomain.subDomain === 'hoslisticHealth') {
+                    if (subdomain.subDomain === 'physiciansSurgeons') {
                         this.selectedsubDomain.push(subdomain);
                     }
                 }

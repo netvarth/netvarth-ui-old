@@ -131,7 +131,7 @@ export class HealthCareComponent implements OnInit {
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = this.active_user.sector;
     this.subdomain = this.active_user.subSector;
-    if ((this.subdomain === 'hospital') || (this.subdomain === 'dentalHosp') || (this.subdomain === 'alternateMedicineHosp')) {
+    if ((this.subdomain === 'hospital') || (this.subdomain === 'dentalHosp') ||(this.subdomain === 'hoslisticHealth') || (this.subdomain === 'alternateMedicineHosp')) {
       this.show_corp_accordion = true;
       this.show_brnch_accordion = true;
     }

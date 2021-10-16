@@ -650,7 +650,7 @@ export class UserServiceChnageComponent implements OnInit {
       } else if (this.user.subSector === 'alternateMedicineHosp') {
         subDomain = 'alternateMedicinePractitioners';
       } else if (this.user.subSector === 'hoslisticHealth') {
-        subDomain = 'hoslisticHealth';
+        subDomain = 'physiciansSurgeons';
       }
 
     } else if (this.user.sector === 'personalCare') {

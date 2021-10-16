@@ -217,7 +217,7 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
                 .subscribe(
                     (data: any) => {
                         this.isMultilevel = data.isMultilevel;
-                        if ((this.sub_domain === 'hospital' || this.sub_domain === 'dentalHosp' || this.sub_domain === 'alternateMedicineHosp' || this.sub_domain === 'veterinaryhospital') && this.accountType === 'BRANCH' && this.isMultilevel) {
+                        if ((this.sub_domain === 'hospital' || this.sub_domain === 'dentalHosp' || this.sub_domain === 'hoslisticHealth' || this.sub_domain === 'alternateMedicineHosp' || this.sub_domain === 'veterinaryhospital') && this.accountType === 'BRANCH' && this.isMultilevel) {
                             this.provider_label = 'Hospital';
                         }
                     },
