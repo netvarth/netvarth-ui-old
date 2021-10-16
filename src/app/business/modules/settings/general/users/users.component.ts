@@ -195,10 +195,11 @@ export class BranchUsersComponent implements OnInit {
         // }
     }
     getTeams(groupId?) {
+        console.log("jhdhfgjdhgjffggrjr");
         this.teamLoaded = true;
         this.provider_services.getTeamGroup().subscribe((data: any) => {
             this.groups = data;
-            console.log(this.groups);
+            console.log("jhdhfgjdhgj"+this.groups);
             this.teamLoaded = false;
             if(this.groups.length > 0){
                 this.showteams = true;
@@ -215,7 +216,6 @@ export class BranchUsersComponent implements OnInit {
                     if (this.selectedTeam !== 'all') {
                         const grp = this.groups.filter(group => group.id === this.selectedTeam.id);
                         this.selectedTeam = grp[0];
-                        console.log(this.selectedUser)
                         this.teamSelected(this.selectedTeam);
                     }
                 }
@@ -325,6 +325,7 @@ export class BranchUsersComponent implements OnInit {
                                 (data1: any) => {
                                     this.departments = data1.departments;
                                     this.users_list = data;
+                                    console.log("users_list"+this.users_list);
                                     this.user_list_dup = this.users_list;
                                     this.user_count_filterApplied = this.users_list.length;
                                     this.api_loading = false;
@@ -332,6 +333,7 @@ export class BranchUsersComponent implements OnInit {
                                 },
                                 (error: any) => {
                                     this.users_list = data;
+                                    console.log("users_list"+this.users_list);
                                     this.user_list_dup = this.users_list;
                                     this.api_loading = false;
                                     this.loadComplete = true;
@@ -532,7 +534,6 @@ export class BranchUsersComponent implements OnInit {
                     data => {
                         this.pagination.totalCnt = data;
                         this.user_count = this.pagination.totalCnt;
-                        console.log(this.user_count)
                         resolve(data);
                     },
                     error => {
@@ -594,7 +595,9 @@ export class BranchUsersComponent implements OnInit {
                 subDomain = 'dentists';
             } else if (this.user.subSector === 'alternateMedicineHosp') {
                 subDomain = 'alternateMedicinePractitioners';
-            }
+            }else if (this.user.subSector === 'hoslisticHealth') {
+                subDomain = 'hoslisticHealth';
+              }
         } else if (this.user.sector === 'personalCare') {
             if (this.user.subSector === 'beautyCare') {
                 subDomain = 'beautyCare';
@@ -644,7 +647,6 @@ export class BranchUsersComponent implements OnInit {
         this.provider_services.getSpecializations(this.user.sector, subDomain)
             .subscribe(data => {
                 this.specialization_arr = data;
-                console.log(this.specialization_arr);
             });
     }
     setFilterDataCheckbox(type, value) {
@@ -753,7 +755,6 @@ export class BranchUsersComponent implements OnInit {
                 'name': this.teamName,
                 'description': this.teamDescription
             };
-            console.log(postData);
             if (!this.teamEdit) {
                 this.createGroup(postData);
             } else {
@@ -763,12 +764,9 @@ export class BranchUsersComponent implements OnInit {
     }
     createGroup(data) {
         this.newlyCreatedGroupId = null;
-        console.log(data);
         this.provider_services.createTeamGroup(data).subscribe(data => {
             this.showAddCustomerHint = true;
-            console.log(data);
             this.newlyCreatedGroupId = data;
-            console.log(data);
         },
             error => {
                 this.apiError = error.error;
@@ -813,9 +811,7 @@ export class BranchUsersComponent implements OnInit {
         if (!type) {
             if (this.selectedTeam.users.length > 0) {
                 for (let i = 0; i < this.selectedTeam.users.length; i++) {
-                    console.log(this.selectedTeam.users[i]);
                     this.userIds.push(this.selectedTeam.users[i].id);
-                    console.log(this.userIds);
                 }
             }
         }
@@ -829,7 +825,6 @@ export class BranchUsersComponent implements OnInit {
         this.locclosebutton.nativeElement.click();
     }
     editGroup(group?) {
-        console.log(group);
         this.teamEdit = true;
         this.groupIdEdit = '';
         if (group) {
@@ -839,8 +834,6 @@ export class BranchUsersComponent implements OnInit {
         }
     }
     teamSelected(team, type?) {
-        console.log("Selected Team:");
-        console.log(team);
         this.showusers = true;
         this.showteams = false;
         if(!type){
@@ -917,8 +910,8 @@ export class BranchUsersComponent implements OnInit {
         console.log(this.userIds)
     }
     getLocIdsUserIds(loc, id, values) {
-        console.log(values.currentTarget.checked);
-        console.log(loc);
+        console.log("values"+values.currentTarget.checked);
+        console.log("locdgf"+loc);
         // if (values.currentTarget.checked) {
         //     this.locIds.push(id);
         //     console.log(this.userIds)
@@ -956,7 +949,7 @@ export class BranchUsersComponent implements OnInit {
               }
             }
                 this.api_loading = false;
-                console.log(this.loc_list);
+                console.log("loc_list"+JSON.stringify(this.loc_list));
             });
     }
     locationclose() {
@@ -964,6 +957,7 @@ export class BranchUsersComponent implements OnInit {
         this.addlocationcheck = false
     }
     assignLocationToUsers() {
+        console.log("this.locIds"+this.locIds);
         if (this.locIds.length === 0) {
             this.apiError = 'Please select at least one location';
         }
@@ -972,7 +966,7 @@ export class BranchUsersComponent implements OnInit {
                 'userIds': this.userIds,
                 'bussLocations': this.locIds
             };
-            console.log(postData);
+            console.log("console.log(postData)"+postData);
             this.provider_services.assignLocationToUsers(postData).subscribe(
                 (data: any) => {
                     this.showcheckbox = false;

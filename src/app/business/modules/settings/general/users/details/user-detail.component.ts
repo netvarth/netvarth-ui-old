@@ -186,7 +186,8 @@ export class BranchUserDetailComponent implements OnInit {
                 );
         }
         this.selectedsubDomain = [];
-        console.log(this.subDomains);
+        console.log("subDomains"+this.subDomains);
+        console.log("subsector"+this.subsector);
         for (const subdomain of this.subDomains) {
             if (this.sector === 'healthCare') {
                 if (this.subsector === 'hospital') {
@@ -199,6 +200,11 @@ export class BranchUserDetailComponent implements OnInit {
                     }
                 } else if (this.subsector === 'alternateMedicineHosp') {
                     if (subdomain.subDomain === 'alternateMedicinePractitioners') {
+                        this.selectedsubDomain.push(subdomain);
+                    }
+                }
+                else if (this.subsector === 'hoslisticHealth') {
+                    if (subdomain.subDomain === 'hoslisticHealth') {
                         this.selectedsubDomain.push(subdomain);
                     }
                 }
