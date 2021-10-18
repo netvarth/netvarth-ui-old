@@ -2114,7 +2114,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return this.dateTimeProcessor.convertMinutesToHourMinute(min);
   }
   viewprescription(checkin) {
-    console.log(checkin);
     this.viewrxdialogRef = this.dialog.open(ViewRxComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class'],

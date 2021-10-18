@@ -215,10 +215,10 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.metrojson = this.fileReader.getMetros();
       this.loadLocationjsontoArray();
     } else {
-      this.fileReader.getLocationJson('http://localhost:4200/').subscribe((locations) => {
+      this.fileReader.getLocationJson(projectConstants.PATH).subscribe((locations) => {
         this.fileReader.setLocations(locations);
         this.locationjson = locations;
-        this.fileReader.getMetrosJson('http://localhost:4200/').subscribe((metros) => {
+        this.fileReader.getMetrosJson(projectConstants.PATH).subscribe((metros) => {
           this.metrojson = metros;
           this.fileReader.setMetros(metros);
           this.loadLocationjsontoArray();
