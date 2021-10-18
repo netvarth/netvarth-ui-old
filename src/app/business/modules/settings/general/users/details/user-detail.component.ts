@@ -469,7 +469,7 @@ export class BranchUserDetailComponent implements OnInit {
             'userType': input.selectedUserType,
             'pincode': input.postalCode,           
         };
-        console.log("this.loc_list"+this.loc_list);
+       // console.log("this.loc_list"+this.loc_list);
         if(this.loc_list && this.loc_list.length == 1){
             let loc = [];
             loc.push(this.loc_list[0].id);
@@ -524,9 +524,9 @@ export class BranchUserDetailComponent implements OnInit {
             // post_data1['subdomain'] = input.selectedSubDomain;
             console.log(this.selectedsubDomain);
             // post_data1['subdomain'] = (this.selectedsubDomain[0]) ? this.selectedsubDomain[0].id : 0;
-            if (this.selectedsubDomain[0] && this.selectedsubDomain[0].id) {
-                post_data1['subdomain'] = this.selectedsubDomain[0].id;
-            }
+            // if (this.selectedsubDomain[0] && this.selectedsubDomain[0].id) {
+            //     post_data1['subdomain'] = this.selectedsubDomain[0].id;
+            // }
         }
         if (input.selectedUserType !== 'ADMIN') {
         post_data1['admin'] = input.privileges;
