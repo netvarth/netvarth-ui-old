@@ -156,6 +156,7 @@ export class BranchUsersComponent implements OnInit {
     showusers = false;
     selecteTeamdUsers: any = [];
     addUser = false;
+    subdomain: any;
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -170,7 +171,7 @@ export class BranchUsersComponent implements OnInit {
         this.selectedTeam = 'all';
         this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
         this.user = this.groupService.getitemFromGroupStorage('ynw-user');
-        console.log(this.user);
+       // console.log(this.user);
         this.domain = this.user.sector;
         this.api_loading = true;
         this.getUsers();
@@ -199,7 +200,7 @@ export class BranchUsersComponent implements OnInit {
         this.teamLoaded = true;
         this.provider_services.getTeamGroup().subscribe((data: any) => {
             this.groups = data;
-            console.log("jhdhfgjdhgj"+this.groups);
+           // console.log("jhdhfgjdhgj"+this.groups);
             this.teamLoaded = false;
             if(this.groups.length > 0){
                 this.showteams = true;
@@ -210,7 +211,7 @@ export class BranchUsersComponent implements OnInit {
                 this.showusers = true;
             }
             if (groupId) {
-                console.log("hi");
+               // console.log("hi");
 
                 if (groupId === 'update') {
                     if (this.selectedTeam !== 'all') {
@@ -321,6 +322,13 @@ export class BranchUsersComponent implements OnInit {
                     // filter = this.setPaginationFilter(filter);
                     this.provider_services.getUsers(filter).subscribe(
                         (data: any) => {
+                            this.users_list = data;
+                            for(let user of this.users_list){
+                                if(user.userType == 'PROVIDER'){
+                                    this.subdomain=user.subdomainName;
+                                }
+                            }
+                            console.log("subdomain"+this.subdomain);
                             this.provider_services.getDepartments().subscribe(
                                 (data1: any) => {
                                     this.departments = data1.departments;
@@ -644,7 +652,7 @@ export class BranchUsersComponent implements OnInit {
             }
         }
         console.log(this.user.sector, subDomain);
-        this.provider_services.getSpecializations(this.user.sector, subDomain)
+        this.provider_services.getSpecializations(this.user.sector, this.subdomain)
             .subscribe(data => {
                 this.specialization_arr = data;
             });
@@ -895,23 +903,20 @@ export class BranchUsersComponent implements OnInit {
         this.teamSelected(this.selectedTeam);
     }
     getUserIds(service, id, values) {
-        console.log(values.currentTarget.checked);
-        console.log(service);
-        console.log(values);
         if (values.currentTarget.checked) {
             this.userIds.push(id);
         } else {
-            console.log(this.userIds);
+          //  console.log(this.userIds);
             const index = this.userIds.filter(x => x !== id);
-            console.log(index)
+          //  console.log(index)
             this.userIds = index;
-            console.log(this.userIds)
+           // console.log(this.userIds)
         }
         console.log(this.userIds)
     }
     getLocIdsUserIds(loc, id, values) {
-        console.log("values"+values.currentTarget.checked);
-        console.log("locdgf"+loc);
+       // console.log("values"+values.currentTarget.checked);
+       // console.log("locdgf"+loc);
         // if (values.currentTarget.checked) {
         //     this.locIds.push(id);
         //     console.log(this.userIds)
@@ -922,14 +927,14 @@ export class BranchUsersComponent implements OnInit {
         // console.log(this.userIds)
         if (values.currentTarget.checked) {
             this.locIds.push(id);
-            console.log(this.locIds)
+           // console.log(this.locIds)
         } else {
-            console.log(this.locIds);
+           // console.log(this.locIds);
             const index = this.locIds.filter(x => x === id);
-            console.log(index)
+          //  console.log(index)
             this.locIds.pop(index);
         }
-        console.log(this.locIds)
+       // console.log(this.locIds)
     }
     addlocation() {
         this.userIds = [];
@@ -957,7 +962,7 @@ export class BranchUsersComponent implements OnInit {
         this.addlocationcheck = false
     }
     assignLocationToUsers() {
-        console.log("this.locIds"+this.locIds);
+       // console.log("this.locIds"+this.locIds);
         if (this.locIds.length === 0) {
             this.apiError = 'Please select at least one location';
         }
@@ -966,7 +971,7 @@ export class BranchUsersComponent implements OnInit {
                 'userIds': this.userIds,
                 'bussLocations': this.locIds
             };
-            console.log("console.log(postData)"+postData);
+           // console.log("console.log(postData)"+postData);
             this.provider_services.assignLocationToUsers(postData).subscribe(
                 (data: any) => {
                     this.showcheckbox = false;

@@ -274,7 +274,7 @@ export class BranchUserDetailComponent implements OnInit {
                 console.log("loc_listdata"+JSON.stringify(data));
              this.locationsjson = data;
             for (const loc of this.locationsjson) {
-              if (loc.status === 'ACTIVE') {
+              if (loc.status === 'ACTIVE'&& loc.baseLocation) {
                 this.loc_list.push(loc);
               }
             }
@@ -469,12 +469,6 @@ export class BranchUserDetailComponent implements OnInit {
             'userType': input.selectedUserType,
             'pincode': input.postalCode,           
         };
-       // console.log("this.loc_list"+this.loc_list);
-        if(this.loc_list && this.loc_list.length == 1){
-            let loc = [];
-            loc.push(this.loc_list[0].id);
-            post_data1['bussLocations']= loc ;
-        }
         if(input.whatsappumber !==''){
             if(input.countryCode_whatsapp.startsWith('+')){
                 this.whatsappCountry = input.countryCode_whatsapp
@@ -547,7 +541,24 @@ export class BranchUserDetailComponent implements OnInit {
                 });
         } else {
             console.log(post_data1);
-            this.provider_services.createUser(post_data1).subscribe(() => {
+            this.provider_services.createUser(post_data1).subscribe((Id) => {
+                if(this.loc_list ){
+                    let loc = [];
+                    let userIds = [];
+                    loc.push(this.loc_list[0].id);
+                    userIds.push(Id);
+                    post_data1['bussLocations']= loc ;
+                    const postData = {
+                        'userIds': userIds,
+                        'bussLocations': loc
+                    };
+                    this.provider_services.assignLocationToUsers(postData).subscribe(
+                        (data: any) => {
+                        },
+                        error => {
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        });
+                }
                 this.userAddConfirm()
               
             },
