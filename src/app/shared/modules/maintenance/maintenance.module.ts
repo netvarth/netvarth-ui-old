@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { SharedModule } from '../../../shared/modules/common/shared.module';
+import { HeaderModule } from '../../../shared/modules/header/header.module';
+
+// import { SearchDataStorageService  } from '../../services/search-datastorage.services';
+
 import { MaintenanceComponent } from './maintenance.component';
-const routes: Routes = [
-  { path: '', component: MaintenanceComponent}
-]
+// import { HttpCommonService } from '../../services/http-common.service';
 @NgModule({
     imports: [
-        [RouterModule.forChild(routes)]
+      SharedModule,
+      HeaderModule
     ],
     declarations: [MaintenanceComponent],
     exports: [MaintenanceComponent],

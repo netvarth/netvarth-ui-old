@@ -10,6 +10,7 @@ import { ServiceDetailComponent } from '../service-detail/service-detail.compone
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 import { CouponsComponent } from '../coupons/coupons.component';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
+// import { ExistingCheckinComponent } from '../existing-checkin/existing-checkin.component';
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { SignUpComponent } from '../signup/signup.component';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';

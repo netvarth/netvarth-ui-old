@@ -560,6 +560,7 @@ export class ProviderSharedFuctions {
           countryCode: countryCode
         }
       });
+      console.log("Patient Message Details :",this.sendglobalmsgdialogRef)
 
       this.sendglobalmsgdialogRef.afterClosed().subscribe(result => {
         if (result === 'reloadlist') {

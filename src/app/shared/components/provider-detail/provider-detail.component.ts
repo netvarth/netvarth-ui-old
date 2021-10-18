@@ -9,7 +9,9 @@ import { trigger, style, transition, animate, keyframes, query, stagger } from '
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 import { CouponsComponent } from '../coupons/coupons.component';
+// import { ProviderDetailService } from '../provider-detail/provider-detail.service';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
+import { ExistingCheckinComponent } from '../existing-checkin/existing-checkin.component';
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { SignUpComponent } from '../signup/signup.component';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
@@ -28,6 +30,7 @@ import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
 import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
+import { CheckavailabilityComponent } from '../checkavailability/checkavailability.component';
 
 
 
@@ -109,6 +112,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   genderType = null;
   showVirtualfieldsSection = false;
   waitlisttime_arr: any = [];
+  checkavailabilitydialogref;
   favprovs: any = [];
   specializationslist: any = [];
   specializationslist_more: any = [];
@@ -1686,15 +1690,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       console.log(service.serviceType);
       if (service.serviceType === 'virtualService') {
         console.log('checkin');
-        // this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-        //   this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
-        // });
+        this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+          this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
+        });
 
-        this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer');
-
-
-      }
-      else {
+      } else {
         this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer');
       }
 
@@ -1741,12 +1741,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     console.log(this.userType);
     if (this.userType === 'consumer') {
-      console.log(service.serviceType);
+      // console.log(service.serviceType,'.......');
       if (service.serviceType === 'virtualService') {
-        // this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-        //   this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'appt', current_provider['service'], consumerdata);
-        // });
-        this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
+        this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+          this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'appt', current_provider['service'], consumerdata);
+        });
 
       }
       else {
@@ -1819,8 +1818,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
               this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
             });
-
-            this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'waitlist', current_provider['service']);
 
           } else {
             this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'waitlist', current_provider['service']);
@@ -1947,7 +1944,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       account_id: this.provider_bussiness_id,
       tel_serv_stat: this.businessjson.virtualServices,
       user: this.userId,
-      service_type: service.serviceType,
       service_id: service.id,
       virtual_info: JSON.stringify(virtualinfo)
     };
@@ -1976,7 +1972,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       user: this.userId,
       futureAppt: this.futureAllowed,
       service_id: service.id,
-      service_type: service.serviceType,
       sel_date: curdate,
       virtual_info: JSON.stringify(virtualinfo)
     };
@@ -2001,6 +1996,28 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   onButtonBeforeHook() {
   }
   onButtonAfterHook() { }
+  // Edited//
+  showExistingCheckin(locId, locName, index) {
+    this.extChecindialogRef = this.dialog.open(ExistingCheckinComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'popup-class'],
+      disableClose: true,
+      data: {
+        locId: locId,
+        locName: locName,
+        terminologies: this.terminologiesjson,
+        settings: this.settingsjson
+      }
+    });
+
+    this.extChecindialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.getExistingCheckinsByLocation(locId, index);
+      }
+    });
+  }
+
+
   showServiceDetail(serv, busname) {
     let servData;
     if (serv.serviceType && serv.serviceType === 'donationService') {
@@ -2446,7 +2463,24 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
 
   }
+  opencheckavail(actionObj) {
+    console.log(this.provider_id,"id...",this.apptSettingsJson)
+    console.log(actionObj['service']['serviceAvailability']['nextAvailableDate'],"serv",);
+    console.log("account id",this.apptSettingsJson['account']['id'])
+
+    this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
+      width: '90%',
+      // panelClass: ['popup-class', 'commonpopupmainclass'],
+      // disableClose: true,
+      data: {
+      //  provider_id:this.provider_id
+      alldetails:actionObj,
+      apptSettingsJson:this.apptSettingsJson,
+      }
+    });
+  }
   cardClicked(actionObj) {
+    console.log("..actionObj..",actionObj);
     if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessjson.name);
@@ -2454,7 +2488,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         this.checkinClicked(actionObj['location'], actionObj['service']);
       }
 
-    } else if (actionObj['type'] === 'appt') {
+    }
+    else if(actionObj['type']=='checkavailability') {
+      // console.log("***checkavailability***");
+      this.opencheckavail(actionObj);
+    }
+    else if (actionObj['type'] === 'appt') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessjson.name);
       } else {
@@ -2474,6 +2513,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       } else if (actionObj['action'] === 'remove') {
         this.decrement(actionObj['service']);
       }
+     
     } else {
       this.providerDetClicked(actionObj['userId']);
     }

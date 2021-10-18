@@ -99,10 +99,33 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
   createForm() {
     this.loginForm = this.fb.group({
+      // phonenumber: ['', Validators.compose(
+      //   [
+      //   Validators.maxLength(10),
+      //   Validators.minLength(10),
+      //   Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
       emailId: ['', Validators.pattern(new RegExp(projectConstantsLocal.VALIDATOR_MOBILE_AND_EMAIL))],
       password: ['', Validators.compose([Validators.required])],
       phone: new FormControl(undefined, [Validators.required])
     });
+    // this.phoneNumber = '+19605551784';
+    // e164Number: "+911234567890",
+    // internationalNumber: "+91 1234 567 890",
+    // nationalNumber: "01234 567 890",
+    // countryCode: "IN",
+    // this.phoneNumber = '+1 2015551234';
+    // this.phoneNumber = '+19605551784';
+    // this.phoneNumber =  {
+// dialCode: "+1",
+// e164Number: "+11234567890",
+// internationalNumber: "+1 9605551784",
+// nationalNumber: "09605551784",
+// countryCode: "IN",
+// number: "+19605551784"}
+    // this.loginForm.controls.phone.setValue(phoneNumber);
+    // this.phoneNumber = '(123)456-7890';
+    // this.loginForm.controls.phone.setValue(this.phoneNumber);
+
   }
   showError() {
     this.phoneError = null;
@@ -114,8 +137,22 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this.phoneError = 'Phone number is invalid';
       return false;
     }
-    // const pN = this.loginForm.get('phone').value.e164Number;
+    const pN = this.loginForm.get('phone').value.e164Number;
+    // const pN = this.document.getElementById('phonenumber').value.trim();
+    // const pN = this.document.getElementById('emailId').value.trim();
     const pW = this.document.getElementById('password').value;
+    // if (pN === '') {
+    //   if (this.document.getElementById('phonenumber')) {
+    //     this.document.getElementById('phonenumber').focus();
+    //     return;
+    //   }
+    // }
+    if (pN === '') {
+      // if (this.document.getElementById('emailId')) {
+      //   this.document.getElementById('emailId').focus();
+      //   return;
+      // }
+    }
     if (pW === '') {
       if (this.document.getElementById('password')) {
         this.document.getElementById('password').focus();
@@ -125,9 +162,17 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
   onSubmit(data) {
     this.resetApiErrors();
+    // const pN = data.phonenumber.trim();
     const dialCode = data.phone.dialCode;
     const pN = data.phone.e164Number.trim();
     const pW = data.password;
+    //  const email = data.emailId.trim();
+    // if (pN === '') {
+    //   if (this.document.getElementById('emailId')) {
+    //     this.document.getElementById('emailId').focus();
+    //     return;
+    //   }
+    // }
     if (pW === '') {
       if (this.document.getElementById('password')) {
         this.document.getElementById('password').focus();
@@ -186,6 +231,22 @@ export class LoginComponent implements OnInit, AfterViewInit {
               
               this.dialogRef.close('success');
               this.lStorageService.setitemonLocalStorage('showTelePop', 'true');
+              // this.tele_num = loginId;
+              // if(dialCode.startsWith('+')){
+              //   this.countryCode = dialCode.substring(1);
+              // }
+              // this.shared_services.telegramChat(this.countryCode,loginId)
+              //  .subscribe(
+              //      data => { 
+              //        this.chatId = data; 
+              //        if(this.chatId === null){
+              //          this.telegramInfo();
+              //        }
+              //      },
+              //      (error) => {
+                      
+              //      }
+              //  );
             },
             error => {
              if (error.status === 401 && error.error === 'Session already exists.') {
@@ -202,9 +263,36 @@ export class LoginComponent implements OnInit, AfterViewInit {
       }
     }
   }
+  // telegramInfo() {
+  //   const dialogref = this.dialog.open(TelegramInfoComponent, {
+  //     width: '70%',
+  //     height: '40%',
+  //     panelClass: ['popup-class', 'commonpopupmainclass', 'full-screen-modal', 'telegramPopupClass'],
+  //     disableClose: true,
+  //   });
+  //   dialogref.afterClosed().subscribe(
+  //     result => {
+  //      //  this.closeDialog();
+  //       // if (result) {
+  //       // }
+  //     }
+  //   );
+  // }
   doForgotPassword() {
     this.resetApiErrors();
     this.api_loading = false;
+    // this.dialogRef.close(); // closing the signin window
+    // const dialogRef = this.dialog.open(ForgotPasswordComponent, {
+    //   width: '60%',
+    //   panelClass: 'forgotpasswordmainclass',
+    //   data: {
+    //     is_provider : this.is_provider
+    //   }
+    // });
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   // this.animal = result;
+    // });
     this.step = 2;
   }
   cancelForgotPassword() {
@@ -213,6 +301,14 @@ export class LoginComponent implements OnInit, AfterViewInit {
   handleSignup() {
     this.dialogRef.close();
     this.doSignup();
+    // if (this.moreParams && (this.moreParams['source'] === 'searchlist_checkin' || this.moreParams['source'] === 'business_page')) {
+    //   this.dialogRef.close('showsignup');
+    // } else {
+    //   this.dialogRef.close('showsignupfromlogin'); // closing the signin window
+    // }
+    // if (this.data.moreparams && (this.data.moreparams.source === 'businesshome_page')) {
+    //   this.doSignup();
+    // }
   }
   doSignup() {
     const dialogReflog = this.dialog.open(SignUpComponent, {
