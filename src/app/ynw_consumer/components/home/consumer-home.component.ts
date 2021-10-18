@@ -2085,7 +2085,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       panelClass: ['commonpopupmainclass', 'popup-class'],
       disableClose: true,
       data: {
-        accencUid: checkin.prescShortUrl
+        accencUid: checkin.prescShortUrl?checkin.prescShortUrl:checkin.prescUrl
       }
     });
   }
@@ -2220,7 +2220,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       this.reloadAPIs();
     });
   }
+  getOrderPaidBill(orderBill){
+    if(orderBill.amountPaid){
+      return orderBill.amountPaid;
+    }else{
+      return orderBill.advanceAmountPaid;
+    }
 
+  }
   viewAttachment(booking, type) {
     if (type === 'appt') {
       this.subs.sink = this.shared_services.getConsumerAppointmentAttachmentsByUuid(booking.uid, booking.providerAccount.id).subscribe(
