@@ -288,7 +288,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
         () => {
           this.provider_dataStorage.setWeightageArray([]);
           this.titleService.setTitle('Jaldee');
-          this.routerobj.navigate(['/business/login']);
+          this.router.navigate(['/home']);
         },
         () => {
         }
