@@ -158,6 +158,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     this.resetFilter();
     this.resetFilterValues();
     this.resetLabelFilter();
+    this.resetOrdertypeFilter();
     this.filterapplied = false;
     this.setTabSelection(event.index + 1);
   }
@@ -264,6 +265,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   clearFilter() {
     this.resetFilter();
     this.resetFilterValues();
+    this.resetOrdertypeFilter();
     this.resetLabelFilter();
     this.filterapplied = false;
     this.doSearch();
@@ -281,7 +283,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
       orderNumber: false,
       orderStatus: false,
       orderMode: false,
-      payment_status: false
+      payment_status: false,
     };
     this.filter = {
       first_name: '',
@@ -300,7 +302,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   keyPressed() {
     this.labelSelection();
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.patientId ||
-      this.filter.payment_status !== 'all' || this.filter.orderNumber || this.orderStatuses.length > 0 || this.filter.orderMode !== 'all' || this.paymentStatuses.length > 0 || this.labelFilterData !== '') {
+      this.filter.payment_status !== 'all' || this.filter.orderNumber || this.orderStatuses.length > 0 || this.filter.orderMode || this.paymentStatuses.length > 0 || this.labelFilterData !== '') {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -484,6 +486,9 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     this.labelMultiCtrl = [];
     this.labelFilter = [];
     this.labelFilterData = '';
+  }
+  resetOrdertypeFilter(){
+    this.historyOrdertype = '';
   }
   // labelClick() {
   //   this.showLabels = true;

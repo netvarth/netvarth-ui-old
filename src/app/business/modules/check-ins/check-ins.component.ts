@@ -2015,7 +2015,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['gender-eq'] = this.genderList.toString();
       }
     }
-    if (this.time_type !== 3) {
+    if (this.time_type) {
       if (this.selected_location && this.selected_location.id) {
         api_filter['location-eq'] = this.selected_location.id;
       }
@@ -2728,7 +2728,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       || this.filter.check_in_end_date || this.filter.check_in_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== ''
       || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
       || this.allPayStatusSelected || this.allModeSelected || this.allLabelSelected || this.allQSelected || this.allLocationSelected) {
-      console.log('fdg');
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
