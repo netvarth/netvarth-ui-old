@@ -240,17 +240,17 @@
                                                         <div class="" *ngIf="sel_ser || type == 'waitlistreschedule'">
                                                             <div class="service-icon pull-left"
                                                                 *ngIf="sel_ser_det.serviceType == 'virtualService'">
-                                                                <i class="fa phon-icon"
+                                                                <i class="fa phon-icon mt-2" 
                                                                     *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                                <i class="fa meet-icon"
+                                                                <i class="fa meet-icon mt-2" 
                                                                     *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                                <i class="fa zoom-icon zoom1"
+                                                                <i class="fa zoom-icon zoom1 mt-2" 
                                                                     *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                                <i class="fa jvideo-icon jvideo-icon-m jvideo-icon-mg5"
+                                                                <i class="fa jvideo-icon jvideo-icon-m jvideo-icon-mg5 mt-2" 
                                                                     *ngIf="sel_ser_det.virtualCallingModes  && sel_ser_det.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
-                                                                <i class="fa wtsapaud-icon"
+                                                                <i class="fa wtsapaud-icon mt-2" 
                                                                     *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType === 'audioService'"></i>
-                                                                <i class="fa wtsapvid-icon"
+                                                                <i class="fa wtsapvid-icon mt-2 " 
                                                                     *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType === 'videoService'"></i>
                                                             </div>
                                                             <h6 class="card-title service mgn-bt-10">
@@ -441,9 +441,9 @@
                                                                         <mat-radio-group formControlName="gender"
                                                                             [ngClass]="{disabledDiv: !editable}"
                                                                             class=" m-0 p-2">
-                                                                            <mat-radio-button value="male">Male
+                                                                            <mat-radio-button value="male" class="mx-2">Male
                                                                             </mat-radio-button>
-                                                                            <mat-radio-button value="female">Female
+                                                                            <mat-radio-button value="female" class="mx-2">Female
                                                                             </mat-radio-button>
                                                                             <mat-radio-button value="other">Other
                                                                             </mat-radio-button>
@@ -556,7 +556,7 @@
                                                                             [ngClass]="{disabledDiv: !editable}"
                                                                             class="mgn-up-5  m-0 p-2"
                                                                             formControlName="islanguage">
-                                                                            <mat-radio-button value="yes">English
+                                                                            <mat-radio-button value="yes" class="mx-2">English
                                                                             </mat-radio-button>
                                                                             <mat-radio-button value="no">Other Languages
                                                                             </mat-radio-button>
@@ -610,7 +610,7 @@
                                                                     <mat-radio-group aria-label="Select an option"
                                                                         (change)="onChange($event)" class="mgn-up-5"
                                                                         formControlName="islanguage">
-                                                                        <mat-radio-button value="yes">English
+                                                                        <mat-radio-button value="yes" class="mx-2">English
                                                                         </mat-radio-button>
                                                                         <mat-radio-button value="no">Other Languages
                                                                         </mat-radio-button>
@@ -1957,17 +1957,17 @@
                                                         <span class="service-icon"
                                                             style="display: inline-block !important;"
                                                             *ngIf="sel_ser_det.serviceType == 'virtualService'">
-                                                            <i class="fa phon-icon"
+                                                            <i class="fa phon-icon mt-5 mb-0"
                                                                 *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                            <i class="fa meet-icon"
+                                                            <i class="fa meet-icon mt-5 mb-0"
                                                                 *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                            <i class="fa zoom-icon"
+                                                            <i class="fa zoom-icon mt-5 mb-0"
                                                                 *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                            <i class="fa jvideo-icon jvideo-icon-m jvideo-icon-mg5"
+                                                            <i class="fa jvideo-icon jvideo-icon-m jvideo-icon-mg5 mt-5 mb-0"
                                                                 *ngIf="sel_ser_det.virtualCallingModes  && sel_ser_det.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
-                                                            <i class="fa wtsapaud-icon"
+                                                            <i class="fa wtsapaud-icon mt-5 mb-0"
                                                                 *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='audioService'"></i>
-                                                            <i class="fa wtsapvid-icon"
+                                                            <i class="fa wtsapvid-icon mt-5 mb-0"
                                                                 *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='videoService'"></i>
                                                         </span>
                                                         <span>{{sel_ser_det.name}}</span>

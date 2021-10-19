@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { projectConstants } from '../../../../app.component';
@@ -16,7 +16,7 @@ import { PreviewuploadedfilesComponent } from '../previewuploadedfiles/previewup
   templateUrl: './jaldee-drive.component.html',
   styleUrls: ['./jaldee-drive.component.css']
 })
-export class JaldeeDriveComponent implements OnInit {
+export class JaldeeDriveComponent implements OnInit,OnChanges {
   bname;
   blogo = '';
   userDetails: any = [];
@@ -29,7 +29,7 @@ export class JaldeeDriveComponent implements OnInit {
   value: number = 0;
   // products: Product[];
   products = [];
-  customers: any[];
+  customers: any[] = [];
   Allfiles: any;
   filter_sidebar = false;
   tooltipcls = '';
@@ -167,6 +167,11 @@ export class JaldeeDriveComponent implements OnInit {
   weightageValue = 0;
   addondialogRef: any;
   fileviewdialogRef: any;
+  p: number = 1;
+  // itemsPerPage:any;
+  // currentPage:any;
+  config:any;
+  count: number = 0;
 
   constructor(
     private groupService: GroupStorageService,
@@ -176,14 +181,25 @@ export class JaldeeDriveComponent implements OnInit {
     private router: Router,
     public location: Location,
     public dialog: MatDialog,
-  ) { }
+  ) {
+    this.config = {
+      itemsPerPage: 5,
+      currentPage: 1,
+      totalItems: this.customers.length
+    };
+   }
 
+   pageChanged(event){
+    this.config.currentPage = event;
+  }
   ngOnInit(): void {
+    this.getPatientFiles();
+    this.getfiles();
     this.userData = this.groupService.getitemFromGroupStorage('ynw-user');
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     console.log(this.active_user);
     this.getBusinessdetFromLocalstorage();
-    this.getfiles();
+    
     // this.cols = [
     //   { field: 'code', header: 'Code' },
     //   { field: 'name', header: 'Name' },
@@ -193,6 +209,14 @@ export class JaldeeDriveComponent implements OnInit {
     this.getTotalFileShareCount();
     this.getFileStorage();
   }
+
+  ngOnChanges(){
+    this.getfiles();
+  }
+  
+
+
+
   getFileStorage() {
     this.provider_servicesobj.getFileStorage().subscribe(
       (data: any) => {
@@ -241,6 +265,7 @@ export class JaldeeDriveComponent implements OnInit {
     }
   }
   showFilterSidebar() {
+    this.getfiles();
     this.filter_sidebar = true;
     console.log(this.filter_sidebar);
   }
@@ -274,6 +299,12 @@ export class JaldeeDriveComponent implements OnInit {
         .subscribe(
           () => {
             this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { 'panelClass': 'snackbarnormal' });
+            this. selectedMessage = {
+              files: [],
+              base64: [],
+              caption: []
+            }
+
           },
           error => {
             this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
@@ -307,6 +338,7 @@ export class JaldeeDriveComponent implements OnInit {
           return;
         } else {
           this.selectedMessage.files.push(file);
+         // this.selectedMessage.files = '';
           const reader = new FileReader();
           reader.onload = (e) => {
             this.selectedMessage.base64.push(e.target['result']);
@@ -335,9 +367,15 @@ export class JaldeeDriveComponent implements OnInit {
     };
     this.router.navigate(['provider', 'drive', 'folderfiles'], navigationExtras);
   }
+  getPatientFiles(){
+    this.getfiles();
+
+  }
   getUsers(from_oninit = false) {
     this.loading = true;
+    
     let filter = this.setFilterForApi();
+    if(filter){
     console.log(filter);
     this.lStorageService.setitemonLocalStorage('userfilter', filter);
     this.provider_servicesobj.getAllFilterAttachments(filter).subscribe(
@@ -348,6 +386,10 @@ export class JaldeeDriveComponent implements OnInit {
         this.api_loading = false;
       }
     );
+    }
+    else{
+      this.getfiles();
+    }
   }
   clearFilter() {
     this.lStorageService.removeitemfromLocalStorage('userfilter');
@@ -519,6 +561,7 @@ export class JaldeeDriveComponent implements OnInit {
 
   }
   preview(file) {
+    console.log("Files : ",this.customers)
     this.fileviewdialogRef = this.dialog.open(PreviewuploadedfilesComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'uploadfilecomponentclass'],
