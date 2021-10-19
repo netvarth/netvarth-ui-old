@@ -103,6 +103,16 @@ ul.bus-actions li {
   font-size: 1.2rem;
   /* text-transform: uppercase; */
 }
+@media (max-width: 280px) {
+  ul.bus-actions li {
+    margin-top: 300px;
+  }
+}
+@media (min-width: 375px) {
+  ul.bus-actions li {
+    margin-top: 400px;
+  }
+}
 
 ul.bus-actions li a.lnk {
   font-weight: 500 !important;
