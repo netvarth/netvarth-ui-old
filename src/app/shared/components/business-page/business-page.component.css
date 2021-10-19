@@ -2288,10 +2288,15 @@ img.ordericon.home {
 }
 .bSection {
   display: flex;
+  flex-direction: column;
+  text-align: center;
+  /* justify-content: center; */
   margin-left: 20px;
 }
-.bSection img {
-  width: 80px;
+.bSection .img {
+  width: 200px;
+  /* text-align: center; */
+
 }
 .bSection .bname {
   color:white;
@@ -2302,6 +2307,10 @@ img.ordericon.home {
 .bSection .name-dept {
   margin-top: auto;
   margin-bottom: auto;
+}
+.bSection .subhead {
+  font-size: 1.00rem !important;
+  color: whitesmoke;
 }
 .bSection .dept {
   font-size: 1.25rem !important;

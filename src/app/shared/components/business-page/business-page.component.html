@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="text-center mgn-bt-40" [class.mgn-up-30]="userId">
+                    <div class="text-center mgn-bt-40" [class.mgn-up-30]="userId" *ngIf="!userId">
                         <img src="../../../../assets/images/iconviswasambandha-removebg-preview.png">
                     </div>
                     <!-- <div class="text-center mgn-bt-20" *ngIf="!userId">
@@ -53,9 +53,17 @@
                         </div>
                     </div>
                     <div class="bSection" *ngIf="userId">
-                        <img alt="Profile Image" src="{{bLogo}}">
+                       <div >
+                        <img class="img img-circle img-responsive" alt="Profile Image" src="{{bLogo}}">
+                       </div>
                         <div class="name-dept">
                             <div class="bname">{{businessjson.businessName | capitalizeFirst}}</div>
+                            <div class="bname dept">{{businessjson.businessUserName | capitalizeFirst}}</div>
+                            <div *ngIf="businessjson.businessDesc.length>1" class="bname dept">About us</div>
+                            <div *ngIf="businessjson.businessDesc.length>1" class="subhead">{{businessjson.businessDesc | capitalizeFirst}}</div>
+                            
+                            <div *ngIf="businessjson.specialization.length>0" class="bname dept">Specialization</div>
+                            <div *ngIf="businessjson.specialization.length>0" class="subhead">{{businessjson.specialization[0] | capitalizeFirst}}</div>
                             <div class="bname dept" *ngIf="apptServices && apptServices[0]"> {{apptServices[0].deptName}}</div>
                             <div class="bname dept" *ngIf="(apptServices && !apptServices[0]) && (wlServices && wlServices[0])">
                                 {{wlServices[0].deptName}}</div>

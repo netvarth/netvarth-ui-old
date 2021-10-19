@@ -321,6 +321,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loc_details = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
     this.jdnTooltip = this.wordProcessor.getProjectMesssages('JDN_TOOPTIP');
     console.log("Before checking mobile tpye");
+    console.log("business json",this.businessjson.length)
     const isMobile = {
       Android: function () {
         return navigator.userAgent.match(/Android/i);
@@ -685,6 +686,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.pageFound = true;
       this.socialMedialist = [];
       this.businessjson = res;
+      // console.log("bussinesss json...",this.businessjson)
       if (this.businessjson.serviceSector.name !== 'healthCare') {
         this.service_cap = 'Services';
       }
@@ -701,10 +703,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
         if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
           this.bLogo = this.businessjson.logo.url;
+          // console.log("business json",this.businessjson)
         }
       } else {
         // this.bLogo = '';
         this.bLogo = '../../../assets/images/img-null.svg';
+        // console.log("business json",this.businessjson)
+
       }
       this.specializationslist = [];
       this.specializationslist_more = [];
@@ -914,11 +919,14 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
       if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
         this.bLogo = this.businessjson.logo.url;
+
         // this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
       }
     } else {
       // this.bLogo = '';
       this.bLogo = '../../../assets/images/img-null.svg';
+      
+
     }
     if (this.businessjson.specialization) {
       this.specializationslist = this.businessjson.specialization;

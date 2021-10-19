@@ -207,6 +207,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         return slotAvailable;
     }
     getPic(user) {
+        console.log('user....',user);
         if (user.profilePicture) {
             // alert(JSON.parse(user.profilePicture)['url']);
             return user.profilePicture['url'];
