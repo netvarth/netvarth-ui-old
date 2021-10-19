@@ -180,7 +180,6 @@ export class BranchUsersComponent implements OnInit {
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.getLicenseUsage();
         this.getSpokenLanguages();
-        this.getSpecializations();
         this.getTeams();
         this.getProviderLocations();
         // this.addCustomerToGroup();
@@ -347,6 +346,7 @@ export class BranchUsersComponent implements OnInit {
                                     this.loadComplete = true;
                                     this.user_count_filterApplied = this.users_list.length;
                                 });
+                                this.getSpecializations();
                         },
                         (error: any) => {
                             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
