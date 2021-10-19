@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
-import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../../../services/provider-services.service';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
 import { MatDialog } from '@angular/material/dialog';
-import { AddproviderAddonComponent } from '../../../../../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
-import { UpdateProviderNotificationsComponent } from '../update-provider-notifications/update-provider-notifications.component';
 import { GroupStorageService } from '../../../../../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
+import { AddproviderAddonComponent } from '../../../../../../../../business/modules/add-provider-addons/add-provider-addons.component';
+import { UpdateProviderUserNotificationsComponent } from '../update-provider-notifications/update-provider-notifications.component';
 
 @Component({
   selector: 'app-provider-notifications',
   templateUrl: './provider-notifications.component.html'
 })
-export class ProviderNotificationUserComponent implements OnInit {
+export class ProviderUserNotificationUserComponent implements OnInit {
   isCheckin;
   mode_of_notify = '';
   SelchkinNotify = false;
@@ -999,7 +999,7 @@ export class ProviderNotificationUserComponent implements OnInit {
     } else if (type === 'Appointment' && !this.appointment_status) {
       this.snackbarService.openSnackBar('Jaldee Appointment Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
     } else {
-      const dialogref = this.dialog.open(UpdateProviderNotificationsComponent, {
+      const dialogref = this.dialog.open(UpdateProviderUserNotificationsComponent, {
         width: '40%',
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,

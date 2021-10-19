@@ -4,10 +4,10 @@ import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { AddProviderAddonsModule } from "../../../../../../../../business/modules/add-provider-addons/add-provider-addons.module";
 import { TelegramInfoModule } from "../../../../../../../../business/modules/settings/comm/telegram-info/telegram-info.module";
 import { LoadingSpinnerModule } from "../../../../../../../../shared/modules/loading-spinner/loading-spinner.module";
-import { AddProviderAddonsModule } from "../../../../../../../../ynw_provider/components/add-provider-addons/add-provider-addons.module";
-import { UpdateProviderNotificationsComponent } from "./update-provider-notifications.component";
+import { UpdateProviderUserNotificationsComponent } from "./update-provider-notifications.component";
 
 @NgModule({
     imports: [
@@ -20,9 +20,9 @@ import { UpdateProviderNotificationsComponent } from "./update-provider-notifica
         MatButtonModule,
         LoadingSpinnerModule
     ],
-    exports: [UpdateProviderNotificationsComponent],
+    exports: [UpdateProviderUserNotificationsComponent],
     declarations: [
-        UpdateProviderNotificationsComponent
+        UpdateProviderUserNotificationsComponent
     ]
 })
-export class UpdateProviderNotificationsModule {}
+export class UpdateProviderUserNotificationsModule {}

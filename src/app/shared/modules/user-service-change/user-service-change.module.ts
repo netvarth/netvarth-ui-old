@@ -4,32 +4,32 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { UserServiceChangeRoutingModule } from './user-service-change.routing.module';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
-import { ConfirmBoxLocationComponent } from './confirm-box-location/confirm-box-location.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ConfirmBoxModule } from '../../../ynw_provider/shared/component/confirm-box/confirm-box.module';
-
-
-
+import { ConfirmBoxModule } from '../../../business/shared/confirm-box/confirm-box.module';
+import { ConfirmBoxLocationModule } from './confirm-box-location/confirm-box-location.module';
+import { RouterModule, Routes } from '@angular/router';
+const routes: Routes = [
+  { path: '', component: UserServiceChnageComponent },
+];
 @NgModule({
     imports: [
       MatTableModule,
       MatCheckboxModule,
       CommonModule,
       MatFormFieldModule,
-      UserServiceChangeRoutingModule,
       MatInputModule,
       FormsModule,
       LoadingSpinnerModule,
       MatDialogModule,
-      ConfirmBoxModule
+      ConfirmBoxModule,
+      ConfirmBoxLocationModule,
+      [RouterModule.forChild(routes)]
     ],
     declarations: [
-       UserServiceChnageComponent,
-       ConfirmBoxLocationComponent 
+       UserServiceChnageComponent 
     ],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,

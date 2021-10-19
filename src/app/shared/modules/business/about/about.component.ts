@@ -18,18 +18,6 @@ export class AboutComponent implements OnInit {
     this.metaService.addTags([
       { name: 'description', content: 'www.jaldee.com is a web portal connecting service providers with customers. Jaldee is an all India platform listing thousands of doctors/professionals/technicians and all service areas including healthcare, homecare, personal care and legal/financial care. The motto of Jaldee is \"seamless connectivity of service providers/business enterprises with potential customers.\" Elimination of queues, wiping out unproductive & boring waiting times, is the motivation & aim of Jaldee.' }
     ]);
-    this.carouselTwo = {
-      items: 1,
-      nav: true,
-      navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-      dots: false,
-      responsiveClass: true,
-      responsive: {
-        0: {
-          items: 1
-        },
-      }
-    };
     setTimeout(() => {
       this.handleScroll('prov_home_n');
     }, 100);

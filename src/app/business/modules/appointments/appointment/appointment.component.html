@@ -19,7 +19,6 @@
                                     <h5 class="mgn-up-10" *ngIf="source === 'appt-block'"> <b>Find an existing
                                         {{customer_label}}</b></h5>
                                         <div class="input-group mob-container mgn-up-20">
-                                        <!-- <mat-label for="phone" class="coloroflabels">Enter {{customer_label | capitalizeFirst}} Phone#</mat-label> -->
                                       <ngx-intl-tel-input [cssClass]="'custom'" class="internumbox" [preferredCountries]="preferredCountries"
                                           [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
                                           [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
@@ -481,19 +480,7 @@
                                         <div class="member-outer">
                                             <div class="member-head">
                                                 {{select_the_cap}} {{member_cap}}
-                                                <!-- <ng-container *ngIf="!multipleMembers_allowed">
-                                                    {{member_cap}}
-                                                </ng-container> -->
-                                                <!-- <ng-container *ngIf="multipleMembers_allowed">{{members_cap}}
-                                                </ng-container> -->
                                                 {{for_whom_the_cap}} appointment
-                                                <!-- <span
-                                                    *ngIf="settingsjson['showTokenId']">
-                                                    token
-                                                </span>
-                                                <span
-                                                    *ngIf="!settingsjson['showTokenId']">{{checkinLabel}}
-                                                </span> -->
                                                 {{is_beingmade_cap}}
                                             </div>
                                             <div class="member-list">

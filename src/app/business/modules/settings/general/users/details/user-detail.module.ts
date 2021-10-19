@@ -14,7 +14,10 @@ import { LoadingSpinnerModule } from "../../../../../../shared/modules/loading-s
 import { UserConfirmBoxModule } from "../confirm-box/user-confirm-box.module";
 import { BranchUserDetailComponent } from "./user-detail.component";
 import { MatButtonModule } from "@angular/material/button";
-
+import { RouterModule, Routes } from "@angular/router";
+const routes: Routes = [
+    {path:'', component: BranchUserDetailComponent}
+]
 @NgModule({
     imports: [
         CommonModule,
@@ -30,7 +33,8 @@ import { MatButtonModule } from "@angular/material/button";
         UserConfirmBoxModule,
         LoadingSpinnerModule,
         FormMessageDisplayModule,
-        CapitalizeFirstPipeModule
+        CapitalizeFirstPipeModule,
+        [RouterModule.forChild(routes)]
     ],
     exports: [BranchUserDetailComponent],
     declarations: [BranchUserDetailComponent]

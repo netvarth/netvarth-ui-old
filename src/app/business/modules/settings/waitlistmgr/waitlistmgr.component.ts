@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { Subscription } from 'rxjs';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { ProviderDataStorageService } from '../../../../ynw_provider/services/provider-datastorage.service';
+import { ProviderServices } from '../../../services/provider-services.service';
+import { ProviderDataStorageService } from '../../../services/provider-datastorage.service';
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
@@ -19,40 +19,22 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 })
 export class WaitlistMgrComponent implements OnInit, OnDestroy {
     accept_online_cap = Messages.WAITLIST_ACCEPT_ONLINE_CAP;
-    // locations_cap = Messages.WAITLIST_LOCATIONS_CAP;
     services_cap = Messages.WAITLIST_SERVICES_CAP;
     ser_time_windows_cap = Messages.SERVICE_TIME_CAP;
     statusboard_cap = Messages.DISPLAYBOARD_HEADING;
     bProfile = null;
     online_checkin = false;
     waitlist_manager: any = null;
-    // location_count: any = 0;
     service_count: any = 0;
     queues_count: any = 0;
     instant_count: any = 0;
-    // departmentCount: any = 0;
     board_count: any = 0;
-    // locations: any = [];
-    // selected_location = null;
-    // multipeLocationAllowed = false;
-    // locName;
-    // businessConfig: any = [];
     checkin_label = '';
     prevcheckstatus;
     loc_list: any = [];
     active_user;
     customer_label = '';
     loading = true;
-    breadcrumbs = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: Messages.WAITLIST_MANAGE_CAP
-        }
-    ];
-
     subscription: Subscription;
     isCheckin;
     domain;

@@ -6,7 +6,6 @@ import { Nl2BrPipeModule } from "nl2br-pipe";
 import { LoadingSpinnerModule } from "../../../shared/modules/loading-spinner/loading-spinner.module"
 import { CapitalizeFirstPipeModule } from "../../pipes/capitalize.module";
 import { BusinessprovideruserPageComponent } from "./business-provideruser-page.component";
-import { BusinessprovideruserPageRoutingModule } from "./business-provideruser-page.routing.module";
 import { CardModule } from "../card/card.module"
 import { HeaderModule } from "../../../shared/modules/header/header.module"
 import { AddInboxMessagesModule } from "../add-inbox-messages/add-inbox-messages.module";
@@ -15,10 +14,16 @@ import { CouponsModule } from "../coupons/coupons.module";
 import { ServiceDetailModule } from "../service-detail/service-detail.module";
 import { ConsumerJoinModule } from "../../../ynw_consumer/components/consumer-join/join.component.module";
 import { ConfirmBoxModule } from "../confirm-box/confirm-box.module";
+import { QRCodeGeneratordetailModule } from "../qrcodegenerator/qrcodegeneratordetail.module";
+import { RouterModule, Routes } from "@angular/router";
+const routes: Routes = [
+    { path: '', component: BusinessprovideruserPageComponent},
+    { path: 'home', loadChildren: () => import('../business-page-home/business-page-home.module').then(m => m.BusinessPageHomeModule) },
+    { path: ':userEncId', component: BusinessprovideruserPageComponent}
+];
 @NgModule({
     imports: [
         CommonModule,
-        BusinessprovideruserPageRoutingModule,
         Nl2BrPipeModule,
         CapitalizeFirstPipeModule,
         MatTooltipModule,
@@ -31,7 +36,9 @@ import { ConfirmBoxModule } from "../confirm-box/confirm-box.module";
         CouponsModule,
         ServiceDetailModule,
         ConsumerJoinModule,
-        ConfirmBoxModule
+        ConfirmBoxModule,
+        QRCodeGeneratordetailModule,
+        [RouterModule.forChild(routes)]
     ],
     declarations: [
         BusinessprovideruserPageComponent,

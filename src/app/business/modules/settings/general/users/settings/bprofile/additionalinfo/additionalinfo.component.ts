@@ -1,9 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
 import { MatDialog } from '@angular/material/dialog';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
-import { QuestionService } from '../../../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../../../../../../app.component';
 import { ProviderUserBprofileSearchDynamicComponent } from './provider-userbprofile-search-dynamic.component/provider-userbprofile-search-dynamic.component';
@@ -11,6 +10,7 @@ import { LocalStorageService } from '../../../../../../../../shared/services/loc
 import { GroupStorageService } from '../../../../../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
+import { QuestionService } from '../../../../../../../../shared/modules/dynamic-form/dynamic-form-question.service';
 @Component({
     selector: 'app-useradditionalinfo',
     templateUrl: './additionalinfo.component.html',

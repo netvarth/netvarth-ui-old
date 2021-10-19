@@ -1,16 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { ProviderDataStorageService } from '../../../../../ynw_provider/services/provider-datastorage.service';
+import { ProviderDataStorageService } from '../../../../services/provider-datastorage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Messages } from '../../../../../shared/constants/project-messages';
-import { ProviderBprofileSearchDynamicComponent } from '../../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
-import { QuestionService } from '../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { Router } from '@angular/router';
 import { projectConstants } from '../../../../../app.component';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { QuestionService } from '../../../../../shared/modules/dynamic-form/dynamic-form-question.service';
+import { ProviderBprofileSearchDynamicComponent } from '../../../provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 @Component({
     selector: 'app-additionalinfo',
     templateUrl: './additionalinfo.component.html',

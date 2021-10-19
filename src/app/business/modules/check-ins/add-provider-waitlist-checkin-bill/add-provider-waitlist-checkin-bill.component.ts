@@ -9,12 +9,10 @@ import { startWith, map } from 'rxjs/operators';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
-import { ConfirmPaymentBoxComponent } from '../../../../ynw_provider/shared/component/confirm-paymentbox/confirm-paymentbox.component';
+import { ProviderSharedFuctions } from '../../../functions/provider-shared-functions';
+import { ProviderServices } from '../../../services/provider-services.service';
+import { ConfirmBoxComponent } from '../../../shared/confirm-box/confirm-box.component';
 import { ActivatedRoute } from '@angular/router';
-import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-coupon-note/jc-coupon-note.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
@@ -22,6 +20,8 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import * as moment from 'moment';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
+import { ConfirmPaymentBoxComponent } from '../../../../business/shared/confirm-paymentbox/confirm-paymentbox.component';
+import { JcCouponNoteComponent } from '../../../../shared/modules/jc-coupon-note/jc-coupon-note.component';
 
 export interface ItemServiceGroup {
   type: string;

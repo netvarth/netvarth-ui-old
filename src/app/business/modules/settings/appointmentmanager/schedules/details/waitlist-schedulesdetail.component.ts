@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Messages } from '../../../../../../shared/constants/project-messages';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
-import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from '../../../../../functions/provider-shared-functions';
 import * as moment from 'moment';
 import { projectConstants } from '../../../../../../app.component';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';

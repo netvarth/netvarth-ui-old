@@ -7,9 +7,12 @@ import { FormMessageDisplayModule } from '../../form-message-display/form-messag
 import { LoadingSpinnerModule } from '../../loading-spinner/loading-spinner.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
-import { providerLoginRoutingModule } from './provider-login.routing.module';
 import { MatInputModule } from '@angular/material/input';
 import { LoginModule } from '../../../../shared/components/login/login.module';
+import { RouterModule, Routes } from '@angular/router';
+const routes: Routes = [
+    {path: '', component: ProviderLoginComponent}
+]
 @NgModule({
     imports: [
        CommonModule,
@@ -21,13 +24,12 @@ import { LoginModule } from '../../../../shared/components/login/login.module';
        MatFormFieldModule,
        MatInputModule,
        MatDialogModule,
-       providerLoginRoutingModule,
-       LoginModule
+       LoginModule,
+       [RouterModule.forChild(routes)]
     ],
     declarations: [
         ProviderLoginComponent
     ],
-    entryComponents: [],
     exports: [ProviderLoginComponent]
 })
 export class ProviderLoginModule {}

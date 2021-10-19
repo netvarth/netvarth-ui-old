@@ -2,8 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { projectConstants } from '../../../../app.component';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
-import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderSharedFuctions } from '../../../functions/provider-shared-functions';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { NavigationExtras, Router } from '@angular/router';
 import { CheckinDetailsSendComponent } from '../../check-ins/checkin-details-send/checkin-details-send.component';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
@@ -23,8 +23,8 @@ import { Subscription } from 'rxjs';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { ListRecordingsDialogComponent } from '../../../../shared/components/list-recordings-dialog/list-recordings-dialog.component';
-import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
-import { VoiceConfirmComponent } from '../../customers/video-confirm/voice-confirm.component';
+import { ConfirmBoxComponent } from '../../../shared/confirm-box/confirm-box.component';
+import { VoiceConfirmComponent } from '../../customers/voice-confirm/voice-confirm.component';
 
 @Component({
     selector: 'app-appointment-actions',

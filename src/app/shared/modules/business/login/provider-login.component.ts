@@ -38,39 +38,8 @@ export class ProviderLoginComponent implements OnInit {
   signup_here = '';
   countryCodes = projectConstantsLocal.COUNTRY_CODES;
   selectedCountryCode;
-
-  // images = {
-  //   special_offers: 'assets/images/special offer-01-01.png',
-  //   jaldee_online: 'assets/images/home/jaldee_online.svg',
-  //   jaldee_token: 'assets/images/home/jaldee_token.svg',
-  //   jaldee_checkin: 'assets/images/home/jaldee_checkin.svg',
-  //   jaldee_appt: 'assets/images/home/jaldee_appointment.svg',
-  //   jaldee_comm: 'assets/images/home/jaldee_comm.svg',
-  //   jaldee_pos: 'assets/images/home/jaldee_pos.svg',
-  //   jaldee_pay: 'assets/images/home/jaldee_pay.svg',
-  //   jaldee_coupon: 'assets/images/home/jaldee_coupons.svg',
-  //   jaldee_pet: 'assets/images/home/pet-01.svg',
-  //   jaldee_bank: 'assets/images/home/bank-01.svg',
-  //   jaldee_religious: 'assets/images/home/religoues presets-01.svg',
-  //   jaldee_vastu: 'assets/images/home/vasthu-01.svg',
-  //   jaldee_food: 'assets/images/home/foodand beverages-01.svg',
-  //   jaldee_prof: 'assets/images/home/Proffesional.jpg',
-  //   jaldee_personal: 'assets/images/home/personal-care.jpg',
-  //   jaldee_health: 'assets/images/home/HealthCare.jpg',
-  //   jaldee_kiosk: 'assets/images/home/jaldee_kiosk.svg',
-
-  //   jaldee_qMgr: 'assets/images/home/qmanager.png',
-  //   jaldee_onlineN: 'assets/images/home/Jaldee_online.png',
-  //   jaldee_payN: 'assets/images/home/jaldee_pay3.png',
-  //   jaldee_takeout: 'assets/images/home/Appoinment.png',
-  //   jaldee_appDesktop: 'assets/images/home/available-app.png',
-  //   jaldee_playstore: 'assets/images/home/app_btn1.png',
-  //   jaldee_appstore: 'assets/images/home/app_btn2.png'
-  // };
   phOrem_error = '';
   qParams;
-
-  // @ViewChild('mobPrefix') mobPrefix: ElementRef;
   carouselTwo;
   evnt;
   constructor(
@@ -266,19 +235,6 @@ export class ProviderLoginComponent implements OnInit {
   resetApiErrors() {
     this.api_error = null;
   }
-  // handlekeyup(ev) {
-  //   console.log(ev.target.value);
-  //   if (/^\d+$/.test(ev.target.value)) {
-  //     console.log('Contain numbers only');
-  //     this.mobPrefix.nativeElement.style.display = 'flex';
-  //     this.mobPrefix.nativeElement.class = 'input-group-prepend mob-prefix';
-  //   } else {
-  //     this.mobPrefix.nativeElement.style.display = 'none';
-  //   }
-  //   if (ev.keyCode !== 13) {
-  //     this.resetApiErrors();
-  //   }
-  // }
   onChangePassword() {
     this.step = 1;
   }

@@ -1,31 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { WalletRoutingModule } from './wallet-routing.module';
 import { WalletComponent } from './wallet.component';
-import { JaldeeCashComponent } from './jaldee-cash/jaldee-cash.component';
-import { StoreCreditComponent } from './store-credit/store-credit.component';
 import { HeaderModule } from '../../../shared/modules/header/header.module';
 import { LoadingSpinnerModule } from '../../../shared/modules/loading-spinner/loading-spinner.module';
-import { SpentListComponent } from './jaldee-cash/spent-list/spent-list.component';
-import { TermsConditionComponent } from './jaldee-cash/terms-condition/terms-condition.component';
+import { SpentListModule } from './jaldee-cash/spent-list/spent-list.module';
+import { TermsConditionModule } from './jaldee-cash/terms-condition/term-condition.module';
 
 
 
 @NgModule({
-  declarations: [ WalletComponent, JaldeeCashComponent, StoreCreditComponent,SpentListComponent,TermsConditionComponent],
+  declarations: [ WalletComponent],
   imports: [
     CommonModule,
     WalletRoutingModule,
     HeaderModule,
-    LoadingSpinnerModule
+    LoadingSpinnerModule,
+    SpentListModule,
+    TermsConditionModule
   ],
-  
-  entryComponents: [
-    TermsConditionComponent,
-    SpentListComponent
-  ],
-  exports:[
-    JaldeeCashComponent]
+  exports:[WalletComponent]
 })
 export class WalletModule { }

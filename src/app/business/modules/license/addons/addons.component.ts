@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ProviderAddonAuditlogsComponent } from '../../../../ynw_provider/components/provider-addon-auditlogs/provider-addon-auditlogs.component';
-import { AddproviderAddonComponent } from '../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
+import { ProviderAddonAuditlogsComponent } from '../../provider-addon-auditlogs/provider-addon-auditlogs.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { Router, NavigationExtras } from '@angular/router';
@@ -11,6 +10,7 @@ import { Location } from '@angular/common';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { AddproviderAddonComponent } from '../../add-provider-addons/add-provider-addons.component';
 
 @Component({
     selector: 'app-addons',
@@ -36,15 +36,6 @@ export class AddonsComponent implements OnInit, OnDestroy {
     learn_more = Messages.LEARN_MORE_CAP;
     history_cap = Messages.HISTORY_HOME_CAP;
     account_type;
-    breadcrumbs = [
-        {
-            title: 'License & Invoice',
-            url: '/provider/license'
-        },
-        {
-            title: 'Add-ons'
-        }
-    ];
     addonDescription = '';
     corpSettings: any;
     addon_metric: any;

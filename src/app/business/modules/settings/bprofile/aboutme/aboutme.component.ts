@@ -2,8 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../shared//modules/form-message-display/form-message-display.service';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
-import { ProviderDataStorageService } from '../../../../../ynw_provider/services/provider-datastorage.service';
+import { ProviderServices } from '../../../../services/provider-services.service';
+import { ProviderDataStorageService } from '../../../../services/provider-datastorage.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../../../app.component';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
@@ -12,12 +12,12 @@ import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ProPicPopupComponent } from '../../bprofile/pro-pic-popup/pro-pic-popup.component';
-import { ProviderBprofileSearchDynamicComponent } from '../../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
-import { QuestionService } from '../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
-import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from '../../../../functions/provider-shared-functions';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { QuestionService } from '../../../../../shared/modules/dynamic-form/dynamic-form-question.service';
+import { ProviderBprofileSearchDynamicComponent } from '../../../provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 
 @Component({
   selector: 'app-aboutme',

@@ -6,16 +6,16 @@ import { WordProcessor } from '../../../../../../../../shared/services/word-proc
 import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
-import { AddproviderAddonComponent } from '../../../../../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
-import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../../../services/provider-services.service';
 import { TelegramInfoComponent } from '../../../../../comm/telegram-info/telegram-info.component';
+import { AddproviderAddonComponent } from '../../../../../../../../business/modules/add-provider-addons/add-provider-addons.component';
 
 @Component({
   selector: 'app-update-provider-notifications',
   templateUrl: './update-provider-notifications.component.html',
   styleUrls: ['./update-provider-notifications.component.css']
 })
-export class UpdateProviderNotificationsComponent implements OnInit {
+export class UpdateProviderUserNotificationsComponent implements OnInit {
   telegram = false;
   sms = false;
   email = false;
@@ -69,7 +69,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
   val: any = [];
   tele1_arr: any = [];
   constructor(private sharedfunctionObj: SharedFunctions,
-    public dialogRef: MatDialogRef<UpdateProviderNotificationsComponent>,
+    public dialogRef: MatDialogRef<UpdateProviderUserNotificationsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialog: MatDialog,
     public provider_services: ProviderServices,

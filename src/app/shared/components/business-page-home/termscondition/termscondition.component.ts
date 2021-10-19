@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-//import { LocalStorageService } from '../../../services/local-storage.service';
-
 @Component({
   selector: 'app-termscondition',
   templateUrl: './termscondition.component.html',
@@ -12,8 +10,5 @@ export class TermsconditionComponent implements OnInit {
   @Input() path;
 
   ngOnInit() {
-
   }
-
-
 }

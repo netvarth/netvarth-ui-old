@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
-import { AddproviderAddonComponent } from '../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { AddproviderAddonComponent } from '../../add-provider-addons/add-provider-addons.component';
 @Component({
   selector: 'app-adjustqueue-delay',
   templateUrl: './adjustqueue-delay.component.html'
@@ -85,8 +85,6 @@ export class AdjustqueueDelayComponent implements OnInit {
   provider_label = '';
 
   constructor(
-    // public dialogRef: MatDialogRef<AdjustQueueDelayComponent>,
-    // @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     private route: Router,
     public fed_service: FormMessageDisplayService,

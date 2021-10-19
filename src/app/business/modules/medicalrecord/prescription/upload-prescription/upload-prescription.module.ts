@@ -5,7 +5,7 @@ import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery
 import { MatDialogModule } from "@angular/material/dialog";
 import { ImagesViewModule } from "../imagesview/imagesview.module";
 import { ShareRxModule } from "../share-rx/share-rx.module";
-import { ConfirmBoxModule } from "../../../../../ynw_provider/shared/component/confirm-box/confirm-box.module";
+import { ConfirmBoxModule } from "../../../../shared/confirm-box/confirm-box.module";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatButtonModule } from "@angular/material/button";

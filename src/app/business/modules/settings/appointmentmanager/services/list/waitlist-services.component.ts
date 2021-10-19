@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from '../../../../../functions/provider-shared-functions';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../../app.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,7 +11,7 @@ import { SnackbarService } from '../../../../../../shared/services/snackbar.serv
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { DateTimeProcessor } from '../../../../../../shared/services/datetime-processor.service';
-import { ProviderDataStorageService } from '../../../../../../ynw_provider/services/provider-datastorage.service';
+import { ProviderDataStorageService } from '../../../../../services/provider-datastorage.service';
 import { ServiceQRCodeGeneratordetailComponent } from '../../../../../../shared/modules/service/serviceqrcodegenerator/serviceqrcodegeneratordetail.component';
 
 @Component({

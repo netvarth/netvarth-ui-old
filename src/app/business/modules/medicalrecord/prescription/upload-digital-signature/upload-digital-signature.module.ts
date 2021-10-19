@@ -6,7 +6,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { RouterModule, Routes } from "@angular/router";
 import { LoadingSpinnerModule } from "../../../../../shared/modules/loading-spinner/loading-spinner.module";
-import { ConfirmBoxModule } from "../../../../../ynw_provider/shared/component/confirm-box/confirm-box.module";
+import { ConfirmBoxModule } from "../../../../shared/confirm-box/confirm-box.module";
 import { ImagesViewModule } from "../imagesview/imagesview.module";
 import { UploadDigitalSignatureComponent } from "./upload-digital-signature.component";
 const routes: Routes = [

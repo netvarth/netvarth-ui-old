@@ -13,62 +13,54 @@ export class UserDetailReportComponent implements OnInit {
   daterange: boolean;
   date: any;
   data: any;
-  user_details_loading=true;
-
+  user_details_loading = true;
   fromDate: any;
   toDate: any;
   report: any;
   report_type: string;
-  displayedColumns = ['date', 'assigned','time'];
-  userStats: any=[];
-
+  displayedColumns = ['date', 'assigned', 'time'];
+  userStats: any = [];
   constructor(private router: Router,
-
     private activatedRoute: ActivatedRoute,
-    public dateformat: DateFormatPipe,) {
+    public dateformat: DateFormatPipe) {
     this.activatedRoute.queryParams.subscribe(
       params => {
-        this.data=JSON.parse(params.data);
+        this.data = JSON.parse(params.data);
         console.log(this.data);
-        this.user_details_loading=false;
-        this.userStats=this.data.statsPerDay;
+        this.user_details_loading = false;
+        this.userStats = this.data.statsPerDay;
         console.log(this.userStats);
-      this.params=JSON.parse(params.params);
-      if (this.params) {
-        this.filterCriteria = this.params;
-        console.log(JSON.stringify(this.filterCriteria['date-ge']));
-        if (this.filterCriteria['date-eq']) {
-          this.daterange = false;
-          this.date=this.getDateFormat(new Date(this.filterCriteria['date-eq']));
-        }
-          if(this.filterCriteria['date-ge']){
-            this.daterange = true;
-            this.fromDate=this.getDateFormat(new Date(this.filterCriteria['date-ge']));
-            this.toDate=this.getDateFormat(new Date(this.filterCriteria['date-le']));
+        this.params = JSON.parse(params.params);
+        if (this.params) {
+          this.filterCriteria = this.params;
+          console.log(JSON.stringify(this.filterCriteria['date-ge']));
+          if (this.filterCriteria['date-eq']) {
+            this.daterange = false;
+            this.date = this.getDateFormat(new Date(this.filterCriteria['date-eq']));
           }
-          
-        
-      }
-    });
-   
-   }
+          if (this.filterCriteria['date-ge']) {
+            this.daterange = true;
+            this.fromDate = this.getDateFormat(new Date(this.filterCriteria['date-ge']));
+            this.toDate = this.getDateFormat(new Date(this.filterCriteria['date-le']));
+          }
+        }
+      });
+  }
 
   ngOnInit(): void {
   }
-  redirecToReports(){
-    const filterObj={};
-    filterObj['reportType']='user';
-    filterObj['filter']= this.filterCriteria;
+  redirecToReports() {
+    const filterObj = {};
+    filterObj['reportType'] = 'user';
+    filterObj['filter'] = this.filterCriteria;
     const navigationExtras: NavigationExtras = {
       queryParams: {
         filter: JSON.stringify(filterObj)
-    
       }
-   
+    }
+    this.router.navigate(['provider', 'reports', 'user-report'], navigationExtras);
   }
-  this.router.navigate(['provider', 'reports', 'user-report'],navigationExtras); 
-}
-getDateFormat(date) {
-  return this.dateformat.transformToMonthlyDate(date);
-}
+  getDateFormat(date) {
+    return this.dateformat.transformToMonthlyDate(date);
+  }
 }

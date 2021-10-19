@@ -4,12 +4,18 @@ import { ServiceModule } from '../../../../../../../../shared/modules/service/se
 import { LoadingSpinnerModule } from '../../../../../../../../shared/modules/loading-spinner/loading-spinner.module';
 import { UserWaitlistServiceDetailComponent } from './user-waitlistservice-detail.component';
 import { GalleryModule } from '../../../../../../../../shared/modules/gallery/gallery.module';
+import { RouterModule, Routes } from '@angular/router';
+const routes: Routes = [
+    {path: '', component: UserWaitlistServiceDetailComponent}
+]
+
 @NgModule({
     imports: [
         CommonModule,
         LoadingSpinnerModule,
         ServiceModule,
-        GalleryModule
+        GalleryModule,
+        [RouterModule.forChild(routes)]
     ],
     declarations: [
         UserWaitlistServiceDetailComponent

@@ -4,7 +4,7 @@ import { projectConstantsLocal } from '../../../../../../../../shared/constants/
 import { DOCUMENT } from '@angular/common';
 import { projectConstants } from '../../../../../../../../app.component';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
-import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../../../services/provider-services.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserDataStorageService } from '../../user-datastorage.service';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
@@ -12,8 +12,7 @@ import { FormMessageDisplayService } from '../../../../../../../../shared//modul
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderUserBprofileSearchDynamicComponent } from './../additionalinfo/provider-userbprofile-search-dynamic.component/provider-userbprofile-search-dynamic.component';
 import { MatDialogRef } from '@angular/material/dialog';
-import { QuestionService } from '../../../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
-import { ProviderSharedFuctions } from '../../../../../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from '../../../../../../../functions/provider-shared-functions';
 import { UserBprofileSearchPrimaryComponent } from './../user-bprofile-search-primary/user-bprofile-search-primary.component';
 import { ProPicPopupComponent } from '../../../../../bprofile/pro-pic-popup/pro-pic-popup.component';
 import { GroupStorageService } from '../../../../../../../../shared/services/group-storage.service';
@@ -22,6 +21,7 @@ import { SnackbarService } from '../../../../../../../../shared/services/snackba
 import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { ImageTransform } from './interfaces/index';
+import { QuestionService } from '../../../../../../../../shared/modules/dynamic-form/dynamic-form-question.service';
 @Component({
   selector: 'app-aboutme',
   templateUrl: './aboutme.component.html',

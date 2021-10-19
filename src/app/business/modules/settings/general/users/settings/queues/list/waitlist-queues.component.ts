@@ -2,10 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { projectConstants } from '../../../../../../../../app.component';
-import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
-import { ProviderSharedFuctions } from '../../../../../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from '../../../../../../../functions/provider-shared-functions';
 import { SharedServices } from '../../../../../../../../shared/services/shared-services';
 import { FormMessageDisplayService } from '../../../../../../../../shared/modules/form-message-display/form-message-display.service';
 import * as moment from 'moment';
@@ -35,27 +35,11 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     add_queue = 'Click to create a queue';
     tooltip_queueedit = Messages.QUEUENAME_TOOLTIP;
     tooltipcls = '';
-    breadcrumb_moreoptions: any = [];
     isAllServicesSelected = false;
     services_selected: any = [];
     services_list: any = [];
     servicelist = [];
     instantQForm: FormGroup;
-    breadcrumbs_init = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: Messages.GENERALSETTINGS,
-            url: '/provider/settings/general'
-        },
-        {
-            url: '/provider/settings/general/users',
-            title: 'Users'
-        }
-    ];
-    breadcrumbs = this.breadcrumbs_init;
     queuedialogRef;
     isCheckin;
     selected_location = null;
@@ -140,7 +124,6 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.getUser();
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.accountType = user.accountType;
         this.domain = user.sector;
@@ -148,9 +131,6 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         if (this.groupService.getitemFromGroupStorage('loc_id')) {
             this.selected_location = this.groupService.getitemFromGroupStorage('loc_id');
         }
-        this.breadcrumb_moreoptions = {
-            'actions': [{ 'title': this.new_serv_cap, 'type': 'timewindow' }, { 'title': 'Help', 'type': 'learnmore' }]
-        };
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.initializeQs();
         this.getLicenseUsage();
@@ -159,30 +139,6 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         if (this.queuedialogRef) {
             this.queuedialogRef.close();
         }
-    }
-    /**
-    *Method executes when try to edit start time
-    */
-    getUser() {
-        this.provider_services.getUser(this.userId)
-            .subscribe((data: any) => {
-                const breadcrumbs = [];
-                this.breadcrumbs_init.map((e) => {
-                    breadcrumbs.push(e);
-                });
-                breadcrumbs.push({
-                    title: data.firstName,
-                    url: '/provider/settings/general/users/add?type=edit&val=' + this.userId
-                });
-                breadcrumbs.push({
-                    title: 'Settings',
-                    url: '/provider/settings/general/users/' + this.userId + '/settings'
-                });
-                breadcrumbs.push({
-                    title: 'Tokens/checkins'
-                });
-                this.breadcrumbs = breadcrumbs;
-            });
     }
     editStartTime() {
         this.sTimeEditable = true;

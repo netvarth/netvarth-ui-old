@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, OnDestroy} from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../services/provider-services.service';
 import { Subscription } from 'rxjs/internal/Subscription';
 
 @Component({

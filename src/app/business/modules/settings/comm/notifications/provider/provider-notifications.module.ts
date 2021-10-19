@@ -4,9 +4,9 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { RouterModule, Routes } from "@angular/router";
 import { CapitalizeFirstPipeModule } from "../../../../../../shared/pipes/capitalize.module";
 import { LoadingSpinnerModule } from "../../../../../../shared/modules/loading-spinner/loading-spinner.module";
-import { AddProviderAddonsModule } from "../../../../../../ynw_provider/components/add-provider-addons/add-provider-addons.module";
 import { UpdateProviderNotificationsModule } from "../../update-provider-notifications/update-provider-notifications.module";
 import { ProviderNotificationsComponent } from "./provider-notifications.component";
+import { AddProviderAddonsModule } from "../../../../../../business/modules/add-provider-addons/add-provider-addons.module";
 const routes: Routes = [
     { path: '', component: ProviderNotificationsComponent }
 ];

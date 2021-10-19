@@ -13,6 +13,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ServiceqrcodegeneratorModule } from '../../../../../../shared/modules/service/serviceqrcodegenerator/serviceqrcodegeneratordetail.module';
 const routes: Routes = [
     { path: '', component: WaitlistServicesComponent },
     { path: ':id', loadChildren: ()=> import('../details/waitlistservice-detail.module').then(m=>m.WaitlistserviceDetailModule)}
@@ -30,6 +31,7 @@ const routes: Routes = [
         PagerModule,
         OrderModule,
         ShowMessagesModule,
+        ServiceqrcodegeneratorModule,
         [RouterModule.forChild(routes)]
     ],
     declarations: [

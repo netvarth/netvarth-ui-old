@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { SharedServices } from '../../../../shared/services/shared-services';
@@ -73,8 +73,6 @@ export class AdjustscheduleDelayComponent implements OnInit {
   qdata_list;
 
   constructor(
-    // public dialogRef: MatDialogRef<AdjustQueueDelayComponent>,
-    // @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     private route: Router,
     public fed_service: FormMessageDisplayService,

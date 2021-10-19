@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../../../shared/constants/project-messages';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from '../../../../../functions/provider-shared-functions';
 import { Subscription } from 'rxjs';
 import { ServicesService } from '../../../../../../shared/modules/service/services.service';
 import { GalleryService } from '../../../../../../shared/modules/gallery/galery-service';
@@ -26,8 +26,6 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     image_list: any = [];
     serviceExists = true;
     showGallery = false;
-    breadcrumbs_init;
-    breadcrumbs;
     subscription: Subscription; // for gallery
     serviceSubscription: Subscription; // from service module
     infoSubscription: Subscription;
@@ -50,53 +48,10 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         private provider_shared_functions: ProviderSharedFuctions) {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
-            this.breadcrumbs_init = [
-                {
-                    title: 'Settings',
-                    url: '/provider/settings'
-                },
-                {
-                    title: Messages.WAITLIST_MANAGE_CAP,
-                    url: '/provider/settings/q-manager'
-                },
-                {
-                    title: Messages.WAITLIST_HEALTHCARE_SERVICES,
-                    url: '/provider/settings/q-manager/services'
-                }
-            ];
-            this.breadcrumbs = this.breadcrumbs_init;
-        } else {
-            this.breadcrumbs_init = [
-                {
-                    title: 'Settings',
-                    url: '/provider/settings'
-                },
-                {
-                    title: Messages.WAITLIST_MANAGE_CAP,
-                    url: '/provider/settings/q-manager'
-                },
-                {
-                    title: Messages.WAITLIST_SERVICES_CAP,
-                    url: '/provider/settings/q-manager/services'
-                }
-            ];
-            this.breadcrumbs = this.breadcrumbs_init;
-        }
         this.activated_route.params.subscribe(
             (params) => {
                 this.service_id = params.id;
                 this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-                if (this.service_id === 'add') {
-                    const breadcrumbs = [];
-                    this.breadcrumbs_init.map((e) => {
-                        breadcrumbs.push(e);
-                    });
-                    breadcrumbs.push({
-                        title: 'Add'
-                    });
-                    this.breadcrumbs = breadcrumbs;
-                }
             }
         );
         this.activated_route.queryParams.subscribe(
@@ -260,15 +215,6 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                     this.servicecaption = 'Service Details';
                     this.status = this.serviceParams['service'].status;
                     this.setGalleryImages(this.serviceParams['service'].servicegallery || []);
-                    // remove multiple end breadcrumb on edit function
-                    const breadcrumbs = [];
-                    this.breadcrumbs_init.map((e) => {
-                        breadcrumbs.push(e);
-                    });
-                    breadcrumbs.push({
-                        title: this.serviceParams['service'].name
-                    });
-                    this.breadcrumbs = breadcrumbs;
                     this.api_loading = false;
                     if (this.actionparam === 'edit') {
                         this.servicecaption = 'Edit Service';

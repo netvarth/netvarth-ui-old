@@ -3,22 +3,26 @@ import { NgModule } from "@angular/core";
 import { MatDialogModule } from "@angular/material/dialog";
 import { CapitalizeFirstPipeModule } from "../../../../../../../../shared/pipes/capitalize.module";
 import { LoadingSpinnerModule } from "../../../../../../../../shared/modules/loading-spinner/loading-spinner.module";
-import { AddProviderAddonsModule } from "../../../../../../../../ynw_provider/components/add-provider-addons/add-provider-addons.module";
-import { UpdateProviderNotificationsModule } from "../update-provider-notifications/update-provider-notifications.module";
-import { ProviderNotificationUserComponent } from "./provider-notifications.component";
-
+import { AddProviderAddonsModule } from "../../../../../../../../business/modules/add-provider-addons/add-provider-addons.module";
+import { RouterModule, Routes } from "@angular/router";
+import { ProviderUserNotificationUserComponent } from "./provider-notifications.component";
+import { UpdateProviderUserNotificationsModule } from "../update-provider-notifications/update-provider-notifications.module";
+const routes: Routes = [
+    {path: '',component:ProviderUserNotificationUserComponent }
+]
 @NgModule({
     imports: [
         CommonModule,
         AddProviderAddonsModule,
-        UpdateProviderNotificationsModule,
+        UpdateProviderUserNotificationsModule,
         MatDialogModule,
         LoadingSpinnerModule,
-        CapitalizeFirstPipeModule
+        CapitalizeFirstPipeModule,
+        [RouterModule.forChild(routes)]
     ],
-    exports: [ProviderNotificationUserComponent],
+    exports: [ProviderUserNotificationUserComponent],
     declarations : [
-        ProviderNotificationUserComponent
+        ProviderUserNotificationUserComponent
     ]
 })
 export class ProviderNotificationsUserModule {}

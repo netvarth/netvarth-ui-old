@@ -6,7 +6,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { RouterModule, Routes } from "@angular/router";
 import { SignaturePadModule } from "angular2-signaturepad";
-import { ConfirmBoxModule } from "../../../../../../ynw_provider/shared/component/confirm-box/confirm-box.module";
+import { ConfirmBoxModule } from "../../../../../shared/confirm-box/confirm-box.module";
 import { UploadSignatureComponent } from "./upload-signature.component";
 const routes: Routes = [
     { path: '', component: UploadSignatureComponent}

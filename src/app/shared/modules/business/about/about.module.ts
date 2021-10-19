@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
-import { OwlModule } from 'ngx-owl-carousel';
+import { RouterModule, Routes } from '@angular/router';
+import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { AboutComponent } from './about.component';
-import { AboutRoutingModule } from './about.routing.module';
+const routes: Routes = [
+    { path: '', component: AboutComponent }
+];
 @NgModule({
     imports: [
-        AboutRoutingModule,
-        OwlModule
+        ScrollToModule,
+        [RouterModule.forChild(routes)]
     ],
     declarations: [
         AboutComponent
     ],
-    entryComponents: [],
     exports: [AboutComponent]
 })
 export class AboutModule { }

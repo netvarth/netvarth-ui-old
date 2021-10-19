@@ -6,7 +6,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { projectConstants } from '../../../../../app.component';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
-import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-coupon-note/jc-coupon-note.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConsumerServices } from '../../../../../ynw_consumer/services/consumer-services.service';
 import { RazorpayprefillModel } from '../../../../../shared/components/razorpay/razorpayprefill.model';
@@ -22,6 +21,7 @@ import { DateFormatPipe } from '../../../../../shared/pipes/date-format/date-for
 import { PaytmService } from '../../../../../../app/shared/services/paytm.service';
 import { LocalStorageService } from '../../../../../../app/shared/services/local-storage.service';
 import { CheckInHistoryServices } from '../../../../../shared/modules/consumer-checkin-history-list/components/checkin-history-list/checkin-history-list.service';
+import { JcCouponNoteComponent } from '../../../../../shared/modules/jc-coupon-note/jc-coupon-note.component';
 
 @Component({
     selector: 'app-consumer-appointment-bill',

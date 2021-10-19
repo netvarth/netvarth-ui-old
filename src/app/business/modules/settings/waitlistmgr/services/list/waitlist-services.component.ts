@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from '../../../../../functions/provider-shared-functions';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../../app.component';
 import { ShowMessageComponent } from '../../../../show-messages/show-messages.component';
@@ -11,7 +11,7 @@ import { GroupStorageService } from '../../../../../../shared/services/group-sto
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { DateTimeProcessor } from '../../../../../../shared/services/datetime-processor.service';
-import { ProviderDataStorageService } from '../../../../../../ynw_provider/services/provider-datastorage.service';
+import { ProviderDataStorageService } from '../../../../../services/provider-datastorage.service';
 import { ServiceQRCodeGeneratordetailComponent } from '../../../../../../shared/modules/service/serviceqrcodegenerator/serviceqrcodegeneratordetail.component';
 
 
@@ -31,8 +31,6 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     service_list: any = [];
     api_error = null;
     api_success = null;
-    breadcrumb_moreoptions: any = [];
-    breadcrumbs;
     domain: any;
     trackStatus: string;
     serv_list;
@@ -45,16 +43,6 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         totalCnt: 0,
         perPage: this.page_count
     };
-    breadcrumbs_init = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: Messages.WAITLIST_MANAGE_CAP,
-            url: '/provider/settings/q-manager'
-        },
-    ];
     order = 'status';
     use_metric;
     usage_metric: any;
@@ -88,36 +76,11 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
             });
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
-            const breadcrumbs = [];
-            this.breadcrumbs_init.map((e) => {
-                breadcrumbs.push(e);
-            });
-            breadcrumbs.push({
-                title: Messages.WAITLIST_HEALTHCARE_SERVICES,
-            });
-            this.breadcrumbs = breadcrumbs;
-        } else {
-            const breadcrumbs = [];
-            this.breadcrumbs_init.map((e) => {
-                breadcrumbs.push(e);
-            });
-            breadcrumbs.push({
-                title: Messages.WAITLIST_SERVICES_CAP,
-            });
-            this.breadcrumbs = breadcrumbs;
-        }
         this.api_loading = true;
         this.getBusinessProfile();
         this.getDomainSubdomainSettings();
         this.getServiceCount();
         this.getLicenseUsage();
-        // this.getServices();
-        this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'q-manager->settings-services', 'classname': 'b-service',
-            'actions': [{ 'title': this.add_new_serv_cap, 'type': 'addservice' },
-            { 'title': 'Help', 'type': 'learnmore' }]
-        };
     }
 
     ngOnDestroy() {

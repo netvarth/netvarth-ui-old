@@ -6,9 +6,13 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatInputModule } from "@angular/material/input";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { ConfirmBoxModule } from "../../../../ynw_provider/shared/component/confirm-box/confirm-box.module";
+import { ConfirmBoxModule } from "../../../shared/confirm-box/confirm-box.module";
 import { ListRecordingsModule } from "../../../../shared/components/list-recordings-dialog/list-recordings-dialog.module";
 import { AppointmentActionsComponent } from "./appointment-actions.component";
+import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
+import { LoadingSpinnerModule } from "../../../../shared/modules/loading-spinner/loading-spinner.module";
+import { NgxQRCodeModule } from "ngx-qrcode2";
+import { VoiceConfirmModule } from "../../customers/voice-confirm/voice-confirm.module";
 
 @NgModule({
     imports: [
@@ -20,7 +24,11 @@ import { AppointmentActionsComponent } from "./appointment-actions.component";
         MatDatepickerModule,
         MatInputModule,
         MatChipsModule,
-        ConfirmBoxModule
+        ConfirmBoxModule,
+        CapitalizeFirstPipeModule,
+        LoadingSpinnerModule,
+        NgxQRCodeModule,
+        VoiceConfirmModule
     ],
     exports: [
         AppointmentActionsComponent

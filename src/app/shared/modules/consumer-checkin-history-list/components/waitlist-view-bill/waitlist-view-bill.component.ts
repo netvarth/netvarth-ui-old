@@ -5,12 +5,12 @@ import { projectConstants } from '../../../../../app.component';
 import { SharedFunctions } from '../../../../functions/shared-functions';
 import { DomSanitizer } from '@angular/platform-browser'; import { DOCUMENT } from '@angular/common';
 import { SharedServices } from '../../../../services/shared-services';
-import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-coupon-note/jc-coupon-note.component';
 import { WordProcessor } from '../../../../services/word-processor.service';
 import { SnackbarService } from '../../../../services/snackbar.service';
 import { S3UrlProcessor } from '../../../../services/s3-url-processor.service';
 import { SubSink } from 'subsink';
 import { CheckInHistoryServices } from '../checkin-history-list/checkin-history-list.service';
+import { JcCouponNoteComponent } from '../../../jc-coupon-note/jc-coupon-note.component';
 @Component({
   selector: 'app-consumer-waitlist-checkin-bill',
   templateUrl: './waitlist-view-bill.component.html'

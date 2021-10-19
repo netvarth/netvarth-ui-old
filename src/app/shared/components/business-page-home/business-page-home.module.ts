@@ -1,35 +1,36 @@
 import { CommonModule } from "@angular/common";
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
+import { NgModule } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
+import { MatDividerModule } from "@angular/material/divider";
 import { MatIconModule } from "@angular/material/icon";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatToolbarModule } from "@angular/material/toolbar";
+import { RouterModule, Routes } from "@angular/router";
 import { BusinessPageHomeComponent } from "./business-page-home.component";
-import { BusinessPageHomeRoutingModule } from "./business-page-home.routing.module";
-import { ContactComponent } from "./contactus/contact.component";
-import { PrivacyComponent } from "./privacy/privacy.component";
-import { RefundcancelComponent } from "./refundcancel/refundcancel.component";
-import { TermsconditionComponent } from "./termscondition/termscondition.component";
-
+import { ContactModule } from "./contactus/contact.module";
+import { PrivacyModule } from "./privacy/privacy.module";
+import { RefundcancelModule } from "./refundcancel/refundcancel.module";
+import { TermsconditionModule } from "./termscondition/termscondition.module";
+const routes: Routes = [
+    { path: '', component: BusinessPageHomeComponent}
+];
 @NgModule({
     imports: [
         CommonModule,
-        BusinessPageHomeRoutingModule,
         MatIconModule,
         MatToolbarModule,
         MatSidenavModule,
-        MatButtonModule
+        MatButtonModule,
+        ContactModule,
+        PrivacyModule,
+        MatDividerModule,
+        MatSidenavModule,
+        RefundcancelModule,
+        TermsconditionModule,
+        [RouterModule.forChild(routes)]
     ],
     declarations: [
-        BusinessPageHomeComponent,
-        ContactComponent,
-        TermsconditionComponent,
-        PrivacyComponent,
-        RefundcancelComponent
-    ],
-    schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
-        NO_ERRORS_SCHEMA
-    ],
+        BusinessPageHomeComponent
+    ]
 })
 export class BusinessPageHomeModule { }

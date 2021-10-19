@@ -7,7 +7,7 @@ import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import * as moment from 'moment';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
@@ -16,7 +16,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
-import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { ConfirmBoxComponent } from '../../../shared/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
 
@@ -86,10 +86,6 @@ export class AppointmentComponent implements OnInit {
     pass_loc;
     sel_queue_id;
     countryCode;
-    // sel_queue_waitingmins;
-    // sel_queue_servicetime = '';
-    // sel_queue_name;
-    // sel_queue_timecaption;
     sel_queue_indx;
     sel_queue_det;
     sel_queue_personaahead = 0;

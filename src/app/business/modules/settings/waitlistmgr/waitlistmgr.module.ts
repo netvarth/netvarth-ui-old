@@ -1,39 +1,32 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
-import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
-import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
-import { MaterialModule } from '../../../../shared/modules/common/material.module';
-import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
-import { FormMessageDisplayModule } from '../../../../shared/modules/form-message-display/form-message-display.module';
-import { GalleryModule } from '../../../../shared/modules/gallery/gallery.module';
+import { FormsModule } from '@angular/forms';
 import { WaitlistMgrComponent } from './waitlistmgr.component';
-import { WaitlistMgrRoutingModule } from './waitlistmgr.routing.module';
-import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
-import { WaitlistQueuesModule } from './queues/waitlist-queues.module';
 import { SelectionService } from '../../../../shared/services/selectionService';
 import { ShowMessagesModule } from '../../show-messages/show-messages.module';
 import { ConfirmBoxModule } from '../../../../shared/components/confirm-box/confirm-box.module';
+import { RouterModule, Routes } from '@angular/router';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+const routes: Routes = [
+    { path: '', component: WaitlistMgrComponent },
+    { path: 'services', loadChildren: () => import('./services/list/waitlist-services.module').then(m => m.WaitlistServicesModule) },
+    { path: 'queues', loadChildren: () => import('./queues/list/waitlist-queues.module').then(m => m.WaitlistQueuesModule) },
+    { path: 'displayboards', loadChildren: () => import('./displayboards/displayboards.module').then(m => m.DisplayboardsModule) }
+];
 @NgModule({
     imports: [
         CommonModule,
-        WaitlistMgrRoutingModule,
-        BreadCrumbModule,
-        LoadingSpinnerModule,
-        MaterialModule,
-        CapitalizeFirstPipeModule,
-        FormMessageDisplayModule,
+        MatRadioModule,
+        MatTooltipModule,
+        MatCheckboxModule,
         MatSlideToggleModule,
         FormsModule,
-        ReactiveFormsModule,
-        ModalGalleryModule,
-        GalleryModule,
-        NgbTimepickerModule,
-        WaitlistQueuesModule,
         ShowMessagesModule,
-        ConfirmBoxModule
+        ConfirmBoxModule,
+        [RouterModule.forChild(routes)]
     ],
     declarations: [
         WaitlistMgrComponent

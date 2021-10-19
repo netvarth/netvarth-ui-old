@@ -3,7 +3,7 @@ import { Messages } from '../../../../../../../shared/constants/project-messages
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from '@ks89/angular-modal-gallery';
 import { projectConstants } from '../../../../../../../app.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ProviderServices } from '../../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../shared/functions/shared-functions';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -14,8 +14,7 @@ import { DOCUMENT } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout } from '@ks89/angular-modal-gallery';
-import { ProviderSharedFuctions } from '../../../../../../../ynw_provider/shared/functions/provider-shared-functions';
-import { QuestionService } from '../../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
+import { ProviderSharedFuctions } from '../../../../../../functions/provider-shared-functions';
 import { ProviderUserBprofileSearchDynamicComponent } from './additionalinfo/provider-userbprofile-search-dynamic.component/provider-userbprofile-search-dynamic.component';
 import { UserDataStorageService } from '../user-datastorage.service';
 import { ProPicPopupComponent } from '../../../../bprofile/pro-pic-popup/pro-pic-popup.component';
@@ -25,13 +24,12 @@ import { SnackbarService } from '../../../../../../../shared/services/snackbar.s
 import { WordProcessor } from '../../../../../../../shared/services/word-processor.service';
 import { QRCodeGeneratorComponent } from '../../../../bprofile/qrcodegenerator/qrcodegenerator.component';
 import { Meta } from '@angular/platform-browser';
+import { QuestionService } from '../../../../../../../shared/modules/dynamic-form/dynamic-form-question.service';
 
 @Component({
   selector: 'app-buserprofile',
   templateUrl: './buserprofile.component.html',
   styleUrls: ['../bprofile/additionalinfo/additionalinfo.component.scss','./buserprofile.component.css']
-
-
 })
 
 export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
@@ -209,24 +207,8 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
       }
     ]
   };
-  breadcrumbs_init = [
-    {
-      title: 'Settings',
-      url: '/provider/settings'
-    },
-    {
-      title: Messages.GENERALSETTINGS,
-      url: '/provider/settings/general'
-    },
-    {
-      url: '/provider/settings/general/users',
-      title: 'Users'
-    }
-  ];
-  breadcrumbs = this.breadcrumbs_init;
   businessConfig: any = [];
   customer_label = '';
- 
   primarydialogRef;
   cacheavoider = '';
   frm_additional_cap = '';
@@ -323,33 +305,15 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     this.domain = user.sector;
     this.jaldee_acc_url = Messages.JALDEE_URL.replace('[customer]', this.customer_label);
     this.badgeIcons = projectConstants.LOCATION_BADGE_ICON;
-
-    const breadcrumbs = [];
-    this.breadcrumbs_init.map((e) => {
-      breadcrumbs.push(e);
-    });
-    breadcrumbs.push({
-      title: 'Settings',
-      url: '/provider/settings/general/users/' + this.userId + '/settings'
-    });
-    this.breadcrumbs = breadcrumbs;
     this.getUser();
     this.getUserPublicSearch();
     this.getBusinessConfiguration();
-    // this.initSpecializations();
-    // this.getSpokenLanguages();
-    // this.setLanguages();
-    // calling method to create the form
-    // setTimeout(() => {
-    // this.createForm();
-    // }, 500);
     this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
     this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
     this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
     this.subscription = this.user_datastorage.getWeightageArray().subscribe(result => {
       this.businessProfile_weightageArray = result;
-      // console.log(JSON.stringify(this.businessProfile_weightageArray));
       this.weightageValue = this.calculateWeightage(result);
     });
     this.getproviderBussinessProfileApi()
@@ -649,24 +613,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
       .subscribe((data: any) => {
         this.subDomainId = data.subdomain;
         this.user_arr = data;
-        const breadcrumbs = [];
-        this.breadcrumbs_init.map((e) => {
-          breadcrumbs.push(e);
-        });
-        breadcrumbs.push({
-          title: this.user_arr.firstName,
-          url: '/provider/settings/general/users/add?type=edit&val=' + this.userId,
-        });
-        breadcrumbs.push({
-          title: 'Settings',
-          url: '/provider/settings/general/users/' + this.userId + '/settings'
-        });
-        breadcrumbs.push({
-          title: 'Jaldee Profile'
-        });
-
-        this.breadcrumbs = breadcrumbs;
-
         for (let i = 0; i < this.domainList.bdata.length; i++) {
           if (this.domainList.bdata[i].domain === this.domain) {
             for (let j = 0; j < this.domainList.bdata[i].subDomains.length; j++) {

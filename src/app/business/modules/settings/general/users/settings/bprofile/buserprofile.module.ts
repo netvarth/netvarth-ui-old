@@ -1,68 +1,56 @@
 import { NgModule } from '@angular/core';
-import { BuserProfileRoutingModule } from './buserprofile.routing.module';
 import { BuserProfileComponent } from './buserprofile.component';
-import { BreadCrumbModule } from '../../../../../../../shared/modules/breadcrumb/breadcrumb.module';
 import { LoadingSpinnerModule } from '../../../../../../../shared/modules/loading-spinner/loading-spinner.module';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '../../../../../../../shared/modules/common/shared.module';
-import { CapitalizeFirstPipeModule } from '../../../../../../../shared/pipes/capitalize.module';
-import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
-import { Nl2BrPipeModule } from 'nl2br-pipe';
-import { MediaComponent } from './media/media.component';
-import { LanguagesComponent } from './languages/languages.component';
-import { AdditionalInfoComponent } from './additionalinfo/additionalinfo.component';
-import { SpecializationsComponent } from './specializations/specializations.component';
-import { DynamicFormModule } from '../../../../../dynamic-form/dynamic-form.module';
-import { GalleryModule } from '../../../../../../../shared/modules/gallery/gallery.module';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
-import { UserBprofileSearchPrimaryComponent } from './user-bprofile-search-primary/user-bprofile-search-primary.component';
-import { ProviderUserBprofileSearchDynamicComponent } from './additionalinfo/provider-userbprofile-search-dynamic.component/provider-userbprofile-search-dynamic.component';
-import { UserSpecializationComponent } from './specializations/userspecialization/userspecialization.component';
-import { AddProviderUserBprofileSpokenLanguagesComponent } from './languages/addprovideuserbprofilespokenlanguages/addprovideuserbprofilespokenlanguages.component';
-import { ProviderUserBprofileSearchSocialMediaComponent } from './media/providerUserBprofileSearchSocialMedia/providerUserBprofileSearchSocialMedia.component';
-import { ProPicPopupModule } from '../../../../bprofile/pro-pic-popup/pro-pic-popup.module';
-import { AboutmeComponent } from './aboutme/aboutme.component';
-import { ImageCropperModule } from 'ngx-image-cropper';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
-
+import { UserBprofileSearchDynamicModule } from './additionalinfo/provider-userbprofile-search-dynamic.component/provider-userbrofile-search-dynamic.module';
+import { QRCodeGeneratorModule } from '../../../../bprofile/qrcodegenerator/qrcodegenerator.module';
+import { RouterModule, Routes } from '@angular/router';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { CapitalizeFirstPipeModule } from '../../../../../../../shared/pipes/capitalize.module';
+import { Nl2BrPipeModule } from 'nl2br-pipe';
+import { UserBprofileSearchPrimaryModule } from './user-bprofile-search-primary/user-bprofile-search-primary.module';
+const routes: Routes = [
+    {path: '', component: BuserProfileComponent },
+    {path: '', children : [
+        {path: 'media', loadChildren: ()=> import('./media/media.module').then(m=>m.MediaModule)},
+        {path: 'specializations', loadChildren: ()=> import('./specializations/specializations.module').then(m=>m.SpecializationsModule) },
+        {path: 'languages', loadChildren: ()=> import('./languages/languages.module').then(m=>m.LanguagesModule) },
+        {path: 'additionalinfo', loadChildren: ()=> import('./additionalinfo/additionalinfo.module').then(m=>m.AdditionalInfoModule) },
+        {path: 'aboutme', loadChildren: ()=> import('./aboutme/aboutme.module').then(m=>m.AboutmeModule)}
+    ]}
+];
 @NgModule({
     imports: [
-        BuserProfileRoutingModule,
-        BreadCrumbModule,
-        LoadingSpinnerModule,
         CommonModule,
-        SharedModule,
-        CapitalizeFirstPipeModule,
-        ModalGalleryModule,
-        Nl2BrPipeModule,
-        DynamicFormModule,
-        GalleryModule,
-        NgxQRCodeModule,
+        ReactiveFormsModule,
+        MatDialogModule,
+        MatSlideToggleModule,
+        MatExpansionModule,
+        MatIconModule,
+        MatButtonModule,
+        MatMenuModule,
         ShareButtonsModule,
         ShareIconsModule,
-        ProPicPopupModule,
-        ImageCropperModule
+        UserBprofileSearchDynamicModule,
+        QRCodeGeneratorModule,
+        NgxQRCodeModule,
+        LoadingSpinnerModule,
+        CapitalizeFirstPipeModule,
+        Nl2BrPipeModule,
+        UserBprofileSearchPrimaryModule,
+        [RouterModule.forChild(routes)]
     ],
     declarations: [
-        BuserProfileComponent,
-        MediaComponent,
-        ProviderUserBprofileSearchDynamicComponent,
-        LanguagesComponent,
-        AdditionalInfoComponent,
-        SpecializationsComponent,
-        AboutmeComponent,
-        UserSpecializationComponent,
-        UserBprofileSearchPrimaryComponent,
-        ProviderUserBprofileSearchSocialMediaComponent,
-        AddProviderUserBprofileSpokenLanguagesComponent
-    ],
-    entryComponents: [
-        ProviderUserBprofileSearchDynamicComponent,
-        UserBprofileSearchPrimaryComponent,
-        UserSpecializationComponent,
-        ProviderUserBprofileSearchSocialMediaComponent,
-        AddProviderUserBprofileSpokenLanguagesComponent
+        BuserProfileComponent
     ],
     exports: [
         BuserProfileComponent

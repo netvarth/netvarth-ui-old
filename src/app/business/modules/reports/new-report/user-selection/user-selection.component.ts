@@ -3,12 +3,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ReportDataService } from '../../reports-data.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
-
 
 @Component({
   selector: 'app-user-selection',
@@ -16,7 +15,6 @@ import { SnackbarService } from '../../../../../shared/services/snackbar.service
   styleUrls: ['./user-selection.component.css']
 })
 export class UserSelectionComponent implements OnInit {
-
   accountType: string;
   selected_data: any = [];
   selected_data_id: any;
@@ -33,8 +31,6 @@ export class UserSelectionComponent implements OnInit {
   select_All = Messages.SELECT_ALL;
   public user_dataSource = new MatTableDataSource<any>([]);
   selection = new SelectionModel(true, []);
-
-
   displayedColumns = ['select', 'name', 'user', 'status', 'userName'];
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
@@ -43,29 +39,19 @@ export class UserSelectionComponent implements OnInit {
     private report_service: ReportDataService,
     private groupService: GroupStorageService,
     private snackbarService: SnackbarService,
-  
-
   ) {
-
     this.activated_route.queryParams.subscribe(qparams => {
-
       const user = this.groupService.getitemFromGroupStorage('ynw-user');
       this.accountType = user.accountType;
-   
-        this.displayedColumns = ['select', 'name', 'user', 'mobile','email','status'];
-     
-
+      this.displayedColumns = ['select', 'name', 'user', 'mobile', 'email', 'status'];
       this.reportType = qparams.report_type;
       this.selected_data_id = qparams.data;
-
-        if(qparams.data!==undefined){
-      const userData: any[] = qparams.data.split(',');
-      for (let i = 0; i < userData.length; i++) {
-        this.selected_data.push(userData[i]);
+      if (qparams.data !== undefined) {
+        const userData: any[] = qparams.data.split(',');
+        for (let i = 0; i < userData.length; i++) {
+          this.selected_data.push(userData[i]);
+        }
       }
-    }
-
-
       const _this = this;
       this.getAllUsers().then(result => {
         if (parseInt(qparams.data, 0) === 0) {
@@ -84,26 +70,16 @@ export class UserSelectionComponent implements OnInit {
             }
           });
         }
-
       });
-
     });
   }
-
-
   applyFilter(filterValue: string) {
-
     this.selection.clear();
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.user_dataSource.filter = filterValue;
-
   }
-
   ngOnInit() {
-
-
-
   }
   // user related method-------------------------------------------------------->
   setuserDataSource(result) {
@@ -114,7 +90,6 @@ export class UserSelectionComponent implements OnInit {
         userName = userObj.provider.firstName + ' ' + userObj.provider.lastName;
       }
       user_list.push({ 'id': userObj.id, 'name': userObj.name, 'user': userName });
-
     });
     return user_list;
 
@@ -135,26 +110,20 @@ export class UserSelectionComponent implements OnInit {
       this.selection.clear() :
       this.user_dataSource.data.forEach(row => this.selection.select(row));
   }
-
-
-
   getAllUsers() {
     return new Promise<void>((resolve) => {
       this.provider_services.getUsers()
         .subscribe(
           (data: any) => {
             this.users = data;
-        
             this.user_dataSource.data = this.users
             this.userCount = this.user_dataSource.data.length;
             resolve();
           });
-
     });
   }
-
-   // common method got o previous page------------------------------------->
-   passUserSelectedToReports() {
+  // common method got o previous page------------------------------------->
+  passUserSelectedToReports() {
     this.users_selected = this.selection.selected;
     if (this.selection.selected.length === 0) {
       this.snackbarService.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
@@ -184,14 +153,9 @@ export class UserSelectionComponent implements OnInit {
         this.report_service.updateCustomers(this.users_selected);
         this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
       }
-      //
-      // }
     }
   }
-
   redirecToReports() {
     this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
   }
-
-
 }

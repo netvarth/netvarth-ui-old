@@ -4,16 +4,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { SelectionService } from '../../../../../../shared/services/selectionService';
-
 import { projectConstants } from '../../../../../../app.component';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
-import {
-  FormMessageDisplayService,
-} from '../../../../../../shared/modules/form-message-display/form-message-display.service';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
-import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
+import {FormMessageDisplayService} from '../../../../../../shared/modules/form-message-display/form-message-display.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
+import { ProviderSharedFuctions } from '../../../../../functions/provider-shared-functions';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { JaldeeTimeService } from '../../../../../../shared/services/jaldee-time-service';
@@ -41,21 +38,6 @@ export class WaitlistQueueDetailComponent implements OnInit {
   queue_id = null;
   queue_data;
   display_schedule: any = [];
-  breadcrumbs_init = [
-    {
-      title: 'Settings',
-      url: '/provider/settings'
-    },
-    {
-      title: Messages.WAITLIST_MANAGE_CAP,
-      url: '/provider/settings/q-manager'
-    },
-    {
-      title: this.work_hours,
-      url: '/provider/settings/q-manager/queues'
-    }
-  ];
-  breadcrumbs = this.breadcrumbs_init;
   customer_label = '';
   customer_label_upper = '';
   appointment = false;
@@ -161,14 +143,6 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.getQueueDetail();
       } else {
         this.action = this.queue_id;
-        const breadcrumbs = [];
-        this.breadcrumbs_init.map((e) => {
-          breadcrumbs.push(e);
-        });
-        breadcrumbs.push({
-          title: 'Add'
-        });
-        this.breadcrumbs = breadcrumbs;
         this.createForm();
       }
     }, 100);
@@ -298,15 +272,6 @@ export class WaitlistQueueDetailComponent implements OnInit {
           }
           this.display_schedule = [];
           this.display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(schedule_arr);
-          // remove multiple end breadcrumb on edit function
-          const breadcrumbs = [];
-          this.breadcrumbs_init.map((e) => {
-            breadcrumbs.push(e);
-          });
-          breadcrumbs.push({
-            title: this.queue_data.name
-          });
-          this.breadcrumbs = breadcrumbs;
           this.api_loading = false;
           if (this.action === 'edit') {
             this.queuecaption = 'Edit Queue';

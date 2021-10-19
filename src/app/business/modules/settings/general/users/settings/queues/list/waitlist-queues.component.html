@@ -1,8 +1,6 @@
 <section class="">
         <div class="card title-gb">
                 <h5 class="mgn-up-10">
-                        <!-- <button type="button" class="btn default profile-back" (click)="redirecToUserSettings()">
-                     <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp; -->
                         <span class="fa fa-arrow-left pointer-cursor"
                                 (click)="redirecToUserSettings()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         User Queues (Working Hours)
@@ -31,7 +29,8 @@
                         <div class="card">
                                 <p class="form-level-settings">{{waitlist_cap}}</p>
                                 <div class="copy">
-                                        <div class="col-md-12 no-padding" style="display: flex" *ngIf="accountType !='BRANCH'">
+                                        <div class="col-md-12 no-padding" style="display: flex"
+                                                *ngIf="accountType !='BRANCH'">
                                                 <label style="color: #222223!important"><b>My Availability
                                                                 Today</b></label>
                                                 <mat-panel-description class="acc-plus-btn pointer-cursor"
@@ -93,9 +92,11 @@
                                                                         <div *ngIf="action!='edit'">
                                                                                 <span class="loc-name"
                                                                                         *ngIf="locations && locations.length == 1">
+                                                                                        <span *ngIf="selected_location">{{selected_location.place
+                                                                                                |
+                                                                                                capitalizeFirst}}</span>
                                                                                         <span
-                                                                                                *ngIf="selected_location">{{selected_location.place | capitalizeFirst}}</span>
-                                                                                        <span class="icon-location dash"></span>
+                                                                                                class="icon-location dash"></span>
                                                                                 </span>
                                                                                 <span class="lgin">
                                                                                         <span class="loc-name"
@@ -103,7 +104,9 @@
                                                                                                 [matMenuTriggerFor]="menu"
                                                                                                 *ngIf="locations && locations.length > 1">
                                                                                                 <span class="selct-loctin pointer-cursor"
-                                                                                                        *ngIf="selected_location">{{selected_location.place | capitalizeFirst}}</span>
+                                                                                                        *ngIf="selected_location">{{selected_location.place
+                                                                                                        |
+                                                                                                        capitalizeFirst}}</span>
                                                                                                 <span
                                                                                                         class="icon-location dash link"></span>
                                                                                         </span>
@@ -112,13 +115,19 @@
                                                                                                         *ngFor="let location of locations;let i = index"
                                                                                                         (click)="onChangeLocationSelect(i)">
                                                                                                         <strong>
-                                                                                                                {{ location.place | capitalizeFirst }}</strong>
+                                                                                                                {{
+                                                                                                                location.place
+                                                                                                                |
+                                                                                                                capitalizeFirst
+                                                                                                                }}</strong>
                                                                                                 </button>
                                                                                         </mat-menu>
                                                                                 </span>
                                                                         </div>
                                                                         <div *ngIf="action=='edit'">
-                                                                                <div>{{loc_name}} <span class="icon-location dash"></span></div>
+                                                                                <div>{{loc_name}} <span
+                                                                                                class="icon-location dash"></span>
+                                                                                </div>
                                                                         </div>
                                                                 </div>
                                                                 <div class="form-group">
@@ -141,7 +150,8 @@
                                                                                                 class="example-margin"
                                                                                                 [value]="service.id"
                                                                                                 (change)="handleServicechecbox(i)">
-                                                                                                {{service.name | capitalizeFirst}}
+                                                                                                {{service.name |
+                                                                                                capitalizeFirst}}
                                                                                         </mat-checkbox>
                                                                                 </div>
                                                                         </section>
@@ -179,7 +189,8 @@
                                                                                 </div>
                                                                         </div>
                                                                         <div class="item">
-                                                                                <span class="ttle">{{customer_label | capitalizeFirst}}s
+                                                                                <span class="ttle">{{customer_label |
+                                                                                        capitalizeFirst}}s
                                                                                         served at a time</span>
                                                                                 <span *ngIf="!parallelServeEditable"
                                                                                         class="icon-customer-served pointer-cursor"
@@ -251,7 +262,9 @@
                                                                                                                 -
                                                                                                         </span>
                                                                                                         <span
-                                                                                                                *ngIf="queue.location">{{queue.location.place | capitalizeFirst}}]</span>
+                                                                                                                *ngIf="queue.location">{{queue.location.place
+                                                                                                                |
+                                                                                                                capitalizeFirst}}]</span>
                                                                                                 </div>
                                                                                         </h3>
                                                                                 </div>
@@ -265,8 +278,9 @@
                                                                                                 [checked]="queue.onlineCheckIn"
                                                                                                 (change)="changeQSameDayOnlineStatus(queue)">
                                                                                         </mat-slide-toggle>
-                                                                                        <p><label
-                                                                                                        class="tstat">{{queue.onlineCheckIn ? 'On' : 'Off'}}</label>
+                                                                                        <p><label class="tstat">{{queue.onlineCheckIn
+                                                                                                        ? 'On' :
+                                                                                                        'Off'}}</label>
                                                                                         </p>
                                                                                 </div>
                                                                         </div>
@@ -321,7 +335,8 @@
                                                                         <button mat-menu-item
                                                                                 (click)="viewDashboard(queue,i,'todayQ')"
                                                                                 *ngIf="queue.queueState=='ENABLED' && !todayQcountCaption[i]">
-                                                                                <i class="fa fa-plus"></i>{{tokenOrcheckinCount}}
+                                                                                <i
+                                                                                        class="fa fa-plus"></i>{{tokenOrcheckinCount}}
                                                                         </button>
                                                                         <button mat-menu-item
                                                                                 (click)="editInstantQueue(queue)">
@@ -370,7 +385,9 @@
                                                                                                                 [<span
                                                                                                                         *ngIf="!queue.instantQueue">{{queue.name}}-</span>
                                                                                                                 <span
-                                                                                                                        *ngIf="queue.location">{{queue.location.place | capitalizeFirst}}]</span>
+                                                                                                                        *ngIf="queue.location">{{queue.location.place
+                                                                                                                        |
+                                                                                                                        capitalizeFirst}}]</span>
                                                                                                         </div>
                                                                                                 </h3>
                                                                                         </div>
@@ -389,7 +406,11 @@
                                                                                                                 (change)="changeQSameDayOnlineStatus(queue)">
                                                                                                         </mat-slide-toggle>
                                                                                                         <p> <label
-                                                                                                                        class="tstat">{{queue.onlineCheckIn ? 'On' : 'Off'}}</label>
+                                                                                                                        class="tstat">{{queue.onlineCheckIn
+                                                                                                                        ?
+                                                                                                                        'On'
+                                                                                                                        :
+                                                                                                                        'Off'}}</label>
                                                                                                         </p>
                                                                                                 </div>
                                                                                                 <div
@@ -405,7 +426,11 @@
                                                                                                                 (change)="changeQFutureStatus(queue)">
                                                                                                         </mat-slide-toggle>
                                                                                                         <p> <label
-                                                                                                                        class="tstat">{{queue.futureWaitlist ? 'On' : 'Off'}}</label>
+                                                                                                                        class="tstat">{{queue.futureWaitlist
+                                                                                                                        ?
+                                                                                                                        'On'
+                                                                                                                        :
+                                                                                                                        'Off'}}</label>
                                                                                                         </p>
                                                                                                 </div>
                                                                                         </div>
@@ -465,8 +490,8 @@
                                                                                 <button mat-menu-item
                                                                                         (click)="viewDashboard(queue,i,'scheduleQ')"
                                                                                         *ngIf="queue.queueState=='ENABLED' && !futureQcountCaption[i]">
-                                                                                        <i
-                                                                                                class="fa fa-plus"></i> {{tokenOrcheckinCount}}
+                                                                                        <i class="fa fa-plus"></i>
+                                                                                        {{tokenOrcheckinCount}}
                                                                                 </button>
                                                                                 <button mat-menu-item
                                                                                         (click)="addEditProviderQueue('editFromList', queue)">
@@ -526,9 +551,23 @@
                                                                                                                 -
                                                                                                         </span>
                                                                                                         <span
-                                                                                                                *ngIf="queue.location">{{queue.location.place | capitalizeFirst}}]</span><br>
-                                                                                                                <span class="sms_credit_warn mgn-up-5" *ngIf="queue.queueState =='EXPIRED'"><sup>*</sup>Queue is expired, edit it to activate</span>
-                                                                                                                <span class="sms_credit_warn mgn-up-5" *ngIf="queue.queueState =='DISABLED'"><sup>*</sup>Queue is disabled, enable it to activate</span>
+                                                                                                                *ngIf="queue.location">{{queue.location.place
+                                                                                                                |
+                                                                                                                capitalizeFirst}}]</span><br>
+                                                                                                        <span class="sms_credit_warn mgn-up-5"
+                                                                                                                *ngIf="queue.queueState =='EXPIRED'"><sup>*</sup>Queue
+                                                                                                                is
+                                                                                                                expired,
+                                                                                                                edit it
+                                                                                                                to
+                                                                                                                activate</span>
+                                                                                                        <span class="sms_credit_warn mgn-up-5"
+                                                                                                                *ngIf="queue.queueState =='DISABLED'"><sup>*</sup>Queue
+                                                                                                                is
+                                                                                                                disabled,
+                                                                                                                enable
+                                                                                                                it to
+                                                                                                                activate</span>
                                                                                                 </div>
                                                                                         </h3>
                                                                                 </div>
