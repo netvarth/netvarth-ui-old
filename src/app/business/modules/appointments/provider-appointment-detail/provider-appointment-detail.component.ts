@@ -3,11 +3,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Location } from '@angular/common';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from '../../../functions/provider-shared-functions';
 import * as moment from 'moment';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { AppointmentActionsComponent } from '../appointment-actions/appointment-actions.component';
@@ -57,13 +57,6 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   apptTime;
   communication_history: any = [];
   est_tooltip = Messages.ESTDATE;
-  breadcrumbs_init: any = [
-    {
-      title: 'Appointments',
-      url: '/provider/appointments'
-    }
-  ];
-  breadcrumbs = this.breadcrumbs_init;
   api_success = null;
   api_error = null;
   userDet;
@@ -136,9 +129,6 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     // this.checkin_upper = this.wordProcessor.firstToUpper(this.checkin_label);
     this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
     this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
-    this.breadcrumbs_init.push({
-      'title': 'Appointment'
-    });
   }
   ngOnInit() {
     this.getPos();

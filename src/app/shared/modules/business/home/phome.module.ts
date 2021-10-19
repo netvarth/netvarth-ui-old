@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { PhomeRoutingModule } from './phome-routing.module';
 import { PhomeComponent } from './phome.component';
 import { OwlModule } from 'ngx-owl-carousel';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -14,18 +13,27 @@ import { ForgotPasswordModule } from '../../../../shared/components/forgot-passw
 import { FooterModule } from '../../footer/footer.module';
 import { HeaderModule } from '../../header/header.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ServicePageHealthcareComponent } from '../service-page-healthcare/service-page-healthcare.component';
 import { LoginModule } from '../../../../shared/components/login/login.module';
-import { ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
-
+import { AuthGuardHome } from '../../../../shared/guard/auth.guard';
+const routes: Routes = [
+    { path: '', component: PhomeComponent, canActivate: [AuthGuardHome] },
+    {
+      path: '', children: [
+        { path: 'healthcare', loadChildren: () => import('../service-page-healthcare/service-page-healthcare.module').then(m => m.ServicePageHealthcareModule) },
+        { path: 'pricing', loadChildren: () => import('../pricing/pricing.module').then(m => m.PricingModule) },
+        { path: 'signup', loadChildren: () => import('../signup/providersignup.module').then(m => m.ProvidersignupModule) },
+        { path: 'login', loadChildren: () => import('../login/provider-login.module').then(m => m.ProviderLoginModule) },
+        { path: 'contactus', loadChildren: () => import('../contactus/contactus.module').then(m => m.ContactusModule) },
+        { path: 'aboutus', loadChildren: () => import('../about/about.module').then(m => m.AboutModule) }
+      ]
+    }];
 @NgModule({
     imports: [
         CommonModule,
         OwlModule,
         HeaderModule,
         FooterModule,
-        PhomeRoutingModule,
-        RouterModule,
+        [RouterModule.forChild(routes)],
         LazyModule,
         FormsModule,
         FormMessageDisplayModule,
@@ -38,13 +46,7 @@ import { ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
         LoginModule
     ],
     declarations: [
-        PhomeComponent,
-        ServicePageHealthcareComponent
-    ],
-    providers: [
-        ScrollToService
-    ],
-    entryComponents: [
+        PhomeComponent
     ],
     exports: [PhomeComponent]
 })

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';

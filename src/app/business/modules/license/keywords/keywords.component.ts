@@ -7,15 +7,6 @@ import { Router } from '@angular/router';
 })
 
 export class KeywordsComponent {
-    breadcrumbs = [
-        {
-            title: 'License & Invoice',
-            url: '/provider/license'
-        },
-        {
-            title: 'Jaldee Search Keywords'
-        }
-    ];
     constructor(
         private routerobj: Router,
     ) { }

@@ -20,7 +20,6 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
 import { Messages } from '../../../constants/project-messages';
 import { FormMessageDisplayService } from '../../form-message-display/form-message-display.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
-import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-coupon-note/jc-coupon-note.component';
 import { S3UrlProcessor } from '../../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../../node_modules/subsink';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -29,6 +28,7 @@ import { RazorpayprefillModel } from '../../../../shared/components/razorpay/raz
 import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.model';
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { PaytmService } from '../../../../../app/shared/services/paytm.service';
+import { JcCouponNoteComponent } from '../../jc-coupon-note/jc-coupon-note.component';
 
 @Component({
   selector: 'app-checkout',

@@ -10,7 +10,7 @@ const routes: Routes = [
     { path: 'locations', loadChildren: () => import('../../../../business/modules/settings/general/locations/locations-list.module').then(m => m.LocationListModule) },
     { path: 'holidays', loadChildren: () => import('./holiday/holiday-list/holiday.module').then(m => m.HolidayModule) },
     { path: 'labels', loadChildren: () => import('../../settings/general/labels/labels.module').then(m => m.LabelsModule) },
-    { path: 'customview', loadChildren: () => import('./customview/customview-list/customview.module').then(m => m.CustomViewModule) },
+    { path: 'customview', loadChildren: () => import('./customview/customview-list/customview-list.module').then(m => m.CustomViewListModule) },
     { path: 'users', loadChildren: () => import('../../settings/general/users/users.module').then(m => m.UsersModule) },
     { path: 'livetrack', loadChildren: () => import('../../settings/general/livetrack/livetrack-settings.module').then(m => m.LiveTrackSettingsModule) },
     { path: 'departments', loadChildren: ()=> import('./departments/departments.module').then(m=>m.DepartmentsModule)},

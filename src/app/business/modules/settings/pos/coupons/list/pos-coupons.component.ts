@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../../../shared/constants/project-messages';
@@ -122,7 +122,7 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
     }
   }
   getJaldeeCoupons() {
-   this.subs.sink= this.jaldeeCoupons = this.provider_servicesobj.getJaldeeCoupons()
+   this.subs.sink= this.provider_servicesobj.getJaldeeCoupons()
       .subscribe(data => {
         this.jaldeeCoupons = data;
         for (let index = 0; index < this.jaldeeCoupons.length; index++) {

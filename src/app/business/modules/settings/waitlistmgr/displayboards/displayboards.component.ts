@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../services/provider-services.service';
 import { Messages } from '../../../../../shared/constants/project-messages';
 // import { projectConstants } from '../../../../../app.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,21 +17,6 @@ import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-bo
 export class DisplayboardsComponent implements OnInit {
     tooltipcls = '';
     add_button = '';
-    breadcrumb_moreoptions: any = [];
-    breadcrumbs_init = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: Messages.WAITLIST_MANAGE_CAP,
-            url: '/provider/settings/q-manager'
-        },
-        {
-            title: 'QBoards'
-        }
-    ];
-    breadcrumbs = this.breadcrumbs_init;
     api_loading: boolean;
     action = 'list';
     layout_list: any = [];
@@ -81,10 +66,6 @@ export class DisplayboardsComponent implements OnInit {
         private wordProcessor: WordProcessor
     ) { }
     ngOnInit() {
-        this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'q-manager->settings-q-boards', 'subKey': 'timewindow', 'classname': 'b-queue',
-            'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
-        };
         this.getDisplayboardLayouts();
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.accountType = user.accountType;
@@ -159,15 +140,6 @@ export class DisplayboardsComponent implements OnInit {
         this.action = 'addToGroup';
         this.qBoardscaption = 'Qboard group';
         this.qBoardsSelected = [];
-        const breadcrumbs = [];
-        this.breadcrumbs_init.map((e) => {
-            breadcrumbs.push(e);
-        });
-        breadcrumbs.push({
-            title: 'Group'
-        });
-        this.breadcrumbs = breadcrumbs;
-
         if (this.qBoardSelectCount > 0) {
             for (let i = 0; i < this.layout_list.length; i++) {
                 if (this.qBoardsSelectedIndex[i]) {
@@ -226,15 +198,6 @@ export class DisplayboardsComponent implements OnInit {
         if (layout.isContainer) {
             this.action = 'updateGroup';
             this.button_title = 'Update';
-            const breadcrumbs = [];
-            this.breadcrumbs_init.map((e) => {
-                breadcrumbs.push(e);
-            });
-            breadcrumbs.push({
-                title: layout.displayName
-            });
-            this.breadcrumbs = breadcrumbs;
-
             this.provider_services.getDisplayboardWaitlist(layout.id).subscribe((data: any) => {
                 this.displayName = data.displayName;
                 this.serviceRoom = data.serviceRoom;
@@ -361,7 +324,6 @@ export class DisplayboardsComponent implements OnInit {
     }
     onCancel() {
         this.qBoardscaption = 'QBoards';
-        this.breadcrumbs = this.breadcrumbs_init;
         this.activeGroup = null;
         this.action = 'list';
     }

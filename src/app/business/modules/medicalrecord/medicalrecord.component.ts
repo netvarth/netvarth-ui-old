@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router} from '@angular/router';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../services/provider-services.service';
 import { LastVisitComponent } from './last-visit/last-visit.component';
 import { MedicalrecordService } from './medicalrecord.service';
 import { projectConstants } from '../../../app.component';

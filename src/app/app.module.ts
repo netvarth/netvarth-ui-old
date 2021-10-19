@@ -7,7 +7,6 @@ import { ExtendHttpInterceptor } from './shared/config/extendhttp.interceptor';
 import {  MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { AppComponent, projectConstants } from './app.component';
-import { LogoutComponent } from './shared/components/logout/logout.component';
 import { SearchDetailServices } from './shared/components/search-detail/search-detail-services.service';
 import { AuthGuardConsumer, AuthGuardProvider, AuthGuardHome, AuthGuardLogin} from './shared/guard/auth.guard';
 import { SharedServices } from './shared/services/shared-services';
@@ -17,13 +16,12 @@ import { EqualValidator } from './shared/directives/equal-validator.directive';
 import { FormMessageDisplayService } from './shared/modules/form-message-display/form-message-display.service';
 import { ProviderDetailService } from './shared/components/provider-detail/provider-detail.service';
 import {  LocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
-import { ForceDialogComponent } from './shared/components/force-dialog/force-dialog.component';
 import { GlobalService } from './shared/services/global-service';
 import { Razorpaymodel } from './shared/components/razorpay/razorpay.model';
 import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefill.model';
 import { WindowRefService } from './shared/services/windowRef.service';
 import { RazorpayService } from './shared/services/razorpay.service';
-import { ProviderDataStorageService } from './ynw_provider/services/provider-datastorage.service';
+import { ProviderDataStorageService } from './business/services/provider-datastorage.service';
 import { ShareService } from 'ngx-sharebuttons';
 import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
 import { SessionStorageService } from './shared/services/session-storage.service';
@@ -52,10 +50,13 @@ import { FileReaderService } from './shared/services/file-reader.service';
 import { PaytmService } from './shared/services/paytm.service';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
-import { ProviderServices } from './ynw_provider/services/provider-services.service';
+import { ProviderServices } from './business/services/provider-services.service';
 import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
+import { MaintenanceMsgModule } from './shared/components/maintenance-msg/maintenance-msg.module';
+import { LogoutModule } from './shared/components/logout/logout.module';
+import { ForceDialogModule } from './shared/components/force-dialog/force-dialog.module';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -63,13 +64,8 @@ export function init_app(globalService: GlobalService) {
 @NgModule({
   declarations: [
     AppComponent,
-    LogoutComponent,
-    EqualValidator,
-    ForceDialogComponent
+    EqualValidator
   ],
-  entryComponents: [
-    ForceDialogComponent
-    ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -79,6 +75,9 @@ export function init_app(globalService: GlobalService) {
     AppRoutingModule,
     DateFormatPipeModule,
     MatSnackBarModule,
+    MaintenanceMsgModule,
+    LogoutModule,
+    ForceDialogModule,
     ScrollToModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],

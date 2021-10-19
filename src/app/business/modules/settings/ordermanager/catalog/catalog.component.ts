@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../app.component';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,9 +14,9 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
 import { SubSink } from 'subsink';
 
 @Component({
-  selector: 'app-catalog',
-  templateUrl: './catalog.component.html',
-  styleUrls: ['./catalog.component.css']
+    selector: 'app-catalog',
+    templateUrl: './catalog.component.html',
+    styleUrls: ['./catalog.component.css']
 })
 export class CatalogComponent implements OnInit, OnDestroy {
     dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
@@ -33,24 +33,8 @@ export class CatalogComponent implements OnInit, OnDestroy {
     query_executed = false;
     emptyMsg = '';
     domain;
-    breadcrumb_moreoptions: any = [];
     frm_items_cap = 'Catalog creation and management';
-    breadcrumbs_init = [
-        {
-            url: '/provider/settings',
-            title: 'Settings'
-        },
-        {
-            title: 'Jaldee Order',
-            url: '/provider/settings/ordermanager'
-        },
-        {
-            title: 'Items',
-            url: '/provider/settings/ordermanager/items'
-        }
-    ];
     item_status = projectConstants.ITEM_STATUS;
-    breadcrumbs = this.breadcrumbs_init;
     itemnameTooltip = 'Click here to edit catalog';
     additemdialogRef;
     edititemdialogRef;
@@ -66,9 +50,9 @@ export class CatalogComponent implements OnInit, OnDestroy {
         private routerobj: Router,
         private sharedfunctionObj: SharedFunctions,
         private wordProcessor: WordProcessor,
-    private lStorageService: LocalStorageService,
-    private snackbarService: SnackbarService,
-    private groupService: GroupStorageService) {
+        private lStorageService: LocalStorageService,
+        private snackbarService: SnackbarService,
+        private groupService: GroupStorageService) {
         this.emptyMsg = 'No Catalogs found';
     }
 
@@ -77,7 +61,6 @@ export class CatalogComponent implements OnInit, OnDestroy {
         this.domain = user.sector;
         this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.getCatalog();
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
         this.lStorageService.removeitemfromLocalStorage('selecteditems');
     }
@@ -97,7 +80,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
             this.removeitemdialogRef.close();
         }
     }
-    
+
     performActions(action) {
         if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/billing->items']);
@@ -133,7 +116,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
             this.subscriptions.sink = this.provider_servicesobj.stateChangeCatalog(catalog.id, stat).subscribe(
                 () => {
                     this.getCatalog();
-                    this.snackbarService.openSnackBar( catalog.catalogName + ' disabled successfully');
+                    this.snackbarService.openSnackBar(catalog.catalogName + ' disabled successfully');
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -144,7 +127,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
             this.subscriptions.sink = this.provider_servicesobj.stateChangeCatalog(catalog.id, stat).subscribe(
                 () => {
                     this.getCatalog();
-                    this.snackbarService.openSnackBar( catalog.catalogName + ' enabled successfully');
+                    this.snackbarService.openSnackBar(catalog.catalogName + ' enabled successfully');
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -209,7 +192,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['/provider/' + this.domain + '/billing->' + mod]);
     }
     redirecToJaldeeIordermanager() {
-        this.routerobj.navigate(['provider', 'settings' , 'ordermanager']);
+        this.routerobj.navigate(['provider', 'settings', 'ordermanager']);
     }
     redirecToHelp() {
         this.routerobj.navigate(['/provider/' + this.domain + '/billing->items']);

@@ -10,7 +10,9 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatInputModule } from "@angular/material/input";
 import { MatChipsModule } from "@angular/material/chips";
 import { NgxQRCodeModule } from "ngx-qrcode2";
-import { ConfirmBoxModule } from "../../../../ynw_provider/shared/component/confirm-box/confirm-box.module";
+import { ConfirmBoxModule } from "../../../shared/confirm-box/confirm-box.module";
+import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
+import { VoiceConfirmModule } from "../../customers/voice-confirm/voice-confirm.module";
 
 @NgModule({
     imports: [
@@ -24,7 +26,9 @@ import { ConfirmBoxModule } from "../../../../ynw_provider/shared/component/conf
         MatInputModule,
         MatChipsModule,
         NgxQRCodeModule,
-        ConfirmBoxModule
+        ConfirmBoxModule,
+        CapitalizeFirstPipeModule,
+        VoiceConfirmModule
     ],
     exports: [
         CheckinActionsComponent

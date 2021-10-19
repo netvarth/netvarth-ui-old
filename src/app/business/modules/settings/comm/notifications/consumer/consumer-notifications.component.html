@@ -29,7 +29,7 @@
         <div class="paysettings-tab col-md-6 col-xs-12 col-sm-12 no-padding">
           <div class=" col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-20">
             <label class="notifi-togl" style="display: flex">Send Notifications&nbsp;&nbsp;
-              <mat-slide-toggle class="example-margin" [(ngModel)]="consumerNotification"
+              <mat-slide-toggle class="example-margin" ngDefaultControl [(ngModel)]="consumerNotification"
                 (change)="handleNotificationSettings($event)">
               </mat-slide-toggle> &nbsp;<p class="sts" [class.active]="consumerNotification">{{notification_statusstr}}
               </p>
@@ -69,7 +69,7 @@
                 <div class="notify-phead col-md-3 col-xs-12 col-sm-12 col-lg-3 no-padding">
                   <mat-form-field class="example-full-width mgn-rt-10">
                     <input matInput min="0" max="1000" type="number"
-                      [(ngModel)]="earlyWLNotificatonSettings.personsAhead" (change)="showSubmit('EARLY_WL', 'phead');"
+                      [(ngModel)]="earlyWLNotificatonSettings.personsAhead" ngDefaultControl (change)="showSubmit('EARLY_WL', 'phead');"
                       placeholder="{{customer_label | capitalizeFirst}}s ahead *" autocomplete="off" pattern="[0-9]"
                       (keypress)="numberOnly($event)" (keyup)="isvalid($event)"><br>
                     <div class="mgn-up-5" *ngIf="wltstPersonsahead && !earlyWLNotificatonSettings.personsAhead"
@@ -307,7 +307,7 @@
                       <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
                         [class.mgn-up-minus-20]="!small_device_display">
                         <mat-form-field class="mgn-rt-10">
-                          <mat-select placeholder="Hour" [ngModel]="f_selected_hr" #f_hrsel
+                          <mat-select placeholder="Hour" ngDefaultControl  [ngModel]="f_selected_hr" #f_hrsel
                             (selectionChange)="handleHrSelction(f_hrsel.value,'first')">
                             <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
                               {{hr}}
@@ -318,7 +318,7 @@
                       <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
                         [class.mgn-up-minus-20]="!small_device_display">
                         <mat-form-field class="mgn-rt-10">
-                          <mat-select placeholder="Minute" [ngModel]="f_selected_min" #f_minsel
+                          <mat-select placeholder="Minute" ngDefaultControl  [ngModel]="f_selected_min" #f_minsel
                             (selectionChange)="handleMinSelction(f_minsel.value,'first')">
                             <mat-option *ngFor="let min of appt_remind_min" [value]="min">
                               {{min}}
@@ -357,7 +357,7 @@
                       <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
                         [class.mgn-up-minus-20]="!small_device_display">
                         <mat-form-field class="mgn-rt-10">
-                          <mat-select placeholder="Hour" [ngModel]="s_selected_hr" #s_hrsel
+                          <mat-select placeholder="Hour" ngDefaultControl  [ngModel]="s_selected_hr" #s_hrsel
                             (selectionChange)="handleHrSelction(s_hrsel.value,'second')">
                             <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
                               {{hr}}
@@ -368,7 +368,7 @@
                       <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
                         [class.mgn-up-minus-20]="!small_device_display">
                         <mat-form-field class="mgn-rt-10">
-                          <mat-select placeholder="Minute" [ngModel]="s_selected_min" #s_minsel
+                          <mat-select placeholder="Minute" ngDefaultControl  [ngModel]="s_selected_min" #s_minsel
                             (selectionChange)="handleMinSelction(s_minsel.value,'second')">
                             <mat-option *ngFor="let min of appt_remind_min" [value]="min">
                               {{min}}
@@ -407,7 +407,7 @@
                       <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
                         [class.mgn-up-minus-20]="!small_device_display">
                         <mat-form-field class="mgn-rt-10">
-                          <mat-select placeholder="Hour" [ngModel]="t_selected_hr" #t_hrsel
+                          <mat-select placeholder="Hour" ngDefaultControl  [ngModel]="t_selected_hr" #t_hrsel
                             (selectionChange)="handleHrSelction(t_hrsel.value,'third')">
                             <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
                               {{hr}}
@@ -418,7 +418,7 @@
                       <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
                         [class.mgn-up-minus-20]="!small_device_display">
                         <mat-form-field class="mgn-rt-10">
-                          <mat-select placeholder="Minute" [ngModel]="t_selected_min" #t_minsel
+                          <mat-select placeholder="Minute" ngDefaultControl  [ngModel]="t_selected_min" #t_minsel
                             (selectionChange)="handleMinSelction(t_minsel.value,'third')">
                             <mat-option *ngFor="let min of appt_remind_min" [value]="min">
                               {{min}}
@@ -457,7 +457,7 @@
                       <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
                         [class.mgn-up-minus-20]="!small_device_display">
                         <mat-form-field class="mgn-rt-10">
-                          <mat-select placeholder="Hour" [ngModel]="ft_selected_hr" #ft_hrsel
+                          <mat-select placeholder="Hour" ngDefaultControl  [ngModel]="ft_selected_hr" #ft_hrsel
                             (selectionChange)="handleHrSelction(ft_hrsel.value,'fourth')">
                             <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
                               {{hr}}
@@ -468,7 +468,7 @@
                       <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
                         [class.mgn-up-minus-20]="!small_device_display">
                         <mat-form-field class="mgn-rt-10">
-                          <mat-select placeholder="Minute" [ngModel]="ft_selected_min" #ft_minsel
+                          <mat-select placeholder="Minute" ngDefaultControl [ngModel]="ft_selected_min" #ft_minsel
                             (selectionChange)="handleMinSelction(ft_minsel.value,'fourth')">
                             <mat-option *ngFor="let min of appt_remind_min" [value]="min">
                               {{min}}

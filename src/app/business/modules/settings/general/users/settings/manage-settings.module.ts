@@ -1,34 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
-import { BreadCrumbModule } from '../../../../../../shared/modules/breadcrumb/breadcrumb.module';
-import { LoadingSpinnerModule } from '../../../../../../shared/modules/loading-spinner/loading-spinner.module';
-import { MaterialModule } from '../../../../../../shared/modules/common/material.module';
-import { CapitalizeFirstPipeModule } from '../../../../../../shared/pipes/capitalize.module';
-import { FormMessageDisplayModule } from '../../../../../../shared/modules/form-message-display/form-message-display.module';
 import { ManageSettingsComponent } from './manage-settings.component';
-import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
-import { WaitlistQueuesModule } from './queues/list/waitlist-queues.module';
-import { NotificationUserModule } from './notifications/notifications.module';
-import { ManageSettingsRoutingModule } from './manage-settings.routing.module';
+import { RouterModule, Routes } from '@angular/router';
+const routes: Routes = [
+    { path: '', component: ManageSettingsComponent },
+    { path: 'holidays', loadChildren: () => import('./usernonworkingday/user-nonworkingday-list/user-nonworkingday-list.module').then(m => m.UserNonworkingdayListModule) },
+    { path: 'services', loadChildren: () => import('./services/list/user-waitlist-services.module').then(m => m.UserWaitlistServicesModule) },
+    { path: 'queues', loadChildren: () => import('./queues/list/waitlist-queues.module').then(m => m.WaitlistQueuesModule) },
+    { path: 'notifications', loadChildren: () => import('./notifications/notifications.module').then(m => m.NotificationUserModule) },
+    { path: 'schedules', loadChildren: () => import('./schedules/list/waitlist-schedules.module').then(m => m.WaitlistuserSchedulesModule) },
+    { path: 'bprofile', loadChildren: () => import('./bprofile/buserprofile.module').then(m => m.BuserProfileModule)}
+  ];
 @NgModule({
     imports: [
         CommonModule,
-        ManageSettingsRoutingModule,
-        BreadCrumbModule,
-        LoadingSpinnerModule,
-        MaterialModule,
-        CapitalizeFirstPipeModule,
-        FormMessageDisplayModule,
-        MatSlideToggleModule,
-        FormsModule,
-        ReactiveFormsModule,
-        ModalGalleryModule,
-        NgbTimepickerModule,
-        WaitlistQueuesModule,
-        NotificationUserModule
+        // WaitlistQueuesModule,
+        // NotificationUserModule,
+        [RouterModule.forChild(routes)]
     ],
     declarations: [
         ManageSettingsComponent,

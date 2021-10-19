@@ -4,12 +4,11 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ReportDataService } from '../reports-data.service';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
-
 
 @Component({
   selector: 'app-new-report',
@@ -23,7 +22,7 @@ export class NewReportComponent implements OnInit {
   appointment_customerchosen: string;
   donation_customerchosen: string;
   payment_customerchosen: string;
-  user_chosen:string;
+  user_chosen: string;
   customerchosen: string;
   order_customerId: any;
   order_customer: string;
@@ -75,7 +74,6 @@ export class NewReportComponent implements OnInit {
   payment_purpose: { value: string; displayName: string; }[];
   donation_timePeriod: string;
   appointment_timePeriod: string;
-
   appointment_service_id: number;
   appointment_service: string;
   donation_service_id: any;
@@ -109,25 +107,21 @@ export class NewReportComponent implements OnInit {
   customer: string;
   order_status: any;
   order_status_list: any;
-
   payment_amount: any;
   payment_paymentPurpose: any;
   payment_paymentMode: any;
   payment_paymentStatus: any;
   reportDateCategory: any;
-  payment_donationName:any;
-  payment_donationPhone:any;
-  payment_donationEmail:any;
-  donation_donorFirstName:string;
-  donation_donorLastName:string;
-  donation_donorPhoneNumber:any;
-user_endDate;
-user_startDate;
-user_timePeriod;
-user_users;
-
-
-
+  payment_donationName: any;
+  payment_donationPhone: any;
+  payment_donationEmail: any;
+  donation_donorFirstName: string;
+  donation_donorLastName: string;
+  donation_donorPhoneNumber: any;
+  user_endDate;
+  user_startDate;
+  user_timePeriod;
+  user_users;
   report_criteria: any;
   report_type: any;
   public reportForm: FormGroup;
@@ -164,7 +158,7 @@ user_users;
   }
 
   ngOnInit() {
-    this.payment_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod =this.user_timePeriod = 'LAST_THIRTY_DAYS';
+    this.payment_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = 'LAST_THIRTY_DAYS';
     this.time_period = projectConstantsLocal.REPORT_TIMEPERIOD;
     this.payment_modes = projectConstantsLocal.PAYMENT_MODES;
     this.payment_status = projectConstantsLocal.PAYMENT_STATUS;
@@ -187,9 +181,6 @@ user_users;
     this.payment_transactionType = 0;
     this.waitlist_billpaymentstatus = this.appointment_billpaymentstatus = 0;
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-
-
-
     this.report_data_service._service_data.subscribe((res: any) => {
       this.setServiceData(res);
     });
@@ -206,15 +197,11 @@ user_users;
     this.report_data_service._reports.subscribe(res => {
       this.setReportData(res);
     });
-
-
-
   }
   setReportData(res) {
     console.log(JSON.stringify(res));
     if (Object.keys(res).length !== 0) {
       switch (this.report_type) {
-
         case 'payment': {
           this.payment_paymentStatus = res.status || 0;
           this.payment_paymentMode = res.paymentMode || 0;
@@ -222,9 +209,9 @@ user_users;
           this.payment_amount = res.amount;
           this.payment_transactionType = res.transactionType || 0;
           this.payment_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
-          this.payment_donationName=res.donationName;
-          this.payment_donationEmail=res.donationEmail;
-          this.payment_donationPhone=res.donationPhone;
+          this.payment_donationName = res.donationName;
+          this.payment_donationEmail = res.donationEmail;
+          this.payment_donationPhone = res.donationPhone;
           if (res.dateRange === 'DATE_RANGE') {
             this.hide_dateRange = false;
             this.payment_startDate = res.startDate;
@@ -252,7 +239,6 @@ user_users;
             this.appointment_startDate = res.startDate;
             this.appointment_endDate = res.endDate;
           }
-
           break;
         }
         case 'token': {
@@ -275,7 +261,6 @@ user_users;
             this.order_endDate = res.endDate;
             this.delivery_mode = res.delivery_mode;
           }
-
         }
         case 'user': {
           this.user_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
@@ -284,15 +269,13 @@ user_users;
             this.user_startDate = res.startDate;
             this.user_endDate = res.endDate;
           }
-
         }
       }
     }
-
   }
   isNumeric(evt) {
     return this.shared_functions.isNumeric(evt);
-}
+  }
   setServiceData(res) {
     switch (this.report_type) {
       case 'payment': {
@@ -302,7 +285,6 @@ user_users;
         } else {
           this.payment_service = res.split(',').length - 1 + ' services selected';
           this.payment_service_id = res.replace(/,\s*$/, '');
-
         }
         break;
       }
@@ -313,8 +295,6 @@ user_users;
         } else {
           this.donation_service = res.split(',').length - 1 + ' services selected';
           this.donation_service_id = res.replace(/,\s*$/, '');
-
-
         }
         break;
       }
@@ -325,8 +305,6 @@ user_users;
         } else {
           this.appointment_service = res.split(',').length - 1 + ' services selected';
           this.appointment_service_id = res.replace(/,\s*$/, '');
-
-
         }
         break;
       }
@@ -337,29 +315,21 @@ user_users;
         } else {
           this.token_service = res.split(',').length - 1 + ' services selected';
           this.token_service_id = res.replace(/,\s*$/, '');
-
-
         }
-
         break;
       }
     }
 
   }
-
   setScheduleData(res) {
-
     switch (this.report_type) {
       case 'payment': {
         if (res === 'All') {
           this.payment_schedule = 'All';
           this.payment_schedule_id = 0;
         } else {
-
           this.payment_schedule = res.split(',').length - 1 + ' schedules selected';
           this.payment_schedule_id = res.replace(/,\s*$/, '');
-
-
         }
         break;
       }
@@ -370,8 +340,6 @@ user_users;
         } else {
           this.donation_schedule = res.split(',').length - 1 + ' schedules selected';
           this.donation_schedule_id = res.replace(/,\s*$/, '');
-
-
         }
         break;
       }
@@ -382,8 +350,6 @@ user_users;
         } else {
           this.appointment_schedule = res.split(',').length - 1 + ' schedules selected';
           this.appointment_schedule_id = res.replace(/,\s*$/, '');
-
-
         }
         break;
       }
@@ -394,53 +360,40 @@ user_users;
         } else {
           this.token_schedule = res.split(',').length - 1 + ' schedules selected';
           this.token_schedule_id = res.replace(/,\s*$/, '');
-
-
         }
-
         break;
       }
     }
-
   }
   setCustomerData(res) {
-
     switch (this.report_type) {
       case 'payment': {
         if (res.jaldee_customers === '' || res.jaldee_customers === undefined || res.jaldee_customers === 'All') {
           this.payment_customer = 'All';
-          // this.payment_customerId = 0;
         } else {
           this.payment_customer = res.jaldee_customers.split(',').length + ' ' + this.customer_label + 's selected';
           this.payment_customerchosen = res.customers.replace(/,\s*$/, '');
           this.payment_customerId = res.jaldee_customers.replace(/,\s*$/, '');
-
         }
         break;
       }
       case 'donation': {
         if (res.jaldee_customers === '' || res.jaldee_customers === undefined || res.jaldee_customers === 'All') {
           this.donation_customer = 'All';
-          // this.donation_customerId = 0;
         } else {
           this.donation_customer = res.jaldee_customers.split(',').length + ' ' + this.customer_label + 's selected';
           this.donation_customerchosen = res.customers.replace(/,\s*$/, '');
           this.donation_customerId = res.jaldee_customers.replace(/,\s*$/, '');
-
         }
         break;
       }
       case 'appointment': {
         if (res.jaldee_customers === '' || res.jaldee_customers === undefined || res.jaldee_customers === 'All') {
           this.appointment_customer = 'All';
-          // this.appointment_customerId = 0;
         } else {
-
           this.appointment_customer = res.jaldee_customers.split(',').length + ' ' + this.customer_label + 's selected';
           this.appointment_customerchosen = res.customers.replace(/,\s*$/, '');
-
           this.appointment_customerId = res.jaldee_customers.replace(/,\s*$/, '');
-
         }
         break;
       }
@@ -451,9 +404,7 @@ user_users;
           this.waitlist_customer = res.jaldee_customers.split(',').length + ' ' + this.customer_label + 's selected';
           this.waitlist_customerchosen = res.customers.replace(/,\s*$/, '');
           this.waitlist_customerId = res.jaldee_customers.replace(/,\s*$/, '');
-
         }
-
         break;
       }
       case 'order': {
@@ -463,12 +414,9 @@ user_users;
           this.order_customer = res.jaldee_customers.split(',').length + ' ' + this.customer_label + 's selected';
           this.order_customerchosen = res.customers.replace(/,\s*$/, '');
           this.order_customerId = res.jaldee_customers.replace(/,\s*$/, '');
-
         }
-
         break;
       }
- 
       case 'user': {
         if (res === 'All') {
           this.user = 'All';
@@ -476,16 +424,11 @@ user_users;
         } else {
           this.user = res.split(',').length - 1 + ' users selected';
           this.user_id = res.replace(/,\s*$/, '');
-
-
         }
-
         break;
       }
     }
   }
-
-
   setQueueData(res) {
     switch (this.report_type) {
       case 'payment': {
@@ -495,8 +438,6 @@ user_users;
         } else {
           this.payment_queue = res.split(',').length - 1 + ' queues selected';
           this.payment_queue_id = res.replace(/,\s*$/, '');
-
-
         }
         break;
       }
@@ -507,8 +448,6 @@ user_users;
         } else {
           this.donation_queue = res.split(',').length - 1 + ' queues selected';
           this.donation_queue_id = res.replace(/,\s*$/, '');
-
-
         }
         break;
       }
@@ -519,8 +458,6 @@ user_users;
         } else {
           this.appointment_queue = res.split(',').length - 1 + ' queues selected';
           this.appointment_queue_id = res.replace(/,\s*$/, '');
-
-
         }
         break;
       }
@@ -531,22 +468,19 @@ user_users;
         } else {
           this.token_queue = res.split(',').length - 1 + ' queues selected';
           this.token_queue_id = res.replace(/,\s*$/, '');
-
-
         }
-
         break;
       }
     }
   }
   generateReport(reportType) {
     if (reportType === 'payment') {
-      if(this.payment_donationEmail){
+      if (this.payment_donationEmail) {
         const curemail = this.payment_donationEmail.trim();
         const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
         const result2 = pattern2.test(curemail);
         if (!result2) {
-          this.snackbarService.openSnackBar (this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'),{ 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
           return;
         }
       }
@@ -563,12 +497,9 @@ user_users;
           'service': this.payment_service_id,
           'schedule': this.payment_schedule_id,
           'providerOwnConsumerId': this.payment_customerId,
-          'donationEmail':this.payment_donationEmail,
-          'donationPhone':this.payment_donationPhone,
-
+          'donationEmail': this.payment_donationEmail,
+          'donationPhone': this.payment_donationPhone,
         };
-
-
         if (this.payment_paymentMode === 0) {
           delete this.filterparams.paymentMode;
         }
@@ -587,23 +518,16 @@ user_users;
         if (this.payment_transactionType === 0) {
           delete this.filterparams.transactionType;
         }
-
-        // } else if (this.payment_transactionType === 'appointment') {
-        //   delete this.filterparams.queue;
-        // } else if (this.payment_transactionType === 'waitlist') {
-        //   delete this.filterparams.schedule;
-        // }
         if (this.payment_paymentPurpose === 0) {
           delete this.filterparams.paymentPurpose;
         }
         if (this.payment_amount === undefined) {
           delete this.filterparams.amount;
         }
-      
-        if(this.payment_donationEmail===''||this.payment_donationEmail===undefined){
+        if (this.payment_donationEmail === '' || this.payment_donationEmail === undefined) {
           delete this.filterparams.payment_donationEmail;
         }
-        if(this.payment_donationPhone===''||this.payment_donationPhone===undefined){
+        if (this.payment_donationPhone === '' || this.payment_donationPhone === undefined) {
           delete this.filterparams.payment_donationPhone;
         }
         const filter = {};
@@ -613,8 +537,6 @@ user_users;
             filter[key + '-eq'] = this.filterparams[key];
           }
         }
-
-
         if (this.payment_timePeriod === 'DATE_RANGE') {
           filter['paymentOn-ge'] = this.dateformat.transformTofilterDate(this.payment_startDate);
           filter['paymentOn-le'] = this.dateformat.transformTofilterDate(this.payment_endDate);
@@ -622,9 +544,8 @@ user_users;
         if (this.pay_confirm_num) {
           filter['transactionEncId-like'] = 'confirmationNo::' + this.pay_confirm_num;
         }
-        if(this.payment_donationName!==''||this.payment_donationName!==undefined){
-         // delete this.filterparams.payment_donationName;
-         filter['donationName-like']=this.payment_donationName;
+        if (this.payment_donationName !== '' || this.payment_donationName !== undefined) {
+          filter['donationName-like'] = this.payment_donationName;
         }
         const request_payload: any = {};
         request_payload.reportType = this.report_type.toUpperCase();
@@ -634,9 +555,7 @@ user_users;
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-
     } else if (reportType === 'appointment') {
-
       if (this.appointment_timePeriod === 'DATE_RANGE' && (this.appointment_startDate === undefined || this.appointment_endDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -669,7 +588,6 @@ user_users;
         if (this.appointment_customerId === 0) {
           delete this.filterparams.providerOwnConsumerId;
         }
-
         const filter = {};
         for (const key in this.filterparams) {
           if (this.filterparams.hasOwnProperty(key)) {
@@ -693,7 +611,6 @@ user_users;
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-
     } else if (reportType === 'token') {
       if (this.waitlist_timePeriod === 'DATE_RANGE' && (this.waitlist_startDate === undefined || this.waitlist_endDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
@@ -705,7 +622,6 @@ user_users;
           'waitlistStatus': this.waitlist_status,
           'waitlistMode': this.waitlist_mode,
           'waitlistingForId': this.waitlist_customerId
-
         };
         if (!this.waitlist_customerId) {
           delete this.filterparams.waitlistingFor;
@@ -728,7 +644,6 @@ user_users;
         if (this.waitlist_customerId === 0) {
           delete this.filterparams.providerOwnConsumerId;
         }
-
         const filter = {};
         for (const key in this.filterparams) {
           if (this.filterparams.hasOwnProperty(key)) {
@@ -736,7 +651,6 @@ user_users;
             filter[key + '-eq'] = this.filterparams[key];
           }
         }
-
         if (this.waitlist_timePeriod === 'DATE_RANGE') {
           filter['date-ge'] = this.dateformat.transformTofilterDate(this.waitlist_startDate);
           filter['date-le'] = this.dateformat.transformTofilterDate(this.waitlist_endDate);
@@ -749,31 +663,25 @@ user_users;
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-
     } else if (reportType === 'donation') {
       if (this.donation_timePeriod === 'DATE_RANGE' && (this.donation_startDate === undefined || this.donation_endDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
-         let donorName=''
+        let donorName = ''
         this.filterparams = {
-
           'service': this.donation_service_id,
           'donationAmount': this.donation_amount,
-          'donorPhoneNumber':this.donation_donorPhoneNumber
-
+          'donorPhoneNumber': this.donation_donorPhoneNumber
         };
-  
         if (this.donation_service === 'All') {
           delete this.filterparams.service;
         }
         if (this.donation_amount === undefined) {
           delete this.filterparams.amount;
         }
-        if(this.donation_donorPhoneNumber ==''){
+        if (this.donation_donorPhoneNumber == '') {
           delete this.filterparams.donorPhoneNumber;
         }
-       
-
         const filter = {};
         for (const key in this.filterparams) {
           if (this.filterparams.hasOwnProperty(key)) {
@@ -785,24 +693,23 @@ user_users;
           filter['date-ge'] = this.dateformat.transformTofilterDate(this.donation_startDate);
           filter['date-le'] = this.dateformat.transformTofilterDate(this.donation_endDate);
         }
-        if(this.donation_donorFirstName!==''&&this.donation_donorFirstName!==undefined){
-          donorName='firstName::'+this.donation_donorFirstName;
-          if(this.donation_donorLastName!==''&& this.donation_donorLastName!==undefined){
-            donorName= donorName+',lastName::'+this.donation_donorLastName;
+        if (this.donation_donorFirstName !== '' && this.donation_donorFirstName !== undefined) {
+          donorName = 'firstName::' + this.donation_donorFirstName;
+          if (this.donation_donorLastName !== '' && this.donation_donorLastName !== undefined) {
+            donorName = donorName + ',lastName::' + this.donation_donorLastName;
           }
         }
-        if(this.donation_donorFirstName===''||this.donation_donorFirstName===undefined &&this.donation_donorLastName!==''&& this.donation_donorLastName!==undefined ){
-          donorName='lastName::'+this.donation_donorLastName;
+        if (this.donation_donorFirstName === '' || this.donation_donorFirstName === undefined && this.donation_donorLastName !== '' && this.donation_donorLastName !== undefined) {
+          donorName = 'lastName::' + this.donation_donorLastName;
         }
-        this.filterparams['donor']=donorName;
-        if(this.filterparams['donor']==''||this.filterparams['donor']==undefined ){
-          console.log('delete dontion'+this.donation_donorFirstName);
-           delete filter['donor'];
-         }else{
-          filter['donor-like']=donorName;
+        this.filterparams['donor'] = donorName;
+        if (this.filterparams['donor'] == '' || this.filterparams['donor'] == undefined) {
+          console.log('delete dontion' + this.donation_donorFirstName);
           delete filter['donor'];
-         }
-
+        } else {
+          filter['donor-like'] = donorName;
+          delete filter['donor'];
+        }
         const request_payload: any = {};
         request_payload.reportType = this.report_type.toUpperCase();
         request_payload.reportDateCategory = this.donation_timePeriod;
@@ -811,20 +718,15 @@ user_users;
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-
     } else if (reportType === 'order') {
       if (this.order_timePeriod === 'DATE_RANGE' && (this.order_startDate === undefined || this.order_endDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
-
         this.filterparams = {
-
           'orderStatus': this.order_status,
           'homeDelivery': true,
           'storePickup': true,
           'providerOwnConsumerId': this.order_customerId
-
-
         };
         if (this.order_status === 0) {
           delete this.filterparams.orderStatus;
@@ -847,7 +749,6 @@ user_users;
         if (this.donation_amount === undefined) {
           delete this.filterparams.amount;
         }
-
         const filter = {};
         for (const key in this.filterparams) {
           if (this.filterparams.hasOwnProperty(key)) {
@@ -868,20 +769,16 @@ user_users;
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
     }
-    else if(reportType === 'user'){
+    else if (reportType === 'user') {
       if (this.user_timePeriod === 'DATE_RANGE' && (this.user_startDate === undefined || this.user_endDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
         this.filterparams = {
           'user': this.user_id
-
         };
-      
-        if (this.user_id === 0||this.user_id===undefined) {
+        if (this.user_id === 0 || this.user_id === undefined) {
           delete this.filterparams.user;
         }
-       
-
         const filter = {};
         for (const key in this.filterparams) {
           if (this.filterparams.hasOwnProperty(key)) {
@@ -894,23 +791,16 @@ user_users;
           filter['date-le'] = this.dateformat.transformTofilterDate(this.user_endDate);
         }
         if (this.user_timePeriod === 'LAST_THIRTY_DAYS') {
-
           filter['date-ge'] = this.dateformat.transformTofilterDate(new Date(new Date().setDate(new Date().getDate() - 30)))
           filter['date-le'] = this.dateformat.transformTofilterDate(new Date());
         }
         if (this.user_timePeriod === 'LAST_WEEK') {
-
           filter['date-ge'] = this.dateformat.transformTofilterDate(new Date(new Date().setDate(new Date().getDate() - 7)))
           filter['date-le'] = this.dateformat.transformTofilterDate(new Date());
         }
         if (this.user_timePeriod === 'TODAY') {
           filter['date-eq'] = this.dateformat.transformTofilterDate(new Date());
-         
         }
-        // if (this.user_timePeriod === '') {
-        //   filter['date-eq'] = this.dateformat.transformTofilterDate(new Date());
-         
-        // }
         const request_payload: any = {};
         request_payload.reportType = this.report_type.toUpperCase();
         request_payload.reportDateCategory = this.user_timePeriod;
@@ -918,12 +808,10 @@ user_users;
         request_payload.responseType = 'INLINE';
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
+      }
     }
   }
-  }
-
   changeTimePeriod(event) {
-
     if (event.value === 'DATE_RANGE') {
       this.hide_dateRange = false;
     } else {
@@ -943,8 +831,7 @@ user_users;
           }
         );
     });
-
-  } 
+  }
   generateUserReportByCriteria(payload) {
     console.log(payload.filter);
     return new Promise((resolve, reject) => {
@@ -959,51 +846,43 @@ user_users;
           }
         );
     });
-
-  } 
+  }
   redirecToReports() {
     this.router.navigate(['provider', 'reports']);
   }
-
-
-
   passPayloadForReportGeneration(payload) {
     this.btn_disabled = true;
     this.report_loading = true;
-    if(this.report_type==='user'){
+    if (this.report_type === 'user') {
       this.generateUserReportByCriteria(payload).then(res => {
-      this.report_loading = false;
-      this.btn_disabled = false;
-      this.report_data_service.storeSelectedValues(res);
-      this.generateUserReport(res,payload);
-    },
-    (error) => {
-      this.report_loading = false;
-      this.btn_disabled = false;
-      this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-    });
-    }else{
-    this.generateReportByCriteria(payload).then(res => {
-      this.report_loading = false;
-      this.btn_disabled = false;
-      this.report_data_service.storeSelectedValues(res);
-      this.generatedReport(res);
-        
-    },
-      (error) => {
         this.report_loading = false;
         this.btn_disabled = false;
-        this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-      });
-
+        this.report_data_service.storeSelectedValues(res);
+        this.generateUserReport(res, payload);
+      },
+        (error) => {
+          this.report_loading = false;
+          this.btn_disabled = false;
+          this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+        });
+    } else {
+      this.generateReportByCriteria(payload).then(res => {
+        this.report_loading = false;
+        this.btn_disabled = false;
+        this.report_data_service.storeSelectedValues(res);
+        this.generatedReport(res);
+      },
+        (error) => {
+          this.report_loading = false;
+          this.btn_disabled = false;
+          this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+        });
+    }
   }
-}
   goToSelectionPage(type, selected_id) {
     console.log(selected_id);
     this.setSelectedData().then(res => {
-
       this.report_data_service.storeSelectedValues(res);
-
       if (type === 'service') {
         this.router.navigate(['provider', 'reports', 'service'], { queryParams: { report_type: this.report_type, data: selected_id } });
       }
@@ -1021,20 +900,17 @@ user_users;
       }
     });
   }
-
-  generateUserReport(reportData,payload){
+  generateUserReport(reportData, payload) {
     this.setSelectedData().then(res => {
       this.lStorageService.setitemonLocalStorage('report', JSON.stringify(reportData));
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          filter: JSON.stringify(payload),
-      
+          filter: JSON.stringify(payload)
         }
       };
-      this.router.navigate(['provider', 'reports', 'user-report'],navigationExtras);
+      this.router.navigate(['provider', 'reports', 'user-report'], navigationExtras);
     },
     );
-    
   }
   setSelectedData() {
     let selectedValues = {};
@@ -1049,8 +925,6 @@ user_users;
           'dateRange': this.payment_timePeriod,
           'startDate': this.payment_startDate,
           'endDate': this.payment_endDate
-
-
         };
       }
       if (this.report_type === 'token') {
@@ -1061,8 +935,6 @@ user_users;
           'dateRange': this.waitlist_timePeriod,
           'startDate': this.waitlist_startDate,
           'endDate': this.waitlist_endDate
-
-
         };
       }
       if (this.report_type === 'appointment') {
@@ -1073,9 +945,6 @@ user_users;
           'dateRange': this.appointment_timePeriod,
           'startDate': this.appointment_startDate,
           'endDate': this.appointment_endDate
-
-
-
         };
       } if (this.report_type === 'donation') {
         selectedValues = {
@@ -1083,8 +952,6 @@ user_users;
           'dateRange': this.donation_timePeriod,
           'startDate': this.donation_startDate,
           'endDate': this.donation_endDate
-
-
         };
       } if (this.report_type === 'order') {
         selectedValues = {
@@ -1092,8 +959,6 @@ user_users;
           'dateRange': this.order_timePeriod,
           'startDate': this.order_startDate,
           'endDate': this.order_endDate
-
-
         };
       }
       if (this.report_type === 'user') {
@@ -1101,13 +966,10 @@ user_users;
           'dateRange': this.user_timePeriod,
           'startDate': this.user_startDate,
           'endDate': this.user_endDate
-
-
         };
       }
       resolve(selectedValues);
     });
-
   }
   generatedReport(report) {
     this.setSelectedData().then(res => {
@@ -1115,7 +977,5 @@ user_users;
       this.router.navigate(['provider', 'reports', 'generated-report']);
     },
     );
-
   }
-
 }

@@ -1,67 +1,71 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SearchDetailComponent } from './search-detail.component';
-import { SearchDetailRoutingModule } from './search-detail.routing.module';
 import { HeaderModule } from '../../modules/header/header.module';
-import { MaterialModule } from '../../modules/common/material.module';
 import { FormsModule } from '@angular/forms';
 import { RatingStarModule } from '../../modules/ratingstar/ratingstar.module';
 import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 import { PagerModule } from '../../modules/pager/pager.module';
 import { FooterModule } from '../../modules/footer/footer.module';
-import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
-import { Nl2BrPipeModule } from 'nl2br-pipe';
-import { LoadingSpinnerModule } from '../../modules/loading-spinner/loading-spinner.module';
 import { SearchFormModule } from '../search-form/search-form.module';
-import { ConsumerFooterModule } from '../../../ynw_consumer/components/footer/footer.module';
-import { TruncateModule } from '../../pipes/limitTo.module';
 import { MatDialogModule } from '@angular/material/dialog';
-import { NgxQRCodeModule } from 'ngx-qrcode2';
-import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
-import { ShareIconsModule } from 'ngx-sharebuttons/icons';
-import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegeneratordetail.component';
-import { CheckinHistoryListModule } from '../../modules/consumer-checkin-history-list/components/checkin-history-list/checkin-history-list.module';
 import { AddInboxMessagesModule } from '../add-inbox-messages/add-inbox-messages.module';
 import { JDNDetailModule } from '../jdn-detail/jdn-detail.module';
 import { CouponsModule } from '../coupons/coupons.module';
 import { ServiceDetailModule } from '../service-detail/service-detail.module';
 import { LoginModule } from '../login/login.module';
+import { QRCodeGeneratordetailModule } from '../qrcodegenerator/qrcodegeneratordetail.module';
+import { SignupModule } from '../signup/signup.module';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+const routes: Routes = [
+    { path: '', component: SearchDetailComponent },
+    { path: ':id', loadChildren:() => import('../provider-detail/provider-detail.module').then(m=>m.ProviderDetailModule) },
+    { path: ':id/history', loadChildren: () => import('../consumer-waitlist-history/consumer-waitlist-history.module').then(m=>m.ConsumerWaitlistHistoryModule) }
+];
 @NgModule({
     imports: [
-        CommonModule,
-        HeaderModule,
-        MaterialModule,
+        CommonModule,      
         FormsModule,
         RatingStarModule,
         CapitalizeFirstPipeModule,
         PagerModule,
         FooterModule,
-        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
-        Nl2BrPipeModule,
-        CheckinHistoryListModule,
-        SearchDetailRoutingModule,
-        RouterModule,
-        LoadingSpinnerModule,
-        SearchFormModule,
-        ConsumerFooterModule,
-        TruncateModule,
+        [RouterModule.forChild(routes)],
         MatDialogModule,
-        NgxQRCodeModule,
-        ShareButtonsModule,
-        ShareIconsModule,
-        AddInboxMessagesModule,
-        JDNDetailModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatExpansionModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatCheckboxModule,
+        MatSlideToggleModule,
+        MatIconModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatTooltipModule,
+        HeaderModule,
+        SearchFormModule,
         CouponsModule,
         ServiceDetailModule,
-        LoginModule
+        AddInboxMessagesModule,
+        LoginModule,
+        SignupModule,
+        JDNDetailModule,
+        QRCodeGeneratordetailModule
     ],
     declarations: [
-        SearchDetailComponent,
-        QRCodeGeneratordetailComponent
-    ],
-    entryComponents: [
-        QRCodeGeneratordetailComponent
+        SearchDetailComponent
     ]
 })
 

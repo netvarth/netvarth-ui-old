@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormMessageDisplayModule } from '../form-message-display/form-message-display.module';
 import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
-import { AddServiceModule } from '../../../business/modules/settings/general/users/settings/services/addservice/addservice.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,6 +14,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserlistpopupModule } from './userlist/userlistpopup.module';
+import { ServiceqrcodegeneratorModule } from './serviceqrcodegenerator/serviceqrcodegeneratordetail.module';
 
 @NgModule({
     imports: [
@@ -23,7 +23,6 @@ import { UserlistpopupModule } from './userlist/userlistpopup.module';
         FormMessageDisplayModule,
         CommonModule,
         CapitalizeFirstPipeModule,
-        AddServiceModule,
         MatTooltipModule,
         MatSlideToggleModule,
         MatFormFieldModule,
@@ -33,7 +32,9 @@ import { UserlistpopupModule } from './userlist/userlistpopup.module';
         MatCheckboxModule,
         MatButtonModule,
         NgbTimepickerModule,
-        UserlistpopupModule
+        UserlistpopupModule,
+        ServiceqrcodegeneratorModule
+
     ],
     declarations: [
         ServiceComponent

@@ -10,7 +10,7 @@ import { projectConstants } from '../../../../../app/app.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { FormMessageDisplayService } from '../../form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../business/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';

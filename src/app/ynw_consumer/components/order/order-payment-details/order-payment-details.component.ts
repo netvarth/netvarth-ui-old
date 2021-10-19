@@ -14,7 +14,6 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 export class OrderPaymentDetailsComponent implements OnInit ,OnDestroy{
    
   payments: any;
-  breadcrumbs;
   date_cap = Messages.DATE_CAP;
   time_cap = Messages.TIME_CAP;
   refundable_cap = Messages.REFUNDABLE_CAP;
@@ -30,15 +29,6 @@ export class OrderPaymentDetailsComponent implements OnInit ,OnDestroy{
 
   }
   ngOnInit() {
-      this.breadcrumbs = [
-          {
-              title: 'My Jaldee',
-              url: 'consumer'
-          },
-          {
-              title: 'Payment Logs'
-          }
-      ];
       this.getPayments();
   }
   ngOnDestroy(): void {

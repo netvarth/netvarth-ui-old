@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 
 @Component({
   selector: 'app-questionnaire-details',

@@ -1,8 +1,6 @@
 <section class="">
   <div class="card title-gb">
     <h5 class="mgn-up-10">
-      <!-- <button type="button" class="btn default profile-back" (click)="goBack()">
-        <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp; -->
       <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       {{heading}}
     </h5>
@@ -11,100 +9,45 @@
 <section>
   <div class="content loc-list p-checkin ynw-common-form-nm">
     <div class="col-md-12 no-padding-small">
-      <!-- <div class="row"> -->
       <div class="card p0" *ngIf="!showCheckin && !showQuestionnaire">
         <div class="copy locd">
           <div class="lbl col-sm-12 col-md-12 col-lg-12">
-              <h5 class="mgn-up-10" *ngIf="source !== 'waitlist-block'"><b>Find an existing {{customer_label}} and
-                  create {{(showtoken? 'token' :
-                  'check-in')}}</b></h5>
-              <h5 class="mgn-up-10" *ngIf="source === 'waitlist-block'"> <b>Find an existing {{customer_label}}</b></h5>
-                  <div class="input-group mob-container mgn-up-20">
-                  <!-- <mat-label for="phone" class="coloroflabels">Enter {{customer_label | capitalizeFirst}} Phone#</mat-label> -->
-                <ngx-intl-tel-input [cssClass]="'custom'" class="internumbox" [preferredCountries]="preferredCountries"
-                    [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
-                    [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
-                    [maxLength]="15" [phoneValidation]="true"
-                    [selectedCountryISO] = "selectedCountry"
-                    [separateDialCode]="separateDialCode" [numberFormat]="PhoneNumberFormat.National" name="phone"
-                    [(ngModel)]="phone" (keyup)="resetApiErrors()">
-                </ngx-intl-tel-input>
-                <button class="findcolor"
-                (click)="serchCustomers(phone)"><i class="fa fa-search" aria-hidden="true"></i>
-              </button></div>
-                              <!-- <div class="input-group-append"><button class="create_new_button cs-btn bt3"
-                  (click)="serchCustomers(phone)">Find</button></div> -->
-      <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()"class="mgn-up-20">
-        <div class="or-style">OR</div>
-          <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding  mgn-up-20 sc-frm">
-              <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding"> -->
-                  
-               
-                      
-                  <!-- <div class="form-group mgn-up-20"> -->
-                      <div class="input-group mob-container">
-                          <input autocomplete="off"
-                          placeholder="{{customer_label | capitalizeFirst}} Name or ID or Email"
-                          type="text" class="form-control" formControlName="search_input"
-                          (keypress)="findCustomer(searchForm.value, $event)">
-                      <button class="findcolor"
-                          (click)="searchCustomer(searchForm.value)"><i class="fa fa-search p0" aria-hidden="true"></i>
-                        </button>
-                          <!-- <button class="create_new_button cs-btn bt3"
-                          (click)="searchCustomer(searchForm.value)">Find</button> -->
-                      
-                      </div>
-                      <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
-                          <span *ngIf="emptyFielderror" class="sts-msg error">Please enter the
-                              {{customer_label | capitalizeFirst}} ID or Email</span>
-                          <app-field-error-display style="color: #f24949 !important;"
-                              [displayError]="true" *ngIf="create_new" errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list. 
+            <h5 class="mgn-up-10" *ngIf="source !== 'waitlist-block'"><b>Find an existing {{customer_label}} and
+                create {{(showtoken? 'token' :
+                'check-in')}}</b></h5>
+            <h5 class="mgn-up-10" *ngIf="source === 'waitlist-block'"> <b>Find an existing {{customer_label}}</b></h5>
+            <div class="input-group mob-container mgn-up-20">
+              <ngx-intl-tel-input [cssClass]="'custom'" class="internumbox" [preferredCountries]="preferredCountries"
+                [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
+                [maxLength]="15" [phoneValidation]="true" [selectedCountryISO]="selectedCountry"
+                [separateDialCode]="separateDialCode" [numberFormat]="PhoneNumberFormat.National" name="phone"
+                [(ngModel)]="phone" (keyup)="resetApiErrors()">
+              </ngx-intl-tel-input>
+              <button class="findcolor" (click)="serchCustomers(phone)"><i class="fa fa-search" aria-hidden="true"></i>
+              </button>
+            </div>
+            <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()" class="mgn-up-20">
+              <div class="or-style">OR</div>
+              <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding  mgn-up-20 sc-frm">
+                <div class="input-group mob-container">
+                  <input autocomplete="off" placeholder="{{customer_label | capitalizeFirst}} Name or ID or Email"
+                    type="text" class="form-control" formControlName="search_input"
+                    (keypress)="findCustomer(searchForm.value, $event)">
+                  <button class="findcolor" (click)="searchCustomer(searchForm.value)"><i class="fa fa-search p0"
+                      aria-hidden="true"></i>
+                  </button>                
+                </div>
+                <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
+                  <span *ngIf="emptyFielderror" class="sts-msg error">Please enter the
+                    {{customer_label | capitalizeFirst}} ID or Email</span>
+                  <app-field-error-display style="color: #f24949 !important;" [displayError]="true" *ngIf="create_new"
+                    errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list. 
                           Please create {{customer_label}} to take appointment">
-                          </app-field-error-display>
-                      </div>
-                  
-          </div>
-      </form>
-      
-            <!-- <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()">
-              <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 sc-frm">
-                <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                  <div class="mgn-up-10" *ngIf="source !== 'waitlist-block'"> Find an existing {{customer_label}} and
-                    create {{(showtoken? 'token' :
-                    'check-in')}}</div>
-                  <div class="mgn-up-10" *ngIf="source === 'waitlist-block'"> Find an existing {{customer_label}}
-                  </div>
-
-                  <div class="form-group mgn-up-20">
-                    <div class="input-group mob-container">
-                      <input placeholder="{{customer_label | capitalizeFirst}} Phone# or ID or Email" type="text"
-                        class="form-control" formControlName="search_input"
-                        (keypress)="findCustomer(searchForm.value, $event)" autocomplete="off">
-                      <div class="input-group-append"><button class="create_new_button cs-btn bt3"
-                          (click)="searchCustomer(searchForm.value)">Find</button></div>
-                    </div>
-                    <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
-                      <span *ngIf="emptyFielderror" class="sts-msg error">Please enter the
-                        {{customer_label | capitalizeFirst}} Phone# or ID or Email</span>
-                    </div>
-                  </div>
-
-
+                  </app-field-error-display>
                 </div>
               </div>
             </form>
-            <div class="form-group">
-              <mat-label for="phone">Enter your Mobile Number</mat-label>
-            <ngx-intl-tel-input [cssClass]="'custom'" [preferredCountries]="preferredCountries"
-                [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
-                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
-                [maxLength]="15" [phoneValidation]="true"
-                [selectedCountryISO] = "selectedCountry"
-                [separateDialCode]="separateDialCode" [numberFormat]="PhoneNumberFormat.National" name="phone"
-                [(ngModel)]="phone" (keyup)="resetApiErrors()">
-            </ngx-intl-tel-input>
-            <div class="input-group-append"><button class="create_new_button cs-btn bt3"
-              (click)="serchCustomers(phone)">Find</button></div></div> -->
             <div class="clearfix"></div>
             <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding" *ngIf="showBlockHint">
               <table class="table table-head-custom table-head-bg table-borderless table-vertical-center bold">
@@ -279,7 +222,7 @@
                           class="fa phon-icon" aria-hidden="true"></i>
                         <span class="pad-left-5">{{serv.name | capitalizeFirst}}</span>
                       </ng-container>
-                    </span> 
+                    </span>
                     <mat-form-field *ngIf="servicesjson.length > 1">
                       <mat-select placeholder="{{select_service_cap}}" [ngModel]="sel_ser" #servsel
                         (selectionChange)="handleServiceSel(servsel.value)">
@@ -319,20 +262,16 @@
                             <i *ngIf="mode.callingMode === 'WhatsApp'" class="fa wtsapaud-icon wtsap-cal"></i>
                             <i *ngIf="mode.callingMode === 'Phone'" class="fa phon-icon ph-cal" aria-hidden="true"></i>
                           </span>
-                           <input *ngIf="!showInputSection"
-                            (keypress)="isNumeric($event)"
-                            class="form-control change emailPrepay call-mode-ip "
-                            style="width:50px!important;" placeholder="+91"
-                            [(ngModel)]="cuntryCode" autocomplete="off" maxlength="10"
-                            type="text" min="0"> &nbsp;<input *ngIf="!showInputSection"
-                                (keypress)="isNumeric($event)"
-                                class="form-control change emailPrepay call-mode-ip wtsap-ip-wdth"
-                                style="width:120px!important;" placeholder="9955886655"
-                                [(ngModel)]="callingModes" autocomplete="off" maxlength="10"
-                                type="text" min="0">&nbsp;
+                          <input *ngIf="!showInputSection" (keypress)="isNumeric($event)"
+                            class="form-control change emailPrepay call-mode-ip " style="width:50px!important;"
+                            placeholder="+91" [(ngModel)]="cuntryCode" autocomplete="off" maxlength="10" type="text"
+                            min="0"> &nbsp;<input *ngIf="!showInputSection" (keypress)="isNumeric($event)"
+                            class="form-control change emailPrepay call-mode-ip wtsap-ip-wdth"
+                            style="width:120px!important;" placeholder="9955886655" [(ngModel)]="callingModes"
+                            autocomplete="off" maxlength="10" type="text" min="0">&nbsp;
                           <span class="mgn-bt-10 cal-mod-edt custId-flex-form" *ngIf="showInputSection">
                             {{cuntryCode}}{{callingModes}}</span>
-                          <div class="input-group-append mgn-up-2" >
+                          <div class="input-group-append mgn-up-2">
                             <button *ngIf="!showInputSection" class="btn bt1 btn-primary m2" (click)="addCallingmode(i)"
                               type="button">Add</button>
                             <span class="editbt mgn-lt-20" *ngIf="showInputSection"
@@ -625,34 +564,32 @@
           <app-common-innerloading-spinner *ngIf="api_loading_video">
           </app-common-innerloading-spinner>
         </div>
-     
-      <div class="card" *ngIf="showQuestionnaire" [ngClass]="{'highlight': api_loading_video}">
-        <h6 class="mgn-bt-10 quest-head pad-10">
-          Please provide us with a little more information to complete your booking
-        </h6>
-        <app-questionnaire [questionnaireList]="questionnaireList" [questionAnswers]="questionAnswers"
-          [source]="'proCheckin'" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
-        <div
-          class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100">
-          <div class="mr-2" *ngIf="!showBlockHint">
-            <button type="button" class="btn btn-light-primary font-weight-bold" (click)="goBack()">
-              Previous
-            </button>
-          </div>
-          <div>
-            <button type="button" class="btn btn-primary font-weight-bold" (click)="saveCheckin()"
-              [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
-              [class.spinner-center]="api_loading" [disabled]="api_loading" [class.disabled]="api_loading"
-              *ngIf="!showBlockHint">{{showCheckinButtonCaption()}}</button>
-            <button type="button" class="btn btn-primary font-weight-bold" (click)="validateQnr()"
-              [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading" [class.disabled]="api_loading"
-              [class.spinner-center]="api_loading" [disabled]="api_loading" *ngIf="showBlockHint">Confirm</button>
+        <div class="card" *ngIf="showQuestionnaire" [ngClass]="{'highlight': api_loading_video}">
+          <h6 class="mgn-bt-10 quest-head pad-10">
+            Please provide us with a little more information to complete your booking
+          </h6>
+          <app-questionnaire [questionnaireList]="questionnaireList" [questionAnswers]="questionAnswers"
+            [source]="'proCheckin'" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
+          <div
+            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100">
+            <div class="mr-2" *ngIf="!showBlockHint">
+              <button type="button" class="btn btn-light-primary font-weight-bold" (click)="goBack()">
+                Previous
+              </button>
+            </div>
+            <div>
+              <button type="button" class="btn btn-primary font-weight-bold" (click)="saveCheckin()"
+                [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
+                [class.spinner-center]="api_loading" [disabled]="api_loading" [class.disabled]="api_loading"
+                *ngIf="!showBlockHint">{{showCheckinButtonCaption()}}</button>
+              <button type="button" class="btn btn-primary font-weight-bold" (click)="validateQnr()"
+                [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
+                [class.disabled]="api_loading" [class.spinner-center]="api_loading" [disabled]="api_loading"
+                *ngIf="showBlockHint">Confirm</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    
-    
     </div>
     <div class="clearfix"></div>
   </div>

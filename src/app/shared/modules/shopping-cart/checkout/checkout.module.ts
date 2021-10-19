@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatChipsModule } from "@angular/material/chips";
@@ -13,12 +13,16 @@ import { ConsumerJoinModule } from "../../../../ynw_consumer/components/consumer
 import { ConfirmBoxModule } from "../../../../shared/components/confirm-box/confirm-box.module";
 import { ShoppingListUploadModule } from "../../../../shared/components/shoppinglistupload/shoppinglistupload.module";
 import { FormMessageDisplayModule } from "../../form-message-display/form-message-display.module";
+import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { HeaderModule } from "../../header/header.module";
 import { LoadingSpinnerModule } from "../../loading-spinner/loading-spinner.module";
 import { AddAddressModule } from "./add-address/add-address.module";
 import { CheckoutComponent } from "./checkout.component";
-import { JcCouponNoteModule } from "../../../../ynw_provider/components/jc-coupon-note/jc-coupon-note.module";
-
+import { JcCouponNoteModule } from "../../jc-coupon-note/jc-coupon-note.module";
+import { RouterModule, Routes } from "@angular/router";
+const routes: Routes = [
+    {path: '', component: CheckoutComponent}
+]
 @NgModule({
     imports: [
         CommonModule,
@@ -39,7 +43,9 @@ import { JcCouponNoteModule } from "../../../../ynw_provider/components/jc-coupo
         ShoppingListUploadModule,
         LoadingSpinnerModule,
         FormMessageDisplayModule,
-        ConfirmBoxModule
+        ReactiveFormsModule,
+        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
+        [RouterModule.forChild(routes)]
     ],
     exports: [CheckoutComponent],
     declarations: [

@@ -5,7 +5,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
 import { MatRadioModule } from "@angular/material/radio";
 import { RouterModule, Routes } from "@angular/router";
-import { ConfirmBoxModule } from "../../../../../ynw_provider/shared/component/confirm-box/confirm-box.module";
+import { ConfirmBoxModule } from "../../../../shared/confirm-box/confirm-box.module";
 import { JDNComponent } from "./jdn.component";
 const routes: Routes = [
     { path: '', component: JDNComponent },

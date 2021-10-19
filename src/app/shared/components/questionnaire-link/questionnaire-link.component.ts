@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../business/services/provider-services.service';
 import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import { SharedFunctions } from '../../functions/shared-functions';

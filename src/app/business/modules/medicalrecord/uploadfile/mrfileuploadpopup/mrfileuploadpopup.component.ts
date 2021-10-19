@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { MedicalrecordService } from '../../medicalrecord.service';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../services/provider-services.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';

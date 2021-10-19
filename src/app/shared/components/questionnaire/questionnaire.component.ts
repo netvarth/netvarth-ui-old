@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../business/services/provider-services.service';
 import { SharedServices } from '../../services/shared-services';
 import { SnackbarService } from '../../services/snackbar.service';
 import { WordProcessor } from '../../services/word-processor.service';

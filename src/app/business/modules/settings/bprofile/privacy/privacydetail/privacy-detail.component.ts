@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../../app.component';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
@@ -52,23 +52,7 @@ export class PrivacyDetailComponent implements OnInit {
   privacypermissiontxt = projectConstants.PRIVACY_PERMISSIONS;
   tooltiphone = projectConstants.TOOLTIP_PRIVACYPHONE;
   tooltemail = projectConstants.TOOLTIP_PRIVACYEMAIL;
- 
   loadData: ArrayBuffer;
-  breadcrumbs_init = [
-    {
-      title: 'Settings',
-      url: '/provider/settings'
-    },
-    {
-      title: 'Jaldee Profile',
-      url: '/provider/settings/bprofile'
-    },
-    {
-      title: 'Privacy',
-      url: '/provider/settings/bprofile/privacy'
-    }
-  ];
-  breadcrumbs = this.breadcrumbs_init;
   customer_label: any;
   privacy_id: any;
   action: string;
@@ -102,14 +86,6 @@ export class PrivacyDetailComponent implements OnInit {
             this.curid = this.data.editindx;
           } else {
             this.curid = -1;
-            const breadcrumbs = [];
-            this.breadcrumbs_init.map((e) => {
-              breadcrumbs.push(e);
-            });
-            breadcrumbs.push({
-              title: 'Add'
-            });
-            this.breadcrumbs = breadcrumbs;
           }
           this.curtype = this.data.curtype;
           this.loadData = this.data;
@@ -119,14 +95,6 @@ export class PrivacyDetailComponent implements OnInit {
               this.phonepermission = 'all';
             } else {
               this.edit_ph_id = this.bProfile.phoneNumbers[this.curid].instance;
-              const breadcrumbs = [];
-              this.breadcrumbs_init.map((e) => {
-                breadcrumbs.push(e);
-              });
-              breadcrumbs.push({
-                title: this.edit_ph_id
-              });
-              this.breadcrumbs = breadcrumbs;
               this.phonelabel = this.bProfile.phoneNumbers[this.curid].label;
               this.phonenumber = this.bProfile.phoneNumbers[this.curid].instance;
               this.phonepermission = this.bProfile.phoneNumbers[this.curid].permission;
@@ -149,14 +117,6 @@ export class PrivacyDetailComponent implements OnInit {
               this.emailpermission = 'all';
             } else {
               this.edit_mail_id = this.bProfile.emails[this.curid].instance;
-              const breadcrumbs = [];
-              this.breadcrumbs_init.map((e) => {
-                breadcrumbs.push(e);
-              });
-              breadcrumbs.push({
-                title: this.edit_mail_id
-              });
-              this.breadcrumbs = breadcrumbs;
               this.emaillabel = this.bProfile.emails[this.curid].label;
               this.emailemailid = this.bProfile.emails[this.curid].instance;
               this.emailpermission = this.bProfile.emails[this.curid].permission;

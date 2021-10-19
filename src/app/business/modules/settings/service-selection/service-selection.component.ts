@@ -5,7 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { SelectionService } from '../../../../shared/services/selectionService';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';

@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSelect } from '@angular/material/select';
 import { takeUntil, startWith, map } from 'rxjs/operators';
@@ -90,21 +90,6 @@ export class DisplayboardDetailComponent implements OnInit {
     boardLayoutFields = {};
     boardRows = 1;
     boardCols = 1;
-    breadcrumbs_init = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: Messages.WAITLIST_MANAGE_CAP,
-            url: '/provider/settings/q-manager'
-        },
-        {
-            title: 'QBoard',
-            url: '/provider/settings/q-manager/displayboards'
-        }
-    ];
-    breadcrumbs = this.breadcrumbs_init;
     actionparam = 'show';
     qsetAction;
     qsetId;
@@ -143,15 +128,6 @@ export class DisplayboardDetailComponent implements OnInit {
                 this.layout_id = qparams.id;
                 if (this.layout_id) {
                     this.editLayoutbyId(qparams.id);
-                } else {
-                    const breadcrumbs = [];
-                    this.breadcrumbs_init.map((e) => {
-                        breadcrumbs.push(e);
-                    });
-                    breadcrumbs.push({
-                        title: 'Add'
-                    });
-                    this.breadcrumbs = breadcrumbs;
                 }
             });
     }
@@ -249,14 +225,6 @@ export class DisplayboardDetailComponent implements OnInit {
             this.layoutData = data;
             this.layout = this.getLayout(this.layoutData.layout);
             this.displayBoardData = data;
-            const breadcrumbs = [];
-            this.breadcrumbs_init.map((e) => {
-                breadcrumbs.push(e);
-            });
-            breadcrumbs.push({
-                title: this.layoutData.displayName
-            });
-            this.breadcrumbs = breadcrumbs;
             this.name = this.layoutData.name;
             this.displayName = this.layoutData.displayName;
             this.serviceRoom = this.layoutData.serviceRoom;

@@ -6,7 +6,7 @@ import { FormMessageDisplayService } from '../../../../shared/modules/form-messa
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import * as moment from 'moment';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Location } from '@angular/common';
@@ -181,28 +181,6 @@ export class CustomerSearchComponent implements OnInit {
         base64: [],
         caption: []
     };
-    // breadcrumbs_init = [
-    //     // {
-    //     //     title: 'Check-ins',
-    //     //     url: 'provider/check-ins'
-    //     // },
-    // ];
-    breadcrumbs_init = [
-        // {
-        //     title: 'Check-ins',
-        //     url: 'provider/check-ins'
-        // },
-        {
-            title: 'Customers',
-            url: 'provider/customers'
-        },
-        {
-            title: 'Add'
-        }
-    ];
-    breadcrumbs = this.breadcrumbs_init;
-    // = this.breadcrumbs_init;
-    breadcrumb_moreoptions: any = [];
     searchForm: FormGroup;
     selectedMode: any = 'phone';
     customer_label = '';
@@ -277,14 +255,6 @@ export class CustomerSearchComponent implements OnInit {
             this.customerId = qparams.id;
             if (this.customerId) {
                 if (this.customerId === 'add') {
-                    const breadcrumbs = [];
-                    this.breadcrumbs_init.map((e) => {
-                        breadcrumbs.push(e);
-                    });
-                    breadcrumbs.push({
-                        title: 'Add'
-                    });
-                    this.breadcrumbs = breadcrumbs;
                     this.action = 'add';
                     this.createForm();
                 } else {
@@ -295,43 +265,16 @@ export class CustomerSearchComponent implements OnInit {
                                 (customer) => {
                                     this.customer = customer;
                                     this.customerName = this.customer[0].firstName;
-                                    if (this.action === 'edit') {
-                                        const breadcrumbs = [];
-                                        this.breadcrumbs_init.map((e) => {
-                                            breadcrumbs.push(e);
-                                        });
-                                        breadcrumbs.push({
-                                            title: this.customerName
-                                        });
-                                        this.breadcrumbs = breadcrumbs;
+                                    if (this.action === 'edit') {                                        
                                         this.createForm();
-                                    } else if (this.action === 'view') {
-                                        const breadcrumbs = [];
-                                        this.breadcrumbs_init.map((e) => {
-                                            breadcrumbs.push(e);
-                                        });
-                                        breadcrumbs.push({
-                                            title: this.customerName
-                                        });
-                                        this.breadcrumbs = breadcrumbs;
                                     }
                                 }
                             );
                         }
                     );
                 }
-            }
-            // if (qparams.source) {
-            //     this.qParams['source'] = qparams.source;
-            // }
-            this.phoneNo = qparams.phoneNo;
-            // if (qparams.appt) {
-
-            // }
-            // this.qParams = qparams;
-            // if ((qparams.appt && !qparams.source) || (qparams.appt && qparams.source && qparams.source !== 'clist')) {
-            //     this.appt = qparams.appt;
-            // }
+            }           
+            this.phoneNo = qparams.phoneNo;          
         });
         this.activated_route.queryParams.subscribe(qparams => {
             this.source = qparams.source;
@@ -353,35 +296,11 @@ export class CustomerSearchComponent implements OnInit {
         this.createForm();
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.api_loading = false;
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-        this.get_token_cap = Messages.GET_TOKEN;
-        const breadcrumbs = [
-            {
-                title: this.wordProcessor.firstToUpper(this.customer_label) + 's',
-                url: 'provider/customers'
-            },
-            {
-                title: 'Find'
-            }
-        ];
+        this.get_token_cap = Messages.GET_TOKEN;        
         this.loading = true;
-        this.getGlobalSettingsStatus();
-        this.breadcrumbs = [{
-            title: this.wordProcessor.firstToUpper(this.customer_label) + 's',
-            url: 'provider/customers'
-        },
-        {
-            title: 'Add'
-        }
-        ];
-        // this.breadcrumbs_init.map((e) => {
-        //     breadcrumbs.push(e);
-        // });
-        // breadcrumbs.push(
-        // );
-        this.breadcrumbs = breadcrumbs;
+        this.getGlobalSettingsStatus();        
     }
     getGlobalSettingsStatus() {
         this.provider_services.getGlobalSettings().subscribe(

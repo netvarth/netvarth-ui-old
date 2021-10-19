@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { ProviderServices } from '../../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../../services/provider-services.service';
 import { projectConstantsLocal } from '../../../../../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../../shared/services/word-processor.service';

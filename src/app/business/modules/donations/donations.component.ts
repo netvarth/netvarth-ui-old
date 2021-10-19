@@ -1,12 +1,12 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { projectConstants } from '../../../app.component';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../services/provider-services.service';
 import { Router } from '@angular/router';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from '../../functions/provider-shared-functions';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
@@ -31,13 +31,6 @@ export class DonationsComponent implements OnInit {
     page: 1
   }; // same in resetFilter Fn
   domain;
-  breadcrumb_moreoptions: any = [];
-  breadcrumbs_init = [
-    {
-      title: 'Donations'
-    }
-  ];
-  breadcrumbs = this.breadcrumbs_init;
   pagination: any = {
     startpageval: 1,
     totalCnt: 0,
@@ -50,7 +43,7 @@ export class DonationsComponent implements OnInit {
   loadComplete = false;
   minday = new Date(2015, 0, 1);
   maxday = new Date();
-  
+
   tooltipcls = projectConstants.TOOLTIP_CLS;
   date_cap = Messages.DATE_CAP;
   amount_cap = Messages.AMOUNT_CAP;
@@ -88,16 +81,10 @@ export class DonationsComponent implements OnInit {
     private groupService: GroupStorageService,
     private dateTimeProcessor: DateTimeProcessor,
     private wordProcessor: WordProcessor) {
-      this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
-  this.filtericonclearTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
+    this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
+    this.filtericonclearTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.onResize();
-    // this.breadcrumbs_init = [
-    //     {
-    //         title: this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1).toLowerCase() + 's'
-    //     }
-    // ];
-    // this.breadcrumbs = this.breadcrumbs_init;
   }
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -117,7 +104,6 @@ export class DonationsComponent implements OnInit {
     this.domain = user.sector;
     this.getServiceList();
     this.getLocationList();
-    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
   }
   filterClicked(type) {
     this.filters[type] = !this.filters[type];

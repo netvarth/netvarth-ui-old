@@ -25,7 +25,6 @@ import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { JaldeeTimeService } from '../../services/jaldee-time-service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
-// import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonType, ButtonsStrategy } from 'angular-modal-gallery';
 
 @Component({
   selector: 'app-search-detail',
@@ -563,11 +562,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           this.refinedExists = true;
           if (this.check_QuerystrinfieldexistsinArray(sufield) === -1) {
             this.querystringrefineretain_arr[orgfield] = obj[ufield].split('~'); // split values based on delimiter to an array
-            // if (orgfield === 'ynw_verified_level') {
-            //   for (let jjj = 0; jjj < this.querystringrefineretain_arr[orgfield].length; jjj++) {
-            //     this.querystringrefineretain_arr[orgfield][jjj] = Number(this.querystringrefineretain_arr[orgfield][jjj]);
-            //   }
-            // }
           }
         }
       }
@@ -901,30 +895,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
               let schedule_arr = [];
               let locationcnt = 0;
               for (let i = 0; i < this.search_data.hits.hit.length; i++) {
-                // this.search_data.hits.hit[i].fields.image_list_popup = [];
-                // if ((this.search_data.hits.hit[i].fields.gallery_thumb_nails && this.search_data.hits.hit[i].fields.gallery_thumb_nails.length > 0) ||
-                //   this.search_data.hits.hit[i].fields.logo) {
-                //   let indxval = 0;
-                //   if (this.search_data.hits.hit[i].fields.logo) {
-                //     const imgobj = new Image(
-                //       1,
-                //       { // modal
-                //         img: this.search_data.hits.hit[i].fields.logo
-                //       });
-                //     this.search_data.hits.hit[i].fields.image_list_popup.push(imgobj);
-                //     indxval = 1;
-                //   }
-                //   if (this.search_data.hits.hit[i].fields.gallery_thumb_nails && this.search_data.hits.hit[i].fields.gallery_thumb_nails.length > 0) {
-                //   for (let j = 0; j < this.search_data.hits.hit[i].fields.gallery_thumb_nails.length; j++) {
-                //     const imgobj = new Image(
-                //       j + 2,
-                //       { // modal
-                //         img: this.search_data.hits.hit[i].fields.gallery_thumb_nails[j]
-                //       });
-                //     this.search_data.hits.hit[i].fields.image_list_popup.push(imgobj);
-                //   }
-                // }
-                // }
                 this.account_type = this.search_data.hits.hit[i].fields.account_type;
                 if (this.search_data.hits.hit[i].fields.account_type === '0' && this.search_data.hits.hit[i].fields.providers && this.search_data.hits.hit[i].fields.providers.length > 0) {
                   this.search_data.hits.hit[i].fields.userCount = this.search_data.hits.hit[i].fields.providers.length;
@@ -1059,17 +1029,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             });
         });
     }
-
-
   }
-  // private showinKm(miles) {
-  //   const km = 1.6 * miles;
-  //   if (km < 1) {
-  //     return '<1 km';
-  //   } else {
-  //     return km.toFixed(2) + ' km';
-  //   }
-  // }
+
   getApptTime(provids) {
     if (provids.length > 0) {
       const post_provids: any = [];
@@ -1757,17 +1718,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     }
   }
   SignupforClaimmable(passData) {
-    // this.claimdialogRef = this.dialog.open(SignUpComponent, {
-    //   width: '50%',
-    //   panelClass: ['signupmainclass', 'popup-class'],
-    //   disableClose: true,
-    //   data: {
-    //     is_provider: 'true',
-    //     claimData: passData
-    //   }
-    // });
-    // this.claimdialogRef.afterClosed().subscribe(result => {
-    // });
     this.router.navigate(['business', 'signup'], { queryParams: { claimable: true, phoneNo: passData.phoneNo, accountId: passData.accountId, sector: passData.sector, subSector: passData.subSector, firstName: passData.firstName, lastName: passData.lastName } });
   }
 
@@ -1802,7 +1752,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     }
   }
   doSignup(state, passParam?) {
-    // this.api_loading = false;
     const dialogRef = this.dialog.open(SignUpComponent, {
       width: '50%',
       panelClass: ['signupmainclass', 'popup-class'],
@@ -1834,7 +1783,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     });
   }
   doLogin(state, origin?, passParam?) {
-    // this.snackbarService.openSnackBar('You need to login to check in');
     const current_provider = passParam['current_provider'];
     let is_test_account = null;
     if (current_provider) {
@@ -1895,31 +1843,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
-
-    // const navigationExtras: NavigationExtras = {
-    //   queryParams: {
-    //     loc_id: locid,
-    //     sel_date: curdate,
-    //     cur: this.changedate_req,
-    //     unique_id: this.provider_id,
-    //     account_id: this.provider_bussiness_id
-    //    }
-
-
-    // this.checkindialogRef = this.dialog.open(CheckInComponent, {
-    //   width: '50%',
-    //   panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
-    //   disableClose: true,
-    //   data: {
-    //     type: origin,
-    //     is_provider: this.checkProvider(origin),
-    //     moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 },
-    //     srchprovider: this.current_provider,
-    //     datechangereq: this.changedate_req
-    //   }
-    // });
-    // this.checkindialogRef.afterClosed().subscribe(result => {
-    // });
   }
 
   showAppointment(origin?) {
@@ -1943,20 +1866,11 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
   providerDetClicked(obj) {
     if (obj && obj.fields.unique_id !== undefined) {
-      // const arr = obj.id.split('-');
       const providforDetails = obj.fields.unique_id;
       const locId = obj.fields.location_id1;
       // check whether logged in as consumer
       this.groupService.setitemToGroupStorage('sctop', this.scrolltop);
-      // if (this.shared_functions.checkLogin()) {
-      // const ctype = this.shared_functions.isBusinessOwner('returntyp');
-      // if (ctype === 'consumer') {
       this.showProviderDetails(providforDetails, locId);
-      // }
-      // } else { // show consumer login
-      //   const passParam = { callback: 'providerdetail', providerId: providforDetails, current_provider: obj, locId: locId };
-      //   this.doLogin('', 'consumer', passParam);
-      // }
     }
   }
   showProviderDetails(provid, locId) {
@@ -2112,11 +2026,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         this.btn_clicked = false;
       }
     } else {
-      // const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
-      // this.shared_functions.getS3Url('provider')
-      //   .then(
-      //     res => {
-      // const s3url = res;
       this.subs.sink = this.s3Processor.getJsonsbyTypes(s3id,
         null, 'services').subscribe(
           (accountS3s) => {
@@ -2161,71 +2070,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             this.btn_clicked = false;
           }
         );
-      // this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'services', UTCstring)
-      //   .subscribe(services => {
-      //     let servicesList: any = [];
-      //     servicesList = services;
-
-      //     if (origin === 'serviceClick' || origin === 'donation') {
-      //       for (let i = 0; i < servicesList.length; i++) {
-      //         if (servicesList[i].departmentId) {
-      //           for (let j = 0; j < servicesList[i].services.length; j++) {
-      //             if (servicesList[i].services[j].name === name) {
-      //               selected_service = servicesList[i].services[j];
-      //               break;
-      //             }
-      //           }
-      //         } else {
-      //           if (servicesList[i].name === name) {
-      //             selected_service = servicesList[i];
-      //             break;
-      //           }
-      //         }
-      //       }
-      //     }
-      //     if (origin === 'deptServiceClick') {
-      //       for (let i = 0; i < servicesList.length; i++) {
-      //         for (let j = 0; j < servicesList[i].services.length; j++) {
-      //           if (servicesList[i].services[j].name === name) {
-      //             selected_service = servicesList[i].services[j];
-      //             break;
-      //           }
-      //         }
-      //       }
-      //     }
-      //     if (selected_service !== null) {
-      //       this.showServiceDetail(selected_service, busname);
-      //     } else {
-      //       this.btn_clicked = false;
-      //     }
-      //   },
-      //     error => {
-      //       this.btn_clicked = false;
-      //     });
-      // });
     }
   }
-  // departmentClicked(deptName, searchData) {
-  //   this.showServices = true;
-  //   const s3id = searchData.fields.unique_id;
-  //   const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
-  //   this.shared_functions.getS3Url('provider')
-  //     .then(
-  //       res => {
-  //         const s3url = res;
-  //         this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'services', UTCstring)
-  //           .subscribe(services => {
-  //             let deptList: any = [];
-  //             deptList = services;
-  //             for (let i = 0; i < deptList.length; i++) {
-  //               if (deptList[i].departmentName === deptName) {
-  //                 this.departServiceList = deptList[i].services;
-  //                 this.selectedDepartment = deptName;
-  //               }
-  //             }
-  //           });
-  //       });
-  // }
   showServiceDetail(serv, busname) {
     let servData;
     if (serv.serviceType === 'donationService') {
@@ -2254,13 +2100,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     const couponObject: any = {};
     this.btn_clicked = true;
     const s3id = obj.fields.unique_id;
-    // const busname = obj.fields.title;
-    // const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
-    // this.shared_functions.getS3Url('provider')
-    //   .then(
-    //     res => {
-    //       const s3url = res;
-
     this.subs.sink = this.s3Processor.getJsonsbyTypes(s3id,
       null, 'coupon,providerCoupon').subscribe(
         (accountS3s) => {
@@ -2284,89 +2123,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           });
 
         });
-
-    // const arr = [
-    //   new Promise((resolve, reject) => {
-    //     let jc_coupons:any=[];
-    //     if(obj.fields.coupon_enabled && obj.fields.coupon_enabled!==0){
-
-
-
-
-    // this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'coupon', UTCstring)
-    // .subscribe(couponsList => {
-    //   jc_coupons=couponsList;
-    // //  couponArray.splice(0,0, {'JC':jc_coupons});
-
-
-    // } else{
-    //   resolve(jc_coupons);
-    // }
-    // }),
-    //     new Promise((resolve, reject) => {
-    //       let own_coupons:any=[];
-    //       if(obj.fields.provider_coupon_enabled &&obj.fields.provider_coupon_enabled!==0){
-    //         this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'providerCoupon', UTCstring)
-    //         .subscribe(couponsList => {
-    //           own_coupons=couponsList;
-    //           //couponArray.splice(0,1,{'OWN':own_coupons});
-    //           resolve(own_coupons);
-    //         },
-    //         error=>{
-    //           reject();
-    //         });
-    //       }else{
-    //        resolve(own_coupons);
-    //       }
-    //     })
-    //  ];
-    //  Promise.all([arr[0], arr[1]]).then((resp) => {
-    //   couponObject.JC=resp[0];
-    //   couponObject.OWN=resp[1];
-
-
-    // this.coupondialogRef = this.dialog.open(CouponsComponent, {
-    //   width: '60%',
-    //   panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-    //   disableClose: true,
-    //   data: {
-    //     couponsList: couponObject,
-    //     type: type
-    //   }
-    // });
-    // this.coupondialogRef.afterClosed().subscribe(result => {
-    //   this.btn_clicked = false;
-    // });
-    //  });
-
-    //   this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'coupon', UTCstring)
-    //     .subscribe(couponsList => {
-    //       this.coupondialogRef = this.dialog.open(CouponsComponent, {
-    //         width: '60%',
-    //         panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-    //         disableClose: true,
-    //         data: {
-    //           couponsList: couponsList,
-    //           type: type
-    //         }
-    //       });
-    //       this.coupondialogRef.afterClosed().subscribe(result => {
-    //         this.btn_clicked = false;
-    //       });
-    //     }, error => {
-    //       this.btn_clicked = false;
-    //     });
-    // });
-    // });
   }
   openJdn(obj) {
     const s3id = obj.fields.unique_id;
-    // const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
-    // this.shared_functions.getS3Url('provider')
-    //   .then(
-    //     res => {
-    //       const s3url = res;
-
     this.subs.sink = this.s3Processor.getJsonsbyTypes(s3id,
       null, 'jaldeediscount').subscribe(
         (accountS3s) => {
@@ -2383,22 +2142,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             });
           }
         });
-
-
-    // this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'jaldeediscount', UTCstring)
-    //   .subscribe(jdnList => {
-    //   this.jdndialogRef = this.dialog.open(JdnComponent, {
-    //     width: '60%',
-    //     panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-    //     disableClose: true,
-    //     data: {
-    //       jdnList: jdnList
-    //     }
-    //   });
-    //   this.jdndialogRef.afterClosed().subscribe(result => {
-    //   });
-    // });
-    // });
   }
   payClicked(search_result) {
     this.current_provider = search_result;
@@ -2410,9 +2153,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       const passParam = { callback: '', current_provider: search_result };
       this.doLogin('donation', 'consumer', passParam);
     }
-
-    // const ids = search_result.id.split('-');
-    // this.showDonation(ids[1], false, 'consumer', search_result.fields.unique_id, ids[0]);
   }
   showDonation(locid, curdate, origin, unique_id, accountId) {
     const navigationExtras: NavigationExtras = {
@@ -2426,20 +2166,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     };
     this.routerobj.navigate(['consumer', 'donations', 'new'], navigationExtras);
   }
-  // openImageModalRow(image: Image, galleryList) {
-  //   const index: number = this.getCurrentIndexCustomLayout(image, galleryList);
-  //   this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
-  // }
-  // private getCurrentIndexCustomLayout(image, images): number {
-  //   for (let i = 0; i < images.length; i++) {
-  //     if (images[i].modal.img === image) {
-  //       return i;
-  //     }
-  //   }
-  // }
-  // onButtonBeforeHook() {
-  // }
-  // onButtonAfterHook() { }
   showButton(searchData) {
     if (searchData.fields.online_profile === '1') {
       if (!searchData.fields.waitlist && !searchData.fields.apptAllowed
@@ -2501,4 +2227,3 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     return (verifiedLevel + jDN + stars);
   }
 }
-

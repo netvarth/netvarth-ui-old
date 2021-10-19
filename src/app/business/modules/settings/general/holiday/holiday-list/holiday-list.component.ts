@@ -6,7 +6,7 @@ import { projectConstants } from '../../../../../../app.component';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
 import { Messages } from '../../../../../../shared/constants/project-messages';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
@@ -28,19 +28,6 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     breadcrumb_moreoptions: any = [];
     domain;
     src: any;
-    breadcrumbs = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: 'Jaldee Profile',
-            url: '/provider/settings/bprofile'
-        },
-        {
-            title: 'Languages Known'
-        }
-    ];
     constructor(
         private provider_services: ProviderServices,
         private routerobj: Router,

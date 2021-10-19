@@ -1,48 +1,23 @@
 import { NgModule } from '@angular/core';
-
-import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
-import { CommonModule } from '@angular/common';
-import { SharedModule } from '../../../shared/modules/common/shared.module';
-import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
-
-import { LoadingSpinnerModule } from '../../../shared/modules/loading-spinner/loading-spinner.module';
-import { HeaderModule } from '../../../shared/modules/header/header.module';
-import { ConsumerOrderRoutingModule } from './order.routing.module';
-import { MaterialModule } from '../../../shared/modules/common/material.module';
-import { ItemDetailsComponent } from './item-details/item-details.component';
-import { OwlModule } from 'ngx-owl-carousel';
-import { OrderHistoryComponent } from './order-history/order-history.component';
-import { OrderBillComponent } from './order-bill/order-bill.component';
-import { OrderPaymentDetailsComponent } from './order-payment-details/order-payment-details.component';
-import { MatStepperModule } from '@angular/material/stepper';
-import { PaymentComponent } from './payment/payment.component';
-import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
-import { AddInboxMessagesModule } from '../../../shared/components/add-inbox-messages/add-inbox-messages.module';
+import { RouterModule, Routes } from '@angular/router';
+import { OrderComponent } from './order.component';
+const routes: Routes = [
+    { path: '', component: OrderComponent },
+    { path: 'item-details', loadChildren: () => import('./item-details/item-details.module').then(m => m.ItemDetailsModule) },
+    { path: 'order-history', loadChildren: () => import('./order-history/order-history.module').then(m => m.OrderHistoryModule) },
+    { path: 'order-payments', loadChildren: () => import('./order-payment-details/order-payment-details.module').then(m => m.OrderPaymentDetailsModule) },
+    { path: 'order-bill', loadChildren: () => import('./order-bill/order-bill.module').then(m => m.OrderBillModule) },
+    { path: 'payment', loadChildren: () => import('./payment/payment.module').then(m => m.PaymentModule) }
+  ];
 @NgModule({
     declarations: [
-        ItemDetailsComponent,
-        OrderHistoryComponent,
-        OrderBillComponent,
-        OrderPaymentDetailsComponent,
-        PaymentComponent
-
+       OrderComponent
     ],
     imports: [
-        ConsumerOrderRoutingModule,
-        BreadCrumbModule,
-        CommonModule,
-        SharedModule,
-        CapitalizeFirstPipeModule,
-        LoadingSpinnerModule,
-        HeaderModule,
-        MaterialModule,
-        OwlModule,
-        MatStepperModule,
-        AddInboxMessagesModule,
-        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true })
+        [RouterModule.forChild(routes)]
     ],
     exports: [
-
+        OrderComponent
     ]
 })
 export class ConsumerOrderModule { }

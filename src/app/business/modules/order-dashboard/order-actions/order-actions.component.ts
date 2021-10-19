@@ -5,11 +5,11 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
-import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
-import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
-import { VoiceConfirmComponent } from '../../customers/video-confirm/voice-confirm.component';
+import { ProviderSharedFuctions } from '../../../functions/provider-shared-functions';
+import { ConfirmBoxComponent } from '../../../shared/confirm-box/confirm-box.component';
+import { VoiceConfirmComponent } from '../../customers/voice-confirm/voice-confirm.component';
 
 @Component({
   selector: 'app-order-actions',

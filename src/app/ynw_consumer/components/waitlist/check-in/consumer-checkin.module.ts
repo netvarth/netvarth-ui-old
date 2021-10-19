@@ -9,7 +9,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RouterModule, Routes } from '@angular/router';
 import { ServiceDetailModule } from '../../../../shared/components/service-detail/service-detail.module';
-import { JcCouponNoteModule } from '../../../../ynw_provider/components/jc-coupon-note/jc-coupon-note.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
+import { JcCouponNoteModule } from '../../../../shared/modules/jc-coupon-note/jc-coupon-note.module';
 const routes: Routes = [
     { path: '', component: ConsumerCheckinComponent},
     { path: 'payment/:id', loadChildren: ()=> import('./payment/payment.module').then(m=>m.ConsumerCheckinPaymentModule) },
@@ -31,6 +33,8 @@ const routes: Routes = [
         MatCheckboxModule,
         ServiceDetailModule,
         JcCouponNoteModule,
+        ReactiveFormsModule,
+        LoadingSpinnerModule,
         [RouterModule.forChild(routes)]
     ],
     schemas: [

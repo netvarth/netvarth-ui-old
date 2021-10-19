@@ -4,9 +4,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
-import { ServiceSelectionRoutingModule } from './service-selection-routing.module';
+import { RouterModule, Routes } from '@angular/router';
 import { ServiceSelectionComponent } from './service-selection.component';
-
+const routes: Routes = [
+    { path: '', component: ServiceSelectionComponent }
+];
 @NgModule({
     imports: [
         MatTableModule,
@@ -14,7 +16,7 @@ import { ServiceSelectionComponent } from './service-selection.component';
         MatProgressSpinnerModule,
         CommonModule,
         MatFormFieldModule,
-        ServiceSelectionRoutingModule
+        [RouterModule.forChild(routes)]
     ],
     declarations: [
         ServiceSelectionComponent

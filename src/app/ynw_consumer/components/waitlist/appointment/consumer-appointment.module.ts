@@ -13,7 +13,7 @@ import { VirtualFieldsModule } from '../../virtualfields/virtualfields.module';
 import { ConsumerEmailModule } from '../../../../ynw_consumer/shared/component/consumer-email/consumer-email.module';
 import { RouterModule, Routes } from '@angular/router';
 import { ServiceDetailModule } from '../../../../shared/components/service-detail/service-detail.module';
-import { JcCouponNoteModule } from '../../../../ynw_provider/components/jc-coupon-note/jc-coupon-note.module';
+import { JcCouponNoteModule } from '../../../../shared/modules/jc-coupon-note/jc-coupon-note.module';
 const routes: Routes = [
     { path: '', component: ConsumerAppointmentComponent},
     { path: 'payment/:id',loadChildren: ()=>import('./payment/payment.module').then(m=>m.ConsumerApptPaymentModule) },

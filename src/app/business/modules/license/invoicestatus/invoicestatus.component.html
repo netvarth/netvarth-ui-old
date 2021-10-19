@@ -8,7 +8,6 @@
     </div>
 </section>
 <section>
-
     <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
         <div class="col-md-12 no-padding-small">
             <div class="row">
@@ -26,7 +25,6 @@
                                             <tr>
                                                 <td>
                                                     <span>
-
                                                         <i class="icon-filter-one" (click)="showFilterSidebar()"
                                                             [matTooltipClass]="tooltipcls"
                                                             [matTooltip]="'Use filters to find specific data'"></i>
@@ -35,6 +33,7 @@
                                             </tr>
                                         </table>
                                     </th>
+                                </tr>
                             </thead>
                             <tbody>
 
@@ -47,12 +46,10 @@
                                     <td class="rupee-font">&#8377;{{status.amount}}</td>
                                     <td>{{status.licensePaymentStatus}}</td>
                                     <td>
-                                        <button
-                                            *ngIf="status.licensePaymentStatus === 'Paid'"
-                                            type="button" (click)="jaldeeStatement(status)">Jaldee Invoice</button>
-                                            <button
-                                            *ngIf="status.licensePaymentStatus === 'NotPaid'"
-                                            type="button" (click)="jaldeeStatement(status)">Jaldee Statement</button>
+                                        <button *ngIf="status.licensePaymentStatus === 'Paid'" type="button"
+                                            (click)="jaldeeStatement(status)">Jaldee Invoice</button>
+                                        <button *ngIf="status.licensePaymentStatus === 'NotPaid'" type="button"
+                                            (click)="jaldeeStatement(status)">Jaldee Statement</button>
                                     </td>
                                 </tr>
                             </tbody>

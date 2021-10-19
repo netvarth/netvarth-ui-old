@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,17 +7,6 @@ selector: 'app-licenseusage',
 templateUrl: './licenseusage.component.html'
 })
 export class licenseusageComponent implements OnInit{
-    breadcrumb_moreoptions: any = [];
-
-    breadcrumbs = [
-      {
-        title: 'License & Invoice',
-        url: '/provider/license'
-      },
-      {
-        title: 'License Usage'
-      }
-    ];
     constructor(
        public provider_services: ProviderServices,
        private routerobj: Router

@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { projectConstants } from '../../../../../app.component';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { MatDialog } from '@angular/material/dialog';
 import { Messages } from '../../../../../shared/constants/project-messages';
-import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { ConfirmBoxComponent } from '../../../../shared/confirm-box/confirm-box.component';
 import { NavigationExtras } from '@angular/router';
 import { Router } from '@angular/router';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
@@ -31,20 +31,6 @@ export class PrivacyComponent implements OnInit, OnDestroy {
     phonearr: any = [];
     emailarr: any = [];
     domain;
-    breadcrumbs = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: 'Jaldee Profile',
-            url: '/provider/settings/bprofile'
-        },
-        {
-            title: 'Contact Information'
-        }
-    ];
-    breadcrumb_moreoptions: any = [];
     small_device_display = false;
     screenWidth;
     customernormal_label: any;
@@ -62,7 +48,6 @@ export class PrivacyComponent implements OnInit, OnDestroy {
     ngOnInit() {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.setPrivacyDetails();
     }
     ngOnDestroy() {

@@ -5,7 +5,7 @@ import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../../app.component';
-import { ProviderDataStorageService } from '../../../../ynw_provider/services/provider-datastorage.service';
+import { ProviderDataStorageService } from '../../../../business/services/provider-datastorage.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 @Component({

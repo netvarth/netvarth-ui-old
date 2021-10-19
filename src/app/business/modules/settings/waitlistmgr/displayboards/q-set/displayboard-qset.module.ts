@@ -1,35 +1,24 @@
 import { NgModule } from '@angular/core';
-import { BreadCrumbModule } from '../../../../../../shared/modules/breadcrumb/breadcrumb.module';
-import { MaterialModule } from '../../../../../../shared/modules/common/material.module';
 import { FormMessageDisplayModule } from '../../../../../../shared/modules/form-message-display/form-message-display.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoadingSpinnerModule } from '../../../../../../shared/modules/loading-spinner/loading-spinner.module';
 import { CapitalizeFirstPipeModule } from '../../../../../../shared/pipes/capitalize.module';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '../../../../../../shared/modules/common/shared.module';
 import { DisplayboardQSetComponent } from './displayboard-qset.component';
-import { DisplayboardQSetDetailComponent } from './detail/displayboard-qset-detail.component';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
     declarations: [
-        DisplayboardQSetComponent,
-        DisplayboardQSetDetailComponent
+        DisplayboardQSetComponent
     ],
     imports: [
-        BreadCrumbModule,
-        MaterialModule,
+        MatIconModule,
+        MatMenuModule,
+        MatButtonModule,
         FormMessageDisplayModule,
-        FormsModule,
-        ReactiveFormsModule,
-        LoadingSpinnerModule,
         CapitalizeFirstPipeModule,
-        CommonModule,
-        SharedModule,
-        NgxMatSelectSearchModule,
-        DragDropModule
+        CommonModule
     ],
-    exports: [DisplayboardQSetComponent, DisplayboardQSetDetailComponent]
+    exports: [DisplayboardQSetComponent]
 })
 export class DisplayboardQSetModule { }

@@ -1,10 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../../../../shared/modules/common/shared.module';
+import { MatDialogModule } from '@angular/material/dialog';
 import { LocateCustomerComponent } from './locate-customer.component';
 
 @NgModule({
     imports: [
-        SharedModule
+        CommonModule,
+        MatDialogModule
     ],
     declarations: [
         LocateCustomerComponent

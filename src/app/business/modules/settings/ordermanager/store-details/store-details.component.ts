@@ -2,18 +2,15 @@ import { Component, OnInit, Inject, HostListener , OnDestroy} from '@angular/cor
 import { projectConstants } from '../../../../../app.component';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Router,NavigationExtras } from '@angular/router';
-import { FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ProviderServices } from '../../../../../../../src/app/ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../services/provider-services.service';
 import { SubSink } from 'subsink';
 @Component({
   selector: 'app-store-details',
-  templateUrl: './store-details.component.html',
-  styleUrls: ['./store-details.component.css']
+  templateUrl: './store-details.component.html'
 })
 export class StoreDetailsComponent implements OnInit, OnDestroy {
   privacypermissiontxt = projectConstants.PRIVACY_PERMISSIONS;
-  amForm: FormGroup;
   small_device_display = false;
   screenWidth;
   disableButton = false;

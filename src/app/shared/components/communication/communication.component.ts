@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { SharedFunctions } from '../../functions/shared-functions';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../business/services/provider-services.service';
 import { GroupStorageService } from '../../services/group-storage.service';
 import { projectConstantsLocal } from '../../constants/project-constants';
-import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from '../../../business/functions/provider-shared-functions';
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 
 

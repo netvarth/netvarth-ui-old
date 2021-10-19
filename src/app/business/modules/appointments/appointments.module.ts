@@ -1,85 +1,74 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { AppointmentsComponent } from './appointments.component';
-import { AppointmentsRoutingModule } from './appointments.routing.module';
-import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
-import { MaterialModule } from '../../../shared/modules/common/material.module';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
-import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { PagerModule } from '../../../shared/modules/pager/pager.module';
 import { OwlModule } from 'ngx-owl-carousel';
 import { LoadingSpinnerModule } from '../../../shared/modules/loading-spinner/loading-spinner.module';
-import { ApplyLabelModule } from '../check-ins/apply-label/apply-label.module';
-import { ProviderAppointmentDetailComponent } from './provider-appointment-detail/provider-appointment-detail.component';
-import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
-import { Nl2BrPipeModule } from 'nl2br-pipe';
-import { AddProviderWaitlistCheckInProviderNoteModule } from '../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.module';
-import { LocateCustomerModule } from '../check-ins/locate-customer/locate-customer.module';
 import { ProviderWaitlistCheckInConsumerNoteModule } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.module';
-import { NgxQRCodeModule } from 'ngx-qrcode2';
-import { AdjustscheduleDelayComponent } from './schedule-delay/adjust-schedule-delay.component';
-import { CheckinDetailsSendModule } from '../check-ins/checkin-details-send/checkin-details-send.modules';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
-import { AppointmentActionsComponent } from './appointment-actions/appointment-actions.component';
-import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
 import { GalleryModule } from '../../../shared/modules/gallery/gallery.module';
-import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
 import { CardModule } from '../../../shared/components/card/card.module';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { UserServiceChangeModule } from '../../../shared/modules/user-service-change/user-service-change.module';
-import { AppointmentComponent } from './appointment/appointment.component';
-import { CheckinAddMemberModule } from '../../../shared/modules/checkin-add-member/checkin-add-member.module';
-import { AssignTeamModule } from '../../../shared/modules/assign-team/assign-team.module';
-import { QuestionnaireListPopupModule } from '../questionnaire-list-popup/questionnaire-list-popup.module';
-import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { AttachmentPopupModule } from '../../../shared/components/attachment-popup/attachment-popup.module';
 import { VoicecallDetailsSendModule } from './voicecall-details-send/voicecall-details-send.module';
-import { ConfirmBoxModule } from '../../../ynw_provider/shared/component/confirm-box/confirm-box.module';
+import { RouterModule, Routes } from '@angular/router';
+import { AppointmentActionsModule } from './appointment-actions/appointment-actions.module';
+import { ProviderWaitlistCheckInCancelModule } from '../check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.module';
+import { CommonModule } from '@angular/common';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+const routes: Routes = [
+    { path: '', component: AppointmentsComponent },
+    {
+        path: '',
+        children: [
+            { path: 'adjustdelay', loadChildren: () => import('./schedule-delay/adjust-schedule-delay.module').then(m => m.AdjustScheduleDelayModule) },
+            { path: 'appointment', loadChildren: ()=> import('./appointment/appointment.module').then(m=>m.AppointmentModule) },
+            { path: 'questionnaires', loadChildren: () => import('../questionnaire-list-popup/questionnaire-list-popup.module').then(m => m.QuestionnaireListPopupModule) },
+            { path: ':id', loadChildren: ()=> import('./provider-appointment-detail/provider-appointment-detail.module').then(m=>m.ProviderAppointmentDetailModule) },
+            { path: ':id/user', loadChildren: () => import('../../../shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },
+            { path: ':id/team', loadChildren: () => import('../../../shared/modules/assign-team/assign-team.module').then(m => m.AssignTeamModule) },
 
-
+        ]
+    }
+];
 @NgModule({
     imports: [
-        AppointmentsRoutingModule,
-        BreadCrumbModule,
-        MaterialModule,
+        CommonModule,
         CapitalizeFirstPipeModule,
-        SharedModule,
         PagerModule,
         OwlModule,
         LoadingSpinnerModule,
-        ApplyLabelModule,
-        LocateCustomerModule,
-        InboxModule,
-        Nl2BrPipeModule,
-        AddProviderWaitlistCheckInProviderNoteModule,
         ProviderWaitlistCheckInConsumerNoteModule,
-        CheckinDetailsSendModule,
-        NgxQRCodeModule,
-        MedicalrecordModule,
+        ProviderWaitlistCheckInCancelModule,
         GalleryModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
-        QuestionnaireModule,
         CardModule,
         MatTableModule,
         MatCheckboxModule,
-        UserServiceChangeModule,
-        CheckinAddMemberModule,
-        AssignTeamModule,
-        QuestionnaireListPopupModule,
-        NgxIntlTelInputModule,
+        MatTabsModule,
+        MatTooltipModule,
+        MatCheckboxModule,
+        MatIconModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatDatepickerModule,
         AttachmentPopupModule,
         VoicecallDetailsSendModule,
-        ConfirmBoxModule
+        AppointmentActionsModule,
+        [RouterModule.forChild(routes)]
     ],
     declarations: [
-        AppointmentsComponent,
-        ProviderAppointmentDetailComponent,
-        AdjustscheduleDelayComponent,
-        AppointmentActionsComponent,
-        AppointmentComponent
-    ],
-    entryComponents: [
-        AppointmentActionsComponent
+        AppointmentsComponent
     ],
     exports: [AppointmentsComponent],
     schemas: [

@@ -13,8 +13,6 @@
         <div class="itemVal mgn-up-5">
           <h6 class="name">{{user.firstName + ' ' + user.lastName}}
           </h6>
-          <!-- <h4 *ngIf="user.firstName + ' ' + user.lastName.length>='24'">
-            {{user.firstName + ' ' + user.lastName.substring(0,24) }}...</h4> -->
         </div>
       </div>
     </div>
@@ -22,7 +20,6 @@
   <div class="col-md-12 mobile_disply p0" *ngIf="users_list.length == 0">
     <div>
       <p>No team Members in this location</p>
-
     </div>
   </div>
 </mat-dialog-content>

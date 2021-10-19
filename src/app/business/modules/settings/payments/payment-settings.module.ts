@@ -9,8 +9,8 @@ import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner
 import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
 import { PaymentSettingsComponent } from './payment-settings.component';
 import { PaymentSettingsRoutingModule } from './payment-settings.routing.module';
-import { ProviderPaymentSettingsComponent } from '../../../../ynw_provider/components/provider-payment-settings/provider-payment-settings.component';
-import { ProvidertaxSettingsComponent } from '../../../../ynw_provider/components/provider-tax-settings/provider-tax-settings.component';
+import { ProviderPaymentSettingsComponent } from '../../provider-payment-settings/provider-payment-settings.component';
+import { ProvidertaxSettingsComponent } from '../../provider-tax-settings/provider-tax-settings.component';
 
 @NgModule({
     imports: [

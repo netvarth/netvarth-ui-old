@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { NavigationExtras, Router } from '@angular/router';
@@ -16,16 +16,6 @@ export class InvoiceStatusComponent {
   tooltipcls = '';
   api_loading;
   statusDetail: any;
-  breadcrumb_moreoptions: any = [];
-  breadcrumbs = [
-    {
-      title: 'License & Invoice',
-      url: '/provider/license'
-    },
-    {
-      title: 'Invoice / Statement'
-    }
-  ];
   invoice_status = [];
   temp3;
   selected = 0;

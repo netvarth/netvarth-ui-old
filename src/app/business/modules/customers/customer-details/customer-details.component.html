@@ -8,7 +8,6 @@
         </h5>
     </div>
 </section>
-
 <section *ngIf="viewCustomer && customerAction === '' && !showMoreHistory">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
@@ -43,11 +42,7 @@
                         <div class="col-sm-12 col-md-12 col-lg-12 no-padding-small">
                             <div class="customer-detail-box col-sm-12 col-md-12 col-lg-12" *ngIf="!showMoreHistory">
                                 <span class="customer-action-btn pointer-cursor"
-                                    (click)="showCustomerAction()">Actions</span> &nbsp;
-                                <!-- <span class="customer-action-btn pointer-cursor" 
-                                     (click)="gotoMeet()">Initiate Video Call</span><br> -->
-
-
+                                    (click)="showCustomerAction()">Actions</span> &nbsp;                                
                                 <div>{{customer_label | capitalizeFirst}} ID: <span
                                         class="cust-detail">{{customer[0].jaldeeId}} </span>
                                 </div>
@@ -78,13 +73,7 @@
                                         [source]="'customer-details'" [type]="'details'" [customerDetails]="customer">
                                     </app-questionnaire>
                                 </div>
-                                <!-- <div class="cs-btn bt1 btn-grn txt-trans-none" style="float: right;" *ngIf="showStartBt"
-                                (click)="goMeetProvider()">Start Chat</div><br>
-                                <div class="cs-btn bt1 btn-orange txt-trans-none" style="float: right;" *ngIf="showRejoinBt"
-                                (click)="goMeetProvider()">Rejoin</div><br>
-                                <div class="cs-btn bt1 btn-red txt-trans-none" style="float: right;" *ngIf="showEndBt">End</div><br> -->
                             </div>
-
                             <div *ngIf="!showMoreHistory">
                                 <div class="rece-act mgn-bt-20 mgn-lt-10">Recent activity
                                     <span class="customer-action-btn pointer-cursor pull-right"
@@ -403,16 +392,10 @@
                                                             <mat-icon>more_vert</mat-icon>
                                                         </button>
                                                         <mat-menu #visitMenu="matMenu">
-
                                                             <button mat-menu-item (click)="showCommHistory(visit)">
                                                                 <i class="comm-history-icon"></i>
                                                                 Communication history
                                                             </button>
-                                                            <!-- <button *ngIf="visit.historyOrders.note" mat-menu-item
-                                                                (click)="showConsumerNote(visit)">
-                                                                <i class="customernote-icon"></i>
-                                                               Note
-                                                            </button> -->
                                                         </mat-menu>
                                                     </td>
                                                 </ng-container>
@@ -447,9 +430,6 @@
                                                         class="consumer-dash consumer-appthistory"> <i
                                                             class="electronic-icon" [matTooltip]="'Electronic Delivery'"
                                                             aria-hidden="true"></i> </td>
-                                                    <!-- <td class="consumer-dash consumer-appthistory"> <i class="fa fa-circle-o"  [matTooltip]="'Order'" aria-hidden="true"></i>
-                                                        
-                                                    </td> -->
                                                     <td> {{visit.orderDate | date: newDateFormat}}
                                                         <div *ngIf="visit.orderNumber">Order#
                                                             {{visit.orderNumber}} </div>
@@ -479,16 +459,10 @@
                                                             <mat-icon>more_vert</mat-icon>
                                                         </button>
                                                         <mat-menu #visitMenu="matMenu">
-
                                                             <button mat-menu-item (click)="showCommHistory(visit)">
                                                                 <i class="comm-history-icon"></i>
                                                                 Communication history
                                                             </button>
-                                                            <!-- <button *ngIf="visit.historyOrders.note" mat-menu-item
-                                                                (click)="showConsumerNote(visit)">
-                                                                <i class="customernote-icon"></i>
-                                                               Note
-                                                            </button> -->
                                                         </mat-menu>
                                                     </td>
                                                 </ng-container>
@@ -673,7 +647,8 @@
                                                 <td>
                                                     <span *ngIf="visit.storePickup">Store Pickup</span>
                                                     <span *ngIf="visit.homeDelivery">Home Delivery</span>
-                                                     <span *ngIf="!visit.homeDelivery&&!visit.storePickup">Electronic Delivery</span>
+                                                    <span *ngIf="!visit.homeDelivery&&!visit.storePickup">Electronic
+                                                        Delivery</span>
                                                 </td>
                                                 <td class="hidden-xs">
                                                     <ng-container *ngIf="visit.orderMode === 'WALKIN_ORDER'">
@@ -693,16 +668,10 @@
                                                         <mat-icon>more_vert</mat-icon>
                                                     </button>
                                                     <mat-menu #visitMenu="matMenu">
-
                                                         <button mat-menu-item (click)="showCommHistory(visit)">
                                                             <i class="comm-history-icon"></i>
                                                             Communication history
                                                         </button>
-                                                        <!-- <button *ngIf="visit.historyOrders.note" mat-menu-item
-                                                            (click)="showConsumerNote(visit)">
-                                                            <i class="customernote-icon"></i>
-                                                           Note
-                                                        </button> -->
                                                     </mat-menu>
                                                 </td>
                                             </ng-container>

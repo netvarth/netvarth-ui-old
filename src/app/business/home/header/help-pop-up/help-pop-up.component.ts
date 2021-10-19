@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject, HostListener } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { ProviderStartTourComponent } from '../../../../ynw_provider/components/provider-start-tour/provider-start-tour.component';
 import { JoyrideService } from 'ngx-joyride';
 import { Router } from '@angular/router';
+import { ProviderStartTourComponent } from '../../../../business/modules/provider-start-tour/provider-start-tour.component';
 
 @Component({
   selector: 'app-help-pop-up',

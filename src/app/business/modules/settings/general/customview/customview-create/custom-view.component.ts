@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Messages } from '../../../../../../shared/constants/project-messages';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
@@ -57,19 +56,6 @@ export class CustomViewComponent implements OnInit {
     selectedScheduls: any = [];
     selectedScheduleIds: any = [];
     waitlistMngr: any = [];
-    breadcrumbs = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            url: '/provider/settings/general',
-            title: Messages.GENERALSETTINGS
-        },
-        {
-            title: 'Custom View'
-        }
-    ];
     provider_label;
     servicesList: any = [];
     serviceScheduleCount;

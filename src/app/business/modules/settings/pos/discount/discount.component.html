@@ -1,12 +1,11 @@
 <section class="">
     <div class="card title-gb">
-        <h5 class="mgn-up-10"> 
-            <!-- <button type="button" class="btn default profile-back" (click)="redirecToJaldeeBilling()">
-                <span class="fa fa-chevron-left">&nbsp;Back</span>
-            </button>&nbsp;&nbsp;&nbsp; -->
-            <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToJaldeeBilling()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Discounts 
-            <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i> </h5>
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToJaldeeBilling()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Discounts
+            <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
+        </h5>
     </div>
 </section>
 <section>
@@ -15,11 +14,7 @@
             <div class="row">
                 <div class="card">
                     <p class="form-level-settings">{{frm_dicounts_cap}}
-                        <!-- <a class="learnmore-pointer" id="customer-help"
-                            (click)="learnmore_clicked('discount', $event)">Learn
-                            More</a> -->
-                        </p>
-
+                    </p>
                     <div class="no-dta" *ngIf="discount_list.length ==0 && query_executed == true">
                         <p>{{emptyMsg}}</p>
                         <span class="cs-btn bt3" (click)="addDiscounts()">{{add_disc_cap}}</span>
@@ -40,11 +35,12 @@
                                         <tbody>
                                             <tr *ngFor="let discount of discount_list">
                                                 <td data-title="Name" class="td1">{{discount.name}}</td>
-                                                <td data-title="Value" clas="td2"  class="rupee-font">{{((discount.calculationType=='Percentage') ? 
-                                                ((discount.discValue > 0) ? discount.discValue+'%' : '--'): 
-                                                    ((discount.discValue > 0) ?  (discount.discValue | currency:'&#8377;' ) : '--')
-                                                    
-                                                )}}</td>
+                                                <td data-title="Value" clas="td2" class="rupee-font">
+                                                    {{((discount.calculationType=='Percentage') ?
+                                                    ((discount.discValue > 0) ? discount.discValue+'%' : '--'):
+                                                    ((discount.discValue > 0) ? (discount.discValue | currency:'&#8377;'
+                                                    ) : '--')
+                                                    )}}</td>
                                                 <td data-title="Description" class="td1">{{discount.description}}</td>
                                                 <td class="action">
                                                     <span class="mbt" *ngIf="discount.discType!='OnDemand'">
@@ -65,8 +61,7 @@
                                                             </button>
                                                         </mat-menu>
                                                     </span>
-
-                                                    <span class="mbt-mobile-show" *ngIf="discount.discType!='OnDemand'" >
+                                                    <span class="mbt-mobile-show" *ngIf="discount.discType!='OnDemand'">
                                                         <button class="editcls" type="button"
                                                             (click)="editDiscounts(discount)">{{edit_btn}}</button>
                                                         <button class="deletecls" type="button"

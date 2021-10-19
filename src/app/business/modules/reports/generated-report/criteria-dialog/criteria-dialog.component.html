@@ -15,7 +15,7 @@
     </div>
 </div>
 <div *ngIf="for_view" class="view-pad">
-    <h1 mat-dialog-title class="head-t"> Report  Details</h1>
+    <h1 mat-dialog-title class="head-t"> Report Details</h1>
     <hr>
     <div mat-dialog-content class="no-padding-small">
         <table>
@@ -31,10 +31,6 @@
                 <td>Time Period: </td>
                 <td>{{getReportDateCategoryName(data.content.reportDateCategory)}}</td>
             </tr>
-            <!-- <tr>
-                <td>Criterias :</td>
-                <td>{{JSON.parse(JSON.stringify(data.content.reportCriteria))}}</td>
-            </tr> -->
         </table>
     </div>
     <div mat-dialog-actions>
@@ -49,5 +45,5 @@
     {{ api_success_msg }}
 </div>
 <div class="api_error_msg" *ngIf="api_error">
-   {{ api_error_msg }}
+    {{ api_error_msg }}
 </div>

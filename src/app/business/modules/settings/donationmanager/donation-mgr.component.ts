@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
@@ -10,22 +10,10 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
   templateUrl: './donation-mgr.component.html'
 })
 export class DonationMgrComponent implements OnInit {
-
-  breadcrumbs_init = [
-    {
-      url: '/provider/settings',
-      title: 'Settings'
-    },
-    {
-      title: 'Donation Manager ',
-    }
-  ];
   domain: any;
-  breadcrumbs = this.breadcrumbs_init;
   donations_statusstr: string;
   donations_status: any;
   cause_count: any = 0;
-  breadcrumb_moreoptions: any = [];
   constructor(private router: Router,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -38,7 +26,6 @@ export class DonationMgrComponent implements OnInit {
     this.getCauseCount();
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
-    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
   }
   getCauseCount() {
     const filter = { 'scope-eq': 'account', 'serviceType-eq': 'donationService' , 'status-eq': 'ACTIVE'};

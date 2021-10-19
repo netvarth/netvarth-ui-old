@@ -1,11 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { ProviderServices } from '../../../../../../../../../ynw_provider/services/provider-services.service';
-import { QuestionService } from '../../../../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
+import { ProviderServices } from '../../../../../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../../../shared/functions/shared-functions';
 import { GroupStorageService } from '../../../../../../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../../../../../../shared/services/word-processor.service';
+import { QuestionService } from '../../../../../../../../../shared/modules/dynamic-form/dynamic-form-question.service';
 
 @Component({
   selector: 'app-provider-userbprofile-search-dynamic',

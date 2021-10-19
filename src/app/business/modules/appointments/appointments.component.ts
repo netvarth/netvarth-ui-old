@@ -2,13 +2,13 @@ import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, QueryList, E
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../services/provider-services.service';
 import * as moment from 'moment';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
-import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from '../../functions/provider-shared-functions';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';

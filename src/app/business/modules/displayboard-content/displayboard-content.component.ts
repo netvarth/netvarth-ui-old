@@ -2,7 +2,7 @@
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../services/provider-services.service';
 import { projectConstants } from '../../../app.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';

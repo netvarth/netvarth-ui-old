@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../services/provider-services.service';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';

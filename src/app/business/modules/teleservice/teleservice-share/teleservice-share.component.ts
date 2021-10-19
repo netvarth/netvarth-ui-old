@@ -4,13 +4,13 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { Messages } from '../../../../shared/constants/project-messages';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { MatDialog } from '@angular/material/dialog';
-import { AddproviderAddonComponent } from '../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { AddproviderAddonComponent } from '../../add-provider-addons/add-provider-addons.component';
 
 @Component({
   selector: 'app-teleservice-share',
@@ -92,28 +92,6 @@ export class TeleServiceShareComponent implements OnInit {
 
   ngOnInit() {
     this.ynw_credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
-    // if (this.ynw_credentials) {
-    //   let login = JSON.parse(this.ynw_credentials);
-    //   if(login.countryCode.startsWith('+')){
-    //     this.countryCode = login.countryCode.substring(1);
-    //   }
-    //   this.provider_services.telegramChat(this.countryCode,login.loginId)
-    //    .subscribe(
-    //        data => { 
-    //          this.chatId = data; 
-    //          if(this.chatId === null){
-    //           this.IsTelegramDisable = true;
-    //          }
-    //          else{
-    //           this.IsTelegramDisable = false;
-    //          }
-            
-    //        },
-    //        (error) => {
-              
-    //        }
-    //    );
-    // }
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     if (user.email) {
       this.providerEmail = true;
@@ -274,16 +252,6 @@ export class TeleServiceShareComponent implements OnInit {
     document.execCommand('copy');
     elementId.setSelectionRange(0, 0);
     this.snackbarService.openSnackBar(Message + ' copied to clipboard');
-    // const info = document.getElementById(elementId);
-    // if (window.getSelection) {
-    //   const selection = window.getSelection();
-    //   const range = document.createRange();
-    //   range.selectNodeContents(info);
-    //   selection.removeAllRanges();
-    //   selection.addRange(range);
-    //   document.execCommand('Copy');
-    //   this.snackbarService.openSnackBar(Message + ' copied to clipboard');
-    // }
   }
   // Mass communication
   sendMessage() {

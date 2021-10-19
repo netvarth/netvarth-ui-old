@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../services/provider-services.service';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { Location } from '@angular/common';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';

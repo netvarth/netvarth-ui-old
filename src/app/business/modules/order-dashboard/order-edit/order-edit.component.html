@@ -16,25 +16,18 @@
           <div class="wizard wizard-1">
             <!--begin::Wizard Nav-->
             <div class="wizard-nav border-bottom">
-
             </div>
             <!--end::Wizard Nav-->
-
             <!--begin::Wizard Body-->
             <div class="row justify-content-center my-10 px-8 my-lg-10 px-lg-10">
               <div class="col-lg-12">
                 <!--begin::Wizard Form-->
-
-
-
                 <!--begin::Wizard Step 2-->
                 <div class="pb-5" *ngIf="step == 2">
                   <!--begin::Layout-->
                   <div class="flex-row-fluid">
                     <!--begin::Card-->
                     <div class="">
-
-
                       <!--end::Engage Widget 15-->
                       <!--begin::Section-->
                       <div class="mb-2">
@@ -68,7 +61,6 @@
                                       </div>
                                     </div>
                                     <!--end::Image-->
-
                                     <!--begin::Details-->
                                     <div
                                       class="text-center mt-5 mb-md-0 mb-lg-5 mb-md-0 mb-lg-5 mb-lg-0 mb-5 d-flex flex-column">
@@ -92,8 +84,6 @@
                             </ng-container>
                             <!--end::Product-->
                           </div>
-
-
                           <!--end::Products-->
                         </div>
                         <!--end::Section-->
@@ -104,11 +94,9 @@
                   <!--end::Layout-->
                 </div>
                 <!--end::Wizard Step 2-->
-
                 <!--begin::Wizard Step 3-->
                 <div class="pb-5" *ngIf="step == 3">
                   <div class="flex-row-fluid">
-
                     <!--begin::Section-->
                     <div>
                       <!--begin::Header-->
@@ -119,18 +107,14 @@
                         </h3>
                       </div>
                       <!--end::Header-->
-
                       <div class="card-body p-0 ">
-
                         <div class="w-dta">
                           <div class="row">
                             <div class="copy width100">
                               <!--begin::Shopping Cart-->
-
                               <a href="javascript:;" class="addmoreitem"
                                 *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType !== 'SHOPPINGLIST'"
                                 (click)="gotoPrev()">Add More Items</a>
-
                               <div class="table-outer q-itm"
                                 *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType !== 'SHOPPINGLIST'">
                                 <table class="table">
@@ -144,10 +128,9 @@
                                     </tr>
                                   </thead>
                                   <!--end::Cart Header-->
-
                                   <tbody>
                                     <!--begin::Cart Content-->
-                                    <div  *ngIf="orders.length == 0" class="text-center text-danger">
+                                    <div *ngIf="orders.length == 0" class="text-center text-danger">
                                       Items are disabled or removed from the cart.
                                     </div>
                                     <tr *ngFor="let item of orders">
@@ -184,11 +167,9 @@
                                         </i>
                                       </td>
                                     </tr>
-
                                   </tbody>
                                 </table>
                               </div>
-
                               <div class="table-outer q-itm"
                                 *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType === 'SHOPPINGLIST'">
                                 <table class="table">
@@ -201,32 +182,21 @@
                                     </tr>
                                   </thead>
                                   <!--end::Cart Header-->
-
                                   <tbody>
                                     <!--begin::Cart Content-->
                                     <tr *ngFor="let item of orderDetails.orderItem">
                                       <td data-title="Product" class="d-flex align-items-center font-weight-bolder">
-                                        <!--begin::Symbol-->
-                                        <!-- <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
-                                  <div class="symbol-label" [style.background-image]="'url('+getItemImg(item.item)+')'">
-                                  </div>
-                                </div> -->
-                                        <!--end::Symbol-->
                                         <a class="text-dark text-hover-primary">{{item.name}}
                                         </a>
                                       </td>
                                       <td data-title="Qty" class="text-center align-middle">
-
                                         <span class="mr-2 font-weight-bolder">{{item.quantity}}</span>
-
                                       </td>
                                       <td data-title="Price"
                                         class="text-right align-middle font-weight-bolder font-size-h5 rupee-font">
                                         ₹ {{item.totalPrice}}
                                       </td>
-
                                     </tr>
-
                                   </tbody>
                                 </table>
                               </div>
@@ -253,7 +223,6 @@
                                   <div class="shoppinglistimg-h" *ngIf="(image_list_popup.length-3)>0"><img
                                       class="shoppinglistimg" *ngIf="image_list_popup[2].modal.img"
                                       [src]="image_list_popup[2].modal.img" /></div>
-
                                   <div class="shoppinglistimg-h" (click)="openImageModalRow(image_list_popup[2])"
                                     *ngIf="(image_list_popup.length-3)==0">
                                     <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
@@ -266,9 +235,7 @@
                               [plainGalleryConfig]="customPlainGalleryRowConfig"
                               [buttonsConfig]="customButtonsFontAwesomeConfig"></ks-modal-gallery>
                           </div>
-
                         </div>
-
                         <div *ngIf="orderDetails.shoppingList && orderDetails.catalog.orderType !== 'SHOPPINGLIST'">
                           <div>
                             <ul class="shoppinglist-gal">
@@ -289,7 +256,6 @@
                                   <div class="shoppinglistimg-h" *ngIf="(image_list_popup.length-3)>0"><img
                                       class="shoppinglistimg" *ngIf="image_list_popup[2].modal.img"
                                       [src]="image_list_popup[2].modal.img" /></div>
-
                                   <div class="shoppinglistimg-h" (click)="openImageModalRow(image_list_popup[2])"
                                     *ngIf="(image_list_popup.length-3)==0">
                                     <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
@@ -301,14 +267,12 @@
                             <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
                               [plainGalleryConfig]="customPlainGalleryRowConfig"
                               [buttonsConfig]="customButtonsFontAwesomeConfig"></ks-modal-gallery>
-
-
                           </div>
-
                         </div>
                         <!-- </ng-container> -->
                         <!-- begin: Invoice footer-->
-                        <div class="row justify-content-center bg-gray-100 py-2 px-2 py-md-4 px-md-0 mx-0"  *ngIf="isPhysicalItemsPresent()">
+                        <div class="row justify-content-center bg-gray-100 py-2 px-2 py-md-4 px-md-0 mx-0"
+                          *ngIf="isPhysicalItemsPresent()">
                           <div class="col-md-10 ln-ht-2">
                             <div class="text-muted">DELIVERY TYPE&nbsp;&nbsp; <img src="assets/images/Store-pick-up.png"
                                 alt="..." *ngIf="store_pickup && !home_delivery" style="width: 60px;height:50px">
@@ -338,11 +302,8 @@
                                   data-target="#datePickerModal">
                                   Change </button>
                               </div>
-                              <!-- <div class="fl-right"><a  data-toggle="modal" data-target="#datePickerModal">Change</a></div> -->
                             </div>
-
                             <div *ngIf="isfutureAvailableTime">
-
                               <span>{{sel_checkindate | date: newDateFormat}},
                               </span>
                               <span>
@@ -352,7 +313,6 @@
                             <div *ngIf="!isfutureAvailableTime" class="red">
                               <span>No timings are available</span>
                             </div>
-
                             <!-- Home Address -->
                             <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
                               <div>
@@ -378,7 +338,6 @@
                                             {{orderDetails.homeDeliveryAddress.address}}&nbsp;,
                                             {{orderDetails.homeDeliveryAddress.landMark }}
                                           </span><br>
-
                                           <span>
                                             {{orderDetails.homeDeliveryAddress.city }} ,
                                             {{orderDetails.homeDeliveryAddress.postalCode}}
@@ -392,14 +351,10 @@
                                             {{orderDetails.homeDeliveryAddress.phoneNumber}}
                                           </span><br>
                                         </div>
-                                        <!-- <a  class="addressedit"  (click)="editAddress();" data-toggle="modal" data-target="#exampleModalSizeDefault">
-                                              Edit</a> -->
                                       </div>
-
                                     </div>
                                   </div>
                                 </div>
-
                                 <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4 card"
                                   *ngIf="!orderDetails.homeDeliveryAddress || orderDetails.homeDeliveryAddress==null">
                                   <div class=" card-custom gutter-b rounded-0 card-stretch p-2">
@@ -420,7 +375,6 @@
                                   (ngSubmit)="amForm.valid && onSubmit(amForm.value)">
                                   <div class="modal-content">
                                     <div class="modal-body">
-
                                       <div class="">
                                         <div class="form-group row">
                                           <div class="col-lg-6">
@@ -429,7 +383,6 @@
                                               style="display: flex;">
                                               <span class="input-group-text1 countrycode mob-prefix-border"
                                                 style="margin-top:auto;">+91</span>
-
                                               <input type="text" class="form-control1 mob-field-border"
                                                 style="border-bottom-left-radius: 0px !important; border-top-left-radius: 0px !important;"
                                                 formControlName="phoneNumber">
@@ -438,19 +391,18 @@
                                             <app-field-error-display
                                               [displayError]="fed_service.isFieldValid(amForm,'phoneNumber')"
                                               [errorMsgs]="fed_service.getErrorMessage(amForm,'phoneNumber',
-                                                                                                                        {
-                                                                                                                          'required' : 'Mobile number is required',
-                                                                                                                          'minlength' : 'Enter a 10 digit mobile number',
-                                                                                                                          'maxlength' : 'Enter a 10 digit mobile number',
-                                                                                                                          'pattern' : 'Only numbers are allowed'
-                                                                                                                        })">
+                                              {
+                                                'required' : 'Mobile number is required',
+                                                'minlength' : 'Enter a 10 digit mobile number',
+                                                'maxlength' : 'Enter a 10 digit mobile number',
+                                                'pattern' : 'Only numbers are allowed'
+                                              })">
                                             </app-field-error-display>
 
                                           </div>
                                           <div class="col-lg-6">
                                             <label>First Name*</label>
-                                            <input type="text" class="form-control1"
-                                              formControlName="firstName">
+                                            <input type="text" class="form-control1" formControlName="firstName">
                                             <app-field-error-display
                                               [displayError]="fed_service.isFieldValid(amForm,'firstName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'firstName',
                                                                                         {
@@ -464,8 +416,7 @@
                                           <div class="col-lg-6">
                                             <label>Last Name*</label>
                                             <div class="input-group">
-                                              <input type="text" class="form-control1"
-                                                formControlName="lastName">
+                                              <input type="text" class="form-control1" formControlName="lastName">
                                               <app-field-error-display
                                                 [displayError]="fed_service.isFieldValid(amForm,'lastName')"
                                                 [errorMsgs]="fed_service.getErrorMessage(amForm,'lastName',
@@ -493,8 +444,7 @@
                                         <div class="form-group row">
                                           <div class="col-lg-6">
                                             <label>Address*</label>
-                                            <input type="text" class="form-control1"
-                                              formControlName="address">
+                                            <input type="text" class="form-control1" formControlName="address">
                                             <app-field-error-display
                                               [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
                                                                                     {
@@ -505,8 +455,7 @@
                                           </div>
                                           <div class="col-lg-6">
                                             <label>City*</label>
-                                            <input type="text" class="form-control1"
-                                              formControlName="city">
+                                            <input type="text" class="form-control1" formControlName="city">
                                             <app-field-error-display
                                               [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
                                                                                       {
@@ -516,12 +465,10 @@
                                             </app-field-error-display>
                                           </div>
                                         </div>
-
                                         <div class="form-group row">
                                           <div class="col-lg-6">
                                             <label>Postal Code /ZIP*</label>
-                                            <input type="text" class="form-control1"
-                                              formControlName="postalCode">
+                                            <input type="text" class="form-control1" formControlName="postalCode">
                                             <app-field-error-display
                                               [displayError]="fed_service.isFieldValid(amForm,'postalCode')"
                                               [errorMsgs]="fed_service.getErrorMessage(amForm,'postalCode',
@@ -535,8 +482,7 @@
                                           </div>
                                           <div class="col-lg-6">
                                             <label>Landmark*</label>
-                                            <input type="text" class="form-control1"
-                                              formControlName="landMark">
+                                            <input type="text" class="form-control1" formControlName="landMark">
                                             <app-field-error-display
                                               [displayError]="fed_service.isFieldValid(amForm,'landMark')" [errorMsgs]="fed_service.getErrorMessage(amForm,'landMark',
                                                                                             {
@@ -546,7 +492,6 @@
                                           </div>
                                         </div>
                                       </div>
-
                                     </div>
                                     <div class="modal-footer">
                                       <button #closeModal type="button"
@@ -559,19 +504,14 @@
                                 </form>
                               </div>
                             </div>
-
                             <!--Change Date picker  -->
                             <div class="modal fade" id="datePickerModal" tabindex="-1" role="dialog"
                               aria-labelledby="datePickerModal" aria-hidden="true">
                               <div class="modal-dialog modal-dialog-centered" role="document">
-
                                 <div class="modal-content">
                                   <div class="modal-body">
                                     <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes">
                                       <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
-                                        <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
-                                                  Choose Date
-                                                </div> -->
                                         <div class="col-md-8 col-xs-12 col-sm-10 ">
                                           <div class="lnk ">Choose Date</div>
                                           <div class="pull-left brd-round brd-light mgn-up-10">
@@ -581,7 +521,6 @@
                                               dateFormat}}&nbsp;</span>
                                             <span class="icon-add pull-left mgn-up-10"
                                               (click)="calculateDate(1)"></span>
-                                            <!-- </div>-->
                                             <span class="datepicker">
                                               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                               <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
@@ -592,36 +531,13 @@
                                             </span>
                                           </div>
                                         </div>
-                                      </div>
-                                      <!-- <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
-                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
-                                          Choose Date
-                                        </div>
-                                        <div class="pull-left brd-round brd-light mgn-up-20">
-                                          <div class="icon-minus pull-left" (click)="calculateDate(-1)">
-                                          </div>
-
-                                          <div class="pull-left chkindt">{{ sel_checkindate | date: dateFormat }}</div>
-                                          <div class="icon-add pull-left" (click)="calculateDate(1)"></div>
-                                        </div>
-                                        <div class="pickerouter caldiv pull-left mgn-up-20">
-                                          <mat-datepicker-toggle matSuffix [for]="picker">
-                                          </mat-datepicker-toggle>
-                                          <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
-                                          <input class="" style="visibility: hidden; width:1px" type="text" [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
-                                            [value]="ddate" (dateChange)="handleFutureDateChange($event)">
-                                        </div>
-                                      </div> -->
+                                      </div>                                                                          
                                       <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
-                                        <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">{{timings_title}} </div> -->
-                                        <!-- <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20"> -->
-
                                         <div class="col-md-8 col-xs-12 col-sm-10 " *ngIf="isfutureAvailableTime">
                                           <div class="lnk ">{{timings_title}} </div>
                                           <mat-chip-list class="">
                                             <mat-chip *ngFor="let queu of nextAvailableTimeQueue, let i= index"
                                               (click)="handleQueueSelection(queu, i)">
-                                              <!-- [selected]="queue(i) === nextAvailableTime"> -->
                                               {{queu['sTime'] + ' - ' +
                                               queu['eTime']}}
                                             </mat-chip>
@@ -631,12 +547,8 @@
                                           <div class="lnk ">{{timings_title}} </div>
                                           <p>No timings are available</p>
                                         </div>
-                                        <!-- </div> -->
                                       </div>
-
-
                                     </div>
-
                                   </div>
                                   <div class="modal-footer">
                                     <button #closeDatepickerModal type="button"
@@ -647,72 +559,12 @@
                                       class="btn ln-ht-1 btn-primary font-weight-bold">Ok</button>
                                   </div>
                                 </div>
-
                               </div>
                             </div>
-
-
-
-
                           </div>
-
                         </div>
                         <!-- end: Invoice footer-->
                         <!-- Total summary -->
-                        <!-- Coupon start -->
-                        <!-- <div>
-
-                              <div class="form-group row mt-5">
-
-                              <div class="col-md-3 d-flex align-items-center">
-                                  <a href="javascript:;" style="color:blueviolet" (click)="toggleCoupon();">Apply promo code</a>
-
-                              </div>
-                              <div class="col-md-7" *ngIf="showCoupon" >
-                                <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding">
-                                  <i class="icon-bell"></i>{{applied_inbilltime}}
-                                </div>
-                                <div class="input-group w-100">
-                                  <input type="text" class="form-control" [(ngModel)]="selected_coupon" placeholder="Voucher Code">
-                                  <div class="input-group-append">
-                                    <button class="btn btn-secondary line-height-sm" (click)="applyCoupons(selected_coupon)" type="button">Apply</button>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding" style="color: red;" *ngIf="api_cp_error !== null">
-                                {{api_cp_error}}</div>
-                              <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10 mgn-bt-20">
-
-                              </div>
-                              <div class="col-md-12 col-sm-12 col-lg-12 col-12 mgn-up-20 mgn-bt-30 border-tp pad-up-10"
-                              *ngIf="couponsList && couponsList.length>0">
-                              <label style="color:blue">Coupon Applied</label>
-                              <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding"
-                                *ngFor="let coupon of couponsList let i=index">
-                                <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding coupon-add-msg">
-                                  <div class="col-md-5 col-sm-7 col-xs-7 col-lg-4 no-padding">
-                                    {{coupon.couponCode}} </div>
-                                  <div class="col-md-7 col-sm-5 col-xs-5 col-lg-8 delteTC">
-                                    <span><a *ngIf="coupon.instructions" (click)="toggleterms(i)"
-                                        class="pointer-cursor lnk read-more-checkin">Read
-                                        T & C </a></span>
-                                    <span><a class="pointer-cursor lnk"><i class="pointer-cursor icon-delete mgn-lt-10 lnk"
-                                          (click)="removeJCoupon(i)" [matTooltipClass]="tooltipcls"
-                                          [matTooltip]="'Remove Coupon'"></i></a></span>
-                                  </div>
-                                </div>
-                                <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 mgn-up-10 pre-instr no-padding"
-                                  *ngIf="coupon.showme">
-                                  {{coupon.instructions}}
-                                </div>
-                              </div>
-                            </div>
-                            </div>
-
-
-                        </div> -->
-                        <!-- Coupon end -->
                         <!-- Total summary -->
                         <div class="d-flex flex-column mb-10 mb-md-0 mt-5"
                           *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType !== 'SHOPPINGLIST'">
@@ -735,13 +587,11 @@
                             <span class="text-right price rupee-font">{{ getDeliveryCharge() |
                               currency:'&#8377;'}}</span>
                           </div>
-
                           <div class="d-flex justify-content-between">
                             <span class="mr-15 font-weight-bold">Total Price</span>
                             <span class="text-right price rupee-font"> {{getSubTotal() | currency:'&#8377;'}}</span>
                           </div>
                         </div>
-
                         <div class="d-flex flex-column mb-10 mb-md-0 mt-5"
                           *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType === 'SHOPPINGLIST'">
                           <div class="font-weight-bolder font-size-lg mb-3">SUMMARY</div>
@@ -763,17 +613,12 @@
                             <span class="text-right price rupee-font">{{orderDetails.deliveryCharge |
                               currency:'&#8377;'}}</span>
                           </div>
-
                           <div class="d-flex justify-content-between" *ngIf="orderDetails.bill">
                             <span class="mr-15 font-weight-bold">Total Price</span>
                             <span class="text-right price rupee-font"> {{getSuborderTotal() |
                               currency:'&#8377;'}}</span>
                           </div>
                         </div>
-
-
-
-
                         <!--end::Shopping Cart-->
                       </div>
                     </div>
@@ -781,16 +626,9 @@
                   </div>
                 </div>
                 <!--end::Wizard Step 3-->
-
                 <!--begin::Wizard Actions-->
                 <div class="d-flex justify-content-between border-top mt-2 py-5">
-                  <!-- <div class="mr-2" *ngIf="step == 2 || step == 3">
-                    <button type="button" class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-1" (click)="gotoPrev()">
-                      Previous
-                    </button>
-                  </div> -->
                   <div>
-
                     <button [disabled]="placeOrderDisabled" [hidden]="!isfutureAvailableTime" *ngIf="step == 3 "
                       type="button" class="btn btn-success font-weight-bold text-uppercase px-9 py-1"
                       (click)="confirm()">
@@ -815,5 +653,4 @@
       </div>
     </div>
   </div>
-
 </section>

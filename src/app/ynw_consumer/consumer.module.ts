@@ -9,7 +9,7 @@ import { WaitlistDetailResolver } from './services/waitlist-detail-resolver.serv
 import { SharedServices } from '../shared/services/shared-services';
 import { ConsumerComponent } from './consumer.component';
 import { projectConstants } from '../app.component';
-import { ProviderSharedFuctions } from '../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from '../business/functions/provider-shared-functions';
 import { MatBadgeModule } from '@angular/material/badge';
 import { UpdateProfilePopupModule } from '../shared/components/update-profile-popup/update-profile-popup.module';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';

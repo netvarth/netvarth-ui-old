@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener, ViewChild, OnDestroy } from '@angular/core';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { projectConstants } from '../../../../../../app.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';

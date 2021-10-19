@@ -559,14 +559,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         account_id: this.account_id,
         selected_coupons: this.selected_coupons,
         couponsList: this.couponsList
-
-
       };
-      // const navigationExtras: NavigationExtras = {
-      //   queryParams: {
-      //     providerId: this.provider_id,
-      //   }
-      // };
       let queryParam = {
         providerId: this.provider_id,
       };

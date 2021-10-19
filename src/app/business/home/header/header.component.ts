@@ -8,17 +8,17 @@ import { projectConstants } from '../../../app.component';
 import * as moment from 'moment';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Title } from '@angular/platform-browser';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
-import { ProviderDataStorageService } from '../../../ynw_provider/services/provider-datastorage.service';
+import { ProviderServices } from '../../services/provider-services.service';
+import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { JoyrideService } from 'ngx-joyride';
 import { MatDialog } from '@angular/material/dialog';
-import { ProviderStartTourComponent } from '../../../ynw_provider/components/provider-start-tour/provider-start-tour.component';
 import { HelpPopUpComponent } from './help-pop-up/help-pop-up.component';
 import { SessionStorageService } from '../../../shared/services/session-storage.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
+import { ProviderStartTourComponent } from '../../modules/provider-start-tour/provider-start-tour.component';
 
 @Component({
   selector: 'app-header',

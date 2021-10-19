@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { UpdateNotificationComponent } from './update-notification/update-notification.component';
 import { MatDialog } from '@angular/material/dialog';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';

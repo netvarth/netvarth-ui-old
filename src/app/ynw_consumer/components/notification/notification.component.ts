@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { Location } from '@angular/common';
@@ -13,7 +12,6 @@ import { TelegramPopupComponent } from './telegrampopup/telegrampopup.component'
   styleUrls: ['./notification.component.css'],
 })
 export class NotificationComponent implements OnInit {
-  spForm: FormGroup;
   api_error = null;
   api_success = null;
   is_verified = false;

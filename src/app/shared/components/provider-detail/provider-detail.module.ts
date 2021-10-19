@@ -16,6 +16,7 @@ import { CouponsModule } from "../coupons/coupons.module";
 import { ServiceDetailModule } from "../service-detail/service-detail.module";
 import { ConsumerJoinModule } from "../../../ynw_consumer/components/consumer-join/join.component.module";
 import { ConfirmBoxModule } from "../confirm-box/confirm-box.module";
+import { QRCodeGeneratordetailModule } from "../qrcodegenerator/qrcodegeneratordetail.module";
 
 const routes: Routes = [
     { path: '', component: ProviderDetailComponent },
@@ -37,6 +38,7 @@ const routes: Routes = [
         ServiceDetailModule,
         ConsumerJoinModule,
         ConfirmBoxModule,
+        QRCodeGeneratordetailModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     ],
     exports: [ ProviderDetailComponent ],

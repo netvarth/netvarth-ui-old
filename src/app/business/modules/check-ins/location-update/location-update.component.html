@@ -55,19 +55,7 @@
                       <span> 
                         <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
                       </span>
-                      <!-- <span> 
-                          <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)"></a>
-                        </span> -->
                     </td>
-
-                    <!-- <td class="display-min-none">
-                          <span *ngIf="service.users.length > 0"> 
-                            <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
-                          </span>
-                          <span *ngIf="service.users.length == 0"> 
-                              <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)"></a>
-                            </span>
-                      </td> -->
                   </tr>
                   <tr *ngIf="service_dataSource.data.length == 0 && !loading">
                     No locations found

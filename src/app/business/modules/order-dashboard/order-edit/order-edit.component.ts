@@ -13,7 +13,7 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { OrderItemsComponent } from '../order-items/order-items.component';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';

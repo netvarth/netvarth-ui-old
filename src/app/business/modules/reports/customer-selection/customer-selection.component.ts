@@ -3,7 +3,7 @@ import { ReportDataService } from '../reports-data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
@@ -31,11 +31,6 @@ export class CustomerSelectionComponent implements OnInit {
   selection = new SelectionModel(true, []);
   customerSelected = 'all';
   allcustomer = true;
-
-
-
-
-
   'list': [
     { 'name': 'some name 1', ID: 'D1', 'checked': true },
     { 'name': 'some name 2', ID: 'D2', 'checked': false }
@@ -56,33 +51,21 @@ export class CustomerSelectionComponent implements OnInit {
       this.patient_array = [];
       if (qparams) {
         this.reportType = qparams.report_type;
-
         if (qparams.data !== 0 && qparams.data !== undefined) {
           this.findPatients(qparams.data);
           this.allcustomer = false;
           this.customerSelected = 'specific';
-
-
         } else {
           this.allcustomer = true;
           this.customerSelected = 'all';
-
-
           this.customerSelected = 'all';
-
-
         }
       } else {
         this.allcustomer = true;
       }
-
     });
-
   }
-
-
   ngOnInit() {
-
     this.createForm();
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     const placeholder = 'Enter customer id seperated by comm;Ex 1,2,3';
@@ -97,7 +80,6 @@ export class CustomerSelectionComponent implements OnInit {
       };
       this.report_data_service.updateCustomers(customerData);
     }
-
   }
   getPatientPhoneNo(patient) {
     let phone = '';
@@ -113,9 +95,7 @@ export class CustomerSelectionComponent implements OnInit {
       this.customer_selected = 'All';
       if (this.patient_dataSource.data.length > 0) {
         this.customer_selected = this.selection.selected;
-
       }
-
       let jaldee_customer_id = '';
       let customer_id = '';
       this.customer_selected.forEach(function (customer) {
@@ -124,7 +104,6 @@ export class CustomerSelectionComponent implements OnInit {
         jaldee_customer_id = jaldee_customer_id + customer.jaldeeId + ',';
       });
       console.log(jaldee_customer_id);
-
       const jaldee_customers = jaldee_customer_id.replace(/,\s*$/, '');
       const customers = customer_id.replace(/,\s*$/, '');
       const customerData = {
@@ -146,43 +125,28 @@ export class CustomerSelectionComponent implements OnInit {
       this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
     }
   }
-
   createForm() {
     this.searchForm = this.fb.group({
       search_input: ['', Validators.compose([Validators.required])]
     });
   }
   getPatientDetails(post_data) {
-
-
   }
   findPatients(qparamsData) {
-
     const customerData: any[] = qparamsData.split(',');
     for (let i = 0; i < customerData.length; i++) {
       const data = {
         'id-eq': customerData[i]
       };
-
-
       this.provider_services.getCustomer(data)
         .subscribe(
           (res: any) => {
             this.patient_array.push(res[0]);
-
             this.patient_dataSource.data = this.patient_array;
             this.count = this.patient_dataSource.data.length;
             this.patient_dataSource.data.forEach(row => this.selection.select(row));
-
           });
-
-
     }
-
-
-
-
-
   }
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -190,10 +154,8 @@ export class CustomerSelectionComponent implements OnInit {
     const numRows = this.patient_dataSource.data.length;
     return numSelected === numRows;
   }
-
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-
     this.isAllSelected() ?
       this.selection.clear() :
       this.patient_dataSource.data.forEach(row => this.selection.select(row));
@@ -210,10 +172,8 @@ export class CustomerSelectionComponent implements OnInit {
       this.showError = true;
     } else {
       this.customer_selected = [];
-
       let mode = 'id';
       this.form_data = null;
-
       let post_data = {};
       const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
       const isEmail = emailPattern.test(form_data.search_input);
@@ -230,7 +190,6 @@ export class CustomerSelectionComponent implements OnInit {
           mode = 'id';
         }
       }
-
       switch (mode) {
         case 'phone':
           post_data = {
@@ -248,31 +207,11 @@ export class CustomerSelectionComponent implements OnInit {
           };
           break;
       }
-
       this.provider_services.getCustomer(post_data)
         .subscribe(
           (data: any) => {
             this.patient_dataSource.data = data;
             this.count = data.length;
-            // this.masterToggle();
-            // if (this.count > 0) {
-
-            // }
-
-            // if (data.length === 0) {
-
-            // } else {
-
-            //   if (data.length > 1) {
-            //     const customer = data.filter(member => !member.parent);
-            //     this.customer_data = customer[0];
-            //   } else {
-            // this.customer_data = data[0];
-            // }
-            // this.jaldeeId = this.customer_data.jaldeeId;
-            // this.getFamilyMembers();
-            // this.initCheckIn();
-            // }
           },
           error => {
             this.wordProcessor.apiErrorAutoHide(this, error);

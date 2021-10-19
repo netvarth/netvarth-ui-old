@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Messages } from '../../../../shared/constants/project-messages';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../business/services/provider-services.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { FormMessageDisplayService } from '../../form-message-display/form-message-display.service';
 

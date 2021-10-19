@@ -1,34 +1,31 @@
 import { NgModule } from '@angular/core';
 import { POSComponent } from './pos.component';
 import { CommonModule } from '@angular/common';
-import { POSRoutingModule } from './pos.routing.module';
-import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
-import { ViewReportComponent } from '../../../../ynw_provider/components/view-report/view-report.component';
-import { ProviderJcouponDetailsComponent } from '../../../../ynw_provider/components/provider-jcoupon-details/provider-jcoupon-details.component';
-import { ProviderReimburseReportModule } from '../../../../ynw_provider/components/provider-reimburse-report/provider-reimburse-report.module';
-import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
-import { CouponsModule } from './coupons/pos-coupons.module';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+const routes: Routes = [
+    { path: '', component: POSComponent },
+    {
+        path: 'coupons', children: [
+            { path: 'report', loadChildren: () => import('./coupons/provider-reimburse-report/provider-reimburse-report.module').then(m => m.ProviderReimburseReportModule) },
+            { path: 'report/:id', loadChildren: () => import('./coupons/view-report/view-report.module').then(m => m.ViewReportModule) }
+        ]
+    },
+    { path: 'coupons/:id', loadChildren: () => import('./coupons/provider-jcoupon-details/provider-jcoupon-details.module').then(m=>m.ProviderJcouponDetailsModule) },
+    { path: 'items', loadChildren: () => import('./items/items.module').then(m => m.ItemsModule) },
+    { path: 'coupon', loadChildren: () => import('./coupons/list/pos-coupons.module').then(m => m.CouponsModule) },
+    { path: 'discount', loadChildren: () => import('./discount/discount.module').then(m => m.DiscountModule) }
+];
 @NgModule({
     imports: [
         CommonModule,
-        POSRoutingModule,
-        CapitalizeFirstPipeModule,
-        ProviderReimburseReportModule,
-        LoadingSpinnerModule,
-        CouponsModule,
         MatSlideToggleModule,
-        MatCheckboxModule,
-        RouterModule,
+        [RouterModule.forChild(routes)],
         FormsModule
     ],
     declarations: [
-        POSComponent,
-        ViewReportComponent,
-        ProviderJcouponDetailsComponent
+        POSComponent
     ],
     exports: [POSComponent]
 })

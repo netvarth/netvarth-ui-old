@@ -1,11 +1,11 @@
 import { Component, HostListener, Inject, OnInit, OnDestroy } from '@angular/core';
-import { ProviderAuditLogComponent } from '../../../ynw_provider/components/provider-auditlogs/provider-auditlogs.component';
-import { UpgradeLicenseComponent } from '../../../ynw_provider/components/upgrade-license/upgrade-license.component';
+import { ProviderAuditLogComponent } from '../provider-auditlogs/provider-auditlogs.component';
+import { UpgradeLicenseComponent } from './upgrade-license/upgrade-license.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../services/provider-services.service';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 
@@ -366,11 +366,6 @@ export class LicenseComponent implements OnInit, OnDestroy {
                 }
             }
         }
-        //     },
-        //     error => {
-        //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        //     }
-        // );
     }
     updateSubscription(value) {
         this.provider_servicesobj.changeLicenseSubscription(value)
@@ -387,10 +382,6 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.router.navigate(['provider', 'license', 'payment', 'history']);
     }
     showUnpaidInvoice() {
-        // if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
-        // if (this.corpSettings && this.corpSettings.isCentralised) {
-        //     this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
-        // } else {
         this.loadingTb = true;
         if (this.invoices.length === 1) {
             this.getInvoicePay(this.invoices[0], 1);
@@ -419,10 +410,6 @@ export class LicenseComponent implements OnInit, OnDestroy {
 
     getInvoicePay(invoice, payMentShow) {
         const invoiceJson = JSON.stringify(invoice);
-        // if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
-        // if (this.corpSettings && this.corpSettings.isCentralised) {
-        //     this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
-        // } else {
         this.temp1 = JSON.parse(invoiceJson);
         const navigationExtras: NavigationExtras = {
             queryParams: {
@@ -486,11 +473,9 @@ export class LicenseComponent implements OnInit, OnDestroy {
             });
         }
     }
-
     cancelAssignServices() {
         this.changelicence = false;
     }
-
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/license->' + mod]);
@@ -529,7 +514,6 @@ export class LicenseComponent implements OnInit, OnDestroy {
             }
         }
     }
-
     gotoAddOns() {
         this.router.navigate(['provider', 'license', 'addons']);
     }

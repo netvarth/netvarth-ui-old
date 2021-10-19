@@ -1,29 +1,11 @@
-// import { Component, OnInit } from '@angular/core';
-
-// @Component({
-//   selector: 'app-location-update',
-//   templateUrl: './location-update.component.html',
-//   styleUrls: ['./location-update.component.css']
-// })
-// export class LocationUpdateComponent implements OnInit {
-
-//   constructor() { }
-
-//   ngOnInit(): void {
-//   }
-
-// }
-
-
-
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ActivatedRoute } from '@angular/router';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { ConfirmBoxComponent } from '../../../shared/confirm-box/confirm-box.component';
 import { Location } from '@angular/common';
 import { SharedFunctions } from '../../../../../app/shared/functions/shared-functions';
 import { GroupStorageService } from '../../../../../app/shared/services/group-storage.service';

@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Messages } from '../../../../shared/constants/project-messages';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ReportDataService } from '../reports-data.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';

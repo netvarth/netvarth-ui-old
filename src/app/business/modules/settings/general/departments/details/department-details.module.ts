@@ -8,8 +8,11 @@ import { CapitalizeFirstPipeModule } from "../../../../../../shared/pipes/capita
 import { LoadingSpinnerModule } from "../../../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { DepartmentDetailComponent } from "./department.details.component";
 import { ReactiveFormsModule } from "@angular/forms";
-import { DepartmentModule } from "../../../../../../ynw_provider/shared/modules/department/department.module";
-
+import { DepartmentModule } from "../../../../department/department.module";
+import { RouterModule, Routes } from "@angular/router";
+const routes: Routes = [
+    {path:'', component: DepartmentDetailComponent}
+]
 @NgModule({
     imports: [
         CommonModule,
@@ -20,7 +23,8 @@ import { DepartmentModule } from "../../../../../../ynw_provider/shared/modules/
         MatButtonModule,
         CapitalizeFirstPipeModule,
         ReactiveFormsModule,
-        DepartmentModule
+        DepartmentModule,
+        [RouterModule.forChild(routes)]
     ],
     exports : [DepartmentDetailComponent],
     declarations: [DepartmentDetailComponent]

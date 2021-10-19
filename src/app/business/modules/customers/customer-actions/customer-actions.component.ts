@@ -1,15 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router, NavigationExtras } from '@angular/router';
-import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from '../../../functions/provider-shared-functions';
 import { LastVisitComponent } from '../../medicalrecord/last-visit/last-visit.component';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
-// import { VoicecallConfirmBoxComponent } from '../confirm-box/voicecall-confirm-box.component';
-// import { Location } from '@angular/common';
-import { VoiceConfirmComponent } from '../video-confirm/voice-confirm.component';
+import { VoiceConfirmComponent } from '../voice-confirm/voice-confirm.component';
 
 @Component({
     selector: 'app-customer-actions',

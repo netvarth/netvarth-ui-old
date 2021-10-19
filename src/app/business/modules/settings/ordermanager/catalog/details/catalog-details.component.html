@@ -231,19 +231,7 @@
                           <mat-radio-group formControlName="orderType" (change)="handleshoppingChange($event)">
                             <mat-radio-button value="SHOPPINGCART">Shopping cart</mat-radio-button>&nbsp;&nbsp;
                             <mat-radio-button value="SHOPPINGLIST">Shopping list</mat-radio-button>
-                          </mat-radio-group>
-                          <!-- <div class="radio-inline">
-                                            <label class="radio radio-solid">
-                                              <input type="radio" name="example_2" checked="checked" value="2"/>
-                                              <span></span>
-                                              Shopping cart
-                                            </label>
-                                            <label class="radio radio-solid">
-                                              <input type="radio" name="example_2" value="2"/>
-                                              <span></span>
-                                              Shopping list
-                                            </label>
-                                          </div> -->
+                          </mat-radio-group>                          
                         </div>
                         <!--end::Select-->
                       </div>
@@ -308,46 +296,11 @@
 
 
                     <div class="row" style="background: #ecf0f5;">
-
-                      <!-- <div class="wdth-full">
-                                      <div class="table-responsive">
-                                        <table class="table">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="d-flex align-items-center font-weight-bolder">
-                                                        <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
-                                                            <div class="symbol-label" style="background-image: url('assets/media/products/11.png')"></div>
-                                                        </div>
-                                                        <a href="#" class="text-dark text-hover-primary">Street Sneakers</a>
-                                                    </td>
-                                                    <td class="text-center align-middle">
-                                                        <a href="javascript:;" class="btn btn-xs btn-light-success btn-icon mr-2"><i class="ki ki-minus icon-xs"></i></a>
-                                                        <span class="mr-2 font-weight-bolder">1</span>
-                                                        <a href="javascript:;" class="btn btn-xs btn-light-success btn-icon"><i class="ki ki-plus icon-xs"></i></a>
-                                                    </td>
-                                                    <td class="text-right align-middle">
-                                                        <a href="#" class="btn btn-danger font-weight-bolder font-size-sm">
-                                                             Remove
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                    
-                                                
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    </div> -->
-
-
-
                       <div class="col-xl-6">
                         <!--begin::Input-->
                         <div *ngIf="item_count > 0 && catalogItems.length == 0 " class="form-group">
                           <div *ngIf="!seletedCatalogItems">
-                            <h6>Select items to your Catalog</h6>
-                            <!-- <a class="link underline pointer-cursor"><u>Add items</u></a>&nbsp;
-                            <a class="link underline pointer-cursor"
-                              (click)="showCreateItemPopup()"><u>Create items</u></a> -->
+                            <h6>Select items to your Catalog</h6>                        
                           </div>
                           <div *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0">
                             <h6>{{seletedCatalogItems.length}} items are selected</h6>
@@ -517,50 +470,6 @@
 
 
                     </div>
-
-
-                    <!-- <div class="row" *ngIf="showAddItem && itemsforadd && itemsforadd.length > 0">
-
-                      <div class="col-md-4 col-xxl-4 col-lg-4 mb-3" *ngFor="let item of itemsforadd;let i=index;">
-
-                        <div class="card card-custom card-shadowless" (click)="selectaddItem(i)"
-                          [class.itemselected]="item.selected">
-                          <div class="card-body p-0">
-                            <div class="overlay">
-
-                              <div class="overlay-wrapper rounded bg-light text-center bg_item_img"
-                                [ngStyle]="{ 'background-image': 'url(' + getItemImg(item) + ')'}">
-                              </div>
-                            </div>
-
-                            <div
-                              class="text-center mt-5 mb-md-0 mb-lg-5 mb-md-0 mb-lg-5 mb-lg-0 mb-5 d-flex flex-column">
-                              <a
-                                class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{item.displayName}}?</a>
-
-                              <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{item.price}}</div>
-                              <span class="font-size-lg">Min. Qty <input class="ip-field pl5"
-                                  (keypress)="isNumber($event)" id="minquty_{{item.itemId}}" type="number" min="1"
-                                  value="{{item.minQuantity}}"></span>
-                              <span class="font-size-lg">Max. Qty<input class="ip-field pl5"
-                                  id="maxquty_{{item.itemId}}" (keypress)="isNumber($event)" type="number" min="1"
-                                  value="{{item.maxQuantity}}"> </span>
-                            </div>
-                          </div>
-                        </div>
-
-
-                      </div>
-
-
-                    </div> -->
-
-                    <!--end::Card-->
-
-                    
-
-
-
                   </div>
                   <!--end::Wizard Step 2-->
 
@@ -573,9 +482,7 @@
                         <div class="form-group">
                           <label>Show item prices </label> &nbsp;
                           <mat-slide-toggle formControlName="itemPriceInfo">
-                          </mat-slide-toggle>
-                          <!-- <mat-slide-toggle formControlName="storepickup" (change)="handlestorepickup($event)">
-                          </mat-slide-toggle> -->
+                          </mat-slide-toggle>                         
                         </div>
                       </div>
                       <!--begin::Input-->
@@ -616,31 +523,7 @@
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <!-- <div class="row">
-                      <div class="col-xl-6">
-                        <div class="form-group">
-                          <label>Cancellation Policy</label> &nbsp;
-                          <mat-slide-toggle formControlName="cancelationPolicyStatus" [disabled]="true">
-                          </mat-slide-toggle><br>
-                          <label class="link underline pointer-cursor" (click)="addcancelpolicy()">Add cancellation
-                            policy</label>
-
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-xl-6" *ngIf="showpolicy">
-                        <div class="form-group">
-                          <label>Enter cancelation policy</label>
-                          <textarea type="text" class="form-control1 form-control-solid form-control-lg"
-                            id="cancelationPolicy" placeholder="Enter cancelation policy "
-                            formControlName="cancelationPolicy">
-                                          </textarea>
-                        </div>
-                      </div>
-                    </div> -->
-
+                    </div>                    
                     <!--end::Section-->
 
                   </div>
@@ -850,8 +733,6 @@
                       </div>
                     </div>
                     <!--begin::Input-->
-
-
 
                   </div>
                   <!--begin::Wizard Actions-->

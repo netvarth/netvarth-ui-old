@@ -14,9 +14,6 @@
                 <div class="card col-md-9 col-lg-9 col-sm-12 col-xs-12">
                     <div class="card-body p-0">
                         <div class="col-sm-9 col-xs-12 col-lg-9 col-md-9 p-0">
-                            <!-- <div class="d-flex align-items-end">
-                                <div class="d-flex align-items-center">
-                                    <div class="d-flex flex-column line-hgt"> -->
                             <div class="stats-item head-card"
                                 *ngIf="waiting_type == 'checkin' && (data.waitlistingFor[0].firstName || data.waitlistingFor[0].lastName || data.waitlistingFor[0].memberJaldeeId)">
                                 <h5 class="user-names" *ngFor="let user of data.waitlistingFor">
@@ -160,9 +157,9 @@
                                                 style="width: 45px !important;margin-left: 20px;"></i>
                                             &nbsp;
                                             <div class="mgn-up-10">{{serv_name}}
-                                            <h6 *ngIf="servStarted" class="service-status">Status:
-                                                {{(servDetails?.virtualServiceType ==
-                                                'videoService')? 'Video' : 'Audio'}} Consultation in-progress</h6>
+                                                <h6 *ngIf="servStarted" class="service-status">Status:
+                                                    {{(servDetails?.virtualServiceType ==
+                                                    'videoService')? 'Video' : 'Audio'}} Consultation in-progress</h6>
                                             </div>
                                         </h2>
                                     </div>
@@ -176,12 +173,6 @@
                                                 'WhatsApp'}}</span>
                                             <span class="custom-red" style="text-transform: lowercase !important;">
                                                 {{notSupported}}</span><br>
-                                            <!-- <span class="call-inst"><a (click)="meetingDetails()">
-                                                    Send {{(servDetails?.virtualServiceType == 'videoService')? 'video'
-                                                    : 'audio'}} call {{ph_or_tab_cap}}
-                                                    {{(callingModes == 'Phone')? 'Phone' : 'WhatsApp'}}
-                                                    {{installed_cap}}
-                                                </a></span> -->
                                         </div>
                                     </div>
                                     <div class="mgn-up-20 call-inst" *ngIf="callingModes === 'WhatsApp'">
@@ -192,44 +183,10 @@
                                         You can call the {{customer_label}} directly at
                                         +{{data.virtualService['Phone']}}
                                     </div>
-                                    <!-- <div class="mgn-up-10">
-                                        <i class="fa fa-file-text-o fnt-file"
-                                            aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <img class="nxt-icon" src="assets/images/next.png" alt="nexticon">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <img *ngIf="callingModes === 'WhatsApp'" class="wtsap-img"
-                                            src="assets/images/whtsapLogo.png" alt="WhatsAppicon">
-                                        <img *ngIf="callingModes === 'Phone'" class="wtsap-img"
-                                            src="assets/images/phone.png" alt="phoneicon">
-                                    </div> -->
                                 </div>
                                 <!--Content box with Reminder,meeting details,Customer details(btns) -->
                                 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12   centeralign pad-10">
                                     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign">
-                                        <!-- <img class="usr_img" src="assets/images/user_icn.png" alt="user_icon"> -->
-                                        <!-- <div class="col-md-12 col-m-12 col-xs-12 col-lg-12">
-                                            <b><span class="mgn-lt-5">{{consumer_fname | capitalizeFirst}}</span><span
-                                                    *ngIf="waiting_type === 'checkin'">
-                                                    {{consumer_lname | capitalizeFirst}}
-                                                </span></b>
-                                        </div> -->
-                                        <!-- <div
-                                            class="col-md-12 col-xs-12 col-sm-12 col-lg-12 centeralign mgn-up-20 no-padding">
-                                            <button (click)="reminder()"
-                                                class="functionality-btn btn-primary-n tele-btn txt-trans-none mgn-rt-5">
-                                                <i *ngIf="!servStarted" class="fa fa-bell fa-blk"
-                                                    aria-hidden="true"></i>
-                                                <i *ngIf="servStarted" class="fa fa-comments-o fa-blk"
-                                                    aria-hidden="true"></i>
-                                                <a class="tspace">Send {{servStarted ? 'Message' : 'Reminder'}}</a>
-                                            </button>
-                                            <button (click)="meetingDetails()"
-                                                class="functionality-btn btn-primary-n tele-btn txt-trans-none mgn-up-5">
-                                                <i class="fa fa-share-alt fa-blk" aria-hidden="true"></i>
-                                                <a class="tspace">Share {{(servDetails?.virtualServiceType ==
-                                                    'videoService')? 'video' : 'audio'}} call instructions</a>
-                                            </button>
-                                        </div> -->
                                     </div>
                                 </div>
                             </div>

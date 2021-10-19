@@ -8,9 +8,6 @@ export class GlobalErrorHandler implements ErrorHandler {
     constructor(public shared_services: SharedServices,private injector:Injector) {
     }
 
-
-
-
     handleError(error: any): void {
         const router = this.injector.get(Router);
         const userData = this.shared_services.getUserData();

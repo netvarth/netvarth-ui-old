@@ -3,10 +3,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Location } from '@angular/common';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
-import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from '../../../functions/provider-shared-functions';
 import * as moment from 'moment';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { CheckinActionsComponent } from '../checkin-actions/checkin-actions.component';
@@ -58,7 +58,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   apptTime;
   communication_history: any = [];
   est_tooltip = Messages.ESTDATE;
-  breadcrumbs_init: any = [];
   api_success = null;
   api_error = null;
   userDet;
@@ -178,29 +177,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       .subscribe(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
-        if (this.showToken) {
-          this.breadcrumbs_init = [
-            {
-              title: 'Tokens',
-              url: '/provider/check-ins'
-            },
-            {
-              title: 'Token'
-            }
-          ];
-          this.breadcrumbs = this.breadcrumbs_init;
-        } else {
-          this.breadcrumbs_init = [
-            {
-              title: 'Check-ins',
-              url: '/provider/check-ins'
-            },
-            {
-              title: 'Check-in'
-            }
-          ];
-          this.breadcrumbs = this.breadcrumbs_init;
-        }
         this.getWaitlistDetail();
         this.api_loading = false;
       }, () => {

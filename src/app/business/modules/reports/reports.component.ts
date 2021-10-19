@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReportDataService } from './reports-data.service';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../services/provider-services.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CriteriaDialogComponent } from './generated-report/criteria-dialog/criteria-dialog.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';

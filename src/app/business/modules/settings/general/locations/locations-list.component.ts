@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../app.component';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../services/provider-services.service';
 import { SharedServices } from '../../../../../shared/services/shared-services';
-import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from '../../../../functions/provider-shared-functions';
 import { Router, NavigationExtras } from '@angular/router';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
@@ -37,20 +37,8 @@ export class LocationsListComponent implements OnInit {
     show_addlocationButton = false;
     multipeLocationAllowed = false;
     businessConfig: any = [];
-    breadcrumb_moreoptions: any = [];
     init_location = true;
     api_loading = false;
-    breadcrumbs_init = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: Messages.GENERALSETTINGS,
-            url: '/provider/settings/general'
-        }
-    ];
-    breadcrumbs = this.breadcrumbs_init;
     isCheckin;
     domain: any;
     order = 'status';
@@ -102,26 +90,6 @@ export class LocationsListComponent implements OnInit {
                         if (this.businessConfig[i].multipleLocation) {
                             this.multipeLocationAllowed = true;
                         }
-                        if (this.multipeLocationAllowed === true) {
-                            const breadcrumbs = [];
-                            this.breadcrumbs_init.map((e) => {
-                                breadcrumbs.push(e);
-                            });
-                            breadcrumbs.push({
-                                title: 'Locations'
-                            });
-                            this.breadcrumbs = breadcrumbs;
-                        }
-                        if (this.multipeLocationAllowed === false) {
-                            const breadcrumbs = [];
-                            this.breadcrumbs_init.map((e) => {
-                                breadcrumbs.push(e);
-                            });
-                            breadcrumbs.push({
-                                title: 'Location'
-                            });
-                            this.breadcrumbs = breadcrumbs;
-                        }
                     }
                 }
                 // calling the method to get the list of locations
@@ -155,11 +123,7 @@ export class LocationsListComponent implements OnInit {
                         actions.push({ 'title': 'Help', 'type': 'learnmore' });
                     } else {
                         actions.push({ 'title': 'Help', 'type': 'learnmore' });
-                    }
-                    this.breadcrumb_moreoptions = {
-                        'show_learnmore': true, 'scrollKey': 'general->locations', 'subKey': '', 'classname': 'b-loc',
-                        'actions': actions
-                    };
+                    }                    
                     this.init_location = false;
                 }
                 this.query_executed = true;

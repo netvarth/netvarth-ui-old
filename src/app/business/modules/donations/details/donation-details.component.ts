@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from '../../../functions/provider-shared-functions';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 @Component({

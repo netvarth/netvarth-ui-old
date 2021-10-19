@@ -5,8 +5,8 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { SharedServices } from '../../../shared/services/shared-services';
 import * as moment from 'moment';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
-import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderServices } from '../../services/provider-services.service';
+import { ProviderSharedFuctions } from '../../functions/provider-shared-functions';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from './add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -27,9 +27,9 @@ import { LocalStorageService } from '../../../shared/services/local-storage.serv
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { Title } from '@angular/platform-browser';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
-import { instantQueueComponent } from './instantQ/instantQueue.component';
-import { ConfirmBoxComponent } from '../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { ConfirmBoxComponent } from '../../shared/confirm-box/confirm-box.component';
 import { AttachmentPopupComponent } from '../../../../app/shared/components/attachment-popup/attachment-popup.component';
+import { InstantQueueComponent } from './instant-q/instant-queue.component';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html',
@@ -3205,7 +3205,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
       console.log(loggedUser);
       this.locId = this.groupService.getitemFromGroupStorage('provider_selected_location');
-      this.instantdialogRef = this.dialog.open(instantQueueComponent, {
+      this.instantdialogRef = this.dialog.open(InstantQueueComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,

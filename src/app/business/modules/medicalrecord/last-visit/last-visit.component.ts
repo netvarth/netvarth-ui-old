@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
 import { DateFormatPipe } from '../../../../shared//pipes/date-format/date-format.pipe';

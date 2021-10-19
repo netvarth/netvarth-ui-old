@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, NavigationExtras } from '@angular/router';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { OrderActionsComponent } from './order-actions/order-actions.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
@@ -558,21 +558,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     Object.keys(this.selectedLabels).forEach(key => {
       if (this.selectedLabels[key].length > 0) {
         count++;
-        if (!this.labelFilterData.includes(key)) {
-          // const labelvalues = this.selectedLabels[key].join(',');
-          // const labelvaluesArray = labelvalues.split(',');
-          // for (const value of labelvaluesArray) {
-          //   const lblFilter = key + '::' + value;
-          //   const Mfilter = this.setFilterForApi();
-          //   Mfilter['label-eq'] = lblFilter;
-          //   const promise = this.getHistoryWLCount(Mfilter);
-          //   promise.then(
-          //     result => {
-          //       if (this.labelsCount.indexOf(value + ' - ' + result) === -1) {
-          //         this.labelsCount.push(value + ' - ' + result);
-          //       }
-          //     });
-          // }
+        if (!this.labelFilterData.includes(key)) {        
           if (count === 1) {
             this.labelFilterData = this.labelFilterData + key + '::' + this.selectedLabels[key].join(',');
           } else {
@@ -584,107 +570,6 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
       }
     });
   }
-  // labels(checkin) {
-  //   for (let i = 0; i < this.providerLabels.length; i++) {
-  //     for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
-  //       this.providerLabels[i].valueSet[j].selected = false;
-  //     }
-  //   }
-  //   setTimeout(() => {
-  //     const values = [];
-  //     if (checkin.label) {
-  //       for (const value of Object.values(checkin.label)) {
-  //         values.push(value);
-  //       }
-  //       for (let i = 0; i < this.providerLabels.length; i++) {
-  //         for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
-  //           for (let k = 0; k < values.length; k++) {
-  //             if (this.providerLabels[i].valueSet[j].value === values[k]) {
-  //               this.providerLabels[i].valueSet[j].selected = true;
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }, 100);
-  // }
-  // addLabelvalue(source, label?) {
-  //   const _this = this;
-  //   const appts = [];
-  //   Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
-  //     appts.push(_this.appointmentsChecked[apptIndex]);
-  //   });
-  //   this.labeldialogRef = this.dialog.open(ApplyLabelComponent, {
-  //     width: '50%',
-  //     panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
-  //     disableClose: true,
-  //     autoFocus: true,
-  //     data: {
-  //       checkin: appts[0],
-  //       source: source,
-  //       label: label
-  //     }
-  //   });
-  //   this.labeldialogRef.afterClosed().subscribe(data => {
-  //     if (data) {
-  //       setTimeout(() => {
-  //         this.labels(appts[0]);
-  //         this.labelMap = new Object();
-  //         this.labelMap[data.label] = data.value;
-  //         this.addLabel(appts[0].ynwUuid);
-  //         this.getDisplayname(data.label);
-  //         this.loadApiSwitch('');
-  //       }, 500);
-  //     }
-  //     this.getLabel();
-  //   });
-  // }
-  // addLabel(checkinId) {
-  //   this.provider_services.addLabeltoCheckin(checkinId, this.labelMap).subscribe(data => {
-  //     this.loadApiSwitch('');
-  //   },
-  //     error => {
-  //       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //     });
-  // }
-  // deleteLabel(label, checkinId) {
-  //   this.provider_services.deleteLabelfromCheckin(checkinId, label).subscribe(data => {
-  //     this.loadApiSwitch('');
-  //   },
-  //     error => {
-  //       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //     });
-  // }
-
-  // changeLabelvalue(labelname, value) {
-  //   this.showLabels = false;
-  //   const _this = this;
-  //   const appts = [];
-  //   Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
-  //     appts.push(_this.appointmentsChecked[apptIndex]);
-  //   });
-  //   if (appts.length === 1) {
-  //     this.labelMap = new Object();
-  //     this.labelMap[labelname] = value;
-  //     for (let i = 0; i < this.providerLabels.length; i++) {
-  //       for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
-  //         if (this.providerLabels[i].valueSet[j].value === value) {
-  //           if (!this.providerLabels[i].valueSet[j].selected) {
-  //             this.providerLabels[i].valueSet[j].selected = true;
-  //             this.addLabel(appts[0].ynwUuid);
-  //           } else {
-  //             this.providerLabels[i].valueSet[j].selected = false;
-  //             this.deleteLabel(labelname, appts[0].ynwUuid);
-  //           }
-  //         } else {
-  //           if (this.providerLabels[i].label === labelname) {
-  //             this.providerLabels[i].valueSet[j].selected = false;
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
   setLabelFilter(label, event) {
     const value = event.checked;
     if (label === 'all') {

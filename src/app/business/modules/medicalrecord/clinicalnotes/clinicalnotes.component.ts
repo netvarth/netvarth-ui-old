@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { InboxServices } from '../../../shared/modules/inbox/inbox.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../services/provider-services.service';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { Router } from '@angular/router';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';

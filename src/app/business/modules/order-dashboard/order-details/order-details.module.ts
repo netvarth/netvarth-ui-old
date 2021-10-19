@@ -9,6 +9,9 @@ import { LoadingSpinnerModule } from "../../../../shared/modules/loading-spinner
 import { CommonModule } from "@angular/common";
 import { CommunicationModule } from "../../../../shared/components/communication/communication.module";
 import { CardModule } from "../../../../shared/components/card/card.module";
+import { OrderActionsModule } from "../order-actions/order-actions.module";
+import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
+import { Nl2BrPipeModule } from "nl2br-pipe";
 
 @NgModule({
     imports: [
@@ -20,6 +23,9 @@ import { CardModule } from "../../../../shared/components/card/card.module";
         LoadingSpinnerModule,
         CommunicationModule,
         CardModule,
+        OrderActionsModule,
+        CapitalizeFirstPipeModule,
+        Nl2BrPipeModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     ],
     exports: [

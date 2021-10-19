@@ -45,7 +45,6 @@
                                         </mat-form-field>
                                     </div>
                                 </ng-container>
-                                <!-- qboard adding -->
                                 <div *ngIf="!qboardSelected">
                                     <div class="form-group col-md-6 col-xs-12 col-sm-6">
                                         <mat-form-field>
@@ -85,7 +84,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- qbord adding ends -->
                             </form>
                             <div class="cl1" *ngIf="actionparam === 'view'">
                                 <span class="editbt" *ngIf="!layoutData.isContainer" (click)="editlayout(layoutData.id)"></span>
@@ -129,7 +127,6 @@
                                 </form>
                             </div>
                         </div>
-                        <!--Q Selection criteria starts here-->
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="showMode == 'QSETS'">
                             <app-displayboard-qset (idSelected)="qSetSelected($event)" [source]="source">
                             </app-displayboard-qset>
@@ -143,10 +140,7 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
-        <!-- Header and Footer Settings  -->
         <div *ngIf="!headerSetting && !footerSetting" class="content w-manager settings comn-cls lic-page no-padding">
             <div class="col-md-12 no-padding" (click)="headerClick()">
                 <div *ngIf="actionparam === 'view'">

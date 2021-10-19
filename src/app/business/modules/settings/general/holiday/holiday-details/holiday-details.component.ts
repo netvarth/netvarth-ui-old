@@ -4,14 +4,14 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import * as moment from 'moment';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { DateTimeProcessor } from '../../../../../../shared/services/datetime-processor.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmBoxComponent } from '../../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { ConfirmBoxComponent } from '../../../../../shared/confirm-box/confirm-box.component';
 
 @Component({
   selector: 'app-holiday-details',

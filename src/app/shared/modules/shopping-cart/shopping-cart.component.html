@@ -40,11 +40,8 @@
                               <i *ngIf="item.consumerNote" class="fa fa-trash"></i>
                            </span>
                         </div>
-
                       </div>
-
                     </div>
-
                     <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-4 disp-flex fl-right mgn-up-20">
                       <div *ngIf="getItemQty(item) === 1" (click)="removeItemFromCart(item)"
                         class="item-pad bodr-lft bodr-btm-up item-qty cusr-pointer"><i class="fa fa-trash"></i>
@@ -58,14 +55,9 @@
                         class="item-pad bodr-rht bodr-btm-up item-qty cusr-pointer">+
                       </div>
                     </div>
-                    <!-- <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-3 disp-flex fl-right" (click)="addNotes(item,i);">
-                      <a> <i class="fa fa-sticky-note-o" aria-hidden="true">
-                        Add Notes</i></a>
-                    </div> -->
                   </div>
                 </div>
               </div>
-
               <div class="col-sm-5 col-md-5 col-lg-5 col-xs-12 pad-10">
                 <!-- Side bar contact -->
                 <div class="contact-outer">
@@ -81,8 +73,6 @@
                       <div *ngIf="storeContact.email" class="disp-flex word-break-all"><i class="fa fa-envelope mgn-rt-6 mgn-up-8"></i>{{storeContact.email}}</div>
                       <div *ngIf= "storeContact.alternateEmail" class="disp-flex word-break-all"><i class="fa fa-envelope mgn-rt-6 mgn-up-8"></i>{{storeContact.alternateEmail}}</div>
                       <div *ngIf= "storeContact.whatsappNo"><i class="fa wtsapaud-icon mgn-rt-6"></i>{{storeContact.whatsAppCountryCode}} {{storeContact.whatsappNo}}</div>
-
-
                     </div>
                   </aside>
                 </div>
@@ -101,7 +91,6 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-20 bdr-bt-grey"  *ngIf="isPhysicalItemsPresent()">
                     <div class="oder-sumary-txt" *ngIf="home_delivery && store_pickup">
                       Delivery Type
@@ -145,22 +134,12 @@
                         <span>No timings are available</span>
                       </div>
                   </div>
-                  <!-- <div class="order-label mt-2" *ngIf="(s3CouponsList.JC.length > 0||s3CouponsList.OWN.length > 0)"><a (click)="applyPromocode()"
-                    *ngIf="selected_coupons.length === 0">Apply Promo Code</a>
-                  <a *ngIf="selected_coupons.length > 0" (click)="applyPromocode()">
-                      Promo code {{selected_coupons.toString()}} added, will be applicable in the final bill.</a>
-                </div> -->
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 itm_sumry_outline" *ngIf="catalog_loading && catalog_details && catalog_details.showPrice">
                     <div class="oder-sumary-txt">Order Summary</div>
-
                     <div class="order-label">
                       <div class="flex1">Item Total</div>
                       <div class="price rupee-font">&#8377;{{getTotalItemPrice()}}</div>
                     </div>
-                    <!-- <div class="order-label" *ngIf="catalog_details.taxPercentage">
-                      <div class="flex1">Tax</div>
-                      <div class="price rupee-font">&#8377;{{getTotalItemTax(catalog_details.taxPercentage)}}</div>
-                    </div> -->
                     <ng-container *ngIf="orders.length!==0">
                     <div class="order-label" *ngIf="(home_delivery && !store_pickup) || choose_type =='home'">
                       <div class="flex1">Delivery Charge</div>
@@ -176,27 +155,20 @@
                 </div>
               </div>
             </div>
-
-
             <!-- Change date -->
             <div class="panel-body no-padding">
               <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                 <div class="card p0">
                   <div class="copy locd">
-
-
                     <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
                       *ngIf="action=='timeChange'">
-                      <!-- <p>shiva Reddy</p> -->
                       <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
                           Choose
                           Date</div>
                         <div class="pull-left brd-round brd-light mgn-up-20">
-                          <!-- <div class="icon-minus pull-left" [class.disable]="disableMinus()" -->
                           <div class="icon-minus pull-left" (click)="calculateDate(-1)">
                           </div>
-
                           <div class="pull-left chkindt">{{sel_checkindate | date: dateFormat}}</div>
                           <div class="icon-add pull-left" (click)="calculateDate(1)"></div>
                         </div>
@@ -207,9 +179,7 @@
                           <input class="" style="visibility: hidden; width:1px" type="text" [matDatepicker]="picker"
                             [min]="minDate" [max]="maxDate" [value]="ddate"
                             (dateChange)="handleFutureDateChange($event)">
-
                         </div>
-
                       </div>
                       <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
                           <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20" *ngIf="choose_type === 'home'">Delivery
@@ -217,33 +187,21 @@
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20" *ngIf="choose_type === 'store'"> Store Pickup
                               Timings  </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20">
-                          <!-- <div class="pull-left brd-round brd-light mgn-up-20" *ngIf="isfutureAvailableTime"> -->
-                            <!-- <p>{{futureAvailableTime}}</p> -->
-
-                          <!-- <div *ngIf="!isfutureAvailableTime">
-                            <p>No timings are available</p>
-                          </div> -->
                             <mat-chip-list class="" *ngIf="isfutureAvailableTime" >
                                 <mat-chip *ngFor="let queue of nextAvailableTimeQueue, let i= index"
                                 (click)="handleQueueSelection(queue, i)">
-                                <!-- [selected]="queue(i) === nextAvailableTime"> -->
                                     {{queue['sTime'] + ' - ' +
                                     queue['eTime']}}
                                 </mat-chip>
                             </mat-chip-list>
-                          <!-- </div> -->
-
                             <div *ngIf="!isfutureAvailableTime">
                               <p>No timings are available</p>
                             </div>
                         </div>
-
                       </div>
                       <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-up-20 mgn-lt-5">
                         <button (click)="goBackCart(futureAvailableTime ,queue)"   [disabled]="!isfutureAvailableTime" class="btn bt3 btn-default coupon-apply-btn"
                           type="button">Ok</button>
-                          <!-- <button (click)="resetDateTime();" class="btn bt3 btn-default coupon-apply-btn"
-                          type="button">Cancel</button> -->
                       </div>
                     </div>
                     <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes" *ngIf="action=='coupons'">
@@ -264,12 +222,10 @@
                               </span>
                             </div>
                           </div>
-
                           <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding" style="color: red;"
                             *ngIf="api_cp_error !== null">
                             {{api_cp_error}}</div>
                           <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10 mgn-bt-20">
-
                           </div>
                         </div>
                         <div class="col-md-12 col-sm-12 col-lg-12 col-12 mgn-up-20 mgn-bt-30 border-tp pad-up-10"
@@ -295,7 +251,6 @@
                           </div>
                         </div>
                       </div>
-
                       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 coupon-outer" *ngIf="coupon_status">
                         <div class="form-group">
                           <span *ngIf="coupon_status=='success'" class="coupon_success">Coupon Code(s)
@@ -310,8 +265,6 @@
                 </div>
               </div>
             </div>
-
-
           </div>
         </div>
       </div>

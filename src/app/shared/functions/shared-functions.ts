@@ -7,8 +7,8 @@ import { ConfirmBoxComponent } from '../components/confirm-box/confirm-box.compo
 import { Observable, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { DateFormatPipe } from '../pipes/date-format/date-format.pipe';
-import { ProviderDataStorageService } from '../../ynw_provider/services/provider-datastorage.service';
-import { ProviderServices } from '../../ynw_provider/services/provider-services.service';
+import { ProviderDataStorageService } from '../../business/services/provider-datastorage.service';
+import { ProviderServices } from '../../business/services/provider-services.service';
 import { GroupStorageService } from '../services/group-storage.service';
 import { LocalStorageService } from '../services/local-storage.service';
 import { SessionStorageService } from '../services/session-storage.service';

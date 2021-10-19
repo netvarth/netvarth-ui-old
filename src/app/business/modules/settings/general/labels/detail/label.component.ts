@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';

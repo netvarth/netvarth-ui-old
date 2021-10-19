@@ -3,8 +3,6 @@ import { NgModule, OnInit,  NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@an
 import { CommonModule } from '@angular/common';
 import { LoadingSpinnerModule } from '../../../shared/modules/loading-spinner/loading-spinner.module';
 import { ReportsComponent } from './reports.component';
-import { ReportsRoutingModule } from './reports.routing.module';
-import { NewReportComponent } from './new-report/new-report.component';
 import { ReportDataService } from './reports-data.service';
 import { ExportReportService } from './export-report.service';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
@@ -13,30 +11,35 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-import { ServiceSelectionComponent } from './service-selection/service-selection.component';
-import { ScheduleSelectionComponent } from './schedule-selection/schedule-selection.component';
-import { QueueSelectionComponent } from './queue-selection/queue-selection.component';
-import { GeneratedReportComponent } from './generated-report/generated-report.component';
-import { CustomerSelectionComponent } from './customer-selection/customer-selection.component';
-import { CriteriaDialogComponent } from './generated-report/criteria-dialog/criteria-dialog.component';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
-import { UserSelectionComponent } from './new-report/user-selection/user-selection.component';
-import { UserReportComponent } from './user-report/user-report.component';
-import { UserDetailReportComponent } from './user-report/user-detail-report/user-detail-report.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
+import { RouterModule, Routes } from '@angular/router';
+const routes: Routes = [
+  { path: '', component: ReportsComponent },
+  { path: '', children: [
+      { path: 'new-report', loadChildren: ()=> import('./new-report/new-report.module').then(m=>m.NewReportModule)},
+      { path: 'user-report', loadChildren: ()=> import('./user-report/user-report.module').then(m=>m.UserReportModule)},
+      { path: 'user-details', loadChildren: ()=> import('./user-report/user-detail-report/user-detail-report.module').then(m=>m.UserDetailReportModule)},   
+      { path: 'service', loadChildren: ()=> import('./service-selection/service-selection.module').then(m=>m.ServiceSelectionModule)},
+      { path: 'schedule', loadChildren: ()=> import('./schedule-selection/schedule-selection.module').then(m=>m.ScheduleSelectionModule)},
+      { path: 'queue', loadChildren: ()=> import('./queue-selection/queue-selection.module').then(m=>m.QueueSelectionModule)},
+      { path: 'generated-report', loadChildren: ()=> import('./generated-report/generated-report.module').then(m=>m.GeneratedReportModule)},
+      { path: 'customer', loadChildren: ()=> import('./customer-selection/customer-selection.module').then(m=>m.CustomerSelectionModule)},
+      { path: 'user', loadChildren: ()=> import('./new-report/user-selection/user-selection.module').then(m=>m.UserSelectionModule)}
+    ]
+  }
+];
 @NgModule({
   imports: [
       CommonModule,
       FormsModule,
       ReactiveFormsModule,
       LoadingSpinnerModule,
-      ReportsRoutingModule,
       CapitalizeFirstPipeModule,
       MatTableModule,
       MatFormFieldModule,
@@ -48,30 +51,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
       MatOptionModule,
       MatExpansionModule,
       MatCheckboxModule,
-      MatProgressSpinnerModule
+      MatProgressSpinnerModule,
+      [RouterModule.forChild(routes)]
   ],
   declarations: [
-    ReportsComponent,
-    NewReportComponent,
-    ServiceSelectionComponent,
-    ScheduleSelectionComponent,
-    QueueSelectionComponent,
-    GeneratedReportComponent,
-    CustomerSelectionComponent,
-    CriteriaDialogComponent,
-    UserSelectionComponent,
-    UserReportComponent,
-    UserDetailReportComponent,
-
+    ReportsComponent
   ],
-  entryComponents: [
-    CriteriaDialogComponent
-  ],
-  exports: [
-    MatFormFieldModule,
-    MatInputModule,
-    MatPaginatorModule
-  ],
+  exports: [ReportsComponent],
   providers: [
     ReportDataService,
     ExportReportService

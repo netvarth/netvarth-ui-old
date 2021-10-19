@@ -1,13 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
-import { AddproviderAddonComponent } from '../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 import { MatDialog } from '@angular/material/dialog';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { AddproviderAddonComponent } from '../../add-provider-addons/add-provider-addons.component';
 
 @Component({
     selector: 'app-checkin-details-send',

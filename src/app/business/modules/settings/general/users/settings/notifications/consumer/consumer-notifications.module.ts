@@ -10,9 +10,12 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { CapitalizeFirstPipeModule } from "../../../../../../../../shared/pipes/capitalize.module";
 import { LoadingSpinnerModule } from "../../../../../../../../shared/modules/loading-spinner/loading-spinner.module";
-import { AddProviderAddonsModule } from "../../../../../../../../ynw_provider/components/add-provider-addons/add-provider-addons.module";
 import { ConsumerNotificationUserComponent } from "./consumer-notifications.component";
-
+import { AddProviderAddonsModule } from "../../../../../../../../business/modules/add-provider-addons/add-provider-addons.module";
+import { RouterModule, Routes } from "@angular/router";
+const routes: Routes = [
+    {path: '',component:ConsumerNotificationUserComponent }
+]
 @NgModule({
     imports: [
         CommonModule,
@@ -26,7 +29,8 @@ import { ConsumerNotificationUserComponent } from "./consumer-notifications.comp
         MatCheckboxModule,
         MatSelectModule,
         MatOptionModule,
-        CapitalizeFirstPipeModule
+        CapitalizeFirstPipeModule,
+        [RouterModule.forChild(routes)]
     ],
     exports: [ConsumerNotificationUserComponent],
     declarations: [

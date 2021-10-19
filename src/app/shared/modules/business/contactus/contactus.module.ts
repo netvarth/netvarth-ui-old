@@ -1,19 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { ContactusComponent } from './contactus.component';
-import { contactusRoutingModule } from './contactus.routing.module';
-// import { MaterialModule } from '../../../common/material.module';
-import { FooterModule } from '../../footer/footer.module';
 import { HeaderModule } from '../../header/header.module';
+import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+const routes: Routes = [
+    { path: '', component: ContactusComponent }
+];
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         HeaderModule,
-        // MaterialModule,
-        FooterModule,
-        contactusRoutingModule
+        [RouterModule.forChild(routes)]
     ],
     declarations: [
         ContactusComponent

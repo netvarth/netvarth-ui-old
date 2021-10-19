@@ -7,7 +7,7 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { projectConstants } from '../../../app.component';
 import { FormGroup } from '@angular/forms';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../services/provider-services.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TeleServiceConfirmBoxComponent } from '../teleservice/teleservice-confirm-box/teleservice-confirm-box.component';

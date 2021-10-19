@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { Messages } from '../../../../../../shared/constants/project-messages';
@@ -49,7 +49,7 @@ export class EditcatalogitemPopupComponent implements OnInit {
   disableButton = false;
   userId;
   drugType;
-  drugDetail: any =  [];
+  drugDetail: any = [];
   listOfDrugs;
   today = new Date();
   cataId;
@@ -57,7 +57,6 @@ export class EditcatalogitemPopupComponent implements OnInit {
   minimumquantity;
   maximumquantity
   addAnother = false;
-
   constructor(
     public dialogRef: MatDialogRef<EditcatalogitemPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -65,43 +64,35 @@ export class EditcatalogitemPopupComponent implements OnInit {
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
-    public sharedfunctionObj: SharedFunctions,
+    public sharedfunctionObj: SharedFunctions
   ) {
     this.cataId = data.id;
     this.minimumquantity = data.minquantity;
     this.maximumquantity = data.maxquantity;
   }
-  
   ngOnInit() {
     this.api_loading = false;
     this.createForm();
   }
-
-
   createForm() {
-
-      this.amForm = this.fb.group({
-        maxquantity: ['', Validators.compose([Validators.required])],
-        minquantity: ['', Validators.compose([Validators.required])]
-      });
-      this.amForm.get('maxquantity').setValue(this.maximumquantity);
-      this.amForm.get('minquantity').setValue(this.minimumquantity);
+    this.amForm = this.fb.group({
+      maxquantity: ['', Validators.compose([Validators.required])],
+      minquantity: ['', Validators.compose([Validators.required])]
+    });
+    this.amForm.get('maxquantity').setValue(this.maximumquantity);
+    this.amForm.get('minquantity').setValue(this.minimumquantity);
   }
-
   onSubmit(form_data) {
     this.dialogRef.close(form_data);
 
   }
   isNumeric(evt) {
     return this.sharedfunctionObj.isNumber(evt);
-}
-isvalid(evt) {
+  }
+  isvalid(evt) {
     return this.sharedfunctionObj.isValid(evt);
-}
+  }
   close() {
-      this.dialogRef.close();
+    this.dialogRef.close();
   }
 }
-
-
-

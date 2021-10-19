@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';

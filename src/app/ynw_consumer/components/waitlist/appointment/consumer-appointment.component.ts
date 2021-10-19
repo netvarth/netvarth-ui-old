@@ -9,7 +9,7 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import * as moment from 'moment';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../business/services/provider-services.service';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { DOCUMENT, Location } from '@angular/common';
 import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
@@ -25,11 +25,11 @@ import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
 import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
-import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-coupon-note/jc-coupon-note.component';
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { DomSanitizer } from '../../../../../../node_modules/@angular/platform-browser';
 import { ConsumerEmailComponent } from '../../../shared/component/consumer-email/consumer-email.component';
 import { PaytmService } from '../../../../shared/services/paytm.service';
+import { JcCouponNoteComponent } from '../../../../shared/modules/jc-coupon-note/jc-coupon-note.component';
 
 
 @Component({

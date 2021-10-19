@@ -4,12 +4,12 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
-import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderServices } from '../../services/provider-services.service';
+import { ProviderSharedFuctions } from '../../functions/provider-shared-functions';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
-import { ProviderDataStorageService } from '../../../ynw_provider/services/provider-datastorage.service';
+import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { Title } from '@angular/platform-browser';
 
 @Component({

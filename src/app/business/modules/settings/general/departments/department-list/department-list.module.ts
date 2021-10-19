@@ -7,7 +7,10 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { CapitalizeFirstPipeModule } from "../../../../../../shared/pipes/capitalize.module";
 import { LoadingSpinnerModule } from "../../../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { DepartmentListComponent } from "./department-list.component";
-
+import { RouterModule, Routes } from "@angular/router";
+const routes: Routes = [
+    {path:'', component: DepartmentListComponent}
+]
 @NgModule({
     imports: [
         CommonModule,
@@ -16,7 +19,8 @@ import { DepartmentListComponent } from "./department-list.component";
         MatButtonModule,
         MatIconModule,
         LoadingSpinnerModule,
-        CapitalizeFirstPipeModule
+        CapitalizeFirstPipeModule,
+        [RouterModule.forChild(routes)]
     ],
     exports : [DepartmentListComponent],
     declarations: [DepartmentListComponent]

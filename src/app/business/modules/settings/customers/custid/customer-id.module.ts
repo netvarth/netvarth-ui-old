@@ -5,9 +5,12 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatRadioModule } from "@angular/material/radio";
+import { RouterModule, Routes } from "@angular/router";
 import { CapitalizeFirstPipeModule } from "../../../../../shared/pipes/capitalize.module";
 import { CustomerIdSettingsComponent } from "./customer-id.component";
-
+const routes: Routes = [
+    {path: '', component: CustomerIdSettingsComponent}
+]
 @NgModule({
     imports: [
         CommonModule,
@@ -16,7 +19,8 @@ import { CustomerIdSettingsComponent } from "./customer-id.component";
         MatFormFieldModule,
         MatInputModule,
         FormsModule,
-        CapitalizeFirstPipeModule
+        CapitalizeFirstPipeModule,
+        [RouterModule.forChild(routes)]
     ],
     exports: [CustomerIdSettingsComponent],
     declarations: [CustomerIdSettingsComponent]

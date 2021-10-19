@@ -8,7 +8,6 @@ import { CriteriaDialogComponent } from './criteria-dialog/criteria-dialog.compo
 import { ExportReportService } from '../export-report.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
-
 export class Group {
   level = 0;
   parent: Group;
@@ -25,8 +24,6 @@ export class Group {
   styleUrls: ['./generated-report.component.css']
 })
 export class GeneratedReportComponent implements OnInit {
-
-
   groupByColumns: string[];
   showReport: boolean;
   report_type: any;
@@ -41,15 +38,11 @@ export class GeneratedReportComponent implements OnInit {
   table_header_columns: any;
   report: any = {};
   reducedGroups = [];
-
-
   public report_dataSource = new MatTableDataSource<any>([]);
   reprtdialogRef: any;
   hide_criteria_save = false;
   groupingColumn;
   customer_label: any;
-
-
   constructor(
     private report_data_service: ReportDataService,
     private router: Router,
@@ -79,11 +72,7 @@ export class GeneratedReportComponent implements OnInit {
         this.hide_criteria_save = true;
       }
     });
-
   }
-
-
-
   ngOnInit() {
     this.report_dataSource = this.report.reportContent.data;
     if (this.report.reportContent.data.length === 0) {
@@ -91,10 +80,7 @@ export class GeneratedReportComponent implements OnInit {
     } else {
       this.showReport = true;
     }
-
-    // this.groupingColumn = 'Confirmation Number';
     this.buildDataSource();
-
   }
   replacewithTerminologies(columnname) {
     const column = columnname;
@@ -104,12 +90,9 @@ export class GeneratedReportComponent implements OnInit {
   getDateFormat(date) {
     return this.dateformat.transformToMonthlyDate(date);
   }
-
   buildDataSource() {
-
     this.report_dataSource = this.groupBy(this.groupingColumn, this.report.reportContent.data, this.reducedGroups);
   }
-
   groupBy(column: string, data: any[], reducedGroups?: any[]) {
     if (!column) { return data; }
     let collapsedGroups = reducedGroups;
@@ -124,9 +107,7 @@ export class GeneratedReportComponent implements OnInit {
           reduced: collapsedGroups.some((group) => group.value === currentValue[column])
         }];
       }
-
       accumulator[currentGroup].push(currentValue);
-
       return accumulator;
     };
     const groups = data.reduce(customReducer, {});
@@ -158,11 +139,8 @@ export class GeneratedReportComponent implements OnInit {
     } else {
       this.reducedGroups = this.reducedGroups.filter((el) => el.value !== row.value);
     }
-
     this.buildDataSource();
   }
-
-
   redirecToReports() {
     if (this.hide_criteria_save) {
       this.router.navigate(['provider', 'reports']);
@@ -170,21 +148,9 @@ export class GeneratedReportComponent implements OnInit {
       this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.report_type } });
     }
   }
-
-  // printReport() {
-
-  //   const printContent = document.getElementById('reportGenerated');
-  //   const WindowPrt = window.open('', '', 'left=0,top=0,height=900,toolbar=0,scrollbars=0,status=0');
-  //   WindowPrt.document.write(printContent.innerHTML);
-  //   WindowPrt.document.close();
-  //   WindowPrt.focus();
-  //   WindowPrt.print();
-  //   WindowPrt.close();
-  // }
   saveCriteria() {
     this.reprtdialogRef = this.dialog.open(CriteriaDialogComponent, {
       width: '400px',
-      // panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
         purpose: 'save'
@@ -193,8 +159,6 @@ export class GeneratedReportComponent implements OnInit {
     this.reprtdialogRef.afterClosed().subscribe(result => {
     });
   }
-
-
   exportReport() {
     const reportData = this.report.reportContent.data;
     const tableHeader = this.tableColums;
@@ -206,16 +170,9 @@ export class GeneratedReportComponent implements OnInit {
         const newKey = _this.replacewithTerminologies(tableHeader[key]);
         const newValue = object[key];
         newSet[newKey] = newValue;
-
       });
       reportResult.push(newSet);
-
     });
-
     this.exportReportService.exportExcel(reportResult, this.report_type + '_report');
   }
-
-
-
-
 }

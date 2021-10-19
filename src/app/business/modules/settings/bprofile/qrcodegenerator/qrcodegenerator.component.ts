@@ -44,9 +44,6 @@ export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
       this.qrCodeParent = content2;
     }
   }
-  // ngAfterViewChecked() {
-  //     this.changeDetectorRef.detectChanges();
-  // }
   ngOnInit() {
     this.accuid = this.data.accencUid;
     this.wpath = this.data.path;
@@ -89,31 +86,9 @@ export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
         { property: 'og:image', content: this.imageUrl },
         { property: 'og:type', content: 'link' },
         { property: 'og:description', content: this.description },
-
       ]);
     }, 50);
-
-    // console.log('sharelink...' + this.shareLink);
-    // console.log('qrcode...' + this.qrCodePath);
-
   }
-  // qrCodegenerateCustID(valuetogenerate) {
-  //     this.qr_value = projectConstants.PATH + valuetogenerate;
-  //     this.qr_code_cId = true;
-  //     this.changeDetectorRef.detectChanges();
-  //     setTimeout(() => {
-  //       this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
-  //     }, 50);
-  // }
-  //   closeOnlineQR() {
-  //     this.qr_code_oId = false;
-  //   }
-  //   closeCustomQR() {
-  //     this.qr_code_cId = false;
-  //   }
-  //   showPasscode() {
-  //     this.show_passcode = !this.show_passcode;
-  //   }
   printQr(printSectionId) {
     const printContent = document.getElementById(printSectionId);
     const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');

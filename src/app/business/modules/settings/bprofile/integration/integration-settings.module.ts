@@ -1,27 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../../../../../shared/modules/common/material.module';
-import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
-import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoadingSpinnerModule } from '../../../../../shared/modules/loading-spinner/loading-spinner.module';
-import { BreadCrumbModule } from '../../../../../shared/modules/breadcrumb/breadcrumb.module';
-import { IntegrationSettingsRoutingModule } from './integration-settings.routing.module';
+import { FormsModule } from '@angular/forms';
 import { IntegrationSettingsComponent } from './integration-settings.component';
-
+import { RouterModule, Routes } from '@angular/router';
+const routes: Routes = [
+    {path: '', component: IntegrationSettingsComponent}
+];
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule,
-        CapitalizeFirstPipeModule,
-        FormMessageDisplayModule,
         MatSlideToggleModule,
         FormsModule,
-        ReactiveFormsModule,
-        LoadingSpinnerModule,
-        BreadCrumbModule,
-        IntegrationSettingsRoutingModule
+        [RouterModule.forChild(routes)]
     ],
     declarations: [
         IntegrationSettingsComponent,

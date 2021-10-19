@@ -2,24 +2,21 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/cor
 import { CommonModule } from '@angular/common';
 import { NotificationComponent } from './notification.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderModule } from '../../../shared/modules/header/header.module';
-import { TelegramPopupComponent } from './telegrampopup/telegrampopup.component';
 import { RouterModule, Routes } from '@angular/router';
+import { TelegramPopupModule } from './telegrampopup/telegrampopup.module';
 const routes: Routes = [
   { path: '', component: NotificationComponent }
 ];
 @NgModule({
   declarations: [
-    NotificationComponent,
-    TelegramPopupComponent
+    NotificationComponent
   ],
   imports: [
     CommonModule,
     HeaderModule,
     MatDialogModule,
-    ReactiveFormsModule,
-    FormsModule,
+    TelegramPopupModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [

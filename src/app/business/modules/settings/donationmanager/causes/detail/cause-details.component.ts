@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../../../shared/constants/project-messages';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from '../../../../../functions/provider-shared-functions';
 import { Subscription } from 'rxjs';
 import { ServicesService } from '../../../../../../shared/modules/service/services.service';
 import { GalleryService } from '../../../../../../shared/modules/gallery/galery-service';
@@ -24,21 +24,6 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
     status;
     image_list: any = [];
     serviceExists = true;
-    breadcrumbs_init = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: 'Donation Manager',
-            url: '/provider/settings/donationmanager'
-        },
-        {
-            title: 'Causes',
-            url: '/provider/settings/donationmanager/causes'
-        }
-    ];
-    breadcrumbs = this.breadcrumbs_init;
     subscription: Subscription; // for gallery
     serviceSubscription: Subscription; // from service module
     servstatus;
@@ -60,16 +45,6 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
             (params) => {
                 this.service_id = params.id;
                 this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-                if (this.service_id === 'add') {
-                    const breadcrumbs = [];
-                    this.breadcrumbs_init.map((e) => {
-                        breadcrumbs.push(e);
-                    });
-                    breadcrumbs.push({
-                        title: 'Add'
-                    });
-                    this.breadcrumbs = breadcrumbs;
-                }
             }
         );
         this.activated_route.queryParams.subscribe(
@@ -190,16 +165,7 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
                     this.serviceParams['action'] = 'show';
                     this.causecaption = 'Cause Details';
                     this.status = this.serviceParams['service'].status;
-                    this.setGalleryImages(this.serviceParams['service'].servicegallery || []);
-                    // remove multiple end breadcrumb on edit function
-                    const breadcrumbs = [];
-                    this.breadcrumbs_init.map((e) => {
-                        breadcrumbs.push(e);
-                    });
-                    breadcrumbs.push({
-                        title: this.serviceParams['service'].name
-                    });
-                    this.breadcrumbs = breadcrumbs;
+                    this.setGalleryImages(this.serviceParams['service'].servicegallery || []);                    
                     this.api_loading = false;
                     if (this.actionparam === 'edit') {
                         this.causecaption = 'Edit Cause'; 

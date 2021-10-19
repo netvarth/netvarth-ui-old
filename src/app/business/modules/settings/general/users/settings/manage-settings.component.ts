@@ -1,43 +1,26 @@
 import { Component, OnInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../../app.component';
-import { ButtonsConfig, ButtonsStrategy, ButtonType } from '@ks89/angular-modal-gallery';
-import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
-// import { MatDialogRef } from '@angular/material';
+import { ProviderSharedFuctions } from '../../../../../functions/provider-shared-functions';
 import { UserDataStorageService } from './user-datastorage.service';
 import { Subscription } from 'rxjs';
-import { QuestionService } from '../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { SharedServices } from '../../../../../../shared/services/shared-services';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { LocalStorageService } from '../../../../../../shared/services/local-storage.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
+import { QuestionService } from '../../../../../../shared/modules/dynamic-form/dynamic-form-question.service';
 
 @Component({
   selector: 'app-managesettings',
   templateUrl: './manage-settings.component.html'
 })
 export class ManageSettingsComponent implements OnInit, AfterViewChecked {
-  breadcrumbs_init = [
-    {
-      url: '/provider/settings',
-      title: 'Settings'
-    },
-    {
-      url: '/provider/settings/general',
-      title: Messages.GENERALSETTINGS
-    },
-    {
-      title: 'Users',
-      url: '/provider/settings/general/users'
-    }
-  ];
   domain;
   frm_set_ser_cap = '';
-  breadcrumbs = this.breadcrumbs_init;
   isCorp = false;
   isMultilevel = false;
   accountType: any;
@@ -51,7 +34,6 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
   you_have_cap = Messages.YOU_HAVE_CAP;
   more_cap = Messages.MORE_CAP;
   add_cap = Messages.ADD_BTN;
-
   edit_cap = Messages.EDIT_BTN;
   delete_btn = Messages.DELETE_BTN;
   click_here_cap = Messages.CLICK_HERE_CAP;
@@ -162,26 +144,6 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
   normal_basicinfo_show = 1;
 
   loadingParams: any = { 'diameter': 40, 'strokewidth': 15 };
-  customButtonsFontAwesomeConfig: ButtonsConfig = {
-    visible: true,
-    strategy: ButtonsStrategy.CUSTOM,
-    buttons: [
-      {
-        className: 'fa fa-trash-o',
-        type: ButtonType.DELETE,
-        ariaLabel: 'custom plus aria label',
-        title: 'Delete',
-        fontSize: '20px'
-      },
-      {
-        className: 'inside close-image',
-        type: ButtonType.CLOSE,
-        ariaLabel: 'custom close aria label',
-        title: 'Close',
-        fontSize: '20px'
-      }
-    ]
-  };
   businessConfig: any = [];
   // customer_label = '';
 
@@ -257,7 +219,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
       this.weightageValue = this.calculateWeightage(result);
     });
     if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
-        this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
+      this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
     }
   }
   getProviderSettings() {
@@ -279,30 +241,13 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
   getUser() {
     this.provider_services.getUser(this.userId)
       .subscribe((data: any) => {
-        
         this.bprofilePermit = data.bProfilePermitted;
-        console.log(this.bprofilePermit)
-        const breadcrumbs = [];
-        this.breadcrumbs_init.map((e) => {
-          breadcrumbs.push(e);
-        });
-        breadcrumbs.push({
-          title: data.firstName,
-          url: '/provider/settings/general/users/add?type=edit&val=' + this.userId,
-        });
-        breadcrumbs.push({
-          title: 'Settings'
-        });
-        this.breadcrumbs = breadcrumbs;
         if (this.domainList && this.domainList.bdata) {
           for (let i = 0; i < this.domainList.bdata.length; i++) {
             if (this.domainList.bdata[i].domain === this.domain) {
               for (let j = 0; j < this.domainList.bdata[i].subDomains.length; j++) {
                 if (this.domainList.bdata[i].subDomains[j].id === data.subdomain) {
                   this.subDomain = this.domainList.bdata[i].subDomains[j].subDomain;
-                  // this.getSpecializations(this.domain, this.subDomain);
-                  // this.initSpecializations();
-                  // this.bProfile['subDomain'] = this.subDomain;
                   this.getBusinessProfile();
                 }
               }
@@ -371,44 +316,10 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
           } else {
             this.user_datastorage.updateProfilePicWeightage(false);
           }
-          // if (this.bProfile.status === 'ACTIVE') {
-          //   this.normal_profile_active = 3;
-          // } else {
-          //   this.normal_profile_active = 2;
-          // }
-          // check whether normal business profile section can be displayed
-          // if ((this.bProfile.businessName !== '' && this.bProfile.businessName !== undefined)
-          //   || (this.bProfile.businessDesc !== '' && this.bProfile.businessDesc !== undefined)) {
-          //   // this.getProviderLogo();
-          //   this.normal_basicinfo_show = 3;
-          // } else {
-          //   this.normal_basicinfo_show = 2;
-          // }
-          // this.showaddsocialmedia = false;
-          // this.user_datastorage.set('bProfile', this.bProfile);
-          // this.normal_socialmedia_show = 2;
-          // this.social_arr = [];
-          // if (this.bProfile.socialMedia) {
-          //   if (this.bProfile.socialMedia.length > 0) {
-          //     this.normal_socialmedia_show = 3;
-          //     for (let i = 0; i < this.bProfile.socialMedia.length; i++) {
-          //       if (this.bProfile.socialMedia[i].resource !== '') {
-          //         this.social_arr.push({ 'Sockey': this.bProfile.socialMedia[i].resource, 'Socurl': this.bProfile.socialMedia[i].value });
-          //       }
-          //     }
-          //   }
-          // }
-          // if (this.social_arr.length < this.orgsocial_list.length) {
-          //   this.showaddsocialmedia = true;
-          // }
           this.user_datastorage.set('bProfile', this.bProfile);
           this.user_datastorage.setUserBusinessProfileWeightage(this.bProfile);
-
         },
-        () => {
-          // this.normal_basicinfo_show = 2;
-          // this.normal_socialmedia_show = 2;
-        }
+        () => { }
       );
   }
   getDomainVirtualFields() {
@@ -421,7 +332,6 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
           let user_additionalInfoFilledStatus = false;
           this.domain_fields = data['fields'];
           this.domain_questions = data['questions'] || [];
-          // this.normal_domainfield_show = (this.normal_domainfield_show === 2) ? 4 : 3;
           if (this.userMandatoryfieldArray.length !== 0 && this.domain_fields.some(domain => domain.mandatory === true)) {
             user_mandatorydomain = true;
             this.userMandatoryfieldArray.forEach(mandatoryField => {
@@ -432,12 +342,9 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
                 return;
               }
             });
-
-
           } else {
             user_mandatorydomain = false;
           }
-
           if (this.checkAdditionalFieldsFullyFilled(this.userAdditionalInfoDomainFields, this.domain_fields)) {
             user_additionalInfoFilledStatus = true;
           }
@@ -445,14 +352,9 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
           userWeightageObjectOfDomain.mandatoryDomainFilledStatus = user_mandatorydomainFilled;
           userWeightageObjectOfDomain.additionalDomainFullyFilled = user_additionalInfoFilledStatus;
           this.user_datastorage.setWeightageObjectOfDomain(userWeightageObjectOfDomain);
-
-
-
         }
       );
-
   }
-
   getSubDomainVirtualFields() {
     const userWeightageObjectOfSubDomain: any = {};
     this.getVirtualFields(this.domain,
@@ -474,12 +376,10 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
                 return;
               }
             });
-
           }
           if (this.checkAdditionalFieldsFullyFilled(this.additionalInfoSubDomainFields, this.subdomain_fields)) {
             user_additionalInfoFilledStatus = true;
           }
-
           userWeightageObjectOfSubDomain.mandatorySubDomain = user_mandatorysubdomain;
           userWeightageObjectOfSubDomain.mandatorySubDomainFilledStatus = user_mandatorySubDomainFilled;
           userWeightageObjectOfSubDomain.additionalSubDomainFullyFilled = user_additionalInfoFilledStatus;
@@ -601,7 +501,6 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
       _this.provider_services.getUserBussinessProfile(_this.userId)
         .subscribe(
           data => {
-            // console.log(data);
             resolve(data);
           },
           () => {
@@ -619,8 +518,6 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
     } else {
       if (this.blogo) {
         this.profimg_exists = true;
-        // const today = new Date();
-        //  logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + tday : '';
         logourl = (this.blogo.url) ? this.blogo.url + '?' + this.cacheavoider : '';
       }
       return this.sharedfunctionObj.showjplimg(logourl);
@@ -678,9 +575,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
       this.progress_bar_three = 25;
       this.progress_bar_four = 25;
       return businessProfileWeightageText;
-
     }
-
   }
   calculateWeightage(data) {
     let total = 0;
@@ -688,27 +583,22 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
       data.forEach(x => total += x.value);
     }
     return total;
-
   }
   getServiceCount() {
-    // this.loading = true;
     const filter = { 'provider-eq': this.userId, 'serviceType-neq': 'donationService' };
     this.provider_services.getServiceCount(filter)
       .subscribe(
         data => {
           this.service_count = data;
         });
-    // this.loading = false;
   }
   getQueuesCount() {
-    // this.loading = true;
     const filter = { 'provider-eq': this.userId };
     this.provider_services.getQueuesCount(filter)
       .subscribe(
         data => {
           this.queues_count = data;
         });
-    // this.loading = false;
   }
   services() {
     this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'services']);
@@ -742,16 +632,13 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
       this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
     }
   }
-
   getScheduleCount() {
-    // this.loading = true;
     const filter = { 'provider-eq': this.userId };
     this.provider_services.getSchedulesCount(filter)
       .subscribe(
         data => {
           this.schedules_count = data;
         });
-    // this.loading = false;
   }
   redirecToUsers() {
     this.routerobj.navigate(['provider', 'settings', 'general', 'users']);

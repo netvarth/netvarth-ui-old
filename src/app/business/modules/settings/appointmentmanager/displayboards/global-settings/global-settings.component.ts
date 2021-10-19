@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
@@ -31,23 +31,6 @@ export class GlobalSettingsComponent implements OnInit {
     public model = {
         editorData: ''
     };
-    breadcrumbs_init = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: 'Jaldee Appointment Manager',
-            url: '/provider/settings/appointmentmanager'
-        },
-        {
-            title: 'QBoard',
-            url: '/provider/settings/appointmentmanager/displayboards'
-        },
-        {
-            title: 'Global Settings'
-        }
-    ];
     largeImage: string;
     position: string;
     position_values = [
@@ -78,7 +61,6 @@ export class GlobalSettingsComponent implements OnInit {
         private wordProcessor: WordProcessor
     ) { }
     @Input() headerResult;
-    breadcrumbs = this.breadcrumbs_init;
     url = '';
     public Editor = DecoupledEditor;
     public onReady(editor) {

@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ConfirmBoxComponent } from '../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { ConfirmBoxComponent } from '../../shared/confirm-box/confirm-box.component';
+import { ProviderServices } from '../../services/provider-services.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../services/provider-services.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MedicalrecordService } from '../../medicalrecord.service';
@@ -9,7 +9,7 @@ import { ShareRxComponent } from '../share-rx/share-rx.component';
 import { projectConstants } from '../../../../../app.component';
 import { InstructionsComponent } from '../instructions/instructions.component';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
-import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { ConfirmBoxComponent } from '../../../../shared/confirm-box/confirm-box.component';
 import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';

@@ -14,7 +14,7 @@ import { MediaService } from "../../../shared/services/media-service";
 import { RequestDialogComponent } from "../../../shared/modules/request-dialog/request-dialog.component";
 import * as Video from 'twilio-video';
 import { SharedServices } from "../../../shared/services/shared-services";
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../services/provider-services.service';
 @Component({
     selector: 'app-meeting-room',
     templateUrl: './meeting-room.component.html',

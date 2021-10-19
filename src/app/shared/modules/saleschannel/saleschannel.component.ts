@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../business/services/provider-services.service';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { Subscription } from 'rxjs';
 import { SnackbarService } from '../../services/snackbar.service';

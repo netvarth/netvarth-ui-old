@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../services/provider-services.service';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { ShowMessageComponent } from '../../../show-messages/show-messages.component';
 import { MatDialog } from '@angular/material/dialog';

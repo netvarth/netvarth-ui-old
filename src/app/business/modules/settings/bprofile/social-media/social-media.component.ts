@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../services/provider-services.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';

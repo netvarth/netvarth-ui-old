@@ -1,17 +1,16 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { Messages } from '../../../../../../shared/constants/project-messages';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from '../../../../../functions/provider-shared-functions';
 import { projectConstants } from '../../../../../../app.component';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { GoogleMapComponent } from '../../../../../../ynw_provider/components/googlemap/googlemap.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Location } from '@angular/common';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
-import { AddProviderWaitlistLocationsComponent } from '../../../../../../ynw_provider/components/add-provider-waitlist-locations/add-provider-waitlist-locations.component';
+import { AddProviderWaitlistLocationsComponent } from '../../../../add-provider-waitlist-locations/add-provider-waitlist-locations.component';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
@@ -19,6 +18,7 @@ import { WordProcessor } from '../../../../../../shared/services/word-processor.
 import { SharedServices } from '../../../../../../shared/services/shared-services';
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
 import { JaldeeTimeService } from '../../../../../../shared/services/jaldee-time-service';
+import { GoogleMapComponent } from '../../../../../../business/modules/googlemap/googlemap.component';
 
 @Component({
   selector: 'app-location-details',

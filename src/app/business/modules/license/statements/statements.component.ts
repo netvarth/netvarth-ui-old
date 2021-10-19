@@ -3,7 +3,7 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
@@ -87,16 +87,6 @@ export class StatementsComponent implements OnInit {
   discountDetailsTxt = 'Show discount details';
   // activated_route: any;
   apiloading = false;
-  breadcrumbs_init = [
-    {
-      title: 'License & Invoice',
-      url: '/provider/license'
-    }
-    // {
-    //     title: 'Statements'
-    // }
-  ];
-  breadcrumbs = this.breadcrumbs_init;
   customer_label: any;
   tempp: any;
   var: any;
@@ -124,58 +114,11 @@ export class StatementsComponent implements OnInit {
         this.temp = this.data.source;
       });
     if (this.data.data1 === 'invo-statement NotPaid') {
-      const breadcrumbs = [];
-      this.breadcrumbs_init.map((e) => {
-        breadcrumbs.push(e);
-      });
-      breadcrumbs.push({
-        title: 'Invoice / Statement',
-        url: '/provider/license/invoicestatus'
-      });
-      this.breadcrumbs = breadcrumbs;
-      breadcrumbs.push({
-        title: 'Payment Details'
-      });
-      this.breadcrumbs = breadcrumbs;
     } else if (this.data.data2 === 'invo-statement Paid') {
       this.licensecaption = 'Payment Details';
-      const breadcrumbs = [];
-      this.breadcrumbs_init.map((e) => {
-        breadcrumbs.push(e);
-      });
-      breadcrumbs.push({
-        title: 'Invoice / Statement',
-        url: '/provider/license/invoicestatus'
-      });
-      this.breadcrumbs = breadcrumbs;
-      breadcrumbs.push({
-        title: 'Statements'
-      });
-      this.breadcrumbs = breadcrumbs;
     } else if (this.temp === 'payment-history') {
       this.licensecaption = 'Payment Details';
-      const breadcrumbs = [];
-      this.breadcrumbs_init.map((e) => {
-        breadcrumbs.push(e);
-      });
-      breadcrumbs.push({
-        title: 'Payment History',
-        url: '/provider/license/payment/history'
-      });
-      this.breadcrumbs = breadcrumbs;
-      breadcrumbs.push({
-        title: 'Payment Details'
-      });
-      this.breadcrumbs = breadcrumbs;
     } else {
-      const breadcrumbs = [];
-      this.breadcrumbs_init.map((e) => {
-        breadcrumbs.push(e);
-      });
-      breadcrumbs.push({
-        title: 'Statements',
-      });
-      this.breadcrumbs = breadcrumbs;
     }
     this.invoice = this.data.invoice || null;
     const invoiceJson = JSON.parse(this.invoice);

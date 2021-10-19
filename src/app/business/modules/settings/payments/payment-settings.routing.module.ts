@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ProviderPaymentSettingsComponent } from '../../provider-payment-settings/provider-payment-settings.component';
+import { ProvidertaxSettingsComponent } from '../../provider-tax-settings/provider-tax-settings.component';
 import { PaymentSettingsComponent } from './payment-settings.component';
-import { ProvidertaxSettingsComponent } from '../../../../ynw_provider/components/provider-tax-settings/provider-tax-settings.component';
-import { ProviderPaymentSettingsComponent } from '../../../../ynw_provider/components/provider-payment-settings/provider-payment-settings.component';
 
 const routes: Routes = [
     {path: '', component: PaymentSettingsComponent},

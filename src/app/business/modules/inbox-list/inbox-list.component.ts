@@ -4,7 +4,7 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener, View
 import { projectConstants } from '../../../app.component';
 import { InboxServices } from '../../../shared/modules/inbox/inbox.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../services/provider-services.service';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
@@ -20,7 +20,7 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
   templateUrl: './inbox-list.component.html',
   styleUrls: ['./inbox-list.component.css', '../../../../assets/css/style.bundle.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
-export class InboxListComponent implements OnInit, OnDestroy {
+export class BusinessInboxListComponent implements OnInit, OnDestroy {
   user_id;
   loading = false;
   cronHandle: Subscription;

@@ -1,33 +1,32 @@
 import { NgModule } from '@angular/core';
 import { LocationsListComponent } from './locations-list.component';
-import { LocationsListRoutingModule } from './locations-list.routing.module';
-import { LocationDetailsComponent } from './location-details/location-details.component';
 import { LoadingSpinnerModule } from '../../../../../shared/modules/loading-spinner/loading-spinner.module';
-import { MaterialModule } from '../../../../../shared/modules/common/material.module';
-import { BreadCrumbModule } from '../../../../../shared/modules/breadcrumb/breadcrumb.module';
 import { CommonModule } from '@angular/common';
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
-import { AddProviderSchedulesModule } from '../../../../../ynw_provider/components/add-provider-schedule/add-provider-schedule.module';
 import { OrderModule } from 'ngx-order-pipe';
-
+import { RouterModule, Routes } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+const routes: Routes = [
+    { path: '', component: LocationsListComponent },
+    { path: ':id', loadChildren: ()=> import('./location-details/location-details.module').then(m=>m.LocationDetailsModule) }
+];
 @NgModule({
     imports: [
-        LocationsListRoutingModule,
         LoadingSpinnerModule,
-        MaterialModule,
-        BreadCrumbModule,
         CommonModule,
         CapitalizeFirstPipeModule,
         ReactiveFormsModule,
-        FormMessageDisplayModule,
-        AddProviderSchedulesModule,
-        OrderModule
+        OrderModule,
+        MatIconModule,
+        MatMenuModule,
+        MatButtonModule,
+        [RouterModule.forChild(routes)]
     ],
     declarations: [
-        LocationsListComponent,
-        LocationDetailsComponent
+        LocationsListComponent
     ],
     exports: [
         LocationsListComponent

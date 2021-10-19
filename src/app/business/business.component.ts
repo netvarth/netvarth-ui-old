@@ -1,9 +1,9 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd, RouterEvent, NavigationStart, NavigationCancel, NavigationError } from '@angular/router';
-import { ProviderServices } from '../ynw_provider/services/provider-services.service';
+import { ProviderServices } from './services/provider-services.service';
 import { SharedFunctions } from '../shared/functions/shared-functions';
 import { CommonDataStorageService } from '../shared/services/common-datastorage.service';
-import { ProviderSharedFuctions } from '../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from './functions/provider-shared-functions';
 import { SharedServices } from '../shared/services/shared-services';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -162,7 +162,7 @@ export class BusinessComponent implements OnInit {
         if (!this.contactInfo.primaryEmail) {
           this.getProfile();
         }
-      } 
+      }
     );
   }
   updateEmailPopup() {

@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
@@ -67,19 +67,6 @@ export class CustomerCreateComponent implements OnInit {
   searchClicked = false;
   customer_data: any = [];
   customerPhone: any;
-  breadcrumbs_init = [
-    // {
-    //     title: 'Check-ins',
-    //     url: 'provider/check-ins'
-    // },
-    {
-      title: 'Customers',
-      url: 'provider/customers'
-    }
-
-  ];
-  breadcrumbs = this.breadcrumbs_init;
-  breadcrumb_moreoptions: any = [];
   checkin_type;
   customidFormat;
   loading = true;
@@ -250,24 +237,8 @@ export class CustomerCreateComponent implements OnInit {
         this.customerId = qparams.id;
       }
       this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-      this.breadcrumbs_init = [
-
-        {
-          title: this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1) + 's',
-          url: 'provider/customers'
-        }
-
-      ];
       if (this.customerId) {
         if (this.customerId === 'add') {
-          const breadcrumbs = [];
-          this.breadcrumbs_init.map((e) => {
-            breadcrumbs.push(e);
-          });
-          breadcrumbs.push({
-            title: 'Add'
-          });
-          this.breadcrumbs = breadcrumbs;
           this.action = 'add';
           this.createForm();
           this.getGlobalSettingsStatus();
@@ -280,26 +251,10 @@ export class CustomerCreateComponent implements OnInit {
                   this.customer = customer;
                   this.customerName = this.customer[0].firstName;
                   if (this.action === 'edit') {
-                    const breadcrumbs = [];
-                    this.breadcrumbs_init.map((e) => {
-                      breadcrumbs.push(e);
-                    });
-                    breadcrumbs.push({
-                      title: this.customerName
-                    });
-                    this.breadcrumbs = breadcrumbs;
                     this.viewCustomer = false;
                     this.createForm();
                     this.getGlobalSettingsStatus();
                   } else if (this.action === 'view') {
-                    const breadcrumbs = [];
-                    this.breadcrumbs_init.map((e) => {
-                      breadcrumbs.push(e);
-                    });
-                    breadcrumbs.push({
-                      title: this.customerName
-                    });
-                    this.breadcrumbs = breadcrumbs;
                     this.viewCustomer = true;
                     this.loading = false;
                     if (this.customerId) {
@@ -416,15 +371,6 @@ export class CustomerCreateComponent implements OnInit {
         });
   }
   ngOnInit() {
-    this.breadcrumbs = this.breadcrumbs_init;
-    // this.breadcrumbs = [{
-    //     title: this.wordProcessor.firstToUpper(this.customer_label) + 's',
-    //     url: 'provider/customers'
-    // },
-    // {
-    //     title: 'Add'
-    // }
-    // ];
   }
 
   getGlobalSettingsStatus() {

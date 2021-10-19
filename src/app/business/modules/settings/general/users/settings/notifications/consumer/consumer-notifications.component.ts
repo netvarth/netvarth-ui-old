@@ -1,14 +1,14 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
-import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../../../services/provider-services.service';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
-import { ProviderDataStorageService } from '../../../../../../../../ynw_provider/services/provider-datastorage.service';
+import { ProviderDataStorageService } from '../../../../../../../services/provider-datastorage.service';
 import { MatDialog } from '@angular/material/dialog';
-import { AddproviderAddonComponent } from '../../../../../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
+import { AddproviderAddonComponent } from '../../../../../../../../business/modules/add-provider-addons/add-provider-addons.component';
 
 @Component({
   selector: 'app-userconsumer-notifications',

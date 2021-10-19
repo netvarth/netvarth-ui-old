@@ -7,7 +7,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { CapitalizeFirstPipeModule } from "../../../../../shared/pipes/capitalize.module";
 import { LoadingSpinnerModule } from "../../../../../shared/modules/loading-spinner/loading-spinner.module";
-import { ConfirmBoxModule } from "../../../../../ynw_provider/shared/component/confirm-box/confirm-box.module";
+import { ConfirmBoxModule } from "../../../../shared/confirm-box/confirm-box.module";
 import { AddDrugModule } from "../add-drug/add-drug.module";
 import { InstructionsModule } from "../instructions/instructions.module";
 import { ShareRxModule } from "../share-rx/share-rx.module";

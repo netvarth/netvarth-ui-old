@@ -6350,8 +6350,9 @@ margin-right: 30px !important;
   font-size: 14px !important;
 }
 }
-.phome .h1{
+
   @media screen and (min-width: 601px) {
+    .phome .h1{
       font-size: 40px !important;
     
 }
@@ -6640,8 +6641,9 @@ margin-right: 30px !important;
     background-image: -webkit-linear-gradient(0deg, #3f8bcc 0%, #0c0b35 100%);
     height: 700px;
 }
-.containerapp {
+
   @media (min-width: 1200px){
+    .containerapp {
   max-width: 1200px;
 }
 }

@@ -21,7 +21,7 @@
               "src/favicon.ico",
               "src/manifest.webmanifest"
             ],
-            "styles": [
+            "styles": [              
               "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/font-awesome/css/font-awesome.css",
@@ -69,13 +69,13 @@
                   "maximumWarning": "6kb"
                 }
               ],
-              "optimization": false,
+              "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": false,
               "vendorChunk": false,
-              "buildOptimizer": false,
+              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

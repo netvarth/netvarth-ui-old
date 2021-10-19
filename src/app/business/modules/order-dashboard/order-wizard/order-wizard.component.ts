@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { SharedServices } from '../../../../shared/services/shared-services';
@@ -138,13 +138,6 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
     buttons: [
-      // {
-      //   className: 'fa fa-trash-o',
-      //   type: ButtonType.DELETE,
-      //   ariaLabel: 'custom plus aria label',
-      //   title: 'Delete',
-      //   fontSize: '20px'
-      // },
       {
         className: 'inside close-image',
         type: ButtonType.CLOSE,
@@ -284,18 +277,6 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
       }, () => { },
       () => {
       });
-
-    // this.retval = this.sharedFunctionobj.getS3Url()
-    //   .then(
-    //     res => {
-    //       this.s3url = res;
-    //       this.getbusinessprofiledetails_json('coupon', true);
-    //       this.api_loading1 = false;
-    //     },
-    //     () => {
-    //       this.api_loading1 = false;
-    //     }
-    //   );
   }
   isPhysicalItemsPresent() {
     let physical_item_present = true;
@@ -327,24 +308,6 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
   toggleCoupon() {
     this.showCoupon = !this.showCoupon;
   }
-  // getbusinessprofiledetails_json(section, modDateReq: boolean) {
-  //   let UTCstring = null;
-  //   if (modDateReq) {
-  //     UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
-  //   }
-  //   this.shared_services.getbusinessprofiledetails_json('59222', this.s3url, section, UTCstring)
-  //   .pipe(takeUntil(this.onDestroy$))
-  //     .subscribe(res => {
-  //       this.s3CouponsList = res;
-  //       console.log(this.s3CouponsList);
-  //       if (this.s3CouponsList.length > 0) {
-  //         this.showCouponWB = true;
-  //       }
-  //     },
-  //       () => {
-  //       }
-  //     );
-  // }
   createForm() {
     this.searchForm = this.fb.group({
       search_input: ['', Validators.compose([Validators.required])]
@@ -1348,18 +1311,6 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
       }
     }
   }
-
-  // deleteTempImage(img, index) {
-  //   console.log(img);
-  //   const idex = this.selectedImagelist.files.findIndex(i => i.id === img.id);
-  //     console.log(idex);
-  //   this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== img.id);
-  //   this.selectedImagelist.files.splice(index, 1);
-  //   this.selectedImagelist.base64.splice(index, 1);
-  //   this.selectedImagelist.caption.splice(index, 1);
-  //   console.log(this.image_list_popup);
-  //   console.log(this.selectedImagelist.files);
-  // }
   openImageModalRow(image: Image) {
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
@@ -1374,8 +1325,6 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
       return;
     }
     if (event.button.type === ButtonType.DELETE) {
-
-      // this.deletemodelboxImage(event.image.plain);
       const idex = this.selectedImagelist.files.findIndex(i => i.id === event.image.id);
       this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== event.image.id);
       this.selectedImagelist.files.splice(idex, 1);
@@ -1390,19 +1339,6 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
     this.selectedImagelist.files.splice(idex, 1);
     this.selectedImagelist.base64.splice(idex, 1);
     this.image_list_popup.splice(idex, 1);
-    // this.image_list_popup = [];
-    //   if (this.selectedImagelist.files.length > 0) {
-    //   for (let i = 0; i < this.selectedImagelist.files.length; i++) {
-    //     const imgobj = new Image(i,
-    //         {
-    //             img: this.selectedImagelist.base64[i],
-    //             description: ''
-    //         });
-    //     this.image_list_popup.push(imgobj);
-    // }
-    // console.log(this.image_list_popup);
-
-    //   }
   }
   onButtonAfterHook() { }
   uploadShoppingList() {
@@ -1467,7 +1403,6 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
     this.shoppinglistdialogRef.afterClosed()
       .pipe(takeUntil(this.onDestroy$))
       .subscribe(result => {
-        //  console.log(JSON.parse(JSON.stringify(result)));
         if (result) {
           this.selectedImagelist = {
             files: [],

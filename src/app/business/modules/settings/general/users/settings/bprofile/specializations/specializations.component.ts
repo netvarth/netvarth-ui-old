@@ -1,14 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
-import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
-// import { MatDialog } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GroupStorageService } from '../../../../../../../../shared/services/group-storage.service';
 import { LocalStorageService } from '../../../../../../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
-// import { UserSpecializationComponent } from './userspecialization/userspecialization.component';
 @Component({
     selector: 'app-userspecializatons',
     templateUrl: './specializations.component.html'
@@ -30,28 +28,10 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
     specialdialogRef;
     domain;
     normal_specilization_show = 1;
-    breadcrumb_moreoptions: any = [];
     specn;
     username;
     domainList: any = [];
     subDomain;
-    breadcrumbs_init = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: Messages.GENERALSETTINGS,
-            url: '/provider/settings/general'
-        },
-        {
-            url: '/provider/settings/general/users',
-            title: 'Users'
-
-        },
-
-    ];
-    breadcrumbs = this.breadcrumbs_init;
     userId: any;
     constructor(
         private provider_services: ProviderServices,
@@ -62,7 +42,6 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         private groupService: GroupStorageService,
         private lStorageService: LocalStorageService,
         private snackbarService: SnackbarService
-        // private dialog: MatDialog
     ) {
         this.activated_route.params.subscribe(params => {
             this.userId = params.id;
@@ -79,7 +58,6 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.getUser();
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     // learnmore_clicked(parent, child) {}
     performActions() {
@@ -104,26 +82,6 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
             .subscribe((data: any) => {
                 this.user_arr = data;
                 this.username = data.firstName;
-                const breadcrumbs = [];
-                this.breadcrumbs_init.map((e) => {
-                    breadcrumbs.push(e);
-                });
-                breadcrumbs.push({
-                    title: this.username,
-                    url: '/provider/settings/general/users/add?type=edit&val=' + this.userId,
-                });
-                breadcrumbs.push({
-                    title: 'Settings',
-                    url: '/provider/settings/general/users/' + this.userId + '/settings'
-                  });
-                breadcrumbs.push({
-                    title: 'Online Profile',
-                    url: '/provider/settings/general/users/' + this.userId + '/settings/bprofile',
-                });
-                breadcrumbs.push({
-                    title: 'Specialization'
-                });
-                this.breadcrumbs = breadcrumbs;
                 for (let i = 0; i < this.domainList.bdata.length; i++) {
                     if (this.domainList.bdata[i].domain === this.domain) {
                         for (let j = 0; j < this.domainList.bdata[i].subDomains.length; j++) {
@@ -230,43 +188,4 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
       redirecToBprofile() {
         this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile']);
     }
-    // handleSpecialization() {
-    //     let holdselspec;
-    //     if (this.bProfile && this.bProfile.specialization) {
-    //         holdselspec = JSON.parse(JSON.stringify(this.bProfile.specialization)); // to avoid pass by reference
-    //     } else {
-    //         holdselspec = [];
-    //     }
-    //     const bprof = holdselspec;
-    //     const special = this.specialization_arr;
-    //     this.specialdialogRef = this.dialog.open(UserSpecializationComponent, {
-    //         width: '50%',
-    //         panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
-    //         disableClose: true,
-    //         autoFocus: false,
-    //         data: {
-    //             selspecializations: bprof,
-    //             specializations: special,
-    //             userId: this.userId,
-
-    //         }
-    //     });
-    //     this.specialdialogRef.afterClosed().subscribe(result => {
-    //         if (result) {
-    //             if (result['mod'] === 'reloadlist') {
-    //                 this.bProfile = result['data'];
-    //                 this.initSpecializations();
-    //                 if (this.bProfile && this.bProfile.selspecializations) {
-    //                     if (this.bProfile.selspecializations.length > 0) {
-    //                         this.normal_specilization_show = 3;
-    //                     } else {
-    //                         this.normal_specilization_show = 2;
-    //                     }
-    //                 } else {
-    //                     this.normal_specilization_show = 2;
-    //                 }
-    //             }
-    //         }
-    //     });
-    // }
 }

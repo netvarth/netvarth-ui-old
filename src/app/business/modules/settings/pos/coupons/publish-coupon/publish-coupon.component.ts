@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 // import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,8 +13,6 @@ import { DepartmentListDialogComponent } from '../../../../../shared/department-
 import { ConsumerGroupDialogComponent } from '../../../../../shared/consumer-group-dialog/consumer-group-dialog.component';
 import { ConsumerLabelDialogComponent } from '../../../../../shared/consumer-label-dialog/consumer-label-dialog.component';
 import { UsersListDialogComponent } from '../../../../../shared/users-list-dialog/users-list-dialog.component';
-
-
 
 @Component({
   selector: 'app-publish-coupon',
@@ -51,8 +49,6 @@ export class PublishCouponComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private provider_services: ProviderServices,
     private activated_route: ActivatedRoute) {
-
-
     this.subs.sink = this.activated_route.params.subscribe(params => {
       this.couponId = params.id;
       this.getcouponDetails(this.couponId).then((data) => {
@@ -80,8 +76,6 @@ export class PublishCouponComponent implements OnInit, OnDestroy {
     });
    // this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
    this.checkin_label='Booking';
-
-
   }
 
   ngOnInit(): void {

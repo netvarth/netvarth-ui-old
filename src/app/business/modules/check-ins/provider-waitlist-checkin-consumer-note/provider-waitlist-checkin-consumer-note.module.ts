@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../../../../shared/modules/common/shared.module';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from './provider-waitlist-checkin-consumer-note.component';
-import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
+import { CommonModule } from '@angular/common';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
     imports: [
-        SharedModule,
-        CapitalizeFirstPipeModule,
+        Nl2BrPipeModule,
+        CommonModule,
+        MatDialogModule,
         Nl2BrPipeModule
     ],
     declarations: [

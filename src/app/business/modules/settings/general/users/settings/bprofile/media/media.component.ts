@@ -1,9 +1,9 @@
 import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout } from '@ks89/angular-modal-gallery';
-import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
-import { ProviderDataStorageService } from '../../../../../../../../ynw_provider/services/provider-datastorage.service';
+import { ProviderDataStorageService } from '../../../../../../../services/provider-datastorage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -28,7 +28,6 @@ export class MediaComponent implements OnInit, OnDestroy {
     no_of_grids: number;
     screenWidth: number;
     hide_save_btn = false;
-
     social_media_cap = Messages.BPROFILE_SOCIAL_MEDIA_CAP;
     add_social_media = Messages.BPROFILE_ADD_SOCIAL_MEDIA_CAP;
     no_social_media = Messages.NO_SOCIAL_MEDIA;
@@ -58,28 +57,11 @@ export class MediaComponent implements OnInit, OnDestroy {
     success_error = null;
     selitem_pic = '';
     image_remaining_cnt = 0;
-    breadcrumb_moreoptions: any = [];
     domain;
     customPlainGalleryRowConfig: PlainGalleryConfig = {
         strategy: PlainGalleryStrategy.CUSTOM,
         layout: new AdvancedLayout(-1, true)
     };
-    breadcrumbs_init = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: Messages.GENERALSETTINGS,
-            url: '/provider/settings/general'
-        },
-        {
-            url: '/provider/settings/general/users',
-            title: 'Users'
-
-        }
-    ];
-    breadcrumbs = this.breadcrumbs_init;
     subscription: Subscription;
     userId: any;
     showSave: any = [];
@@ -124,14 +106,11 @@ export class MediaComponent implements OnInit, OnDestroy {
     }
     ngOnInit() {
         this.loading = true;
-        this.getUser();
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        // this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
         this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
         this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
         this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA;
-        // this.getGalleryImages();
         this.getBusinessProfile();
     }
 
@@ -149,31 +128,6 @@ export class MediaComponent implements OnInit, OnDestroy {
         if (this.delgaldialogRef) {
             this.delgaldialogRef.close();
         }
-    }
-    getUser() {
-        this.provider_services.getUser(this.userId)
-            .subscribe((data: any) => {
-                const breadcrumbs = [];
-                this.breadcrumbs_init.map((e) => {
-                    breadcrumbs.push(e);
-                });
-                breadcrumbs.push({
-                    title: data.firstName,
-                    url: '/provider/settings/general/users/add?type=edit&val=' + this.userId,
-                });
-                breadcrumbs.push({
-                    title: 'Settings',
-                    url: '/provider/settings/general/users/' + this.userId + '/settings'
-                });
-                breadcrumbs.push({
-                    title: 'Online Profile',
-                    url: '/provider/settings/general/users/' + this.userId + '/settings/bprofile',
-                });
-                breadcrumbs.push({
-                    title: 'Social Media'
-                });
-                this.breadcrumbs = breadcrumbs;
-            });
     }
     getBusinessProfile() {
         this.showaddsocialmedia = false;
@@ -212,8 +166,6 @@ export class MediaComponent implements OnInit, OnDestroy {
                 }
             );
     }
-
-
     getBussinessProfileApi() {
         const _this = this;
         return new Promise(function (resolve, reject) {
@@ -252,7 +204,6 @@ export class MediaComponent implements OnInit, OnDestroy {
     handleSocialmedia(key?) {
         this.socialdialogRef = this.dialog.open(ProviderUserBprofileSearchSocialMediaComponent, {
             width: '50%',
-            // panelClass: 'socialmediamainclass',
             panelClass: ['popup-class', 'commonpopupmainclass'],
             disableClose: true,
             autoFocus: true,
@@ -286,10 +237,8 @@ export class MediaComponent implements OnInit, OnDestroy {
                     this.getBusinessProfile();
                 },
                 () => {
-
                 }
             );
-
     }
     editSocialmedia(key) {
         this.handleSocialmedia(key);

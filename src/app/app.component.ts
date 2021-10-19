@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { GlobalService } from './shared/services/global-service';
 import {version} from './shared/constants/version';
 import { LocalStorageService } from './shared/services/local-storage.service';
@@ -11,11 +11,10 @@ export let projectConstants: any = {};
 /**
  * Root class of Jaldee Application
  */
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   
   // not used
   title = 'app';
-
   /**
    * 
    * @param globalService 
@@ -43,6 +42,9 @@ export class AppComponent implements OnInit {
     } else {
       this.lStorageService.setitemonLocalStorage('version', cVersion);
     }
+  }
+  ngAfterViewInit () {
+    document.getElementById('globalLoading').remove();
   }
 }
 

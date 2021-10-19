@@ -1,11 +1,8 @@
 <div *ngIf="api_loading">
     <app-common-innerloading-spinner> </app-common-innerloading-spinner>
-
 </div>
 <div *ngIf="!api_loading">
     <section class="">
-
-
         <div class="card title-gb rounded-0">
             <h5 class="mgn-up-10">
                 <span class="fa fa-arrow-left pointer-cursor"
@@ -15,9 +12,6 @@
         </div>
     </section>
     <section>
-
-
-
         <div class="content loc-list">
             <div class="col-md-12 no-padding-small">
                 <div class="row">
@@ -43,8 +37,8 @@
                                                 <div class="item">
                                                     <span class="ttle">{{disc_value}}</span>
                                                     <span class="rupee-font"> {{(coupon.calculationType=='Percentage')?
-                                            coupon.amount+'%':
-                                            (coupon.amount | currency:'&#8377;')}} <span
+                                                        coupon.amount+'%':
+                                                        (coupon.amount | currency:'&#8377;')}} <span
                                                             *ngIf="coupon.maxDiscountValue">
                                                             (upto
                                                             {{(coupon.maxDiscountValue | currency:'&#8377;')}}
@@ -69,13 +63,14 @@
                                             <div class="c-ot">
                                                 <div class="item days">
                                                     <span class="ttle">Applicable Days</span>
-                                                    <span class="mgn-rt-5" *ngFor="let wday of weekdays | keyvalue:keepOriginalOrder">
-                                                        <mat-checkbox  [disabled]="true"
-                                                          [checked]="check_existsinweek_array(selday_arr,wday.value) >= 0">{{wday.key}}
+                                                    <span class="mgn-rt-5"
+                                                        *ngFor="let wday of weekdays | keyvalue:keepOriginalOrder">
+                                                        <mat-checkbox [disabled]="true"
+                                                            [checked]="check_existsinweek_array(selday_arr,wday.value) >= 0">
+                                                            {{wday.key}}
                                                         </mat-checkbox>
                                                     </span>
                                                 </div>
-                                                
                                             </div>
                                             <div>
                                                 <span class="ttle">Booking Modes</span>
@@ -97,8 +92,6 @@
                                                                 class="fa fa-times" style="color: red"></i>
                                                             First {{checkin_label| capitalizeFirst}} Only </span>
                                                     </div>
-
-
                                                 </div>
                                                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6 no-padding">
 
@@ -115,34 +108,32 @@
                                                             *ngIf="coupon.couponRules.minBillAmount">
                                                             <span class="ttle">Minimum Bill Amount</span>
                                                             <span class="rupee-font">
-                                                                {{(coupon.couponRules.minBillAmount  | currency:'&#8377;')}}</span>
+                                                                {{(coupon.couponRules.minBillAmount |
+                                                                currency:'&#8377;')}}</span>
                                                         </div>
-
                                                     </div>
-
-
                                                 </div>
                                             </div>
                                             <div class="c-ot rules-cap">
                                                 <h6>Applicable For</h6>
                                             </div>
                                             <div class="row">
-                                              
                                                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
-                                                   
                                                     <div class="c-ot"
                                                         *ngIf="coupon.couponRules.policies.services.length !=0">
                                                         <span class="ttle">
                                                             <i class="fa fa-check" style="color: green"></i>
-                                                            <a href="javascript:" (click)="openServiceDialog();">{{coupon.couponRules.policies.services.length}} service(s)</a> 
+                                                            <a href="javascript:"
+                                                                (click)="openServiceDialog();">{{coupon.couponRules.policies.services.length}}
+                                                                service(s)</a>
                                                         </span>
-
                                                     </div>
                                                     <div class="c-ot"
                                                         *ngIf="coupon.couponRules.policies.departments.length !=0">
                                                         <span class="ttle">
                                                             <i class="fa fa-check" style="color: green"></i>
-                                                            <a href="javascript:" (click)="openDepartmentDialog();">{{coupon.couponRules.policies.departments.length}}</a> 
+                                                            <a href="javascript:"
+                                                                (click)="openDepartmentDialog();">{{coupon.couponRules.policies.departments.length}}</a>
                                                             department(s)
                                                         </span>
 
@@ -151,25 +142,28 @@
                                                         *ngIf="coupon.couponRules.policies.users.length !=0">
                                                         <span class="ttle">
                                                             <i class="fa fa-check" style="color: green"></i>
-                                                            <a href="javascript:" (click)="openUserDialog();">{{coupon.couponRules.policies.users.length}} user(s)</a> 
+                                                            <a href="javascript:"
+                                                                (click)="openUserDialog();">{{coupon.couponRules.policies.users.length}}
+                                                                user(s)</a>
                                                         </span>
-
                                                     </div>
                                                     <div class="c-ot"
                                                         *ngIf="coupon.couponRules.policies.consumerLabels.length !=0">
                                                         <span class="ttle">
                                                             <i class="fa fa-check" style="color: green"></i>
-                                                            <a href="javascript:" (click)="openCustomerLabelDialog();">{{coupon.couponRules.policies.consumerLabels.length}} label(s)</a>
+                                                            <a href="javascript:"
+                                                                (click)="openCustomerLabelDialog();">{{coupon.couponRules.policies.consumerLabels.length}}
+                                                                label(s)</a>
                                                         </span>
-
                                                     </div>
                                                     <div class="c-ot"
                                                         *ngIf="coupon.couponRules.policies.consumerGroups.length !=0">
                                                         <span class="ttle">
                                                             <i class="fa fa-check" style="color: green"></i>
-                                                            <a href="javascript:" (click)="openCustomerGroupDialog();"> {{coupon.couponRules.policies.consumerGroups.length}} group(s)</a>
+                                                            <a href="javascript:" (click)="openCustomerGroupDialog();">
+                                                                {{coupon.couponRules.policies.consumerGroups.length}}
+                                                                group(s)</a>
                                                         </span>
-
                                                     </div>
                                                     <div class="c-ot"
                                                         *ngIf="coupon.couponRules.policies.catalogues.length !=0">
@@ -183,23 +177,21 @@
                                                         *ngIf="coupon.couponRules.policies.items.length !=0">
                                                         <span class="ttle">
                                                             <i class="fa fa-check" style="color: green"></i>
-                                                            <a href="javascript:" (click)="openItemDialog();"> {{coupon.couponRules.policies.items.length}} item(s)</a>
+                                                            <a href="javascript:" (click)="openItemDialog();">
+                                                                {{coupon.couponRules.policies.items.length}} item(s)</a>
                                                         </span>
-
                                                     </div>
                                                 </div>
                                             </div>
-
-
-
                                             <div class="row" *ngIf="coupon.couponRules.published==false">
                                                 <button class="btn btn-primary" (click)="publish();"> Publish</button>
                                             </div>
                                             <div class="row" *ngIf="coupon.couponRules.published ==true">
                                                 <p><b style="color:green">Coupon is published and is valid from<span
-                                                            style="color:blue">{{coupon.couponRules.publishedFrom | date: newDateFormat}}</span>
-                                                        to <span
-                                                            style="color:blue">{{coupon.couponRules.publishedTo | date: newDateFormat}}</span></b>
+                                                            style="color:blue">{{coupon.couponRules.publishedFrom |
+                                                            date: newDateFormat}}</span>
+                                                        to <span style="color:blue">{{coupon.couponRules.publishedTo |
+                                                            date: newDateFormat}}</span></b>
                                                 </p>
                                             </div>
                                         </div>
@@ -207,16 +199,15 @@
                                 </div>
                                 <div class="lbr col-sm-12 col-md-4 col-lg-4 no-padding-small">
                                     <div class="cr1" *ngIf="pCouponStat">
-                                      <h5>Coupon Stats</h5>
-                                      <div class="chart">
-                                          <p> #Bookings Applied : {{pCouponStat.providerUsage.usageCount}}</p>
-                                          <p> Total Amount Discounted : {{pCouponStat.providerUsage.usageAmt.toFixed(2)}}</p>
-                                          <!-- <p> Amount Reimbursed by Jaldee.com : {{pCouponStat.providerUsage.reimbursed}}</p> -->
-                                      </div>
-                                  </div>
-                                  </div>
+                                        <h5>Coupon Stats</h5>
+                                        <div class="chart">
+                                            <p> #Bookings Applied : {{pCouponStat.providerUsage.usageCount}}</p>
+                                            <p> Total Amount Discounted :
+                                                {{pCouponStat.providerUsage.usageAmt.toFixed(2)}}</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

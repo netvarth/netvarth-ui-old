@@ -13,7 +13,6 @@ import { SubSink } from 'subsink';
   styleUrls: ['./item-details.component.css']
 })
 export class ItemDetailsComponent implements OnInit,OnDestroy {
- 
 
   itemImages: any;
   customOptions: any;
@@ -77,7 +76,7 @@ private subs=new SubSink();
     private location: Location,
     private lStorageService: LocalStorageService,
     private router: Router ,
-    public route: ActivatedRoute,) { }
+    public route: ActivatedRoute) { }
 
   ngOnInit() {
     const orderList = JSON.parse(this.lStorageService.getitemfromLocalStorage('order'));
@@ -130,10 +129,6 @@ private subs=new SubSink();
     }
     return qty;
   }
-  // getItemQty() {
-  //   const qty = this.orderList.filter(i => i.itemId === this.currentItem.itemId).length;
-  //   return qty;
-  // }
   increment() {
     this.addToCart();
   }
@@ -160,29 +155,8 @@ private subs=new SubSink();
         break;
       }
     }
-
     this.getItemQty();
   }
-
-
-  // addRandomImage() {
-  //   const imageToCopy: Image = this.imagesRect[Math.floor(Math.random() * this.imagesRect.length)];
-  //   const newImage: Image = new Image(this.imagesRect.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
-  //   this.imagesRect = [...this.imagesRect, newImage];
-  // }
-
-  // onChangeAutoPlay() {
-  //   this.autoPlay = !this.autoPlay;
-  // }
-
-  // onChangeShowArrows() {
-  //   this.showArrows = !this.showArrows;
-  // }
-
-  // onChangeShowDots() {
-  //   this.showDots = !this.showDots;
-  // }
-
   // output evets
   onShow(event: ImageEvent) {
     console.log('show', event);

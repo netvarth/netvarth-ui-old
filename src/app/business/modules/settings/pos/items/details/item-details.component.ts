@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { projectConstants } from '../../../../../../app.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';

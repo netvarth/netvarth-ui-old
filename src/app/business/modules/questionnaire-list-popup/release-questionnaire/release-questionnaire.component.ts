@@ -1,8 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
-import { AddproviderAddonComponent } from '../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
@@ -10,6 +9,7 @@ import { projectConstants } from '../../../../app.component';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { AddproviderAddonComponent } from '../../add-provider-addons/add-provider-addons.component';
 
 @Component({
   selector: 'app-release-questionnaire',

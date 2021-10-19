@@ -3,7 +3,7 @@ import { AddDrugComponent } from './add-drug/add-drug.component';
 import { NavigationExtras, Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { MedicalrecordService } from '../medicalrecord.service';
 import { InstructionsComponent } from './instructions/instructions.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';

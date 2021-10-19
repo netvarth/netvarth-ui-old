@@ -11,8 +11,8 @@ import { MatSelectModule } from "@angular/material/select";
 import { RouterModule, Routes } from "@angular/router";
 import { CapitalizeFirstPipeModule } from "../../../../../../shared/pipes/capitalize.module";
 import { LoadingSpinnerModule } from "../../../../../../shared/modules/loading-spinner/loading-spinner.module";
-import { AddProviderAddonsModule } from "../../../../../../ynw_provider/components/add-provider-addons/add-provider-addons.module";
 import { ConsumerNotificationsComponent } from "./consumer-notifications.component";
+import { AddProviderAddonsModule } from "../../../../../../business/modules/add-provider-addons/add-provider-addons.module";
 const routes: Routes = [
     { path: '', component: ConsumerNotificationsComponent }
 ];

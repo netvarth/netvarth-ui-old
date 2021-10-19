@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { projectConstants } from '../../../../../../app.component';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../../../shared/constants/project-messages';
@@ -36,23 +36,6 @@ export class DiscountDetailsComponent implements OnInit {
   api_loading = true;
   api_loading1 = true;
   disableButton = false;
-  breadcrumbs_init = [
-
-    {
-      url: '/provider/settings',
-      title: 'Settings'
-    },
-    {
-      title: 'Jaldee Billing',
-      url: '/provider/settings/pos'
-    },
-    {
-      title: 'Discounts',
-      url: '/provider/settings/pos/discount'
-    }
-
-  ];
-  breadcrumbs = this.breadcrumbs_init;
   customer_label;
   discount_id;
   action;
@@ -74,15 +57,7 @@ export class DiscountDetailsComponent implements OnInit {
         this.discount_id = params.id;
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         if (this.discount_id) {
-          if (this.discount_id === 'add') {
-            const breadcrumbs = [];
-            this.breadcrumbs_init.map((e) => {
-              breadcrumbs.push(e);
-            });
-            breadcrumbs.push({
-              title: 'Add'
-            });
-            this.breadcrumbs = breadcrumbs;
+          if (this.discount_id === 'add') {            
             this.action = 'add';
             this.createForm();
           } else {
@@ -93,15 +68,7 @@ export class DiscountDetailsComponent implements OnInit {
                   (item) => {
                     this.discount = item;
                     this.discountname = this.discount.name;
-                    if (this.action === 'edit') {
-                      const breadcrumbs = [];
-                      this.breadcrumbs_init.map((e) => {
-                        breadcrumbs.push(e);
-                      });
-                      breadcrumbs.push({
-                        title: this.discountname
-                      });
-                      this.breadcrumbs = breadcrumbs;
+                    if (this.action === 'edit') {                      
                       this.createForm();
                     }
                   }

@@ -81,56 +81,6 @@
                 </li>
                 <li class="dropdown customized-dd" *ngIf="time_type !==3"
                   style="margin-left: auto !important; margin-bottom: 12px !important; margin-right: 10px !important;">
-                  <!-- <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                    *ngIf="selectedView">
-                    <span style="margin-right: 10px !important;">
-                      <i class="fa fa-users"></i>
-                      <span *ngIf="!small_device_display && selectedView.name">
-                        {{selectedView.name}}</span>
-                      <span *ngIf="!small_device_display && !selectedView.name">
-                        <ng-container *ngIf="selectedView.businessName">
-                          {{selectedView.businessName}}</ng-container>
-                        <ng-container *ngIf="!selectedView.businessName">
-                          {{selectedView.firstName}}</ng-container>
-                      </span>
-                    </span>
-                    <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" style="padding-bottom: 0 !important;">
-                    <li>
-                      <ul class="menu dd-menu">
-                        <li *ngFor="let view of views" [ngClass]="{'active': (view.id == selectedView.id)}">
-                          <a class="pointer-cursor" (click)="handleViewSel(view)">
-                            <ng-container *ngIf="view.name">
-                              <h4 *ngIf="view.name.length>='27'">
-                                {{view.name.substring(0,24) }}...</h4>
-                              <h4 *ngIf="view.name.length<'27'">{{view.name}}</h4>
-                            </ng-container>
-                            <ng-container *ngIf="!view.name">
-                              <h4 *ngIf="!view.businessName">
-                                <ng-container *ngIf="view.firstName.length>='27'">
-                                  {{ view.firstName.substring(0,24) }}...
-                                </ng-container>
-                                <ng-container *ngIf="view.firstName.length<'27'">
-                                  {{ view.firstName}}
-                                </ng-container>
-                              </h4>
-                              <h4 *ngIf="view.businessName">
-                                <ng-container *ngIf="view.businessName.length>='27'">
-                                  {{ view.businessName.substring(0,24) }}...
-                                </ng-container>
-                                <ng-container *ngIf="view.businessName.length<'27'">
-                                  {{ view.businessName}}
-                                </ng-container>
-                              </h4>
-                            </ng-container>
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="footer manage-views"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage
-                        Views</a></li>
-                  </ul> -->
                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="modal" data-target="#selectViewModal"
                     *ngIf="selectedView">
                     <span style="margin-right: 10px !important;">
@@ -247,9 +197,7 @@
               <div>
                 <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
                   <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
-                    <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
-                      <!-- <span *ngIf="filterapplied === true" class="clearFilter reset-filter" (click)="clearFilter()"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">Reset</span> -->
+                    <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">                    
                       <span class="filter-head-title">Filter</span>
                       <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                         (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
@@ -392,7 +340,6 @@
                         <div id="collapseServices1" class="collapse in" data-parent="#accordion1">
                           <div class="card-body">
                             <div class="filter-checkbox-input" *ngIf="service_list.length > 1">
-                              <!-- <label class="filterHeaders">Services</label> -->
                               <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                               </li>
                               <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -442,7 +389,6 @@
                         <div id="collapsePayStatus1" class="collapse in" data-parent="#accordion1">
                           <div class="card-body">
                             <div class="filter-checkbox-input">
-                              <!-- <label class="filterHeaders">Payment Status</label> -->
                               <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                               </li>
                               <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -555,9 +501,6 @@
                     <i class="fa fa-refresh" (click)="refresh()"></i>
                   </a>
                   <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
-                    <!-- <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
-                      [matTooltip]="filtericonTooltip">
-                    </i> -->
                     <img src="../../../assets/images/provider-filter-icon.png" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
                       [matTooltip]="filtericonTooltip" style="width: 22px !important; margin-top: -6px !important;">
                   </a>
@@ -635,14 +578,6 @@
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
-                        <!-- <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
-                          {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName +
-                            ' ' + appt.provider.lastName}}
-                          {{appt.provider.firstName}}&nbsp;{{appt.provider.lastName}
-                        </div>
-                        <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
-                          {{getUsersList(appt.teamId)}}
-                        </div> -->
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -676,30 +611,11 @@
                       </td>
                       <td class="td-three">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                          <!-- <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
-                          </span>
-                          <span class="online-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'ONLINE_APPOINTMENT'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
-                          </span>
-                          <span class="phonein-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
-                          </span>
-                          <span class="walkin-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'WALK_IN_APPOINTMENT'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
-                          </span>
-                          <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
-                            class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
-                            *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span> -->
                           <span [matTooltip]="appt.service.consumerNoteTitle | capitalizeFirst"
                             class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.consumerNote"
                             (click)="stopprop($event);showConsumerNote(appt)">
                             <i class="icon-note"></i>
                           </span>
-                          <!-- <span (click)="stopprop($event);openAttachmentGallery(appt)"
-                            [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
-                            *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
-                              class="material-icons">attach_file</i></span> -->
                               <span (click)="stopprop($event);showAttachments(appt)"
                             [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                             *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
@@ -849,9 +765,6 @@
                     <i class="fa fa-refresh" (click)="refresh()"></i>
                   </a>
                   <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
-                    <!-- <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
-                      [matTooltip]="filtericonTooltip">
-                    </i> -->
                     <img src="../../../assets/images/provider-filter-icon.png" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
                       [matTooltip]="filtericonTooltip" style="width: 22px !important; margin-top: -6px !important;">
                   </a>
@@ -958,26 +871,7 @@
                           </div>
                         </td>
                         <td class="td-three">
-                          <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                            <!-- <span class="dashboardrescheduled-icon mgn-rt-10"
-                              *ngIf="apptByTimeSlot[appt.time][0].isRescheduled" [matTooltipClass]="tooltipcls"
-                              [matTooltip]="'Rescheduled'">
-                            </span>
-                            <span class="online-icon mgn-rt-10"
-                              *ngIf="apptByTimeSlot[appt.time][0].appointmentMode == 'ONLINE_APPOINTMENT'"
-                              [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
-                            </span>
-                            <span class="phonein-icon mgn-rt-10"
-                              *ngIf="apptByTimeSlot[appt.time][0].appointmentMode == 'PHONE_IN_APPOINTMENT'"
-                              [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
-                            </span>
-                            <span class="walkin-icon mgn-rt-10"
-                              *ngIf="apptByTimeSlot[appt.time][0].appointmentMode == 'WALK_IN_APPOINTMENT'"
-                              [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
-                            </span>
-                            <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
-                              class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
-                              *ngIf="apptByTimeSlot[appt.time][0].apptStatus == 'Arrived' && !apptByTimeSlot[appt.time][0].virtualService"></span> -->
+                          <div class="col-md-12 col-xs-12 col-sm-12 no-padding">                           
                             <span
                               [matTooltip]="apptByTimeSlot[appt.time][0].service.consumerNoteTitle | capitalizeFirst"
                               class="pull-left cnote  pointer-cursor mgn-rt-10"
@@ -985,10 +879,6 @@
                               (click)="stopprop($event);showConsumerNote(apptByTimeSlot[appt.time][0])">
                               <i class="icon-note"></i>
                             </span>
-                            <!-- <span (click)="stopprop($event);openAttachmentGallery(apptByTimeSlot[appt.time][0])"
-                              [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
-                              *ngIf="apptByTimeSlot[appt.time][0].hasAttachment"><i style="font-size: 20px;"
-                                class="material-icons">attach_file</i></span> -->
                                 <span (click)="stopprop($event);showAttachments(appt)"
                                 [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                                 *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
@@ -1162,14 +1052,7 @@
                           *ngIf="!appt.appmtFor[0].firstName && !appt.appmtFor[0].lastName">
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                       </td>
-                      <td class="title td-two">
-                        <!-- <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
-                          {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName +
-                            ' ' + appt.provider.lastName}}
-                        </div>
-                        <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
-                          {{getUsersList(appt.teamId)}}
-                        </div> -->
+                      <td class="title td-two">                        
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -1203,21 +1086,6 @@
                       </td>
                       <td class="td-three">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                          <!-- <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
-                          </span>
-                          <span class="online-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'ONLINE_APPOINTMENT'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
-                          </span>
-                          <span class="phonein-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
-                          </span>
-                          <span class="walkin-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'WALK_IN_APPOINTMENT'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
-                          </span>
-                          <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
-                            class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
-                            *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span> -->
                           <span [matTooltip]="appt.service.consumerNoteTitle | capitalizeFirst"
                             class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.consumerNote"
                             (click)="stopprop($event);showConsumerNote(appt)">
@@ -1226,11 +1094,7 @@
                           <span (click)="stopprop($event);showAttachments(appt)"
                           [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                           *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
-                            class="material-icons">attach_file</i></span>
-                          <!-- <span (click)="stopprop($event);openAttachmentGallery(appt)"
-                            [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
-                            *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
-                              class="material-icons">attach_file</i></span> -->
+                            class="material-icons">attach_file</i></span>                        
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                           *ngIf="time_type === 3 || (time_type !== 3 && (!appt.virtualService || (appt.virtualService && appt.apptStatus !== 'Arrived')))">
@@ -1348,8 +1212,6 @@
                       </app-card>
                     </div>
                   </tbody>
-
-
                 </table>
               </div>
             </div>
@@ -1368,9 +1230,6 @@
                   <i class="fa fa-refresh" (click)="refresh()"></i>
                 </a>
                 <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
-                  <!-- <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
-                    [matTooltip]="filtericonTooltip">
-                  </i> -->
                   <img src="../../../assets/images/provider-filter-icon.png" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
                     [matTooltip]="filtericonTooltip" style="width: 22px !important; margin-top: -6px !important;">
                 </a>
@@ -1382,8 +1241,6 @@
                         <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                           (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Close filter window'"></i>
-                        <!-- <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span> -->
                       </div>
                     <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
                       <ul class="sidebar-menu accordion" id="accordion2">
@@ -1515,7 +1372,6 @@
                           <div id="collapseServices2" class="collapse in" data-parent="#accordion2">
                             <div class="card-body">
                               <div class="filter-checkbox-input" *ngIf="service_list.length > 1">
-                                <!-- <label class="filterHeaders">Services</label> -->
                                 <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                 </li>
                                 <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -1564,7 +1420,6 @@
                           <div id="collapsePayStatus2" class="collapse in" data-parent="#accordion2">
                             <div class="card-body">
                               <div class="filter-checkbox-input">
-                                <!-- <label class="filterHeaders">Payment Status</label> -->
                                 <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                 </li>
                                 <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -1599,7 +1454,6 @@
                           <div id="collapseAMode2" class="collapse in" data-parent="#accordion2">
                             <div class="card-body">
                               <div class="filter-checkbox-input">
-                                <!-- <label class="filterHeaders">Appointment Mode</label> -->
                                 <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                 </li>
                                 <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -1634,7 +1488,6 @@
                           <div id="collapseLabels2" class="collapse in" data-parent="#accordion2">
                             <div class="card-body">
                               <div class="filter-checkbox-input" *ngIf="providerLabels.length > 0">
-                                <!-- <label class="filterHeaders">Labels</label> -->
                                 <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                                   <mat-checkbox class="filter-checkbox" [checked]="allLabelSelected" (change)="setLabelFilter('all', $event)">
                                     All</mat-checkbox>
@@ -1766,14 +1619,7 @@
                         *ngIf="!appt.appmtFor[0].firstName && !appt.appmtFor[0].lastName">
                         {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                     </td>
-                    <td class="title td-two">
-                      <!-- <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
-                        {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName +
-                          ' ' + appt.provider.lastName}}
-                      </div>
-                      <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
-                        {{getUsersList(appt.teamId)}}
-                      </div> -->
+                    <td class="title td-two">                      
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                         <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -1806,31 +1652,12 @@
                       </div>
                     </td>
                     <td class="td-three">
-                      <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                        <!-- <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
-                        </span>
-                        <span class="online-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'ONLINE_APPOINTMENT'"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
-                        </span>
-                        <span class="phonein-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
-                        </span>
-                        <span class="walkin-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'WALK_IN_APPOINTMENT'"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
-                        </span>
-                        <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
-                          class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
-                          *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span> -->
+                      <div class="col-md-12 col-xs-12 col-sm-12 no-padding">                        
                         <span [matTooltip]="appt.service.consumerNoteTitle | capitalizeFirst"
                           class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.consumerNote"
                           (click)="stopprop($event);showConsumerNote(appt)">
                           <i class="icon-note"></i>
                         </span>
-                        <!-- <span (click)="stopprop($event);openAttachmentGallery(appt)"
-                          [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
-                          *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
-                            class="material-icons">attach_file</i></span> -->
                             <span (click)="stopprop($event);showAttachments(appt)"
                             [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                             *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
@@ -1950,8 +1777,6 @@
                     </app-card>
                   </div>
                 </tbody>
-
-
               </table>
             </div>
           </mat-tab>
@@ -1966,9 +1791,6 @@
                   </i>
                 </a>
                 <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
-                  <!-- <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
-                    [matTooltip]="filtericonTooltip">
-                  </i> -->
                   <img src="../../../assets/images/provider-filter-icon.png" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
                     [matTooltip]="filtericonTooltip" style="width: 22px !important; margin-top: -6px !important;">
                 </a>
@@ -1980,8 +1802,6 @@
                         <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                           (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Close filter window'"></i>
-                        <!-- <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span> -->
                       </div>
                       <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
                       <ul class="sidebar-menu accordion" id="accordion3">
@@ -2113,7 +1933,6 @@
                           <div id="collapseServices3" class="collapse in" data-parent="#accordion3">
                             <div class="card-body">
                               <div class="filter-checkbox-input" *ngIf="service_list.length > 1">
-                                <!-- <label class="filterHeaders">Services</label> -->
                                 <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                 </li>
                                 <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -2162,7 +1981,6 @@
                           <div id="collapseTCStatus3" class="collapse in" data-parent="#accordion3">
                             <div class="card-body">
                               <div class="filter-checkbox-input" *ngIf="time_type === 3">
-                                <!-- <label class="filterHeaders">Appointment Status</label> -->
                                 <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                 </li>
                                 <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -2197,7 +2015,6 @@
                           <div id="collapsePayStatus3" class="collapse in" data-parent="#accordion3">
                             <div class="card-body">
                               <div class="filter-checkbox-input">
-                                <!-- <label class="filterHeaders">Payment Status</label> -->
                                 <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                 </li>
                                 <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -2232,7 +2049,6 @@
                           <div id="collapseAMode3" class="collapse in" data-parent="#accordion3">
                             <div class="card-body">
                               <div class="filter-checkbox-input">
-                                <!-- <label class="filterHeaders">Appointment Mode</label> -->
                                 <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                 </li>
                                 <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -2267,7 +2083,6 @@
                           <div id="collapseLabels3" class="collapse in" data-parent="#accordion3">
                             <div class="card-body">
                               <div class="filter-checkbox-input" *ngIf="providerLabels.length > 0">
-                                <!-- <label class="filterHeaders">Labels</label> -->
                                 <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                                   <mat-checkbox class="filter-checkbox" [checked]="allLabelSelected" (change)="setLabelFilter('all', $event)">
                                     All</mat-checkbox>
@@ -2402,13 +2217,6 @@
                         {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                     </td>
                     <td class="title td-two">
-                      <!-- <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
-                        {{(appt.provider.businessName) ? appt.provider.businessName : appt.provider.firstName +
-                          ' ' + appt.provider.lastName}}
-                      </div>
-                      <div class="bold user-txt-clr" *ngIf="appt.teamId !== 0">
-                        {{getUsersList(appt.teamId)}}
-                      </div> -->
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                         <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -2442,30 +2250,11 @@
                     </td>
                     <td class="td-three">
                       <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                        <!-- <span class="dashboardrescheduled-icon mgn-rt-10" *ngIf="appt.isRescheduled"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Rescheduled'">
-                        </span>
-                        <span class="online-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'ONLINE_APPOINTMENT'"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
-                        </span>
-                        <span class="phonein-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
-                        </span>
-                        <span class="walkin-icon mgn-rt-10" *ngIf="appt.appointmentMode == 'WALK_IN_APPOINTMENT'"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
-                        </span>
-                        <span [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'" title="{{arrived_upper}}"
-                          class="pull-left dashboardarrived-icon checkin_status mgn-rt-10"
-                          *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span> -->
                         <span [matTooltip]="appt.service.consumerNoteTitle | capitalizeFirst"
                           class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.consumerNote"
                           (click)="stopprop($event);showConsumerNote(appt)">
                           <i class="icon-note"></i>
                         </span>
-                        <!-- <span (click)="stopprop($event);openAttachmentGallery(appt)"
-                          [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
-                          *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
-                            class="material-icons">attach_file</i></span> -->
                             <span (click)="stopprop($event);showAttachments(appt)"
                             [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                             *ngIf="appt.hasAttachment"><i style="font-size: 20px;"

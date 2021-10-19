@@ -1,61 +1,38 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ShoppingCartRoutingModule } from './shopping-cart.routing.module';
 import { ShoppingCartSharedComponent } from './shopping-cart.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { HeaderModule } from '../header/header.module';
-import { AddItemNotesComponent } from './add-item-notes/add-item-notes.component';
-import { CheckoutComponent } from './checkout/checkout.component';
-import { AddAddressComponent } from './checkout/add-address/add-address.component';
-import { MatStepperModule } from '@angular/material/stepper';
-import { NgBootstrapModule } from '../common/ngbootstrap.module';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MaterialModule } from '../common/material.module';
+import { FormsModule } from '@angular/forms';
 import { FormMessageDisplayModule } from '../form-message-display/form-message-display.module';
-import { GalleryModule } from '@ks89/angular-modal-gallery';
-import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
 import { ConfirmBoxModule } from '../../components/confirm-box/confirm-box.module';
+import { AddItemNotesModule } from './add-item-notes/add-item-notes.module';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatChipsModule } from '@angular/material/chips';
+const routes: Routes = [
+  { path: '', component: ShoppingCartSharedComponent },
+  { path: 'checkout', loadChildren: () => import('./checkout/checkout.module').then(m => m.CheckoutModule) },
+];
 @NgModule({
     imports: [
       CommonModule,
-      ShoppingCartRoutingModule,
-      RouterModule,
       HeaderModule,
       MatRadioModule,
+      MatTooltipModule,
       MatDatepickerModule,
-      MatNativeDateModule,
-      MatStepperModule,
-      NgBootstrapModule,
-      MatGridListModule,
+      MatChipsModule,
       FormsModule,
-      ReactiveFormsModule,
-      MaterialModule,
       FormMessageDisplayModule,
-      GalleryModule,
-      LoadingSpinnerModule,
-      ConfirmBoxModule
+      ConfirmBoxModule,
+      AddItemNotesModule,
+      [RouterModule.forChild(routes)]
     ],
     exports: [
-      ShoppingCartRoutingModule,
-      RouterModule,
-      CommonModule,
-      HeaderModule,
-      MatRadioModule,
-      MatDatepickerModule,
-      MatNativeDateModule,
-      MatStepperModule,
-      NgBootstrapModule,
-      MaterialModule
+      ShoppingCartSharedComponent
     ],
-    declarations: [ShoppingCartSharedComponent, AddItemNotesComponent, CheckoutComponent, AddAddressComponent],
-    entryComponents: [
-      AddItemNotesComponent,
-      AddAddressComponent,
-      ],
+    declarations: [ShoppingCartSharedComponent],
     schemas: [
       CUSTOM_ELEMENTS_SCHEMA,
       NO_ERRORS_SCHEMA

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';

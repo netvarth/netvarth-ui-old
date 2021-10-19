@@ -1,7 +1,7 @@
-import { Component, OnInit , OnDestroy} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { MatDialog } from '@angular/material/dialog';
 import { ShowMessageComponent } from '../../show-messages/show-messages.component';
@@ -18,18 +18,6 @@ import { SubSink } from 'subsink';
 export class OrdermanagerComponent implements OnInit, OnDestroy {
 
   customer_label = '';
-  breadcrumbs_init = [
-    {
-      url: '/provider/settings',
-      title: 'Settings'
-    },
-    {
-      title: 'Jaldee Billing',
-      url: '/provider/settings/pos'
-    }
-  ];
-
-  breadcrumbs = this.breadcrumbs_init;
   orderstatus;
   pos_statusstr = 'Off';
   frm_public_self_cap = '';
@@ -42,7 +30,6 @@ export class OrdermanagerComponent implements OnInit, OnDestroy {
   discount_count = 0;
   item_list;
   item_count = 0;
-  breadcrumb_moreoptions: any = [];
   pos;
   catalog_list: any = [];
   private subscriptions = new SubSink();
@@ -54,20 +41,16 @@ export class OrdermanagerComponent implements OnInit, OnDestroy {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService
-    ) {
+  ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
-
   ngOnInit() {
     this.frm_public_self_cap = Messages.FRM_LEVEL_SELF_MSG.replace('[customer]', this.customer_label);
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
-    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.getOrderStatus();
     this.getCatalog();
-    //this.getDiscounts();
     this.getitems();
-    //this.getPOSSettings();
   }
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
@@ -87,10 +70,10 @@ export class OrdermanagerComponent implements OnInit, OnDestroy {
   }
   getCatalog() {
     this.subscriptions.sink = this.provider_services.getProviderCatalogs()
-        .subscribe(data => {
-            this.catalog_list = data;
-        });
-}
+      .subscribe(data => {
+        this.catalog_list = data;
+      });
+  }
   getitems() {
     this.subscriptions.sink = this.provider_services.getProviderItems()
       .subscribe(data => {
@@ -110,7 +93,7 @@ export class OrdermanagerComponent implements OnInit, OnDestroy {
       }
     };
     if (this.noitemError) {
-      this.router.navigate(['provider', 'settings', 'pos', 'items'] , navigatExtras);
+      this.router.navigate(['provider', 'settings', 'pos', 'items'], navigatExtras);
     } else {
       this.snackbarService.openSnackBar(this.itemError, { 'panelClass': 'snackbarerror' });
     }
@@ -125,30 +108,26 @@ export class OrdermanagerComponent implements OnInit, OnDestroy {
     const status = (event.checked) ? 'enabled' : 'disabled';
     if (event.checked && this.catalog_list.length === 0) {
       const confirmdialogRef = this.dialog.open(ShowMessageComponent, {
-          width: '50%',
-          panelClass: ['popup-class', 'commonpopupmainclass'],
-          disableClose: true,
-          data: {
-            'type': 'order'
-          }
-        });
-        this.subscriptions.sink = confirmdialogRef.afterClosed().subscribe(result => {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          'type': 'order'
+        }
+      });
+      this.subscriptions.sink = confirmdialogRef.afterClosed().subscribe(result => {
         this.getOrderStatus();
       });
-  } else {
-    this.subscriptions.sink = this.provider_services.setProviderOrderSStatus(event.checked).subscribe(data => {
-      this.snackbarService.openSnackBar('Order settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
-      this.getOrderStatus();
-    }, (error) => {
-      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      this.getOrderStatus();
-    });
+    } else {
+      this.subscriptions.sink = this.provider_services.setProviderOrderSStatus(event.checked).subscribe(data => {
+        this.snackbarService.openSnackBar('Order settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+        this.getOrderStatus();
+      }, (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.getOrderStatus();
+      });
+    }
   }
-}
-
-
-
-
   getOrderStatus() {
     this.subscriptions.sink = this.provider_services.getProviderOrderSettings().subscribe((data: any) => {
       this.orderstatus = data.enableOrder;

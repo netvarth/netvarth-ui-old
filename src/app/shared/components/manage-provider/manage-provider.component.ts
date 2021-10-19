@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../business/services/provider-services.service';
 import { Title } from '@angular/platform-browser';
 import { SessionStorageService } from '../../services/session-storage.service';
 import { GroupStorageService } from '../../services/group-storage.service';

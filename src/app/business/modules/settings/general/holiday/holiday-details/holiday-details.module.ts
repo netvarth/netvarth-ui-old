@@ -14,7 +14,7 @@ import { FormMessageDisplayModule } from "../../../../../../shared/modules/form-
 import { LoadingSpinnerModule } from "../../../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { HolidayDetailsComponent } from "./holiday-details.component";
 const routes: Routes = [
-    { path: '',  component: HolidayDetailsComponent },
+    { path: '',  component: HolidayDetailsComponent }
 ];
 @NgModule({
     imports: [

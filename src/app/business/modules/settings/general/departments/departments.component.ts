@@ -2,8 +2,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { ProviderSharedFuctions } from '../../../../functions/provider-shared-functions';
+import { ProviderServices } from '../../../../services/provider-services.service';
 import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';

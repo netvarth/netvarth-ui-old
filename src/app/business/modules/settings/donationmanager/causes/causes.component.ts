@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from '../../../../functions/provider-shared-functions';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../services/provider-services.service';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../app.component';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
@@ -11,7 +11,7 @@ import { WordProcessor } from '../../../../../shared/services/word-processor.ser
 import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ServiceQRCodeGeneratordetailComponent } from '../..../../../../../../shared/modules/service/serviceqrcodegenerator/serviceqrcodegeneratordetail.component';
-import { ProviderDataStorageService } from '../../../../../ynw_provider/services/provider-datastorage.service';
+import { ProviderDataStorageService } from '../../../../services/provider-datastorage.service';
 
 @Component({
     selector: 'app-donation-causelist',
@@ -28,23 +28,8 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
     service_list: any = [];
     api_error = null;
     api_success = null;
-    breadcrumb_moreoptions: any = [];
     add_button ='Click to create a cause';
     tooltipcls = projectConstants.TOOLTIP_CLS;
-    breadcrumbs = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            url: '/provider/settings/donationmanager',
-            title: 'Donation Manager'
-        },
-        {
-            url: '/provider/settings/donationmanager/causes',
-            title: 'Causes'
-        }
-    ];
     domain: any;
     trackStatus: string;
     cause_list: any = [];
@@ -72,11 +57,6 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
         this.getBusinessProfile();
         this.getDomainSubdomainSettings();
         this.getServices();
-        this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'donationmanager->causes', 'classname': 'b-service',
-            'actions': [{ 'title': 'Add Cause', 'type': 'addcause' },
-            { 'title': 'Help', 'type': 'learnmore' }]
-        };
     }
 
     ngOnDestroy() {

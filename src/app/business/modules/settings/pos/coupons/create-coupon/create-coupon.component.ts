@@ -5,7 +5,7 @@ import { FormMessageDisplayService } from '../../../../../../shared/modules/form
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { TimewindowPopupComponent } from '../../../ordermanager/catalog/timewindowpopup/timewindowpopup.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { ServiceListDialogComponent } from '../../../../../shared/service-list-dialog/service-list-dialog.component';

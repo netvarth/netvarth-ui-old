@@ -3,15 +3,15 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dial
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../services/provider-services.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { MedicalrecordService } from '../../medicalrecord.service';
 import { Messages } from '../../../../../shared/constants/project-messages';
-import { AddproviderAddonComponent } from '../../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { SharedServices } from '../../../../../shared/services/shared-services';
+import { AddproviderAddonComponent } from '../../../add-provider-addons/add-provider-addons.component';
 
 
 @Component({

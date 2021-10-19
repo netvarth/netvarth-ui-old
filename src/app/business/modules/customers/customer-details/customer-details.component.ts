@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
@@ -232,46 +232,6 @@ export class CustomerDetailComponent implements OnInit {
         };
         this.router.navigate(['/provider/customers/' + this.customer[0].id], navigationExtras);
     }
-   
-    // goMeetProvider() {
-    //     const navigationExtras: NavigationExtras = {
-    //         queryParams: { custId: this.customerId }
-    //     };
-    //     // const path = 'meet/' + this.id ;
-    //     // window.open(path, '_blank');
-    //     this.router.navigate(['meet', this.id], navigationExtras);
-    // }
-    // getMeetingStatus() {
-       
-    //     this.showStartBt = true;
-    //     this.provider_services.getStatus(this.id).subscribe(
-    //         (data: any) => {
-    //             this.linkStatus = data.linkStatus;
-    //             this.meetingStatus = data.meetingStatus;
-    //             if (this.meetingStatus === 'REQUESTED' && this.linkStatus === 'ENABLED') {
-    //                 this.showStartBt = true;
-    //                 this.showRejoinBt = false;
-    //                 this.showEndBt = false;
-    //             }
-    //             else if (this.meetingStatus === 'STARTED' && this.linkStatus === 'ENABLED') {
-
-    //                 this.showStartBt = true;
-    //                 this.showRejoinBt = false;
-    //                 this.showEndBt = false;
-    //             }
-    //             else if (this.meetingStatus === 'INTERRUPTED' && this.linkStatus === 'ENABLED') {
-    //                 this.showStartBt = false;
-    //                 this.showRejoinBt = true;
-    //                 this.showEndBt = false;
-    //             }
-    //             else {
-    //                 this.showStartBt = false;
-    //                 this.showRejoinBt = false;
-    //                 this.showEndBt = true;
-    //             }
-    //         }
-    //     );
-    // }
     getCustomerTodayVisit() {
         this.provider_services.getCustomerTodayVisit(this.customerId).subscribe(
             (data: any) => {

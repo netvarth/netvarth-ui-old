@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -27,7 +27,6 @@ export class JaldeeOnlineComponent implements OnInit {
   custm_id: string;
   bProfile = null;
   normal_customid_show: number;
-
   businessConfig: ArrayBuffer;
   onlinepresence_status_str: string;
   onlinepresence_status = false;

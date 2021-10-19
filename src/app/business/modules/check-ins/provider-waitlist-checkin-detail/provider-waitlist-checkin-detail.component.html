@@ -7,7 +7,6 @@
     </h5>
   </div>
 </section>
-
 <section class="prov-apptDetail" *ngIf="waitlist_data">
   <div class="content comn-cls checkin-details">
     <div class="col-md-12 no-padding-small">
@@ -17,9 +16,6 @@
             <app-common-innerloading-spinner> </app-common-innerloading-spinner>
           </div>
           <div class="card" *ngIf="!api_loading">
-
-
-
             <div class="c-details">
               <h2>
                 <i *ngIf="waitlist_data.service.serviceType === 'virtualService'" [class]="iconClass"></i>
@@ -31,16 +27,12 @@
                   | capitalizeFirst}}</span><br>
                 <div *ngIf="waitlist_data.provider" class="mgn-up-5 sub-user-name">
                   <span>{{provider_label | capitalizeFirst}} : </span>
-                  <!-- <span>{{spfname | capitalizeFirst}} {{splname}}
-                  </span> -->
                   <span>{{spName}}</span>
                 </div>
                 <div *ngIf="waitlist_data.teamId !== 0" class="mgn-up-5 sub-user-name">
                   <span>Team : </span>
                   <span>{{getUsersList(waitlist_data.teamId)}}</span>
                 </div>
-
-
                 <div *ngIf="waitlist_data.provider && waitlist_data.provider.mobileNo" class="mgn-up-5 sub-user-name">
                   <i class="fa fa-mobile icon"></i>
                   <span> {{waitlist_data.provider.countryCode}} {{waitlist_data.provider.mobileNo}}</span>
@@ -116,8 +108,6 @@
                   {{waitlist_data.amountPaid | currency:'&#8377;'}}
                 </span>
               </div>
-
-
               <!-- Status,Date,Time bar -->
               <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stat-bar">
                 <div
@@ -139,47 +129,16 @@
                       {{getAppxTime(waitlist_data)}}</span>
                   </div>
                 </div>
-                <!-- <div class="col-md-4 col-lg-4 col-xl-4 col-xs-6 stats-item"
-                  *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] && (waitlist_data.service.serviceType === 'virtualService')">
-                  <span class="status-label">STATUS</span>
-                  <span>
-                    {{check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst]}}
-                  </span>
-                </div>
                 <div class="col-md-4 col-lg-4 col-xl-4 col-xs-6 stats-item"
-                  *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] && (waitlist_data.service.serviceType !== 'virtualService')">
-                  <span class="status-label">STATUS</span>
-                  <span>
-                    {{check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst]}}
-                  </span>
-                  <span *ngIf="waitlist_data.internalStatus"><small style="color:blue">{{waitlist_data.internalStatus |
-                      capitalizeFirst}}</small>
-
-                  </span>
-                </div> -->
-                   <div class="col-md-4 col-lg-4 col-xl-4 col-xs-6 stats-item"
                   *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst]">
                   <span class="status-label">STATUS</span>
                   <span>
                     {{check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst]}}
                   </span>
                   <span *ngIf="waitlist_data.internalStatus"><small style="color:blue">{{waitlist_data.internalStatus |
-                    capitalizeFirst}}</small>
-
-                </span>
-                </div>
-                <!-- <div class="col-md-4 col-lg-4 col-xl-4 col-xs-6 stats-item"
-                  *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] && (waitlist_data.service.serviceType !== 'virtualService')">
-                  <span class="status-label">STATUS</span>
-                  <span>
-                    {{check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst]}}
-                  </span>
-                  <span *ngIf="waitlist_data.internalStatus"><small style="color:blue">{{waitlist_data.internalStatus |
                       capitalizeFirst}}</small>
-
                   </span>
-                </div> -->
-
+                </div>
                 <div class="col-md-4 col-lg-4 col-xl-4 col-xs-12 stats-item">
                   <span class="status-label">DATE & TIME-WINDOW</span>
                   <span>
@@ -189,7 +148,6 @@
                 </div>
               </div>
             </div>
-
             <!-- View more and Less -->
             <div class="more_view mgn-up-20">
               <span class="opt-viewmore" *ngIf="!view_more" (click)="viewMore()"><a class="fl-left">View
@@ -197,7 +155,6 @@
               <span class="opt-viewmore" *ngIf="view_more" (click)="viewMore()"><a class="fl-left">View
                   less</a></span>
             </div>
-
             <!-- Instructions,messages,notes -->
             <div class="more_view" *ngIf="view_more" class="mgn-up-30">
               <mat-tab-group animationDuration="10ms" class="index-head">
@@ -288,7 +245,6 @@
             </div>
           </div>
           <div class="card" *ngIf="internalStatuslog && internalStatuslog.length>0">
-
             <h2>Internal Status History</h2>
             <div class="c-history-outer">
               <ul class="internal-history">
@@ -296,10 +252,8 @@
                   <div class="time">{{log.DateTime}}</div>
                   <div class="action">{{log.InternalStatus | capitalizeFirst}}-<span class="user">{{log.User |
                       capitalizeFirst}}</span></div>
-                  <!-- <div class="user">{{log.User | capitalizeFirst}}</div> -->
                 </li>
               </ul>
-
             </div>
           </div>
         </div>

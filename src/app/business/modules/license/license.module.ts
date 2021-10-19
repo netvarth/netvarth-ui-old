@@ -1,61 +1,51 @@
 import { NgModule, OnInit } from '@angular/core';
 import { LicenseComponent } from './license.component';
-import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { CommonModule } from '@angular/common';
-import { LicenseRoutingModule } from './license.routing.module';
 import { LoadingSpinnerModule } from '../../../shared/modules/loading-spinner/loading-spinner.module';
-import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
-import { ProviderBprofileSearchAdwordsComponent } from '../../../ynw_provider/components/provider-bprofile-search-adwords/provider-bprofile-search-adwords.component';
-import { ProviderPaymentHistoryComponent } from '../../../ynw_provider/components/provider-payment-history/provider-payment-history.component';
 import { PagerModule } from '../../../shared/modules/pager/pager.module';
-import { AddonsComponent } from './addons/addons.component';
-import { ProviderAddonAuditlogsComponent } from '../../../ynw_provider/components/provider-addon-auditlogs/provider-addon-auditlogs.component';
-import { KeywordsComponent } from './keywords/keywords.component';
-import { UpgradeLicenseComponent } from '../../../ynw_provider/components/upgrade-license/upgrade-license.component';
-import { ProviderAuditLogComponent } from '../../../ynw_provider/components/provider-auditlogs/provider-auditlogs.component';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
-import { licenseusageComponent } from './licenseusage/licenseusage.component';
-import { StatementsComponent } from './statements/statements.component';
-import { InvoiceStatusComponent } from './invoicestatus/invoicestatus.component';
-import { ViewPrevStatementComponent } from './statements/viewprevstatement.component';
-import { PaymentComponent } from './payments/licensepayment.component';
-import { AddonDetailComponent } from './addons/addon-detail/addon-detail.component';
-import { AddProviderAddonsModule } from '../../../ynw_provider/components/add-provider-addons/add-provider-addons.module';
-
+import { RouterModule, Routes } from '@angular/router';
+import { UpgradeLicenseModule } from './upgrade-license/upgrade-license.module';
+import { ProviderAuditLogModule } from '../provider-auditlogs/provider-auditlogs.module';
+import { AddProviderAddonsModule } from '../add-provider-addons/add-provider-addons.module';
+import { ConfirmBoxModule } from '../../../shared/components/confirm-box/confirm-box.module';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+const routes: Routes = [
+    { path: '', component: LicenseComponent },
+    { path: '', children: [
+      { path: 'payment/history', loadChildren: ()=> import('../provider-payment-history/provider-payment-history.module').then(m=>m.ProviderPaymentHistoryModule)},
+      { path: 'addons', loadChildren: ()=> import('./addons/addons.module').then(m=>m.AddonsModule)},
+      { path: 'keywords',loadChildren: ()=> import('./keywords/keywords.module').then(m=>m.KeywordsModule)},
+      { path: 'Statements', loadChildren: ()=> import('./statements/statements.module').then(m=>m.StatementsModule)},
+      { path: 'invoicestatus', loadChildren: ()=> import('./invoicestatus/invoicestatus.module').then(m=>m.InvoiceStatusModule)},
+      { path: 'licenseusage', loadChildren: ()=> import('./licenseusage/licenseusage.module').then(m=>m.LicenseusageModule)},
+      { path: 'viewstatement',loadChildren: ()=> import('./statements/viewprevstatement/viewprevstatement.module').then(m=>m.ViewPrevStatementModule)},
+      { path: 'payments', loadChildren: ()=> import('./payments/licensepayment.module').then(m=>m.LicensePaymentModule)},
+      { path: 'addon-detail', loadChildren: ()=> import('./addons/addon-detail/addon-detail.module').then(m=>m.AddonDetailModule)}
+    ]},
+    { path: ':type', component: LicenseComponent },
+  ];
 @NgModule({
     imports: [
-        SharedModule,
         CommonModule,
+        MatMenuModule,
+        MatIconModule,
+        MatButtonModule,
         LoadingSpinnerModule,
-        BreadCrumbModule,
-        LicenseRoutingModule,
         PagerModule,
         CapitalizeFirstPipeModule,
-        AddProviderAddonsModule
+        AddProviderAddonsModule,
+        ProviderAuditLogModule,
+        [RouterModule.forChild(routes)],
 
+        UpgradeLicenseModule,
+        ProviderAuditLogModule,
+        ConfirmBoxModule
     ],
     declarations: [
-        ProviderBprofileSearchAdwordsComponent,
-        LicenseComponent,
-        AddonsComponent,
-        PaymentComponent,
-        ProviderPaymentHistoryComponent,
-        ProviderAddonAuditlogsComponent,
-        KeywordsComponent,
-        InvoiceStatusComponent,
-        licenseusageComponent,
-        UpgradeLicenseComponent,
-        ProviderAuditLogComponent,
-        StatementsComponent,
-        ViewPrevStatementComponent,
-        AddonDetailComponent
-    ],
-    entryComponents: [
-        ProviderAddonAuditlogsComponent,
-        UpgradeLicenseComponent,
-        ProviderAuditLogComponent,
-        StatementsComponent,
-        ViewPrevStatementComponent
+        LicenseComponent
     ],
     exports: [LicenseComponent]
 })

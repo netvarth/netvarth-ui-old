@@ -1,12 +1,18 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../../../../../shared/modules/common/shared.module';
 import { ProPicPopupComponent } from './pro-pic-popup.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { CommonModule } from '@angular/common';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
 
 @NgModule({
     imports: [
-        SharedModule,
-        ImageCropperModule
+        CommonModule,
+        ImageCropperModule,
+        MatDialogModule,
+        MatButtonModule,
+        FormMessageDisplayModule
     ],
     declarations: [
         ProPicPopupComponent

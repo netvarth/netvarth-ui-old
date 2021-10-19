@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, NgZone } from '@angular/core';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../business/services/provider-services.service';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { SharedServices } from '../../services/shared-services';
 import { Messages } from '../../constants/project-messages';

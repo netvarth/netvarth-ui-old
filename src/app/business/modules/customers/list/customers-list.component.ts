@@ -1,10 +1,10 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { MatDialog } from '@angular/material/dialog';
-import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from '../../../functions/provider-shared-functions';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
@@ -16,7 +16,6 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
-import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input'; 
 
 @Component({
   selector: 'app-customers-list',
@@ -120,11 +119,6 @@ export class CustomersListComponent implements OnInit {
     email1error = null;
     phoneerror = null;
   separateDialCode = true;
-    SearchCountryField = SearchCountryField;
-    selectedCountry = CountryISO.India;
-    PhoneNumberFormat = PhoneNumberFormat;
-    preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
-    phone;
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,

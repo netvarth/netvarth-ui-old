@@ -8,7 +8,6 @@
     </div>
 </section>
 <section class="yourProfile">
-
     <!--New Revamp  -->
     <div class="content w-manager settings comn-cls lic-page">
         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
@@ -77,54 +76,21 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <!-- Before Img selection -->
-
-                                                    <!-- <div class="uppy-Dashboard-AddFiles-list"
-                                                        *ngIf="!imageChangedEvent">
-                                                        <div class="button_center">
-                                                            <div class="uppy-DashboardTab">
-                                                                <button type="button" class="uppy-DashboardTab-btn"
-                                                                    (click)="imgSel.click()">
-                                                                    <svg aria-hidden="true" focusable="false" width="32"
-                                                                        height="32" viewBox="0 0 32 32">
-                                                                        <g fill="none" fill-rule="evenodd">
-                                                                            <rect width="32" height="32" rx="16"
-                                                                                fill="#2275D7"></rect>
-                                                                            <path
-                                                                                d="M21.973 21.152H9.863l-1.108-5.087h14.464l-1.246 5.087zM9.935 11.37h3.958l.886 1.444a.673.673 0 0 0 .585.316h6.506v1.37H9.935v-3.13zm14.898 3.44a.793.793 0 0 0-.616-.31h-.978v-2.126c0-.379-.275-.613-.653-.613H15.75l-.886-1.445a.673.673 0 0 0-.585-.316H9.232c-.378 0-.667.209-.667.587V14.5h-.782a.793.793 0 0 0-.61.303.795.795 0 0 0-.155.663l1.45 6.633c.078.36.396.618.764.618h13.354c.36 0 .674-.246.76-.595l1.631-6.636a.795.795 0 0 0-.144-.675z"
-                                                                                fill="#FFF"></path>
-                                                                        </g>
-                                                                    </svg>
-                                                                    <div class="uppy-DashboardTab-name">My Device</div>
-                                                                </button>
+                                                    <div *ngIf="!imageChangedEvent" class="col-lg-12 col-md-9 col-sm-12"
+                                                        (click)="imgSel.click()">
+                                                        <div
+                                                            class="dropzone dropzone-default dropzone-success dz-clickable col-lg-12">
+                                                            <div class="dropzone-msg dz-message needsclick">
+                                                                <h3 class="dropzone-msg-title">Click here to upload.
+                                                                </h3>
+                                                                <span class="dropzone-msg-desc">Only image(jpg, jpeg,
+                                                                    png) is allowed for upload</span>
                                                             </div>
                                                             <input type="file" name="image_src" id="image_src"
                                                                 accept="image/*" #imgSel (change)="imageSelect($event)"
                                                                 class="ip_hide">
                                                         </div>
-                                                    </div> -->
-
-
-                                               
-                                                        <div *ngIf="!imageChangedEvent" class="col-lg-12 col-md-9 col-sm-12" (click)="imgSel.click()">
-                                                            <div
-                                                                class="dropzone dropzone-default dropzone-success dz-clickable col-lg-12">
-                                                                <div class="dropzone-msg dz-message needsclick">
-                                                                    <h3 class="dropzone-msg-title">Click here to upload.</h3>
-                                                                    <span class="dropzone-msg-desc">Only image(jpg, jpeg, png) is allowed for upload</span>
-                                                                </div>
-                                                                <input type="file" name="image_src" id="image_src"
-                                                                accept="image/*" #imgSel (change)="imageSelect($event)"
-                                                                class="ip_hide">
-                                                            </div>
-                                                        </div>
-
-
-
-
-
-
-
-
+                                                    </div>
                                                     <!-- After Img selection cropper -->
                                                     <div>
                                                         <mat-progress-bar *ngIf="loadSymbol" mode="indeterminate"
@@ -187,8 +153,8 @@
                                             </span>
                                         </h6>
                                         <div class="warning" *ngIf="normal_basicinfo_show==1">
-                                            <app-innerloading-spinner spinnerParams="loadingParams">
-                                            </app-innerloading-spinner>
+                                            <app-common-innerloading-spinner spinnerParams="loadingParams">
+                                            </app-common-innerloading-spinner>
                                         </div>
                                         <div class="col-md-12 col-xs-12 col-sm-12 bus-bprof-strength no-padding"
                                             *ngIf="normal_basicinfo_show!=1">
@@ -209,14 +175,6 @@
 
                                     <!-- About You -->
                                     <div class="col-md-12 col-sm-12 col-xs-12 no-padding abt-you-box" #basicInfoSection>
-                                        <!-- <div class="pad-10"><span *ngIf="aboutmefilled" class="sub-heads">About
-                                                Us</span><span class="edit-txt custId-cursor" (click)="gotoAboutMe()"
-                                                *ngIf="aboutmefilled">Manage</span></div> -->
-                                        <!-- <div class="no-dta" *ngIf="!aboutmefilled">
-                                            <span [ngClass]="{'no_abt_us':!aboutmefilled }" class="cs-btn bt3"
-                                                (click)="gotoAboutMe()">About
-                                                Us</span>
-                                        </div> -->
                                         <div class="busns-name">
                                             {{bProfile.businessName}}
                                         </div>
@@ -357,11 +315,16 @@
                         <div class="col-a col-b pl0 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                             <div class="card p0 w-dta active">
                                 <div class="mgn-bt-20">
-                                     <!-- About me -->
+                                    <!-- About me -->
                                     <div class="cd-b">
-                                        <div class="div-outline custId-cursor" [ngClass]="{'div-grn-outline':aboutmefilled,'div-red-outline':!aboutmefilled }" (click)="gotoAboutMe()">
-                                            <i *ngIf="aboutmefilled" class="fa fa-check-circle fa-lg fa-grn fl-right" aria-hidden="true"></i>
-                                            <i *ngIf="!aboutmefilled" class="fa fa-exclamation-circle fa-lg fa-red fl-right" aria-hidden="true"></i>
+                                        <div class="div-outline custId-cursor"
+                                            [ngClass]="{'div-grn-outline':aboutmefilled,'div-red-outline':!aboutmefilled }"
+                                            (click)="gotoAboutMe()">
+                                            <i *ngIf="aboutmefilled" class="fa fa-check-circle fa-lg fa-grn fl-right"
+                                                aria-hidden="true"></i>
+                                            <i *ngIf="!aboutmefilled"
+                                                class="fa fa-exclamation-circle fa-lg fa-red fl-right"
+                                                aria-hidden="true"></i>
                                             <i class="fa person-icon"></i> &nbsp;&nbsp;
                                             <span class="fontstyl">About Us</span>
                                         </div>
@@ -473,8 +436,8 @@
                                                     </mat-expansion-panel-header>
                                                     <div class="no-dta"
                                                         *ngIf="normal_domainfield_show==1 || normal_subdomainfield_show==1">
-                                                        <app-innerloading-spinner spinnerParams="loadingParams">
-                                                        </app-innerloading-spinner>
+                                                        <app-common-innerloading-spinner spinnerParams="loadingParams">
+                                                        </app-common-innerloading-spinner>
                                                     </div>
                                                     <div class="no-dta"
                                                         *ngIf="normal_domainfield_show== 4 && normal_subdomainfield_show== 4">

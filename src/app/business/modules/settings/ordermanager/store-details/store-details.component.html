@@ -4,18 +4,17 @@
             <span class="fa fa-arrow-left pointer-cursor"
                 (click)="redirecToJaldeeIordermanager()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             Store Contact Information
-            <!-- <i class="fa fa-question-circle-o fa-lg fl-right" ></i>  -->
         </h5>
     </div>
 </section>
-<section>
+<section >
     <div class="content loc-list labels">
         <div class="col-md-12 col-xs-12 no-padding-small">
             <div class="row">
                 <div class="card p0">
                     <div class="copy locd">
                         <div class="lbl col-md-12">
-                            <div class="cl1">
+                            <div class="cl1" *ngIf="info_list">
                                 <span class="editbt" (click)="editInfo()"></span>
                                 <div class="ot-it">
                                     <h3>{{info_list?.firstName}} {{info_list?.lastName}}</h3>
@@ -58,6 +57,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <app-common-innerloading-spinner *ngIf="info_list"></app-common-innerloading-spinner>
                         </div>
                     </div>
                 </div>

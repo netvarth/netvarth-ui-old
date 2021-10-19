@@ -1,26 +1,23 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ProviderResolver } from '../ynw_provider/services/provider-resolver.service';
-import { BusinessHomeComponent } from './home/business-home.component';
+import { ProviderResolver } from './services/provider-resolver.service';
 import { AuthGuardProviderHome, AuthGuardLogin } from '../shared/guard/auth.guard';
 import { BusinessComponent } from './business.component';
-import { AddProviderWaitlistCheckInBillComponent } from './modules/check-ins/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
-import { EnquiryComponent } from './modules/enquiry/enquiry.component';
 
 const routes: Routes = [
   {
     path: '', component: BusinessComponent, resolve: { terminologies: ProviderResolver },
     children: [
-      { path: '', component: BusinessHomeComponent, canActivate: [AuthGuardProviderHome] },
+      { path: '', component: BusinessComponent, canActivate: [AuthGuardProviderHome] },
       { path: 'faq', loadChildren: () => import('./modules/faq/provider-faq.module').then(m => m.ProviderFaqModule) },
-      { path: 'customers', loadChildren: () => import('./modules/customers/customers.module').then(m => m.CustomersModule) },
+      { path: 'customers', loadChildren: () => import('./modules/customers/list/customers-list.module').then(m => m.CustomersListModule) },
       { path: 'telehealth', loadChildren: () => import('./modules/teleservice/teleservice.module').then(m => m.TeleServiceModule) },
-      { path: 'bill/:id', component: AddProviderWaitlistCheckInBillComponent },
-      { path: 'settings', loadChildren: () => import('../ynw_provider/components/provider-settings/provider-settings.module').then(m => m.ProviderSettingsModule) },
+      { path: 'bill/:id', loadChildren: ()=> import('../business/modules/check-ins/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.module').then(m=>m.AddProviderWaitlistCheckinBillModule)},
+      { path: 'settings', loadChildren: () => import('../business/modules/provider-settings/provider-settings.module').then(m => m.ProviderSettingsModule) },
       { path: 'profile', loadChildren: ()=> import('../shared/modules/edit-profile/edit-profile.module').then(m=>m.EditProfileModule), canActivate: [AuthGuardLogin] },
       { path: 'change-password', loadChildren: ()=>import('../shared/modules/change-password/change-password.module').then(m=>m.ChangePasswordModule), canActivate: [AuthGuardLogin] },
       { path: 'change-mobile', loadChildren: ()=>import('../shared/modules/change-mobile/change-mobile.module').then(m=>m.ChangeMobileModule), canActivate: [AuthGuardLogin] },
-      { path: 'inbox', loadChildren: () => import('./modules/inbox-list/inbox-list.module').then(m => m.InboxListModule) },
+      { path: 'inbox', loadChildren: () => import('./modules/inbox-list/inbox-list.module').then(m => m.BusinessInboxListModule) },
       { path: 'finance', loadChildren: () => import('./modules/learnmore/finance/finance.module').then(m => m.FinanceModule) },
       { path: 'foodJoints', loadChildren: () => import('./modules/learnmore/foodjoints/foodjoints.module').then(m => m.FoodjointsModule) },
       { path: 'healthCare', loadChildren: () => import('./modules/learnmore/healthcare/healthcare.module').then(m => m.HealthcareModule) },
@@ -38,12 +35,12 @@ const routes: Routes = [
       { path: 'auditlog', loadChildren: () => import('../business/modules/provider-system-auditlogs/provider-system-auditlogs.module').then(m => m.ProviderSystemAuditLogsModule) },
       { path: 'alerts', loadChildren: () => import('../business/modules/provider-system-alerts/provider-system-alerts.module').then(m => m.ProviderSystemAlertsModule) },
       { path: 'check-ins', loadChildren: () => import('../business/modules/check-ins/check-ins.module').then(m => m.CheckinsModule) },
-      { path: 'bwizard', loadChildren: () => import('../ynw_provider/components/provider-bwizard/provider-bwizard.module').then(m=>m.ProviderBwizardModule)},
-      { path: 'appointments', loadChildren: () => import('./modules/appointments/appointments.module').then(m => m.AppointmentsModule) },
-      { path: 'orders', loadChildren: () => import('./modules/order-dashboard/order-dashboard.module').then(m => m.OrderDashboardModule) },
-      { path: 'donations', loadChildren: () => import('./modules/donations/donations.module').then(m => m.DonationsModule) },
-      { path: 'enquiry', component: EnquiryComponent },
-      { path: 'enquiry/chat', loadChildren: () => import('./modules/inbox-list/inbox-list.module').then(m => m.InboxListModule) },
+      { path: 'bwizard', loadChildren: () => import('../business/modules/provider-bwizard/provider-bwizard.module').then(m=>m.ProviderBwizardModule)},
+      { path: 'appointments', loadChildren: () => import('./modules/appointments/appointments.module').then(m => m.AppointmentsModule)},
+      { path: 'orders', loadChildren: () => import('./modules/order-dashboard/order-dashboard.module').then(m => m.OrderDashboardModule)},
+      { path: 'donations', loadChildren: () => import('./modules/donations/donations.module').then(m => m.DonationsModule)},
+      { path: 'enquiry', loadChildren: ()=> import('../business/modules/enquiry/enquiry.module').then(m=>m.EnquiryModule)},
+      { path: 'enquiry/chat', loadChildren: () => import('./modules/inbox-list/inbox-list.module').then(m => m.BusinessInboxListModule) },
       { path: 'secure-video', loadChildren: () => import('./modules/video-call/video-call.module').then(m=>m.VideoCallModule) },
     ]
   }

@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Location } from '@angular/common';
-import { Messages } from '../../../../../../shared/constants/project-messages';
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
@@ -20,21 +19,7 @@ export class CustomViewListComponent implements OnInit {
   api_loading: boolean;
   customViewList: any = [];
   removeitemdialogRef;
-  breadcrumb_moreoptions: any = [];
   domain: any;
-  breadcrumbs = [
-    {
-      title: 'Settings',
-      url: '/provider/settings'
-    },
-    {
-      url: '/provider/settings/general',
-      title: Messages.GENERALSETTINGS
-    },
-    {
-      title: 'Custom Views'
-    }
-  ];
   back_type: any;
 
   constructor(
@@ -57,11 +42,6 @@ export class CustomViewListComponent implements OnInit {
     this.api_loading = true;
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
-    this.breadcrumb_moreoptions = {
-      'show_learnmore': true, 'scrollKey': 'general->customview', 'classname': 'b-service',
-      'actions': [
-        { 'title': 'Help', 'type': 'learnmore' }]
-    };
     this.getCustomViewList();
   }
   performActions(action) {
@@ -131,7 +111,6 @@ export class CustomViewListComponent implements OnInit {
       console.log(this.back_type);
       this.location.back();
     }
-    // this.router.navigate(['provider', 'settings' , 'general']);
   }
   redirecToHelp() {
     this.router.navigate(['/provider/' + this.domain + '/general->customview']);

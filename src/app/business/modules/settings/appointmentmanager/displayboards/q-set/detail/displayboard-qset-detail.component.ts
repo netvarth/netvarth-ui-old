@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormMessageDisplayService } from '../../../../../../../shared/modules/form-message-display/form-message-display.service';
-import { ProviderServices } from '../../../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../../../services/provider-services.service';
 import { Messages } from '../../../../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../../../../shared/functions/shared-functions';
-import { ProviderSharedFuctions } from '../../../../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from '../../../../../../functions/provider-shared-functions';
 // import { projectConstants } from '../../../../../../../app.component';
 import { projectConstantsLocal } from '../../../../../../../shared/constants/project-constants';
 import { FormControl } from '@angular/forms';

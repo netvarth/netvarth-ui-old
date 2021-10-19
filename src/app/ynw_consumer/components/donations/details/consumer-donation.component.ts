@@ -9,7 +9,7 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../shared/services/shared-services';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../business/services/provider-services.service';
 import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.model';
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
