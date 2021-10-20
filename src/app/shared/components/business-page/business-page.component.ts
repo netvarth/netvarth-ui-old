@@ -729,9 +729,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       if (this.businessjson.emails) {
         this.emaillist = this.businessjson.emails;
+        console.log("***email**",this.emaillist);
       }
       if (this.businessjson.phoneNumbers) {
         this.phonelist = this.businessjson.phoneNumbers;
+        console.log("***phone***",this.phonelist);
       }
       // this.getbusinessprofiledetails_json('gallery', true);
       const holdbName = this.businessjson.businessDesc || '';
@@ -919,7 +921,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
       if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
         this.bLogo = this.businessjson.logo.url;
-        // console.log("business json",this.businessjson)
+        console.log("business json",this.businessjson)
         // this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
       }
     } else {
@@ -936,9 +938,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     if (this.businessjson.emails) {
       this.emaillist = this.businessjson.emails;
+      console.log("**email**",this.emaillist)
     }
     if (this.businessjson.phoneNumbers) {
       this.phonelist = this.businessjson.phoneNumbers;
+      console.log("**phone**",this.phonelist);
     }
     const holdbName = this.businessjson.businessDesc || '';
     const maxCnt = 120;
