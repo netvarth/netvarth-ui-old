@@ -7,9 +7,12 @@ import { MatListModule } from "@angular/material/list";
 import { MatSelectModule } from "@angular/material/select";
 import { MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from "@angular/material/table";
+import { RouterModule, Routes } from "@angular/router";
 import { CriteriaDialogModule } from "./criteria-dialog/criteria-dialog.module";
 import { GeneratedReportComponent } from "./generated-report.component";
-
+const routes: Routes = [
+    {path: '', component: GeneratedReportComponent}
+]
 @NgModule({
     declarations: [GeneratedReportComponent],
     exports: [GeneratedReportComponent],
@@ -22,7 +25,8 @@ import { GeneratedReportComponent } from "./generated-report.component";
         FormsModule,
         MatTableModule,
         MatSortModule,
-        CriteriaDialogModule
+        CriteriaDialogModule,
+        [RouterModule.forChild(routes)]
     ]
 })
 export class GeneratedReportModule{}

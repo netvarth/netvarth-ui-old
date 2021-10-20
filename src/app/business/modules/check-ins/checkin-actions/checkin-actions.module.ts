@@ -13,6 +13,10 @@ import { NgxQRCodeModule } from "ngx-qrcode2";
 import { ConfirmBoxModule } from "../../../shared/confirm-box/confirm-box.module";
 import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
 import { VoiceConfirmModule } from "../../customers/voice-confirm/voice-confirm.module";
+import { GalleryModule } from "../../../../shared/modules/gallery/gallery.module";
+import { AddProviderWaitlistCheckInProviderNoteModule } from "../add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.module";
+import { AddInboxMessagesModule } from "../../../../shared/components/add-inbox-messages/add-inbox-messages.module";
+import { CommunicationService } from "../../../../business/services/communication-service";
 
 @NgModule({
     imports: [
@@ -28,13 +32,19 @@ import { VoiceConfirmModule } from "../../customers/voice-confirm/voice-confirm.
         NgxQRCodeModule,
         ConfirmBoxModule,
         CapitalizeFirstPipeModule,
-        VoiceConfirmModule
+        VoiceConfirmModule,
+        GalleryModule,
+        AddProviderWaitlistCheckInProviderNoteModule,
+        AddInboxMessagesModule
     ],
     exports: [
         CheckinActionsComponent
     ],
     declarations: [
         CheckinActionsComponent
+    ],
+    providers: [
+        CommunicationService
     ]
 })
 export class CheckinsActionsModule {}

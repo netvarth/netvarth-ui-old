@@ -12,7 +12,10 @@ import { ProviderWaitlistCheckInConsumerNoteModule } from "../../check-ins/provi
 import { CustomerActionsModule } from "../customer-actions/customer-actions.module";
 import { CustomerDetailComponent } from "./customer-details.component";
 import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
-
+import { RouterModule, Routes } from "@angular/router";
+const routes: Routes = [
+    {path: '', component: CustomerDetailComponent}
+]
 @NgModule({
     declarations: [CustomerDetailComponent],
     exports: [CustomerDetailComponent],
@@ -28,7 +31,8 @@ import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.m
         QuestionnaireModule,
         InboxListModule,
         LoadingSpinnerModule,
-        CapitalizeFirstPipeModule
+        CapitalizeFirstPipeModule,
+        [RouterModule.forChild(routes)]
     ],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,

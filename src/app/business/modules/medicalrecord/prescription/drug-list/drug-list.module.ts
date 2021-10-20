@@ -12,7 +12,10 @@ import { AddDrugModule } from "../add-drug/add-drug.module";
 import { InstructionsModule } from "../instructions/instructions.module";
 import { ShareRxModule } from "../share-rx/share-rx.module";
 import { DrugListComponent } from "./drug-list.component";
-
+import { RouterModule, Routes } from "@angular/router";
+const routes: Routes = [
+    {path: '', component: DrugListComponent}
+]
 @NgModule({
     imports: [
         CommonModule,
@@ -26,7 +29,8 @@ import { DrugListComponent } from "./drug-list.component";
         MatButtonModule,
         FormsModule,
         LoadingSpinnerModule,
-        CapitalizeFirstPipeModule
+        CapitalizeFirstPipeModule,
+        [RouterModule.forChild(routes)]
     ],
     exports: [DrugListComponent],
     declarations: [DrugListComponent]

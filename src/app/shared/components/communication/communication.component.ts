@@ -4,8 +4,8 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { ProviderServices } from '../../../business/services/provider-services.service';
 import { GroupStorageService } from '../../services/group-storage.service';
 import { projectConstantsLocal } from '../../constants/project-constants';
-import { ProviderSharedFuctions } from '../../../business/functions/provider-shared-functions';
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
+import { CommunicationService } from '../../../business/services/communication-service';
 
 
 
@@ -34,7 +34,7 @@ export class CommunicationComponent implements OnInit {
     private providerServices: ProviderServices,
     private groupService: GroupStorageService,
     private dialog: MatDialog,
-    private provider_shared_functions: ProviderSharedFuctions,
+    private communicationService: CommunicationService,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
@@ -96,7 +96,7 @@ export class CommunicationComponent implements OnInit {
         order.push(this.orderDetails);
       }
       console.log(order);
-      this.provider_shared_functions.addConsumerInboxMessage(order, this, 'order-provider')
+      this.communicationService.addConsumerInboxMessage(order, this, 'order-provider')
         .then(
           () => { 
             this.dialogRef.close('reloadlist');

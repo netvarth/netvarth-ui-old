@@ -1,13 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router, NavigationExtras } from '@angular/router';
-import { ProviderSharedFuctions } from '../../../functions/provider-shared-functions';
 import { LastVisitComponent } from '../../medicalrecord/last-visit/last-visit.component';
 import { ProviderServices } from '../../../services/provider-services.service';
 import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { VoiceConfirmComponent } from '../voice-confirm/voice-confirm.component';
+import { CommunicationService } from '../../../../business/services/communication-service';
 
 @Component({
     selector: 'app-customer-actions',
@@ -30,12 +30,13 @@ export class CustomerActionsComponent implements OnInit {
     providerMeetingUrl: any;
     phoneNum;
     whatsappNum;
-    constructor(@Inject(MAT_DIALOG_DATA) public data: any, private provider_services: ProviderServices,
+    constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+        private provider_services: ProviderServices,
         private snackbarService: SnackbarService,
         private groupService: GroupStorageService,
         private router: Router,
-        // private location: Location,
-        public dialog: MatDialog, private provider_shared_functions: ProviderSharedFuctions,
+        private communicationService: CommunicationService,
+        public dialog: MatDialog,
         public dialogRef: MatDialogRef<CustomerActionsComponent>) {
     }
     ngOnInit() {
@@ -167,7 +168,7 @@ export class CustomerActionsComponent implements OnInit {
     }
     CustomersInboxMessage() {
         this.closeDialog();
-        this.provider_shared_functions.ConsumerInboxMessage(this.customerDetails, 'customer-list')
+        this.communicationService.ConsumerInboxMessage(this.customerDetails, 'customer-list')
             .then(
                 () => { },
                 () => { }

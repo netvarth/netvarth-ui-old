@@ -7,6 +7,7 @@ import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.m
 import { LoadingSpinnerModule } from "../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { VoiceConfirmModule } from "../../customers/voice-confirm/voice-confirm.module";
 import { OrderActionsComponent } from "./order-actions.component";
+import { CommunicationService } from "../../../../business/services/communication-service";
 
 @NgModule({
     declarations: [OrderActionsComponent],
@@ -19,6 +20,9 @@ import { OrderActionsComponent } from "./order-actions.component";
         MatRadioModule,
         LoadingSpinnerModule,
         CapitalizeFirstPipeModule
+    ],
+    providers: [
+        CommunicationService
     ]
 })
 export class OrderActionsModule{}

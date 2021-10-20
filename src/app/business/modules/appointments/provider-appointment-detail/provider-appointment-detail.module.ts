@@ -10,6 +10,7 @@ import { AddProviderWaitlistCheckInProviderNoteModule } from "../../check-ins/ad
 import { ProviderAppointmentDetailComponent } from "./provider-appointment-detail.component";
 import { Nl2BrPipeModule } from "nl2br-pipe";
 import { InboxListModule } from "../../../../shared/modules/inbox/inbox-list/inbox-list.module";
+import { CommunicationService } from "../../../../business/services/communication-service";
 const routes: Routes= [
     { path: '', component: ProviderAppointmentDetailComponent }
 ]
@@ -31,6 +32,9 @@ const routes: Routes= [
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
         NO_ERRORS_SCHEMA
+    ],
+    providers: [
+        CommunicationService
     ]
 })
 export class ProviderAppointmentDetailModule{}

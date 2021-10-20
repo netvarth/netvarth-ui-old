@@ -6,7 +6,10 @@ import { MatInputModule } from "@angular/material/input";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatTableModule } from "@angular/material/table";
 import { ScheduleSelectionComponent } from "./schedule-selection.component";
-
+import { RouterModule, Routes } from '@angular/router';
+const routes: Routes = [
+    {path: '', component: ScheduleSelectionComponent}
+]
 @NgModule({
     declarations: [ScheduleSelectionComponent],
     exports: [ScheduleSelectionComponent],
@@ -16,7 +19,8 @@ import { ScheduleSelectionComponent } from "./schedule-selection.component";
         MatProgressSpinnerModule,
         MatFormFieldModule,
         MatInputModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        [RouterModule.forChild(routes)]
     ]
 })
 export class ScheduleSelectionModule{}

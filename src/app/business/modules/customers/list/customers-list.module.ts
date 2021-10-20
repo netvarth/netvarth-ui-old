@@ -17,6 +17,7 @@ import { ConfirmBoxModule } from '../../../../shared/components/confirm-box/conf
 import { LastVisitModule } from '../../medicalrecord/last-visit/last-visit.module';
 import { FormsModule } from '@angular/forms';
 import { PagerModule } from '../../../../shared/modules/pager/pager.module';
+import { CommunicationService } from '../../../../business/services/communication-service';
 
 const routes: Routes = [
     { path: '', component: CustomersListComponent},
@@ -49,6 +50,9 @@ const routes: Routes = [
     ],
     declarations: [
         CustomersListComponent
+    ],
+    providers:[
+        CommunicationService
     ],
     exports: [CustomersListComponent]
 })

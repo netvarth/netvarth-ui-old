@@ -7,6 +7,7 @@ import { LoadingSpinnerModule } from "../../../../shared/modules/loading-spinner
 import { LastVisitModule } from "../../medicalrecord/last-visit/last-visit.module";
 import { VoiceConfirmModule } from "../voice-confirm/voice-confirm.module";
 import { CustomerActionsComponent } from "./customer-actions.component";
+import { CommunicationService } from "../../../../business/services/communication-service";
 
 @NgModule({
     imports: [
@@ -19,6 +20,9 @@ import { CustomerActionsComponent } from "./customer-actions.component";
         CapitalizeFirstPipeModule
     ],
     exports: [CustomerActionsComponent],
-    declarations: [CustomerActionsComponent]
+    declarations: [CustomerActionsComponent],
+    providers:[
+        CommunicationService
+    ]
 })
 export class CustomerActionsModule {}

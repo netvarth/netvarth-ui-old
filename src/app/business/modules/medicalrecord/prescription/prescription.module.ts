@@ -10,10 +10,10 @@ import { InstructionsModule } from "./instructions/instructions.module";
 import { PrescriptionComponent } from "./prescription.component";
 import { ShareRxModule } from "./share-rx/share-rx.module";
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
-import { RouterModule, Routes } from "@angular/router";
-const routes: Routes = [
-    { path: '', component: PrescriptionComponent}
-]
+// import { RouterModule, Routes } from "@angular/router";
+// const routes: Routes = [
+//     { path: '', component: PrescriptionComponent}
+// ]
 @NgModule({
     imports: [
         CommonModule,
@@ -25,8 +25,8 @@ const routes: Routes = [
         ImagesViewModule,
         InstructionsModule,
         MatButtonModule,
-        [RouterModule.forChild(routes)],
-        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
+        // [RouterModule.forChild(routes)],
+        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true })
     ],
     exports: [PrescriptionComponent],
     declarations: [ PrescriptionComponent ]

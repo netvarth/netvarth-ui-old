@@ -6,8 +6,8 @@ import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ProviderSharedFuctions } from '../../../functions/provider-shared-functions';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { CommunicationService } from '../../../../business/services/communication-service';
 
 @Component({
     'selector': 'app-donation-details',
@@ -26,7 +26,7 @@ export class DonationDetailsComponent {
         public sharedFunctions: SharedFunctions,
         public providerservices: ProviderServices,
         public location: Location, private dialog: MatDialog,
-        public provider_shared_functions: ProviderSharedFuctions,
+        private communicationService: CommunicationService,
         private wordProcessor: WordProcessor) {
         this.activaterouter.params.subscribe(param => {
             this.uid = param.id;
@@ -62,7 +62,7 @@ export class DonationDetailsComponent {
     addInboxMessage() {
         let customerlist = [];
         customerlist.push(this.donationDetails);
-        this.provider_shared_functions.ConsumerInboxMessage(customerlist, 'donation-list')
+        this.communicationService.ConsumerInboxMessage(customerlist, 'donation-list')
             .then(
                 () => { },
                 () => { }

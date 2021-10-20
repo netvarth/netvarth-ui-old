@@ -15,6 +15,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { CommunicationService } from '../../../../business/services/communication-service';
 
 @Component({
   selector: 'app-provider-appointment-detail',
@@ -116,6 +117,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     private groupService: GroupStorageService,
     private snackbarService: SnackbarService,
     private dateTimeProcessor: DateTimeProcessor,
+    private communicationService: CommunicationService,
     private provider_shared_functions: ProviderSharedFuctions) {
     this.activated_route.params.subscribe(params => {
       this.waitlist_id = params.id;
@@ -370,7 +372,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     const waitlist = [];
     waitlist.push(this.waitlist_data);
     const uuid = this.waitlist_data.uid || null;
-    this.provider_shared_functions.addConsumerInboxMessage(waitlist, this, 'appt')
+    this.communicationService.addConsumerInboxMessage(waitlist, this, 'appt')
       .then(
         () => {
           this.getCommunicationHistory(uuid);

@@ -16,6 +16,7 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
+import { CommunicationService } from '../../../../business/services/communication-service';
 
 @Component({
   selector: 'app-provider-waitlist-checkin-detail',
@@ -116,6 +117,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     private groupService: GroupStorageService,
     private dateTimeProcessor: DateTimeProcessor,
     private jaldeeTimeService: JaldeeTimeService,
+    private communicationService: CommunicationService,
     private provider_shared_functions: ProviderSharedFuctions) {
     this.activated_route.params.subscribe(params => {
       this.waitlist_id = params.id;
@@ -405,7 +407,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     const waitlist = [];
     waitlist.push(this.waitlist_data);
     const uuid = this.waitlist_data.ynwUuid || null;
-    this.provider_shared_functions.addConsumerInboxMessage(waitlist, this)
+    this.communicationService.addConsumerInboxMessage(waitlist, this)
       .then(
         () => {
           this.getCommunicationHistory(uuid);

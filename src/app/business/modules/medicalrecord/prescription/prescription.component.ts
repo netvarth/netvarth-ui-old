@@ -3,7 +3,6 @@ import { AddDrugComponent } from './add-drug/add-drug.component';
 import { NavigationExtras, Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { ProviderServices } from '../../../services/provider-services.service';
 import { MedicalrecordService } from '../medicalrecord.service';
 import { InstructionsComponent } from './instructions/instructions.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
@@ -15,6 +14,7 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { AddNoteComponent } from './add-note/add-note.component';
+import { ProviderServices } from '../../../../business/services/provider-services.service';
 
 @Component({
   selector: 'app-prescription',
@@ -243,6 +243,23 @@ export class PrescriptionComponent implements OnInit {
     this.addDrugdialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.saveRx(result);
+    //     setTimeout(() => {       
+    //     const addnotedialogRef = this.dialog.open(AddNoteComponent, {
+    //       width: '50%',
+    //       panelClass: ['popup-class', 'commonpopupmainclass'],
+    //       disableClose: true,
+    //       data: {
+    //         message:''
+    //       }
+    //   });
+    //   addnotedialogRef.afterClosed().subscribe(result1 => {
+    //       if(result1){
+    //         console.log(result1);
+    //         this.note = result1.message;
+    //       }
+    //       
+    //   });
+    // }, 500);
       }
     });
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
 import { LastVisitComponent } from './last-visit/last-visit.component';
@@ -107,8 +107,8 @@ export class MedicalrecordComponent implements OnInit {
     private medicalService: MedicalrecordService,
     private datePipe: DateFormatPipe,
     private snackbarService: SnackbarService,
-        private wordProcessor: WordProcessor,
-        private groupService: GroupStorageService
+    private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     console.log("hai..");
@@ -117,17 +117,12 @@ export class MedicalrecordComponent implements OnInit {
       if (queryParams['calledfrom']) {
         this.medicalService.setCalledFrom(queryParams['calledfrom']);
       }
-
-
     });
-
-
   }
-
-
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     console.log("hai..helo");
+    console.log(user);
     this.accountType = user.accountType;
     this.medicalService.setDoctorId(user.id);
     this.activated_route.paramMap.subscribe(params => {
@@ -138,7 +133,9 @@ export class MedicalrecordComponent implements OnInit {
       this.mrId = parseInt(medicalrecordId, 0);
       this.medicalService.setParams(this.bookingType, this.bookingId);
       this.getPatientVisitListCount();
-
+      console.log("Patient Id:"+ this.patientId);
+      console.log("MrId:" +this.mrId);
+      console.log(this.bookingType);
       if (this.mrId !== 0) {
         this.getMedicalRecordUsingId(this.mrId);
       } else {
@@ -147,7 +144,7 @@ export class MedicalrecordComponent implements OnInit {
         } else if (this.bookingType === 'TOKEN') {
           this.getWaitlistDetails(this.bookingId);
         } else if (this.bookingType === 'FOLLOWUP') {
-          this.getPatientDetails(this.patientId);
+           this.getPatientDetails(this.patientId);
         }
       }
       const clinical_link = '/provider/customers/' + this.patientId + '/' + this.bookingType + '/' + this.bookingId + '/medicalrecord/' + this.mrId + '/clinicalnotes';
@@ -235,7 +232,6 @@ export class MedicalrecordComponent implements OnInit {
         });
   }
   getPatientDetails(uid) {
-
     const filter = { 'id-eq': uid };
     this.provider_services.getCustomer(filter)
       .subscribe(
@@ -250,8 +246,6 @@ export class MedicalrecordComponent implements OnInit {
             this.display_PatientId = this.customerDetails.jaldeeId;
           }
           this.medicalService.setPatientDetails(this.customerDetails);
-
-
         },
         error => {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -310,7 +304,7 @@ export class MedicalrecordComponent implements OnInit {
 
   }
 
- 
+
   getMedicalRecordUsingId(mrId) {
     this.provider_services.GetMedicalRecord(mrId)
       .subscribe((data: any) => {
@@ -450,12 +444,12 @@ export class MedicalrecordComponent implements OnInit {
 
 
   }
-  uploadedFileforMr(){
+  uploadedFileforMr() {
     const mrId = this.mrId;
     this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', mrId, 'fileupload']);
   }
 
-  
+
   isShowtable() {
     if (this.showtable === false) {
       this.showtable = true;
@@ -477,9 +471,9 @@ export class MedicalrecordComponent implements OnInit {
     });
     this.uploadfiledialogRef.afterClosed().subscribe(result => {
       console.log(result)
-      if(result){
-      this.getMedicalRecordUsingId(result);
-    }
+      if (result) {
+        this.getMedicalRecordUsingId(result);
+      }
     });
   }
 }

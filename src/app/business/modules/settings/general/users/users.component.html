@@ -386,7 +386,7 @@
                                                                           </span></div>
                                                                       
                                                                       <div class="mgn-up-5"
-                                                                          *ngIf="service.bussLocations.length > 0  && domain === 'finance'"> <span
+                                                                          *ngIf="service.bussLocations && service.bussLocations.length > 0  && domain === 'finance'"> <span
                                                                               class="b2">
                                                                               {{getBussLoc(service.bussLocations)}}
                                                                           </span></div>
@@ -430,7 +430,7 @@
                                                       </td>
 
                                                       <td class="display-min-none" *ngIf="domain === 'finance'">
-                                                        <span *ngIf="service.bussLocations.length > 0  && domain === 'finance'">
+                                                        <span *ngIf="service.bussLocations && service.bussLocations.length > 0  && domain === 'finance'">
                                                           {{getBussLoc(service.bussLocations)}}</span>
                                                     </td>
                                                       <td class="display-min-none">
@@ -628,7 +628,7 @@
                                                                         </span></div>
                                                                     
                                                                     <div class="mgn-up-5"
-                                                                        *ngIf="service.bussLocations.length > 0  && domain === 'finance'"> <span
+                                                                        *ngIf="service.bussLocations && service.bussLocations.length > 0  && domain === 'finance'"> <span
                                                                             class="b2">Business Locations &nbsp;
                                                                             <i class="fa fa-map-marker mgn-rt-5" style="color: blue;" aria-hidden="true"></i>
                                                                             {{getBussLoc(service.bussLocations)}}
@@ -676,7 +676,7 @@
                                                   </td>
 
                                                   <td class="display-min-none" *ngIf="domain === 'finance'">
-                                                    <span *ngIf="service.bussLocations.length > 0  && domain === 'finance'">
+                                                    <span *ngIf="service.bussLocations && service.bussLocations.length > 0  && domain === 'finance'">
                                                       {{getBussLoc(service.bussLocations)}}</span>
                                                   </td>
 

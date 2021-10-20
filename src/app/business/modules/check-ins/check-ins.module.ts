@@ -33,12 +33,13 @@ const routes: Routes = [
         children: [
             { path: 'add', loadChildren: ()=> import('./check-in/provider-checkin.module').then(m=>m.ProviderCheckinModule)},
             { path: 'adjustdelay', loadChildren:()=> import('./adjustqueue-delay/adjustqueue-delay.module').then(m=>m.AdjustqueueDelayModule)},
-            { path: 'questionnaires', loadChildren: () => import('../questionnaire-list-popup/questionnaire-list-popup.module').then(m => m.QuestionnaireListPopupModule) },
+            { path: 'questionnaires', loadChildren: () => import('../questionnaire-list-popup/questionnaire-list-popup.module').then(m => m.QuestionnaireListPopupModule) },            
             { path: ':id', loadChildren: ()=> import('./provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.module').then(m=>m.ProviderWaitlistCheckInDetailModule)},
             { path: ':id/add-label', loadChildren: ()=> import('./apply-label/apply-label.module').then(m=>m.ApplyLabelModule)},
             { path: ':id/user', loadChildren: () => import('../../../shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },
             { path: ':id/team', loadChildren: () => import('../../../shared/modules/assign-team/assign-team.module').then(m => m.AssignTeamModule) },
             { path: ':id/updateloc', loadChildren: ()=> import('./location-update/location-update.module').then(m=>m.LocationUpdateModule)},
+            { path: ':id/print', loadChildren: ()=> import('../../shared/print-booking-details/print-booking-detail.module').then(m=>m.PrintBookingDetailModule)}           
         ]
     }
 ];

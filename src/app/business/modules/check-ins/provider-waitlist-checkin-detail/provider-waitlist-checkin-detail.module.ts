@@ -9,7 +9,11 @@ import { QuestionnaireModule } from "../../../../shared/components/questionnaire
 import { LoadingSpinnerModule } from "../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
 import { ProviderWaitlistCheckInDetailComponent } from "./provider-waitlist-checkin-detail.component";
-
+import { RouterModule, Routes } from "@angular/router";
+import { CommunicationService } from "../../../../business/services/communication-service";
+const routes: Routes = [
+    {path: '', component: ProviderWaitlistCheckInDetailComponent}
+]
 @NgModule({
     declarations: [ProviderWaitlistCheckInDetailComponent],
     exports: [ProviderWaitlistCheckInDetailComponent],
@@ -23,11 +27,15 @@ import { ProviderWaitlistCheckInDetailComponent } from "./provider-waitlist-chec
         MatTabsModule,
         QuestionnaireModule,
         Nl2BrPipeModule,
-        InboxListModule
+        InboxListModule,
+        [RouterModule.forChild(routes)]
     ],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
         NO_ERRORS_SCHEMA
+    ],
+    providers: [
+        CommunicationService
     ]
 })
 export class ProviderWaitlistCheckInDetailModule{}

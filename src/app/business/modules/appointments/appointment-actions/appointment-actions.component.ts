@@ -25,6 +25,7 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { ListRecordingsDialogComponent } from '../../../../shared/components/list-recordings-dialog/list-recordings-dialog.component';
 import { ConfirmBoxComponent } from '../../../shared/confirm-box/confirm-box.component';
 import { VoiceConfirmComponent } from '../../customers/voice-confirm/voice-confirm.component';
+import { CommunicationService } from '../../../../business/services/communication-service';
 
 @Component({
     selector: 'app-appointment-actions',
@@ -119,6 +120,7 @@ export class AppointmentActionsComponent implements OnInit {
         private dateTimeProcessor: DateTimeProcessor,
         private provider_shared_functions: ProviderSharedFuctions,
         public shared_services: SharedServices,
+        private communicationService: CommunicationService,
         // public _location: Location,
         public dialogRef: MatDialogRef<AppointmentActionsComponent>) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
@@ -274,7 +276,7 @@ export class AppointmentActionsComponent implements OnInit {
             checkin.push(this.appt);
         }
         this.dialogRef.close();
-        this.provider_shared_functions.addConsumerInboxMessage(checkin, this, 'appt')
+        this.communicationService.addConsumerInboxMessage(checkin, this, 'appt')
             .then(
                 () => { },
                 () => { }

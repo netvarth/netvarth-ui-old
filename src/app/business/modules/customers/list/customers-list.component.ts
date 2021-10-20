@@ -4,7 +4,6 @@ import { projectConstants } from '../../../../app.component';
 import { ProviderServices } from '../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { MatDialog } from '@angular/material/dialog';
-import { ProviderSharedFuctions } from '../../../functions/provider-shared-functions';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
@@ -16,6 +15,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { CommunicationService } from '../../../../business/services/communication-service';
 
 @Component({
   selector: 'app-customers-list',
@@ -122,7 +122,7 @@ export class CustomersListComponent implements OnInit {
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
-    private provider_shared_functions: ProviderSharedFuctions,
+    private communicationService: CommunicationService,
     public dateformat: DateFormatPipe,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -480,7 +480,7 @@ export class CustomersListComponent implements OnInit {
     } else {
       customers = this.selectedcustomersformsg;
     }
-    this.provider_shared_functions.ConsumerInboxMessage(customers, 'customer-list')
+    this.communicationService.ConsumerInboxMessage(customers, 'customer-list')
       .then(
         () => { },
         () => { }

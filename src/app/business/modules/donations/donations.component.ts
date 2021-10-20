@@ -6,12 +6,12 @@ import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pi
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ProviderSharedFuctions } from '../../functions/provider-shared-functions';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
+import { CommunicationService } from '../../services/communication-service';
 
 @Component({
   'selector': 'app-donations',
@@ -75,7 +75,8 @@ export class DonationsComponent implements OnInit {
   filtericonTooltip: any;
   filtericonclearTooltip: any;
   constructor(private provider_services: ProviderServices,
-    public dateformat: DateFormatPipe, private provider_shared_functions: ProviderSharedFuctions,
+    public dateformat: DateFormatPipe,
+    private communicationService: CommunicationService,
     private routerobj: Router, private dialog: MatDialog,
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
@@ -378,7 +379,7 @@ export class DonationsComponent implements OnInit {
   addInboxMessage() {
     let customerlist = [];
     customerlist = this.selectedDonations;
-    this.provider_shared_functions.ConsumerInboxMessage(customerlist, 'donation-list')
+    this.communicationService.ConsumerInboxMessage(customerlist, 'donation-list')
       .then(
         () => { },
         () => { }

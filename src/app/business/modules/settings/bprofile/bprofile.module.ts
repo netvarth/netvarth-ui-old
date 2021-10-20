@@ -12,7 +12,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
-import { ShareButtonModule } from 'ngx-sharebuttons/button';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { FormMessageDisplayModule } from '../../../../shared/modules/form-message-display/form-message-display.module';
 import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
@@ -20,6 +19,8 @@ import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { ProviderBprofileSearchDynamicModule } from '../../provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.module';
 import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
 import { GalleryModule } from '../../../../shared/modules/gallery/gallery.module';
+import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 const routes: Routes = [
     { path: '', component: BProfileComponent },
     { path: '', children: [
@@ -46,7 +47,8 @@ const routes: Routes = [
         MatIconModule,
         MatProgressBarModule,
         ImageCropperModule,
-        ShareButtonModule,
+        ShareButtonsModule,
+        ShareIconsModule,
         NgxQRCodeModule,
         CapitalizeFirstPipeModule,
         FormMessageDisplayModule,

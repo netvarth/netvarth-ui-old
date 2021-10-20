@@ -9,6 +9,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
+import { CommunicationService } from '../../services/communication-service';
 
 const routes: Routes = [
     { path: '', component: DonationsComponent },
@@ -31,7 +32,8 @@ const routes: Routes = [
         MatCheckboxModule,
         [RouterModule.forChild(routes)]
     ],
-    exports: [DonationsComponent]
+    exports: [DonationsComponent],
+    providers: [CommunicationService]
 })
 export class DonationsModule {
 

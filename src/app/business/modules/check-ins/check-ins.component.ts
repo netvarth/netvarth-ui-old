@@ -30,6 +30,7 @@ import { DateTimeProcessor } from '../../../shared/services/datetime-processor.s
 import { ConfirmBoxComponent } from '../../shared/confirm-box/confirm-box.component';
 import { AttachmentPopupComponent } from '../../../../app/shared/components/attachment-popup/attachment-popup.component';
 import { InstantQueueComponent } from './instant-q/instant-queue.component';
+import { CommunicationService } from '../../services/communication-service';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html',
@@ -372,6 +373,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
     private dateTimeProcessor: DateTimeProcessor,
+    private communicationService: CommunicationService,
     private titleService: Title) {
     this.onResize();
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -2359,7 +2361,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
       appts.push(_this.appointmentsChecked[apptIndex]);
     });
-    this.provider_shared_functions.addConsumerInboxMessage(appts, this)
+    this.communicationService.addConsumerInboxMessage(appts, this)
       .then(
         () => { },
         () => { }

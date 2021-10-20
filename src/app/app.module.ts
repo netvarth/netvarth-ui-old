@@ -15,7 +15,7 @@ import {  MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/materi
 import { EqualValidator } from './shared/directives/equal-validator.directive';
 import { FormMessageDisplayService } from './shared/modules/form-message-display/form-message-display.service';
 import { ProviderDetailService } from './shared/components/provider-detail/provider-detail.service';
-import {  LocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
+import {  DatePipe, LocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
 import { GlobalService } from './shared/services/global-service';
 import { Razorpaymodel } from './shared/components/razorpay/razorpay.model';
 import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefill.model';
@@ -83,6 +83,7 @@ export function init_app(globalService: GlobalService) {
   ],
   providers: [
     ProviderServices,
+    DatePipe,
     BsModalService,
     AuthGuardConsumer,
     AuthGuardProvider,

@@ -9,7 +9,10 @@ import { MatSelectModule } from "@angular/material/select";
 import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
 import { LoadingSpinnerModule } from "../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { NewReportComponent } from "./new-report.component";
-
+import { RouterModule, Routes } from '@angular/router';
+const routes: Routes = [
+    {path: '', component: NewReportComponent}
+]
 @NgModule({
     declarations: [NewReportComponent],
     exports: [NewReportComponent],
@@ -22,7 +25,8 @@ import { NewReportComponent } from "./new-report.component";
         MatInputModule,
         MatDatepickerModule,
         LoadingSpinnerModule,
-        CapitalizeFirstPipeModule
+        CapitalizeFirstPipeModule,
+        [RouterModule.forChild(routes)]
     ]
 })
 export class NewReportModule{}
