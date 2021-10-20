@@ -128,5 +128,32 @@ getSingleTime(slot) {
     const slots = slot.split('-');
     return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
 }
-ngOnInit() {}
+ngOnInit() {
+
+    this.today = new Date(this.today);
+    this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    this.minDate = new Date(this.minDate);
+    const dd = this.today.getDate();
+    const mm = this.today.getMonth() + 1; // January is 0!
+    const yyyy = this.today.getFullYear();
+    let cday = '';
+    if (dd < 10) {
+        cday = '0' + dd;
+    } else {
+        cday = '' + dd;
+    }
+    let cmon;
+    if (mm < 10) {
+        cmon = '0' + mm;
+    } else {
+        cmon = '' + mm;
+    }
+    const dtoday = yyyy + '-' + cmon + '-' + cday;
+    this.todaydate = dtoday;
+    this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
+    if (this.type !== 'reschedule') {
+        this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
+    }
+    this.minDate = this.todaydate;
+}
 }
