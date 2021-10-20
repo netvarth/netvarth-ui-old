@@ -180,24 +180,19 @@
 </div>
 
 
-<div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+
+<div class="row ">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding ">
         <div class="card booking-card booking-card-user pointer-cursor user" *ngIf="item.type=='provider'"
-    (click)="cardActionPerformed(item.type, null, null, null, user.id, $event)" style="display: flex;flex-direction: row;">
+    (click)="cardActionPerformed(item.type, null, null, null, user.id, $event)" >
+    <div>
         <img  class="img-circle img-responsive" [src]="getPic(user)" alt="Profile Pic" style="width: 50px;height: 50px;">
+    </div>
         <div class="card-item-content" style="display: flex;flex-direction: row;">
-            <!-- <a class="user-name card-title font-weight-bold module line-clamp" *ngIf="user.businessName" style="font-size: 14px;color: #946394 !important" >{{user.businessName}}</a> -->
-            <!-- <h6 class="qualification font-normal" *ngIf="user.qualifications && user.qualifications.length>0" >
-                {{user.qualifications[0] | limitTo: [20, '...']}}
-            </h6> -->
+
             <div class="specialization-parent" *ngIf="user.businessUserName" >
                 <label class="specialization" *ngIf="user.businessUserName">{{user.businessUserName}}</label>
             </div>
-            <!-- <p  *ngIf="user.apptTime && user.apptTime.caption && user.apptTime.availableSchedule.availableDate === todayDate" class="availability user-available" style="background-color: aqua;">
-                <ng-container >
-                    {{user.apptTime.caption}}<br />{{user.apptTime.date}}
-                </ng-container>
-            </p> -->
             <button type="button" class="book-btn" >BOOK NOW</button>
         </div>
     
