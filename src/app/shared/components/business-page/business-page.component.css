@@ -2339,10 +2339,10 @@ img.ordericon.home {
 
 }
 .bSection .bname {
-  color:white;
-  font-size: 1.5rem;
+  color:#ffffff;
+  font-size: 1.1rem;
   margin-left: 10px;
-  font-weight: bold;
+  font-weight: 400;
 }
 .bSection .name-dept {
   margin-top: auto;

@@ -60,11 +60,14 @@
                         <div class="name-dept">
                             <div class="bname">{{businessjson.businessName | capitalizeFirst}}</div>
                             <div class="bname dept">{{businessjson.businessUserName | capitalizeFirst}}</div>
-                            <div *ngIf="businessjson.businessDesc.length>1" class="bname dept">About us</div>
-                            <div *ngIf="businessjson.businessDesc.length>1" class="subhead">{{businessjson.businessDesc | capitalizeFirst}}</div>
+                            <div *ngIf="businessjson.businessDesc.length>1" class="subhead">About us</div>
+                            <div *ngIf="businessjson.businessDesc.length>1" class="bname dept">{{businessjson.businessDesc | capitalizeFirst}}</div>
                             
-                            <div *ngIf="businessjson.specialization.length>0" class="bname dept">Specialization</div>
-                            <div *ngIf="businessjson.specialization.length>0" class="subhead">{{businessjson.specialization[0] | capitalizeFirst}}</div>
+                            <div *ngIf="businessjson.specialization.length>0" class="subhead">Specialization</div>
+                            <div *ngIf="businessjson.specialization.length>0" class="bname dept">{{businessjson.specialization[0] | capitalizeFirst}}</div>
+                            <div  class="subhead">Contact Us</div>
+                            <div class="bname dept">8121386139</div>
+                            <div class="bname dept">vishwasampada21@gmail.com</div>
                             <div class="bname dept" *ngIf="apptServices && apptServices[0]"> {{apptServices[0].deptName}}</div>
                             <div class="bname dept" *ngIf="(apptServices && !apptServices[0]) && (wlServices && wlServices[0])">
                                 {{wlServices[0].deptName}}</div>

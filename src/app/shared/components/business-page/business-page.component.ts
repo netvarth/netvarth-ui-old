@@ -321,7 +321,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loc_details = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
     this.jdnTooltip = this.wordProcessor.getProjectMesssages('JDN_TOOPTIP');
     console.log("Before checking mobile tpye");
-    console.log("business json",this.businessjson.length)
+    // console.log("business json",this.businessjson.length)
     const isMobile = {
       Android: function () {
         return navigator.userAgent.match(/Android/i);
@@ -703,12 +703,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
         if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
           this.bLogo = this.businessjson.logo.url;
-          // console.log("business json",this.businessjson)
+          console.log("business json",this.businessjson)
         }
       } else {
         // this.bLogo = '';
         this.bLogo = '../../../assets/images/img-null.svg';
-        // console.log("business json",this.businessjson)
+        console.log("business json",this.businessjson)
 
       }
       this.specializationslist = [];
@@ -919,7 +919,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
       if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
         this.bLogo = this.businessjson.logo.url;
-
+        // console.log("business json",this.businessjson)
         // this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
       }
     } else {
