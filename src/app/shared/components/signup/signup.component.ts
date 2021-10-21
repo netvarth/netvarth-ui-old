@@ -12,6 +12,7 @@ import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-
 import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { GroupStorageService } from '../../services/group-storage.service';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-signup',
@@ -102,7 +103,8 @@ export class SignUpComponent implements OnInit {
     public shared_functions: SharedFunctions,
     private wordProcessor: WordProcessor,
     private lStorageService: LocalStorageService,
-    private groupService: GroupStorageService
+    private groupService: GroupStorageService,
+    private authService: AuthService
   ) {
     this.is_provider = data.is_provider || 'true';
   }
@@ -406,7 +408,7 @@ export class SignUpComponent implements OnInit {
             'loginId': this.user_details.userProfile.primaryMobileNo,
             'password': post_data.password
           };
-          this.shared_functions.consumerLogin(login_data, this.moreParams)
+          this.authService.consumerLogin(login_data, this.moreParams)
             .then(
               () => {
                 const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);

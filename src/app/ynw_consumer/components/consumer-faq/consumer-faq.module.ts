@@ -1,16 +1,14 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../../../shared/modules/common/material.module';
 import { ConsumerFaqComponent } from './consumer-faq.component';
-import { ConsumerFaqRoutingModule } from './consumer-faq-routing.module';
-
+import { RouterModule, Routes } from '@angular/router';
+const routes: Routes = [
+    { path: '', component: ConsumerFaqComponent}
+];
 @NgModule({
     imports: [
-        ConsumerFaqRoutingModule,
         CommonModule,
-        SharedModule,
-        MaterialModule
+        [RouterModule.forChild(routes)]
     ],
     declarations: [
         ConsumerFaqComponent

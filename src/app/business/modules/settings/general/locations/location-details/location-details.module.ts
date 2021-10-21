@@ -11,6 +11,7 @@ import { FormMessageDisplayModule } from '../../../../../../shared/modules/form-
 import { LoadingSpinnerModule } from '../../../../../../shared/modules/loading-spinner/loading-spinner.module';
 import { LocationDetailsComponent } from './location-details.component';
 import { GooglemapModule } from '../../../../../../business/modules/googlemap/googlemap.module';
+import { AddProviderWaitlistLocationsModule } from '../../../../../../business/modules/add-provider-waitlist-locations/add-provider-waitlist-locations.module';
 const routes: Routes = [
     {path: '', component: LocationDetailsComponent}
 ]
@@ -26,6 +27,7 @@ const routes: Routes = [
         MatCheckboxModule,
         MatButtonModule,
         CapitalizeFirstPipeModule,
+        AddProviderWaitlistLocationsModule,
         [RouterModule.forChild(routes)]
     ],
     declarations: [

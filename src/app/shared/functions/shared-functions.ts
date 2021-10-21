@@ -7,13 +7,12 @@ import { ConfirmBoxComponent } from '../components/confirm-box/confirm-box.compo
 import { Observable, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { DateFormatPipe } from '../pipes/date-format/date-format.pipe';
-import { ProviderDataStorageService } from '../../business/services/provider-datastorage.service';
 import { ProviderServices } from '../../business/services/provider-services.service';
 import { GroupStorageService } from '../services/group-storage.service';
 import { LocalStorageService } from '../services/local-storage.service';
-import { SessionStorageService } from '../services/session-storage.service';
 import { FileService } from '../services/file-service';
 import { projectConstants } from '../../../app/app.component';
+import { AuthService } from '../services/auth-service';
 @Injectable()
 
 export class SharedFunctions {
@@ -26,33 +25,11 @@ export class SharedFunctions {
   constructor(private shared_service: SharedServices, private router: Router,
     private dialog: MatDialog, public provider_services: ProviderServices,
     public dateformat: DateFormatPipe,
-    private providerDataStorage: ProviderDataStorageService,
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
-    private sessionStorageService: SessionStorageService,
-    private fileService: FileService
+    private fileService: FileService,
+    private authService: AuthService
   ) { }
-
-  logout() {
-    this.doLogout()
-      .then(
-        data => {
-          this.router.navigate(['/home']);
-        },
-        error => {
-        }
-      );
-  }
-
-  logoutNoRedirect() {
-    this.doLogout()
-      .then(
-        data => {
-        },
-        error => {
-        }
-      );
-  }
 
   callMaintanance() {
     const promise = new Promise<void>((resolve) => {
@@ -61,184 +38,7 @@ export class SharedFunctions {
     return promise;
   }
 
-  doLogout() {
-    const promise = new Promise<void>((resolve, reject) => {
-      if (this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true') {
-        this.providerLogout()
-          .then(
-            data => {
-              resolve();
-            }
-          );
-      } else {
-        this.consumerLogout()
-          .then(
-            data => {
-              resolve();
-            }
-          );
-      }
-    });
-    return promise;
-  }
-  private consumerLogout() {
-    const promise = new Promise<void>((resolve, reject) => {
-      this.shared_service.ConsumerLogout()
-        .subscribe(data => {
-          this.lStorageService.clearLocalstorage();
-          this.sessionStorageService.clearSessionStorage();
-          // this.clearSessionStorage();
-          resolve();
-        },
-          error => {
-            resolve();
-          }
-        );
-    });
-    return promise;
-  }
-
-  private providerLogout() {
-    const promise = new Promise<void>((resolve, reject) => {
-      this.shared_service.ProviderLogout()
-        .subscribe(data => {
-          this.providerDataStorage.setWeightageArray([]);
-          this.lStorageService.clearLocalstorage();
-          this.sessionStorageService.clearSessionStorage();
-          // this.clearSessionStorage();
-          resolve();
-        },
-          error => {
-            resolve();
-          }
-        );
-    });
-    return promise;
-  }
-  consumerLogin(post_data, moreParams?) {
-    post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
-    this.sendMessage({ ttype: 'main_loading', action: true });
-    const promise = new Promise((resolve, reject) => {
-      this.shared_service.ConsumerLogin(post_data)
-        .subscribe(
-          data => {
-            resolve(data);
-            this.setLoginData(data, post_data, 'consumer');
-            if (moreParams === undefined) {
-              this.router.navigate(['/consumer']);
-            } else {
-              if (moreParams['bypassDefaultredirection'] === 1) {
-                // const mtemp = '1';
-              } else {
-                this.router.navigate(['/consumer']);
-              }
-            }
-          },
-          error => {
-            this.sendMessage({ ttype: 'main_loading', action: false });
-            if (error.status === 401) {
-              // Not registred consumer or session alredy exists
-              reject(error);
-              // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
-            } else {
-              if (error.error && typeof (error.error) === 'object') {
-                error.error = Messages.API_ERROR;
-              }
-              reject(error);
-            }
-          });
-    });
-    return promise;
-  }
-
-  businessLogin(post_data) {
-    this.sendMessage({ ttype: 'main_loading', action: true });
-    const promise = new Promise((resolve, reject) => {
-      this.shared_service.ProviderLogin(post_data)
-        .subscribe(
-          data => {
-            this.providerDataStorage.setWeightageArray([]);
-            this.lStorageService.setitemonLocalStorage('popupShown', 'false');
-            this.setLoginData(data, post_data, 'provider');
-            resolve(data);
-          },
-          error => {
-            this.sendMessage({ ttype: 'main_loading', action: false });
-            if (error.status === 401) {
-              reject(error);
-              // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
-            } else {
-              if (error.error && typeof (error.error) === 'object') {
-                error.error = Messages.API_ERROR;
-              }
-              reject(error);
-            }
-          });
-    });
-    return promise;
-  }
-  providerLogin(post_data) {
-    this.sendMessage({ ttype: 'main_loading', action: true });
-    const promise = new Promise((resolve, reject) => {
-      this.shared_service.ProviderLogin(post_data)
-        .subscribe(
-          data => {
-            this.providerDataStorage.setWeightageArray([]);
-            this.lStorageService.setitemonLocalStorage('popupShown', 'false');
-            this.setLoginData(data, post_data, 'provider');
-            resolve(data);
-            this.router.navigate(['/provider']);
-          },
-          error => {
-            this.sendMessage({ ttype: 'main_loading', action: false });
-            if (error.status === 401) {
-              reject(error);
-              // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
-            } else {
-              if (error.error && typeof (error.error) === 'object') {
-                error.error = Messages.API_ERROR;
-              }
-              reject(error);
-            }
-          });
-    });
-    return promise;
-  }
-
-  adminLogin(post_data, type) {
-    this.sendMessage({ ttype: 'main_loading', action: true });
-    const promise = new Promise((resolve, reject) => {
-      this.shared_service.adminLogin(post_data, type)
-        .subscribe(
-          data => {
-            resolve(data);
-            this.setLoginData(data, post_data, 'provider');
-            this.router.navigate(['/provider']);
-          },
-          error => {
-            this.sendMessage({ ttype: 'main_loading', action: false });
-            if (error.status === 401) {
-              reject(error);
-              // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
-            } else {
-              if (error.error && typeof (error.error) === 'object') {
-                error.error = Messages.API_ERROR;
-              }
-              reject(error);
-            }
-          });
-    });
-    return promise;
-  }
-
-  public setLoginData(data, post_data, mod) {
-    this.groupService.setitemToGroupStorage('ynw-user', data);
-    this.lStorageService.setitemonLocalStorage('isBusinessOwner', (mod === 'provider') ? 'true' : 'false');
-    if (mod === 'provider') {
-    }
-    delete post_data['password'];
-    this.lStorageService.setitemonLocalStorage('ynw-credentials', JSON.stringify(post_data));
-  }
+  
   public checkLogin() {
     const login = (this.lStorageService.getitemfromLocalStorage('ynw-credentials')) ? true : false;
     return login;
@@ -303,7 +103,8 @@ export class SharedFunctions {
     const promise = new Promise((resolve, reject) => {
       const user = this.groupService.getitemFromGroupStorage('ynw-user');
       if (!user.id) {
-        this.router.navigate(['logout']);
+        // this.router.navigate(['logout']);
+        this.authService.logoutFromJaldee();
       }
       this.shared_service.getProfile(user.id, this.isBusinessOwner('returntyp'))
         .subscribe(

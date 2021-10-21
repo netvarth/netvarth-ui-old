@@ -57,12 +57,7 @@ export class EditProfileComponent implements OnInit {
   email1error = null;
   confrmshow = false;
   domain;
-  breadcrumb_moreoptions: any = [];
-
-
   loading = false;
-  breadcrumbs_init: { title: string; url: string; }[];
-  breadcrumbs: { title: string; url: string; }[];
   tele_arr: any = [];
   chatId;
   val: any = [];
@@ -83,13 +78,6 @@ export class EditProfileComponent implements OnInit {
     public dialog: MatDialog,
     private snackbarService: SnackbarService
   ) {
-    this.breadcrumbs_init = [
-      {
-        title: Messages.USER_PROF_CAP,
-        url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/profile'
-      }
-    ];
-    this.breadcrumbs = this.breadcrumbs_init;
   }
   goBack() {
     this.location.back();
@@ -154,7 +142,6 @@ export class EditProfileComponent implements OnInit {
               });
             }
           } else if (typ === 'provider') {
-            this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
             this.editProfileForm.patchValue({
               first_name: data['basicInfo']['firstName'] || null,
               last_name: data['basicInfo']['lastName'] || null,

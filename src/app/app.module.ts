@@ -55,7 +55,6 @@ import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.mod
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { MaintenanceMsgModule } from './shared/components/maintenance-msg/maintenance-msg.module';
-import { LogoutModule } from './shared/components/logout/logout.module';
 import { ForceDialogModule } from './shared/components/force-dialog/force-dialog.module';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -76,7 +75,6 @@ export function init_app(globalService: GlobalService) {
     DateFormatPipeModule,
     MatSnackBarModule,
     MaintenanceMsgModule,
-    LogoutModule,
     ForceDialogModule,
     ScrollToModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })

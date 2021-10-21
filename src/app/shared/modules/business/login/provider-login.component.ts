@@ -15,6 +15,7 @@ import { SessionStorageService } from '../../../../shared/services/session-stora
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { Title } from '@angular/platform-browser';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { AuthService } from '../../../../shared/services/auth-service';
 
 @Component({
   selector: 'app-plogin',
@@ -56,7 +57,8 @@ export class ProviderLoginComponent implements OnInit {
     private sessionStorageService: SessionStorageService,
     private snackbarService: SnackbarService,
     private titleService: Title,
-    private groupService: GroupStorageService
+    private groupService: GroupStorageService,
+    private authService: AuthService
   ) {
     this.titleService.setTitle('Jaldee Business - Login');
     this.activateRoute.queryParams.subscribe(data => {
@@ -180,7 +182,7 @@ export class ProviderLoginComponent implements OnInit {
     post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
     // this.shared_functions.clearSessionStorage();
     this.sessionStorageService.clearSessionStorage();
-    this.shared_functions.businessLogin(post_data)
+    this.authService.businessLogin(post_data)
       .then(
         () => {
           const encrypted = this.shared_services.set(this.password, projectConstants.KEY);
@@ -198,7 +200,7 @@ export class ProviderLoginComponent implements OnInit {
         },
         error => {
           if (error.status === 401 && error.error === 'Session already exists.') {
-            this.shared_functions.doLogout().then(() => {
+            this.authService.doLogout().then(() => {
               this.onSubmit(data);
             });
           } else {

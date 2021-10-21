@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BusinessRoutingModule } from './business-routing.module';
-import { AuthGuardProviderHome, AuthGuardNewProviderHome } from '../shared/guard/auth.guard';
+import { AuthGuardProviderHome } from '../shared/guard/auth.guard';
 import { ProviderServices } from './services/provider-services.service';
 import { ProviderDataStorageService } from './services/provider-datastorage.service';
 import { MessageService } from './services/provider-message.service';
@@ -30,11 +30,10 @@ import { BusinessHeaderModule } from './home/header/header.module';
         MenuModule,
         BusinessHeaderModule,
         JoyrideModule.forRoot(),
-        UpdateEmailModule,
+        UpdateEmailModule
     ],
     providers: [
         AuthGuardProviderHome,
-        AuthGuardNewProviderHome,
         ProviderServices,
         ProviderDataStorageService,
         MessageService,

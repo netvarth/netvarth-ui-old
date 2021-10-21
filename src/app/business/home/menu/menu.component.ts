@@ -9,8 +9,7 @@ import { ProviderSharedFuctions } from '../../functions/provider-shared-function
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
-import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
-import { Title } from '@angular/platform-browser';
+import { AuthService } from '../../../shared/services/auth-service';
 
 @Component({
   selector: 'app-menu',
@@ -53,8 +52,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
-    private provider_dataStorage: ProviderDataStorageService,
-    private titleService: Title
+    private authService: AuthService
   ) {
     this.getEnquiryCount();
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -289,15 +287,6 @@ export class MenuComponent implements OnInit, OnDestroy {
     });
   }
   doLogout() {
-    this.shared_functions.doLogout()
-      .then(
-        () => {
-          this.provider_dataStorage.setWeightageArray([]);
-          this.titleService.setTitle('Jaldee');
-          this.router.navigate(['/home']);
-        },
-        () => {
-        }
-      );
+    this.authService.logoutFromJaldee();
   }
 }

@@ -8,6 +8,7 @@ import { projectConstants } from '../../../../app.component';
 import { ProviderDataStorageService } from '../../../../business/services/provider-datastorage.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { AuthService } from '../../../../shared/services/auth-service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -35,14 +36,15 @@ export class AdminLoginComponent implements OnInit {
     private provider_dataStorage: ProviderDataStorageService,
     public router: Router, private activated_route: ActivatedRoute,
     private snackbarService: SnackbarService,
-    private lStorageService: LocalStorageService
+    private lStorageService: LocalStorageService,
+    private authService: AuthService
   ) {
     this.activaterouterobj.paramMap
       .subscribe(params => {
         this.loginId = params.get('userId');
         this.accountId = params.get('accountId');
         if (this.shared_functions.checkLogin()) {
-          this.shared_functions.logoutNoRedirect();
+          this.authService.logoutNoRedirect();
         }
       });
     this.activated_route.queryParams.subscribe(
@@ -63,9 +65,10 @@ export class AdminLoginComponent implements OnInit {
       accountId: this.accountId
     };
     this.api_loading = true;
-    this.shared_functions.adminLogin(post_data, this.type)
+    this.authService.adminLogin(post_data, this.type)
       .then(
         () => {
+          this.lStorageService.removeitemfromLocalStorage('customId');
           const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
           this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
           this.provider_dataStorage.setWeightageArray([]);

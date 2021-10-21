@@ -10,9 +10,9 @@ import { Location } from '@angular/common';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 @Component({
     selector: 'app-label',
-    templateUrl: './label.component.html'
+    templateUrl: './label-details.component.html'
 })
-export class LabelComponent implements OnInit {
+export class LabelDetailsComponent implements OnInit {
     tooltipcls = '';
     add_button = '';
     actionparam = 'show';

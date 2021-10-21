@@ -2,7 +2,6 @@ import { catchError, switchMap, retry } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { Observable, Subject, throwError, EMPTY } from 'rxjs';
-import { Router } from '@angular/router';
 import { base_url } from './../constants/urls';
 import { SharedFunctions } from '../functions/shared-functions';
 import { Messages } from '../constants/project-messages';
@@ -13,6 +12,7 @@ import { MaintenanceMsgComponent } from '../components/maintenance-msg/maintenan
 import { SnackbarService } from '../services/snackbar.service';
 import { SessionStorageService } from '../services/session-storage.service';
 import { LocalStorageService } from '../services/local-storage.service';
+import { AuthService } from '../services/auth-service';
 // import { version } from '../constants/version' ;
 
 @Injectable()
@@ -45,11 +45,12 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   forceUpdateCalled = false;
   stopThisRequest = false;
 
-  constructor(private router: Router, private shared_functions: SharedFunctions,
+  constructor(private shared_functions: SharedFunctions,
     public shared_services: SharedServices, private dialog: MatDialog,
     private snackbarService: SnackbarService,
     private sessionStorageService: SessionStorageService,
-    private lStorageService: LocalStorageService) { }
+    private lStorageService: LocalStorageService,
+    private authService: AuthService) { }
 
   private _refreshSubject: Subject<any> = new Subject<any>();
   private _maintananceSubject: Subject<any> = new Subject<any>();
@@ -61,7 +62,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       }
     });
     if (this._refreshSubject.observers.length === 1) {
-      this.shared_functions.doLogout().then(
+      this.authService.doLogout().then(
         (refreshSubject: any) => {
           this._refreshSubject.next(refreshSubject);
         }
@@ -208,7 +209,10 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               return this._ifSessionExpiredN().pipe(
                 switchMap(() => {
                   // return next.handle(this.updateHeader(req, url));
-                  this.router.navigate(['/']);
+                  // this.router.navigate(['/']);
+
+                  this.authService.logoutFromJaldee();
+                  
                   return EMPTY;
                 })
               );

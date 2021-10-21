@@ -14,6 +14,7 @@ import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-
 import { SessionStorageService } from '../../services/session-storage.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
+import { AuthService } from '../../services/auth-service';
 
 
 
@@ -62,10 +63,11 @@ export class LoginComponent implements OnInit {
     private wordProcessor: WordProcessor,
     public dialog: MatDialog,
     private router: Router,
+    private authService: AuthService,
     @Inject(DOCUMENT) public document
   ) {
     if (this.shared_functions.checkLogin()) {
-      this.shared_functions.logout();
+      this.authService.logout();
     }
     this.test_provider = data.test_account;
     this.is_provider = data.is_provider || 'true';
@@ -139,7 +141,7 @@ export class LoginComponent implements OnInit {
     if (this.data.type === 'provider') {
       post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
       this.sessionStorageService.clearSessionStorage();
-      this.shared_functions.providerLogin(post_data)
+      this.authService.providerLogin(post_data)
         .then(
           () => {
             const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
@@ -161,7 +163,8 @@ export class LoginComponent implements OnInit {
         }, projectConstants.TIMEOUT_DELAY_SMALL);
       } else {
         post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
-        this.shared_functions.consumerLogin(post_data, this.moreParams)
+        this.lStorageService.removeitemfromLocalStorage('customId');
+        this.authService.consumerLogin(post_data, this.moreParams)
           .then(
             () => {
               const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
@@ -173,7 +176,7 @@ export class LoginComponent implements OnInit {
             },
             error => {
               if (error.status === 401 && error.error === 'Session already exists.') {
-                this.shared_functions.doLogout().then(() => {
+                this.authService.doLogout().then(() => {
                   this.onSubmit(data);
                 });
               } else {

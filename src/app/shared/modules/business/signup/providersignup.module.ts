@@ -33,7 +33,6 @@ import { MatSelectModule } from '@angular/material/select';
     declarations: [
         ProvidersignupComponent
     ],
-    entryComponents: [],
     exports: [ProvidersignupComponent]
 })
 export class ProvidersignupModule {}

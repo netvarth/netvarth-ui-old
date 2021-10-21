@@ -29,6 +29,7 @@ import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
 import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
+import { AuthService } from '../../services/auth-service';
 @Component({
   selector: 'app-businessprovideruser-page',
   templateUrl: './business-provideruser-page.component.html',
@@ -323,7 +324,8 @@ export class BusinessprovideruserPageComponent implements OnInit, AfterViewInit,
     private domainConfigService: DomainConfigGenerator,
     // private modalService: BsModalService,
     private dateTimeProcessor: DateTimeProcessor,
-    private s3Processor: S3UrlProcessor
+    private s3Processor: S3UrlProcessor,
+    private authService: AuthService,
     // private customAppSerice: CustomAppService
   ) {
     // this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
@@ -468,6 +470,7 @@ export class BusinessprovideruserPageComponent implements OnInit, AfterViewInit,
                 (id: any) => {
                   _this.provider_id = id;
                   _this.customId = _this.accountEncId;
+                  // _this.lStorageService.setitemonLocalStorage('customId', _this.customId);
                   console.log("fdhf"+ _this.customId);
                   _this.accEncUid = _this.accountEncId;
                   _this.accountIdExists = true;
@@ -1641,7 +1644,7 @@ console.log("fgf"+JSON.stringify(loc));
         };
         this.shared_services.ConsumerLogin(data).subscribe(
           (loginInfo: any) => {
-            this.sharedFunctionobj.setLoginData(loginInfo, data, 'consumer');
+            this.authService.setLoginData(loginInfo, data, 'consumer');
             this.lStorageService.setitemonLocalStorage('qrp', data.password);
             resolve(true);
           },

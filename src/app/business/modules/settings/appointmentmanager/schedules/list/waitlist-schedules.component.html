@@ -1,8 +1,6 @@
 <section class="">
         <div class="card title-gb">
                 <h5 class="mgn-up-10">
-                        <!-- <button type="button" class="btn default profile-back" (click)="redirecToApptmanager()">
-             <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp; -->
                         <span class="fa fa-arrow-left pointer-cursor"
                                 (click)="redirecToApptmanager()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         Schedules (Working Hours)
@@ -64,7 +62,9 @@
                                                                                                                 [<span
                                                                                                                         *ngIf="!queue.instantQueue">{{queue.name}}-</span>
                                                                                                                 <span
-                                                                                                                        *ngIf="queue.location">{{queue.location.place | capitalizeFirst}}]</span>
+                                                                                                                        *ngIf="queue.location">{{queue.location.place
+                                                                                                                        |
+                                                                                                                        capitalizeFirst}}]</span>
                                                                                                         </div>
                                                                                                 </h3>
                                                                                         </div>
@@ -83,7 +83,11 @@
                                                                                                                 (change)="changeScheduleSameDayOnlineStatus(queue)">
                                                                                                         </mat-slide-toggle>
                                                                                                         <p> <label
-                                                                                                                        class="tstat">{{queue.todayAppt ? 'On' : 'Off'}}</label>
+                                                                                                                        class="tstat">{{queue.todayAppt
+                                                                                                                        ?
+                                                                                                                        'On'
+                                                                                                                        :
+                                                                                                                        'Off'}}</label>
                                                                                                         </p>
                                                                                                 </div>
                                                                                                 <div
@@ -99,7 +103,11 @@
                                                                                                                 (change)="changeScheduleFutureStatus(queue)">
                                                                                                         </mat-slide-toggle>
                                                                                                         <p> <label
-                                                                                                                        class="tstat">{{queue.futureAppt ? 'On' : 'Off'}}</label>
+                                                                                                                        class="tstat">{{queue.futureAppt
+                                                                                                                        ?
+                                                                                                                        'On'
+                                                                                                                        :
+                                                                                                                        'Off'}}</label>
                                                                                                         </p>
                                                                                                 </div>
                                                                                         </div>
@@ -231,9 +239,23 @@
                                                                                                                 -
                                                                                                         </span>
                                                                                                         <span
-                                                                                                                *ngIf="queue.location">{{queue.location.place | capitalizeFirst}}]</span><br>
-                                                                                                                <span class="sms_credit_warn mgn-up-5" *ngIf="queue.apptState =='EXPIRED'"><sup>*</sup>Schedule is expired, edit it to activate</span>
-                                                                                                                <span class="sms_credit_warn mgn-up-5" *ngIf="queue.apptState =='DISABLED'"><sup>*</sup>Schedule is disabled, enable it to activate</span>
+                                                                                                                *ngIf="queue.location">{{queue.location.place
+                                                                                                                |
+                                                                                                                capitalizeFirst}}]</span><br>
+                                                                                                        <span class="sms_credit_warn mgn-up-5"
+                                                                                                                *ngIf="queue.apptState =='EXPIRED'"><sup>*</sup>Schedule
+                                                                                                                is
+                                                                                                                expired,
+                                                                                                                edit it
+                                                                                                                to
+                                                                                                                activate</span>
+                                                                                                        <span class="sms_credit_warn mgn-up-5"
+                                                                                                                *ngIf="queue.apptState =='DISABLED'"><sup>*</sup>Schedule
+                                                                                                                is
+                                                                                                                disabled,
+                                                                                                                enable
+                                                                                                                it to
+                                                                                                                activate</span>
                                                                                                 </div>
                                                                                         </h3>
                                                                                 </div>

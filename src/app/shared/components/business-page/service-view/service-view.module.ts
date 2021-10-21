@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HeaderModule } from '../../../modules/header/header.module';
-import { MaterialModule } from '../../../modules/common/material.module';
 import { FormsModule } from '@angular/forms';
 import { RatingStarModule } from '../../../modules/ratingstar/ratingstar.module';
 import { CapitalizeFirstPipeModule } from '../../../pipes/capitalize.module';
@@ -22,7 +21,6 @@ import { ConsumerJoinModule } from '../../../../ynw_consumer/components/consumer
     imports: [
         CommonModule,
         HeaderModule,
-        MaterialModule,
         FormsModule,
         RatingStarModule,
         CapitalizeFirstPipeModule,

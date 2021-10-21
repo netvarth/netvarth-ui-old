@@ -20,6 +20,7 @@ import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { ConsumerJoinComponent } from '../../../../ynw_consumer/components/consumer-join/join.component';
 import { SignUpComponent } from '../../signup/signup.component';
 import { MatSidenav } from '@angular/material/sidenav';
+import { AuthService } from '../../../../shared/services/auth-service';
 
 @Component({
   selector: 'app-service-view',
@@ -155,6 +156,7 @@ export class ServiceViewComponent implements OnInit {
     private groupService: GroupStorageService,
     private dateTimeProcessor: DateTimeProcessor,
     public sharedFunctionobj: SharedFunctions,
+    private authService: AuthService,
   //  private observer: BreakpointObserver,
     private dialog: MatDialog,
     private activaterouterobj: ActivatedRoute) {
@@ -1070,7 +1072,7 @@ export class ServiceViewComponent implements OnInit {
         };
         this.shared_services.ConsumerLogin(data).subscribe(
           (loginInfo: any) => {
-            this.sharedFunctionobj.setLoginData(loginInfo, data, 'consumer');
+            this.authService.setLoginData(loginInfo, data, 'consumer');
             this.lStorageService.setitemonLocalStorage('qrp', data.password);
             resolve(true);
           },

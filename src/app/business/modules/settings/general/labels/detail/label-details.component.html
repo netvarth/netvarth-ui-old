@@ -1,0 +1,93 @@
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToGeneral()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {{labelcaption}}
+        </h5>
+    </div>
+</section>
+<section>
+    <div class="content loc-list labels">
+        <div class="col-md-12 no-padding-small">
+            <div class="row">
+                <div class="card p0">
+                    <div class="copy locd">
+                        <div class="lbl col-md-12">
+                            <div class="cl1" *ngIf="actionparam === 'view' && labelData">
+                                <span class="editbt" *ngIf="labelData.status=='ENABLED'" (click)="editLabel()"></span>
+                                <div class="ot-it">
+                                    <h3>{{ labelData.displayName | capitalizeFirst}} </h3>
+                                    <div class="c-ot m0">
+                                        <div class="item displyfont">
+                                            <span class="ttle">Description</span>
+                                            <span *ngIf="!labelData.description">-</span>
+                                            <span *ngIf="labelData.description">{{ labelData.description |
+                                                capitalizeFirst}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="c-ot m0" *ngIf="labelData.ownershipDetails">
+                                        <div class="item displyfont">
+                                            <span class="ttle">Permitted Users/Team</span>
+
+                                            {{getOwnership(labelData.ownershipDetails)}}
+                                        </div>
+                                    </div>
+                                    <div class="btm-ctrl">
+                                        <div class="ctrl enable-disable">
+                                            <span class="ttle">Label Status</span>
+                                            <span>
+                                                <mat-slide-toggle [(ngModel)]="labelStatus"
+                                                    (change)="changeLabelStatus(labelData)"></mat-slide-toggle>
+                                            </span>
+                                            <span class='enabled' *ngIf="labelData.status=='ENABLED'">Enabled</span>
+                                            <span class='disabled' *ngIf="labelData.status=='DISABLED'">Disabled</span>
+                                        </div>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" *ngIf="actionparam !== 'view'">
+                                <p class="form-level-settings no-margin mgn-up-10">Create label to group
+                                    {{customer_label}}s,
+                                    Tokens, Appointments. </p>
+                                <form novalidate (keyup)="resetApiErrors()"
+                                    class="ynw-common-form-nm wiz-service labelForm serviceform">
+                                    <ng-container>
+                                        <div class="c-ot m0 no-padding">
+                                            <div class="form-group col-md-7 no-padding">
+                                                <mat-form-field>
+                                                    <input matInput type="text" class="form-control" id="displayName"
+                                                        placeholder="{{label_name_cap}}*" [(ngModel)]="displayName"
+                                                        [ngModelOptions]="{standalone: true}" autocomplete="off">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <textarea matInput class="form-control" id="description"
+                                                    placeholder="Briefly describe label" [(ngModel)]="description"
+                                                    [ngModelOptions]="{standalone: true}" (keyup)="setCharCount()"
+                                                    (focus)="setDescFocus()" (blur)="lostDescFocus()"
+                                                    maxlength="255"> </textarea>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="actiondiv labelsave glbl-seting-heder" *ngIf="!showAddsec">
+                                            <button (click)="onCancel()" type="button"
+                                                class="cs-btn bt2">{{cancel_btn}}</button>
+                                            &nbsp;
+                                            <button mat-button [disabled]="displayName == ''" (click)="onSubmit()"
+                                                type="button" class="cs-btn bt1">{{button_title}}</button>
+                                        </div>
+                                        <br />
+                                    </ng-container>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</section>

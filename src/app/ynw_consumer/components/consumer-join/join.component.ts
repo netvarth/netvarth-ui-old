@@ -3,7 +3,6 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../shared/services/shared-services';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -14,6 +13,7 @@ import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SessionStorageService } from '../../../shared/services/session-storage.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { SubSink } from 'subsink';
+import { AuthService } from '../../../shared/services/auth-service';
 // import './join.component.ts'
 
 
@@ -76,12 +76,12 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
-    public shared_functions: SharedFunctions,
     private wordProcessor: WordProcessor,
     private sessionStorageService: SessionStorageService,
     private lStorageService: LocalStorageService,
     public dialog: MatDialog,
     private router: Router,
+    private authService: AuthService,
     @Inject(DOCUMENT) public document
   ) {
 
@@ -177,9 +177,8 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
     this.api_loading = true;
     if (this.data.type === 'provider') {
       post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
-      // this.shared_functions.clearSessionStorage();
       this.sessionStorageService.clearSessionStorage();
-      this.shared_functions.providerLogin(post_data)
+      this.authService.providerLogin(post_data)
         .then(
           () => {
             const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
@@ -202,7 +201,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
         }, projectConstants.TIMEOUT_DELAY_SMALL);
       } else {
         post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
-        this.shared_functions.consumerLogin(post_data, this.moreParams)
+        this.authService.consumerLogin(post_data, this.moreParams)
           .then(
             () => {
               const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
@@ -217,7 +216,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
                 if (!activeUser) {
                   this.shared_services.ConsumerLogout().subscribe(
                     ()=> {
-                      this.shared_functions.consumerLogin(post_data, this.moreParams).then(
+                      this.authService.consumerLogin(post_data, this.moreParams).then(
                         () => {
                           const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
                           this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
@@ -370,7 +369,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
             'password': post_data.password
           };
           // this.dialogRef.close();
-          this.shared_functions.consumerLogin(login_data, this.moreParams)
+          this.authService.consumerLogin(login_data, this.moreParams)
             .then(
               (login_info: any) => {
                 this.user_details.userProfile['firstName'] = this.loginForm.get('first_name').value;
@@ -381,9 +380,9 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
                     login_info['firstName'] = this.user_details.userProfile['firstName'];
                     login_info['lastName'] = this.user_details.userProfile['lastName'];
                     login_info['userName'] = login_info['firstName'] + ' ' + login_info['lastName'];
-                    this.shared_functions.setLoginData(login_info, login_data, 'consumer');
+                    this.authService.setLoginData(login_info, login_data, 'consumer');
                     const pdata = { 'ttype': 'updateuserdetails' };
-                    this.shared_functions.sendMessage(pdata);
+                    this.authService.sendMessage(pdata);
                     const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
                     this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
                     this.lStorageService.setitemonLocalStorage('qrp', post_data.password);

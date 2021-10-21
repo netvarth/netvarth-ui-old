@@ -7,9 +7,7 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
 import * as moment from 'moment';
 import { Messages } from '../../../shared/constants/project-messages';
-import { Title } from '@angular/platform-browser';
 import { ProviderServices } from '../../services/provider-services.service';
-import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { JoyrideService } from 'ngx-joyride';
 import { MatDialog } from '@angular/material/dialog';
 import { HelpPopUpComponent } from './help-pop-up/help-pop-up.component';
@@ -19,6 +17,7 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { ProviderStartTourComponent } from '../../modules/provider-start-tour/provider-start-tour.component';
+import { AuthService } from '../../../shared/services/auth-service';
 
 @Component({
   selector: 'app-header',
@@ -74,9 +73,8 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     public shared_service: SharedServices,
     private provider_services: ProviderServices,
     private routerobj: Router,
-    private titleService: Title,
     public dialog: MatDialog,
-    private provider_dataStorage: ProviderDataStorageService,
+    private authService: AuthService,
     private readonly joyrideService: JoyrideService) {
       this.getEnquiryCount();
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
@@ -283,16 +281,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     }
   }
   doLogout() {
-    this.shared_functions.doLogout()
-      .then(
-        () => {
-          this.provider_dataStorage.setWeightageArray([]);
-          this.titleService.setTitle('Jaldee');
-          this.router.navigate(['/home']);
-        },
-        () => {
-        }
-      );
+    this.authService.logoutFromJaldee();
   }
 
   redirectto(mod) {

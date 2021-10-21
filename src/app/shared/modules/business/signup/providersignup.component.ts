@@ -17,6 +17,7 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { Title } from '@angular/platform-browser';
+import { AuthService } from '../../../../shared/services/auth-service';
 
 @Component({
   selector: 'app-providersignup',
@@ -165,7 +166,8 @@ export class ProvidersignupComponent implements OnInit {
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
-    private titleService: Title) {
+    private titleService: Title,
+    private authService: AuthService) {
     this.titleService.setTitle('Jaldee Business - Signup');
     this.activatedRoute.queryParams.subscribe(params => {
       this.claimDetails = params;
@@ -397,16 +399,16 @@ export class ProvidersignupComponent implements OnInit {
 
   signUpFinished(login_data) {
     if (this.ynw_credentials != null) {
-      this.shared_functions.doLogout().then(() => {
+      this.authService.doLogout().then(() => {
         this.lStorageService.setitemonLocalStorage('new_provider', 'true');
-        this.shared_functions.providerLogin(login_data);
+        this.authService.providerLogin(login_data);
         const encrypted = this.shared_services.set(this.providerPwd, projectConstants.KEY);
         this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
         this.lStorageService.setitemonLocalStorage('newProvider', 'true');
       });
     } else {
       this.lStorageService.setitemonLocalStorage('new_provider', 'true');
-      this.shared_functions.providerLogin(login_data);
+      this.authService.providerLogin(login_data);
       const encrypted = this.shared_services.set(this.providerPwd, projectConstants.KEY);
       this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
       this.lStorageService.setitemonLocalStorage('newProvider', 'true');

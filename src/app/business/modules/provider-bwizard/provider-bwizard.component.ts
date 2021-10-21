@@ -21,6 +21,7 @@ import { GroupStorageService } from '../../../shared/services/group-storage.serv
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { JaldeeTimeService } from '../../../shared/services/jaldee-time-service';
 import { QuestionService } from '../../../shared/modules/dynamic-form/dynamic-form-question.service';
+import { AuthService } from '../../../shared/services/auth-service';
 
 @Component({
   selector: 'app-provider-bwizard',
@@ -252,7 +253,8 @@ export class ProviderbWizardComponent implements OnInit {
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
-    private jaldeeTimeService: JaldeeTimeService
+    private jaldeeTimeService: JaldeeTimeService,
+    private authService: AuthService
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
@@ -1525,7 +1527,7 @@ export class ProviderbWizardComponent implements OnInit {
     this.expressSignupClicked = true;
   }
   providerLogout() {
-    this.shared_functions.doLogout()
+    this.authService.doLogout()
       .then(
         () => {
           this.routerobj.navigate(['/home']);

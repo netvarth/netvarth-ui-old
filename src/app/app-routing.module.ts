@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LogoutComponent } from './shared/components/logout/logout.component';
 import { AuthGuardConsumer, AuthGuardHome, AuthGuardProvider } from './shared/guard/auth.guard';
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', loadChildren: () => import('./shared/components/admin/login/login.module').then(m => m.AdminLoginModule) },
@@ -15,7 +14,7 @@ const routes: Routes = [
     { path: '', loadChildren: ()=> import('./shared/components/home/home.module').then(m=>m.HomeModule), canActivate: [AuthGuardHome] },
     { path: 'business', loadChildren: () => import('./shared/modules/business/home/phome.module').then(m => m.PhomeModule) },
     { path: 'home', redirectTo: '', pathMatch: 'full' },
-    { path: 'logout', component: LogoutComponent },
+    // { path: 'logout', component: LogoutComponent },
     { path: 'not-found', loadChildren: () => import('./shared/modules/not-found/not-found.module').then(m => m.NotFoundModule) },
     { path: 'searchdetail', loadChildren: () => import('./shared/components/search-detail/search-detail.module').then(m => m.SearchDetailModule) },
     { path: 'terms', loadChildren: () => import('./shared/modules/terms-static/terms-static.module').then(m => m.TermsStaticModule) },

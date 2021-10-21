@@ -14,6 +14,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { WordProcessor } from '../../services/word-processor.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { GroupStorageService } from '../../services/group-storage.service';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-header',
@@ -118,7 +119,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public shared_service: SharedServices,
     private wordProcessor: WordProcessor,
     private lStorageService: LocalStorageService,
-    private groupService: GroupStorageService
+    private groupService: GroupStorageService,
+    private authService:AuthService
   ) {
     this.onResize();
     this.evnt = router.events.subscribe(event => {
@@ -358,18 +360,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return (type === 'consumer') ? 'false' : 'true';
   }
   doLogout() {
-    this.shared_functions.doLogout()
-      .then(
-        () => {
-          if (this.customId) {
-            this.router.navigate([this.customId]);
-          } else {
-            this.router.navigate(['/home']);
-          }
-        },
-        () => {
-        }
-      );
+    this.authService.logoutFromJaldee();
   }
   upgradeMembership() {
     this.lStorageService.setitemonLocalStorage('lic_ret', this.router.url);

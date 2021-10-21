@@ -14,21 +14,7 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
 })
 export class LabelsComponent implements OnInit {
     tooltipcls = '';
-    add_button = '';
-    breadcrumb_moreoptions: any = [];
-    breadcrumbs = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: Messages.GENERALSETTINGS,
-            url: '/provider/settings/general'
-        },
-        {
-            title: 'Custom Fields'
-        }
-    ];
+    add_button = '';    
     api_loading=true;
     label_list: any;
 source;
@@ -63,20 +49,7 @@ source;
                     this.getLabels();
                 }
          }
-    ngOnInit() {
-
-        this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'general->labels', 'subKey': 'timewindow', 'classname': 'b-queue',
-            'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
-        };
-        // const user = this.groupService.getitemFromGroupStorage('ynw-user');
-        // this.domain = user.sector;
-        // if (user.accountType === 'BRANCH') {
-        //     this.getProviders();
-        //   }
-
-        // this.getLabels();
-      
+    ngOnInit() {      
     }
     getUsersList(users){
         console.log(users);

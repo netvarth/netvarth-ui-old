@@ -21,6 +21,7 @@ import { GalleryService } from '../../../../shared/modules/gallery/galery-servic
 import { GalleryModule } from '../../../../shared/modules/gallery/gallery.module';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import { AddProviderWaitlistLocationsModule } from '../../add-provider-waitlist-locations/add-provider-waitlist-locations.module';
 const routes: Routes = [
     { path: '', component: BProfileComponent },
     { path: '', children: [
@@ -54,6 +55,7 @@ const routes: Routes = [
         FormMessageDisplayModule,
         LoadingSpinnerModule,
         Nl2BrPipeModule,
+        AddProviderWaitlistLocationsModule,
         ProviderBprofileSearchDynamicModule,
         [RouterModule.forChild(routes)]
     ],

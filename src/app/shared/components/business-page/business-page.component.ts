@@ -29,6 +29,7 @@ import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
 import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
+import { AuthService } from '../../services/auth-service';
 @Component({
   selector: 'app-business-page',
   templateUrl: './business-page.component.html',
@@ -279,11 +280,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   nextAvailableTime;
   customId: any;
   accEncUid: any;
-
   accountEncId: string;
   userEncId: string;
-
-  // bsModalRef: BsModalRef;
   nonfirstCouponCount = 0;
   activeUser: any;
   checkinProviderList: any = [];
@@ -324,12 +322,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     public wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private domainConfigService: DomainConfigGenerator,
-    // private modalService: BsModalService,
     private dateTimeProcessor: DateTimeProcessor,
-    private s3Processor: S3UrlProcessor
-    // private customAppSerice: CustomAppService
+    private s3Processor: S3UrlProcessor,
+    private authService: AuthService
   ) {
-    // this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
@@ -479,6 +475,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                 (id: any) => {
                   _this.provider_id = id;
                   _this.customId = _this.accountEncId;
+                  _this.lStorageService.setitemonLocalStorage('customId', _this.customId );
                   console.log("fdhf"+ _this.customId);
                   _this.accEncUid = _this.accountEncId;
                   _this.accountIdExists = true;
@@ -1670,8 +1667,8 @@ console.log("fgf"+JSON.stringify(loc));
           'mUniqueId': null
         };
         this.shared_services.ConsumerLogin(data).subscribe(
-          (loginInfo: any) => {
-            this.sharedFunctionobj.setLoginData(loginInfo, data, 'consumer');
+          (loginInfo: any) => {            
+            this.authService.setLoginData(loginInfo, data, 'consumer');
             this.lStorageService.setitemonLocalStorage('qrp', data.password);
             resolve(true);
           },

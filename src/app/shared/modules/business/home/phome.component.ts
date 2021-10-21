@@ -15,6 +15,7 @@ import { SessionStorageService } from '../../../../shared/services/session-stora
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { AuthService } from '../../../../shared/services/auth-service';
 
 @Component({
   selector: 'app-phome',
@@ -94,7 +95,8 @@ export class PhomeComponent implements OnInit {
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
     private titleService: Title,
-    private groupService: GroupStorageService
+    private groupService: GroupStorageService,
+    private authService: AuthService
   ) {
     this.titleService.setTitle('Jaldee Business Home');
     this.activateRoute.queryParams.subscribe(data => {
@@ -319,7 +321,7 @@ export class PhomeComponent implements OnInit {
     post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
     // this.shared_functions.clearSessionStorage();
     this.sessionStorageService.clearSessionStorage();
-    this.shared_functions.providerLogin(post_data)
+    this.authService.providerLogin(post_data)
       .then(
         () => {
           const encrypted = this.shared_services.set(this.password, projectConstants.KEY);
@@ -330,7 +332,7 @@ export class PhomeComponent implements OnInit {
         error => {
           // ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
           if (error.status === 401 && error.error === 'Session already exists.') {
-            this.shared_functions.doLogout().then(() => {
+            this.authService.doLogout().then(() => {
               this.onSubmit(data);
             });
           } else {

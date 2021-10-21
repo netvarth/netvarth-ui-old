@@ -1,30 +1,30 @@
 import { NgModule } from '@angular/core';
-import { BreadCrumbModule } from '../../../../../shared/modules/breadcrumb/breadcrumb.module';
-import { MaterialModule } from '../../../../../shared/modules/common/material.module';
-import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoadingSpinnerModule } from '../../../../../shared/modules/loading-spinner/loading-spinner.module';
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
 import { CommonModule } from '@angular/common';
 import { LabelsComponent } from './labels.component';
-import { LabelComponent } from './detail/label.component';
-import { LabelsRoutingModule } from './labels.routing.module';
-
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { RouterModule, Routes } from '@angular/router';
+const routes: Routes = [
+    { path: '',  component: LabelsComponent},
+    { path: ':id', loadChildren: ()=> import('./detail/label-details.module').then(m=>m.LabelDetailSModule)}
+];
 @NgModule({
     declarations: [
-       LabelsComponent,
-       LabelComponent
+       LabelsComponent
     ],
     imports: [
-        LabelsRoutingModule,
-        BreadCrumbModule,
-        MaterialModule,
-        FormMessageDisplayModule,
-        FormsModule,
-        ReactiveFormsModule,
         LoadingSpinnerModule,
         CapitalizeFirstPipeModule,
-        CommonModule
+        CommonModule,
+        MatTooltipModule,
+        MatIconModule,
+        MatMenuModule,
+        MatButtonModule,
+        [RouterModule.forChild(routes)]
     ],
     exports: [LabelsComponent]
 })

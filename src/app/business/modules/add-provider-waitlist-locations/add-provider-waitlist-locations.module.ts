@@ -11,6 +11,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { LoadingSpinnerModule } from "../../../shared/modules/loading-spinner/loading-spinner.module";
 import { FormMessageDisplayModule } from "../../../shared/modules/form-message-display/form-message-display.module";
 import { AddProviderWaitlistLocationsComponent } from "./add-provider-waitlist-locations.component";
+import { AddProviderSchedulesModule } from "../add-provider-schedule/add-provider-schedule.module";
 
 @NgModule({
     declarations: [AddProviderWaitlistLocationsComponent],
@@ -26,7 +27,8 @@ import { AddProviderWaitlistLocationsComponent } from "./add-provider-waitlist-l
         MatSelectModule,
         MatOptionModule,
         MatButtonModule,
-        LoadingSpinnerModule
+        LoadingSpinnerModule,
+        AddProviderSchedulesModule
     ]
 })
 export class AddProviderWaitlistLocationsModule{}

@@ -6,46 +6,27 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 
-
 @Component({
     selector: 'app-livetrack-settings',
     templateUrl: './livetrack-settings.component.html'
 })
 export class LiveTrackSettingsComponent implements OnInit {
     breadcrumbs_init: ({ title: string; url: string; } | { title: string; url?: undefined; })[];
-  
+
     livetrack_status: any;
     livetrack_statusstr: string;
     cust_domain_name = '';
     custs_name = '';
-
-
-    breadcrumb_moreoptions: any = [];
     domain;
     customer_label: any;
     customer_label_upper: any;
-    breadcrumbs: ({ title: string; url: string; } | { title: string; url?: undefined; })[];
     constructor(private provider_services: ProviderServices,
         private groupService: GroupStorageService,
         private wordProcessor: WordProcessor,
         private snackbarService: SnackbarService,
         private router: Router) {
-            this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-            this.customer_label_upper = this.wordProcessor.firstToUpper(this. customer_label);
-            this.breadcrumbs_init = [
-                {
-                    title: 'Settings',
-                    url: '/provider/settings'
-                },
-                {
-                    title: Messages.GENERALSETTINGS,
-                    url: '/provider/settings/general'
-                },
-                {
-                    title: Messages.LOCATESETTINGS.replace('[customer]', this. customer_label_upper),
-                }
-            ];
-            this.breadcrumbs = this.breadcrumbs_init;
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+        this.customer_label_upper = this.wordProcessor.firstToUpper(this.customer_label);
     }
     ngOnInit() {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -53,7 +34,6 @@ export class LiveTrackSettingsComponent implements OnInit {
         this.getLiveTrackStatus();
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
         this.custs_name = Messages.CUSTOMERS_NAME.replace('[customer]', this.customer_label);
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     performActions(action) {
         if (action === 'learnmore') {
@@ -68,7 +48,6 @@ export class LiveTrackSettingsComponent implements OnInit {
         this.provider_services.getGlobalSettings().subscribe(
             (data: any) => {
                 this.livetrack_status = data.livetrack;
-                // console.log(this.livetrack_status);
                 this.livetrack_statusstr = (this.livetrack_status) ? 'On' : 'Off';
             });
     }
@@ -87,10 +66,9 @@ export class LiveTrackSettingsComponent implements OnInit {
             );
     }
     redirecToGeneral() {
-        this.router.navigate(['provider', 'settings' , 'general']);
+        this.router.navigate(['provider', 'settings', 'general']);
     }
     redirecToHelp() {
         this.router.navigate(['/provider/' + this.domain + '/general->livetracking']);
     }
 }
-

@@ -1,21 +1,20 @@
 import { NgModule } from '@angular/core';
-// import { MaterialModule } from '../../../../../shared/modules/common/material.module';
-import { BreadCrumbModule } from '../../../../../shared/modules/breadcrumb/breadcrumb.module';
 import { LiveTrackSettingsComponent } from './livetrack-settings.component';
-import { LiveTrackSettingsRoutingModule } from './livetrack-settings.routing.module';
 import { CommonModule } from '@angular/common';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
-
+import { RouterModule, Routes } from '@angular/router';
+const routes: Routes = [
+    { path: '', component: LiveTrackSettingsComponent}
+];
 @NgModule({
     imports: [
-        BreadCrumbModule,
         CapitalizeFirstPipeModule,
         FormsModule,
         CommonModule,
         MatSlideToggleModule,
-        LiveTrackSettingsRoutingModule
+        [RouterModule.forChild(routes)]
     ],
     declarations: [
         LiveTrackSettingsComponent
