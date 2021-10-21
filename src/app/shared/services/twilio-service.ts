@@ -84,7 +84,6 @@ export class TwilioService {
     //                 }).then(localTracks => {
     //                     _this.previewTracks = localTracks;
     //                     _this.previewTracksClone = localTracks.slice();
-    //                     console.log(_this.previewTracks);
     //                     localTracks.forEach(localTrack => {
     //                         if (localTrack.kind === 'audio'){
     //                             this.microphone= true;
@@ -92,11 +91,9 @@ export class TwilioService {
     //                         _this.addPreviewTrackToDom(localTrack);
     //                     })
     //                 }, (error)=> {
-    //                     console.log("Hi");
 
                         
 
-    //                     console.log(error);
     //                 });
     //             }
     //         }

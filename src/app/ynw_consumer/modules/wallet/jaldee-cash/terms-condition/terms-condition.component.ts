@@ -13,7 +13,6 @@ export class TermsConditionComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
-    console.log(this.data);
     if (this.data.type) {
     }
     if (this.data.buttons === 'okCancel') {

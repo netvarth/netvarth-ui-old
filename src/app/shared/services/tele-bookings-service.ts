@@ -12,7 +12,6 @@ export class TeleBookingService {
     constructor(private servicemeta: ServiceMeta, private dateTimeProcessor: DateTimeProcessor) { }
 
     getAvailableBookings(countrycode, phonenumber) {
-        console.log("getAvailableBookings");
         let bookings = [];
         return new Promise((resolve, reject) => {
             this.getAvailableBookingAppointments(countrycode, phonenumber).then(
@@ -67,11 +66,9 @@ export class TeleBookingService {
                     }
                     this.getAvaiableBookingCheckins(countrycode, phonenumber).then(
                         (checkins: any) => {
-                            console.log(checkins);
                             for (let i = 0; i < checkins.length; i++) {
                                 let token = '';
                                 if (checkins[i].showToken) {
-                                    console.log(checkins[i].token);
                                     if (checkins[i].token) {
                                         token = checkins[i].token;
                                     } else {

@@ -66,7 +66,6 @@ export class GeneratedReportComponent implements OnInit {
       ([key, value]) => this.table_header.push({ 'order': key, 'name': value })
     );
     this.displayedColumns = this.table_header.map(column => column.order);
-    console.log(this.displayedColumns);
     this.activated_route.queryParams.subscribe(qparams => {
       if (qparams.reportRecreate) {
         this.hide_criteria_save = true;

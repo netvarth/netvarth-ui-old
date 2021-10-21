@@ -27,10 +27,10 @@ import { ManagePrivacyComponent } from '../manage-privacy/manage-privacy.compone
       state('false', style({ opacity: 0, height: 0 })),
       transition('0 <=> 1', animate('.5s ease-out'))
     ])
-  ] 
+  ]
 })
-export class MyfavouritesComponent implements OnInit,OnDestroy {
-  
+export class MyfavouritesComponent implements OnInit, OnDestroy {
+
   loadcomplete = { waitlist: false, fav_provider: false, history: false, donations: false, appointment: false };
   fav_providers;
   fav_providers_id_list: any[];
@@ -65,7 +65,7 @@ export class MyfavouritesComponent implements OnInit,OnDestroy {
   not_allowed_cap = Messages.NOT_ALLOWED_CAP;
   addnotedialogRef: any;
   privacydialogRef: MatDialogRef<unknown, any>;
-private subs=new SubSink();
+  private subs = new SubSink();
   constructor(
     public shared_functions: SharedFunctions,
     private shared_services: SharedServices,
@@ -93,7 +93,7 @@ private subs=new SubSink();
   setSystemDate() {
     const _this = this;
     return new Promise<void>(function (resolve, reject) {
-      _this.subs.sink=_this.shared_services.getSystemDate()
+      _this.subs.sink = _this.shared_services.getSystemDate()
         .subscribe(
           res => {
             _this.server_date = res;
@@ -110,7 +110,7 @@ private subs=new SubSink();
   // Get Fav Providers
   getFavouriteProvider() {
     this.loadcomplete.fav_provider = false;
-   this.subs.sink= this.shared_services.getFavProvider()
+    this.subs.sink = this.shared_services.getFavProvider()
       .subscribe(
         data => {
           this.loadcomplete.fav_provider = true;
@@ -161,18 +161,18 @@ private subs=new SubSink();
   // }
   setWaitlistTimeDetailsProvider(provider, k) {
     // if (this.s3url) {
-      this.subs.sink = this.s3Processor.getJsonsbyTypes(provider.uniqueId,null, 'settings,terminologies').subscribe(
-          (accountS3s) => {
-            if (accountS3s['settings']) {
-              this.processS3s('settings', accountS3s['settings'], k);
-            }
-            if (accountS3s['terminologies']) {
-              this.processS3s('terminologies', accountS3s['terminologies'], k);
-            }
-          });
+    this.subs.sink = this.s3Processor.getJsonsbyTypes(provider.uniqueId, null, 'settings,terminologies').subscribe(
+      (accountS3s) => {
+        if (accountS3s['settings']) {
+          this.processS3s('settings', accountS3s['settings'], k);
+        }
+        if (accountS3s['terminologies']) {
+          this.processS3s('terminologies', accountS3s['terminologies'], k);
+        }
+      });
 
-      // this.getbusinessprofiledetails_json(provider.uniqueId, 'settings', true, k);
-      // this.getbusinessprofiledetails_json(provider.uniqueId, 'terminologies', true, k);
+    // this.getbusinessprofiledetails_json(provider.uniqueId, 'settings', true, k);
+    // this.getbusinessprofiledetails_json(provider.uniqueId, 'terminologies', true, k);
     // }
     const locarr = [];
     let i = 0;
@@ -200,7 +200,7 @@ private subs=new SubSink();
       }
     }
   }
-   getWaitingTime(provids_locid, index) {
+  getWaitingTime(provids_locid, index) {
     if (provids_locid.length > 0) {
       const post_provids_locid: any = [];
       for (let i = 0; i < provids_locid.length; i++) {
@@ -209,7 +209,7 @@ private subs=new SubSink();
       if (post_provids_locid.length === 0) {
         return;
       }
-      this.subs.sink=this.consumer_services.getEstimatedWaitingTime(post_provids_locid)
+      this.subs.sink = this.consumer_services.getEstimatedWaitingTime(post_provids_locid)
         .subscribe(data => {
           let waitlisttime_arr: any = data;
           // const locationjson: any = [];
@@ -309,7 +309,7 @@ private subs=new SubSink();
       if (post_provids_locid.length === 0) {
         return;
       }
-      this.subs.sink=this.consumer_services.getApptTime(post_provids_locid)
+      this.subs.sink = this.consumer_services.getApptTime(post_provids_locid)
         .subscribe(data => {
           this.appttime_arr = data;
           let locindx;
@@ -356,7 +356,6 @@ private subs=new SubSink();
   }
 
   addCommonMessage(provider) {
-    console.log(provider);
     const pass_ob = {};
     pass_ob['source'] = 'consumer-common';
     pass_ob['userId'] = provider.uniqueId;

@@ -120,15 +120,12 @@ export class SocialMediaComponent implements OnInit {
         this.hide_save_btn = false;
     }
     deleteSocialmedia(sockey) {
-        console.log(this.social_arr);
-        console.log(sockey);
         const post_data: any = [];
         for (let i = 0; i < this.social_arr.length; i++) {
             if (this.social_arr[i].Sockey !== sockey) {
                 post_data.push({ 'resource': this.social_arr[i].Sockey, 'value': this.social_arr[i].Socurl });
             }
         }
-        console.log(post_data);
         const submit_data = {
             'socialMedia': post_data
         };

@@ -1885,7 +1885,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
   applyRefund(payment) {
     this.applydisc = true;
-    console.log(payment);
     if (payment) {
       this.selectedPayment = payment;
       this.amounttoRefund = payment.refundableAmount.toFixed(2);

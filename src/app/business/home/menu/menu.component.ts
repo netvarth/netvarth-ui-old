@@ -250,7 +250,6 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
   getGlobalSettings() {
     const settings = this.groupService.getitemFromGroupStorage('settings');
-    console.log(settings);
     if (settings) {
       this.donationstatus = settings.donationFundRaising;
       this.apptstatus = settings.appointment;

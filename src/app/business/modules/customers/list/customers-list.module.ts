@@ -18,6 +18,7 @@ import { LastVisitModule } from '../../medicalrecord/last-visit/last-visit.modul
 import { FormsModule } from '@angular/forms';
 import { PagerModule } from '../../../../shared/modules/pager/pager.module';
 import { CommunicationService } from '../../../../business/services/communication-service';
+import { AddInboxMessagesModule } from '../../../../shared/components/add-inbox-messages/add-inbox-messages.module';
 
 const routes: Routes = [
     { path: '', component: CustomersListComponent},
@@ -44,6 +45,7 @@ const routes: Routes = [
         ConfirmBoxModule,
         LoadingSpinnerModule,
         CapitalizeFirstPipeModule,
+        AddInboxMessagesModule,
         LastVisitModule,
         PagerModule,
         [RouterModule.forChild(routes)]

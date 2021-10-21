@@ -77,13 +77,11 @@ export class LocationUpdateComponent implements OnInit {
       this.source = qparams.source;
       if (this.source === 'appt'){
         this.getApptDetails().then(result => {
-          console.log(result);
           this.checkin = result;
           this.getProviderLocations();
         })
       } else if (this.source == 'checkin'){
         this.getCheckinDetails().then(result => {
-          console.log(result);
           this.checkin = result;
           this.getProviderLocations();
         })
@@ -104,7 +102,6 @@ export class LocationUpdateComponent implements OnInit {
   }
   getProviderLocations() {
     this.provider_services.getProviderLocations().subscribe((data: any) => {
-      console.log(data);
       this.service_dataSource.data = this.setServiceDataSource(data);
       this.filterApplied_count = this.service_dataSource.data.length;
       setTimeout(() => {
@@ -114,9 +111,7 @@ export class LocationUpdateComponent implements OnInit {
   }
   setServiceDataSource(result) {
     const service_list: any = [];
-    console.log(this.checkin);
     result.forEach(serviceObj => {
-      console.log(this.checkin);
       if((this.source == 'checkin')){
         if(this.checkin.queue.location.id !== serviceObj.id) {
           service_list.push(
@@ -163,9 +158,7 @@ export class LocationUpdateComponent implements OnInit {
       }
     });
     dialogrefd.afterClosed().subscribe(result => {
-      console.log("hi");
       if (result) {
-        console.log(this.selectedUser);
         if (this.source == 'checkin') {
           const post_data = {
             'ynwUuid': this.uuid,
@@ -211,10 +204,7 @@ export class LocationUpdateComponent implements OnInit {
   selectedRow(index, user) {
     this.selectrow = true;
     this.selectedUser = user;
-    console.log(index);
-    console.log(this.selectedUser)
     if (this.selectrow === true && user.id) {
-      console.log("hi")
       this.updateUser()
     }
     this.removeSelection();
@@ -232,7 +222,6 @@ export class LocationUpdateComponent implements OnInit {
     });
   }
   getUserImg(user) {
-    console.log(user);
     if (user.profilePicture) {
       const proImage = user.profilePicture;
       return proImage.url;
@@ -261,7 +250,6 @@ export class LocationUpdateComponent implements OnInit {
     this.selectedUser = user;
     // this.getUser();
     this.getUser().then(result => {
-      console.log(result);
       this.contactDetailsdialogRef = this.dialog.open(TeamMembersComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],

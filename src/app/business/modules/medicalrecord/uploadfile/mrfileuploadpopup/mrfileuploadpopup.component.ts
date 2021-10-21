@@ -63,12 +63,7 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
             this.mrId = this.data.mrid;
             this.patientId = this.data.patientid;
             this.bookingType = this.data.bookingtype;
-            this.bookingId = this.data.bookingid;
-            console.log(this.mrId);
-            console.log(this.patientId);
-            console.log(this.bookingType);
-            console.log(this.bookingId);
-            
+            this.bookingId = this.data.bookingid;  
         }
     }
     resetVariables() {
@@ -94,18 +89,15 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
         const input = event.target.files;
         if (input) {
           for (const file of input) {
-            console.log(file);
             if (projectConstantsLocal.MRFILETYPES_UPLOAD.indexOf(file.type) === -1) {
               this.error_msg ='Selected file type not supported';
             } else if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
               this.error_msg ='Please upload file with size < 100 mb';
             } else {
               this.item_pic.files.push(file);
-              console.log(this.item_pic.files);
               const reader = new FileReader();
               reader.onload = (e) => {
                 this.item_pic.base64.push(e.target['result']);
-                console.log(this.item_pic.base64);
               reader.readAsDataURL(file);
             }
           }
@@ -119,13 +111,11 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
         this.item_pic.caption.splice(i, 1);
     }
     saveImages() {
-      console.log(this.mrId);
         this.error_msg = '';
         this.error_list = [];
         this.img_save_caption = 'Uploading .. ';
         this.savedisabled = true;        
         if (this.mrId) {
-          console.log(this.mrId);
             this.uploadMrfiles();
           } else {
             let passingId ;
@@ -137,7 +127,6 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
             this.medicalrecord_service.createMRForUploadPrescription(this.bookingType, passingId)
               .then((data: number) => {
                 this.mrId = data;
-                console.log(this.mrId);
                 this.uploadMrfiles();
               },
                 error => {
@@ -149,7 +138,6 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
         
     }
    reloadCurrentRoute() {
-     console.log('inisde');
       let currentUrl = 'provider/customers/'+this.patientId+'/' + this.bookingType+'/' + this.bookingId + '/medicalrecord/'+ this.mrId+ '/clinicalnotes';
       this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
           this.router.navigate([currentUrl]);
@@ -160,10 +148,8 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
       let file;
       for (const pic of this.item_pic.files) {
            file = pic;
-           console.log(file);
            const imgsize=pic['size'];
            const sizeinkb=(imgsize/1024).toFixed(0);
-           console.log(sizeinkb);
            passdata = {
             "url": pic['name'],
             "type": pic['type'],
@@ -180,10 +166,6 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
       .subscribe((data) => {
         this.dialogRef.close(this.mrId);
         this.snackbarService.openSnackBar('File Uploaded Successfully');
-        console.log(this.patientId);
-        console.log(this.bookingType);
-        console.log(this.bookingId);
-        console.log(this.mrId);
        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId]);
        // this.reloadCurrentRoute();
     

@@ -59,15 +59,10 @@ export class OrderActionsComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    console.log(this.customer_label);
     this.orderDetails = this.data.selectedOrder;
-    console.log(this.orderDetails)
     if(this.data.type){
       this.timeType = this.data.type;
     }
-    console.log(this.timeType);
-    console.log(this.orderDetails);
-    console.log(this.orderDetails.orderStatus);
     if (this.orderDetails.length > 1) {
       this.mulipleSelection = true;
     }
@@ -123,7 +118,6 @@ export class OrderActionsComponent implements OnInit {
     this.router.navigate(['/provider/customers/' + this.orderDetails.orderFor.id]);
   }
   changeOrderStatus(status) {
-    console.log(status);
     if(status === 'Cancelled'){
       this.cancelorderDialog = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
@@ -160,8 +154,6 @@ export class OrderActionsComponent implements OnInit {
         const catalog = this.catalog_list.filter(cata => cata.id === this.orderDetails.catalog.id);
         if (catalog[0]) {
           this.catalogStatuses = catalog[0].orderStatuses;
-          console.log(this.catalogStatuses);
-          console.log(this.status);
             if (this.orderDetails.homeDelivery) {
               for (let i = 0; i < this.status.length; i++) {
                 for (let j = 0; j < this.catalogStatuses.length; j++) {
@@ -170,7 +162,6 @@ export class OrderActionsComponent implements OnInit {
                   }
                 }
               }
-              console.log(this.catalogfilterStats);
             } else if (this.orderDetails.storePickup) {
               for (let i = 0; i < this.status.length; i++) {
                 for (let j = 0; j < this.catalogStatuses.length; j++) {
@@ -179,7 +170,6 @@ export class OrderActionsComponent implements OnInit {
                   }
                 }
               }
-              console.log(this.catalogfilterStats);
             }
 
 
@@ -206,14 +196,6 @@ goBack() {
 
 
 addLabeltoOrder(label, event) {
-  // this.labelMap = new Object();
-  // if (event.checked) {
-  //     this.labelMap[label] = true;
-  //     this.addLabel();
-  // } else {
-  //     this.deleteLabel();
-  // }
-  console.log(event.checked);
   this.showApply = false;
   let labelArr = this.providerLabels.filter(lab => lab.label === label);
   if (this.labelMap[label]) {
@@ -222,7 +204,6 @@ addLabeltoOrder(label, event) {
   if (this.labelsforRemove.indexOf(label) !== -1) {
       this.labelsforRemove.splice(this.labelsforRemove.indexOf(label), 1);
   }
-  console.log(labelArr);
   if (event.checked) {
       if (labelArr[0] && labelArr[0].selected) {
       } else {
@@ -239,12 +220,6 @@ addLabeltoOrder(label, event) {
 }
 
 addLabel() {
-  // this.provider_services.addLabeltoCheckin(this.orderDetails.ynwUuid, this.labelMap).subscribe(data => {
-  //     this.dialogRef.close('reload');
-  // },
-  //     error => {
-  //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //     });
   const ids = [];
   if (this.mulipleSelection) {
       for (const order of this.orderDetails) {
@@ -279,7 +254,6 @@ getLabel() {
   this.providerLabels = [];
   this.provider_services.getLabelList().subscribe((data: any) => {
       this.providerLabels = data.filter(label => label.status === 'ENABLED');
-      console.log(this.providerLabels);
       if (!this.mulipleSelection) {
           this.labelselection();
       }else {
@@ -410,7 +384,6 @@ addConsumerInboxMessage() {
   } else {
       checkin.push(this.orderDetails);
   }
-  console.log(checkin);
   this.communicationService.addConsumerInboxMessage(checkin, this ,'order-provider')
       .then(
           () => { },

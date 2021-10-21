@@ -34,11 +34,9 @@ source;
               });
               const user = this.groupService.getitemFromGroupStorage('ynw-user');
               this.domain = user.sector;
-              console.log(user.accountType);
               if (user.accountType === 'BRANCH') {
                   this.getProviders().then((data) => {
                    this.users = data;
-                   console.log(this.users);
                    this.getUsersTeam().then((team)=>{
                        this.team=team;
                     this.getLabels();
@@ -52,12 +50,9 @@ source;
     ngOnInit() {      
     }
     getUsersList(users){
-        console.log(users);
-        console.log(this.users);
        let userNamelist='';
        users.forEach(element => {
         const userObject =  this.users.filter(user => user.id === parseInt(element)); 
-        console.log(userObject);
         userNamelist=userNamelist+userObject[0].firstName+' '+userObject[0].lastName+','
        }); 
 
@@ -69,7 +64,6 @@ source;
      
             ownerShipData.users.forEach(element => {
                 const userObject =  this.users.filter(user => user.id === parseInt(element)); 
-                console.log(userObject);
                 userNamelist=userNamelist+userObject[0].firstName+' '+userObject[0].lastName+','
                }); 
         
@@ -79,7 +73,6 @@ source;
 
             ownerShipData.teams.forEach(element => {
                 const userObject =  this.team.filter(team => team.id === parseInt(element)); 
-                console.log(userObject);
                 userNamelist=userNamelist+userObject[0].name+','
                }); 
                userNamelist= userNamelist.replace(/,\s*$/, '')
@@ -92,7 +85,6 @@ source;
         this.provider_services.getLabelList()
             .subscribe(
                 (data: any) => {
-                    console.log(data);
                     //this.label_list = data.filter(label => label.status === 'ACTIVE');
                     this.label_list=data;
                     this.api_loading = false;

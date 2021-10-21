@@ -83,9 +83,7 @@ private subs=new SubSink();
     if (orderList) {
       this.orderList = orderList;
     }
-    console.log(this.orderList);
     this.route.queryParams.subscribe(qparams => {
-      console.log("qparams"+qparams);
       if(qparams.isFrom && qparams.isFrom =='providerdetail'){
         this.from = 'providerdetail';
     };
@@ -93,7 +91,6 @@ private subs=new SubSink();
       });
     this.subs.sink=this.sharedServices.getItemDetails(1).subscribe(
       (item: any) => {
-        console.log(item);
         this.currentItem = item;
         this.itemImages = this.currentItem.itemImages;
         for (let imgIndex = 0; imgIndex < this.itemImages.length; imgIndex++) {
@@ -147,7 +144,6 @@ private subs=new SubSink();
 
   }
   removeFromCart() {
-    console.log(this.orderList);
     for (const i in this.orderList) {
       if (this.orderList[i].itemId === this.currentItem.itemId) {
         this.orderList.splice(i, 1);
@@ -159,15 +155,12 @@ private subs=new SubSink();
   }
   // output evets
   onShow(event: ImageEvent) {
-    console.log('show', event);
   }
 
   onFirstImage(event: ImageEvent) {
-    console.log('firstImage', event);
   }
 
   onLastImage(event: ImageEvent) {
-    console.log('lastImage', event);
   }
 
 }

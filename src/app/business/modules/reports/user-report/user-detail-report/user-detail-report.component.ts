@@ -26,14 +26,11 @@ export class UserDetailReportComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(
       params => {
         this.data = JSON.parse(params.data);
-        console.log(this.data);
         this.user_details_loading = false;
         this.userStats = this.data.statsPerDay;
-        console.log(this.userStats);
         this.params = JSON.parse(params.params);
         if (this.params) {
           this.filterCriteria = this.params;
-          console.log(JSON.stringify(this.filterCriteria['date-ge']));
           if (this.filterCriteria['date-eq']) {
             this.daterange = false;
             this.date = this.getDateFormat(new Date(this.filterCriteria['date-eq']));

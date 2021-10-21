@@ -195,7 +195,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       });
     this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    console.log(this.customer_label);
     this.shared_functions.getMessage().subscribe(data => {
       switch (data.ttype) {
         case 'upgradelicence':
@@ -283,7 +282,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.frm_msg_commn = Messages.FRM_LEVEL_COMMN_MSG.replace('[customer]', this.customer_label);
     this.frm_waitlist_cap = Messages.FRM_LEVEL_WAITLIST_MSG.replace('[customer]', this.customer_label);
     this.jaldee_pay_cap = Messages.JALDEE_PAY_MSG.replace('[customer]', this.customer_label);
-    console.log(this.customer_label);
     this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
     this.custs_name = Messages.CUSTOMERS_NAME.replace('[customer]', this.customer_label);
     this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
@@ -335,7 +333,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   getProviderLocations() {
     this.provider_services.getProviderLocations()
       .subscribe(data => {
-        console.log(data);
         this.loc_list = data;
       });
   }
@@ -402,8 +399,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
 
           step => {
             /*Do something*/
-            // console.log('Location', window.location.href, 'Path', window.location.pathname);
-            // console.log('Next:', step);
           },
           error => {
             /*handle error*/
@@ -1117,7 +1112,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.provider_services.getBussinessProfile()
       .subscribe(data => {
         this.bProfile = data;
-        console.log(this.bProfile);
         this.bprofileLoaded = true;
         this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
           domainfields => {

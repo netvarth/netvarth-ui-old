@@ -45,7 +45,6 @@ export class NotificationComponent implements OnInit {
   enableTelegram(stat) {
     this.teleGramStat(stat).then(
       (data) => {
-        console.log('then');
         this.getTelegramstat();
       },
       error => {
@@ -83,14 +82,12 @@ export class NotificationComponent implements OnInit {
     this.shared_services.getTelegramstat()
       .subscribe(
         (data: any) => {
-          console.log(data);
           this.status = data.status;
           if (data.botUrl) {
             this.boturl = data.botUrl;
           }
         },
         error => {
-          console.log(error);
         }
       );
   }

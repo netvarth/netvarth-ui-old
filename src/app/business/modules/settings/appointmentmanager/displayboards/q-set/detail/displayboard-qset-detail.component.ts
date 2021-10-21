@@ -271,7 +271,6 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                                 this.providerLabels[i]['selectedValue'] = this.displayBoardData.qBoardConditions.labels[key];
                                 this.labelMultiCtrl.push(this.providerLabels[i]);
                                 this.labelList[this.providerLabels[i].label] = this.displayBoardData.qBoardConditions.labels[key];
-                                //console.log(this.labelMultiCtrl);
                             }
                         }
                     });
@@ -406,7 +405,6 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             'apptStatus': this.selectedWtlstList,
             'providers': userIds
         };
-        console.log(this.qboardConditions);
         if (this.actionparam === 'add') {
             const post_data = {
                 'name': name,

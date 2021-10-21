@@ -149,7 +149,6 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     if (this.userDet.accountType === 'BRANCH') {
       this.getTeams().then((data) => {
         this.teams = data;
-        console.log(this.teams);
       });
     }
 
@@ -238,8 +237,6 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
               this.internalStatuslog = status;
               // this.statusLog.push(this.waitlist_history);
               // this.statusLog.push(this.internalStatuslog);
-              // console.log(this.statusLog);
-
             });
           });
           this.getCommunicationHistory(this.waitlist_data.uid);

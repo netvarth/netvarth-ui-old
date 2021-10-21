@@ -115,7 +115,6 @@ export class ReportsComponent implements OnInit {
     });
     dialogrefd.afterClosed().subscribe(result => {
       if (result) {
-        console.log(del_item);
         this.provider_services.deleteCriteria(del_item).subscribe(data => {
           if (data) {
             this.getCriteriaList();

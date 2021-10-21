@@ -50,12 +50,9 @@ export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
     this.bname = this.data.businessName;
     this.about = this.data.businessDesc;
     this.busername = this.data.businessUserName;
-    console.log(this.bname);
-    console.log(this.about);
     this.customId = this.data.customId;
     this.userId = this.data.userId;
     // this.window_path = this.data.pathUrl;
-    // console.log(this.wpath + this.accuid);
     if(this.userId){
       this.shareLink = this.wpath + this.accuid+'/'+ this.userId ;
     } else {
@@ -80,7 +77,6 @@ export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
     this.changeDetectorRef.detectChanges();
     setTimeout(() => {
       this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
-      console.log(this.qrCodePath);
       this.angular_meta.addTags([
          { property: 'og:title', content: this.data.businessName },
         { property: 'og:image', content: this.imageUrl },

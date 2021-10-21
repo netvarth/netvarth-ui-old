@@ -12,7 +12,6 @@ export class DisplaylabelpopupComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.order = this.data;
-    console.log(this.order);
     Object.keys(this.order.label).forEach(key => {
       this.displayLabels.push(key);
     });

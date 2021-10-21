@@ -34,7 +34,6 @@ export class CustomViewListComponent implements OnInit {
       this.activated_route.queryParams.subscribe(qparams => {   
         if (qparams.type) {
            this.back_type = qparams.type;
-           console.log(this.back_type)
         }  
       });
   }
@@ -108,7 +107,6 @@ export class CustomViewListComponent implements OnInit {
     } else if (this.back_type === 'view'){
       this.router.navigate(['provider', 'settings' , 'general']);
     } else{
-      console.log(this.back_type);
       this.location.back();
     }
   }

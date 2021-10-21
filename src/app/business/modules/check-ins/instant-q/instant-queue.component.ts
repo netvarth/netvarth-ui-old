@@ -50,7 +50,6 @@ export class InstantQueueComponent implements OnInit {
         public fed_service: FormMessageDisplayService,
     ) {
         this.location = data.location;
-        console.log(this.location)
         this.userId = data.userId;
         if (data.instaQid) {
             this.instantQId = data.instaQid;
@@ -89,8 +88,6 @@ export class InstantQueueComponent implements OnInit {
     createForm(server_date) {
         this.qId = this.queue_list.id;
         const todaydt = new Date(server_date);
-        console.log(server_date);
-        console.log(moment(server_date).format());
         this.start_hour = parseInt(moment(new Date(todaydt), ['hh:mm A']).format('HH'));
         this.start_min = parseInt(moment(new Date(todaydt), ['hh:mm A']).format('mm'));
         this.now = moment(new Date(todaydt), ['hh:mm A']).add(2, 'hours').format('hh:mm A');
@@ -110,16 +107,7 @@ export class InstantQueueComponent implements OnInit {
         const curtime = {};
         if (this.fromDateCaption === 'Now') {
             const server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-            console.log(server_date);
-            const today = server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-            console.log(today);
-            console.log("moment(server_date, ['hh:mm A']):"+moment(server_date, ['hh:mm:ss A']));
-            console.log("moment(server_date, ['hh:mm A']).format('HH'):"+moment(server_date, ['hh:mm:ss A']).format('HH'));
-            console.log("moment(server_date, ['hh:mm A']).format('hh'):"+moment(server_date, ['hh:mm:ss A']).format('hh'));
-            console.log("parseInt(moment(server_date).format('HH'):"+parseInt(moment(server_date).format('HH')));
-            console.log(moment("2010-10-20 4:30","YYYY-MM-DD HH:mm").format('HH'));
-            console.log(moment(server_date,"YYYY-MM-DD HH:mm").format('HH'));
-            console.log(moment(server_date,"YYYY-MM-DD HH:mm")); 
+            // const today = server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
             // curtime['hour'] = parseInt(moment(server_date, ['hh:mm A']).format('HH'));
             // curtime['minutes'] = parseInt(moment(server_date, ['hh:mm A']).format('mm'));
             curtime['hour'] = parseInt(moment(server_date).format('HH'));
@@ -132,7 +120,6 @@ export class InstantQueueComponent implements OnInit {
             hour: curtime['hour'],
             minute: curtime['minutes']
         };
-        console.log(sttime);
         this.instantQForm.patchValue({
             dstart_time: sttime || null,
         });
@@ -212,7 +199,6 @@ export class InstantQueueComponent implements OnInit {
         };
         const instantQInput = {};
         const services = [];
-        console.log(this.servicelist)
         for (let i = 0; i < this.servicelist.length; i++) {
             services.push({ 'id': this.servicelist[i].id });
         }
@@ -220,7 +206,6 @@ export class InstantQueueComponent implements OnInit {
             instantQInput['id'] = this.qId;
         }
         const serv = [];
-        console.log(this.location)
         instantQInput['location'] = this.location;
         if (this.action !== 'edit') {
             instantQInput['services'] = serv;

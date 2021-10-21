@@ -66,7 +66,6 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
   }
   onSubmit(form_data) {
     this.disableButton = true;
-    console.log(form_data);
     // const post_data = form_data.message.trim() || '';
     if (form_data.message === '') {
       this.api_error = 'Please enter your note';

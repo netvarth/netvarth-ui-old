@@ -462,9 +462,7 @@ export class ProviderCheckinComponent implements OnInit {
         }
     }
     serchCustomers(val){
-        console.log(val);
         const dialCode = val.dialCode;
-        console.log(dialCode);
         const pN = val.e164Number.trim();
         let loginId = pN;
         if(pN.startsWith(dialCode)) {
@@ -640,7 +638,6 @@ export class ProviderCheckinComponent implements OnInit {
             virtualArray[this.virtualServicemode] = this.virtualServicenumber;
             post_data['virtualService'] = virtualArray;
         }
-        console.log(post_data);
         this.provider_services.confirmWaitlistBlock(post_data)
             .subscribe(
                 data => {
@@ -933,7 +930,6 @@ export class ProviderCheckinComponent implements OnInit {
                                 this.cuntryCode = '';
                             }
                             this.wtsapmode = this.customer_data.phoneNo;
-                            console.log('whatsappmoe..' + this.wtsapmode);
                         }
                     }
                 }
@@ -1251,7 +1247,6 @@ export class ProviderCheckinComponent implements OnInit {
                     this.is_wtsap_empty = true;
                 }
             }
-            console.log("array"+this.virtualServiceArray);
             //   post_Data['virtualService'] = this.virtualServiceArray;
             for (const i in this.virtualServiceArray) {
                 if (i === 'WhatsApp') {
@@ -1281,7 +1276,6 @@ export class ProviderCheckinComponent implements OnInit {
             this.holdenterd_partySize = this.enterd_partySize;
             post_Data['partySize'] = Number(this.holdenterd_partySize);
         }
-        console.log(JSON.stringify(post_Data));
         if (this.api_error === null) {
             post_Data['consumer'] = { id: this.customer_data.id };
             post_Data['ignorePrePayment'] = true;
@@ -1453,7 +1447,6 @@ export class ProviderCheckinComponent implements OnInit {
         //     // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
         //     // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
         //     this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
-        //     console.log(this.waitlist_for);
         // }
     }
     showCheckinButtonCaption() {

@@ -238,7 +238,7 @@ export class ProPicPopupComponent implements OnInit {
                 data => {
                     //   this.blogo = [];
                     //   this.blogo = data;
-                    //   console.log(this.blogo);
+
                     // calling function which saves the business related details to show in the header
                     //   const today = new Date();
                     //   const tday = today.toString().replace(/\s/g, '');
@@ -264,7 +264,7 @@ export class ProPicPopupComponent implements OnInit {
     uploadCoverPic(passdata) {
         this.provider_services.uploadCoverFoto(passdata).subscribe(
             data => {
-                console.log(data);
+
                 if (data) {
                     this.api_success = Messages.BPROFILE_COVER_ADD;
                     this.img_save_caption = 'Uploaded';

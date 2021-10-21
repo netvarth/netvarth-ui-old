@@ -226,8 +226,6 @@ export class CustomersListComponent implements OnInit {
             .subscribe(
               data => {
                 this.customers = data;
-                console.log(this.customers)
-                console.log(this.customers.length);
                 this.apiloading = false;
                 this.loadComplete = true;
               },

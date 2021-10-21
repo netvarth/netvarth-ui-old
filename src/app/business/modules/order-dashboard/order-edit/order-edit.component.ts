@@ -211,7 +211,6 @@ export class OrderEditComponent implements OnInit, OnDestroy {
         'eTime': timeslot[1]
 
       }
-      console.log(timeSlot);
       post_Data['timeSlot'] = timeSlot;
       post_Data['orderDate'] = this.sel_checkindate;
     }
@@ -318,7 +317,6 @@ confirmOrder(post_data) {
   this.providerservice.updateOrder(post_data)
     .pipe(takeUntil(this.onDestroy$))
     .subscribe(data => {
-      console.log(this.orderDetails);
       if (this.orderDetails && this.orderDetails.orderItem && this.orderDetails.catalog.orderType !== 'SHOPPINGLIST') {
         this.updateOrderItems().then(res => {
           this.placeOrderDisabled = false;
@@ -344,11 +342,8 @@ confirmOrder(post_data) {
     );
 }
 updateOrderItems() {
-  console.log('úpdate');
   const items = this.getOrderItems();
   const orderId = this.orderDetails.uid;
-  console.log(items);
-  console.log(orderId);
   const _this = this;
   return new Promise(function (resolve, reject) {
     _this.providerservice.updateOrderItems(orderId, items)
@@ -388,15 +383,12 @@ getOrderDetails(uid) {
       this.orderDetails = data;
       this.orderNumber = this.orderDetails.orderNumber;
       this.customerId = this.orderDetails.orderFor.id;
-      console.log(this.orderDetails)
-      console.log(this.catalogItems)
       if (this.orderDetails && this.orderDetails.orderItem && this.orderDetails.catalog.orderType !== 'SHOPPINGLIST') {
         for (const item of this.orderDetails.orderItem) {
           const itemqty: number = item.quantity;
           const itemId = item.id;
           if (this.catalogItems) {
             const orderItem = this.catalogItems.find(i => i.item.itemId === itemId);
-            console.log(orderItem)
             if (orderItem) {
               const itemObject = orderItem.item;
               for (let i = 0; i < itemqty; i++) {
@@ -447,7 +439,6 @@ getOrderDetails(uid) {
       if(this.orderDetails.timeSlot){
       this.nextAvailableTime = this.orderDetails.timeSlot.sTime + ' - ' + this.orderDetails.timeSlot.eTime;
       }
-      //console.log(this.nextAvailableTime);  Z
       this.loading = false;
     });
 }
@@ -561,7 +552,6 @@ getItemQty(item) {
   if (qty === 0) {
     this.removeItemFromCart(item);
   }
-  // console.log(qty);
   return qty;
 }
 
@@ -932,7 +922,6 @@ getOrderAvailableDatesForPickup() {
     .pipe(takeUntil(this.onDestroy$))
     .subscribe((data: any) => {
       this.store_availables = data.filter(obj => obj.isAvailable);
-      // console.log(this.store_availables);
       this.getAvailabilityByDate(this.sel_checkindate);
       const availDates = this.store_availables.map(function (a) { return a.date; });
       _this.storeAvailableDates = availDates.filter(function (elem, index, self) {
@@ -947,7 +936,6 @@ getOrderAvailableDatesForHome() {
     .pipe(takeUntil(this.onDestroy$))
     .subscribe((data: any) => {
       this.home_availables = data.filter(obj => obj.isAvailable);
-      //console.log(this.home_availables);
       this.getAvailabilityByDate(this.sel_checkindate);
       const availDates = this.home_availables.map(function (a) { return a.date; });
       _this.homeAvailableDates = availDates.filter(function (elem, index, self) {
@@ -996,7 +984,6 @@ getAvailabilityByDate(date) {
   this.sel_checkindate = date;
   const cday = new Date(this.sel_checkindate);
   const currentday = (cday.getDay() + 1);
-  //console.log(currentday);
   if (this.choose_type === 'store') {
     const storeIntervals = (this.catalog_details.pickUp.pickUpSchedule.repeatIntervals).map(Number);
     const last_date = moment().add(30, 'days');
@@ -1006,11 +993,8 @@ getAvailabilityByDate(date) {
       this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
       this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
       this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
-      //  console.log('greater than 30');
     }
     else if ((storeIntervals.includes(currentday)) && (date < thirty_date)) {
-      // console.log('less than 30'); 
-      // console.log(this.store_availables);
       const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
       if (this.store_availables&& this.store_availables.length>0) {
         const availability = this.store_availables.filter(obj => obj.date === sel_check_date);
@@ -1037,9 +1021,7 @@ getAvailabilityByDate(date) {
       this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
       this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
       this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
-      // console.log('greater than 30');
     } else if (homeIntervals.includes(currentday) && (date < thirty_date)) {
-      // console.log(this.home_availables);
       const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
       const availability = this.home_availables.filter(obj => obj.date === sel_check_date);
       if (availability.length > 0) {

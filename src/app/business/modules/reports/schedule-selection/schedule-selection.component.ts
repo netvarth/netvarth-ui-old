@@ -117,7 +117,6 @@ export class ScheduleSelectionComponent implements OnInit {
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.schedule_dataSource.data.length;
-    console.log(numSelected, numRows);
     return numSelected === numRows;
   }
 
@@ -149,7 +148,6 @@ export class ScheduleSelectionComponent implements OnInit {
             let display_schedule = [];
             display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(schedule_arr);
             schedules[i]['displayschedule'] = display_schedule;
-            console.log('schdeule..' + JSON.stringify(schedules));
             let userName = '';
             if (schedules[i].provider) {
               userName = schedules[i].provider.firstName + '' + schedules[i].provider.lastName;
@@ -217,18 +215,8 @@ export class ScheduleSelectionComponent implements OnInit {
       if (this.schedules_selected === '') {
         this.schedules_selected = 'All';
       }
-
-      console.log(this.schedules_selected.length + '=' + this.scheduleCount);
-
       this.report_service.updatedScheduleDataSelection(this.schedules_selected);
       this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
-
-      //
-      // }
-
-
-
-
     }
   }
 

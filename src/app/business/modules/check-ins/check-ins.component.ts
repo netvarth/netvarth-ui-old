@@ -507,7 +507,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.active_user.accountType === 'BRANCH') {
       this.getTeams().then((data) => {
         this.teams = data;
-        console.log(this.teams);
       });
     }
     this.image_list_popup_temp = [];
@@ -1344,11 +1343,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.selQIds = this.getActiveQIdsFromView(this.selectedView);
     }
-    console.log(this.activeUser);
-    console.log(this.selQIds);
     if ((this.selQIds && this.selQIds.length > 0) || this.activeUser) {
       if (this.activeUser) {
-        console.log(this.unassignview);
         if (this.unassignview) {
           Mfilter['provider-eq'] = null;
         } else {
@@ -1478,7 +1474,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   getHistoryWL() {
     this.loading = true;
     let Mfilter = this.setFilterForApi();
-    console.log(this.active_user);
     if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
       if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
         Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.active_user.id;
@@ -1768,7 +1763,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.today_waitlist_count = 0;
     this.history_waitlist_count = 0;
     this.future_waitlist_count = 0;
-    console.log('count', this.activeQs.length);
     if (this.time_type !== 2 && this.activeQs.length > 0 || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) {
       this.getFutureWLCount()
         .then(
@@ -1935,7 +1929,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   setFilterForApi() {
     let api_filter = {};
     const filter = this.lStorageService.getitemfromLocalStorage('wlfilter');
-    console.log(filter);
     if (filter) {
       api_filter = filter;
     }
@@ -2050,12 +2043,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       || this.filter.check_in_end_date || this.filter.check_in_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== ''
       || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
       || this.allPayStatusSelected || this.allModeSelected || this.allLabelSelected || this.allQSelected || this.allLocationSelected) {
-      console.log('fdg');
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
     }
-    console.log(this.filterapplied);
     this.loadApiSwitch('doSearch');
     this.shared_functions.setFilter();
   }
@@ -2734,7 +2725,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.filterapplied = false;
     }
-    console.log(this.filterapplied);
     this.shared_functions.setFilter();
   }
   scrollToTop() {
@@ -2864,7 +2854,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           if (type !== 'image') {
             imagePath = communications[comIndex].thumbPath;
           }
-          console.log(imagePath);
           const imgobj = new Image(
             count,
             { // modal
@@ -3079,7 +3068,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   gotoCustomerDetails(waitlist) {
     this.lStorageService.setitemonLocalStorage('wlfilter', this.setFilterForApi());
-    console.log(this.setFilterForApi());
     if (waitlist.waitlistStatus !== 'blocked') {
       this.router.navigate(['/provider/customers/' + waitlist.waitlistingFor[0].id]);
     }
@@ -3132,7 +3120,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   cardClicked(event) {
-    console.log(event);
     if (event.type === 'note') {
       this.showConsumerNote(event.waitlist);
     } else if (event.type === 'attachment') {
@@ -3155,11 +3142,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
   isuserAvailableNow() {
-    console.log(this.active_user.id);
     this.shared_services.isuserAvailableNow(this.active_user.id)
       .subscribe(data => {
         this.qAvailability = data;
-        console.log(this.qAvailability);
         if (this.qAvailability.availableNow) {
           this.instaQid = this.qAvailability.instanceQueueId;
         }
@@ -3204,7 +3189,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     } else {
       const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
-      console.log(loggedUser);
       this.locId = this.groupService.getitemFromGroupStorage('provider_selected_location');
       this.instantdialogRef = this.dialog.open(InstantQueueComponent, {
         width: '50%',

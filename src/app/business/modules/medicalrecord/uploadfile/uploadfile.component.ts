@@ -181,11 +181,9 @@ export class UploadFileComponent implements OnInit {
         if (data) {
           if (data.mrVideoAudio) {
             this.uploadFiles = data.mrVideoAudio;
-            //console.log(this.uploadFiles);
             for (let file of this.uploadFiles) {
               let type = '';
               type = file.type.split("/");
-              // console.log(type[0]);
               if (type[0] == 'video' || type[0] == 'audio' || type[0] == 'image') {
                 this.mediafiles.push(file);
               } else {

@@ -27,7 +27,6 @@ export class ProviderWaitlistCheckInConsumerNoteComponent implements OnInit {
     private dateTimeProcessor: DateTimeProcessor
 
   ) {
-    console.log(data);
     this.checkin = data.checkin;
     this.type = data.type;
     if (this.checkin.service && this.checkin.service.consumerNoteTitle) {

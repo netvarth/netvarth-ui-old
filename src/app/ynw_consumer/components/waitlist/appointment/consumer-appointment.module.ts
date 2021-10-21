@@ -14,6 +14,12 @@ import { ConsumerEmailModule } from '../../../../ynw_consumer/shared/component/c
 import { RouterModule, Routes } from '@angular/router';
 import { ServiceDetailModule } from '../../../../shared/components/service-detail/service-detail.module';
 import { JcCouponNoteModule } from '../../../../shared/modules/jc-coupon-note/jc-coupon-note.module';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 const routes: Routes = [
     { path: '', component: ConsumerAppointmentComponent},
     { path: 'payment/:id',loadChildren: ()=>import('./payment/payment.module').then(m=>m.ConsumerApptPaymentModule) },
@@ -41,6 +47,12 @@ const routes: Routes = [
         ConsumerEmailModule,
         ServiceDetailModule,
         JcCouponNoteModule,
+        MatChipsModule,
+        MatDatepickerModule,
+        MatTooltipModule,
+        MatRadioModule,
+        MatCheckboxModule,
+        MatFormFieldModule,
         [RouterModule.forChild(routes)]
     ],
     schemas: [

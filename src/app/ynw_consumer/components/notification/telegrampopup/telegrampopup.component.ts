@@ -47,7 +47,6 @@ export class TelegramPopupComponent implements OnInit {
   }
   onSubmit(form_data) {
     this.disableButton = true;
-    console.log(form_data);
 
     this.dialogRef.close(form_data);
   }

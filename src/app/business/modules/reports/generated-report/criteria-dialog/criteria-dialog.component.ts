@@ -30,7 +30,6 @@ export class CriteriaDialogComponent implements OnInit {
   ngOnInit() {
     this.time_period = projectConstantsLocal.REPORT_TIMEPERIOD;
     this.report_criteria_ip = this.report_data_service.getReportCriteriaInput();
-    console.log(this.report_criteria_ip);
     if (this.data.content) {
       this.for_view = true;
     } else {
