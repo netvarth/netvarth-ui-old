@@ -30,6 +30,11 @@ export class CheckavailabilityComponent implements OnInit {
     freeSlots: any = [];
     appointment: any = [];
     selectedDate: any;
+    today: Date;
+    minDate;
+    maxDate: Date;
+    type: string;
+    customer_data: any;
     constructor(
         public dialogRef: MatDialogRef<CheckavailabilityComponent>,
         private dateTimeProcessor: DateTimeProcessor, public shared_services: SharedServices,
@@ -49,6 +54,19 @@ export class CheckavailabilityComponent implements OnInit {
     }
 
 //    *** getting data *** 
+handleFutureDateChange(e) {
+    const tdate = e.targetElement.value;
+    const newdate = tdate.split('/').reverse().join('-');
+    const futrDte = new Date(newdate);
+    const obtmonth = (futrDte.getMonth() + 1);
+    let cmonth = '' + obtmonth;
+    if (obtmonth < 10) {
+        cmonth = '0' + obtmonth;
+    }
+    const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
+    this.sel_checkindate = seldate;
+    this.getAvailableSlotByLocationandService(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+}
 disableMinus() {
     const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();

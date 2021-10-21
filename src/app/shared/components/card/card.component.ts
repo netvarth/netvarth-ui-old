@@ -8,11 +8,11 @@ import { DateFormatPipe } from '../../pipes/date-format/date-format.pipe';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import { GroupStorageService } from '../../services/group-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as moment from 'moment';
-import { SubSink } from 'subsink';
+// import * as moment from 'moment';
+// import { SubSink } from 'subsink';
 import { SharedServices } from '../../services/shared-services';
-import { S3UrlProcessor } from '../../services/s3-url-processor.service';
-import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
+// import { S3UrlProcessor } from '../../services/s3-url-processor.service';
+// import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 @Component({
     'selector': 'app-card',
     'templateUrl': './card.component.html',
@@ -153,181 +153,12 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         public route: ActivatedRoute,
         private cdref: ChangeDetectorRef) {
 
-            this.subs.sink = this.route.queryParams.subscribe(
-                params => {
-                    console.log("params..",params);
-                    this.sel_loc = params.loc_id;
-                    this.locationName = params.locname;
-                    this.googleMapUrl = params.googleMapUrl;
-                    if (params.qid) {
-                        this.sel_queue_id = params.qid;
-                    }
-                    if(params.isFrom && params.isFrom =='providerdetail'){
-                        this.from = 'providerdetail';
-                    }
-                    this.change_date = params.cur;
-                    this.futureAppt = params.futureAppt;
-                    this.account_id = params.account_id;
-                    this.provider_id = params.unique_id;
-                    this.sel_checkindate = this.selectedDate = params.sel_date;
-                    this.hold_sel_checkindate = this.sel_checkindate;
-                    this.tele_srv_stat = params.tel_serv_stat;
-                    if (params.dept) {
-                        this.selectedDeptParam = parseInt(params.dept);
-                        this.filterDepart = true;
-                    }
-                    if (params.user) {
-                        this.selectedUserParam = params.user;
-                    }
-                    if (params.service_id) {
-                        this.selectedService = parseInt(params.service_id);
-                    }
-                    if (params.type === 'reschedule') {
-                        this.type = params.type;
-                        this.rescheduleUserId = params.uuid;
-                        this.getRescheduleApptDet();
-                    }
-                    if (params.theme) {
-                        this.theme = params.theme;
-    
-                    }
-                    if (params.customId) {
-                        this.customId = params.customId;
-                        this.businessId = this.account_id;
-                    }
-                    if (params.virtual_info) {
-                        this.virtualInfo = JSON.parse(params.virtual_info);
-    
-                    }
-                });
+         
 
 
     }
-    gets3curl() {
-        console.log('entered')
-        this.api_loading1 = true;
-        let accountS3List = 'settings,terminologies,coupon,providerCoupon,businessProfile,departmentProviders,appointmentsettings';
-        console.log("provider id",this.provider_id)
-        this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
-            null, accountS3List).subscribe(
-        
-                (accountS3s) => {
-                    console.log('checking accounts3list',accountS3List)
-                    if (accountS3s['settings']) {
-                        this.processS3s('settings', accountS3s['settings']);
-                    }
-                    if (accountS3s['appointmentsettings']) {
-                        this.processS3s('appointmentsettings', accountS3s['appointmentsettings']);
-                    }
-                    if (accountS3s['terminologies']) {
-                        this.processS3s('terminologies', accountS3s['terminologies']);
-                    }
-                    if (accountS3s['coupon']) {
-                        this.processS3s('coupon', accountS3s['coupon']);
-                    }
-                    if (accountS3s['providerCoupon']) {
-                        this.processS3s('providerCoupon', accountS3s['providerCoupon']);
-                    }
-                    if (accountS3s['departmentProviders']) {
-                        this.processS3s('departmentProviders', accountS3s['departmentProviders']);
-                    }
-                    if (accountS3s['businessProfile']) {
-                        this.processS3s('businessProfile', accountS3s['businessProfile']);
-                    }
-                    this.api_loading1 = false;
-                console.log("accounts3list",accountS3List);
 
-                }
-                
-            );
-    }
-    dateClass(date: Date): MatCalendarCellCssClasses {
-        return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
-    }
-    handleFutureDateChange(e) {
-        const tdate = e.targetElement.value;
-        const newdate = tdate.split('/').reverse().join('-');
-        const futrDte = new Date(newdate);
-        const obtmonth = (futrDte.getMonth() + 1);
-        let cmonth = '' + obtmonth;
-        if (obtmonth < 10) {
-            cmonth = '0' + obtmonth;
-        }
-        const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
-        this.sel_checkindate = seldate;
-        this.getAvailableSlotByLocationandService(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
-    }
-    processS3s(type, res) {
-        let result = this.s3Processor.getJson(res);
-        switch (type) {
-            case 'settings': {
-                this.settingsjson = result;
-                this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
-                break;
-            }
-            case 'appointmentsettings': {
-                this.appointmentSettings = result;
-                console.log("appointment data...........",this.appointmentSettings)
-                break;
-            }
-            case 'terminologies': {
-                this.terminologiesjson = result;
-                this.wordProcessor.setTerminologies(this.terminologiesjson);
-                break;
-            }
-            case 'businessProfile': {
-                this.businessjson = result;
-                if (this.businessjson.uniqueId === 128007) {
-                    this.heartfulnessAccount = true;
-                }
-                this.accountType = this.businessjson.accountType;
-                if (this.accountType === 'BRANCH') {
-                    this.getProviderDepart(this.businessjson.id);
-                }
-                this.domain = this.businessjson.serviceSector.domain;
-                if (this.domain === 'foodJoints') {
-                    this.note_placeholder = 'Item No Item Name Item Quantity';
-                    this.note_cap = 'Add Note / Delivery address';
-                } else {
-                    this.note_placeholder = '';
-                    this.note_cap = 'Add Note';
-                }
-                this.getPartysizeDetails(this.businessjson.serviceSector.domain, this.businessjson.serviceSubSector.subDomain);
-                break;
-            }
-            case 'coupon': {
-                this.s3CouponsList.JC = result;
-                if (this.s3CouponsList.JC.length > 0) {
-                    this.showCouponWB = true;
-                }
-                break;
-            }
-            case 'providerCoupon': {
-                this.s3CouponsList.OWN = result;
-                if (this.s3CouponsList.OWN.length > 0) {
-                    this.showCouponWB = true;
-                }
-                break;
-            }
-            case 'departmentProviders': {
-                let deptProviders: any = [];
-                deptProviders = result;
-                if (!this.filterDepart) {
-                    this.users = deptProviders;
-                } else {
-                    deptProviders.forEach(depts => {
-                        if (depts.users.length > 0) {
-                            this.users = this.users.concat(depts.users);
-                        }
-                    });
-                }
-                if (this.selectedUserParam) {
-                    this.setUserDetails(this.selectedUserParam);
-                }
-                break;
-            }
-        }
-    }
+ 
     getPartysizeDetails(domain, subdomain) {
         this.subs.sink = this.shared_services.getPartysizeDetails(domain, subdomain)
             .subscribe(data => {
@@ -388,28 +219,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
             });
     }
-    calculateDate(days) {
-        const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
-        const newdate = new Date(date);
-        newdate.setDate(newdate.getDate() + days);
-        const dd = newdate.getDate();
-        const mm = newdate.getMonth() + 1;
-        const y = newdate.getFullYear();
-        const ndate1 = y + '-' + mm + '-' + dd;
-        const ndate = moment(ndate1, 'YYYY-MM-DD HH:mm').format();
-        const strtDt1 = this.todaydate + ' 00:00:00';
-        const strtDt = moment(strtDt1, 'YYYY-MM-DD HH:mm').toDate();
-        const nDt = new Date(ndate);
-        if (nDt.getTime() >= strtDt.getTime()) {
-            this.sel_checkindate = ndate;
-            this.getAvailableSlotByLocationandService(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
-        }
-        const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
-        const ddd = new Date(day);
-        this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
-    }
+  
 
     getServicebyLocationId(locid, pdate) {
         this.api_loading1 = true;
@@ -671,58 +481,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
 
 
     ngOnInit() {
-        this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-        this.maxsize = 1;
-        this.step = 1;
-        this.gets3curl();
-        if (this.server_date) {
-            this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        }
-        this.today = new Date(this.today);
-        this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        this.minDate = new Date(this.minDate);
-        const dd = this.today.getDate();
-        const mm = this.today.getMonth() + 1; // January is 0!
-        const yyyy = this.today.getFullYear();
-        let cday = '';
-        if (dd < 10) {
-            cday = '0' + dd;
-        } else {
-            cday = '' + dd;
-        }
-        let cmon;
-        if (mm < 10) {
-            cmon = '0' + mm;
-        } else {
-            cmon = '' + mm;
-        }
-        const dtoday = yyyy + '-' + cmon + '-' + cday;
-        this.todaydate = dtoday;
-        this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
-        if (this.type !== 'reschedule') {
-            this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
-        }
-        this.minDate = this.todaydate;
-        if (this.change_date === 'true') {
-            const seldateChecker = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-            const seldate_checker = new Date(seldateChecker);
-            const todaydateChecker = new Date(this.todaydate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-            const todaydate_checker = new Date(todaydateChecker);
-            if (seldate_checker.getTime() === todaydate_checker.getTime()) { // if the next available date is today itself, then add 1 day to the date and use it
-                const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-                const serverdate = moment(server).format();
-                const servdate = new Date(serverdate);
-                const nextdate = new Date(seldate_checker.setDate(servdate.getDate() + 1));
-                this.sel_checkindate = this.selectedDate = nextdate.getFullYear() + '-' + (nextdate.getMonth() + 1) + '-' + nextdate.getDate();
-            }
-        }
-        const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const ddd = new Date(day);
-        this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
-        this.hold_sel_checkindate = this.sel_checkindate;       
-        console.log(this.item)
-        console.log(this.type)
-        console.log(this.teams);
+
         if(this.type == 'appointment-dashboard'){
             this.appointment = this.item;
             console.log(this.appointment)
