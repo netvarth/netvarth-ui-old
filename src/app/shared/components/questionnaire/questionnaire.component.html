@@ -149,7 +149,7 @@
                         </div>
                         <!-- for Date -->
                         <div class="col-12 disp-flex" *ngIf="getQuestion(question).fieldDataType === 'date'">
-                            <input class="form-control1" [matDatepicker]="picker" [max]="tday" [min]="minday"
+                            <input class="form-control1" [matDatepicker]="picker" [max]="getMaxdate(question)" [min]="getMindate(question)"
                                 [(ngModel)]="answers[getQuestion(question).labelName]"
                                 (dateChange)="onSubmit('inputChange')" [disabled]="buttonDisable || disableInput()"
                                 (click)="picker.open()">
@@ -258,7 +258,7 @@
                                 </div>
                                 <!-- for Date -->
                                 <div class="col-12 disp-flex" *ngIf="column.dataType === 'date'">
-                                    <input class="form-control1" [matDatepicker]="picker" [max]="tday" [min]="minday"
+                                    <input class="form-control1" [matDatepicker]="picker"  [max]="getMaxdate(question)" [min]="getMindate(question)"
                                         [(ngModel)]="dataGridColumns[getQuestion(question).labelName + '=' + column.order]"
                                         [disabled]="buttonDisable || disableInput()" (click)="picker.open()">
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
