@@ -130,7 +130,6 @@ export class AppointmentActionsComponent implements OnInit {
         this.getLabel();
         this.apiloading = true;
         this.appt = this.data.checkinData;
-        console.log(this.appt)
         if (!this.data.multiSelection) {
             this.getPos();
             this.setData();
@@ -146,7 +145,6 @@ export class AppointmentActionsComponent implements OnInit {
         this.subdomain = user.subSector;
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.active_user = user.userType;
-        console.log(this.active_user)
         this.userid = user.id;
         this.subscription = this.galleryService.getMessage().subscribe(input => {
             if (input && input.uuid) {
@@ -1062,19 +1060,13 @@ export class AppointmentActionsComponent implements OnInit {
             }
         });
         dialogrefd.afterClosed().subscribe(result => {
-            console.log("Result:", result)
-            console.log(this.appt.uid)
-            console.log(this.userid)
             if (result) {
-                console.log(this.appt.uid)
-                console.log(this.userid)
                 const post_data = {
                     'uid': this.appt.uid,
                     'provider': {
                         'id': this.userid
                     },
                 };
-                console.log(post_data)
                 this.provider_services.updateUserAppointment(post_data)
                     .subscribe(
                         data => {
@@ -1095,12 +1087,10 @@ export class AppointmentActionsComponent implements OnInit {
     }
     getInternStatus() {
         this.provider_services.getapptInternalstatList(this.appt.uid).subscribe((data: any) => {
-            console.log(data);
             this.statusList = data;
         });
     }
     changeWaitlistInternalStatus(action) {
-        console.log(action);
         if (action !== 'Rejected') {
             this.buttonClicked = true;
         }

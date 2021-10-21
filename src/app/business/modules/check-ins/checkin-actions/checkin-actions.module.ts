@@ -17,6 +17,8 @@ import { GalleryModule } from "../../../../shared/modules/gallery/gallery.module
 import { AddProviderWaitlistCheckInProviderNoteModule } from "../add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.module";
 import { AddInboxMessagesModule } from "../../../../shared/components/add-inbox-messages/add-inbox-messages.module";
 import { CommunicationService } from "../../../../business/services/communication-service";
+import { FormsModule } from "@angular/forms";
+import { ProviderWaitlistCheckInCancelModule } from "../provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.module";
 
 @NgModule({
     imports: [
@@ -34,8 +36,10 @@ import { CommunicationService } from "../../../../business/services/communicatio
         CapitalizeFirstPipeModule,
         VoiceConfirmModule,
         GalleryModule,
+        FormsModule,
         AddProviderWaitlistCheckInProviderNoteModule,
-        AddInboxMessagesModule
+        AddInboxMessagesModule,
+        ProviderWaitlistCheckInCancelModule
     ],
     exports: [
         CheckinActionsComponent

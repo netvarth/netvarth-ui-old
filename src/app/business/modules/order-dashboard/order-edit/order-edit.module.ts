@@ -9,6 +9,10 @@ import { LoadingSpinnerModule } from "../../../../shared/modules/loading-spinner
 import { OrderItemsModule } from "../order-items/order-items.module";
 import { OrderEditComponent } from "./order-edit.component";
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
+import { RouterModule, Routes } from "@angular/router";
+const routes: Routes = [
+    {path: '', component: OrderEditComponent}
+]
 @NgModule({
     declarations: [OrderEditComponent],
     exports: [OrderEditComponent],
@@ -22,6 +26,7 @@ import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery
         MatChipsModule,
         OrderItemsModule,
         FormsModule,
+        [RouterModule.forChild(routes)],
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     ]
 })
