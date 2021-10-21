@@ -285,6 +285,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   apptServices;
   private subscriptions = new SubSink();
   consumerVirtualinfo: any;
+  private subs = new SubSink();
+  email;
+  mobileNo;
+  countryCode;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -293,6 +297,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     private dialog: MatDialog,
     private searchdetailserviceobj: SearchDetailServices,
     public router: Router,
+    public route: ActivatedRoute,
     private locationobj: Location,
     private titleService: Title,
     private metaService: Meta,
@@ -357,6 +362,20 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA_CONSUMER;
     // this.getInboxUnreadCnt();
+    this.subs.sink = this.route.queryParams.subscribe(
+      params => {
+        if (params.email) {
+          this.email = params.email;
+        }
+        if (params.mobileNo) {
+          this.mobileNo = params.mobileNo;
+        }
+        if (params.countryCode) {
+          this.countryCode = params.countryCode;
+        }
+      });
+
+
     this.activaterouterobj.queryParams.subscribe(qparams => {
       if (qparams.src) {
         this.pSource = qparams.src;
@@ -2021,12 +2040,20 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   providerDetClicked(userId) {
-    // const navigationExtras: NavigationExtras = {
-    //   queryParams: {
-    //     src: 'bp'
-    //   }
-    // };
+    if(this.deptUsers[0].email || this.deptUsers[0].mobileNo || this.deptUsers[0].countryCode){
+      const queryParam = {
+        email: this.deptUsers[0].email,
+        mobileNo: this.deptUsers[0].mobileNo,
+        countryCode: this.deptUsers[0].countryCode,
+      };
+      const navigationExtras: NavigationExtras = {
+        queryParams: queryParam
+      };
+      this.routerobj.navigate([this.accountEncId, userId], navigationExtras);
+    }
+   else{
     this.routerobj.navigate([this.accountEncId, userId]);
+   }
   }
 
   cardClicked(actionObj) {

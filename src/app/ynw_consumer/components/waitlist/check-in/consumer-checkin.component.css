@@ -2246,3 +2246,7 @@ background: #16254b 0% 0% no-repeat padding-box !important;
 .c-checkin-new .card-container-custom .chk-btns-div mat-chip.notes-and-file-chip.margin-right-0{
   margin-right: 0 !important;
 }
+.pad_btns{
+  border: 1px solid #EBEDF3!important;
+  padding-top: 12px !important;
+}

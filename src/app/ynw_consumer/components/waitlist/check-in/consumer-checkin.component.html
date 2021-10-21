@@ -106,7 +106,7 @@
                                         *ngIf="bookStep === 1">
                                         <div class="panel-body no-padding">
                                             <div
-                                                class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding pull-right">
+                                                class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding pull-right" style="padding-bottom: 12px !important;">
                                                 <div
                                                     class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding check-new-group custom-border-bottom border-tp">
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding border-bt"
@@ -470,14 +470,14 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div><br>
                                             <div *ngIf="!questionnaireList.labels"
-                                                            class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding"
-                                                            style="padding: 0 12.5px !important">
+                                                            class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding pad_btns"
+                                                            style="padding: 10px 12.5px !important">
                                                             <a #modal data-toggle="modal"
                                                                 data-target="#exampleModalCenter">
                                                             </a>
-                                                            <div style="color: #9B9B9B;font-weight: 500;font-size: 10px;padding-top: 5px;">Attach your file here</div>
+                                                            <div style="color: #9B9B9B;font-weight: 500;font-size: 10px;padding-top: 5px;">Attach files and notes if any,</div>
                                                             <mat-chip-list class="btns">
                                                                 <mat-chip class="notes-and-file-chip"
                                                                     [class.mandatoryChip]="sel_ser_det.consumerNoteMandatory && type != 'waitlistreschedule'"
