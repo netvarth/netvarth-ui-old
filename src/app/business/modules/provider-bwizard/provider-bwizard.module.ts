@@ -20,7 +20,11 @@ import { DynamicFormModule } from "../../../shared/modules/dynamic-form/dynamic-
 import { AddProviderSchedulesModule } from "../../../business/modules/add-provider-schedule/add-provider-schedule.module";
 import { CapitalizeFirstPipeModule } from "../../../shared/pipes/capitalize.module";
 import { ProviderStartTourModule } from "../provider-start-tour/provider-start-tour.module";
-
+import { RouterModule, Routes } from "@angular/router";
+import { QuestionService } from "../../../shared/modules/dynamic-form/dynamic-form-question.service";
+const routes: Routes = [
+    {path: '', component: ProviderbWizardComponent}
+]
 @NgModule({
     imports: [
         CommonModule,
@@ -43,11 +47,15 @@ import { ProviderStartTourModule } from "../provider-start-tour/provider-start-t
         DynamicFormModule,
         AddProviderSchedulesModule,
         CapitalizeFirstPipeModule,
-        ProviderStartTourModule
+        ProviderStartTourModule,
+        [RouterModule.forChild(routes)]
     ],
     exports: [ProviderbWizardComponent],
     declarations: [
         ProviderbWizardComponent
+    ],
+    providers: [
+        QuestionService
     ]
 })
 export class ProviderBwizardModule {}

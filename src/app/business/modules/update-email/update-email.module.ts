@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
+import { MatDialogModule } from "@angular/material/dialog";
 import { FormMessageDisplayModule } from "../../../shared/modules/form-message-display/form-message-display.module";
 import { UpdateEmailComponent } from "./update-email.component";
 
@@ -10,7 +11,8 @@ import { UpdateEmailComponent } from "./update-email.component";
     imports: [
         CommonModule,
         FormsModule,
-        FormMessageDisplayModule
+        FormMessageDisplayModule,
+        MatDialogModule
     ]
 })
 export class UpdateEmailModule {}

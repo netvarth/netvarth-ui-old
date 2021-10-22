@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, Inject } from '@angular/core';
+import { Component, OnInit, ElementRef, Inject, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -30,7 +30,7 @@ import { AuthService } from '../../../shared/services/auth-service';
 
 })
 
-export class ProviderbWizardComponent implements OnInit {
+export class ProviderbWizardComponent implements OnInit, AfterViewInit {
 
   profileTooltip = Messages.PROFILE_TOOLTIP;
   settingsTooltip = Messages.SETTINGS_TOOLTIP;
@@ -254,10 +254,14 @@ export class ProviderbWizardComponent implements OnInit {
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
     private jaldeeTimeService: JaldeeTimeService,
-    private authService: AuthService
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
+  }
+  ngAfterViewInit() {
+    this.cdr.detectChanges();
   }
 
   ngOnInit() {
