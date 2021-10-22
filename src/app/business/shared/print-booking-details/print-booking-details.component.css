@@ -1,0 +1,13 @@
+.qnr-section {
+    font-weight: bold;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+}
+.qnrsec {
+    padding: 10px;
+}
+.section-shadow {
+    margin: 20px 10px;
+    padding: 20px !important;
+    box-shadow: 0 0 10px rgb(0 0 0 / 12%) !important;
+}
