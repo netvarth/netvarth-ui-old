@@ -1,82 +1,136 @@
 <section class="">
     <div class="card title-gb">
-      <h5 class="mgn-up-10">
-        <span class="fa fa-arrow-left pointer-cursor" (click)="gotoPrev()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <!-- <span *ngIf="showToken">Token</span>
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="gotoPrev()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <!-- <span *ngIf="showToken">Token</span>
         <span *ngIf="!showToken">Check-in</span> -->
-      </h5>
+        </h5>
     </div>
-  </section>
-  <section>
-     
-        <div class="content comn-cls checkin-details">
-                <div class="col-md-12 no-padding-small">
-                       
-                  <div class="row" >
-                    <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small">
-                            <button class="btn btn-primary float-right m2" (click)="printDetails();" > Print </button>
-                            <div class="card" id="print-section">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <td colspan="2" style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">
-                                              {{this.dateFormat.transformToDIsplayFormat(this.bookingDetails.date)}}
-                                            </td>
-                                        </tr>
-                                        <tr  colspan="2" *ngIf="bookingDetails.token"  style="text-align:center;">
-                                          <td><strong>Token # :</strong>{{bookingDetails.token}}</td>
-                                        </tr>
+</section>
+<section>
 
-                                    </thead>
-                                    <tbody>
-                                        <tr colspan="2" style="text-align:center" >
-                                            <td>{{bname}} </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Location 
-                                            </td>
-                                            <td>: {{this.bookingDetails.queue.location.place}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td> {{customer_label| capitalizeFirst}} </td>
-                                            <td>
-                                                : {{customerName}}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td> Service </td>
-                                            <td>
-                                                : {{this.bookingDetails.service.name}}
-                                            </td>
-                                        </tr>
+    <div class="content comn-cls checkin-details">
+        <div class="col-md-12 no-padding-small">
+            <div class="row">
+                <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small">
+                    <button class="btn btn-primary float-right m2" (click)="printDetails();"> Print </button>
+                    <div class="card" id="print-section">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <td colspan="2"
+                                        style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">
+                                        {{this.dateFormat.transformToDIsplayFormat(this.bookingDetails.date)}}
+                                    </td>
+                                </tr>
+                                <tr *ngIf="bookingDetails.token">
+                                    <td colspan="2" style="text-align:center;"><strong>Token #
+                                            :</strong>{{bookingDetails.token}}</td>
+                                </tr>
 
-                                    </tbody>
-                                </table>
-    <div class="text-center" *ngIf="showQR">
-        <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value" style="width: 200px;">
-        </ngx-qrcode>
-        </div>
-        <div class="qnrsec" *ngFor="let qnr of groupedQnr | keyvalue"
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="2" style="text-align:center">{{bname}} </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Location
+                                    </td>
+                                    <td>: {{this.bookingDetails.queue.location.place}}</td>
+                                </tr>
+                                <tr>
+                                    <td> {{customer_label| capitalizeFirst}} </td>
+                                    <td>
+                                        : {{customerName}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td> Service </td>
+                                    <td>
+                                        : {{this.bookingDetails.service.name}}
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <div class="text-center " *ngIf="showQR">
+                            <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value"
+                                style="width: 200px; margin:50px;">
+                            </ngx-qrcode>
+                        </div>
+                        <!-- <div class="qnrsec" *ngFor="let qnr of groupedQnr | keyvalue"
         [class.section-shadow]="getSectionCount() > 1">
         <div class="qnr-section" *ngIf="getSectionCount() > 1">{{qnr.key}}</div>
         <div class="form-group card mgn-0" *ngFor="let question of qnr.value">
                 <div>{{question.question.label|capitalizeFirst}}</div>
                 <div><i>{{getAnswer(question)}}</i></div>
             </div>
-        </div>
-      
-        
-        <!-- <div class="card" *ngFor="let question of questionanswers">
+        </div> -->
+                        <ng-container *ngIf="groupedQnr.length>0">
+                            <div class="qnrsec" *ngFor="let qnr of groupedQnr | keyvalue"
+                                [class.section-shadow]="getSectionCount() > 1">
+                                <ng-container *ngIf="getSectionCount() > 1">
+
+                                    <table class="table table-bordered " style="width:100%">
+                                        <thead style="background-color:grey">
+                                            <tr class="text-center">
+                                                <td colspan="3"> {{qnr.key}} </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let question of qnr.value">
+                                            <tr>
+                                                <td colspan="2">
+                                                    {{question.question.label|capitalizeFirst}}
+                                                </td>
+                                                <td>
+                                                    <i>{{getAnswer(question)}}</i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+
+                                </ng-container>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="groupedQnr.length==0">
+
+                            <table class="table table-bordered " style="width:100%">
+                                <thead style="background-color:grey">
+                                    <tr class="text-center">
+                                        <td colspan="3"> Details </td>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let question of questionanswers">
+                                    <tr>
+                                        <td colspan="2">
+                                            {{question.question.label|capitalizeFirst}}
+                                        </td>
+                                        <td>
+                                            <i>{{getAnswer(question)}}</i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+
+                        </ng-container>
+
+
+
+                        <!-- <div class="card" *ngFor="let question of questionanswers">
             <div>{{question.question.label|capitalizeFirst}}</div>
             <div><i>{{getAnswer(question)}}</i></div>
         </div> -->
-  
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </div>
-    </div>
-    </div>
-    </div>
-    </div>
-  </section>
-
+</section>

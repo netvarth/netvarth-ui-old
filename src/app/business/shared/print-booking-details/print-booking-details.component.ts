@@ -41,6 +41,7 @@ export class PrintBookingDetailsComponent implements OnInit {
         this.bookingId = params.id;
         this.getBookingDetails(this.bookingId).then((data)=>{
           this.bookingDetails=data;
+          console.log(this.bookingDetails.date);
           if(this.bookingDetails.questionnaire){
           this.questionnaires=this.bookingDetails.questionnaire;
           this.questionanswers=this.questionnaires.questionAnswers;
@@ -62,11 +63,14 @@ export class PrintBookingDetailsComponent implements OnInit {
   }
   groupQuestionsBySection() {
 
-      //this.groupedQnr = this.sharedFunctionObj.groupBy(this.questionanswers, 'sectionName');
+  const isSectionName=this.questionanswers.filter(obj=>obj.question.hasOwnProperty('sectionName'));
+  console.log(isSectionName);
+  if(isSectionName.length>0){
       this.groupedQnr = this.questionanswers.reduce(function (rv, x) {
         (rv[x.question['sectionName']] = rv[x.question['sectionName']] || []).push(x);
         return rv;
       }, {});
+    }
       console.log(this.groupedQnr);
   
   }
