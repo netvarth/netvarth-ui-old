@@ -8,47 +8,71 @@
     </div>
   </section>
   <section>
+     
         <div class="content comn-cls checkin-details">
                 <div class="col-md-12 no-padding-small">
-                  <div class="row" id="print-section">
+                       
+                  <div class="row" >
                     <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small">
-                            <div class="card" >
-                                <table>
+                            <button class="btn btn-primary float-right m2" (click)="printDetails();" > Print </button>
+                            <div class="card" id="print-section">
+                                <table class="table">
                                     <thead>
                                         <tr>
-                                            <td colspan="3" style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">
-    
+                                            <td colspan="2" style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">
+                                              {{this.dateFormat.transformToDIsplayFormat(this.bookingDetails.date)}}
                                             </td>
+                                        </tr>
+                                        <tr  colspan="2" *ngIf="bookingDetails.token"  style="text-align:center;">
+                                          <td><strong>Token # :</strong>{{bookingDetails.token}}</td>
                                         </tr>
 
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                Location:
-                                            </td>
-                                            <td>Thrissur</td>
+                                        <tr colspan="2" style="text-align:center" >
+                                            <td>{{bname}} </td>
                                         </tr>
                                         <tr>
-                                            <td> Name :</td>
                                             <td>
-                                                leonora
+                                                Location 
+                                            </td>
+                                            <td>: {{this.bookingDetails.queue.location.place}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td> {{customer_label| capitalizeFirst}} </td>
+                                            <td>
+                                                : {{customerName}}
                                             </td>
                                         </tr>
                                         <tr>
-
+                                            <td> Service </td>
+                                            <td>
+                                                : {{this.bookingDetails.service.name}}
+                                            </td>
                                         </tr>
 
                                     </tbody>
                                 </table>
-    <div class="dashqr" *ngIf="showQR">
+    <div class="text-center" *ngIf="showQR">
         <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value" style="width: 200px;">
         </ngx-qrcode>
         </div>
-        <div class="card" *ngFor="let question of questionanswers">
-            <div>{{question.question.label|capitalizeFirst}}</div>
-            <div>{{getAnswer(question)}}</div>
+        <div class="qnrsec" *ngFor="let qnr of groupedQnr | keyvalue"
+        [class.section-shadow]="getSectionCount() > 1">
+        <div class="qnr-section" *ngIf="getSectionCount() > 1">{{qnr.key}}</div>
+        <div class="form-group card mgn-0" *ngFor="let question of qnr.value">
+                <div>{{question.question.label|capitalizeFirst}}</div>
+                <div><i>{{getAnswer(question)}}</i></div>
+            </div>
         </div>
+      
+        
+        <!-- <div class="card" *ngFor="let question of questionanswers">
+            <div>{{question.question.label|capitalizeFirst}}</div>
+            <div><i>{{getAnswer(question)}}</i></div>
+        </div> -->
+  
+
     </div>
     </div>
     </div>
