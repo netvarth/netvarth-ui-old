@@ -92,7 +92,7 @@
                             </div>
                         </div>
                         <div class=" textitalic"
-                            *ngIf="servicedetails && servicedetails.serviceDuration && !is_donation_serv">
+                            *ngIf="servicedetails && servicedetails.serviceDuration && servicedetails.serviceDurationEnabled && !is_donation_serv">
                             <span>{{service_duration}} : {{HHMM}} </span>
                         </div>
                         <div class="outer3"

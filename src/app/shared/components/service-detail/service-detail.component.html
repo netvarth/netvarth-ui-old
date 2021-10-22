@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="outer5 service-duration"
-                *ngIf="data.serdet && data.serdet.serviceDuration && !is_donation_serv">
+                *ngIf="data.serdet && data.serdet.serviceDuration && data.serdet.serviceDurationEnabled &&!is_donation_serv">
                 <div class="duration">
                     <span>{{service_duration}} : </span>
                     <span style="font-weight: bold">
