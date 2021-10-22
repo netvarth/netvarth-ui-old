@@ -1,3 +1,4 @@
+import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatDialogModule } from "@angular/material/dialog";
@@ -12,7 +13,8 @@ import { UpdateNotificationComponent } from "./update-notification.component";
         MatInputModule,
         MatFormFieldModule,
         MatSlideToggleModule,
-        FormsModule
+        FormsModule,
+        CommonModule
     ],
     exports: [UpdateNotificationComponent],
     declarations: [UpdateNotificationComponent]

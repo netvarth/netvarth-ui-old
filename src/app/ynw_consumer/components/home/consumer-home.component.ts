@@ -1912,7 +1912,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const navigationExtras: NavigationExtras = {
       queryParams: queryParams
     }
-    this.router.navigate(['consumer', 'checkin', 'history'], navigationExtras);
+    this.router.navigate(['consumer', 'history'], navigationExtras);
   }
   gotoApptmentHistory() {
     let queryParams = {};

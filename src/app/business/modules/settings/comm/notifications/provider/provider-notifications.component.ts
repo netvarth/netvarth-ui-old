@@ -1751,7 +1751,6 @@ export class ProviderNotificationsComponent implements OnInit {
       });
       dialogref.afterClosed().subscribe(
         result => {
-alert(result);
         });
     }
   }

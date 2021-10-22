@@ -14,6 +14,7 @@ import { NgxQRCodeModule } from "ngx-qrcode2";
 import { AddInboxMessagesModule } from "../../../../shared/components/add-inbox-messages/add-inbox-messages.module";
 import { MeetingDetailsModule } from "../../meeting-details/meeting-details.module";
 import { ActionPopupModule } from "../action-popup/action-popup.module";
+import { GalleryModule } from "../../../../shared/modules/gallery/gallery.module";
 const routes: Routes = [
     { path: '', component: ApptDetailComponent }
 ];
@@ -32,7 +33,8 @@ const routes: Routes = [
         NgxQRCodeModule,
         AddInboxMessagesModule,
         MeetingDetailsModule,
-        ActionPopupModule
+        ActionPopupModule,
+        GalleryModule
     ],
     exports:[
         ApptDetailComponent

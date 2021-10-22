@@ -475,8 +475,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                 (id: any) => {
                   _this.provider_id = id;
                   _this.customId = _this.accountEncId;
-                  _this.lStorageService.setitemonLocalStorage('customId', _this.customId );
-                  console.log("fdhf"+ _this.customId);
                   _this.accEncUid = _this.accountEncId;
                   _this.accountIdExists = true;
                   _this.getproviderBprofileDetails();
@@ -881,6 +879,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(res['customId']);
     if(res['customId']){
       this.customId = res['customId'];
+      this.lStorageService.setitemonLocalStorage('customId', this.customId );
+      this.lStorageService.setitemonLocalStorage('accounttId', this.businessjson.id);
     }
     this.accEncUid = res['accEncUid'];
     if (!this.userId) {

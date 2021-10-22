@@ -8,6 +8,7 @@ import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { HeaderModule } from '../../header/header.module';
 import { LoadingSpinnerModule } from '../../loading-spinner/loading-spinner.module';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
+import { InboxServices } from '../inbox.service';
 const routes: Routes = [
   { path: '', component: InboxOuterComponent}
 ];
@@ -26,7 +27,10 @@ const routes: Routes = [
     declarations: [
       InboxOuterComponent
     ],
-    exports: [InboxOuterComponent]
+    exports: [InboxOuterComponent],
+    providers: [
+      InboxServices
+    ]
 })
 export class InboxModule {
 }

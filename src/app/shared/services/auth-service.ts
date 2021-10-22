@@ -121,7 +121,13 @@ export class AuthService {
     logoutFromJaldee() {
         const isProvider = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
         const customId = this.lStorageService.getitemfromLocalStorage('customId');
-        if (isProvider === 'false') {
+        if (isProvider === 'true') {
+            this.providerLogout().then(
+                () => {
+                    this.router.navigate(['business', 'login']);
+                }
+            )            
+        } else {
             this.consumerLogout().then(
                 () => {
                     if (customId) {
@@ -132,17 +138,6 @@ export class AuthService {
                     this.lStorageService.removeitemfromLocalStorage('customId');
                 }
             )
-        } else {
-            this.providerLogout().then(
-                () => {
-                    this.router.navigate(['business', 'login']);
-                }
-            )
-        }
-        if (this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true') {
-            this.providerLogout().then()
-        } else {
-
         }
     }
 
@@ -186,6 +181,9 @@ export class AuthService {
 
     consumerLogin(post_data, moreParams?) {
         post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
+        if (this.lStorageService.getitemfromLocalStorage('accountId')) {
+            post_data['accountId'] = this.lStorageService.getitemfromLocalStorage('accountId');
+        }
         this.sendMessage({ ttype: 'main_loading', action: true });
         const promise = new Promise((resolve, reject) => {
             this.shared_services.ConsumerLogin(post_data)

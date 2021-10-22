@@ -10,6 +10,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { CommunicationService } from '../../services/communication-service';
+import { AddInboxMessagesModule } from '../../../shared/components/add-inbox-messages/add-inbox-messages.module';
 
 const routes: Routes = [
     { path: '', component: DonationsComponent },
@@ -30,6 +31,7 @@ const routes: Routes = [
         MatTooltipModule,
         MatDatepickerModule,
         MatCheckboxModule,
+        AddInboxMessagesModule,
         [RouterModule.forChild(routes)]
     ],
     exports: [DonationsComponent],
