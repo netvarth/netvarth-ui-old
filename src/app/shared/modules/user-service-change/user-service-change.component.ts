@@ -82,6 +82,9 @@ export class UserServiceChnageComponent implements OnInit {
   userDetails:any;
   domain;
   locationsjson: any = [];
+  subdomain: any;
+  users_list: any = [];
+  
 
   constructor(
     private activated_route: ActivatedRoute,
@@ -118,17 +121,24 @@ export class UserServiceChnageComponent implements OnInit {
     this.service_dataSource.filter = filterValue;
   }
   ngOnInit() {
+  this.getProviders()
     this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
     this.getSpokenLanguages();
     this.getSpecializations();
     this.getProviderLocations();
   }
-  getProviders() {
+   getProviders() {
     let apiFilter = {};
     apiFilter = this.setFilterForApi();
     apiFilter['userType-eq'] = 'PROVIDER';
     apiFilter['status-eq'] = 'ACTIVE';
     this.provider_services.getUsers(apiFilter).subscribe(data => {
+      this.users_list = data;
+      for(let user of this.users_list){
+          if(user.userType == 'PROVIDER'){
+              this.subdomain=user.subdomainName;
+          }
+      }
       this.service_dataSource.data = this.setServiceDataSource(data);
       this.filterApplied_count = this.service_dataSource.data.length;
     });
@@ -546,7 +556,7 @@ export class UserServiceChnageComponent implements OnInit {
           subDomain = 'entertainment';
        }  
     }
-    this.provider_services.getSpecializations(this.user.sector, subDomain)
+    this.provider_services.getSpecializations(this.user.sector, this.subdomain)
       .subscribe(data => {
         this.specialization_arr = data;
         this.getProviders();
