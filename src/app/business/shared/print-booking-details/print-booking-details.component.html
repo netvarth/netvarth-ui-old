@@ -1,1 +1,58 @@
-<p>print-booking-details works!</p>
+<section class="">
+    <div class="card title-gb">
+      <h5 class="mgn-up-10">
+        <span class="fa fa-arrow-left pointer-cursor" (click)="gotoPrev()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <!-- <span *ngIf="showToken">Token</span>
+        <span *ngIf="!showToken">Check-in</span> -->
+      </h5>
+    </div>
+  </section>
+  <section>
+        <div class="content comn-cls checkin-details">
+                <div class="col-md-12 no-padding-small">
+                  <div class="row" id="print-section">
+                    <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small">
+                            <div class="card" >
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <td colspan="3" style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">
+    
+                                            </td>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                Location:
+                                            </td>
+                                            <td>Thrissur</td>
+                                        </tr>
+                                        <tr>
+                                            <td> Name :</td>
+                                            <td>
+                                                leonora
+                                            </td>
+                                        </tr>
+                                        <tr>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+    <div class="dashqr" *ngIf="showQR">
+        <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value" style="width: 200px;">
+        </ngx-qrcode>
+        </div>
+        <div class="card" *ngFor="let question of questionanswers">
+            <div>{{question.question.label|capitalizeFirst}}</div>
+            <div>{{getAnswer(question)}}</div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+  </section>
+
