@@ -4,7 +4,7 @@ import { projectConstantsLocal } from '../../constants/project-constants';
 
 @Component({
     selector: 'app-jc-coupon-note',
-    templateUrl: './jc-Coupon-note.component.html'
+    templateUrl: './jc-coupon-note.component.html'
 })
 
 export class JcCouponNoteComponent implements OnInit {

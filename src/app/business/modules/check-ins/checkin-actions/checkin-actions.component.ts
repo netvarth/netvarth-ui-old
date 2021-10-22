@@ -141,7 +141,6 @@ export class CheckinActionsComponent implements OnInit {
         this.setMinMaxDate();
         this.getLabel();
         this.checkin = this.data.checkinData;
-        console.log(this.checkin);
         if (!this.data.multiSelection) {
             this.ynwUuid = this.checkin.ynwUuid;
             this.location_id = this.checkin.queue.location.id;
@@ -546,9 +545,9 @@ export class CheckinActionsComponent implements OnInit {
         this.dialogRef.close();
         this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid, 'team'], { queryParams: { source: 'checkin' } });
     }
-    chnageLocation(){
+    chnageLocation() {
         this.dialogRef.close();
-        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid, 'updateloc'], { queryParams: { source: 'checkin' } }); 
+        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid, 'updateloc'], { queryParams: { source: 'checkin' } });
     }
     removeProvider() {
         // this.dialogRef.close();
@@ -584,7 +583,7 @@ export class CheckinActionsComponent implements OnInit {
             }
         });
     }
-    removeTeam(){
+    removeTeam() {
         let msg = '';
         msg = 'Do you want to remove the team ?';
         const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
@@ -695,7 +694,6 @@ export class CheckinActionsComponent implements OnInit {
         }
         if (this.users && this.users.length > 1 && !this.data.multiSelection && this.accountType == 'BRANCH' && (this.checkin.queue.provider.id === 0) && (this.checkin.waitlistStatus === 'arrived' || this.checkin.waitlistStatus === 'checkedIn')) {
             this.showAssign = true;
-            console.log("hi");
         }
     }
     getLabel() {
@@ -766,12 +764,6 @@ export class CheckinActionsComponent implements OnInit {
         this.dialogRef.close();
     }
     deleteLabel() {
-        // this.provider_services.deleteLabelfromCheckin(checkinId, label).subscribe(data => {
-        //     this.dialogRef.close('reload');
-        // },
-        //     error => {
-        //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        //     });
         let ids = [];
         // if (this.data.multiSelection) {
         //     ids = this.checkinsByLabel[label];
@@ -813,13 +805,10 @@ export class CheckinActionsComponent implements OnInit {
         });
         labeldialogRef.afterClosed().subscribe(data => {
             if (data) {
-                // setTimeout(() => {
-                // this.labels();
                 this.labelMap = new Object();
                 this.labelMap[data.label] = data.value;
                 this.addLabel();
                 this.getDisplayname(data.label);
-                // }, 500);
             }
             this.getLabel();
         });
@@ -832,12 +821,6 @@ export class CheckinActionsComponent implements OnInit {
         }
     }
     addLabel() {
-        // this.provider_services.addLabeltoCheckin(this.checkin.ynwUuid, this.labelMap).subscribe(data => {
-        //     this.dialogRef.close('reload');
-        // },
-        //     error => {
-        //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        //     });
         const ids = [];
         if (this.data.multiSelection) {
             for (const checkin of this.checkin) {
@@ -846,11 +829,6 @@ export class CheckinActionsComponent implements OnInit {
         } else {
             ids.push(this.checkin.ynwUuid);
         }
-        // const postData = {
-        //     'labelName': label,
-        //     'labelValue': 'true',
-        //     'uuid': ids
-        // };
         const postData = {
             'labels': this.labelMap,
             'uuid': ids
@@ -1135,12 +1113,10 @@ export class CheckinActionsComponent implements OnInit {
     }
     getInternStatus() {
         this.provider_services.getInternalstatList(this.ynwUuid).subscribe((data: any) => {
-            console.log(data);
             this.statusList = data;
         });
     }
     changeWaitlistInternalStatus(action) {
-        console.log(action);
         if (action !== 'CANCEL') {
             // this.dialogRef.close();
             this.buttonClicked = true;
@@ -1165,9 +1141,9 @@ export class CheckinActionsComponent implements OnInit {
     }
     getProviderLocation() {
         this.provider_services.getProviderLocations()
-          .subscribe(
-            (data: any) => {
-              this.location = data;
-            });
-      }
+            .subscribe(
+                (data: any) => {
+                    this.location = data;
+                });
+    }
 }
