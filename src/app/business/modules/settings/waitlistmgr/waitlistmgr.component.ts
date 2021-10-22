@@ -83,7 +83,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     calcMode = 'conventional';
     est_time;
     numberofpersons;
-    ngOnInit() {
+    ngOnInit() { 
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {

@@ -111,7 +111,7 @@ export class CardComponent implements OnInit, AfterViewChecked {
                     } else {
                         this.timingCaption = 'Est Wait Time';
                         this.timings = this.getTimeToDisplay(this.service.serviceAvailability['queueWaitingTime']);
-                    }
+                    } 
                 }
                 break;
             case 'appt':

@@ -365,7 +365,7 @@ export class BranchUserDetailComponent implements OnInit {
             post_data1['deptId'] = input.selectedDepartment;
             post_data1['bProfilePermitted'] = input.bProfilePermitted;
             console.log(this.selectedsubDomain);
-           // if (this.selectedsubDomain[0] && this.selectedsubDomain[0].id) {
+            // if (this.selectedsubDomain[0] && this.selectedsubDomain[0].id) {
             //    post_data1['subdomain'] = this.selectedsubDomain[0].id;
            // }
         }

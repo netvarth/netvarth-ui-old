@@ -2257,4 +2257,4 @@ export class ProviderServices {
     const url = 'provider/settings/waitlistMgr/personsAhead/' +status;
     return this.servicemeta.httpPut(url);
   }
-}
+} 

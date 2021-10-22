@@ -1141,7 +1141,7 @@ export class QuestionnaireComponent implements OnInit {
     if (value === false) {
       return 'No';
     }
-  }
+  } 
    getMaxdate(data) {
     let date;
     console.log("tday"+this.tday);

@@ -548,7 +548,7 @@ export class ServiceViewComponent implements OnInit {
               this.wordProcessor.apiErrorAutoHide(this, error);
               this.loading = false;
             });
-      },
+      }, 
         error => {
           this.wordProcessor.apiErrorAutoHide(this, error);
           this.loading = false;
