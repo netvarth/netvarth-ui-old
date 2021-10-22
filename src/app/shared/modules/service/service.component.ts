@@ -164,6 +164,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     tool_code;
     showPrice;
     priceDescription = false;
+    showServiceduration = true;
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
@@ -221,6 +222,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                 if (this.service_data.serviceType === 'virtualService') {
                                     this.is_virtual_serv = true;
                                 }
+                                this.showServiceduration = this.service_data.serviceDurationEnabled;
                                 this.preInfoEnabled = this.service_data.preInfoEnabled;
                                 this.postInfoEnabled = this.service_data.postInfoEnabled;
                                 this.preInfoTitle = this.service_data.preInfoTitle || '';
@@ -579,6 +581,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 form_data.priceDynamic = (!form_data.priceDynamic || form_data.priceDynamic === false) ? false : true;
                 const duration = this.shared_service.getTimeinMin(this.duration);
                 form_data.serviceDuration = duration;
+                form_data.serviceDurationEnabled = this.showServiceduration;
             }
             if (this.departmentId) {
                 form_data['department'] = this.departmentId;

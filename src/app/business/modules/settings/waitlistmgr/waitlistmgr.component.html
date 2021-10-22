@@ -73,8 +73,11 @@
                                 </div>
                             </div>
                             <div class="mgn-bt-5">
-                                <i class="fa fa-check"></i>
-                                <span class="mgn-lt-5" style="font-weight: bold;"> Number of persons ahead </span>
+                                <mat-checkbox (change)="setnumberofPersons($event)" [checked]="numberofpersons">
+                                    Number of persons ahead
+                                    </mat-checkbox>
+                                <!-- <i class="fa fa-check"></i>
+                                <span class="mgn-lt-5" style="font-weight: bold;"> Number of persons ahead </span> -->
                             </div>
                             <div class="mgn-bt-5">
                                 <span>Sequence/Priority number in queue</span>

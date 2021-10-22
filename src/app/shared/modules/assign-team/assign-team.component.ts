@@ -400,6 +400,8 @@ export class AssignTeam implements OnInit {
         subDomain = 'dentists';
       } else if (this.user.subSector === 'alternateMedicineHosp') {
         subDomain = 'alternateMedicinePractitioners';
+      } else if (this.user.subSector === 'hoslisticHealth') {
+        subDomain = 'physiciansSurgeons';
       }
     } else if (this.user.sector === 'personalCare') {
       subDomain = 'beautyCare';

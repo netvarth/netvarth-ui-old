@@ -1,14 +1,18 @@
+import { CommonModule } from "@angular/common";
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { MatDialogModule } from "@angular/material/dialog";
 import { NgxQRCodeModule } from "ngx-qrcode2";
-import { ShareButtonModule } from "ngx-sharebuttons/button";
+import { ShareButtonsModule } from "ngx-sharebuttons/buttons";
+import { ShareIconsModule } from "ngx-sharebuttons/icons";
 import { ViewRxComponent } from "./view-rx.component";
 
 @NgModule({
     imports: [
         MatDialogModule,
-        ShareButtonModule,
-        NgxQRCodeModule
+        ShareButtonsModule,
+        ShareIconsModule,
+        NgxQRCodeModule,
+        CommonModule
     ],
     declarations: [
         ViewRxComponent

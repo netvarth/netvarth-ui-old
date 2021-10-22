@@ -322,6 +322,11 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
           </ngb-timepicker>
         </ng-container>
       </div>
+      <div *ngIf="subdomainsettings.serviceBillable && !is_donation">
+      <mat-checkbox  [checked]="showServiceduration">
+       Show service duration
+        </mat-checkbox>
+      </div>
       <div class="col-md-6" *ngIf="showResources">
         <div class="form-group" *ngIf="!is_donation">
           <mat-form-field>

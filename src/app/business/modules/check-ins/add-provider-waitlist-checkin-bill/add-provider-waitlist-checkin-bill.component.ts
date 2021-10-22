@@ -22,6 +22,7 @@ import * as moment from 'moment';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { ConfirmPaymentBoxComponent } from '../../../../business/shared/confirm-paymentbox/confirm-paymentbox.component';
 import { JcCouponNoteComponent } from '../../../../shared/modules/jc-coupon-note/jc-coupon-note.component';
+import { ConfirmPaymentLinkComponent } from '../../../../../../src/app/business/shared/confirm-paymentlink/confirm-paymentlink.component';
 
 export interface ItemServiceGroup {
   type: string;
@@ -1489,17 +1490,17 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
   }
   paymentlink() {
-    // this.dialog.open(ConfirmPaymentLinkComponent, {
-    //   width: '50%',
-    //   panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-    //   disableClose: true,
-    //   data: {
-    //     emailId: this.emailId,
-    //     mobilenumber: this.mobilenumber,
-    //     uuid: this.uuid,
-    //     countryCode: this.countryCode
-    //   }
-    // });
+    this.dialog.open(ConfirmPaymentLinkComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        emailId: this.emailId,
+        mobilenumber: this.mobilenumber,
+        uuid: this.uuid,
+        countryCode: this.countryCode
+      }
+    });
   }
 
   changeDate(time) {

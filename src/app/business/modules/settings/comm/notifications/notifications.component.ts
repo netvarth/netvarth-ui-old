@@ -63,7 +63,7 @@ export class NotificationsComponent implements OnInit {
     }
     gotoProvider() {
         let title;
-        if (this.sub_domain === ('hospital' || 'dentalHosp' || 'alternateMedicineHosp' || 'veterinaryhospital' ) && this.accountType === 'BRANCH' && this.isMultilevel) {
+        if (this.sub_domain === ('hospital' || 'dentalHosp' || 'alternateMedicineHosp' || 'veterinaryhospital' || 'hoslisticHealth') && this.accountType === 'BRANCH' && this.isMultilevel) {
             title = 'Hospital';
         } else {
             title = 'Provider';
