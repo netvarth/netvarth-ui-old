@@ -71,7 +71,7 @@ export class PrintBookingDetailsComponent implements OnInit {
         return rv;
       }, {});
     }
-      console.log(this.groupedQnr);
+      
   
   }
   qrCodegeneration(valuetogenerate) {

@@ -15,41 +15,37 @@
                 <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small">
                     <button class="btn btn-primary float-right m2" (click)="printDetails();"> Print </button>
                     <div class="card" id="print-section">
-                        <table class="table">
+                        <table class="table" *ngIf="bookingDetails" >
                             <thead>
-                                <tr>
+                                <!-- <tr>
                                     <td colspan="2"
                                         style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">
                                         {{this.dateFormat.transformToDIsplayFormat(this.bookingDetails.date)}}
                                     </td>
-                                </tr>
+                                </tr> -->
                                 <tr *ngIf="bookingDetails.token">
-                                    <td colspan="2" style="text-align:center;"><strong>Token #
+                                    <td colspan="2" align="center"><strong>Token #
                                             :</strong>{{bookingDetails.token}}</td>
                                 </tr>
 
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td colspan="2" style="text-align:center">{{bname}} </td>
+                                    <td colspan="2" align="center">{{bname}} </td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        Location
+                                    <td align="center"  colspan="2">
+                                        Location :: {{this.bookingDetails.queue.location.place}}
                                     </td>
-                                    <td>: {{this.bookingDetails.queue.location.place}}</td>
+                                    
                                 </tr>
                                 <tr>
-                                    <td> {{customer_label| capitalizeFirst}} </td>
-                                    <td>
-                                        : {{customerName}}
-                                    </td>
+                                    <td colspan="2" align="center"> {{customer_label| capitalizeFirst}}: {{customerName}} </td>
+                                   
                                 </tr>
                                 <tr>
-                                    <td> Service </td>
-                                    <td>
-                                        : {{this.bookingDetails.service.name}}
-                                    </td>
+                                    <td colspan="2" align="center"> Service : {{this.bookingDetails.service.name}} </td>
+                                    
                                 </tr>
 
                             </tbody>
@@ -67,23 +63,23 @@
                 <div><i>{{getAnswer(question)}}</i></div>
             </div>
         </div> -->
-                        <ng-container *ngIf="groupedQnr.length>0">
+                        <ng-container *ngIf="groupedQnr">
                             <div class="qnrsec" *ngFor="let qnr of groupedQnr | keyvalue"
                                 [class.section-shadow]="getSectionCount() > 1">
                                 <ng-container *ngIf="getSectionCount() > 1">
 
-                                    <table class="table table-bordered " style="width:100%">
+                                    <table  style="width:100%" border="1" border-color='#eee'>
                                         <thead style="background-color:grey">
-                                            <tr class="text-center">
-                                                <td colspan="3"> {{qnr.key}} </td>
+                                            <tr style="text-align:center">
+                                                <td colspan="2"> {{qnr.key}} </td>
                                             </tr>
                                         </thead>
                                         <tbody *ngFor="let question of qnr.value">
                                             <tr>
-                                                <td colspan="2">
+                                                <td style="width:60%">
                                                     {{question.question.label|capitalizeFirst}}
                                                 </td>
-                                                <td>
+                                                <td style="width:40%">
                                                     <i>{{getAnswer(question)}}</i>
                                                 </td>
                                             </tr>
@@ -94,6 +90,8 @@
                                 </ng-container>
                             </div>
                         </ng-container>
+            <!-- {{}} -->
+           
                         <ng-container *ngIf="groupedQnr.length==0">
 
                             <table class="table table-bordered " style="width:100%">
