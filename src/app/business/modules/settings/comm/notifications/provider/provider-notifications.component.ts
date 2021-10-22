@@ -213,7 +213,6 @@ export class ProviderNotificationsComponent implements OnInit {
       for (const notifyList of notificationList) {
         if (notifyList.eventType && notifyList.eventType === 'WAITLISTADD') {
           if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
-            // console.log(this.SelchkinNotify);
             this.SelchkinNotify = false;
           }
           if (notifyList.email && notifyList.email.length !== 0) {
@@ -1190,7 +1189,6 @@ export class ProviderNotificationsComponent implements OnInit {
         chekincancelMode = 'UPDATE';
       }
     }
-    // console.log(this.SelchkincnclNotify);
     if (!this.SelchkincnclNotify) {
       this.em1_arr = [];
       this.ph1_arr = [];

@@ -1244,7 +1244,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (Mfilter['schedule-eq'] && (this.filteredSchedule.length === 0 || this.filter.schedule === 'all')) {
       delete Mfilter['schedule-eq'];
     }
-    console.log('hisory', this.active_user);
     if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
       if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
         Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.active_user.id;
@@ -1292,7 +1291,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.selQIds && this.selQIds.length > 0 || this.activeUser) {
       if (this.activeUser) {
-        console.log(this.unassignview);
         if (this.unassignview) {
           Mfilter['provider-eq'] = null;
         } else {
@@ -1443,7 +1441,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   getHistoryAppointments() {
-    console.log("in history");
     let Mfilter = this.setFilterForApi();
     if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
       if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
@@ -1537,11 +1534,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   setFilterForApi() {
     let api_filter = {};
     const filter = this.lStorageService.getitemfromLocalStorage('filter');
-    console.log(filter);
     if (filter) {
       api_filter = filter;
     }
-    console.log(api_filter);
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;
     }
@@ -1615,7 +1610,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['gender-eq'] = this.genderList.toString();
       }
     }
-    if (this.time_type !== 3) {
+    if (this.time_type) {
       if (this.selected_location && this.selected_location.id) {
         api_filter['location-eq'] = this.selected_location.id;
       }
@@ -2256,8 +2251,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   handleViewSel(view) {
     this.unassignview = false;
-    console.log("view Seslection");
-    console.log(view);
     this.activeUser = null;
     const tempUser = {};
     tempUser['firstName'] = 'All';
@@ -2269,7 +2262,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!view.userType) {
       this.initView(this.selectedView, 'reloadAPIs', 'view');
     } else {
-      console.log('i am a user');
       this.handleUserSelection(view);
     }
   }
@@ -2369,7 +2361,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(() => {
       this.qloading = false;
     }, 1000);
-    console.log("TimeType:" + this.time_type);
     if (this.time_type === 1) {
       this.groupService.setitemToGroupStorage('appt_selQ', this.selQIds);
     } else if (this.time_type === 2) {
@@ -2630,7 +2621,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   onButtonAfterHook() { }
   gotoCustomerDetails(appt) {
     this.lStorageService.setitemonLocalStorage('filter', this.setFilterForApi());
-    console.log(this.setFilterForApi());
     if (appt.apptStatus !== 'blocked') {
       this.router.navigate(['/provider/customers/' + appt.appmtFor[0].id]);
     }
@@ -2639,7 +2629,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     event.stopPropagation();
   }
   addCustomerDetails(appt) {
-    console.log(appt);
     let virtualServicemode;
     let virtualServicenumber;
     if (appt.service.serviceType == 'virtualService') {
@@ -2779,7 +2768,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return age[0];
   }
   cardClicked(event) {
-    console.log(event);
     if (event.type === 'note') {
       this.showConsumerNote(event.waitlist);
     } else if (event.type === 'attachment') {

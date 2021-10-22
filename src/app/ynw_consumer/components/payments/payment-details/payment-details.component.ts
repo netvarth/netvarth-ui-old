@@ -100,14 +100,12 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
         this.shared_services.getAppointmentByConsumerUUID(uid, accountId).subscribe(
             (data) => {
                 this.waitlist = data;
-                console.log(this.waitlist);
                 if (this.waitlist.provider) {
                     this.provider_name = this.waitlist.providerAccount.businessName + ',' + ((this.waitlist.provider.businessName) ?
                         this.waitlist.provider.businessName : this.waitlist.provider.firstName + ' ' + this.waitlist.provider.lastName);
                 } else {
                     this.provider_name = this.waitlist.providerAccount.businessName
                 }
-                console.log(this.provider_name);
                 this.api_loading = false;
             },
         );
@@ -116,14 +114,12 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
         this.shared_services.getCheckinByConsumerUUID(uid, accountId).subscribe(
             (data) => {
                 this.waitlist = data;
-                console.log(this.waitlist);
                 if (this.waitlist.provider) {
                     this.provider_name = this.waitlist.providerAccount.businessName + ',' + ((this.waitlist.provider.businessName) ?
                         this.waitlist.provider.businessName : this.waitlist.provider.firstName + ' ' + this.waitlist.provider.lastName);
                 } else {
                     this.provider_name = this.waitlist.providerAccount.businessName
                 }
-                console.log(this.provider_name);
                 this.api_loading = false;
             },
         );
@@ -132,14 +128,12 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
         this.shared_services.getOrderByConsumerUUID(uid, accountId).subscribe(
             (data) => {
                 this.waitlist = data;
-                console.log(this.waitlist);
                 if (this.waitlist.provider) {
                     this.provider_name = this.waitlist.providerAccount.businessName + ',' + ((this.waitlist.provider.businessName) ?
                         this.waitlist.provider.businessName : this.waitlist.provider.firstName + ' ' + this.waitlist.provider.lastName);
                 } else {
                     this.provider_name = this.waitlist.providerAccount.businessName
                 }
-                console.log(this.provider_name);
                 this.api_loading = false;
             },
         );

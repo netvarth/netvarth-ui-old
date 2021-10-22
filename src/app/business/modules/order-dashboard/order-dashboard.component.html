@@ -5,19 +5,6 @@
   <div class="col-md-9 col-lg-9 col-sm-12 col-xs-12">
     <div class="disp-flex count-section">
       <div class="card boxshadow-style mgn-rt-10">
-       <!-- <div>Total orders</div>
-        <div class="order-count"> {{(todayOrdersCount + futureOrdersCount) ? todayOrdersCount + futureOrdersCount : 0}}
-        </div>
-        <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20">
-          <div class="col-md-4 col-xs-6 col-sm-6 no-padding">
-            <div> Today</div>
-            <div class="order-count red"> {{todayOrdersCount}}</div>
-          </div>
-          <div class="col-md-4 col-xs-6 col-sm-6 no-padding">
-            <div> Future</div>
-            <div class="order-count red"> {{futureOrdersCount}}</div>
-          </div>
-        </div> -->
         <div class="quik_link">
           Quick Links
         </div>
@@ -82,86 +69,7 @@
                 <i class="icon-filter-one" (click)="showFilter()">
                 </i>
               </a>
-              <div>
-                <!-- <aside class="filterSidebar" *ngIf="showFilterSection">
-                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter" [ngStyle]="{'height.px': filterHeight}">
-                    <div class="filterClosebtn" [class.pd-btm-30]="!filterapplied">
-                      <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
-                        (click)="hideFilterSidebar()" [matTooltip]="'Close filter window'"></i>
-                      <span *ngIf="filterapplied" class="clearFilter" (click)="clearFilter()"
-                        [matTooltip]="'Reset filter'"> Clear All</span>
-                    </div>
-                    <ul class="sidebar-menu">
-                      <div class="filterTextinput">
-                        <li class="filterli">
-                          <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                            class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
-                        </li>
-                      </div>
-                      <div class="filterTextinput">
-                        <li class="filterli">
-                          <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
-                            class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
-                        </li>
-                      </div>
-                      <div class="filterTextinput">
-                        <li class="filterli">
-                          <input type="text" autocomplete="off" [(ngModel)]="filter.patientId" (blur)="doSearch()"
-                            (keyup)="keyPressed($event)" class="filterTextbox"
-                            placeholder="{{customerIdTooltip | capitalizeFirst}}">
-                        </li>
-                      </div>
-                      <div class="filterTextinput">
-                        <li class="filterli">
-                          <input type="text" id="txt_mobile" [(ngModel)]="filter.orderNumber" (blur)="doSearch()"
-                            (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Order Id">
-                        </li>
-                      </div>
-
-                      <div>
-                        <label class="filterHeaders"> Order Status</label>
-                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                        </li>
-                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                          *ngFor="let status of orderStatusFilter">
-                          <mat-checkbox [checked]="orderStatuses.indexOf(status) !== -1"
-                            (change)="setFilterDataCheckbox('orderStatus', status)">
-                            {{status}}</mat-checkbox>
-                        </li>
-                      </div>
-                      <div>
-                        <label class="filterHeaders">Order booking mode</label>
-                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                        </li>
-                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                          <mat-checkbox [checked]="allModeSelected"
-                            (change)="setFilterDataCheckbox('orderMode', 'all', $event)">
-                            All</mat-checkbox>
-                        </li>
-                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                          *ngFor="let mode of ordertypeModes">
-                          <mat-checkbox [checked]="orderModes.indexOf(mode.mode) !== -1"
-                            (change)="setFilterDataCheckbox('orderMode', mode.mode, $event)">
-                            {{mode.value}}</mat-checkbox>
-                        </li>
-                      </div>
-                      <div *ngIf="providerLabels.length > 0">
-                        <label class="filterHeaders">Labels</label>
-                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                          <mat-checkbox [checked]="allLabelSelected" (change)="setLabelFilter('all', $event)">
-                            All</mat-checkbox>
-                        </li>
-                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                          *ngFor="let lbl of providerLabels">
-                          <mat-checkbox
-                            [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(true) !== -1"
-                            (change)="setLabelFilter(lbl, $event)">
-                            {{lbl.displayName}}</mat-checkbox>
-                        </li>
-                      </div>
-                    </ul>
-                  </section>
-                </aside> -->
+              <div>                
                 <aside class="filterSidebar newfilter-sidebar" *ngIf="showFilterSection">
                   <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
                     <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">

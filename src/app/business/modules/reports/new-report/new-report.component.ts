@@ -199,7 +199,6 @@ export class NewReportComponent implements OnInit {
     });
   }
   setReportData(res) {
-    console.log(JSON.stringify(res));
     if (Object.keys(res).length !== 0) {
       switch (this.report_type) {
         case 'payment': {
@@ -704,7 +703,6 @@ export class NewReportComponent implements OnInit {
         }
         this.filterparams['donor'] = donorName;
         if (this.filterparams['donor'] == '' || this.filterparams['donor'] == undefined) {
-          console.log('delete dontion' + this.donation_donorFirstName);
           delete filter['donor'];
         } else {
           filter['donor-like'] = donorName;
@@ -833,7 +831,6 @@ export class NewReportComponent implements OnInit {
     });
   }
   generateUserReportByCriteria(payload) {
-    console.log(payload.filter);
     return new Promise((resolve, reject) => {
       this.provider_services.generateUserReport(payload.filter)
         .subscribe(
@@ -880,7 +877,6 @@ export class NewReportComponent implements OnInit {
     }
   }
   goToSelectionPage(type, selected_id) {
-    console.log(selected_id);
     this.setSelectedData().then(res => {
       this.report_data_service.storeSelectedValues(res);
       if (type === 'service') {

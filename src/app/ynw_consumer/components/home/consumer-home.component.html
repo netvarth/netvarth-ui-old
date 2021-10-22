@@ -280,16 +280,17 @@
                                                 mat-flat-button class="btns rupee-font"
                                                 (click)="viewBill(oder,'order',$event)">Pay
                                                 {{oder.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
-                                            <!-- <span
-                                                *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0"
-                                                class="amtPaid">Paid
-                                                {{(oder.bill && oder.bill.amountPaid ? (oder.bill.amountPaid |
-                                                currency:'&#8377;') : (oder.advanceAmountPaid |
-                                                currency:'&#8377;'))}}</span> &nbsp;&nbsp; -->
+                                       
                                                 <span
-                                                *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0"
+                                                *ngIf="oder.bill && oder.bill.amountPaid > 0"
                                                 class="amtPaid">Paid
-                                                {{getOrderPaidBill(oder.bill)| currency:'&#8377;'}}</span> &nbsp;&nbsp;
+                                                {{oder.bill.amountPaid | currency:'&#8377;'}}</span>
+                                                <span
+                                                *ngIf="oder.bill && !oder.bill.amountPaid && oder.advanceAmountPaid > 0"
+                                                class="amtPaid">Paid
+                                                {{oder.advanceAmountPaid | currency:'&#8377;'}}</span>
+                                                
+                                                &nbsp;&nbsp;
                                             <span *ngIf="oder.bill && oder.bill.refundedAmount >0" style="color:green">
                                                 Refunded </span>
                                             <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
@@ -345,7 +346,9 @@
                                                     </button>
                                                     <button mat-menu-item *ngIf="oder.orderStatus !='Cancelled'"
                                                         (click)="rateService(oder,'order')">
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>Rate Your Order                                                      
+                                                        <i class="fa fa-star-o" aria-hidden="true"></i>Rate Your Order
+                                                        <!-- <span class="rate-service" [class.rated]="isRated(oder)"
+                                                            (click)="rateService(oder,'order')"><i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}</span> -->
                                                     </button>
                                                     <button mat-menu-item (click)="addWaitlistMessage(oder,'orders')">
                                                         <i class="fa chat-icon"></i>
@@ -387,12 +390,16 @@
                                                     mat-flat-button class="btns rupee-font"
                                                     (click)="viewBill(oder,'order',$event)">Pay
                                                     {{oder.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
-                                                <span
+                                                    <span
+                                                *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0"
+                                                class="amtPaid">Paid
+                                                {{getOrderPaidBill(oder.bill)| currency:'&#8377;'}}</span>&nbsp;&nbsp;
+                                                <!-- <span
                                                     *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0"
                                                     class="amtPaid">Paid
                                                     {{(oder.bill && oder.bill.amountPaid ? (oder.bill.amountPaid |
                                                     currency:'&#8377;') : (oder.advanceAmountPaid |
-                                                    currency:'&#8377;'))}}</span> &nbsp;&nbsp;
+                                                    currency:'&#8377;'))}}</span> &nbsp;&nbsp; -->
                                                 <span *ngIf="oder.bill && oder.bill.refundedAmount >0"
                                                     style="color:green"> Refunded </span>
                                                 <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
@@ -498,12 +505,18 @@
                                                 mat-flat-button class="btns rupee-font"
                                                 (click)="viewBill(oder,'order',$event)">Pay
                                                 {{oder.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
-                                            <span
+                                            <!-- 
+                                                <span
                                                 *ngIf="oder.bill && oder.bill.amountPaid > 0 || oder.advanceAmountPaid > 0"
                                                 class="amtPaid">Paid
                                                 {{(oder.bill && oder.bill.amountPaid ? (oder.bill.amountPaid |
                                                 currency:'&#8377;') : (oder.advanceAmountPaid |
-                                                currency:'&#8377;'))}}</span> &nbsp;&nbsp;
+                                                currency:'&#8377;'))}}</span>
+                                                  -->
+                                                 <span
+                                                *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0"
+                                                class="amtPaid">Paid
+                                                {{getOrderPaidBill(oder.bill)| currency:'&#8377;'}}</span>&nbsp;&nbsp;
                                             <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                 <button mat-flat-button class="btns"
                                                     *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
@@ -600,12 +613,17 @@
                                                     mat-flat-button class="btns rupee-font"
                                                     (click)="viewBill(oder,'order',$event)">Pay
                                                     {{oder.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
-                                                <span
+                                                <!-- <span
                                                     *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0"
                                                     class="amtPaid">Paid
                                                     {{(oder.bill && oder.bill.amountPaid ? (oder.bill.amountPaid |
                                                     currency:'&#8377;') : (oder.advanceAmountPaid |
-                                                    currency:'&#8377;'))}}</span> &nbsp;&nbsp;
+                                                    currency:'&#8377;'))}}</span> -->
+                                                    <span
+                                                    *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0"
+                                                    class="amtPaid">Paid
+                                                    {{getOrderPaidBill(oder.bill)| currency:'&#8377;'}}</span>
+                                                     &nbsp;&nbsp;
                                                 <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                     <button mat-flat-button class="btns"
                                                         *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"

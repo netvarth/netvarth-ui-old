@@ -40,7 +40,6 @@ export class UserReportComponent implements OnInit {
         this.params = JSON.parse(params.filter);
         if (this.params.filter) {
           this.filterCriteria = this.params.filter;
-          console.log(JSON.stringify(this.filterCriteria['date-ge']));
           if (this.filterCriteria['date-eq']) {
             this.daterange = false;
             this.date = this.getDateFormat(new Date(this.filterCriteria['date-eq']));
@@ -76,8 +75,6 @@ export class UserReportComponent implements OnInit {
   userDetailsReport(row) {
     const rowDetails = JSON.stringify(row);
     const filterparams = JSON.stringify(this.filterCriteria);
-    console.log(rowDetails);
-    console.log(filterparams);
     this.router.navigate(['provider', 'reports', 'user-details'], { queryParams: { data: rowDetails, params: filterparams } });
   }
 }

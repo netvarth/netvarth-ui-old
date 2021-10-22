@@ -38,7 +38,6 @@ export class SpentListComponent implements OnInit {
         this.subs.sink=this.consumer_services.getConsumerCashspentWithIdDetails(this.data.cashid)
     .subscribe(
       data => {
-       console.log(data);
        this.cashspentInfo = data;
        this.loading = false;
       },
@@ -52,8 +51,6 @@ export class SpentListComponent implements OnInit {
       this.subs.sink=this.consumer_services.getConsumerTotalCashspent()
   .subscribe(
     (data:any) => {
-      console.log('hai');
-     console.log(data);
      this.cashspentInfo = data;
     // this.loading = false;
     },

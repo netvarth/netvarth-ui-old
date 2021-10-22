@@ -220,7 +220,6 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                     this.getPaymentModes();
                     const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
                     this.customer_countrycode = credentials.countryCode;
-                    console.log("credentioooo"+credentials.countryCode);
                     // if(this.customer_countrycode == '+91'){
                     //     this.getPaymentModes();
                     // } else {
@@ -440,7 +439,6 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                     }
                  }
                
-                console.log(this.paymode);
                 if(this.razorpayEnabled ||this.paytmEnabled){
                     this.paymode = true;
                 }
@@ -618,7 +616,6 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
             this.cdRef.detectChanges();
     }
     transactionCompleted(response) {
-        console.log("response"+response)
         if(response.STATUS == 'TXN_FAILURE'){
             this.isClickedOnce=false;
             this.loadingPaytm = false;

@@ -116,7 +116,6 @@ export class UploadPrescriptionComponent implements OnInit {
       .subscribe((data) => {
         if (Object.keys(data).length !== 0 && data.constructor === Object) {
           this.uploadImages = data['prescriptionsList'];
-          console.log(data);
           this.image_list_popup = [];
           for (const pic of this.uploadImages) {
             const imgdet = { 'name': pic.originalName, 'keyName': pic.keyName, 'size': pic.imageSize, 'view': true, 'url': pic.url, 'type': pic.type };
@@ -128,7 +127,6 @@ export class UploadPrescriptionComponent implements OnInit {
               });
             this.image_list_popup.push(imgobj);
           }
-          console.log(this.selectedMessage.files);
         }
       },
         error => {
@@ -136,8 +134,6 @@ export class UploadPrescriptionComponent implements OnInit {
         });
   }
   openImageModalRow(image: Image) {
-    console.log(image);
-    console.log(this.image_list_popup[0]);
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
@@ -157,11 +153,9 @@ export class UploadPrescriptionComponent implements OnInit {
           this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
         } else {
           this.selectedMessage.files.push(file);
-          console.log(this.selectedMessage.files);
           const reader = new FileReader();
           reader.onload = (e) => {
             this.selectedMessage.base64.push(e.target['result']);
-            console.log(this.selectedMessage.base64[0]);
             this.image_list_popup = [];
             const imgobj = new Image(0,
               { // modal
@@ -193,15 +187,12 @@ export class UploadPrescriptionComponent implements OnInit {
       });
       this.imagesviewdialogRef.afterClosed().subscribe(result => {
         if (result) {
-          console.log(result);
         }
       });
     } else {
-      console.log("in else");
       const fileselected = { url: '', title: '' };
       fileselected.url = this.selectedMessage.base64[0];
       fileselected.title = 'Upload Prescription';
-      console.log(fileselected);
       this.imagesviewdialogRef = this.dialog.open(ImagesviewComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -210,7 +201,6 @@ export class UploadPrescriptionComponent implements OnInit {
       });
       this.imagesviewdialogRef.afterClosed().subscribe(result => {
         if (result) {
-          console.log(result);
         }
       });
     }
@@ -222,12 +212,10 @@ export class UploadPrescriptionComponent implements OnInit {
         this.temarry.files.push(this.selectedMessage.files[ia]);
       }
     }
-    console.log(this.temarry.files);
     const submit_data: FormData = new FormData();
     const propertiesDetob = {};
     let i = 0;
     for (const pic of this.temarry.files) {
-      console.log(pic);
       submit_data.append('files', pic, pic['name']);
       const properties = {
         'caption': this.temarry.caption[i] || ''
@@ -252,7 +240,6 @@ export class UploadPrescriptionComponent implements OnInit {
       this.medicalrecord_service.createMRForUploadPrescription(this.bookingType, passingId)
         .then((data: number) => {
           this.mrId = data;
-          console.log(this.mrId);
           this.uploadMrPrescription(data, submit_data);
         },
           error => {
@@ -317,7 +304,6 @@ export class UploadPrescriptionComponent implements OnInit {
     });
     this.sharedialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
       }
     });
   }

@@ -13,6 +13,10 @@ import { ContactInfoModule } from "./contact-info/contact-info.module";
 import { OrderWizardComponent } from "./order-wizard.component";
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
+import { RouterModule, Routes } from "@angular/router";
+const routes: Routes = [
+    {path: '', component: OrderWizardComponent}
+]
 @NgModule({
     declarations: [OrderWizardComponent],
     exports: [OrderWizardComponent],
@@ -31,6 +35,7 @@ import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.m
         MatChipsModule,
         CapitalizeFirstPipeModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
+        [RouterModule.forChild(routes)]
     ]
 })
 export class OrderWizardModule{}

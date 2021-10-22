@@ -553,9 +553,7 @@ export class AdjustqueueDelayComponent implements OnInit {
         (data) => {
           this.api_loading = true;
           this.queuejson = data;
-          console.log(this.queuejson);
           this.queuejson = this.queuejson.filter(q => q.queueState !== 'EXPIRED');
-          console.log(this.queuejson);
           if (this.queuejson.length === 1) {
             this.getTodayCheckIn(this.queuejson[0].id);
           }
@@ -571,7 +569,6 @@ export class AdjustqueueDelayComponent implements OnInit {
       this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
         .subscribe(data => {
           this.queuejson = data;
-          console.log(this.queuejson);
           if (this.queuejson.length === 1) {
             this.getTodayCheckIn(this.queuejson[0].id);
           }

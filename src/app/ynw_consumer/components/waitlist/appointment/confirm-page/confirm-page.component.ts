@@ -126,7 +126,6 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
       let navigationExtras: NavigationExtras = {
           queryParams: queryParams
       };
-      console.log("navigationExtras appt"+JSON.stringify(navigationExtras));
       if(this.from){
         this.router.navigate(['consumer']);
       }else{
@@ -143,6 +142,5 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
     }
   }
   updateEmail() {
-    console.log(this.email);
   }
 }

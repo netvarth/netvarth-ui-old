@@ -435,8 +435,6 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                         }
                         
                     }
-                    console.log("paymode" + this.paymentmodes.payGateways);                    
-                    console.log(this.paymode);
                     if (this.razorpayEnabled || this.paytmEnabled) {
                         this.paymode = true;
                     }
@@ -585,7 +583,6 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
         this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
     }
     transactionCompleted(response) {
-        console.log(response);
         if (response.STATUS == 'TXN_FAILURE') {
             this.isClickedOnce = false;
             this.loadingPaytm = false;

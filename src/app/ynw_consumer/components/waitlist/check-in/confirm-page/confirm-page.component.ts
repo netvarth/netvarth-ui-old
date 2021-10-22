@@ -117,7 +117,6 @@ export class ConfirmPageComponent implements OnInit ,OnDestroy{
       let navigationExtras: NavigationExtras = {
           queryParams: queryParams
       };
-      console.log("navigationExtras frm"+this.from);
       if(this.from){
         this.router.navigate(['consumer']);
       }else{
@@ -128,7 +127,6 @@ export class ConfirmPageComponent implements OnInit ,OnDestroy{
     // this.lStorageService.removeitemfromLocalStorage('inPostInfo');
   }
   updateEmail() {
-    console.log(this.email);
   }
   getWaitTime(waitlist) {
     if (waitlist.calculationMode !== 'NoCalc') {

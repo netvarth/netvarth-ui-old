@@ -208,10 +208,6 @@ export class ShareRxComponent implements OnInit {
     rxview += '</head><body >';
     rxview += vwofrx.innerHTML;
     rxview += '</body></html>';
-    console.log(rxview);
-    console.log(formdata);
-    console.log(this.sharewith);
-    console.log(this.customid);
     if (this.sharewith !== 0) {
       // if (this.thirdpartyphone === '' && this.thirdpartyemail === '') {
       if (this.thirdpartyemail === '') {
@@ -361,8 +357,6 @@ export class ShareRxComponent implements OnInit {
   onUserSelect(event) {
     this.resetApiErrors();
     this.customid = '';
-    console.log(event);
-    console.log(this.sharewith);
     if (event.value !== 0) {
       this.showthirdparty = true;
     } else {
@@ -381,7 +375,6 @@ export class ShareRxComponent implements OnInit {
           this.mrPrescriptionDetails = data['prescriptionsList'];
           if (Object.keys(data).length !== 0 && data.constructor === Object) {
             if (data['prescriptionsList'] && data['prescriptionsList'][0].keyName) {
-              console.log(data);
               this.signature_loading = false;
             } else {
               this.drugList = data['prescriptionsList'];
@@ -408,15 +401,11 @@ export class ShareRxComponent implements OnInit {
       );
   }
   getDigitalSign() {
-    console.log('getDigitalsignature');
     if (this.provider_user_Id) {
       this.provider_services.getDigitalSign(this.provider_user_Id)
         .subscribe((data: any) => {
-          console.log(data);
           this.imagedetails = data;
-          console.log(this.imagedetails);
           this.signurl = this.imagedetails.url;
-          console.log(this.signurl);
         },
           error => {
           });
@@ -424,11 +413,9 @@ export class ShareRxComponent implements OnInit {
   }
   showdigitalsign() {
     let logourl = '';
-    console.log(this.signurl);
     if (this.signurl) {
       logourl = (this.signurl) ? this.signurl : '';
     }
-    console.log(this.shared_functions.showlogoicon(logourl));
     return this.shared_functions.showlogoicon(logourl);
 
   }
@@ -447,7 +434,6 @@ export class ShareRxComponent implements OnInit {
         .subscribe((data: any) => {
           this.userdata = data;
           this.userbname = this.userdata.businessName;
-          console.log(this.userdata);
         },
         );
     }
@@ -457,12 +443,10 @@ export class ShareRxComponent implements OnInit {
       .subscribe(
         data => {
           this.bdata = data;
-          console.log(this.bdata);
           this.loading = false;
           this.bname = this.bdata.businessName;
           this.address = this.bdata.baseLocation.address;
           this.mobile = this.bdata.accountLinkedPhNo;
-          console.log(this.mobile);
         });
   }
   getSMSCredits() {

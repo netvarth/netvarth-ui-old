@@ -55,7 +55,6 @@ export class UserSelectionComponent implements OnInit {
       const _this = this;
       this.getAllUsers().then(result => {
         if (parseInt(qparams.data, 0) === 0) {
-          console.log(this.user_dataSource.data);
           this.masterToggle();
         }
         if (_this.selected_data.length > 0) {
@@ -98,9 +97,7 @@ export class UserSelectionComponent implements OnInit {
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    console.log(numSelected);
     const numRows = this.user_dataSource.data.length;
-    console.log(numRows);
     return numSelected === numRows;
   }
 

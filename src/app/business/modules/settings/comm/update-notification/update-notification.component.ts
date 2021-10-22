@@ -90,7 +90,6 @@ export class UpdateNotificationComponent implements OnInit {
             const postdata = {
                 'virtualCallingModes': virtualCallingModes
             };
-            console.log(postdata);
             this.provider_services.addVirtualCallingModes(postdata).subscribe(
                 (data) => {
                     if (this.mode === 'WhatsApp') {

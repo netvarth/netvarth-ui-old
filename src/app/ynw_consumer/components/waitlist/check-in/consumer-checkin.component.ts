@@ -299,7 +299,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 }
                 if (params.theme) {
                     this.theme = params.theme;
-                    console.log(this.theme);
                 }
                 if (params.customId) {
                     this.customId = params.customId;
@@ -334,7 +333,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.api_loading1 = true;
         const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
         this.customer_countrycode = credentials.countryCode;
-        console.log("credentioooo" + credentials.countryCode);
         this.getPaymentModes();
 
         if (activeUser) {
@@ -442,7 +440,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     // } else {
                     //     this.razorpayEnabled = true;
                     // }
-                    console.log("paymode" + this.paymentmodes.payGateways);
                     // for(let modes of this.paymentmodes){
                     //    for(let gateway of modes.payGateways){
                     //        if(gateway == 'PAYTM'){
@@ -563,7 +560,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         };
         this.subs.sink = fn.subscribe(data => {
             this.familymembers = [];
-            console.log(this.familymembers);
             this.familymembers.push(self_obj);
             for (const mem of data) {
                 if (mem.userProfile.id !== self_obj.userProfile.id) {
@@ -604,7 +600,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                                 if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.whatsappnumber !== undefined) {
                                     const whtsappcountryCode = this.virtualInfo.countryCode_whtsap.split('+')[1];
                                     this.callingModes = whtsappcountryCode + '' + this.virtualInfo.whatsappnumber;
-                                    console.log(this.callingModes);
                                 }
                             }
                         }
@@ -817,7 +812,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
                         this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
                     } else {
-                        console.log(this.callingModes);
                         this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
                     }
                 }
@@ -982,10 +976,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
             if (this.waitlist_for.length !== 0) {
                 for (const list of this.waitlist_for) {
-                    console.log(list['id']);
-                    console.log(this.familymembers);
-                    const memberObject = this.familymembers.filter(member => member.userProfile.id === list['id']);
-                    console.log(memberObject);
+                    // const memberObject = this.familymembers.filter(member => member.userProfile.id === list['id']);
                     if (list['id'] !== this.customer_data.id) {
                         // this.confirmVirtualServiceinfo(memberObject, type);
                         this.confirmcheckin(type, paymenttype);
@@ -1023,7 +1014,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.lStorageService.removeitemfromLocalStorage('age');
                 this.lStorageService.removeitemfromLocalStorage('userId');
                 if (this.customId) {
-                    console.log("businessid" + this.businessId);
                     const accountid = this.businessId;
                     this.shared_services.addProvidertoFavourite(accountid)
                         .subscribe(() => {
@@ -1170,7 +1160,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             if (this.businessId) {
                 queryParams['customId'] = this.customId;
             }
-            console.log("this.from" + this.from);
             if (this.from) {
                 queryParams['isFrom'] = this.from;
             }
@@ -1381,7 +1370,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }, 2000);
     }
     setVirtualTeleserviceCustomer() {
-        console.log(this.virtualInfo);
         if (this.virtualInfo && this.virtualInfo.email && this.virtualInfo.email !== '') {
             // this.payEmail = this.virtualInfo.email;
             this.newEmail = this.payEmail = this.virtualInfo.email;
@@ -1394,7 +1382,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.waitlist_for.push({ id: this.newMember, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
             if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
                 this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
-                console.log(this.whatsappCountryCode);
                 this.newWhatsapp = this.virtualInfo.whatsappnumber
                 if (this.virtualInfo.countryCode_whtsap.includes('+')) {
                     this.callingModes = this.virtualInfo.countryCode_whtsap.split('+')[1] + '' + this.virtualInfo.whatsappnumber;
@@ -1412,11 +1399,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.consumerType = 'member';
             this.waitlist_for = [];
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor);
-            console.log(current_member);
             this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member[0]['userProfile'].firstName, lastName: current_member[0]['userProfile'].lastName });
             if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
                 this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
-                console.log(this.whatsappCountryCode);
                 this.newWhatsapp = this.virtualInfo.whatsappnumber
                 if (this.virtualInfo.countryCode_whtsap.includes('+')) {
                     this.callingModes = this.virtualInfo.countryCode_whtsap.split('+')[1] + '' + this.virtualInfo.whatsappnumber;
@@ -1916,7 +1901,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     checkCouponvalidity() {
-        console.log('inside validaity');
         if (this.waitlist_for.length !== 0) {
             for (const list of this.waitlist_for) {
                 if (list.id === this.customer_data.id) {
@@ -1931,7 +1915,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
                     this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
                 } else {
-                    console.log(this.callingModes);
                     this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
                 }
             }
@@ -2247,14 +2230,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.checkJcash = true
                 this.jcashamount = this.paymentDetails.eligibleJcashAmt.jCashAmt;
                 this.jcreditamount = this.paymentDetails.eligibleJcashAmt.creditAmt;
-                console.log(this.paymentDetails.amountRequiredNow);
-                console.log(this.jcashamount);
                 if (this.checkJcash && this.paymentDetails.amountRequiredNow > this.jcashamount) {
                     this.payAmount = this.paymentDetails.amountRequiredNow - this.jcashamount;
-                    console.log(this.payAmount);
                 } else if (this.checkJcash && this.paymentDetails.amountRequiredNow <= this.jcashamount) {
                     this.payAmount = 0;
-                    console.log(this.payAmount)
                 }
             },
                 error => {
@@ -2340,7 +2319,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.shared_services.PayByJaldeewallet(postData)
                 .subscribe((pData: any) => {
                     if (pData.isGateWayPaymentNeeded && pData.isJCashPaymentSucess) {
-                        console.log("first" + pData);
                         if (paymentMode == 'PPI') {
                             this.payWithPayTM(pData.response);
                         } else {
@@ -2356,7 +2334,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         else {
             this.subs.sink = this.shared_services.consumerPayment(this.waitlistDetails)
                 .subscribe((pData: any) => {
-                    console.log("firstrt" + pData);
                     this.pGateway = pData.paymentGateway;
                     if (this.pGateway === 'RAZORPAY') {
                         this.paywithRazorpay(pData);
@@ -2417,7 +2394,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         return length;
     }
     actionCompleted() {
-        console.log(this.action);
         if (this.action === 'timeChange') {
             if (this.queuejson[this.sel_queue_indx]) {
                 this.selectedQTime = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
@@ -2458,7 +2434,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.getConsumerQuestionnaire(this.sel_ser, consumerid, this.account_id).subscribe(data => {
             this.questionnaireList = data;
             this.questionnaireLoaded = true;
-            console.log(this.sel_ser);
             if (this.sel_ser_det.serviceType === 'virtualService') {
                 this.setVirtualTeleserviceCustomer();
             }
@@ -2505,7 +2480,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     changePolicy(event) {
-        console.log(event.target.checked);
         this.checkPolicy = event.target.checked;
     }
     isNumeric(evt) {

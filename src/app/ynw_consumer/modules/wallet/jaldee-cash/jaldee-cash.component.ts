@@ -52,7 +52,6 @@ export class JaldeeCashComponent implements OnInit {
     this.subs.sink=this.consumer_services.getConsumerCashbalance()
     .subscribe(
       data => {
-       console.log(data);
        this.cashbalanceInfo = data;
        this.loading = false;
       },
@@ -66,7 +65,6 @@ export class JaldeeCashComponent implements OnInit {
     this.subs.sink=this.consumer_services.getConsumerCashbalanceDetails()
       .subscribe(
         data => {
-         console.log(data);
          this.cashbalanceInfodetail = data;
          this.loading = false;
         },
@@ -81,7 +79,6 @@ export class JaldeeCashComponent implements OnInit {
     this.subs.sink=this.consumer_services.getConsumerCashbalanceExpiredDetails()
     .subscribe(
       data => {
-       console.log(data);
        this.cashbalanceInfoExpireddetail = data;
        this.loading = false;
       },

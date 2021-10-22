@@ -161,8 +161,6 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
             });
     }
     showPopup(mode) {
-
-        console.log(mode);
         const dialogref = this.dialog.open(UpdateNotificationComponent, {
             width: '40%',
             panelClass: ['popup-class', 'commonpopupmainclass', 'updatenotificationclass'],
@@ -222,7 +220,6 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
         this.provider_services.getJaldeeVideoRecording()
             .subscribe(
                 (data) => {
-                    console.log(data)
                     this.videocredits = data;
                 }
             );

@@ -152,7 +152,6 @@ export class CustomerCreateComponent implements OnInit {
     this.activated_route.queryParams.subscribe(qparams => {
       const user = this.groupService.getitemFromGroupStorage('ynw-user');
       this.domain = user.sector;
-      console.log(this.domain);
       this.subdomain = user.subSector;
       this.source = qparams.source;
       this.showToken = qparams.showtoken;
@@ -298,7 +297,6 @@ export class CustomerCreateComponent implements OnInit {
           if (data.length > 0) {
             if (data[0].userProfile) {
               this.customerDetails = data[0].userProfile;
-              //console.log("hello"+this.customerDetails);
               this.amForm.get('mobile_number').setValue(data[0].userProfile.primaryMobileNo);
               this.amForm.get('countryCode').setValue(data[0].userProfile.countryCode);
               this.amForm.get('first_name').setValue(data[0].userProfile.firstName);
@@ -449,7 +447,6 @@ export class CustomerCreateComponent implements OnInit {
     });
 
     if (this.customer[0].age) {
-      console.log(this.customer[0].age.year)
       if (this.customer[0].age.year && this.customer[0].age.year !== 0) {
         this.ageType = 'year';
         this.amForm.get('age').setValue(this.customer[0].age.year || '');
@@ -485,7 +482,6 @@ export class CustomerCreateComponent implements OnInit {
     if (form_data.dob) {
       datebirth = this.dateTimeProcessor.transformToYMDFormat(form_data.dob);
     }
-    console.log(form_data);
     if (this.domain == 'healthCare' && (form_data.dob == '' && form_data.age == '')) {
       this.snackbarService.openSnackBar('please enter date of birth or age', { 'panelClass': 'snackbarerror' });
       this.disableButton = false;
@@ -658,8 +654,6 @@ export class CustomerCreateComponent implements OnInit {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             this.disableButton = false;
           });
-      //console.log(post_data); 
-
     }
   }
   goBackAfterAdd(form_data, data) {
@@ -712,7 +706,6 @@ export class CustomerCreateComponent implements OnInit {
     }
   }
   goBackAfterEdit(form_data, data) {
-    console.log(this.source);
     if (this.source === 'checkin' || this.source === 'token') {
       const navigationExtras: NavigationExtras = {
         queryParams: {

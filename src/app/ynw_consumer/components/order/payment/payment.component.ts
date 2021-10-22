@@ -128,7 +128,6 @@ export class PaymentComponent implements OnInit {
         this.lStorageService.setitemonLocalStorage('uuid', this.uuid);
         this.lStorageService.setitemonLocalStorage('acid', this.accountId);
         this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
-        console.log(this.orderDetails);
         this.shared_services.consumerPayment(this.orderDetails)
             .subscribe((pData: any) => {
                 this.origin = 'consumer';
@@ -137,8 +136,6 @@ export class PaymentComponent implements OnInit {
                 if (this.pGateway === 'RAZORPAY') {
                     this.paywithRazorpay(pData);
                 } else {
-                    console.log('not razorpay');
-
                     if (pData['response']) {
                         this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
                         this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
@@ -170,7 +167,6 @@ export class PaymentComponent implements OnInit {
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
-        console.log(this.checkIn_type);
         this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uuid, this.livetrack, this.accountId, this.prepayment);
     }
 

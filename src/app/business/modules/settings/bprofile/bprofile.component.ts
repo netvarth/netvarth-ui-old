@@ -490,7 +490,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.subscription = this.provider_datastorage.getWeightageArray().subscribe(result => {
       this.businessProfile_show = 1;
       this.businessweightageArray = result;
-      // console.log(JSON.stringify(this.businessweightageArray));
       if (this.businessweightageArray.length !== 0) {
         this.weightageValue = this.calculateWeightage(result);
         // if(this.checkAllRequiredFiedsOfJaldeeOnlineFilled()){
@@ -812,7 +811,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       .subscribe(
         data => {
           this.image_list = data;
-          console.log(this.image_list);
           if (this.image_list && this.image_list.length !== 0) {
             this.galryFilled = true;
           }
@@ -1335,8 +1333,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.profimg_exists = false;
     if (this.item_pic.base64) {
       this.profimg_exists = true;
-      console.log(this.item_pic);
-      console.log(this.item_pic.base64);
       return this.item_pic.base64;
     } else {
       if (this.blogo[0]) {
@@ -1349,8 +1345,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   // Change pro pic
   changeProPic(image) {
-    console.log(image);
-    console.log(this.blogo);
     this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -1435,7 +1429,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.changeDetectorRef.detectChanges();
     setTimeout(() => {
       this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
-      console.log(this.qrCodePath);
       this.angular_meta.addTags([
         { property: 'og:title', content: this.bProfile.businessName },
         { property: 'og:image', content: this.imageUrl },
@@ -1451,7 +1444,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.provider_services.getCoverFoto().subscribe(
       data => {
         if (data) {
-          console.log(data);
           const cnow = new Date();
           const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
           this.cacheavoider_cover = dd;
@@ -1489,19 +1481,15 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   imageSelect(event: any): void {
     this.loadSymbol = true;
     this.imageChangedEvent = event;
-    console.log(this.imageChangedEvent);
   }
   clearModalData(source?) {
     this.imageChangedEvent = '';
-    console.log(this.imageChangedEvent);
     if (source) {
       this.imgType = true;
     }
-    console.log(this.imgType);
   }
 
   imageCropped(event: ImageCroppedEvent) {
-    console.log('hi');
     this.loadSymbol = false;
     this.fileToReturn = '';
     this.croppedImage = event.base64; // preview
@@ -1509,7 +1497,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       event.base64,
       this.imageChangedEvent.target.files[0].name,
     );
-    console.log(this.fileToReturn);
     return this.fileToReturn;
   }
   imageLoaded() {
@@ -1542,10 +1529,8 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.success_error = null;
     this.error_list = [];
     this.error_msg = '';
-    console.log(file);
     if (file) {
         this.success_error = this.sharedfunctionobj.imageValidation(file);
-        console.log(this.success_error);
         if (this.success_error === true) {
             const reader = new FileReader();
             this.item_pic.files = file;
@@ -1565,14 +1550,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
                 const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
                 submit_data.append('properties', blobPropdata);
                 if (this.imgType) {
-                    console.log('cover');
                 } else {
-                    // if (this.data.userId) {
-                    //     this.uploadUserLogo(submit_data);
-                    // } else {
-                    //     this.uploadLogo(submit_data);
-                    // }
-                    console.log('propic');
                     this.uploadLogo(submit_data);
                 }
           //  }

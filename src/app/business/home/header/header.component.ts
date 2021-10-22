@@ -119,7 +119,6 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       // this.connect();
     });
     this.userData = this.groupService.getitemFromGroupStorage('ynw-user');
-    console.log(this.userData);
     this.account_type = this.userData.accountType;
     if (this.userData.accountType === 'BRANCH' && !this.userData.adminPrivilege) {
       this.getUserDetails();
@@ -188,8 +187,6 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
 
           step => {
             /*Do something*/
-            // console.log('Location', window.location.href, 'Path', window.location.pathname);
-            // console.log('Next:', step);
           },
           error => {
             /*handle error*/

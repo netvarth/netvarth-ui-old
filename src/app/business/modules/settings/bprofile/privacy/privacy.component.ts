@@ -244,7 +244,6 @@ export class PrivacyComponent implements OnInit, OnDestroy {
         const email_json = [];
 
         let post_itemdata = {};
-        console.log(emailorPhone);
         if (emailorPhone.resource === 'Email') {
             for (const email of this.emailarr) {
                 if (email.instance !== emailorPhone.instance) {
@@ -257,7 +256,6 @@ export class PrivacyComponent implements OnInit, OnDestroy {
             }
             }
             post_itemdata = { 'emails': email_json };
-            console.log(post_itemdata);
         } else {
             for (const phone of this.phonearr) {
                 if (phone.instance !== emailorPhone.instance) {
@@ -270,7 +268,6 @@ export class PrivacyComponent implements OnInit, OnDestroy {
             }
             }
             post_itemdata = { 'phoneNumbers': email_json };
-            console.log(post_itemdata);
         }
         email_json.push({
             'label': emailorPhone.label,

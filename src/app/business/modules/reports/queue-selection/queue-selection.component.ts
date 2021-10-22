@@ -67,7 +67,6 @@ export class QueueSelectionComponent implements OnInit {
       const _this = this;
       this.getAllQs().then(result => {
         if (parseInt(qparams.data, 0) === 0) {
-          console.log(this.queue_dataSource.data);
           this.masterToggle();
         }
         if (_this.selected_data.length > 0) {
@@ -121,9 +120,7 @@ export class QueueSelectionComponent implements OnInit {
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    console.log(numSelected);
     const numRows = this.queue_dataSource.data.length;
-    console.log(numRows);
     return numSelected === numRows;
   }
 
@@ -151,7 +148,6 @@ export class QueueSelectionComponent implements OnInit {
               }
               queue_list = this.jaldeeTimeService.arrageScheduleforDisplay(queue_arr);
               this.queues[i].displayQ = queue_list[0];
-              console.log(JSON.stringify(this.queues[i].displayQ));
               let userName = '';
               if (this.queues[i].provider) {
                 userName = this.queues[i].provider.firstName + '' + this.queues[i].provider.lastName;
@@ -173,7 +169,6 @@ export class QueueSelectionComponent implements OnInit {
               );
             }
             this.queue_dataSource.data = this.queue_list_for_grid;
-            console.log(this.queue_list_for_grid.length);
             this.queueCount = this.queue_list_for_grid.length;
             resolve();
           });

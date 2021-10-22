@@ -749,8 +749,6 @@ export class ProviderbWizardComponent implements OnInit {
 
           step => {
             /*Do something*/
-            // console.log('Location', window.location.href, 'Path', window.location.pathname);
-            // console.log('Next:', step);
           },
           error => {
             /*handle error*/

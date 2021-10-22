@@ -500,7 +500,6 @@ export class AdjustscheduleDelayComponent implements OnInit {
       this.shared_services.getProviderSchdulesbyLocatinIdandServiceIdwithoutDate(locid, servid, accountid)
         .subscribe(data => {
           this.queuejson = data;
-          console.log(this.queuejson);
           if (this.queuejson.length === 1) {
             this.getTodayAppointments(this.queuejson[0].id);
           }

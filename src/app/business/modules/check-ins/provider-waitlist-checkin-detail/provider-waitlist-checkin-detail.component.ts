@@ -151,7 +151,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     if (this.userDet.accountType === 'BRANCH') {
       this.getTeams().then((data) => {
         this.teams = data;
-        console.log(this.teams);
       });
     }
 

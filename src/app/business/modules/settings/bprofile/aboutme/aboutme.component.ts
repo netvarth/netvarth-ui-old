@@ -173,8 +173,6 @@ export class AboutMeComponent implements OnInit {
         () => {
           this.snackbarService.openSnackBar(Messages.BPROFILE_ABOUT_UPDATED);
           this.disableButton = false;
-          // console.log(this.domain_fields_mandatory.length);
-          // console.log(this.subdomain_fields_mandatory.length);
           if (this.domain_fields_mandatory.length !== 0 || this.subdomain_fields_mandatory.length !== 0) {
             this.showVirtualFields = true;
           } else {
@@ -272,7 +270,6 @@ export class AboutMeComponent implements OnInit {
       .subscribe(
         data => {
           this.blogo = data;
-          // console.log(this.blogo);
           const cnow = new Date();
           const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
           this.cacheavoider = dd;
@@ -338,7 +335,6 @@ export class AboutMeComponent implements OnInit {
           let additionalInfoFilledStatus = false;
           this.domain_fields = data['fields'];
           this.domain_fields_mandatory = this.domain_fields.filter(dom => dom.mandatory === true);
-          // console.log('domain mandatory..' + JSON.stringify(this.domain_fields_mandatory));
           this.domain_questions = data['questions'] || [];
           this.domain_fields.forEach(subdomain => {
             checkArray.push(subdomain);
@@ -520,7 +516,6 @@ export class AboutMeComponent implements OnInit {
           this.subdomain_fields = data['fields'];
           // this.subdomain_fields_nonmandatory = this.subdomain_fields.filter(dom => dom.mandatory === false);
           this.subdomain_fields_mandatory = this.subdomain_fields.filter(dom => dom.mandatory === true);
-          // console.log('subdomain mandatory..' + JSON.stringify(this.subdomain_fields_mandatory));
           this.subdomain_fields.forEach(subdomain => {
             checkArray.push(subdomain);
           });

@@ -523,7 +523,6 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
           }
           this.advance_amount = this.catalog_details.advanceAmount;
         }
-        console.log(this.sel_checkindate);
         this.getOrderAvailableDatesForPickup();
         this.getOrderAvailableDatesForHome();
         // this.getAvailabilityByDate(this.sel_checkindate);    
@@ -583,10 +582,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
 
   }
   goBackToSummary(selectesTimeslot, queue) {
-
-    console.log(queue);
     const selectqueue = queue['sTime'] + ' - ' + queue['eTime'];
-    console.log(selectqueue);
     this.nextAvailableTime = selectqueue;
     this.datepickerModal.nativeElement.click();
 
@@ -608,15 +604,12 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
     // });
   }
   handleQueueSelection(queue, index) {
-    console.log(queue);
     this.queue = queue;
   }
   onSubmit(form_data) {
 
-    console.log(JSON.stringify(form_data));
     this.disableSave = true;
     this.added_address.push(form_data);
-    console.log('addres' + JSON.stringify(this.added_address));
     this.provider_services.updateDeliveryaddress(this.customer_data.id, this.added_address)
       .pipe(takeUntil(this.onDestroy$))
       .subscribe(
@@ -684,7 +677,6 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
     this.removeFromCart(item);
   }
   addToCart(Item) {
-    console.log(JSON.stringify(Item));
     this.orderList.push(Item);
     this.getTotalItemAndPrice();
     this.getItemQty(Item);
@@ -814,7 +806,6 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((data: any) => {
         this.store_availables = data.filter(obj => obj.isAvailable);
-        console.log(this.store_availables);
         this.getAvailabilityByDate(this.sel_checkindate);
         const availDates = this.store_availables.map(function (a) { return a.date; });
         _this.storeAvailableDates = availDates.filter(function (elem, index, self) {
@@ -829,7 +820,6 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((data: any) => {
         this.home_availables = data.filter(obj => obj.isAvailable);
-        console.log(this.home_availables);
         this.getAvailabilityByDate(this.sel_checkindate);
         const availDates = this.home_availables.map(function (a) { return a.date; });
         _this.homeAvailableDates = availDates.filter(function (elem, index, self) {
@@ -839,7 +829,6 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
   }
 
   dateClass(date: Date): MatCalendarCellCssClasses {
-    console.log(this.choose_type);
     if (this.choose_type === 'store') {
       return (this.storeAvailableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     } else {
@@ -847,14 +836,9 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
     }
   }
   getAvailabilityByDate(date) {
-    console.log(date);
-    console.log(this.storeAvailableDates);
-    console.log(this.store_availables);
-    console.log(this.choose_type);
     this.sel_checkindate = date;
     const cday = new Date(this.sel_checkindate);
     const currentday = (cday.getDay() + 1);
-    console.log(currentday);
     if (this.choose_type === 'store') {
       const storeIntervals = (this.catalog_details.pickUp.pickUpSchedule.repeatIntervals).map(Number);
       const last_date = moment().add(30, 'days');
@@ -864,11 +848,8 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
         this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
         this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
         this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
-        console.log('greater than 30');
       }
       else if ((storeIntervals.includes(currentday)) && (date < thirty_date)) {
-        console.log('less than 30');
-        console.log(this.store_availables);
         const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
         const availability = this.store_availables.filter(obj => obj.date === sel_check_date);
         if (availability.length > 0) {
@@ -888,16 +869,12 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
       const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
       const last_date = moment().add(30, 'days');
       const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();
-      console.log(homeIntervals);
-      console.log(JSON.stringify(homeIntervals));
       if (homeIntervals.includes(currentday) && (date > thirty_date)) {
         this.isfutureAvailableTime = true;
         this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
         this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
         this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
-        console.log('greater than 30');
       } else if (homeIntervals.includes(currentday) && (date < thirty_date)) {
-        console.log(this.home_availables);
         const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
         const availability = this.home_availables.filter(obj => obj.date === sel_check_date);
         if (availability.length > 0) {
@@ -1001,7 +978,6 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
   }
   changeType(event) {
     this.choose_type = event.value;
-    console.log(this.choose_type);
     if (event.value === 'store') {
       this.store_pickup = true;
       this.choose_type = 'store';
@@ -1031,7 +1007,6 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
 
   }
   confirm() {
-    console.log('inside');
     let post_Data={};
     let timeslot:any;
     if (!this.iscustomerEmailPhone && (!this.customer_data.email || !this.customer_data.phoneNo || this.customer_data.phoneNo.includes('*'))) {

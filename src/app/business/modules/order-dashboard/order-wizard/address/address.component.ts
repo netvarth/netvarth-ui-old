@@ -44,12 +44,8 @@ export class AddressComponent implements OnInit {
     if (data.address !== null) {
       this.exist_add = data.address;
     }
-
     this.edit_address = data.update_address;
-    console.log(this.edit_address);
-
     this.index = data.edit_index;
-
   }
 
   ngOnInit(): void {

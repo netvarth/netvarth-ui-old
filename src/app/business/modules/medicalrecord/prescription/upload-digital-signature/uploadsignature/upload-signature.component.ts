@@ -66,7 +66,6 @@ export class UploadSignatureComponent implements OnInit {
     this.activatedRoot.queryParams.subscribe(queryParams => {
       if (queryParams.providerId) {
         this.providerId = queryParams.providerId;
-        console.log(this.providerId);
       }
     });
 
@@ -128,7 +127,6 @@ export class UploadSignatureComponent implements OnInit {
     const propertiesDetob = {};
     let i = 0;
     for (const pic of this.selectedMessage.files) {
-      console.log(pic);
       submit_data.append('files', pic, pic['name']);
       const properties = {
         'caption': this.selectedMessage.caption[i] || ''

@@ -281,7 +281,6 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
   getProviderServices() {
     this.api_loading1 = true;
     let filter;
-    // console.log(this.queue_data);
     if (this.queue_data && this.queue_data.provider) {
       filter = { 'status-eq': 'ACTIVE', 'provider-eq': this.queue_data.provider.id };
     } else {

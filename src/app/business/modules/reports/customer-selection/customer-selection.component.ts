@@ -99,11 +99,9 @@ export class CustomerSelectionComponent implements OnInit {
       let jaldee_customer_id = '';
       let customer_id = '';
       this.customer_selected.forEach(function (customer) {
-        console.log(customer);
         customer_id = customer_id + customer.id + ',';
         jaldee_customer_id = jaldee_customer_id + customer.jaldeeId + ',';
       });
-      console.log(jaldee_customer_id);
       const jaldee_customers = jaldee_customer_id.replace(/,\s*$/, '');
       const customers = customer_id.replace(/,\s*$/, '');
       const customerData = {
@@ -167,7 +165,6 @@ export class CustomerSelectionComponent implements OnInit {
     this.showError = false;
   }
   searchCustomer(form_data) {
-    console.log(form_data.search_input);
     if (form_data.search_input === '') {
       this.showError = true;
     } else {

@@ -451,9 +451,7 @@ export class AppointmentComponent implements OnInit {
         }
     }
     serchCustomers(val){
-        console.log(val);
         const dialCode = val.dialCode;
-        console.log(dialCode);
         const pN = val.e164Number.trim();
         let loginId = pN;
         if(pN.startsWith(dialCode)) {
@@ -618,14 +616,11 @@ export class AppointmentComponent implements OnInit {
                 'id': this.customer_data.id,
             }], 
         };
-        console.log(this.virtualServicemode);
-        console.log(this.virtualServicenumber);
         if (this.virtualServicemode || this.virtualServicenumber) {
             const virtualArray = {};
             virtualArray[this.virtualServicemode] = this.virtualServicenumber||'';
             post_data['virtualService'] = virtualArray;
         }
-        console.log(post_data);
         this.provider_services.confirmAppointmentBlock(post_data)
             .subscribe(
                 data => {
@@ -895,7 +890,6 @@ export class AppointmentComponent implements OnInit {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
                         this.callingModes = this.customer_data.phoneNo.trim();
                         this.cuntryCode = this.customer_data.countryCode;
-                        console.log("this.callingModes."+this.callingModes);
                         if (this.callingModes.includes('*')) {
                             this.callingModes = '';
                             this.cuntryCode = '';

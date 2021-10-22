@@ -366,7 +366,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.getPaymentModes();
         const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
         this.customer_countrycode = credentials.countryCode;
-        console.log("credentioooo" + credentials.countryCode);
         // if(this.customer_countrycode == '+91'){
         //     this.getPaymentModes();
         // } else {
@@ -746,7 +745,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
                 if (type) {
                     this.selectedApptTime = this.apptTime;
-                    console.log("fdgfd"+JSON.stringify(this.selectedApptTime));
                 }
                 this.api_loading1 = false;
             });
@@ -894,10 +892,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     if (!this.waitlist_for[0]['apptTime']) {
                         this.waitlist_for[0]['apptTime'] = this.selectedApptTime['time']
                     }
-                    // console.log(this.virtualInfo);
                     // const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
                     // const formattedDate = moment(momentDate).format("YYYY-MM-DD");
-                    // console.log(formattedDate);
                     // this.waitlist_for[0]['dob'] = formattedDate;
                     this.waitlist_for[0]['whatsAppNum'] = {
                         'countryCode': this.virtualInfo.countryCode_whtsap,
@@ -981,8 +977,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
             if (this.waitlist_for.length !== 0) {
                 for (const list of this.waitlist_for) {
-                    const memberObject = this.familymembers.filter(member => member.userProfile.id === list['id']);
-                    console.log(memberObject);
+                    // const memberObject = this.familymembers.filter(member => member.userProfile.id === list['id']);
                     if (list['id'] !== this.customer_data.id) {
                         // this.confirmVirtualServiceinfo(memberObject, type);
                         this.confirmcheckin(type, paymenttype);
@@ -1038,7 +1033,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             .subscribe(data => {
                 const retData = data;
                 if (this.customId) {
-                    console.log("businessid" + this.businessId);
                     const accountid = this.businessId;
                     this.shared_services.addProvidertoFavourite(accountid)
                         .subscribe(() => {
@@ -1916,8 +1910,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
         }
         // }
-        console.log(this.newEmail);
-
         if (this.newEmail && this.newEmail.trim() !== '') {
             const pattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
             const result = pattern.test(this.newEmail);
@@ -2185,7 +2177,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         else {
             this.subs.sink = this.shared_services.consumerPayment(this.waitlistDetails)
                 .subscribe((pData: any) => {
-                    console.log("payment method" + pData);
                     this.pGateway = pData.paymentGateway;
                     if (this.pGateway === 'RAZORPAY') {
                         this.paywithRazorpay(pData);
@@ -2264,13 +2255,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.selectedDate = this.sel_checkindate;
             this.checkFutureorToday();
             this.selectedApptTime = this.apptTime;
-            console.log("action"+JSON.stringify(this.selectedApptTime));
             this.waitlist_for[0].apptTime = this.apptTime['time'];
             if(this.type == 'reschedule' && this.appointment.service && this.appointment.service.priceDynamic){
                 this.subs.sink = this.shared_services.getAppointmentReschedulePricelist(this.appointment.service.id).subscribe(
                     (list: any) => {
                         this.pricelist = list;
-                        console.log("this.pricelist"+JSON.stringify(this.pricelist));
                         let oldprice;
                         let newprice;
                         for(let list of this.pricelist){
@@ -2281,10 +2270,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                                 newprice = list.price;
                             }
                         } 
-                        console.log("oldprice"+oldprice);
-                        console.log("newprice"+newprice);
                         this.changePrice = newprice - oldprice;
-                        console.log("changeprice"+this.changePrice);
                         this.amountdifference = this.appointment.amountDue + this.changePrice;
                     });
             }
@@ -2586,6 +2572,5 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.readMore = !this.readMore;
     }
     log() {
-        console.log('after triggererd');
     }
 }

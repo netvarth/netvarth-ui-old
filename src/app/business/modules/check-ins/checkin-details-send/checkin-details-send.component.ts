@@ -85,12 +85,10 @@ export class CheckinDetailsSendComponent implements OnInit {
             this.chekintype = this.data.chekintype;
         }
    ngOnInit() {
-     console.log('checkindetail send');
     this.getSMSCredits();
     this.getProviderSettings();
     this.SEND_MESSAGE = Messages.SEND_MESSAGE.replace('[customer]', this.customer_label);
     this.bname = this.data.qdata.providerAccount.businessName;
-    console.log(this.data.qdata);
     if (this.data.qdata.service.serviceType === 'virtualService') {
       switch (this.data.qdata.service.virtualCallingModes[0].callingMode) {
         case 'Zoom': {
@@ -125,9 +123,6 @@ export class CheckinDetailsSendComponent implements OnInit {
         this.consumer_email = this.data.qdata.waitlistingFor[0].email;
         this.serv_name = this.data.qdata.service.name;
         this.date = this.data.qdata.date;
-        console.log(this.date)
-        // this.date = this.shared_functions.formatDateDisplay(this.data.qdata.date);
-        console.log(this.date)
         this.time = this.data.qdata.checkInTime;
         this.deptName = this.data.qdata.service.deptName;
         this.qname =  this.data.qdata.queue.name;
@@ -148,9 +143,6 @@ export class CheckinDetailsSendComponent implements OnInit {
           this.spName = (this.data.qdata.provider.businessName) ? this.data.qdata.provider.businessName : this.data.qdata.provider.firstName + ' ' + this.data.qdata.provider.lastName;
           this.spfname = this.data.qdata.provider.firstName;
           this.splname = this.data.qdata.provider.lastName;
-          console.log(this.spfname);
-          console.log(this.splname);
-
           }
           if(this.data.qdata.waitlistingFor[0].memberJaldeeId){
             this.patientid = this.data.qdata.waitlistingFor[0].memberJaldeeId;
@@ -165,8 +157,6 @@ export class CheckinDetailsSendComponent implements OnInit {
         }
         this.serv_name = this.data.qdata.service.name;
         this.date = this.data.qdata.appmtDate;
-        console.log(this.date)
-        // this.date = this.shared_functions.formatDateDisplay(this.data.qdata.appmtDate);
         this.time = this.data.qdata.appmtTime;
         this.location = this.data.qdata.location.place;
         this.appttime = this.data.qdata.appmtFor[0].apptTime;

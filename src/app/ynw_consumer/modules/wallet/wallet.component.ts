@@ -34,7 +34,6 @@ export class WalletComponent implements OnInit {
     this.subs.sink=this.consumer_services.getConsumerCashbalanceDetails()
       .subscribe(
         data => {
-         console.log(data);
          this.cashbalanceInfo = data;
          this.remainamount= this.cashbalanceInfo.totCashAvailable;
         //  for(let info of this.cashbalanceInfo){
@@ -53,7 +52,6 @@ export class WalletComponent implements OnInit {
     this.location.back();
   }
   gotoJaldeeCashdetails(){
-    console.log('in ')
     this.router.navigate(['consumer', 'mywallet', 'jaldee-cash']);
   }
   ngOnDestroy() {

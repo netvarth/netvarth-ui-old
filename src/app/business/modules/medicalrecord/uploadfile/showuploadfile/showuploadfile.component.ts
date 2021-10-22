@@ -16,7 +16,6 @@ export class ShowuploadfileComponent implements OnInit {
     public sharedfunctionObj: SharedFunctions,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    console.log(this.data);
     this.details = this.data.file;
     if (this.data.source === 'qnr') {
       this.title = (this.details.comments) ? this.details.comments : '';
@@ -28,7 +27,6 @@ export class ShowuploadfileComponent implements OnInit {
       this.type = this.details.type.split('/');
       this.type = this.type[0];
     }
-    console.log(this.details);
   }
   ngOnInit() {
     const cnow = new Date();

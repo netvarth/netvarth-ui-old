@@ -84,7 +84,6 @@ export class CustomViewComponent implements OnInit {
             this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
             if (qparams.type) {
                 this.back_type = qparams.type;
-                console.log(this.back_type)
              }
         });
        
@@ -343,7 +342,6 @@ export class CustomViewComponent implements OnInit {
                     setTimeout(() => {
                         this.loading = false;
                     }, 500);
-                    // console.log(this.users_list);
                     // else {
                     //     this.departmentSelection();
                     // }

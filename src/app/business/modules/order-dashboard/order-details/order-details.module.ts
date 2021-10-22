@@ -12,7 +12,10 @@ import { CardModule } from "../../../../shared/components/card/card.module";
 import { OrderActionsModule } from "../order-actions/order-actions.module";
 import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
 import { Nl2BrPipeModule } from "nl2br-pipe";
-
+import { RouterModule, Routes } from "@angular/router";
+const routes: Routes = [
+    {path: '', component: OrderDetailsComponent}
+]
 @NgModule({
     imports: [
         CommonModule,
@@ -26,6 +29,7 @@ import { Nl2BrPipeModule } from "nl2br-pipe";
         OrderActionsModule,
         CapitalizeFirstPipeModule,
         Nl2BrPipeModule,
+        [RouterModule.forChild(routes)],
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     ],
     exports: [
