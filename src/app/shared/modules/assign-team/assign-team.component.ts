@@ -6,12 +6,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ActivatedRoute } from '@angular/router';
-import { ProviderServices } from '../../../business/services/provider-services.service';
+import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { GroupStorageService } from '../../services/group-storage.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmBoxComponent } from '../../../business/shared/confirm-box/confirm-box.component';
+import { ConfirmBoxComponent } from '../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { WordProcessor } from '../../services/word-processor.service';
 import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../constants/project-constants';
@@ -402,6 +402,7 @@ export class AssignTeam implements OnInit {
         subDomain = 'alternateMedicinePractitioners';
       } else if (this.user.subSector === 'hoslisticHealth') {
         subDomain = 'physiciansSurgeons';
+      }
     } else if (this.user.sector === 'personalCare') {
       subDomain = 'beautyCare';
     } else if (this.user.sector === 'finance') {
