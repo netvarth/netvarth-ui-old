@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { MatDialogModule } from "@angular/material/dialog";
 import { NgxQRCodeModule } from "ngx-qrcode2";
 import { ShareButtonsModule } from "ngx-sharebuttons/buttons";
+import { ShareIconsModule } from "ngx-sharebuttons/icons";
 import { QRCodeGeneratordetailComponent } from "./qrcodegeneratordetail.component";
 
 @NgModule({
@@ -12,6 +13,7 @@ import { QRCodeGeneratordetailComponent } from "./qrcodegeneratordetail.componen
         CommonModule,
         MatDialogModule,
         ShareButtonsModule,
+        ShareIconsModule,
         NgxQRCodeModule
     ]
 })
