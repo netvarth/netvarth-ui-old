@@ -1141,5 +1141,31 @@ export class QuestionnaireComponent implements OnInit {
     if (value === false) {
       return 'No';
     }
+  } 
+   getMaxdate(data) {
+    let date;
+    console.log("tday"+this.tday);
+    if(this.getQuestion(data).dateProperties && this.getQuestion(data).dateProperties.endDate){
+      const dt = this.reverse(this.getQuestion(data).dateProperties.endDate);
+      date = new Date(dt)
+    } else {
+      date = this.tday;
+    }
+    return date;
   }
+  getMindate(data) {
+    let date;
+    if(this.getQuestion(data).dateProperties && this.getQuestion(data).dateProperties.startDate){
+      const dt = this.reverse(this.getQuestion(data).dateProperties.startDate);
+      date = new Date(dt)
+    } else {
+      date = this.minday;
+    }
+   // console.log(date);
+    return date;
+  }
+   reverse(s){
+   // date.split("/").reverse().join("-");
+    return s.split("-").reverse().join("-");
+}
 }

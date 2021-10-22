@@ -2253,4 +2253,8 @@ export class ProviderServices {
     const url = 'provider/appointment/unassignTeam';
     return this.servicemeta.httpPut(url, post_data);
   }
-}
+   setpersonsWaitlistMgr(status) {
+    const url = 'provider/settings/waitlistMgr/personsAhead/' +status;
+    return this.servicemeta.httpPut(url);
+  }
+} 

@@ -13,7 +13,7 @@
         <div class="col-md-12 no-padding-small" *ngIf="waitlist_manager != null">
             <div class="row">
                 <div class="card pos wtmgr">
-                    <div style="margin-bottom: 10px">
+                    <div style="margin-bottom: 10px"> 
                         <h4>QManager
                             <mat-slide-toggle [(ngModel)]="waitlist_status" (change)="handleCheckinPresence($event)">
                             </mat-slide-toggle> &nbsp;{{waitlist_statusstr}}
@@ -21,7 +21,7 @@
                         <span class="form-level-settings">
                             Use the Jaldee QManager to manage the services you offer using a queue system.
                         </span>
-                    </div>
+                    </div> 
                     <div class="mgn-bt-30" *ngIf="domain !=='healthCare'">
                         <div class="mgn-bt-10" style="font-weight: 600"> Choose your Queue system </div>
                         <mat-radio-group [(ngModel)]="qSystem">
@@ -117,8 +117,11 @@
                                 </div>
                             </div>
                             <div class="mgn-bt-5">
-                                <i class="fa fa-check"></i>
-                                <span class="mgn-lt-5" style="font-weight: bold;"> Number of persons ahead </span>
+                                <mat-checkbox (change)="setnumberofPersons($event)" [checked]="numberofpersons">
+                                    Number of persons ahead
+                                    </mat-checkbox>
+                                <!-- <i class="fa fa-check"></i>
+                                <span class="mgn-lt-5" style="font-weight: bold;"> Number of persons ahead </span> -->
                             </div>
                             <div class="mgn-bt-5">
                                 <mat-checkbox (change)="setWaitingTime($event)" [checked]="est_time">

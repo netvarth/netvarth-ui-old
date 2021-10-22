@@ -503,7 +503,9 @@ export class ServiceViewComponent implements OnInit {
             this.servicename = this.wlServices[aptIndex]['name'];
             this.servicedetails = this.wlServices[aptIndex];
             console.log("detailswait" + JSON.stringify(this.servicedetails));
+           if (this.servicedetails.serviceAvailability['personAhead'] >= 0) {
             this.personsAheadText = 'People in line : ' + this.servicedetails.serviceAvailability['personAhead'];
+            }
             this.getduration(this.servicedetails);
             if (this.servicedetails.serviceAvailability['calculationMode'] !== 'NoCalc') {
               if (this.servicedetails.serviceAvailability['serviceTime']) {
@@ -546,7 +548,7 @@ export class ServiceViewComponent implements OnInit {
               this.wordProcessor.apiErrorAutoHide(this, error);
               this.loading = false;
             });
-      },
+      }, 
         error => {
           this.wordProcessor.apiErrorAutoHide(this, error);
           this.loading = false;

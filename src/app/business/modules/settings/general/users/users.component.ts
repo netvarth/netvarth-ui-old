@@ -623,7 +623,7 @@ export class BranchUsersComponent implements OnInit {
         }
         console.log("Specialization Sector:"+ this.user.sector);
         console.log("Specialization SubDomain:"+ subDomain);
-        this.provider_services.getSpecializations(this.user.sector, subDomain)
+         this.provider_services.getSpecializations(this.user.sector, this.subdomain)
             .subscribe(data => {
                 this.specialization_arr = data;
             });

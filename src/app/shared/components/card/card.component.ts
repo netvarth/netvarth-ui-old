@@ -97,7 +97,9 @@ export class CardComponent implements OnInit, AfterViewChecked {
         switch (this.item.type) {
             case 'waitlist':
                 this.service = this.item.item;
-                this.personsAheadText = 'People in line : ' + this.service.serviceAvailability['personAhead'];
+                if (this.service.serviceAvailability['personAhead'] >= 0) {
+                    this.personsAheadText = 'People in line : ' + this.service.serviceAvailability['personAhead']; 
+                }
                 if (this.service.serviceAvailability['showToken']) {
                 } else {
                     this.buttonCaption = 'Get ' + this.getTerminologyTerm('waitlist');
@@ -109,7 +111,7 @@ export class CardComponent implements OnInit, AfterViewChecked {
                     } else {
                         this.timingCaption = 'Est Wait Time';
                         this.timings = this.getTimeToDisplay(this.service.serviceAvailability['queueWaitingTime']);
-                    }
+                    } 
                 }
                 break;
             case 'appt':
