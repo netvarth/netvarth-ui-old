@@ -323,7 +323,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         </ng-container>
       </div>
       <div *ngIf="subdomainsettings.serviceBillable && !is_donation">
-      <mat-checkbox  [checked]="showServiceduration">
+      <mat-checkbox  [checked]="showServiceduration" [(ngModel)]="showServiceduration" [ngModelOptions]="{standalone: true}">
        Show service duration
         </mat-checkbox>
       </div>
