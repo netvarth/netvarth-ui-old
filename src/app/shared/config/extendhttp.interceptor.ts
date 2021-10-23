@@ -62,7 +62,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       }
     });
     if (this._refreshSubject.observers.length === 1) {
-      this.authService.doLogout().then(
+      this.authService.logoutFromJaldee().then(
         (refreshSubject: any) => {
           this._refreshSubject.next(refreshSubject);
         }
@@ -210,9 +210,6 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
                 switchMap(() => {
                   // return next.handle(this.updateHeader(req, url));
                   // this.router.navigate(['/']);
-
-                  this.authService.logoutFromJaldee();
-                  
                   return EMPTY;
                 })
               );

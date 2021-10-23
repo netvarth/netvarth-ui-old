@@ -17,7 +17,7 @@ export class AuthGuardConsumer implements CanActivate {
       && this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'false') {
       return true;
     }
-    this.authService.logoutFromJaldee();
+    this.authService.logoutFromJaldee().then();
     return false;
   }
 }
@@ -32,7 +32,7 @@ export class AuthGuardProvider implements CanActivate {
       && this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true') {
       return true;
     }
-    this.authService.logoutFromJaldee();
+    this.authService.logoutFromJaldee().then();
     return false;
   }
 }
@@ -44,7 +44,7 @@ export class AuthGuardLogin implements CanActivate {
     if (this.lStorageService.getitemfromLocalStorage('ynw-credentials')) {
       return true;
     }
-    this.authService.logoutFromJaldee();
+    this.authService.logoutFromJaldee().then();
     return false;
   }
 }
@@ -95,7 +95,7 @@ export class AuthGuardProviderHome implements CanActivate {
         return false;
       }
     }
-    this.authService.logoutFromJaldee();
+    this.authService.logoutFromJaldee().then();
     return false;
   }
 }

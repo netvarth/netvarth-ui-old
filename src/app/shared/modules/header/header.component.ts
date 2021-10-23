@@ -360,7 +360,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return (type === 'consumer') ? 'false' : 'true';
   }
   doLogout() {
-    this.authService.logoutFromJaldee();
+    this.authService.logoutFromJaldee().then();
   }
   upgradeMembership() {
     this.lStorageService.setitemonLocalStorage('lic_ret', this.router.url);

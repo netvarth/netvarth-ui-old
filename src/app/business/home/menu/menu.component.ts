@@ -286,6 +286,6 @@ export class MenuComponent implements OnInit, OnDestroy {
     });
   }
   doLogout() {
-    this.authService.logoutFromJaldee();
+    this.authService.logoutFromJaldee().then();
   }
 }

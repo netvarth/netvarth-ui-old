@@ -104,7 +104,7 @@ export class SharedFunctions {
       const user = this.groupService.getitemFromGroupStorage('ynw-user');
       if (!user.id) {
         // this.router.navigate(['logout']);
-        this.authService.logoutFromJaldee();
+        this.authService.logoutFromJaldee().then();
       }
       this.shared_service.getProfile(user.id, this.isBusinessOwner('returntyp'))
         .subscribe(

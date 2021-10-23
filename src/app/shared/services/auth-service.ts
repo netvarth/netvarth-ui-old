@@ -119,26 +119,32 @@ export class AuthService {
     }
 
     logoutFromJaldee() {
-        const isProvider = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
-        const customId = this.lStorageService.getitemfromLocalStorage('customId');
-        if (isProvider === 'true') {
-            this.providerLogout().then(
-                () => {
-                    this.router.navigate(['business', 'login']);
-                }
-            )            
-        } else {
-            this.consumerLogout().then(
-                () => {
-                    if (customId) {
-                        this.router.navigate([customId]);
-                    } else {
-                        this.router.navigate(['/']);
+        const promise = new Promise<void>((resolve, reject) => {
+            const isProvider = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
+            console.log("isProvider:" + isProvider);
+            const customId = this.lStorageService.getitemfromLocalStorage('customId');
+            if (isProvider === 'true') {
+                this.providerLogout().then(
+                    () => {
+                        this.router.navigate(['business', 'login']);
+                        resolve();
                     }
-                    this.lStorageService.removeitemfromLocalStorage('customId');
-                }
-            )
-        }
+                )
+            } else {
+                this.consumerLogout().then(
+                    () => {
+                        if (customId) {
+                            this.router.navigate([customId]);
+                        } else {
+                            this.router.navigate(['/']);
+                        }
+                        this.lStorageService.removeitemfromLocalStorage('customId');
+                        resolve();
+                    }
+                )
+            }
+        });
+        return promise;
     }
 
     doLogout() {
