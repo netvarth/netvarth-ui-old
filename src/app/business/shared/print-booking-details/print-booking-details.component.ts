@@ -29,6 +29,7 @@ export class PrintBookingDetailsComponent implements OnInit {
   bname: any;
   location: any;
   customerName: any;
+  answerSection:any;
 
 
   constructor(private activated_route:ActivatedRoute, 
@@ -135,6 +136,14 @@ printDetails(){
   printWindow.document.close();
 
 }
+isDatagrid(question) {
+  let answerLine=question.answerLine.answer;
+  if(Object.keys(answerLine)[0]==='dataGrid'){
+    return true;
+  }else{
+    return false;
+  }
+}
 getAnswer(question){
   let answerLine=question.answerLine.answer;
   if(Object.keys(answerLine)[0]==='fileUpload'){
@@ -150,8 +159,11 @@ getAnswer(question){
     }
    }
   }
-  return answerLine[Object.keys(answerLine)[0]];
-
+return answerLine[Object.keys(answerLine)[0]];
 }
 
+getinnerTableData(column){
+  return column[Object.keys(column)[0]];
+
+}
 }

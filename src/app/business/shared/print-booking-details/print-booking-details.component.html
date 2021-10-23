@@ -15,7 +15,7 @@
                 <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small">
                     <button class="btn btn-primary float-right m2" (click)="printDetails();"> Print </button>
                     <div class="card" id="print-section">
-                        <table class="table" *ngIf="bookingDetails" >
+                        <table class="table" *ngIf="bookingDetails">
                             <thead>
                                 <!-- <tr>
                                     <td colspan="2"
@@ -34,18 +34,19 @@
                                     <td colspan="2" align="center">{{bname}} </td>
                                 </tr>
                                 <tr>
-                                    <td align="center"  colspan="2">
+                                    <td align="center" colspan="2">
                                         Location :: {{this.bookingDetails.queue.location.place}}
                                     </td>
-                                    
+
                                 </tr>
                                 <tr>
-                                    <td colspan="2" align="center"> {{customer_label| capitalizeFirst}}: {{customerName}} </td>
-                                   
+                                    <td colspan="2" align="center"> {{customer_label| capitalizeFirst}}:
+                                        {{customerName}} </td>
+
                                 </tr>
                                 <tr>
                                     <td colspan="2" align="center"> Service : {{this.bookingDetails.service.name}} </td>
-                                    
+
                                 </tr>
 
                             </tbody>
@@ -68,7 +69,7 @@
                                 [class.section-shadow]="getSectionCount() > 1">
                                 <ng-container *ngIf="getSectionCount() > 1">
 
-                                    <table  style="width:100%" border="1" border-color='#eee'>
+                                    <table style="width:100%" border="1" border-color='#eee'>
                                         <thead style="background-color:grey">
                                             <tr style="text-align:center">
                                                 <td colspan="2"> {{qnr.key}} </td>
@@ -79,9 +80,30 @@
                                                 <td style="width:60%">
                                                     {{question.question.label|capitalizeFirst}}
                                                 </td>
-                                                <td style="width:40%">
+                                                <!-- <td style="width:40%">
+                                                    <i>{{getAnswer(question)}}</i>
+                                                </td> -->
+
+                                                <td  *ngIf="isDatagrid(question) && question.answerLine.answer.dataGrid.length>0">
+                                                    <ng-container
+                                                        *ngFor="let data of question.answerLine.answer.dataGrid ">
+                                                        <table style="width:100%" border="1" border-color='#eee'>
+                                                            <tr *ngFor="let value of data.dataGridColumn ">
+                                                                <td  style="width:60%"> {{value.columnId}}</td>
+
+                                                                <td style="width:40%"> {{getinnerTableData(value.column)}}</td>
+
+
+                                                            </tr>
+                                                        </table>
+
+                                                    </ng-container>
+                                                </td>
+
+                                                <td *ngIf="!isDatagrid(question)" style="width:40%">
                                                     <i>{{getAnswer(question)}}</i>
                                                 </td>
+
                                             </tr>
                                         </tbody>
 
@@ -90,8 +112,8 @@
                                 </ng-container>
                             </div>
                         </ng-container>
-            <!-- {{}} -->
-           
+                        <!-- {{}} -->
+
                         <ng-container *ngIf="groupedQnr.length==0">
 
                             <table class="table table-bordered " style="width:100%">
@@ -105,9 +127,26 @@
                                         <td colspan="2">
                                             {{question.question.label|capitalizeFirst}}
                                         </td>
-                                        <td>
-                                            <i>{{getAnswer(question)}}</i>
-                                        </td>
+                                        <td  *ngIf="isDatagrid(question) && question.answerLine.answer.dataGrid.length>0">
+                                                <ng-container
+                                                    *ngFor="let data of question.answerLine.answer.dataGrid ">
+                                                    <table style="width:100%" border="1" border-color='#eee'>
+                                                        <tr *ngFor="let value of data.dataGridColumn ">
+                                                            <td  style="width:60%"> {{value.columnId}}</td>
+
+                                                            <td style="width:40%"> {{getinnerTableData(value.column)}}</td>
+
+
+                                                        </tr>
+                                                    </table>
+
+                                                </ng-container>
+                                            </td>
+
+                                            <td *ngIf="!isDatagrid(question)" style="width:40%">
+                                                <i>{{getAnswer(question)}}</i>
+                                            </td>
+
                                     </tr>
                                 </tbody>
 
