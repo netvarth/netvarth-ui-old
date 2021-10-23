@@ -50,12 +50,6 @@
                   [innerHTML]="highlightSelText(kw.autoname, 'search_autocompletehighlight', 'keyword')"></span><span
                   class="item-category">{{(kw.typ === 'kwtitle'? 'Business Name/Keyword ': (kwgroup.name === 'special'? kw.subdomain: (kw.typ === 'onlineid'? 'Business ID ' : '') ))}}</span>
               </mat-option>
-              <!-- <mat-option *ngFor="let kw of displaykeywordList[kwgroup.name]" [value]="kw.autoname"
-                (click)="setKeyword(kw)">
-                <span
-                  [innerHTML]="highlightSelText(kw.autoname, 'search_autocompletehighlight', 'keyword', kw.typ)"></span>{{ value }}<span
-                  class="item-category">{{(kw.typ === 'onlineid'? 'Online ID ': (kwgroup.name === 'special'? 'specialization':''))}}</span>
-              </mat-option> -->
             </mat-optgroup>
           </div>
         </mat-autocomplete>
@@ -97,48 +91,9 @@
               </div>
             </div>
             </div>            
-          </div>
-					<!--<div class="item review-card text-center">
-						 <div class="customer-avatar">
-							<img src="assets/images/home/client.png" alt="client-avatar" />
-						</div>
-						<div class="customer-info">
-							<h4 class="name">John Smith</h4>
-							<h4 class="name">Jaldee Telehealth</h4>
-							<p class="position">&nbsp;</p>
-							 <p class="position">Manager</p>
-						</div>
-						 <div class="ratings">
-							<img src="assets/images/home/rating-idle.png" alt="ratings" class="rating-idle" />
-							<img src="assets/images/home/rating-hover.png" alt="ratings" class="rating-hover" />
-						</div> 
-						<div class="review-text">
-							<p>Consult your doctor from anywhere. Visit <a
-									href="https://business.jaldee.com/">telehealth.jaldee.com</a> to view our doctors
-								and book a video consultation.</p>
-						</div>
-					</div>	-->			
+          </div>	
 				</owl-carousel>
       </div>
-
-    <!-- <ul class="hpul">
-      <li class="hpli" >
-        
-      </li>
-    </ul> -->
-    <!-- <app-popularsearch-moreoptions  (searchpopularmoreclick)="setKeyword($event)"
-          [passedPSearches]="displaykeywordList"></app-popularsearch-moreoptions> -->
-    <!-- <div class=""> -->
-      <!-- <p class="pop-search"><b style="padding-right: 10px; line-height:40px">Popular Searches: </b>
-        <span class="pointer-cursor" *ngFor="let kw of jsonlist" (click)="setKeyword(kw)">
-          <a *ngIf="kw.show"> {{kw.displayname}} </a>
-        </span>
-        <a class="learnmore-pointer" style="padding-left:10px !important;"
-          *ngIf="searchLength > paginationLimit && !showmoreSearch" (click)="showMoreItems('more')">more...</a>
-        <a class="learnmore-pointer" style="padding-left:10px !important;" *ngIf="showmoreSearch"
-          (click)="showMoreItems('less')">less...</a>
-      </p> -->
-    <!-- </div> -->
   </div>
 
   <ng-container>
@@ -210,13 +165,7 @@
                   <span
                     [innerHTML]="highlightSelText(kw.autoname, 'search_autocompletehighlight', 'keyword')"></span><span
                     class="item-category">{{(kw.typ === 'kwtitle'? 'Business Name/Keyword ': (kwgroup.name === 'special'? kw.subdomain: (kw.typ === 'onlineid'? 'Business ID ' : '') ))}}</span>
-                </mat-option>
-                <!-- <mat-option *ngFor="let kw of displaykeywordList[kwgroup.name]" [value]="kw.autoname"
-                  (click)="setKeyword(kw)">
-                  <span
-                    [innerHTML]="highlightSelText(kw.autoname, 'search_autocompletehighlight', 'keyword', kw.typ)"></span>{{ value }}<span
-                    class="item-category">{{(kw.typ === 'onlineid'? 'Online ID ': (kwgroup.name === 'special'? 'specialization':''))}}</span>
-                </mat-option> -->
+                </mat-option>              
               </mat-optgroup>
             </div>
           </mat-autocomplete>
@@ -265,48 +214,9 @@
                 </div>
               </div>
               </div>            
-            </div>
-            <!--<div class="item review-card text-center">
-               <div class="customer-avatar">
-                <img src="assets/images/home/client.png" alt="client-avatar" />
-              </div>
-              <div class="customer-info">
-                <h4 class="name">John Smith</h4>
-                <h4 class="name">Jaldee Telehealth</h4>
-                <p class="position">&nbsp;</p>
-                 <p class="position">Manager</p>
-              </div>
-               <div class="ratings">
-                <img src="assets/images/home/rating-idle.png" alt="ratings" class="rating-idle" />
-                <img src="assets/images/home/rating-hover.png" alt="ratings" class="rating-hover" />
-              </div> 
-              <div class="review-text">
-                <p>Consult your doctor from anywhere. Visit <a
-                    href="https://business.jaldee.com/">telehealth.jaldee.com</a> to view our doctors
-                  and book a video consultation.</p>
-              </div>
-            </div>	-->			
+            </div>		
           </owl-carousel>
         </div>
-  
-      <!-- <ul class="hpul">
-        <li class="hpli" >
-          
-        </li>
-      </ul> -->
-      <!-- <app-popularsearch-moreoptions  (searchpopularmoreclick)="setKeyword($event)"
-            [passedPSearches]="displaykeywordList"></app-popularsearch-moreoptions> -->
-      <!-- <div class=""> -->
-        <!-- <p class="pop-search"><b style="padding-right: 10px; line-height:40px">Popular Searches: </b>
-          <span class="pointer-cursor" *ngFor="let kw of jsonlist" (click)="setKeyword(kw)">
-            <a *ngIf="kw.show"> {{kw.displayname}} </a>
-          </span>
-          <a class="learnmore-pointer" style="padding-left:10px !important;"
-            *ngIf="searchLength > paginationLimit && !showmoreSearch" (click)="showMoreItems('more')">more...</a>
-          <a class="learnmore-pointer" style="padding-left:10px !important;" *ngIf="showmoreSearch"
-            (click)="showMoreItems('less')">less...</a>
-        </p> -->
-      <!-- </div> -->
     </div>
   
     <ng-container>

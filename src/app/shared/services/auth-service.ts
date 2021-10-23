@@ -181,9 +181,6 @@ export class AuthService {
 
     consumerLogin(post_data, moreParams?) {
         post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
-        if (this.lStorageService.getitemfromLocalStorage('accountId')) {
-            post_data['accountId'] = this.lStorageService.getitemfromLocalStorage('accountId');
-        }
         this.sendMessage({ ttype: 'main_loading', action: true });
         const promise = new Promise((resolve, reject) => {
             this.shared_services.ConsumerLogin(post_data)

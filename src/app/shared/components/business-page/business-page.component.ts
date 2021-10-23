@@ -880,7 +880,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     if(res['customId']){
       this.customId = res['customId'];
       this.lStorageService.setitemonLocalStorage('customId', this.customId );
-      this.lStorageService.setitemonLocalStorage('accounttId', this.businessjson.id);
+      this.lStorageService.setitemonLocalStorage('accountId', res['id']);
     }
     this.accEncUid = res['accEncUid'];
     if (!this.userId) {

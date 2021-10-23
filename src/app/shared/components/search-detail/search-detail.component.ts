@@ -216,7 +216,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     this.showrefinedsection = false; // this is done to override all conditions and to hide the refined filter section by default
     this.getDomainListMain()
       .then(data => {
-        this.domainlist_data = data;
+        const bDomains = data;
+        this.domainlist_data = this.shared_functions.sortByKey(bDomains, 'order' );
         this.activaterouterobj.params
           .subscribe(paramsv => {
             this.setSearchfields(paramsv, 1);
@@ -325,7 +326,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         this.shared_service.bussinessDomains()
           .subscribe(
             res => {
-              this.domainlist_data = res;
+              const bDomains = res;
+              this.domainlist_data = this.shared_functions.sortByKey(bDomains, 'order' );
               const today = new Date();
               const postdata = {
                 cdate: today,
@@ -1404,12 +1406,14 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     if (this.domainlist_data === undefined) {
       const bconfig = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
       if (bconfig && bconfig.bdata) { // case if data is there in local storage
-        this.domainlist_data = bconfig.bdata;
+        const bDomains = bconfig.bdata;
+        this.domainlist_data = this.shared_functions.sortByKey(bDomains, 'order' );
       } else {
         this.shared_service.bussinessDomains()
           .subscribe(
             res => {
-              this.domainlist_data = res;
+              const bDomains = res;
+              this.domainlist_data = this.shared_functions.sortByKey(bDomains, 'order' );
               const today = new Date();
               const postdata = {
                 cdate: today,

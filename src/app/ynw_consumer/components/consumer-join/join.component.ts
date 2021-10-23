@@ -295,6 +295,9 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
   }
   signUpApiConsumer(user_details) {
     this.resendemailotpsuccess = false;
+    if (this.lStorageService.getitemfromLocalStorage('customId') && this.lStorageService.getitemfromLocalStorage('accountId')) {
+      user_details['accountId'] = this.lStorageService.getitemfromLocalStorage('accountId');
+  }
     this.subs.sink = this.shared_services.signUpConsumer(user_details)
       .subscribe(
         () => {

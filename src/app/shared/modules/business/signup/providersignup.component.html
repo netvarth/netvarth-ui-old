@@ -12,25 +12,27 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                         <div class="form-group">
                             <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
                             <div class="input-group-prepend">
-                                <span style="width: 20% !important;" class="input-group-text mgn-m-up-10" id="lstCountryCode">                            
+                                <span style="width: 20% !important;" class="input-group-text mgn-m-up-10"
+                                    id="lstCountryCode">
                                     <!-- <mat-select [(ngModel)] = "selectedCountryCode" [ngModelOptions]="{standalone: true}"> -->
                                     <mat-select formControlName="selectedCountryCode">
-                                        <mat-option *ngFor="let codes of countryCodes" [value]="codes.value">{{codes.displayName}}</mat-option>
-                                      </mat-select>
-                                    </span>
+                                        <mat-option *ngFor="let codes of countryCodes" [value]="codes.value">
+                                            {{codes.displayName}}</mat-option>
+                                    </mat-select>
+                                </span>
 
-                                <input class="mgn-lt-15" type="text" formControlName="phonenumber" name="phone" id="phone"
-                                    placeholder="Mobile number" maxlength=10 />                                
+                                <input class="mgn-lt-15" type="text" formControlName="phonenumber" name="phone"
+                                    id="phone" placeholder="Mobile number" maxlength=10 />
                             </div>
-                            <app-field-error-display
-                                    [displayError]="fed_service.isFieldValid(signupForm,'phonenumber')" [errorMsgs]="fed_service.getErrorMessage(signupForm,'phonenumber',
+                            <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'phonenumber')"
+                                [errorMsgs]="fed_service.getErrorMessage(signupForm,'phonenumber',
                                 {
                                   'required' : 'Mobile number is required',
                                   'minlength' : 'Enter a 10 digit mobile number',
                                   'maxlength' : 'Enter a 10 digit mobile number',
                                   'pattern' : 'Only numbers are allowed'
                                 })">
-                                </app-field-error-display>
+                            </app-field-error-display>
                         </div>
                         <div class="form-group">
                             <label for="Firstname"><i class="zmdi zmdi-email"></i></label>
@@ -63,7 +65,8 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                 <a rel="noopener" target="_blank" (click)="gotoTerms()">{{terms_cond_cap}}</a></span>
                         </div>
                         <div class="form-group form-button">
-                            <input type="submit" name="signup" id="signup" class="form-submit-next" value="Next" [ngClass]="{'disableCss': (signupForm.get('terms_condition').value == '' || signupForm.get('terms_condition').value == false || !signupForm.valid)}"
+                            <input type="submit" name="signup" id="signup" class="form-submit-next" value="Next"
+                                [ngClass]="{'disableCss': (signupForm.get('terms_condition').value == '' || signupForm.get('terms_condition').value == false || !signupForm.valid)}"
                                 [disabled]="signupForm.get('terms_condition').value == '' || signupForm.get('terms_condition').value == false || !signupForm.valid"
                                 (click)="registerClicked()">
                         </div>
@@ -85,36 +88,17 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <h2 class="form-title">Select your Domain </h2>
                         <div class="col-md-7 col-sm-12 col-xs-12 no-padding-small">
-                            <div class="col-md-12 col-xs-12 col-sm-12 control domains pointer-cursor" (click)="selectedDomain = domain" *ngFor="let domain of business_domains; let i = index" [class.div-grn-outline]="domain===selectedDomain">  
-                                <div class="pull-left"><div class="subdom_img {{domainSettings[domain.domain].iconClass}}"
-                                    *ngIf="domainSettings[domain.domain] "></div></div> 
-                                <div  class="pull-left mgn-lt-10"><h6>{{domain.displayName}}</h6></div> 
+                            <div class="col-md-12 col-xs-12 col-sm-12 control domains pointer-cursor"
+                                (click)="selectedDomain = domain" *ngFor="let domain of business_domains; let i = index"
+                                [class.div-grn-outline]="domain===selectedDomain">
+                                <div class="pull-left">
+                                    <div class="subdom_img {{domainSettings[domain.domain].iconClass}}"
+                                        *ngIf="domainSettings[domain.domain] "></div>
+                                </div>
+                                <div class="pull-left mgn-lt-10">
+                                    <h6>{{domain.displayName}}</h6>
+                                </div>
                             </div>
-                            <!-- <mat-accordion class="acc-btn acc-doms">
-                                <mat-expansion-panel [expanded]="domainIndex[i]"
-                                    *ngFor="let domain of business_domains; let i = index"
-                                    [class.active]="domain===selectedDomain">
-                                    <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'"
-                                        class="acc-header">
-                                        <mat-panel-title class="block-level">
-                                            <div class="subdom_img {{domainSettings[domain.domain].iconClass}}"
-                                                *ngIf="domainSettings[domain.domain]">
-                                            </div>
-                                            <h6>{{domain.displayName}}</h6>
-                                        </mat-panel-title>
-                                    </mat-expansion-panel-header> -->
-                                    <!-- <div class="acc-subdoms" *ngIf="domain && domain.subDomains">
-                                        <ul>
-                                            <li *ngFor="let subdomain of domain.subDomains"
-                                                [class.subdomainstyle]="subdomain.subDomain==selectedSubDomain.subDomain"
-                                                (click)="subdomSelection(subdomain,domain, i)">
-                                                {{subdomain.displayName}} <i class="fa fa-check pull-right"
-                                                    *ngIf="subdomain.subDomain==selectedSubDomain.subDomain"></i>
-                                            </li>
-                                        </ul>
-                                    </div> -->
-                                <!-- </mat-expansion-panel>
-                            </mat-accordion> -->
                             <div class="col-md-12 col-xs-12 col-sm-12 control">
                                 <div class="form-group form-button">
                                     <input type="submit" name="signup" id="signup" class="form-submitback" value="Back"
@@ -146,25 +130,11 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <h2 class="form-title">Select your area of specialization </h2>
                         <div class="col-md-7 col-sm-12 col-xs-12 no-padding-small">
-                            <!-- <mat-accordion class="acc-btn acc-doms">
-                                <mat-expansion-panel [expanded]="domainIndex[i]"
-                                    *ngFor="let domain of business_domains; let i = index"
-                                    [class.active]="domain===selectedDomain">
-                                    <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'"
-                                        class="acc-header">
-                                        <mat-panel-title class="block-level">
-                                            <div class="subdom_img {{domainSettings[domain.domain].iconClass}}"
-                                                *ngIf="domainSettings[domain.domain]">
-                                            </div>
-                                            <h6>{{domain.displayName}}</h6>
-                                        </mat-panel-title>
-                                    </mat-expansion-panel-header> -->
-                                    <!-- (click)="subdomSelection(subdomain,selectedDomain, i)" -->
-                                    <div class="acc-subdoms subdomains pointer-cursor" (click)="selectedSubDomain = subdomain" *ngFor="let subdomain of selectedDomain.subDomains" [class.div-grn-outline]="subdomain==selectedSubDomain">
-                                        <h6>{{subdomain.displayName}}</h6>
-                                    </div>
-                                <!-- </mat-expansion-panel>
-                            </mat-accordion> -->
+                            <div class="acc-subdoms subdomains pointer-cursor" (click)="selectedSubDomain = subdomain"
+                                *ngFor="let subdomain of selectedDomain.subDomains"
+                                [class.div-grn-outline]="subdomain==selectedSubDomain">
+                                <h6>{{subdomain.displayName}}</h6>
+                            </div>
                             <div class="col-md-12 col-xs-12 col-sm-12 control">
                                 <div class="form-group form-button">
                                     <input type="submit" name="signup" id="signup" class="form-submitback" value="Back"
@@ -213,9 +183,9 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                         </div> -->
                                         <div class="form-group">
                                             <!-- <mat-form-field> -->
-                                                <input class="number-ip-sm no-padding" matInput placeholder="Enter OTP"
-                                                    [(ngModel)]="otp" [ngModelOptions]="{standalone: true}"
-                                                    autocomplete="off" (keypress)="removSpecChar($event)" maxlength="5">
+                                            <input class="number-ip-sm no-padding" matInput placeholder="Enter OTP"
+                                                [(ngModel)]="otp" [ngModelOptions]="{standalone: true}"
+                                                autocomplete="off" (keypress)="removSpecChar($event)" maxlength="5">
                                             <!-- </mat-form-field> -->
                                         </div>
                                         <mat-dialog-actions>
@@ -235,7 +205,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                                 {{seconds_cap}}
                                             </div>
                                         </mat-dialog-actions>
-                                        
+
                                     </div>
                                 </div>
                                 <div>
@@ -249,9 +219,9 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                 <div class="ynw-common-form-nm otpemailsection">
                                     <div class="form-group">
                                         <!-- <mat-form-field> -->
-                                            <input type="email" matInput [(ngModel)]="email"
-                                                [ngModelOptions]="{standalone: true}" placeholder="Enter your email id"
-                                                autocomplete="off" />
+                                        <input type="email" matInput [(ngModel)]="email"
+                                            [ngModelOptions]="{standalone: true}" placeholder="Enter your email id"
+                                            autocomplete="off" />
                                         <!-- </mat-form-field> -->
                                     </div>
                                     <mat-dialog-actions>
@@ -264,46 +234,50 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                         </div>
                                     </mat-dialog-actions>
                                 </div>
-                                
+
                             </ng-container>
-                           <div class="password-form" *ngIf="isValidOtp">
-                            <h3 class="password-form-title form-title">Create new password</h3>
-                            <!-- <h3 class="form-title">Please set your password to finish sign up process.</h3> -->
-                            <h6 class="password-form-message">Please set your password to finish sign up process.</h6>
-                            <div class="password-form-box">
-                                <div class="padding-top">
-                                    <div class="form-group">
-                                        <label for="password">Password</label>
-                                        <input type="password" formControlName="new_password" name="name" id="name" class="password"
-                                            placeholder="Enter password" />
-                                        <app-field-error-display
-                                            [displayError]="fed_service.isFieldValid(spForm,'new_password')"
-                                            [errorMsgs]="fed_service.getErrorMessage(spForm,'new_password',
+                            <div class="password-form" *ngIf="isValidOtp">
+                                <h3 class="password-form-title form-title">Create new password</h3>
+                                <!-- <h3 class="form-title">Please set your password to finish sign up process.</h3> -->
+                                <h6 class="password-form-message">Please set your password to finish sign up process.
+                                </h6>
+                                <div class="password-form-box">
+                                    <div class="padding-top">
+                                        <div class="form-group">
+                                            <label for="password">Password</label>
+                                            <input type="password" formControlName="new_password" name="name" id="name"
+                                                class="password" placeholder="Enter password" />
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(spForm,'new_password')"
+                                                [errorMsgs]="fed_service.getErrorMessage(spForm,'new_password',
                                             {'required' : 'Password is required',
                                             'pattern' : 'Use minimum 8 characters with atleast one uppercase, lowercase and number'})">
+                                            </app-field-error-display>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="re-enter">Confirm Password</label>
+                                        <input type="password" formControlName="confirm_password" name="passsword"
+                                            id="password" class="password" placeholder="Re-enter password*"
+                                            (keyup)="keyPressed()" />
+                                        <app-field-error-display
+                                            [displayError]="fed_service.isFieldValid(spForm,'confirm_password')"
+                                            [errorMsgs]="fed_service.getErrorMessage(spForm,'confirm_password',
+                                        {'required' : 'Re-enter Password'})">
+                                        </app-field-error-display>
+                                        <app-field-error-display
+                                            [displayError]="spForm.get('confirm_password').valid && !isValidConfirm_pw"
+                                            errorMsg="Entered passwords does not match">
                                         </app-field-error-display>
                                     </div>
-                                </div>
-                            
-                                <div class="form-group">
-                                    <label for="re-enter">Confirm Password</label>
-                                    <input type="password" formControlName="confirm_password" name="passsword" id="password" class="password"
-                                        placeholder="Re-enter password*" (keyup)="keyPressed()" />
-                                    <app-field-error-display
-                                        [displayError]="fed_service.isFieldValid(spForm,'confirm_password')" [errorMsgs]="fed_service.getErrorMessage(spForm,'confirm_password',
-                                        {'required' : 'Re-enter Password'})">
-                                    </app-field-error-display>
-                                    <app-field-error-display [displayError]="spForm.get('confirm_password').valid && !isValidConfirm_pw"
-                                        errorMsg="Entered passwords does not match">
-                                    </app-field-error-display>
-                                </div>
-                                <div class="form-group form-button">
-                                    <input type="submit" [disabled]="!spForm.valid || joinClicked" name="signup" id="signup"
-                                        class="create-new-password-button form-submit" value="Join Jaldee"
-                                        (click)="onPasswordSubmit()">
+                                    <div class="form-group form-button">
+                                        <input type="submit" [disabled]="!spForm.valid || joinClicked" name="signup"
+                                            id="signup" class="create-new-password-button form-submit"
+                                            value="Join Jaldee" (click)="onPasswordSubmit()">
+                                    </div>
                                 </div>
                             </div>
-                           </div>
                         </form>
 
                     </div>
@@ -363,46 +337,32 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                         </div>
                                     </div>
                                 </li>
-
-                                <!-- <app-saleschannel (retfromSC)="onReferalSubmit($event)"
-                                        (resetApiErrors)="resetApiErrors()">
-                                    </app-saleschannel> -->
-                                <!-- <li [class.active]="hearus=='Jaldee'" (click)="saleschannelselection('Jaldee')">
-                                    <img src="../../../../assets/images/home/signup/jaldee.png" width="25"
-                                        height="25" />
-                                    <h6>Jaldee</h6>
-                                </li> -->
                                 <li [class.active]="hearus=='Facebook'" (click)="saleschannelselection('Facebook')">
-                                    <img src="./assets/images/home/signup/facebook-01.png" width="25"
-                                        height="25" />
+                                    <img src="./assets/images/home/signup/facebook-01.png" width="25" height="25" />
                                     <h6>Facebook</h6>
                                 </li>
                                 <li [class.active]="hearus=='Friend'" (click)="saleschannelselection('Friend')">
-                                    <img src="./assets/images/home/signup/Friend-01.png" width="25"
-                                        height="25" />
+                                    <img src="./assets/images/home/signup/Friend-01.png" width="25" height="25" />
                                     <h6>Friend</h6>
                                 </li>
                                 <li [class.active]="hearus=='GoogleSearch'"
                                     (click)="saleschannelselection('GoogleSearch')">
-                                    <img src="./assets/images/home/signup/Google.png" width="25"
-                                        height="25" />
+                                    <img src="./assets/images/home/signup/Google.png" width="25" height="25" />
                                     <h6>Google</h6>
                                 </li>
                                 <li [class.active]="hearus=='Twitter'" (click)="saleschannelselection('Twitter')">
-                                    <img src="./assets/images/home/signup/Twitter.png" width="25"
-                                        height="25" />
+                                    <img src="./assets/images/home/signup/Twitter.png" width="25" height="25" />
                                     <h6>Twitter</h6>
                                 </li>
                                 <li [class.active]="hearus=='Other'" (click)="saleschannelselection('Other')">
-                                    <img src="./assets/images/home/signup/Other-01.png" width="25"
-                                        height="25" />
+                                    <img src="./assets/images/home/signup/Other-01.png" width="25" height="25" />
                                     <h6>Other</h6>
                                 </li>
                             </ul>
                         </div>
                         <div class="form-group form-button">
-                            <input type="button" name="backToSubDomain" id="backToSubDomain" class="form-submitback" value="Back"
-                                        (click)="backToSubdomains()">&nbsp;
+                            <input type="button" name="backToSubDomain" id="backToSubDomain" class="form-submitback"
+                                value="Back" (click)="backToSubdomains()">&nbsp;
                             <input type="submit" name="signup" id="signup" class="form-submit" value="Next"
                                 (click)="submitHearus()">
                         </div>

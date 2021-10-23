@@ -202,7 +202,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       }
     }
     if (this.domainlistpassed.length > 0) {
-      this.domainlist_data = this.domainlistpassed;
+      const bDomains = this.domainlistpassed;
+      this.domainlist_data = this.shared_functions.sortByKey(bDomains, 'order' );
     } else {
       this.getDomainList();
     }
@@ -613,14 +614,16 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       const diff = this.dateTimeProcessor.getdaysdifffromDates('now', saveddate);
       if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
         run_api = false;
-        this.domainlist_data = bdata;
+        const bDomains = bdata;
+        this.domainlist_data = this.shared_functions.sortByKey(bDomains, 'order' );
       }
     }
     if (run_api) { // case if data is not there in data
       this.shared_service.bussinessDomains()
         .subscribe(
           res => {
-            this.domainlist_data = res;
+            const bDomains = res;
+            this.domainlist_data = this.shared_functions.sortByKey(bDomains, 'order' );
             const today = new Date();
             const postdata = {
               cdate: today,

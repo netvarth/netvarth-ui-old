@@ -8,7 +8,7 @@ import { LocalStorageService } from '../services/local-storage.service';
 @Injectable()
 export class AuthGuardConsumer implements CanActivate {
 
-  constructor( 
+  constructor(
     private authService: AuthService,
     private lStorageService: LocalStorageService) { }
 
@@ -52,12 +52,14 @@ export class AuthGuardLogin implements CanActivate {
 
 @Injectable()
 export class AuthGuardHome implements CanActivate {
-  constructor(private router: Router, private groupService: GroupStorageService, 
-    private lStorageService: LocalStorageService) {}
+  constructor(private router: Router, private groupService: GroupStorageService,
+    private lStorageService: LocalStorageService) { }
   canActivate() {
     let credentials = null;
     let userType = null;
-    if (this.lStorageService.getitemfromLocalStorage('ynw-credentials') && this.groupService.getitemFromGroupStorage('ynw-user') ) {
+    this.lStorageService.removeitemfromLocalStorage('accountId');
+    this.lStorageService.removeitemfromLocalStorage('customId');
+    if (this.lStorageService.getitemfromLocalStorage('ynw-credentials') && this.groupService.getitemFromGroupStorage('ynw-user')) {
       credentials = this.groupService.getitemFromGroupStorage('ynw-user');
       userType = credentials['userType'];
       if (this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true' || userType === 3) {
