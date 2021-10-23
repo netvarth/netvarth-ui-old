@@ -407,8 +407,11 @@ export class ServiceViewComponent implements OnInit {
   }
   setBusinesssProfile(res) {
     this.onlinePresence = res['onlinePresence'];
-    this.customId = res['customId'];
     this.accEncUid = res['accEncUid'];
+    const custID = res['customId'] ? res['customId']:res['accEncUid'];
+    this.customId = custID;
+    this.lStorageService.setitemonLocalStorage('customId', custID);
+    this.lStorageService.setitemonLocalStorage('accountId', res['id']);
     if (!this.userId) {
       this.businessjson = res;
       this.sector = this.businessjson.serviceSector.domain;

@@ -7,6 +7,7 @@ import { SharedServices } from "../../services/shared-services";
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
+import { LocalStorageService } from "../../services/local-storage.service";
 
 @Component({
   selector: 'app-business-page-home',
@@ -42,7 +43,8 @@ export class BusinessPageHomeComponent implements OnInit {
     private shared_services: SharedServices,
     private domainConfigService: DomainConfigGenerator,
     private observer: BreakpointObserver,
-    private s3Processor: S3UrlProcessor) {
+    private s3Processor: S3UrlProcessor,
+    private lStorageService: LocalStorageService) {
   }
   ngOnInit() {
     const _this = this;
@@ -162,6 +164,9 @@ export class BusinessPageHomeComponent implements OnInit {
     }
   }
   setBusinesssProfile(res) {
+    const custID = res['customId'] ? res['customId']:res['accEncUid'];
+    this.lStorageService.setitemonLocalStorage('customId', custID);
+    this.lStorageService.setitemonLocalStorage('accountId', res['id']);
     this.businessjson = res;
     this.businessName = this.businessjson.businessName;
     if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {

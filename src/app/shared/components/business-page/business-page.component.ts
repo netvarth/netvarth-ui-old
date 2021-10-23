@@ -877,11 +877,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.onlinePresence = res['onlinePresence'];
     console.log("response"+res);
     console.log(res['customId']);
-    if(res['customId']){
-      this.customId = res['customId'];
-      this.lStorageService.setitemonLocalStorage('customId', this.customId );
-      this.lStorageService.setitemonLocalStorage('accountId', res['id']);
-    }
+    const custID = res['customId'] ? res['customId']:res['accEncUid'];
+    this.customId = custID;
+    this.lStorageService.setitemonLocalStorage('customId', custID);
+    this.lStorageService.setitemonLocalStorage('accountId', res['id']);
     this.accEncUid = res['accEncUid'];
     if (!this.userId) {
       this.api_loading = false;
