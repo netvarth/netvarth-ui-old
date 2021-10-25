@@ -48,14 +48,16 @@
             </ul>
           </div>
           <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 bold pad-top-10 mgn-up-10 mgn-bt-10 border-tp">
-            <div>
+            <div >
+              <!-- *ngIf="defaultFolder === 'yes'" -->
               <p>Choose folder to upload</p>
-              <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)">
-                <mat-radio-button [value]="'public'" checked>
+              <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)" >
+                <mat-radio-button [value]="'public'" >
+                  <!-- [checked]='true' *ngIf="defaultFolder"-->
                   Public folder
                 </mat-radio-button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                <mat-radio-button [value]="'private'">
+                <mat-radio-button [value]="'private'" >
                   Private folder
                 </mat-radio-button>
               </mat-radio-group>
@@ -67,7 +69,7 @@
         <button type="button" class="disp-none btn btn-light-primary font-weight-bold" data-dismiss="modal"
           #closebutton>Cancel</button>
         <button type="button" class="btn btn-primary font-weight-bold hf-btn" data-dismiss="modal" #closebutton
-          (click)="actionCompleted()">Ok</button>
+          (click)="actionCompleted()" [disabled]="!choose_type" >Ok</button>
         <!-- [disabled]="!choose_type" -->
       </div>
       <div class="error-section" *ngIf="apiError !== ''">
@@ -153,7 +155,8 @@
                       </div>
 
                       <div class="progress mb-1" style="height:6px">
-                        <div class="progress-bar bg-primary" style="width:50%"></div>
+                        <!-- style="width:'{{storageleft.remainingStorage}}' !important;" -->
+                        <div class="progress-bar bg-primary" style="width: 50%;" ></div>
                       </div>
 
                     </div>
@@ -245,7 +248,7 @@
 
                     <i class="fa fa-folder" aria-hidden="true">
 
-                      <p (click)="publicfolder('public')"> Public Folder</p>
+                      <p (click)="publicfolder('public')"> Patient Files</p>
                     </i>
                     <!-- <img src="../../../assets/images/Group 818.jpg" class=" fa fa-folder pull-left text-light "
                   style="width: 22px !important; margin-top: 2px !important;"> -->
@@ -256,7 +259,7 @@
 
                     <i class="fa fa-folder" aria-hidden="true">
 
-                      <p (click)="publicfolder('private')">Private Folder</p>
+                      <p (click)="publicfolder('private')">My Files</p>
                     </i>
                     <!-- <img src="../../../assets/images/Group 816.jpg" class=" fa fa-folderpull-left text-light "
                   style="width: 22px !important; margin-top: 2px !important;"> -->
@@ -291,18 +294,12 @@
                   <a class="dropdown-item" href="#">Link 3</a>
                 </div> -->
 
-              <div class="mx-2 cust-name">
+              <!-- <div class="mx-2 cust-name">
                 <div class="mx-2">
                   <h4>Patients Files</h4>
 
                 </div>
-                <!-- <h4>
-                  <span> Patients Files</span>
-                  <span> <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-left">
-                      <img src="../../../assets/images/provider-filter-icon.png"
-                        style="width: 22px !important; margin-top: -6px !important;">
-                    </a></span>
-                </h4> -->
+               
                 <button type="button" class="my-3 btn btn-white p-button-rounded p-ripple dropdown-toggle"
                   (click)="showFilterSidebar()"
                   style="width: 250px; background-color: white !important; border: 1px solid gray;">
@@ -312,16 +309,18 @@
                   <img src="../../../assets/images/Group 820.jpg" class="pull-right text-light"
                     style="width: 22px !important; margin-top: 2px !important;">
                 </button>
-              </div>
-              <div class="mx-2 container">
+                <div class="form-group pull-right my-3 mx-4">
+                  <input type="text" class="form-control inp p-button-rounded" placeholder="Search" [(ngModel)]="searchTerm">
+                </div>
+              </div> -->
+              <!-- <div class="mx-2 container">
 
 
                 <table class="table table-hover">
 
                   <thead>
                     <tr>
-                      <!-- <th>Patient Name</th> -->
-                      <th>Index</th>
+                     
                       <th>File Name</th>
                       <th>Date</th>
                       <th>File Type</th>
@@ -329,11 +328,9 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr style="cursor: pointer;" *ngFor="let customer of customers  let i= index" (click)="preview(customer)">
-                      <!-- <td>
-                       {{customer.patientName}} | paginate: config;
-                     </td> -->
-                     <td>{{i}}</td>
+                    <tr style="cursor: pointer;" *ngFor="let customer of customers | filter:searchTerm | paginate: config;   let i= index" (click)="preview(customer)">
+                     
+                     
                       <td>
                         {{customer.fileName}}
                       </td>
@@ -347,14 +344,17 @@
                        {{customer.fileSize}}
                       </td>
                     </tr>
+                    <tr *ngIf="customers.length === 0">
+                     <div class="text-center" *ngIf="filter.fileName === '' || filter.fileSize === '' || filter.fileType === '' || filter.folderName === '' "><strong>No Files Found</strong> </div>
+                    </tr>
                   </tbody>
 
                 </table>
-                <!-- <div class="d-block ml-auto">
+                <div class="d-block ml-auto my-3 pull-right">
 
                   <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
-              </div> -->
-                <!-- <p-table [value]="customers" responsiveLayout="scroll">
+              </div>
+                <p-table [value]="customers" responsiveLayout="scroll">
                   <ng-template pTemplate="header">
                     <tr>
                       <th class="th">File Name</th>
@@ -379,8 +379,8 @@
                       </td>
                     </tr>
                   </ng-template>
-                </p-table> -->
-              </div>
+                </p-table> 
+              </div> -->
               <div style="text-align: center;" class="my-3">
                 <div class="prov-name-txt my-2" style="text-transform:none !important;">
                   Unlock More Space!
@@ -390,7 +390,7 @@
                 </div>
                 <button (click)="gotoSmsAddon()" class="btn btn-warning text-dark p-button-rounded"> Upgrade Now
                 </button>
-
+<!-- provider/license/addons -->
 
 
 
@@ -567,7 +567,7 @@
       </div> -->
     </ul>
   </section>
-  <div class="filter-footer">
+  <div class="filter-footer" *ngIf="filterapplied === true">
     <!-- *ngIf="filterapplied === true" -->
     <button class="btn reset-btn" (click)="clearFilter()">
       <i class="fa fa-undo"></i>Reset
@@ -817,24 +817,19 @@
                       class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
                       id="folder2">
                       <i class="fa fa-folder" aria-hidden="true">
-                        <p (click)="publicfolder('public')"> Public Folder</p>
+                        <p (click)="publicfolder('public')"> Patient Files</p>
                       </i>
                     </div>
                     <div (click)="publicfolder('public')"
                       class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
                       id="folder2">
                       <i class="fa fa-folder" aria-hidden="true">
-                        <p (click)="publicfolder('public')"> Public Folder</p>
+                        <p (click)="publicfolder('public')"> My Files</p>
                       </i>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="mx-2 cust-name">
-                <div class="mx-2">
-                  <h4>Patients Files</h4>
-
-                </div>
                 <!-- <h4>
                   <span> Patients Files</span>
                   <span> <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-left">
@@ -842,6 +837,12 @@
                         style="width: 22px !important; margin-top: -6px !important;">
                     </a></span>
                 </h4> -->
+              <!-- <div class="mx-2 cust-name">
+                <div class="mx-2">
+                  <h4>Patients Files</h4>
+
+                </div>
+              
                 <button type="button" class="my-3 btn btn-white p-button-rounded p-ripple dropdown-toggle"
                   (click)="showFilterSidebar()"
                   style="width: 250px; background-color: white !important; border: 1px solid gray;">
@@ -851,43 +852,49 @@
                   <img src="../../../assets/images/Group 820.jpg" class="pull-right text-light"
                     style="width: 22px !important; margin-top: 2px !important;">
                 </button>
-              </div>
-              <div class="mx-2 container">
+                <div class="form-group pull-right">
+                  <input type="text" class="form-control rounded" placeholder="Search" [(ngModel)]="searchTerm">
+                </div>
+              </div> -->
+              <!-- <div class="mx-2 container">
 
 
                 <table class="table table-hover">
 
                   <thead>
                     <tr>
-                      <!-- <th>Patient Name</th> -->
+                     
                       <th>File Name</th>
                       <th>Date</th>
                       <th>File Type</th>
                       <th>File Size</th>
                     </tr>
                   </thead>
-                  <tbody responsiveLayout="scroll">
-                    <tr style="cursor: pointer;" *ngFor="let customer of customers" (click)="preview(customer)">
-                      <!-- <td>
-                       {{customer.patientName}}
-                     </td> -->
+                  <tbody>
+                    <tr style="cursor: pointer;" *ngFor="let customer of customers | filter:searchTerm | paginate: config;   let i= index" (click)="preview(customer)">
+                     
+                     
                       <td>
-                        <span class="image-text">{{customer.fileName}}</span>
+                        {{customer.fileName}}
                       </td>
                       <td>
-                        <span class="image-text">{{customer.uploadedDate}}</span>
+                     {{customer.uploadedDate}}
                       </td>
                       <td>
-                        <span>{{customer.fileType}}</span>
+                      {{customer.fileType}}
                       </td>
                       <td>
-                        <span>{{customer.fileSize}}</span>
+                       {{customer.fileSize}}
                       </td>
                     </tr>
                   </tbody>
 
                 </table>
-                <!-- <p-table [value]="customers" responsiveLayout="scroll">
+                <div class="d-block ml-auto">
+
+                  <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+              </div>
+                 <p-table [value]="customers" responsiveLayout="scroll">
                   <ng-template pTemplate="header">
                     <tr>
                       <th class="th">File Name</th>
@@ -912,8 +919,8 @@
                       </td>
                     </tr>
                   </ng-template>
-                </p-table> -->
-              </div>
+                </p-table> 
+              </div> -->
               <div style="text-align: center;">
                 <div class="prov-name-txt" style="text-transform:none !important;">
                   Unlock More Space!

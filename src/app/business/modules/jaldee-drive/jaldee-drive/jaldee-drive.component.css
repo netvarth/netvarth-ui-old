@@ -22,6 +22,9 @@
 .bgcolor{
   background-color: #4666a5;
 }
+.inp{
+  border-radius: 50%;
+}
 
 
 .folder i.fa-folder {

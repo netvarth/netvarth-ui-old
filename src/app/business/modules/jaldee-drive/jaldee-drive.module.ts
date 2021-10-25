@@ -10,6 +10,10 @@ import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
 import { FolderFilesComponent } from './folder-files/folder-files.component';
 import { PreviewuploadedfilesComponent } from './previewuploadedfiles/previewuploadedfiles.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter'; // import ng2search pipe module
+
+
 
 
 
@@ -24,6 +28,8 @@ import { PreviewuploadedfilesComponent } from './previewuploadedfiles/previewupl
   imports: [
     MaterialModule,
     NgxIntlTelInputModule,
+    NgxPaginationModule,
+    Ng2SearchPipeModule,
     NgCircleProgressModule.forRoot({
       "radius": 60,
       "space": -10,

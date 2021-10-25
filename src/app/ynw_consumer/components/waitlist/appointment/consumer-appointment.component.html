@@ -371,14 +371,14 @@
                                                                         &nbsp;
                                                                         <span
                                                                             style="margin-right: 5px;padding-right: 5px;">{{consumer_label}}</span>
-                                                                        <a (click)="goToEdit()"
+                                                                        <!-- <a (click)="goToEdit()"
                                                                             *ngIf="!hideEditButton"><i
                                                                                 class="fa fa-edit fa-1x"
                                                                                 style="font-size: large;color: blue;"
                                                                                 data-bs-toggle="tooltip"
                                                                                 data-bs-placement="right"
                                                                                 title="Edit"></i>
-                                                                        </a>
+                                                                        </a> -->
 
 
                                                                     </div>
@@ -439,8 +439,9 @@
                                                                                 class="red">*</span></label>
                                                                         <br />
                                                                         <mat-radio-group formControlName="gender"
-                                                                            [ngClass]="{disabledDiv: !editable}"
+                                                                            
                                                                             class=" m-0 p-2">
+                                                                            <!-- [ngClass]="{disabledDiv: !editable}" -->
                                                                             <mat-radio-button value="male" class="mx-2">Male
                                                                             </mat-radio-button>
                                                                             <mat-radio-button value="female" class="mx-2">Female
@@ -458,8 +459,9 @@
                                                                         <label class="col-form-label"
                                                                             for="lastName">Age(in
                                                                             years)<span class="red">*</span></label><br>
+                                                                            <!-- [ngClass]="{disabledDiv: !editable}" -->
                                                                         <input type="text" min="1" max="150"
-                                                                            [ngClass]="{disabledDiv: !editable}"
+                                                                            
                                                                             class="form-control vt_dt no-padding mgn-up-5"
                                                                             formControlName="age" style="width:50%"
                                                                             (keypress)=isNumeric($event)
@@ -489,10 +491,11 @@
                                                                             class="col-form-label">Residing
                                                                             Pincode in
                                                                             India <span class="red">*</span></label>
+                                                                            <!--  [ngClass]="{disabledDiv: !editable}" -->
                                                                         <input type="text" placeholder="xxxxxx"
                                                                             class="form-control vt_dt no-padding mgn-up-5"
                                                                             id="location" formControlName="pincode"
-                                                                            [ngClass]="{disabledDiv: !editable}"
+                                                                           
                                                                             (keypress)="isNumeric($event)"
                                                                             (keyup)="showLocations($event)"
                                                                             style="width:50%"
@@ -528,9 +531,10 @@
                                                                         <label class="col-form-label"
                                                                             for="lastName">Location <span
                                                                                 class="red">*</span></label>
+                                                                                <!--  [ngClass]="{disabledDiv: !editable}" -->
                                                                         <input placeholder="Enter your location"
                                                                             class="form-control"
-                                                                            [ngClass]="{disabledDiv: !editable}"
+                                                                           
                                                                             formControlName="localarea"
                                                                             [ngStyle]="{'background-color': bgColor}">
                                                                     </div>
@@ -551,9 +555,10 @@
                                                                             your preferred language <span
                                                                                 class="red">*</span></label>
                                                                         <br />
+                                                                        <!-- [ngClass]="{disabledDiv: !editable}" -->
                                                                         <mat-radio-group aria-label="Select an option"
                                                                             (change)="onChange($event)"
-                                                                            [ngClass]="{disabledDiv: !editable}"
+                                                                            
                                                                             class="mgn-up-5  m-0 p-2"
                                                                             formControlName="islanguage">
                                                                             <mat-radio-button value="yes" class="mx-2">English
@@ -585,8 +590,9 @@
                                                                         <span
                                                                             style="word-wrap: break-word; padding-right: 5px;margin-right: 5px;">{{virtualForm.get('preferredLanguage').value}}</span>
 
+                                                                            <!--  [ngClass]="{disabledDiv: !editable}" -->
                                                                         <span (click)="editLanguage()"
-                                                                            [ngClass]="{disabledDiv: !editable}"
+                                                                           
                                                                             style="color:rgb(255, 255, 255)"><i
                                                                                 class="fa fa-edit fa-1x"
                                                                                 style="font-size: large;"
@@ -709,8 +715,9 @@
                                                                             #</label>
                                                                         <div class="disp-flex">
                                                                             <div class="form-group no-margin">
+                                                                                <!-- [ngClass]="{disabledDiv: !editable}" -->
                                                                                 <input type="text"
-                                                                                    [ngClass]="{disabledDiv: !editable}"
+                                                                                    
                                                                                     (keypress)="isNumericSign($event)"
                                                                                     matInput
                                                                                     class="form-control input-group-text"
@@ -722,8 +729,9 @@
                                                                                     [ngStyle]="{'background-color': bgColor}">
                                                                             </div>
                                                                             <div class="form-group width-100">
+                                                                                <!-- [ngClass]="{disabledDiv: !editable}" -->
                                                                                 <input type="text"
-                                                                                    [ngClass]="{disabledDiv: !editable}"
+                                                                                    
                                                                                     (keypress)="isNumeric($event)"
                                                                                     matInput
                                                                                     class="form-control text-width"
@@ -761,8 +769,9 @@
                                                                         <div class="disp-flex">
 
                                                                             <div class="form-group no-margin">
+                                                                                <!-- [ngClass]="{disabledDiv: !editable}" -->
                                                                                 <input type="text"
-                                                                                    [ngClass]="{disabledDiv: !editable}"
+                                                                                    
                                                                                     (keypress)="isNumericSign($event)"
                                                                                     matInput
                                                                                     class="form-control input-group-text"
@@ -774,8 +783,9 @@
                                                                                     [ngStyle]="{'background-color': bgColor}">
                                                                             </div>
                                                                             <div class="form-group width-100">
+                                                                                <!-- [ngClass]="{disabledDiv: !editable}" -->
                                                                                 <input type="text"
-                                                                                    [ngClass]="{disabledDiv: !editable}"
+                                                                                    
                                                                                     (keypress)="isNumeric($event)"
                                                                                     matInput
                                                                                     class="form-control text-width"
@@ -797,8 +807,9 @@
                                                                     <div class="form-group optional">
                                                                         <label for="email"
                                                                             class="col-form-label">Email</label>
+                                                                            <!-- [ngClass]="{disabledDiv: !editable}" -->
                                                                         <input type="email" class="form-control"
-                                                                            [ngClass]="{disabledDiv: !editable}"
+                                                                            
                                                                             formControlName="email" style="width:55%"
                                                                             [ngStyle]="{'background-color': bgColor}" />
                                                                         <mat-checkbox class="updateemail"
@@ -1226,7 +1237,22 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div *ngIf="type != 'reschedule' && !sel_ser_det.isPrePayment"
+                                            <div *ngIf="type != 'waitlistreschedule'"
+                                                class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container">
+                                                <button type="button" *ngIf="serviceType==='virtualService'"
+                                                    class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    (click)="goToStep('prev')">
+                                                    Go Back
+                                                </button>
+                                                <button type="button"
+                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    (click)="goToStep('next')"
+                                                    [class.disabled]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1)">
+                                                    Next
+                                                </button>
+
+                                            </div>
+                                            <!-- <div *ngIf="type != 'reschedule' && !sel_ser_det.isPrePayment"
                                                 class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 mgn-lt-10">
                                                 
                                                    <button type="button" *ngIf="serviceType==='virtualService'"
@@ -1240,7 +1266,7 @@
                                                     [class.disabled]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1)">
                                                     Next
                                                 </button>
-                                            </div>
+                                            </div> -->
                                             <div *ngIf="type != 'reschedule' && sel_ser_det.isPrePayment && questionnaireList.labels && questionnaireList.labels.length > 0"
                                                 class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 mgn-lt-10">
                                                    <button type="button" *ngIf="serviceType==='virtualService'"

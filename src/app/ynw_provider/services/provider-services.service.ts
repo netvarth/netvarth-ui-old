@@ -2253,6 +2253,10 @@ export class ProviderServices {
     const url = 'provider/appointment/unassignTeam';
     return this.servicemeta.httpPut(url, post_data);
   }
+  getAllFileAttachments() {
+    return this.servicemeta.httpGet('provider/fileShare/');
+  }
+
   getAllAttachments(id) {
     return this.servicemeta.httpGet('provider/fileShare/'+ id);
   }

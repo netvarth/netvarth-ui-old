@@ -86,6 +86,8 @@ import { DateTimeProcessor } from './shared/services/datetime-processor.service'
 import { DomainConfigGenerator } from './shared/services/domain-config-generator.service';
 import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import {NgxPaginationModule} from 'ngx-pagination';
+ import { Ng2SearchPipeModule } from 'ng2-search-filter'; // import ng2search pipe module
 import { JaldeeTimeService } from './shared/services/jaldee-time-service';
 import { FileService } from './shared/services/file-service';
 import { LivetrackService } from './shared/services/livetrack-service';
@@ -187,6 +189,8 @@ export function init_app(globalService: GlobalService) {
     CardModule,
     MatStepperModule,
     NgxIntlTelInputModule,
+    NgxPaginationModule,
+    Ng2SearchPipeModule,
     ModalModule.forRoot(),
     ShareIconsModule,
     VirtualFieldsModule,
