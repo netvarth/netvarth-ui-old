@@ -21,9 +21,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
-import { MatOptionModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatChipsModule } from '@angular/material/chips';
 const routes: Routes = [
     { path: '', component: AppointmentsComponent },
     {
@@ -60,8 +60,8 @@ const routes: Routes = [
         MatIconModule,
         MatMenuModule,
         MatButtonModule,
-        MatSelectModule,
-        MatOptionModule,
+        MatFormFieldModule,
+        MatChipsModule,
         MatDatepickerModule,
         AttachmentPopupModule,
         VoicecallDetailsSendModule,
