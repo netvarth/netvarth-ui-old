@@ -13,7 +13,10 @@
 .headofpanelbody {
 /* background-color: rgb(155, 147, 147); */
 box-shadow: 6px 5px rgba(240, 235, 235, 0.836);
-padding: 50px;
+padding-top: 50px;
+padding-left: 50px;
+padding-right:50px;
+padding-bottom: 20px;
 border-radius: 5px;
 }
 .headofpanelbody .serviceheading {
@@ -28,7 +31,10 @@ flex-flow: row wrap;
 }
 .headofpanelbodyforbuttontoken {
 box-shadow: 6px 5px rgba(240, 235, 235, 0.836);
-padding: 50px;
+padding-top: 35px;
+padding-left:50px;
+padding-right:50px;
+padding-bottom:35px;
 border-radius: 5px;
 /* background-color: orange; */
 /* height: 265px; */
@@ -39,6 +45,7 @@ text-align: center;
 @media (min-width:320px) and (max-width:768px) {
 .mobilephoneaboutus {
   box-shadow: 1px 1px 3px #0000000F;
+  margin-left: 40px;
   
 }
 /* .headofpanelbodyforbuttontoken {
