@@ -51,8 +51,8 @@ export class PrintBookingDetailsComponent implements OnInit {
             if (this.bookingDetails.questionnaire) {
               this.questionnaires = this.bookingDetails.questionnaire;
               this.questionanswers = this.questionnaires.questionAnswers;
-              if(this.questionanswers){
-              this.groupQuestionsBySection();
+              if (this.questionanswers) {
+                this.groupQuestionsBySection();
               }
             };
             this.setPrintDetails();
@@ -64,7 +64,7 @@ export class PrintBookingDetailsComponent implements OnInit {
             if (this.bookingDetails.questionnaire) {
               this.questionnaires = this.bookingDetails.questionnaire;
               this.questionanswers = this.questionnaires.questionAnswers;
-              if(this.questionanswers){
+               if(this.questionanswers){
                 this.groupQuestionsBySection();
                 }   
                };
@@ -72,6 +72,7 @@ export class PrintBookingDetailsComponent implements OnInit {
           });
         }
       })
+
 
     });
 
@@ -88,14 +89,18 @@ export class PrintBookingDetailsComponent implements OnInit {
   groupQuestionsBySection() {
 
     const isSectionName = this.questionanswers.filter(obj => obj.question.hasOwnProperty('sectionName'));
+    console.log(isSectionName);
     if (isSectionName.length > 0) {
       this.groupedQnr = this.questionanswers.reduce(function (rv, x) {
         (rv[x.question['sectionName']] = rv[x.question['sectionName']] || []).push(x);
         return rv;
       }, {});
     }
+
+
   }
   qrCodegeneration(valuetogenerate) {
+    console.log('valuetogenerate' + valuetogenerate);
     if (this.bookingType === 'checkin') {
       this.qr_value = this.path + 'status/' + valuetogenerate.checkinEncId;
     } else {
@@ -107,6 +112,7 @@ export class PrintBookingDetailsComponent implements OnInit {
     this.locationObject.back();
   }
   setPrintDetails() {
+
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.qrCodegeneration(this.bookingDetails);
@@ -222,5 +228,5 @@ export class PrintBookingDetailsComponent implements OnInit {
   getSingleTime(slot) {
     const slots = slot.split('-');
     return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
-}
+  }
 }
