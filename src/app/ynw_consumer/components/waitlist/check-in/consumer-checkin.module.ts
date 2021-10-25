@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
 import { JcCouponNoteModule } from '../../../../shared/modules/jc-coupon-note/jc-coupon-note.module';
 import { MatChipsModule } from '@angular/material/chips';
+import { QuestionnaireModule } from '../../../../shared/components/questionnaire/questionnaire.module';
 const routes: Routes = [
     { path: '', component: ConsumerCheckinComponent},
     { path: 'payment/:id', loadChildren: ()=> import('./payment/payment.module').then(m=>m.ConsumerCheckinPaymentModule) },
@@ -35,6 +36,7 @@ const routes: Routes = [
         MatFormFieldModule,
         MatChipsModule,
         FormsModule,
+        QuestionnaireModule,
         ReactiveFormsModule,
         LoadingSpinnerModule,
         [RouterModule.forChild(routes)]
