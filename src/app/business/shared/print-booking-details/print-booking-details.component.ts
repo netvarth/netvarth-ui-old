@@ -147,17 +147,16 @@ isDatagrid(question) {
 getAnswer(question){
   let answerLine=question.answerLine.answer;
   if(Object.keys(answerLine)[0]==='fileUpload'){
-   if(answerLine.fileUpload.length > 1){
-    return answerLine.fileUpload.length +'files uploaded';
-   }else{
-    if(answerLine.fileUpload.length === 1){
-      if(answerLine.fileUpload[0].originalName){
-        return answerLine.fileUpload[0].originalName;
-      }else{
-        return answerLine.fileUpload[0].keyName;
-      }
-    }
-   }
+    let filesuploaded='';
+  for(let file of answerLine.fileUpload){
+       if(file.originalName){
+         filesuploaded+=file.originalName + ',';
+       }else{
+        filesuploaded+=file.keyName + ',';
+       }
+      
+  }
+  return filesuploaded.substring(0, filesuploaded.length - 1);
   }
 return answerLine[Object.keys(answerLine)[0]];
 }
