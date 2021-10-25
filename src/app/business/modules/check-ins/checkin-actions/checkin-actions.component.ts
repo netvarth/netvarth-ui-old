@@ -212,7 +212,7 @@ export class CheckinActionsComponent implements OnInit {
     }
     printCheckin() {
         this.dialogRef.close();
-        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid, 'print']);
+        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid, 'print'],{queryParams:{bookingType:'checkin'}});
         // this.qrCodegeneration(this.checkin);
         // const bprof = this.groupService.getitemFromGroupStorage('ynwbp');
         // const bname = bprof.bn;
