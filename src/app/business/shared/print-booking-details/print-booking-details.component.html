@@ -15,7 +15,7 @@
                 <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small">
                     <button class="btn btn-primary float-right m2" (click)="printDetails();"> Print </button>
                     <div class="card" id="print-section">
-                        <table class="table" *ngIf="bookingDetails">
+                        <table class="table" *ngIf="bookingDetails" align="center">
                             <thead>
                                 <!-- <tr>
                                     <td colspan="2"
@@ -23,9 +23,17 @@
                                         {{this.dateFormat.transformToDIsplayFormat(this.bookingDetails.date)}}
                                     </td>
                                 </tr> -->
-                                <tr *ngIf="bookingDetails.token">
+                                <tr *ngIf="bookingType==='checkin'&& bookingDetails.token">
                                     <td colspan="2" align="center"><strong>Token #
                                             :</strong>{{bookingDetails.token}}</td>
+                                </tr>
+                                <tr *ngIf="bookingType==='appt'&& bookingDetails.appmtDate">
+                                    <td colspan="2" align="center"><strong>Appointment On
+                                            :</strong>
+                                        <!-- <span *ngIf="bookingDetails.appmtDate">{{bookingDetails.appmtDate}}</span> &nbsp; -->
+                                        <span
+                                            *ngIf="bookingDetails.appmtTime">{{getSingleTime(bookingDetails.appmtTime)}}</span>
+                                    </td>
                                 </tr>
 
                             </thead>
@@ -33,9 +41,15 @@
                                 <tr>
                                     <td colspan="2" align="center">{{bname}} </td>
                                 </tr>
-                                <tr>
+                                <tr *ngif="bookingType==='checkin'">
                                     <td align="center" colspan="2">
                                         Location :: {{this.bookingDetails.queue.location.place}}
+                                    </td>
+
+                                </tr>
+                                <tr *ngif="bookingType==='appt'">
+                                    <td align="center" colspan="2">
+                                        Location :: {{this.bookingDetails.location.place}}
                                     </td>
 
                                 </tr>
@@ -48,10 +62,21 @@
                                     <td colspan="2" align="center"> Service : {{this.bookingDetails.service.name}} </td>
 
                                 </tr>
+                                <tr *ngIf="bookingDetails.service.deptName">
+                                    <td colspan="2" align="center"> Department :
+                                        {{this.bookingDetails.service.deptName}} </td>
+
+                                </tr>
+                                <tr *ngIf="bookingDetails.schedule">
+                                    <td colspan="2" align="center"> Schedule : {{this.bookingDetails.schedule.name}} [
+                                        {{ this.bookingDetails.schedule.apptSchedule.timeSlots[0].sTime }} -
+                                        {{this.bookingDetails.schedule.apptSchedule.timeSlots[0].eTime}}] </td>
+
+                                </tr>
 
                             </tbody>
                         </table>
-                        <div class="text-center " *ngIf="showQR">
+                        <div class="text-center " *ngIf="showQR" align="center">
                             <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value"
                                 style="width: 200px; margin:50px;">
                             </ngx-qrcode>
@@ -84,14 +109,16 @@
                                                     <i>{{getAnswer(question)}}</i>
                                                 </td> -->
 
-                                                <td  *ngIf="isDatagrid(question) && question.answerLine.answer.dataGrid.length>0">
+                                                <td
+                                                    *ngIf="isDatagrid(question) && question.answerLine.answer.dataGrid.length>0">
                                                     <ng-container
                                                         *ngFor="let data of question.answerLine.answer.dataGrid ">
                                                         <table style="width:100%" border="1" border-color='#eee'>
                                                             <tr *ngFor="let value of data.dataGridColumn ">
-                                                                <td  style="width:60%"> {{value.columnId}}</td>
+                                                                <td style="width:60%"> {{value.columnId}}</td>
 
-                                                                <td style="width:40%"> {{getinnerTableData(value.column)}}</td>
+                                                                <td style="width:40%">
+                                                                    {{getinnerTableData(value.column)}}</td>
 
 
                                                             </tr>
@@ -114,7 +141,7 @@
                         </ng-container>
                         <!-- {{}} -->
 
-                        <ng-container *ngIf="groupedQnr.length==0">
+                        <ng-container *ngIf="groupedQnr.length==0 && questionanswers">
 
                             <table class="table table-bordered " style="width:100%">
                                 <thead style="background-color:grey">
@@ -127,25 +154,25 @@
                                         <td colspan="2">
                                             {{question.question.label|capitalizeFirst}}
                                         </td>
-                                        <td  *ngIf="isDatagrid(question) && question.answerLine.answer.dataGrid.length>0">
-                                                <ng-container
-                                                    *ngFor="let data of question.answerLine.answer.dataGrid ">
-                                                    <table style="width:100%" border="1" border-color='#eee'>
-                                                        <tr *ngFor="let value of data.dataGridColumn ">
-                                                            <td  style="width:60%"> {{value.columnId}}</td>
+                                        <td
+                                            *ngIf="isDatagrid(question) && question.answerLine.answer.dataGrid.length>0">
+                                            <ng-container *ngFor="let data of question.answerLine.answer.dataGrid ">
+                                                <table style="width:100%" border="1" border-color='#eee'>
+                                                    <tr *ngFor="let value of data.dataGridColumn ">
+                                                        <td style="width:60%"> {{value.columnId}}</td>
 
-                                                            <td style="width:40%"> {{getinnerTableData(value.column)}}</td>
+                                                        <td style="width:40%"> {{getinnerTableData(value.column)}}</td>
 
 
-                                                        </tr>
-                                                    </table>
+                                                    </tr>
+                                                </table>
 
-                                                </ng-container>
-                                            </td>
+                                            </ng-container>
+                                        </td>
 
-                                            <td *ngIf="!isDatagrid(question)" style="width:40%">
-                                                <i>{{getAnswer(question)}}</i>
-                                            </td>
+                                        <td *ngIf="!isDatagrid(question)" style="width:40%">
+                                            <i>{{getAnswer(question)}}</i>
+                                        </td>
 
                                     </tr>
                                 </tbody>

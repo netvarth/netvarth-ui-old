@@ -35,6 +35,7 @@ const routes: Routes = [
             { path: ':id', loadChildren: ()=> import('./provider-appointment-detail/provider-appointment-detail.module').then(m=>m.ProviderAppointmentDetailModule) },
             { path: ':id/user', loadChildren: () => import('../../../shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },
             { path: ':id/team', loadChildren: () => import('../../../shared/modules/assign-team/assign-team.module').then(m => m.AssignTeamModule) },
+            { path: ':id/print', loadChildren: ()=> import('../../shared/print-booking-details/print-booking-detail.module').then(m=>m.PrintBookingDetailModule)}           
 
         ]
     }

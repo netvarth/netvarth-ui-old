@@ -203,60 +203,62 @@ export class AppointmentActionsComponent implements OnInit {
     }
     printAppt() {
         this.dialogRef.close();
-        const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
-        let bname = '';
-        if (bdetails) {
-            bname = bdetails.bn || '';
-        }
-        const fname = (this.appt.appmtFor[0].firstName) ? this.appt.appmtFor[0].firstName : '';
-        const lname = (this.appt.appmtFor[0].lastName) ? this.appt.appmtFor[0].lastName : '';
-        const _this = this;
-        _this.qrCodegeneration(this.appt);
-        setTimeout(() => {
-            const printContent = document.getElementById('print-section');
-            const params = [
-                'height=' + screen.height,
-                'width=' + screen.width,
-                'fullscreen=yes'
-            ].join(',');
-            const printWindow = window.open('', '', params);
-            let checkin_html = '';
-            checkin_html += '<table style="width:100%;"><thead>';
-            checkin_html += '<tr><td colspan="3" style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">' + this.dateformat.transformToDIsplayFormat(this.appt.appmtDate) + '<br/>';
-            if (this.appt.batchId) {
-                checkin_html += 'Batch <span style="font-weight:bold">' + this.appt.batchId + '</span>';
-            } else {
-                checkin_html += 'Appointment Time <span style="font-weight:bold">' + this.getSingleTime(this.appt.appmtTime) + '</span>';
-            }
-            checkin_html += '</td></tr>';
-            checkin_html += '<tr><td colspan="3" style="text-align:center">' + bname.charAt(0).toUpperCase() + bname.substring(1) + '</td></tr>';
-            checkin_html += '<tr><td width="48%" align="right">Location</td><td>:</td><td>' + this.appt.location.place + '</td></tr>';
-            // checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.appt.location.place + '</td></tr>';
-            checkin_html += '</thead><tbody>';
-            if (fname !== '' || lname !== '') {
-                checkin_html += '<tr><td width="48%" align="right">' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + '</td><td>:</td><td>' + fname + ' ' + lname + '</td></tr>';
-            } else {
-                checkin_html += '<tr><td width="48%" align="right">' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + ' Id </td><td>:</td><td>' + this.appt.providerConsumer.jaldeeId + '</td></tr>';
-            }
-            if (this.appt.service && this.appt.service.deptName) {
-                checkin_html += '<tr><td width="48%" align="right">Department</td><td>:</td><td>' + this.appt.service.deptName + '</td></tr>';
-            }
-            checkin_html += '<tr><td width="48%" align="right">Service</td><td>:</td><td>' + this.appt.service.name + '</td></tr>';
-            if (this.appt.provider && this.appt.provider.firstName && this.appt.provider.lastName) {
-                checkin_html += '<tr><td width="48%" align="right">' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + '</td><td>:</td><td>' + this.appt.provider.firstName.charAt(0).toUpperCase() + this.appt.provider.firstName.substring(1) + ' ' + this.appt.provider.lastName + '</td></tr>';
-            }
-            checkin_html += '<tr><td width="48%" align="right">schedule</td><td>:</td><td>' + this.appt.schedule.name + ' [' + this.appt.schedule.apptSchedule.timeSlots[0].sTime + ' - ' + this.appt.schedule.apptSchedule.timeSlots[0].eTime + ']' + '</td></tr>';
-            checkin_html += '<tr><td colspan="3" align="center">' + printContent.innerHTML + '</td></tr>';
-            checkin_html += '<tr><td colspan="3" align="center">Scan to know your status or log on to ' + this.qr_value + '</td></tr>';
-            checkin_html += '</tbody></table>';
-            printWindow.document.write('<html><head><title></title>');
-            printWindow.document.write('</head><body >');
-            printWindow.document.write(checkin_html);
-            printWindow.document.write('</body></html>');
-            _this.showQR = false;
-            printWindow.moveTo(0, 0);
-            printWindow.print();
-        });
+        this.router.navigate(['provider', 'appointments', this.appt.uid, 'print'],{queryParams:{bookingType:'appt'}});
+        // this.dialogRef.close();
+        // const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
+        // let bname = '';
+        // if (bdetails) {
+        //     bname = bdetails.bn || '';
+        // }
+        // const fname = (this.appt.appmtFor[0].firstName) ? this.appt.appmtFor[0].firstName : '';
+        // const lname = (this.appt.appmtFor[0].lastName) ? this.appt.appmtFor[0].lastName : '';
+        // const _this = this;
+        // _this.qrCodegeneration(this.appt);
+        // setTimeout(() => {
+        //     const printContent = document.getElementById('print-section');
+        //     const params = [
+        //         'height=' + screen.height,
+        //         'width=' + screen.width,
+        //         'fullscreen=yes'
+        //     ].join(',');
+        //     const printWindow = window.open('', '', params);
+        //     let checkin_html = '';
+        //     checkin_html += '<table style="width:100%;"><thead>';
+        //     checkin_html += '<tr><td colspan="3" style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">' + this.dateformat.transformToDIsplayFormat(this.appt.appmtDate) + '<br/>';
+        //     if (this.appt.batchId) {
+        //         checkin_html += 'Batch <span style="font-weight:bold">' + this.appt.batchId + '</span>';
+        //     } else {
+        //         checkin_html += 'Appointment Time <span style="font-weight:bold">' + this.getSingleTime(this.appt.appmtTime) + '</span>';
+        //     }
+        //     checkin_html += '</td></tr>';
+        //     checkin_html += '<tr><td colspan="3" style="text-align:center">' + bname.charAt(0).toUpperCase() + bname.substring(1) + '</td></tr>';
+        //     checkin_html += '<tr><td width="48%" align="right">Location</td><td>:</td><td>' + this.appt.location.place + '</td></tr>';
+        //     // checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.appt.location.place + '</td></tr>';
+        //     checkin_html += '</thead><tbody>';
+        //     if (fname !== '' || lname !== '') {
+        //         checkin_html += '<tr><td width="48%" align="right">' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + '</td><td>:</td><td>' + fname + ' ' + lname + '</td></tr>';
+        //     } else {
+        //         checkin_html += '<tr><td width="48%" align="right">' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + ' Id </td><td>:</td><td>' + this.appt.providerConsumer.jaldeeId + '</td></tr>';
+        //     }
+        //     if (this.appt.service && this.appt.service.deptName) {
+        //         checkin_html += '<tr><td width="48%" align="right">Department</td><td>:</td><td>' + this.appt.service.deptName + '</td></tr>';
+        //     }
+        //     checkin_html += '<tr><td width="48%" align="right">Service</td><td>:</td><td>' + this.appt.service.name + '</td></tr>';
+        //     if (this.appt.provider && this.appt.provider.firstName && this.appt.provider.lastName) {
+        //         checkin_html += '<tr><td width="48%" align="right">' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + '</td><td>:</td><td>' + this.appt.provider.firstName.charAt(0).toUpperCase() + this.appt.provider.firstName.substring(1) + ' ' + this.appt.provider.lastName + '</td></tr>';
+        //     }
+        //     checkin_html += '<tr><td width="48%" align="right">schedule</td><td>:</td><td>' + this.appt.schedule.name + ' [' + this.appt.schedule.apptSchedule.timeSlots[0].sTime + ' - ' + this.appt.schedule.apptSchedule.timeSlots[0].eTime + ']' + '</td></tr>';
+        //     checkin_html += '<tr><td colspan="3" align="center">' + printContent.innerHTML + '</td></tr>';
+        //     checkin_html += '<tr><td colspan="3" align="center">Scan to know your status or log on to ' + this.qr_value + '</td></tr>';
+        //     checkin_html += '</tbody></table>';
+        //     printWindow.document.write('<html><head><title></title>');
+        //     printWindow.document.write('</head><body >');
+        //     printWindow.document.write(checkin_html);
+        //     printWindow.document.write('</body></html>');
+        //     _this.showQR = false;
+        //     printWindow.moveTo(0, 0);
+        //     printWindow.print();
+        // });
     }
     getSingleTime(slot) {
         const slots = slot.split('-');
