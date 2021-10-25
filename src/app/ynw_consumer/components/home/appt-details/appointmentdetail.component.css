@@ -1,0 +1,179 @@
+.mgl-auto {
+    margin-left: auto !important;
+}
+.serv-name {
+    text-overflow: ellipsis;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.serv-width {
+    max-width: 40%;
+}
+.con-width {
+    max-width: 60%;
+}
+.green {
+    color: green !important;
+}
+.m-hgt-50 {
+    min-height: 50px;
+}
+.bg-cover {
+    margin-bottom: 20px;
+}
+.mt-80 {
+    margin-top: 80px;
+}
+.svg-align {
+    overflow: hidden;
+    vertical-align: middle;
+}
+.ansr {
+    color: #7E8299 !important;
+    padding-left: 30px;
+    margin-bottom: 20px;
+}
+.svg-icon.svg-icon-success svg g [fill] {
+    -webkit-transition: fill 0.3s ease;
+    transition: fill 0.3s ease;
+    fill: #1BC5BD !important;
+  }
+  
+  .consumer-dash .grid-card button:disabled {
+    background-color: grey !important;
+}
+
+.mat-grid-tile .mat-grid-tile-footer {
+    padding: 0 8px !important;
+}
+app-appt-card, app-wl-card {
+    height: 100%;
+    overflow: auto;
+}
+
+@media (max-width: 575px) {
+    h1.hello-msg {
+        text-align: left !important;
+    }
+}
+.telebt{
+    color: #3c8dbc;
+    border: 1px solid;
+}
+.tbt{
+    font-size: 20px !important
+}
+.tele_button{
+    padding-top: 70px !important
+}
+.qnr-accord .mat-expansion-panel-header {
+    margin: 10px !important;
+    padding: 0 !important;
+}
+.qnrstatus {
+    margin-left: auto;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+[class~=modal-content], [class~=modal] {
+    position: fixed;
+  }
+  
+  [class~=modal] {
+    z-index: 1000;
+  }
+  
+  [class~=modal] {
+    left: 0;
+  }
+  
+  [class~=modal] {
+    top: 0;
+  }
+  
+  [class~=modal-content], [class~=modal] {
+    width: 100%;
+  }
+  
+  [class~=modal] {
+    height: 100%;
+  }
+  
+  [class~=modal] {
+    overflow: auto;
+  }
+  
+  [class~=modal] {
+    -webkit-animation-name: fadeIn;
+  }
+  
+  [class~=close]:focus, [class~=close]:hover {
+    text-decoration: none;
+  }
+  
+  [class~=close]:focus, [class~=close]:hover {
+    cursor: pointer;
+  }
+  
+  [class~=modal-content], [class~=modal] {
+    -webkit-animation-duration: .4s;
+  }
+  
+  [class~=modal] {
+    animation-name: fadeIn;
+  }
+  
+  [class~=modal] {
+    animation-duration: .4s;
+  }
+  
+  [class~=modal-content] {
+    bottom: 0;
+  }
+  
+  [class~=modal-content] {
+    background-color: #fefefe;
+  }
+  
+  [class~=modal-content] {
+    -webkit-animation-name: slideIn;
+  }
+  
+  [class~=modal-content] {
+    animation-name: slideIn;
+  }
+  
+  [class~=modal-content] {
+    animation-duration: .4;
+  }
+  #popup .modal-header {
+    padding: 15px 5px 15px 0px !important; 
+  }
+  #popup .close {
+    opacity: 1 !important;
+    font-size: 1.75rem !important;
+  }
+  
+  ::ng-deep .service-detail-modal {
+    transform: translate(0, 5%) !important;
+  }
+  
+  ::ng-deep .service-detail-modal-container {
+    opacity: 1 !important;
+  }
+@media (max-width: 775px) {
+    .pop-up_small {
+        display: block !important;
+    }
+}
+@media  (max-width: 750px)  {
+  .web{
+      display: none !important;
+  }
+}
+@media (min-width: 450px) {
+  .disply  {
+      display: none !important;
+  }
+}

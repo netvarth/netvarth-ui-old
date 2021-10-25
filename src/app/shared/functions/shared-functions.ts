@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedServices } from '../services/shared-services';
-// import { projectConstants } from '../../app.component';
-import { Messages } from '../constants/project-messages';
 import { ConfirmBoxComponent } from '../components/confirm-box/confirm-box.component';
 import { Observable, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -305,7 +303,7 @@ export class SharedFunctions {
     return searchLabelsList;
   }
   print_PricewithCurrency(price) {
-    return '₹' + ' ' + price.toFixed(2);;
+    return 'â‚¹' + ' ' + price.toFixed(2);;
   }
 
   imageValidation(file, source?) {
@@ -339,12 +337,6 @@ export class SharedFunctions {
 
 
   fileValidation(file) {
-    // let file_types;
-    //  if (source === 'attachment' || source === 'consumerimages' ) {
-    //      file_types = projectConstants.FILETYPES_UPLOAD;
-    //  } else {
-    //      file_types = projectConstants.IMAGE_FORMATS;
-    //  }
     const image_max_size = 15000000;
     const error = [];
     let is_error = false;
@@ -358,17 +350,6 @@ export class SharedFunctions {
       return error;
     }
   }
-
-  getApiError(error) {
-    if (error.error && typeof error.error === 'string') {
-      return error.error;
-    } else if (typeof error === 'string') {
-      return error;
-    } else {
-      return Messages.API_ERROR;
-    }
-  }
-
   confirmGalleryImageDelete(ob, file) {
     ob.delgaldialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
@@ -524,69 +505,6 @@ export class SharedFunctions {
     }
     return schedule_arr;
   }
-  // arrageScheduleforDisplay(schedule_arr) {
-  //   const timebase: any = [];
-  //   for (let i = 0; i < schedule_arr.length; i++) {
-  //     const timeindx = schedule_arr[i]['sTime'].replace(/\s+/, '') + schedule_arr[i]['eTime'].replace(/\s+/, '');
-  //     if (timebase[timeindx] === undefined) {
-  //       timebase[timeindx] = new Array();
-  //       timebase[timeindx].push(schedule_arr[i]);
-  //     } else {
-  //       timebase[timeindx].push(schedule_arr[i]);
-  //     }
-  //   }
-  //   for (const obj in timebase) {
-  //     if (obj) {
-  //       const len = timebase[obj].length;
-  //       for (let i = 0; i < len; i++) {
-  //         for (let j = i + 1; j < len; j++) {
-  //           if (timebase[obj][j].day < timebase[obj][i].day) {
-  //             const tempobj = timebase[obj][i];
-  //             timebase[obj][i] = timebase[obj][j];
-  //             timebase[obj][j] = tempobj;
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  //   const displaysch = [];
-  //   let pday = 0;
-  //   for (const obj in timebase) {
-  //     if (obj) {
-  //       let curstr = '';
-  //       let gap = 0;
-  //       for (let i = 0; i < timebase[obj].length; i++) {
-  //         if (i === 0) {
-  //           curstr = this.getDay(timebase[obj][i].day);
-  //           pday = timebase[obj][i].day;
-  //         } else {
-  //           const diffs = timebase[obj][i].day - pday;
-  //           if (diffs > 1) {
-  //             if (gap >= 1) {
-  //               if (curstr.includes((this.getDay(pday)))) {
-  //               } else {
-  //                 curstr = curstr + ' - ' + this.getDay(pday);
-  //               }
-  //             }
-  //             curstr = curstr + ', ' + this.getDay(timebase[obj][i].day);
-  //           } else {
-  //             if (i === (timebase[obj].length - 1)) {
-  //               curstr = curstr + ' - ' + this.getDay(timebase[obj][i].day);
-  //             }
-  //             gap++;
-  //           }
-  //           pday = timebase[obj][i].day;
-  //         }
-  //       }
-  //       displaysch.push({ 'time': timebase[obj][0]['sTime'] + ' - ' + timebase[obj][0]['eTime'], 'dstr': curstr, 'indx': obj, 'recurrtype': timebase[obj][0]['recurrtype'] });
-  //     }
-  //   }
-  //   return displaysch;
-  // }
-  // getDay(num) {
-  //   return projectConstants.myweekdaysSchedule[num];
-  // }
-
   orderChangeWorkingHours(schedulearr) {
     const tmparr = schedulearr;
     for (let i = 0; i < tmparr.length; i++) {

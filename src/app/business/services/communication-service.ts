@@ -33,9 +33,6 @@ export class CommunicationService {
                 const lname = (customerlist[0].donor.lastName) ? customerlist[0].donor.lastName : '';
                 name = fname + ' ' + lname;
             }
-            phone = customerlist[0].phoneNo;
-            countryCode = customerlist[0].countryCode;
-            email = customerlist[0].email;
         } else if (customerlist.length === 1 && source !== 'donation-list') {
             type = 'single';
             custid = customerlist[0].id || null;
