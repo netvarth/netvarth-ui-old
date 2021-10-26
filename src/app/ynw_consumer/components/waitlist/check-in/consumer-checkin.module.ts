@@ -13,6 +13,7 @@ import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner
 import { JcCouponNoteModule } from '../../../../shared/modules/jc-coupon-note/jc-coupon-note.module';
 import { MatChipsModule } from '@angular/material/chips';
 import { QuestionnaireModule } from '../../../../shared/components/questionnaire/questionnaire.module';
+import { MatRadioModule } from '@angular/material/radio';
 const routes: Routes = [
     { path: '', component: ConsumerCheckinComponent},
     { path: 'payment/:id', loadChildren: ()=> import('./payment/payment.module').then(m=>m.ConsumerCheckinPaymentModule) },
@@ -31,6 +32,7 @@ const routes: Routes = [
         MatDatepickerModule,
         MatTooltipModule,
         MatCheckboxModule,
+        MatRadioModule,
         ServiceDetailModule,
         JcCouponNoteModule,
         MatFormFieldModule,
