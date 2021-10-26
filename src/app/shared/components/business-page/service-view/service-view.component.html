@@ -81,7 +81,7 @@
                     <div class="row" >
                         <div class="{{servicesAndProviders && servicesAndProviders.length ==1 ? 'col-lg-8 col-md-4 col-sm-12 col-xs-12 headofpanelbody' : 'col-lg-12 col-md-12 col-sm-12 col-xs-12 headofpanelbody'}}" >
                         <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 serviceheading">
-                            <div class="mgn-rt-5"  *ngIf="servicedetails.serviceType == 'virtualService'">
+                            <div class="mgn-rt-5"  *ngIf="servicedetails && servicedetails.serviceType == 'virtualService'">
                                 <i class="fa phon-icon"
                                     *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                 <i class="fa meet-icon"
@@ -102,12 +102,12 @@
                         </div>
                         <div>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 servicetimingdetails">
-                                <p *ngIf="servicedetails && servicedetails.serviceDuration && !is_donation_serv">
+                                <p *ngIf="servicedetails && servicedetails.serviceDuration && !is_donation_serv && servicedetails.serviceDurationEnabled">
                                     <b> {{service_duration}} : {{HHMM}}</b> <span class="mobile-none mgn-lt-5 mgn-rt-5" style="color: red;font-weight: 800;">|</span>
                                 </p>
                                 <!-- <p class="col-lg-1 col-md-1 col-sm-0 col-xs-0" *ngIf="servicedetails && servicedetails.serviceDuration && !is_donation_serv" style="color: red;font-weight: 800;">|</p> -->
                                 <p  *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0"> <b>Service Fee {{servicedetails.totalAmount | currency:
-                                    '':''}}</b> <span class="mobile-none mgn-lt-5 mgn-rt-5" style="color: red;font-weight: 800;margin-left: 20px;">|</span>  </p>
+                                    '':''}}</b> <span *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount != servicedetails.totalAmount"class="mobile-none mgn-lt-5 mgn-rt-5" style="color: red;font-weight: 800;margin-left: 20px;">|</span>  </p>
                                 <!-- <p class="col-lg-1 /col-md-1 mobile-none" *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0" style="color: red;font-weight: 800;">|</p> -->
         
                                 <p   *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount != servicedetails.totalAmount"><b>Amount required Now: {{servicedetails.minPrePaymentAmount |
