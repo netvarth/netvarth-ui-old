@@ -32,6 +32,8 @@ export class PrintBookingDetailsComponent implements OnInit {
   customerName: any;
   answerSection: any;
   bookingType: any;
+  internalStatusLog: any=[];
+  customerDetails: any;
 
 
   constructor(private activated_route: ActivatedRoute,
@@ -48,6 +50,7 @@ export class PrintBookingDetailsComponent implements OnInit {
         if (this.bookingType === 'appt') {
           this.getApptBookingDetails(this.bookingId).then((data) => {
             this.bookingDetails = data;
+            this.customerDetails=this.bookingDetails.appmtFor[0];
             if (this.bookingDetails.questionnaire) {
               this.questionnaires = this.bookingDetails.questionnaire;
               this.questionanswers = this.questionnaires.questionAnswers;
@@ -57,10 +60,14 @@ export class PrintBookingDetailsComponent implements OnInit {
             };
             this.setPrintDetails();
           });
+          this.getAppointmentInternalStatus(this.bookingId).then((data) =>{
+            this.internalStatusLog=data;
+          });
         }
         if (this.bookingType === 'checkin') {
           this.getWaitlistBookingDetails(this.bookingId).then((data) => {
             this.bookingDetails = data;
+            this.customerDetails=this.bookingDetails.waitlistingFor[0];
             if (this.bookingDetails.questionnaire) {
               this.questionnaires = this.bookingDetails.questionnaire;
               this.questionanswers = this.questionnaires.questionAnswers;
@@ -70,12 +77,47 @@ export class PrintBookingDetailsComponent implements OnInit {
                };
               this.setPrintDetails();
           });
+          this.getWaitlistInternalStatusLog(this.bookingId).then((data) =>{
+            this.internalStatusLog=data;
+          });
         }
       })
 
 
     });
 
+
+  }
+  getAppointmentInternalStatus(uuid) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+
+      _this.providerServices.getProviderAppointmentInternalStatusHistory(uuid)
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
+
+  }
+  getWaitlistInternalStatusLog(uuid) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+
+      _this.providerServices.getProviderWaitlistinternalHistroy(uuid)
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
 
   }
 
