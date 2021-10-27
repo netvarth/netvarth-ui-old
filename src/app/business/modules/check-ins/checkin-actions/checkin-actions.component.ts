@@ -744,7 +744,7 @@ export class CheckinActionsComponent implements OnInit {
         // const customerId = customerDetails[0].id;
         const dialogref = this.dialog.open(VoiceConfirmComponent, {
             width: '60%',
-            height: '30%',
+            height: '35%',
             panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {

@@ -43,13 +43,13 @@
                                 </tr>
                                 <tr *ngIf="bookingType==='checkin'">
                                     <td align="center" colspan="2">
-                                        Location :: {{this.bookingDetails.queue.location.place}}
+                                        Location : {{this.bookingDetails.queue.location.place}}
                                     </td>
 
                                 </tr>
                                 <tr *ngIf="bookingType==='appt'">
                                     <td align="center" colspan="2">
-                                        Location :: {{this.bookingDetails.location.place}}
+                                        Location : {{this.bookingDetails.location.place}}
                                     </td>
 
                                 </tr>
@@ -81,14 +81,28 @@
                                 style="width: 200px; margin:50px;">
                             </ngx-qrcode>
                         </div>
-                        <!-- <div class="qnrsec" *ngFor="let qnr of groupedQnr | keyvalue"
-        [class.section-shadow]="getSectionCount() > 1">
-        <div class="qnr-section" *ngIf="getSectionCount() > 1">{{qnr.key}}</div>
-        <div class="form-group card mgn-0" *ngFor="let question of qnr.value">
-                <div>{{question.question.label|capitalizeFirst}}</div>
-                <div><i>{{getAnswer(question)}}</i></div>
-            </div>
-        </div> -->
+                        <ng-container>
+                                <strong><u>Customer  Details</u></strong>
+                            <table style="width:100%" border="1" border-color='#eee'>
+                                <thead>
+                                    <tr>
+                                        <td><b>Name</b></td>
+                                        <td><b>Phone #</b></td>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> {{ customerDetails.firstName }}&nbsp;{{ customerDetails.lastName }}</td>
+                                        <td> {{ customerDetails.phoneNo }}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </ng-container>
+                     
+
+      
                         <ng-container *ngIf="groupedQnr">
                             <div class="qnrsec" *ngFor="let qnr of groupedQnr | keyvalue"
                                 [class.section-shadow]="getSectionCount() > 1">
@@ -177,6 +191,28 @@
                                     </tr>
                                 </tbody>
 
+                            </table>
+
+                        </ng-container>
+
+                        <ng-container *ngIf="internalStatusLog.length>0">
+                            <strong><u>Review Details</u></strong>
+                            <table style="width:100%" border="1" border-color='#eee'>
+                                <thead>
+                                    <tr>
+                                        <td><b>Reviewer</b> </td>
+                                        <td><b>Status</b> </td>
+                                        <td><b>Updated Date</b></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let status of internalStatusLog">
+                                        <td>{{status.User}}</td>
+                                        <td>{{status.InternalStatus}}</td>
+                                        <td>{{status.DateTime}}</td>
+                                    </tr>
+
+                                </tbody>
                             </table>
 
                         </ng-container>

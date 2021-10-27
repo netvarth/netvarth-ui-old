@@ -32,6 +32,8 @@ export class PrintBookingDetailsComponent implements OnInit {
   customerName: any;
   answerSection: any;
   bookingType: any;
+  internalStatusLog: any=[];
+  customerDetails: any;
 
 
   constructor(private activated_route: ActivatedRoute,
@@ -48,27 +50,35 @@ export class PrintBookingDetailsComponent implements OnInit {
         if (this.bookingType === 'appt') {
           this.getApptBookingDetails(this.bookingId).then((data) => {
             this.bookingDetails = data;
+            this.customerDetails=this.bookingDetails.appmtFor[0];
             if (this.bookingDetails.questionnaire) {
               this.questionnaires = this.bookingDetails.questionnaire;
               this.questionanswers = this.questionnaires.questionAnswers;
-              if(this.questionanswers){
-              this.groupQuestionsBySection();
+              if (this.questionanswers) {
+                this.groupQuestionsBySection();
               }
             };
             this.setPrintDetails();
+          });
+          this.getAppointmentInternalStatus(this.bookingId).then((data) =>{
+            this.internalStatusLog=data;
           });
         }
         if (this.bookingType === 'checkin') {
           this.getWaitlistBookingDetails(this.bookingId).then((data) => {
             this.bookingDetails = data;
+            this.customerDetails=this.bookingDetails.waitlistingFor[0];
             if (this.bookingDetails.questionnaire) {
               this.questionnaires = this.bookingDetails.questionnaire;
               this.questionanswers = this.questionnaires.questionAnswers;
-              if(this.questionanswers){
+               if(this.questionanswers){
                 this.groupQuestionsBySection();
                 }   
                };
               this.setPrintDetails();
+          });
+          this.getWaitlistInternalStatusLog(this.bookingId).then((data) =>{
+            this.internalStatusLog=data;
           });
         }
       })
@@ -76,6 +86,38 @@ export class PrintBookingDetailsComponent implements OnInit {
 
     });
 
+
+  }
+  getAppointmentInternalStatus(uuid) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+
+      _this.providerServices.getProviderAppointmentInternalStatusHistory(uuid)
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
+
+  }
+  getWaitlistInternalStatusLog(uuid) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+
+      _this.providerServices.getProviderWaitlistinternalHistroy(uuid)
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
 
   }
 
@@ -89,14 +131,18 @@ export class PrintBookingDetailsComponent implements OnInit {
   groupQuestionsBySection() {
 
     const isSectionName = this.questionanswers.filter(obj => obj.question.hasOwnProperty('sectionName'));
+    console.log(isSectionName);
     if (isSectionName.length > 0) {
       this.groupedQnr = this.questionanswers.reduce(function (rv, x) {
         (rv[x.question['sectionName']] = rv[x.question['sectionName']] || []).push(x);
         return rv;
       }, {});
     }
+
+
   }
   qrCodegeneration(valuetogenerate) {
+    console.log('valuetogenerate' + valuetogenerate);
     if (this.bookingType === 'checkin') {
       this.qr_value = this.path + 'status/' + valuetogenerate.checkinEncId;
     } else {
@@ -108,6 +154,7 @@ export class PrintBookingDetailsComponent implements OnInit {
     this.locationObject.back();
   }
   setPrintDetails() {
+
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.qrCodegeneration(this.bookingDetails);
@@ -120,7 +167,7 @@ export class PrintBookingDetailsComponent implements OnInit {
         this.customerName = fname + " " + lname;
       }
       else {
-        this.customerName = this.bookingDetails.providerConsumer.jaldeeId
+        this.customerName = this.bookingDetails.consumer.jaldeeId
       }
 
     } else {
@@ -130,7 +177,7 @@ export class PrintBookingDetailsComponent implements OnInit {
         this.customerName = fname + " " + lname;
       }
       else {
-        this.customerName = this.bookingDetails.providerConsumer.jaldeeId
+        this.customerName = this.bookingDetails.consumer.jaldeeId
       }
     }
 
@@ -223,5 +270,5 @@ export class PrintBookingDetailsComponent implements OnInit {
   getSingleTime(slot) {
     const slots = slot.split('-');
     return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
-}
+  }
 }

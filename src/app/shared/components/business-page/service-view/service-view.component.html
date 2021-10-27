@@ -1,0 +1,325 @@
+
+<section class="content bus-page" [ngClass]="accountProperties?accountProperties['theme']:''">
+    <div class="container">
+        <div class="row pad-bt-10 bus-page-header">
+            <div class="panel panel-default">
+                <div class="panel-heading top-row">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        <a class="pull-left back-btn mgn-up-5" *ngIf="userId" (click)="goBack()"><i
+                                class="fa fa-arrow-left"></i></a>
+                        &nbsp;
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
+                        <app-header *ngIf="accountIdExists && sharedFunctionobj.checkLogin()"
+                            [includedfrom]="'pdetails'" [accountId]="accountId" [customId]="customId"
+                            [showHeaderAction]="true"></app-header>
+                        <div class="view-booking" *ngIf="accountIdExists && !sharedFunctionobj.checkLogin()">
+                            <button class="pull-right btn btn-primary dashboard-btn" (click)="dashboardClicked()">My
+                                Bookings</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Cover Foto -->
+                <div *ngIf="bgCover" class="cvr-ht"
+                    [ngStyle]="{ 'background-image': (!profileSettings || (profileSettings && profileSettings['showCoverPicture'])) ? 'url(' + bgCover + ')': ''}">
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 headofpanelbody">
+                        <div class="col-md-2 col-xs-12 col-sm-12 col-lg-2" >
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" [ngClass]="{'cvr-dp-mgn': bgCover}">
+                                <img alt="Profile Image" src="{{bLogo}}" id="profile-image1"
+                                    class="img-circle img-responsive cvr-dp pointer-cursor"
+                                    [ngClass]="{'cvr-dp-bdr': bgCover}"
+                                    (click)="galleryExists && openImageModalRow(image_list_popup[0])">
+                            </div>
+                        </div>
+                        <div class="col-lg-1 col-md-1" ></div>
+                        <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8 mgn-bt-10 no-padding bus-title-content" 
+                        *ngIf="businessjson">
+                        <div class="col-md-10 col-xs-12 col-sm-12 col-lg-11 no-padding"
+                            *ngIf="(!profileSettings || (profileSettings && profileSettings['showSpecialization'] || profileSettings['showProfile']))">
+                            <div class="no-padding right-padding-md-15"
+                                [ngClass]="{'col-md-12 col-sm-12':(businessjson.verifyLevel == 'BASIC' ||
+                        businessjson.verifyLevel == 'BASIC_PLUS' || businessjson.verifyLevel == 'ADVANCED')?true:false}">
+                                <h3 class="business-name" *ngIf="businessjson.businessName">
+                                    {{businessjson.businessName
+                                    | capitalizeFirst}}
+                                </h3>
+                                <h3 class="font_user_size business-user-name" *ngIf="businessjson.businessUserName">
+                                    {{businessjson.businessUserName | capitalizeFirst}}
+                                </h3>
+                                <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12"></div>
+                                <div class="address col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-5 no-padding single-loc " 
+                                    *ngIf="locationjson && locationjson.length > 0">
+                                    <span *ngIf="locationjson.length == 1" class="locbtn"><a
+                                            [href]="selectedLocation.googleMapUrl" target="_blank"
+                                            *ngIf="selectedLocation.googleMapUrl!=''"><i
+                                                class="fa fa-map-marker takeTourTitle mgn-rt-10"></i></a>{{selectedLocation.place
+                                        | capitalizeFirst}}</span>
+                                    <div class="locbtn" *ngIf="locationjson.length > 1"><a
+                                            [href]="selectedLocation.googleMapUrl" target="_blank"
+                                            *ngIf="selectedLocation.googleMapUrl!=''"><i
+                                                class="fa fa-map-marker takeTourTitle mgn-rt-10"></i></a>
+                                        <select  class="selectbxstyle" [(ngModel)]="selectedLocation" (ngModelChange)="changeLocation($event)">
+                                            <option *ngFor="let loc of locationjson"  [ngValue]="loc" >
+                                                {{loc.place}}</option>
+                                        </select>
+                                    </div>
+                               
+                                </div>
+                                <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12 mgn-up-10"></div>
+                                <div class="mobilephoneaboutus">
+                                    <h6 style="color: #747474;">About us </h6>
+                                    <p *ngIf="businessjson.businessDesc"><b>{{businessjson.businessDesc | capitalizeFirst}}</b></p>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row" >
+                        <div class="{{servicesAndProviders && servicesAndProviders.length ==1 ? 'col-lg-8 col-md-4 col-sm-12 col-xs-12 headofpanelbody' : 'col-lg-12 col-md-12 col-sm-12 col-xs-12 headofpanelbody'}}" >
+                        <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 serviceheading">
+                            <div class="mgn-rt-5"  *ngIf="servicedetails && servicedetails.serviceType == 'virtualService'">
+                                <i class="fa phon-icon"
+                                    *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                <i class="fa meet-icon"
+                                    *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                <i class="fa zoom-icon "
+                                    *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                <i class="fa jvideo-icon jvideo-icon-m"
+                                    *ngIf="servicedetails.virtualCallingModes  && servicedetails.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+                                <i class="fa wtsapaud-icon"
+                                    *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'WhatsApp' && servicedetails.virtualServiceType === 'audioService'"></i>
+                                <i class="fa wtsapvid-icon"
+                                    *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'WhatsApp' && servicedetails.virtualServiceType === 'videoService'"></i>
+                            </div>
+                            <h3  *ngIf="servicename" style="color: #51DC8F;">{{servicename | capitalizeFirst}}</h3>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-bt-5" style="color: #92B1D3;" *ngIf="servicedetails && servicedetails.description">
+                            {{servicedetails.description}}
+                        </div>
+                        <div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 servicetimingdetails">
+                                <p *ngIf="servicedetails && servicedetails.serviceDuration && !is_donation_serv && servicedetails.serviceDurationEnabled">
+                                    <b> {{service_duration}} : {{HHMM}}</b> <span class="mobile-none mgn-lt-5 mgn-rt-5" style="color: red;font-weight: 800;">|</span>
+                                </p>
+                                <!-- <p class="col-lg-1 col-md-1 col-sm-0 col-xs-0" *ngIf="servicedetails && servicedetails.serviceDuration && !is_donation_serv" style="color: red;font-weight: 800;">|</p> -->
+                                <p  *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0"> <b>Service Fee {{servicedetails.totalAmount | currency:
+                                    '':''}}</b> <span *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount != servicedetails.totalAmount"class="mobile-none mgn-lt-5 mgn-rt-5" style="color: red;font-weight: 800;margin-left: 20px;">|</span>  </p>
+                                <!-- <p class="col-lg-1 /col-md-1 mobile-none" *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0" style="color: red;font-weight: 800;">|</p> -->
+        
+                                <p   *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount != servicedetails.totalAmount"><b>Amount required Now: {{servicedetails.minPrePaymentAmount |
+                                    currency: '':''}}</b></p>
+                            </div>
+                        </div>
+                        <!-- <p class="col-lg-1 col-md-1 col-sm-0 col-xs-0" *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount != servicedetails.totalAmount" style="color: red;font-weight: 800;">|</p> -->
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-5"></div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="color: #92B1D3;"*ngIf="servicedetails && servicedetails.priceDynamic && servicedetails.paymentDescription && servicedetails.paymentDescription">
+                                {{servicedetails.paymentDescription}}
+                        </div>
+                        </div>
+                        <app-common-innerloading-spinner *ngIf="loading || loading_direct" ></app-common-innerloading-spinner>
+                        <div class="{{servicesAndProviders && servicesAndProviders.length ==1 ? 'col-lg-4 col-md-4 col-sm-12 col-xs-12' :  'col-lg-12 col-md-12 col-sm-12 col-xs-12'}}" *ngIf="servicesAndProviders && servicesAndProviders.length >0 && !loading && !loading_direct">
+                            <div class="{{servicesAndProviders && servicesAndProviders.length ==1 ?  'col-lg-12 col-md-12 col-xs-12 col-sm-12 headofpanelbodyforbuttontoken' : 'col-lg-4 col-md-4 col-sm-12 col-xs-12 headofpanelbodyforbuttontoken'}}" *ngFor="let sp of servicesAndProviders">
+                                        <p class="card-text peopleAhead font-normal"
+                                        *ngIf="sp.type =='waitlist' && personsAheadText">{{personsAheadText}}
+                                        </p>
+                                        <p class="card-text emptySpace" *ngIf="sp.type =='appt'"></p>
+                                      
+
+                                        <!-- <p class="card-text emptySpace"
+                                             *ngIf="sp.type =='waitlist' && !personsAheadText"></p> -->
+                                        <p class="card-text availability" *ngIf="timings && sp.type =='waitlist'">
+                                             {{timingCaption}}
+                                            <span><b>{{timings}}</b></span>
+                                        </p>
+                                        <p class="card-text availability" *ngIf="timingsapt && sp.type =='appt'">
+                                        {{timingCaptionapt}}<br>
+                                        <b>{{timingsapt}}</b><br>
+                                        </p>
+                                        <p class="card-text emptyheght" *ngIf="!timings && sp.type =='waitlist'" >
+                                        </p>
+                                         <p class="card-text emptyheght" *ngIf="!timingsapt && sp.type =='appt'"></p>
+                                         <div class="service-buttons">
+                                             <button class="btn actionbtn btn-outline-warning" type="button"
+                                                 (click)="bttonClick(sp)">{{getButtontype(sp)}}</button>
+                                        </div>
+                                    <!-- </div> -->
+                                <!-- <button class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn actionbtn btn-outline-warning " >Get Token</button> -->
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <!-- <div class="headstyle col-md-12 col-xs-12 col-sm-12 col-lg-12 ">
+                        <div class="col-md-2 col-xs-12 col-sm-12 col-lg-2">
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" [ngClass]="{'cvr-dp-mgn': bgCover}">
+                                <img alt="Profile Image" src="{{bLogo}}" id="profile-image1"
+                                    class="img-circle img-responsive cvr-dp pointer-cursor"
+                                    [ngClass]="{'cvr-dp-bdr': bgCover}"
+                                    (click)="galleryExists && openImageModalRow(image_list_popup[0])">
+                            </div>
+                        </div>
+                        <div class="col-md-1 col-lg-1"></div>
+                        <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8 mgn-bt-10 no-padding bus-title-content"
+                            *ngIf="businessjson">
+                            <div class="col-md-10 col-xs-12 col-sm-12 col-lg-11 no-padding"
+                                *ngIf="(!profileSettings || (profileSettings && profileSettings['showSpecialization'] || profileSettings['showProfile']))">
+                                <div class="no-padding right-padding-md-15"
+                                    [ngClass]="{'col-md-12 col-sm-12':(businessjson.verifyLevel == 'BASIC' ||
+                            businessjson.verifyLevel == 'BASIC_PLUS' || businessjson.verifyLevel == 'ADVANCED')?true:false}">
+                                    <h3 class="business-name" *ngIf="businessjson.businessName">
+                                        {{businessjson.businessName
+                                        | capitalizeFirst}}
+                                    </h3>
+                                    <h3 class="font_user_size business-user-name" *ngIf="businessjson.businessUserName">
+                                        {{businessjson.businessUserName | capitalizeFirst}}
+                                    </h3>
+                                    <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12"></div>
+                                    <div class="address col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-5 no-padding single-loc " 
+                                        *ngIf="locationjson && locationjson.length > 0">
+                                        <span *ngIf="locationjson.length == 1" class="locbtn"><a
+                                                [href]="selectedLocation.googleMapUrl" target="_blank"
+                                                *ngIf="selectedLocation.googleMapUrl!=''"><i
+                                                    class="fa fa-map-marker takeTourTitle mgn-rt-10"></i></a>{{selectedLocation.place
+                                            | capitalizeFirst}}</span>
+                                        <div class="locbtn" *ngIf="locationjson.length > 1"><a
+                                                [href]="selectedLocation.googleMapUrl" target="_blank"
+                                                *ngIf="selectedLocation.googleMapUrl!=''"><i
+                                                    class="fa fa-map-marker takeTourTitle mgn-rt-10"></i></a>
+                                            <select  class="selectbxstyle" [(ngModel)]="selectedLocation" (ngModelChange)="changeLocation($event)">
+                                                <option *ngFor="let loc of locationjson"  [ngValue]="loc" >
+                                                    {{loc.place}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    
+                    <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10" *ngIf="servicedetails">
+                        <div class="service-icon pull-left" *ngIf="servicedetails.serviceType == 'virtualService'">
+                            <i class="fa phon-icon"
+                                *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                            <i class="fa meet-icon"
+                                *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                            <i class="fa zoom-icon "
+                                *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                            <i class="fa jvideo-icon jvideo-icon-m"
+                                *ngIf="servicedetails.virtualCallingModes  && servicedetails.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+                            <i class="fa wtsapaud-icon"
+                                *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'WhatsApp' && servicedetails.virtualServiceType === 'audioService'"></i>
+                            <i class="fa wtsapvid-icon"
+                                *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'WhatsApp' && servicedetails.virtualServiceType === 'videoService'"></i>
+                        </div>
+                        <div class="busname" *ngIf="servicename">{{servicename | capitalizeFirst}}<span class="deptname"
+                                *ngIf="deptname">({{deptname}})</span>
+                        </div>
+                        <div class="outer1 line" *ngIf="servicedetails && servicedetails.description">
+                            <div class="des textitalic" *ngIf="servicedetails && servicedetails.description"
+                                [innerHTML]="servicedetails.description | nl2br">
+                            </div>
+                        </div>
+                        <div class=" textitalic"
+                            *ngIf="servicedetails && servicedetails.serviceDuration && !is_donation_serv">
+                            <span>{{service_duration}} : {{HHMM}} </span>
+                        </div>
+                        <div class="outer3"
+                            *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0">
+                            <div class="textitalic">
+                                <span class="data-label">{{sector =='healthCare' ? 'Consultation' : '
+                                    Service'}} Fee : </span>
+                                <span style="font-weight: bold" class="rupee-font data-value">
+                                    <i class='fa fa-inr'></i>{{servicedetails.totalAmount | currency:
+                                    '':''}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="outer4"
+                            *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount != servicedetails.totalAmount">
+                            <div class=" textitalic">
+                                <span class="data-label">Amount required now : </span>
+                                <span style="font-weight: bold" class="rupee-font data-value">
+                                    <i class="fa fa-inr"></i>{{servicedetails.minPrePaymentAmount |
+                                    currency: '':''}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="outer1 line"
+                            *ngIf="servicedetails && servicedetails.priceDynamic && servicedetails.paymentDescription">
+                            <div class="des textitalic" *ngIf="servicedetails && servicedetails.paymentDescription"
+                                [innerHTML]="servicedetails.paymentDescription | nl2br">
+                            </div>
+                        </div>
+                        <div class="textitalic tax" *ngIf="servicedetails && servicedetails.taxable">
+                            <span class="data-label">Tax Applicable : </span>
+                            <span style="font-weight: bold" class="data-value">
+                                Yes
+                            </span>
+                        </div>
+                        <div >
+                            <app-common-innerloading-spinner *ngIf="loading || loading_direct" ></app-common-innerloading-spinner>
+                            <ng-container *ngIf="servicesAndProviders && servicesAndProviders.length >0 && !loading && !loading_direct">
+                                <div class="card change" *ngFor="let sp of servicesAndProviders">
+                                    <div class="card-body">
+                                        <div class="service-details">
+                                            <p class="card-text peopleAhead font-normal"
+                                                *ngIf="sp.type =='waitlist' && personsAheadText">{{personsAheadText}}
+                                            </p>
+                                            <p class="card-text emptySpace" *ngIf="sp.type =='appt'"></p>
+                                            <p class="card-text emptySpace"
+                                                *ngIf="sp.type =='waitlist' && !personsAheadText"></p>
+                                            <p class="card-text availability" *ngIf="timings && sp.type =='waitlist'">
+                                                {{timingCaption}}
+                                                <br /><b>{{timings}}</b>
+                                            </p>
+                                            <p class="card-text availability" *ngIf="timingsapt && sp.type =='appt'">
+                                                {{timingCaptionapt}}
+                                                <br /><b>{{timingsapt}}</b>
+                                            </p>
+                                            <p class="card-text emptyheght" *ngIf="!timings && sp.type =='waitlist'">
+                                            </p>
+                                            <p class="card-text emptyheght" *ngIf="!timingsapt && sp.type =='appt'"></p>
+                                            <div class="service-buttons">
+                                                <button class="btn actionbtn btn-outline-warning" type="button"
+                                                    (click)="bttonClick(sp)">{{getButtontype(sp)}}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="donationServices && donationServices.length >0 && !loading && !loading_direct">
+                                <div class="card donatechange" *ngFor="let sp of donationServices">
+                                    <div class="card-body">
+                                        <div class="textcentr cardtext ">
+                                            <span class="rupee-font bold">Donate <i class="fa fa-inr"></i>
+                                                {{sp.item.minDonationAmount}}</span>
+                                            <span class="rupee-font bold"
+                                                *ngIf="sp.item.maxDonationAmount != sp.item.minDonationAmount"> or
+                                                more</span>
+                                        </div>
+                                        <div class="textcentr cardtext fixhght"></div>
+                                        <div class="textcentr"> <button class="btn actionbtn btn-outline-warning"
+                                                type="button" (click)="bttonClick(sp)">{{getButtontype(sp)}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-5 bordertop" *ngIf="servicedetails && servicedetails.servicegallery">
+                            <h4>Service gallery</h4> 
+                            <div class="col-md-2 col-xs-4 col-sm-3 col-lg-2 mgn-up-10 " *ngFor="let image of servicedetails.servicegallery;let i = index">
+                                <img class="caroimage" [src]="image.url" />
+                            </div>
+
+
+                    </div>   
+                   </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
