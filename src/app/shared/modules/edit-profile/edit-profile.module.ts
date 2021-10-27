@@ -6,7 +6,6 @@ import { FormMessageDisplayModule } from '../../../shared/modules/form-message-d
 import { EditProfileComponent } from './edit-profile.component';
 import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
 import { HeaderModule } from '../header/header.module';
-import { TelegramInfoModule } from '../../../ynw_consumer/components/telegram-info/telegram-info.module';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -26,7 +25,6 @@ const routes: Routes = [
         LoadingSpinnerModule,
         HeaderModule,
         FormsModule,
-        TelegramInfoModule,
         MatRadioModule,
         MatFormFieldModule,
         MatInputModule,

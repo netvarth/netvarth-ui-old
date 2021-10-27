@@ -926,21 +926,12 @@ export class SharedServices {
     const url = 'consumer/orders/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
   }
-  // getConsumerCatalogs() {
-  //   const url = 'http://localhost:4200/assets/json/item.json';
-  //   return this.servicemeta.httpGet(url);
-  // }
   getConsumerCatalogs(accountid) {
     const url = 'consumer/orders/catalogs/' + accountid;
     return this.servicemeta.httpGet(url);
   }
   getOrderSettings(accountid) {
     const url = 'consumer/orders/settings' + '?account=' + accountid;
-    return this.servicemeta.httpGet(url);
-  }
-  getItemDetails(itemId?) {
-    console.log(itemId);
-    const url = 'http://localhost:4200/assets/json/item-details.json';
     return this.servicemeta.httpGet(url);
   }
   setOrderDetails(data) {

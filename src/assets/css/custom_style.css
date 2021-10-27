@@ -13829,6 +13829,9 @@ app-waitlist-queuedetail .wtsapvid-icon {
 .mgn-5 {
   margin: 5px !important;
 }
+body {
+  overflow: auto !important;
+}
 .mat-scrool {
   max-height: 400px !important;
   overflow: auto !important;

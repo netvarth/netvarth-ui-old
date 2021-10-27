@@ -7,14 +7,16 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { MatDialog } from '@angular/material/dialog';
 import { DOCUMENT } from '@angular/common';
 import { projectConstants } from '../../../app.component';
-import { WordProcessor } from '../../services/word-processor.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { GroupStorageService } from '../../services/group-storage.service';
-import {version} from '../../../shared/constants/version';
+import { version } from '../../../shared/constants/version';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { AuthService } from '../../services/auth-service';
+import { SnackbarService } from '../../services/snackbar.service';
 @Component({
   selector: 'app-home-app',
-  templateUrl: './home-app.component.html'
+  templateUrl: './home-app.component.html',
+  styleUrls: ['./home-app.component.css']
 })
 export class HomeAppComponent implements OnInit, OnDestroy {
   mobile_no_cap = Messages.MOBILE_NUMBER_CAP;
@@ -40,36 +42,37 @@ export class HomeAppComponent implements OnInit, OnDestroy {
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
-    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
     public dialog: MatDialog, public router: Router,
     private lStorageService: LocalStorageService,
     private groupService: GroupStorageService,
+    private authService: AuthService,
     @Inject(DOCUMENT) public document
   ) {
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (router.url === '\/') {
-        if (this.shared_functions.isBusinessOwner()) {
-          this.shared_functions.getGlobalSettings()
-            .then(
-              (settings: any) => {
-                setTimeout(() => {
-                  if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
-                    if (settings.waitlist) {
-                      router.navigate(['provider', 'check-ins']);
-                    } else if (settings.appointment) {
-                      router.navigate(['provider', 'appointments']);
-                    } else if (settings.order) {
-                      router.navigate(['provider', 'orders']);
+          if (this.shared_functions.isBusinessOwner()) {
+            this.shared_functions.getGlobalSettings()
+              .then(
+                (settings: any) => {
+                  setTimeout(() => {
+                    if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
+                      if (settings.waitlist) {
+                        router.navigate(['provider', 'check-ins']);
+                      } else if (settings.appointment) {
+                        router.navigate(['provider', 'appointments']);
+                      } else if (settings.order) {
+                        router.navigate(['provider', 'orders']);
+                      } else {
+                        router.navigate(['provider', 'settings']);
+                      }
                     } else {
                       router.navigate(['provider', 'settings']);
                     }
-                  } else {
-                    router.navigate(['provider', 'settings']);
-                  }
-                }, 500);
-              });
-            }
+                  }, 500);
+                });
+          }
         }
       }
     });
@@ -89,7 +92,6 @@ export class HomeAppComponent implements OnInit, OnDestroy {
       phonenumber: ['', Validators.compose(
         [Validators.required])],
       password: ['', Validators.compose([Validators.required])]
-
     });
   }
   showError() {
@@ -125,7 +127,6 @@ export class HomeAppComponent implements OnInit, OnDestroy {
         return;
       }
     }
-    const ob = this;
     const post_data = {
       'countryCode': '+91',
       'loginId': data.phonenumber,
@@ -135,9 +136,9 @@ export class HomeAppComponent implements OnInit, OnDestroy {
     const cVersion = version.desktop;
     this.api_loading = true;
     post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
-    this.shared_functions.doLogout().then(
+    this.authService.doLogout().then(
       ()=> {
-        this.shared_functions.businessLogin(post_data)
+        this.authService.businessLogin(post_data)
         .then(
           () => {
             this.lStorageService.setitemonLocalStorage('version', cVersion);
@@ -146,7 +147,7 @@ export class HomeAppComponent implements OnInit, OnDestroy {
            }, projectConstants.TIMEOUT_DELAY_SMALL);
           },
           error => {
-            ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             this.api_loading = false;
           }
         );
@@ -160,8 +161,6 @@ export class HomeAppComponent implements OnInit, OnDestroy {
   }
   cancelForgotPassword() {
     this.step = 1;
-  }
-  handleSignup() {
   }
   doSignup() {
     this.router.navigate(['business/signup']);

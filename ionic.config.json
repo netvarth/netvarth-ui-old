@@ -1,0 +1,7 @@
+{
+  "name": "jaldeeprovider",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

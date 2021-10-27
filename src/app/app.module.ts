@@ -25,7 +25,6 @@ import { ProviderDataStorageService } from './business/services/provider-datasto
 import { ShareService } from 'ngx-sharebuttons';
 import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
 import { SessionStorageService } from './shared/services/session-storage.service';
-import { CookieProcessor } from './shared/services/cookie-processor.service';
 import { LocalStorageService } from './shared/services/local-storage.service';
 import { GroupStorageService } from './shared/services/group-storage.service';
 import { WordProcessor } from './shared/services/word-processor.service';
@@ -56,6 +55,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { MaintenanceMsgModule } from './shared/components/maintenance-msg/maintenance-msg.module';
 import { ForceDialogModule } from './shared/components/force-dialog/force-dialog.module';
+import { IonicModule } from '@ionic/angular';
+import { FirebaseX } from '@ionic-native/firebase-x/ngx';
+import { Device } from '@ionic-native/device/ngx';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -77,9 +80,13 @@ export function init_app(globalService: GlobalService) {
     MaintenanceMsgModule,
     ForceDialogModule,
     ScrollToModule.forRoot(),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    IonicModule.forRoot()
   ],
   providers: [
+    FirebaseX,
+    Device,
+    LocalNotifications,
     ProviderServices,
     DatePipe,
     BsModalService,
@@ -112,7 +119,6 @@ export function init_app(globalService: GlobalService) {
     ShareService,
     SessionStorageService,
     LocalStorageService,
-    CookieProcessor,
     GroupStorageService,
     WordProcessor,
     DateTimeProcessor,

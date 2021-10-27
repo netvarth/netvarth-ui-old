@@ -23,6 +23,7 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { Title } from '@angular/platform-browser';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { AttachmentPopupComponent } from '../../../../app/shared/components/attachment-popup/attachment-popup.component';
+declare let cordova: any;
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html',
@@ -2164,12 +2165,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           .subscribe(
             data => {
               this.historyCheckins = data;
-              const params = [
-                'height=' + screen.height,
-                'width=' + screen.width,
-                'fullscreen=yes'
-              ].join(',');
-              const printWindow = window.open('', '', params);
+              // const params = [
+              //   'height=' + screen.height,
+              //   'width=' + screen.width,
+              //   'fullscreen=yes'
+              // ].join(',');
+              // const printWindow = window.open('', '', params);
               let checkin_html = '';
               checkin_html += '<table width="100%" style="border: 1px solid #dbdbdb;">';
               checkin_html += '<td style="padding:10px;">Sl.No.</td>';
@@ -2202,16 +2203,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
               }
               checkin_html += '</div>';
-              printWindow.document.write('<html><head><title></title>');
-              printWindow.document.write('</head><body >');
-              printWindow.document.write(checkin_html);
-              printWindow.document.write('</body></html>');
-              printWindow.moveTo(0, 0);
-              printWindow.print();
-              printWindow.document.close();
-              setTimeout(() => {
-                printWindow.close();
-              }, 500);
+              cordova.plugins.printer.print(checkin_html);
+              // printWindow.document.write('<html><head><title></title>');
+              // printWindow.document.write('</head><body >');
+              // printWindow.document.write(checkin_html);
+              // printWindow.document.write('</body></html>');
+              // printWindow.moveTo(0, 0);
+              // printWindow.print();
+              // printWindow.document.close();
+              // setTimeout(() => {
+              //   printWindow.close();
+              // }, 500);
             });
       });
   }

@@ -31,6 +31,7 @@ import { ConfirmBoxComponent } from '../../shared/confirm-box/confirm-box.compon
 import { AttachmentPopupComponent } from '../../../../app/shared/components/attachment-popup/attachment-popup.component';
 import { InstantQueueComponent } from './instant-q/instant-queue.component';
 import { CommunicationService } from '../../services/communication-service';
+declare let cordova: any;
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html',
@@ -2514,12 +2515,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           .subscribe(
             data => {
               this.historyCheckins = data;
-              const params = [
-                'height=' + screen.height,
-                'width=' + screen.width,
-                'fullscreen=yes'
-              ].join(',');
-              const printWindow = window.open('', '', params);
+              // const params = [
+              //   'height=' + screen.height,
+              //   'width=' + screen.width,
+              //   'fullscreen=yes'
+              // ].join(',');
+              // const printWindow = window.open('', '', params);
               let checkin_html = '';
               checkin_html += '<table width="100%" style="border: 1px solid #dbdbdb;">';
               checkin_html += '<td style="padding:10px;">Sl.No.</td>';
@@ -2555,16 +2556,17 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
               }
               checkin_html += '</div>';
-              printWindow.document.write('<html><head><title></title>');
-              printWindow.document.write('</head><body >');
-              printWindow.document.write(checkin_html);
-              printWindow.document.write('</body></html>');
-              printWindow.moveTo(0, 0);
-              printWindow.print();
-              printWindow.document.close();
-              setTimeout(() => {
-                printWindow.close();
-              }, 500);
+              // printWindow.document.write('<html><head><title></title>');
+              // printWindow.document.write('</head><body >');
+              // printWindow.document.write(checkin_html);
+              // printWindow.document.write('</body></html>');
+              // printWindow.moveTo(0, 0);
+              // printWindow.print();
+              // printWindow.document.close();
+              // setTimeout(() => {
+              //   printWindow.close();
+              // }, 500);
+              cordova.plugins.printer.print(checkin_html);
             });
       });
   }

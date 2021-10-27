@@ -12,7 +12,6 @@ import { GroupStorageService } from '../../services/group-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { MatDialog } from '@angular/material/dialog';
-import { TelegramInfoComponent } from '../../../ynw_consumer/components/telegram-info/telegram-info.component';
 import { SharedServices } from '../../services/shared-services';
 
 @Component({
@@ -109,7 +108,6 @@ export class EditProfileComponent implements OnInit {
     }
     this.maxalloweddate = this.tday.getFullYear() + '-' + dispmonth + '-' + this.tday.getDate();
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
-    this.getTelegramstat();
   }
   getProfile(typ) {
     this.loading = true;
@@ -305,69 +303,6 @@ export class EditProfileComponent implements OnInit {
   }
   redirecToSettings() {
     this._location.back();
-  }
-  telegramInfo() {
-    this.telegramdialogRef = this.dialog.open(TelegramInfoComponent, {
-      width: '70%',
-      height: '40%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'full-screen-modal', 'telegramPopupClass'],
-      disableClose: true,
-    });
-    this.telegramdialogRef.afterClosed().subscribe(
-      result => {
-        if (result) {
-          this.getTelegramstat();
-        }
-      }
-    );
-  }
-
-  enableTelegram(event) {
-    const stat = (event.checked) ? 'ENABLED' : 'DISABLED';
-    this.shared_services.consumertelegramChat(this.removePlus(this.countryCode), this.phonenoHolder).subscribe(data => {
-      this.chatId = data;
-    })
-    this.teleGramStat(stat).then(
-      (data) => {
-        console.log('then');
-        this.getTelegramstat();
-      },
-      error => {
-        this.telegramstat = false;
-        if (!this.telegramstat || this.chatId === null) {
-          this.telegramInfo();
-        }
-      });
-  }
-  teleGramStat(stat) {
-    const _this = this;
-    return new Promise(function (resolve, reject) {
-      _this.shared_services.enableTelegramNoti(stat)
-        .subscribe(
-          data => {
-            resolve(data);
-          },
-          (error) => {
-            reject(error);
-          }
-        );
-    });
-  }
-  getTelegramstat() {
-    this.shared_services.getTelegramstat()
-      .subscribe(
-        (data: any) => {
-          console.log(data);
-          this.status = data.status;
-          this.waitlist_statusstr = this.status ? 'On' : 'Off';
-          if (data.botUrl) {
-            this.boturl = data.botUrl;
-          }
-        },
-        error => {
-          console.log(error);
-        }
-      );
   }
   removePlus(countryCode) {
     if (countryCode.startsWith('+')) {

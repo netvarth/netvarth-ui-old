@@ -179,3 +179,7 @@
     background-size: 350px; */
     display: none !important;
    } }
+
+   .login-img {
+    content: url(../../../../assets/images/loginimg01.png);
+  }

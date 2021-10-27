@@ -29,6 +29,7 @@ import { QuestionService } from '../../../../shared/modules/dynamic-form/dynamic
 import { ProviderBprofileSearchDynamicComponent } from '../../provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 // import '../../../../../assets/plugins/custom/uppy/uppy.bundle.js';
 // import '../../../../../assets/js/pages/crud/file-upload/uppy.js';
+declare let cordova: any;
 
 @Component({
   selector: 'app-bprofile',
@@ -1631,4 +1632,25 @@ rotateLeft() {
       };
   }
 
+  printQr(printSectionId) {
+    const printContent = document.getElementById(printSectionId);
+    setTimeout(() => {
+      // const params = [
+      //   'height=' + screen.height,
+      //   'width=' + screen.width,
+      //   'fullscreen=yes'
+      // ].join(',');
+      // const printWindow = window.open('', '', params);
+      let printsection = '<html><head><title></title>';
+      printsection += '</head><body style="margin-top:200px">';
+      printsection += '<div style="text-align:center!important">';
+      printsection += printContent.innerHTML;
+      printsection += '</div>';
+      printsection += '</body></html>';
+      cordova.plugins.printer.print(printsection);
+      // printWindow.moveTo(0, 0);
+      // printWindow.print();
+      // printWindow.document.close();
+    });
+  }
 }

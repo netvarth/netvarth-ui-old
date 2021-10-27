@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
-// import * as itemjson from '../../assets/json/item.json';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Location } from '@angular/common';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
