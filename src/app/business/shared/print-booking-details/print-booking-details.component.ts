@@ -51,6 +51,7 @@ export class PrintBookingDetailsComponent implements OnInit {
           this.getApptBookingDetails(this.bookingId).then((data) => {
             this.bookingDetails = data;
             this.customerDetails=this.bookingDetails.appmtFor[0];
+            console.log("this.customerDetails"+this.customerDetails);
             if (this.bookingDetails.questionnaire) {
               this.questionnaires = this.bookingDetails.questionnaire;
               this.questionanswers = this.questionnaires.questionAnswers;

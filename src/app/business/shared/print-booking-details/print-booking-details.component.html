@@ -92,7 +92,7 @@
 
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr *ngIf="customerDetails">
                                         <td> {{ customerDetails.firstName }}&nbsp;{{ customerDetails.lastName }}</td>
                                         <td> {{ customerDetails.phoneNo }}</td>
                                     </tr>
@@ -195,7 +195,7 @@
 
                         </ng-container>
 
-                        <ng-container *ngIf="internalStatusLog.length>0">
+                        <ng-container *ngIf="internalStatusLog && internalStatusLog.length>0">
                             <strong><u>Review Details</u></strong>
                             <table style="width:100%" border="1" border-color='#eee'>
                                 <thead>
