@@ -461,7 +461,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
   }
   getOrderPaidBill(orderBill){
-    if(orderBill.amountPaid){
+    if(orderBill.bill && orderBill.bill.amountPaid){
       return orderBill.amountPaid;
     }else{
       return orderBill.advanceAmountPaid;

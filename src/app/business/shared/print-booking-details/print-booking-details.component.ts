@@ -167,7 +167,7 @@ export class PrintBookingDetailsComponent implements OnInit {
         this.customerName = fname + " " + lname;
       }
       else {
-        this.customerName = this.bookingDetails.consumer.jaldeeId
+        this.customerName = this.bookingDetails.providerConsumer.jaldeeId
       }
 
     } else {
