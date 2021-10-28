@@ -14,15 +14,6 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
     'templateUrl': './general-settings.component.html'
 })
 export class GeneralSettingsComponent implements OnInit {
-    breadcrumbs = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: 'General'
-        }
-    ];
     bProfile = null;
     loading = true;
     businessConfig: any = [];
@@ -35,7 +26,6 @@ export class GeneralSettingsComponent implements OnInit {
     customer_label = '';
     cust_domain_name = '';
     locations_cap = Messages.WAITLIST_LOCATIONS_CAP;
-    breadcrumb_moreoptions: any = [];
     frm_set_loc_cap = Messages.FRM_LEVEL_SETT_LOC_MSG;
     // livetrack_status: any;
     // livetrack_statusstr: string;
@@ -70,7 +60,6 @@ export class GeneralSettingsComponent implements OnInit {
         this.getDepartmentsCount();
         this.getDomainSubdomainSettings();
         this.getBusinessConfiguration();
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     goLocation() {
         this.router.navigate(['provider', 'settings', 'general', 'locations']);

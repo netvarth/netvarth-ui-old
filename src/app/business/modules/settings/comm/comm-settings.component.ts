@@ -21,7 +21,6 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
     provider_label = '';
     cust_domain_name = '';
     provider_domain_name = '';
-    breadcrumb_moreoptions: any = [];
     smsGlobalStatus: any;
     notificationStatus: any;
     smsCredits: ArrayBuffer;
@@ -72,7 +71,6 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
         this.getSMSglobalSettings();
         this.getVirtualCallingModesList();
         this.getDomainSubdomainSettings();
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         // this.getRecordingStatus();
         this.getJaldeeVideoCredits();
         this.getJaldeeRecordingStatus();

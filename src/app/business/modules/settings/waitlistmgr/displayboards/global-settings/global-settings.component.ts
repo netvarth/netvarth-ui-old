@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Messages } from '../../../../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { ProviderServices } from '../../../../../services/provider-services.service';
