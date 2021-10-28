@@ -35,6 +35,9 @@ export class AuthService {
     setLoginData(data, post_data, mod) {
         this.groupService.setitemToGroupStorage('ynw-user', data);
         this.lStorageService.setitemonLocalStorage('isBusinessOwner', (mod === 'provider') ? 'true' : 'false');
+        if (mod==='provider'){
+            this.lStorageService.setitemonLocalStorage('jld', post_data['password']);
+        }        
         delete post_data['password'];
         this.lStorageService.setitemonLocalStorage('ynw-credentials', JSON.stringify(post_data));
     }

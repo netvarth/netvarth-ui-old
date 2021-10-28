@@ -144,8 +144,8 @@ export class LoginComponent implements OnInit {
       this.authService.providerLogin(post_data)
         .then(
           () => {
-            const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
-            this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+            // const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
+            // this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
             setTimeout(() => {
               this.dialogRef.close();
             }, projectConstants.TIMEOUT_DELAY_SMALL);
@@ -167,8 +167,8 @@ export class LoginComponent implements OnInit {
         this.authService.consumerLogin(post_data, this.moreParams)
           .then(
             () => {
-              const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
-              this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+              // const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
+              // this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
               this.lStorageService.setitemonLocalStorage('qrp', data.password);
 
               this.dialogRef.close('success');

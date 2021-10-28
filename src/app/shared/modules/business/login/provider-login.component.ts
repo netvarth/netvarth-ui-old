@@ -44,7 +44,6 @@ export class ProviderLoginComponent implements OnInit {
   carouselTwo;
   evnt;
   constructor(
-    public dialogRef: MatDialogRef<LoginComponent>,
     private router: Router,
     public shared_functions: SharedFunctions,
     private routerobj: Router,

@@ -402,15 +402,17 @@ export class ProvidersignupComponent implements OnInit {
       this.authService.doLogout().then(() => {
         this.lStorageService.setitemonLocalStorage('new_provider', 'true');
         this.authService.providerLogin(login_data);
-        const encrypted = this.shared_services.set(this.providerPwd, projectConstants.KEY);
-        this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+        // const encrypted = this.shared_services.set(this.providerPwd, projectConstants.KEY);
+        // this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+        this.lStorageService.setitemonLocalStorage('jld', login_data['password']);
         this.lStorageService.setitemonLocalStorage('newProvider', 'true');
       });
     } else {
       this.lStorageService.setitemonLocalStorage('new_provider', 'true');
       this.authService.providerLogin(login_data);
-      const encrypted = this.shared_services.set(this.providerPwd, projectConstants.KEY);
-      this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+      // const encrypted = this.shared_services.set(this.providerPwd, projectConstants.KEY);
+      // this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+      this.lStorageService.setitemonLocalStorage('jld', login_data['password']);
       this.lStorageService.setitemonLocalStorage('newProvider', 'true');
     }
   }

@@ -307,8 +307,9 @@ export class PhomeComponent implements OnInit {
     this.authService.providerLogin(post_data)
       .then(
         () => {
-          const encrypted = this.shared_services.set(this.password, projectConstants.KEY);
-          this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+          // const encrypted = this.shared_services.set(this.password, projectConstants.KEY);
+          // this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+          // this.lStorageService.setitemonLocalStorage('jld', post_data['password']);
           // this.dialogRef.close();
 
         },
