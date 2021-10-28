@@ -138,9 +138,7 @@ text-align: center;
 .actionbtn {
   font-size: 10px;
 }
-.headofpanelbodyforbuttontoken {
-
-    
+.headofpanelbodyforbuttontoken { 
   box-shadow: 6px 5px rgba(240, 235, 235, 0.836) !important;
   padding: 0px !important;
   border-radius: 5px !important;

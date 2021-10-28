@@ -46,5 +46,4 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         ServiceViewComponent
     ]
 })
-
 export class ServiceViewModule { }
