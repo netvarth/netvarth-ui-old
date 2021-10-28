@@ -1296,7 +1296,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     addMember() {
         this.action = 'addmember';
         this.disable = false;
-    }
+    } 
     handleReturnDetails(obj) {
         this.addmemberobj.fname = obj.fname || '';
         this.addmemberobj.lname = obj.lname || '';

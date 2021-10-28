@@ -14,6 +14,7 @@ import { JcCouponNoteModule } from '../../../../shared/modules/jc-coupon-note/jc
 import { MatChipsModule } from '@angular/material/chips';
 import { QuestionnaireModule } from '../../../../shared/components/questionnaire/questionnaire.module';
 import { MatRadioModule } from '@angular/material/radio';
+import { CheckinAddMemberModule } from '../../../../shared/modules/checkin-add-member/checkin-add-member.module';
 const routes: Routes = [
     { path: '', component: ConsumerCheckinComponent},
     { path: 'payment/:id', loadChildren: ()=> import('./payment/payment.module').then(m=>m.ConsumerCheckinPaymentModule) },
@@ -35,6 +36,7 @@ const routes: Routes = [
         MatRadioModule,
         ServiceDetailModule,
         JcCouponNoteModule,
+        CheckinAddMemberModule ,
         MatFormFieldModule,
         MatChipsModule,
         FormsModule,

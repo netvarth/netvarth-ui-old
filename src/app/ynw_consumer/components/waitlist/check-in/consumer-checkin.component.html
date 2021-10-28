@@ -21,7 +21,7 @@
                                 <div class="loading-hgt" *ngIf="!questionnaireLoaded">
                                     <app-common-innerloading-spinner></app-common-innerloading-spinner>
                                 </div>
-                                <div class="col-xl-12" *ngIf="questionnaireLoaded">
+                                <div *ngIf="questionnaireLoaded">
                                     <div
                                         class="lbl col-sm-12 col-md-5 col-lg-4 col-xs-12 col-sm-12 no-padding displ-none">
                                         <div class="wizard-nav" *ngIf="type !='waitlistreschedule'">
@@ -155,15 +155,15 @@
                                                                 <h6 class="card-title service mgn-bt-10">
                                                                     {{sel_ser_det.name}}
                                                                 </h6>
-                                                                <div class="" style="font-size: 1rem">
+                                                                <div class="" style="font-size: 1rem" *ngIf="sel_ser_det && sel_ser_det.description">
                                                                     <p class="module-nomargin line-clamp no-margin"
-                                                                        *ngIf="sel_ser_det.description && !showmoreSpec"
+                                                                        *ngIf="sel_ser_det && sel_ser_det.description && !showmoreSpec"
                                                                         (click)="showSpec()">
                                                                         {{sel_ser_det.description}}</p>
                                                                     <p class="more" (click)="showSpec()"
-                                                                        *ngIf="sel_ser_det.description.length > 200 && !showmoreSpec">
+                                                                        *ngIf="sel_ser_det && sel_ser_det.description && sel_ser_det.description.length > 200 && !showmoreSpec">
                                                                         Read more</p>
-                                                                    <p *ngIf="showmoreSpec" (click)="showSpec()">
+                                                                    <p *ngIf="sel_ser_det && sel_ser_det.description && showmoreSpec" (click)="showSpec()">
                                                                         {{sel_ser_det.description}}</p>
                                                                 </div>
                                                                 <div class="">

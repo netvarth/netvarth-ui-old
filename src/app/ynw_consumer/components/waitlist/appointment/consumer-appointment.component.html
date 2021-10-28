@@ -157,13 +157,13 @@
                                                                 </h6>
                                                                 <div class="" style="font-size: 1rem;">
                                                                     <p class="module-nomargin line-clamp no-margin"
-                                                                        *ngIf="sel_ser_det.description && !showmoreSpec"
+                                                                        *ngIf="sel_ser_det && sel_ser_det.description && !showmoreSpec"
                                                                         (click)="showSpec()">
                                                                         {{sel_ser_det.description}}
                                                                         </p>
-                                                                    <p class="more" (click)="showSpec()" *ngIf="sel_ser_det.description.length > 200 && !showmoreSpec">Read more</p>
+                                                                    <p class="more" (click)="showSpec()" *ngIf="sel_ser_det && sel_ser_det.description && sel_ser_det.description.length > 200 && !showmoreSpec">Read more</p>
                                                                    
-                                                                    <p *ngIf="showmoreSpec" (click)="showSpec()">
+                                                                    <p *ngIf="sel_ser_det && sel_ser_det.description && showmoreSpec" (click)="showSpec()">
                                                                         {{sel_ser_det.description}}</p>
                                                                 </div>
                                                                 <div class="">
