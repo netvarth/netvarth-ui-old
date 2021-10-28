@@ -5,6 +5,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { ScrollToModule } from "@nicky-lenaers/ngx-scroll-to";
 import { OwlModule } from "ngx-owl-carousel";
 import { Nl2BrPipeModule } from "nl2br-pipe";
+import { LazyModule } from "../../modules/lazy-load/lazy.module";
 import { LoadingSpinnerModule } from "../../modules/loading-spinner/loading-spinner.module";
 import { SearchModule } from "../../modules/search/search.module";
 import { LoginModule } from "../login/login.module";
@@ -22,7 +23,8 @@ const routes: Routes = [
         ScrollToModule.forRoot(),
         LoadingSpinnerModule,
         SearchModule,
-        LoginModule
+        LoginModule,
+        LazyModule
     ],
     exports: [HomeComponent],
     declarations: [HomeComponent]

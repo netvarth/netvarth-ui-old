@@ -6,7 +6,10 @@ import { QuestionnaireModule } from "../../../../shared/components/questionnaire
 import { LoadingSpinnerModule } from "../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { ProviderWaitlistCheckInConsumerNoteModule } from "../../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.module";
 import { DonationDetailsComponent } from "./donation-details.component";
-
+import { RouterModule, Routes } from "@angular/router";
+const routes: Routes = [
+    {path: '', component: DonationDetailsComponent}
+]
 @NgModule({
     declarations: [DonationDetailsComponent],
     exports: [DonationDetailsComponent],
@@ -16,7 +19,8 @@ import { DonationDetailsComponent } from "./donation-details.component";
         ProviderWaitlistCheckInConsumerNoteModule,
         LoadingSpinnerModule,
         QuestionnaireModule,
-        CapitalizeFirstPipeModule
+        CapitalizeFirstPipeModule,
+        [RouterModule.forChild(routes)]
     ]
 })
 export class DonationDetailsModule{}
