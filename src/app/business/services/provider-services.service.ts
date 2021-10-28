@@ -320,6 +320,9 @@ export class ProviderServices {
   getProviderLocations() {
     return this.servicemeta.httpGet('provider/locations');
   }
+  getInternalStatus() {
+    return this.servicemeta.httpGet('provider/waitlist/internalStatuses');
+  }
   setWaitlistMgr(data) {
     const url = 'provider/settings/waitlistMgr/';
     return this.servicemeta.httpPut(url, data);
