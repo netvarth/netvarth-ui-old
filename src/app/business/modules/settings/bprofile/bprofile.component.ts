@@ -276,7 +276,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   adwords_remaining = 0;
   adwordshow_list: any = [];
   tooltipcls = projectConstants.TOOLTIP_CLS;
-  breadcrumb_moreoptions: any = [];
   normal_adworkds_active = false;
   normal_search_display = false;
   normal_search_active = false;
@@ -308,15 +307,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       }
     ]
   };
-  breadcrumbs = [
-    {
-      title: 'Settings',
-      url: '/provider/settings'
-    },
-    {
-      title: 'My Account'
-    }
-  ];
   businessConfig: any = [];
   multipeLocationAllowed = false;
   // customer_label = '';
@@ -472,7 +462,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.user_accountType = user.accountType;
-    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.customForm = this.fb.group({
       // customid: ['', Validators.compose([Validators.required])]
       customid: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_ALPHANUMERIC_HYPHEN)])]

@@ -16,7 +16,6 @@ import { GroupStorageService } from '../../../../../../shared/services/group-sto
 export class DepartmentListComponent implements OnInit {
     departments: any = [];
     deptObj;
-    breadcrumb_moreoptions: any = [];
     loading = true;
     tooltipcls = projectConstants.TOOLTIP_CLS;
     add_button = Messages.ADD_DEPT;
@@ -38,10 +37,6 @@ export class DepartmentListComponent implements OnInit {
         this.domain = user.sector;
         this.loading = true;
         this.getDepartments();
-        this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'general->departments', 'subKey': 'timewindow', 'classname': 'b-queue',
-            'actions': [{ 'title': 'Add Department', 'type': 'addDepartment' }, { 'title': 'Help', 'type': 'learnmore' }]
-        };
         this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
         // this.loading = false;
     }
