@@ -478,7 +478,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="card">
+                <div class="card" *ngIf="internalStats.length > 0">
                   <div class="card-header">
                     <h2 class="mb-0">
                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseStatus1"
@@ -1558,7 +1558,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="card">
+                  <div class="card" *ngIf="internalStats.length > 0">
                     <div class="card-header">
                       <h2 class="mb-0">
                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseStatus2"
@@ -2204,7 +2204,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="card">
+                  <div class="card" *ngIf="internalStats.length > 0">
                     <div class="card-header">
                       <h2 class="mb-0">
                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseStatus3"

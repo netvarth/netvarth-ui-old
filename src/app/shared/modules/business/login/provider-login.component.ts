@@ -6,7 +6,6 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { FormMessageDisplayService } from '../../form-message-display/form-message-display.service';
-import { projectConstants } from '../../../../app.component';
 import { SignUpComponent } from '../../../../shared/components/signup/signup.component';
 import { ForgotPasswordComponent } from '../../../../shared/components/forgot-password/forgot-password.component';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
