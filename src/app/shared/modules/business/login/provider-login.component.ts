@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';;
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute, NavigationExtras, NavigationEnd } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-import { LoginComponent } from '../../../../shared/components/login/login.component';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { FormMessageDisplayService } from '../../form-message-display/form-message-display.service';
@@ -184,8 +183,6 @@ export class ProviderLoginComponent implements OnInit {
     this.authService.businessLogin(post_data)
       .then(
         () => {
-          const encrypted = this.shared_services.set(this.password, projectConstants.KEY);
-          this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
           this.lStorageService.setitemonLocalStorage('bpwd', data.password);
           if (this.qParams && this.qParams['src']) {
             if (this.qParams['src'] && this.lStorageService.getitemfromLocalStorage(this.qParams['src'])) {

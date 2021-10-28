@@ -45,7 +45,6 @@ export class ConsumerAuthService {
                                         this.shared_services.ConsumerLogin(data).subscribe(
                                             (loginInfo) => {
                                                 this.setLoginData(loginInfo, data, 'consumer');
-                                                this.lStorageService.setitemonLocalStorage('jld', data.password);
                                                 this.lStorageService.setitemonLocalStorage('qrp', data.password);
                                                 resolve(true);
                                             });
