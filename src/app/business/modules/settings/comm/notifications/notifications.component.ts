@@ -21,7 +21,6 @@ export class NotificationsComponent implements OnInit {
     cust_domain_name = '';
     provdr_domain_name = '';
     frm_providr_notification_cap = '';
-    breadcrumb_moreoptions: any = [];
     customer_label = '';
     provider_label = '';
     custmr_domain_terminology = '';
@@ -56,7 +55,6 @@ export class NotificationsComponent implements OnInit {
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
         this.frm_providr_notification_cap = Messages.FRM_LEVEL_PROVIDER_NOTIFICATION_MSG.replace('[customer]', this.customer_label);
         this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     gotoConsumer() {
         this.router.navigate(['provider', 'settings', 'comm', 'notifications', 'consumer']);

@@ -196,8 +196,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     notes = false;
     attachments = false;
     action = '';
-    // breadcrumbs;
-    // breadcrumb_moreoptions: any = [];
     showEditView = false;
     slots;
     freeSlots: any = [];

@@ -87,7 +87,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   availableSlots: any = [];
   callingModes = projectConstants.CALLING_MODES;
   pos = false;
-  breadcrumbs;
   iconClass: string;
   spfname: any;
   splname: any;

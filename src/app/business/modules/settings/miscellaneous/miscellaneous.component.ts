@@ -19,7 +19,6 @@ export class MiscellaneousComponent implements OnInit {
     provider_domain_name = '';
     customer_label = '';
     provider_label = '';
-    breadcrumb_moreoptions: any = [];
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -35,7 +34,6 @@ export class MiscellaneousComponent implements OnInit {
         this.getDomainSubdomainSettings();
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
         this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     gotocorporate() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'corporate']);

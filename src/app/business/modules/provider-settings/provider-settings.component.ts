@@ -114,11 +114,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   locName;
   businessConfig: any = [];
   loc_list: any = [];
-  breadcrumbs = [
-    {
-      title: 'Settings'
-    }
-  ];
   location_count: any = 0;
   service_count: any = 0;
   queues_count: any = 0;

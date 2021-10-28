@@ -35,25 +35,11 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     add_queue =  'Click to create a queue';
     tooltipcls = projectConstants.TOOLTIP_CLS;
     tooltip_queueedit = Messages.QUEUENAME_TOOLTIP;
-    breadcrumb_moreoptions: any = [];
     isAllServicesSelected = false;
     services_selected: any = [];
     services_list: any = [];
     servicelist = [];
     instantQForm: FormGroup;
-    breadcrumbs = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: Messages.WAITLIST_MANAGE_CAP,
-            url: '/provider/settings/q-manager'
-        },
-        {
-            title: this.work_hours
-        }
-    ];
     queuedialogRef;
     isCheckin;
     selected_location = null;
@@ -137,9 +123,6 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         if (this.groupService.getitemFromGroupStorage('loc_id')) {
             this.selected_location = this.groupService.getitemFromGroupStorage('loc_id');
         }
-        this.breadcrumb_moreoptions = {
-            'actions': [{ 'title': this.new_serv_cap, 'type': 'timewindow' }, { 'title': 'Help', 'type': 'learnmore' }]
-        };
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.initializeQs();
         this.getLicenseUsage();

@@ -191,7 +191,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   jCouponsList: any = [];
   makPaydialogRef;
   qty = '';
-  breadcrumbs = [];
   showPayWorkBench = false;
   amountpay;
   paymentOnline = false;
@@ -325,40 +324,13 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
         if (this.source === 'appt') {
-          this.breadcrumbs = [
-            {
-              title: 'Appointments',
-              url: '/provider/appointments'
-            },
-            {
-              title: 'Bill'
-            }
-          ];
           this.getApptDetails();
         } else if (this.source === 'order') {
           this.getOrderDetails();
         } else {
-          if (this.showToken) {
-            this.breadcrumbs = [
-              {
-                title: 'Tokens',
-                url: '/provider/check-ins'
-              },
-              {
-                title: 'Bill'
-              }
-            ];
+          if (this.showToken) {            
             this.getCheckinDetails();
-          } else {
-            this.breadcrumbs = [
-              {
-                title: 'Check-ins',
-                url: '/provider/check-ins'
-              },
-              {
-                title: 'Bill'
-              }
-            ];
+          } else {            
             this.getCheckinDetails();
           }
         }

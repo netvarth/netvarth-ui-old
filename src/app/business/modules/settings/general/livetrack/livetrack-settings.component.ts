@@ -11,8 +11,6 @@ import { SnackbarService } from '../../../../../shared/services/snackbar.service
     templateUrl: './livetrack-settings.component.html'
 })
 export class LiveTrackSettingsComponent implements OnInit {
-    breadcrumbs_init: ({ title: string; url: string; } | { title: string; url?: undefined; })[];
-
     livetrack_status: any;
     livetrack_statusstr: string;
     cust_domain_name = '';

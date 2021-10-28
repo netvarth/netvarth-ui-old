@@ -108,7 +108,6 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
     type;
     accountId;
     pid;
-    breadcrumbs;
     source;
     pGateway: any;
     razorModel: any;
@@ -179,31 +178,6 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                     this.source = params.source;
                 }
                 this.getWaitlist();
-                if (this.source === 'history') {
-                    this.breadcrumbs = [
-                        {
-                            title: 'My Jaldee',
-                            url: 'consumer'
-                        },
-                        {
-                            title: 'Checkins History',
-                            url: 'consumer/checkin/history'
-                        },
-                        {
-                            title: 'Bill'
-                        }
-                    ];
-                } else {
-                    this.breadcrumbs = [
-                        {
-                            title: 'My Jaldee',
-                            url: 'consumer'
-                        },
-                        {
-                            title: 'Bill'
-                        }
-                    ];
-                }
                 if (this.source === 'history') {
                     this.checkIn_type = 'checkin_historybill';
                 }

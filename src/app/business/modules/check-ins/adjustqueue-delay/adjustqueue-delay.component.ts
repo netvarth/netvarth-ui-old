@@ -46,8 +46,6 @@ export class AdjustqueueDelayComponent implements OnInit {
   // frm_adjust_del_cap = Messages.FRM_LEVEL_ADJ_DELAY_MSG_CNGE;
   disableButton = false;
   instantQueue;
-  breadcrumbs;
-  breadcrumb_moreoptions: any = [];
   account_id;
   departmentlist: any = [];
   departments: any = [];
@@ -103,29 +101,9 @@ export class AdjustqueueDelayComponent implements OnInit {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
-    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.getProviderSettings();
     this.getSMSCredits();
-    // this.breadcrumbs = [
-    //   {
-    //     title: 'Check-ins',
-    //     url: 'provider/check-ins'
-    //   },
-    //   {
-    //     title: 'Adjust delay'
-    //   }
-    // ];
     this.send_message_cap = Messages.DELAY_SEND_MSG.replace('[customer]', this.customer_label);
-    // this.arrived_cnt = this.data.arrived_count;
-    // this.checkedin_cnt = this.data.checkedin_count;
-    // this.tot_checkin_count = this.checkedin_cnt + this.arrived_cnt;
-    // this.queues = this.data.queues;
-    // this.queue_name = this.data.queue_name;
-    // this.instantQueue = this.data.instant_queue;
-    // this.queue_schedule = this.data.queue_schedule;
-    // if (!this.data.queues || !this.data.queue_id) {
-    //   this.closePopup('error');
-    // }
     const loc = this.groupService.getitemFromGroupStorage('loc_id');
     this.sel_loc = loc.id;
     this.getBussinessProfileApi()
@@ -189,28 +167,7 @@ export class AdjustqueueDelayComponent implements OnInit {
     this.provider_services.getWaitlistMgr()
       .subscribe(data => {
         this.settings = data;
-        this.showToken = this.settings.showTokenId;
-        if (this.showToken) {
-          this.breadcrumbs = [
-            {
-              title: 'Tokens',
-              url: 'provider/check-ins'
-            },
-            {
-              title: 'Adjust delay'
-            }
-          ];
-        } else {
-          this.breadcrumbs = [
-            {
-              title: 'Check-ins',
-              url: 'provider/check-ins'
-            },
-            {
-              title: 'Adjust delay'
-            }
-          ];
-        }
+        this.showToken = this.settings.showTokenId;     
       }, () => {
       });
   }

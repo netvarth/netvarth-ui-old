@@ -16,21 +16,6 @@ import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-bo
 export class DisplayboardsComponent implements OnInit {
     tooltipcls = '';
     add_button = '';
-    breadcrumb_moreoptions: any = [];
-    breadcrumbs_init = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: 'Jaldee Appointment Manager',
-            url: '/provider/settings/appointmentmanager'
-        },
-        {
-            title: 'QBoards'
-        }
-    ];
-    breadcrumbs = this.breadcrumbs_init;
     api_loading: boolean;
     action = 'list';
     layout_list: any = [];
@@ -80,10 +65,6 @@ export class DisplayboardsComponent implements OnInit {
         private dialog: MatDialog
     ) { }
     ngOnInit() {
-        this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'appointmentmanager->q-boards', 'subKey': 'timewindow', 'classname': 'b-queue',
-            'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
-        };
         this.getDisplayboardLayouts();
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.accountType = user.accountType;
@@ -145,15 +126,6 @@ export class DisplayboardsComponent implements OnInit {
         this.action = 'addToGroup';
         this.qboardscaption = 'Qboard group';
         this.qBoardsSelected = [];
-        const breadcrumbs = [];
-        this.breadcrumbs_init.map((e) => {
-            breadcrumbs.push(e);
-        });
-        breadcrumbs.push({
-            title: 'Group'
-        });
-        this.breadcrumbs = breadcrumbs;
-
         if (this.qBoardSelectCount > 0) {
             for (let i = 0; i < this.layout_list.length; i++) {
                 if (this.qBoardsSelectedIndex[i]) {
@@ -211,14 +183,6 @@ export class DisplayboardsComponent implements OnInit {
         if (layout.isContainer) {
             this.action = 'updateGroup';
             this.button_title = 'Update';
-            const breadcrumbs = [];
-            this.breadcrumbs_init.map((e) => {
-                breadcrumbs.push(e);
-            });
-            breadcrumbs.push({
-                title: layout.displayName
-            });
-            this.breadcrumbs = breadcrumbs;
             if (layout && layout.id) {
                 this.provider_services.getDisplayboardAppointment(layout.id).subscribe((data: any) => {
                     this.displayName = data.displayName;
@@ -346,7 +310,6 @@ export class DisplayboardsComponent implements OnInit {
     }
     onCancel() {
         this.qboardscaption = 'QBoards';
-        this.breadcrumbs = this.breadcrumbs_init;
         this.activeGroup = null;
         this.action = 'list';
     }

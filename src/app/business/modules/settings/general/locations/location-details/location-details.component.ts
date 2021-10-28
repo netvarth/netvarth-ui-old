@@ -65,21 +65,6 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
   display_schedule: any = [];
   schedule_ar: any = [];
   parking_types = projectConstants.PARKING_TYPES;
-  breadcrumbs_init = [
-    {
-      title: 'Settings',
-      url: '/provider/settings'
-    },
-    {
-      title: Messages.GENERALSETTINGS,
-      url: '/provider/settings/general'
-    },
-    {
-      title: 'Locations',
-      url: '/provider/settings/general/locations'
-    }
-  ];
-  breadcrumbs = this.breadcrumbs_init;
   editlocdialogRef;
   isCheckin;
   active_Schedules: any = [];
@@ -143,15 +128,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     this.getLocationBadges();
     if (this.location_id !== 'add') {
       this.getLocationDetail();
-    } else {
-      const breadcrumbs = [];
-      this.breadcrumbs_init.map((e) => {
-        breadcrumbs.push(e);
-      });
-      breadcrumbs.push({
-        title: 'Add'
-      });
-      this.breadcrumbs = breadcrumbs;
+    } else {      
       this.action = this.location_id;
       this.createForm();
     }
@@ -255,16 +232,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
           for (let i = 0; i < this.schedule_ar.length; i++) {
             this.display_schedule[i] = this.schedule_ar[i][0];
           }
-          this.getQueueList();
-          // remove multiple end breadcrumb on edit function
-          const breadcrumbs = [];
-          this.breadcrumbs_init.map((e) => {
-            breadcrumbs.push(e);
-          });
-          breadcrumbs.push({
-            title: this.location_data.place
-          });
-          this.breadcrumbs = breadcrumbs;
+          this.getQueueList();          
           if (this.location_data.lattitude !== '' && this.location_data.longitude !== '') {
             this.mapurl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.google.com/maps/embed/v1/view?zoom=11&center=' + this.location_data.lattitude + ',' + this.location_data.longitude + '&key=' + projectConstants.GOOGLEAPIKEY);
           }

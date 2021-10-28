@@ -30,8 +30,6 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     service_list: any = [];
     api_error = null;
     api_success = null;
-    breadcrumb_moreoptions: any = [];
-    breadcrumbs;
     domain: any;
     trackStatus: string;
     serv_list;

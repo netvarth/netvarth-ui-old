@@ -11,15 +11,6 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
     'templateUrl': './payment-settings.component.html'
 })
 export class PaymentSettingsComponent implements OnInit {
-    breadcrumbs = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: 'Jaldee Pay'
-        }
-    ];
     frm_public_self_cap = '';
     jaldee_pay_cap: string;
     payment_statusstr = 'Off';
@@ -31,7 +22,6 @@ export class PaymentSettingsComponent implements OnInit {
     payuVerified = false;
     isJaldeeAccount = false;
     domain;
-    breadcrumb_moreoptions: any = [];
     constructor(private router: Router,
         private provider_services: ProviderServices,
         private groupService: GroupStorageService,
@@ -44,7 +34,6 @@ export class PaymentSettingsComponent implements OnInit {
         this.frm_public_self_cap = Messages.FRM_LEVEL_SELF_MSG.replace('[customer]', this.customer_label);
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.getpaymentDetails();
     }
     gotoTaxSettings() {

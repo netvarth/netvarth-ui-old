@@ -49,17 +49,11 @@ export class ProviderSystemAlertComponent implements OnInit {
   totalCnt;
   domain;
   perPage = projectConstants.PERPAGING_LIMIT;
-  breadcrumbs = [
-    {
-      title: 'System Alerts'
-    }
-  ];
   tday = new Date();
   minday = new Date(1900, 0, 1);
   endminday = new Date(1900, 0, 1);
   maxDate = new Date();
   isCheckin;
-  breadcrumb_moreoptions: any = [];
   filters: any = {
     'date': false
   };
@@ -87,7 +81,6 @@ export class ProviderSystemAlertComponent implements OnInit {
     this.holdalertEnddate = this.alertEnddate;
     this.getAlertListTotalCnt('false', '', '');
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
-    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
   }
   getAlertListTotalCnt(ackStatus, sdate, edate) {
     this.shared_services.getAlertsTotalCnt(ackStatus, sdate, edate)

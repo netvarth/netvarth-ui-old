@@ -57,11 +57,6 @@ export class LicenseComponent implements OnInit, OnDestroy {
     showAmounts = true;
     frm_lic_cap = Messages.FRM_LEVEL_PROVIDER_LICE_MSG;
     frm_addon_cap = Messages.FRM_LEVEL_PROVIDER_LIC_ADDON_MSG;
-    breadcrumbs = [
-        {
-            title: 'License & Invoice'
-        }
-    ];
     pay_data = {
         amount: 0,
         paymentMode: 'DC', // 'null', changes as per request from Manikandan
@@ -82,9 +77,6 @@ export class LicenseComponent implements OnInit, OnDestroy {
     loadingTb = false;
     upgradablepackages = [];
     addonTooltip = '';
-    breadcrumb_moreoptions = {
-        'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
-    };
     upgradedialogRef;
     active_user;
     lichistorydialogRef;
