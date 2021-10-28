@@ -58,6 +58,11 @@
                                         {{customerName}} </td>
 
                                 </tr>
+                                <tr *ngIf="customer.phoneNo">
+                                    <td colspan="2" align="center"> {{customer_label| capitalizeFirst}} Ph #:
+                                        {{customer.phoneNo}} </td>
+
+                                </tr>
                                 <tr>
                                     <td colspan="2" align="center"> Service : {{this.bookingDetails.service.name}} </td>
 
@@ -76,12 +81,12 @@
 
                             </tbody>
                         </table>
-                        <div class="text-center " *ngIf="showQR" align="center">
+                    <div class="text-center " *ngIf="showQR" align="center">
                             <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value"
                                 style="width: 200px; margin:50px;">
                             </ngx-qrcode>
-                        </div>
-                        <ng-container>
+                        </div> 
+                       <!-- <ng-container *ngIf="customerDetails && questionanswers && questionanswers.length>0">
                                 <strong><u>Customer  Details</u></strong>
                             <table style="width:100%" border="1" border-color='#eee'>
                                 <thead>
@@ -92,14 +97,14 @@
 
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr *ngIf="customerDetails">
                                         <td> {{ customerDetails.firstName }}&nbsp;{{ customerDetails.lastName }}</td>
                                         <td> {{ customerDetails.phoneNo }}</td>
                                     </tr>
 
                                 </tbody>
                             </table>
-                        </ng-container>
+                        </ng-container> -->
                      
 
       
@@ -195,7 +200,7 @@
 
                         </ng-container>
 
-                        <ng-container *ngIf="internalStatusLog.length>0">
+                        <ng-container *ngIf="internalStatusLog && internalStatusLog.length>0">
                             <strong><u>Review Details</u></strong>
                             <table style="width:100%" border="1" border-color='#eee'>
                                 <thead>

@@ -500,6 +500,44 @@
                     </div>
                   </div>
                 </div>
+                <div class="card">
+                  <div class="card-header">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseStatus1"
+                        aria-expanded="false">
+                        <div>
+                          <div style="display: inline-block !important;">
+                            <i class="fa fa-circle-o-notch"></i>
+                          </div>
+                          <span>&nbsp;Internal Status</span>
+                        </div>
+                        <i class="fa fa-angle-down"></i>
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapseStatus1" class="collapse in" data-parent="#accordion1">
+                    <div class="card-body">
+                      <div class="filter-checkbox-input">
+                        <!-- <label *ngIf="!showToken" class="filterHeaders">Check-in Mode</label>
+                              <label *ngIf="showToken" class="filterHeaders">Token booking mode</label> -->
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li>
+                        <!-- <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox class="filter-checkbox" [checked]="allStatusSelected"
+                            (change)="setFilterDataCheckbox('internalStatus', 'all', $event)">
+                            All</mat-checkbox>
+                        </li> -->
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                          *ngFor="let stat of internalStats">
+                          <mat-checkbox class="filter-checkbox" [checked]="intStat.indexOf(stat.statusId) !== -1"
+                            (change)="setFilterDataCheckbox('internalStatus', stat.statusId, $event)">
+                            {{stat.status}}</mat-checkbox>
+                        </li>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+             
               </ul>
             </section>
             <div class="filter-footer" *ngIf="filterapplied === true">
@@ -1316,6 +1354,43 @@
                       </div>
                     </div>
                   </div>
+                  <div class="card">
+                    <div class="card-header">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseStatus2"
+                          aria-expanded="false">
+                          <div>
+                            <div style="display: inline-block !important;">
+                              <i class="fa fa-circle-o-notch"></i>
+                            </div>
+                            <span>&nbsp;Internal Status</span>
+                          </div>
+                          <i class="fa fa-angle-down"></i>
+                        </button>
+                      </h2>
+                    </div>
+                    <div id="collapseStatus2" class="collapse in" data-parent="#accordion1">
+                      <div class="card-body">
+                        <div class="filter-checkbox-input">
+                          <!-- <label *ngIf="!showToken" class="filterHeaders">Check-in Mode</label>
+                                <label *ngIf="showToken" class="filterHeaders">Token booking mode</label> -->
+                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                          </li>
+                          <!-- <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                            <mat-checkbox class="filter-checkbox" [checked]="allStatusSelected"
+                              (change)="setFilterDataCheckbox('internalStatus', 'all', $event)">
+                              All</mat-checkbox>
+                          </li> -->
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                            *ngFor="let stat of internalStats">
+                            <mat-checkbox class="filter-checkbox" [checked]="intStat.indexOf(stat.statusId) !== -1"
+                              (change)="setFilterDataCheckbox('internalStatus', stat.statusId, $event)">
+                              {{stat.status}}</mat-checkbox>
+                          </li>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <div class="card" style="padding-bottom: 30px !important;">
                     <div class="card-header">
                       <h2 class="mb-0">
@@ -2000,6 +2075,43 @@
                               [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(true) !== -1"
                               (change)="setLabelFilter(lbl, $event)">
                               {{lbl.displayName | capitalizeFirst}}</mat-checkbox>
+                          </li>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseStatus13"
+                          aria-expanded="false">
+                          <div>
+                            <div style="display: inline-block !important;">
+                              <i class="fa fa-circle-o-notch"></i>
+                            </div>
+                            <span>&nbsp;Internal Status</span>
+                          </div>
+                          <i class="fa fa-angle-down"></i>
+                        </button>
+                      </h2>
+                    </div>
+                    <div id="collapseStatus3" class="collapse in" data-parent="#accordion1">
+                      <div class="card-body">
+                        <div class="filter-checkbox-input">
+                          <!-- <label *ngIf="!showToken" class="filterHeaders">Check-in Mode</label>
+                                <label *ngIf="showToken" class="filterHeaders">Token booking mode</label> -->
+                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                          </li>
+                          <!-- <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                            <mat-checkbox class="filter-checkbox" [checked]="allStatusSelected"
+                              (change)="setFilterDataCheckbox('internalStatus', 'all', $event)">
+                              All</mat-checkbox>
+                          </li> -->
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                            *ngFor="let stat of internalStats">
+                            <mat-checkbox class="filter-checkbox" [checked]="intStat.indexOf(stat.statusId) !== -1"
+                              (change)="setFilterDataCheckbox('internalStatus', stat.statusId, $event)">
+                              {{stat.status}}</mat-checkbox>
                           </li>
                         </div>
                       </div>

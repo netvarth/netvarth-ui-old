@@ -1,5 +1,8 @@
 import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular/core';;
+<<<<<<< HEAD
 import { MatDialog } from '@angular/material/dialog';
+=======
+>>>>>>> refs/remotes/origin/1.8.x.jaldee-cash
 import { Router, ActivatedRoute, NavigationExtras, NavigationEnd } from '@angular/router';
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -81,9 +84,7 @@ export class PhomeComponent implements OnInit {
   constructor(
     private router: Router,
     public shared_functions: SharedFunctions,
-    // private routerobj: Router,
     public shared_services: SharedServices,
-    public dialog: MatDialog,
     private _scrollToService: ScrollToService,
     public fed_service: FormMessageDisplayService,
     private fb: FormBuilder,
@@ -257,7 +258,10 @@ export class PhomeComponent implements OnInit {
     document.getElementById(cityName).style.display = 'block';
     evt.target.className += ' active';
   }
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/1.8.x.jaldee-cash
   showMore(name) {
     switch (name) {
       case 'public_search': {
@@ -307,11 +311,16 @@ export class PhomeComponent implements OnInit {
     this.authService.providerLogin(post_data)
       .then(
         () => {
+<<<<<<< HEAD
           // const encrypted = this.shared_services.set(this.password, projectConstants.KEY);
           // this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
           // this.lStorageService.setitemonLocalStorage('jld', post_data['password']);
           // this.dialogRef.close();
 
+=======
+          const encrypted = this.shared_services.set(this.password, projectConstants.KEY);
+          this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+>>>>>>> refs/remotes/origin/1.8.x.jaldee-cash
         },
         error => {
           // ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
@@ -382,12 +391,6 @@ export class PhomeComponent implements OnInit {
   onChangePassword() {
     this.step = 1;
   }
-  // checkAccountExists () {
-  //   if
-  // }
-  // doSignuppage() {
-  //   this.routerobj.navigate(['business/signup']);
-  // }
   gotoproducts() {
     const navigationExtras: NavigationExtras = {
       queryParams: { type: 'products' }

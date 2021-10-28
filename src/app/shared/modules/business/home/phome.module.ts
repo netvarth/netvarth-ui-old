@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PhomeComponent } from './phome.component';
 import { OwlModule } from 'ngx-owl-carousel';
+<<<<<<< HEAD
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormMessageDisplayModule } from '../../form-message-display/form-message-display.module';
 import { ProvidersignupModule } from '../signup/providersignup.module';
@@ -11,6 +12,9 @@ import { FooterModule } from '../../footer/footer.module';
 import { HeaderModule } from '../../header/header.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { LoginModule } from '../../../../shared/components/login/login.module';
+=======
+import { LazyModule } from '../../lazy-load/lazy.module';
+>>>>>>> refs/remotes/origin/1.8.x.jaldee-cash
 import { AuthGuardHome } from '../../../../shared/guard/auth.guard';
 const routes: Routes = [
     { path: '', component: PhomeComponent, canActivate: [AuthGuardHome] },
@@ -24,9 +28,8 @@ const routes: Routes = [
     imports: [
         CommonModule,
         OwlModule,
-        HeaderModule,
-        FooterModule,
         [RouterModule.forChild(routes)],
+<<<<<<< HEAD
         FormsModule,
         FormMessageDisplayModule,
         ReactiveFormsModule,
@@ -34,6 +37,9 @@ const routes: Routes = [
         ForgotPasswordModule,
         MatFormFieldModule,
         LoginModule
+=======
+        LazyModule
+>>>>>>> refs/remotes/origin/1.8.x.jaldee-cash
     ],
     declarations: [
         PhomeComponent
