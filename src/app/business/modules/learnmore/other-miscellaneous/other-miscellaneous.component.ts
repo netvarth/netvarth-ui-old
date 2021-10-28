@@ -6,7 +6,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 
 @Component({ 
     selector: 'app-otherMiscellaneous-learnmore',
-    templateUrl: './otherMiscellaneous.component.html'
+    templateUrl: './other-miscellaneous.component.html'
 })
 export class OtherMiscellaneousComponent implements OnInit {
     @Input() target: string;
