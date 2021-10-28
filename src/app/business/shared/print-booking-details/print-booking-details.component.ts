@@ -33,9 +33,10 @@ export class PrintBookingDetailsComponent implements OnInit {
   customerName: any;
   answerSection: any;
   bookingType: any;
-  internalStatusLog: any=[];
+  internalStatusLog: any = [];
   customerDetails: any;
   customer: any;
+  isJaldeeId: boolean=false;
 
 
   constructor(private activated_route: ActivatedRoute,
@@ -52,8 +53,8 @@ export class PrintBookingDetailsComponent implements OnInit {
         if (this.bookingType === 'appt') {
           this.getApptBookingDetails(this.bookingId).then((data) => {
             this.bookingDetails = data;
-            this.customerDetails=this.bookingDetails.appmtFor[0];
-            console.log("this.customerDetails"+this.customerDetails);
+            this.customerDetails = this.bookingDetails.appmtFor[0];
+            console.log("this.customerDetails" + this.customerDetails);
             if (this.bookingDetails.questionnaire) {
               this.questionnaires = this.bookingDetails.questionnaire;
               this.questionanswers = this.questionnaires.questionAnswers;
@@ -63,25 +64,25 @@ export class PrintBookingDetailsComponent implements OnInit {
             };
             this.setPrintDetails();
           });
-          this.getAppointmentInternalStatus(this.bookingId).then((data) =>{
-            this.internalStatusLog=data;
+          this.getAppointmentInternalStatus(this.bookingId).then((data) => {
+            this.internalStatusLog = data;
           });
         }
         if (this.bookingType === 'checkin') {
           this.getWaitlistBookingDetails(this.bookingId).then((data) => {
             this.bookingDetails = data;
-            this.customerDetails=this.bookingDetails.waitlistingFor[0];
+            this.customerDetails = this.bookingDetails.waitlistingFor[0];
             if (this.bookingDetails.questionnaire) {
               this.questionnaires = this.bookingDetails.questionnaire;
               this.questionanswers = this.questionnaires.questionAnswers;
-               if(this.questionanswers){
+              if (this.questionanswers) {
                 this.groupQuestionsBySection();
-                }   
-               };
-              this.setPrintDetails();
+              }
+            };
+            this.setPrintDetails();
           });
-          this.getWaitlistInternalStatusLog(this.bookingId).then((data) =>{
-            this.internalStatusLog=data;
+          this.getWaitlistInternalStatusLog(this.bookingId).then((data) => {
+            this.internalStatusLog = data;
           });
         }
       })
@@ -164,25 +165,27 @@ export class PrintBookingDetailsComponent implements OnInit {
     const bprof = this.groupService.getitemFromGroupStorage('ynwbp');
     this.bname = bprof.bn;
     if (this.bookingType === 'appt') {
-      this.customer=this.bookingDetails.appmtFor[0];
+      this.customer = this.bookingDetails.appmtFor[0];
       const fname = (this.bookingDetails.appmtFor[0].firstName) ? this.bookingDetails.appmtFor[0].firstName : '';
       const lname = (this.bookingDetails.appmtFor[0].lastName) ? this.bookingDetails.appmtFor[0].lastName : '';
       if (fname !== '' || lname !== '') {
         this.customerName = fname + " " + lname;
-       
+
       }
       else {
+        this.isJaldeeId=true;
         this.customerName = this.bookingDetails.providerConsumer.jaldeeId
       }
 
     } else {
-      this.customer=this.bookingDetails.waitlistingFor[0];
+      this.customer = this.bookingDetails.waitlistingFor[0];
       const fname = (this.bookingDetails.waitlistingFor[0].firstName) ? this.bookingDetails.waitlistingFor[0].firstName : '';
       const lname = (this.bookingDetails.waitlistingFor[0].lastName) ? this.bookingDetails.waitlistingFor[0].lastName : '';
       if (fname !== '' || lname !== '') {
         this.customerName = fname + " " + lname;
       }
       else {
+        this.isJaldeeId=true;
         this.customerName = this.bookingDetails.consumer.jaldeeId
       }
     }
@@ -265,6 +268,13 @@ export class PrintBookingDetailsComponent implements OnInit {
 
       }
       return filesuploaded.substring(0, filesuploaded.length - 1);
+    }
+    if (Object.keys(answerLine)[0] === 'list') {
+      let items = '';
+      for (let item of answerLine.list) {
+        items += item + ',';
+      }
+      return items.substring(0, items.length - 1);
     }
     return answerLine[Object.keys(answerLine)[0]];
   }
