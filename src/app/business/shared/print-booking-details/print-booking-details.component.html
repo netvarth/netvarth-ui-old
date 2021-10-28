@@ -41,6 +41,13 @@
                                 <tr>
                                     <td colspan="2" align="center">{{bname}} </td>
                                 </tr>
+                                <tr *ngIf="bookingDetails.provider&& bookingDetails.provider.firstName">
+                                    <td colspan="2" align="center"> {{provider_label| capitalizeFirst}}:
+                                        <span *ngIf="bookingDetails.provider.firstName">{{bookingDetails.provider.firstName}}</span>
+                                        <span *ngIf="bookingDetails.provider.lastName">{{bookingDetails.provider.lastName}}</span>
+                                     </td>
+
+                                </tr>
                                 <tr *ngIf="bookingType==='checkin'">
                                     <td align="center" colspan="2">
                                         Location : {{this.bookingDetails.queue.location.place}}
@@ -53,8 +60,13 @@
                                     </td>
 
                                 </tr>
-                                <tr>
+                                <tr *ngIf="!isJaldeeId">
                                     <td colspan="2" align="center"> {{customer_label| capitalizeFirst}}:
+                                        {{customerName}} </td>
+
+                                </tr>
+                                <tr *ngIf="isJaldeeId">
+                                    <td colspan="2" align="center"> {{ customer_label|capitalizeFirst }} Id #:
                                         {{customerName}} </td>
 
                                 </tr>
@@ -63,8 +75,9 @@
                                         {{customer.phoneNo}} </td>
 
                                 </tr>
+                           
                                 <tr>
-                                    <td colspan="2" align="center"> Service : {{this.bookingDetails.service.name}} </td>
+                                    <td colspan="2" align="center"> Service : {{bookingDetails.service.name}} </td>
 
                                 </tr>
                                 <tr *ngIf="bookingDetails.service.deptName">
