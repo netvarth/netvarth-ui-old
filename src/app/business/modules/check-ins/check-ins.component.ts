@@ -107,6 +107,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     service: 'all',
     waitlist_status: 'all',
     waitlistMode: 'all',
+    internalStatus: 'all',
     payment_status: 'all',
     check_in_start_date: null,
     check_in_end_date: null,
@@ -131,6 +132,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     waitlist_status: false,
     payment_status: false,
     waitlistMode: false,
+    internalStatus: false,
     check_in_start_date: false,
     check_in_date: false,
     check_in_end_date: false,
@@ -265,10 +267,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   breadcrumbs_init = [];
   breadcrumb_moreoptions: any = [];
   apptModes: any = [];
+  intStat: any = [];
   paymentStatuses: any = [];
   apptStatuses: any = [];
   ageGroups: any = [];
   allModeSelected = false;
+  allStatusSelected = false;
   allLabelSelected = false;
   allPayStatusSelected = false;
   allApptStatusSelected = false;
@@ -358,6 +362,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   bussLocs: any = [];
   locId;
   location_select: any = [];
+  internalStats: any = [];
   @ViewChild('closebutton') closebutton;
   showattachmentDialogRef: any;
   constructor(private shared_functions: SharedFunctions,
@@ -514,6 +519,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.refresh();
     });
     this.getProviderLocation();
+    this.getInternalStatus();
   }
   getProviderLocation() {
     this.provider_services.getProviderLocations()
@@ -521,6 +527,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         (data: any) => {
           this.location_select = data;
         });
+  }
+  getInternalStatus(){
+    this.provider_services.getInternalStatus()
+    .subscribe(
+      (data: any) => {
+        this.internalStats = data;
+      });
   }
   getDepartments() {
     this.provider_services.getDepartments().subscribe(
@@ -621,6 +634,38 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.allModeSelected = true;
       }
     }
+
+    if (type === 'internalStatus') {
+      if (value === 'all') {
+        this.intStat = [];
+        this.allStatusSelected = false;
+        if (event.checked) {
+          for (const stat of this.internalStats) {
+            if (this.intStat.indexOf(stat.StatusId) === -1) {
+              this.intStat.push(stat.StatusId);
+            }
+          }
+          this.allStatusSelected = true;
+        }
+      } else {
+        this.allStatusSelected = false;
+        const indx = this.intStat.indexOf(value);
+        if (indx === -1) {
+          this.intStat.push(value);
+        } else {
+          this.intStat.splice(indx, 1);
+        }
+      }
+      if (this.intStat.length === this.internalStats.length) {
+        this.filter['internalStatus'] = 'all';
+        this.allStatusSelected = true;
+      }
+    }
+
+
+
+
+   
     if (type === 'payment_status') {
       if (value === 'all') {
         this.paymentStatuses = [];
@@ -1887,12 +1932,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.selectedLabels = [];
     this.paymentStatuses = [];
     this.apptModes = [];
+    this.intStat = [];
     this.allAgeSlected = false;
     this.allGenderSlected = false;
     this.allServiceSelected = false;
     this.allApptStatusSelected = false;
     this.allPayStatusSelected = false;
     this.allModeSelected = false;
+    this.allStatusSelected = false;
     this.allLabelSelected = false;
     this.allQSelected = false;
     this.allLocationSelected = false;
@@ -1963,6 +2010,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.apptModes.length > 0 && this.filter.waitlistMode !== 'all') {
       api_filter['waitlistMode-eq'] = this.apptModes.toString();
+    }
+    if (this.intStat.length > 0) {
+      api_filter['internalStatus-eq'] = this.intStat.toString();
     }
     if (this.time_type !== 1) {
       if (this.filter.check_in_start_date != null) {
@@ -2039,10 +2089,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.labelSelection();
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.checkinEncId || this.filter.patientId || this.filter.service !== 'all' || this.filter.location != 'all'
-      || this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.check_in_start_date
+      || this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.internalStatus !== 'all' || this.filter.check_in_start_date
       || this.filter.check_in_end_date || this.filter.check_in_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== ''
       || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
-      || this.allPayStatusSelected || this.allModeSelected || this.allLabelSelected || this.allQSelected || this.allLocationSelected) {
+      || this.allPayStatusSelected || this.allModeSelected || this.allStatusSelected || this.allLabelSelected || this.allQSelected || this.allLocationSelected) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -2076,6 +2126,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       service: false,
       waitlist_status: false,
       payment_status: false,
+      internalStatus: false,
       waitlistMode: false,
       check_in_start_date: false,
       check_in_end_date: false,
@@ -2097,6 +2148,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       waitlist_status: 'all',
       payment_status: 'all',
       waitlistMode: 'all',
+      internalStatus: 'all',
       check_in_start_date: null,
       check_in_end_date: null,
       check_in_date: null,
@@ -2405,7 +2457,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.filters[type]) {
       if (type === 'check_in_start_date' || type === 'check_in_end_date' || type === 'check_in_date') {
         this.filter[type] = null;
-      } else if (type === 'payment_status' || type === 'service' || type === 'queue' || type === 'location' || type === 'waitlistMode') {
+      } else if (type === 'payment_status' || type === 'service' || type === 'queue' || type === 'location' || type === 'waitlistMode' || type === 'internalStatus') {
         this.filter[type] = 'all';
       } else if (type === 'waitlist_status') {
         this.statusMultiCtrl = [];
@@ -2717,10 +2769,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.labelSelection();
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode||this.filter.checkinEncId || this.filter.patientId || this.filter.service !== 'all' || this.filter.location != 'all'
-      || this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.check_in_start_date
+      || this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.internalStatus !== 'all' || this.filter.check_in_start_date
       || this.filter.check_in_end_date || this.filter.check_in_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== ''
       || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
-      || this.allPayStatusSelected || this.allModeSelected || this.allLabelSelected || this.allQSelected || this.allLocationSelected) {
+      || this.allPayStatusSelected || this.allModeSelected || this.allStatusSelected || this.allLabelSelected || this.allQSelected || this.allLocationSelected) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;

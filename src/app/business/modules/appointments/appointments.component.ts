@@ -103,6 +103,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     service: 'all',
     apptStatus: 'all',
     payment_status: 'all',
+    internalStatus: 'all',
     check_in_start_date: null,
     check_in_date: null,
     check_in_end_date: null,
@@ -126,6 +127,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     service: false,
     apptStatus: false,
     payment_status: false,
+    internalStatus: false,
     check_in_start_date: false,
     check_in_date: false,
     check_in_end_date: false,
@@ -271,6 +273,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   slotsForQ: any = [];
   filter_sidebar = false;
   apptModes: any = [];
+  intStat: any = [];
   paymentStatuses: any = [];
   apptStatuses: any = [];
   ageGroups: any = [];
@@ -329,6 +332,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   filterLocation: any = [];
   selectedLabels: any = [];
   allLabelSelected: any = [];
+  allStatusSelected: any = [];
   customerIdTooltip = '';
   allLabels: any = [];
   voicedialogRef: any;
@@ -359,6 +363,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('closebutton') closebutton;
   showattachmentDialogRef: any;
   unassignview = false;
+  internalStats: any = [];
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -485,6 +490,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
       this.refresh();
     });
+    this.getInternalStatus();
+  }
+  getInternalStatus(){
+    this.provider_services.getInternalStatus()
+    .subscribe(
+      (data: any) => {
+        this.internalStats = data;
+      });
   }
   getServiceName(serviceName) {
     let name = '';
@@ -879,6 +892,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       service: false,
       apptStatus: false,
       payment_status: false,
+    internalStatus: false,
       check_in_start_date: false,
       check_in_date: false,
       check_in_end_date: false,
@@ -900,6 +914,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       service: 'all',
       apptStatus: 'all',
       payment_status: 'all',
+      internalStatus: 'all',
       check_in_start_date: null,
       check_in_date: null,
       check_in_end_date: null,
@@ -1270,7 +1285,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.chkSlotInput = {};
     this.selectedAppt = [];
     this.appointmentsChecked = [];
-    this.setApptSelections();
     this.chkSelectAppointments = false;
     this.apptSingleSelection = false;
     this.apptMultiSelection = false;
@@ -1564,6 +1578,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.apptModes.length > 0 && this.filter.appointmentMode !== 'all') {
       api_filter['appointmentMode-eq'] = this.apptModes.toString();
     }
+    if (this.intStat.length > 0) {
+      api_filter['internalStatus-eq'] = this.intStat.toString();
+    }
     if (this.time_type !== 1) {
       if (this.filter.check_in_start_date != null) {
         api_filter['date-ge'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_start_date);
@@ -1640,10 +1657,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.labelSelection();
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
-      this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
+      this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.internalStatus !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
       || this.filter.check_in_end_date !== null || this.filter.check_in_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all'
       || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
-      || this.allPayStatusSelected || this.allModeSelected || this.allLabelSelected || this.allScheduleSelected || this.allLocationSelected) {
+      || this.allPayStatusSelected || this.allModeSelected || this.allLabelSelected || this.allStatusSelected || this.allScheduleSelected || this.allLocationSelected) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -1661,10 +1678,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.labelSelection();
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
-      this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
+      this.filter.schedule !== 'all' || this.filter.payment_status !== 'all'|| this.filter.internalStatus !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
       || this.filter.check_in_end_date !== null || this.filter.check_in_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all'
       || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
-      || this.allPayStatusSelected || this.allModeSelected || this.allLabelSelected || this.allScheduleSelected || this.allLocationSelected) {
+      || this.allPayStatusSelected || this.allModeSelected || this.allLabelSelected || this.allStatusSelected || this.allScheduleSelected || this.allLocationSelected) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -1783,7 +1800,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.filters[type]) {
       if (type === 'check_in_start_date' || type === 'check_in_end_date' || type === 'check_in_date') {
         this.filter[type] = null;
-      } else if (type === 'payment_status' || type === 'service' || type === 'queue' || type === 'appointmentMode' || type === 'location') {
+      } else if (type === 'payment_status' || type === 'service' || type === 'queue' || type === 'appointmentMode' || type === 'location' || type === 'internalStatus') {
         this.filter[type] = 'all';
       } else if (type === 'apptStatus') {
         this.statusMultiCtrl = [];
@@ -1850,6 +1867,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.filteredSchedule = [];
     this.paymentStatuses = [];
     this.apptModes = [];
+    this.intStat = [];
+    
     this.filterLocation = [];
     this.allAgeSlected = false;
     this.allGenderSlected = false;
@@ -1861,6 +1880,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.allLocationSelected = false;
     this.selectedLabels = [];
     this.allLabelSelected = [];
+    this.allStatusSelected = [];
+    
   }
   setFilterData(type, value) {
     this.filter[type] = value;
@@ -1875,6 +1896,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.apptModes = [];
         this.allModeSelected = false;
         if (event.checked) {
+         
           for (const apptMode of this.appointmentModes) {
             if (this.apptModes.indexOf(apptMode.mode) === -1) {
               this.apptModes.push(apptMode.mode);
@@ -1894,6 +1916,32 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.apptModes.length === this.appointmentModes.length) {
         this.filter['appointmentMode'] = 'all';
         this.allModeSelected = true;
+      }
+    }
+    if (type === 'internalStatus') {
+      if (value === 'all') {
+        this.intStat = [];
+        this.allStatusSelected = false;
+        if (event.checked) {
+          for (const stat of this.internalStats) {
+            if (this.intStat.indexOf(stat.StatusId) === -1) {
+              this.intStat.push(stat.StatusId);
+            }
+          }
+          this.allStatusSelected = true;
+        }
+      } else {
+        this.allStatusSelected = false;
+        const indx = this.intStat.indexOf(value);
+        if (indx === -1) {
+          this.intStat.push(value);
+        } else {
+          this.intStat.splice(indx, 1);
+        }
+      }
+      if (this.intStat.length === this.internalStats.length) {
+        this.filter['internalStatus'] = 'all';
+        this.allStatusSelected = true;
       }
     }
     if (type === 'payment_status') {
