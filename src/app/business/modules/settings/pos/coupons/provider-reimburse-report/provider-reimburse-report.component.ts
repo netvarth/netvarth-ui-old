@@ -38,23 +38,6 @@ export class ProviderReimburseReportComponent implements OnInit {
   api_error = null;
   api_success = null;
   filtericonTooltip:any;
-  breadcrumbs = [
-    {
-      title: 'Settings',
-      url: '/provider/settings'
-    },
-    {
-      title: 'Billing/POS',
-      url: '/provider/settings/pos'
-    },
-    {
-      title: 'Coupons',
-      url: '/provider/settings/pos/coupon'
-    },
-    {
-      title: 'Reports'
-    }
-  ];
   tooltipcls = '';
   open_filter = false;
   filter = {

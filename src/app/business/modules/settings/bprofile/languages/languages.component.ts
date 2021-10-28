@@ -25,7 +25,6 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     lang_known_cap = Messages.LANG_KNOWN_CAP;
     have_not_add_cap = Messages.BPROFILE_HAVE_NOT_ADD_CAP;
     add_it_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
-    breadcrumb_moreoptions: any = [];
     domain;
     src: any;
     constructor(
@@ -42,7 +41,6 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     ngOnInit() {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
         this.getSpokenLanguages();
         this.setLanguages();

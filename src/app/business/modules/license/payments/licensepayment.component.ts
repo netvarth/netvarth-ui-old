@@ -20,7 +20,6 @@ import { Messages } from '../../../../../../src/app/shared/constants/project-mes
 })
 export class PaymentComponent implements OnInit {
   payment_popup = null;
-  breadcrumbs = [];
   waitlistDetails: any = [];
   paymentresponse: any = [];
   origin;
@@ -70,15 +69,6 @@ export class PaymentComponent implements OnInit {
     });
   }
   ngOnInit() {
-    this.breadcrumbs = [
-      {
-        title: 'License & Invoice',
-        url: '/provider/license'
-      },
-      {
-        title: 'Payments'
-      }
-    ];
   }
   payuPayment() {
     this.isClickedOnce=true;

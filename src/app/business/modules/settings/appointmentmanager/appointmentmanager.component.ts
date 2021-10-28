@@ -16,17 +16,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
     templateUrl: './appointmentmanager.component.html'
 })
 export class AppointmentmanagerComponent implements OnInit {
-    breadcrumbs_init = [
-        {
-            url: '/provider/settings',
-            title: 'Settings'
-        },
-        {
-            title: 'Jaldee Appointment Manager'
-        }
-    ];
     domain;
-    breadcrumbs = this.breadcrumbs_init;
     isCorp = false;
     isMultilevel = false;
     accountType: any;
@@ -43,7 +33,6 @@ export class AppointmentmanagerComponent implements OnInit {
     futureDateApptlist = false;
     apptlist_statusstr = 'Off';
     futureapptlist_statusstr = 'off';
-    breadcrumb_moreoptions: any = [];
     frm_set_ser_cap = '';
     bProfile = null;
     locationExists = false;
@@ -68,7 +57,6 @@ export class AppointmentmanagerComponent implements OnInit {
         this.getServiceCount();
         this.getSchedulesCount();
         this.getApptlistMgr();
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
         this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
         this.frm_set_ser_cap = Messages.FRM_LEVEL_SETT_SERV_MSG.replace('[customer]', this.customer_label);

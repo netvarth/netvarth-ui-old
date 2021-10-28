@@ -97,7 +97,6 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     maxcnt11 = 11;
     activeLicPkg;
     disableMyAcc = false;
-    breadcrumb_moreoptions: any = [];
     customer_label = '';
     payment_set_cap = '';
     isCheckin;
@@ -106,20 +105,6 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     tax_st_cap = Messages.FRM_LEVEL_TAX_SETTINGS_MSG;
     jPay_Billing = false;
     upgrade_license = Messages.COUPON_UPGRADE_LICENSE;
-
-    breadcrumbs = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: 'Jaldee Pay',
-            url: '/provider/settings/payments'
-        },
-        {
-            title: 'Bank Account'
-        }
-    ];
     licenseMetadata: any = [];
     licenseMetrics: any = [];
     api_loading = false;
@@ -163,7 +148,6 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.getTaxpercentage();
         this.getProviderProfile();
         this.activeLicPkg = this.groupService.getitemFromGroupStorage('ynw-user').accountLicenseDetails.accountLicense.name;
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.payment_set_cap = Messages.FRM_LEVEL_PAYMENT_SETTINGS_MSG.replace('[customer]', this.customer_label);
         this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
         // this.getLicenseMetrics();

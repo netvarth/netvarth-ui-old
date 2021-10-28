@@ -1,16 +1,17 @@
 import { NgModule } from "@angular/core";
 import { OtherMiscellaneousComponent } from "./otherMiscellaneous.component";
-import { OtherMiscellaneousRoutingModule } from "./otherMiscellaneous.routing.module";
 import { SharedModule } from "../../../../shared/modules/common/shared.module";
 import { HeaderModule } from "../../../../shared/modules/header/header.module";
-import { BreadCrumbModule } from "../../../../shared/modules/breadcrumb/breadcrumb.module";
-
+import { RouterModule, Routes } from "@angular/router";
+const routes: Routes = [
+  { path: ':parent', component: OtherMiscellaneousComponent },
+  { path: '/help', component: OtherMiscellaneousComponent }
+];
 @NgModule({
     imports: [
         SharedModule,
         HeaderModule,
-        BreadCrumbModule,
-        OtherMiscellaneousRoutingModule
+        [RouterModule.forChild(routes)]
       ],
       declarations: [OtherMiscellaneousComponent],
       exports: [OtherMiscellaneousComponent],

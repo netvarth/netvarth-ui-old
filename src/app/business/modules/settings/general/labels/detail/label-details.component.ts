@@ -23,7 +23,6 @@ export class LabelDetailsComponent implements OnInit {
     cancel_btn = Messages.CANCEL_BTN;
     save_btn = Messages.SAVE_BTN;
     labelSubscription: Subscription;
-    breadcrumb_moreoptions: any = [];
     labelInfo = {
         'label': null,
         'description': null,
@@ -34,24 +33,9 @@ export class LabelDetailsComponent implements OnInit {
     max_char_count = 500;
     button_title = 'Save';
     isfocused = false;
-    breadcrumbs_init = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: Messages.GENERALSETTINGS,
-            url: '/provider/settings/general'
-        },
-        {
-            title: 'Labels',
-            url: '/provider/settings/general/labels'
-        }
-    ];
     label;
     action: string;
     status: any;
-    breadcrumbs = this.breadcrumbs_init;
     api_error: any = [];
     api_success: any;
     valueSet = [];
@@ -97,15 +81,6 @@ export class LabelDetailsComponent implements OnInit {
                 this.label_id = qparams.id;
                 if (this.label_id) {
                     this.editLabelbyId(qparams.id);
-                } else {
-                    const breadcrumbs = [];
-                    this.breadcrumbs_init.map((e) => {
-                        breadcrumbs.push(e);
-                    });
-                    breadcrumbs.push({
-                        title: 'Create Label'
-                    });
-                    this.breadcrumbs = breadcrumbs;
                 }
             });
             const user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -152,15 +127,7 @@ export class LabelDetailsComponent implements OnInit {
     }
     editLabelbyId(id) {
         this.provider_services.getLabel(id).subscribe(data => {
-            this.labelData = data;
-            const breadcrumbs = [];
-            this.breadcrumbs_init.map((e) => {
-                breadcrumbs.push(e);
-            });
-            breadcrumbs.push({
-                title: this.labelData.displayName
-            });
-            this.breadcrumbs = breadcrumbs;
+            this.labelData = data;            
             this.label = this.labelData.label;
             this.description = this.labelData.description;
             this.displayName = this.labelData.displayName;

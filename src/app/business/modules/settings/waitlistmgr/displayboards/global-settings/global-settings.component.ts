@@ -34,23 +34,6 @@ export class GlobalSettingsComponent implements OnInit {
     public model = {
         editorData: ''
     };
-    breadcrumbs_init = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: Messages.WAITLIST_MANAGE_CAP,
-            url: '/provider/settings/q-manager'
-        },
-        {
-            title: 'QBoard',
-            url: '/provider/settings/q-manager/displayboards'
-        },
-        {
-            title: 'Global Settings'
-        }
-    ];
     largeImage: string;
     position: string;
     position_values = [
@@ -81,7 +64,6 @@ export class GlobalSettingsComponent implements OnInit {
         private wordProcessor: WordProcessor
     ) { }
     @Input() headerResult;
-    breadcrumbs = this.breadcrumbs_init;
     url = '';
     public Editor = DecoupledEditor;
     public onReady(editor) {

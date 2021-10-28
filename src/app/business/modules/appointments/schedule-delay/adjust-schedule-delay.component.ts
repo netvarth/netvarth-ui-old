@@ -44,8 +44,6 @@ export class AdjustscheduleDelayComponent implements OnInit {
   frm_adjust_del_cap = '';
   disableButton = false;
   instantQueue;
-  breadcrumbs;
-  breadcrumb_moreoptions: any = [];
   account_id;
   departmentlist: any = [];
   departments: any = [];
@@ -88,16 +86,6 @@ export class AdjustscheduleDelayComponent implements OnInit {
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
-    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
-    this.breadcrumbs = [
-      {
-        title: 'Appointments',
-        url: 'provider/appointments'
-      },
-      {
-        title: 'Adjust delay'
-      }
-    ];
     this.send_message_cap = Messages.DELAY_SEND_MSG1.replace('[customer]', this.customer_label);
     // this.arrived_cnt = this.data.arrived_count;
     // this.checkedin_cnt = this.data.checkedin_count;

@@ -135,18 +135,12 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
   profimg_exists = false;
   badgeIcons: any = [];
   badgeArray: any = [];
-
-
   tooltipcls = projectConstants.TOOLTIP_CLS;
-  breadcrumb_moreoptions: any = [];
-
   normal_profile_active = 1;  // [1 - loading]  [2 - no info] [3 - info available]
   normal_basicinfo_show = 1;
-
   loadingParams: any = { 'diameter': 40, 'strokewidth': 15 };
   businessConfig: any = [];
   // customer_label = '';
-
   primarydialogRef;
   cacheavoider = '';
   frm_additional_cap = '';

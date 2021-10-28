@@ -27,7 +27,6 @@ export class ProvidertaxSettingsComponent implements OnInit {
     update_tax_cap = Messages.PAY_SET_UPDATE_TAX_CAP;
     enable_cap = Messages.ENABLE_CAP;
     disable_cap = Messages.DISABLE_CAP;
-    breadcrumb_moreoptions: any = [];
     isCheckin;
     allFieldsExists = false;
     enabletax = false;
@@ -50,7 +49,6 @@ export class ProvidertaxSettingsComponent implements OnInit {
         this.isCheckin = this.sessionStorageService.getitemfromSessionStorage('isCheckin');
         this.resetApi();
         this.getTaxpercentage();
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
     }
 
     getTaxpercentage() {

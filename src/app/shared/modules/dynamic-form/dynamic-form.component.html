@@ -10,7 +10,7 @@
       <button type="button" class="cs-btn bt2" *ngIf="origin != 'bwizard'" mat-dialog-close >Cancel</button>
       <button type="button" class="cs-btn bt2" style="margin-right: 10px" *ngIf="origin == 'bwizard'"
         (click)="cancelClicked()">Cancel</button>
-      <button mat-button type="submit" class="cs-btn bt1" [disabled]="!form.valid">Save</button>
+      <button mat-button type="submit" class="cs-btn bt1 popBt" [disabled]="!form.valid">Save</button>
     </mat-dialog-actions>
   </form>
 

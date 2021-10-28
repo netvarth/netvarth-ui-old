@@ -164,7 +164,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   pollingSet: any = [];
   pollingApptSet: any = [];
   callingModesDisplayName = projectConstants.CALLING_MODES;
-  breadcrumbs;
   donations: any = [];
   rupee_symbol = 'Ã¢â€šÂ¹';
   appttime_arr: any = [];
@@ -342,14 +341,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (stat === true) {
       this.showOrder = true;
     }
-    //  else {
-    //   this.showOrder = false;
-    // }
-    this.breadcrumbs = [
-      {
-        title: 'My Jaldee'
-      }
-    ];
     this.setSystemDate();
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     this.carouselOne = {

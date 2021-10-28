@@ -104,20 +104,6 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
     this.activated_route.params.subscribe(params => {
       this.queue_id = params.sid;
       this.userId = params.id;
-      // this.breadcrumbs.push(
-      //     {
-      //         url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
-      //         title: this.userId
-      //     },
-      //     {
-      //         url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings',
-      //         title: 'Settings'
-      //     },
-      //     {
-      //         url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings/queues',
-      //         title: 'Queues'
-      //     }
-      // );
     });
     this.activated_route.queryParams.subscribe(qparams => {
       this.params = qparams;

@@ -170,8 +170,6 @@ export class ProviderCheckinComponent implements OnInit {
         base64: [],
         caption: []
     };
-    breadcrumbs;
-    breadcrumb_moreoptions: any = [];
     activeWt;
     searchForm: FormGroup;
     apptTime: any;
@@ -307,27 +305,9 @@ export class ProviderCheckinComponent implements OnInit {
             if (qparams.thirdParty) {
                 this.thirdParty = qparams.thirdParty;
             }
-            if (this.showtoken) {
-                this.breadcrumbs = [
-                    {
-                        title: 'New Token',
-                        url: 'provider/check-ins'
-                    },
-                    {
-                        title: this.chekin_title
-                    }
-                ];
+            if (this.showtoken) {                
                 this.heading = 'Create a Token';
-            } else {
-                this.breadcrumbs = [
-                    {
-                        title: 'New Check-in',
-                        url: 'provider/check-ins'
-                    },
-                    {
-                        title: this.chekin_title
-                    }
-                ];
+            } else {                
                 this.heading = 'Create a Check-in';
             }
             if (this.source === 'waitlist-block') {
@@ -370,10 +350,6 @@ export class ProviderCheckinComponent implements OnInit {
     ngOnInit() {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollkey': 'check-ins->check-in',
-            'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
-        };
         this.carouselOne = {
             dots: false,
             nav: true,
@@ -395,18 +371,8 @@ export class ProviderCheckinComponent implements OnInit {
             responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 2 }, 1200: { items: 3 } }
         };
         this.createForm();
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.api_loading = false;
-        this.get_token_cap = Messages.GET_TOKEN;
-        // this.breadcrumbs = [
-        //     {
-        //         title: 'Tokens/Check-ins',
-        //         url: 'provider/check-ins'
-        //     },
-        //     {
-        //         title: this.chekin_title
-        //     }
-        // ];
+        this.get_token_cap = Messages.GET_TOKEN;        
         this.maxsize = 1;
         this.step = 1;
         // this.getCurrentLocation();

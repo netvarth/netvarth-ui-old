@@ -16,25 +16,6 @@ import { GroupStorageService } from '../../../../../../shared/services/group-sto
 export class DepartmentDetailComponent implements OnInit {
     dept_data;
     dept_id;
-    breadcrumbs_init = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: Messages.GENERALSETTINGS,
-            url: '/provider/settings/general'
-        },
-        {
-            title: 'Departments',
-            url: '/provider/settings/general/departments'
-        },
-        {
-            title: 'Department List',
-            url: '/provider/settings/general/departments/list'
-        }
-    ];
-    breadcrumbs = this.breadcrumbs_init;
     selected_action = 'show';
     isCheckin;
     add_it_now_show = false;
@@ -80,14 +61,6 @@ export class DepartmentDetailComponent implements OnInit {
         if (this.dept_id === 'add') {
             this.dept_id = null;
             this.showServc = false;
-            const breadcrumbs = [];
-            this.breadcrumbs_init.map((e) => {
-                breadcrumbs.push(e);
-            });
-            breadcrumbs.push({
-                title: 'Add'
-            });
-            this.breadcrumbs = breadcrumbs;
         }
         if (this.dept_id) {
             this.getDepartmentDetails();
@@ -276,15 +249,7 @@ export class DepartmentDetailComponent implements OnInit {
                             }
                             this.dept_services = this.dept_data.serviceIds;
                             this.selected_action = 'show';
-                            this.deptcaption = 'Department Details';
-                            const breadcrumbs = [];
-                            this.breadcrumbs_init.map((e) => {
-                                breadcrumbs.push(e);
-                            });
-                            breadcrumbs.push({
-                                title: this.dept_data.departmentName
-                            });
-                            this.breadcrumbs = breadcrumbs;
+                            this.deptcaption = 'Department Details';                            
                             const newserviceArray = [];
                             for (let i = 0; i < this.servicesjson.length; i++) {
                                 for (let j = 0; j < this.dept_services.length; j++) {

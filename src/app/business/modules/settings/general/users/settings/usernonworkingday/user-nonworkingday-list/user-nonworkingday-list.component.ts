@@ -32,7 +32,6 @@ export class UserNonworkingdayListComponent implements OnInit, OnDestroy {
   emptyMsg = '';
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
-  breadcrumb_moreoptions: any = [];
   frm_non_wrkg_cap = Messages.FRM_LEVEL_NON_WORKING_MSG;
   isCheckin;
   addholdialogRef;
@@ -67,7 +66,6 @@ export class UserNonworkingdayListComponent implements OnInit, OnDestroy {
     this.domain = user.sector;
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getNonworkingdays();
-    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
   ngOnDestroy() {

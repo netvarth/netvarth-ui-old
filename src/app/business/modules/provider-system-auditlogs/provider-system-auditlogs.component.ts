@@ -61,13 +61,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   domain;
   perPage = projectConstants.PERPAGING_LIMIT;
   tday = new Date();
-  breadcrumb_moreoptions: any = [];
   minday = new Date(2015, 0, 1);
-  breadcrumbs = [
-    {
-      title: 'Activity Log'
-    }
-  ];
   isCheckin;
   dateFilter = false;
   constructor(
@@ -100,7 +94,6 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     this.holdlogSelaction = this.logSelaction;
     this.getAuditListTotalCnt('', '', '', '');
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
-    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
   }
   getAuditListTotalCnt(cat, subcat, action, sdate) {
     this.shared_services.getAuditLogsTotalCnt(cat, subcat, action, sdate)
