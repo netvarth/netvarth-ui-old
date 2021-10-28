@@ -10,6 +10,7 @@ import { DateTimeProcessor } from '../../../shared/services/datetime-processor.s
 
 
 
+
 @Component({
   selector: 'app-print-booking-details',
   templateUrl: './print-booking-details.component.html',
@@ -34,6 +35,7 @@ export class PrintBookingDetailsComponent implements OnInit {
   bookingType: any;
   internalStatusLog: any=[];
   customerDetails: any;
+  customer: any;
 
 
   constructor(private activated_route: ActivatedRoute,
@@ -162,16 +164,19 @@ export class PrintBookingDetailsComponent implements OnInit {
     const bprof = this.groupService.getitemFromGroupStorage('ynwbp');
     this.bname = bprof.bn;
     if (this.bookingType === 'appt') {
+      this.customer=this.bookingDetails.appmtFor[0];
       const fname = (this.bookingDetails.appmtFor[0].firstName) ? this.bookingDetails.appmtFor[0].firstName : '';
       const lname = (this.bookingDetails.appmtFor[0].lastName) ? this.bookingDetails.appmtFor[0].lastName : '';
       if (fname !== '' || lname !== '') {
         this.customerName = fname + " " + lname;
+       
       }
       else {
         this.customerName = this.bookingDetails.providerConsumer.jaldeeId
       }
 
     } else {
+      this.customer=this.bookingDetails.waitlistingFor[0];
       const fname = (this.bookingDetails.waitlistingFor[0].firstName) ? this.bookingDetails.waitlistingFor[0].firstName : '';
       const lname = (this.bookingDetails.waitlistingFor[0].lastName) ? this.bookingDetails.waitlistingFor[0].lastName : '';
       if (fname !== '' || lname !== '') {
