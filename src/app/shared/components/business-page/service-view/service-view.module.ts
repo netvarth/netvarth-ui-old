@@ -17,6 +17,7 @@ import { ServiceViewComponent } from './service-view.component';
 import { ServiceViewRoutingModule } from './service-view.routing.module';
 import { CheckinHistoryListModule } from '../../../../shared/modules/consumer-checkin-history-list/components/checkin-history-list/checkin-history-list.module';
 import { ConsumerJoinModule } from '../../../../ynw_consumer/components/consumer-join/join.component.module';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
     imports: [
         CommonModule,
@@ -35,7 +36,8 @@ import { ConsumerJoinModule } from '../../../../ynw_consumer/components/consumer
         CardModule,
         MatDialogModule,
         ServiceViewRoutingModule,
-        ConsumerJoinModule
+        ConsumerJoinModule,
+        MatTooltipModule
     ],
     declarations: [
         ServiceViewComponent

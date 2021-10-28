@@ -9,6 +9,25 @@
   margin: 0;
   position: relative;
   letter-spacing: normal;
+
+}
+.imgsection {
+width: 50px;height: 50px;
+}
+.minimumheight {
+background-color: black;
+min-height:50px;
+}
+.fontwaitlist {
+font-size: 13px;
+}
+
+.marginalignment {
+padding-left: 60px;
+padding-right: 60px;
+}
+.marginalignmentincards{
+margin-left: 60px;
 }
 .headofpanelbody {
 /* background-color: rgb(155, 147, 147); */
@@ -19,8 +38,76 @@ padding-right:50px;
 padding-bottom: 20px;
 border-radius: 5px;
 }
+@media (max-width:1024px) {
+/* .text-xs-center {
+  text-align: center;
+  background-color: lawngreen;
+} */
+}
+@media (min-width: 320px) and (max-width: 768px) {
+.text-xs-center {
+  text-align: center;
+  
+  /* background-color: #E0A800; */
+}
+.flex-xs-small {
+  /* display: flex; */
+}
+.imgsection {
+  width: 30px;height: 30px;
+}
+.rowreverse {
+  display: flex;
+  flex-flow: column-reverse;
+}
+.fontwaitlist {
+  /* font-size: 11px; */
+}
+.padding-xs-2{
+  /* padding: 2px; */
+}
+.marginalignment {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.marginalignmentincards {
+  margin: 0px !important;
+}
+.left-right-padding {
+  padding-left:30px;
+  padding-right:30px;
+}
+.font-xs-small {
+  all:initial;
+  font-size:12px;
+  font-weight: 500;
+
+  /* align-items:left; */
+  /* text-align:left; */
+  /* text-align: start; */
+  /* text-align: initial; */
+  /* float: left; */
+}
+}
 .headofpanelbody .serviceheading {
 display: flex;
+background-color:#92B1D3;
+padding: 5px;
+color: white;
+
+}
+.description {
+background-color: #E1F0FF;
+padding: 10px;
+border-radius: 5px;
+color: #3c8dbc;
+text-align: center;
+}
+.serviceheading {
+display: flex;
+background-color:#92B1D3;
+padding: 5px;
+color: white;
 
 }
 .headofpanelbody .servicetimingdetails {
@@ -44,13 +131,20 @@ text-align: center;
 }
 @media (min-width:320px) and (max-width:768px) {
 .mobilephoneaboutus {
-  box-shadow: 1px 1px 3px #0000000F;
+  /* box-shadow: 1px 1px 3px #0000000F; */
   margin-left: 40px;
   
 }
-/* .headofpanelbodyforbuttontoken {
-  all: initial;
-} */
+.actionbtn {
+  font-size: 10px;
+}
+.headofpanelbodyforbuttontoken {
+
+    
+  box-shadow: 6px 5px rgba(240, 235, 235, 0.836) !important;
+  padding: 0px !important;
+  border-radius: 5px !important;
+}
 .mobile-none {
   display: none;
 }
@@ -546,8 +640,9 @@ color: #073B4C !important;
 background-color: #FFC734 !important;
 border-color: #D39E00;
 color: #fff;
-font-weight: 600;
-min-width: 150px !important;
+font-weight: 500;
+width: 100%;
+/* min-width: 150px !important; */
 }
 .mgncla{
   margin-bottom: 10px;
@@ -941,7 +1036,7 @@ font-weight: 600 !important;
 .card-body .service-details .donationAmount,
 .card-body .service-details .peopleAhead {
 margin: 0 !important;
-padding: 2px 6px;
+/* padding: 2px 6px; */
 font-weight: 600;
 font-size: 15px !important;
 color: #065499!important;
@@ -995,6 +1090,9 @@ border-color: transparent;
 color: #073B4C !important;
 background-color: transparent !important;
 border-color: #073B4C;
+}
+.text-center {
+text-align: center;
 }
 .emptyheght{
 margin: 0 !important;
