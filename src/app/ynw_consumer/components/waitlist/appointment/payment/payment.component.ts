@@ -24,16 +24,6 @@ export class ConsumerAppointmentPaymentComponent implements OnInit,OnDestroy {
     uuid: any;
     accountId: any;
     prepayment_amnt_cap = Messages.PREPAYMENT_AMOUNT_CAP;
-    breadcrumbs = [
-        {
-            title: 'My Jaldee',
-            url: '/consumer'
-        },
-        {
-            title: 'Payment'
-        }
-    ];
-    breadcrumb_moreoptions: any = [];
     activeWt: any;
     prepaymentAmount: number;
     waitlistDetails: { 'amount': number; 'paymentMode': any; 'uuid': any; 'accountId': any; 'purpose': string; };

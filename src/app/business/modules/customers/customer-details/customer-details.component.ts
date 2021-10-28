@@ -46,7 +46,6 @@ export class CustomerDetailComponent implements OnInit {
     searchClicked = false;
     customer_data: any = [];
     customerPhone: any;
-    breadcrumb_moreoptions: any = [];
     checkin_type;
     customidFormat;
     loading = true;

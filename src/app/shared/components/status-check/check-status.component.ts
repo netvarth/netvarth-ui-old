@@ -34,11 +34,6 @@ export class CheckYourStatusComponent implements OnInit, OnDestroy {
   server_date;
   placeText;
   check_in_statuses = projectConstants.CHECK_IN_STATUSES;
-  breadcrumbs = [
-    {
-      title: 'Know Your Status'
-    }
-  ];
   provider_label = '';
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
@@ -126,28 +121,7 @@ export class CheckYourStatusComponent implements OnInit, OnDestroy {
           }
         }
       );
-    // this.retval = this.shared_functions.getS3Url()
-    //   .then(
-    //     res => {
-    //       this.s3url = res;
-    //       this.getbusinessprofiledetails_json('terminologies', true);
-    //     });
   }
-  // getbusinessprofiledetails_json(section, modDateReq: boolean) {
-  //   let UTCstring = null;
-  //   if (modDateReq) {
-  //     UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
-  //   }
-  //   this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-  //     .subscribe(res => {
-  //       switch (section) {
-  //         case 'terminologies': {
-  //           this.terminologiesjson = res;
-  //           break;
-  //         }
-  //       }
-  //     });
-  // }
   getTerminologyTerm(term) {
     const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
     if (this.terminologiesjson) {

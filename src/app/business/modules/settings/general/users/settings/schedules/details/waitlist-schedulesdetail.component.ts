@@ -36,21 +36,6 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
     queue_id = null;
     queue_data;
     display_schedule: any = [];
-    breadcrumbs_init = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: Messages.GENERALSETTINGS,
-            url: '/provider/settings/general'
-        },
-        {
-            url: '/provider/settings/general/users',
-            title: 'Users'
-        }
-    ];
-    breadcrumbs = this.breadcrumbs_init;
     customer_label = '';
     appointment = false;
     api_loading = false;
@@ -131,7 +116,6 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
     }
     ngOnInit() {
         this.minDate = this.convertDate();
-        this.getUser();
         this.getWaitlistMgr();
         this.api_loading = true;
         this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
@@ -146,35 +130,6 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
                 this.createForm();
             }
         }, 100);
-    }
-    getUser() {
-        this.provider_services.getUser(this.userId)
-            .subscribe((data: any) => {
-                this.breadcrumbs.push(
-                    {
-                        url: '/provider/settings/general/users/add?type=edit&val=' + this.userId,
-                        title: data.firstName
-                    },
-                    {
-                        url: '/provider/settings/general/users/' + this.userId + '/settings',
-                        title: 'Settings'
-                    },
-                    {
-                        url: '/provider/settings/general/users/' + this.userId + '/settings/schedules',
-                        title: ' Appointment Schedules'
-                    }
-                );
-                if (this.action === 'add') {
-                    const breadcrumbs = [];
-                    this.breadcrumbs_init.map((e) => {
-                        breadcrumbs.push(e);
-                    });
-                    breadcrumbs.push({
-                        title: 'Add'
-                    });
-                    this.breadcrumbs = breadcrumbs;
-                }
-            });
     }
     getWaitlistMgr() {
         this.api_loading = true;
@@ -290,16 +245,7 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
                         schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_data.apptSchedule);
                     }
                     this.display_schedule = [];
-                    this.display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(schedule_arr);
-                    // remove multiple end breadcrumb on edit function
-                    const breadcrumbs = [];
-                    this.breadcrumbs_init.map((e) => {
-                        breadcrumbs.push(e);
-                    });
-                    breadcrumbs.push({
-                        title: this.queue_data.name
-                    });
-                    this.breadcrumbs = breadcrumbs;
+                    this.display_schedule = this.jaldeeTimeService.arrageScheduleforDisplay(schedule_arr);                    
                     this.api_loading = false;
                     if (this.action === 'edit') {
                         this.Schedulescaption = 'Edit Schedule';
@@ -322,40 +268,6 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
             });
         this.api_loading1 = false;
     }
-    //   getDepartments() {
-    //     this.departments = [];
-    //     this.api_loading1 = true;
-    //     this.provider_services.getDepartments()
-    //       .subscribe(
-    //         data => {
-    //           this.deptObj = data;
-    //           this.filterbyDept = this.deptObj.filterByDept;
-    //           this.departments = this.deptObj.departments;
-    //           for (let i = 0; i < this.services_list.length; i++) {
-    //             for (let j = 0; j < this.departments.length; j++) {
-    //               for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
-    //                 if (this.departments[j].serviceIds[k] === this.services_list[i].id) {
-    //                   this.departments[j].serviceIds[k] = this.services_list[i].name;
-    //                 }
-    //               }
-    //             }
-    //           }
-    //           for (let j = 0; j < this.departments.length; j++) {
-    //             for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
-    //               // tslint:disable-next-line: radix
-    //               if (parseInt(this.departments[j].serviceIds[k])) {
-    //                 delete this.departments[j].serviceIds[k];
-    //               }
-    //             }
-    //           }
-    //           this.api_loading1 = false;
-    //         },
-    //         error => {
-    //           this.api_loading1 = false;
-    //           // this.wordProcessor.apiErrorAutoHide(this, error);
-    //         }
-    //       );
-    //   }
     goBack() {
         // this.router.navigate(['provider', 'settings', 'miscellaneous',
         //     'queues']);
@@ -578,23 +490,6 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
             return;
         } else {
             // Numeric validation
-            // if (isNaN(form_data.qcapacity)) {
-            //     const error = 'Please enter a numeric value for capacity';
-            //     this.wordProcessor.apiErrorAutoHide(this, error);
-            //     return;
-            // }
-            // if (!this.shared_Functionsobj.checkIsInteger(form_data.qcapacity)) {
-            //     const error = 'Please enter an integer value for Maximum ' + this.customer_label + 's served';
-            //     this.wordProcessor.apiErrorAutoHide(this, error);
-            //     return;
-            // } else {
-            //     if (form_data.qcapacity === 0) {
-            //         const error = 'Maximum ' + this.customer_label + 's served should be greater than 0';
-            //         this.wordProcessor.apiErrorAutoHide(this, error);
-            //         return;
-            //     }
-            // }
-            // Numeric validation
             if (isNaN(form_data.qserveonce)) {
                 const error = 'Please enter a numeric value for Resources available';
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -679,32 +574,6 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
                     'suffix': this.ssuffixName
                 }
             };
-            // schedulejson = {
-            //     'recurringType': 'Weekly',
-            //     'repeatIntervals': daystr,
-            //     'startDate': today,
-            //     'terminator': {
-            //         'endDate': '',
-            //         'noOfOccurance': 0
-            //     },
-            //     'timeSlots': [{
-            //         'getsTime': starttime_format,
-            //         'geteTime': endtime_format
-            //     }]
-            // };
-            // // generating the data to be posted
-            // const post_data = {
-            //     'name': form_data.qname,
-            //     'apptSchedule': schedulejson,
-            //     'apptState': 'ENABLED',
-            //   //  'parallelServing': form_data.qserveonce,
-            //     //'capacity': form_data.qcapacity,
-            //     'location': this.selected_locationId,
-            //     'services': selser,
-            //    // 'tokenStarts': form_data.tokennum,
-            //     'timeDuration': form_data.timeSlot,
-            //     'batch':false
-            // };
             if (this.action === 'edit') {
                 this.Schedulescaption = 'Schedule Details';
                 this.editProviderSchedule(post_data);
@@ -921,12 +790,6 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
     }
     EnableBatch(ev) {
         this.showBatchFields = ev.checked;
-        // if (ev.checked) {
-        //     this.amForm.get('qserveonce').setValue(2);
-        // } else {
-        //     this.amForm.get('qserveonce').setValue(1);
-        //     this.sbatchStatus = false;
-        // }
     }
     redirecToUserSchedule() {
         this.router.navigate(['provider', 'settings', 'general', 'users' , this.userId , 'settings' , 'schedules']);

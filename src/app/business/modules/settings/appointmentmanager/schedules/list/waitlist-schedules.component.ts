@@ -35,31 +35,11 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
     add_button = 'Click to create a schedule';
     // tooltip_queueedit = Messages.QUEUENAME_TOOLTIP;
     tooltip_queueedit = Messages.SCHEDULENAME_TOOLTIP;
-    breadcrumb_moreoptions: any = [];
     isAllServicesSelected = false;
     services_selected: any = [];
     services_list: any = [];
     servicelist = [];
     instantQForm: FormGroup;
-    breadcrumbs_init = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-
-        {
-            url: '/provider/settings/appointmentmanager',
-            title: 'Jaldee Appointment Manager'
-        },
-
-        {
-            url: '/provider/settings/appointmentmanager/schedules',
-            title: 'Schedules (Working Hours)'
-
-        }
-
-    ];
-    breadcrumbs = this.breadcrumbs_init;
     queuedialogRef;
     isCheckin;
     selected_location = null;
@@ -142,28 +122,9 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
-        // const breadcrumbs = [];
-        // this.breadcrumbs_init.map((e) => {
-        //     breadcrumbs.push(e);
-        // });
-        // breadcrumbs.push({
-        //     title: this.userId,
-        //     url: '/provider/settings/general/users/add?type=edit&val=' + this.userId
-        // });
-        // breadcrumbs.push({
-        //     title: 'Settings',
-        //     url: '/provider/settings/general/users/' + this.userId + '/settings'
-        // });
-        // breadcrumbs.push({
-        //     title: 'Queues'
-        // });
-        // this.breadcrumbs = breadcrumbs;
         if (this.groupService.getitemFromGroupStorage('loc_id')) {
             this.selected_location = this.groupService.getitemFromGroupStorage('loc_id');
         }
-        this.breadcrumb_moreoptions = {
-            'actions': [{ 'title': this.new_serv_cap, 'type': 'timewindow' }, { 'title': 'Help', 'type': 'learnmore' }]
-        };
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.initializeQs();
         this.getLicenseUsage();

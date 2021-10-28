@@ -13,7 +13,6 @@ import { SnackbarService } from '../../../../../shared/services/snackbar.service
 export class CorporateSettingsComponent implements OnInit {
     corporateCode;
     corporateName;
-    breadcrumb_moreoptions: any = [];
     cancel_btn = Messages.CANCEL_BTN;
     save_btn_cap = Messages.SAVE_BTN;
     accountType;
@@ -37,7 +36,6 @@ export class CorporateSettingsComponent implements OnInit {
         this.domain = user.sector;
         this.accountType = user.accountType;
         this.getCorporateDetails();
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     getCorporateDetails() {
         this.shared_services.getCorporateDetails().subscribe(

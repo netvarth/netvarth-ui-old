@@ -15,15 +15,6 @@ import { LocalStorageService } from '../../../../../shared/services/local-storag
   styleUrls: ['./confirm-page.component.css']
 })
 export class ConfirmPageComponent implements OnInit ,OnDestroy{
-  breadcrumbs = [
-    {
-      title: 'My Jaldee',
-      url: '/consumer'
-    },
-    {
-      title: 'Payment'
-    }
-  ];
   infoParams;
   waitlist: any = [];
   private subs=new SubSink();

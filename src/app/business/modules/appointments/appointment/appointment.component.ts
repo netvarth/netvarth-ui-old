@@ -166,8 +166,6 @@ export class AppointmentComponent implements OnInit {
         base64: [],
         caption: []
     };
-    breadcrumbs;
-    breadcrumb_moreoptions: any = [];
     activeWt;
     searchForm: FormGroup;
     apptTime = '';
@@ -375,18 +373,8 @@ export class AppointmentComponent implements OnInit {
         this.createForm();
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.api_loading = false;
         this.get_token_cap = Messages.GET_TOKEN;
-        this.breadcrumbs = [
-            {
-                title: 'Appointments',
-                url: 'provider/appointments'
-            },
-            {
-                title: this.appt_title
-            }
-        ];
         this.maxsize = 1;
         this.step = 1;
         // this.getCurrentLocation();

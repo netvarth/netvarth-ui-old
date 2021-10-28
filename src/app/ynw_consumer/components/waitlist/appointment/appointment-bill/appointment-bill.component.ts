@@ -108,7 +108,6 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
     type;
     accountId;
     pid;
-    breadcrumbs;
     source;
     pGateway: any;
     razorModel: any;

@@ -110,7 +110,6 @@ export class OrderBillComponent implements OnInit, OnDestroy {
     type;
     accountId;
     pid;
-    breadcrumbs;
     source;
     pGateway: any;
     razorModel: any;
@@ -141,7 +140,6 @@ export class OrderBillComponent implements OnInit, OnDestroy {
     paymode = false;
     customer_countrycode: any;
     constructor(
-        //   private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
         public sharedfunctionObj: SharedFunctions,
         public sharedServices: SharedServices,

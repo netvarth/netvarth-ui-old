@@ -77,7 +77,6 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         });
     }
     frm_set_ser_cap = '';
-    breadcrumb_moreoptions: any = [];
     frm_set_loc_cap = Messages.FRM_LEVEL_SETT_LOC_MSG;
     frm_set_working_hr_cap = Messages.FRM_LEVEL_SETT_WORKING_HR_MSG;
     calcMode = 'conventional';
@@ -102,9 +101,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         // this.getBusinessConfiguration();
         this.getDisplayboardCount();
         // this.getStatusboardLicenseStatus();
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.frm_set_ser_cap = Messages.FRM_LEVEL_SETT_SERV_MSG.replace('[customer]', this.customer_label);
-        // this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'q-manager->settings' };
         // Update from footer
         this.subscription = this.shared_functions.getMessage()
             .subscribe(

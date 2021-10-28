@@ -85,21 +85,8 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit,OnDestroy {
                 }
             });
     }
-
-    // breadcrumbs;
-    // breadcrumb_moreoptions: any = [];
     activeWt: any;
-
     ngOnInit() {
-        // this.breadcrumbs = [
-        //     {
-        //         title: 'My Jaldee',
-        //         url: '/consumer'
-        //     },
-        //     {
-        //         title: 'Live Tracking'
-        //     }
-        // ];
         this.getCurrentLocation().then(
             (lat_long: any) => {
             }, (error) => {

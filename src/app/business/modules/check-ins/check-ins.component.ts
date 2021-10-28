@@ -264,8 +264,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   showUndo = false;
   showRejected = false;
   apiloading = true;
-  breadcrumbs_init = [];
-  breadcrumb_moreoptions: any = [];
   apptModes: any = [];
   intStat: any = [];
   paymentStatuses: any = [];
@@ -553,10 +551,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.waitlistModes = this.waitlistModesToken;
         }
         if (this.showToken) {
-          this.breadcrumbs_init = [{ title: 'Tokens' }];
           this.tokenOrCheckin = 'Tokens';
         } else {
-          this.breadcrumbs_init = [{ title: 'Check-ins' }];
           this.tokenOrCheckin = 'Check-ins';
         }
       }, () => {

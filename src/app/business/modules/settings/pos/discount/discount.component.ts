@@ -25,23 +25,7 @@ export class DiscountComponent implements OnInit, OnDestroy {
   discount_list: any = [];
   query_executed = false;
   emptyMsg = '';
-  breadcrumb_moreoptions: any = [];
   frm_dicounts_cap = Messages.FRM_LEVEL_DISCOUNTS_MSG;
-  breadcrumbs_init = [
-    {
-      url: '/provider/settings',
-      title: 'Settings'
-    },
-    {
-      title: 'Jaldee Billing',
-      url: '/provider/settings/pos'
-    },
-    {
-      title: 'Discounts',
-      url: '/provider/settings/pos/discounts'
-    }
-  ];
-  breadcrumbs = this.breadcrumbs_init;
   accountdialogRef;
   adddiscdialogRef;
   remdiscdialogRef;
@@ -65,7 +49,6 @@ export class DiscountComponent implements OnInit, OnDestroy {
     this.domain = user.sector;
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getDiscounts(); // Call function to get the list of discount lists
-    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
 

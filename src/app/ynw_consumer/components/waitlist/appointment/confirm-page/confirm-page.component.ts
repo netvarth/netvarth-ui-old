@@ -15,16 +15,6 @@ import { LocalStorageService } from '../../../../../shared/services/local-storag
   styleUrls: ['./confirm-page.component.css']
 })
 export class ConfirmPageComponent implements OnInit,OnDestroy {
-
-  breadcrumbs = [
-    {
-      title: 'My Jaldee',
-      url: '/consumer'
-    },
-    {
-      title: 'Payment'
-    }
-  ];
   infoParams;
   appointment: any = [];
   path = projectConstants.PATH;
@@ -78,27 +68,6 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
-  // okClick() {
-  //   let queryParam = {};
-  //   if (this.customId) {
-  //     queryParam['customId'] = this.customId;
-  //     queryParam['theme'] = this.theme;
-  //   }
-  //   if (this.infoParams.account_id) {
-  //     queryParam['account_id'] = this.infoParams.account_id;
-  //     queryParam['accountId'] = this.infoParams.account_id;
-
-  //   }
-  //   const navigationExtras: NavigationExtras = {
-  //     queryParams: queryParam
-  //   };
-  //   this.lStorageService.setitemonLocalStorage('orderStat', false);
-  //   if (this.appointment.service.livetrack && this.type !== 'reschedule') {
-  //     this.router.navigate(['consumer', 'appointment', 'track', this.infoParams.uuid], navigationExtras);
-  //   } else {
-  //     this.router.navigate(['consumer'], navigationExtras);
-  //   }
-  // }
   okClick(appt) {
     if (appt.service.livetrack && this.type !== 'reschedule') {
       let queryParams= {
