@@ -972,7 +972,7 @@ export class ServiceViewComponent implements OnInit {
           console.log("logged In");
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
           if (_this.userType === 'consumer') {
-            if (service.serviceType === 'virtualService') {
+            if (service && service.serviceType === 'virtualService') {
               console.log(service);
               _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
                 _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.availableDate, 'checkin', service, consumerdata);
@@ -1031,7 +1031,7 @@ export class ServiceViewComponent implements OnInit {
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
           if (_this.userType === 'consumer') {
 
-            if (service.serviceType === 'virtualService') {
+            if (service && service.serviceType === 'virtualService') {
               _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
                 _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.nextAvailableDate, 'appt', service, consumerdata);
               });
@@ -1264,7 +1264,7 @@ export class ServiceViewComponent implements OnInit {
 
         } else {
           console.log(passParam);
-          if (current_provider['service']['serviceType'] === 'virtualService') {
+          if (current_provider['service'] && current_provider['service']['serviceType'] === 'virtualService') {
             this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
               this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
             });
@@ -1315,7 +1315,7 @@ export class ServiceViewComponent implements OnInit {
         if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-          if (current_provider['service']['serviceType'] === 'virtualService') {
+          if (current_provider['service'] && current_provider['service']['serviceType'] === 'virtualService') {
             this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
               this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'appt', current_provider['service']);
             });
@@ -1323,7 +1323,7 @@ export class ServiceViewComponent implements OnInit {
             this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
           }
         } else {
-          if (current_provider['service']['serviceType'] === 'virtualService') {
+          if (current_provider['service'] && current_provider['service']['serviceType'] === 'virtualService') {
             this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
               this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
             });

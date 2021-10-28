@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
-import { LazyModule } from '../../modules/lazy-load/lazy.module';
 import { HeaderComponent } from './header.component';
 import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
 import { LoginModule } from '../../components/login/login.module';
@@ -20,7 +19,6 @@ import { MatButtonModule } from '@angular/material/button';
         CommonModule,
         RouterModule,
         LoadingSpinnerModule,
-        LazyModule,
         LoginModule,
         MatDialogModule,
         ScrollToModule,
