@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HeaderModule } from '../../../modules/header/header.module';
 import { FormsModule } from '@angular/forms';
@@ -14,10 +13,14 @@ import { TruncateModule } from '../../../pipes/limitTo.module';
 import { CardModule } from '../../card/card.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ServiceViewComponent } from './service-view.component';
-import { ServiceViewRoutingModule } from './service-view.routing.module';
-import { CheckinHistoryListModule } from '../../../../shared/modules/consumer-checkin-history-list/components/checkin-history-list/checkin-history-list.module';
 import { ConsumerJoinModule } from '../../../../ynw_consumer/components/consumer-join/join.component.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Routes, RouterModule } from '@angular/router';
+import { SignupModule } from '../../signup/signup.module';
+import { VirtualFieldsModule } from '../../../../ynw_consumer/components/virtualfields/virtualfields.module';
+const routes: Routes = [
+    { path: '', component: ServiceViewComponent }
+];
 @NgModule({
     imports: [
         CommonModule,
@@ -28,16 +31,16 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         PagerModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
         Nl2BrPipeModule,
-        CheckinHistoryListModule,
-        RouterModule,
         LoadingSpinnerModule,
         SearchFormModule,
         TruncateModule,
         CardModule,
         MatDialogModule,
-        ServiceViewRoutingModule,
         ConsumerJoinModule,
-        MatTooltipModule
+        MatTooltipModule,
+        VirtualFieldsModule,
+        SignupModule,
+        [RouterModule.forChild(routes)]
     ],
     declarations: [
         ServiceViewComponent

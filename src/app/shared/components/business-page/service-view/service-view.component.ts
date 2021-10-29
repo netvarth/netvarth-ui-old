@@ -175,7 +175,20 @@ export class ServiceViewComponent implements OnInit {
     }
   }
   ngOnInit() {
-    this.accountIdExists = false;
+    const _this = this;
+    _this.accountIdExists = false;
+    if (_this.sharedFunctionobj.isBusinessOwner()) {
+      _this.authService.providerLogout().then(
+        () => {
+          _this.initPage();
+        }
+      )
+    } else {
+      _this.initPage();
+    }
+  }
+
+  initPage () {
     this.setSystemDate();
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -227,7 +240,6 @@ export class ServiceViewComponent implements OnInit {
         this.source = qparams.source;
       }
     });
-
   }
   goBack() {
     this.locationobj.back();
@@ -497,64 +509,65 @@ export class ServiceViewComponent implements OnInit {
     this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
   }
   generateServicesAndDoctorsForLocation(providerId, locationId) {
-    this.loading = true;
-    this.getWaitlistServices(locationId)
+    const _this = this;
+    _this.loading = true;
+    _this.getWaitlistServices(locationId)
       .then((wlServices: any) => {
-        this.wlServices = wlServices;
-        for (let aptIndex = 0; aptIndex < this.wlServices.length; aptIndex++) {
-          if (this.wlServices[aptIndex]['id'] == this.serviceid && this.wlServices[aptIndex].serviceAvailability) {
-            this.servicename = this.wlServices[aptIndex]['name'];
-            this.servicedetails = this.wlServices[aptIndex];
-            console.log("detailswait" + JSON.stringify(this.servicedetails));
-           if (this.servicedetails.serviceAvailability['personAhead'] >= 0) {
-            this.personsAheadText = 'People in line : ' + this.servicedetails.serviceAvailability['personAhead'];
+        _this.wlServices = wlServices;
+        for (let aptIndex = 0; aptIndex < _this.wlServices.length; aptIndex++) {
+          if (_this.wlServices[aptIndex]['id'] == _this.serviceid && _this.wlServices[aptIndex].serviceAvailability) {
+            _this.servicename = _this.wlServices[aptIndex]['name'];
+            _this.servicedetails = _this.wlServices[aptIndex];
+            console.log("detailswait" + JSON.stringify(_this.servicedetails));
+           if (_this.servicedetails.serviceAvailability['personAhead'] >= 0) {
+            _this.personsAheadText = 'People in line : ' + _this.servicedetails.serviceAvailability['personAhead'];
             }
-            this.getduration(this.servicedetails);
-            if (this.servicedetails.serviceAvailability['calculationMode'] !== 'NoCalc') {
-              if (this.servicedetails.serviceAvailability['serviceTime']) {
-                this.timingCaption = 'Next Available Time';
-                this.timings = this.getAvailibilityForCheckin(this.servicedetails.serviceAvailability['availableDate'], this.servicedetails.serviceAvailability['serviceTime']);
+            _this.getduration(_this.servicedetails);
+            if (_this.servicedetails.serviceAvailability['calculationMode'] !== 'NoCalc') {
+              if (_this.servicedetails.serviceAvailability['serviceTime']) {
+                _this.timingCaption = 'Next Available Time';
+                _this.timings = _this.getAvailibilityForCheckin(_this.servicedetails.serviceAvailability['availableDate'], _this.servicedetails.serviceAvailability['serviceTime']);
               } else {
-                this.timingCaption = 'Est Wait Time';
-                this.timings = this.getTimeToDisplay(this.servicedetails.serviceAvailability['queueWaitingTime']);
+                _this.timingCaption = 'Est Wait Time';
+                _this.timings = _this.getTimeToDisplay(_this.servicedetails.serviceAvailability['queueWaitingTime']);
               }
             }
-            if (this.wlServices[aptIndex]['deptName']) {
-              this.deptname = this.wlServices[aptIndex]['deptName'];
+            if (_this.wlServices[aptIndex]['deptName']) {
+              _this.deptname = _this.wlServices[aptIndex]['deptName'];
             }
           }
         }
-        console.log(this.wlServices);
-        this.getAppointmentServices(locationId)
+        console.log(_this.wlServices);
+        _this.getAppointmentServices(locationId)
           .then((apptServices: any) => {
-            this.apptServices = apptServices;
-            for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
-              if (this.apptServices[aptIndex]['id'] == this.serviceid && this.apptServices[aptIndex].serviceAvailability) {
-                this.servicename = this.apptServices[aptIndex]['name'];
-                this.servicedetails = this.apptServices[aptIndex];
-                console.log("details" + JSON.stringify(this.servicedetails));
-                this.getduration(this.servicedetails);
-                if (this.servicedetails.serviceAvailability['nextAvailable']) {
-                  this.timingCaptionapt = 'Next Available Time';
-                  this.timingsapt = this.getAvailabilityforAppt(this.servicedetails.serviceAvailability.nextAvailableDate, this.servicedetails.serviceAvailability.nextAvailable);
+            _this.apptServices = apptServices;
+            for (let aptIndex = 0; aptIndex < _this.apptServices.length; aptIndex++) {
+              if (_this.apptServices[aptIndex]['id'] == _this.serviceid && _this.apptServices[aptIndex].serviceAvailability) {
+                _this.servicename = _this.apptServices[aptIndex]['name'];
+                _this.servicedetails = _this.apptServices[aptIndex];
+                console.log("details" + JSON.stringify(_this.servicedetails));
+                _this.getduration(_this.servicedetails);
+                if (_this.servicedetails.serviceAvailability['nextAvailable']) {
+                  _this.timingCaptionapt = 'Next Available Time';
+                  _this.timingsapt = _this.getAvailabilityforAppt(_this.servicedetails.serviceAvailability.nextAvailableDate, _this.servicedetails.serviceAvailability.nextAvailable);
                 }
-                if (this.apptServices[aptIndex]['deptName']) {
-                  this.deptname = this.apptServices[aptIndex]['deptName'];
+                if (_this.apptServices[aptIndex]['deptName']) {
+                  _this.deptname = _this.apptServices[aptIndex]['deptName'];
                 }
               }
             }
-            console.log(this.apptServices);
-            this.setServiceUserDetails();
-            this.loading = false;
+            console.log(_this.apptServices);
+            _this.setServiceUserDetails();
+            _this.loading = false;
           },
             error => {
-              this.wordProcessor.apiErrorAutoHide(this, error);
-              this.loading = false;
+              _this.wordProcessor.apiErrorAutoHide(_this, error);
+              _this.loading = false;
             });
       }, 
         error => {
-          this.wordProcessor.apiErrorAutoHide(this, error);
-          this.loading = false;
+          _this.wordProcessor.apiErrorAutoHide(_this, error);
+          _this.loading = false;
         });
   }
   getduration(servicedetails: any) {
