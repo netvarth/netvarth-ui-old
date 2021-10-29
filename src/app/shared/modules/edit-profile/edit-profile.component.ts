@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import * as moment from 'moment';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { SharedFunctions } from '../../functions/shared-functions';
@@ -14,6 +14,7 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TelegramInfoComponent } from '../../../ynw_consumer/components/telegram-info/telegram-info.component';
 import { SharedServices } from '../../services/shared-services';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-edit-profile',
@@ -42,6 +43,7 @@ export class EditProfileComponent implements OnInit {
   dashboard_cap = Messages.DASHBOARD_TITLE;
   country_code = Messages.MOB_NO_PREFIX_CAP;
   editProfileForm: FormGroup;
+  private subs = new SubSink();
   api_error = null;
   api_success = null;
   curtype;
@@ -66,6 +68,8 @@ export class EditProfileComponent implements OnInit {
   boturl: any;
   telegramdialogRef: any;
   waitlist_statusstr: string;
+  accountId: any;
+  customId: any;
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
@@ -76,8 +80,17 @@ export class EditProfileComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private _location: Location,
     public dialog: MatDialog,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private activated_route: ActivatedRoute
   ) {
+    this.subs.sink = this.activated_route.queryParams.subscribe(qparams => {
+      if (qparams && qparams.accountId) {
+        this.accountId = qparams.accountId;
+      }
+      if (qparams && qparams.customId) {
+        this.customId = qparams.customId;
+      }
+    });
   }
   goBack() {
     this.location.back();
@@ -374,5 +387,28 @@ export class EditProfileComponent implements OnInit {
       countryCode = countryCode.substring(1);
     }
     return countryCode;
+  }
+  redirectto(mod, usertype) {
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['customId'] = this.customId;
+    }
+    if(this.accountId) {
+      queryParams['accountId'] = this.accountId;
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParams
+    };
+    switch (mod) {
+      case 'change-password':
+        this.router.navigate([usertype, 'change-password'], navigationExtras);
+        break;
+      case 'change-mobile':
+        this.router.navigate([usertype, 'change-mobile'], navigationExtras);
+        break;
+      case 'members':
+        this.router.navigate([usertype, 'members'], navigationExtras);
+        break;
+    }
   }
 }
