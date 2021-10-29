@@ -13,3 +13,8 @@
 .min-hght {
     min-height: 500px;
 }
+@media(max-width: 750px){ 
+    .small{
+      width: 90% !important;
+    }
+    }
