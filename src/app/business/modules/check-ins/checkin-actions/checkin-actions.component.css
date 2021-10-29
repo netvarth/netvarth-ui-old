@@ -187,3 +187,9 @@
   max-height: 65vh;
   overflow-y: scroll;
 }
+@media(max-width: 750px){ 
+  .popBt{
+    height: 38px !important;
+    width: 100px !important;
+  }
+  }
