@@ -120,9 +120,9 @@
                         *ngIf="servicesAndProviders && servicesAndProviders.length >0 && !loading && !loading_direct">
                         <div class="headofpanelbodyforbuttontoken mgn-bt-10" *ngFor="let sp of servicesAndProviders">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
-                                *ngIf="sp.type =='waitlist' && personsAheadText">
+                                *ngIf="sp.type =='waitlist'">
                                 <div class="card-text availability">
-                                    <p>{{personsAheadText}}</p>
+                                    <p>{{personsAheadText}}</p>&nbsp;
                                     <p ><span *ngIf="timings">{{timingCaption}}</span>
                                        <br/>
                                         <span class="fontwaitlist">{{timings}}&nbsp;</span>
