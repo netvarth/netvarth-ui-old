@@ -7,7 +7,7 @@ import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pi
 import { ProviderServices } from '../../services/provider-services.service';
 import { Location } from '@angular/common';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
+
 
 
 
@@ -22,7 +22,7 @@ export class PrintBookingDetailsComponent implements OnInit {
   elementType = 'url';
   bookingId: any;
   path = projectConstants.PATH;
-  groupedQnr: any ;
+  groupedQnr: any;
   qr_value: string;
   showQR = false;
   customer_label: any;
@@ -37,7 +37,7 @@ export class PrintBookingDetailsComponent implements OnInit {
   internalStatusLog: any = [];
   customerDetails: any;
   customer: any;
-  isJaldeeId: boolean=false;
+  isJaldeeId: boolean = false;
 
 
   constructor(private activated_route: ActivatedRoute,
@@ -45,7 +45,6 @@ export class PrintBookingDetailsComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private providerServices: ProviderServices,
     public dateFormat: DateFormatPipe,
-    private sharedFunctionobj: SharedFunctions,
     private dateTimeProcessor: DateTimeProcessor,
     private locationObject: Location) {
     this.activated_route.params.subscribe(params => {
@@ -136,18 +135,12 @@ export class PrintBookingDetailsComponent implements OnInit {
   }
   groupQuestionsBySection() {
 
-    // const isSectionName = this.questionanswers.filter(obj => obj.question.hasOwnProperty('sectionName'));
-    // console.log(isSectionName);
-    // if (isSectionName.length > 0) {
-      this.groupedQnr = this.questionanswers.reduce(function (rv, x) {
-        rv[x.question['sectionName']] = [...rv[x.question['sectionName']]|| [],x];
-        return rv;
-      }, {});
-    // }
-  //  this.groupedQnr= this.sharedFunctionobj.groupBy(this.questionanswers, 'sectionName');
-console.log(JSON.stringify(this.groupedQnr));
-console.log(JSON.stringify('length'+ this.groupedQnr.length));
-console.log(this.sharedFunctionobj);
+    this.groupedQnr = this.questionanswers.reduce(function (rv, x) {
+      rv[x.question['sectionName']] = [...rv[x.question['sectionName']] || [], x];
+      return rv;
+    }, {});
+
+
 
   }
   qrCodegeneration(valuetogenerate) {
@@ -178,7 +171,7 @@ console.log(this.sharedFunctionobj);
 
       }
       else {
-        this.isJaldeeId=true;
+        this.isJaldeeId = true;
         this.customerName = this.bookingDetails.providerConsumer.jaldeeId
       }
 
@@ -190,7 +183,7 @@ console.log(this.sharedFunctionobj);
         this.customerName = fname + " " + lname;
       }
       else {
-        this.isJaldeeId=true;
+        this.isJaldeeId = true;
         this.customerName = this.bookingDetails.consumer.jaldeeId
       }
     }
@@ -281,6 +274,14 @@ console.log(this.sharedFunctionobj);
       }
       return items.substring(0, items.length - 1);
     }
+    if (Object.keys(answerLine)[0] === 'date') {
+      if (answerLine.date === "12:00 AM") {
+        return '';
+      }
+      else {
+        return answerLine.date;
+      }
+    }
     return answerLine[Object.keys(answerLine)[0]];
   }
 
@@ -293,14 +294,14 @@ console.log(this.sharedFunctionobj);
     return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
   isObject(groupedQnr) {
-  if(typeof(groupedQnr)==="object" && Object.keys(groupedQnr).length > 0){
-    console.log(Object.keys(groupedQnr));
-   console.log(Object.keys(groupedQnr).length);
-    console.log('true');
-    return true;
-  }else if(typeof(groupedQnr)==="object" && Object.keys(groupedQnr).length < 0){
-    console.log('false');
-    return false;
-  }
+    if (typeof (groupedQnr) === "object" && Object.keys(groupedQnr).length > 0) {
+      console.log(Object.keys(groupedQnr));
+      console.log(Object.keys(groupedQnr).length);
+      console.log('true');
+      return true;
+    } else if (typeof (groupedQnr) === "object" && Object.keys(groupedQnr).length < 0) {
+      console.log('false');
+      return false;
+    }
   }
 }
