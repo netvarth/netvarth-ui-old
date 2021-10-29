@@ -7,14 +7,12 @@ import { ExtendHttpInterceptor } from './shared/config/extendhttp.interceptor';
 import {  MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { AppComponent, projectConstants } from './app.component';
-import { SearchDetailServices } from './shared/components/search-detail/search-detail-services.service';
 import { AuthGuardConsumer, AuthGuardProvider, AuthGuardHome, AuthGuardLogin} from './shared/guard/auth.guard';
 import { SharedServices } from './shared/services/shared-services';
 import { SharedFunctions } from './shared/functions/shared-functions';
 import {  MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EqualValidator } from './shared/directives/equal-validator.directive';
 import { FormMessageDisplayService } from './shared/modules/form-message-display/form-message-display.service';
-import { ProviderDetailService } from './shared/components/provider-detail/provider-detail.service';
 import {  DatePipe, LocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
 import { GlobalService } from './shared/services/global-service';
 import { Razorpaymodel } from './shared/components/razorpay/razorpay.model';
@@ -113,8 +111,6 @@ export function init_app(globalService: GlobalService) {
     SharedFunctions,
     FormMessageDisplayService,
     ErrorMessagingService,
-    SearchDetailServices,
-    ProviderDetailService,
     ProviderDataStorageService,
     ShareService,
     SessionStorageService,
