@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
@@ -8,6 +8,7 @@ import { Messages } from '../../constants/project-messages';
 import { Location } from '@angular/common';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { SnackbarService } from '../../services/snackbar.service';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-change-password',
@@ -33,7 +34,9 @@ export class ChangePasswordComponent implements OnInit {
   api_success = null;
   curtype;
   isBusinessowner = false;
-
+  customId: any;
+  accountId: any;
+  private subs = new SubSink();
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
@@ -41,10 +44,19 @@ export class ChangePasswordComponent implements OnInit {
     public router: Router,
     private location: Location,
     private lStorageService: LocalStorageService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private activated_route: ActivatedRoute
   ) {
     this.isBusinessowner = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
+    this.subs.sink = this.activated_route.queryParams.subscribe(qparams => {
+      if (qparams && qparams.accountId) {
+        this.accountId = qparams.accountId;
+      }
+      if (qparams && qparams.customId) {
+        this.customId = qparams.customId;
+      }
+    });
    }
   goBack() {
     this.location.back();
@@ -110,6 +122,29 @@ export class ChangePasswordComponent implements OnInit {
   }
   resetApiErrors() {
     this.api_error = null;
+  }
+  redirectto(mod, usertype) {
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['customId'] = this.customId;
+    }
+    if(this.accountId) {
+      queryParams['accountId'] = this.accountId;
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParams
+    };
+    switch (mod) {
+      case 'profile':
+        this.router.navigate([usertype, 'profile'], navigationExtras);
+        break;
+      case 'change-mobile':
+        this.router.navigate([usertype, 'change-mobile'], navigationExtras);
+        break;
+      case 'members':
+        this.router.navigate([usertype, 'members'], navigationExtras);
+        break;
+    }
   }
 }
 

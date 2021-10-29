@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular/core';;
 import { Router, ActivatedRoute, NavigationExtras, NavigationEnd } from '@angular/router';
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+// import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
@@ -24,7 +24,7 @@ export class PhomeComponent implements OnInit {
   password;
   document;
   carouselOne;
-  loginForm: FormGroup;
+  // loginForm: FormGroup;
   api_error = null;
   is_provider = 'true';
   step = 1;
@@ -82,7 +82,7 @@ export class PhomeComponent implements OnInit {
     public shared_services: SharedServices,
     private _scrollToService: ScrollToService,
     public fed_service: FormMessageDisplayService,
-    private fb: FormBuilder,
+    // private fb: FormBuilder,
     private activateRoute: ActivatedRoute,
     private sessionStorageService: SessionStorageService,
     private lStorageService: LocalStorageService,
@@ -173,7 +173,7 @@ export class PhomeComponent implements OnInit {
 					},
 				} 
     };
-    this.createForm();
+    // this.createForm();
     this.api_loading = false;
 
     this.carouselPricing = {
@@ -318,15 +318,15 @@ export class PhomeComponent implements OnInit {
   }
 
   createForm() {
-    this.loginForm = this.fb.group({
-      // phonenumber: ['', Validators.compose(
-      //   [Validators.required,
-      //   Validators.maxLength(10),
-      //   Validators.minLength(10),
-      //   Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
-      emailId: ['', Validators.compose([Validators.required])],
-      password: ['', Validators.compose([Validators.required])]
-    });
+    // this.loginForm = this.fb.group({
+    //   // phonenumber: ['', Validators.compose(
+    //   //   [Validators.required,
+    //   //   Validators.maxLength(10),
+    //   //   Validators.minLength(10),
+    //   //   Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+    //   emailId: ['', Validators.compose([Validators.required])],
+    //   password: ['', Validators.compose([Validators.required])]
+    // });
   }
   showError() {
     this.show_error = true;

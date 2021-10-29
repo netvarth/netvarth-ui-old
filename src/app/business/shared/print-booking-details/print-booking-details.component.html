@@ -121,15 +121,16 @@
                      
 
       
-                        <ng-container *ngIf="groupedQnr">
+                        <ng-container *ngIf="groupedQnr && isObject(groupedQnr)">
+                   
                             <div class="qnrsec" *ngFor="let qnr of groupedQnr | keyvalue"
-                                [class.section-shadow]="getSectionCount() > 1">
-                                <ng-container *ngIf="getSectionCount() > 1">
+                                [class.section-shadow]="getSectionCount() > 0">
+                                <ng-container *ngIf="getSectionCount() > 0">
 
                                     <table style="width:100%" border="1" border-color='#eee'>
                                         <thead style="background-color:grey">
                                             <tr style="text-align:center">
-                                                <td colspan="2"> {{qnr.key}} </td>
+                                                <td colspan="2"> {{qnr.key && qnr.key!=='undefined'?qnr.key :'Details'}} </td>
                                             </tr>
                                         </thead>
                                         <tbody *ngFor="let question of qnr.value">
@@ -172,8 +173,8 @@
                             </div>
                         </ng-container>
                         <!-- {{}} -->
-
-                        <ng-container *ngIf="groupedQnr.length==0 && questionanswers">
+           
+                        <ng-container *ngIf="!isObject(groupedQnr) &&questionanswers && questionanswers.length>0">
 
                             <table class="table table-bordered " style="width:100%">
                                 <thead style="background-color:grey">

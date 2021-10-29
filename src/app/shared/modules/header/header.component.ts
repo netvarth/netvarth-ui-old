@@ -375,7 +375,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     console.log(usertype);
     switch (mod) {
       case 'profile':
-        this.router.navigate([usertype, 'profile']);
+        let pqueryParams = {};
+        if (this.customId) {
+          pqueryParams['accountId'] = this.accountId;
+          pqueryParams['customId'] = this.customId;
+        }
+        const pnavigationExtras: NavigationExtras = {
+          queryParams: pqueryParams
+        };
+        this.router.navigate([usertype, 'profile'], pnavigationExtras);
         break;
      case 'wallet':
         this.router.navigate([usertype, 'mywallet']);
