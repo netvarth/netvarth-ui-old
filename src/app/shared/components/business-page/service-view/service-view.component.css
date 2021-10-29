@@ -1209,11 +1209,11 @@ ul.service-ul li {
       .service-li-title {
         color: #2653B7;
       }
-     .meet-icon, .jvideo-icon {
+     .meet-icon, .jvideo-icon, .wtsapvid-icon {
        top: 10px !important;
        width: 25px !important;
      }
-     .zoom-icon {
+     .zoom-icon  {
       top: 10px !important;
       width: 32px !important;
     }
