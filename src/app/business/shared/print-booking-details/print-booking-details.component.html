@@ -130,7 +130,7 @@
                                     <table style="width:100%" border="1" border-color='#eee'>
                                         <thead style="background-color:grey">
                                             <tr style="text-align:center">
-                                                <td colspan="2"> {{qnr.key}} </td>
+                                                <td colspan="2"> {{qnr.key && qnr.key!=='undefined'?qnr.key :'Details'}} </td>
                                             </tr>
                                         </thead>
                                         <tbody *ngFor="let question of qnr.value">
