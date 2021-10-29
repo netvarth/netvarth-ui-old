@@ -53,7 +53,7 @@
                 *ngIf="alert.ackStatus==false && alert.ackRequired==true" (click)="alertAcknowlege(alert)"></i>
             </p>
           </li>
-          <li class="footer"><a href="#" routerLink="alerts" (click)="actionPerformed('alert')">Go to Alerts</a></li>
+          <li class="footer"><a href="provider/alerts" (click)="actionPerformed('alert')">Go to Alerts</a></li>
         </ul>
       </div>
     </div>
@@ -89,7 +89,7 @@
             </a>
           </li>
           <li class="footer">
-            <a class="pointer-cursor" routerLink="license" (click)="actionPerformed('license')">Go to subscription plan
+            <a class="pointer-cursor" routerLink="provider/license" (click)="actionPerformed('license')">Go to subscription plan
               section</a>
           </li>
         </ul>
