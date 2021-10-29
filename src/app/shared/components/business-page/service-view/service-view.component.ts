@@ -519,7 +519,7 @@ export class ServiceViewComponent implements OnInit {
             _this.servicename = _this.wlServices[aptIndex]['name'];
             _this.servicedetails = _this.wlServices[aptIndex];
             console.log("detailswait" + JSON.stringify(_this.servicedetails));
-           if (_this.servicedetails.serviceAvailability['personAhead'] >= 0) {
+           if (_this.servicedetails.serviceDurationEnabled&&_this.servicedetails.serviceAvailability['personAhead'] >= 0) {
             _this.personsAheadText = 'People in line : ' + _this.servicedetails.serviceAvailability['personAhead'];
             }
             _this.getduration(_this.servicedetails);
