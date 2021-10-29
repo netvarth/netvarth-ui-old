@@ -1217,3 +1217,6 @@ ul.service-ul li {
       top: 10px !important;
       width: 32px !important;
     }
+    .card-text.availability {
+      min-height: 100px;
+    }

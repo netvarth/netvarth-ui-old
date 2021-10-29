@@ -105,71 +105,11 @@
                                     [matTooltip]="servicedetails.paymentDescription"></i></span><br/><span class="bold price rupee-font">{{servicedetails.minPrePaymentAmount  | currency:'&#8377;'}}</span></li>
                                 <li *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0"><span class="service-li-title">Service Fee</span><br /><span class="bold price rupee-font">{{servicedetails.totalAmount | currency:'&#8377;'}}</span></li>
                             </ul>
-                            <!-- <div class=" col-lg-4 col-md-4 col-sm-4 col-xs-4"
-                                *ngIf="servicedetails && servicedetails.serviceDuration && !is_donation_serv">
-                                <div class="text-xs-center col-lg-2 col-md-2 col-sm-12 col-xs-12 ">
-                                    <img src="../../../../../assets/images/Serviceimg5.jpg"
-                                        style="width: 50px;height: 50px;">
-                                </div>
-                                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                    <div class="font-xs-small col-lg-12 col-md-12 col-xs-12 col-sm-12"
-                                        style="color: skyblue;">
-                                        Service Duration
-                                    </div>
-                                    <div class="font-xs-small col-lg-12 col-md-12 col-xs-12 col-sm-12">{{HHMM}}</div>
-                                </div>
-                            </div> -->
-                            <!-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"
-                                *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount != servicedetails.totalAmount">
-                                <div>
-                                    <div class="text-xs-center col-lg-2 col-md-2 col-sm-12 col-xs-12 ">
-                                        <img src="../../../../../assets/images/Serviceimg5.jpg"
-                                            style="width: 50px;height: 50px;">
-                                    </div>
-                                    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                        <div class="font-xs-small col-lg-12 col-md-12 col-xs-12 col-sm-12"
-                                            style="color: skyblue;">
-                                            Amount Required Now <span><i class="fa fa-info-circle"
-                                                    [matTooltip]="servicedetails.paymentDescription"></i></span>
-                                        </div>
-                                        <div class="font-xs-small col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                            RS:{{servicedetails.minPrePaymentAmount |
-                                            currency: '':''}}</div>
-                                    </div>
-                                </div>
-                            </div> -->
-                            <!-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"
-                                *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0">
-                                <div>
-                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 text-xs-center ">
-                                        <img src="../../../../../assets/images/Serviceimg5.jpg"
-                                            style="width: 50px;height: 50px;">
-                                    </div>
-                                    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                        <div class="font-xs-small col-lg-12 col-md-12 col-xs-12 col-sm-12"
-                                            style="color: skyblue;">
-                                            Service Fee
-                                        </div>
-                                        <div class="font-xs-small col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                            RS:{{servicedetails.totalAmount | currency:
-                                            '':''}}</div>
-                                    </div>
-                                </div>
-                            </div> -->
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 mgn-bt-10 marginalignment"
                             *ngIf="servicedetails && servicedetails.description">
                             <div class="description" *ngIf="servicedetails && servicedetails.description">
-                                {{servicedetails.description}}
-                                This will put the list style a bit further to the right than normal list items, which is a bit "off" if there are normal ones below. I don't know the independent solution, but depending on your image's width, this will improve that: "margin: 0 0 0 -7px;" – 
-e-motiv
- May 8 '15 at 18:43
-For top positioning, changing top value worked for me instead of top padding. background: url(images/bullet.gif) no-repeat left 8px; – 
-Sridhar Katakam
- May 5 '18 at 6:29 
-It's a real shame you can't style the list-style directly. It makes people use all sorts of workarounds. I'd really prefer to use list-style for something that's really a list-style, but I cannot make it look the way I want to. – 
-mcv
- Mar 16 '20 at 15:21 
+                                {{servicedetails.description}}                                
                             </div>
                         </div>
                     </div>
@@ -181,33 +121,21 @@ mcv
                         <div class="headofpanelbodyforbuttontoken mgn-bt-10" *ngFor="let sp of servicesAndProviders">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
                                 *ngIf="sp.type =='waitlist' && personsAheadText">
-                                <!-- <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 text-xs-center">
-                                    <img src="../../../../../assets/images/Serviceimg1.jpg"
-                                        style="width: 40px;height: 40px;">
-                                </div> -->
                                 <div class="card-text availability">
                                     <p>{{personsAheadText}}</p>
-                                    <p  *ngIf="timings">
-                                        {{timingCaption}}<br/>
-                                        <span class="fontwaitlist">{{timings}}</span>
+                                    <p ><span *ngIf="timings">{{timingCaption}}</span>
+                                       <br/>
+                                        <span class="fontwaitlist">{{timings}}&nbsp;</span>
                                     </p>
                                 </div>
                             </div>
-                            <!-- <p class="card-text emptySpace" *ngIf="sp.type =='appt'"></p> -->
-                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12" *ngIf="timingsapt && sp.type =='appt'">
-                                <!-- <div class="col-lg-2 col-md-2 col-xs-12 col-sm-12 text-xs-center">
-                                    <img src="../../../../../assets/images/Serviceimg1.jpg"
-                                        style="width: 40px;height: 40px;">
-                                </div> -->
+                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12" *ngIf="timingsapt && sp.type =='appt'">                               
                                 <div class="card-text availability">
                                         <p>{{timingCaptionapt}}</p>
                                         <p class="fontwaitlist">
                                             {{timingsapt}} <br/><span>&nbsp;</span> </p>
                                 </div>
-                            </div>
-                            <p class="card-text emptyheght" *ngIf="!timings && sp.type =='waitlist'">
-                            </p>
-                            <p class="card-text emptyheght" *ngIf="!timingsapt && sp.type =='appt'"></p>
+                            </div>                          
                             <div class="service-buttons" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <button
                                     class="btn actionbtn btn-outline-warning col-lg-12 col-md-12 col-sm-12 col-xs-12"
