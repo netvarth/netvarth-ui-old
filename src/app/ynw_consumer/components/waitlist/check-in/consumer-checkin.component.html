@@ -1,7 +1,7 @@
 <section #consumer_checkin class="c-checkin-new container no-padding" [ngClass]="theme?theme:''">
     <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
     <div class="content p0 loc-list ynw-common-form-nm">
-        <div class="panel panel-default" >
+        <div class="panel panel-default">
             <div class="panel-heading top-row ">
                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <a class="pull-left back-btn mgn-up-5" (click)="goBack('back')"><i class="fa fa-arrow-left"></i></a>
@@ -13,8 +13,8 @@
             </div>
             <app-common-innerloading-spinner *ngIf="loadingPaytm"></app-common-innerloading-spinner>
             <div class="pad-10 d-flex flex-column-fluid hf-panel-body">
-                <div class="card card-custom no-margin no-padding" class="cardwidth" >
-                    <div class="card-body p-0" >
+                <div class="card card-custom no-margin no-padding" class="cardwidth">
+                    <div class="card-body p-0">
                         <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"
                             data-wizard-clickable="false">
                             <div class="row justify-content-center">
@@ -155,7 +155,8 @@
                                                                 <h6 class="card-title service mgn-bt-10">
                                                                     {{sel_ser_det.name}}
                                                                 </h6>
-                                                                <div class="" style="font-size: 1rem" *ngIf="sel_ser_det && sel_ser_det.description">
+                                                                <div class="" style="font-size: 1rem"
+                                                                    *ngIf="sel_ser_det && sel_ser_det.description">
                                                                     <p class="module-nomargin line-clamp no-margin"
                                                                         *ngIf="sel_ser_det && sel_ser_det.description && !showmoreSpec"
                                                                         (click)="showSpec()">
@@ -163,7 +164,8 @@
                                                                     <p class="more" (click)="showSpec()"
                                                                         *ngIf="sel_ser_det && sel_ser_det.description && sel_ser_det.description.length > 200 && !showmoreSpec">
                                                                         Read more</p>
-                                                                    <p *ngIf="sel_ser_det && sel_ser_det.description && showmoreSpec" (click)="showSpec()">
+                                                                    <p *ngIf="sel_ser_det && sel_ser_det.description && showmoreSpec"
+                                                                        (click)="showSpec()">
                                                                         {{sel_ser_det.description}}</p>
                                                                 </div>
                                                                 <div class="">
@@ -347,10 +349,18 @@
                                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
                                                                     </div>
-                                                                    <div class="" *ngIf="newEmail">
+                                                                    <!-- <div class="" *ngIf="newEmail">
                                                                         <i class="fa fa-envelope-o "></i>
                                                                         <span
                                                                             class="mgn-lt-5 emailvallabel">{{newEmail}}</span>
+                                                                        <a class="mgn-lt-5 lnk pointer-cursor">
+                                                                        </a>
+                                                                    </div> -->
+
+                                                                    <div class="" *ngIf="payEmail">
+                                                                        <i class="fa fa-envelope-o "></i>
+                                                                        <span
+                                                                            class="mgn-lt-5 emailvallabel">{{payEmail}}</span>
                                                                         <a class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
                                                                     </div>
@@ -445,7 +455,7 @@
                                                                         class="blue custId-cursor"
                                                                         (click)="showJCCouponNote(coupon)"
                                                                         aria-hidden="true">Know more</small></small>
-                                                            </div>                                                            
+                                                            </div>
                                                             <div
                                                                 class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20">
                                                                 <div
@@ -590,7 +600,7 @@
                                                                             [(ngModel)]="newPhone" autocomplete="off"
                                                                             (keypress)="isNumeric($event)"
                                                                             maxlength="10">
-                                                                    </div>                                                                    
+                                                                    </div>
                                                                     <div class="sts-msg error" *ngIf="phoneError">
                                                                         {{phoneError}}
                                                                     </div>
@@ -617,7 +627,7 @@
                                                                             id="newWhatsapp" placeholder=""
                                                                             name="newWhatsapp" [(ngModel)]="newWhatsapp"
                                                                             autocomplete="off">
-                                                                    </div>                                                                    
+                                                                    </div>
                                                                     <div class="sts-msg error" *ngIf="whatsapperror">
                                                                         {{whatsapperror}}</div>
 
@@ -1324,7 +1334,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="txt-align-center">
-                                                        <button type="button" 
+                                                        <button type="button"
                                                             class=" next-button btn btn-primary font-weight-bold text-uppercase "
                                                             [class.disabled]="paymentBtnDisabled"
                                                             *ngIf="razorpayEnabled  && !paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
@@ -1342,11 +1352,10 @@
                                                     </div>
                                                     <div class="clearfix"></div>
 
-                                                    <div class="txt-align-center pad_link" 
+                                                    <div class="txt-align-center pad_link"
                                                         *ngIf="interNatioanalPaid && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                        <span [class.disabled]="paymentBtnDisabled" 
+                                                        <span [class.disabled]="paymentBtnDisabled"
                                                             (click)="!isClickedOnce && saveCheckin('checkin')"
-
                                                             class="pointer-cursor"><a
                                                                 class="refund_policy">International Payment ? Click
                                                                 here</a></span>
