@@ -13,7 +13,7 @@ import { SharedFunctions } from './shared/functions/shared-functions';
 import {  MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EqualValidator } from './shared/directives/equal-validator.directive';
 import { FormMessageDisplayService } from './shared/modules/form-message-display/form-message-display.service';
-import {  DatePipe, LocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
+import {  DatePipe, HashLocationStrategy, LocationStrategy } from '../../node_modules/@angular/common';
 import { GlobalService } from './shared/services/global-service';
 import { Razorpaymodel } from './shared/components/razorpay/razorpay.model';
 import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefill.model';
@@ -135,7 +135,7 @@ export function init_app(globalService: GlobalService) {
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS },
-    { provide: LocationStrategy, useClass: PathLocationStrategy },
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: MatDialogRef, useValue: {} },
     { provide: MAT_DIALOG_DATA, useValue: [] }
   ],
