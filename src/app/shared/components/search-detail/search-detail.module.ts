@@ -25,6 +25,7 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegeneratordetail.component';
+import { CheckavailabilityComponent } from '../checkavailability/checkavailability.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -54,7 +55,8 @@ import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegenerat
         SearchDetailComponent,
         ProviderDetailComponent,
         ConsumerWaitlistHistoryComponent,
-        QRCodeGeneratordetailComponent
+        QRCodeGeneratordetailComponent,
+        CheckavailabilityComponent
     ],
     entryComponents: [
         QRCodeGeneratordetailComponent

@@ -1,7 +1,50 @@
 <h1 class="mat-dialog-title head" >
-    checkavailability dialog box
+    <!-- checkavailability dialog box -->
+    <div class="col-lg-12">
+        <div class="col-lg-11"></div>
+        <div class="col-lg-1">
+            
+        </div>
+    </div>
+    <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
+        <div class="col-lg-8"> <b>Today</b></div>
+        <div class="col-lg-4">Service<br> 
+        <div style="color:yellow"><h3>WhatsApp<br> Consultation</h3></div>
+        </div>
+    </div>
+    
+    <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
+        <div class="col-lg-8">
+            <b>Available Time</b>
+        </div>
+        <p class="col-lg-2" style="color: lightgreen;">🟢AVAILABLE</p>
+        <p class="col-lg-2" style="color: rgb(252, 119, 119);">🔴BOOKED</p>
 
+        <div class="col-lg-12" style="border-radius: 5px; border: 2px solid lightskyblue;" >
+            
+        <div style="padding:20px">
+            <div class="col-lg-2" *ngFor="let slot of freeslots;let i = index" >
 
+                <p class="green" *ngIf="slot.active">{{slot.displayTime}}</p>
+                <p  *ngIf="!slot.active"><del style="color: red;">{{slot.displayTime}}</del></p>
+    
+    
+            </div>
+        </div>
+   
+
+        </div>
+        <div class="col-lg-12"></div>
+        <div class="col-lg-12 ">
+            <h2>Price</h2>
+            <p class="col-lg-12" style="color: lightgrey;">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Temporibus fuga voluptatem fugiat optio laborum repudiandae corrupti praesentium ex suscipit, adipisci, corporis ipsam repellat! Veritatis blanditiis sint dolores hic quia corporis?</p>
+        </div>
+        <div class="col-lg-12" style="color: blue;">Service Price:$1000</div>
+        <div class="col-lg-12" style="color: blue;">Advance Payment:$10.00</div>
+        <div class="col-lg-12" style="text-align: center;">
+        <button class="btn" style="width:30%;background-color: blue;color: white;">Okay</button>
+        </div>
+    </div>
       <!-- ****Modal Code**** -->
         <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">

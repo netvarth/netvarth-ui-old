@@ -2470,6 +2470,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
     this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
       width: '90%',
+      height: '100%',
       // panelClass: ['popup-class', 'commonpopupmainclass'],
       // disableClose: true,
       data: {

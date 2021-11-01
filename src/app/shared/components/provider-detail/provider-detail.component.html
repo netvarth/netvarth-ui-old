@@ -661,6 +661,7 @@
                                 *ngIf="sps['departmentItems'].length > 0">
                                 {{sps.departmentName}}
                             </h4>
+                            
                             <div class="bus-item-N" *ngFor="let sp of sps['departmentItems']">
                                 <app-card [item]="sp" [domain]="businessjson.serviceSector.domain"
                                     [terminology]='terminologiesjson' [extras]="" [loc]="selectedLocation"

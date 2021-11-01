@@ -720,7 +720,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
     getAvailableSlotByLocationandService(locid, servid, pdate, accountid, type?) {
-        console.log(servid,';;;;;;;;;;;;;;;;;servid')
+        console.log(servid,locid,accountid,';;;;;;;;;;;;;;;;;servid')
         this.subs.sink = this.shared_services.getSlotsByLocationServiceandDate(locid, servid, pdate, accountid)
             .subscribe(data => {
                 this.slots = data;

@@ -5,6 +5,7 @@ import { TruncateModule } from '../../pipes/limitTo.module';
 import { CardComponent } from './card.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+// import { BrowserModule } from '@angular/platform-browser'
 // import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
@@ -16,7 +17,8 @@ import { MatIconModule } from '@angular/material/icon';
         TruncateModule,
         CapitalizeFirstPipeModule,
         MatMenuModule,
-        MatIconModule
+        MatIconModule,
+        // BrowserModule
     ],
     exports: [
         CardComponent

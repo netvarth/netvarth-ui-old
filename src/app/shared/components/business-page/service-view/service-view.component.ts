@@ -228,6 +228,10 @@ export class ServiceViewComponent implements OnInit {
     });
 
   }
+  imagemovevarible=false;
+  imagemove() {
+    this.imagemovevarible=!this.imagemovevarible;
+  }
   goBack() {
     this.locationobj.back();
     this.userId = null;
@@ -429,6 +433,7 @@ export class ServiceViewComponent implements OnInit {
         this.bLogo = '../../../assets/images/img-null.svg';
       }
       const holdbName = this.businessjson.businessDesc || '';
+      console.log("business description..............",this.businessjson);
       const maxCnt = 120;
       if (holdbName.length > maxCnt) {
         this.bNameStart = holdbName.substr(0, maxCnt);

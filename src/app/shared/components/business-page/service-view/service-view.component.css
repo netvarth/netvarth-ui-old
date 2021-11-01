@@ -9,6 +9,144 @@
     margin: 0;
     position: relative;
     letter-spacing: normal;
+
+}
+.imgsection {
+  width: 50px;height: 50px;
+}
+.minimumheight {
+  background-color: black;
+  min-height:50px;
+}
+.fontwaitlist {
+  font-size: 13px;
+}
+
+.marginalignment {
+  padding-left: 60px;
+  padding-right: 60px;
+}
+.marginalignmentincards{
+  margin-left: 60px;
+}
+.headofpanelbody {
+  /* background-color: rgb(155, 147, 147); */
+  box-shadow: 6px 5px rgba(240, 235, 235, 0.836);
+  padding-top: 50px;
+  padding-left: 50px;
+  padding-right:50px;
+  padding-bottom: 20px;
+  border-radius: 5px;
+}
+@media(min-width:1023px) and (max-width:1024px) {
+  .cardsection {
+    display: flex !important;
+    /* justify-content: space-around; */
+  }
+}
+@media (min-width: 320px) and (max-width: 768px) {
+  .text-xs-center {
+    text-align: center;
+    
+    /* background-color: #E0A800; */
+  }
+  .flex-xs-small {
+    /* display: flex; */
+  }
+  .imgsection {
+    width: 30px;height: 30px;
+  }
+  .rowreverse {
+    display: flex;
+    flex-flow: column-reverse;
+  }
+  .fontwaitlist {
+    /* font-size: 11px; */
+  }
+  .padding-xs-2{
+    /* padding: 2px; */
+  }
+  .marginalignment {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .marginalignmentincards {
+    margin: 0px !important;
+  }
+  .left-right-padding {
+    padding-left:30px;
+    padding-right:30px;
+  }
+  .font-xs-small {
+    all:initial;
+    font-size:12px;
+    font-weight: 500;
+  
+    /* align-items:left; */
+    /* text-align:left; */
+    /* text-align: start; */
+    /* text-align: initial; */
+    /* float: left; */
+  }
+}
+.headofpanelbody .serviceheading {
+  display: flex;
+  background-color:#92B1D3;
+  padding: 5px;
+  color: white;
+
+}
+.description {
+  background-color: #92B1D3;
+  padding: 10px;
+  border-radius: 5px;
+  color: blue;
+}
+.serviceheading {
+  display: flex;
+  background-color:#92B1D3;
+  padding: 5px;
+  color: white;
+
+}
+.headofpanelbody .servicetimingdetails {
+  display: flex;
+  flex-direction: row;
+  flex-flow: row wrap;
+
+}
+.headofpanelbodyforbuttontoken {
+  box-shadow: 6px 5px rgba(240, 235, 235, 0.836);
+  padding-top: 35px;
+  padding-left:50px;
+  padding-right:50px;
+  padding-bottom:35px;
+  border-radius: 5px;
+  /* background-color: orange; */
+  /* min-height: 200px; */
+  /* display: flex; */
+  /* align-items: center */
+  text-align: center;
+}
+@media (min-width:320px) and (max-width:768px) {
+  .mobilephoneaboutus {
+    /* box-shadow: 1px 1px 3px #0000000F; */
+    margin-left: 40px;
+    
+  }
+  .actionbtn {
+    font-size: 10px;
+  }
+  .headofpanelbodyforbuttontoken {
+
+      
+    box-shadow: 6px 5px rgba(240, 235, 235, 0.836) !important;
+    padding: 0px !important;
+    border-radius: 5px !important;
+  }
+  .mobile-none {
+    display: none;
+  }
 }
 
 .modal-title.service-detail-title .name {
@@ -498,11 +636,12 @@
   .actionbtn{
 border: 1px solid rgb(50, 47, 223);
 color: #073B4C !important;
-background-color: #E0A800 !important;
+background-color: #FFC734 !important;
 border-color: #D39E00;
 color: #fff;
-font-weight: 600;
-min-width: 150px !important;
+font-weight: 500;
+width: 100%;
+/* min-width: 150px !important; */
   }
   .mgncla{
     margin-bottom: 10px;
@@ -571,9 +710,12 @@ mat-sidenav {
     text-align: center!important;
   }
 }
-.headstyle{
+.card .headstyle{
   box-shadow: 6px 5px rgba(240, 235, 235, 0.836);
 border-radius: 10px;
+/* background-color: lightcoral; */
+
+
 }
 .business-name{
   color: #073B4C;
@@ -666,7 +808,7 @@ border-radius: 10px;
 
 .content.bus-page .bus-page-header .bus-title-content .business-name,
 .content.bus-page .bus-page-header .bus-title-content .business-user-name {
-  color: #1E4079!important;
+  color: #2653B7 !important;
   margin-bottom: 10px !important;
   margin-top: 0 !important;
 }
@@ -893,7 +1035,7 @@ margin-top: 6px;
  .card-body .service-details .donationAmount,
  .card-body .service-details .peopleAhead {
   margin: 0 !important;
-  padding: 2px 6px;
+  /* padding: 2px 6px; */
   font-weight: 600;
   font-size: 15px !important;
   color: #065499!important;
@@ -903,6 +1045,7 @@ margin-top: 6px;
   margin: 0 !important;
   padding: 2px 6px;
   height: 25px !important;
+  background-color: lawngreen;
   /* padding: 0 !important;
   height: 17px !important;
   margin: 6px 0 !important; */
@@ -947,10 +1090,14 @@ font-weight: 700;
   background-color: transparent !important;
   border-color: #073B4C;
 }
+.text-center {
+  text-align: center;
+}
 .emptyheght{
   margin: 0 !important;
   padding: 2px 6px;
-height: 55px !important;;
+height: 35px !important;
+/* background-color:blue; */
 }
 .donatechange{
   width: 20%;
@@ -964,8 +1111,9 @@ height: 55px !important;;
   margin-top: 10px !important;
   float: left;
 }
+
 .selectbxstyle {
-  color: #1E4079 !important;
+  color: #2653B7 !important;
 border: none;
 font-weight: bold;
   background: none;
@@ -1003,7 +1151,7 @@ font-weight: bold;
 color: #1E4079 !important;
 }
 .service-icon {
-  display: block !important;
+  /* display: block !important; */
   font-size: 1.5rem !important;
 }
 
