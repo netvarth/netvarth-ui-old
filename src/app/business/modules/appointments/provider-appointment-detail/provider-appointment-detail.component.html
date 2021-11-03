@@ -140,7 +140,41 @@
                   </span>
                 </div>
               </div>
+                <!-- privatenote -->
 
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stat-bar" style="background-color: #f2f2f2;">
+                  <div class="more_view">
+                    <span class="pvtnote">Private Notes</span>
+                    
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stats-item pl0">
+                    <span *ngIf="waitlist_notes.length > 0">
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 pnotes" *ngFor="let note of waitlist_notes; let i = index">
+                        <div style="background: whitesmoke; margin: 3px">
+                          <!-- <p style="float: left;">{{note.firstName}}Aparna</p> -->
+                          <span class="status-label note_name">{{note.firstName}}</span>
+                          <span class="status-label note_date">{{note.timeStamp | date: newDateFormat}}</span>
+                          <div class="note" [innerHTML]="note.note | nl2br">
+                          </div>
+                        <!-- <p style="float: right;">{{note.timeStamp | date: newDateFormat}}</p> -->
+                        <!-- <br> -->
+                        <!-- <p [innerHTML]="note.note | nl2br"></p> -->
+                        <div class="result attach" *ngIf="note.attachment && note.attachment.length > 0"
+                          (click)="showImagesection(i)">
+                          <i class="fa fa-file-text-o" aria-hidden="true"></i> <a class="attach-link">
+                           {{note.attachment.length}} Attachment(s) </a>
+                        </div>
+                        <div class="thumbnails mt10 mb10" *ngIf="showImages[i]">
+                          <a class="mg-10" target="_blank" [href]="attachment.s3path"
+                            *ngFor="let attachment of note.attachment"><img [src]="getThumbUrl(attachment)"
+                              style="width:100px; height:100px" /></a>
+                        </div>
+                      </div>
+                      </div>
+                    </span>
+                    <span class="no_note" *ngIf="waitlist_notes && waitlist_notes.length == 0">{{no_pvt_notes_cap}}</span>
+                  </div>
+                </div>
               <!-- View more and Less -->
               <div class="more_view mgn-up-20">
                 <span class="opt-viewmore" *ngIf="!view_more" (click)="viewMore()"><a class="fl-left">View
@@ -152,7 +186,7 @@
               <!-- Instructions,messages,notes -->
               <div class="more_view" *ngIf="view_more" class="mgn-up-30">
                 <mat-tab-group animationDuration="10ms" class="index-head">
-                  <mat-tab label="Private Notes" *ngIf="waitlist_data.apptStatus!=='blocked'">
+                  <!-- <mat-tab label="Private Notes" *ngIf="waitlist_data.apptStatus!=='blocked'">
                     <span *ngIf="waitlist_notes.length > 0">
                       <div class="pnotes" *ngFor="let note of waitlist_notes; let i = index">
                         <p [innerHTML]="note.note | nl2br"></p>
@@ -170,7 +204,7 @@
                       </div>
                     </span>
                     <span *ngIf="waitlist_notes.length == 0">{{no_pvt_notes_cap}}</span>
-                  </mat-tab>
+                  </mat-tab> -->
                   <mat-tab label="Messages">
                     <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'"
                       (reloadApi)="getCommunicationHistory(waitlist_data.uid)">

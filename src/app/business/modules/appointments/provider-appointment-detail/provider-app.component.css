@@ -78,3 +78,29 @@
     font-weight: bold;
     font-size: 0.9rem;
 }
+.pvtnote{
+    color: #3c8dbc !important;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding-left: 15px;
+}
+.note{
+    padding-top: 25px;
+    padding-left: 10px; 
+    padding-bottom: 5px;
+    font-size: 14px;
+}
+.note_date{
+    float: right; 
+    padding-right: 5px; 
+    padding-top: 5px; 
+}
+.note_name{
+    float: left; 
+    padding-left: 10px; 
+    padding-top: 5px;
+}
+.no_note{
+    padding-left: 14px;
+    font-size: 14px;
+}
