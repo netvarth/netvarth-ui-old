@@ -112,7 +112,7 @@
     .note_view{
         background: whitesmoke; 
     margin: 3px; 
-        width: 50% !important;
+        width: 100% !important;
         height: 100% !important;
     }
   }
