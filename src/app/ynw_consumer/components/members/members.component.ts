@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { SubSink } from 'subsink';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-consumer-members',
@@ -39,12 +40,26 @@ export class MembersComponent implements OnInit, OnDestroy {
   query_executed = false;
   emptyMsg = 'No Family members added yet';
   private subs = new SubSink();
+  customId: any;
+  accountId: any;
   constructor(private consumer_services: ConsumerServices,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
-    private location: Location) { }
+    private location: Location,
+    public router: Router,
+    private activated_route: ActivatedRoute
+  ) {
+    this.subs.sink = this.activated_route.queryParams.subscribe(qparams => {
+      if (qparams && qparams.accountId) {
+        this.accountId = qparams.accountId;
+      }
+      if (qparams && qparams.customId) {
+        this.customId = qparams.customId;
+      }
+    });
+  }
 
   ngOnInit() {
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
@@ -127,5 +142,31 @@ export class MembersComponent implements OnInit, OnDestroy {
         this.getMembers();
       }
     });
+  }
+  redirectto(mod, usertype) {
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['customId'] = this.customId;
+    }
+    if (this.accountId) {
+      queryParams['accountId'] = this.accountId;
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParams
+    };
+    switch (mod) {
+      case 'profile':
+        this.router.navigate([usertype, 'profile'], navigationExtras);
+        break;
+      case 'change-password':
+        this.router.navigate([usertype, 'change-password'], navigationExtras);
+        break;
+      case 'change-mobile':
+        this.router.navigate([usertype, 'change-mobile'], navigationExtras);
+        break;
+      case 'dashboard':
+        this.router.navigate([usertype], navigationExtras);
+        break;
+    }
   }
 }

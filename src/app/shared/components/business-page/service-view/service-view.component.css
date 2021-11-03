@@ -1175,7 +1175,7 @@ ul.service-ul li {
 .headofpanelbodyforbuttontoken {
   /* box-shadow: 6px 5px rgba(240, 235, 235, 0.836); */
   padding-top: 25px;
-  background: #edebeb;
+  background: #efefef;
   padding-bottom:25px;
   border-radius: 5px;
   text-align: center;
@@ -1209,11 +1209,14 @@ ul.service-ul li {
       .service-li-title {
         color: #2653B7;
       }
-     .meet-icon, .jvideo-icon {
+     .meet-icon, .jvideo-icon, .wtsapvid-icon {
        top: 10px !important;
        width: 25px !important;
      }
-     .zoom-icon {
+     .zoom-icon  {
       top: 10px !important;
       width: 32px !important;
+    }
+    .card-text.availability {
+      min-height: 100px;
     }

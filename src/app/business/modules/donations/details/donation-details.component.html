@@ -10,7 +10,7 @@
 <section>
     <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
     <div class="card col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding min-hght" *ngIf="!loading">
-        <div class="donationdetails col-md-8 col-xs-12 col-sm-12 col-lg-9 no-margin-small">
+        <div class="donationdetails col-md-8 col-xs-12 col-sm-12 col-lg-9 no-margin-small small">
             <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8 no-padding personal">
                 <div class="bold font11" *ngIf="donationDetails.donor.firstName || donationDetails.donor.lastName">
                     {{donationDetails.donor.firstName}} {{donationDetails.donor.lastName}}</div>
@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="col-md-8 col-xs-12 col-sm-12 col-lg-9 no-padding mgn-20 no-margin-small">
-            <div class="recentactivity mgn-up-10">
+            <div class="recentactivity mgn-up-10 small">
                 <table class="width-100">
                     <thead>
                         <tr>

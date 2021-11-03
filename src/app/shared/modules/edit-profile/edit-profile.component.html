@@ -3,7 +3,7 @@
         <div class="panel panel-default">
             <div class="panel-heading top-row ">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                    <app-header *ngIf="shared_functions.checkLogin()" [showHeaderAction]="true"></app-header>
+                    <app-header *ngIf="shared_functions.checkLogin()" [customId]="customId" [accountId]="accountId" [showHeaderAction]="true"></app-header>
                 </div>
             </div>
             <div class="panel-body no-padding">
@@ -169,11 +169,11 @@
                         <div class="right-menu">
                             <div class="right-menu-header">{{related_links_cap}}</div>
                             <ul class="related-link">
-                                <li (click)="shared_functions.redirectto('change-password')" class="icon-password">
+                                <li (click)="redirectto('change-password','consumer')" class="icon-password">
                                     {{change_password_cap}}</li>
-                                <li (click)="shared_functions.redirectto('change-mobile')" class="icon-mobile">
+                                <li (click)="redirectto('change-mobile','consumer')" class="icon-mobile">
                                     {{change_mobile_cap}}</li>
-                                <li (click)="shared_functions.redirectto('members')" class="icon-members">
+                                <li (click)="redirectto('members','consumer')" class="icon-members">
                                     {{family_members_cap}}</li>
                             </ul>
                         </div>
@@ -331,9 +331,9 @@
                 <div class="right-menu">
                     <div class="right-menu-header">{{related_links_cap}}</div>
                     <ul class="related-link">
-                        <li (click)="shared_functions.redirectto('change-password')" class="icon-password">
+                        <li (click)="redirectto('change-password','provider')" class="icon-password">
                             {{change_password_cap}}</li>
-                        <li (click)="shared_functions.redirectto('change-mobile')" class="icon-mobile">
+                        <li (click)="redirectto('change-mobile','provider')" class="icon-mobile">
                             {{change_mobile_cap}}</li>
                     </ul>
                 </div>

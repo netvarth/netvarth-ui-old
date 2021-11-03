@@ -461,9 +461,17 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   redirectto(mod) {
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['accountId'] = this.accountId;
+      queryParams['customId'] = this.customId;
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParams
+    };
     switch (mod) {
       case 'profile':
-        this.router.navigate([usertype, 'profile']);
+        this.router.navigate([usertype, 'profile'], navigationExtras);
         break;
     }
   }

@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="mobile-no" *ngIf="data.phoneNumber">
                                     <i class="fa fa-mobile icon"></i>
-                                    <span class="sub-texts">{{data.countryCode}}-{{data.phoneNumber}}</span>
+                                    <span class="sub-texts">{{data.countryCode}} {{data.phoneNumber}}</span>
                                 </div>
                                 <div class="e-mail" *ngIf="data.appmtFor[0].email">
                                     <i class="fa fa-envelope icon"></i>
@@ -87,7 +87,7 @@
                                     </div>
                                     <div class="user-age" *ngIf="data.appmtFor[0].age">
                                         <i class="fa fa-user icon"></i>
-                                        <span class="sub-texts">{{getAge(data.appmtFor[0].age)}}</span>
+                                        <span class="sub-texts">{{getAge(data.appmtFor[0].age)}} years</span>
                                     </div>
                                 </div>
                                 <div class="pref-language"

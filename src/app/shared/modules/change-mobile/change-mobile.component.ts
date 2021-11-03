@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
@@ -13,6 +13,7 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { isValidNumber } from 'libphonenumber-js';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-change-mobile',
@@ -35,6 +36,7 @@ export class ChangeMobileComponent implements OnInit {
   changemob_cap = Messages.CHANGE_MOB_CAP;
   dashboard_cap = Messages.DASHBOARD_TITLE;
   spForm: FormGroup;
+  private subs = new SubSink();
   api_error = null;
   api_success = null;
   is_verified = false;
@@ -46,6 +48,8 @@ export class ChangeMobileComponent implements OnInit {
   curtype;
   usertype;
   submit_data: any = {};
+  accountId: any;
+  customId: any;
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
@@ -56,7 +60,17 @@ export class ChangeMobileComponent implements OnInit {
     private snackbarService: SnackbarService,
     private lStorageService: LocalStorageService,
     private s3Processor: S3UrlProcessor,
-  ) { }
+    private activated_route: ActivatedRoute
+  ) { 
+    this.subs.sink = this.activated_route.queryParams.subscribe(qparams => {
+      if (qparams && qparams.accountId) {
+        this.accountId = qparams.accountId;
+      }
+      if (qparams && qparams.customId) {
+        this.customId = qparams.customId;
+      }
+    });
+  }
   goBack() {
     this.location.back();
   }
@@ -182,5 +196,28 @@ export class ChangeMobileComponent implements OnInit {
   }
   redirecToSettings() {
     this.router.navigate(['provider', 'settings', 'bprofile']);
+  }
+  redirectto(mod, usertype) {
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['customId'] = this.customId;
+    }
+    if(this.accountId) {
+      queryParams['accountId'] = this.accountId;
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParams
+    };
+    switch (mod) {
+      case 'profile':
+        this.router.navigate([usertype, 'profile'], navigationExtras);
+        break;
+      case 'change-password':
+        this.router.navigate([usertype, 'change-password'], navigationExtras);
+        break;
+      case 'members':
+        this.router.navigate([usertype, 'members'], navigationExtras);
+        break;
+    }
   }
 }
