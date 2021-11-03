@@ -23,7 +23,7 @@
                         *ngIf="!userId">
                         <div
                             class="col-xs-12 col-sm-12 no-padding mgn-bt-10 visible-xs visible-sm bus-actions-small-devices">
-                            <ul class="bus-actions no-padding mgn-up-10 width-100"
+                            <ul class=" no-padding mgn-up-10 width-100"
                                 *ngIf="settings_exists && business_exists">
                                 <li class="centeralign mgn-rt-10" >
                                     <a class="like-btn action-btns" (click)="communicateHandler()" >
@@ -127,7 +127,7 @@
                             </div>
                         </ng-container>
                     </ng-container>
-
+               
                     <ng-container *ngIf="!showDepartments || (showDepartments && this.userId)">
                         <div class="bus-item-N" *ngFor="let sp of servicesAndProviders">
                          <app-card [item]="sp" [domain]="businessjson?.serviceSector?.domain"

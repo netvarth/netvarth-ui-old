@@ -2057,7 +2057,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   cardClicked(actionObj) {
-
+    console.log("actionObj['type']",actionObj['type'])
     if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessjson.name);
@@ -2166,6 +2166,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
           if (this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex]['provider']['id'] === JSON.parse(this.userId) && this.apptServices[aptIndex].serviceAvailability) {
             servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+
             this.serviceCount++;
           }
         }
@@ -2253,6 +2254,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         this.serviceCount++;
       }
     }
+    console.log("********",servicesAndProviders)
   }
 
   reset() {

@@ -997,7 +997,7 @@ export const projectConstantsLocal = {
   // ACCOUNTENC_ID: '12r45b0',
   // S3UNIQUE_ID: '128495'
   /** Production viswasamadha Real*/
-  PROVIDER_ACCOUNT_ID: 127000,
-  ACCOUNTENC_ID: '93a28i3',
-  S3UNIQUE_ID: '153234'
+  PROVIDER_ACCOUNT_ID: 127052,
+  ACCOUNTENC_ID: '33a09y8',
+  S3UNIQUE_ID: '153286'
 };
