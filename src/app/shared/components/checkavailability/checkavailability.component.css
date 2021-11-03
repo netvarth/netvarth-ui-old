@@ -4,3 +4,38 @@
 .red{
     color: red;
 }
+.skyblue{
+    padding: 10px;
+    border-radius:5px;
+   background-color: skyblue;
+    color:blue;
+    margin-right: 5px;
+    text-align: center;
+}
+.slotdiv {
+    max-height: 100vh !important;
+    overflow: auto;
+    margin-top: 0px !important;
+  
+  }
+.today {
+    color: blue;
+    margin-left: 10px;
+}
+.pad-lg-20 {
+    padding: 20px;
+}
+@media (min-width:320px) and (max-width:760px) {
+    *{
+        font-size: 12px;
+    }
+    .pad-lg-20 {
+        padding: 0px !important;
+    }
+    .green {
+        font-size: 10px;
+    }
+    .red {
+        font-size: 10px;
+    }
+}

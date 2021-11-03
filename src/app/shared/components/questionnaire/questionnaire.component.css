@@ -159,6 +159,7 @@
 .form-group.card {
     border: 1px solid #dadce063 !important;
     border-radius: 8px !important;
+    padding: 5px !important;
 }
 .docname {
     width: 120px;

@@ -31,6 +31,7 @@ import { VirtualFieldsModule } from '../../virtualfields/virtualfields.module';
         ConfirmPageComponent,
         AppointmentConfirmPopupComponent,
         
+        
     ],
     imports: [
         FormMessageDisplayModule,

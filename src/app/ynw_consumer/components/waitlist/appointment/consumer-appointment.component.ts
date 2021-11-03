@@ -324,6 +324,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 if (params.type === 'reschedule') {
                     this.type = params.type;
                     this.rescheduleUserId = params.uuid;
+                    console.log("ereschudul user id ..............", this.rescheduleUserId )
                     this.getRescheduleApptDet();
                 }
                 if (params.theme) {
@@ -405,6 +406,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         }
         const dtoday = yyyy + '-' + cmon + '-' + cday;
         this.todaydate = dtoday;
+        console.log("*****today",this.todaydate)
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
         if (this.type !== 'reschedule') {
             this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
@@ -720,7 +722,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
     getAvailableSlotByLocationandService(locid, servid, pdate, accountid, type?) {
-        console.log(servid,locid,accountid,';;;;;;;;;;;;;;;;;servid')
+        console.log(servid,locid,accountid,type,pdate,';;;;;;;;;;;;;;;;;servid')
         this.subs.sink = this.shared_services.getSlotsByLocationServiceandDate(locid, servid, pdate, accountid)
             .subscribe(data => {
                 this.slots = data;
@@ -732,7 +734,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                             freslot['scheduleId'] = scheduleSlots['scheduleId'];
                             freslot['displayTime'] = this.getSingleTime(freslot.time);
                             this.freeSlots.push(freslot);
-                            console.log("freeslots...........",this.freeSlots);
+                            // console.log("freeslots...........",this.freeSlots);
                         }
                     }
                 }
@@ -1242,6 +1244,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.action = 'email';
     }
     calculateDate(days) {
+        console.log("entered calculate")
         const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
         const newdate = new Date(date);
@@ -1264,6 +1267,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
     }
     disableMinus() {
+        console.log("entered..")
         const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
         const seldate = new Date(seldate2);
@@ -1273,8 +1277,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         const strtDt = new Date(strtDt2);
         const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
         if (startdate >= selecttdate) {
+            console.log("TRUE")
             return true;
         } else {
+            console.log("False")
+            
             return false;
         }
     }

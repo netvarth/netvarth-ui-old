@@ -462,6 +462,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     });
   }
+  getOrderPaidBill(orderBill){
+    if(orderBill.amountPaid){
+      return orderBill.amountPaid;
+    }else{
+      return orderBill.advanceAmountPaid;
+    }
+
+  }
   redirectto(mod) {
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
     switch (mod) {
@@ -2111,7 +2119,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       panelClass: ['commonpopupmainclass', 'popup-class'],
       disableClose: true,
       data: {
-        accencUid: checkin.prescShortUrl
+        accencUid: checkin.prescShortUrl?checkin.prescShortUrl:checkin.prescUrl
       }
     });
   }

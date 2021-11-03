@@ -100,6 +100,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     frm_set_working_hr_cap = Messages.FRM_LEVEL_SETT_WORKING_HR_MSG;
     calcMode = 'conventional';
     est_time;
+    numberofpersons;
     ngOnInit() {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
@@ -152,6 +153,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.loading = true;
         this.waitlist_manager = null;
         this.est_time = false;
+        this.numberofpersons = false;
         this.isManualMode = false;
         this.trnArndTime = 0;
         this.provider_services.getWaitlistMgr()
@@ -178,6 +180,9 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
                         if (this.waitlist_manager.calculationMode === 'Conventional') {
                             this.calcMode = 'conventional';
                         }
+                    }
+                    if(data['personsAhead']){
+                        this.numberofpersons = true;
                     }
                     this.online_checkin = data['onlineCheckIns'];
                     this.futureDateWaitlist = data['futureDateWaitlist'];
@@ -514,6 +519,29 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
                     () => {
                         this.getWaitlistMgr();
                         this.is_data_chnge = 0;
+                        this.snackbarService.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+                    },
+                    error => {
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
+        }
+    }
+    setnumberofPersons(ev) {
+        if (ev.checked) {
+            this.provider_services.setpersonsWaitlistMgr('Enable')
+                .subscribe(
+                    () => {
+                        this.getWaitlistMgr();
+                        this.snackbarService.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+                    },
+                    error => {
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
+        } else {
+            this.provider_services.setpersonsWaitlistMgr('Disable')
+                .subscribe(
+                    () => {
+                        this.getWaitlistMgr();
                         this.snackbarService.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
                     },
                     error => {

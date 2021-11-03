@@ -2641,7 +2641,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     if(!this.isPhysicalItemsPresent()){
        showCatalogItems=true;
      }
-     console.log(showCatalogItems);
+     console.log(showCatalogItems,'jjjjjjjjjjjj');
     return showCatalogItems;
   }
 

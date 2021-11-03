@@ -106,6 +106,8 @@ export class BranchUserDetailComponent implements OnInit {
     countrycode;
     isadminPrivilege: any;
     provider_label = '';
+    locationsjson:any;
+    loc_list: any = [];
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -141,14 +143,15 @@ export class BranchUserDetailComponent implements OnInit {
             });
             this.breadcrumbs = breadcrumbs;
         }
+        this.getProviderLocations();
         const bConfig = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.subsector = user.subSector;
         this.isadminPrivilege = user.adminPrivilege;
         this.sector = user.sector;
-        console.log(bConfig);
-        console.log(this.sector);
-        console.log(this.subsector);
+       // console.log(bConfig);
+       // console.log(this.sector);
+       // console.log(this.subsector);
         this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: this.provider_label }, { value: 'ADMIN', name: 'Admin' }];
         // if (this.sector !== 'healthCare' && this.sector !== 'finance') {
         //     this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: 'Provider' }, { value: 'ADMIN', name: 'Admin' }];
@@ -160,7 +163,7 @@ export class BranchUserDetailComponent implements OnInit {
         //     this.userTypesFormfill = [{ value: 'ASSISTANT', name: 'Assistant' }, { value: 'PROVIDER', name: 'MENTOR' }, { value: 'ADMIN', name: 'Admin' }];
         // }
         if (bConfig && bConfig.bdata) {
-            console.log("");
+           // console.log("");
             for (let i = 0; i < bConfig.bdata.length; i++) {
                 if (user.sector === bConfig.bdata[i].domain) {
                     for (let j = 0; j < bConfig.bdata[i].subDomains.length; j++) {
@@ -186,7 +189,8 @@ export class BranchUserDetailComponent implements OnInit {
                 );
         }
         this.selectedsubDomain = [];
-        console.log(this.subDomains);
+       // console.log("subDomains"+this.subDomains);
+      //  console.log("subsector"+this.subsector);
         for (const subdomain of this.subDomains) {
             if (this.sector === 'healthCare') {
                 if (this.subsector === 'hospital') {
@@ -199,6 +203,11 @@ export class BranchUserDetailComponent implements OnInit {
                     }
                 } else if (this.subsector === 'alternateMedicineHosp') {
                     if (subdomain.subDomain === 'alternateMedicinePractitioners') {
+                        this.selectedsubDomain.push(subdomain);
+                    }
+                }
+                else if (this.subsector === 'hoslisticHealth') {
+                    if (subdomain.subDomain === 'physiciansSurgeons') {
                         this.selectedsubDomain.push(subdomain);
                     }
                 }
@@ -258,6 +267,21 @@ export class BranchUserDetailComponent implements OnInit {
               }
         }
     }
+    getProviderLocations() {
+        this.api_loading = true;
+        this.provider_services.getProviderLocations()
+            .subscribe(data => {
+                console.log("loc_listdata"+JSON.stringify(data));
+             this.locationsjson = data;
+            for (const loc of this.locationsjson) {
+              if (loc.status === 'ACTIVE'&& loc.baseLocation) {
+                this.loc_list.push(loc);
+              }
+            }
+                this.api_loading = false;
+                console.log("loc_list"+this.loc_list);
+            });
+    }
     createForm() {
         this.userForm = this.fb.group({
             first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
@@ -297,13 +321,13 @@ export class BranchUserDetailComponent implements OnInit {
         this.getWaitlistMgr();
     }
     getUserData() {
-        console.log("hi");
+       // console.log("hi");
         if (this.userId) {
             this.provider_services.getUser(this.userId)
                 .subscribe(
                     res => {
                         this.user_data = res;
-                        console.log("hi");
+                       // console.log("hi");
                         if (this.actionparam.type === 'edit') {
                             this.usercaption = 'User Details';
                             this.type = this.user_data.userType;
@@ -323,9 +347,9 @@ export class BranchUserDetailComponent implements OnInit {
                                 }
                             }
                             // this.createForm();
-                            console.log("check");
+                          //  console.log("check");
                             this.updateForm();
-                            console.log("check");
+                          //  console.log("check");
                         }
                         const breadcrumbs = [];
                         this.breadcrumbs_init.map((e) => {
@@ -343,7 +367,7 @@ export class BranchUserDetailComponent implements OnInit {
         }
     }
     updateForm() {
-        console.log("hi");
+       // console.log("hi");
         if (this.user_data.userType === 'PROVIDER') {
             this.showPrvdrFields = true;
         }
@@ -353,8 +377,8 @@ export class BranchUserDetailComponent implements OnInit {
         // if(this.user_data.whatsAppNum){
         //     this.whatsappCountry  = this.user_data.whatsAppNum.countryCode.split('+')
         // }
-        console.log(this.user_data);
-        console.log(this.userForm);
+       // console.log(this.user_data);
+       // console.log(this.userForm);
        
         this.userForm.setValue({
             'first_name': this.user_data.firstName || null,
@@ -382,7 +406,7 @@ export class BranchUserDetailComponent implements OnInit {
             // 'city': this.user_data.city || null
       
         });
-        console.log(this.userForm);
+       // console.log(this.userForm);
        
 
         // if(this.user_data.pincode) {
@@ -494,9 +518,9 @@ export class BranchUserDetailComponent implements OnInit {
             // post_data1['subdomain'] = input.selectedSubDomain;
             console.log(this.selectedsubDomain);
             // post_data1['subdomain'] = (this.selectedsubDomain[0]) ? this.selectedsubDomain[0].id : 0;
-            if (this.selectedsubDomain[0] && this.selectedsubDomain[0].id) {
-                post_data1['subdomain'] = this.selectedsubDomain[0].id;
-            }
+            // if (this.selectedsubDomain[0] && this.selectedsubDomain[0].id) {
+            //     post_data1['subdomain'] = this.selectedsubDomain[0].id;
+            // }
         }
         if (input.selectedUserType !== 'ADMIN') {
         post_data1['admin'] = input.privileges;
@@ -517,7 +541,24 @@ export class BranchUserDetailComponent implements OnInit {
                 });
         } else {
             console.log(post_data1);
-            this.provider_services.createUser(post_data1).subscribe(() => {
+            this.provider_services.createUser(post_data1).subscribe((Id) => {
+                if(this.loc_list ){
+                    let loc = [];
+                    let userIds = [];
+                    loc.push(this.loc_list[0].id);
+                    userIds.push(Id);
+                    post_data1['bussLocations']= loc ;
+                    const postData = {
+                        'userIds': userIds,
+                        'bussLocations': loc
+                    };
+                    this.provider_services.assignLocationToUsers(postData).subscribe(
+                        (data: any) => {
+                        },
+                        error => {
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        });
+                }
                 this.userAddConfirm()
               
             },

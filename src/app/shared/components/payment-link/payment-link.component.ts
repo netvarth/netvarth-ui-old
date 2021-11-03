@@ -176,6 +176,12 @@ export class PaymentLinkComponent implements OnInit {
             this.countryCode = this.bill_data.billFor.countryCode;
            
           }
+          if (this.bill_data && this.bill_data.accountId === 0) {
+            this.razorpayEnabled = true;
+          }
+          else{
+            this.getPaymentModes();
+          }
           if (this.bill_data.accountProfile.providerBusinessName) {
             this.username = this.bill_data.accountProfile.providerBusinessName;
           }
@@ -191,11 +197,14 @@ export class PaymentLinkComponent implements OnInit {
                 }
               );
           }
-          for (let i = 0; i < this.bill_data.discount.length; i++) {
-            if (this.bill_data.discount[i].displayNote) {
-              this.discountDisplayNotes = true;
+          if(this.bill_data && this.bill_data.discount){
+            for (let i = 0; i < this.bill_data.discount.length; i++) {
+              if (this.bill_data.discount[i].displayNote) {
+                this.discountDisplayNotes = true;
+              }
             }
           }
+          
           if (this.bill_data.displayNotes || this.discountDisplayNotes) {
             this.billNoteExists = true;
           }
@@ -203,7 +212,7 @@ export class PaymentLinkComponent implements OnInit {
             this.refund_value = Math.abs(this.bill_data.amountDue);
           }
           this.getBillDateandTime();
-          this.getPaymentModes();
+         
         },
         error => {
         },
