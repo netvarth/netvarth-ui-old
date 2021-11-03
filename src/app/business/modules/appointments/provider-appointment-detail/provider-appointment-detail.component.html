@@ -150,9 +150,9 @@
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stats-item pl0">
                     <span *ngIf="waitlist_notes.length > 0">
                       <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 pnotes" *ngFor="let note of waitlist_notes; let i = index">
-                        <div style="background: whitesmoke; margin: 3px">
+                        <div class="note_view">
                           <!-- <p style="float: left;">{{note.firstName}}Aparna</p> -->
-                          <span class="status-label note_name">{{note.firstName}}</span>
+                          <span class="status-label note_name" *ngIf="note.firstName != '' || note.lastName != ''">{{note.firstName}} {{note.lastName}}</span>
                           <span class="status-label note_date">{{note.timeStamp | date: newDateFormat}}</span>
                           <div class="note" [innerHTML]="note.note | nl2br">
                           </div>
