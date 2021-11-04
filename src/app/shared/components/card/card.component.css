@@ -562,11 +562,18 @@ button.fxmenu {
     font-size: 16px !important;
 }
 
-.booking-card-user.user .card-item-content .specialization-parent {
+/*.booking-card-user.user .card-item-content .specialization-parent {
     width: 100% !important;
     margin: 0 10px !important;
-    /* height: 26px !important; */
+    /* height: 26px !important;
+}*/
+.booking-card-user.user .card-item-content .specialization-parent {
+    margin: 0 10px!important;
+    max-width: 20vh!important;
+    min-width: 20vh!important;
+    word-break: break-all;
 }
+
 
 .booking-card-user.user .card-item-content .specialization {
     margin: 0 !important;
