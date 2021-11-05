@@ -89,6 +89,8 @@ export class BranchUserDetailComponent implements OnInit {
     countrycode;
     isadminPrivilege: any;
     provider_label = '';
+    locationsjson:any;
+    loc_list: any = [];
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -115,6 +117,7 @@ export class BranchUserDetailComponent implements OnInit {
             this.userId = this.actionparam.val;
             this.getUserData();
         }
+        this.getProviderLocations();
         const bConfig = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.subsector = user.subSector;
@@ -203,6 +206,21 @@ export class BranchUserDetailComponent implements OnInit {
                 }
             }
         }
+    }
+    getProviderLocations() {
+        this.api_loading = true;
+        this.provider_services.getProviderLocations()
+            .subscribe(data => {
+                console.log("loc_listdata"+JSON.stringify(data));
+             this.locationsjson = data;
+            for (const loc of this.locationsjson) {
+              if (loc.status === 'ACTIVE'&& loc.baseLocation) {
+                this.loc_list.push(loc);
+              }
+            }
+                this.api_loading = false;
+                console.log("loc_list"+this.loc_list);
+            });
     }
     createForm() {
         this.userForm = this.fb.group({
@@ -373,7 +391,7 @@ export class BranchUserDetailComponent implements OnInit {
             post_data1['admin'] = input.privileges;
             console.log(input.privileges);
         }
-        if (this.actionparam.type === 'edit') {
+        if (this.actionparam.type === 'edit') { 
             console.log(post_data1);
             this.provider_services.updateUser(post_data1, this.userId).subscribe(() => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('USERUPDATED_ADDED'), { 'panelclass': 'snackbarerror' });
@@ -384,7 +402,24 @@ export class BranchUserDetailComponent implements OnInit {
                 });
         } else {
             console.log(post_data1);
-            this.provider_services.createUser(post_data1).subscribe(() => {
+            this.provider_services.createUser(post_data1).subscribe((Id) => {
+                if(this.loc_list ){
+                    let loc = [];
+                    let userIds = [];
+                    loc.push(this.loc_list[0].id);
+                    userIds.push(Id);
+                    post_data1['bussLocations']= loc ;
+                    const postData = {
+                        'userIds': userIds,
+                        'bussLocations': loc
+                    };
+                    this.provider_services.assignLocationToUsers(postData).subscribe(
+                        (data: any) => {
+                        },
+                        error => {
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        });
+                }
                 this.userAddConfirm()
 
             },
