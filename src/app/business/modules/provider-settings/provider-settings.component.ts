@@ -228,7 +228,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   additionalInfoDomainFields: any = [];
   additionalInfoSubDomainFields: any = [];
   domain_fields;
-  domain:any='';
+  domain: any = '';
   domain_questions = [];
   subdomain_fields = [];
   image_list: any = [];
@@ -250,15 +250,15 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   customerstooltip = '';
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
-    if(user.sector){
-    this.domain = user.sector;
+    if (user.sector) {
+      this.domain = user.sector;
     }
     this.services_hint = projectConstantsLocal.DOMAIN_SERVICES_HINT[this.domain].helphint;
     if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
       this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
-    } 
-    if(user.accountType){
-    this.accountType = user.accountType;
+    }
+    if (user.accountType) {
+      this.accountType = user.accountType;
     }
     this.bprofileTooltip = this.wordProcessor.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
     this.waitlistTooltip = this.wordProcessor.getProjectMesssages('WAITLIST_TOOLTIP');
@@ -426,7 +426,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.cdf.detectChanges();
 
   }
-   ngOnDestroy() {
+  ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
     if (this.subscription) {
       this.subscription.unsubscribe();
@@ -986,6 +986,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       case 'questionnaire':
         this.routerobj.navigate(['provider', 'settings', 'general', 'questionnaire']);
         break;
+      case 'templates':
+        this.routerobj.navigate(['provider', 'settings', 'general', 'templates']);
+        break;
+      case 'newsfeed':
+        this.routerobj.navigate(['provider', 'settings', 'general', 'newsfeed']);
     }
   }
   getLocationCount() {

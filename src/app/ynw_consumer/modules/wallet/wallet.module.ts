@@ -7,8 +7,6 @@ import { LoadingSpinnerModule } from '../../../shared/modules/loading-spinner/lo
 import { SpentListModule } from './jaldee-cash/spent-list/spent-list.module';
 import { TermsConditionModule } from './jaldee-cash/terms-condition/term-condition.module';
 
-
-
 @NgModule({
   declarations: [ WalletComponent],
   imports: [

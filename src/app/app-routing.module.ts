@@ -11,6 +11,9 @@ const routes: Routes = [
         path: 'consumer', loadChildren: () => import('./ynw_consumer/consumer.module').then(m => m.ConsumerModule),
         canActivate: [AuthGuardConsumer]
     },
+    {
+        path: 'customapp/:id', loadChildren: () => import('./custom-app/custom-app.module').then(m => m.CustomAppModule)
+    },
     { path: '', loadChildren: ()=> import('./shared/components/home/home.module').then(m=>m.HomeModule), canActivate: [AuthGuardHome] },
     { path: 'business', loadChildren: () => import('./shared/modules/business/home/phome.module').then(m => m.PhomeModule) },
     { path: 'home', redirectTo: '', pathMatch: 'full' },

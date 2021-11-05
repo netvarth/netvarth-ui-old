@@ -1,0 +1,83 @@
+<section>
+    <section>
+        <section id="headerSection">
+            <div id="box-search">
+                <div class="thumbnail">
+                    <img class="imgbackground" [src]="templateJson['headerImage']" style="width: 100%; height: 500px;">
+                    <div class="caption">
+                        <h2 [innerHtml]="templateJson.headerTitle | safeHtml"></h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="gapsection"></div>
+        <section id="section1" class="container-fluid">
+            <div class="row card no-padding">
+                <div class=" col-lg-6 col-sm-6 col-xs-12 col-md-6" style="color:#545871">
+                    <div class="card-body mgn-up-20" >
+                        <div [innerHtml]="templateJson.section1Title | safeHtml"></div>
+                        <div [innerHtml]="templateJson.section1Description"></div>
+                    </div>
+                </div>
+                <div class="images col-lg-6 col-sm-6 col-xs-12 col-md-6 no-padding">
+                    <div class="gallery-item col-lg-6 col-sm-6 col-sm-6 col-xs-6 no-padding"
+                        *ngFor="let image of templateJson.section1Images; let i=index">
+                        <img class="gallery-img" src="{{image}}">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="gapsection"></div>
+        <section id="section2">
+            <div class="row card">
+                <div class="doctorcardimage col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding">
+                    <div class="gallery-item">
+                        <img class="imagesectionabove" src="{{templateJson.section2Image}}">
+                    </div>
+                </div>
+                <div class="doctorcardsectioncard col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="card-body">
+                        <div [innerHtml]="templateJson.section2Title | safeHtml"></div>
+                        <div [innerHtml]="templateJson.section2Description | safeHtml"></div>
+                        <div class="gapsection"></div>
+                        <!-- <button href="#" class="btn btn-primary">See More</button> -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="gapsection"></div>
+        <div class="container-fluid doctor-section card" id="section3">
+            <div [innerHTML]="templateJson.section3Title | safeHtml"></div>
+            <div [innerHTML]="templateJson.section3Description | safeHtml"></div>
+        </div>
+        <div class="gapsection"></div>
+        <div class="container-fluid card" id="section4">
+            <div [innerHTML]="templateJson.section4Title | safeHtml"></div>
+            <div [innerHTML]="templateJson.section4Description | safeHtml"></div>
+        </div>
+        <div class="gapsection"></div>
+        <div class="container-fluid card" id="recentNews">
+            <div class="text-center" [innerHTML]="templateJson.section5Title | safeHtml"></div>
+            <div [innerHTML]="templateJson.section5Description | safeHtml"></div>
+            <div class="feedsContainer mgn-up-50 mgn-bt-50" >
+                <owl-carousel [options]="customOptions" >
+                    <div class="item"
+                        *ngFor="let newsFeeds of templateJson['newsFeeds']">
+                        <div class="recentcards card">
+                            <div>
+                                <img  class="imagesectioninrecentnews" src="{{newsFeeds.image}}"
+                                    alt="Card image cap">
+                            </div>
+                            <div class="card-body">
+                                <div [innerHtml]="newsFeeds.title | safeHtml" >                                   
+                                </div>
+                                <div [innerHtml]="newsFeeds.description | safeHtml">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </owl-carousel>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </section>

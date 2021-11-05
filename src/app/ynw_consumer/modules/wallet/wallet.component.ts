@@ -7,7 +7,6 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { ConsumerServices } from '../../services/consumer-services.service';
 import { SpentListComponent } from './jaldee-cash/spent-list/spent-list.component';
 import { MatDialog } from '@angular/material/dialog';
-
 @Component({
   selector: 'app-wallet',
   templateUrl: './wallet.component.html',
@@ -23,8 +22,8 @@ export class WalletComponent implements OnInit {
     public shared_functions: SharedFunctions,
     private snackbarService: SnackbarService,
     private consumer_services: ConsumerServices,
-    public router: Router) { 
-    
+    public router: Router
+    ) { 
   }
 
   ngOnInit(): void {
