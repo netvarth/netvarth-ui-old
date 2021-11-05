@@ -26,6 +26,7 @@ import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegeneratordetail.component';
 import { CheckavailabilityComponent } from '../checkavailability/checkavailability.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 @NgModule({
     imports: [
         CommonModule,
@@ -49,7 +50,8 @@ import { CheckavailabilityComponent } from '../checkavailability/checkavailabili
         MatDialogModule,
         NgxQRCodeModule,
         ShareButtonsModule,
-        ShareIconsModule
+        ShareIconsModule,
+        MatDatepickerModule
     ],
     declarations: [
         SearchDetailComponent,

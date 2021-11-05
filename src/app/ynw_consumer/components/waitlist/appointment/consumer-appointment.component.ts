@@ -770,6 +770,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.consumerNote = vale;
     }
     handleFutureDateChange(e) {
+        console.log("handle entered")
         const tdate = e.targetElement.value;
         const newdate = tdate.split('/').reverse().join('-');
         const futrDte = new Date(newdate);

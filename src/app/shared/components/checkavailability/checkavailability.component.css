@@ -1,14 +1,14 @@
 .green{
-    color: lightgreen;
+    color: #1EB000;
 }
 .red{
-    color: red;
+    color: #FF5502;
 }
 .skyblue{
     padding: 10px;
     border-radius:5px;
-   background-color: skyblue;
-    color:blue;
+   background-color: #F1EFFB;
+   color: #2653B7;
     margin-right: 5px;
     text-align: center;
 }
@@ -19,7 +19,7 @@
   
   }
 .today {
-    color: blue;
+    color: #2653B7;
     margin-left: 10px;
 }
 .pad-lg-20 {
@@ -28,6 +28,18 @@
 @media (min-width:320px) and (max-width:760px) {
     *{
         font-size: 12px;
+    }
+    .skyblue {
+        padding: 10px;
+        border-radius:5px;
+       background-color: #F1EFFB;
+       color: #2653B7;
+        margin-right: 2px;
+        text-align: center;
+    }
+    .padding-xs-small {
+        padding: 0px !important;
+        margin: 0px !important;
     }
     .pad-lg-20 {
         padding: 0px !important;

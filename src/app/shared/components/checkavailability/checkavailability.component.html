@@ -12,24 +12,25 @@
             <img (click)="dismissModal()" src="../../../../assets/images/cross.png" style="width: 30px;height: 30px;">
         </div>
     </div>
-    <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
+    <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 padding-xs-small">
         <div class="col-lg-8 col-sm-12 col-md-8 col-xs-12" > 
             <h2 class="today">Today</h2>
             <div>
-            <div class="col-lg-8 col-xs-12 col-sm-12 col-md-12">
-                <div class="skyblue col-lg-1 col-md-1 col-sm-2 col-xs-2"
+            <div class="col-lg-8 col-xs-12 col-sm-12 col-md-12 padding-xs-small" >
+                <div class="skyblue col-lg-1 col-md-1 col-sm-1 col-xs-1"
                     [class.disable]="disableMinus()"
                     *ngIf="apptSettings.futureAppt"
                     (click)="calculateDate(-1)" ><h4><</h4>
                 </div>
                 <!-- {{appointmentSettings.futureAppt}} -->
-                <div class="col-lg-5 col-md-5 col-xs-6 col-sm-6 skyblue"><h4>{{sel_checkindate | date: dateFormat}}</h4></div>
-                <div class="skyblue col-lg-1 col-md-1 col-sm-2 col-xs-2"
+                <div class="col-lg-5 col-md-5 col-xs-8 col-sm-8 skyblue"><h4>{{sel_checkindate | date: dateFormat}}</h4></div>
+                <div class="skyblue col-lg-1 col-md-1 col-sm-1 col-xs-1"
                     *ngIf="apptSettings.futureAppt"
                     (click)="calculateDate(1)"><h4>></h4>
                  </div>
-                    <div class="pickerouter caldiv col-lg-1 col-md-1 col-sm-2 col-xs-2"
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 padding-xs-small"
                     *ngIf="apptSettings.futureAppt">
+                    <!-- {{dateClass.bind(this)}} -->
                     <mat-datepicker-toggle matSuffix [for]="picker">
                     </mat-datepicker-toggle>
                     <mat-datepicker #picker
@@ -53,8 +54,8 @@
         <div class="col-lg-8 col-sm-6 col-xs-6 col-md-8">
             <b>Available Time</b>
         </div>
-        <p class="col-lg-2 col-sm-3 col-xs-6 col-md-2" style="color: lightgreen;">🟢AVAILABLE</p>
-        <p class="col-lg-2 col-sm-3 col-xs-6  col-md-2" style="color: rgb(252, 119, 119);">🔴BOOKED</p>
+        <p class="col-lg-2 col-sm-3 col-xs-6 col-md-2 green" >🟢AVAILABLE</p>
+        <p class="col-lg-2 col-sm-3 col-xs-6  col-md-2 red">🔴BOOKED</p>
 
         <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12" style="border-radius: 5px; border: 2px solid lightskyblue;" >
             
@@ -73,12 +74,12 @@
         <div class="col-lg-12"></div>
         <div class="col-lg-12 ">
             <h2>Price</h2>
-            <p class="col-lg-12" style="color: lightgrey;">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Temporibus fuga voluptatem fugiat optio laborum repudiandae corrupti praesentium ex suscipit, adipisci, corporis ipsam repellat! Veritatis blanditiis sint dolores hic quia corporis?</p>
+            <p class="col-lg-12" style="color: lightgrey;">{{actionObj.service.description}}</p>
         </div>
-        <div class="col-lg-12" style="color: blue;" *ngIf="actionObj.service.totalAmount">Service Price:{{actionObj.service.totalAmount}}</div>
-        <div class="col-lg-12" style="color: blue;" *ngIf="actionObj.service.minPrePaymentAmount">Advance Payment: {{actionObj.service.minPrePaymentAmount}}</div>
+        <div class="col-lg-12" style="color:  #2653B7;" *ngIf="actionObj.service.totalAmount">Service Price:{{actionObj.service.totalAmount}}</div>
+        <div class="col-lg-12" style="color:  #2653B7" *ngIf="actionObj.service.minPrePaymentAmount">Advance Payment: {{actionObj.service.minPrePaymentAmount}}</div>
         <div class="col-lg-12" style="text-align: center;">
-        <button class="btn" style="width:30%;background-color: blue;color: white;">Okay</button>
+        <button class="btn" style="width:30%;background-color:  #2653B7;color: white;">Okay</button>
         </div>
     </div>
       <!-- ****Modal Code**** -->

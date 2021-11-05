@@ -67,14 +67,16 @@ export class CheckavailabilityComponent implements OnInit {
         //         this.appointment = appt;
         // })
         this.getAvailableSlotByLocationandService(this.sel_loc,this.sel_ser,this.sel_checkindate, this.account_id,'init')
+        this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc,this.sel_ser, this.account_id)
     // console.log("locationid,serviceid,accountid",this.sel_loc,this.sel_ser,this.account_id);
     // console.log("data.............",this.getAvailableSlotByLocationandService(this.sel_loc,this.sel_ser,this.sel_checkindate, this.account_id,'init'))
     }
     dateClass(date: Date): MatCalendarCellCssClasses {
+        // console.log("*********************************",this.availableDates)
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
     getAvailableSlotByLocationandService(locid, servid, pdate, accountid, type?) {
-        console.log(servid,locid,accountid,type,pdate,';;;;;;;;;;;;;;;;;servid')
+        // console.log(servid,locid,accountid,type,pdate,';;;;;;;;;;;;;;;;;servid')
         this.subs.sink = this.shared_services.getSlotsByLocationServiceandDate(locid, servid, pdate, accountid)
             .subscribe(data => {
                 this.slots = data;
@@ -86,7 +88,7 @@ export class CheckavailabilityComponent implements OnInit {
                             freslot['scheduleId'] = scheduleSlots['scheduleId'];
                             freslot['displayTime'] = this.getSingleTime(freslot.time);
                             this.freeSlots.push(freslot);
-                            console.log("********free slots ********",this.freeSlots)
+                            // console.log("********free slots ********",this.freeSlots)
                         }
                     }
                 }
@@ -104,7 +106,7 @@ export class CheckavailabilityComponent implements OnInit {
                 }
                 if (type) {
                     this.selectedApptTime = this.apptTime;
-                    console.log("fdgfd"+JSON.stringify(this.selectedApptTime));
+                    // console.log("fdgfd"+JSON.stringify(this.selectedApptTime));
                 }
                 this.api_loading1 = false;
             });
@@ -187,7 +189,7 @@ handleFutureDateChange(e) {
 //     }
 // }
 calculateDate(days):any {
-    console.log("entered calculate")
+    // console.log("entered calculate")
 
     const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
@@ -198,11 +200,11 @@ calculateDate(days):any {
     const y = newdate.getFullYear();
     const ndate1 = y + '-' + mm + '-' + dd;
     const ndate = moment(ndate1, 'YYYY-MM-DD HH:mm').format();
-    console.log("today date......",this.todaydate)
+    // console.log("today date......",this.todaydate)
     const strtDt1 = this.todaydate + ' 00:00:00';
     const strtDt = moment(strtDt1, 'YYYY-MM-DD HH:mm').toDate();
     const nDt = new Date(ndate);
-    console.log(nDt.getTime(),strtDt.getTime())
+    // console.log(nDt.getTime(),strtDt.getTime())
     if (nDt.getTime() >= strtDt.getTime()) {
         this.sel_checkindate = ndate;
         this.getAvailableSlotByLocationandService(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
@@ -243,14 +245,20 @@ ngOnInit() {
     } else {
         cmon = '' + mm;
     }
-    console.log(yyyy,cmon,cday,';;;;;;;;;;')
+ 
     const dtoday = yyyy + '-' + cmon + '-' + cday;
     this.todaydate = dtoday;
-    console.log("*****today",this.todaydate)
+  
     this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
+  
+    const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const ddd = new Date(day);
+    this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
+ 
     // if (this.type !== 'reschedule') {
     //     this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
     // }
     this.minDate = this.todaydate;
+    
 }
 }
