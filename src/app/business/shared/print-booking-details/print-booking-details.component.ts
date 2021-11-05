@@ -38,6 +38,7 @@ export class PrintBookingDetailsComponent implements OnInit {
   customerDetails: any;
   customer: any;
   isJaldeeId: boolean = false;
+  spName: any;
 
 
   constructor(private activated_route: ActivatedRoute,
@@ -174,6 +175,9 @@ export class PrintBookingDetailsComponent implements OnInit {
         this.isJaldeeId = true;
         this.customerName = this.bookingDetails.providerConsumer.jaldeeId
       }
+      if (this.bookingDetails.provider) {
+        this.spName = (this.bookingDetails.provider.businessName) ? this.bookingDetails.provider.businessName : this.bookingDetails.provider.firstName + ' ' + this.bookingDetails.provider.lastName;
+      }
 
     } else {
       this.customer = this.bookingDetails.waitlistingFor[0];
@@ -185,6 +189,9 @@ export class PrintBookingDetailsComponent implements OnInit {
       else {
         this.isJaldeeId = true;
         this.customerName = this.bookingDetails.consumer.jaldeeId
+      }
+      if (this.bookingDetails.provider) {
+        this.spName = (this.bookingDetails.provider.businessName) ? this.bookingDetails.provider.businessName : this.bookingDetails.provider.firstName + ' ' + this.bookingDetails.provider.lastName;
       }
     }
 

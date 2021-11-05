@@ -840,7 +840,21 @@
               <div class="">
                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-10"
                   *ngIf="time_type === 1 && statusAction == 'new' && (activeSchedules.length > 0 || activeUser || (active_user.accountType === 'BRANCH' && activeSchedules.length == 0))">
-                  <div class="col-md-3 col-xs-5 col-sm-4 no-padding">
+                  <mat-chip-list>
+                    <mat-chip class="pointer-cursor" [selected]="selected_type === 'all'" (click)="handleApptSelectionType('all')">
+                      All Slots
+                    </mat-chip>
+                    <mat-chip class="pointer-cursor" [selected]="selected_type === 'booked'" (click)="handleApptSelectionType('booked')">
+                      Booked Slots
+                    </mat-chip>
+                    <mat-chip class="pointer-cursor" [selected]="selected_type === 'free'" (click)="handleApptSelectionType('free')">
+                      Free Slots
+                    </mat-chip>
+                  </mat-chip-list>
+                 
+                 
+                 
+                  <!-- <div class="col-md-3 col-xs-5 col-sm-4 no-padding">
                     <mat-select class="selecttype" [(ngModel)]="selected_type">
                       <mat-option [value]="'all'" (click)="handleApptSelectionType('all')">
                         All slots
@@ -852,7 +866,7 @@
                         Free slots
                       </mat-option>
                     </mat-select>
-                  </div>
+                  </div> -->
                 </div>
                 <div class="pad-10 pull-left check-status">
                   <a class="mgn-rt-10" [class.selectedStatus]="statusAction=='new'" (click)="statusClick('new')">

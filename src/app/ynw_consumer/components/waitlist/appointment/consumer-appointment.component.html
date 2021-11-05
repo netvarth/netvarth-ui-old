@@ -1195,9 +1195,9 @@
                                                 </div>
                                             </div>
                                             <div class="disply">
-                                                <div class="textcenter"
-                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                    <!--<div class="textcenter" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">-->
+                                                <!-- <div class="textcenter"
+                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"> -->
+                                                    <div class="textcenter" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                     <span class="ser_price no-mgn-bt bold">Service Price : <span
                                                             class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
                                                             | currency:'&#8377;'}}</span></span><br>

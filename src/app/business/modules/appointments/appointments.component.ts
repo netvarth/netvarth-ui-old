@@ -2,16 +2,18 @@ import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, QueryList, E
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
- import { ProviderServices } from '../../../business/services/provider-services.service';
+import { ProviderServices } from '../../services/provider-services.service';
+//import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 
-// import { ProviderServices } from '../../services/provider-services.service';
-import { ProviderSharedFuctions } from '../../functions/provider-shared-functions';
 import * as moment from 'moment';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
+import { ProviderSharedFuctions } from '../../functions/provider-shared-functions';
 // import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
+
+
+import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
@@ -97,7 +99,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     first_name: '',
     last_name: '',
     phone_number: '',
-    countrycode:'',
     appointmentEncId: '',
     patientId: '',
     appointmentMode: 'all',
@@ -120,7 +121,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     first_name: false,
     last_name: false,
     phone_number: false,
-    countrycode: false,
     appointmentEncId: false,
     patientId: false,
     appointmentMode: false,
@@ -692,9 +692,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const filterEnum = {};
     filterEnum['state-eq'] = 'ENABLED';
     if (date === 'all') {
-      if(this.selected_location){
-        filterEnum['location-eq'] = this.selected_location.id;
-      }
+      filterEnum['location-eq'] = this.selected_location.id;
     }
     return new Promise((resolve) => {
       _this.provider_services.getProviderSchedules(filterEnum).subscribe(
@@ -874,7 +872,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       first_name: false,
       last_name: false,
       phone_number: false,
-      countrycode:false,
       appointmentEncId: false,
       patientId: false,
       appointmentMode: false,
@@ -894,7 +891,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       first_name: '',
       last_name: '',
       phone_number: '',
-      countrycode:'',
       appointmentEncId: '',
       patientId: '',
       appointmentMode: 'all',
@@ -1554,9 +1550,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.phone_number !== '') {
       api_filter['phoneNo-eq'] = this.filter.phone_number;
     }
-    if(this.filter.countrycode !== ''){
-      api_filter['countryCode-eq'] = this.filter.countrycode;
-    }
     if (this.filter.appointmentEncId !== '') {
       api_filter['appointmentEncId-eq'] = this.filter.appointmentEncId;
     }
@@ -1647,7 +1640,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.maxday = this.yesterdayDate;
     }
     this.labelSelection();
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
       this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
       || this.filter.check_in_end_date !== null || this.filter.check_in_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all'
       || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
@@ -1668,7 +1661,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.maxday = this.yesterdayDate;
     }
     this.labelSelection();
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
       this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
       || this.filter.check_in_end_date !== null || this.filter.check_in_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all'
       || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
@@ -1805,12 +1798,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const label_status = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm(status));
     return label_status;
   }
-
-
   selectAllAppoinments() {
     this.appointmentsChecked = {};
     this.chkAppointments = {};
     if (this.chkSelectAppointments) {
+      this.apptMultiSelection = true;
       for (let aIndex = 0; aIndex < this.check_in_filtered_list.length; aIndex++) {
         if (this.check_in_filtered_list[aIndex].consumer) {
           this.chkAptHistoryClicked(aIndex, this.check_in_filtered_list[aIndex]);
@@ -1822,18 +1814,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.activeAppointment = null;
     }
   }
-  chkAptHistoryClicked(index, appt) {
-    if (!this.chkAppointments[index]) {
-      this.chkAppointments[index] = true;
-      this.appointmentsChecked[index] = appt;
-    } else {
-      this.chkAppointments[index] = false;
-      delete this.appointmentsChecked[index];
-      this.chkSelectAppointments = false;
-    }
-    this.setApptSelections();
-  }
-
   // selectAllAppoinments() {
   //   this.appointmentsChecked = {};
   //   this.chkAppointments = {};
@@ -1857,18 +1837,18 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const indx = this.check_in_filtered_list.indexOf(appt);
     return this.chkAppointments[indx];
   }
-  // chkAptHistoryClicked(index, appt) {
-  //   if (!this.chkAppointments[index]) {
-  //     this.chkAppointments[index] = true;
-  //     this.appointmentsChecked[index] = appt;
-  //   } else {
-  //     this.chkAppointments[index] = false;
-  //     delete this.appointmentsChecked[index];
-  //     this.chkSelectAppointments = false;
-  //     this.selAllSlots = false;
-  //   }
-  //   this.setApptSelections();
-  // }
+  chkAptHistoryClicked(index, appt) {
+    if (!this.chkAppointments[index]) {
+      this.chkAppointments[index] = true;
+      this.appointmentsChecked[index] = appt;
+    } else {
+      this.chkAppointments[index] = false;
+      delete this.appointmentsChecked[index];
+      this.chkSelectAppointments = false;
+      this.selAllSlots = false;
+    }
+    this.setApptSelections();
+  }
   clearFilter() {
     this.resetFilter();
     this.resetLabelFilter();
@@ -2686,20 +2666,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.router.navigate(['provider', 'appointments', 'appointment'], { queryParams: { source: 'appt-block', uid: appt.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: appt.service.id, apptMode: appt.appointmentMode } });
   }
-  // selectAllStarted() {
-  //   this.startedAppointmentsChecked = {};
-  //   this.startedChkAppointments = {};
-  //   if (this.chkStartedSelectAppointments) {
-  //     for (let aIndex = 0; aIndex < this.startedAppts.length; aIndex++) {
-  //       this.chkStartedAptHistoryClicked(aIndex, this.startedAppts[aIndex]);
-  //     }
-  //   } else {
-  //     this.apptStartedSingleSelection = false;
-  //     this.apptStartedMultiSelection = false;
-  //     this.activeAppointment = null;
-  //   }
-  // }
-
   selectAllStarted() {
     this.startedAppointmentsChecked = {};
     this.startedChkAppointments = {};
@@ -2713,8 +2679,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.activeAppointment = null;
     }
   }
-
-
   chkStartedAptHistoryClicked(index, appt) {
     if (!this.startedChkAppointments[index]) {
       this.startedChkAppointments[index] = true;
@@ -2744,36 +2708,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.apptStartedMultiSelection = true;
     }
   }
-  
-  // chkStartedAptHistoryClicked(index, appt) {
-  //   if (!this.startedChkAppointments[index]) {
-  //     this.startedChkAppointments[index] = true;
-  //     this.startedAppointmentsChecked[index] = appt;
-  //   } else {
-  //     this.startedChkAppointments[index] = false;
-  //     delete this.startedAppointmentsChecked[index];
-  //     this.chkStartedSelectAppointments = false;
-  //   }
-  //   this.setStartedApptSelections();
-  // }
-
-  // setStartedApptSelections() {
-  //   this.apptSingleSelection = false;
-  //   this.apptStartedMultiSelection = false;
-  //   this.activeAppointment = null;
-  //   const totalAppointmentsSelected = Object.keys(this.startedAppointmentsChecked).length;
-  //   if (totalAppointmentsSelected === this.startedAppts.length && totalAppointmentsSelected !== 0) {
-  //     this.chkStartedSelectAppointments = true;
-  //   }
-  //   if (totalAppointmentsSelected === 1) {
-  //     this.apptSingleSelection = true;
-  //     Object.keys(this.startedAppointmentsChecked).forEach(key => {
-  //       this.activeAppointment = this.startedAppointmentsChecked[key];
-  //     });
-  //   } else if (totalAppointmentsSelected > 1) {
-  //     this.apptStartedMultiSelection = true;
-  //   }
-  // }
   tabChange(event) {
     this.lStorageService.removeitemfromLocalStorage('filter');
     this.resetCheckList();
@@ -2851,19 +2785,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       return false;
     }
   }
-
-  // showSelectAll() {
-  //   if (this.check_in_filtered_list.length > 1) {
-  //     const filterArray = this.check_in_filtered_list.filter(appt => appt.consumer);
-  //     if (filterArray.length > 1) {
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   } else {
-  //     return false;
-  //   }
-  // }
   getAge(age) {
     age = age.split(',');
     return age[0];

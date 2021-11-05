@@ -57,6 +57,8 @@ export class DonationsComponent implements OnInit {
     'service': false
   };
   selected = 0;
+  showCustomers = false;
+
   donationsSelected: any = [];
   donations: any = [];
   selectedIndex: any = [];
@@ -361,8 +363,8 @@ export class DonationsComponent implements OnInit {
       this.selectAll = false;
     }
   }
-  selectAllDonations() {
-    if (!this.selectAll) {
+  selectAllDonations(event) {
+    if (event.target.checked) {
       this.selectAll = true;
       for (let i = 0; i < this.donations.length; i++) {
         this.donationsSelected[i] = true;
@@ -376,6 +378,76 @@ export class DonationsComponent implements OnInit {
       this.selectedDonations = [];
     }
   }
+
+  selectcustomers(customer) {
+  //  this.hide_msgicon = false;
+    const custArr = this.selectedDonations.filter(cust => cust.id === customer.id);
+    if (custArr.length === 0) {
+      this.selectedDonations.push(customer);
+    } else {
+      this.selectedDonations.splice(this.selectedDonations.indexOf(customer), 1);
+    }
+    if (this.selectedDonations.length === 1) {
+      if (!this.selectedDonations[0].phoneNo && !this.selectedDonations[0].email) {
+       // this.hide_msgicon = true;
+      }
+    } else {
+      const customerList = this.selectedDonations.filter(customer => customer.phoneNo || customer.email);
+      if (customerList.length === 0) {
+       // this.hide_msgicon = true;
+      }
+    }
+    const custArr1 = this.selectedDonations.filter(cust => cust.id === customer.id);
+    if (custArr1.length === 0) {
+      this.selectedDonations.push(customer);
+    } else {
+      this.selectedDonations.splice(this.selectedDonations.indexOf(customer), 1);
+    }
+    if (this.selectedDonations.length === this.donations.length) {
+     // this.allCustomerSelected = true;
+    } else {
+      //this.allCustomerSelected = false;
+    }
+  }
+  checkSelection(customer) {
+    const custom = this.selectedDonations.filter(cust => cust.id === customer.id);
+    if (custom.length > 0) {
+      return true;
+    }
+  }
+  isAllCustomerSelected() {
+    let customers = 0;
+    for (let customer of this.donations) {
+      const custArr = this.selectedDonations.filter(cust => cust.id === customer.id);
+      if (custArr.length > 0) {
+        customers++;
+      }
+    }
+    if (customers === this.donations.length) {
+      return true;
+    }
+  }
+
+  selectAllcustomers(event) {
+    if (event.target.checked) {
+      for (let i = 0; i < this.donations.length; i++) {
+        const customer = this.selectedDonations.filter(customer => customer.id === this.donations[i].id);
+        if (customer.length === 0 ) {
+          //&& !this.showText(this.donations[i])
+          this.selectedDonations.push(this.donations[i]);
+        }
+      }
+    } else {
+      for (let i = 0; i < this.donations.length; i++) {
+        const customer = this.selectedDonations.filter(customer => customer.id === this.donations[i].id);
+        if (customer.length > 0) {
+          this.selectedDonations = this.selectedDonations.filter(cust => cust.id !== customer[0].id);
+        }
+      }
+    }
+  }
+
+
   addInboxMessage() {
     let customerlist = [];
     customerlist = this.selectedDonations;
