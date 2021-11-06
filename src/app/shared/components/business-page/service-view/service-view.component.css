@@ -122,6 +122,7 @@
   padding-right:50px;
   padding-bottom:35px;
   border-radius: 5px;
+  
   /* background-color: orange; */
   /* min-height: 200px; */
   /* display: flex; */
@@ -131,7 +132,8 @@
 @media (min-width:320px) and (max-width:768px) {
   .mobilephoneaboutus {
     /* box-shadow: 1px 1px 3px #0000000F; */
-    margin-left: 40px;
+    /* margin-left: 40px; */
+    text-align:center
     
   }
   .actionbtn {
@@ -143,6 +145,7 @@
     box-shadow: 6px 5px rgba(240, 235, 235, 0.836) !important;
     padding: 0px !important;
     border-radius: 5px !important;
+    
   }
   .mobile-none {
     display: none;
@@ -167,11 +170,11 @@
     align-items: flex-start;
 }
 
-.modal-title.service-detail-title .name .dispvalue span .wtsapaud-icon {
+.wtsapaud-icon {
     width: 35px;
 }
 
-.modal-title.service-detail-title .name .dispvalue span .wtsapvid-icon {
+ .wtsapvid-icon {
     width: 40px;
     margin-right: 8px;
 }
@@ -187,15 +190,14 @@
     margin-top: -12px;
 }
 
-.modal-title.service-detail-title .name .dispvalue span .zoom-icon {
+.zoom-icon {
     width: 38px;
 }
 
-.modal-title.service-detail-title .name .dispvalue span .meet-icon {
+.meet-icon {
     width: 28px;
 }
-
-.modal-title.service-detail-title .name .dispvalue span .phon-icon {
+ .phon-icon {
     width: 28px;
 }
 
