@@ -194,6 +194,24 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
       }
     });
   }
+  // getCommunicationHistory() {
+  //   this.subs.sink = this.consumer_services.getConsumerCommunications(this.providerId)
+  //     .subscribe(
+  //       data => {
+  //         const history: any = data;
+  //         this.communication_history = [];
+  //         for (const his of history) {
+  //           if (his.waitlistId === this.ynwUuid) {
+  //             this.communication_history.push(his);
+  //           }
+  //         }
+  //         this.sortMessages();
+  //       },
+  //       error => {
+  //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //       }
+  //     );
+  // }
   getCommunicationHistory() {
     this.subs.sink = this.consumer_services.getConsumerCommunications(this.providerId)
       .subscribe(

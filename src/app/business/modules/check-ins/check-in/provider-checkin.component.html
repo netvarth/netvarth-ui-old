@@ -21,8 +21,9 @@
                 [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
                 [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
                 [maxLength]="15" [phoneValidation]="true" [selectedCountryISO]="selectedCountry"
-                [separateDialCode]="separateDialCode" [numberFormat]="PhoneNumberFormat.National" name="phone"
+                [separateDialCode]="separateDialCode"  name="phone"
                 [(ngModel)]="phone" (keyup)="resetApiErrors()">
+                <!-- [numberFormat]="PhoneNumberFormat.National" -->
               </ngx-intl-tel-input>
               <button class="findcolor" (click)="serchCustomers(phone)"><i class="fa fa-search" aria-hidden="true"></i>
               </button>

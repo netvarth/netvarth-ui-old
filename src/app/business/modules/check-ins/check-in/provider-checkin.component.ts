@@ -434,15 +434,25 @@ export class ProviderCheckinComponent implements OnInit {
         if(pN.startsWith(dialCode)) {
         loginId = pN.split(dialCode)[1];
         }
+        // else{
+        //     this.createNew('create');
+        // }
+        // if(dialCode===0){
+        //     this.createNew('create');
+        // }
         let post_data = {
             'phoneNo-eq': loginId,
             'countryCode-eq': dialCode
         };
+        if(post_data['phoneNo-eq'] === 0){
+            this.createNew('create');
+        }
         this.provider_services.getCustomer(post_data)
         .subscribe(
             (data: any) => {
                 this.qParams['phone'] = loginId;
                 this.qParams['countryCode'] = dialCode;
+           
                 if (data.length === 0) {
                     // if (mode === 'phone') {
                     //     const filter = { 'primaryMobileNo-eq': form_data.search_input };
@@ -456,8 +466,12 @@ export class ProviderCheckinComponent implements OnInit {
                     if (data.length > 1) {
                         const customer = data.filter(member => !member.parent);
                         this.customer_data = customer[0];
+                        // if(this.qParams['phone'] === '0000'){
+                        //     this.createNew('create');
+                        // }
                     } else {
                         this.customer_data = data[0];
+                     
                     }
                     this.jaldeeId = this.customer_data.jaldeeId;
                     if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {

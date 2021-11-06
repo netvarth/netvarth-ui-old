@@ -44,7 +44,7 @@
                                 <tr *ngIf="bookingDetails.provider&& bookingDetails.provider.firstName">
                                     <td colspan="2" align="center"> {{provider_label| capitalizeFirst}}:
                                         <span >{{spName}}</span>
-                                      
+                                      <!-- <span>{{bookingDetails.provider.firstName}} {{bookingDetails.provider.lastName}}</span> -->
                                      </td>
 
                                 </tr>
@@ -72,7 +72,7 @@
                                 </tr>
                                 <tr *ngIf="customer.phoneNo">
                                     <td colspan="2" align="center"> {{customer_label| capitalizeFirst}} Ph #:
-                                        {{customer.phoneNo}} </td>
+                                      <span>{{bookingDetails.countryCode}}</span> {{customer.phoneNo}} </td>
 
                                 </tr>
                            
