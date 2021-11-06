@@ -129,7 +129,7 @@
                     </ng-container>
                
                     <ng-container *ngIf="!showDepartments || (showDepartments && this.userId)">
-                        <div class="bus-item-N" *ngFor="let sp of servicesAndProviders">
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" style="margin-bottom: 10px;" *ngFor="let sp of servicesAndProviders">
                          <app-card [item]="sp" [domain]="businessjson?.serviceSector?.domain"
                                 [terminology]='terminologiesjson' [loc]="selectedLocation"
                                 (actionPerformed)="cardClicked($event)"></app-card>

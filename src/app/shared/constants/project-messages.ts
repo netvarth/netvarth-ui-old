@@ -1567,7 +1567,7 @@ export const Messages = {
 
   // Store details
   'CONTACT_INFO_UPDATED': 'Contact Info updated successfully',
-  'DOCTORS_SPECIALIZATION_HINT': 'Select a department and the trainer with whom you would like to consult.',
+  'DOCTORS_SPECIALIZATION_HINT': 'Select a department and the priest with whom you would like to consult.',
   //attachment send
   'ATTACHMENT_SEND':'Attachment sent successfully',
   'QUESTIONNAIRE_CONSUMER_HEADING': 'More info'
