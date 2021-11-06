@@ -2324,11 +2324,13 @@ img.ordericon.home {
   margin-top: -6px;
 }
 .dept-card .service-buttons{
-  width: 35%;
+  width: 45%;
   margin: auto;
 }
 .panel-body .text-center img {
-  width: 60%;
+  width: 500px;
+  height: 500px;
+  /* background-color: #334b99; */
 }
 .bSection {
   display: flex;
