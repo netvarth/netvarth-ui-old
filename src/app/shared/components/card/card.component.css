@@ -62,6 +62,7 @@
 .book-btn {
     width: 100%;
     max-height:30px !important;
+    min-height:30px !important;
     color: white;
     font-weight: 600;
     border-radius: 10px;
@@ -562,11 +563,18 @@ button.fxmenu {
     font-size: 16px !important;
 }
 
-.booking-card-user.user .card-item-content .specialization-parent {
+/*.booking-card-user.user .card-item-content .specialization-parent {
     width: 100% !important;
     margin: 0 10px !important;
-    /* height: 26px !important; */
+    /* height: 26px !important;
+}*/
+.booking-card-user.user .card-item-content .specialization-parent {
+    margin: 0 10px!important;
+    max-width: 18vh!important;
+    min-width: 18vh!important;
+    word-break: break-word;
 }
+
 
 .booking-card-user.user .card-item-content .specialization {
     margin: 0 !important;

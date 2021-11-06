@@ -41,10 +41,14 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     ngOnInit() {
         this.todayDate = this.datePipe.transformTofilterDate(new Date());
         console.log(this.todayDate);
+    
         switch (this.item.type) {
             case 'waitlist':
                 this.service = this.item.item;
+                console.log('service'+ JSON.stringify(this.service));
+                if(this.service.serviceAvailability['personAhead']){
                 this.personsAheadText = 'People in line : ' + this.service.serviceAvailability['personAhead'];
+                }
                 if (this.service.serviceAvailability['showToken']) {
                 } else {
                     this.buttonCaption = 'Get ' + this.getTerminologyTerm('waitlist');
