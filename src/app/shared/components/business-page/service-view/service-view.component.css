@@ -97,14 +97,14 @@
 
 }
 .description {
-  background-color: #92B1D3;
+  background-color: #e1f0ff;;
   padding: 10px;
   border-radius: 5px;
-  color: #2653B7;
+  color: #3c8dbc;
 }
 .serviceheading {
   display: flex;
-  background-color:#92B1D3;
+  background-color:#1e4079;
   padding: 5px;
   color: white;
 
