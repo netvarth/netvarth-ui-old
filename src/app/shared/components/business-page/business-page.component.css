@@ -860,6 +860,8 @@ ul.details.badges li {
   font-size: 0.75rem;
   height: 40px;
   background-color: #16254b;
+  padding: 0px !important;
+  margin:0px !important;
   /* font-family: poppins !important; */
 }
 
@@ -2330,7 +2332,7 @@ img.ordericon.home {
 .panel-body .text-center img {
   width: 500px;
   height: 500px;
-  /* background-color: #334b99; */
+  background-color: #334b99;
 }
 .bSection {
   display: flex;
