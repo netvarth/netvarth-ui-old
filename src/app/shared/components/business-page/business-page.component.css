@@ -292,7 +292,7 @@ ul.bus-actions-horiz li {
   } */
 }
 
-@media (min-width: 500px) and (max-width: 767px) {
+@media (min-width: 500px) and (max-width: 768px) {
   .img-responsive {
     width: 25% !important;
     margin: auto;
@@ -2285,7 +2285,8 @@ img.ordericon.home {
 }
 @media (min-width:768px) {
   .dept-card .service-buttons{
-    width: 70%;
+    width: 55% !important;
+    /* background: chocolate !important; */
     margin: auto;
   } 
 }
@@ -2342,7 +2343,8 @@ img.ordericon.home {
 .bSection {
   display: flex;
   flex-direction: column;
-  align-self: center;
+  /* align-self: center; */
+  text-align: center;
   margin-left: 20px;
 }
 .bSection .img {
