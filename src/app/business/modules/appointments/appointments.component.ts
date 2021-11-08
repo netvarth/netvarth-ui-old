@@ -694,7 +694,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const filterEnum = {};
     filterEnum['state-eq'] = 'ENABLED';
     if (date === 'all') {
-      filterEnum['location-eq'] = this.selected_location.id;
+      if(this.selected_location){
+        filterEnum['location-eq'] = this.selected_location.id;
+      }
     }
     return new Promise((resolve) => {
       _this.provider_services.getProviderSchedules(filterEnum).subscribe(
@@ -888,8 +890,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       location_id: false,
       age: false,
       gender: false,
-      location: false,
-      
+      location: false
     };
     this.filter = {
       first_name: '',
@@ -1648,7 +1649,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.maxday = this.yesterdayDate;
     }
     this.labelSelection();
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number ||this.filter.countrycode || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
       this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
       || this.filter.check_in_end_date !== null || this.filter.check_in_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all'
       || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
@@ -1669,7 +1670,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.maxday = this.yesterdayDate;
     }
     this.labelSelection();
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number ||this.filter.countrycode|| this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
       this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
       || this.filter.check_in_end_date !== null || this.filter.check_in_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all'
       || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
