@@ -63,7 +63,7 @@
             <div [innerHTML]="templateJson.section3Description | safeHtml"></div>
             <div class="dynamic mgn-up-20">
                 <div class="col-md-12">
-                    <div class="col-md-4 mgn-bt-20">
+                    <div class="col-md-4 mgn-bt-20 no-padding">
                         <!-- <mat-form-field> -->
                         <mat-label>Location</mat-label>
                         <mat-select placeholder="Choose Location" [(ngModel)]="selectedLocation"
@@ -73,7 +73,7 @@
                             </mat-option>
                         </mat-select>
                     </div>
-                    <div class="col-md-4 mgn-bt-20">
+                    <div class="col-md-4 mgn-bt-20 no-padding">
                         <!-- <mat-form-field> -->
                         <mat-label>Branch</mat-label>
                         <mat-select placeholder="Choose Branch" [(ngModel)]="selectedServicesBranch"
@@ -155,7 +155,7 @@
                             </mat-option>
                         </mat-select>
                     </div> -->
-                    <div class="col-md-4 mgn-bt-20">
+                    <div class="col-md-4 mgn-bt-20 no-padding">
                         <mat-label>Branch</mat-label>
                         <mat-select placeholder="Choose Branch" [(ngModel)]="selectedUserBranch"
                             (selectionChange)="changeBranch(selectedUserBranch, 'user')">
@@ -164,7 +164,7 @@
                             </mat-option>
                         </mat-select>
                     </div>
-                    <div class="col-md-4 mgn-bt-20">
+                    <div class="col-md-4 mgn-bt-20 no-padding">
                         <div class="form-group">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="User Location" [(ngModel)]="userLocation">

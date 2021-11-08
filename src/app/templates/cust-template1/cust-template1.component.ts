@@ -2935,6 +2935,17 @@ export class CustTemplate1Component implements OnInit {
     }
   }
   filterUserByLocName(locationName) {
-    this.filteredUsers = this.users.filter(users=> this.users.includes(locationName));
+    // const users = this.users;
+    let filteredUsers = this.users;
+    console.log(filteredUsers);
+    if (this.selectedUserBranch) {
+      filteredUsers = filteredUsers.filter(user => user.item.deptId === this.selectedUserBranch.departmentId)
+    }
+    if (locationName && locationName.trim()!=='') {
+      filteredUsers = filteredUsers.filter(user=> user.item.locationName.includes(locationName));
+    }
+    console.log(filteredUsers);
+    this.filteredUsers = filteredUsers;
+    
   }
 }
