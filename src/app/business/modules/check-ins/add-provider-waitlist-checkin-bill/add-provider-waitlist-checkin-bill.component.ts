@@ -452,7 +452,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   getUserName(user) {
     let userDetails = '';
     if (user.firstName && user.firstName !== null && user.firstName !== undefined && user.firstName !== '') {
-      userDetails = user.firstName + ' ' + user.lastName;
+      userDetails = user.firstName;
+      if( user.lastName && user.lastName !== null && user.lastName !== undefined && user.lastName !== ''){
+        userDetails = user.firstName + ' ' + user.lastName;
+      }
     } else {
       if (user.memberJaldeeId) {
         userDetails = this.customer_label + ' Id#'+' : ' + user.memberJaldeeId;

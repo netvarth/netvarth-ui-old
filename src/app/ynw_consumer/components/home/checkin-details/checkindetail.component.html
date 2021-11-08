@@ -189,6 +189,11 @@
                                                 <span *ngIf="waitlist.service && !waitlist.service.postInfoEnabled">No
                                                     Instructions</span>
                                             </mat-tab>
+                                            <!-- <mat-tab label="Messages">
+                                                <app-inbox-list [messages]="communication_history"
+                                                    [fromsource]="'consumer-waitlist'"
+                                                    (reloadApi)="getCommunicationHistory()"></app-inbox-list>
+                                            </mat-tab> -->
                                             <mat-tab label="Messages">
                                                 <app-inbox-list [messages]="communication_history"
                                                     [fromsource]="'consumer-waitlist'"

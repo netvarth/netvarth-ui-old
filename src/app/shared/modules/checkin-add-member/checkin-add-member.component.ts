@@ -34,6 +34,7 @@ export class CheckinAddMemberComponent implements OnInit {
   @Input() globalsettings: any;
   constructor(
     public fed_service: FormMessageDisplayService,
+    public sharedFunctionobj: SharedFunctions,
     public sharedservice: SharedServices, public shared_functions: SharedFunctions,
     private wordProcessor: WordProcessor
   ) {
@@ -43,6 +44,19 @@ export class CheckinAddMemberComponent implements OnInit {
     console.log(this.globalsettings);
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
+  onFieldBlur(key) {
+    this.amForm.get(key).setValue(this.toCamelCase(this.amForm.get(key).value));
+  }
+  toCamelCase(word) {
+    if (word) {
+      return this.wordProcessor.toCamelCase(word);
+    } else {
+      return word;
+    }
+  }
+  isNumeric(evt) {
+    return !this.sharedFunctionobj.isNumber(evt);
+}
   valuechange() {
     const retobj = {
       'fname': this.firstname || '',
