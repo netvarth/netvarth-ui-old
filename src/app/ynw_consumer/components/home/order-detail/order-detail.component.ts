@@ -151,10 +151,7 @@ buttons: [
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
     this.getStoreContact();
-
-
-
-   // this.getFavouriteProvider();
+    this.getFavouriteProvider();
   }
 
   gets3curl() {
@@ -243,6 +240,7 @@ buttons: [
   }
   checkIfFav(id) {
     let fav = false;
+    console.log(this.fav_providers_id_list);
     if (this.fav_providers_id_list) {
       this.fav_providers_id_list.map((e) => {
         if (e === id) {
@@ -257,6 +255,7 @@ buttons: [
       .subscribe(
         data => {
           this.fav_providers = data;
+          console.log('favorite proividerasa'+ this.fav_providers);
           this.fav_providers_id_list = [];
           this.setWaitlistTimeDetails();
         },
