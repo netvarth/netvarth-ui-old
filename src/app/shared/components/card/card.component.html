@@ -250,8 +250,7 @@
  Out of stock</div> -->
 </div>
 
-<div  *ngIf="item.type=='provider'"
- (click)="cardActionPerformed(item.type, null, null, null, user.id, $event)">
+<div  *ngIf="item.type=='provider'">
  <!-- <div class="card-item-head">
  <img class="card-img img-circle img-responsive" [src]="getPic(user)" alt="Profile Pic">
  </div>
@@ -354,10 +353,10 @@
             </div>
             <div class="row">
                 <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
-                <button  class="btn  btn-primary" style="width: 100%;margin-top: 1%;">Book Now</button>
+                <button  (click)="cardActionPerformed(item.type, null, null, null, user.id, $event)" class="btn  btn-primary" style="width: 100%;margin-top: 1%;">Book Now</button>
                 </div>
                 <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
-                    <button  class="btn  btn-primary" style="width: 100%;margin-top: 1%;" >Check availability
+                    <button (click)="cardActionPerformed('checkavailability',null, null, null, user.id, $event)" class="btn  btn-primary" style="width: 100%;margin-top: 1%;" >Check availability
                    </button>
                 </div>
             </div>

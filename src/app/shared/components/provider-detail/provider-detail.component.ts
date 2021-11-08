@@ -2465,9 +2465,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   opencheckavail(actionObj) {
     console.log(this.provider_id,"id...",this.apptSettingsJson)
-    console.log(actionObj['service']['serviceAvailability']['nextAvailableDate'],"serv",);
-    console.log("account id",this.apptSettingsJson['account']['id'])
-
+    // console.log(actionObj['service']['serviceAvailability']['nextAvailableDate'],"serv",);
+    // console.log("account id",this.apptSettingsJson['account']['id'])
+    console.log('.....................................................')
     this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
       width: '90%',
       height: '100%',
@@ -2481,7 +2481,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     });
   }
   cardClicked(actionObj) {
-    console.log("..actionObj..",actionObj);
+   console.log("pppppppppppppppppppppppppppppppppppp")
     if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessjson.name);
@@ -2491,7 +2491,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
     }
     else if(actionObj['type']=='checkavailability') {
-      // console.log("***checkavailability***");
+      console.log("***checkavailability***");
+       console.log("..actionObj..",actionObj);
       this.opencheckavail(actionObj);
     }
     else if (actionObj['type'] === 'appt') {

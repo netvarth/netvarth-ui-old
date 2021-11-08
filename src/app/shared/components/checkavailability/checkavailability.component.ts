@@ -53,13 +53,19 @@ export class CheckavailabilityComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: any,
 
     ) {
-       
+       console.log("LLLLLLLLLLLLLLLLLLLLL")
         this.actionObj=data.alldetails,
-        this.apptSettings=data.apptSettingsJson,
-        
-        this.account_id=String(this.apptSettings['account']['id']),
-        this.sel_loc=String(this.actionObj['location']['id']),
-        this.sel_ser=this.actionObj['service']['id'],
+        this.apptSettings=data.apptSettingsJson
+        if(this.apptSettings['account']['id']) {
+            this.account_id=String(this.apptSettings['account']['id']);
+        }
+        if(this.actionObj['location']['id']) {
+        this.sel_loc=String(this.actionObj['location']['id']);
+        }
+        if(this.actionObj['service']['id']) {
+            this.sel_ser=this.actionObj['service']['id'];
+
+        }
         // this.sel_loc=this.apptServicesjson
         this.sel_checkindate=this.hold_sel_checkindate=this.selectedDate=this.actionObj['service']['serviceAvailability']['nextAvailableDate'];
         // this.subs.sink = this.shared_services.getAppointmentByConsumerUUID(this.rescheduleUserId, this.account_id).subscribe(

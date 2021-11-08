@@ -172,19 +172,24 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     }
     cardActionPerformed(type, action, service, location, userId, event) {
         event.stopPropagation();
+        console.log(":::::::::::::::;",type, action, service, location, userId, event)
         const actionObj = {};
         actionObj['type'] = type;
         actionObj['action'] = action;
         if (service) {
             actionObj['service'] = service;
         }
+        console.log("..........123")
         if (location) {
             actionObj['location'] = location;
         }
+        console.log("..........456")
         if (userId) {
             actionObj['userId'] = userId;
         }
+        console.log("PPPPPPPPP",actionObj)
         this.actionPerformed.emit(actionObj);
+        console.log("..........")
     }
     showConsumerNote(item) {
         this.noteClicked.emit(item);
