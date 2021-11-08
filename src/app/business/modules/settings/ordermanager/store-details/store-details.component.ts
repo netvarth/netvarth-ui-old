@@ -60,6 +60,7 @@ export class StoreDetailsComponent implements OnInit, OnDestroy {
     this.subscriptions.sink = this.provider_services.getContactInfo()
       .subscribe(data => {
         this.info_list = data;
+        this.api_loading=false;
 
       });
   }
