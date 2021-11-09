@@ -146,7 +146,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         base64: [],
         caption: []
     };
-    paymentBtnDisabled = false;
     editBookingFields = false;
     activeWt;
     searchForm: FormGroup;
