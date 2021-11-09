@@ -90,7 +90,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 break;
             default:
                 this.user = this.item.item;
-                console.log(this.user);
+                
                 break;
         }
     }

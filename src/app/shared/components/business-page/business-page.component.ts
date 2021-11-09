@@ -407,13 +407,14 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(params => {
         this.accountEncId = params.get('id');
         // alert(this.accountEncId);
-        console.log("My Id is : " + this.accountEncId);
+        console.log("My Id is : " + this.accountEncId,params.get('userEncId'));
         if (params.get('userEncId')) {
           this.userEncId = params.get('userEncId');
           this.userId = this.userEncId;
         } else {
           this.userId = null;
         }
+        console.log('/.............llllllllllllllllllllll',this.userId)
         this.domainConfigService.getDomainList().then(
           (domainConfig) => {
             this.domainList = domainConfig;
