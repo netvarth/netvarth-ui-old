@@ -2260,4 +2260,21 @@ export class ProviderServices {
     const url = 'provider/settings/waitlistMgr/personsAhead/' +status;
     return this.servicemeta.httpPut(url);
   }
+  getAllFilterAttachments(filter?) {
+    const url = 'provider/fileShare';
+    return this.servicemeta.httpGet(url,null,filter);
+  }
+  uploadAttachments(folder_name, account_id ,body) {
+    const url = 'provider/fileShare/upload/'+ folder_name + '/' + account_id;
+    return this.servicemeta.httpPost(url, body);
+  }
+  getFileStorage(){
+    return this.servicemeta.httpGet('provider/fileShare/storage');
+  }
+  getTotalFileShareCount(id) {
+    return this.servicemeta.httpGet('provider/fileShare/count/'+ id);
+  }
+  getAllFileAttachments() {
+    return this.servicemeta.httpGet('provider/fileShare/');
+  }
 } 

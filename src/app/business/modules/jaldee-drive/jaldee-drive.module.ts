@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { JaldeeDriveComponent } from './jaldee-drive/jaldee-drive.component';
-import { JaldeeDriveRoutingModule } from './jaldee-drive.routing.module';
 import { TableModule } from 'primeng/table';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { MaterialModule } from '../../../shared/modules/common/material.module';
@@ -12,9 +11,14 @@ import { FolderFilesComponent } from './folder-files/folder-files.component';
 import { PreviewuploadedfilesComponent } from './previewuploadedfiles/previewuploadedfiles.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter'; // import ng2search pipe module
+import { Routes, RouterModule } from '@angular/router';
 
 
+const routes: Routes = [
+  { path: '', component: JaldeeDriveComponent },
+  { path: 'folderfiles', component: FolderFilesComponent }
 
+];
 
 
 
@@ -50,11 +54,11 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter'; // import ng2search pip
       // "responsive":false,
       "lazy": false}),
     CommonModule,
-    JaldeeDriveRoutingModule,
     TableModule,  
     NgCircleProgressModule,
     MatRadioModule,
-    FormsModule
+    FormsModule,
+    [RouterModule.forChild(routes)],
   ],
   exports: [JaldeeDriveComponent]
 })

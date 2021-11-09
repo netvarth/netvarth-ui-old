@@ -1,6 +1,6 @@
 import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+
 import { projectConstants } from '../../../../app.component';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { Messages } from '../../../../shared/constants/project-messages';
@@ -10,6 +10,7 @@ import { Location } from '@angular/common';
 // import { AddproviderAddonComponent } from '../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PreviewuploadedfilesComponent } from '../previewuploadedfiles/previewuploadedfiles.component';
+import { ProviderServices } from '../../../../business/services/provider-services.service';
 
 
 @Component({

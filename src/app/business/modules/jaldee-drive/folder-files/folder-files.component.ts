@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { PreviewuploadedfilesComponent } from '../previewuploadedfiles/previewuploadedfiles.component';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { ProviderServices } from '../../../../business/services/provider-services.service';
 export let projectConstants: any = {};
 
 
