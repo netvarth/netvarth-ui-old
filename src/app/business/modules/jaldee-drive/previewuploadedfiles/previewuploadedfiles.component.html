@@ -1,0 +1,27 @@
+<!-- <p>previewuploadedfiles works!</p> -->
+<h1 class="mat-dialog-title"> {{title}}
+    <button #locte mat-dialog-close class="modal_close" tabindex="-1">
+      <i class="fa fa-window-close" aria-hidden="true"></i>
+    </button>
+  </h1>
+  <div class="pad-20 image-scroll" *ngIf="details.fileType && details.fileType != 'pdf'" >
+    <img style="width:100%;margin-top: -20px;" [src]="details.filePath"
+      *ngIf="details.fileType && details.fileType == 'bmp'|| details.fileType =='png'|| details.fileType == 'gif' || details.fileType == 'jpg' ||details.fileType =='jpeg'||details.fileType == 'webp'"/>
+ </div>
+  <div *ngIf="details.fileType && details.fileType == 'pdf'">
+    <!-- <span>  -->
+        <!-- <a [href]="details.filePath" target="_blank" download>         
+        </a> -->
+        <div class="mx-3 py-2 px-2"> 
+            <i class="fa fa-file-pdf-o" aria-hidden="true" style="color:red;">&nbsp;
+        <a [href]="details.filePath" target="_blank" download>
+            {{details.caption ? details.caption:'document'}}-{{details.fileType ? details.fileType:'file' }} 
+          </a>
+        </i>
+        </div>
+
+    <!-- </span> -->
+</div>
+  <!-- <mat-dialog-actions>
+      <button type="button" class="cs-btn bt1 small-btn" (click)="closeDialog()">Close</button>
+    </mat-dialog-actions> -->

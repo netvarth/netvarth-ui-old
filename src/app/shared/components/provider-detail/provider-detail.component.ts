@@ -1668,11 +1668,15 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       console.log(service.serviceType);
       if (service.serviceType === 'virtualService') {
         console.log('checkin');
-        this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-          this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
-        });
+        // this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+        //   this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
+        // });
 
-      } else {
+        this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer');
+
+
+      }
+      else {
         this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer');
       }
 
@@ -1721,9 +1725,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     if (this.userType === 'consumer') {
       console.log(service.serviceType);
       if (service.serviceType === 'virtualService') {
-        this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-          this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'appt', current_provider['service'], consumerdata);
-        });
+        // this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+        //   this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'appt', current_provider['service'], consumerdata);
+        // });
+        this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
 
       }
       else {
@@ -1796,6 +1801,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
               this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
             });
+
+            this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'waitlist', current_provider['service']);
 
           } else {
             this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'waitlist', current_provider['service']);
@@ -1922,6 +1929,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       account_id: this.provider_bussiness_id,
       tel_serv_stat: this.businessjson.virtualServices,
       user: this.userId,
+      service_type: service.serviceType,
       service_id: service.id,
       virtual_info: JSON.stringify(virtualinfo)
     };
@@ -1950,6 +1958,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       user: this.userId,
       futureAppt: this.futureAllowed,
       service_id: service.id,
+      service_type: service.serviceType,
       sel_date: curdate,
       virtual_info: JSON.stringify(virtualinfo)
     };

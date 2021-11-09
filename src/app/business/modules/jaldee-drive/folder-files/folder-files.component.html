@@ -1,0 +1,328 @@
+<!-- <p>folder-files works!</p> -->
+<section class="">
+  <div class="card title-gb rounded-0">
+    <h5 class="mgn-up-10">
+      <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()">
+
+      </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {{foldername}}
+
+    </h5>
+  </div>
+</section>
+<!-- <section>
+    <div>
+        <p-table [value]="customers" responsiveLayout="scroll" class="table-hover">
+          <ng-template pTemplate="header">
+            <tr>
+              <th class="th" style="width:40%;">File Name</th>
+              <th class="th">Date</th>
+              <th class="th">File Type</th>
+              <th class="th">File Size</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-customer>
+            <tr class="pointer-cursor" (click)="preview(customer)">
+             
+              <td class="td">
+                <span class="image-text">{{customer.fileName}}</span>
+              </td>
+              <td class="td">
+                <span class="image-text">{{customer.uploadedDate}}</span>
+              </td>
+              <td class="td">
+                <span>{{customer.fileType}}</span>
+              </td>
+              <td class="td">
+                <span>{{customer.fileSize}}</span>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+</section> -->
+
+<div class="mx-2 row cust-name  disp-flex">
+
+  <!-- <div class="mx-2">
+    <h4>Patients Files</h4>
+
+  </div> -->
+  <!-- <h4>
+    <span> Patients Files</span>
+    <span> <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-left">
+        <img src="../../../assets/images/provider-filter-icon.png"
+          style="width: 22px !important; margin-top: -6px !important;">
+      </a></span>
+  </h4> -->
+
+  <div class="col-12 col-sm-12 col-xs-12">
+    <button type="button" class="my-3 btn btn-white p-button-rounded p-ripple dropdown-toggle "
+      (click)="showFilterSidebar()" style="width: 250px; background-color: white !important; border: 1px solid gray;">
+      <img src="../../../assets/images/Group 822.jpg" class="pull-left text-light"
+        style="width: 22px !important; margin-top: 2px !important;">
+      <span class="mx-2 pull-left text-info">Filter</span>
+      <img src="../../../assets/images/Group 820.jpg" class="pull-right text-light"
+        style="width: 22px !important; margin-top: 2px !important;">
+    </button>
+  </div> 
+  <div class="col-12 col-sm-12 col-xs-12">
+    <div class="form-group pull-right  my-3 mx-4">
+      <input type="text" class="mx-5 form-control inp p-button-rounded filter-text-input filterTextbox filter-textbox"
+        placeholder="Search" [(ngModel)]="searchTerm" style="width: 250px;">
+
+    </div>
+
+  </div>
+</div>
+<div class="mx-2 container">
+
+
+  <table class="table table-hover">
+
+    <thead>
+      <tr>
+        <!-- <th>Patient Name</th> -->
+
+        <th>File Name</th>
+        <th>Date</th>
+        <th>File Type</th>
+        <th>File Size</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="cursor: pointer;"
+        *ngFor="let customer of customers | filter:searchTerm | paginate: config;   let i= index"
+        (click)="preview(customer)">
+        <!-- <td>
+         {{customer.patientName}} | paginate: config;
+       </td> -->
+
+        <td>
+          {{customer.fileName}}
+        </td>
+        <td>
+          {{customer.uploadedDate}}
+        </td>
+        <td>
+          {{customer.fileType}}
+        </td>
+        <td>
+          {{customer.fileSize}}
+        </td>
+      </tr>
+      <!-- <tr *ngIf="customers.length === 0">
+       <div class="text-center" *ngIf="filter.fileName === '' || filter.fileSize === '' || filter.fileType === '' || filter.folderName === '' "><strong>No Files Found</strong> </div>
+      </tr> -->
+    </tbody>
+
+  </table>
+  <div class="d-block ml-auto my-3 pull-right">
+
+    <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+  </div>
+  <!-- <p-table [value]="customers" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="th">File Name</th>
+        <th class="th">Date</th>
+        <th class="th">File Type</th>
+        <th class="th">File Size</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer>
+      <tr style="cursor: pointer;" (click)="preview(customer)">
+        <td class="td">
+          <span class="image-text">{{customer.fileName}}</span>
+        </td>
+        <td class="td">
+          <span class="image-text">{{customer.uploadedDate}}</span>
+        </td>
+        <td class="td">
+          <span>{{customer.fileType}}</span>
+        </td>
+        <td class="td">
+          <span>{{customer.fileSize}}</span>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table> -->
+</div>
+
+
+
+<aside class="filterSidebar filter-sidebar user-filter" *ngIf="filter_sidebar">
+  <section class="sidebar filter-container" id="filterContainer" style="overflow:auto"
+    [ngStyle]="{'height.vh': 90, 'margin-top.px': filterapplied === true ? 95 : 44}">
+    <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+      <span class="filter-head-title">Filters</span>
+      <i class="icon-filter-one-op ng-star-inserted closeFilter" (click)="hideFilterSidebar()"
+        [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter sidebar'"></i>
+    </div>
+    <ul class="sidebar-menu accordion" id="accordion1">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseLocation1"
+              aria-expanded="false">
+              <div>
+                <div style="display: inline-block !important;">
+                  <!-- <i class="fa fa-map-marker"></i> -->
+                </div>
+                File name
+              </div>
+              <i class="fa fa-angle-down"></i>
+            </button>
+          </h2>
+        </div>
+        <div id="collapseLocation1" class="collapse in" data-parent="#accordion1">
+          <div class="card-body">
+            <div class="filterTextinput filter-text-input">
+              <li class="filterli filter-li">
+                <input type="text" id="city" [(ngModel)]="filter.fileName" #city (keyup)="doSearch()" maxlength="20"
+                  class="filterTextbox filter-textbox" placeholder="Enter file name">
+              </li>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h2 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePin1"
+              aria-expanded="false">
+              <div>
+                <div style="display: inline-block !important;">
+                  <!-- <i class="fa fa-location-arrow"></i> -->
+                </div>
+                file type
+              </div>
+              <i class="fa fa-angle-down"></i>
+            </button>
+          </h2>
+        </div>
+        <div id="collapsePin1" class="collapse in" data-parent="#accordion1">
+          <div class="card-body">
+            <div class="filterTextinput filter-text-input">
+              <li class="filterli filter-li">
+                <input type="text" id="fileType" [(ngModel)]="filter.fileType" #fileType (keyup)="doSearch()"
+                  maxlength="10" class="filterTextbox filter-textbox" placeholder="Enter fileType">
+              </li>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h2 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName1"
+              aria-expanded="false">
+              <div>
+                <div style="display: inline-block !important;">
+                  <!-- <i class="fa fa-user"></i> -->
+                </div>
+                File size
+              </div>
+              <i class="fa fa-angle-down"></i>
+            </button>
+          </h2>
+        </div>
+        <div id="collapseName1" class="collapse in" data-parent="#accordion1">
+          <div class="card-body">
+            <div class="filterTextinput filter-text-input">
+              <li class="filterli filter-li">
+                <input type="text" id="fileSize" [(ngModel)]="filter.fileSize" #fileSize (keyup)="doSearch()"
+                  maxlength="20" class="filterTextbox filter-textbox" placeholder="Enter File size">
+              </li>
+            </div>
+            <div class="filter-checkbox-input">
+              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                <mat-checkbox class="filter-checkbox" [checked]="lessMb"
+                  (change)="setFilterDataCheckbox('fileSize', 'true')">
+                  Less than 1MB</mat-checkbox>
+                <!--  (change)="setFilterDataCheckbox('fileSize', 'false')"  [checked]="grateMB" -->
+              </li>
+              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                <mat-checkbox class="filter-checkbox" (change)="setFilterDataCheckbox('fileSize', 'false')"
+                  [checked]="grateMB">
+                  Greater than 1MB</mat-checkbox>
+              </li>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h2 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseAvailable1"
+              aria-expanded="false">
+              <div>
+                <div style="display: inline-block !important;">
+                  <!-- <i class="fa fa-clock-o"></i> -->
+                </div>
+                Folders
+              </div>
+              <i class="fa fa-angle-down"></i>
+            </button>
+          </h2>
+        </div>
+        <div id="collapseAvailable1" class="collapse in" data-parent="#accordion1">
+          <div class="card-body">
+            <div class="filterTextinput filter-checkbox-input">
+              <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+              </li>
+              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                <mat-checkbox class="filter-checkbox" [checked]="availabileSelected"
+                  (change)="setFilterDataCheckbox('folder', 'true')">
+                  Public folder</mat-checkbox>
+              </li>
+              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                <mat-checkbox class="filter-checkbox" [checked]="notAvailabileSelected"
+                  (change)="setFilterDataCheckbox('folder', 'false')">
+                  Private folder </mat-checkbox>
+              </li>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <i class="fa fa-bookmark"></i> -->
+      <!-- <div class="card">
+        <div class="card-header">
+          <h2 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseBNo1"
+              aria-expanded="false">
+              <div>
+                <div style="display: inline-block !important;">
+                
+                </div>
+                <span>&nbsp;Booking ID</span>
+              </div>
+              <i class="fa fa-angle-down"></i>
+            </button>
+          </h2>
+        </div>
+        <div id="collapseBNo1" class="collapse in" data-parent="#accordion1">
+          <div class="card-body">
+            <div class="filterTextinput filter-text-input">
+              <li class="filterli filter-li">
+                <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId"
+                  [ngModelOptions]="{standalone: true}" class="filterTextbox filter-textbox"
+                  placeholder="Enter Booking ID">
+              </li>
+            </div>
+          </div>
+        </div>
+      </div> -->
+    </ul>
+  </section>
+  <div class="filter-footer" *ngIf="filterapplied === true">
+    <!-- *ngIf="filterapplied === true" -->
+    <button class="btn reset-btn" (click)="clearFilter()">
+      <i class="fa fa-undo"></i>Reset
+    </button>
+    <button class="btn apply-btn" (click)="getUsers()">
+      <i class="fa fa-check"></i>Apply
+    </button>
+  </div>
+</aside>

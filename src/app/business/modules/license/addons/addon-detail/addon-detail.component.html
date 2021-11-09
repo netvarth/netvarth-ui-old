@@ -1,8 +1,10 @@
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
-            <span (click)="redirecToAddon()"
+            <span (click)="redirecToAddon()" *ngIf="!drive"
                 class="fa fa-arrow-left pointer-cursor"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="fa fa-arrow-left pointer-cursor" *ngIf="drive && disp_name"
+                (click)="redirecToAddon()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             Add-ons
         </h5>
     </div>
