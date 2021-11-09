@@ -354,7 +354,11 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
       if (isNumber && isCount10) {
         mode = 'phone';
         this.prefillnewCustomerwithfield = 'phone';
-      } else {
+      } else if(isNumber || !isCount10){
+        mode = 'phone';
+        this.prefillnewCustomerwithfield = 'phone';
+      }
+      else {
         mode = 'id';
         this.prefillnewCustomerwithfield = 'id';
       }

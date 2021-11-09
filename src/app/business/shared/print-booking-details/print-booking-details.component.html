@@ -43,7 +43,8 @@
                                 </tr>
                                 <tr *ngIf="bookingDetails.provider&& bookingDetails.provider.firstName">
                                     <td colspan="2" align="center"> {{provider_label| capitalizeFirst}}:
-                                        <span >{{spName}}</span>
+                                      <span >{{spName}}</span>
+                                      <!--   <span>{{bookingDetails.countryCode}}</span> -->
                                       <!-- <span>{{bookingDetails.provider.firstName}} {{bookingDetails.provider.lastName}}</span> -->
                                      </td>
 
@@ -71,8 +72,9 @@
 
                                 </tr>
                                 <tr *ngIf="customer.phoneNo">
-                                    <td colspan="2" align="center"> {{customer_label| capitalizeFirst}} Ph #:
-                                      <span>{{bookingDetails.countryCode}}</span> {{customer.phoneNo}} </td>
+                                    <td colspan="2" align="center"  *ngIf="customer.phoneNo === 'null'">{{customer_label| capitalizeFirst}} Ph #: NIL</td>
+                                    <td colspan="2" align="center" *ngIf="customer.phoneNo !== 'null'"> {{customer_label| capitalizeFirst}} Ph #:
+                                      {{bookingDetails.countryCode}} {{customer.phoneNo}} </td>
 
                                 </tr>
                            
