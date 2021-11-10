@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { NgModule } from "@angular/core";
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatOptionModule } from "@angular/material/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -11,6 +11,7 @@ import { GlobalSettingsModule } from "../global-settings/global-settings.module"
 import { DisplayboardQSetDetailModule } from "../q-set/detail/displayboard-qset-detail.module";
 import { DisplayboardQSetModule } from "../q-set/displayboard-qset.module";
 import { DisplayboardDetailComponent } from "./displayboard-details.component";
+import { MatRadioButton } from '@angular/material/radio';
 const routes: Routes = [
     {path: '', component: DisplayboardDetailComponent}
 ]
@@ -25,11 +26,16 @@ const routes: Routes = [
         MatInputModule,
         MatSelectModule,
         MatOptionModule,
+        MatRadioButton,
         DisplayboardQSetModule,
         DisplayboardQSetDetailModule,
         CapitalizeFirstPipeModule,
         GlobalSettingsModule,
         [RouterModule.forChild(routes)]
-    ]
+    ],
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
+      ],
 })
 export class DisplayboardDetailModule{}

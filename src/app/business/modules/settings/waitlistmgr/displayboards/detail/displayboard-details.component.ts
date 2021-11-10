@@ -4,7 +4,7 @@ import { NavigationExtras } from '@angular/router';
 
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSelect } from '@angular/material/select';
 import { takeUntil, startWith, map } from 'rxjs/operators';
@@ -13,6 +13,7 @@ import { WordProcessor } from '../../../../../../shared/services/word-processor.
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { interval as observableInterval, Subscription } from 'rxjs';
+import { ProviderServices } from '../../../../../../business/services/provider-services.service';
 
 
 
