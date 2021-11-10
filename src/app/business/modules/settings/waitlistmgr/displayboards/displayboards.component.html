@@ -1,27 +1,333 @@
-<section class="">
+<!-- <section>
+    <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
+        [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section> -->
+<!-- <section class="">
     <div class="card title-gb">
-        <h5 class="mgn-up-10">
-            <span class="fa fa-arrow-left pointer-cursor"
-                (click)="redirecToQmanager()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <h5 class="mgn-up-10"> 
+
+            <span class="fa fa-arrow-left pointer-cursor"(click)="redirecToQmanager()" ></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {{qBoardscaption}}
-            <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
-        </h5>
+         
+          <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
+        </h5>     
     </div>
-</section>
-<section>
+</section>  -->
+
+
+    <!-- <h2 class="mx-3 px-3 text-secondary">QBoards</h2>
+    <p class="mx-3 px-3 text-secondary">some text is going here</p> -->
+
+
     <div class="content displayboard loc-list">
-        <div class="col-md-12 no-padding-small">
-            <div class="row">
-                <div class="col-md-12 no-padding">
+        <!-- <div class="row mx-3">
+            <div class="lbl card col-md-8 no-padding">
+                <table class="table table-bordered table-responsive col-md-8  bg-white">
+                    <thead>
+
+                        <th colspan="2">
+                            <p class="col-md-8 text-info">
+                                <span class=" pointer-cursor "></span>&nbsp;&nbsp;
+                                QBoard Wizard
+
+                                <i class="fa fa-question-circle-o fa-lg text-secondary" (click)="redirecToHelp()"></i>
+                            </p>
+                        </th>
+
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                            <td>
+
+
+
+
+                                <div class=" pull-left align-content-around bg-light text-info">
+                                    <span class="fa fa-desktop mx-2">ROOM NO 101</span> <br>
+                                    <span class="fa fa-desktop mx-2">ROOM NO 102</span>
+                                </div>
+                                <div class="pull-right align-content-around bg-light text-info">
+
+                                    <span class="fa fa-eye "> </span> &nbsp;
+                                    <span class="fa fa-trash "> </span> &nbsp;
+                                    <span class="fa fa-toggle-on "></span>&nbsp;<br>
+
+
+
+                                    <span class="fa fa-eye "> </span> &nbsp;
+                                    <span class="fa fa-trash"> </span> &nbsp;
+                                    <span class="fa fa-toggle-on "></span>&nbsp;
+                                </div>
+
+
+
+
+
+
+                            </td>
+
+                            <td>
+
+
+                                <p class="ml-2 text-muted txt">
+                                    Instructions : This is instruction to the consumer or provider while using
+                                    this website for queries and it also help them to make there work easy and
+                                    understable.
+                                </p>
+
+                                <br>
+
+
+                                <div class="col-md-3 col-sm-12 col-12 col-xs-12" *ngIf="layout_list.length==0">
+                                    <div class="row">
+                                        <div class="no-dta">
+                                            <p>No {{statusboard_cap}}s created yet.</p>
+                                            <span class="cs-btn bt3" (click)="addDisplayboardLayout()">CREATE
+                                                NEW QBOARD</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="lbl col-md-4  col-sm-12 co-xs-12 no-padding">
+
+                <p class="mx-4 px-2 hlp text-info">
+                    Help</p>
+                <p class="mx-4 px-2 text-info" style="margin-right: 5px;">How to Set up QBoards</p>
+                <p class="mx-4 px-2 text-info" style="margin-right: 5px;">How to Set up QBoards</p>
+            </div>
+
+        </div> -->
+
+
+        <div class="col-md-12  col-12 col-sm-12  col-lg-12 col-xs-12 no-padding-small">
+            <div class="row mr-1">
+                <div class="col-md-12  col-12 col-sm-12 col-lg-12 col-xs-12 no-padding">
                     <div class="card" *ngIf="api_loading">
                         <app-common-innerloading-spinner></app-common-innerloading-spinner>
                     </div>
                 </div>
-                <div class="col-md-12 no-padding" *ngIf="!api_loading">
-                    <div class="card no-padding">
+                <div class="col-md-12 col-12 col-sm-12 col-lg-12 col-xs-12 no-padding" *ngIf="!api_loading">
+                    <div class="card no-padding mx-3 px-3">
                         <div class="copy">
-                            <div class="col-md-12 no-padding" *ngIf="action == 'list'">
-                                <div class="col-md-12 no-padding">
+                            <div class="col-md-12  col-12 col-sm-12 col-lg-12 col-xs-12 no-padding"
+                                *ngIf="action == 'list'">
+                                <div class="row">
+                                    <div class="col-md-12  col-12 col-sm-12 col-lg-12 col-xs-12 no-padding">
+
+                                        <ul class="nav jd-custom-nav chkn-dash">
+                                            <li class="dropdown notifications-menu pull-right" style="display: flex;"
+                                                [class.disabled]="qBoardSelectCount == 0"
+                                                *ngIf="layout_list.length > 1">
+                                                <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
+                                                    (click)="(qBoardSelectCount > 0) && addDisplayboardGroup()"
+                                                    [class.pointer-cursor]="(qBoardSelectCount > 0)"
+                                                    class="dropdown-toggle navbar-item-color bold ">
+                                                    <span>
+                                                        <i class="fa fa-plus"></i> New Group
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <!-- <li class="dropdown notifications-menu pull-right" style="display: flex;">
+                                                <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
+                                                    (click)="addDisplayboardLayout()"
+                                                    class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                                                    <span>
+                                                        <i class="fa fa-plus"></i> {{statusboard_cap}}
+                                                    </span>
+                                                </a>
+                                            </li> -->
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p class="col-md-12  col-12 col-sm-12 col-lg-12 col-xs-12 page-header mx-2 text-info">
+                                    <!-- fa fa-arrow-left  style="border-bottom:solid lightgray; border-width: 1px;"-->
+                                   <i  class="fa fa-arrow-left text-info" (click)="redirecToQmanager()"></i>
+                                    <span class=" pointer-cursor " ></span>&nbsp;&nbsp;
+                                    {{qBoardscaption}}
+
+                                    <i class="fa fa-question-circle-o fa-lg text-info pull-right mt-1"
+                                        (click)="redirecToHelp()"></i>
+                                </p>
+
+
+
+                                <div class="row mx-4">
+                                    <div class="col-md-7 col-7 col-sm-7 col-lg-7 col-xs-7 rgt  no-padding">
+
+                                        <!-- <div class=" pull-left align-content-around bg-light text-info">
+                                            <span class="fa fa-desktop mx-2"
+                                                *ngFor="let layout of layout_list, let i=index">&nbsp;{{layout.displayName
+                                                | capitalizeFirst}}</span> <br>
+                                        </div>
+                                        <div class="pull-right align-content-around bg-light text-info">
+
+                                            <span class="fa fa-eye "> </span> &nbsp;
+                                            <span class="fa fa-trash "> </span> &nbsp;
+                                            <span class="fa fa-toggle-on "></span>&nbsp;<br>
+
+
+
+                                            <span class="fa fa-eye "> </span> &nbsp;
+                                            <span class="fa fa-trash"> </span> &nbsp;
+                                            <span class="fa fa-toggle-on "></span>&nbsp;
+                                        </div> -->
+
+
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding"
+                                            *ngIf="layout_list.length!==0">
+                                            <div class="table-responsive">
+                                                <table class="table tbl-qboard listBoard">
+                                                    <!-- <thead class="qBoardselected-table">
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Refresh Interval</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead> -->
+                                                    <tbody>
+                                                        <p *ngIf="layout_list.length === 0" class="text-center">No
+                                                            {{statusboard_cap}}s created yet.</p>
+
+                                                        <tr *ngFor="let layout of layout_list, let i=index"
+                                                            [class.selected-qboard]="!layout.isContainer && qBoardsSelectedIndex[i]"
+                                                            class="tr-row">
+                                                            <!-- <td class="centeralign">
+                                                                
+                                                                <mat-checkbox class="pt10" >
+                                                                </mat-checkbox> 
+                                                            </td> -->
+                                                            <td *ngIf="!rowChange">
+                                                                <input type="checkbox" class="ckbx pull-left"
+                                                                    [disabled]="layout.isContainer"
+                                                                    [checked]="qBoardsSelectedIndex[i]"
+                                                                    (click)="!layout.isContainer && qBoardClicked(i)"
+                                                                    [value]="layout.id"
+                                                                    *ngIf="layout_list.length > 1" />
+                                                                <div (click)="goDisplayboardLayoutDetails(layout, 'layout')"
+                                                                    class="pull-left mgn-lt-10 align-content-around">
+                                                                    <h3 class="pointer-cursor" data-toggle="tooltip"
+                                                                        data-placement="top" title="QBoard">
+                                                                        <i
+                                                                            class="fa fa-desktop"></i>&nbsp;{{layout.displayName
+                                                                        | capitalizeFirst}}
+                                                                        <!-- <i *ngIf="layout.isContainer"
+                                                                            class="fa fa-desktop" ></i> -->
+                                                                        <!-- <span
+                                                                            *ngIf="!layout.container" class="layout_name"> (Id -
+                                                                            {{layout.id}})</span> -->
+                                                                    </h3>
+                                                                </div>
+                                                            </td>
+                                                            <td class="pull-right bg-light text-info tr-row">
+                                                                <!-- <span class="">
+                                                                    <button type="button" mat-icon-button
+                                                                        [matMenuTriggerFor]="appMenu">
+                                                                        <mat-icon>more_vert</mat-icon>
+                                                                    </button>
+                                                                </span> -->
+                                                                <span class="d-flex ml-auto">
+                                                                    <i class="fa fa-eye text-info p-1 pointer-cursor"
+                                                                        (click)="ViewDisplayboardLayout(layout)"
+                                                                        aria-hidden="true" data-toggle="tooltip"
+                                                                        data-placement="top" title="View"></i>
+
+
+
+                                                                    <!-- <button mat-menu-item
+                                                                        (click)="editDisplayboardLayout(layout)">
+                                                                        <i class="icon-edit"></i>
+                                                                        Edit
+                                                                    </button> -->
+
+
+                                                                    <i class="icon-delete text-info p-1 pointer-cursor"
+                                                                        (click)="deleteDisplayboardLayout(layout)"
+                                                                        data-toggle="tooltip" data-placement="top"
+                                                                        title="Delete"></i>
+
+
+
+                                                                    <!-- <i class="fa fa-folder-open text-info p-1 pointer-cursor"
+                                                                        (click)="goDisplayboardLayoutDetails(layout, 'layout')" data-toggle="tooltip" data-placement="top" title="Open"></i>
+                                                                    <a class="pointer-cursor"
+                                                                        style="color: black; font-weight: 400;">
+
+                                                                    </a>
+                                                                    <i class="fa fa-toggle-on p-1 pointer-cursor" data-toggle="tooltip" data-placement="top" title="Slide" (click)="onToggleData()"></i> -->
+
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+
+
+                                        </div>
+
+
+
+                                    </div>
+                                    <div class="col-md-5 col-5 col-sm-5 col-lg-5 col-xs-5 no-padding">
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding">
+                                            <div class="table-responsive">
+                                                <table class="table tbl-qboard">
+
+                                                    <tbody>
+                                                        <tr>
+                                                            <p class="ml-2 text-muted txt">
+                                                                Instructions : This is instruction to the consumer or
+                                                                provider while using
+                                                                this website for queries and it also help them to make
+                                                                there work easy and
+                                                                understable.
+                                                            </p> <br>
+                                                            <!-- <div class="text-center">
+                                                                <span class="cs-btn bt3  btn-lg" (click)="addDisplayboardLayout()">CREATE
+                                                                    NEW QBOARD</span>
+                                                            </div> -->
+
+
+                                                            <div class="text-center my-3">
+                                                                <p *ngIf="layout_list.length === 0">No
+                                                                    {{statusboard_cap}}s created yet.</p>
+                                                                <span class="cs-btn bt3"
+                                                                    (click)="addDisplayboardLayout()"
+                                                                    data-toggle="tooltip" data-placement="top"
+                                                                    title="Create New QBoard">CREATE
+                                                                    NEW QBOARD</span>
+                                                            </div>
+
+
+
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+
+
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+
+                                <!-- <div class="col-md-12 no-padding">
                                     <ul class="nav jd-custom-nav chkn-dash">
                                         <li class="dropdown notifications-menu pull-right" style="display: flex;"
                                             [class.disabled]="qBoardSelectCount == 0" *ngIf="layout_list.length > 1">
@@ -44,21 +350,23 @@
                                             </a>
                                         </li>
                                     </ul>
-                                </div>
-                                <div class="col-md-12" *ngIf="layout_list.length==0">
+                                </div> -->
+                                <!-- <div class="col-md-12" *ngIf="layout_list.length==0">
                                     <div class="row">
                                         <div class="no-dta">
                                             <p>No {{statusboard_cap}}s created yet.</p>
                                             <span class="cs-btn bt3" (click)="addDisplayboardLayout()">Create</span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-12 no-padding" *ngIf="layout_list.length!==0">
+                                </div> -->
+                                <!-- <div class="col-md-12 no-padding" *ngIf="layout_list.length!==0">
                                     <div class="table-responsive">
                                         <table class="table tbl-qboard">
+                                           
                                             <tbody>
                                                 <tr *ngFor="let layout of layout_list, let i=index"
                                                     [class.selected-qboard]="!layout.isContainer && qBoardsSelectedIndex[i]">
+                                                   
                                                     <td>
                                                         <input type="checkbox" class="ckbx pull-left"
                                                             [disabled]="layout.isContainer"
@@ -71,6 +379,7 @@
                                                                 <i *ngIf="layout.isContainer"
                                                                     class="fa fa-object-group"></i>&nbsp;{{layout.displayName
                                                                 | capitalizeFirst}}
+                                                               
                                                             </h3>
                                                         </div>
                                                     </td>
@@ -87,6 +396,7 @@
                                                                     class="fa fa-eye" aria-hidden="true"></i>
                                                                 View
                                                             </button>
+                                                           
                                                             <button mat-menu-item
                                                                 (click)="deleteDisplayboardLayout(layout)">
                                                                 <i class="icon-delete"></i>
@@ -105,7 +415,10 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+
+
+                                   
+                                </div> -->
                             </div>
                             <!-- For Adding QBoards to a Group -->
                             <div class="col-md-12 no-padding" *ngIf="action =='addToGroup' || action =='updateGroup'">
@@ -148,6 +461,7 @@
                                                                     autocomplete="off">
                                                             </td>
                                                             <td class="action">
+                                                                <!-- <i class="icon-edit" (click)></i> &nbsp; -->
                                                                 <i class="icon-delete"
                                                                     (click)="removeFromGroup(qboard)"></i>
                                                             </td>
@@ -161,6 +475,7 @@
                                                                             {{add_circle_outline}}</mat-icon>
                                                                     </button>
                                                                 </mat-panel-description>
+                                                                <!-- <i class="fa fa-plus-circle blue pointer-cursor" (click)="enableAddToGroup()"></i> -->
                                                             </td>
                                                         </tr>
                                                         <tr *ngIf="enableAddGroup">
@@ -205,7 +520,14 @@
                         </div>
                     </div>
                 </div>
+                <!-- <div class="col-md-4 col-12 col-sm-12 col-lg-4 col-xs-12 no-padding">
+                    style="border-bottom: solid lightgray ; border-width: 1px; margin-right: 5px;"
+                    <p class="mx-4 px-2 hlp text-info">
+                        Help</p>
+                    <p class="mx-4 px-2 text-info" style="margin-right: 5px;">How to Set up QBoards</p>
+                    <p class="mx-4 px-2 text-info" style="margin-right: 5px;">How to Set up QBoards</p>
+                </div> -->
             </div>
         </div>
+
     </div>
-</section>
