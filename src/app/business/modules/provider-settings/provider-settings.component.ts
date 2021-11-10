@@ -249,11 +249,14 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   miscellaneuostooltip = 'Miscellaneous';
   customerstooltip = '';
   ngOnInit() {
+
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     if(user.sector){
     this.domain = user.sector;
     }
+    if(projectConstantsLocal.DOMAIN_SERVICES_HINT[this.domain].helphint){
     this.services_hint = projectConstantsLocal.DOMAIN_SERVICES_HINT[this.domain].helphint;
+    }
     if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
       this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
     } 
