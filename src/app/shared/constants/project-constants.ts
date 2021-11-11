@@ -210,8 +210,8 @@ export const projectConstantsLocal = {
     retailStores: { iconClass: 'retailstores_icon' },
     otherMiscellaneous: { iconClass: 'other_icon' },
     educationalInstitution: { iconClass: 'education_icon' },
-    sportsAndEntertainement: { iconClass: 'sports_icon'}
-
+    sportsAndEntertainement: { iconClass: 'sports_icon'},
+    communitySocietyAssociation: { iconClass: 'association_icon'}
   },
   DOMAIN_SERVICES_HINT: {
     healthCare: { helphint: 'In-person consultation, Video consultation, Lab services' },
