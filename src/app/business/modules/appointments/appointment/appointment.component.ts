@@ -506,7 +506,11 @@ export class AppointmentComponent implements OnInit {
             const isEmail = emailPattern.test(form_data.search_input);
             if (isEmail) {
                 mode = 'email';
-            } else {
+            } 
+            // else if (form_data){
+
+            // }
+            else {
                // const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
                 //const isNumber = phonepattern.test(form_data.search_input);
                 //const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);

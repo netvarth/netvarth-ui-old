@@ -79,7 +79,39 @@
                                 </tr>
                            
                                 <tr>
-                                    <td colspan="2" align="center"> Service : {{bookingDetails.service.name}} </td>
+                                    <td colspan="2" align="center">
+
+                                    Service :
+                                        {{bookingDetails.service.name}} </td>
+                                 
+                                    <!-- <td colspan="2" align="center">
+                                        
+                                        <div class="disp-flex">
+                                            <span class="service-icon"
+                                                    style="display: inline-block !important;"
+                                                    *ngIf="bookingType == 'checkin'">
+                                                    <i class="fa phon-icon"
+                                                        *ngIf="bookingDetails.waitlistingFor && bookingDetails.waitlistingFor[0].callingMode === 'Phone'"></i>
+                                                    <i class="fa meet-icon"
+                                                        *ngIf="bookingDetails.waitlistingFor && bookingDetails.waitlistingFor[0].callingMode === 'GoogleMeet'"></i>
+                                                    <i class="fa zoom-icon"
+                                                        *ngIf="bookingDetails.waitlistingFor && bookingDetails.waitlistingFor[0].callingMode === 'Zoom'"></i>
+                                                    <i class="fa jvideo-icon jvideo-icon-m jvideo-icon-mg5"
+                                                        *ngIf="bookingDetails.waitlistingFor  && bookingDetails.waitlistingFor[0].callingMode === 'VideoCall'"></i>
+                                                    <i class="fa wtsapaud-icon"
+                                                        *ngIf="bookingDetails.waitlistingFor && bookingDetails.waitlistingFor[0].callingMode === 'WhatsApp' && bookingDetails.bookingType ==='audioService'"></i>
+                                                    <i class="fa wtsapvid-icon"
+                                                        *ngIf="bookingDetails.waitlistingFor && bookingDetails.waitlistingFor[0].callingMode === 'WhatsApp' && bookingDetails.bookingType ==='videoService'"></i>
+                                                </span>
+                                            <span class="billing-head"
+                                                style="display: flex !important; align-items: center !important;margin-bottom: 5px;"> Service </span>
+                                            <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
+                                            <span class="billing-value disp-flex align-items-center">
+                                                
+                                                <span class="mgn-bt-5">{{bookingDetails.service.name}}</span>
+                                            </span>
+                                        </div>
+                                                       </td> -->
 
                                 </tr>
                                 <tr *ngIf="bookingDetails.service.deptName">
