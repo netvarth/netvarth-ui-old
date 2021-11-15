@@ -2297,6 +2297,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     actionCompleted() {
         if (this.action === 'slotChange') {
+            console.log("slotchanged")
             this.selectedDate = this.sel_checkindate;
             this.checkFutureorToday();
             this.selectedApptTime = this.apptTime;
@@ -2310,6 +2311,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         let oldprice;
                         let newprice;
                         for(let list of this.pricelist){
+                            console.log("**********",this.currentScheduleId)
                             if(list.schedule.id == this.currentScheduleId){ // appointment scheduleid
                                 oldprice = list.price;
                             }

@@ -62,8 +62,8 @@
         <div class="pad-lg-20">
             <div class="col-lg-2 col-xs-4 col-sm-4"  *ngFor="let slot of freeSlots;let i = index" >
 
-                <p class="green" *ngIf="slot.active">{{slot.displayTime}}</p>
-                <p  *ngIf="!slot.active"><del style="color: red;">{{slot.displayTime}}</del></p>
+                <p   (click)="timeSelected(slot);" class="green" *ngIf="slot.active">{{slot.displayTime}}</p>
+                <p   (click)="timeSelected(slot);"  *ngIf="!slot.active"><del style="color: red;">{{slot.displayTime}}</del></p>
     
     
             </div>
@@ -79,7 +79,7 @@
         <div class="col-lg-12" style="color:  #2653B7;" *ngIf="actionObj.service.totalAmount">Service Price:{{actionObj.service.totalAmount}}</div>
         <div class="col-lg-12" style="color:  #2653B7" *ngIf="actionObj.service.minPrePaymentAmount">Advance Payment: {{actionObj.service.minPrePaymentAmount}}</div>
         <div class="col-lg-12" style="text-align: center;">
-        <button class="btn" style="width:30%;background-color:  #2653B7;color: white;">Okay</button>
+        <button (click)="actionCompleted()" class="btn" style="width:30%;background-color:  #2653B7;color: white;">Okay</button>
         </div>
     </div>
       <!-- ****Modal Code**** -->

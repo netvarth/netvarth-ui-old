@@ -30,6 +30,8 @@ import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
 import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
+import { CheckavailabilityComponent } from '../checkavailability/checkavailability.component';
+
 @Component({
   selector: 'app-businessprovideruser-page',
   templateUrl: './business-provideruser-page.component.html',
@@ -2450,6 +2452,24 @@ console.log("fgf"+JSON.stringify(loc));
       this.apptfirstArray = this.apptTempArray;
     }
   }
+  checkavailabilitydialogref;
+  opencheckavail(actionObj) {
+    console.log(this.provider_id,"id...",this.apptSettingsJson,actionObj)
+    // console.log(actionObj['service']['serviceAvailability']['nextAvailableDate'],"serv",);
+    // console.log("account id",this.apptSettingsJson['account']['id'])
+    console.log('.....................................................')
+    this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
+      width: '90%',
+      height: '100%',
+      // panelClass: ['popup-class', 'commonpopupmainclass'],
+      // disableClose: true,
+      data: {
+      //  provider_id:this.provider_id
+      alldetails:actionObj,
+      apptSettingsJson:this.apptSettingsJson,
+      }
+    });
+  }
   providerDetClicked(userId) {
     // const navigationExtras: NavigationExtras = {
     //   queryParams: {
@@ -2460,7 +2480,7 @@ console.log("fgf"+JSON.stringify(loc));
   }
 
   cardClicked(actionObj) {
-
+    console.log("entered here")
     if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
@@ -2468,7 +2488,11 @@ console.log("fgf"+JSON.stringify(loc));
         this.checkinClicked(actionObj['location'], actionObj['service']);
       }
 
-    } else if (actionObj['type'] === 'appt') {
+    } 
+    else if(actionObj['type']=='checkavailability') {
+      this.opencheckavail(actionObj);
+    }
+    else if (actionObj['type'] === 'appt') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
       } else {
@@ -2477,7 +2501,9 @@ console.log("fgf"+JSON.stringify(loc));
     } else if (actionObj['type'] === 'donation') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
-      } else {
+      } 
+      
+      else {
         this.payClicked(actionObj['location'].id, actionObj['location'].place, new Date(), actionObj['service']);
       }
     } else if (actionObj['type'] === 'item') {

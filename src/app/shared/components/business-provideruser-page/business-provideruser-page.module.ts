@@ -9,6 +9,7 @@ import { BusinessprovideruserPageComponent } from "./business-provideruser-page.
 import { BusinessprovideruserPageRoutingModule } from "./business-provideruser-page.routing.module";
 import { CardModule } from "../card/card.module"
 import { HeaderModule } from "../../../shared/modules/header/header.module"
+import { CheckavailabilityComponent } from "../checkavailability/checkavailability.component";
 @NgModule({
     imports: [
         CommonModule,
@@ -23,6 +24,7 @@ import { HeaderModule } from "../../../shared/modules/header/header.module"
     ],
     declarations: [
         BusinessprovideruserPageComponent,
+        CheckavailabilityComponent
     ],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,

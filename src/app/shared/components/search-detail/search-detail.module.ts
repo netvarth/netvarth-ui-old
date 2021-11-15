@@ -58,10 +58,11 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
         ProviderDetailComponent,
         ConsumerWaitlistHistoryComponent,
         QRCodeGeneratordetailComponent,
-        CheckavailabilityComponent
+   
     ],
     entryComponents: [
-        QRCodeGeneratordetailComponent
+        QRCodeGeneratordetailComponent,
+        CheckavailabilityComponent
     ]
 })
 

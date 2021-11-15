@@ -47,6 +47,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     selectedUser;
     selQIds: any = [];
     qualification;
+    disablecheckavailabilitybutton=false;
     constructor(
         private lStorageService: LocalStorageService,
         private wordProcessor: WordProcessor,
@@ -59,8 +60,8 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     }
 
     ngOnInit() {
-        console.log(this.item)
-        console.log(this.type)
+        console.log(this.item,'item')
+        console.log(this.type,'itemmmmmmmmmmmmmm')
         console.log(this.teams);
         if(this.type == 'appointment-dashboard'){
             this.appointment = this.item;
@@ -94,6 +95,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         }
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.todayDate = this.datePipe.transformTofilterDate(new Date());
+
         switch (this.item.type) {
             case 'waitlist':
                 this.service = this.item.item;
@@ -149,6 +151,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 this.user = this.item.item;
                 break;
         }
+        console.log('this.service............',this.service)
     }
     ngOnChanges() {
         // this.itemQty = this.quantity;
@@ -171,25 +174,53 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         event.stopPropagation();
     }
     cardActionPerformed(type, action, service, location, userId, event) {
-        event.stopPropagation();
-        console.log(":::::::::::::::;",type, action, service, location, userId, event)
-        const actionObj = {};
-        actionObj['type'] = type;
-        actionObj['action'] = action;
-        if (service) {
-            actionObj['service'] = service;
+        if(type=='checkavailability'){
+            if(service['serviceAvailability']['nextAvailableDate']) {
+                event.stopPropagation();
+        
+                const actionObj = {};
+                actionObj['type'] = type;
+                actionObj['action'] = action;
+                if (service) {
+                    actionObj['service'] = service;
+                }
+              
+                if (location) {
+                    actionObj['location'] = location;
+                }
+               
+                if (userId) {
+                    actionObj['userId'] = userId;
+                }
+                
+                this.actionPerformed.emit(actionObj);
+            } 
+            else {
+                this.disablecheckavailabilitybutton = true
+            }
+        } 
+        else {
+            event.stopPropagation();
+        
+            const actionObj = {};
+            actionObj['type'] = type;
+            actionObj['action'] = action;
+            if (service) {
+                actionObj['service'] = service;
+            }
+          
+            if (location) {
+                actionObj['location'] = location;
+            }
+           
+            if (userId) {
+                actionObj['userId'] = userId;
+            }
+            
+            this.actionPerformed.emit(actionObj);
         }
-        console.log("..........123")
-        if (location) {
-            actionObj['location'] = location;
-        }
-        console.log("..........456")
-        if (userId) {
-            actionObj['userId'] = userId;
-        }
-        console.log("PPPPPPPPP",actionObj)
-        this.actionPerformed.emit(actionObj);
-        console.log("..........")
+
+    
     }
     showConsumerNote(item) {
         this.noteClicked.emit(item);

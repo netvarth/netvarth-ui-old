@@ -506,6 +506,24 @@ button.fxmenu1{
     padding: 2px 5px 0px 5px;
     text-align: center;
 }
+.getappointmentbutton {
+    width: 100%;
+    margin-top: 1%;
+    border-radius: 5px;
+    background-color:#1E4079;
+    color: white;
+    font-weight: 600;
+    font-style: Montserrat; 
+}
+.checkavailabilitybutton{
+    width: 100%;
+    margin-top: 1%;
+    border-radius: 5px;
+    background-color: #FFC107;
+    color: white;
+    font-weight: 600;
+    font-style: Montserrat;
+}
 .booking-card.card.order.disabled .card-item-content , .booking-card.card.order.disabled .card-item-head {
     opacity: .4 !important;
     /* pointer-events: none !important; */
@@ -644,7 +662,7 @@ justify-content: center;
 flex-direction: column;
 height: 70px;
 width: 70px;
-  margin: 5px;
+  margin: 4px;
   /* padding: 50px; */
 /* font-size: 80px;
 box-shadow: #00000029 -3pt 22pt 6pt !important;

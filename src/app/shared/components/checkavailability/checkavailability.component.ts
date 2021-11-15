@@ -5,7 +5,6 @@ import * as moment from 'moment';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 // import { SharedServices } from '../../services/shared-services';
 import { SubSink } from 'subsink';
-
 import { SharedServices } from '../../services/shared-services';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { LocalStorageService } from '../../services/local-storage.service';
@@ -20,7 +19,7 @@ export class CheckavailabilityComponent implements OnInit {
     sel_checkindate: any;
     hold_sel_checkindate: any;
     apptSettings
-    todaydate: string;
+    todaydate;
     ddate;
     sel_loc; //check next
     sel_ser;
@@ -45,6 +44,9 @@ export class CheckavailabilityComponent implements OnInit {
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
     api_loading1: boolean;
     server_date: any;
+    amountdifference: any;
+    changePrice: number;
+    currentScheduleId: any;
     constructor(
         public dialogRef: MatDialogRef<CheckavailabilityComponent>,
         public dateTimeProcessor: DateTimeProcessor,
@@ -53,19 +55,16 @@ export class CheckavailabilityComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: any,
 
     ) {
-       console.log("LLLLLLLLLLLLLLLLLLLLL")
+
         this.actionObj=data.alldetails,
         this.apptSettings=data.apptSettingsJson
-        if(this.apptSettings['account']['id']) {
+  
             this.account_id=String(this.apptSettings['account']['id']);
-        }
-        if(this.actionObj['location']['id']) {
+       
         this.sel_loc=String(this.actionObj['location']['id']);
-        }
-        if(this.actionObj['service']['id']) {
+      
+       
             this.sel_ser=this.actionObj['service']['id'];
-
-        }
         // this.sel_loc=this.apptServicesjson
         this.sel_checkindate=this.hold_sel_checkindate=this.selectedDate=this.actionObj['service']['serviceAvailability']['nextAvailableDate'];
         // this.subs.sink = this.shared_services.getAppointmentByConsumerUUID(this.rescheduleUserId, this.account_id).subscribe(
@@ -76,6 +75,56 @@ export class CheckavailabilityComponent implements OnInit {
         this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc,this.sel_ser, this.account_id)
     // console.log("locationid,serviceid,accountid",this.sel_loc,this.sel_ser,this.account_id);
     // console.log("data.............",this.getAvailableSlotByLocationandService(this.sel_loc,this.sel_ser,this.sel_checkindate, this.account_id,'init'))
+    }
+    timeSelected(slot) {
+        this.apptTime = slot;
+        // this.waitlist_for[0].apptTime = this.apptTime['time'];
+    }
+    isFuturedate = false;
+    checkFutureorToday() {
+        const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
+        const date2 = new Date(dt2);
+        const dte0 = this.selectedDate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
+        const datee2 = new Date(dte2);
+        if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+            this.isFuturedate = true;
+        } else {
+            this.isFuturedate = false;
+        }
+    }
+    pricelist:any;
+    actionCompleted() {
+            this.selectedDate = this.sel_checkindate;
+            this.checkFutureorToday();
+            this.selectedApptTime = this.apptTime;
+            console.log("action"+JSON.stringify(this.selectedApptTime));
+            this.waitlist_for[0].apptTime = this.apptTime['time'];
+            if(this.type == 'reschedule' && this.appointment.service && this.appointment.service.priceDynamic){
+                this.subs.sink = this.shared_services.getAppointmentReschedulePricelist(this.appointment.service.id).subscribe(
+                    (list: any) => {
+                        this.pricelist = list;
+                        console.log("this.pricelist"+JSON.stringify(this.pricelist));
+                        let oldprice;
+                        let newprice;
+                        for(let list of this.pricelist){
+                            if(list.schedule.id == this.currentScheduleId){ // appointment scheduleid
+                                oldprice = list.price;
+                            }
+                            if(list.schedule.id == this.selectedApptTime['scheduleId']){ // rescheduledappointment scheduleid
+                                newprice = list.price;
+                            }
+                        } 
+                        console.log("oldprice"+oldprice);
+                        console.log("newprice"+newprice);
+                        this.changePrice = newprice - oldprice;
+                        console.log("changeprice"+this.changePrice);
+                        this.amountdifference = this.appointment.amountDue + this.changePrice;
+                        this.dialogRef.close('');
+                    });
+            }
+        
     }
     dateClass(date: Date): MatCalendarCellCssClasses {
         // console.log("*********************************",this.availableDates)

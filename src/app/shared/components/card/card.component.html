@@ -25,7 +25,7 @@
 
             <div class="row text-xs-center" >
                 <div class="col-lg-4 col-sm-12 col-xs-12 col-md-12 text-xs-center1" >
-                    <div class="service-image border1 img-circle" 
+                    <div class="img-circle service-image" 
                     *ngIf="service.serviceType && service.serviceType == 'virtualService'">
                     <i class="fa phon-icon"
                     *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -40,48 +40,49 @@
                     <i class="fa jaldeevideo-icon"
                     *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
                     </div>
-                    <div class="img-circle border imagesectionincards "
+                    <div class="img-circle"
                         *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'donationService'">
                                 <img class="card-img img-responsive" src="assets/images/donation.png" alt="Donation Image" >
                     </div>
-                    <div class="img-circle border imagesectionincards "
+                    <div class="img-circle "
                         *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain != 'religiousPriests'"
                             >
                                 <img class="card-img img-responsive" src="assets/images/meeting_Artboard.png"
                                     alt="Physical Service Image" >
                     </div>
-                    <div class="img-circle border imagesectionincards "
+                    <div class="img-circle "
                                 *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain == 'religiousPriests'"
                                    >
                                                  <img class="card-img img-responsive" src="assets/images/hindu-temple-clipart.jpg"
                                     alt="Physical Service Image">
                     </div>
-                <!-- <img class="img-circle border imagesectionincards text-xs-center" src="assets/images/donation.png">  -->
+                <!-- <img class="img-circle text-xs-center" src="assets/images/donation.png">  -->
                 </div>
                 <div class="col-lg-6  col-sm-12 col-xs-12 col-md-12" style="margin-top: 2%;">
                         <h4 [ngClass]="{'no-padding':service.serviceType && service.serviceType == 'virtualService'}">{{service.name | capitalizeFirst}}</h4>
-                        <p class="mgn-up-10" *ngIf="service.name=='Consultation'"></p>
+                        <p style="padding-top:8px;" *ngIf="service.name=='Consultation'"></p>
                         <p class="card-text donationAmount" *ngIf="item.type=='donation'">
                             <span class="rupee-font bold">Donate <i class="fa fa-inr"></i> {{service.minDonationAmount}}</span>
                             <span class="rupee-font bold" *ngIf="service.maxDonationAmount != service.minDonationAmount"> or more</span>
                         </p>
-                        <p class="card-text peopleAhead font-normal" *ngIf="personsAheadText">{{personsAheadText}}</p>
-                        <p class="card-text emptySpace" *ngIf="item.type!='donation' && !personsAheadText"></p>
-                        <h6 style="color: lightblue;" *ngIf="timings">{{timingCaption}}</h6>
-                        <h6 style="color: lightblue;" *ngIf="timings">{{timings}}</h6>
+                        <div  style="font-size: 10px;" *ngIf="personsAheadText">{{personsAheadText}}</div>
+                       
+                        <h6 style="color:#FFC107;font-size: 8px;" *ngIf="timings">{{timingCaption}}</h6>
+                        <h6 style="color: #1E4079;" *ngIf="timings">{{timings}}</h6>
 
                 </div>
 
             </div>
             <div class="row">
-            <div  *ngIf="service.serviceType && service.serviceType == 'virtualService'" style="margin-bottom: 18px;"></div>
+            <!-- <div  *ngIf="service.serviceType && service.serviceType == 'virtualService'" style="margin-bottom: 18px;"></div> -->
 
                 <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
 
-                <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event)"  class="btn  btn-primary" style="width: 100%;margin-top: 1%;">{{buttonCaption}}</button>
+                <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event)"  class="btn getappointmentbutton">{{buttonCaption}}</button>
                 </div>
                 <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
-                    <button  (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)" class="btn  btn-primary" style="width: 100%;margin-top: 1%;" >Check availability
+                    
+                    <button [disabled]="disablecheckavailabilitybutton" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)" class="btn checkavailabilitybutton"  >Check availability
                    </button>
                    
                 </div>
@@ -311,32 +312,23 @@
             <div class="row text-xs-center" >
                 <div class="col-lg-4 col-xs-1 col-md-1 display-sm-none">
 
-                    <div class="img-circle providerborder providerimagesection text-xs-center">
+                    <div class="img-circle  text-xs-center">
                                 <img class="card-img img-responsive" [src]="getPic(user)" alt="Profile Pic">
                     </div>
-
-                <!-- <img class="img-circle border imagesectionincards text-xs-center" src="assets/images/donation.png">  -->
                 </div>
-                <div class="col-lg-6 col-xs-12 col-md-12" style="margin-top: 2%;">
+
+                <div class="col-lg-6 col-xs-12 col-md-12" >
                         <h4 *ngIf="user.businessName">{{user.businessName}}</h4>
-                        <h6 class="qualification font-normal" *ngIf="user.qualifications && user.qualifications.length === 1" >
-                            {{user.qualifications[0]}}
-                        </h6>
-                        <h6 class="qualification font-normal" *ngIf="user.qualifications && user.qualifications.length > 1">
-                            {{user.qualifications[0]}}...
-                        </h6>
-                        <h6 class="qualification" *ngIf="!user.qualifications || (user.qualifications && user.qualifications.length==0)"
-                        style="height:8px;"></h6>
-                        <div class="specialization-parent" *ngIf="user.businessUserName">
-                        <label class="specialization" *ngIf="user.businessUserName">{{user.businessUserName}}</label>
-                        </div>
-                        <div class="specialization-parent" *ngIf="!user.businessUserName" style="visibility: hidden;">
-                            <label class="specialization" >Nothing</label>
-                            </div>
+                        <div *ngIf="user.qualifications && user.qualifications.length === 1" >{{user.qualifications[0]}}</div>
+                        <div *ngIf="user.qualifications && user.qualifications.length > 1">{{user.qualifications[0]}}...</div>
+                      
+                        <div *ngIf="user.businessUserName"><b>{{user.businessUserName}}</b></div>
+                        <div *ngIf="!user.businessUserName" style="visibility: hidden;"><b>Nothing</b></div>
                         <!-- <label *ngIf="!user.businessUserName" style="padding: 2px 3px; margin:0 !important;"></label> -->
-                        <p class="availability user-available">
+                        <!-- <p > -->
                             <ng-container *ngIf="user.apptTime && user.apptTime.caption && user.apptTime.availableSchedule.availableDate === todayDate">
-                            {{user.apptTime.caption}}<br />{{user.apptTime.date}}
+                            <div>{{user.apptTime.caption}}</div>
+                            <div >{{user.apptTime.date}}</div>
                             </ng-container>
                             <ng-container
                             *ngIf="(!user.apptTime || (user.apptTime && (!user.apptTime.caption || user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && user.waitingTime.caption">
@@ -346,20 +338,12 @@
                             *ngIf="(!user.apptTime || ((user.apptTime.caption && user.apptTime.availableSchedule && user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && !user.waitingTime.caption">
                             {{user.apptTime.caption}}<br />{{user.apptTime.date}}
                             </ng-container>
-                        </p>
-                </div>
-
-
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
-                <button  (click)="cardActionPerformed(item.type, null, null, null, user.id, $event)" class="btn  btn-primary" style="width: 100%;margin-top: 1%;">Book Now</button>
-                </div>
-                <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
-                    <button (click)="cardActionPerformed('checkavailability',null, null, null, user.id, $event)" class="btn  btn-primary" style="width: 100%;margin-top: 1%;" >Check availability
-                   </button>
+                        <!-- </p> -->
                 </div>
             </div>
+                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding">
+                <button  (click)="cardActionPerformed(item.type, null, null, null, user.id, $event)" class="btn getappointmentbutton">Book Now</button>
+                </div>
 
         </div>
 
