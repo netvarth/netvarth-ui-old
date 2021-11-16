@@ -17,6 +17,7 @@ import { AuthService } from '../services/auth-service';
 
 @Injectable()
 export class ExtendHttpInterceptor implements HttpInterceptor {
+  loggedUrls = [];
   no_redirect_path = [
     base_url + 'consumer/login',
     base_url + 'superadmin/login',
@@ -44,6 +45,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   loginCompleted = false;
   forceUpdateCalled = false;
   stopThisRequest = false;
+  sessionExpired = false;
 
   constructor(private shared_functions: SharedFunctions,
     public shared_services: SharedServices, private dialog: MatDialog,
@@ -198,7 +200,10 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
           this._handleErrors(error);
           if (error instanceof HttpErrorResponse) {
             if (this._checkSessionExpiryErr(error)) {
-             // this.shared_services.callHealth(error.message).subscribe();
+              if (!this.sessionExpired) {
+                this.shared_services.callHealth(JSON.stringify(this.loggedUrls)).subscribe();
+                this.sessionExpired = true;
+              }             
               // const isprovider = this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true';
               //  this.shared_functions.doLogout().then (
               //    () => {
@@ -210,6 +215,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
                 switchMap(() => {
                   // return next.handle(this.updateHeader(req, url));
                   // this.router.navigate(['/']);
+                  this.sessionExpired = false;
                   return EMPTY;
                 })
               );
@@ -278,12 +284,21 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     // req = req.clone({ headers: req.headers.append('Expires', '0'), withCredentials: true });
     // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.androidpro) });
     // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.iospro) });
+    if (this.lStorageService.getitemfromLocalStorage('BOOKING_CHANNEL')) {
+      req = req.clone({ headers: req.headers.append('BOOKING_CHANNEL', this.lStorageService.getitemfromLocalStorage('BOOKING_CHANNEL')), withCredentials: true });
+    }
     if (this.sessionStorageService.getitemfromSessionStorage('tabId')) {
       req = req.clone({ headers: req.headers.append('tab', this.sessionStorageService.getitemfromSessionStorage('tabId')), withCredentials: true });
     } else {
       req.headers.delete('tab');
     }
     req = req.clone({ url: url, responseType: 'json' });
+ 
+    if(this.loggedUrls.length > 10) {
+      this.loggedUrls.shift();
+    }
+    this.loggedUrls.push(req);
+
     return req;
   }
 

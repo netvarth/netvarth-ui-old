@@ -67,7 +67,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12 mgn-up-10"></div>
-                                    <div class="">
+                                    <div class="single-loc">
                                         <h6 style="color: #747474;">About us </h6>
                                         <p *ngIf="businessjson.businessDesc"><b>{{businessjson.businessDesc |
                                                 capitalizeFirst}}</b></p>
@@ -101,7 +101,7 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10">
                             <ul class="service-ul flex" *ngIf="servicedetails">
                                 <li *ngIf="servicedetails && servicedetails.serviceDuration && servicedetails.serviceDurationEnabled && !is_donation_serv"><span class="service-li-title">Duration</span><br/><span class="bold">{{HHMM}}</span></li>
-                                <li *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount != servicedetails.totalAmount"><span class="service-li-title">Amount Required Now <i class="fa fa-info-circle"
+                                <li *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount"><span class="service-li-title">Amount Required Now <i class="fa fa-info-circle"
                                     [matTooltip]="servicedetails.paymentDescription"></i></span><br/><span class="bold price rupee-font">{{servicedetails.minPrePaymentAmount  | currency:'&#8377;'}}</span></li>
                                 <li *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0"><span class="service-li-title">Service Fee</span><br /><span class="bold price rupee-font">{{servicedetails.totalAmount | currency:'&#8377;'}}</span></li>
                             </ul>

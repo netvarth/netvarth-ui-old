@@ -569,6 +569,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     this.qr_code_oId = true;
     this.cdref.detectChanges();
     setTimeout(() => {
+      if(this.qrCodeParent){
       this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
       console.log(this.qrCodePath);
       this.angular_meta.addTags([
@@ -578,6 +579,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
         { property: 'og:description', content: this.bProfile.businessDesc },
 
       ]);
+    }
     }, 50);
   }
   generateQR(id,userid) {

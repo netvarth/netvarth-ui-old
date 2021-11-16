@@ -30,6 +30,16 @@
                                     <app-field-error-display [displayError]="showError['gstnumber']['status']"
                                         [errorMsg]="showError['gstnumber']['msg']"></app-field-error-display>
                                 </div>
+                                <div class="form-group gstval border-style">
+                                    <label class="caption">Enter Name as in GST
+                                      </label>
+                                    <mat-form-field *ngIf="showEditSection || !allFieldsExists">
+                                        <input matInput [(ngModel)]="gstname" id="name" >
+                                    </mat-form-field>
+                                 <label *ngIf="!showEditSection && allFieldsExists"> {{gstname}}</label>
+                                      <!--  <app-field-error-display [displayError]="showError['gstnumber']['status']"
+                                        [errorMsg]="showError['gstnumber']['msg']"></app-field-error-display> -->
+                                </div>
                                 <div class="form-group border-style">
                                     <label class="caption">{{tax_percentage_cap}}</label>
                                     <mat-form-field *ngIf="showEditSection || !allFieldsExists">

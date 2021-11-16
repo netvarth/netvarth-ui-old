@@ -967,6 +967,12 @@ input[type=checkbox]:not(old):checked + label > span:before {
   height:25px !important;
   float: left;
 }
+.association_icon {
+  content:    url(../../../../../assets/images/home/signup/Group.png);
+  width: 25px !important;
+  height:25px !important;
+  float: left;
+}
 .other_icon {
   content:    url(../../../../../assets/images/home/signup/support.png);
   width: 25px !important;

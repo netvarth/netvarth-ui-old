@@ -144,6 +144,7 @@ export class ProvidersignupComponent implements OnInit {
     professionalConsulting: 'assets/images/home/Proffesional.jpg',
     personalCare: 'assets/images/home/personal-care.jpg',
     healthCare: 'assets/images/home/HealthCare.jpg',
+    communitySocietyAssociation : 'assets/images/home/Group.png',
     retailStores: 'assets/images/home/supermarket-01.png',
     otherMiscellaneous: '',
     educationalInstitution: 'assets/images/home/Education-01.svg',

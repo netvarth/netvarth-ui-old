@@ -265,10 +265,10 @@ export class PrintBookingDetailsComponent implements OnInit {
     if (Object.keys(answerLine)[0] === 'fileUpload') {
       let filesuploaded = '';
       for (let file of answerLine.fileUpload) {
-        if (file.originalName) {
-          filesuploaded += file.originalName + ',';
+        if (file.caption) {
+          filesuploaded += file.caption + ',';
         } else {
-          filesuploaded += file.keyName + ',';
+          filesuploaded += file.originalName + ',';
         }
 
       }
