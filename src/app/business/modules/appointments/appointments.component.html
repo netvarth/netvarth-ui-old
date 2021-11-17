@@ -1385,7 +1385,7 @@
                 </table>
               </div>
             </div>
-          </mat-tab>
+          </mat-tab> 
           <mat-tab label="Future ({{future_waitlist_count}})">
             <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
             <div *ngIf="!loading">
@@ -1472,51 +1472,6 @@
                                     class="filterTextbox filter-textbox" (keyup)="keyPressed()"
                                     placeholder="Enter {{customerIdTooltip | capitalizeFirst}}">
                                 </li>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="card" >
-                          <div class="card-header">
-                            <h2 class="mb-0">
-                              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePhNo3" aria-expanded="false">
-                                <div>
-                                  <div style="display: inline-block !important;">
-                                    <i class="fa fa-phone"></i>
-                                  </div>
-                                  <span>&nbsp;Phone Number</span>
-                                </div>
-                                <i class="fa fa-angle-down"></i>
-                              </button>
-                            </h2>
-                          </div>
-                          <!-- <div id="collapsePhNo3" class="collapse in" data-parent="#accordion3">
-                            <div class="card-body">
-                              <div class="filterTextinput filter-text-input" >
-                                  <li class="filterli filter-li">
-                                      <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode (keyup)="keyPressed()"
-                                      class="filterTextbox change countryCodewidth" placeholder="+91">
-                                    <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
-                                      [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
-                                      (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
-                                      placeholder="9955668855">
-                                  </li>
-                              </div>
-                            </div>
-                          </div> -->
-
-
-                          <div id="collapsePhNo3" class="collapse in" data-parent="#accordion3">
-                            <div class="card-body">
-                              <div class="filterTextinput filter-text-input" >
-                                  <li class="filterli filter-li">
-                                      <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode (keyup)="keyPressed()"
-                                      class="filterTextbox change countryCodewidth" placeholder="+91">
-                                    <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
-                                      [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
-                                      (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
-                                      placeholder="9955668855">
-                                  </li>
                               </div>
                             </div>
                           </div>
@@ -2107,14 +2062,11 @@
                           <div id="collapsePhNo3" class="collapse in" data-parent="#accordion3">
                             <div class="card-body">
                               <div class="filterTextinput filter-text-input" *ngIf="time_type == 3">
-                                  <li class="filterli filter-li">
-                                      <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode (keyup)="keyPressed()"
-                                      class="filterTextbox change countryCodewidth" placeholder="+91">
-                                    <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
-                                      [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
-                                      (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
-                                      placeholder="9955668855">
-                                  </li>
+                                <li class="filterli filter-li">
+                                  <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number" #Fmobile
+                                    (keypress)="isNumeric($event)" (keyup)="keyPressed()"
+                                    maxlength="10" class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
+                                </li>
                               </div>
                             </div>
                           </div>
@@ -2129,7 +2081,7 @@
                                   </div>
                                   <span>&nbsp;Booking ID</span>
                                 </div>
-                                <i class="fa fa-angle-down"></i> 
+                                <i class="fa fa-angle-down"></i>
                               </button>
                             </h2>
                           </div>
@@ -2386,21 +2338,6 @@
               <table class="table tbl-qboard childDetails singleDash">
                 <thead id="childActionBar" *ngIf="check_in_filtered_list.length > 1 || apptMultiSelection">
                   <tr>
-                    <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="5">
-                      <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
-                        (click)="stopprop($event)" (change)="selectAllAppoinments()" [(ngModel)]="chkSelectAppointments"
-                        [ngModelOptions]="{standalone: true}" />
-                      <label class="selectall"> Select all</label>
-                      <!--  -->
-                      <a  *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor act-btn"
-                        (click)="showCheckinActions(statusAction)" [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
-                        Actions <i class="fa fa-caret-down"></i>
-                      </a>
-                    </th>
-                  </tr>
-                </thead>
-                <!-- <thead id="childActionBar" *ngIf="check_in_filtered_list.length > 1 || apptMultiSelection">
-                  <tr>
                     <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="3">
                       <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
                         (click)="stopprop($event)" (change)="selectAllAppoinments()" [(ngModel)]="chkSelectAppointments"
@@ -2415,7 +2352,7 @@
                     <th class="childActionBar" colspan="2">
                     </th>
                   </tr>
-                </thead> -->
+                </thead>
                 <tbody *ngIf="!loading && check_in_filtered_list.length == 0">
                   <tr>
                     <td colspan="5" class="no-appt">
@@ -2427,14 +2364,9 @@
                   <tr class="pointer-cursor" [class.user-tr-backclr]="appt.provider" (click)="goCheckinDetail(appt)"
                     *ngFor="let appt of check_in_filtered_list, let i=index">
                     <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
-                      
                       <input *ngIf="appt.providerConsumer" [checked]="chkAppointments[i]" type="checkbox"
                         class="ckbx pull-left" (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
                     </td>
-                    <!-- <td class="chkWth" *ngIf="check_in_filtered_list.length > 1">
-                      <input type="checkbox" class="ckbx pull-left" [checked]="chkAppointments[i]" (click)="stopprop($event)"
-                        (change)="chkAptHistoryClicked(i, checkin)" />
-                    </td> -->
                     <td class="parent-selection parent-title td-one">
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                         *ngIf="time_type!=1">
