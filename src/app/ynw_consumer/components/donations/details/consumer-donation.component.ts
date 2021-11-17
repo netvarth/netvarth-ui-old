@@ -661,7 +661,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                     this.paywithRazorpay(pData);
                 } else {
                     if (pData['response']) {
-                        this.payWithPayTM(pData);
+                        this.payWithPayTM(pData,this.account_id);
                         // this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
                         // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
                         // setTimeout(() => {
@@ -696,12 +696,15 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.isClickedOnce=false;
         this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uid, null, this.account_id, null, null, this.customId);
     }
-    payWithPayTM(pData:any) {
+    payWithPayTM(pData:any,accountId:any) {
         this.loadingPaytm = true;
-        this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
+        this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL,accountId, this);
     }
-    transactionCompleted(response) {
+    transactionCompleted(response,payload,accountId) {
         if(response.STATUS == 'TXN_SUCCESS'){
+            this.paytmService.updatePaytmPay(payload, accountId)
+            .then((data) => {
+                if(data){
             this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
             let queryParams = {
                 account_id: this.account_id,
@@ -718,7 +721,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 queryParams: queryParams
                 };
                 this.ngZone.run(() => this.router.navigate(['consumer', 'donations', 'confirm'], navigationExtras));
-        } else if(response.STATUS == 'TXN_FAILURE'){
+            }
+       })     } else if(response.STATUS == 'TXN_FAILURE'){
             this.isClickedOnce=false;
             this.loadingPaytm = false;
                 this.cdRef.detectChanges();

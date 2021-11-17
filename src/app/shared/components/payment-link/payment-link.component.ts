@@ -174,12 +174,12 @@ export class PaymentLinkComponent implements OnInit {
             this.uuid = this.bill_data.uuid;
             this.accountId = this.bill_data.accountId;
             this.countryCode = this.bill_data.billFor.countryCode;
-           
+
           }
           if (this.bill_data && this.bill_data.accountId === 0) {
             this.razorpayEnabled = true;
           }
-          else{
+          else {
             this.getPaymentModes();
           }
           if (this.bill_data.accountProfile.providerBusinessName) {
@@ -197,14 +197,14 @@ export class PaymentLinkComponent implements OnInit {
                 }
               );
           }
-          if(this.bill_data && this.bill_data.discount){
+          if (this.bill_data && this.bill_data.discount) {
             for (let i = 0; i < this.bill_data.discount.length; i++) {
               if (this.bill_data.discount[i].displayNote) {
                 this.discountDisplayNotes = true;
               }
             }
           }
-          
+
           if (this.bill_data.displayNotes || this.discountDisplayNotes) {
             this.billNoteExists = true;
           }
@@ -212,7 +212,7 @@ export class PaymentLinkComponent implements OnInit {
             this.refund_value = Math.abs(this.bill_data.amountDue);
           }
           this.getBillDateandTime();
-         
+
         },
         error => {
         },
@@ -306,7 +306,7 @@ export class PaymentLinkComponent implements OnInit {
         if (this.pGateway === 'RAZORPAY') {
           this.paywithRazorpay(data);
         } else {
-          this.payWithPayTM(data);
+          this.payWithPayTM(data, this.accountId);
         }
       },
         error => {
@@ -339,20 +339,25 @@ export class PaymentLinkComponent implements OnInit {
       }
     );
   }
-  payWithPayTM(pData: any) {
+  payWithPayTM(pData: any, accountId: any) {
     this.isClickedOnce = true;
     this.loadingPaytm = true;
-    this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
+    this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
   }
-  transactionCompleted(response) {
+  transactionCompleted(response, payload, accountId) {
     if (response.STATUS == 'TXN_SUCCESS') {
-      this.paidStatus = 'true';
-      this.order_id = response.ORDERID;
-      this.payment_id = response.TXNID;
-      this.loadingPaytm = false;
-      this.cdRef.detectChanges();
-      this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-      this.ngZone.run(() => console.log('Transaction success'));
+      this.paytmService.updatePaytmPay(payload, accountId)
+        .then((data) => {
+          if (data) {
+            this.paidStatus = 'true';
+            this.order_id = response.ORDERID;
+            this.payment_id = response.TXNID;
+            this.loadingPaytm = false;
+            this.cdRef.detectChanges();
+            this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+            this.ngZone.run(() => console.log('Transaction success'));
+          }
+        })
     } else if (response.STATUS == 'TXN_FAILURE') {
       this.isClickedOnce = false;
       this.paidStatus = 'false';

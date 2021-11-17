@@ -1142,8 +1142,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
 
-    transactionCompleted(response) {
+    transactionCompleted(response,payload,accountId) {
         if (response.STATUS == 'TXN_SUCCESS') {
+             this.paytmService.updatePaytmPay(payload, accountId)
+             .then((data) => {
+                 if(data){
             this.isClickedOnce = false;
             this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
             let multiple;
@@ -1168,6 +1171,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 queryParams: queryParams
             };
             this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras));
+        }
+        });
         } else if (response.STATUS == 'TXN_FAILURE') {
             this.isClickedOnce = false;
             this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
@@ -2321,7 +2326,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 .subscribe((pData: any) => {
                     if (pData.isGateWayPaymentNeeded && pData.isJCashPaymentSucess) {
                         if (paymentMode == 'PPI') {
-                            this.payWithPayTM(pData.response);
+                            this.payWithPayTM(pData.response,this.account_id);
                         } else {
                             this.paywithRazorpay(pData.response);
                         }
@@ -2340,7 +2345,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         this.paywithRazorpay(pData);
                     } else {
                         if (pData['response']) {
-                            this.payWithPayTM(pData);                           
+                            this.payWithPayTM(pData,this.account_id);                           
                         } else {
                             this.isClickedOnce = false;
                             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
@@ -2367,9 +2372,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.isClickedOnce = false;
         this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'checkin_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList, this.customId, this.from);
     }
-    payWithPayTM(pData: any) {
+    payWithPayTM(pData: any,accountId:any) {
         this.loadingPaytm = true;
-        this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
+        this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL,accountId, this);
     }
     getImage(url, file) {
         if (file.type == 'application/pdf') {

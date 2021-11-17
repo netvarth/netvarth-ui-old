@@ -2162,7 +2162,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
                     if (pData.isGateWayPaymentNeeded == true && pData.isJCashPaymentSucess == true) {
                         if (paymentMode == 'PPI') {
-                            this.payWithPayTM(pData.response);
+                            this.payWithPayTM(pData.response,this.account_id);
                         } else {
                             this.paywithRazorpay(pData.response);
                         }
@@ -2175,14 +2175,16 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     });
         }
         else {
+            console.log('waitlistDetails'+JSON.stringify(this.waitlistDetails));
             this.subs.sink = this.shared_services.consumerPayment(this.waitlistDetails)
                 .subscribe((pData: any) => {
+                    console.log(pData);
                     this.pGateway = pData.paymentGateway;
                     if (this.pGateway === 'RAZORPAY') {
                         this.paywithRazorpay(pData);
                     } else {
                         if (pData['response']) {
-                            this.payWithPayTM(pData);
+                            this.payWithPayTM(pData,this.account_id);
                             // this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
                             // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
                             // setTimeout(() => {
@@ -2218,16 +2220,16 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.isClickedOnce = false;
         this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'appt_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList, this.customId,this.from);
     }
-    payWithPayTM(pData: any) {
+    payWithPayTM(pData: any,accountId:any) {
         this.loadingPaytm = true;
-        this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
+        this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
     }
     getImage(url, file) {
         if (file.type == 'application/pdf') {
             return '../../../../../assets/images/pdf.png';
         } else {
             return url;
-        }
+        } 
     }
 
     viewAttachments() {
@@ -2367,8 +2369,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras);
         }
     }
-    transactionCompleted(response) {
+    transactionCompleted(response,payload,accountId) {
         if (response.STATUS == 'TXN_SUCCESS') {
+            this.paytmService.updatePaytmPay(payload, accountId)
+            .then((data) => {
+                if(data){
             this.isClickedOnce = false;
             this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
             let queryParams = {
@@ -2386,6 +2391,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 queryParams: queryParams
             };
             this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras));
+        }
+        })
         } else if (response.STATUS == 'TXN_FAILURE') {
             this.isClickedOnce = false;
             this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
