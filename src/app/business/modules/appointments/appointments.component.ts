@@ -1807,22 +1807,22 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const label_status = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm(status));
     return label_status;
   }
-  selectAllAppoinments() {
-    this.appointmentsChecked = {};
-    this.chkAppointments = {};
-    if (this.chkSelectAppointments) {
-      this.apptMultiSelection = true;
-      for (let aIndex = 0; aIndex < this.check_in_filtered_list.length; aIndex++) {
-        if (this.check_in_filtered_list[aIndex].consumer) {
-          this.chkAptHistoryClicked(aIndex, this.check_in_filtered_list[aIndex]);
-        }
-      }
-    } else {
-      this.apptSingleSelection = false;
-      this.apptMultiSelection = false;
-      this.activeAppointment = null;
-    }
-  }
+  // selectAllAppoinments() {
+  //   this.appointmentsChecked = {};
+  //   this.chkAppointments = {};
+  //   if (this.chkSelectAppointments) {
+  //     this.apptMultiSelection = true;
+  //     for (let aIndex = 0; aIndex < this.check_in_filtered_list.length; aIndex++) {
+  //       if (this.check_in_filtered_list[aIndex].consumer) {
+  //         this.chkAptHistoryClicked(aIndex, this.check_in_filtered_list[aIndex]);
+  //       }
+  //     }
+  //   } else {
+  //     this.apptSingleSelection = false;
+  //     this.apptMultiSelection = false;
+  //     this.activeAppointment = null;
+  //   }
+  // }
   // selectAllAppoinments() {
   //   this.appointmentsChecked = {};
   //   this.chkAppointments = {};
@@ -1838,6 +1838,23 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   //     this.activeAppointment = null;
   //   }
   // }
+
+
+  selectAllAppoinments() {
+    this.appointmentsChecked = {};
+    this.chkAppointments = {};
+    if (this.chkSelectAppointments) {
+      for (let aIndex = 0; aIndex < this.check_in_filtered_list.length; aIndex++) {
+        if (this.check_in_filtered_list[aIndex].providerConsumer) {
+          this.chkAptHistoryClicked(aIndex, this.check_in_filtered_list[aIndex]);
+        }
+      }
+    } else {
+      this.apptSingleSelection = false;
+      this.apptMultiSelection = false;
+      this.activeAppointment = null;
+    }
+  }
   chkAptClicked(appt) {
     const indx = this.check_in_filtered_list.indexOf(appt);
     this.chkAptHistoryClicked(indx, appt);

@@ -1385,7 +1385,7 @@
                 </table>
               </div>
             </div>
-          </mat-tab>
+          </mat-tab>   
           <mat-tab label="Future ({{future_waitlist_count}})">
             <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
             <div *ngIf="!loading">
@@ -2386,16 +2386,18 @@
               <table class="table tbl-qboard childDetails singleDash">
                 <thead id="childActionBar" *ngIf="check_in_filtered_list.length > 1 || apptMultiSelection">
                   <tr>
-                    <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="5">
+                    <th class="chkWth check-table-head" *ngIf="check_in_filtered_list.length > 1" colspan="3">
                       <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
                         (click)="stopprop($event)" (change)="selectAllAppoinments()" [(ngModel)]="chkSelectAppointments"
                         [ngModelOptions]="{standalone: true}" />
                       <label class="selectall"> Select all</label>
-                      <!--  -->
-                      <a  *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor act-btn"
-                        (click)="showCheckinActions(statusAction)" [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
+                      <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor act-btn"
+                        (click)="showCheckinActions(statusAction)" [matTooltipClass]="tooltipcls"
+                        [matTooltip]="'Actions'">
                         Actions <i class="fa fa-caret-down"></i>
                       </a>
+                    </th>
+                    <th class="childActionBar" colspan="2">
                     </th>
                   </tr>
                 </thead>
@@ -2416,6 +2418,7 @@
                     </th>
                   </tr>
                 </thead> -->
+                
                 <tbody *ngIf="!loading && check_in_filtered_list.length == 0">
                   <tr>
                     <td colspan="5" class="no-appt">

@@ -32,7 +32,8 @@ export class FolderFilesComponent implements OnInit {
     fileSize: '',
     fileName: '',
     fileType: '',
-    checkinEncId: '',
+    // checkinEncId: '',
+    contextId : '',
     folderName: '',
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1
@@ -95,7 +96,7 @@ export class FolderFilesComponent implements OnInit {
   }
   doSearch() {
     this.lStorageService.removeitemfromLocalStorage('userfilter');
-    if (this.filter.fileSize || this.filter.fileName || this.filter.fileType || this.filter.folderName || this.filter.checkinEncId || this.selectedLanguages.length > 0 || this.selectedLocations.length > 0 || this.selectedSpecialization.length > 0) {
+    if (this.filter.fileSize || this.filter.fileName || this.filter.fileType || this.filter.folderName || this.filter.contextId || this.selectedLanguages.length > 0 || this.selectedLocations.length > 0 || this.selectedSpecialization.length > 0) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -149,10 +150,13 @@ export class FolderFilesComponent implements OnInit {
     if (this.filter.folderName !== '') {
       api_filter['folderName-eq'] = this.filter.folderName;
     }
-
-    if (this.filter.checkinEncId !== '') {
-      api_filter['bookingId-eq'] = this.filter.checkinEncId;
+    
+    if (this.filter.contextId !== '') {
+      api_filter['contextId-eq'] = this.filter.contextId;
     }
+    // if (this.filter.contextId !== '') {
+    //   api_filter['bookingId-eq'] = this.filter.contextId;
+    // }
     if (this.selectedLanguages.length > 0) {
       api_filter['spokenlangs-eq'] = this.selectedLanguages.toString();
     }
@@ -218,7 +222,8 @@ export class FolderFilesComponent implements OnInit {
       fileSize: '',
       fileName: '',
       fileType: '',
-      checkinEncId: '',
+      // checkinEncId: '',
+      contextId : '',
       folderName: '',
       page_count: projectConstants.PERPAGING_LIMIT,
       page: 1
@@ -289,6 +294,7 @@ export class FolderFilesComponent implements OnInit {
         console.log(data);
         // this.Allfiles = data;
         this.customers = data
+        console.log("Uploaded Files : ",this.customers);
       }
     );
 

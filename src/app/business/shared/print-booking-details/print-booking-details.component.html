@@ -62,11 +62,14 @@
 
                                 </tr>
                                 <tr *ngIf="!isJaldeeId">
-                                    <td colspan="2" align="center"> {{customer_label| capitalizeFirst}}:
+                                    <td colspan="2" align="center"  *ngIf="customer.firstName === 'null' && customer.lastName === 'null' ">{{customer_label| capitalizeFirst}} Name #: NIL</td>
+
+                                    <td colspan="2" align="center" *ngIf="customer.firstName !== 'null' || customer.lastName !== 'null' "> {{customer_label| capitalizeFirst}} Name #:
                                         {{customerName}} </td>
 
                                 </tr>
                                 <tr *ngIf="isJaldeeId">
+
                                     <td colspan="2" align="center"> {{ customer_label|capitalizeFirst }} Id #:
                                         {{customerName}} </td>
 

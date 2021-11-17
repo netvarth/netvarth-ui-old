@@ -46,7 +46,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   };
   @ViewChild('modal') modal;
   imgCaptions: any = [];
-  choose_type = '';
+  choose_type = 'private';
   active_user: any;
   filter = {
     fileSize: '',
@@ -287,7 +287,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   actionCompleted() {
     console.log(this.action);
     if (this.action === 'attachment' && this.choose_type && this.selectedMessage) {
-      console.log(this.action);
+      console.log("After Click of OK Button :",this.action,this.choose_type,this.selectedMessage);
       const dataToSend: FormData = new FormData();
       const captions = {};
       let i = 0;
@@ -303,11 +303,11 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
             i++;
           }
         }
-        // this.selectedMessage = {
-        //   files: [],
-        //   base64: [],
-        //   caption: []
-        // }
+        this.selectedMessage = {
+          files: [],
+          base64: [],
+          caption: []
+        }
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
@@ -336,10 +336,10 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
       }
 
     }
-    // else{
-    //   alert('Please attach atleast one file.');
+    else{
+      alert('Please attach atleast one file.');
 
-    // }
+    }
 
     this.getfiles();
   }
@@ -388,8 +388,14 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   }
   changeType(event) {
 
-    this.choose_type = event.value;
 
+    if(event.value === 'private'){
+      this.choose_type = event.value;
+    }
+    else{
+      this.choose_type = event.value;
+
+    }
     // //this.choose_type = event.value;
     // if (event) {
     //    this.selectedFolder = event.value
@@ -401,7 +407,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     //   this.choose_type = event.value;
     // }
 
-    console.log(this.choose_type);
+    console.log("File Type : ",this.choose_type);
   }
   publicfolder(foldername) {
     const navigationExtras: NavigationExtras = {
