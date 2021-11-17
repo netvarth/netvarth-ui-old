@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { SubSink } from 'subsink';
 
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -37,7 +38,9 @@ export class ConsumerPaymentsComponent implements OnInit, OnDestroy {
         public dateformat: DateFormatPipe,
         private dateTimeProcessor: DateTimeProcessor,
         private activated_route: ActivatedRoute,
-        private shared_services: SharedServices) {
+        private shared_services: SharedServices,
+        public translate: TranslateService,
+        ) {
         this.subs.sink = this.activated_route.queryParams.subscribe(qparams => {
             if (qparams && qparams.accountId) {
                 this.accountId = qparams.accountId;
@@ -48,6 +51,8 @@ export class ConsumerPaymentsComponent implements OnInit, OnDestroy {
         });
     }
     ngOnInit() {
+        this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+
         this.breadcrumbs = [
             {
                 title: 'My Jaldee',

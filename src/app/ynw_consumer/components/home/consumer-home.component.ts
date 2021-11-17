@@ -31,6 +31,7 @@ import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
 import { AttachmentPopupComponent } from '../../../shared/components/attachment-popup/attachment-popup.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-consumer-home',
@@ -258,6 +259,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
+    public translate: TranslateService,
     private galleryService: GalleryService,
     private dateTimeProcessor: DateTimeProcessor,
     public _sanitizer: DomSanitizer) {
@@ -312,6 +314,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.translate.use(JSON.parse(localStorage.getItem('myData')))  
+
     // console.log(this.bookingStatusClasses);
     this.usr_details = this.groupService.getitemFromGroupStorage('ynw-user');
     this.login_details = this.lStorageService.getitemfromLocalStorage('ynw-credentials');

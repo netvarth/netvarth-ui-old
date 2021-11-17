@@ -11,7 +11,7 @@ import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scrol
 import { Meta, Title } from '@angular/platform-browser';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
-
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -56,8 +56,15 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     private lStorageService: LocalStorageService,
     private dateTimeProcessor: DateTimeProcessor,
     private titleService: Title,
-    private metaService: Meta
+    private metaService: Meta,
+      public translate: TranslateService,
   ) {
+
+
+
+
+
+    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
     this.evnt = routerobj.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (routerobj.url === '\/') {

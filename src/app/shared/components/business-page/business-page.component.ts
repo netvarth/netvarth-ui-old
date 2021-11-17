@@ -30,6 +30,8 @@ import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
 import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
+import { TranslateService } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-business-page',
   templateUrl: './business-page.component.html',
@@ -327,7 +329,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     private domainConfigService: DomainConfigGenerator,
     // private modalService: BsModalService,
     private dateTimeProcessor: DateTimeProcessor,
-    private s3Processor: S3UrlProcessor
+    private s3Processor: S3UrlProcessor,
+    public translate: TranslateService,
     // private customAppSerice: CustomAppService
   ) {
     // this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
@@ -385,6 +388,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+
     this.api_loading = true;
     this.accountIdExists = false;
     this.userId = null;

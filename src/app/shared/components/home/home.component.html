@@ -17,13 +17,18 @@
 								class="" /></a>
 					</div> -->
 					<div class="account-links ">
-						<a (click)="providerLinkClicked()" class="pointer-cursor"><span class="bus-page-rdbtn">Service
-								Provider Home</span></a>
+						<a (click)="providerLinkClicked()" class="pointer-cursor"><span class="bus-page-rdbtn">{{'Home' | translate}}</span></a>
 						<!-- <a href="https://business.jaldee.com/" class="pointer-cursor"><span class="bus-page-rdbtn">Business
 									Partner Zone</span></a> -->
 						<a class="pointer-cursor" class="login-link"><span class="cons_btn_login_top"
-								(click)="doLogin('consumer')">Log in</span> <span class="cons_btn_join_top"
-								(click)="doSignup('consumer')">Sign up</span></a>
+								(click)="doLogin('consumer')">{{'Log_in' | translate}}</span> <span class="cons_btn_join_top"
+								(click)="doSignup('consumer')">{{'Sign_up' | translate}}</span></a>
+						<!-- <a  class="pointer-cursor ">
+							<span (click)="changeLocale('en')" >English | </span>
+							<span (click)="changeLocale('hd')" > Hindi </span>
+						</a> -->
+						
+
 					</div>
 					<!-- <div class="account-links col-xs-12 col-sm-12">
 						<a href="# " class="pointer-cursor pull-left">Business Partner Zone</a>
@@ -46,12 +51,12 @@
 					<div class="col-12 no-padding">
 						<div class="col-xs-12  col-sm-12 no-padding">
 							<a class="pointer-cursor" class="login-link d-block pull-right">
-								<span class="cons_btn_login_top" (click)="doLogin('consumer')">Log in</span>
-								<span class="cons_btn_join_top" (click)="doSignup('consumer')">Sign up</span></a>
+								<span class="cons_btn_login_top" (click)="doLogin('consumer')">{{'Log_in' | translate}}</span>
+								<span class="cons_btn_join_top" (click)="doSignup('consumer')">{{'Sign_up' | translate}}</span></a>
 						</div>
 						<div class="col-xs-12 col-sm-12 no-padding mgn-up-20">
 							<a (click)="providerLinkClicked()" class="pointer-cursor d-block pull-right">
-								<span class="bus-page-rdbtn">Service Provider Home</span></a>
+								<span class="bus-page-rdbtn">{{'Home' | translate}}</span></a>
 							<!-- <a href="https://business.jaldee.com/" class="pointer-cursor d-block pull-right">
 								<span class="bus-page-rdbtn">Business Partner Zone</span></a> -->
 						</div>
@@ -74,7 +79,7 @@
 				<div class="col-md-12 col-xs-12 col-sm-12 no-padding-small">
 					<div class="sa" *ngIf="domain_obtained==true">
 						<div class="account-links">
-							<h2>Avoid Waiting in Queues</h2>
+							<h2>{{'Avoid_msg' | translate}}</h2>
 							<!-- <h5>Find Service Provider</h5> -->
 							<ng-container>
 								<app-search [showopennow]="0" [searchfields]="searchfields"
@@ -151,7 +156,7 @@
 						<!-- <section id="reviews"> -->
 						<div class="col-md-12">
 							<div style="text-align: center;margin-bottom: 20px;">
-								<a href="https://t.me/JaldeeBot" target="_blank" class="book_telgrm_btn"><span class="svg-icon"><i class="fa fa-telegram"></i></span>Book on Telegram</a>
+								<a href="https://t.me/JaldeeBot" target="_blank" class="book_telgrm_btn"><span class="svg-icon"><i class="fa fa-telegram"></i></span>{{'Book_telegram' | translate}}</a>
 
 							</div>
 
@@ -166,7 +171,7 @@
 								<!-- <h2 class="section-title">Jaldee News</h2> -->
 								<!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p> -->
 							</div>
-							<owl-carousel [options]="carouselOne" [carouselClasses]="['owl-carousel', 'owl-theme']">
+							<owl-carousel  [options]="carouselOne" [carouselClasses]="['owl-carousel', 'owl-theme']">
 								<div class="item  review-card text-center">
 									<!-- <div class="customer-avatar">
 											<img src="assets/images/home/client.png" alt="client-avatar" />
@@ -230,6 +235,10 @@
 									</div>
 								</div>
 							</owl-carousel>
+							
+
+
+
 						</div>
 						<!-- </section> -->
 						<!-- <ul>
@@ -256,43 +265,43 @@
 		<section id="working">
 			<div class="container">
 				<div class="section-header text-center">
-					<h2 class="section-title">How Jaldee Works</h2>
+					<h2 class="section-title">{{'How_Jaldee_work' | translate}}</h2>
 				</div>
 				<div id="steps-row" class="row">
 					<div class="col-lg col-sm-6 text-center step mb-5">
 						<div class="step-icon"><img src="assets/images/home/step1.png" alt="Find" /></div>
-						<h5>Find</h5>
+						<h5>{{'Find' | translate}}</h5>
 						<ul class="list-unstyled">
-							<li>Doctors</li>
-							<li>Professionals</li>
-							<li>Beauty and more</li>
+							<li>{{'Doctors' | translate}}</li>
+							<li>{{'Professionals' | translate}} </li>
+							<li>{{'Beauty and more' | translate}}</li>
 						</ul>
 					</div>
 					<div class="col-lg col-sm-6 text-center step mb-5">
 						<div class="step-icon"><img src="assets/images/home/step2.png" alt="Book" /></div>
-						<h5>Book</h5>
+						<h5>{{'Book' | translate}}</h5>
 						<ul class="list-unstyled">
-							<li>Appointment</li>
-							<li>Queue Token</li>
-							<li>Online Check-in</li>
+							<li>{{'Appointment' | translate}}</li>
+							<li>{{'Queue Token' | translate }}</li>
+							<li>{{'Online Check-in' |translate }}</li>
 						</ul>
 					</div>
 					<div class="col-lg col-sm-6 text-center step mb-5">
 						<div class="step-icon"><img src="assets/images/home/step3.png" alt="Alert" /></div>
-						<h5>Get Alerts</h5>
+						<h5>{{'Get Alerts' | translate}}</h5>
 						<ul class="list-unstyled">
-							<li>Reminders</li>
-							<li>Current waiting time</li>
-							<li>Real-time status</li>
+							<li>{{'Reminders' | translate}}</li>
+							<li>{{'Current waiting time' | translate}}</li>
+							<li>{{'Real-time status' | translate}}</li>
 						</ul>
 					</div>
 					<div class="col-lg col-sm-6 text-center step mb-5">
 						<div class="step-icon"><img src="assets/images/home/step4.png" alt="Pay" /></div>
-						<h5>Pay</h5>
+						<h5>{{'Pay' | translate}}</h5>
 						<ul class="list-unstyled">
-							<li>Mobile pay</li>
-							<li>Contactless receipts</li>
-							<li>SMS/Email Pay</li>
+							<li>{{'Mobile pay' | translate}}</li>
+							<li>{{'Contactless receipts' | translate}}</li>
+							<li>{{'SMS/Email Pay' | translate}}</li>
 						</ul>
 					</div>
 				</div>
@@ -329,69 +338,69 @@
 		<section id="services">
 			<div class="container">
 				<div class="section-header text-center">
-					<h3>You don’t have to wait in lines to get a quality service!</h3>
-					<h2 class="section-title">Not anymore! <strong>Jaldee Karo!</strong></h2>
+					<h3>{{'Jaldee_msg' | translate}}</h3>
+					<h2 class="section-title">{{'Not anymore!' | translate}} <strong>{{'Jaldee Karo!' | translate}}</strong></h2>
 				</div>
 
 				<div id="services-list" class="row no-gutters">
 					<ul class="col-md">
 						<li>
-							<div class="servicelist-icon icon-1"></div>Find services nearby
+							<div class="servicelist-icon icon-1"></div>{{'Find services nearby' | translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-2"></div>Get online token
+							<div class="servicelist-icon icon-2"></div>{{'Get online token' | translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-3"></div>Book an appointment
+							<div class="servicelist-icon icon-3"></div>{{'Book an appointment' | translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-4"></div>Check-in to a queue from anywhere
+							<div class="servicelist-icon icon-4"></div>{{'Check-in to a queue from anywhere' | translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-5"></div>Take a video call with your Doctor
+							<div class="servicelist-icon icon-5"></div>{{'Take a video call with your Doctor' | translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-6"></div>Book home services
+							<div class="servicelist-icon icon-6"></div>{{'Book home services' | translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-7"></div>Get real-time status alerts
-						</li>
-					</ul>
-					<ul class="col-md">
-						<li>
-							<div class="servicelist-icon icon-8"></div>Check your waiting time and delay
-						</li>
-						<li>
-							<div class="servicelist-icon icon-9"></div>Get traffic live alerts & know when to leave
-						</li>
-						<li>
-							<div class="servicelist-icon icon-10"></div>Auto share your arrival time
-						</li>
-						<li>
-							<div class="servicelist-icon icon-11"></div>Do online enquiries before you visit
-						</li>
-						<li>
-							<div class="servicelist-icon icon-12"></div>Do it all while protecting your privacy
-						</li>
-						<li>
-							<div class="servicelist-icon icon-13"></div>Pay for your services using your phone
-						</li>
-						<li>
-							<div class="servicelist-icon icon-14"></div>Contactless receipts & billing
+							<div class="servicelist-icon icon-7"></div>{{'Get real-time status alerts' | translate}}
 						</li>
 					</ul>
 					<ul class="col-md">
 						<li>
-							<div class="servicelist-icon icon-15"></div>No convenience charges, never pay here!!
+							<div class="servicelist-icon icon-8"></div>{{'Check your waiting time and delay' | translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-16"></div>Use Jaldee Mobile Apps or browser UI
+							<div class="servicelist-icon icon-9"></div>{{'Get traffic live alerts & know when to leave' | translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-17"></div>Favorite your service providers
+							<div class="servicelist-icon icon-10"></div>{{'Auto share your arrival time' | translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-18"></div>Get coupons and discounts
+							<div class="servicelist-icon icon-11"></div>{{'Do online enquiries before you visit' | translate}}
+						</li>
+						<li>
+							<div class="servicelist-icon icon-12"></div>{{'Do it all while protecting your privacy' | translate}}
+						</li>
+						<li>
+							<div class="servicelist-icon icon-13"></div>{{'Pay for your services using your phone' | translate}}
+						</li>
+						<li>
+							<div class="servicelist-icon icon-14"></div>{{'Contactless receipts & billing' | translate}}
+						</li>
+					</ul>
+					<ul class="col-md">
+						<li>
+							<div class="servicelist-icon icon-15"></div>{{'No convenience charges, never pay here!!' | translate}}
+						</li>
+						<li>
+							<div class="servicelist-icon icon-16"></div>{{'Use Jaldee Mobile Apps or browser UI' | translate}}
+						</li>
+						<li>
+							<div class="servicelist-icon icon-17"></div>{{'Favorite your service providers' | translate}}
+						</li>
+						<li>
+							<div class="servicelist-icon icon-18"></div>{{'Get coupons and discounts' | translate}}
 						</li>
 					</ul>
 				</div>
@@ -402,7 +411,7 @@
 			<div class="container">
 				<div class="section-header text-center">
 					<img src="assets/images/home/logo-blue.png" alt="Jaldee" />
-					<h2 class="section-title">Explore Services</h2>
+					<h2 class="section-title">{{'Explore Services' | translate}}</h2>
 					<!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p> -->
 				</div>
 				<div id="services-grid" class="row">
@@ -413,8 +422,8 @@
 									class="img-fluid" />
 							</div>
 							<div class="service-overlay text-center">
-								<h3 class="service-title">Healthcare</h3>
-								<p>[Doctors, Dentists, Labs, Radiology, Ayurvedic, Naturopathy, homeopathy, Veterinary]
+								<h3 class="service-title">{{'Healthcare' | translate}}</h3>
+								<p>{{'Healthcare_list' | translate}}
 								</p>
 							</div>
 						</div>
@@ -426,8 +435,8 @@
 									class="img-fluid" />
 							</div>
 							<div class="service-overlay text-center">
-								<h3 class="service-title">Personal Care</h3>
-								<p>[Hair Salons, Spa, Massage, Fitness, Beauty care, more]</p>
+								<h3 class="service-title">{{'Personal Care' | translate}}</h3>
+								<p>{{'Personal Care_list' | translate}}</p>
 							</div>
 						</div>
 					</div>
@@ -438,8 +447,8 @@
 									class="img-fluid" />
 							</div>
 							<div class="service-overlay text-center">
-								<h3 class="service-title">Food and Beverage</h3>
-								<p>[Dine-in, Takeaway]</p>
+								<h3 class="service-title">{{'Food and Beverage' | translate}}</h3>
+								<p>{{'Food and Beverage_list' | translate}}</p>
 							</div>
 						</div>
 					</div>
@@ -450,8 +459,8 @@
 									class="img-fluid" />
 							</div>
 							<div class="service-overlay text-center">
-								<h3 class="service-title">Professionals</h3>
-								<p>[Accountants, Tax Consultants, Lawyers, Architects, more]</p>
+								<h3 class="service-title">{{'Professional' | translate}}</h3>
+								<p>{{'Professionals_list' | translate}}</p>
 							</div>
 						</div>
 					</div>
@@ -461,8 +470,8 @@
 								<img src="assets/images/home/service-home.jpg" alt="Home Services" class="img-fluid" />
 							</div>
 							<div class="service-overlay text-center">
-								<h3 class="service-title">Local business</h3>
-								<p>[Plumbers, Electricians, Painters, Carpenters, more]</p>
+								<h3 class="service-title">{{'Local business' | translate}}</h3>
+								<p>{{'Local business_list' | translate}}</p>
 							</div>
 						</div>
 					</div>
@@ -473,8 +482,8 @@
 									class="img-fluid" />
 							</div>
 							<div class="service-overlay text-center">
-								<h3 class="service-title">Religious, Vaastu & Astrology</h3>
-								<p>[Temples, Priests, Ceremonies, more]</p>
+								<h3 class="service-title">{{'Religious, Vaastu & Astrology' | translate}}</h3>
+								<p>{{'Religious, Vaastu & Astrology_list' | translate}}</p>
 							</div>
 						</div>
 					</div>
@@ -484,7 +493,7 @@
 		<section id="apps">
 			<div class="container">
 				<div class="section-header text-center">
-					<h2 class="section-title">Get Jaldee App now</h2>
+					<h2 class="section-title">{{'Get Jaldee App now' | translate}}</h2>
 				</div>
 				<div class="section-app text-center">
 					<a class="button1" href="https://play.google.com/store/apps/details?id=com.jaldeeinc.jaldee"><img
@@ -514,15 +523,15 @@
 					<img src="assets/images/home/service-provider.jpg" alt="Service Provider"
 						class="img-fluid cta-image">
 					<div class="cta-content">
-						<h2 class="cta-title">Are you a <br>Service Provider?</h2>
-						<a routerLink="/business" class="btn cta-btn">Learn More</a>
+						<h2 class="cta-title">{{'Are you a' | translate}} <br>{{'Service Provider?' | translate}}</h2>
+						<a routerLink="/business" class="btn cta-btn">{{'Learn More' | translate}}</a>
 					</div>
 				</div>
 				<div class="cta col-lg-6">
 					<img src="assets/images/home/business.jpg" alt="Business Owner" class="img-fluid cta-image">
 					<div class="cta-content">
-						<h2 class="cta-title">Are you a <br>Business Owner?</h2>
-						<a routerLink="/business" class="btn cta-btn">Learn More</a>
+						<h2 class="cta-title">{{'Are you a' | translate}} <br> {{'Business Owner?' | translate}}</h2>
+						<a routerLink="/business" class="btn cta-btn">{{'Learn More' | translate}}</a>
 					</div>
 				</div>
 			</div>
@@ -537,50 +546,45 @@
 				<div class="row">
 					<div class="col-lg-3 footer-col footer-col-1">
 						<div>
-							<h4>Jaldee</h4>
+							<h4>{{'Jaldee' | translate}}</h4>
 							<ul class="menu">
-								<!-- <li><a class="pointer-cursor" [routerLink]="['/home/aboutus']" target="_blank">About</a>
-								</li> -->
-								<li>
-									<a class="pointer-cursor" href="https://contact.jaldee.com">Contact</a>
-									<!-- <a class="pointer-cursor" [routerLink]="['/home/contact']"
-										target="_blank">Contact</a> -->
-									</li>
-								<li><a class="pointer-cursor" [routerLink]="['/terms']" target="_blank">Terms</a></li>
+								<li><a class="pointer-cursor" href="https://contact.jaldee.com"
+										target="_blank">{{'Contact' | translate}}</a></li>
+								<li><a class="pointer-cursor" [routerLink]="['/terms']" target="_blank">{{'Terms' | translate}}</a></li>
 							</ul>
 						</div>
 					</div>
 					<div class="col-lg-3 footer-col footer-col-2">
 						<div>
-							<h4>Solutions</h4>
+							<h4>{{'Solutions' | translate}}</h4>
 							<ul class="menu">
-								<li><a routerLink="/business">Healthcare</a></li>
-								<li><a routerLink="/business">Personal Care</a></li>
-								<li><a routerLink="/business">Banks/Finance</a></li>
-								<li><a routerLink="/business">Corporates</a></li>
-								<li><a routerLink="/business">Supermarkets/Retail</a></li>
-								<li><a routerLink="/business">Professionals</a></li>
-								<li><a routerLink="/business">Restaurants</a></li>
+								<li><a routerLink="/business">{{'Healthcare' | translate}}</a></li>
+								<li><a routerLink="/business">{{'Personal Care' | translate}}</a></li>
+								<li><a routerLink="/business">{{'Banks/Finance' | translate}}</a></li>
+								<li><a routerLink="/business">{{'Corporates' | translate}}</a></li>
+								<li><a routerLink="/business">{{'Supermarkets/Retail' | translate}}</a></li>
+								<li><a routerLink="/business">{{'Professionals' | translate}}</a></li>
+								<li><a routerLink="/business">{{'Restaurants' | translate}}</a></li>
 							</ul>
 						</div>
 					</div>
 					<div class="col-lg-3 footer-col footer-col-3">
 						<div>
-							<h4>Jaldify Now</h4>
+							<h4>{{'Jaldify Now' | translate}}</h4>
 							<ul class="menu">
-								<li><a routerLink="/business">List your business</a></li>
-								<li><a routerLink="/business">Become Jaldee Partner</a></li>
-								<li><a routerLink="/business/pricing">Pricing</a></li>
-								<li><a href="https://demo.jaldee.com/">Ask for a demo</a></li>
-								<li><a [routerLink]="['/home/contact']" target="_blank">Support</a></li>
+								<li><a routerLink="/business">{{'List your business' | translate}}</a></li>
+								<li><a routerLink="/business">{{'Become Jaldee Partner' | translate}}</a></li>
+								<li><a routerLink="/business/pricing">{{'Pricing' | translate}}</a></li>
+								<li><a href="https://demo.jaldee.com/">{{'Ask for a demo' | translate}}</a></li>
+								<li><a [routerLink]="['/home/contact']" target="_blank">{{'Support' | translate}}</a></li>
 							</ul>
 						</div>
 					</div>
 					<div class="col-lg-3 footer-col footer-col-4">
 						<div>
-							<h4>Resources</h4>
+							<h4>{{'Resources' | translate}}</h4>
 							<ul class="menu">
-								<li><a href="https://www.youtube.com/channel/UCZD8V1OapzlaS5eNET9x3mg">Videos</a></li>
+								<li><a href="https://www.youtube.com/channel/UCZD8V1OapzlaS5eNET9x3mg">{{'Videos' | translate}}</a></li>
 							</ul>
 						</div>
 					</div>

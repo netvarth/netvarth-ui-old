@@ -1,7 +1,7 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, APP_INITIALIZER, ErrorHandler, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, Injector } from '@angular/core';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared/modules/common/shared.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { ScrollbarModule } from 'ngx-scrollbar';
@@ -19,7 +19,7 @@ import { PagerModule } from './shared/modules/pager/pager.module';
 // import { CheckInModule } from './shared/modules/check-in/check-in.module';
 import { ConsumerCheckinHistoryListModule } from './shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.module';
 import { AppComponent, projectConstants } from './app.component';
-import { HomeComponent } from './shared/components/home/home.component';
+// import { HomeComponent } from './shared/components/home/home.component';
 import { LogoutComponent } from './shared/components/logout/logout.component';
 import { SignUpComponent } from './shared/components/signup/signup.component';
 import { LoginComponent } from './shared/components/login/login.component';
@@ -119,11 +119,17 @@ import { PaytmService } from './shared/services/paytm.service';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { projectConstantsLocal } from './shared/constants/project-constants';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, projectConstantsLocal.PATH + 'assets/i18n/home/', '.json');
+}
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     LogoutComponent,
     EqualValidator,
     SignUpComponent,
@@ -218,7 +224,15 @@ export function init_app(globalService: GlobalService) {
     VirtualFieldsModule,
     MeetRoomModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    QuestionnaireLinkModule
+    QuestionnaireLinkModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      },
+      // isolate: true,
+    }),
   ],
   providers: [
     BsModalService,
@@ -229,6 +243,7 @@ export function init_app(globalService: GlobalService) {
     ServiceMeta,
     Razorpaymodel,
     RazorpayprefillModel,
+    
     WindowRefService,
     PaytmService,
     RazorpayService,

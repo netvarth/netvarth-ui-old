@@ -8,7 +8,14 @@ import { CapitalizeFirstPipeModule } from "../../pipes/capitalize.module";
 import { BusinessPageComponent } from "./business-page.component";
 import { BusinessPageRoutingModule } from "./business-page.routing.module";
 import { CardModule } from "../card/card.module"
-import { HeaderModule } from "../../../shared/modules/header/header.module"
+import { HeaderModule } from "../../../shared/modules/header/header.module";
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { projectConstantsLocal } from "../../constants/project-constants";
+export function homeHttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http,projectConstantsLocal.PATH+ './assets/i18n/home/', '.json');
+  }
 @NgModule({
     imports: [
         CommonModule,
@@ -19,7 +26,17 @@ import { HeaderModule } from "../../../shared/modules/header/header.module"
         GalleryModule,
         LoadingSpinnerModule,
         CardModule,
-        HeaderModule
+        HeaderModule,
+        HttpClientModule,
+        TranslateModule.forChild({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: homeHttpLoaderFactory,
+                deps: [HttpClient]
+            },
+            isolate: false,
+            // extend: true
+        })
     ],
     declarations: [
         BusinessPageComponent,

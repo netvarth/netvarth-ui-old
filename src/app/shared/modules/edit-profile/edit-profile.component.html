@@ -1,6 +1,7 @@
 <!-- <section [ngClass]="{'container': curtype=='consumer'}">
     <app-breadcrumb [breadcrumbs]="breadcrumbs" (performAction)="performActions($event)" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section> -->
+
 <section *ngIf="curtype=='consumer'" class="container no-padding myaccount no-padding-small consumer-profile">
     <div class="content p0 see-pages cons-members">
 
@@ -12,7 +13,7 @@
             </div>
             <div class="panel-body no-padding">
                 <div class="card title-gb">
-                    <h5 class="mgn-up-10">My Account
+                    <h5 class="mgn-up-10">{{'My Account' | translate}}
                         <a class="pull-left mgn-rt-20 back-btn" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
                     </h5>
                 </div>
@@ -34,19 +35,19 @@
                                                     autocomplete="off">
                                             </mat-form-field> -->
                                             <div class="">
-                                                <label class="form-control-label">First Name</label>
+                                                <label class="form-control-label">{{'First Name' | translate}}</label>
                                                 <input type="text" class="form-control is-invalid" id="first_name"
-                                                    placeholder="First Name" formControlName="first_name" autocomplete="off" />
+                                                    placeholder="{{'First Name' | translate}}" formControlName="first_name" autocomplete="off" />
                                             </div>
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'first_name')"
                                                 [errorMsgs]="fed_service.getErrorMessage(editProfileForm,'first_name',
                                         {
-                                        'required' : 'First name is required',
-                                        'pattern' : 'Only alphabets are allowed'
+                                        'required' : 'f_nameerror' | translate,
+                                        'pattern' : 'alpha_nameerror' | translate
                                         })">
                                             </app-field-error-display>
                                             <app-field-error-display [displayError]="true" *ngIf="fnameerror != null && !fed_service.isFieldValid(editProfileForm,'first_name')"
-                                                [errorMsg]="fnameerror">
+                                                errorMsg="{{'f_nameerror' | translate}}">
                                             </app-field-error-display>
                                         </div>
                                         <div class="form-group">
@@ -56,19 +57,19 @@
                                                     autocomplete="off">
                                             </mat-form-field> -->
                                             <div class="">
-                                                <label class="form-control-label">Last Name</label>
+                                                <label class="form-control-label">{{'Last Name' | translate}}</label>
                                                 <input type="text" class="form-control is-invalid" id="last_name"
-                                                    placeholder="Last Name" formControlName="last_name" autocomplete="off" />
+                                                    placeholder="{{'Last Name' | translate}}" formControlName="last_name" autocomplete="off" />
                                             </div>
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'last_name')"
                                                 [errorMsgs]="fed_service.getErrorMessage(editProfileForm,'last_name',
                                         {
-                                        'required' : 'Last name is required',
-                                        'pattern' : 'Only alphabets are allowed'
+                                        'required' : 'l_nameerror' | translate,
+                                        'pattern' : 'alpha_nameerror' | translate
                                         })">
                                             </app-field-error-display>
                                             <app-field-error-display [displayError]="true" *ngIf="lnameerror != null && !fed_service.isFieldValid(editProfileForm,'last_name')"
-                                                [errorMsg]="lnameerror">
+                                                errorMsg="{{'lnameerror' | translate}}">
                                             </app-field-error-display>
                                         </div>
                                         <div class="form-group">
@@ -80,15 +81,17 @@
                                                     ondrag="return false" ondrop="return false">
                                             </mat-form-field> -->
                                             <div class="">
-                                                <label class="form-control-label">Email</label>
+                                                <label class="form-control-label">{{'Email' | translate}}</label>
                                                 <input type="text" class="form-control is-invalid" id="email"
-                                                    formControlName="email" placeholder="Email(user@xyz.com)"
+                                                    formControlName="email" placeholder="{{'Email' | translate}}(user@xyz.com)"
                                                     autocomplete="off" (keyup)="showConfrmEmail($event)" onpaste="return false;"
                                                     oncopy="return false" oncut="return false" ondrag="return false"
                                                     ondrop="return false" />
                                             </div>
+    
                                             <app-field-error-display [displayError]="true" *ngIf="emailerror != null && !fed_service.isFieldValid(editProfileForm,'email')"
-                                                [errorMsg]="emailerror">
+                                                errorMsg="{{'email_error' | translate }}">
+                                     
                                             </app-field-error-display>
                                         </div>
                                         <div class="form-group" *ngIf="confrmshow">
@@ -99,14 +102,14 @@
                                                     oncut="return false" ondrag="return false" ondrop="return false">
                                             </mat-form-field> -->
                                             <div class="">
-                                                <label class="form-control-label">Re-enter Email</label>
+                                                <label class="form-control-label">{{'Re-enter Email' | translate}}</label>
                                                 <input type="text" class="form-control is-invalid" id="email1"
-                                                    formControlName="email1" placeholder="Re-enter Email(user@xyz.com)"
+                                                    formControlName="email1" placeholder="{{'Re-enter Email' | translate}}(user@xyz.com)"
                                                     autocomplete="off" onpaste="return false;" oncopy="return false"
                                                     oncut="return false" ondrag="return false" ondrop="return false" />
                                             </div>
                                             <app-field-error-display [displayError]="true" *ngIf="email1error != null && !fed_service.isFieldValid(editProfileForm,'email1')"
-                                                [errorMsg]="email1error">
+                                                errorMsg="{{'email_error' | translate }}">
                                             </app-field-error-display>
                                         </div>
                                         <div class="form-group">
@@ -117,7 +120,7 @@
                                                 <mat-radio-button value="other">Other</mat-radio-button>
                                             </mat-radio-group>
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'gender')"
-                                                errorMsg="Please select the gender.">
+                                                errorMsg="{{'gender_error' | translate}}">
                                             </app-field-error-display>
                                         </div>
                                         <div class="form-group col-md-7 no-padding picker-form-group">
@@ -129,7 +132,7 @@
                                                 <mat-datepicker #picker [disabled]="false"></mat-datepicker>
                                             </mat-form-field>
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'dob')"
-                                                errorMsg="Please select the date of birth.">
+                                                errorMsg="{{'date_error' | translate}}">
                                             </app-field-error-display>
                                         </div>
                                     </div>

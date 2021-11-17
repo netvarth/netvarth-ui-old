@@ -15,6 +15,7 @@ import { DateTimeProcessor } from '../../../shared/services/datetime-processor.s
 import { S3UrlProcessor } from '../../../shared/services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-myfavourites',
@@ -75,10 +76,17 @@ private subs=new SubSink();
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private dateTimeProcessor: DateTimeProcessor,
-    private s3Processor: S3UrlProcessor
+    private s3Processor: S3UrlProcessor,
+    public translate: TranslateService,
+
   ) { }
 
   ngOnInit() {
+    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+    this.translate.stream('REMOVE_FAV').subscribe(v=> this.remove_fav_cap  = v);
+    this.translate.stream('MANAGE_PRIVACY').subscribe(v=> this.manage_privacy_cap  = v);
+    this.translate.stream('SEND_MSGS_CAP').subscribe(v=> this.send_msg_cap  = v);
+   
     this.setSystemDate();
     this.getFavouriteProvider();
     // this.gets3curl();

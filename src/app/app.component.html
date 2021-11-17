@@ -1,1 +1,15 @@
-<router-outlet></router-outlet>
+
+
+<div class="selecttag">
+    <mat-form-field >
+      <!-- <mat-label>Choose language</mat-label> -->
+      <mat-select [(ngModel)] = "langselected" apperance="outline">
+        <mat-option *ngFor="let lang of languages" [value]="lang.viewValue" (click)="changeLocale(lang.value,lang.viewValue)">
+          {{lang.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    </div>
+  
+
+  <router-outlet></router-outlet>

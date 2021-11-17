@@ -8,14 +8,18 @@ import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { WordProcessor } from '../../services/word-processor.service';
+import { TranslateService } from '@ngx-translate/core';
 
 export class ForgotPasswordModel {
   constructor(
+   
     public phonenumber: number = null,
     public phone_otp: string = null,
     public password: string = null,
     public confirm_password: string = null
-  ) { }
+  ) {
+    
+   }
 
 }
 
@@ -67,10 +71,14 @@ export class ForgotPasswordComponent {
     public dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
     public shared_functions: SharedFunctions,
-    private wordProcessor: WordProcessor
+    private wordProcessor: WordProcessor,
+    public translate: TranslateService,
+
   ) {
     this.createForm(1);
     this.is_provider = data.is_provider;
+    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+
   }
   // phonenumber: ['', Validators.compose(
   //   [Validators.required,

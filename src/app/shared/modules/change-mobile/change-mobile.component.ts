@@ -13,6 +13,7 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { isValidNumber  } from 'libphonenumber-js';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-change-mobile',
@@ -63,12 +64,21 @@ export class ChangeMobileComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private lStorageService: LocalStorageService,
+    public translate: TranslateService,
     private s3Processor: S3UrlProcessor,
   ) { }
   goBack () {
     this.location.back();
   }
   ngOnInit() {
+    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+    this.translate.stream('CHANGE_MOB_CAP').subscribe(v=>{this.mobile_cap = v});
+    this.translate.stream('RELATED_LINKS').subscribe(v => {this.related_links_cap = v});
+    this.translate.stream('USER_PROF_CAP').subscribe(v=>this.user_profile_cap=v);
+    this.translate.stream('DASHBOARD_TITLE').subscribe(v => {this.dashboard_cap=v});
+    this.translate.stream('CHANGE_PASSWORD_CAP').subscribe(v=> {this.change_pass_cap = v});
+    this.translate.stream('FAMILY_MEMBERS').subscribe(v=>{this.family_members_cap = v});
+
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
     this.spForm = this.fb.group({
       countryCode:['',Validators.compose([

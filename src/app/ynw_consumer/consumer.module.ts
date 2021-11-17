@@ -67,6 +67,14 @@ import { NotificationComponent } from './components/notification/notification.co
 import { telegramPopupComponent } from './components/notification/telegrampopup/telegrampopup.component';
 import { WalletModule } from './modules/wallet/wallet.module';
 import { ConsumerEmailComponent } from './shared/component/consumer-email/consumer-email.component';
+
+import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { projectConstantsLocal } from '../shared/constants/project-constants';
+export function homeHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http,projectConstantsLocal.PATH+ './assets/i18n/home/', '.json');
+}
 @NgModule({
   imports: [
     CapitalizeFirstPipeModule,
@@ -99,7 +107,17 @@ import { ConsumerEmailComponent } from './shared/component/consumer-email/consum
     MatTooltipModule,
     CapitalizeFirstPipeModule,
     QuestionnaireModule,
-    WalletModule
+    WalletModule,
+    HttpClientModule,
+    TranslateModule.forChild({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: homeHttpLoaderFactory,
+          deps: [HttpClient]
+      },
+      isolate: false,
+      extend: true
+  })
   ],
   declarations: [
     ConsumerComponent,

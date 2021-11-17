@@ -60,10 +60,10 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
         QRCodeGeneratordetailComponent,
    
     ],
-    entryComponents: [
-        QRCodeGeneratordetailComponent,
-        CheckavailabilityComponent
-    ]
+        entryComponents: [
+            QRCodeGeneratordetailComponent,
+            CheckavailabilityComponent
+        ]
 })
 
 export class SearchDetailModule { }

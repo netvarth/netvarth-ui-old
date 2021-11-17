@@ -14,6 +14,7 @@ import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-
 import { SessionStorageService } from '../../services/session-storage.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 
@@ -64,6 +65,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private wordProcessor: WordProcessor,
     public dialog: MatDialog,
     private router: Router,
+    public translate: TranslateService,
     @Inject(DOCUMENT) public document
   ) {
     if (this.shared_functions.checkLogin()) {
@@ -78,6 +80,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     // this.cd.detectChanges();
   }
   ngOnInit() {
+    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
     // if (this.countryCodes.length !== 0) {
     //   this.selectedCountryCode =this.countryCodes[0].value;
     // }

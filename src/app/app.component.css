@@ -1,0 +1,12 @@
+.selecttag {
+    display: flex;
+    justify-content: flex-end;
+    /* background-color: aqua; */
+}
+.mat-form-field{
+    /* width: 80px !important; */
+    height: 40px !important;
+    position: absolute;
+    top: -2%;
+    /* background-color: blue; */
+}

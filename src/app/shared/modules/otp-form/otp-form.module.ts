@@ -6,14 +6,28 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
 
 import { OtpFormComponent } from './otp-form.component';
-
+import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { projectConstantsLocal } from '../../constants/project-constants';
+export function homeHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http,projectConstantsLocal.PATH+ './assets/i18n/home/', '.json');
+}
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
         MaterialModule,
         ReactiveFormsModule,
-        FormMessageDisplayModule
+        FormMessageDisplayModule,
+        HttpClientModule,
+        TranslateModule.forChild({
+          loader: {
+              provide: TranslateLoader,
+              useFactory: homeHttpLoaderFactory,
+              deps: [HttpClient]
+          },
+      })
     ],
     declarations: [
         OtpFormComponent

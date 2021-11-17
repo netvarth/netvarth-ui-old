@@ -18,6 +18,7 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { SubSink } from 'subsink';
 // import * as moment from 'moment';
+import { TranslateService } from '@ngx-translate/core';
 
 
 
@@ -76,6 +77,8 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     private snackbarService: SnackbarService,
+    public translate: TranslateService,
+
     @Inject(MAT_DIALOG_DATA) public data: any) {
       this.subs.sink= this.activateroute.queryParams.subscribe(params => {
         if (params.accountId) {
@@ -103,6 +106,16 @@ export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
     }
   }
   ngOnInit() {
+    this.translate.use(JSON.parse(localStorage.getItem('myData')))
+    this.translate.stream('SERV_PROVIDER_CAP').subscribe(v=>{this.service_provider_cap=v});
+    this.translate.stream('PRO_SERVICE_CAP').subscribe(v=>{this.service_cap=v});
+    this.translate.stream('LOCATION_CAP').subscribe(v=>this.location_cap=v);
+    this.translate.stream('DATE_COL_CAP').subscribe(v=>this.date_cap=v);
+    this.translate.stream('PRO_STATUS_CAP').subscribe(v=>this.status_cap=v);
+    this.translate.stream('SEND_MSG_CAP').subscribe(v=>this.send_message_cap=v);
+    this.translate.stream('RATE_YOU_VISIT').subscribe(v=>this.rate_your_visit=v);
+    this.translate.stream('BILL_CAPTION').subscribe(v=>this.bill_cap=v);
+
   
   }
   ngOnDestroy(): void {

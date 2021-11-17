@@ -8,7 +8,13 @@ import { ChangeMobileComponent } from './change-mobile.component';
 import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
 import { OtpFormModule } from '../../../shared/modules/otp-form/otp-form.module';
 import { HeaderModule } from '../header/header.module';
-
+import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { projectConstantsLocal } from '../../constants/project-constants';
+export function homeHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, projectConstantsLocal.PATH+'./assets/i18n/home/', '.json');
+}
 @NgModule({
     imports: [
         CommonModule,
@@ -18,7 +24,15 @@ import { HeaderModule } from '../header/header.module';
         FormMessageDisplayModule,
         BreadCrumbModule,
         OtpFormModule,
-        HeaderModule
+        HeaderModule,
+        HttpClientModule,
+        TranslateModule.forChild({
+          loader: {
+              provide: TranslateLoader,
+              useFactory: homeHttpLoaderFactory,
+              deps: [HttpClient]
+          },
+      })
     ],
     declarations: [
         ChangeMobileComponent

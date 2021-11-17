@@ -12,6 +12,7 @@ import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-
 import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { GroupStorageService } from '../../services/group-storage.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-signup',
@@ -102,12 +103,16 @@ export class SignUpComponent implements OnInit {
     public shared_functions: SharedFunctions,
     private wordProcessor: WordProcessor,
     private lStorageService: LocalStorageService,
-    private groupService: GroupStorageService
+    private groupService: GroupStorageService,
+    
+    public translate: TranslateService,
   ) {
     this.is_provider = data.is_provider || 'true';
   }
 
   ngOnInit() {
+    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+
     if (this.countryCodes.length !== 0) {
       this.selectedCountryCode =this.countryCodes[0].value;
     }

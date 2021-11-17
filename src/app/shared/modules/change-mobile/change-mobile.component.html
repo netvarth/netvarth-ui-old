@@ -23,7 +23,7 @@
                   (keyup)="resetApiErrors()" class="form">
                   <div  class="col-md-12 mr-2">
                       <ul class="info-lst serviceadd-info">
-                              <li> <a >The new mobile number will be updated as the login mobile number too.</a>
+                              <li> <a >{{'The new mobile number will be updated as the login mobile number too.' | translate}}</a>
                               </li>
                              
                       </ul>
@@ -62,7 +62,7 @@
                 <br>
                 <div class="col-md-12 mgn-up-10">
                   <button type="submit" mat-button
-                    [disabled]="(spForm.controls['phonenumber'].value === prev_phonenumber) || !spForm.valid">{{save_btn_cap}}</button>
+                    [disabled]="(spForm.controls['phonenumber'].value === prev_phonenumber) || !spForm.valid">{{'SAVE_BTN' | translate}}</button>
                   </div> 
                   </form>
               </div>

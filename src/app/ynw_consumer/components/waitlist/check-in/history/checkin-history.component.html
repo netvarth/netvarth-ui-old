@@ -1,3 +1,4 @@
+    
 <section class="container consumer-appthistory no-padding-small">
     <div class="row">
         <div class="panel panel-default">
@@ -12,7 +13,7 @@
                         <div class="card title-gb">
                             <h5 class="mgn-up-10">
                                 <!-- Check-ins/Tokens -->
-                                History <a class="pull-left mgn-rt-20 back-btn" (click)="goback()"><i
+                                {{'History' | translate}} <a class="pull-left mgn-rt-20 back-btn" (click)="goback()"><i
                                         class="fa fa-arrow-left"></i></a></h5>
                         </div>
                         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
@@ -22,12 +23,13 @@
                                 <table class="table" *ngIf="entire_history && entire_history.length > 0">
                                     <thead>
                                         <tr>
-                                            <th class="th3">{{date_cap}} & Time</th>
+                                            <th class="th3">{{date_cap}} & {{'Time' | translate}}</th>
                                             <th class="th1">{{service_provider_cap}}</th>
                                             <th *ngIf="!showOrderHist" class="th2">{{location_cap}}</th>
-                                            <th> {{showOrderHist ? 'Order':'Service'}} for</th>
+                                            <th *ngIf="showOrderHist"> {{ 'Order for' | translate}}</th>
+                                            <th *ngIf="!showOrderHist">{{'Service for' | translate}}}} </th>
                                             <th *ngIf="!showOrderHist" class="th6">{{service_cap}}</th>
-                                            <th *ngIf="showOrderHist" class="th6">No of items</th>
+                                            <th *ngIf="showOrderHist" class="th6">{{'No of items' | translate}}</th>
                                             <th class="th4">{{status_cap}}</th>
                                             <th class="th5"></th>
                                         </tr>
@@ -234,14 +236,11 @@
                                                                     src="../../../../assets/images/Delivery.svg" /></div>
                                                                 <div *ngIf="his_wait.homeDelivery"><img class="ordericon pickup"
                                                                     src="../../../../assets/images/order/Storepickup.svg" /></div>
-                                                                    <div *ngIf="!his_wait.homeDelivery &&!his_wait.storePickup"><img class="ordericon pickup"
-                                                                        src="../../../../assets/images/order/e-delivery.png" style="height:40px;width:40px"/></div>
                                                             <!-- <i class="fa fa-shopping-cart shop_cart_icon"></i> -->
                                                         </div>
-                                                        <span> &nbsp;{{his_wait.orderDate | date: newDateFormat }}<br>
-                                                            <ng-container *ngIf="his_wait.timeSlot">
+                                                        <span> &nbsp;{{his_wait.orderDate | date: newDateFormat }},<br>
                                                             {{his_wait.timeSlot.sTime}} -
-                                                            {{his_wait.timeSlot.eTime}}</ng-container></span>
+                                                            {{his_wait.timeSlot.eTime}}</span>
                                                     </div>
                                                 </td>
                                                 <td data-title="Service Provider"
@@ -273,7 +272,7 @@
                                                             <button mat-menu-item 
                                                             [class.rated]="isRated(his_wait)"
                                                             (click)="rateOrderService(his_wait)">
-                                                            <i class="fa fa-star-o" aria-hidden="true"></i>Rate Your Order</button>
+                                                            <i class="fa fa-star-o" aria-hidden="true"></i>{{'Rate Your Order' | translate}}</button>
                                                         <button mat-menu-item *ngIf="his_wait.bill && his_wait.bill.billViewStatus == 'Show' && his_wait.bill.billStatus == 'Settled'"
                                                             (click)="getOrderBill(his_wait)">
                                                             <i class="bill-icon-history"></i>
@@ -281,7 +280,7 @@
                                                         <button mat-menu-item *ngIf="his_wait.bill && his_wait.bill.billViewStatus == 'Show' && his_wait.bill.billStatus !== 'Settled'"
                                                             (click)="getOrderBill(his_wait)">
                                                             <i class="bill-icon-history"></i>
-                                                            Bill</button>
+                                                           {{'BILL_CAPTION' | translate}}</button>
                                                     </mat-menu>
                                                 </td>
                                             </ng-container>

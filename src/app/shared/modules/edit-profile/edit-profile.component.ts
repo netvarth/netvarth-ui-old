@@ -14,6 +14,8 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TelegramInfoComponent } from '../../../ynw_consumer/components/telegram-info/telegram-info.component';
 import { SharedServices } from '../../services/shared-services';
+import { TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-edit-profile',
@@ -81,8 +83,17 @@ export class EditProfileComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private _location: Location,
     public dialog: MatDialog,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    public translate: TranslateService,
   ) {
+    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+
+    this.translate.stream('UPDATE_BTN').subscribe(v => {this.update_btn=v});
+    this.translate.stream('RELATED_LINKS').subscribe(v => {this.related_links_cap = v});
+    this.translate.stream('CHANGE_PASSWORD_CAP').subscribe(v=> {this.change_password_cap = v});
+    this.translate.stream('CHANGE_MOB_CAP').subscribe(v=>{this.change_mobile_cap = v});
+    this.translate.stream('FAMILY_MEMBERS').subscribe(v=>{this.family_members_cap = v});
+   
    this.breadcrumbs_init = [
       {
         title: Messages.USER_PROF_CAP,

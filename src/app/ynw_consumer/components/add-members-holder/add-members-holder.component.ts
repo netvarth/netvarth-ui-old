@@ -7,6 +7,7 @@ import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SubSink } from 'subsink';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-members-holder',
@@ -40,6 +41,7 @@ export class AddMembersHolderComponent implements OnInit,OnDestroy {
     public dialogRef: MatDialogRef<AddMembersHolderComponent>,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
+    public translate: TranslateService,
     private wordProcessor: WordProcessor,
     @Inject(MAT_DIALOG_DATA) public data: any) {
 console.log(data);
@@ -74,6 +76,13 @@ console.log(data);
   }
 
   ngOnInit() {
+    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+    this.translate.stream('FAMILY_MEMBER').subscribe(v=>this.family_member_cap=v);
+    this.translate.stream('CANCEL_BTN').subscribe(v=>this.cancel_btn_cap=v);
+    this.translate.stream('SAVE_BTN').subscribe(v=>this.save_btn_cap=v);
+    this.translate.stream('MEMBER_CAPTION').subscribe(v=>this.update_btn_cap=v);
+    this.translate.stream('UPDATE_BTN').subscribe(v=>this.member_cap=v);
+  
   }
 ngOnDestroy(){
   this.subs.unsubscribe();

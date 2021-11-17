@@ -9,6 +9,7 @@ import { projectConstants } from '../../../app.component';
 import { Location } from '@angular/common';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { SnackbarService } from '../../services/snackbar.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-change-password',
@@ -43,6 +44,7 @@ export class ChangePasswordComponent implements OnInit {
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     public router: Router,
+    public translate: TranslateService,
     private location: Location,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService
@@ -61,7 +63,13 @@ export class ChangePasswordComponent implements OnInit {
     this.location.back();
   }
   ngOnInit() {
+    this.translate.use(JSON.parse(localStorage.getItem('myData')))  
 
+    this.translate.stream('FAMILY_MEMBERS').subscribe(v=>{this.family_members_cap = v});
+    this.translate.stream('RELATED_LINKS').subscribe(v => {this.related_links_cap = v});
+    this.translate.stream('CHANGE_MOB_CAP').subscribe(v=>{this.change_mobile_cap = v});
+    this.translate.stream('USER_PROF_CAP').subscribe(v=>this.user_profile_cap=v);
+    
     if (this.curtype!=='consumer') {
       this.spForm = this.fb.group({
         old_password: ['', Validators.compose(

@@ -6,7 +6,7 @@ import { FormMessageDisplayService } from '../../modules/form-message-display/fo
 import { DOCUMENT } from '@angular/common';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../functions/shared-functions';
-
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-sp-form',
   templateUrl: './set-password-form.component.html',
@@ -37,10 +37,13 @@ export class SetPasswordFormComponent implements OnInit {
     public dialogRef: MatDialogRef<SetPasswordFormComponent>,
     private fb: FormBuilder, public sharedfunctionObj: SharedFunctions,
     public fed_service: FormMessageDisplayService,
+    public translate: TranslateService,
     @Inject(DOCUMENT) public document,
     public shared_services: SharedServices) { }
 
   ngOnInit() {
+    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+
     this.createForm();
     if (this.type !== 'forgot_password') {
       this.set_password_msg = Messages.SET_PASSWORD_MSG;

@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { Messages } from '../../constants/project-messages';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-otp-form',
@@ -56,10 +57,12 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
-    public shared_services: SharedServices,
+    public shared_services: SharedServices, public translate: TranslateService,
     public shared_functions: SharedFunctions) { }
 
   ngOnInit() {
+    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+
     this.createForm();
     this.resetCounter(this.refreshTime);
     this.cronHandle = observableInterval(1000).subscribe(() => {

@@ -27,7 +27,7 @@
         <div>Or</div> -->
 
         <div class="form-group">
-            <mat-label for="phone">Enter your Mobile Number</mat-label>
+            <mat-label for="phone">{{'Mobile_num' | translate}}</mat-label>
             <ngx-intl-tel-input [cssClass]="'custom'" [preferredCountries]="preferredCountries"
                 [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
                 [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
@@ -36,7 +36,14 @@
                 [separateDialCode]="separateDialCode" [numberFormat]="PhoneNumberFormat.National" name="phone"
                 formControlName="phone" (keyup)="resetApiErrors()">
             </ngx-intl-tel-input>
-            <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div>
+            <div class="sts-msg error" *ngIf="phoneError">
+                <div *ngIf="phoneError=='Please enter your phone number'">
+                    {{'Phone_enter_err' | translate}}
+                </div>
+                <div *ngIf="phoneError=='Phone number is invalid'">
+                    {{'Phone_invalid_err' | translate}}
+                </div>
+            </div>
         </div>
 
 
@@ -73,32 +80,33 @@
                 in with email id/mobile number</p>
         </div> -->
         <div class="form-group">
-            <mat-label for="password">Password</mat-label>
+            <mat-label for="password">{{'Password' | translate }}</mat-label>
             <!-- <mat-form-field> -->
                 <input type="password"  class="form-control" id="password" placeholder=""
                     formControlName="password" autocomplete="off" (keyup)="handlekeyup($event)">
             <!-- </mat-form-field> -->
             <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'password') && show_error"
-                errorMsg="Password is required">
+                errorMsg="{{'pass_err' | translate}}" >
             </app-field-error-display>
         </div>
     </div>
     <div class="mat-dialog-actions">
         <button type="submit" mat-button [disabled]="api_loading" (click)="showError()">
-            <span *ngIf="!api_loading">Login</span>
+            <span *ngIf="!api_loading">{{'Login' | translate}}</span>
             <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
             </app-common-innerloading-spinner>
         </button>
-        <a style="float: right; margin-top:10px;" class="forgotpass" (click)="doForgotPassword()">Forgot Password ?</a>
-        <a style="float: right; margin-top:10px; padding-right: 20px" class="forgotpass" (click)="handleSignup()">Sign
-            Up</a>
+        <a style="float: right; margin-top:10px;" class="forgotpass" (click)="doForgotPassword()">{{'Forgot Password' | translate}}</a>
+        <a style="float: right; margin-top:10px; padding-right: 20px" class="forgotpass" (click)="handleSignup()">{{'Sign Up' | translate}}</a>
         <!-- <div class="newuser" (click)="">{{signup_here}}<span>Signup here</span></div> -->
-        <div *ngIf="is_provider=='false'">If you are a Service Provider / Business Owner
-            <div><a style="cursor:pointer" class="normal-link" (click)="goBusinessClicked()">Go to Jaldee Business</a>
+        <div *ngIf="is_provider=='false'">{{'Login_msg' | translate}}
+            <div><a style="cursor:pointer" class="normal-link" (click)="goBusinessClicked()">{{'Go_Jaldee_Business' | translate}}</a>
             </div>
         </div>
     </div>
-    <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+    <div *ngIf="api_error">
+        <app-field-error-display [displayError]="true" errorMsg="{{api_error}}"></app-field-error-display>
+        </div>
 
 
 </form>

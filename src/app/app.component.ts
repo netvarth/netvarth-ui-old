@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { GlobalService } from './shared/services/global-service';
 import {version} from './shared/constants/version';
 import { LocalStorageService } from './shared/services/local-storage.service';
+import { TranslateService } from '@ngx-translate/core';
 export let projectConstants: any = {};
+import {I18nService} from '../app/shared/services/i18n-service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -21,9 +23,12 @@ export class AppComponent implements OnInit {
    * @param globalService 
    * @param lStorageService 
    */
+   langselected='English';
   constructor(
     private globalService: GlobalService,
-    private lStorageService: LocalStorageService
+    private lStorageService: LocalStorageService,
+    public translate: TranslateService,
+    private i18nService: I18nService, 
   ) { }
 
   /**
@@ -34,6 +39,14 @@ export class AppComponent implements OnInit {
    * 
    */
   ngOnInit() {
+    this.translate.use('en'); 
+    for(let i=0;i<this.languages.length;i++) {
+      if(this.languages[i].value==JSON.parse(localStorage.getItem('myData'))) {
+        this.langselected=this.languages[i].viewValue;
+        break;
+      }
+    }
+
     projectConstants = this.globalService.getGlobalConstants();
     const cVersion = version.desktop;
     const pVersion = this.lStorageService.getitemfromLocalStorage('version');
@@ -44,5 +57,22 @@ export class AppComponent implements OnInit {
       this.lStorageService.setitemonLocalStorage('version', cVersion);
     }
   }
+  languages = [
+    {value: 'en', viewValue: 'English'},
+    {value: 'hd', viewValue: 'Hindi'},
+    {value: 'kan', viewValue: 'Kannada'},
+    {value: 'tel',viewValue:'Telugu'},
+    {value: 'mal',viewValue:'Malayalam'},
+    {value: 'tam',viewValue:'Tamil'}
+  ];
+  changeLocale(locale: string,languagename) {
+    this.langselected=languagename;
+    console.log('lang',this.langselected)
+ 
+     this.translate.use(locale); 
+  
+      this.i18nService.changeLocale(locale);
+        
+   }
 }
 

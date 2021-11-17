@@ -10,7 +10,14 @@ import { MaterialModule } from '../../modules/common/material.module';
 import { OtpFormModule } from '../../modules/otp-form/otp-form.module';
 import { SetPasswwordModule } from '../set-password-form/set-password-form.module';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 
+import { projectConstantsLocal } from "../../constants/project-constants";
+export function homeHttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http,projectConstantsLocal.PATH+ './assets/i18n/home/', '.json');
+  }
 
 
 @NgModule({
@@ -22,7 +29,17 @@ import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
         FormMessageDisplayModule,
         OtpFormModule,
         SetPasswwordModule,
-        NgxIntlTelInputModule
+        HttpClientModule,
+        NgxIntlTelInputModule,
+        TranslateModule.forChild({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: homeHttpLoaderFactory,
+                deps: [HttpClient]
+            },
+            isolate: false,
+            // extend: true
+        })
     ],
     declarations: [
         ForgotPasswordComponent
