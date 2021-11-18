@@ -1,6 +1,9 @@
 .mob-container {
     max-width: 320px !important;
 }
+.carouselList{
+  overflow-x: scroll;
+}
 
 /* .mob-container input {
     height:35px !important;

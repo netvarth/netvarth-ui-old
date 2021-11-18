@@ -458,6 +458,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.windowScrolled = false;
     }
   }
+
   ngOnInit() {
     this.getProviderSettings();
     this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
