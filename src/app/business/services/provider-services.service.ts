@@ -5,6 +5,7 @@ import { ServiceMeta } from '../../shared/services/service-meta';
 
 @Injectable()
 export class ProviderServices {
+    
   catalogPrefilledInput: any = [];
   constructor(private servicemeta: ServiceMeta) { }
   getProviderConfig() {
@@ -1072,6 +1073,10 @@ export class ProviderServices {
     const url = 'provider/user';
     return this.servicemeta.httpGet(url, null, filter);
   }
+  getUserProfiles(profileIds) {
+    const url = 'provider/user/providerProfiles/' + profileIds;
+    return this.servicemeta.httpGet(url);
+}
   updateUserWaitlist(post_data) {
     const url = 'provider/waitlist/update';
     return this.servicemeta.httpPut(url, post_data);
