@@ -2392,6 +2392,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             };
             this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras));
         }
+        },
+        error=>{
+            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });   
         })
         } else if (response.STATUS == 'TXN_FAILURE') {
             this.isClickedOnce = false;

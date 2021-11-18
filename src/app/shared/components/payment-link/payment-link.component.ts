@@ -357,6 +357,9 @@ export class PaymentLinkComponent implements OnInit {
             this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
             this.ngZone.run(() => console.log('Transaction success'));
           }
+        },
+        error=>{
+          this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
         })
     } else if (response.STATUS == 'TXN_FAILURE') {
       this.isClickedOnce = false;

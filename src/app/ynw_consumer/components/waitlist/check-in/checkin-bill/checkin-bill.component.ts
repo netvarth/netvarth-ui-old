@@ -604,6 +604,9 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                 this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
             }
         }
+    },
+    error =>{
+        this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });  
     });
         }
    

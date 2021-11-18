@@ -614,7 +614,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
             this.loadingPaytm = false; 
             this.cdRef.detectChanges();
     }
-    transactionCompleted(response) {
+    transactionCompleted(response,payload, accountId) {
         if(response.STATUS == 'TXN_FAILURE'){
             this.isClickedOnce=false;
             this.loadingPaytm = false;
@@ -642,6 +642,9 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
               }
 
         } else if(response.STATUS == 'TXN_SUCCESS'){
+            this.paytmService.updatePaytmPay(payload,accountId)
+            .then((data) => {
+                if (data) {
             this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
             const navigationExtras: NavigationExtras = {
                 queryParams: {
@@ -656,6 +659,12 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
               } else {
               this.ngZone.run(() => this.router.navigate(['consumer'] ,navigationExtras));
               }
+
+            }
+        },
+        error=>{
+            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });   
+        });
         }
       
       

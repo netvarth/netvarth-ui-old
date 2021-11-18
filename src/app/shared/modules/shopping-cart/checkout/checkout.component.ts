@@ -1863,6 +1863,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
               this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
             }
           }
+        },
+        error=>{
+          this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' }); 
         })
 
     } else if (response.STATUS == 'TXN_FAILURE') {

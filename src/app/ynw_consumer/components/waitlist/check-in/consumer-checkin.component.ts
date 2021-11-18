@@ -1172,6 +1172,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             };
             this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras));
         }
+        },
+        error =>{
+            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });   
         });
         } else if (response.STATUS == 'TXN_FAILURE') {
             this.isClickedOnce = false;
