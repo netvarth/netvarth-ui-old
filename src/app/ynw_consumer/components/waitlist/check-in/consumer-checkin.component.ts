@@ -235,6 +235,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     paymentmodes: any;
     customer_countrycode: any;
     from: string;
+    wt_personaahead;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -687,6 +688,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         this.sel_queue_name = this.queuejson[selindx].name;
                         this.sel_queue_timecaption = this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'];
                         this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
+                        this.wt_personaahead = this.queuejson[this.sel_queue_indx].showPersonAhead;
                         this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
                         if (this.calc_mode === 'Fixed' && this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
                             this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);

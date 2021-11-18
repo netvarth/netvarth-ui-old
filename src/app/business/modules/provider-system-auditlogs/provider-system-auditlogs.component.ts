@@ -21,6 +21,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   select_cap = Messages.SELECT_CAP;
   search_cap = Messages.SEARCH_CAP;
   date_time_cap = Messages.DATE_TIME_CAP;
+  date_time_auditcap = Messages.DATE_TIME_AUDIT_CAP;
   text_cap = Messages.TEXT_CAP;
   subject_cap = Messages.SUBJECT_CAP;
   user_name_cap = Messages.USER_NAME_CAP;

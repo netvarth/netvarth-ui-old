@@ -310,7 +310,7 @@
                                                       <th *ngIf="domain === 'finance'" class="display-min-none" style="width: 30%;">Business Locations
                                                       </th>
                                                       <th class="display-min-none">Languages</th>
-                                                      <th class="display-min-none">Booking#</th>
+                                                      <!-- <th class="display-min-none">Booking#</th> -->
                                                       <th class="display-min-none"></th>
                                                   </tr>
                                               </thead>
@@ -396,13 +396,13 @@
                                                                               {{getLanguages(service.preferredLanguages)}}
                                                                           </span>
                                                                       </div>
-                                                                      <div class="mgn-up-5"
+                                                                      <!-- <div class="mgn-up-5"
                                                                           *ngIf="service.userType === 'PROVIDER'">
                                                                           <span class="b1">Booking Count:
                                                                           </span><span class="b2">
                                                                               {{service.currentWlCount + service.currentApptCount}}
                                                                           </span>
-                                                                      </div>
+                                                                      </div> -->
                                                                   </div>
                                                               </div>
                                                           </div>
@@ -438,11 +438,11 @@
                                                               {{getLanguages(service.preferredLanguages)}}
                                                           </span>
                                                       </td>
-                                                      <td class="display-min-none">
+                                                      <!-- <td class="display-min-none">
                                                           <span *ngIf="service.userType === 'PROVIDER'">
                                                               {{service.currentWlCount + service.currentApptCount}}
                                                           </span>
-                                                      </td>
+                                                      </td> -->
                                                       <td>
                                                           <div class="copy">
                                                               <span class="">

@@ -290,7 +290,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
     gotoNext() {
 
         if (this.amForm.get('orderType').value === 'SHOPPINGLIST' && this.amForm.get('advancePaymentStatus').value === 'FULLAMOUNT' && this.step === 3) {
-            this.snackbarService.openSnackBar('Shopping list not supported fullamount advance payment', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Shopping list not supported full amount advance payment', { 'panelClass': 'snackbarerror' });
             return;
         }
         if (this.payAdvance === 'FIXED' && this.step === 3) {
