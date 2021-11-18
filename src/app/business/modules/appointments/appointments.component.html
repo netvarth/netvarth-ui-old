@@ -589,7 +589,7 @@
                         <input type="checkbox" class="ckbx pull-left" [checked]="chkStartedSelectAppointments"
                           (click)="stopprop($event)" (change)="selectAllStarted()" [(ngModel)]="!chkStartedSelectAppointments"
                           [ngModelOptions]="{standalone: true}" />
-                        <label class="selectall"> Select all appt </label>
+                        <label class="selectall"> Select all</label>
                         <a *ngIf="apptStartedMultiSelection" class="statusText btn-play pointer-cursor act-btn"
                           (click)="showCheckinActions('started')" [matTooltipClass]="tooltipcls" [matTooltip]="'Actions'">
                           Actions <i class="fa fa-caret-down"></i>
@@ -896,12 +896,12 @@
                         <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
                           (click)="stopprop($event)" (change)="selectAllAppoinments($event)"
                           [(ngModel)]="chkSelectAppointments" [ngModelOptions]="{standalone: true}" />
-                        <label class="selectall"> Select all appt</label>
-                        <!-- <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor act-btn"
+                        <label class="selectall"> Select all</label>
+                        <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor act-btn"
                           (click)="showCheckinActions(statusAction)" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Actions'">
                           Actions <i class="fa fa-caret-down"></i>
-                        </a> -->
+                        </a>
                       </th>
                       <th class="childActionBar" colspan="2">
                       </th>
@@ -1703,7 +1703,7 @@
                       <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
                         (click)="stopprop($event)" (change)="selectAllAppoinments($event)" [(ngModel)]="chkSelectAppointments"
                         [ngModelOptions]="{standalone: true}" />
-                      <label class="selectall"> Select all appt</label>
+                      <label class="selectall"> Select all</label>
                       <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor act-btn"
                         (click)="showCheckinActions(statusAction)" [matTooltipClass]="tooltipcls"
                         [matTooltip]="'Actions'">
@@ -2342,7 +2342,7 @@
                       <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
                         (click)="stopprop($event)" (change)="selectAllAppoinments($event)" [(ngModel)]="chkSelectAppointments"
                         [ngModelOptions]="{standalone: true}" />
-                      <label class="selectall"> Select all appt</label>
+                      <label class="selectall"> Select all</label>
                       <a *ngIf="apptMultiSelection" class="statusText btn-play pointer-cursor act-btn"
                         (click)="showCheckinActions(statusAction)" [matTooltipClass]="tooltipcls"
                         [matTooltip]="'Actions'">
