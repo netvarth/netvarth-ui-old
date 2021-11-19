@@ -355,13 +355,13 @@ export class ProviderCheckinComponent implements OnInit {
             nav: true,
             navContainer: '.checkin-nav',
             navText: [
-                '<i class="fa fa-angle-left" aria-hidden="true"></i>',
-                '<i class="fa fa-angle-right" aria-hidden="true"></i>'
+                '<i class="fa fa-angle-left fa-2x" aria-hidden="true"></i>',
+                '<i class="fa fa-angle-right fa-2x" aria-hidden="true"></i>'
             ],
-            autoplay: false,
-            // autoplayTimeout: 6000,
-            // autoplaySpeed: 1000,
-            // autoplayHoverPause: true,
+            autoplay: true,
+            autoplayTimeout: 6000,
+            autoplaySpeed: 1000,
+            autoplayHoverPause: true,
             mouseDrag: false,
             touchDrag: true,
             pullDrag: false,
