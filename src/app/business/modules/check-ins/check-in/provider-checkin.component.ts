@@ -1843,7 +1843,7 @@ export class ProviderCheckinComponent implements OnInit {
         };
         this.provider_services.getUsers(filter).subscribe(
             (users: any) => {
-                const filteredUser = users.filter(user => user.queues && user.status === 'ACTIVE');
+                const filteredUser = users.filter(user => user.status === 'ACTIVE');
                 this.users = [];
                 this.users = filteredUser;
                 this.users.push(this.userN);

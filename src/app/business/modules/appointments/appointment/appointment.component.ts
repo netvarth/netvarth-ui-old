@@ -1652,7 +1652,7 @@ export class AppointmentComponent implements OnInit {
             };
             this.provider_services.getUsers(filter).subscribe(
                 (users: any) => {
-                    const filteredUser = users.filter(user => user.schedules && user.status === 'ACTIVE');
+                    const filteredUser = users.filter(user => user.status === 'ACTIVE');
                     this.users = [];
                     this.users = filteredUser;
                     let found = false;
@@ -1747,7 +1747,7 @@ export class AppointmentComponent implements OnInit {
         };
         this.provider_services.getUsers(filter).subscribe(
             (users: any) => {
-                const filteredUser = users.filter(user => user.schedules && user.status === 'ACTIVE');
+                const filteredUser = users.filter(user => user.status === 'ACTIVE');
                 this.users = [];
                 this.users = filteredUser;
                 this.users.push(this.userN);
