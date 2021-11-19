@@ -458,7 +458,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.windowScrolled = false;
     }
   }
-
+  images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
   ngOnInit() {
     this.getProviderSettings();
     this.accountSettings = this.groupService.getitemFromGroupStorage('settings');

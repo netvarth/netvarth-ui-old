@@ -28,6 +28,8 @@ import { FormsModule } from '@angular/forms';
 import { ApplyLabelModule } from './apply-label/apply-label.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgbCarouselModule} from '@ng-bootstrap/ng-bootstrap';
+// import {NgbCarousel} from '@ng-bootstrap/ng-bootstrap';
+
 
 
 const routes: Routes = [
@@ -80,7 +82,8 @@ const routes: Routes = [
         [RouterModule.forChild(routes)]
     ],
     declarations: [
-        CheckInsComponent
+        CheckInsComponent,
+
     ],
     exports: [CheckInsComponent]
 })

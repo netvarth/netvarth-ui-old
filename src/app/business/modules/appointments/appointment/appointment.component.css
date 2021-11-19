@@ -1,9 +1,26 @@
 .mob-container {
     max-width: 320px !important;
 }
+/* .pcheckin-owl .carouselList{
+  max-width: 550px;
+  
+} */
+/* @media(max-width: 600px) {
+  mat-chip-list .carouselList{
+  max-width: 600px;
+  }
+} */
 .carouselList{
-  overflow-x: scroll;
+  /* width: auto; */
+  /* overflow-x: auto; */
+  
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  overflow-x: auto;
 }
+
+
 
 /* .mob-container input {
     height:35px !important;

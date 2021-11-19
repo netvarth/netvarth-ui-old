@@ -1,7 +1,15 @@
 .mob-container {
     max-width: 320px !important;
 }
-
+.carouselList{
+  /* width: auto; */
+  /* overflow-x: auto; */
+  
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  overflow-x: auto;
+}
 /* .mob-container input {
     height:35px !important;
     border-left: 1px solid #ccc !important;

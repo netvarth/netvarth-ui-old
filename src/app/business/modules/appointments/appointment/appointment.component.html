@@ -13,63 +13,65 @@
                 <div class="card p0" *ngIf="!showCheckin && !showQuestionnaire">
                     <div class="copy locd">
                         <div class="lbl col-sm-12 col-md-12 col-lg-12">
-                                <h5 class="mgn-up-10" *ngIf="source !== 'appt-block'"><b> Find an existing
-                                        {{customer_label}} and create
-                                        appointment</b></h5> 
-                                    <h5 class="mgn-up-10" *ngIf="source === 'appt-block'"> <b>Find an existing
-                                        {{customer_label}}</b></h5>
-                                        <div class="input-group mob-container mgn-up-20">
-                                      <ngx-intl-tel-input [cssClass]="'custom'" class="internumbox" [preferredCountries]="preferredCountries"
-                                          [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
-                                          [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
-                                          [maxLength]="15" [phoneValidation]="true"
-                                          [selectedCountryISO] = "selectedCountry"
-                                          [separateDialCode]="separateDialCode" [numberFormat]="PhoneNumberFormat.National" name="phone"
-                                          [(ngModel)]="phone" (keyup)="resetApiErrors()">
-                                      </ngx-intl-tel-input>
-                                      <button class="findcolor"
-                                      (click)="serchCustomers(phone)"><i class="fa fa-search" aria-hidden="true"></i>
-                                    </button></div>
-                                      <!-- <div class="input-group-append"><button class="create_new_button cs-btn bt3"
+                            <h5 class="mgn-up-10" *ngIf="source !== 'appt-block'"><b> Find an existing
+                                    {{customer_label}} and create
+                                    appointment</b></h5>
+                            <h5 class="mgn-up-10" *ngIf="source === 'appt-block'"> <b>Find an existing
+                                    {{customer_label}}</b></h5>
+                            <div class="input-group mob-container mgn-up-20">
+                                <ngx-intl-tel-input [cssClass]="'custom'" class="internumbox"
+                                    [preferredCountries]="preferredCountries" [enableAutoCountrySelect]="true"
+                                    [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                    [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                    [selectFirstCountry]="false" [maxLength]="15" [phoneValidation]="true"
+                                    [selectedCountryISO]="selectedCountry" [separateDialCode]="separateDialCode"
+                                    [numberFormat]="PhoneNumberFormat.National" name="phone" [(ngModel)]="phone"
+                                    (keyup)="resetApiErrors()">
+                                </ngx-intl-tel-input>
+                                <button class="findcolor" (click)="serchCustomers(phone)"><i class="fa fa-search"
+                                        aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <!-- <div class="input-group-append"><button class="create_new_button cs-btn bt3"
                                         (click)="serchCustomers(phone)">Find</button></div> -->
-                            <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()"class="mgn-up-20">
+                            <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()" class="mgn-up-20">
                                 <div class="or-style">OR</div>
                                 <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding  mgn-up-20 sc-frm">
                                     <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding"> -->
-                                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding mgn-bt-50 apptdate-slot"
-                                            *ngIf="slotTime">
-                                            <div class="col-md-5 col-lg-4 col-xs-5 col-sm-6 no-padding">
-                                                Date: {{sel_checkindate | date: dateFormat}} </div>
-                                            <div class="col-md-5 col-lg-4 col-xs-7 col-sm-6 no-padding"> Appointment
-                                                slot: {{getSingleTime(slotTime)}}</div>
-                                        </div>
-                                        
-                                            
-                                        <!-- <div class="form-group mgn-up-20"> -->
-                                            <div class="input-group mob-container">
-                                                <input autocomplete="off"
-                                                placeholder="{{customer_label | capitalizeFirst}} Name or ID or Email"
-                                                type="text" class="form-control" formControlName="search_input"
-                                                (keypress)="findCustomer(searchForm.value, $event)">
-                                            <button class="findcolor"
-                                                (click)="searchCustomer(searchForm.value)"><i class="fa fa-search p0" aria-hidden="true"></i>
-                                              </button>
-                                                <!-- <button class="create_new_button cs-btn bt3"
+                                    <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding mgn-bt-50 apptdate-slot"
+                                        *ngIf="slotTime">
+                                        <div class="col-md-5 col-lg-4 col-xs-5 col-sm-6 no-padding">
+                                            Date: {{sel_checkindate | date: dateFormat}} </div>
+                                        <div class="col-md-5 col-lg-4 col-xs-7 col-sm-6 no-padding"> Appointment
+                                            slot: {{getSingleTime(slotTime)}}</div>
+                                    </div>
+
+
+                                    <!-- <div class="form-group mgn-up-20"> -->
+                                    <div class="input-group mob-container">
+                                        <input autocomplete="off"
+                                            placeholder="{{customer_label | capitalizeFirst}} Name or ID or Email"
+                                            type="text" class="form-control" formControlName="search_input"
+                                            (keypress)="findCustomer(searchForm.value, $event)">
+                                        <button class="findcolor" (click)="searchCustomer(searchForm.value)"><i
+                                                class="fa fa-search p0" aria-hidden="true"></i>
+                                        </button>
+                                        <!-- <button class="create_new_button cs-btn bt3"
                                                 (click)="searchCustomer(searchForm.value)">Find</button> -->
-                                            
-                                            </div>
-                                            <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
-                                                <span *ngIf="emptyFielderror" class="sts-msg error">Please enter the
-                                                    {{customer_label | capitalizeFirst}} ID or Email</span>
-                                                <app-field-error-display style="color: #f24949 !important;"
-                                                    [displayError]="true" *ngIf="create_new" errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list. 
+
+                                    </div>
+                                    <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
+                                        <span *ngIf="emptyFielderror" class="sts-msg error">Please enter the
+                                            {{customer_label | capitalizeFirst}} ID or Email</span>
+                                        <app-field-error-display style="color: #f24949 !important;"
+                                            [displayError]="true" *ngIf="create_new" errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list. 
                                                 Please create {{customer_label}} to take appointment">
-                                                </app-field-error-display>
-                                            </div>
-                                        
+                                        </app-field-error-display>
+                                    </div>
+
                                 </div>
                             </form>
-                            
+
                             <div class="clearfix"></div>
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20" *ngIf="showBlockHint">
                                 <table
@@ -116,14 +118,16 @@
                                             </td>
                                         </tr>
                                     </tbody>
-                                </table>                                
+                                </table>
                             </div>
                             <div class="create_new mgn-bt-20 font-9" *ngIf="!showBlockHint">
                                 <div class="or-style">OR</div>
-                                <a class="underline coloroflabels" (click)="createNew()" *ngIf="source !== 'appt-block'">
+                                <a class="underline coloroflabels" (click)="createNew()"
+                                    *ngIf="source !== 'appt-block'">
                                     Create a new {{customer_label}} and get appointment
                                 </a>
-                                <a class="underline coloroflabels" (click)="createNew()" *ngIf="source === 'appt-block'">
+                                <a class="underline coloroflabels" (click)="createNew()"
+                                    *ngIf="source === 'appt-block'">
                                     Create a new {{customer_label}}
                                 </a>
                             </div>
@@ -183,7 +187,7 @@
                                         <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
                                             <li>
                                                 {{waitfor.firstName | capitalizeFirst}}
-                                                {{waitfor.lastName | capitalizeFirst}}                                               
+                                                {{waitfor.lastName | capitalizeFirst}}
                                             </li>
                                         </ng-container>
                                         <li *ngIf="jaldeeId">
@@ -247,7 +251,7 @@
                                     </ng-container>
                                 </div>
                                 <div class="service-outer" *ngIf="servicesjson.length > 0">
-                                    <ng-container>                                       
+                                    <ng-container>
                                         <span *ngIf="servicesjson.length == 1">
                                             <div class="one-service">Service</div>
                                             <ng-container *ngFor="let serv of servicesjson">
@@ -303,35 +307,31 @@
                                                 <div class="cal-mod-instrct" *ngIf="mode.callingMode">
                                                     {{mode.instructions}}
                                                 </div>
-                                                <div class="input-section mgn-bt-15 desfont" 
+                                                <div class="input-section mgn-bt-15 desfont"
                                                     *ngIf="mode.callingMode === 'WhatsApp' || mode.callingMode === 'Phone'">
                                                     <span> <i *ngIf="mode.callingMode === 'WhatsApp'"
                                                             class="fa wtsapaud-icon wtsap-cal"></i>
                                                         <i *ngIf="mode.callingMode === 'Phone'"
                                                             class="fa phon-icon ph-cal" aria-hidden="true"></i>
                                                     </span>
-                                                     <input *ngIf="!showInputSection"
-                                                        (keypress)="isNumeric($event)"
+                                                    <input *ngIf="!showInputSection" (keypress)="isNumeric($event)"
                                                         class="form-control change emailPrepay call-mode-ip "
                                                         style="width:50px!important;" placeholder="+91"
                                                         [(ngModel)]="cuntryCode" autocomplete="off" maxlength="10"
                                                         type="text" min="0">&nbsp;<input *ngIf="!showInputSection"
-                                                            (keypress)="isNumeric($event)"
-                                                            class="form-control change emailPrepay call-mode-ip wtsap-ip-wdth"
-                                                            style="width:120px!important;" placeholder="9955669922"
-                                                            [(ngModel)]="callingModes" autocomplete="off" maxlength="10"
-                                                            type="text" min="0">&nbsp;
+                                                        (keypress)="isNumeric($event)"
+                                                        class="form-control change emailPrepay call-mode-ip wtsap-ip-wdth"
+                                                        style="width:120px!important;" placeholder="9955669922"
+                                                        [(ngModel)]="callingModes" autocomplete="off" maxlength="10"
+                                                        type="text" min="0">&nbsp;
                                                     <span class="mgn-bt-10 cal-mod-edt custId-flex-form"
                                                         *ngIf="showInputSection"> {{cuntryCode}}{{callingModes}}</span>
-                                                    <div class="input-group-append mgn-up-2"
-                                                        >
-                                                        <button *ngIf="!showInputSection"
-                                                            
-                                                            class="btn bt1 btn-primary m2" (click)="addCallingmode(i)"
-                                                            type="button">Add</button>
+                                                    <div class="input-group-append mgn-up-2">
+                                                        <button *ngIf="!showInputSection" class="btn bt1 btn-primary m2"
+                                                            (click)="addCallingmode(i)" type="button">Add</button>
                                                         <span class="editbt mgn-lt-20" *ngIf="showInputSection"
                                                             (click)="editCallingmodes(i)"></span>
-                                                    </div>                                                    
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -361,8 +361,9 @@
                                 </div>
                                 <div class="col-md-12 no-padding ">
                                     <div class="col-md-12 mgn-bt-10 btborder" *ngIf="queuejson.length > 0">
-                                        <mat-chip-list class="pcheckin-owl ">
-                                            <owl-carousel [options]="carouselOne" class="carouselList" [carouselClasses]="['owl-theme']">
+                                        <mat-chip-list class="pcheckin-owl">
+                                            <owl-carousel [options]="carouselOne" class="carouselList"
+                                                [carouselClasses]="['owl-theme']">
                                                 <mat-chip class="item" *ngFor="let queue of queuejson, let i= index"
                                                     [selected]="queue.id === queuejson[this.sel_queue_indx].id"
                                                     (click)="handleQueueSelection(queue, i);">
@@ -370,18 +371,21 @@
                                                         queue.apptSchedule.timeSlots[0]['eTime']}}
                                                     </span>
                                                 </mat-chip>
-                                               
+
                                             </owl-carousel>
                                             <div class="owl-theme">
                                                 <div class="owl-controls">
-                                                    <div class="checkin-nav owl-nav"></div>
+                                                    <div class="checkin-nav owl-nav">
+
+                                                    </div>
                                                 </div>
                                             </div>
                                         </mat-chip-list>
-                                    </div>                                  
+
+                                    </div>
                                 </div>
                                 <div>
-                                    <ng-container *ngIf="queuejson.length > 0 && servicesjson.length > 0">                                       
+                                    <ng-container *ngIf="queuejson.length > 0 && servicesjson.length > 0">
                                         <div class="col-md-12 form-group queue-outer mgn-bt-20"
                                             *ngIf="freeSlots.length>0 && showEditView">
                                             <div class="ttle mgn-bt-10">Select Appointment Time</div>
@@ -462,13 +466,14 @@
                         <div class="col-md-12 btborder1 mgn-bt-20">&nbsp;</div>
 
                         <ng-container *ngIf="checkinLabel && queuejson.length > 0  && servicesjson.length > 0">
-                            <div class="waitlist-action mgn-bt-20 mgn-up-10">                                
+                            <div class="waitlist-action mgn-bt-20 mgn-up-10">
                                 <button type="button" class="btn btn-primary font-weight-bold" (click)="showQnr()"
                                     [disabled]="api_loading || !showApptTime"
                                     *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">Next</button>
                                 <button type="button" class="btn btn-primary font-weight-bold" (click)="saveCheckin()"
-                                    [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading" [class.disabled]="api_loading"
-                                    [class.spinner-center]="api_loading" [disabled]="api_loading || !showApptTime"
+                                    [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
+                                    [class.disabled]="api_loading" [class.spinner-center]="api_loading"
+                                    [disabled]="api_loading || !showApptTime"
                                     *ngIf="!questionnaireList.labels">{{showCheckinButtonCaption()}}</button>
                             </div>
                         </ng-container>
@@ -488,7 +493,7 @@
                                                 <div class="cs-btn bt3 member-add" (click)="addMember()"
                                                     *ngIf="!showCreateMember">
                                                     {{add_member_cap}}</div>
-                                                <ul class="member-ul">                                                   
+                                                <ul class="member-ul">
                                                     <ng-container>
                                                         <mat-radio-group>
                                                             <li *ngFor="let memb of familymembers">
@@ -530,7 +535,7 @@
                                                     (click)="handleSaveMember()">OK</button>
                                             </div>
                                         </div>
-                                    </ng-container>                                   
+                                    </ng-container>
                                 </div>
                                 <ng-container *ngIf="action=='note'">
                                     <div class="col-md-12 mgn-bt-20">
@@ -548,7 +553,7 @@
                                                 (click)="handleGoBack(1)">OK
                                             </button>
                                         </div>
-                                    </div>                                                                    
+                                    </div>
                                 </ng-container>
                             </aside>
                         </div>
@@ -569,7 +574,7 @@
                                         <span
                                             *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span></a>
                                 </mat-chip>
-                            </mat-chip-list>                           
+                            </mat-chip-list>
                         </div>
                     </div>
                 </div>
@@ -577,40 +582,41 @@
             <div class="card">
                 <div class="card" *ngIf="api_loading_video">
                     <div *ngIf="api_loading_video" class="incomplete-msg">
-                      <div style="padding: 0 30px;">
-                        Files are Uploading...
-                      </div>
+                        <div style="padding: 0 30px;">
+                            Files are Uploading...
+                        </div>
                     </div>
                     <app-common-innerloading-spinner *ngIf="api_loading_video">
                     </app-common-innerloading-spinner>
-                  </div>
-           
-            <div class="card" *ngIf="showQuestionnaire" [ngClass]="{'highlight': api_loading_video}">
-                <h6 class="mgn-bt-10 quest-head pad-10">
-                    Please provide us with a little more information to complete your booking
-                </h6>
-                <app-questionnaire [questionnaireList]="questionnaireList" [questionAnswers]="questionAnswers"
-                    [source]="'proAppt'" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
-                <div
-                    class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100">
-                    <div class="mr-2" *ngIf="!showBlockHint">
-                        <button type="button" class="btn btn-light-primary font-weight-bold" (click)="goBack()">
-                            Previous
-                        </button>
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-primary font-weight-bold" (click)="saveCheckin()"
-                            [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
-                            [class.spinner-center]="api_loading" [disabled]="api_loading" [class.disabled]="api_loading"
-                            *ngIf="!showBlockHint">{{showCheckinButtonCaption()}}</button>
-                        <button type="button" class="btn btn-primary font-weight-bold" (click)="validateQnr()"
-                            [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
-                            [class.spinner-center]="api_loading" [disabled]="api_loading" [class.disabled]="api_loading"
-                            *ngIf="showBlockHint">Confirm</button>
+                </div>
+
+                <div class="card" *ngIf="showQuestionnaire" [ngClass]="{'highlight': api_loading_video}">
+                    <h6 class="mgn-bt-10 quest-head pad-10">
+                        Please provide us with a little more information to complete your booking
+                    </h6>
+                    <app-questionnaire [questionnaireList]="questionnaireList" [questionAnswers]="questionAnswers"
+                        [source]="'proAppt'" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
+                    <div
+                        class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100">
+                        <div class="mr-2" *ngIf="!showBlockHint">
+                            <button type="button" class="btn btn-light-primary font-weight-bold" (click)="goBack()">
+                                Previous
+                            </button>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-primary font-weight-bold" (click)="saveCheckin()"
+                                [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
+                                [class.spinner-center]="api_loading" [disabled]="api_loading"
+                                [class.disabled]="api_loading"
+                                *ngIf="!showBlockHint">{{showCheckinButtonCaption()}}</button>
+                            <button type="button" class="btn btn-primary font-weight-bold" (click)="validateQnr()"
+                                [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
+                                [class.spinner-center]="api_loading" [disabled]="api_loading"
+                                [class.disabled]="api_loading" *ngIf="showBlockHint">Confirm</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
         <div class="clearfix"></div>
     </div>
