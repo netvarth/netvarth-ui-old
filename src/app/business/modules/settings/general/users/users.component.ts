@@ -456,7 +456,8 @@ export class BranchUsersComponent implements OnInit {
         }
         if (this.filter.userType !== '') {
             if (this.filter.userType == 'ADMIN') {
-                api_filter['or=userType-eq'] =this.filter.userType+',isAdmin-eq='+true;  
+                // api_filter['or=userType-eq'] =this.filter.userType+',isAdmin-eq='+true;  
+                  api_filter['userType-eq'] =this.filter.userType;  
               } else {
                 api_filter['userType-eq'] = this.filter.userType;
               }
