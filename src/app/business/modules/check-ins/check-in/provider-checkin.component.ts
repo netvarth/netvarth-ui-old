@@ -305,9 +305,9 @@ export class ProviderCheckinComponent implements OnInit {
             if (qparams.thirdParty) {
                 this.thirdParty = qparams.thirdParty;
             }
-            if (this.showtoken) {                
+            if (this.showtoken) {
                 this.heading = 'Create a Token';
-            } else {                
+            } else {
                 this.heading = 'Create a Check-in';
             }
             if (this.source === 'waitlist-block') {
@@ -372,7 +372,7 @@ export class ProviderCheckinComponent implements OnInit {
         };
         this.createForm();
         this.api_loading = false;
-        this.get_token_cap = Messages.GET_TOKEN;        
+        this.get_token_cap = Messages.GET_TOKEN;
         this.maxsize = 1;
         this.step = 1;
         // this.getCurrentLocation();
@@ -427,12 +427,12 @@ export class ProviderCheckinComponent implements OnInit {
             this.searchCustomer(form_data);
         }
     }
-    serchCustomers(val){
+    serchCustomers(val) {
         const dialCode = val.dialCode;
         const pN = val.e164Number.trim();
         let loginId = pN;
-        if(pN.startsWith(dialCode)) {
-        loginId = pN.split(dialCode)[1];
+        if (pN.startsWith(dialCode)) {
+            loginId = pN.split(dialCode)[1];
         }
         // else{
         //     this.createNew('create');
@@ -444,58 +444,58 @@ export class ProviderCheckinComponent implements OnInit {
             'phoneNo-eq': loginId,
             'countryCode-eq': dialCode
         };
-        if(post_data['phoneNo-eq'] === 0){
+        if (post_data['phoneNo-eq'] === 0) {
             this.createNew('create');
         }
         this.provider_services.getCustomer(post_data)
-        .subscribe(
-            (data: any) => {
-                this.qParams['phone'] = loginId;
-                this.qParams['countryCode'] = dialCode;
-           
-                if (data.length === 0) {
-                    // if (mode === 'phone') {
-                    //     const filter = { 'primaryMobileNo-eq': form_data.search_input };
-                    //     this.getJaldeeCustomer(filter);
-                    // } else {
-                    //     this.form_data = data;
-                    //     this.create_new = true;
-                    // }
-                    this.createNew('create');
-                } else {
-                    if (data.length > 1) {
-                        const customer = data.filter(member => !member.parent);
-                        this.customer_data = customer[0];
-                        // if(this.qParams['phone'] === '0000'){
-                        //     this.createNew('create');
+            .subscribe(
+                (data: any) => {
+                    this.qParams['phone'] = loginId;
+                    this.qParams['countryCode'] = dialCode;
+
+                    if (data.length === 0) {
+                        // if (mode === 'phone') {
+                        //     const filter = { 'primaryMobileNo-eq': form_data.search_input };
+                        //     this.getJaldeeCustomer(filter);
+                        // } else {
+                        //     this.form_data = data;
+                        //     this.create_new = true;
                         // }
+                        this.createNew('create');
                     } else {
-                        this.customer_data = data[0];
-                     
-                    }
-                    this.jaldeeId = this.customer_data.jaldeeId;
-                    if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
-                        this.countryCode = this.customer_data.countryCode;
-                    } else {
-                        this.countryCode = '+91';
-                    }
-                    if (this.source === 'waitlist-block') {
-                        this.showBlockHint = true;
-                        if (this.showtoken) {
-                            this.heading = 'Confirm your Token';
+                        if (data.length > 1) {
+                            const customer = data.filter(member => !member.parent);
+                            this.customer_data = customer[0];
+                            // if(this.qParams['phone'] === '0000'){
+                            //     this.createNew('create');
+                            // }
                         } else {
-                            this.heading = 'Confirm your Check-in';
+                            this.customer_data = data[0];
+
                         }
-                    } else {
-                        this.getFamilyMembers();
-                        this.initCheckIn();
+                        this.jaldeeId = this.customer_data.jaldeeId;
+                        if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+                            this.countryCode = this.customer_data.countryCode;
+                        } else {
+                            this.countryCode = '+91';
+                        }
+                        if (this.source === 'waitlist-block') {
+                            this.showBlockHint = true;
+                            if (this.showtoken) {
+                                this.heading = 'Confirm your Token';
+                            } else {
+                                this.heading = 'Confirm your Check-in';
+                            }
+                        } else {
+                            this.getFamilyMembers();
+                            this.initCheckIn();
+                        }
                     }
+                },
+                error => {
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
-            },
-            error => {
-                this.wordProcessor.apiErrorAutoHide(this, error);
-            }
-        );
+            );
 
     }
     searchCustomer(form_data) {
@@ -537,11 +537,11 @@ export class ProviderCheckinComponent implements OnInit {
                         'email-eq': form_data.search_input
                     };
                     break;
-                    case 'id':
-                            post_data['or=jaldeeId-eq'] =  form_data.search_input + ',firstName-eq=' + form_data.search_input;
-                        //     'jaldeeId-eq'= form_data.search_input,'firstName'= form_data.search_input
-                        
-                         break;
+                case 'id':
+                    post_data['or=jaldeeId-eq'] = form_data.search_input + ',firstName-eq=' + form_data.search_input;
+                    //     'jaldeeId-eq'= form_data.search_input,'firstName'= form_data.search_input
+
+                    break;
             }
             this.provider_services.getCustomer(post_data)
                 .subscribe(
@@ -728,7 +728,8 @@ export class ProviderCheckinComponent implements OnInit {
                                                     _this.handleDeptSelction(_this.selected_dept);
                                                 },
                                                 () => {
-                                                    this.getAllUsers();
+                                                    this.getAvailableUsers();
+                                                    // this.getAllUsers();
                                                     // this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
                                                 }
                                             );
@@ -886,7 +887,7 @@ export class ProviderCheckinComponent implements OnInit {
             return false;
         }
         return true;
-    } 
+    }
     resetApiErrors() {
         this.emailerror = null;
         this.email1error = null;
@@ -1187,12 +1188,12 @@ export class ProviderCheckinComponent implements OnInit {
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
             } else if (!this.thirdParty) {
                 if (this.cuntryCode) {
-                     if(this.cuntryCode.includes('+')){
-                         this.cuntryCode=this.cuntryCode.slice(1);
-                     }
+                    if (this.cuntryCode.includes('+')) {
+                        this.cuntryCode = this.cuntryCode.slice(1);
                     }
-                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.cuntryCode + '' + this.callingModes;
-                
+                }
+                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.cuntryCode + '' + this.callingModes;
+
             } else {
                 const thirdparty_countrycode = '91';
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = thirdparty_countrycode + '' + this.callingModes;
@@ -1222,7 +1223,7 @@ export class ProviderCheckinComponent implements OnInit {
         }
         if (this.sel_ser_det.serviceType === 'virtualService') {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
-                if (!this.callingModes ||!this.cuntryCode) {
+                if (!this.callingModes || !this.cuntryCode) {
                     this.snackbarService.openSnackBar('Please enter a valid number to contact you', { 'panelClass': 'snackbarerror' });
                     this.is_wtsap_empty = true;
                 }
@@ -1294,10 +1295,10 @@ export class ProviderCheckinComponent implements OnInit {
         this.shared_services.addProviderCheckin(post_Data)
             .subscribe((data) => {
                 const retData = data;
-               // let retUuid;
+                // let retUuid;
                 let parentUid;
                 Object.keys(retData).forEach(key => {
-                  //  retUuid = retData[key];
+                    //  retUuid = retData[key];
                     this.trackUuid = retData[key];
                     parentUid = retData['parent_uuid'];
                 });
@@ -1806,7 +1807,8 @@ export class ProviderCheckinComponent implements OnInit {
                 });
             // }
         } else {
-            this.getAllUsers();
+            // this.getAllUsers();
+            this.getAvailableUsers();
         }
         // if (obj === 'None') {
         //     this.servicesjson = this.serviceslist;
@@ -1859,6 +1861,29 @@ export class ProviderCheckinComponent implements OnInit {
                 }
             });
     }
+
+
+    getAvailableUsers() {
+        this.provider_services.getAvailableUsers().subscribe(
+            (users: any) => {
+                // const filteredUser = users.filter(user => user.status === 'ACTIVE');
+                this.users = users;
+                // this.users = filteredUser;
+                this.users.push(this.userN);
+                if (this.selectUser) {
+                    const userDetails = this.users.filter(user => user.id === this.selectUser);
+                    this.selected_user = userDetails[0];
+                    this.handleUserSelection(this.selected_user);
+                } else if (this.users.length !== 0) {
+                    this.selected_user = this.users[0];
+                    this.handleUserSelection(this.selected_user);
+                } else {
+                    this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                }
+            });
+    }
+
+
     handleUserSelection(user) {
         this.selectedUser = user;
         this.queuejson = [];
@@ -2049,12 +2074,12 @@ export class ProviderCheckinComponent implements OnInit {
         return this.sharedFunctionobj.isNumericwithoutdot(evt);
     }
     addCallingmode(index) {
-        if (!this.cuntryCode  || this.cuntryCode.charAt(0) === '0') {
+        if (!this.cuntryCode || this.cuntryCode.charAt(0) === '0') {
             this.snackbarService.openSnackBar('Please enter valid countrycode', { 'panelClass': 'snackbarerror' });
         }
         if (this.callingModes && this.callingModes.charAt(0) !== '0') {
             this.showInputSection = true;
-        } else if (!this.callingModes  || this.callingModes.charAt(0) === '0') {
+        } else if (!this.callingModes || this.callingModes.charAt(0) === '0') {
             this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
         }
     }
@@ -2164,7 +2189,7 @@ export class ProviderCheckinComponent implements OnInit {
         });
     }
     validateQnr(post_Data?) {
-      
+
         if (!this.questionAnswers) {
             this.questionAnswers = {
                 answers: {
@@ -2172,12 +2197,12 @@ export class ProviderCheckinComponent implements OnInit {
                     questionnaireId: this.questionnaireList.id
                 }
             }
-            this.api_loading=false;
+            this.api_loading = false;
         }
-        if (this.questionAnswers &&this.questionAnswers.answers) {
+        if (this.questionAnswers && this.questionAnswers.answers) {
             this.api_loading = true;
             this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
-                this.api_loading=false;
+                this.api_loading = false;
                 if (data.length === 0) {
                     if (!this.showBlockHint) {
                         this.addCheckInProvider(post_Data);

@@ -1073,6 +1073,10 @@ export class ProviderServices {
     const url = 'provider/user';
     return this.servicemeta.httpGet(url, null, filter);
   }
+  getAvailableUsers() {
+    const url = 'provider/user/available';
+    return this.servicemeta.httpGet(url);
+  }
   getUserProfiles(profileIds) {
     const url = 'provider/user/providerProfiles/' + profileIds;
     return this.servicemeta.httpGet(url);

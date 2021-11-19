@@ -709,7 +709,8 @@ export class AppointmentComponent implements OnInit {
                                             },
                                             () => {
                                                 // this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
-                                                this.getAllUsers();
+                                                // this.getAllUsers();
+                                                this.getAvailableUsers();
                                             }
                                         );
                                     }
@@ -1737,8 +1738,28 @@ export class AppointmentComponent implements OnInit {
                     }
                 });
         } else {
-            this.getAllUsers();
+            // this.getAllUsers();
+            this.getAvailableUsers();
         }
+    }
+    getAvailableUsers() {
+        this.provider_services.getAvailableUsers().subscribe(
+            (users: any) => {
+                // const filteredUser = users.filter(user => user.status === 'ACTIVE');
+                this.users = users;
+                // this.users = filteredUser;
+                this.users.push(this.userN);
+                if (this.selectUser !== undefined) {
+                    const userDetails = this.users.filter(user => user.id === this.selectUser);
+                    this.selected_user = userDetails[0];
+                    this.handleUserSelection(this.selected_user);
+                } else if (this.users.length !== 0) {
+                    this.selected_user = this.users[0];
+                    this.handleUserSelection(this.selected_user);
+                } else {
+                    this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                }
+            });
     }
     getAllUsers() {
         const filter = {

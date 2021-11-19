@@ -296,8 +296,7 @@ export class BranchUsersComponent implements OnInit {
                             console.log(ids);
                             if (ids) {
                             this.provider_services.getUserProfiles(ids).subscribe(
-                                (profiles: any)=> {
-                                    
+                                (profiles: any)=> {                                    
                                     _this.users_list = profiles.map((item, i) => Object.assign({}, item, usersList[i]));                                    
                                     _this.users_list.map(
                                         function(user) { user.preferredLanguages = _this.getLanguages(user.preferredLanguages);
