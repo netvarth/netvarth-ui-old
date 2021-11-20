@@ -20,6 +20,7 @@ import { SnackbarService } from '../../../../../../shared/services/snackbar.serv
 import { EditcatalogitemPopupComponent } from '../editcatalogitempopup/editcatalogitempopup.component';
 import { CreateItemPopupComponent } from '../createItem/createitempopup.component';
 import { SubSink } from 'subsink';
+
 @Component({
     selector: 'app-catalogdetail',
     templateUrl: './catalog-details.component.html',
@@ -278,14 +279,13 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         this.subscriptions.unsubscribe();
     }
     isExpired(item){
-    
-        if(new Date(item.expiryDate) < new Date()){
-            console.log('expired');
-            return true;
-        }else{
-            console.log('not expired');
+        if(moment(new Date(item.expiryDate)).isSameOrAfter(new Date(), 'day')){
             return false;
+        }else{
+            return true;
         }
+
+       
     }
     gotoNext() {
 
