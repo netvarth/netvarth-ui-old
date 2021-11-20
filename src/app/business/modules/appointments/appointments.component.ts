@@ -1815,10 +1815,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   selectAllAppoinments(event) {
     this.appointmentsChecked = {};
     this.chkAppointments = {};
-    console.log('inisdeee'+event.target.checked);
-      console.log(this.chkSelectAppointments);
     if (event.target.checked) {
-      console.log('true');
       this.apptMultiSelection = true;
       for (let aIndex = 0; aIndex < this.check_in_filtered_list.length; aIndex++) {
         if (this.check_in_filtered_list[aIndex].consumer) {
@@ -2197,6 +2194,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           .subscribe(
             data => {
               this.historyCheckins = data;
+              console.log(this.historyCheckins);
               const params = [
                 'height=' + screen.height,
                 'width=' + screen.width,
@@ -2214,10 +2212,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               for (let i = 0; i < this.historyCheckins.length; i++) {
                 const fname = (this.historyCheckins[i].appmtFor[0].firstName) ? this.historyCheckins[i].appmtFor[0].firstName : '';
                 const lname = (this.historyCheckins[i].appmtFor[0].lastName) ? this.historyCheckins[i].appmtFor[0].lastName : '';
+                let name='';
+                if(fname!== '' && lname!==''){
+                name=fname+''+ lname;
+                }
+                else{
+                name='Nil';
+                }
                 checkin_html += '<tr style="line-height:20px;padding:10px">';
                 checkin_html += '<td style="padding:10px">' + (this.historyCheckins.indexOf(this.historyCheckins[i]) + 1) + '</td>';
                 checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].appmtDate).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.getSingleTime(this.historyCheckins[i].appmtTime) + '</td>';
-                checkin_html += '<td style="padding:10px">' + fname + ' ' + lname + '</td>';
+                checkin_html += '<td style="padding:10px">' + name + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
                 if (this.historyCheckins[i].label && Object.keys(this.historyCheckins[i].label).length > 0) {
                   const labels = [];
