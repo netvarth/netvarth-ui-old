@@ -101,9 +101,10 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10">
                             <ul class="service-ul flex" *ngIf="servicedetails">
                                 <li *ngIf="servicedetails && servicedetails.serviceDuration && servicedetails.serviceDurationEnabled && !is_donation_serv"><span class="service-li-title">Duration</span><br/><span class="bold">{{HHMM}}</span></li>
+                                <li *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0"><span class="service-li-title">Service Fee</span><br /><span class="bold price rupee-font">{{servicedetails.totalAmount | currency:'&#8377;'}}</span></li>
                                 <li *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount"><span class="service-li-title">Amount Required Now <i class="fa fa-info-circle"
                                     [matTooltip]="servicedetails.paymentDescription"></i></span><br/><span class="bold price rupee-font">{{servicedetails.minPrePaymentAmount  | currency:'&#8377;'}}</span></li>
-                                <li *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0"><span class="service-li-title">Service Fee</span><br /><span class="bold price rupee-font">{{servicedetails.totalAmount | currency:'&#8377;'}}</span></li>
+                               
                             </ul>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 mgn-bt-10 marginalignment"
@@ -144,27 +145,24 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 serviceheading no-margin"
-                    style="background-color: #1e4079;">
-                    <div class="mgn-rt-5"
-                        *ngIf="servicedetails && servicedetails.serviceType == 'virtualService'">
-                        <i class="fa phon-icon"
-                            *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                        <i class="fa meet-icon fa-3x ml-2"
-                            *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                        <i class="fa zoom-icon "
-                            *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                        <i class="fa jvideo-icon jvideo-icon-m"
-                            *ngIf="servicedetails.virtualCallingModes  && servicedetails.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
-                        <i class="fa wtsapaud-icon"
-                            *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'WhatsApp' && servicedetails.virtualServiceType === 'audioService'"></i>
-                        <i class="fa wtsapvid-icon"
-                            *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'WhatsApp' && servicedetails.virtualServiceType === 'videoService'"></i>
+                   
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 marginalignmentincards" *ngIf="donationServices && donationServices.length >0 && !loading && !loading_direct">
+                    <div class="card donatechange" *ngFor="let sp of donationServices">
+                        <div class="card-body">
+                            <div class="textcentr cardtext ">
+                                <span class="rupee-font bold">Donate <i class="fa fa-inr"></i>
+                                    {{sp.item.minDonationAmount}}</span>
+                                <span class="rupee-font bold"
+                                    *ngIf="sp.item.maxDonationAmount != sp.item.minDonationAmount"> or
+                                    more</span>
+                            </div>
+                            <div class="textcentr cardtext fixhght"></div>
+                            <div class="textcentr"> <button class="btn actionbtn btn-outline-warning"
+                                    type="button" (click)="bttonClick(sp)">{{getButtontype(sp)}}</button>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="mgn-lt-5" style="color: #ffff; padding: 10px 0 10px 0px;" *ngIf="servicename">{{servicename |
-                        capitalizeFirst}}</h3>
                 </div>
-
                 </div>
             </div>
         </div>
