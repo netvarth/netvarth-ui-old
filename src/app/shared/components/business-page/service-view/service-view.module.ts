@@ -17,6 +17,8 @@ import { ConsumerJoinModule } from '../../../../ynw_consumer/components/consumer
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Routes, RouterModule } from '@angular/router';
 import { SignupModule } from '../../signup/signup.module';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+
 import { VirtualFieldsModule } from '../../../../ynw_consumer/components/virtualfields/virtualfields.module';
 const routes: Routes = [
     { path: '', component: ServiceViewComponent }
@@ -25,6 +27,7 @@ const routes: Routes = [
     imports: [
         CommonModule,
         HeaderModule,
+        CarouselModule,
         FormsModule,
         RatingStarModule,
         CapitalizeFirstPipeModule,
