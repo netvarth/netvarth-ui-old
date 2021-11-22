@@ -310,139 +310,145 @@
                                                       <th *ngIf="domain === 'finance'" class="display-min-none" style="width: 30%;">Business Locations
                                                       </th>
                                                       <th class="display-min-none">Languages</th>
-                                                      <th class="display-min-none">Booking#</th>
+                                                      <!-- <th class="display-min-none">Booking#</th> -->
                                                       <th class="display-min-none"></th>
                                                   </tr>
                                               </thead>
                                               <tbody>
                                                   <tr class="row_data border-bottom pointer-cursor waitlist-box"
-                                                      *ngFor="let service of users_list | orderBy: order; let i = index;"
-                                                      (click)="selectedRow(i,service)"
+                                                      *ngFor="let user of users_list | orderBy: order; let i = index;"
+                                                      (click)="selectedRow(i,user)"
                                                       [class.pointer-check]="this.showcheckbox" 
-                                                      [class.disabled-group]="service.status=='INACTIVE'">
-                                                      <!-- (click)="selectedRow(i,service)" -->
+                                                      [class.disabled-group]="user.status=='INACTIVE'">
+                                                      <!-- (click)="selectedRow(i,user)" -->
                                                       <td class="">
                                                           <div class="disp-flex">
                                                               <div class="pr-3 check-box"   *ngIf="showcheckbox">
                                                                   <span class="symbol-label">
-                                                                    <!-- <input type="checkbox" name="Checkboxes4" [checked]="checkSelection(service)"> -->
-                                                                    <input type="checkbox" name="Checkboxes4"  [checked]="checkSelection(service)" (click)="stopprop($event);"   (change)="getUserIds(service, service.id , $event)">
-                                                                    <!-- <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a> -->
+                                                                    <!-- <input type="checkbox" name="Checkboxes4" [checked]="checkSelection(user)"> -->
+                                                                    <input type="checkbox" name="Checkboxes4"  [checked]="checkSelection(user)" (click)="stopprop($event);"   (change)="getUserIds(user, user.id , $event)">
+                                                                    <!-- <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(user)">View</a> -->
 
                                                                   </span>
                                                                 </div>
                                                               <div class='user-img'>
-                                                                  <img [src]="getUserImg(service)" />
+                                                                  <img [src]="getUserImg(user)" />
                                                               </div>
                                                               <div class="mgn-lt-10">
                                                                   <div class="username">
-                                                                      {{(service.businessName) ? service.businessName
-                                                                      : service.firstName + ' ' +
-                                                                      service.lastName}}&nbsp;
+                                                                      {{(user.businessName) ? user.businessName
+                                                                      : user.firstName + ' ' +
+                                                                      user.lastName}}&nbsp;
                                                                       <div class='status-circle'
-                                                                          [ngClass]="service.isAvailable ? 'green' : 'grey'"
-                                                                          *ngIf="accountSettings.availability && service.userType === 'PROVIDER' ">
+                                                                          [ngClass]="user.isAvailable ? 'green' : 'grey'"
+                                                                          *ngIf="accountSettings.availability && user.userType === 'PROVIDER' ">
                                                                       </div>
                                                                   </div>
-                                                                  <div class="disp-flex mgn-up-5" *ngIf="service.employeeId">
-                                                                    {{service.employeeId}}&nbsp;
+                                                                  <div class="disp-flex mgn-up-5" *ngIf="user.employeeId">
+                                                                    {{user.employeeId}}&nbsp;
                                                                 </div>
                                                                   <div class="disp-flex mgn-up-5"
-                                                                      *ngIf="service.city && service.state"><i
+                                                                      *ngIf="user.city && user.state"><i
                                                                           class="fa fa-map-marker mgn-rt-5"
-                                                                          aria-hidden="true"></i>{{service.city}},&nbsp;{{service.state}}
+                                                                          aria-hidden="true"></i>{{user.city}},&nbsp;{{user.state}}
                                                                   </div>
-                                                                  <div class="disp-flex mgn-up-5"  *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum || service.email">
-                                                                    <span (click)="stopprop($event); viewContactDetails(service)" style="color: #3c8dbc; cursor: pointer;">Contact Info</span>
+                                                                  <div class="disp-flex mgn-up-5"  *ngIf="user.mobileNo || user.whatsAppNum || user.telegramNum || user.email">
+                                                                    <span (click)="stopprop($event); viewContactDetails(user)" style="color: #3c8dbc; cursor: pointer;">Contact Info</span>
                                                                   </div>  
                                                                   <div class="d-lg-none">
-                                                                      <div class=" mgn-up-5" *ngIf="service.userType">
+                                                                      <div class=" mgn-up-5" *ngIf="user.userType">
                                                                           <span class="b2"
-                                                                              *ngIf="service.userType === 'PROVIDER' ">{{provider_label
+                                                                              *ngIf="user.userType === 'PROVIDER' ">{{provider_label
                                                                               |
                                                                               capitalizeFirst}}</span>
                                                                           <span class="b2"
-                                                                              *ngIf="service.userType === 'ASSISTANT'">{{assistant_label
+                                                                              *ngIf="user.userType === 'ASSISTANT'">{{assistant_label
                                                                               |
                                                                               capitalizeFirst}}</span>
                                                                           <span class="b2"
-                                                                              *ngIf="service.userType === 'ADMIN'">Admin</span>
+                                                                              *ngIf="user.userType === 'ADMIN'">Admin</span>
                                                                       </div>
 
                                                                      
 
 
-                                                                      <div class="mgn-up-5" *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum || service.email">
+                                                                      <div class="mgn-up-5" *ngIf="user.mobileNo || user.whatsAppNum || user.telegramNum || user.email">
                                                                           <span class="b2">
-                                                                            <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
+                                                                            <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(user)">View</a>
                                                                           </span>
-                                                                             <!-- {{service.countryCode}} {{service.mobileNo}} 
+                                                                             <!-- {{user.countryCode}} {{user.mobileNo}} 
                                                                           </span> -->
                                                                       </div>
                                                                       <div class="mgn-up-5"
-                                                                          *ngIf="service.specialization && domain !== 'finance'"> <span
+                                                                          *ngIf="user.specialization && domain !== 'finance'"> <span
                                                                               class="b2">
-                                                                              {{getSpecialization(service.specialization)}}
+                                                                              {{user.specialization}}
+                                                                              <!-- {{getSpecialization(user.specialization)}} -->
                                                                           </span></div>
                                                                       
                                                                       <div class="mgn-up-5"
-                                                                          *ngIf="service.bussLocations && service.bussLocations.length > 0  && domain === 'finance'"> <span
+                                                                          *ngIf="user.bussLocations && user.bussLocations.length > 0  && domain === 'finance'"> <span
                                                                               class="b2">
-                                                                              {{getBussLoc(service.bussLocations)}}
+                                                                              {{getBussLoc(user.bussLocations)}}
                                                                           </span></div>
                                                                       <div class="mgn-up-5"
-                                                                          *ngIf="service.preferredLanguages"><span
+                                                                          *ngIf="user.preferredLanguages"><span
                                                                               class="b2">
-                                                                              {{getLanguages(service.preferredLanguages)}}
+                                                                              {{user.preferredLanguages}}
+                                                                              <!-- {{getLanguages(user.preferredLanguages)}} -->
                                                                           </span>
                                                                       </div>
-                                                                      <div class="mgn-up-5"
-                                                                          *ngIf="service.userType === 'PROVIDER'">
+                                                                      <!-- <div class="mgn-up-5"
+                                                                          *ngIf="user.userType === 'PROVIDER'">
                                                                           <span class="b1">Booking Count:
                                                                           </span><span class="b2">
-                                                                              {{service.currentWlCount + service.currentApptCount}}
+                                                                              {{user.currentWlCount + user.currentApptCount}}
                                                                           </span>
-                                                                      </div>
+                                                                      </div> -->
                                                                   </div>
                                                               </div>
                                                           </div>
                                                       </td>
                                                       <td class="display-min-none">
                                                           <span class="ttle"
-                                                              *ngIf="service.userType === 'PROVIDER' ">
+                                                              *ngIf="user.userType === 'PROVIDER' ">
                                                               {{provider_label | capitalizeFirst}}
                                                           </span>
                                                           <span class="ttle"
-                                                              *ngIf="service.userType === 'ASSISTANT'">{{assistant_label
+                                                              *ngIf="user.userType === 'ASSISTANT'">{{assistant_label
                                                               |
                                                               capitalizeFirst}}</span>
                                                           <span class="ttle"
-                                                              *ngIf="service.userType === 'ADMIN'">Admin</span>
+                                                              *ngIf="user.userType === 'ADMIN'">Admin</span>
                                                       </td>
                                                       <!-- <td class="display-min-none">
-                                                          <span *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum || service.email">
-                                                            <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
+                                                          <span *ngIf="user.mobileNo || user.whatsAppNum || user.telegramNum || user.email">
+                                                            <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(user)">View</a>
                                                           </span>
                                                       </td> -->
                                                       <td class="display-min-none" *ngIf="domain !== 'finance'">
-                                                          <span *ngIf="service.specialization   && domain !== 'finance'">
-                                                              {{getSpecialization(service.specialization)}}</span>
+                                                          <span *ngIf="user.specialization   && domain !== 'finance'">
+                                                            {{user.specialization}}
+                                                              <!-- {{getSpecialization(user.specialization)}} -->
+                                                            </span>
                                                       </td>
 
                                                       <td class="display-min-none" *ngIf="domain === 'finance'">
-                                                        <span *ngIf="service.bussLocations && service.bussLocations.length > 0  && domain === 'finance'">
-                                                          {{getBussLoc(service.bussLocations)}}</span>
+                                                        <span *ngIf="user.bussLocations && user.bussLocations.length > 0  && domain === 'finance'">
+                                                          <!-- {{getBussLoc(user.bussLocations)}} -->
+                                                        </span>
                                                     </td>
                                                       <td class="display-min-none">
-                                                          <span *ngIf="service.preferredLanguages">
-                                                              {{getLanguages(service.preferredLanguages)}}
+                                                          <span *ngIf="user.preferredLanguages">
+                                                            {{user.preferredLanguages}}
+                                                              <!-- {{getLanguages(user.preferredLanguages)}} -->
                                                           </span>
                                                       </td>
-                                                      <td class="display-min-none">
-                                                          <span *ngIf="service.userType === 'PROVIDER'">
-                                                              {{service.currentWlCount + service.currentApptCount}}
+                                                      <!-- <td class="display-min-none">
+                                                          <span *ngIf="user.userType === 'PROVIDER'">
+                                                              {{user.currentWlCount + user.currentApptCount}}
                                                           </span>
-                                                      </td>
+                                                      </td> -->
                                                       <td>
                                                           <div class="copy">
                                                               <span class="">
@@ -454,21 +460,21 @@
                                                               </span>
                                                               <mat-menu #appMenu="matMenu">
                                                                   <button mat-menu-item
-                                                                      (click)="personalProfile(service.id)">
+                                                                      (click)="personalProfile(user.id)">
                                                                       Personal Details
                                                                   </button>
-                                                                  <button *ngIf="service.userType === 'PROVIDER'"
+                                                                  <button *ngIf="user.userType === 'PROVIDER'"
                                                                       mat-menu-item
-                                                                      (click)="manageSettings(service.id)">
+                                                                      (click)="manageSettings(user.id)">
                                                                       Settings
                                                                   </button>
                                                                   <button mat-menu-item
-                                                                      (click)="changeUserStatus(service)">
-                                                                      <i *ngIf="service.status=='INACTIVE' || !service.status"
+                                                                      (click)="changeUserStatus(user)">
+                                                                      <i *ngIf="user.status=='INACTIVE' || !user.status"
                                                                           class="icon-enable disabled "></i>
-                                                                      <i *ngIf="service.status=='ACTIVE'"
+                                                                      <i *ngIf="user.status=='ACTIVE'"
                                                                           class="icon-disable"></i>
-                                                                      {{(service.status=='ACTIVE') ? 'Disable'
+                                                                      {{(user.status=='ACTIVE') ? 'Disable'
                                                                       :'Enable'}}
                                                                   </button>
                                                               </mat-menu>
@@ -565,132 +571,137 @@
 
 
                                                     <th class="display-min-none">Languages</th>
-                                                    <th class="display-min-none">Booking count</th>
+                                                    <!-- <th class="display-min-none">Booking count</th> -->
                                                     <th class="display-min-none"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr class="row_data border-bottom pointer-cursor waitlist-box"
-                                                    *ngFor="let service of users_list | orderBy: order; let i = index;"
-                                                    (click)="selectedRow(i,service)"
-                                                    [class.disabled-group]="service.status=='INACTIVE'">
+                                                    *ngFor="let user of users_list | orderBy: order; let i = index;"
+                                                    (click)="selectedRow(i,user)"
+                                                    [class.disabled-group]="user.status=='INACTIVE'">
                                                     <td class="">
                                                         <div class="disp-flex">
                                                             <div class="pr-3 check-box"   *ngIf="showcheckbox">
                                                                 <span class="symbol-label">                                                                
-                                                                  <input type="checkbox" name="Checkboxes4"  [checked]="checkSelection(service)" (click)="stopprop($event);"   (change)="getUserIds(service, service.id , $event)">
+                                                                  <input type="checkbox" name="Checkboxes4"  [checked]="checkSelection(user)" (click)="stopprop($event);"   (change)="getUserIds(user, user.id , $event)">
 
                                                                 </span>
                                                               </div>
                                                             <div class='user-img'>
-                                                                <img [src]="getUserImg(service)" />
+                                                                <img [src]="getUserImg(user)" />
                                                             </div>
                                                             <div class="mgn-lt-10">
                                                                 <div class="username">
-                                                                    {{(service.businessName) ? service.businessName
-                                                                    : service.firstName + ' ' +
-                                                                    service.lastName}}&nbsp;
+                                                                    {{(user.businessName) ? user.businessName
+                                                                    : user.firstName + ' ' +
+                                                                    user.lastName}}&nbsp;
                                                                     <div class='status-circle'
-                                                                        [ngClass]="service.isAvailable ? 'green' : 'grey'"
-                                                                        *ngIf="accountSettings.availability && service.userType === 'PROVIDER' ">
+                                                                        [ngClass]="user.isAvailable ? 'green' : 'grey'"
+                                                                        *ngIf="accountSettings.availability && user.userType === 'PROVIDER' ">
                                                                     </div>
                                                                 </div>
                                                                 <div class="disp-flex mgn-up-5"
-                                                                    *ngIf="service.city && service.state"><i
+                                                                    *ngIf="user.city && user.state"><i
                                                                         class="fa fa-map-marker mgn-rt-5"
-                                                                        aria-hidden="true"></i>{{service.city}},&nbsp;{{service.state}}
+                                                                        aria-hidden="true"></i>{{user.city}},&nbsp;{{user.state}}
                                                                 </div>
                                                                 <div class="d-lg-none">
-                                                                    <div class=" mgn-up-5" *ngIf="service.userType">
+                                                                    <div class=" mgn-up-5" *ngIf="user.userType">
                                                                         <span class="b2"
-                                                                            *ngIf="service.userType === 'PROVIDER' ">{{provider_label
+                                                                            *ngIf="user.userType === 'PROVIDER' ">{{provider_label
                                                                             |
                                                                             capitalizeFirst}}</span>
                                                                         <span class="b2"
-                                                                            *ngIf="service.userType === 'ASSISTANT'">{{assistant_label
+                                                                            *ngIf="user.userType === 'ASSISTANT'">{{assistant_label
                                                                             |
                                                                             capitalizeFirst}}</span>
                                                                         <span class="b2"
-                                                                            *ngIf="service.userType === 'ADMIN'">Admin</span>
+                                                                            *ngIf="user.userType === 'ADMIN'">Admin</span>
                                                                     </div>
-                                                                    <div class=" mgn-up-5" *ngIf="service.employeeId">
-                                                                      {{service.employeeId}}
+                                                                    <div class=" mgn-up-5" *ngIf="user.employeeId">
+                                                                      {{user.employeeId}}
                                                                    </div>
-                                                                    <div class="mgn-up-5" *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum || service.email">
+                                                                    <div class="mgn-up-5" *ngIf="user.mobileNo || user.whatsAppNum || user.telegramNum || user.email">
                                                                         <span class="b2">
-                                                                          <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
+                                                                          <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(user)">View</a>
                                                                         </span>
                                                                     </div>
                                                                     <div class="mgn-up-5"
-                                                                        *ngIf="service.specialization && domain !== 'finance'"> <span
+                                                                        *ngIf="user.specialization && domain !== 'finance'"> <span
                                                                             class="b2">
-                                                                           {{getSpecialization(service.specialization)}}
+                                                                            {{user.specialization}}
+                                                                           <!-- {{getSpecialization(user.specialization)}} -->
                                                                         </span></div>
                                                                     
                                                                     <div class="mgn-up-5"
-                                                                        *ngIf="service.bussLocations && service.bussLocations.length > 0  && domain === 'finance'"> <span
+                                                                        *ngIf="user.bussLocations && user.bussLocations.length > 0  && domain === 'finance'"> <span
                                                                             class="b2">Business Locations &nbsp;
                                                                             <i class="fa fa-map-marker mgn-rt-5" style="color: blue;" aria-hidden="true"></i>
-                                                                            {{getBussLoc(service.bussLocations)}}
+                                                                            {{getBussLoc(user.bussLocations)}}
                                                                         </span></div>
 
 
 
                                                                     <div class="mgn-up-5"
-                                                                        *ngIf="service.preferredLanguages"><span
+                                                                        *ngIf="user.preferredLanguages"><span
                                                                             class="b2">
-                                                                            {{getLanguages(service.preferredLanguages)}}
+                                                                            {{user.preferredLanguages}}
+                                                                            <!-- {{getLanguages(user.preferredLanguages)}} -->
                                                                         </span>
                                                                     </div>
-                                                                    <div class="mgn-up-5"
-                                                                        *ngIf="service.userType === 'PROVIDER'">
+                                                                    <!-- <div class="mgn-up-5"
+                                                                        *ngIf="user.userType === 'PROVIDER'">
                                                                         <span class="b1">Booking Count:
                                                                         </span><span class="b2">
-                                                                            {{service.currentWlCount + service.currentApptCount}}
+                                                                            {{user.currentWlCount + user.currentApptCount}}
                                                                         </span>
-                                                                    </div>
+                                                                    </div> -->
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td class="display-min-none">
                                                         <span class="ttle"
-                                                            *ngIf="service.userType === 'PROVIDER' ">
+                                                            *ngIf="user.userType === 'PROVIDER' ">
                                                             {{provider_label | capitalizeFirst}}
                                                         </span>
                                                         <span class="ttle"
-                                                            *ngIf="service.userType === 'ASSISTANT'">{{assistant_label
+                                                            *ngIf="user.userType === 'ASSISTANT'">{{assistant_label
                                                             |
                                                             capitalizeFirst}}</span>
                                                         <span class="ttle"
-                                                            *ngIf="service.userType === 'ADMIN'">Admin</span>
+                                                            *ngIf="user.userType === 'ADMIN'">Admin</span>
                                                     </td>
                                                     <td class="display-min-none">
-                                                        <span *ngIf="service.mobileNo || service.whatsAppNum || service.telegramNum || service.email">
-                                                          <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
+                                                        <span *ngIf="user.mobileNo || user.whatsAppNum || user.telegramNum || user.email">
+                                                          <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(user)">View</a>
                                                         </span>
                                                     </td>
                                                     <td class="display-min-none" *ngIf="domain !== 'finance'">
-                                                      <span *ngIf="service.specialization && domain !== 'finance'">
-                                                          {{getSpecialization(service.specialization)}}</span>
+                                                      <span *ngIf="user.specialization && domain !== 'finance'">
+                                                        {{user.specialization}}
+                                                          <!-- {{getSpecialization(user.specialization)}} -->
+                                                        </span>
                                                   </td>
 
                                                   <td class="display-min-none" *ngIf="domain === 'finance'">
-                                                    <span *ngIf="service.bussLocations && service.bussLocations.length > 0  && domain === 'finance'">
-                                                      {{getBussLoc(service.bussLocations)}}</span>
+                                                    <span *ngIf="user.bussLocations && user.bussLocations.length > 0  && domain === 'finance'">
+                                                      {{getBussLoc(user.bussLocations)}}</span>
                                                   </td>
 
 
                                                     <td class="display-min-none">
-                                                        <span *ngIf="service.preferredLanguages">
-                                                            {{getLanguages(service.preferredLanguages)}}
+                                                        <span *ngIf="user.preferredLanguages">
+                                                          {{user.preferredLanguages}}
+                                                            <!-- {{getLanguages(user.preferredLanguages)}} -->
                                                         </span>
                                                     </td>
-                                                    <td class="display-min-none">
-                                                        <span *ngIf="service.userType === 'PROVIDER'">
-                                                            {{service.currentWlCount + service.currentApptCount}}
+                                                    <!-- <td class="display-min-none">
+                                                        <span *ngIf="user.userType === 'PROVIDER'">
+                                                            {{user.currentWlCount + user.currentApptCount}}
                                                         </span>
-                                                    </td>
+                                                    </td> -->
                                                     <td>
                                                         <div class="copy">
                                                             <span class="" style="top: 4px;">
@@ -702,21 +713,21 @@
                                                             </span>
                                                             <mat-menu #appMenu="matMenu">
                                                                 <button mat-menu-item
-                                                                    (click)="personalProfile(service.id)">
+                                                                    (click)="personalProfile(user.id)">
                                                                     Personal Details
                                                                 </button>
-                                                                <button *ngIf="service.userType === 'PROVIDER'"
+                                                                <button *ngIf="user.userType === 'PROVIDER'"
                                                                     mat-menu-item
-                                                                    (click)="manageSettings(service.id)">
+                                                                    (click)="manageSettings(user.id)">
                                                                     Settings
                                                                 </button>
                                                                 <button mat-menu-item
-                                                                    (click)="changeUserStatus(service)">
-                                                                    <i *ngIf="service.status=='INACTIVE' || !service.status"
+                                                                    (click)="changeUserStatus(user)">
+                                                                    <i *ngIf="user.status=='INACTIVE' || !user.status"
                                                                         class="icon-enable disabled "></i>
-                                                                    <i *ngIf="service.status=='ACTIVE'"
+                                                                    <i *ngIf="user.status=='ACTIVE'"
                                                                         class="icon-disable"></i>
-                                                                    {{(service.status=='ACTIVE') ? 'Disable'
+                                                                    {{(user.status=='ACTIVE') ? 'Disable'
                                                                     :'Enable'}}
                                                                 </button>
                                                             </mat-menu>

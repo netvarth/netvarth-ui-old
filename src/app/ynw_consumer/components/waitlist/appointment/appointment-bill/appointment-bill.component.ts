@@ -507,7 +507,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                                 this.origin = 'consumer';
                                 if (pData.isGateWayPaymentNeeded  && pData.isJCashPaymentSucess) {
                                     if(paymentType == 'paytm'){
-                                        this.payWithPayTM(pData.response);
+                                        this.payWithPayTM(pData.response,this.accountId);
                                     }else{
                                         this.paywithRazorpay(pData.response);
                                     }
@@ -586,7 +586,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                             if (this.pGateway === 'RAZORPAY') {
                                 this.paywithRazorpay(data);
                             } else {
-                                this.payWithPayTM(data);
+                                this.payWithPayTM(data,this.accountId);
                                 // this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
                                 // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
                                 // setTimeout(() => {
@@ -604,17 +604,17 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
             }
         }
     }
-    payWithPayTM(pData:any) {
+    payWithPayTM(pData:any,accountId:any) {
         this.isClickedOnce=true;
         this.loadingPaytm = true;
-        this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
+        this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId,this);
     }
     closeloading(){
             this.isClickedOnce=false;
             this.loadingPaytm = false; 
             this.cdRef.detectChanges();
     }
-    transactionCompleted(response) {
+    transactionCompleted(response,payload, accountId) {
         if(response.STATUS == 'TXN_FAILURE'){
             this.isClickedOnce=false;
             this.loadingPaytm = false;
@@ -642,6 +642,9 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
               }
 
         } else if(response.STATUS == 'TXN_SUCCESS'){
+            this.paytmService.updatePaytmPay(payload,accountId)
+            .then((data) => {
+                if (data) {
             this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
             const navigationExtras: NavigationExtras = {
                 queryParams: {
@@ -656,6 +659,12 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
               } else {
               this.ngZone.run(() => this.router.navigate(['consumer'] ,navigationExtras));
               }
+
+            }
+        },
+        error=>{
+            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });   
+        });
         }
       
       

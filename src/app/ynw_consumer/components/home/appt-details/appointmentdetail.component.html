@@ -155,8 +155,15 @@
                                             <mat-tab label="Messages">
                                                 <app-inbox-list [messages]="communication_history"
                                                     [fromsource]="'consumer-waitlist'"
-                                                    (reloadApi)="getCommunicationHistory()"></app-inbox-list>
+                                                    (reloadApi)="getCommunicationHistory()">
+                                                </app-inbox-list>
+                                                <!--  {{communication_history[0]['accountName']}}  {{communication_history[0]['service']}}  {{communication_history[0]['msg']}} -->
                                             </mat-tab>
+                                            <!--  <mat-tab label="Messages">
+                                                <app-inbox-list [messages]="communication_history"
+                                                    [fromsource]="'consumer-waitlist'"
+                                                    (reloadApi)="getCommunicationHistory()"></app-inbox-list>
+                                            </mat-tab> -->
                                             <mat-tab label="{{cust_notes_cap | capitalizeFirst}}">
                                                 <span
                                                     *ngIf="appt && appt.consumerNote &&  appt.consumerNote !== ''">{{appt.consumerNote}}</span>

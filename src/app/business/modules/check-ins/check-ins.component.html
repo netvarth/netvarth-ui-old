@@ -26,7 +26,8 @@
                   </li>
                 </ul>
               </li>
-              <li *ngIf="admin"  class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
+              <li *ngIf="admin" class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a>
+              </li>
             </ul>
           </li>
           <ng-container
@@ -98,7 +99,7 @@
                     data-toggle="dropdown"><i class="fa fa-hourglass-start"></i> Delay</a>
                 </li>
                 <li class="dropdown customized-dd" *ngIf="time_type !==3"
-                  style="margin-left: auto !important; margin-bottom: 12px !important; margin-right: 10px !important;" >
+                  style="margin-left: auto !important; margin-bottom: 12px !important; margin-right: 10px !important;">
                   <button type="button" href="#" class="btn btn-default dropdown-toggle" data-toggle="modal"
                     data-target="#selectViewModal" *ngIf="selectedView">
                     <span style="margin-right: 10px !important;">
@@ -118,7 +119,7 @@
                   </button>
                   <div class="modal fade" id="selectViewModal" tabindex="-1" role="dialog">
                     <div class="modal-dialog" role="document">
-                      <div class="modal-content" class="box" >
+                      <div class="modal-content" class="box">
                         <div class="modal-header">
                           <h5 class="modal-title" id="selectViewModalLabel">Select View</h5>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -312,7 +313,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="card" >
+                <div class="card">
                   <div class="card-header">
                     <h2 class="mb-0">
                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePhNo3"
@@ -329,15 +330,15 @@
                   </div>
                   <div id="collapsePhNo3" class="collapse in" data-parent="#accordion3">
                     <div class="card-body">
-                      <div class="filterTextinput filter-text-input" >
-                          <li class="filterli filter-li">
-                              <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode (keyup)="keyPressed()"
-                              class="filterTextbox change countryCodewidth" placeholder="+91">
-                            <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
-                              [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
-                              (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
-                              placeholder="9955668855">
-                          </li>
+                      <div class="filterTextinput filter-text-input">
+                        <li class="filterli filter-li">
+                          <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode
+                            (keyup)="keyPressed()" class="filterTextbox change countryCodewidth" placeholder="+91">
+                          <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
+                            [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
+                            (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
+                            placeholder="9955668855">
+                        </li>
                       </div>
                     </div>
                   </div>
@@ -537,7 +538,7 @@
                     </div>
                   </div>
                 </div>
-             
+
               </ul>
             </section>
             <div class="filter-footer" *ngIf="filterapplied === true">
@@ -662,7 +663,7 @@
                   </div>
                   <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
                     {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
-                    + ' ' + checkin.provider.lastName}} 
+                    + ' ' + checkin.provider.lastName}}
                   </div>
                   <span style="color:green" *ngIf="checkin.internalStatus"> {{
                     checkin.internalStatus }}</span>
@@ -908,7 +909,7 @@
                   </div>
                   <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
                     {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName
-                    + ' ' + checkin.provider.lastName}} 
+                    + ' ' + checkin.provider.lastName}}
                   </div>
                   <span style="color:green" *ngIf="checkin.internalStatus">{{
                     checkin.internalStatus }}</span>
@@ -1166,7 +1167,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="card" >
+                  <div class="card">
                     <div class="card-header">
                       <h2 class="mb-0">
                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePhNo3"
@@ -1183,10 +1184,10 @@
                     </div>
                     <div id="collapsePhNo3" class="collapse in" data-parent="#accordion3">
                       <div class="card-body">
-                        <div class="filterTextinput filter-text-input" >
+                        <div class="filterTextinput filter-text-input">
                           <li class="filterli filter-li">
-                              <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode (keyup)="keyPressed()"
-                              class="filterTextbox change countryCodewidth" placeholder="+91">
+                            <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode
+                              (keyup)="keyPressed()" class="filterTextbox change countryCodewidth" placeholder="+91">
                             <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
                               [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
                               (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
@@ -1534,7 +1535,7 @@
                 </div>
                 <div class="bold user-txt-clr" *ngIf="selectedUser && selectedUser.id == 'all' && checkin.provider">
                   {{(checkin.provider.businessName) ? checkin.provider.businessName : checkin.provider.firstName +
-                  ' ' + checkin.provider.lastName}} 
+                  ' ' + checkin.provider.lastName}}
                 </div>
                 <span style="color:green" *ngIf="checkin.internalStatus"> {{
                   checkin.internalStatus }}</span>
@@ -1772,7 +1773,7 @@
                               [ngModelOptions]="{standalone: true}" (keyup)="keyPressed()"
                               class="filterTextbox filter-textbox" placeholder="Enter Booking ID">
                           </li>
-                          
+
                         </div>
                       </div>
                     </div>
@@ -1795,14 +1796,14 @@
                     <div id="collapsePhNo3" class="collapse in" data-parent="#accordion3">
                       <div class="card-body">
                         <div class="filterTextinput filter-text-input" *ngIf="time_type == 3">
-                            <li class="filterli filter-li">
-                                <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode (keyup)="keyPressed()"
-                                class="filterTextbox change countryCodewidth" placeholder="+91">
-                              <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
-                                [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
-                                (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
-                                placeholder="9955668855">
-                            </li>
+                          <li class="filterli filter-li">
+                            <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode
+                              (keyup)="keyPressed()" class="filterTextbox change countryCodewidth" placeholder="+91">
+                            <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number"
+                              [ngModelOptions]="{standalone: true}" #Fmobile (keyup)="keyPressed()"
+                              (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox change phonewidth"
+                              placeholder="9955668855">
+                          </li>
                         </div>
                       </div>
                     </div>
@@ -2083,8 +2084,8 @@
                   <div class="card" *ngIf="internalStats.length > 0">
                     <div class="card-header">
                       <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseStatus13"
-                          aria-expanded="false">
+                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                          data-target="#collapseStatus13" aria-expanded="false">
                           <div>
                             <div style="display: inline-block !important;">
                               <i class="fa fa-circle-o-notch"></i>
@@ -2411,6 +2412,7 @@
     <app-common-innerloading-spinner></app-common-innerloading-spinner>
   </div>
   </div>
+
   <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
     [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
     (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>

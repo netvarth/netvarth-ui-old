@@ -13,8 +13,8 @@
     "analyze": "webpack-bundle-analyzer dist/stats.json",
     "compodoc": "compodoc -p tsconfig.json",
     "dev-build": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng",
-    "local-serve": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng serve -c=local",
-    "build-prod": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng build --configuration production --verbose"
+    "local-serve": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng serve -c=local --port 4201",
+    "build-prod": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng build --configuration production"
   },
   "private": true,
   "dependencies": {
@@ -44,7 +44,7 @@
     "@kolkov/angular-editor": "^1.1.2",
     "@ks89/angular-modal-gallery": "^7.2.6",
     "@microsoft/signalr": "^3.1.7",
-    "@ng-bootstrap/ng-bootstrap": "^4.1.1",
+    "@ng-bootstrap/ng-bootstrap": "^4.2.2",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
     "@nicky-lenaers/ngx-scroll-to": "^9.0.0",

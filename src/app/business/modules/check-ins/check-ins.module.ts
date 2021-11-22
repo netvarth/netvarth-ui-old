@@ -26,6 +26,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { OwlModule } from 'ngx-owl-carousel';
 import { FormsModule } from '@angular/forms';
 import { ApplyLabelModule } from './apply-label/apply-label.module';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbCarouselModule} from '@ng-bootstrap/ng-bootstrap';
+// import {NgbCarousel} from '@ng-bootstrap/ng-bootstrap';
+
+
+
 const routes: Routes = [
     { path: '', component: CheckInsComponent },
     { 
@@ -47,6 +53,8 @@ const routes: Routes = [
 @NgModule({
     imports: [
         CommonModule,
+        NgbModule,
+        NgbCarouselModule,
         FormsModule,
         MatTabsModule,
         MatTooltipModule,
@@ -74,7 +82,8 @@ const routes: Routes = [
         [RouterModule.forChild(routes)]
     ],
     declarations: [
-        CheckInsComponent
+        CheckInsComponent,
+
     ],
     exports: [CheckInsComponent]
 })

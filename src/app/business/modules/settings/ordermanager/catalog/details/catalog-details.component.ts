@@ -20,6 +20,7 @@ import { SnackbarService } from '../../../../../../shared/services/snackbar.serv
 import { EditcatalogitemPopupComponent } from '../editcatalogitempopup/editcatalogitempopup.component';
 import { CreateItemPopupComponent } from '../createItem/createitempopup.component';
 import { SubSink } from 'subsink';
+
 @Component({
     selector: 'app-catalogdetail',
     templateUrl: './catalog-details.component.html',
@@ -278,19 +279,18 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         this.subscriptions.unsubscribe();
     }
     isExpired(item){
-    
-        if(new Date(item.expiryDate) < new Date()){
-            console.log('expired');
-            return true;
-        }else{
-            console.log('not expired');
+        if(moment(new Date(item.expiryDate)).isSameOrAfter(new Date(), 'day')){
             return false;
+        }else{
+            return true;
         }
+
+       
     }
     gotoNext() {
 
         if (this.amForm.get('orderType').value === 'SHOPPINGLIST' && this.amForm.get('advancePaymentStatus').value === 'FULLAMOUNT' && this.step === 3) {
-            this.snackbarService.openSnackBar('Shopping list not supported fullamount advance payment', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Shopping list not supported full amount advance payment', { 'panelClass': 'snackbarerror' });
             return;
         }
         if (this.payAdvance === 'FIXED' && this.step === 3) {
