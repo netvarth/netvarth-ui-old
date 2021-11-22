@@ -14,7 +14,7 @@ const routes: Routes = [
     { path: '', loadChildren: ()=> import('./shared/components/home/home.module').then(m=>m.HomeModule), canActivate: [AuthGuardHome] },
     { path: 'business', loadChildren: () => import('./shared/modules/business/home/phome.module').then(m => m.PhomeModule) },
     { path: 'home', redirectTo: '', pathMatch: 'full' },
-    // { path: 'logout', component: LogoutComponent },
+ 
     { path: 'not-found', loadChildren: () => import('./shared/modules/not-found/not-found.module').then(m => m.NotFoundModule) },
     { path: 'searchdetail', loadChildren: () => import('./shared/components/search-detail/search-detail.module').then(m => m.SearchDetailModule) },
     { path: 'terms', loadChildren: () => import('./shared/modules/terms-static/terms-static.module').then(m => m.TermsStaticModule) },
