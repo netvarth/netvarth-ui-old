@@ -514,7 +514,7 @@ export class BranchUsersComponent implements OnInit {
             }
         }
         if (this.selectedLanguages.length > 0) {
-            api_filter['spokenlangs-eq'] = this.selectedLanguages.toString();
+            api_filter['preferredLanguages-eq'] = this.selectedLanguages.toString();
         }
         if (this.selectedLocations.length > 0) {
             api_filter['businessLocs-eq'] = this.selectedLocations.toString();
