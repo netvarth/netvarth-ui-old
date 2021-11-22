@@ -1114,4 +1114,7 @@ export class SharedServices {
     const url = 'consumer/appointment/schedule/' + serviceid + '/pricelist';
     return this.servicemeta.httpGet(url);
   }
+  getNewsFeeds(url) {
+    return this.servicemeta.httpGet(url);
+  }
 }
