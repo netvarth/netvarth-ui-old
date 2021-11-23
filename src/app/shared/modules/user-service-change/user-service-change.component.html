@@ -364,11 +364,12 @@
                               <span class="b2">{{service.specialization}} </span>
                             </div>
                             <div class="mgn-up-5"
-                            *ngIf="service.bussloc && service.bussloc.length > 0  && domain === 'finance'"> <span
+                            *ngIf="service.businessLocations && domain === 'finance'"> <span
                                 class="b2">Business Locations &nbsp;&nbsp;
                                 <br>
                                 <i class="fa fa-map-marker mgn-rt-5" style="color: blue;" aria-hidden="true"></i>
-                                {{getBussLoc(service.bussloc)}}
+                                <!-- {{getBussLoc(service.bussLocations)}} -->
+                                {{service.businessLocations}}
                             </span></div>
 
 
@@ -392,19 +393,22 @@
                       {{service.specialization}}
                     </td>
 
-                    <td class="display-min-none" *ngIf="domain === 'finance' && service.bussloc.length > 0">
-                      {{getBussLoc(service.bussloc)}}
+                    <td class="display-min-none" *ngIf="domain === 'finance'">
+                        <span *ngIf="service.businessLocations">
+                          <!-- {{getBussLoc(service.bussLocations)}} -->
+                          {{service.businessLocations}}
+                        </span>
                     </td>
 
 
                     <td class="display-min-none">
                       {{service.preferredLanguages}}
                     </td>
-                    <td class="display-min-none">
+                    <!-- <td class="display-min-none">
                       <span *ngIf="service.userType === 'PROVIDER'">
                         {{service.currentWlCount}}
                       </span>
-                    </td>
+                    </td> -->
                   </tr>
                   <tr *ngIf="service_dataSource.data && service_dataSource.data.length == 0 && !loading">
                     No {{provider_label}} found
