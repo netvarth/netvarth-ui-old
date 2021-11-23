@@ -23,11 +23,11 @@ import { AppointmentActionsComponent } from './appointment-actions/appointment-a
 import { VoicecallDetailsSendComponent } from './voicecall-details-send/voicecall-details-send.component';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
-import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { Title } from '@angular/platform-browser';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { AttachmentPopupComponent } from '../../../../app/shared/components/attachment-popup/attachment-popup.component';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html',
@@ -1644,8 +1644,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     api_filter['count'] = this.filter.page_count;
     return api_filter;
   }
-  doSearch() {
-    this.shared_functions.setFilter();
+  doSearchs() {
     this.lStorageService.removeitemfromLocalStorage('filter');
     this.endminday = this.filter.check_in_start_date;
     if (this.filter.check_in_end_date) {
@@ -1664,7 +1663,32 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.filterapplied = false;
     }
     this.loadApiSwitch('doSearch');
+   // this.shared_functions.setFilter();
+
   }
+
+  doSearch() {
+    this.shared_functions.setFilter();
+    this.lStorageService.removeitemfromLocalStorage('filter');
+    this.endminday = this.filter.check_in_start_date;
+    if (this.filter.check_in_end_date) {
+      this.maxday = this.filter.check_in_end_date;
+    } else {
+      this.maxday = this.yesterdayDate;
+    }
+    this.labelSelection();
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
+      this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
+      || this.filter.check_in_end_date !== null || this.filter.check_in_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all'
+      || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
+      || this.allPayStatusSelected || this.allModeSelected || this.allLabelSelected || this.allScheduleSelected || this.allLocationSelected) {
+      this.filterapplied = true;
+    } else {
+      this.filterapplied = false;
+    }
+    this.loadApiSwitch('doSearch');
+  }
+ 
   keyPressed() {
     this.shared_functions.setFilter();
     this.lStorageService.removeitemfromLocalStorage('filter');

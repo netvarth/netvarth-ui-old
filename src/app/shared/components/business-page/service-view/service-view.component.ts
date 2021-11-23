@@ -174,7 +174,27 @@ export class ServiceViewComponent implements OnInit {
       this.small_device_display = false;
     }
   }
+  customOptions: any = {
+    dots: false,
+    nav: true,
+    navText: [
+        '<i class="fa fa-angle-left fa-2x"  aria-hidden="true"></i>',
+        '<i class="fa fa-angle-right fa-2x"  aria-hidden="true"></i>'
+    ],
+    autoplay: true,
+    autoplayTimeout: 6000,
+    autoplaySpeed: 1000,
+    autoplayHoverPause: true,
+    mouseDrag: false,
+    touchDrag: true,
+    pullDrag: false,
+    autoWidth: true,
+    loop: true,
+    responsiveClass: true,
+    responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 2 }, 1200: { items: 3 } }
+}
   ngOnInit() {
+    console.log("Image List : ",this.image_list_popup)
     const _this = this;
     _this.accountIdExists = false;
     if (_this.sharedFunctionobj.isBusinessOwner()) {

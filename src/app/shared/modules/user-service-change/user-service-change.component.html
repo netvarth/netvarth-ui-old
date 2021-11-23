@@ -326,7 +326,7 @@
 
 
                     <th class="display-min-none">Languages</th>
-                    <th class="display-min-none">Booking count</th>
+                    <!-- <th class="display-min-none">Booking count</th> -->
                   </tr>
                 </thead>
                 <tbody *ngIf="!loading">
@@ -364,7 +364,7 @@
                               <span class="b2">{{service.specialization}} </span>
                             </div>
                             <div class="mgn-up-5"
-                            *ngIf="service.bussloc.length > 0  && domain === 'finance'"> <span
+                            *ngIf="service.bussloc && service.bussloc.length > 0  && domain === 'finance'"> <span
                                 class="b2">Business Locations &nbsp;&nbsp;
                                 <br>
                                 <i class="fa fa-map-marker mgn-rt-5" style="color: blue;" aria-hidden="true"></i>
@@ -372,12 +372,12 @@
                             </span></div>
 
 
-                            <div class="mgn-up-5" *ngIf="service.languages">
-                              <span class="b2">{{service.languages}} </span>
+                            <div class="mgn-up-5" *ngIf="service.preferredLanguages">
+                              <span class="b2">{{service.preferredLanguages}} </span>
                             </div>
-                            <div class="mgn-up-5" *ngIf="service.userType === 'PROVIDER'"> <span class="b1">Booking
+                            <!-- <div class="mgn-up-5" *ngIf="service.userType === 'PROVIDER'"> <span class="b1">Booking
                                 Count:
-                              </span><span class="b2">{{service.currentWlCount}} </span></div>
+                              </span><span class="b2">{{service.currentWlCount}} </span></div> -->
                           </div>
                         </div>
                       </div>
@@ -398,7 +398,7 @@
 
 
                     <td class="display-min-none">
-                      {{service.languages}}
+                      {{service.preferredLanguages}}
                     </td>
                     <td class="display-min-none">
                       <span *ngIf="service.userType === 'PROVIDER'">
@@ -406,7 +406,7 @@
                       </span>
                     </td>
                   </tr>
-                  <tr *ngIf="service_dataSource.data.length == 0 && !loading">
+                  <tr *ngIf="service_dataSource.data && service_dataSource.data.length == 0 && !loading">
                     No {{provider_label}} found
                   </tr>
                 </tbody>

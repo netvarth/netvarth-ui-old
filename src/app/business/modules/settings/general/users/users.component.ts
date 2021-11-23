@@ -153,7 +153,7 @@ export class BranchUsersComponent implements OnInit {
         this.user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = this.user.sector;
         this.api_loading = true;
-        this.getUsers();
+        this.getUsers(true);
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.assistant_label = this.wordProcessor.getTerminologyTerm('assistant');
         this.getLicenseUsage();
@@ -168,11 +168,11 @@ export class BranchUsersComponent implements OnInit {
         this.provider_services.getTeamGroup().subscribe((data: any) => {
             this.groups = data;
             this.teamLoaded = false;
-            if(this.groups.length > 0){
+            if (this.groups.length > 0) {
                 this.showteams = true;
                 this.showusers = false;
             }
-            if(this.groups.length == 0){
+            if (this.groups.length == 0) {
                 this.showteams = false;
                 this.showusers = true;
             }
@@ -275,8 +275,8 @@ export class BranchUsersComponent implements OnInit {
     getUsers(from_oninit = false) {
         const _this = this;
         this.loading = true;
-        let filter= this.setFilterForApi();
-        if(this.selectedTeam!=='all' && !this.addUser) {
+        let filter = this.setFilterForApi();
+        if (this.selectedTeam !== 'all' && !this.addUser) {
             filter['teams-eq'] = this.selectedTeam.id;
         }
         this.lStorageService.setitemonLocalStorage('userfilter', filter);
@@ -288,27 +288,46 @@ export class BranchUsersComponent implements OnInit {
                     // filter = this.setPaginationFilter(filter);
                     this.provider_services.getUsers(filter).subscribe(
                         (data: any) => {
-                            // this.users_list = data;
-                            const usersList = data;
-                            
-                            console.log(usersList);
-                            const ids = usersList.map(function (a) { return a.bProfileId; });
-                            console.log(ids);
-                            if (ids) {
-                            this.provider_services.getUserProfiles(ids).subscribe(
-                                (profiles: any)=> {                                    
-                                    _this.users_list = profiles.map((item, i) => Object.assign({}, item, usersList[i]));                                    
-                                    _this.users_list.map(
-                                        function(user) { user.preferredLanguages = _this.getLanguages(user.preferredLanguages);
-                                        return user })
-                                    _this.users_list.map(
-                                        function(user) { user.specialization = _this.getSpecialization(user.specialization);
-                                        return user })
-                                        console.log(_this.users_list);
-                                }
-                            )
+                            this.users_list = data;
+                            if (from_oninit) {
+                                _this.setSpecializationFilter(this.users_list);
+                                console.log(_this.specialization_arr);
                             }
-                            console.log("User Bprofile Ids:" + ids);
+                            this.users_list.map(function (user) {
+                                user.preferredLanguages = user.preferredLanguages ? _this.getLanguages(user.preferredLanguages) : '';
+                                return user
+                            })
+                            this.users_list.map(function (user) {
+                                user.specialization = user.specialization ? user.specialization.map(spec => spec.displayName) : '';
+                                return user
+                            })
+                            // this.users_list = this.users_list.map(function(user) {
+                            //     if (user.specialiation) {
+                            //         user.specialiations = user.specialiation.map(special => special.displayName);
+                            //     }
+                            // })
+                            //    user.specialization.map(specialization => specialization.displayName);
+                            // // })displayName
+                            console.log(this.users_list);
+                            // const usersList = data;                            
+                            // console.log(usersList);                        
+                            // const ids = usersList.map(function (a) { return a.bProfileId; });
+                            // console.log(ids);
+                            // if (ids) {
+                            // this.provider_services.getUserProfiles(ids).subscribe(
+                            //     (profiles: any)=> {                                    
+                            //         _this.users_list = profiles.map((item, i) => Object.assign({}, item, usersList[i]));                                    
+                            //         _this.users_list.map(
+                            //             function(user) { user.preferredLanguages = _this.getLanguages(user.preferredLanguages);
+                            //             return user })
+                            //         _this.users_list.map(
+                            //             function(user) { user.specialization = _this.getSpecialization(user.specialization);
+                            //             return user })
+                            //             console.log(_this.users_list);
+                            //     }
+                            // )
+                            // }
+                            // console.log("User Bprofile Ids:" + ids);
                             this.provider_services.getDepartments().subscribe(
                                 (data1: any) => {
                                     this.departments = data1.departments;
@@ -325,7 +344,7 @@ export class BranchUsersComponent implements OnInit {
                                     this.loadComplete = true;
                                     this.user_count_filterApplied = this.users_list.length;
                                 });
-                                // this.getSpecializations();
+                            // this.getSpecializations();
                         },
                         (error: any) => {
                             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -334,6 +353,20 @@ export class BranchUsersComponent implements OnInit {
                 (error: any) => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
+    }
+    setSpecializationFilter(users_list: any) {
+        const _this = this;
+        const specialiationList = [];
+        users_list.map(function (user) {
+            console.log(user.specialization);
+            if (user.specialization) {
+                specialiationList.push(...user.specialization);
+            }
+            _this.specialization_arr = getUniqueListBy(specialiationList, 'name');
+            function getUniqueListBy(arr, key) {
+                return [...new Map(arr.map(item => [item[key], item])).values()]
+            }
+        })
     }
     getDepartmentNamebyId(id) {
         let departmentName;
@@ -457,10 +490,10 @@ export class BranchUsersComponent implements OnInit {
         if (this.filter.userType !== '') {
             if (this.filter.userType == 'ADMIN') {
                 // api_filter['or=userType-eq'] =this.filter.userType+',isAdmin-eq='+true;  
-                  api_filter['userType-eq'] =this.filter.userType;  
-              } else {
                 api_filter['userType-eq'] = this.filter.userType;
-              }
+            } else {
+                api_filter['userType-eq'] = this.filter.userType;
+            }
         }
         if (this.filter.available !== '') {
             api_filter['available-eq'] = this.filter.available;
@@ -481,13 +514,13 @@ export class BranchUsersComponent implements OnInit {
             }
         }
         if (this.selectedLanguages.length > 0) {
-            api_filter['spokenlangs-eq'] = this.selectedLanguages.toString();
+            api_filter['preferredLanguages-eq'] = this.selectedLanguages.toString();
         }
         if (this.selectedLocations.length > 0) {
             api_filter['businessLocs-eq'] = this.selectedLocations.toString();
         }
         if (this.selectedSpecialization.length > 0) {
-            api_filter['specialization-eq'] = this.selectedSpecialization.toString();
+            api_filter['specialization-eq'] = 'name::' + this.selectedSpecialization.toString();
         }
         if (this.selectedTeam === 'all' || this.addUser) {
             delete api_filter['teams-eq'];
@@ -641,7 +674,7 @@ export class BranchUsersComponent implements OnInit {
         }
         const specializationArray = [];
         for (let i = 0; i < specialization.length; i++) {
-            if (specialization[i] && specialization[i]!==null && specialization[i]!=='null') {
+            if (specialization[i] && specialization[i] !== null && specialization[i] !== 'null') {
                 specializationArray.push(specialization[i]);
             }
         }
@@ -763,7 +796,7 @@ export class BranchUsersComponent implements OnInit {
     teamSelected(team, type?) {
         this.showusers = true;
         this.showteams = false;
-        if(!type){
+        if (!type) {
             this.showUsers = false;
             this.showcheckbox = false;
         }
@@ -808,7 +841,7 @@ export class BranchUsersComponent implements OnInit {
         console.log("In Check Selection");
         console.log(user);
         console.log(this.selecteTeamdUsers);
-        if ( this.selecteTeamdUsers && this.selecteTeamdUsers.length > 0) {
+        if (this.selecteTeamdUsers && this.selecteTeamdUsers.length > 0) {
             const isuser = this.selecteTeamdUsers.filter(listofusers => listofusers.id === user.id);
             if (isuser.length > 0) {
                 return true;
@@ -820,7 +853,7 @@ export class BranchUsersComponent implements OnInit {
         this.userIds = [];
         this.showcheckbox = false;
         this.showUsers = false;
-        this.addUser =false;
+        this.addUser = false;
         this.teamSelected(this.selectedTeam);
     }
     getUserIds(service, id, values) {
@@ -850,12 +883,12 @@ export class BranchUsersComponent implements OnInit {
         this.api_loading = true;
         this.provider_services.getProviderLocations()
             .subscribe(data => {
-             this.locationsjson = data;
-            for (const loc of this.locationsjson) {
-              if (loc.status === 'ACTIVE') {
-                this.loc_list.push(loc);
-              }
-            }
+                this.locationsjson = data;
+                for (const loc of this.locationsjson) {
+                    if (loc.status === 'ACTIVE') {
+                        this.loc_list.push(loc);
+                    }
+                }
                 this.api_loading = false;
             });
     }
@@ -906,12 +939,12 @@ export class BranchUsersComponent implements OnInit {
     resetError() {
         this.apiError = '';
     }
-    cancelLocationToUsers(){
+    cancelLocationToUsers() {
         this.apiError = '';
     }
-    getBussLoc(bussloc){
+    getBussLoc(bussloc) {
         for (let i = 0; i < bussloc.length; i++) {
-            const locations = this.locationsjson.filter(loc =>loc.id === bussloc[i]);
+            const locations = this.locationsjson.filter(loc => loc.id === bussloc[i]);
             if (locations[0]) {
                 bussloc[i] = locations[0].place;
             }

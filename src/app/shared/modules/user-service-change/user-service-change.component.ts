@@ -121,25 +121,66 @@ export class UserServiceChnageComponent implements OnInit {
     this.service_dataSource.filter = filterValue;
   }
   ngOnInit() {
-  this.getProviders()
+  this.getProviders(true);
     this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
     this.getSpokenLanguages();
-    this.getSpecializations();
+    // this.getSpecializations();
     this.getProviderLocations();
   }
-   getProviders() {
+  setSpecializationFilter(users_list: any) {
+    const _this = this;
+    const specialiationList = [];
+    users_list.map(function (user) {
+        console.log(user.specialization);
+        if (user.specialization) {
+            specialiationList.push(...user.specialization);
+        }        
+    })
+    _this.specialization_arr = getUniqueListBy(specialiationList, 'name');
+      function getUniqueListBy(arr, key) {
+          return [...new Map(arr.map(item => [item[key], item])).values()]
+      }
+}
+getLanguages(languages) {
+  if (!languages) {
+      return;
+  }
+  languages = JSON.parse(languages);
+  for (let i = 0; i < languages.length; i++) {
+      languages[i] = languages[i].charAt(0).toUpperCase() + languages[i].slice(1).toLowerCase();
+  }
+  languages = languages.toString();
+  if (languages.length > 1) {
+      languages = languages.replace(/,/g, ", ");
+  }
+  return languages;
+}
+   getProviders(from_init?) {
+     const _this = this;
     let apiFilter = {};
     apiFilter = this.setFilterForApi();
     apiFilter['userType-eq'] = 'PROVIDER';
     apiFilter['status-eq'] = 'ACTIVE';
     this.provider_services.getUsers(apiFilter).subscribe(data => {
       this.users_list = data;
-      for(let user of this.users_list){
-          if(user.userType == 'PROVIDER'){
-              this.subdomain=user.subdomainName;
-          }
+      if (from_init) {
+        _this.setSpecializationFilter(this.users_list);
+        console.log(_this.specialization_arr);
       }
-      this.service_dataSource.data = this.setServiceDataSource(data);
+      this.users_list.map(function (user) {
+        user.preferredLanguages = user.preferredLanguages ? _this.getLanguages(user.preferredLanguages) : '';
+        return user
+      })
+      this.users_list.map(function (user) {
+          user.specialization = user.specialization ? user.specialization.map(spec => spec.displayName) : '';
+          return user
+      })
+      // for(let user of this.users_list){
+      //     if(user.userType == 'PROVIDER'){
+      //         this.subdomain=user.subdomainName;
+      //     }
+      // }
+      this.service_dataSource.data = this.users_list;
       this.filterApplied_count = this.service_dataSource.data.length;
     });
     setTimeout(() => {
@@ -157,63 +198,59 @@ export class UserServiceChnageComponent implements OnInit {
       this.selection.clear() :
       this.service_dataSource.data.forEach(row => this.selection.select(row));
   }
-  setServiceDataSource(result) {
-    const service_list: any = [];
-    result.forEach(serviceObj => {
-      let businessName = '';
-      let languages;
-      let specialization;
-      businessName = (serviceObj.businessName) ? serviceObj.businessName : serviceObj.firstName + ' ' + serviceObj.lastName;
-      if (serviceObj.preferredLanguages) {
-        languages = JSON.parse(serviceObj.preferredLanguages);
-        for (var i = 0; i < languages.length; i++) {
-          languages[i] = languages[i].charAt(0).toUpperCase() + languages[i].slice(1).toLowerCase();
-        }
-      }
-      if (serviceObj.specialization) {
-        for (let i = 0; i < serviceObj.specialization.length; i++) {
-          const special = this.specialization_arr.filter(speciall => speciall.name === serviceObj.specialization[i]);
-          if (special[0]) {
-            serviceObj.specialization[i] = special[0].displayName;
-          }
-        }
-        specialization = serviceObj.specialization.toString();
-        if (serviceObj.specialization.length > 1) {
-          specialization = specialization.replace(/,/g, ", ");
-        }
-      }
-      service_list.push(
-        {
-          'id': serviceObj.id,
-          'businessName': businessName,
-          'gender': serviceObj.gender,
-          'userType': serviceObj.userType,
-          'status': serviceObj.status,
-          'mobileNo': serviceObj.mobileNo,
-          'isAvailable': serviceObj.isAvailable,
-          'specialization': specialization,
-          'languages': languages,
-          'locationName': serviceObj.locationName,
-          'profilePicture': serviceObj.profilePicture,
-          'city': serviceObj.city,
-          'employeeId': serviceObj.employeeId,
-          'state': serviceObj.state,
-          'currentWlCount': serviceObj.currentWlCount+serviceObj.currentApptCount,
-          'whatsAppNum': (serviceObj.whatsAppNum) ? serviceObj.whatsAppNum  : '', 
-          'telegramNum': (serviceObj.telegramNum) ? serviceObj.telegramNum  : '', 
-          'countryCode':  serviceObj.countryCode || '',
-          'firstName': serviceObj.firstName,
-          'lastName': serviceObj.lastName,
-          'email': serviceObj.email || '',
-          'bussloc': serviceObj.bussLocations || ''
- 
-          // serviceObj.firstName + ' ' + serviceObj.lastName;
-
-
-        });
-    });
-    return service_list;
-  }
+  // setServiceDataSource(result) {
+  //   const usersList: any = [];
+  //   result.forEach(userObj => {
+  //     let businessName = '';
+  //     // let languages;
+  //     // let specialization;
+  //     businessName = (userObj.businessName) ? userObj.businessName : userObj.firstName + ' ' + userObj.lastName;
+  //     // if (userObj.preferredLanguages) {
+  //     //   languages = JSON.parse(userObj.preferredLanguages);
+  //     //   for (var i = 0; i < languages.length; i++) {
+  //     //     languages[i] = languages[i].charAt(0).toUpperCase() + languages[i].slice(1).toLowerCase();
+  //     //   }
+  //     // }
+  //     // if (userObj.specialization) {
+  //     //   for (let i = 0; i < userObj.specialization.length; i++) {
+  //     //     const special = this.specialization_arr.filter(speciall => speciall.name === userObj.specialization[i]);
+  //     //     if (special[0]) {
+  //     //       userObj.specialization[i] = special[0].displayName;
+  //     //     }
+  //     //   }
+  //     //   specialization = userObj.specialization.toString();
+  //       // if (userObj.specialization.length > 1) {
+  //       //   specialization = specialization.replace(/,/g, ", ");
+  //       // }
+  //     // }
+  //     usersList.push(
+  //       {
+  //         'id': userObj.id,
+  //         'businessName': businessName,
+  //         'gender': userObj.gender,
+  //         'userType': userObj.userType,
+  //         'status': userObj.status,
+  //         'mobileNo': userObj.mobileNo,
+  //         'isAvailable': userObj.isAvailable,
+  //         'specialization':userObj.specialization,
+  //         'languages': userObj.preferredLanguages,
+  //         'locationName': userObj.locationName,
+  //         'profilePicture': userObj.profilePicture,
+  //         'city': userObj.city,
+  //         'employeeId': userObj.employeeId,
+  //         'state': userObj.state,
+  //         'currentWlCount': userObj.currentWlCount+userObj.currentApptCount,
+  //         'whatsAppNum': (userObj.whatsAppNum) ? userObj.whatsAppNum  : '', 
+  //         'telegramNum': (userObj.telegramNum) ? userObj.telegramNum  : '', 
+  //         'countryCode':  userObj.countryCode || '',
+  //         'firstName': userObj.firstName,
+  //         'lastName': userObj.lastName,
+  //         'email': userObj.email || '',
+  //         'bussloc': userObj.bussLocations || ''
+  //       });
+  //   });
+  //   return usersList;
+  // }
   updateUser() {
     let msg = '';
     if (!this.selectedUser.isAvailable && (this.user.id === 136239 || this.user.id === 9341)) {
@@ -477,7 +514,7 @@ export class UserServiceChnageComponent implements OnInit {
       }
     }
     if (this.selectedLanguages.length > 0) {
-      api_filter['spokenlangs-eq'] = this.selectedLanguages.toString();
+      api_filter['preferredLanguages-eq'] = this.selectedLanguages.toString();
     }
     if (this.selectedSpecialization.length > 0) {
       api_filter['specialization-eq'] = this.selectedSpecialization.toString();
@@ -556,11 +593,11 @@ export class UserServiceChnageComponent implements OnInit {
     //       subDomain = 'entertainment';
     //    }  
     // }
-    this.provider_services.getSpecializations(this.user.sector, this.subdomain)
-      .subscribe(data => {
-        this.specialization_arr = data;
-        this.getProviders();
-      });
+    // this.provider_services.getSpecializations(this.user.sector, this.subdomain)
+    //   .subscribe(data => {
+    //     this.specialization_arr = data;
+    //     this.getProviders();
+    //   });
   }
   setFilterDataCheckbox(type, value) {
     if (type === 'languages') {
