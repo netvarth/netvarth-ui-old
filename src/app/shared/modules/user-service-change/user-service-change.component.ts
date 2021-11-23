@@ -665,7 +665,6 @@ getLanguages(languages) {
       }
     });
 }
-
 getApptDetails() {
   this.provider_services.getAppointmentById(this.uuid)
     .subscribe(
