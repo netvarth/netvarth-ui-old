@@ -539,7 +539,6 @@ getLanguages(languages) {
       this.doSearch();
     }
   }
-
   getSpokenLanguages() {
     this.provider_services.getSpokenLanguages()
       .subscribe(data => {
