@@ -327,7 +327,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
        Show service duration
         </mat-checkbox>
       </div>
-      <div class="col-md-6" *ngIf="showResources">
+      <div class="col-md-6" >
         <div class="form-group" *ngIf="!is_donation">
           <mat-form-field>
             <input matInput type="text" class="form-control" id="resources" (keypress)="isNumeric($event)"
@@ -336,7 +336,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
 
         </div>
       </div>
-      <div class="col-md-6" *ngIf="showResources">
+      <div class="col-md-6" >
         <div class="form-group" *ngIf="!is_donation">
           <mat-form-field>
             <input matInput type="text" class="form-control" id="bookings" (keypress)="isNumeric($event)"
