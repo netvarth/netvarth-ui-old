@@ -529,7 +529,7 @@ getLanguages(languages) {
       api_filter['preferredLanguages-eq'] = this.selectedLanguages.toString();
     }
     if (this.selectedSpecialization.length > 0) {
-      api_filter['specialization-eq'] = this.selectedSpecialization.toString();
+      api_filter['specialization-eq'] = 'name::' + this.selectedSpecialization.toString();
     }
     return api_filter;
   }
