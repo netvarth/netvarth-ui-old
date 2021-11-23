@@ -993,7 +993,9 @@ ul.details.badges li {
 }
 
 .bus-item-N {
-  width: 20%;
+   border-radius: 20px !important;
+  width: 32%;
+  /*width: 20%;*/old
   float: left !important;
   margin-bottom: 10px !important;
   padding: 5px;

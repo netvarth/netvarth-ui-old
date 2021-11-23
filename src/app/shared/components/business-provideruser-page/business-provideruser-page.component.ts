@@ -30,6 +30,8 @@ import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
 import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
 import { AuthService } from '../../services/auth-service';
+import { CheckavailabilityComponent } from '../checkavailability/checkavailability.component';
+
 @Component({
   selector: 'app-businessprovideruser-page',
   templateUrl: './business-provideruser-page.component.html',
@@ -2455,7 +2457,11 @@ console.log("fgf"+JSON.stringify(loc));
         this.checkinClicked(actionObj['location'], actionObj['service']);
       }
 
-    } else if (actionObj['type'] === 'appt') {
+    } 
+    else if(actionObj['type']=='checkavailability') {
+      this.opencheckavail(actionObj);
+    }
+    else if (actionObj['type'] === 'appt') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
       } else {

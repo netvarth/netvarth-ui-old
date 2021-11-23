@@ -47,6 +47,7 @@ export class CardComponent implements OnInit, AfterViewChecked {
     selectedUser;
     selQIds: any = [];
     qualification;
+    disablecheckavailabilitybutton=false;
     constructor(
         private lStorageService: LocalStorageService,
         private wordProcessor: WordProcessor,
@@ -166,20 +167,53 @@ export class CardComponent implements OnInit, AfterViewChecked {
         event.stopPropagation();
     }
     cardActionPerformed(type, action, service, location, userId, event) {
-        event.stopPropagation();
-        const actionObj = {};
-        actionObj['type'] = type;
-        actionObj['action'] = action;
-        if (service) {
-            actionObj['service'] = service;
+        if(type=='checkavailability'){
+            if(service['serviceAvailability']['nextAvailableDate']) {
+                event.stopPropagation();
+        
+                const actionObj = {};
+                actionObj['type'] = type;
+                actionObj['action'] = action;
+                if (service) {
+                    actionObj['service'] = service;
+                }
+              
+                if (location) {
+                    actionObj['location'] = location;
+                }
+               
+                if (userId) {
+                    actionObj['userId'] = userId;
+                }
+                
+                this.actionPerformed.emit(actionObj);
+            } 
+            else {
+                this.disablecheckavailabilitybutton = true
+            }
+        } 
+        else {
+            event.stopPropagation();
+        
+            const actionObj = {};
+            actionObj['type'] = type;
+            actionObj['action'] = action;
+            if (service) {
+                actionObj['service'] = service;
+            }
+          
+            if (location) {
+                actionObj['location'] = location;
+            }
+           
+            if (userId) {
+                actionObj['userId'] = userId;
+            }
+            
+            this.actionPerformed.emit(actionObj);
         }
-        if (location) {
-            actionObj['location'] = location;
-        }
-        if (userId) {
-            actionObj['userId'] = userId;
-        }
-        this.actionPerformed.emit(actionObj);
+
+    
     }
     showConsumerNote(item) {
         this.noteClicked.emit(item);
