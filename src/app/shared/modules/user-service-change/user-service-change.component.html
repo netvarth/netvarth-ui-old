@@ -99,7 +99,7 @@
                 <div style="display: inline-block !important;">
                   <i class="fa fa-map-marker"></i>
                 </div>
-                Location
+                Residing Location
               </div>
               <i class="fa fa-angle-down"></i>
             </button>
@@ -296,6 +296,36 @@
           </div>
         </div>
       </div>
+      <div class="card">
+        <div class="card-header">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseLocation2" aria-expanded="false">
+              <div>
+                <div style="display: inline-block !important;">
+                  <i class="fa fa-language"></i>
+                </div>
+                Business Locations
+              </div>
+              <i class="fa fa-angle-down"></i>
+            </button>
+          </h2>
+        </div>
+        <div id="collapseLocation2" class="collapse" data-parent="#accordion1">
+          <div class="card-body">
+            <div class="filterTextinput filter-checkbox-input">
+                <!-- <label class="filterHeaders">Languages</label> -->
+                <li class="filterli">
+                    <mat-checkbox *ngFor="let loc of loc_list" class="filter-checkbox"
+                        [checked]="selectedLocations.indexOf(loc.id) !== -1"
+                        (change)="setFilterDataCheckbox('location', loc.id)">
+                        <!-- {{language.displayName}} -->
+                        {{loc.place | capitalizeFirst}} 
+                    </mat-checkbox>
+                </li>
+            </div>
+          </div>
+        </div>
+     </div>
     </ul>
   </section>
   <div class="filter-footer" *ngIf="filterapplied === true">

@@ -84,6 +84,8 @@ export class UserServiceChnageComponent implements OnInit {
   locationsjson: any = [];
   subdomain: any;
   users_list: any = [];
+  loc_list: any = [];
+  selectedLocations: any = [];
   
 
   constructor(
@@ -475,10 +477,11 @@ getLanguages(languages) {
     };
     this.selectedSpecialization = [];
     this.selectedLanguages = [];
+    this.selectedLocations = [];
   }
   doSearch() {
     // this.getProviders();
-    if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pincode || this.filter.email || this.filter.primaryMobileNo || this.filter.employeeId || this.filter.available || this.selectedLanguages.length > 0 || this.selectedSpecialization.length > 0) {
+    if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pincode || this.filter.email || this.filter.primaryMobileNo || this.filter.employeeId || this.filter.available || this.selectedLanguages.length > 0 || this.selectedLocations.length > 0 || this.selectedSpecialization.length > 0) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -518,6 +521,9 @@ getLanguages(languages) {
       } else {
         this.filter.primaryMobileNo = '';
       }
+    }
+    if (this.selectedLocations.length > 0) {
+      api_filter['businessLocs-eq'] = this.selectedLocations.toString();
     }
     if (this.selectedLanguages.length > 0) {
       api_filter['preferredLanguages-eq'] = this.selectedLanguages.toString();
@@ -612,6 +618,14 @@ getLanguages(languages) {
         this.selectedLanguages.splice(indx, 1);
       }
     }
+    if (type === 'location') {
+      const indx = this.selectedLocations.indexOf(value);
+      if (indx === -1) {
+          this.selectedLocations.push(value);
+      } else {
+          this.selectedLocations.splice(indx, 1);
+      }
+    }
     if (type === 'specializations') {
       const indx = this.selectedSpecialization.indexOf(value);
       if (indx === -1) {
@@ -703,6 +717,11 @@ getApptDetails() {
       _this.provider_services.getProviderLocations()
         .subscribe(data => {
           _this.locationsjson = data;
+          for (const loc of _this.locationsjson) {
+            if (loc.status === 'ACTIVE') {
+                _this.loc_list.push(loc);
+            }
+        }
          resolve(true);
         }, ()=> {
           resolve(false);
