@@ -101,7 +101,7 @@
     "tslib": "^2.0.0",
     "twilio-video": "^2.7.2",
     "underscore": "^1.8.3",
-    "webpack": "^5.52.1",
+    "webpack": "^5.64.2",
     "xlsx": "^0.16.9",
     "xml-js": "^1.6.11",
     "zone.js": "~0.11.4"
@@ -128,7 +128,6 @@
     "browser-sync": "^2.26.7",
     "browser-sync-webpack-plugin": "^2.0.1",
     "codelyzer": "^6.0.0",
-    "cordova-android": "^9.1.0",
     "cordova-plugin-androidx": "^3.0.0",
     "cordova-plugin-androidx-adapter": "^1.1.3",
     "cordova-plugin-badge": "^0.8.8",
@@ -147,11 +146,11 @@
     "cordova-plugin-statusbar": "^2.4.2",
     "cordova-plugin-whitelist": "^1.3.3",
     "cross-env": "^7.0",
+    "es6-promise-plugin": "^4.2.2",
     "firebase-tools": "^9.0.0",
     "fuzzy": "^0.1.3",
     "inquirer": "^6.2.2",
     "inquirer-autocomplete-prompt": "^1.0.1",
-    "es6-promise-plugin": "^4.2.2",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "jsonc-parser": "^3.0.0",
@@ -172,7 +171,7 @@
     "sass-loader": "^8.0.0",
     "ts-node": "~5.0.1",
     "tslint": "~6.1.0",
-    "typescript": "^4.2.4",
+    "typescript": "^4.2.3",
     "webpack-bundle-analyzer": "^3.3.2"
   },
   "cordova": {
@@ -205,11 +204,16 @@
         "ANDROID_FIREBASE_CRASHLYTICS_VERSION": "17.4.0",
         "ANDROID_FIREBASE_CRASHLYTICS_NDK_VERSION": "17.4.0",
         "ANDROID_GSON_VERSION": "2.8.6",
-        "ANDROID_FIREBASE_PERF_GRADLE_PLUGIN_VERSION": "1.3.5"
+        "ANDROID_FIREBASE_PERF_GRADLE_PLUGIN_VERSION": "1.3.5",
+        "ANDROID_FIREBASE_IID_VERSION": "21.1.0"
       },
-      "cordova-plugin-geolocation": {},
+      "cordova-plugin-geolocation": {
+        "GPS_REQUIRED": "true"
+      },
       "phonegap-plugin-media-stream": {},
-      "cordova-plugin-np-socialsharing": {},
+      "cordova-plugin-np-socialsharing": {
+        "ANDROID_SUPPORT_V4_VERSION": "24.1.1+"
+      },
       "cordova-plugin-androidx-adapter": {},
       "cordova-plugin-file": {},
       "cordova-plugin-camera": {

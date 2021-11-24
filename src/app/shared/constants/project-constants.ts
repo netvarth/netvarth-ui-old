@@ -1028,10 +1028,14 @@ export const projectConstantsLocal = {
     { displayName: 'Shipped', value: 'Shipped', delivery: true, pickup: false, clas: 'ordershipped' },
     { displayName: 'Cancelled', value: 'Cancelled', delivery: true, pickup: true, clas: 'ordercancelled' }
   ],
+  ITEM_TYPES:[
+    {displayName:'physical',value:'PHYSICAL'},
+    {displayName:'virtual',value:'VIRTUAL'}
+  ],
   INBOX_MSG_TYPES: {
     CHAT: 'Chat',
     ENQUIRY: 'Enquiry',
-    ALERT: 'Alert',
+    ALERT: 'System Generated',
     BOOKINGS: 'Bookings'
   },
   WALLET_NOTES: {
