@@ -128,6 +128,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   orderNumber:any;
   store_availables: any;
   home_availables: any;
+  onlyVirtualItems = false;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -155,7 +156,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     private location: Location,
     private shared_services: SharedServices,
     private dialog: MatDialog,
-        public providerservice: ProviderServices,
+    public providerservice: ProviderServices,
     public sharedFunctionobj: SharedFunctions,
     private groupService: GroupStorageService,
     public fed_service: FormMessageDisplayService,
@@ -194,186 +195,190 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   }
 
   confirm() {
+    let timeslot:any;
+    let post_Data: any;
     this.placeOrderDisabled = true;
-    const timeslot = this.nextAvailableTime.split(' - ');
+    post_Data = {
+      'uid': this.orderDetails.uid,
+      'countryCode': this.orderDetails.countryCode,
+      'phoneNumber': this.orderDetails.phoneNumber,
+      'email': this.orderDetails.email
+    }
+    if (!this.onlyVirtualItems) {
+      timeslot = this.nextAvailableTime.split(' - ');
+        let timeSlot = {
+        'sTime': timeslot[0],
+        'eTime': timeslot[1]
+
+      }
+      console.log(timeSlot);
+      post_Data['timeSlot'] = timeSlot;
+      post_Data['orderDate'] = this.sel_checkindate;
+    }
+    
+  
     if (this.choose_type === 'home') {
-      if (this.selectedAddress === '' ) {
+      if (this.selectedAddress === '') {
         this.placeOrderDisabled = false;
         this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
         return;
       } else {
-        const post_Data = {
-          'homeDelivery': true,
-          'homeDeliveryAddress': this.selectedAddress,
-          'uid': this.orderDetails.uid,
-          'timeSlot': {
-            'sTime': timeslot[0],
-            'eTime': timeslot[1]
-          },
-          'orderDate':  this.sel_checkindate,
-          'countryCode': this.orderDetails.countryCode,
-          'phoneNumber': this.orderDetails.phoneNumber,
-          'email': this.orderDetails.email
-
-        };
-        this.confirmOrder(post_Data);
-
+        post_Data['homeDelivery'] = true,
+          post_Data['homeDeliveryAddress'] = this.selectedAddress
       }
     }
+
     if (this.choose_type === 'store') {
-      const post_Data = {
-        'storePickup': true,
-        'uid': this.orderDetails.uid,
-        'timeSlot': {
-          'sTime': timeslot[0],
-          'eTime': timeslot[1]
-        },
-        'orderDate': this.sel_checkindate,
-        'countryCode': this.orderDetails.countryCode,
-        'phoneNumber': this.orderDetails.phoneNumber,
-        'email': this.orderDetails.email
-      };
-      this.confirmOrder(post_Data);
+      post_Data['storePickup'] = true
     }
   }
 
 
-  onSubmit(form_data) {
-    const timeslot = this.nextAvailableTime.split(' - ');
-    this.selectedAddress = form_data;
-    const post_data = {
-      'homeDelivery': true,
-      'homeDeliveryAddress': this.selectedAddress,
-      'uid': this.orderDetails.uid,
-      'timeSlot': {
-        'sTime': timeslot[0],
-        'eTime': timeslot[1]
+isPhysicalItemsPresent(){
+  let physical_item_present = true;
+  if(this.orderDetails.orderType!=='SHOPPINGLIST'){
+  const virtualItems = this.orders.filter(catalogitem => catalogitem.item.itemType === 'VIRTUAL')
+  if (virtualItems.length > 0 && this.orders.length === virtualItems.length) {
+    physical_item_present = false;
+    this.onlyVirtualItems = true;
+  }
+}
+  return physical_item_present;
+}
+onSubmit(form_data) {
+  const timeslot = this.nextAvailableTime.split(' - ');
+  this.selectedAddress = form_data;
+  const post_data = {
+    'homeDelivery': true,
+    'homeDeliveryAddress': this.selectedAddress,
+    'uid': this.orderDetails.uid,
+    'timeSlot': {
+      'sTime': timeslot[0],
+      'eTime': timeslot[1]
+    },
+    'orderDate': this.sel_checkindate,
+    'countryCode': this.orderDetails.countryCode,
+    'phoneNumber': this.orderDetails.phoneNumber,
+    'email': this.orderDetails.email
+
+  };
+  this.closeModal.nativeElement.click();
+
+  this.providerservice.updateProviderOrders(post_data)
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(
+      data => {
+        this.disableSave = false;
+        this.closeModal.nativeElement.click();
+        this.getOrderDetails(this.uid);
       },
-      'orderDate':  this.sel_checkindate,
-      'countryCode': this.orderDetails.countryCode,
-      'phoneNumber': this.orderDetails.phoneNumber,
-      'email': this.orderDetails.email
-
-    };
-    this.closeModal.nativeElement.click();
-
-    this.providerservice.updateProviderOrders(post_data)
-    .pipe(takeUntil(this.onDestroy$))
-      .subscribe(
-        data => {
-          this.disableSave = false;
-          this.closeModal.nativeElement.click();
-          this.getOrderDetails(this.uid);
-        },
-        error => {
-          this.disableSave = false;
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
-      );
-  }
-
-  // goBack() {
-  //   this.router.navigate(['providers', 'orders']);
-  // }
-  editAddress() {
-    this.amForm.setValue({
-      'phoneNumber': this.orderDetails.homeDeliveryAddress.phoneNumber || null,
-      'firstName': this.orderDetails.homeDeliveryAddress.firstName || null,
-      'lastName': this.orderDetails.homeDeliveryAddress.lastName || null,
-      'email': this.orderDetails.homeDeliveryAddress.email || null,
-      'address': this.orderDetails.homeDeliveryAddress.address || null,
-      'city': this.orderDetails.homeDeliveryAddress.city || null,
-      'postalCode': this.orderDetails.homeDeliveryAddress.postalCode || null,
-      'landMark': this.orderDetails.homeDeliveryAddress.landMark || null,
-      'countryCode': '+91',
-    });
-
-  }
-  getOrderItems() {
-console.log(this.orders);
-    this.orderSummary = [];
-    this.orders.forEach(item => {
-      let consumerNote = '';
-      const itemId = item.item.itemId;
-      const qty = this.getItemQty(item);
-      console.log(qty);
-      if (item.consumerNote) {
-        consumerNote = item.consumerNote;
+      error => {
+        this.disableSave = false;
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
+    );
+}
 
-      this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote });
-    });
-    return this.orderSummary;
-  }
+// goBack() {
+//   this.router.navigate(['providers', 'orders']);
+// }
+editAddress() {
+  this.amForm.setValue({
+    'phoneNumber': this.orderDetails.homeDeliveryAddress.phoneNumber || null,
+    'firstName': this.orderDetails.homeDeliveryAddress.firstName || null,
+    'lastName': this.orderDetails.homeDeliveryAddress.lastName || null,
+    'email': this.orderDetails.homeDeliveryAddress.email || null,
+    'address': this.orderDetails.homeDeliveryAddress.address || null,
+    'city': this.orderDetails.homeDeliveryAddress.city || null,
+    'postalCode': this.orderDetails.homeDeliveryAddress.postalCode || null,
+    'landMark': this.orderDetails.homeDeliveryAddress.landMark || null,
+    'countryCode': '+91',
+  });
 
-  confirmOrder(post_data) {
-    this.providerservice.updateOrder(post_data)
+}
+getOrderItems() {
+  this.orderSummary = [];
+  this.orders.forEach(item => {
+    let consumerNote = '';
+    const itemId = item.item.itemId;
+    const qty = this.getItemQty(item);
+    if (item.consumerNote) {
+      consumerNote = item.consumerNote;
+    }
+
+    this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote });
+  });
+  return this.orderSummary;
+}
+
+confirmOrder(post_data) {
+  this.providerservice.updateOrder(post_data)
     .pipe(takeUntil(this.onDestroy$))
-      .subscribe(data => {
-        console.log(this.orderDetails);
-        if(this.orderDetails && this.orderDetails.orderItem && this.orderDetails.catalog.orderType !== 'SHOPPINGLIST'){
+    .subscribe(data => {
+      console.log(this.orderDetails);
+      if (this.orderDetails && this.orderDetails.orderItem && this.orderDetails.catalog.orderType !== 'SHOPPINGLIST') {
         this.updateOrderItems().then(res => {
           this.placeOrderDisabled = false;
           this.snackbarService.openSnackBar('Your Order updated successfully');
           this.orderList = [];
           this.router.navigate(['provider', 'orders']);
         },
-        error => {
-          this.placeOrderDisabled = false;
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        });
+          error => {
+            this.placeOrderDisabled = false;
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          });
       } else {
-          this.placeOrderDisabled = false;
-          this.snackbarService.openSnackBar('Your Order updated successfully');
-          this.router.navigate(['provider', 'orders']);
+        this.placeOrderDisabled = false;
+        this.snackbarService.openSnackBar('Your Order updated successfully');
+        this.router.navigate(['provider', 'orders']);
       }
+    },
+      error => {
+        this.placeOrderDisabled = false;
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      }
+
+    );
+}
+updateOrderItems() {
+  console.log('úpdate');
+  const items = this.getOrderItems();
+  const orderId = this.orderDetails.uid;
+  console.log(items);
+  console.log(orderId);
+  const _this = this;
+  return new Promise(function (resolve, reject) {
+    _this.providerservice.updateOrderItems(orderId, items)
+      .subscribe(data => {
+        resolve(data);
       },
         error => {
-          this.placeOrderDisabled = false;
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          reject(error);
         }
-
       );
-  }
-  updateOrderItems() {
-    console.log('úpdate');
-    const items = this.getOrderItems();
-    const orderId = this.orderDetails.uid;
-    console.log(items);
-    console.log(orderId);
-    const _this = this;
-    return new Promise(function (resolve, reject) {
-      _this.providerservice.updateOrderItems(orderId, items)
-        .subscribe(data => {
-          resolve(data);
-        },
-          error => {
-            reject(error);
-          }
-        );
-    });
-  }
-  gotoNext() {
-    if (this.step === 2) {
-      if (this.orders.length === 0) {
-        this.snackbarService.openSnackBar('Please add items to proceed', { 'panelClass': 'snackbarerror' });
-        return false;
-      } else {
-        this.step = this.step + 1;
-      }
+  });
+}
+gotoNext() {
+  if (this.step === 2) {
+    if (this.orders.length === 0) {
+      this.snackbarService.openSnackBar('Please add items to proceed', { 'panelClass': 'snackbarerror' });
+      return false;
     } else {
       this.step = this.step + 1;
     }
-
-  }
-  gotoPrev() {
-    this.step = this.step - 1;
+  } else {
+    this.step = this.step + 1;
   }
 
+}
+gotoPrev() {
+  this.step = this.step - 1;
+}
 
-  // fetch orderdetails using order id
-  getOrderDetails(uid) {
-    this.providerservice.getProviderOrderById(uid)
+
+// fetch orderdetails using order id
+getOrderDetails(uid) {
+  this.providerservice.getProviderOrderById(uid)
     .pipe(takeUntil(this.onDestroy$))
     .subscribe(data => {
       this.orderList = [];
@@ -431,10 +436,13 @@ console.log(this.orders);
       
 
 
+
       this.sel_checkindate = this.orderDetails.orderDate;
       // this.getAvailabilityByDate(this.sel_checkindate);
+      if(this.orderDetails.timeSlot){
       this.nextAvailableTime = this.orderDetails.timeSlot.sTime + ' - ' + this.orderDetails.timeSlot.eTime;
-      //console.log(this.nextAvailableTime);
+      }
+      //console.log(this.nextAvailableTime);  Z
       this.loading = false;
     });
   }

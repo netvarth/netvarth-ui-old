@@ -554,6 +554,11 @@ width: 80%!important;
   border: 2px solid gray;
   padding: 10px;
 }
+.disable_card{
+  pointer-events: none!important;
+  opacity: .4 !important;
+
+}
 /* .cataimg:hover{
   opacity: .5;
 } */

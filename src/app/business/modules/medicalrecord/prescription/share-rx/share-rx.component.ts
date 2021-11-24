@@ -259,6 +259,9 @@ export class ShareRxComponent implements OnInit {
     if (this.sharewith === 0 ) {
       if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
         this.api_error = 'share via options are not selected';
+        setTimeout(()=>{
+         this.api_error='';
+        },3000)
         this.disable = false;
         this.sharebtnloading = false;
         return;

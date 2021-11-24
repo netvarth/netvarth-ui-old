@@ -69,7 +69,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   countryCode;
   countryCodeTele;
   chatId: any;
-  IsTelegramDisable:any;
+  IsTelegramDisable: any;
   countryCod;
   ynw_credentials;
   constructor(
@@ -111,7 +111,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       if (!this.email_id) {
         this.email = false;
       }
-      if ((!this.phone && !this.phone_history) || this.phone === '' || this.countryCode !='+91') {
+      if ((!this.phone && !this.phone_history) || this.phone === '' || this.countryCode != '+91') {
         this.sms = false;
       }
       if ((!this.phone && !this.phone_history) || this.phone === '') {
@@ -173,25 +173,25 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     this.createForm();
     this.ynw_credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
     if (this.phone) {
-      if(this.countryCode.startsWith('+')){
+      if (this.countryCode.startsWith('+')) {
         this.countryCod = this.countryCode.substring(1);
       }
-      this.provider_services.telegramChat(this.countryCod,this.phone)
-       .subscribe(
-           data => { 
-             this.chatId = data; 
-             if(this.chatId === null){
+      this.provider_services.telegramChat(this.countryCod, this.phone)
+        .subscribe(
+          data => {
+            this.chatId = data;
+            if (this.chatId === null) {
               this.IsTelegramDisable = true;
-             }
-             else{
+            }
+            else {
               this.IsTelegramDisable = false;
-             }
-            
-           },
-           (error) => {
-              
-           }
-       );
+            }
+
+          },
+          (error) => {
+
+          }
+        );
     }
     this.SEND_MESSAGE = Messages.SEND_MESSAGE.replace('[customer]', this.customer_label);
     if (this.source === 'provider-waitlist' || this.source === 'customer-list') {
@@ -252,6 +252,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     });
   }
   onSubmit(form_data) {
+    console.log("Form Data :", form_data);
     this.resetApiErrors();
     const blankvalidate = projectConstantsLocal.VALIDATOR_BLANK;
     const dataToSend: FormData = new FormData();
@@ -264,6 +265,14 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         i++;
       }
     }
+    // if(this.typeOfMsg === 'single'){
+    //   if(this.data.source === 'provider-waitlist'){
+    //     if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
+    //       this.api_error = 'share message via options are not selected';
+    //       return this.api_error;
+    //     }
+    //   }
+    // }
     const foruuid = [];
     foruuid.push(this.uuid);
     const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
@@ -273,9 +282,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     } else {
       if (this.typeOfMsg === 'multiple') {
         if (this.data.source === 'customer-list') {
-          if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
+          if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
             this.api_error = 'share message via options are not selected';
-            return;
+            return this.api_error;
           } else {
             const post_data = {
               medium: {
@@ -303,7 +312,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               );
           }
         } else {
-          if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
+          if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
             this.api_error = 'share message via options are not selected';
             return;
           } else {
@@ -376,7 +385,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         }
       } else {
         if (this.data.source === 'customer-list') {
-          if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
+          if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
             this.api_error = 'share message via options are not selected';
             return;
           } else {
@@ -406,7 +415,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               );
           }
         } else if (this.source === 'donation-list') {
-          if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
+          if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
             this.api_error = 'share message via options are not selected';
             return;
           } else {
@@ -436,8 +445,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               );
           }
         } else {
+          // IsTelegramDisable && !this.telegram  && !this.telegram (IsTelegramDisable && !this.telegram)
           if (this.data.source === 'provider-waitlist') {
-            if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
+            if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
               this.api_error = 'share message via options are not selected';
               return;
             }

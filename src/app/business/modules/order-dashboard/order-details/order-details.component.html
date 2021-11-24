@@ -5,9 +5,9 @@
             Order
         </h5>
     </div>
-  </section>
+</section>
 
-  <section>
+<section>
     <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8 no-padding order mgn-up-10" *ngIf="!loading">
         <div class="orderdetails col-md-11 col-xs-12 col-sm-12 col-lg-11">
             <div class="col-md-9 col-xs-12 col-sm-6 col-lg-9 no-padding personal">
@@ -16,44 +16,50 @@
                 <div class="bold font11" *ngIf="orderDetails.orderFor.firstName || orderDetails.orderFor.lastName">
                     {{orderDetails.orderFor.firstName}} {{orderDetails.orderFor.lastName}}</div>
                 <div> {{orderDetails.orderNumber}}</div>
-                <span *ngIf="orderDetails.orderFor.jaldeeId">{{customerLabel | capitalizeFirst}} id : {{orderDetails.orderFor.jaldeeId}}</span>
+                <span *ngIf="orderDetails.orderFor.jaldeeId">{{customerLabel | capitalizeFirst}} id :
+                    {{orderDetails.orderFor.jaldeeId}}</span>
                 <div *ngIf="orderDetails.phoneNumber"> <i class="fa fa-phone"
                         aria-hidden="true"></i>{{orderDetails.countryCode}} {{orderDetails.phoneNumber}}</div>
-                        <div *ngIf="orderDetails.email"> <i class="fa fa-envelope"
-                            aria-hidden="true"></i>{{orderDetails.email}}</div>
-                
-                <div class="bold font11 mgn-bt-10"> {{orderDetails.orderDate | date: display_dateFormat}},
-                    {{orderDetails.orderTimeWindow.timeSlots[0].sTime}} -
-                    {{orderDetails.orderTimeWindow.timeSlots[0].eTime}}</div>
-                    <div *ngIf="orderDetails.homeDeliveryAddress"class="bold font11 mgn-bt-10"><i class="fa fa-address-card-o" aria-hidden="true"></i> Delivery Address</div>
-                    <address *ngIf="orderDetails.homeDeliveryAddress"> 
-                        <span>
-                          {{delivery_address.firstName }} &nbsp;{{delivery_address.lastName}}
-                        </span><br>
-                        <span>
-                            {{delivery_address.address }},{{delivery_address.landMark }}
-                          </span><br>
-                        <span>
-                          {{delivery_address.city }} , {{delivery_address.postalCode}}
-                        </span><br>
-                     
-                        <span>
-                            {{delivery_address.countryCode }} {{delivery_address.phoneNumber}}
-                          </span>
-                        </address>
-                        <div *ngIf="orderDetails.orderNote" class="prov-wtlst-note-border shadow-none mgn-bt-10">
-                                <span style="color:#193ca4">Notes:&nbsp;</span>
-                                <span [innerHTML]="orderDetails.orderNote | nl2br"></span>
-                            </div>
-                
+                <div *ngIf="orderDetails.email"> <i class="fa fa-envelope" aria-hidden="true"></i>{{orderDetails.email}}
+                </div>
+
+                <div class="bold font11 mgn-bt-10"> {{orderDetails.orderDate | date: display_dateFormat}}
+                    <ng-container *ngIf="orderDetails.orderTimeWindow && orderDetails.orderTimeWindow.timeSlots[0]">,
+                        {{orderDetails.orderTimeWindow.timeSlots[0].sTime}} -
+                        {{orderDetails.orderTimeWindow.timeSlots[0].eTime}}
+                    </ng-container>
+                </div>
+                <div *ngIf="orderDetails.homeDeliveryAddress" class="bold font11 mgn-bt-10"><i
+                        class="fa fa-address-card-o" aria-hidden="true"></i> Delivery Address</div>
+                <address *ngIf="orderDetails.homeDeliveryAddress">
+                    <span>
+                        {{delivery_address.firstName }} &nbsp;{{delivery_address.lastName}}
+                    </span><br>
+                    <span>
+                        {{delivery_address.address }},{{delivery_address.landMark }}
+                    </span><br>
+                    <span>
+                        {{delivery_address.city }} , {{delivery_address.postalCode}}
+                    </span><br>
+
+                    <span>
+                        {{delivery_address.countryCode }} {{delivery_address.phoneNumber}}
+                    </span>
+                </address>
+                <div *ngIf="orderDetails.orderNote" class="prov-wtlst-note-border shadow-none mgn-bt-10">
+                    <span style="color:#193ca4">Notes:&nbsp;</span>
+                    <span [innerHTML]="orderDetails.orderNote | nl2br"></span>
+                </div>
+
             </div>
             <div class="col-md-3 col-xs-12 col-sm-6 col-lg-3 no-padding">
 
-                          <div class="" *ngIf="!small_device_display">
-                               <mat-icon class="msgIcon pointer"(click)="showCommunication()" *ngIf="communication_history.length >0" matBadge="" matBadgeOverlap=true>sms</mat-icon>
-                 <i class="delivery-icon pull-right"
-                        *ngIf="orderDetails.homeDelivery"></i>
+                <div class="" *ngIf="!small_device_display">
+                    <mat-icon class="msgIcon pointer" (click)="showCommunication()"
+                        *ngIf="communication_history.length >0" matBadge="" matBadgeOverlap=true>sms</mat-icon>
+                    <i class="delivery-icon pull-right" *ngIf="orderDetails.homeDelivery"></i>
                     <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup"></i>
+                    <i class="electronic-icon pull-right" *ngIf="!orderDetails.homeDelivery&&!orderDetails.storePickup"></i>
                 </div>
                 <div [class.fl-left]="small_device_display" [class.mgn-up-70]="!small_device_display"> <span
                         class="customer-action-btn pointer-cursor" (click)="showOrderActions()">Actions</span>
@@ -61,7 +67,8 @@
             </div>
         </div>
 
-        <div class="col-md-11 col-xs-12 col-sm-12 col-lg-11 orderdetails" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.orderItem.length > 0 && !orderDetails.shoppingList">
+        <div class="col-md-11 col-xs-12 col-sm-12 col-lg-11 orderdetails"
+            *ngIf="orderDetails && orderDetails.orderItem && orderDetails.orderItem.length > 0 && !orderDetails.shoppingList">
             <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10 mgn-up-20">
                 <div class="pull-left bold font11">
                     Ordered Items
@@ -105,24 +112,25 @@
                 </table>
             </div>
         </div>
-        <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10 orderdetails" *ngIf="image_list_popup && orderDetails.shoppingList">
-        <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10  mgn-bt-10 mgn-up-10" >
-            <span style="padding-left: 3px !important;">SHOPPINGLIST</span>
-        </div>
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 order" *ngIf="orderDetails.shoppingList">
+        <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10 orderdetails"
+            *ngIf="image_list_popup && orderDetails.shoppingList">
+            <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10  mgn-bt-10 mgn-up-10">
+                <span style="padding-left: 3px !important;">SHOPPINGLIST</span>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 order" *ngIf="orderDetails.shoppingList">
                 <!-- <div  class="col-sm-10 col-md-10 col-lg-10 col-xl-8 col-xs-12" > -->
-            <ul class="shoppinglist-gal">
-                <ng-container *ngFor="let file of image_list_popup;let i = index">
-                    <li class="shoppinglist-li">
-                        <div class="shoppinglistbx">
-                            <div class="shoppinglistimg-h" (click)="openImageModalRow(file)">
-                                <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg" [src]="file.modal.img"
-                                    *ngIf="file.modal.img" />
+                <ul class="shoppinglist-gal">
+                    <ng-container *ngFor="let file of image_list_popup;let i = index">
+                        <li class="shoppinglist-li">
+                            <div class="shoppinglistbx">
+                                <div class="shoppinglistimg-h" (click)="openImageModalRow(file)">
+                                    <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
+                                        [src]="file.modal.img" *ngIf="file.modal.img" />
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                </ng-container>
-                <!-- <li *ngIf="image_list_popup.length>2"class="shoppinglist-li">
+                        </li>
+                    </ng-container>
+                    <!-- <li *ngIf="image_list_popup.length>2"class="shoppinglist-li">
                     <div class="shoppinglistbx">
                         <span class="shoppinglistmre" (click)="openImageModalRow(image_list_popup[2])"
                             *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
@@ -138,32 +146,30 @@
                         </div>
                     </div>
                 </li> -->
-            </ul>
-            <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
-            [plainGalleryConfig]="customPlainGalleryRowConfig"
-            [buttonsConfig]="customButtonsFontAwesomeConfig"
-            (buttonBeforeHook)="onButtonBeforeHook()"
-            (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
-        <!-- </div> -->
+                </ul>
+                <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
+                    [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
+                    (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()">
+                </ks-modal-gallery>
+                <!-- </div> -->
+            </div>
+        </div>
     </div>
-</div>
-    </div>
-    <div class="col-md-4 col-xs-12 col-sm-12 col-lg-4 mgn-up-10" *ngIf="!loading" >
-    <div class="card">
+    <div class="col-md-4 col-xs-12 col-sm-12 col-lg-4 mgn-up-10" *ngIf="!loading">
+        <div class="card">
             <h5>Order History</h5>
             <div class="c-history-outer">
-              <ul class="c-history">
-                <li class="{{getRandomClass(history.orderStatus)}}" *ngFor="let history of orderlist_history">
-                  <div class="time">{{getformatedTime(history.time)| date: newTimeDateFormat }}</div>
-                  <div class="action">{{history.orderStatus | capitalizeFirst}}</div>
-                </li>
-              </ul>
-              <p class="no-result" *ngIf="orderlist_history.length == 0">{{no_history_found}}</p>
+                <ul class="c-history">
+                    <li class="{{getRandomClass(history.orderStatus)}}" *ngFor="let history of orderlist_history">
+                        <div class="time">{{getformatedTime(history.time)| date: newTimeDateFormat }}</div>
+                        <div class="action">{{history.orderStatus | capitalizeFirst}}</div>
+                    </li>
+                </ul>
+                <p class="no-result" *ngIf="orderlist_history.length == 0">{{no_history_found}}</p>
             </div>
-          </div>
         </div>
+    </div>
 
-  </section>
-  <div class="clearfix"></div>
-  <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-
+</section>
+<div class="clearfix"></div>
+<app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>

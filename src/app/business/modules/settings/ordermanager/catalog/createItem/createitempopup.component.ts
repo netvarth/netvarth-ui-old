@@ -61,7 +61,7 @@ uploadcatalogImages: any = [];
 action = 'add';
 disableButton = false;
 item;
-
+minDay=new Date();
 removeimgdialogRef;
 imageList: any = [];
 item_id;
@@ -89,6 +89,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
 };
 private subscriptions = new SubSink();
     customer_label: any;
+    itemType='physical'
   constructor(
     public dialogRef: MatDialogRef<CreateItemPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -128,7 +129,9 @@ private subscriptions = new SubSink();
                 promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
                 promotionalPriceType: [],
                 promotionallabel: [],
-                customlabel: []
+                customlabel: [],
+                itemType:['PHYSICAL'],
+            expiryDate:[]
     });
         this.amItemForm.get('promotionalPriceType').setValue('FIXED');
         this.amItemForm.get('promotionallabel').setValue('ONSALE');
@@ -167,6 +170,7 @@ onSubmit(form_data) {
         }
     }
     //  this.saveImagesForPostinstructions();
+    const expiryDate = this.convertDate(form_data.expiryDate);
     if (this.action === 'add') {
         const post_itemdata = {
             'itemCode': form_data.itemCode,
@@ -185,8 +189,10 @@ onSubmit(form_data) {
             'promotionLabelType': form_data.promotionallabel,
             'promotionLabel': form_data.customlabel || '',
             'promotionalPrice': form_data.promotionalPrice || 0,
-            'promotionalPrcnt': form_data.promotionalPrice || 0
-        };
+            'promotionalPrcnt': form_data.promotionalPrice || 0,
+            'itemType':form_data.itemType,
+            'expiryDate':expiryDate,
+        }
         if (!this.showPromotionalPrice) {
             post_itemdata['promotionalPriceType'] = 'NONE';
             post_itemdata['promotionLabelType'] = 'NONE';
@@ -194,6 +200,29 @@ onSubmit(form_data) {
         
         this.addItem(post_itemdata);
     } 
+}
+convertDate(date?) {
+    // let today;
+    let mon;
+    let cdate;
+    if (date) {
+        cdate = new Date(date);
+    } else {
+        cdate = new Date();
+    }
+    mon = (cdate.getMonth() + 1);
+    if (mon < 10) {
+        mon = '0' + mon;
+    }
+    return (cdate.getFullYear() + '-' + mon + '-' + ('0' + cdate.getDate()).slice(-2));
+}
+itemTypeChange(event){
+   if(event.value==='VIRTUAL'){
+    this.itemType='virtual';
+   }else{
+       this.itemType='physical'
+   }
+
 }
 addItem(post_data) {
     this.disableButton = true;

@@ -23,6 +23,8 @@ import { ProviderUserBprofileSearchSocialMediaComponent } from './media/provider
 import { ProPicPopupModule } from '../../../../bprofile/pro-pic-popup/pro-pic-popup.module';
 import { AboutmeComponent } from './aboutme/aboutme.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 
 @NgModule({
     imports: [
@@ -37,6 +39,8 @@ import { ImageCropperModule } from 'ngx-image-cropper';
         DynamicFormModule,
         GalleryModule,
         NgxQRCodeModule,
+        ShareButtonsModule,
+        ShareIconsModule,
         ProPicPopupModule,
         ImageCropperModule
     ],

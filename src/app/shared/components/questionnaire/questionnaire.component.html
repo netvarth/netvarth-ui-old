@@ -33,12 +33,12 @@
                             <mat-select multiple #deptsel [disabled]="buttonDisable || disableInput()"
                                 *ngIf="getQuestion(question).filePropertie.maxNoOfFile > 1 && getQuestion(question).filePropertie.minNoOfFile !== getQuestion(question).filePropertie.maxNoOfFile"
                                 [(ngModel)]="uploadFilesTemp[getQuestion(question).labelName]" class="select-box"
-                                placeholder="Select one">
+                                placeholder="Select">
                                 <mat-option
                                     *ngFor="let document of getQuestion(question).filePropertie.allowedDocuments"
                                     [value]="document" (click)="changeImageSelected(getQuestion(question), document)">
                                     {{document}}</mat-option>
-                            </mat-select>
+                            </mat-select> 
                             <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12 no-padding mgn-up-20"
                                 *ngIf="getDocuments(getQuestion(question)) && getDocuments(getQuestion(question)).length > 0">
                                 <div class="dropzone dropzone-default dropzone-primary dz-clickable"

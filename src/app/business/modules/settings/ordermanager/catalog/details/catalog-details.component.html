@@ -369,7 +369,7 @@
 
                     <!--begin::Card-->
                     <div class="row bg-grey" *ngIf="cataId">
-                      <div class="col-md-4 mt-4 col-xxl-3 col-lg-4 mb-3" *ngFor="let item of catalogItems;let i=index;">
+                      <div class="col-md-4 mt-4 col-xxl-3 col-lg-4 mb-3" *ngFor="let item of catalogItems;let i=index;" [class.disable_card] = "item.itemType === 'VIRTUAL'&& isExpired(item)">
                         <button *ngIf="item.id" class="pull-right more_btn"  mat-icon-button [matMenuTriggerFor]="appMenu" >
                           <mat-icon>more_horiz</mat-icon>
                         </button>
@@ -422,10 +422,10 @@
 
 
                       </div>
-
+<!--[class.disable_card] = "item.itemType === 'VIRTUAL'&& isExpired(item)"-->
                       <div class="col-md-4 mt-4 col-xxl-3 col-lg-4 mb-3" *ngFor="let item of itemsforadd;let i=index;">
                        
-                        <div class="card card-custom card-shadowless" (click)="selectaddItem(i)"  [class.itemselected]="item.selected">
+                        <div class="card card-custom card-shadowless" (click)="selectaddItem(i)"  [class.itemselected]="item.selected" [class.disable_card] = "item.itemType === 'VIRTUAL'&& isExpired(item)" >
                           <div class="card-body p-0">
                             <!--begin::Image-->
                             <div class="overlay">
@@ -438,9 +438,10 @@
 
                             <!--begin::Details-->
                             <div
-                              class="text-center mt-5 mb-md-0 mb-lg-1 mb-md-0 mb-lg-1 mb-lg-0 mb-1 d-flex flex-column item_info">
+                              class="text-center mt-5 mb-md-0 mb-lg-1 mb-md-0 mb-lg-1 mb-lg-0 mb-1 d-flex flex-column item_info" >
                               <a
                                 class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{item.displayName}}*</a>
+                                <small *ngIf="item.itemType === 'VIRTUAL'&& isExpired(item)" class="text-danger font-weight-bold">Expired</small>
 
                               <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{item.price}}</div>
                               <!-- min -->
@@ -474,7 +475,7 @@
 
                       <div class="col-md-4 mt-4 col-xxl-3 col-lg-4 mb-3" *ngFor="let item of catalogItem;let i=index;">
                        
-                        <div class="card card-custom card-shadowless" (click)="selectItem(i)"  [class.itemselected]="item.selected">
+                        <div class="card card-custom card-shadowless" (click)="selectItem(i)"  [class.itemselected]="item.selected" >
                           <div class="card-body p-0">
                             <!--begin::Image-->
                             <div class="overlay">
@@ -648,12 +649,23 @@
                   <div class="pb-5" *ngIf="step == 4">
                     <!--begin::Section-->
                     <h4 class="mb-10 font-weight-bold text-dark">Delivery details</h4>
+                    <div class="card card-shadow card-custom card-shadowless" *ngIf="onlyVirtualItems">
+                      <div class="card-body p-0">
+                        <div class="test-center text-warning">
+                          <p>
+                              Delivery options are not applicable for catalogs that contain only virtual items. Click on SAVE to proceed.
+                              
+                          </p>
+                        </div>
+                        </div>
+                    </div>
+
 
                     <div class="card card-shadow card-custom card-shadowless">
                       <div class="card-body p-0">
                         <div class="form-group">
                           <label>Store pickup </label> &nbsp;
-                          <mat-slide-toggle formControlName="storepickup" (change)="handlestorepickup($event)">
+                          <mat-slide-toggle formControlName="storepickup"  [disabled]="storePickUpDisabled"(change)="handlestorepickup($event)">
                           </mat-slide-toggle>
                         </div>
                         <div *ngIf="storepickupStat">
@@ -734,7 +746,7 @@
                       <div class="card-body p-0">
                         <div class="form-group">
                           <label>Home delivery </label> &nbsp;
-                          <mat-slide-toggle formControlName="homedelivery" (change)="handlehomedelivery($event)">
+                          <mat-slide-toggle formControlName="homedelivery" [disabled]="homeDeliveryDisabled"(change)="handlehomedelivery($event)">
                           </mat-slide-toggle>
                         </div>
                         <!--end::Input-->
