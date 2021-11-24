@@ -233,9 +233,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         if (params.customId) {
           this.customId = params.customId;
         }
-        if(params.isFrom && params.isFrom =='providerdetail'){
+        if (params.isFrom && params.isFrom == 'providerdetail') {
           this.from = 'providerdetail';
-      }
+        }
       });
 
 
@@ -296,8 +296,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.orderList) {
       this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
       this.isPhysicalItemsPresent();
-       
-      
+
+
 
     }
 
@@ -416,7 +416,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   isPhysicalItemsPresent() {
     let physical_item_present = true;
- console.log(this.orders);
+    console.log(this.orders);
     const virtualItems = this.orders.filter(orderitem => orderitem.item.itemType === 'VIRTUAL')
 
     if (virtualItems.length > 0 && this.orders.length === virtualItems.length) {
@@ -478,10 +478,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.customer_countrycode = credentials.countryCode;
       this.phonenumber = activeUser.primaryPhoneNumber;
       // this.storeContact.get('phone').value(this.phonenumber);
-     // this.storeContact.controls.phone.setValue(this.phonenumber);
-     if(this.customer_countrycode == "+91"){
-      this.storeContact.controls.phone.setValue(this.phonenumber);
-    }
+      // this.storeContact.controls.phone.setValue(this.phonenumber);
+      if (this.customer_countrycode == "+91") {
+        this.storeContact.controls.phone.setValue(this.phonenumber);
+      }
       this.customer_phoneNumber = activeUser.primaryPhoneNumber;
       console.log(this.customer_phoneNumber);
       this.getaddress();
@@ -951,13 +951,13 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       'orderFor': {
         'id': 0
       },
-  
+
       'orderNote': this.orderlistNote,
       'coupons': this.selected_coupons,
       'countryCode': '+91',
     }
     if (this.orderType !== 'SHOPPINGLIST') {
-      post_Data['orderItem']= this.getOrderItems();
+      post_Data['orderItem'] = this.getOrderItems();
     }
     if (this.jcashamount > 0 && this.checkJcash) {
       post_Data['useCredit'] = this.checkJcredit
@@ -965,45 +965,45 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (!this.onlyvirtualItemsPresent) {
       timeslot = this.nextAvailableTime.split(' - ');
-      let timeSlot= {
+      let timeSlot = {
         'sTime': timeslot[0],
         'eTime': timeslot[1]
 
       }
-      post_Data['timeSlot']=timeSlot;
-      post_Data['orderDate']=this.sel_checkindate;
-    
-    if (this.delivery_type === 'home') {
-      if (this.added_address === null || this.added_address.length === 0) {
-        this.checkoutDisabled = false;
-        this.isClickedOnce = false;
-        this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
-        return;
-      } else {
-        const delivery_address = {
-          'firstName': this.selectedAddress.firstName,
-          'lastName': this.selectedAddress.lastName,
-          'phoneNumber': this.selectedAddress.phoneNumber,
-          'countryCode': '+91',
-          'email': this.selectedAddress.email,
-          'address': this.selectedAddress.address,
-          'city': this.selectedAddress.city,
-          'postalCode': this.selectedAddress.postalCode,
-          'landMark': this.selectedAddress.landMark
+      post_Data['timeSlot'] = timeSlot;
+      post_Data['orderDate'] = this.sel_checkindate;
 
-        };
-        if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
-          this.emailId = this.customer_email;
-        }
-            post_Data['homeDelivery']=true;
-            post_Data['homeDeliveryAddress']=delivery_address;
-            post_Data['email']=this.selectedAddress.email;
-       
+      if (this.delivery_type === 'home') {
+        if (this.added_address === null || this.added_address.length === 0) {
+          this.checkoutDisabled = false;
+          this.isClickedOnce = false;
+          this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
+          return;
+        } else {
+          const delivery_address = {
+            'firstName': this.selectedAddress.firstName,
+            'lastName': this.selectedAddress.lastName,
+            'phoneNumber': this.selectedAddress.phoneNumber,
+            'countryCode': '+91',
+            'email': this.selectedAddress.email,
+            'address': this.selectedAddress.address,
+            'city': this.selectedAddress.city,
+            'postalCode': this.selectedAddress.postalCode,
+            'landMark': this.selectedAddress.landMark
+
+          };
+          if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
+            this.emailId = this.customer_email;
+          }
+          post_Data['homeDelivery'] = true;
+          post_Data['homeDeliveryAddress'] = delivery_address;
+          post_Data['email'] = this.selectedAddress.email;
+
         }
       }
     }
-    if (this.delivery_type === 'store' ||this.onlyvirtualItemsPresent) {
-     
+    if (this.delivery_type === 'store' || this.onlyvirtualItemsPresent) {
+
       if (!this.storeContact.value.phone || !this.storeContact.value.email) {
         this.checkoutDisabled = false;
         this.isClickedOnce = false;
@@ -1012,18 +1012,18 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       } else {
         const contactNumber = this.storeContact.value.phone;
         const contact_email = this.storeContact.value.email;
-        post_Data['phoneNumber']=contactNumber,
-        post_Data['email']=contact_email
-          
-        }
-        if(this.delivery_type==='store'&& !this.onlyvirtualItemsPresent){
-          post_Data['storePickup']=true;
-        }
+        post_Data['phoneNumber'] = contactNumber,
+          post_Data['email'] = contact_email
+
       }
-    
-      this.confirmOrder(post_Data, paytype);
+      if (this.delivery_type === 'store' && !this.onlyvirtualItemsPresent) {
+        post_Data['storePickup'] = true;
+      }
     }
-  
+
+    this.confirmOrder(post_Data, paytype);
+  }
+
   doLogin(origin?, passParam?) {
 
     const is_test_account = true;
@@ -1090,7 +1090,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           });
 
-        
+
           if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
             console.log(post_Data.email)
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
@@ -1114,28 +1114,28 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             this.lStorageService.removeitemfromLocalStorage('order_spId');
             this.lStorageService.removeitemfromLocalStorage('order');
             this.snackbarService.openSnackBar('Your Order placed successfully');
-            if(this.from){
-            let queryParams = {
-              'source': 'order'
+            if (this.from) {
+              let queryParams = {
+                'source': 'order'
+              }
+              if (this.customId) {
+                queryParams['customId'] = this.customId;
+                queryParams['accountId'] = this.account_id;
+              }
+              let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
+              };
+              this.router.navigate(['consumer'], navigationExtras);
+            } else {
+              let queryParams = {
+                'source': 'order'
+              }
+              let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
+              };
+              this.router.navigate(['consumer'], navigationExtras);
             }
-            if (this.customId) {
-              queryParams['customId'] = this.customId;
-              queryParams['accountId'] = this.account_id;
-            }
-            let navigationExtras: NavigationExtras = {
-              queryParams: queryParams
-            };
-            this.router.navigate(['consumer'], navigationExtras);
-          } else{
-            let queryParams = {
-              'source': 'order'
-            }
-            let navigationExtras: NavigationExtras = {
-              queryParams: queryParams
-            };
-            this.router.navigate(['consumer'], navigationExtras);
           }
-        }
         },
           error => {
             this.isClickedOnce = false;
@@ -1189,7 +1189,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             this.lStorageService.removeitemfromLocalStorage('order_spId');
             this.lStorageService.removeitemfromLocalStorage('order');
             this.snackbarService.openSnackBar('Your Order placed successfully');
-            if(this.from){
+            if (this.from) {
               let queryParams = {
                 'source': 'order'
               }
@@ -1202,7 +1202,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
               };
               this.router.navigate(['consumer'], navigationExtras);
               // this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
-            } else{
+            } else {
               let queryParams = {
                 'source': 'order'
               }
@@ -1255,7 +1255,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       if (item.consumerNote) {
         consumerNote = item.consumerNote;
       }
-      this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote ,'itemType':item.item.itemType,'name':item.item.displayName});
+      this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote, 'itemType': item.item.itemType, 'name': item.item.displayName });
     });
     return this.orderSummary;
   }
@@ -1767,7 +1767,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
           if (pData.isGateWayPaymentNeeded == true && pData.isJCashPaymentSucess == true) {
             if (paymentMode == 'PPI') {
-              this.payWithPayTM(pData.response);
+              this.payWithPayTM(pData.response, this.account_id);
             } else {
               this.paywithRazorpay(pData.response);
             }
@@ -1788,7 +1788,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             this.paywithRazorpay(pData);
           } else {
             if (pData['response']) {
-              this.payWithPayTM(pData);
+              this.payWithPayTM(pData, this.account_id);
               // this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
               // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
               // setTimeout(() => {
@@ -1826,51 +1826,59 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'checkin_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList, this.customId);
 
   }
-  payWithPayTM(pData: any) {
+  payWithPayTM(pData: any, accountId: any) {
     this.loadingPaytm = true;
-    this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
+    this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
   }
-  transactionCompleted(response) {
+  transactionCompleted(response, payload, accountId) {
     if (response.STATUS == 'TXN_SUCCESS') {
+      this.paytmService.updatePaytmPay(payload, accountId)
+        .then((data) => {
+          if (data) {
+            this.isClickedOnce = false;
+            this.lStorageService.removeitemfromLocalStorage('order_sp');
+            this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+            this.lStorageService.removeitemfromLocalStorage('order_spId');
+            this.lStorageService.removeitemfromLocalStorage('order');
+            this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+            if (this.from) {
+              let queryParams = {
+                'source': 'order',
+              };
+              let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
+              }
+              this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+            } else {
+              let queryParams = {
+                'source': 'order',
+              };
+              if (this.customId) {
+                queryParams['customId'] = this.customId;
+                queryParams['accountId'] = this.account_id;
+              }
+              let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
+              }
+              this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+            }
+          }
+        },
+        error=>{
+          this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' }); 
+        })
+
+    } else if (response.STATUS == 'TXN_FAILURE') {
       this.isClickedOnce = false;
-      this.lStorageService.removeitemfromLocalStorage('order_sp');
-      this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
-      this.lStorageService.removeitemfromLocalStorage('order_spId');
-      this.lStorageService.removeitemfromLocalStorage('order');
-      this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-      if(this.from){
+      this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+      if (this.from) {
         let queryParams = {
           'source': 'order',
         };
-        let navigationExtras: NavigationExtras = {
-          queryParams: queryParams
-        }
-        this.ngZone.run(() => this.router.navigate(['consumer'],navigationExtras));
-      } else {
-        let queryParams = {
-          'source': 'order',
-        };
-        if (this.customId) {
-          queryParams['customId'] = this.customId;
-          queryParams['accountId'] = this.account_id;
-        }
         let navigationExtras: NavigationExtras = {
           queryParams: queryParams
         }
         this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
-      }
-      
-    } else if (response.STATUS == 'TXN_FAILURE') {
-      this.isClickedOnce = false;
-      this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
-      if(this.from){
-        let queryParams = {
-          'source': 'order',
-        };
-        let navigationExtras: NavigationExtras = {
-          queryParams: queryParams
-        }
-        this.ngZone.run(() => this.router.navigate(['consumer'],navigationExtras));
       } else {
         let queryParams = {
           'source': 'order',
@@ -1887,7 +1895,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-   
+
   closeloading() {
     this.isClickedOnce = false;
     this.loadingPaytm = false;

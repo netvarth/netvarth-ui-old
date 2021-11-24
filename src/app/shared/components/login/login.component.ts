@@ -93,7 +93,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       emailId: ['', Validators.pattern(new RegExp(projectConstantsLocal.VALIDATOR_MOBILE_AND_EMAIL))],
       password: ['', Validators.compose([Validators.required])],
-      phone: new FormControl(undefined, [Validators.required])
+      phone: new FormControl( [Validators.required])
     });
   }
   showError() {

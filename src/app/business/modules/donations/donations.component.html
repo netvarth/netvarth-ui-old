@@ -60,10 +60,21 @@
             <li class="dropdown notifications-menu pull-left">
               <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="control-sidebar"
                 *ngIf="loadComplete && donations.length !== 0">
-                <input [checked]="selectAll" type="checkbox" class="ckbx pull-left" (change)="selectAllDonations()" />
+                <input [checked]="selectAll" type="checkbox" class="ckbx pull-left" (change)="selectAllDonations($event)" />
                 &nbsp;&nbsp;Select all
               </a>
+              <div class="customer-selected mx-2" *ngIf="selectedDonations && selectedDonations.length > 0">
+                {{selectedDonations.length}} {{(selectedDonations.length === 1) ? customer_label
+                : customer_label + 's'}} selected </div>
             </li>
+            <!-- <li>
+         
+                  <input type="checkbox" (change)="selectAllcustomers($event)"
+                    [checked]="isAllCustomerSelected()">
+                  Name
+          
+              
+            </li> -->
           </ul>
         </div>
         <aside class="filterSidebar" *ngIf="filter_sidebar">
@@ -125,8 +136,18 @@
                         <div class="td one">
                           <input [checked]="donationsSelected[i]" type="checkbox" class="ckbx pull-left"
                             (change)="selectDonations(i)" (click)="stopprop($event)" />
+                            <!-- <input type="checkbox" name="Checkboxes4" class="ckbx pull-left"  [checked]="checkSelection(donation)"
+                            (click)="stopprop($event)" (change)="selectcustomers(donation)"
+                           > -->
                           <span class="date">{{donation.date | date: newDateFormat}}</span>
                         </div>
+                        <!-- <span class="symbol-label">
+                          <input type="checkbox" name="Checkboxes4" [checked]="checkSelection(donation)"
+                            (click)="stopprop($event)" (change)="selectcustomers(donation)"
+                           >
+                    
+                        </span> -->
+                               <!--  [disabled]="showText(customer)" -->
                         <div class="td two">
                           <span>{{donation.service.name |
                             capitalizeFirst}} </span>
@@ -155,11 +176,21 @@
             </div>
           </div>
         </div>
-        <div class="search_paging" *ngIf="loadComplete">
-          <app-pager *ngIf="pagination.totalCnt != 0" [total_pages]="pagination.totalCnt"
+        <div class="search_paging" *ngIf="loadComplete && donations.length !== 0">
+          <app-pager  [total_pages]="pagination.totalCnt"
             [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
           </app-pager>
         </div>
+        <!-- <div class="d-flex justify-content-between align-items-center flex-wrap pull-right"
+        *ngIf="!apiloading && !showCustomers && customers.length > 0">
+        <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+          (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
+      </div> -->
+        <!-- <div class="d-flex justify-content-between align-items-center flex-wrap pull-right"
+        *ngIf="!apiloading && !showCustomers && donations.length > 0">
+        <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+          (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
+      </div> -->
       </div>
     </div>
   </div>

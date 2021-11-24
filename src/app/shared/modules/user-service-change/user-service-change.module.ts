@@ -11,6 +11,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmBoxModule } from '../../../business/shared/confirm-box/confirm-box.module';
 import { ConfirmBoxLocationModule } from './confirm-box-location/confirm-box-location.module';
 import { RouterModule, Routes } from '@angular/router';
+import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 const routes: Routes = [
   { path: '', component: UserServiceChnageComponent },
 ];
@@ -18,6 +19,7 @@ const routes: Routes = [
     imports: [
       MatTableModule,
       MatCheckboxModule,
+      CapitalizeFirstPipeModule,
       CommonModule,
       MatFormFieldModule,
       MatInputModule,

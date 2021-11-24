@@ -38,6 +38,7 @@ export class PrintBookingDetailsComponent implements OnInit {
   customerDetails: any;
   customer: any;
   isJaldeeId: boolean = false;
+  spName: any;
 
 
   constructor(private activated_route: ActivatedRoute,
@@ -76,6 +77,7 @@ export class PrintBookingDetailsComponent implements OnInit {
             if (this.bookingDetails.questionnaire) {
               this.questionnaires = this.bookingDetails.questionnaire;
               this.questionanswers = this.questionnaires.questionAnswers;
+              console.log("Checkin questionanswers : ",this.questionanswers);
               if (this.questionanswers) {
                 this.groupQuestionsBySection();
               }
@@ -174,6 +176,9 @@ export class PrintBookingDetailsComponent implements OnInit {
         this.isJaldeeId = true;
         this.customerName = this.bookingDetails.providerConsumer.jaldeeId
       }
+      if (this.bookingDetails.provider) {
+        this.spName = (this.bookingDetails.provider.businessName) ? this.bookingDetails.provider.businessName : this.bookingDetails.provider.firstName + ' ' + this.bookingDetails.provider.lastName;
+      }
 
     } else {
       this.customer = this.bookingDetails.waitlistingFor[0];
@@ -185,6 +190,9 @@ export class PrintBookingDetailsComponent implements OnInit {
       else {
         this.isJaldeeId = true;
         this.customerName = this.bookingDetails.consumer.jaldeeId
+      }
+      if (this.bookingDetails.provider) {
+        this.spName = (this.bookingDetails.provider.businessName) ? this.bookingDetails.provider.businessName : this.bookingDetails.provider.firstName + ' ' + this.bookingDetails.provider.lastName;
       }
     }
 
@@ -247,6 +255,7 @@ export class PrintBookingDetailsComponent implements OnInit {
   }
   isDatagrid(question) {
     let answerLine = question.answerLine.answer;
+    console.log("Data Checkins :",answerLine)
     if (Object.keys(answerLine)[0] === 'dataGrid') {
       return true;
     } else {
@@ -258,10 +267,10 @@ export class PrintBookingDetailsComponent implements OnInit {
     if (Object.keys(answerLine)[0] === 'fileUpload') {
       let filesuploaded = '';
       for (let file of answerLine.fileUpload) {
-        if (file.originalName) {
-          filesuploaded += file.originalName + ',';
+        if (file.caption) {
+          filesuploaded += file.caption + ',';
         } else {
-          filesuploaded += file.keyName + ',';
+          filesuploaded += file.originalName + ',';
         }
 
       }
@@ -286,6 +295,7 @@ export class PrintBookingDetailsComponent implements OnInit {
   }
 
   getinnerTableData(column) {
+    console.log("Inner table Data : ",column[Object.keys(column)[0]])
     return column[Object.keys(column)[0]];
 
   }

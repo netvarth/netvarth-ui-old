@@ -11,6 +11,8 @@ import { ConfirmBoxModule } from '../../components/confirm-box/confirm-box.modul
 import { AddItemNotesModule } from './add-item-notes/add-item-notes.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+
 const routes: Routes = [
   { path: '', component: ShoppingCartSharedComponent },
   { path: 'checkout', loadChildren: () => import('./checkout/checkout.module').then(m => m.CheckoutModule) },
@@ -22,6 +24,7 @@ const routes: Routes = [
       MatRadioModule,
       MatTooltipModule,
       MatDatepickerModule,
+      MatMomentDateModule,
       MatChipsModule,
       FormsModule,
       FormMessageDisplayModule,

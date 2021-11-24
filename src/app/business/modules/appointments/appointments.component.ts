@@ -104,7 +104,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     service: 'all',
     apptStatus: 'all',
     payment_status: 'all',
-    internalStatus: 'all',
     check_in_start_date: null,
     check_in_date: null,
     check_in_end_date: null,
@@ -128,7 +127,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     service: false,
     apptStatus: false,
     payment_status: false,
-    internalStatus: false,
     check_in_start_date: false,
     check_in_date: false,
     check_in_end_date: false,
@@ -274,7 +272,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   slotsForQ: any = [];
   filter_sidebar = false;
   apptModes: any = [];
-  intStat: any = [];
   paymentStatuses: any = [];
   apptStatuses: any = [];
   ageGroups: any = [];
@@ -333,7 +330,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   filterLocation: any = [];
   selectedLabels: any = [];
   allLabelSelected: any = [];
-  allStatusSelected: any = [];
   customerIdTooltip = '';
   allLabels: any = [];
   voicedialogRef: any;
@@ -364,7 +360,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('closebutton') closebutton;
   showattachmentDialogRef: any;
   unassignview = false;
-  internalStats: any = [];
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -491,14 +486,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
       this.refresh();
     });
-    this.getInternalStatus();
-  }
-  getInternalStatus(){
-    this.provider_services.getInternalStatus()
-    .subscribe(
-      (data: any) => {
-        this.internalStats = data;
-      });
   }
   getServiceName(serviceName) {
     let name = '';
@@ -893,7 +880,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       service: false,
       apptStatus: false,
       payment_status: false,
-    internalStatus: false,
       check_in_start_date: false,
       check_in_date: false,
       check_in_end_date: false,
@@ -915,7 +901,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       service: 'all',
       apptStatus: 'all',
       payment_status: 'all',
-      internalStatus: 'all',
       check_in_start_date: null,
       check_in_date: null,
       check_in_end_date: null,
@@ -961,6 +946,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.resetLabelFilter();
       }
     }
+    console.log(this.time_type);
     switch (this.time_type) {
       case 1: this.getTodayAppointments();
         break;
@@ -1260,6 +1246,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (Mfilter['schedule-eq'] && (this.filteredSchedule.length === 0 || this.filter.schedule === 'all')) {
       delete Mfilter['schedule-eq'];
     }
+    console.log('hisory', this.active_user);
     if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
       if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
         Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.active_user.id;
@@ -1286,6 +1273,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.chkSlotInput = {};
     this.selectedAppt = [];
     this.appointmentsChecked = [];
+    this.setApptSelections();
     this.chkSelectAppointments = false;
     this.apptSingleSelection = false;
     this.apptMultiSelection = false;
@@ -1306,6 +1294,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.selQIds && this.selQIds.length > 0 || this.activeUser) {
       if (this.activeUser) {
+        console.log(this.unassignview);
         if (this.unassignview) {
           Mfilter['provider-eq'] = null;
         } else {
@@ -1456,6 +1445,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   getHistoryAppointments() {
+    console.log("in history");
     let Mfilter = this.setFilterForApi();
     if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
       if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
@@ -1492,6 +1482,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
   setApptSelections() {
+
+    console.log('inisdeenjen appt selctions');
     this.apptSingleSelection = false;
     this.apptMultiSelection = false;
     this.activeAppointment = null;
@@ -1500,7 +1492,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.showUndo = false;
     this.showArrived = false;
     const totalAppointmentsSelected = Object.keys(this.appointmentsChecked).length;
+    console.log(totalAppointmentsSelected);
     if (totalAppointmentsSelected === this.check_in_filtered_list.length && totalAppointmentsSelected !== 0) {
+      console.log('inisdee setAppt Selections' );
       this.chkSelectAppointments = true;
     }
     if (totalAppointmentsSelected === 1) {
@@ -1579,9 +1573,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.apptModes.length > 0 && this.filter.appointmentMode !== 'all') {
       api_filter['appointmentMode-eq'] = this.apptModes.toString();
     }
-    if (this.intStat.length > 0) {
-      api_filter['internalStatus-eq'] = this.intStat.toString();
-    }
     if (this.time_type !== 1) {
       if (this.filter.check_in_start_date != null) {
         api_filter['date-ge'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_start_date);
@@ -1628,7 +1619,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['gender-eq'] = this.genderList.toString();
       }
     }
-    if (this.time_type) {
+    if (this.time_type !== 3) {
       if (this.selected_location && this.selected_location.id) {
         api_filter['location-eq'] = this.selected_location.id;
       }
@@ -1647,6 +1638,29 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     api_filter['count'] = this.filter.page_count;
     return api_filter;
   }
+  doSearchs() {
+    this.lStorageService.removeitemfromLocalStorage('filter');
+    this.endminday = this.filter.check_in_start_date;
+    if (this.filter.check_in_end_date) {
+      this.maxday = this.filter.check_in_end_date;
+    } else {
+      this.maxday = this.yesterdayDate;
+    }
+    this.labelSelection();
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
+      this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
+      || this.filter.check_in_end_date !== null || this.filter.check_in_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all'
+      || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
+      || this.allPayStatusSelected || this.allModeSelected || this.allLabelSelected || this.allScheduleSelected || this.allLocationSelected) {
+      this.filterapplied = true;
+    } else {
+      this.filterapplied = false;
+    }
+    this.loadApiSwitch('doSearch');
+   // this.shared_functions.setFilter();
+
+  }
+
   doSearch() {
     this.shared_functions.setFilter();
     this.lStorageService.removeitemfromLocalStorage('filter');
@@ -1657,17 +1671,18 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.maxday = this.yesterdayDate;
     }
     this.labelSelection();
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
-      this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.internalStatus !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
+      this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
       || this.filter.check_in_end_date !== null || this.filter.check_in_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all'
       || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
-      || this.allPayStatusSelected || this.allModeSelected || this.allLabelSelected || this.allStatusSelected || this.allScheduleSelected || this.allLocationSelected) {
+      || this.allPayStatusSelected || this.allModeSelected || this.allLabelSelected || this.allScheduleSelected || this.allLocationSelected) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
     }
     this.loadApiSwitch('doSearch');
   }
+ 
   keyPressed() {
     this.shared_functions.setFilter();
     this.lStorageService.removeitemfromLocalStorage('filter');
@@ -1679,10 +1694,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.labelSelection();
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
-      this.filter.schedule !== 'all' || this.filter.payment_status !== 'all'|| this.filter.internalStatus !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
+      this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
       || this.filter.check_in_end_date !== null || this.filter.check_in_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all'
       || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
-      || this.allPayStatusSelected || this.allModeSelected || this.allLabelSelected || this.allStatusSelected || this.allScheduleSelected || this.allLocationSelected) {
+      || this.allPayStatusSelected || this.allModeSelected || this.allLabelSelected || this.allScheduleSelected || this.allLocationSelected) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -1801,7 +1816,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.filters[type]) {
       if (type === 'check_in_start_date' || type === 'check_in_end_date' || type === 'check_in_date') {
         this.filter[type] = null;
-      } else if (type === 'payment_status' || type === 'service' || type === 'queue' || type === 'appointmentMode' || type === 'location' || type === 'internalStatus') {
+      } else if (type === 'payment_status' || type === 'service' || type === 'queue' || type === 'appointmentMode' || type === 'location') {
         this.filter[type] = 'all';
       } else if (type === 'apptStatus') {
         this.statusMultiCtrl = [];
@@ -1815,13 +1830,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const label_status = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm(status));
     return label_status;
   }
-
-  selectAllAppoinments() {
+  selectAllAppoinments(event) {
     this.appointmentsChecked = {};
     this.chkAppointments = {};
-    if (this.chkSelectAppointments) {
+    if (event.target.checked) {
+      this.apptMultiSelection = true;
       for (let aIndex = 0; aIndex < this.check_in_filtered_list.length; aIndex++) {
-        if (this.check_in_filtered_list[aIndex].providerConsumer) {
+        if (this.check_in_filtered_list[aIndex].consumer) {
           this.chkAptHistoryClicked(aIndex, this.check_in_filtered_list[aIndex]);
         }
       }
@@ -1831,6 +1846,21 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.activeAppointment = null;
     }
   }
+  // selectAllAppoinments() {
+  //   this.appointmentsChecked = {};
+  //   this.chkAppointments = {};
+  //   if (this.chkSelectAppointments) {
+  //     for (let aIndex = 0; aIndex < this.check_in_filtered_list.length; aIndex++) {
+  //       if (this.check_in_filtered_list[aIndex].providerConsumer) {
+  //         this.chkAptHistoryClicked(aIndex, this.check_in_filtered_list[aIndex]);
+  //       }
+  //     }
+  //   } else {
+  //     this.apptSingleSelection = false;
+  //     this.apptMultiSelection = false;
+  //     this.activeAppointment = null;
+  //   }
+  // }
   chkAptClicked(appt) {
     const indx = this.check_in_filtered_list.indexOf(appt);
     this.chkAptHistoryClicked(indx, appt);
@@ -1868,8 +1898,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.filteredSchedule = [];
     this.paymentStatuses = [];
     this.apptModes = [];
-    this.intStat = [];
-    
     this.filterLocation = [];
     this.allAgeSlected = false;
     this.allGenderSlected = false;
@@ -1881,8 +1909,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.allLocationSelected = false;
     this.selectedLabels = [];
     this.allLabelSelected = [];
-    this.allStatusSelected = [];
-    
   }
   setFilterData(type, value) {
     this.filter[type] = value;
@@ -1897,7 +1923,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.apptModes = [];
         this.allModeSelected = false;
         if (event.checked) {
-         
           for (const apptMode of this.appointmentModes) {
             if (this.apptModes.indexOf(apptMode.mode) === -1) {
               this.apptModes.push(apptMode.mode);
@@ -1917,32 +1942,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.apptModes.length === this.appointmentModes.length) {
         this.filter['appointmentMode'] = 'all';
         this.allModeSelected = true;
-      }
-    }
-    if (type === 'internalStatus') {
-      if (value === 'all') {
-        this.intStat = [];
-        this.allStatusSelected = false;
-        if (event.checked) {
-          for (const stat of this.internalStats) {
-            if (this.intStat.indexOf(stat.StatusId) === -1) {
-              this.intStat.push(stat.StatusId);
-            }
-          }
-          this.allStatusSelected = true;
-        }
-      } else {
-        this.allStatusSelected = false;
-        const indx = this.intStat.indexOf(value);
-        if (indx === -1) {
-          this.intStat.push(value);
-        } else {
-          this.intStat.splice(indx, 1);
-        }
-      }
-      if (this.intStat.length === this.internalStats.length) {
-        this.filter['internalStatus'] = 'all';
-        this.allStatusSelected = true;
       }
     }
     if (type === 'payment_status') {
@@ -2230,10 +2229,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               for (let i = 0; i < this.historyCheckins.length; i++) {
                 const fname = (this.historyCheckins[i].appmtFor[0].firstName) ? this.historyCheckins[i].appmtFor[0].firstName : '';
                 const lname = (this.historyCheckins[i].appmtFor[0].lastName) ? this.historyCheckins[i].appmtFor[0].lastName : '';
+                let name='';
+                if(fname!== '' && lname!==''){
+                name=fname+''+ lname;
+                }
+                else{
+                name='Nil';
+                }
                 checkin_html += '<tr style="line-height:20px;padding:10px">';
                 checkin_html += '<td style="padding:10px">' + (this.historyCheckins.indexOf(this.historyCheckins[i]) + 1) + '</td>';
                 checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].appmtDate).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.getSingleTime(this.historyCheckins[i].appmtTime) + '</td>';
-                checkin_html += '<td style="padding:10px">' + fname + ' ' + lname + '</td>';
+                checkin_html += '<td style="padding:10px">' + name + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
                 if (this.historyCheckins[i].label && Object.keys(this.historyCheckins[i].label).length > 0) {
                   const labels = [];

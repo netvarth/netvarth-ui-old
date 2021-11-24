@@ -24,6 +24,7 @@ import { ConfirmPaymentBoxComponent } from '../../../../business/shared/confirm-
 import { JcCouponNoteComponent } from '../../../../shared/modules/jc-coupon-note/jc-coupon-note.component';
 import { ConfirmPaymentLinkComponent } from '../../../../../../src/app/business/shared/confirm-paymentlink/confirm-paymentlink.component';
 
+
 export interface ItemServiceGroup {
   type: string;
   values: string[];
@@ -452,7 +453,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   getUserName(user) {
     let userDetails = '';
     if (user.firstName && user.firstName !== null && user.firstName !== undefined && user.firstName !== '') {
-      userDetails = user.firstName + ' ' + user.lastName;
+      userDetails = user.firstName;
+      if( user.lastName && user.lastName !== null && user.lastName !== undefined && user.lastName !== ''){
+        userDetails = user.firstName + ' ' + user.lastName;
+      }
     } else {
       if (user.memberJaldeeId) {
         userDetails = this.customer_label + ' Id#'+' : ' + user.memberJaldeeId;
@@ -649,10 +653,15 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         (data: any) => {
           for (const ser of data) {
-            if (ser.status === 'ACTIVE') {
+            if (ser.status === 'ACTIVE'){
+            if (ser.itemType==='VIRTUAL'&& moment(new Date(ser.expiryDate)).isSameOrAfter(new Date(), 'day') ){
               this.items.push(ser);
-            }
+            
+          }else if(ser.itemType=='PHYSICAL'){
+            this.items.push(ser);
           }
+          }
+        }
           const itemslist = this.items.map((ob) => ob.displayName);
           this.itemServicesGroup[1]['values'] = itemslist;
         },

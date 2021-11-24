@@ -12,7 +12,7 @@ import { SubSink } from 'subsink';
 
 })
 export class EditStoreDetailsComponent implements OnInit , OnDestroy{
-    api_loading = true;
+    api_loading = false;
     data: any;
     firstName;
     lastName;
@@ -91,7 +91,7 @@ export class EditStoreDetailsComponent implements OnInit , OnDestroy{
     editInfo(data) {
         console.log(data);
         this.resetApiErrors();
-        this.api_loading = true;
+       // this.api_loading = true;
         this.subscriptions.sink = this.provider_services.editContactInfo(data)
             .subscribe(
                 () => {

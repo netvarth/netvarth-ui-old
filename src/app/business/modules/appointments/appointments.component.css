@@ -165,7 +165,9 @@
     font-weight: 700 !important;
     font-size: 15px !important;
 } */
-
+.selecttype{
+    display:inline-block;
+}
 .dropdown.notifications-menu a {
     height: 105px !important;
     margin-bottom: 12px !important;

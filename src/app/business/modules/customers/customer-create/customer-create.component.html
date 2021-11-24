@@ -80,22 +80,22 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-lg-6" *ngIf="haveMobile">
+                        <div class="col-lg-6 col-12 col-sm-12" *ngIf="haveMobile">
                             <label>Mobile</label>
-                            <div class="input-group">
+                            <div class="input-group" style="width: 100%;">
                                 <div class="countrycode">
                                     <input type="text"
                                         [readonly]="action === 'edit'&& customer[0].jaldeeConsumer !=0 && customer[0].phoneNo"
                                         (keypress)="isNumericSign($event)" matInput class="form-control"
                                         id="countryCode" placeholder="Country code " formControlName="countryCode"
-                                        autocomplete="off" maxlength="5">
+                                        autocomplete="off" maxlength="5" style="width: 100%;">
                                 </div>
                                 <div class="mobilenumber">
                                     <input
                                         [readonly]="action === 'edit'&& customer[0].jaldeeConsumer !=0 && customer[0].phoneNo"
                                         type="text" class="form-control" (keypress)="isNumeric($event)"
                                         id="mobile_number" placeholder="{{mobile_cap}} " formControlName="mobile_number"
-                                        autocomplete="off" maxlength=10 />
+                                        autocomplete="off" maxlength=10 style="width: 100%;" />
                                 </div>
                                 <app-field-error-display
                                     [displayError]="fed_service.isFieldValid(amForm,'mobile_number')" [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',

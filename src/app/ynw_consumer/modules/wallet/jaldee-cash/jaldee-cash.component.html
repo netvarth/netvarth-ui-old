@@ -1,0 +1,216 @@
+<section class="container no-padding no-padding-small">
+  <div class="content p0 see-pages cons-members">
+    <div class="panel panel-default">
+      <div class="panel-heading top-row ">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+          <app-header *ngIf="shared_functions.checkLogin()" [showHeaderAction]="true"></app-header>
+        </div>
+      </div>
+      <div class="panel-body no-padding">
+        <div class="card title-gb">
+          <h5 class="mgn-up-10">Jaldee Cash<a class="pull-left mgn-rt-20 back-btn" (click)="goBack()"><i
+                class="fa fa-arrow-left"></i></a></h5>
+        </div>
+        <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 no-padding " *ngIf="!loading">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+            <div class="widget widget-account-invoice-three">
+              <div class="widget-heading">
+                <div class="wallet-balance" *ngIf="cashbalanceInfodetail">
+                  <p> Balance</p>
+                  <h5 class=""><span class="w-currency"><i class="fa fa-inr"
+                        aria-hidden="true"></i>&nbsp;</span>{{cashbalanceInfodetail.totCashAvailable}}</h5>
+                </div>
+              </div>
+              <div class="widget-amount">
+                <div class="w-a-info funds-received"
+                  *ngIf="cashbalanceInfodetail && cashbalanceInfodetail.totCashAwarded">
+                  <span>Received <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                      fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                      class="feather feather-chevron-up">
+                      <polyline points="18 15 12 9 6 15"></polyline>
+                    </svg></span>
+                  <p><i class="fa fa-inr" aria-hidden="true"></i>{{cashbalanceInfodetail.totCashAwarded}}</p>
+                </div>
+                <div class="w-a-info funds-spent" *ngIf="cashbalanceInfodetail">
+                  <span>Spent <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                      fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                      class="feather feather-chevron-down">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg></span>
+                  <p><i class="fa fa-inr" aria-hidden="true"></i>{{cashbalanceInfodetail.totCashSpent}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="small_device_display">
+            <div class=" col-sm-12 col-12 layout-spacing">
+              <div class="widget1 widget-table-one" *ngIf="cashbalanceInfo.length > 0">
+                <div class="widget-content" *ngFor="let details of cashbalanceInfo; let i = index;">
+                  <div class="transactions-list">
+                    <div class="t-item">
+                      <div class="t-company-name">
+                        <div class="t-icon">
+                          <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                              stroke-linejoin="round" class="feather feather-credit-card">
+                              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                              <line x1="1" y1="10" x2="23" y2="10"></line>
+                            </svg>
+                          </div>
+                        </div>
+                        <div class="t-name">
+                  
+                          <span>{{details.jCashOffer.name}}</span><br>
+                          <span *ngIf="(details.originalAmt - details.remainingAmt)>0" (click)="spentlist(details.id)" class="bluelink">Spent
+                            &nbsp;<i class="fa fa-inr"
+                              aria-hidden="true"></i>&nbsp;{{details.originalAmt-details.remainingAmt}}</span>
+                          <span *ngIf="(details.originalAmt - details.remainingAmt)==0">Spent&nbsp;<i class="fa fa-inr"
+                              aria-hidden="true"></i> &nbsp;{{details.originalAmt-details.remainingAmt}}</span>
+                          <p class="meta-date">{{details.jCashIssueInfo.issuedDt | date: newDateFormat}}</p>
+                        </div>
+                      </div>
+                      <div class="t-rate rate-dec">
+                        <p><span><i class="fa fa-inr" aria-hidden="true"></i> {{details.originalAmt}}</span></p>
+                      </div>
+                    </div>
+                    <span>
+                      <span class="walletexpiry">Expires on {{details.jCashSpendRulesInfo.expiryDt | date:
+                        newDateFormat}}</span><span class="pull-right walletfont"
+                        (click)="termsAndCondition(details.displayNote)">T&C</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="expirecash" *ngIf="cashbalanceInfoExpireddetail.length > 0"><a (click)="expiredCash()">Expired
+                  cash</a></div>
+              <div class="widget1 widget-table-one" *ngIf="cashbalanceInfoExpireddetail.length > 0 && expiredcash">
+                <div class="widget-content" *ngFor="let details of cashbalanceInfoExpireddetail; let i = index;">
+                  <div class="transactions-list">
+                    <div class="t-item">
+                      <div class="t-company-name">
+                        <div class="t-icon">
+                          <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                              stroke-linejoin="round" class="feather feather-credit-card">
+                              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                              <line x1="1" y1="10" x2="23" y2="10"></line>
+                            </svg>
+                          </div>
+                        </div>
+                        <div class="t-name">
+                          <span>{{details.jCash.jCashOffer.name}}</span>
+                          <p class="meta-date">{{details.jCash.jCashIssueInfo.issuedDt | date: newDateFormat}}</p>
+                        </div>
+                      </div>
+                      <div class="t-rate rate-dec">
+                        <p><span><i class="fa fa-inr" aria-hidden="true"></i> {{details.amount}}</span></p>
+                      </div>
+                    </div>
+                    <span>
+                      <span class="walletexpiry">Expired on {{details.jCash.jCashSpendRulesInfo.expiryDt | date:
+                        newDateFormat}}</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="w-dta" *ngIf="!small_device_display">
+            <div *ngIf="cashbalanceInfo.length > 0">
+              <div>
+                <div class="table-outer q-itm">
+                  <table class="table transbase">
+                    <!--begin::Cart Header-->
+                    <thead>
+                      <tr>
+                        <!-- <th>Booking/Order ID</th> -->
+                        <th>Offer</th>
+                        <th>Amount earned</th>
+                        <th>Amount spent</th>
+                        <th>Date</th>
+                        <th>Expiry date</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <!--end::Cart Header-->
+                    <tbody>
+                      <!--begin::Cart Content-->
+                      <tr *ngFor="let details of cashbalanceInfo; let i = index;">
+                        <td data-title="Offer">
+                          {{details.jCashOffer.name}}
+                        </td>
+                        <td data-title="Amount earned">
+                          <i class="fa fa-inr" aria-hidden="true"></i> {{details.originalAmt}}
+                        </td>
+                        <td data-title="Amount spent">
+                          <span (click)="spentlist(details.id)" *ngIf="(details.originalAmt-details.remainingAmt)>0"
+                            class="bluelink"><i class="fa fa-inr"
+                              aria-hidden="true"></i>&nbsp;{{details.originalAmt-details.remainingAmt}}</span>
+                          <span *ngIf="(details.originalAmt-details.remainingAmt)<=0"><i class="fa fa-inr"
+                              aria-hidden="true"></i> &nbsp;{{details.originalAmt-details.remainingAmt}}</span>
+                        </td>
+                        <td data-title="Awarded date">
+                          {{details.jCashIssueInfo.issuedDt | date: newDateFormat}}
+                        </td>
+                        <td data-title="Expiry date" class="red">
+                          {{details.jCashSpendRulesInfo.expiryDt | date: newDateFormat}}
+                        </td>
+                        <td data-title="" class="walletfont" (click)="termsAndCondition(details.displayNote)">
+                          T&C
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="expirecash" *ngIf="cashbalanceInfoExpireddetail.length > 0"><a (click)="expiredCash()">Expired
+                cash</a></div>
+            <div *ngIf="cashbalanceInfoExpireddetail.length > 0 && expiredcash">
+              <div>
+                <div class="table-outer q-itm">
+                  <table class="table transbase">
+                    <!--begin::Cart Header-->
+                    <thead>
+                      <tr>
+                        <th>Offer</th>
+                        <th>Amount earned</th>
+                        <th>Amount expired</th>
+                        <th>Awarded date</th>
+                        <th>Expired date</th>
+                      </tr>
+                    </thead>
+                    <!--end::Cart Header-->
+                    <tbody>
+                      <!--begin::Cart Content-->
+                      <tr *ngFor="let details of cashbalanceInfoExpireddetail; let i = index;">
+                        <td data-title="Offer">
+                          {{details.jCash.jCashOffer.name}}
+                        </td>
+                        <td data-title="Amount earned">
+                          <i class="fa fa-inr" aria-hidden="true"></i> {{details.jCash.originalAmt}}
+                        </td>
+                        <td data-title="Amount expired">
+                          <i class="fa fa-inr" aria-hidden="true"></i> {{details.amount}}
+                        </td>
+                        <td data-title="Awarded date">
+                          {{details.jCash.jCashIssueInfo.issuedDt | date: newDateFormat}}
+                        </td>
+                        <td data-title="Expiry date" class="red">
+                          {{details.jCash.jCashSpendRulesInfo.expiryDt | date: newDateFormat}}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

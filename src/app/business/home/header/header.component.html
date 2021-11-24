@@ -89,7 +89,7 @@
             </a>
           </li>
           <li class="footer">
-            <a class="pointer-cursor" routerLink="provider/license" (click)="actionPerformed('license')">Go to subscription plan
+            <a class="pointer-cursor" href="provider/license" (click)="actionPerformed('license')">Go to subscription plan
               section</a>
           </li>
         </ul>
@@ -135,7 +135,7 @@
         <div class="text-muted mt-1 sub-sec" *ngIf="locName">
           <i class="icon-location"></i>{{locName}}
         </div>
-        <div class="text-muted mt-1">
+        <div class="text-muted mt-1" style="font-size: 12px;">
           {{bsector}}
         </div>
         <div class="text-muted sub-sec">
