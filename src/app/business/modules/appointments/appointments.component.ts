@@ -23,11 +23,11 @@ import { AppointmentActionsComponent } from './appointment-actions/appointment-a
 import { VoicecallDetailsSendComponent } from './voicecall-details-send/voicecall-details-send.component';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
-import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { Title } from '@angular/platform-browser';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { AttachmentPopupComponent } from '../../../../app/shared/components/attachment-popup/attachment-popup.component';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html',
@@ -950,6 +950,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.resetLabelFilter();
       }
     }
+    console.log(this.time_type);
     switch (this.time_type) {
       case 1: this.getTodayAppointments();
         break;
@@ -1485,6 +1486,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
   setApptSelections() {
+
+    console.log('inisdeenjen appt selctions');
     this.apptSingleSelection = false;
     this.apptMultiSelection = false;
     this.activeAppointment = null;
@@ -1493,7 +1496,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.showUndo = false;
     this.showArrived = false;
     const totalAppointmentsSelected = Object.keys(this.appointmentsChecked).length;
+    console.log(totalAppointmentsSelected);
     if (totalAppointmentsSelected === this.check_in_filtered_list.length && totalAppointmentsSelected !== 0) {
+      console.log('inisdee setAppt Selections' );
       this.chkSelectAppointments = true;
     }
     if (totalAppointmentsSelected === 1) {
@@ -1639,8 +1644,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     api_filter['count'] = this.filter.page_count;
     return api_filter;
   }
-  doSearch() {
-    this.shared_functions.setFilter();
+  doSearchs() {
     this.lStorageService.removeitemfromLocalStorage('filter');
     this.endminday = this.filter.check_in_start_date;
     if (this.filter.check_in_end_date) {
@@ -1659,7 +1663,32 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.filterapplied = false;
     }
     this.loadApiSwitch('doSearch');
+   // this.shared_functions.setFilter();
+
   }
+
+  doSearch() {
+    this.shared_functions.setFilter();
+    this.lStorageService.removeitemfromLocalStorage('filter');
+    this.endminday = this.filter.check_in_start_date;
+    if (this.filter.check_in_end_date) {
+      this.maxday = this.filter.check_in_end_date;
+    } else {
+      this.maxday = this.yesterdayDate;
+    }
+    this.labelSelection();
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
+      this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
+      || this.filter.check_in_end_date !== null || this.filter.check_in_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all'
+      || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
+      || this.allPayStatusSelected || this.allModeSelected || this.allLabelSelected || this.allScheduleSelected || this.allLocationSelected) {
+      this.filterapplied = true;
+    } else {
+      this.filterapplied = false;
+    }
+    this.loadApiSwitch('doSearch');
+  }
+ 
   keyPressed() {
     this.shared_functions.setFilter();
     this.lStorageService.removeitemfromLocalStorage('filter');
@@ -1807,22 +1836,22 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const label_status = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm(status));
     return label_status;
   }
-  // selectAllAppoinments() {
-  //   this.appointmentsChecked = {};
-  //   this.chkAppointments = {};
-  //   if (this.chkSelectAppointments) {
-  //     this.apptMultiSelection = true;
-  //     for (let aIndex = 0; aIndex < this.check_in_filtered_list.length; aIndex++) {
-  //       if (this.check_in_filtered_list[aIndex].consumer) {
-  //         this.chkAptHistoryClicked(aIndex, this.check_in_filtered_list[aIndex]);
-  //       }
-  //     }
-  //   } else {
-  //     this.apptSingleSelection = false;
-  //     this.apptMultiSelection = false;
-  //     this.activeAppointment = null;
-  //   }
-  // }
+  selectAllAppoinments(event) {
+    this.appointmentsChecked = {};
+    this.chkAppointments = {};
+    if (event.target.checked) {
+      this.apptMultiSelection = true;
+      for (let aIndex = 0; aIndex < this.check_in_filtered_list.length; aIndex++) {
+        if (this.check_in_filtered_list[aIndex].consumer) {
+          this.chkAptHistoryClicked(aIndex, this.check_in_filtered_list[aIndex]);
+        }
+      }
+    } else {
+      this.apptSingleSelection = false;
+      this.apptMultiSelection = false;
+      this.activeAppointment = null;
+    }
+  }
   // selectAllAppoinments() {
   //   this.appointmentsChecked = {};
   //   this.chkAppointments = {};
@@ -1838,23 +1867,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   //     this.activeAppointment = null;
   //   }
   // }
-
-
-  selectAllAppoinments() {
-    this.appointmentsChecked = {};
-    this.chkAppointments = {};
-    if (this.chkSelectAppointments) {
-      for (let aIndex = 0; aIndex < this.check_in_filtered_list.length; aIndex++) {
-        if (this.check_in_filtered_list[aIndex].providerConsumer) {
-          this.chkAptHistoryClicked(aIndex, this.check_in_filtered_list[aIndex]);
-        }
-      }
-    } else {
-      this.apptSingleSelection = false;
-      this.apptMultiSelection = false;
-      this.activeAppointment = null;
-    }
-  }
   chkAptClicked(appt) {
     const indx = this.check_in_filtered_list.indexOf(appt);
     this.chkAptHistoryClicked(indx, appt);
@@ -2206,6 +2218,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           .subscribe(
             data => {
               this.historyCheckins = data;
+              console.log(this.historyCheckins);
               const params = [
                 'height=' + screen.height,
                 'width=' + screen.width,
@@ -2223,10 +2236,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               for (let i = 0; i < this.historyCheckins.length; i++) {
                 const fname = (this.historyCheckins[i].appmtFor[0].firstName) ? this.historyCheckins[i].appmtFor[0].firstName : '';
                 const lname = (this.historyCheckins[i].appmtFor[0].lastName) ? this.historyCheckins[i].appmtFor[0].lastName : '';
+                let name='';
+                if(fname!== '' && lname!==''){
+                name=fname+''+ lname;
+                }
+                else{
+                name='Nil';
+                }
                 checkin_html += '<tr style="line-height:20px;padding:10px">';
                 checkin_html += '<td style="padding:10px">' + (this.historyCheckins.indexOf(this.historyCheckins[i]) + 1) + '</td>';
                 checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].appmtDate).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.getSingleTime(this.historyCheckins[i].appmtTime) + '</td>';
-                checkin_html += '<td style="padding:10px">' + fname + ' ' + lname + '</td>';
+                checkin_html += '<td style="padding:10px">' + name + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
                 if (this.historyCheckins[i].label && Object.keys(this.historyCheckins[i].label).length > 0) {
                   const labels = [];

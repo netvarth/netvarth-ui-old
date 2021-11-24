@@ -1,0 +1,43 @@
+[
+    {
+      "logourl":"../../assets/images/logo-white.png",
+      "publishbutton":"Publish",
+      "arrowurl":"../../assets/images/arrow_back_black_24dp.svg",
+      "EditYourProfile":"Edit Your Profile",
+      "mainheadimageurl":"../../../assets/templateimages/Haw.jpg",
+      "captionofheadimage":"Welcome to hawk Hospital",
+      "fourimageheading":"Lorem ipsum dolor sit amet",
+      "fourimagedescription":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at, luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Idac bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet.",
+      "Gosomewherebutton":"Go somewhere",
+      "fourimages":["../../../assets/templateimages/bruno-rodrigues-279xIHymPYY-unsplash.jpg","../../../assets/templateimages/bruno-rodrigues-279xIHymPYY-unsplash.jpg","../../../assets/templateimages/bruno-rodrigues-279xIHymPYY-unsplash.jpg","../../../assets/templateimages/bruno-rodrigues-279xIHymPYY-unsplash.jpg"],
+      "Uploadbutton":"Upload",
+      "oneimageurl":"../../../assets/templateimages/bg.png",
+      "oneimageheading":"Lorem ipsum dolor sit amet",
+      "oneimagedescription":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at, luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Idac bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet.",
+      "OURDOCTORS":"OUR DOCTORS",
+      "DoctorName":"DR.TULASI",
+      "Doctordescription":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at, luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Idac bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet.",
+      "Showmorebutton":"Showmore",
+      "OurServices":"Our Services",
+      "OurServicescontent":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at, luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Idac bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet.",
+      "Ourserviceimage":["../../../assets/templateimages/bruno-rodrigues-279xIHymPYY-unsplash.jpg","../../../assets/templateimages/ashkan-forouzani-DPEPYPBZpB8-unsplash (1).jpg","../../../assets/templateimages/brian-mercado-rm7rZYdl3rY-unsplash.jpg","../../../assets/templateimages/ashkan-forouzani-DPEPYPBZpB8-unsplash (1).jpg"],
+      "Consultation":"Consultation",
+      "cardimages":["../../../assets/templateimages/meeting_Artboard (1).png","../../../assets/templateimages/meeting_Artboard (1).png","../../../assets/templateimages/jaldeevideo.34da709d24c020f7f0f4 (1).jpg","../../../assets/templateimages/jaldeevideo.34da709d24c020f7f0f4 (1).jpg","../../../assets/templateimages/meeting_Artboard (1).png","../../../assets/templateimages/b5757a2eed2300820433e4083ae635c2.jpg"],
+      "NextAvalibleTime":"Next Avalible Time",
+      "time":"Today 1:40 PM",
+      "horizontelarrow":"../../assets/images/more_horiz_black_24dp.svg",
+      "RecentNews":"Recent News",
+      "RecentNewsimage":"../../assets/images/download.jpg",
+      "RecentNewsedit":"Edit Details",
+      "editicon":"../../assets/images/edit_black_24dp.svg",
+      "RecentNewshead":"Lorem ipsum dolor sit amet",
+      "RecentNewscontent":"Lorem ipsum dolor sit ametLorem ipsum dolor sit ametLorem ipsum dolor sit ametLorem ipsum dolor sit ametLorem ipsum dolor sit ametLorem ipsum dolor sit ametLorem ipsum dolor sit ametLorem ipsum dolor sit ametLorem ipsum dolor sit ametLorem ipsum dolor sit amet",
+      "languageicon":"../../assets/images/language_black_24dp.svg",
+      "languagematter":"Long Name Here",
+      "timeicon":"../../assets/images/access_time_black_24dp.svg",
+      "timeiconcontent":"1 hr ago",
+      "seemorenews":"See More News"
+
+    }
+
+  ]

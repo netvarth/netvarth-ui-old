@@ -77,6 +77,7 @@ export class PrintBookingDetailsComponent implements OnInit {
             if (this.bookingDetails.questionnaire) {
               this.questionnaires = this.bookingDetails.questionnaire;
               this.questionanswers = this.questionnaires.questionAnswers;
+              console.log("Checkin questionanswers : ",this.questionanswers);
               if (this.questionanswers) {
                 this.groupQuestionsBySection();
               }
@@ -254,6 +255,7 @@ export class PrintBookingDetailsComponent implements OnInit {
   }
   isDatagrid(question) {
     let answerLine = question.answerLine.answer;
+    console.log("Data Checkins :",answerLine)
     if (Object.keys(answerLine)[0] === 'dataGrid') {
       return true;
     } else {
@@ -265,10 +267,10 @@ export class PrintBookingDetailsComponent implements OnInit {
     if (Object.keys(answerLine)[0] === 'fileUpload') {
       let filesuploaded = '';
       for (let file of answerLine.fileUpload) {
-        if (file.originalName) {
-          filesuploaded += file.originalName + ',';
+        if (file.caption) {
+          filesuploaded += file.caption + ',';
         } else {
-          filesuploaded += file.keyName + ',';
+          filesuploaded += file.originalName + ',';
         }
 
       }
@@ -293,6 +295,7 @@ export class PrintBookingDetailsComponent implements OnInit {
   }
 
   getinnerTableData(column) {
+    console.log("Inner table Data : ",column[Object.keys(column)[0]])
     return column[Object.keys(column)[0]];
 
   }

@@ -327,8 +327,11 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
        Show service duration
         </mat-checkbox>
       </div>
-      <div class="col-md-6" *ngIf="showResources">
+      <!-- <div class="col-md-6" >
         <div class="form-group" *ngIf="!is_donation">
+          <label style="margin-bottom: 0 !important" class="col-form-label">Number of resources</label>
+          <div class="settings_info">
+            No. of resources that need to be used for this service.</div>
           <mat-form-field>
             <input matInput type="text" class="form-control" id="resources" (keypress)="isNumeric($event)"
               placeholder="Number of resources" formControlName="resoucesRequired" autocomplete="off">
@@ -336,14 +339,46 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
 
         </div>
       </div>
-      <div class="col-md-6" *ngIf="showResources">
+      <div class="col-md-6" >
         <div class="form-group" *ngIf="!is_donation">
+          <label style="margin-bottom: 0 !important" class="col-form-label">Maximum bookings allowed</label>
+          <div class="settings_info">
+            Maximum no. of bookings allowed for a customer for the same service, same schedule and same day.</div>
           <mat-form-field>
             <input matInput type="text" class="form-control" id="bookings" (keypress)="isNumeric($event)"
               placeholder="Maximum bookings allowed" formControlName="maxBookingsAllowed" autocomplete="off">
           </mat-form-field>
 
         </div>
+      </div> -->
+
+      <div class="row mgn-lt-5 mgn-up-20" *ngIf="!is_donation">
+        <section class="mgn-bt-30">
+          <label style="margin-bottom: 0 !important" class="col-form-label">Number of resources</label>
+          <div class="settings_info">
+            No. of resources that need to be used for this service.</div>
+
+            <div>
+            <mat-form-field class="example-full-width">
+              <input matInput type="text" class="form-control" id="resources" (keypress)="isNumeric($event)"
+              placeholder="Number of resources" formControlName="resoucesRequired" autocomplete="off">
+            </mat-form-field>
+         </div>
+        </section>
+      </div>
+      <div class="row mgn-lt-5 mgn-up-20" *ngIf="!is_donation">
+        <section class="mgn-bt-30">
+          <label style="margin-bottom: 0 !important" class="col-form-label">Maximum bookings allowed</label>
+          <div class="settings_info">
+            Maximum no. of bookings allowed for a customer for the same service, same schedule and same day.</div>
+
+            <div>
+            <mat-form-field class="example-full-width">
+              <input matInput type="text" class="form-control" id="bookings" (keypress)="isNumeric($event)"
+              placeholder="Maximum bookings allowed" formControlName="maxBookingsAllowed" autocomplete="off">
+            </mat-form-field>
+         </div>
+        </section>
       </div>
       <div class="form-group glbl-preview"
         *ngIf="(subdomainsettings.serviceBillable || !subdomainsettings.serviceBillable) && is_donation">

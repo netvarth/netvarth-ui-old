@@ -917,11 +917,11 @@
 
                                                         </div>
 
-                                                        <div
+                                                        <div *ngIf="wt_personaahead"
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20">
                                                             Waiting in Line
                                                         </div>
-                                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="wt_personaahead">
                                                             <h6 class="card-title serv-time">
                                                                 <span *ngIf="personsAhead <= 0">0
                                                                     People</span>
@@ -1951,8 +1951,8 @@
                                                         {{selectedQTime}}
                                                     </span>
                                                 </div>
-                                                <div class="no-mgn-bt bold"> Waiting in line</div>
-                                                <div class="mgn-bt-10 pad-bt-10">
+                                                <div class="no-mgn-bt bold" *ngIf="wt_personaahead"> Waiting in line</div>
+                                                <div class="mgn-bt-10 pad-bt-10" *ngIf="wt_personaahead">
                                                     <span *ngIf="personsAhead <= 0">0 People</span>
                                                     <span *ngIf="personsAhead == 1">1<span>
                                                             Person</span></span>

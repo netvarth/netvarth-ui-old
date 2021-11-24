@@ -607,6 +607,7 @@ export const Messages = {
   'JALDEE_CAP': 'Jaldee Soft Pvt Ltd',
   'COPY_RIGHT_CAP': 'Copyright',
   'DATE_TIME_CAP': 'Date/Time',
+  'DATE_TIME_AUDIT_CAP': 'Date & Time',
   'TEXT_CAP': 'Description',
   'SUBJECT_CAP': 'Action',
   'USER_NAME_CAP': 'User',

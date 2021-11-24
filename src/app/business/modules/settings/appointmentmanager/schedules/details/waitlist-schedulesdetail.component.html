@@ -274,7 +274,13 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                 <a class="learnmore-pointer" (click)="advancedClick()"> Advanced settings</a>
                             </div>                           
                             <div class="form-group row" *ngIf="showAdvancedSettings">
+                              
+
+           
                                     <div class="mgn-lt-10" >
+                                        <label style="margin-bottom: 0 !important" class="col-form-label">Resources available</label>
+                                        <div class="settings_info">
+                                          No. of resources that can be used at the same time.</div>
                                             <mat-form-field class="example-full-width">
                                                 <input matInput min="1" max="{{parallellimit}}" type="text"
                                                     class="number-ip-sm"

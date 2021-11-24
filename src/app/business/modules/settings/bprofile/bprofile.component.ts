@@ -1417,6 +1417,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.qr_code_oId = true;
     this.changeDetectorRef.detectChanges();
     setTimeout(() => {
+      if(this.qrCodeParent){
       this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
       this.angular_meta.addTags([
         { property: 'og:title', content: this.bProfile.businessName },
@@ -1425,6 +1426,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
         { property: 'og:description', content: this.bProfile.businessDesc },
 
       ]);
+    }
     }, 50);
   }
 

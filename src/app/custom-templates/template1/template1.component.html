@@ -1,0 +1,279 @@
+<div class="row">
+    <div class="col-lg-10"></div>
+    <div class="col-lg-1">
+        <button class="btn btn-primary" (click)="publishTemplate()">Preview</button>
+    </div>
+    <div class="col-lg-1">
+        <button class="btn btn-primary" (click)="edit()">Edit</button>
+    </div>
+</div>
+<!-- {{templateForm.value | json}} -->
+<section *ngIf="!publishvarible && !loading">
+    <form [formGroup]="templateForm" *ngIf="loader">
+        <section>
+            <div id="box-search">
+                <div class="thumbnail">
+                    <img class="imgbackground"
+                        src="{{templateJson && templateJson['headerImage']?templateJson['headerImage']:''}}"
+                        style="width: 100%; height: 500px;">
+                    <div class="caption">
+                        <ckeditor [editor]="Editor" [config]="editorConfig" formControlName="headerTitle">
+                        </ckeditor>
+                    </div>
+                    <div class="btn btn-primary uploadlabel">
+                        <input type="file" id="headimage" (change)="selectFile($event,'headimage',null)"><label
+                            for="headimage" style="cursor: pointer;">Upload</label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="gapsection"></div>
+
+        <section id="section1" class="container-fluid">
+            <div class="row card no-padding">
+                <div class=" col-lg-6 col-sm-6 col-xs-12 col-md-6" style="color:#545871">
+                    <div class="card-body mgn-up-20">
+                        <h5 class="card-title">
+                            <div>
+                                <ckeditor [editor]="Editor" [config]="editorConfig" formControlName="section1Title">
+                                </ckeditor>
+                                <br>
+                            </div>
+
+                        </h5>
+                        <div class="card-text">
+                            <div>
+                                <ckeditor [editor]="Editor" [config]="editorConfig"
+                                    formControlName="section1Description">
+                                </ckeditor>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="images col-lg-6 col-sm-6 col-xs-12 col-md-6 no-padding" formArrayName="section1Images">
+                    <div class="gallery-item col-lg-6 col-sm-6 col-sm-6 col-xs-6 no-padding"
+                        *ngFor="let image of templateForm.value.section1Images; let i=index">
+                        <img class="gallery-img" src="{{image}}">
+                        <div class="btn btn-primary gallery-button">
+                            <input type="file" id="{{i}}" (change)="selectFile($event,i,null)"><label for="{{i}}"
+                                style="cursor: pointer;">Upload</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="gapsection"></div>
+        <section id="section2">
+            <div class="row card">
+                <div class="doctorcardimage col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding">
+                    <div class="gallery-item">
+                        <img class="imagesectionabove"
+                            src="{{templateJson && templateJson['section2Image']?templateJson['section2Image']:''}}">
+
+                        <div class="btn btn-primary gallery-button">
+                            <input type="file" id="section2File"
+                                (change)="selectFile($event,'section2Image',null)"><label for="section2File"
+                                style="cursor: pointer;">Upload</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="doctorcardsectioncard col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <div>
+                                <ckeditor [editor]="Editor" [config]="editorConfig" formControlName="section2Title">
+                                </ckeditor>
+                            </div>
+
+                        </h5>
+                        <div class="card-text">
+                            <div>
+                                <ckeditor [editor]="Editor" [config]="editorConfig"
+                                    formControlName="section2Description"></ckeditor>
+                            </div>
+
+                        </div>
+                        <div class="gapsection"></div>
+                        <button href="#" class="btn btn-primary">See More</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="gapsection"></div>
+        <div class="container-fluid doctor-section card" id="section3">
+            <div class="form-group inline">
+                <label class="col-form-label">Show Section</label>
+                <mat-slide-toggle class="example-margin" ngDefaultControl [ngModelOptions]="{standalone: true}" [(ngModel)]="showSection3">
+                </mat-slide-toggle>
+            </div>
+            <div class="text-center">
+                <ckeditor [editor]="Editor" [config]="editorConfig" formControlName="section3Title"></ckeditor>
+            </div>
+
+            <div class="text-center">
+                <div class="text-center">
+                    <ckeditor [editor]="Editor" [config]="editorConfig" formControlName="section3Description">
+                    </ckeditor>
+                </div>
+
+            </div>
+            <!-- <div class="row col-lg-12 col-md-12 col-sm-12 col-10 mx-auto allcards">
+                <div class="col-lg-6" style="padding:2%;" *ngFor="let img of data[0].Ourserviceimage">
+                    <div class="row cardbackground">
+                        <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12  imagesectiondoctors" >
+                            <img class="cardimage" src="{{img}}" style="width: 200px;height: 200px;">
+                        </div>
+                        <div class="col-lg-6 col-md-12  col-xs-12 col-sm-12 ">
+                            <h1 class="imagesectiondoctors">{{data[0].DoctorName}}</h1>
+                            <ckeditor  [editor]="Editor" [config]="editorConfig"  style="width:60%;"
+                                formControlName="doctortext1"></ckeditor>
+                            <div  [innerHtml]="templateForm.value.doctortext1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- <div class="text-center">
+                <button class="btn btn-primary">{{data[0].Showmorebutton}}</button>
+            </div>
+            <br> -->
+        </div>
+        <div class="gapsection"></div>
+        <div class="container-fluid card" id="section4">
+            <div class="form-group inline">
+                <label class="col-form-label">Show Section</label>
+                <mat-slide-toggle class="example-margin" ngDefaultControl [ngModelOptions]="{standalone: true}"  [(ngModel)]="showSection4">
+                </mat-slide-toggle>
+            </div>
+            <div class="text-center">
+                <ckeditor [editor]="Editor" [config]="editorConfig" formControlName="section4Title"></ckeditor>
+            </div>
+            <div class="text-center">
+                <div class="text-center">
+                    <ckeditor [editor]="Editor" [config]="editorConfig" formControlName="section4Description">
+                    </ckeditor>
+                </div>
+            </div>
+            <div class="filters">
+
+            </div>
+        </div>
+        <div class="gapsection"></div>
+        <div class="container-fluid card" id="recentNews">
+            <br>
+            <div class="text-center">
+                <ckeditor [editor]="Editor" [config]="editorConfig" formControlName="section5Title"></ckeditor>
+            </div>
+            <div class="text-center">
+                <ckeditor [editor]="Editor" [config]="editorConfig" formControlName="section5Description"></ckeditor>
+            </div>
+            <div class="clearfix"></div>
+            <div class="text-center">
+                <button class="btn btn-primary" (click)="addNewsFeed()">Add More News</button>
+            </div>
+        </div>
+    </form>
+</section>
+
+
+
+
+
+<section *ngIf="publishvarible && !loading">
+    <section>
+        <section id="headerSection">
+            <div id="box-search">
+                <div class="thumbnail">
+                    <img class="imgbackground" [src]="templateJson['headerImage']" style="width: 100%; height: 500px;">
+                    <div class="caption" [innerHtml]="templateJson.headerTitle | safeHtml">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="gapsection"></div>
+        <section id="section1" class="container-fluid">
+            <div class="row card no-padding">
+                <div class=" col-lg-6 col-sm-6 col-xs-12 col-md-6" style="color:#545871">
+                    <div class="card-body mgn-up-20">
+                        <div [innerHtml]="templateJson.section1Title | safeHtml"></div>
+                        <div [innerHtml]="templateJson.section1Description | safeHtml"></div>
+                    </div>
+                </div>
+                <div class="images col-lg-6 col-sm-6 col-xs-12 col-md-6 no-padding">
+                    <div class="gallery-item col-lg-6 col-sm-6 col-sm-6 col-xs-6 no-padding"
+                        *ngFor="let image of templateJson.section1Images; let i=index">
+                        <img class="gallery-img" src="{{image}}">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="gapsection"></div>
+        <section id="section2">
+            <div class="row card">
+                <div class="doctorcardimage col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding">
+                    <div class="gallery-item">
+                        <img class="imagesectionabove" src="{{templateJson.section2Image}}">
+                    </div>
+                </div>
+                <div class="doctorcardsectioncard col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <div [innerHtml]="templateJson.section2Title | safeHtml"></div>
+                        </h5>
+                        <div class="card-text">
+                            <div [innerHtml]="templateJson.section2Description | safeHtml"></div>
+                        </div>
+                        <div class="gapsection"></div>
+                        <!-- <button href="#" class="btn btn-primary">See More</button> -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="gapsection"></div>
+        <div class="container-fluid doctor-section card" id="section3">
+            <div [innerHTML]="templateJson.section3Title | safeHtml"></div>
+            <div [innerHTML]="templateJson.section3Description | safeHtml"></div>
+        </div>
+        <div class="gapsection"></div>
+        <div class="container-fluid card" id="section4">
+            <div [innerHTML]="templateJson.section4Title | safeHtml"></div>
+            <div [innerHTML]="templateJson.section4Description | safeHtml"></div>
+        </div>
+        <div class="gapsection"></div>
+        <div class="container-fluid card" id="recentNews">
+            
+            <div [innerHTML]="templateJson.section5Title | safeHtml"></div>
+            <div [innerHTML]="templateJson.section5Description | safeHtml"></div>
+            <div class="feedsContainer mgn-up-50 mgn-bt-50">
+                <owl-carousel [options]="customOptions">
+                    <div class="item" *ngFor="let newsFeeds of templateJson['newsFeeds']">
+                        <div class="recentcards card">
+                            <div>
+                                <img class="imagesectioninrecentnews" src="{{newsFeeds.image}}" alt="Card image cap">
+                            </div>
+                            <div class="card-body">
+                                <div>
+                                    <h4 [innerHtml]="newsFeeds.title | safeHtml"></h4>
+                                </div>
+                                <div>
+                                    <div [innerHtml]="newsFeeds.description | safeHtml"></div>
+                                </div>
+                                <!-- <div class="row" style="background-color: aqua;">
+                                    <div class="col-lg-6 col-xs-12">
+                                        <img src="../../../assets/templateimages/language_black_24dp.svg" >
+                                        <p style="font-size: 8px;">Lang Name Here</p>
+                                    </div>
+                                    <div class="col-lg-6 col-xs-12">
+                                        <img src="../../../assets/templateimages/access_time_black_24dp.svg"><p style="font-size: 8px;">1 hr ago</p>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </owl-carousel>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </section>
+</section>

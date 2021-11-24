@@ -47,7 +47,7 @@ export class GlobalErrorHandler implements ErrorHandler {
             window.location.reload();
         } else {
             console.log(JSON.stringify(mailError));
-            this.shared_services.callHealth(JSON.stringify(mailError)).subscribe();
+            // this.shared_services.callHealth(JSON.stringify(mailError)).subscribe();
         }
     }
 }

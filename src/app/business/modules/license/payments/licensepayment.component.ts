@@ -1,4 +1,4 @@
-import { Component, Inject,ViewChild, ChangeDetectorRef, OnInit, NgZone } from '@angular/core';
+import { Component, Inject, ViewChild, ChangeDetectorRef, OnInit, NgZone } from '@angular/core';
 import { WindowRefService } from '../../../../shared//services/windowRef.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
@@ -32,10 +32,11 @@ export class PaymentComponent implements OnInit {
   razorpay_order_id: any;
   paidStatus = 'false';
   razorpay_signature: any;
-  isClickedOnce=false;
+  isClickedOnce = false;
   order_id: any;
   payment_id: any;
   @ViewChild('license_paylink') paytmview;
+  accountId: any;
   constructor(
     private activated_route: ActivatedRoute,
     private cdRef: ChangeDetectorRef,
@@ -55,6 +56,7 @@ export class PaymentComponent implements OnInit {
     this.activated_route.queryParams.subscribe(qparams => {
       this.data = qparams;
       this.waitlistDetails = JSON.parse(this.data.details);
+      this.accountId = this.waitlistDetails.accountId;
       this.razorpayService.changePaidStatus(this.data.paidStatus);
       this.razorpayService.currentStatus.subscribe(status => {
         this.razorpay_order_id = this.waitlistDetails.razorpay_order_id;
@@ -71,13 +73,13 @@ export class PaymentComponent implements OnInit {
   ngOnInit() {
   }
   payuPayment() {
-    this.isClickedOnce=true;
+    this.isClickedOnce = true;
     let paymentWay;
     paymentWay = 'DC';
     this.makeFailedPayment(paymentWay);
   }
   paytmPayment() {
-    this.isClickedOnce=true;
+    this.isClickedOnce = true;
     let paymentWay;
     paymentWay = 'PPI';
     this.makeFailedPayment(paymentWay);
@@ -100,17 +102,17 @@ export class PaymentComponent implements OnInit {
               if (paymentMode === 'DC') {
                 this.document.getElementById('payuform').submit();
               } else {
-                this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
+                this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this.accountId, this);
               }
             }, 2000);
           } else {
-            this.isClickedOnce=false;
+            this.isClickedOnce = false;
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
           }
         }
       },
         error => {
-          this.isClickedOnce=false;
+          this.isClickedOnce = false;
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
@@ -125,27 +127,36 @@ export class PaymentComponent implements OnInit {
     this.razorModel.description = pData.description;
     this.razorModel.name = pData.providerName;
     this.razorpayService.payWithRazor(this.razorModel, this.origin);
-    this.isClickedOnce=false;
+    this.isClickedOnce = false;
   }
-  transactionCompleted(response) {
-    if(response.STATUS == 'TXN_SUCCESS'){
-      this.paidStatus = 'true';
-      this.order_id = response.ORDERID;
-    this.payment_id = response.TXNID;
+  transactionCompleted(response, payload, accountId) {
+    if (response.STATUS == 'TXN_SUCCESS') {
+      this.paytmService.updatePaytmPay(payload, accountId)
+        .then((data) => {
+          if (data) {
+            this.paidStatus = 'true';
+            this.order_id = response.ORDERID;
+            this.payment_id = response.TXNID;
+            this.cdRef.detectChanges();
+            this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+            this.ngZone.run(() => console.log('Transaction success'));
+          }
+        },
+        error=>{
+          this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' }); 
+        })
+
+
+    } else if (response.STATUS == 'TXN_FAILURE') {
+      this.isClickedOnce = false;
+      this.paidStatus = 'false';
       this.cdRef.detectChanges();
-      this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-      this.ngZone.run(() =>console.log('Transaction success') );
-    
-  } else if(response.STATUS == 'TXN_FAILURE'){
-    this.isClickedOnce=false;
-    this.paidStatus = 'false';
-    this.cdRef.detectChanges();
-    this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
-    this.ngZone.run(() =>console.log('Transaction failed') );
+      this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+      this.ngZone.run(() => console.log('Transaction failed'));
+    }
   }
-  }
-  closeloading(){
-    this.isClickedOnce=false;
+  closeloading() {
+    this.isClickedOnce = false;
     this.cdRef.detectChanges();
     this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
     this.ngZone.run(() => console.log('cancelled'));

@@ -1,0 +1,12 @@
+input[type='file'] {
+	opacity:0;
+	display: none;
+}
+.newsfeedcards {
+	width: 400px;
+}
+@media (max-width: 360px) {
+    .newsfeedcards {
+		width: 300px;
+	}
+}

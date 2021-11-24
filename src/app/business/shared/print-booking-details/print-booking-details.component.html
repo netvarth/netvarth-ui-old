@@ -62,14 +62,13 @@
 
                                 </tr>
                                 <tr *ngIf="!isJaldeeId">
-                                    <td colspan="2" align="center"  *ngIf="customer.firstName === 'null' && customer.lastName === 'null' ">{{customer_label| capitalizeFirst}} Name #: NIL</td>
+                                    <td colspan="2" align="center"  *ngIf="customer.firstName === 'null' && customer.firstName === 'null' ">{{customer_label| capitalizeFirst}}  #: NIL</td>
 
-                                    <td colspan="2" align="center" *ngIf="customer.firstName !== 'null' || customer.lastName !== 'null' "> {{customer_label| capitalizeFirst}} Name #:
+                                    <td colspan="2" align="center"> {{customer_label| capitalizeFirst}}:
                                         {{customerName}} </td>
 
                                 </tr>
                                 <tr *ngIf="isJaldeeId">
-
                                     <td colspan="2" align="center"> {{ customer_label|capitalizeFirst }} Id #:
                                         {{customerName}} </td>
 
@@ -82,39 +81,22 @@
                                 </tr>
                            
                                 <tr>
-                                    <td colspan="2" align="center">
-
-                                    Service :
-                                        {{bookingDetails.service.name}} </td>
-                                 
-                                    <!-- <td colspan="2" align="center">
-                                        
-                                        <div class="disp-flex">
-                                            <span class="service-icon"
-                                                    style="display: inline-block !important;"
-                                                    *ngIf="bookingType == 'checkin'">
-                                                    <i class="fa phon-icon"
-                                                        *ngIf="bookingDetails.waitlistingFor && bookingDetails.waitlistingFor[0].callingMode === 'Phone'"></i>
-                                                    <i class="fa meet-icon"
-                                                        *ngIf="bookingDetails.waitlistingFor && bookingDetails.waitlistingFor[0].callingMode === 'GoogleMeet'"></i>
-                                                    <i class="fa zoom-icon"
-                                                        *ngIf="bookingDetails.waitlistingFor && bookingDetails.waitlistingFor[0].callingMode === 'Zoom'"></i>
-                                                    <i class="fa jvideo-icon jvideo-icon-m jvideo-icon-mg5"
-                                                        *ngIf="bookingDetails.waitlistingFor  && bookingDetails.waitlistingFor[0].callingMode === 'VideoCall'"></i>
-                                                    <i class="fa wtsapaud-icon"
-                                                        *ngIf="bookingDetails.waitlistingFor && bookingDetails.waitlistingFor[0].callingMode === 'WhatsApp' && bookingDetails.bookingType ==='audioService'"></i>
-                                                    <i class="fa wtsapvid-icon"
-                                                        *ngIf="bookingDetails.waitlistingFor && bookingDetails.waitlistingFor[0].callingMode === 'WhatsApp' && bookingDetails.bookingType ==='videoService'"></i>
-                                                </span>
-                                            <span class="billing-head"
-                                                style="display: flex !important; align-items: center !important;margin-bottom: 5px;"> Service </span>
-                                            <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
-                                            <span class="billing-value disp-flex align-items-center">
-                                                
-                                                <span class="mgn-bt-5">{{bookingDetails.service.name}}</span>
-                                            </span>
-                                        </div>
-                                                       </td> -->
+                                    <td class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item" colspan="2" align="center">
+                                        Service : <i class="fa meet-icon"
+                                            *ngIf="bookingDetails.service.serviceType === 'virtualService' && bookingDetails.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                        <i class="fa zoom-icon"
+                                            *ngIf="bookingDetails.service.serviceType === 'virtualService' && bookingDetails.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                        <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                                            *ngIf="bookingDetails.service.serviceType === 'virtualService' && bookingDetails.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+                                        <i class="fa phon-icon"
+                                            *ngIf="bookingDetails.service.serviceType === 'virtualService' && bookingDetails.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                        <i class="fa wtsapaud-icon"
+                                            *ngIf="bookingDetails.service.serviceType === 'virtualService' && bookingDetails.service.virtualCallingModes[0].callingMode === 'WhatsApp' && bookingDetails.service.virtualServiceType === 'audioService'"></i>
+                                        <i class="fa wtsapvid-icon"
+                                            *ngIf="bookingDetails.service.serviceType === 'virtualService' && bookingDetails.service.virtualCallingModes[0].callingMode === 'WhatsApp' && bookingDetails.service.virtualServiceType === 'videoService'"></i>
+                                       {{bookingDetails.service.name}}
+                                    </td>
+                                    <!-- <td colspan="2" align="center"> Service : {{bookingDetails.service.name}} </td> -->
 
                                 </tr>
                                 <tr *ngIf="bookingDetails.service.deptName">
@@ -185,10 +167,10 @@
                                                         *ngFor="let data of question.answerLine.answer.dataGrid ">
                                                         <table style="width:100%" border="1" border-color='#eee'>
                                                             <tr *ngFor="let value of data.dataGridColumn ">
-                                                                <td style="width:60%"> {{value.columnId}}</td>
+                                                                <td style="width:60%"> {{value.columnId | capitalizeFirst}}</td>
 
                                                                 <td style="width:40%">
-                                                                    {{getinnerTableData(value.column)}}</td>
+                                                                    {{getinnerTableData(value.column) | capitalizeFirst}}</td>
 
 
                                                             </tr>
@@ -198,7 +180,7 @@
                                                 </td>
 
                                                 <td *ngIf="!isDatagrid(question)" style="width:40%">
-                                                    <i>{{getAnswer(question)}}</i>
+                                                    <i>{{getAnswer(question) | capitalizeFirst}}</i>
                                                 </td>
 
                                             </tr>
@@ -222,16 +204,16 @@
                                 <tbody *ngFor="let question of questionanswers">
                                     <tr>
                                         <td colspan="2">
-                                            {{question.question.label|capitalizeFirst}}
+                                            {{question.question.label | capitalizeFirst}}
                                         </td>
                                         <td
                                             *ngIf="isDatagrid(question) && question.answerLine.answer.dataGrid.length>0">
                                             <ng-container *ngFor="let data of question.answerLine.answer.dataGrid ">
                                                 <table style="width:100%" border="1" border-color='#eee'>
                                                     <tr *ngFor="let value of data.dataGridColumn ">
-                                                        <td style="width:60%"> {{value.columnId}}</td>
+                                                        <td style="width:60%"> {{value.columnId | capitalizeFirst}}</td>
 
-                                                        <td style="width:40%"> {{getinnerTableData(value.column)}}</td>
+                                                        <td style="width:40%"> {{getinnerTableData(value.column) | capitalizeFirst}}</td>
 
 
                                                     </tr>
@@ -241,7 +223,7 @@
                                         </td>
 
                                         <td *ngIf="!isDatagrid(question)" style="width:40%">
-                                            <i>{{getAnswer(question)}}</i>
+                                            <i>{{getAnswer(question) | capitalizeFirst}}</i>
                                         </td>
 
                                     </tr>

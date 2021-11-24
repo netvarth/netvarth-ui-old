@@ -9,6 +9,7 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { ProviderServices } from '../../services/provider-services.service';
 
+
 @Component({
     selector: 'app-provider-settings',
     templateUrl: './provider-tax-settings.component.html'
@@ -21,6 +22,7 @@ export class ProvidertaxSettingsComponent implements OnInit {
     active_user;
     showError: any = [];
     gstnumber;
+    gstname;
     taxDetails: any = [];
     tax_st_cap = Messages.FRM_LEVEL_TAX_SETTINGS_MSG;
     tax_percentage_cap = Messages.PAY_SET_TAX_PER_CAP;
@@ -56,8 +58,10 @@ export class ProvidertaxSettingsComponent implements OnInit {
             .subscribe(data => {
                 this.taxDetails = data;
                 if (this.taxDetails) {
+                    console.log(this.taxDetails);
                     this.taxpercentage = this.taxDetails.taxPercentage;
                     this.gstnumber = this.taxDetails.gstNumber || '';
+                    this.gstname=this.taxDetails.nameAsInGst;
                     if (this.taxDetails.taxPercentage && this.taxDetails.gstNumber) {
                         this.allFieldsExists = true;
                     }
@@ -103,7 +107,8 @@ export class ProvidertaxSettingsComponent implements OnInit {
         if (!this.errorExist) {
             const postData = {
                 'taxPercentage': this.taxpercentage,
-                'gstNumber': this.gstnumber || ''
+                'gstNumber': this.gstnumber || '',
+                'nameAsInGst': this.gstname
             };
             this.provider_services.setTaxpercentage(postData)
                 .subscribe(() => {

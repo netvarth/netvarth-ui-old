@@ -161,7 +161,7 @@
                       <div class="note_view">
                         <!-- <p style="float: left;">{{note.firstName}}Aparna</p> -->
                         <span class="status-label note_name" *ngIf="note.firstName != '' || note.lastName != ''">{{note.firstName}} {{note.lastName}}</span>
-                        <span class="status-label note_date">{{note.timeStamp | date: newDateFormat}}</span>
+                        <span *ngIf="note.noteTime" class="status-label note_date">, {{note.noteTime}}</span> <span class="status-label note_date">{{note.timeStamp | date: newDateFormat}}</span> 
                         <div class="note" [innerHTML]="note.note | nl2br">
                         </div>
                       <!-- <p style="float: right;">{{note.timeStamp | date: newDateFormat}}</p> -->

@@ -197,11 +197,14 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
     this.subs.sink = this.consumer_services.getConsumerCommunications(this.providerId)
       .subscribe(
         data => {
+          console.log(" Communication History : ",data);
           const history: any = data;
           this.communication_history = [];
           for (const his of history) {
             if (his.waitlistId === this.ynwUuid) {
               this.communication_history.push(his);
+              console.log(" Communication History Message : ",this);
+
             }
           }
           this.sortMessages();
@@ -211,6 +214,24 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
         }
       );
   }
+  // getCommunicationHistory() {
+  //   this.subs.sink = this.consumer_services.getConsumerCommunications(this.providerId)
+  //     .subscribe(
+  //       data => {
+  //         const history: any = data;
+  //         this.communication_history = [];
+  //         for (const his of history) {
+  //           if (his.waitlistId === this.ynwUuid) {
+  //             this.communication_history.push(his);
+  //           }
+  //         }
+  //         this.sortMessages();
+  //       },
+  //       error => {
+  //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //       }
+  //     );
+  // }
   sortMessages() {
     this.communication_history.sort(function (message1, message2) {
       if (message1.timeStamp < message2.timeStamp) {

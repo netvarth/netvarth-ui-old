@@ -1114,4 +1114,15 @@ export class SharedServices {
     const url = 'consumer/appointment/schedule/' + serviceid + '/pricelist';
     return this.servicemeta.httpGet(url);
   }
+  getNewsFeeds(url) {
+    return this.servicemeta.httpGet(url);
+  }
+  updateRazorPay(data,id){
+    const url = 'provider/payment/razorpay/update?account='+id;
+    return this.servicemeta.httpPost(url,data);
+  }
+  updatePaytmPay(data,id) {
+    const url = 'provider/payment/paytm/update?account='+id;
+    return this.servicemeta.httpPost(url,data);
+  }
 }

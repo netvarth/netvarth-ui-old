@@ -58,7 +58,8 @@ export class DonationsComponent implements OnInit {
   };
   selected = 0;
   showCustomers = false;
-
+  selectedGroup;
+  groupCustomers;
   donationsSelected: any = [];
   donations: any = [];
   selectedIndex: any = [];
@@ -274,6 +275,7 @@ export class DonationsComponent implements OnInit {
   handle_pageclick(pg) {
     this.pagination.startpageval = pg;
     this.filter.page = pg;
+    this.selectAll = true;
     this.doSearch();
   }
   doSearch() {
@@ -378,7 +380,35 @@ export class DonationsComponent implements OnInit {
       this.selectedDonations = [];
     }
   }
-
+  showText(customer) {
+    if (this.selectedGroup !== 'all' && this.showCustomers) {
+      const fitlerArray = this.groupCustomers.filter(custom => custom.id === customer.id);
+      if (fitlerArray[0]) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+  selectAllcustomer(event) {
+    if (event.target.checked) {
+      for (let i = 0; i < this.donations.length; i++) {
+        const customer = this.selectedDonations.filter(customer => customer.id === this.donations[i].id);
+        if (customer.length === 0 && !this.showText(this.donations[i])) {
+          this.selectedDonations.push(this.donations[i]);
+        }
+      }
+    } else {
+      for (let i = 0; i < this.donations.length; i++) {
+        const customer = this.selectedDonations.filter(customer => customer.id === this.donations[i].id);
+        if (customer.length > 0) {
+          this.selectedDonations = this.selectedDonations.filter(cust => cust.id !== customer[0].id);
+        }
+      }
+    }
+  }
   selectcustomers(customer) {
   //  this.hide_msgicon = false;
     const custArr = this.selectedDonations.filter(cust => cust.id === customer.id);

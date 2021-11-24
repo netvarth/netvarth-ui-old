@@ -123,6 +123,7 @@ export class AuthService {
             const isProvider = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
             console.log("isProvider:" + isProvider);
             const customId = this.lStorageService.getitemfromLocalStorage('customId');
+            const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
             if (isProvider === 'true') {
                 this.providerLogout().then(
                     () => {
@@ -134,7 +135,11 @@ export class AuthService {
                 this.consumerLogout().then(
                     () => {
                         if (customId) {
-                            this.router.navigate([customId]);
+                            if(reqFrom === 'cuA') {
+                                this.router.navigate(['customapp',customId]);
+                            } else{
+                                this.router.navigate([customId]);
+                            }                            
                         } else {
                             this.router.navigate(['/']);
                         }

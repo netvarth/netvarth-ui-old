@@ -126,7 +126,7 @@
 										<input class="form-control1 new_ht_calc" type="text" #itemservicesearch
 											aria-label="Number" [formControl]="itemServiceSearch"
 											(keyup)="itemServiceManualAdd('',itemServiceSearch)"
-											[matAutocomplete]="auto" placeholder="Choose Service/Item">
+											[matAutocomplete]="auto" placeholder="{{source !== 'order'?'Choose Service/Item':'Item'}}">
 
 										<mat-autocomplete #auto="matAutocomplete">
 											<ng-container
@@ -210,7 +210,7 @@
 									<button mat-menu-item
 										*ngIf="(source == 'order' && items.length > 0) || source != 'order'"
 										(click)="showAddItem()">
-										<span>Add Service/Item</span>
+										<span><span *ngIf="source!=='order'">Add Service/</span>Item</span>
 									</button>
 									<button mat-menu-item data-toggle="modal" data-target="#exampleModalDeliveryCharge"
 										(click)="showDeliveryCharge()" *ngIf="source==='order' && checkin.homeDelivery">
@@ -248,7 +248,7 @@
 								<table class="table">
 									<thead>
 										<tr>
-											<th class="pl-0 font-weight-bold text-muted  text-uppercase">Service/Item
+											<th class="pl-0 font-weight-bold text-muted  text-uppercase">{{source !== 'order'?'Service/Item':'Item'}}
 											</th>
 											<th class="text-right font-weight-bold text-muted text-uppercase">Qty</th>
 											<th class="text-right font-weight-bold text-muted text-uppercase">Rate</th>
