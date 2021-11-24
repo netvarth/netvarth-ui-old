@@ -1302,7 +1302,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     // console.log('order');
     // event.stopPropagation();
     if (this.customId) {
-      this.gotoDetails();
+      this.router.navigate([this.customId]);
     } else {
       this.router.navigate(['searchdetail', provider.uniqueId]);
     }
@@ -2501,7 +2501,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
   }
   gotoDetails() {
-    this.router.navigate([this.customId]);
+    const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
+    if (this.customId && reqFrom){
+      this.router.navigate(['customapp', this.customId]);
+    } else {
+      this.router.navigate([this.customId]);
+    }
+    
   }
   closeModal(){
     this.popUp.nativeElement.style.display = 'none';

@@ -103,6 +103,11 @@
         </section>
         <div class="gapsection"></div>
         <div class="container-fluid doctor-section card" id="section3">
+            <div class="form-group inline">
+                <label class="col-form-label">Show Section</label>
+                <mat-slide-toggle class="example-margin" ngDefaultControl [ngModelOptions]="{standalone: true}" [(ngModel)]="showSection3">
+                </mat-slide-toggle>
+            </div>
             <div class="text-center">
                 <ckeditor [editor]="Editor" [config]="editorConfig" formControlName="section3Title"></ckeditor>
             </div>
@@ -136,51 +141,23 @@
         </div>
         <div class="gapsection"></div>
         <div class="container-fluid card" id="section4">
+            <div class="form-group inline">
+                <label class="col-form-label">Show Section</label>
+                <mat-slide-toggle class="example-margin" ngDefaultControl [ngModelOptions]="{standalone: true}"  [(ngModel)]="showSection4">
+                </mat-slide-toggle>
+            </div>
             <div class="text-center">
                 <ckeditor [editor]="Editor" [config]="editorConfig" formControlName="section4Title"></ckeditor>
             </div>
-
             <div class="text-center">
                 <div class="text-center">
                     <ckeditor [editor]="Editor" [config]="editorConfig" formControlName="section4Description">
                     </ckeditor>
                 </div>
+            </div>
+            <div class="filters">
 
             </div>
-            <!-- <div class="text-center">
-                <h1 style="text-align: center">{{data[0].OurServices}}</h1>
-            </div>
-            <div class="row servicecontent">
-                <ckeditor  [editor]="Editor" [config]="editorConfig"  style="width:60%;"
-                    formControlName="servicecontent" style="width: 100%;"></ckeditor>
-                <div  [innerHtml]="templateForm.value.servicecontent"></div>
-            </div> -->
-            <!-- <div class="row   container">
-                <div class="col-lg-7 col-sm-12">
-                </div>
-                <div class="col-lg-5 col-sm-12">
-                </div>
-            </div> -->
-            <!-- <div class="allcardsinservice text-center">
-                <div class="card servicecard" *ngFor="let image of data[0].cardimages">
-                    <div class="row mainmatter">
-                        <div class="col-lg-11 col-sm-2 col-11" style="text-align: right;">
-                            <img src="{{data[0].horizontelarrow}}">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="imageservicecard col-lg-4 col-md-4 col-sm-4 col-4">
-                            <img class="rounded-circle imgstylingservice" src="{{image}}">
-                        </div>
-                        <div class="contentservice  col-lg-6 col-sm-12 col-12">
-                            <h3>{{data[0].Consultation}}</h3>
-                            <p>{{data[0].NextAvalibleTime}}</p>
-                            <h6>{{data[0].time}}</h6>
-                        </div>
-                    </div>
-                    <button href="#" class="btn btn-primary">{{data[0].Gosomewherebutton}}</button>
-                </div>
-            </div> -->
         </div>
         <div class="gapsection"></div>
         <div class="container-fluid card" id="recentNews">
@@ -188,81 +165,13 @@
             <div class="text-center">
                 <ckeditor [editor]="Editor" [config]="editorConfig" formControlName="section5Title"></ckeditor>
             </div>
-
             <div class="text-center">
                 <ckeditor [editor]="Editor" [config]="editorConfig" formControlName="section5Description"></ckeditor>
             </div>
-
-            <!-- <div class="feedsContainer mgn-up-50 mgn-bt-50" >
-                <owl-carousel [options]="customOptions" [items]="templateForm.get('newsFeeds')['controls']">
-                    <div class="item" formArrayName="newsFeeds"
-                        *ngFor="let newsFeed of templateForm.get('newsFeeds')['controls']; let i=index">
-                        <div class="recentcards col-md-12" [formGroupName]="i">
-                            <div class="">
-                                <img class="imagesectioninrecentnews" src="{{templateForm.value.newsFeeds[i].image}}" alt="Card image cap">
-                                <div  class="gallery-button btn btn-primary">
-                                    <input type="file" id="10+{{i}}" (change)="selectFile($event,'newsfeed',i)"><label for="10+{{i}}"
-                                        style="cursor: pointer;">Upload</label>
-                                </div>
-                            </div>
-                            <div class="card-body">
-    
-                                <div >
-                                    <ckeditor [editor]="Editor" [config]="editorConfig" formControlName="title"></ckeditor>
-                                </div>
-    
-        
-                                <div >
-                                    <ckeditor [editor]="Editor" [config]="editorConfig" formControlName="description"></ckeditor>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </owl-carousel>
-            </div> -->
             <div class="clearfix"></div>
-            <!-- <div formArrayName="newsFeeds">
-                <div class="fourcards" *ngFor="let newsFeed of section1Images; let i=index">
-                    <div class=" recentcards"> -->
-            <!-- <div class="gallery-item">
-                            <img class="imagesectioninrecentnews" src="{{newsFeed.image}}" alt="Card image cap">
-                            <div  class="gallery-button btn btn-primary">
-                                <input type="file" [id]="i" (change)="editNewsFeed($event,i)"><label for="{{i}}"
-                                    style="cursor: pointer;">Upload<img
-                                        src="../../../assets/templateimages/edit_black_24dp.svg"></label>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <ckeditor style="color: black;"  [editor]="Editor" [config]="editorConfig"
-                                 formControlName="newsFeed.title"></ckeditor>
-                            <div >
-                                <h3 [innerHtml]="newsFeed.title"></h3>
-                            </div>
-                            <ckeditor style="color: black;"  [editor]="Editor" [config]="editorConfig"
-                                 formControlName="description"></ckeditor>
-                            <div >
-                                <div [innerHtml]="newsFeed.description"></div>
-                            </div> -->
-            <!-- <br>
-                        <br>
-                        <div class="row">
-                            <div class="col langsection">
-                                <img
-                                    src="../../../assets/templateimages//language_black_24dp.svg">{{data[0].languagematter}}
-                            </div>
-                            <div class="col langsection">
-                                <img
-                                    src="../../assets/templateimages/access_time_black_24dp.svg">{{data[0].timeiconcontent}}
-                            </div>
-                        </div> -->
-            <!-- </div> -->
-            <!-- </div>
-                </div>
-            </div> -->
             <div class="text-center">
                 <button class="btn btn-primary" (click)="addNewsFeed()">Add More News</button>
             </div>
-            <!-- {{templateForm.value | json}} -->
         </div>
     </form>
 </section>

@@ -1,5 +1,27 @@
 <section class="container">
-    <section id="section1">
+    <section id="section1 " class="bus-page">
+        <div class="row card no-padding">
+            <div class="col-12 " style="color:#545871">
+                <div class="pad-bt-10 bus-page-header">
+                    <div class="panel panel-default">
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                            <a class="pull-left back-btn mgn-up-5" *ngIf="userId" (click)="goBack()"><i
+                                    class="fa fa-arrow-left"></i></a>
+                            &nbsp;
+                        </div>
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
+                            <app-header *ngIf="accountIdExists && sharedFunctionobj.checkLogin()" 
+                                [includedfrom]="'pdetails'" [accountId]="accountId" [customId]="customId" 
+                                [showHeaderAction]="true"></app-header>
+                            <div class="view-booking" *ngIf="accountIdExists && !sharedFunctionobj.checkLogin()">
+                                <button class="pull-right btn btn-primary dashboard-btn" (click)="dashboardClicked()">My
+                                    Bookings</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row card no-padding">
             <div class="col-12" style="color:#545871">
                 <div class="card-body">
@@ -32,7 +54,7 @@
                     <div [innerHtml]="templateJson.section1Description"></div>
                 </div>
             </div>
-            <div class="images col-lg-6 col-sm-6 col-xs-12 col-md-6 no-padding">
+            <div class="images col-lg-6 col-sm-6 col-xs-12 col-md-6 mgn-up-10">
                 <div class="gallery-item col-lg-6 col-sm-6 col-sm-6 col-xs-6 no-padding"
                     *ngFor="let image of templateJson.section1Images; let i=index">
                     <img class="gallery-img" src="{{image}}">
@@ -42,12 +64,12 @@
     </section>
     <section id="section2" class="mgn-up-10">
         <div class="row card">
-            <div class="doctorcardimage col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding">
+            <div class="doctorcardimage col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="gallery-item">
                     <img class="imagesectionabove" src="{{templateJson.section2Image}}">
                 </div>
             </div>
-            <div class="doctorcardsectioncard col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="doctorcardsectioncard col-lg-6 col-md-6 col-sm-6 col-xs-12 mgn-up-10">
                 <div class="card-body">
                     <div [innerHtml]="templateJson.section2Title | safeHtml"></div>
                     <div [innerHtml]="templateJson.section2Description | safeHtml"></div>
@@ -57,15 +79,17 @@
             </div>
         </div>
     </section>
-    <section id="section3" class="mgn-up-10">
+    <section id="section3" class="mgn-up-10" *ngIf="templateJson.showSection3">
         <div class="row card">
-            <div [innerHTML]="templateJson.section3Title | safeHtml"></div>
-            <div [innerHTML]="templateJson.section3Description | safeHtml"></div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div [innerHTML]="templateJson.section3Title | safeHtml"></div>
+                <div [innerHTML]="templateJson.section3Description | safeHtml"></div>
+            </div>
             <div class="dynamic mgn-up-20">
-                <div class="col-md-12">
-                    <div class="col-md-4 mgn-bt-20 no-padding">
+                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20 mgn-bt-20 brd-bt">
+                    <div class="col-md-4 col-sm-6 mgn-bt-20" *ngIf="locationjson && locationjson.length>1">
                         <!-- <mat-form-field> -->
-                        <mat-label>Location</mat-label>
+                        <!-- <mat-label>Location</mat-label> -->
                         <mat-select placeholder="Choose Location" [(ngModel)]="selectedLocation"
                             (selectionChange)="changeLocation(selectedLocation)">
                             <mat-option *ngFor="let location of locationjson" [value]="location">
@@ -73,11 +97,13 @@
                             </mat-option>
                         </mat-select>
                     </div>
-                    <div class="col-md-4 mgn-bt-20 no-padding">
+                    <div class="col-md-4 col-sm-6 mgn-bt-20"
+                        *ngIf="showDepartments && templateJson['branchFilterService']">
                         <!-- <mat-form-field> -->
-                        <mat-label>Branch</mat-label>
+                        <!-- <mat-label>Branch</mat-label> -->
                         <mat-select placeholder="Choose Branch" [(ngModel)]="selectedServicesBranch"
                             (selectionChange)="changeBranch(selectedServicesBranch, 'services')">
+                            <mat-option value="">All</mat-option>
                             <mat-option *ngFor="let branch of branches" [value]="branch">
                                 {{ branch.departmentName | capitalizeFirst }}
                             </mat-option>
@@ -110,7 +136,9 @@
                     </div>
                 </div> -->
 
-
+                <div class="col-md-12" *ngIf="filteredServices && filteredServices.length===0">
+                    No services found
+                </div>
                 <div class="bus-item-N" *ngFor="let sp of filteredServices">
                     <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp"
                         [terminology]='terminologiesjson' [loc]="selectedLocation"
@@ -140,12 +168,12 @@
         </div> -->
         </div>
     </section>
-    <section id="section4" class="mgn-up-10">
+    <section id="section4" class="mgn-up-10" *ngIf="templateJson.showSection4">
         <div class="row card">
             <div [innerHTML]="templateJson.section4Title | safeHtml"></div>
             <div [innerHTML]="templateJson.section4Description | safeHtml"></div>
-            <div class="dynamic mgn-up-20">
-                <div class="col-md-12">
+            <div class="dynamic mgn-up-20" *ngIf="showUserSection">
+                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20 mgn-bt-20 brd-bt">
                     <!-- <div class="col-md-4 mgn-bt-20">
                         <mat-label>Location</mat-label>
                         <mat-select placeholder="Choose Location" [(ngModel)]="selectedLocation"
@@ -155,21 +183,25 @@
                             </mat-option>
                         </mat-select>
                     </div> -->
-                    <div class="col-md-4 mgn-bt-20 no-padding">
-                        <mat-label>Branch</mat-label>
+                    <div class="col-md-4 col-sm-6 mgn-bt-20"
+                        *ngIf="showDepartments && templateJson['branchFilterUser']">
+                        <!-- <mat-label>Branch</mat-label> -->
                         <mat-select placeholder="Choose Branch" [(ngModel)]="selectedUserBranch"
                             (selectionChange)="changeBranch(selectedUserBranch, 'user')">
+                            <mat-option value="">All</mat-option>
                             <mat-option *ngFor="let branch of branches" [value]="branch">
                                 {{ branch.departmentName | capitalizeFirst }}
                             </mat-option>
                         </mat-select>
                     </div>
-                    <div class="col-md-4 mgn-bt-20 no-padding">
+                    <div class="col-md-4 col-sm-6 mgn-bt-20" *ngIf="templateJson['locationFilterUser']">
                         <div class="form-group">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="User Location" [(ngModel)]="userLocation">
+                                <input type="text" class="form-control" placeholder="User Location"
+                                    [(ngModel)]="userLocation">
                                 <div class="input-group-append">
-                                  <button class="btn btn-success" type="submit" (click)="filterUserByLocName(userLocation)">Go</button>
+                                    <button class="btn btn-success" type="submit"
+                                        (click)="filterUserByLocName(userLocation)">Go</button>
                                 </div>
                             </div>
                         </div>
@@ -183,30 +215,49 @@
                         (actionPerformed)="cardClicked($event)">
                     </app-card>
                 </div>
+                <div class="col-md-12" *ngIf="filteredUsers && filteredUsers.length===0">
+                    No users found
+                </div>
             </div>
         </div>
     </section>
-    <section id="recentNews" class="mgn-up-10">
+    <section id="recentNews" class="mgn-up-10" *ngIf="templateJson['showRecentNews']">
         <div class="row card">
             <div class="text-center" [innerHTML]="templateJson.section5Title | safeHtml"></div>
             <div [innerHTML]="templateJson.section5Description | safeHtml"></div>
-            <div class="feedsContainer mgn-up-50 mgn-bt-50">
-                <owl-carousel [options]="customOptions">
-                    <div class="item" *ngFor="let newsFeeds of templateJson['newsFeeds']">
-                        <div class="recentcards card">
-                            <div>
-                                <img class="imagesectioninrecentnews" src="{{newsFeeds.image}}" alt="Card image cap">
+
+            <div class="cauroselsection mgn-bt-50">
+                <owl-carousel-o [options]="customOptions">
+                    <ng-template carouselSlide *ngFor="let newsFeed of newsFeeds">
+                        <div class="recentcards card item">
+                            <div class="">
+                                <img class="imagesectioninrecentnews gallery-img" src="{{newsFeed.image}}"
+                                    alt="Card image cap">
+                                <div class="gallery-button">
+                                    <button class="updates"
+                                        style="background-color: white;padding: 2%;"><b>{{newsFeed.group}}</b></button>
+                                </div>
                             </div>
                             <div class="card-body">
-                                <div [innerHtml]="newsFeeds.title | safeHtml">
+                                <div class="newsDetails">
+                                    <h6 [innerHtml]="newsFeed.title | safeHtml"></h6>
+                                    <p [innerHtml]="newsFeed.description | safeHtml" class="recentdesc"></p>
                                 </div>
-                                <div [innerHtml]="newsFeeds.description | safeHtml">
+                                <div>
+                                    <a (click)="openNews(newsFeed.link)" *ngIf="newsFeed.linkType==='video'"
+                                        class="pull-right btn btn-primary" style="border-radius: 5px;"><b>Watch
+                                            video</b></a>
+                                    <a (click)="openNews(newsFeed.link)" *ngIf="newsFeed.linkType!=='video'"
+                                        class="pull-right btn btn-primary" style="border-radius: 5px;"><b>View</b></a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </owl-carousel>
+                    </ng-template>
+
+                </owl-carousel-o>
             </div>
+
+
         </div>
     </section>
 </section>

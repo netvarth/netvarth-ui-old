@@ -1,7 +1,7 @@
 import { projectConstants } from '../../app.component';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
 import { MatDialog } from '@angular/material/dialog';
-import { AuthService } from '../../shared/services/auth-service';
+// import { AuthService } from '../../shared/services/auth-service';
 import { Component, OnInit, HostListener, ViewEncapsulation, Input } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
@@ -161,6 +161,8 @@ export class CustTemplate1Component implements OnInit {
   filteredUsers;
   userLocation;
 
+  showUserSection = false;
+
   selectedUser;
   branches: any = [];
   catlog: any;
@@ -305,6 +307,7 @@ export class CustTemplate1Component implements OnInit {
   businessName;
   businessId;
   accountId: any;
+  req_from = 'cuA';
   terms = false;
   privacy = false;
   pwaIOShint: boolean;
@@ -313,30 +316,9 @@ export class CustTemplate1Component implements OnInit {
   onlyVirtualItems = false;
   providercustomId: any;
   provideraccEncUid: any;
-  customOptions = {
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: true,
-    dots: false,
-    navSpeed: 700,
-    navText: ['', ''],
-    responsive: {
-      0: {
-        items: 1
-      },
-      400: {
-        items: 2
-      },
-      740: {
-        items: 3
-      },
-      940: {
-        items: 3
-      }
-    },
-    nav: true
-  };
+  customOptions;
   users: any;
+  newsFeeds: any = [];
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -354,8 +336,8 @@ export class CustTemplate1Component implements OnInit {
     private snackbarService: SnackbarService,
     private domainConfigService: DomainConfigGenerator,
     private dateTimeProcessor: DateTimeProcessor,
-    private s3Processor: S3UrlProcessor,
-    private authService: AuthService
+    private s3Processor: S3UrlProcessor
+    // private authService: AuthService
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -428,7 +410,10 @@ export class CustTemplate1Component implements OnInit {
     this.activaterouterobj.queryParams.subscribe(qparams => {
       if (qparams.src) {
         this.pSource = qparams.src;
-
+      }
+      if (qparams.at) {
+        this.lStorageService.setitemonLocalStorage('authToken', qparams.at);
+        console.log(qparams.at);
       }
       this.businessjson = [];
       this.servicesjson = [];
@@ -470,15 +455,13 @@ export class CustTemplate1Component implements OnInit {
               this.getAccountIdFromEncId(this.accountEncId).then(
                 (id: any) => {
                   _this.provider_id = id;
+                  _this.setNewsFeeds(this.provider_id);                  
                   _this.customId = _this.accountEncId;
                   _this.accEncUid = _this.accountEncId;
                   _this.accountIdExists = true;
                   _this.getproviderBprofileDetails();
                   _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
                     (uiconfig: any) => {
-                      if (uiconfig['pixelId']) {
-                        this.addScript('1424568804585712');
-                      }
                       if (uiconfig['terms']) {
                         this.terms = true;
                       }
@@ -813,6 +796,7 @@ export class CustTemplate1Component implements OnInit {
     this.customId = custID;
     this.lStorageService.setitemonLocalStorage('customId', custID);
     this.lStorageService.setitemonLocalStorage('accountId', res['id']);
+    this.lStorageService.setitemonLocalStorage('reqFrom', this.req_from);
     this.accEncUid = res['accEncUid'];
     if (!this.userId) {
       this.api_loading = false;
@@ -1557,35 +1541,44 @@ export class CustTemplate1Component implements OnInit {
 
 
   goThroughLogin() {
+    const _this = this;
+    console.log("Entered to goThroughLogin Method");
     return new Promise((resolve) => {
-      const qrpw = this.lStorageService.getitemfromLocalStorage('qrp');
-      let qrusr = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
-      qrusr = JSON.parse(qrusr);
-      if (qrusr && qrpw) {
-        const data = {
-          'countryCode': qrusr.countryCode,
-          'loginId': qrusr.loginId,
-          'password': qrpw,
-          'mUniqueId': null
-        };
-        this.shared_services.ConsumerLogin(data).subscribe(
-          (loginInfo: any) => {
-            this.authService.setLoginData(loginInfo, data, 'consumer');
-            this.lStorageService.setitemonLocalStorage('qrp', data.password);
-            resolve(true);
-          },
-          (error) => {
-            if (error.status === 401 && error.error === 'Session already exists.') {
-              resolve(true);
-            } else {
-              resolve(false);
-            }
-          }
-        );
+      if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')){
+        resolve(true);
       } else {
         resolve(false);
       }
     });
+    // return new Promise((resolve) => {
+    //   const qrpw = this.lStorageService.getitemfromLocalStorage('qrp');
+    //   let qrusr = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+    //   qrusr = JSON.parse(qrusr);
+    //   if (qrusr && qrpw) {
+    //     const data = {
+    //       'countryCode': qrusr.countryCode,
+    //       'loginId': qrusr.loginId,
+    //       'password': qrpw,
+    //       'mUniqueId': null
+    //     };
+    //     this.shared_services.ConsumerLogin(data).subscribe(
+    //       (loginInfo: any) => {
+    //         this.authService.setLoginData(loginInfo, data, 'consumer');
+    //         this.lStorageService.setitemonLocalStorage('qrp', data.password);
+    //         resolve(true);
+    //       },
+    //       (error) => {
+    //         if (error.status === 401 && error.error === 'Session already exists.') {
+    //           resolve(true);
+    //         } else {
+    //           resolve(false);
+    //         }
+    //       }
+    //     );
+    //   } else {
+    //     resolve(false);
+    //   }
+    // });
   }
   redirectToHistory() {
     const _this = this;
@@ -2529,6 +2522,7 @@ export class CustTemplate1Component implements OnInit {
         this.serviceCount++;
       }
     }
+    this.filteredServices = this.services;
     this.users = [];    
     this.branches = [];
     console.log(this.deptUsers);
@@ -2559,9 +2553,11 @@ export class CustTemplate1Component implements OnInit {
           // deptItem['departmentItems'].push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
           this.users.push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
           this.userCount++;
-      }    
-      this.filteredServices = this.services;
+      }
       this.filteredUsers = this.users;
+    }
+    if (this.users.length > 0) {
+      this.showUserSection = true;
     }
   }
   getCatalogs(locationId) {
@@ -2918,20 +2914,24 @@ export class CustTemplate1Component implements OnInit {
     };
     this.routerobj.navigate(['consumer'], navigationExtras);
   }
-
-  addScript(pixelId) {
-    let script_tag = document.createElement("script");
-    script_tag.type = "text/javascript";
-    script_tag.text = "!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq.disablePushState = true;fbq('init', " + pixelId + ");fbq('track', 'PageView');";
-    document.getElementById('busPageId').appendChild(script_tag);
-  }
   changeBranch (selectedBranch, type) {
-    if (type === 'services') {
-      this.selectedServicesBranch = selectedBranch;
-      this.filteredServices = this.services.filter(service=> service.item.department === selectedBranch.departmentId);
-    } else if (type === 'user') {
-      this.selectedUserBranch = selectedBranch;
-      this.filteredUsers = this.users.filter(user => user.item.deptId === selectedBranch.departmentId);
+    this.userLocation = '';
+    if (selectedBranch === '') {
+      if (type === 'services') {
+        this.selectedServicesBranch = '';
+        this.filteredServices = this.services;
+      } else if (type === 'user') {
+        this.selectedUserBranch = '';
+        this.filteredUsers = this.users;
+      }
+    } else {
+      if (type === 'services') {
+        this.selectedServicesBranch = selectedBranch;
+        this.filteredServices = this.services.filter(service=> service.item.department === selectedBranch.departmentId);
+      } else if (type === 'user') {
+        this.selectedUserBranch = selectedBranch;
+        this.filteredUsers = this.users.filter(user => user.item.deptId === selectedBranch.departmentId);
+      }
     }
   }
   filterUserByLocName(locationName) {
@@ -2947,5 +2947,45 @@ export class CustTemplate1Component implements OnInit {
     console.log(filteredUsers);
     this.filteredUsers = filteredUsers;
     
+  }
+  openNews(link) {
+    window.open(link);
+  }
+  setNewsFeeds(uniqueid): void {
+    const _this = this;
+    const url = projectConstantsLocal.UIS3PATH + uniqueid + "/news_feed.json?"+ new Date();
+    _this.shared_services.getNewsFeeds(url).subscribe(
+      (newsfeeds)=> {
+        _this.newsFeeds = newsfeeds;
+        _this.customOptions= {
+          loop:true,
+          margin:10,
+          mouseDrag: true,
+          touchDrag: true,
+          pullDrag: true,
+          autoplay:true,
+          navSpeed: 200,
+          dots:true,
+          center: true,
+          // nav:true,
+          // navText: [ '<i class="fa fa-caret-right"></i>', '<i class="fa fa-caret-left"></i>"' ],
+          responsiveClass:true,
+          responsive:{
+              0:{
+                items:2
+              },
+              400:{
+                items:2
+              },
+              740:{
+                items:3
+              },
+              940:{
+                items:3
+              }
+          }
+        };
+      }
+    )
   }
 }

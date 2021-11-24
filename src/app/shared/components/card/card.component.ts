@@ -59,12 +59,12 @@ export class CardComponent implements OnInit, AfterViewChecked {
     }
 
     ngOnInit() {
-        console.log(this.item)
-        console.log(this.type)
-        console.log(this.teams);
+        // console.log(this.item)
+        // console.log(this.type)
+        // console.log(this.teams);
         if (this.type == 'appointment-dashboard') {
             this.appointment = this.item;
-            console.log(this.appointment)
+            // console.log(this.appointment)
         }
         if (this.type) {
             this.item.type = this.type;

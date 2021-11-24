@@ -90,15 +90,18 @@ export class Template1Component implements OnInit {
     'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware'];
   public data: any = []
   resultJson: any;
-  loading = true;;
+  loading = true;
+  showSection3=true;
+  showSection4=true;
   constructor(private fb: FormBuilder,
     private providerServices: ProviderServices,
     private templateService: CustomTemplatesService) {
-
   }
   setTemplateValues(template) {
     console.log('setTemplateValues');
     console.log(template);
+    // this.showSection3 = template.showSection3?true:false;
+    // this.showSection4 = template.showSection4?true:false;
     this.templateForm.patchValue({
       // headerImage: template.headerImage,
       headerTitle: template.headerTitle,
@@ -109,7 +112,7 @@ export class Template1Component implements OnInit {
       section2Title: template.section2Title,
       section2Description: template.section2Description,
       // section2Image: template.section2Image,
-      section3Title: template.section3Title,
+      section3Title: template.section3Title, 
       section3Description: template.section3Description,
       section4Title: template.section4Title,
       section4Description: template.section4Description,
@@ -129,7 +132,7 @@ export class Template1Component implements OnInit {
       section2Title: new FormControl('Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
       section2Description: new FormControl('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at, luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Idac bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet.'),
       // section2Image: new FormControl('../../../assets/templateimages/bg.jpg'),
-      section3Title: new FormControl('Our Services'),
+      section3Title: false,
       section3Description: new FormControl('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at, luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Idac bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet.'),
       section4Title: new FormControl('Our Doctors'),
       section4Description: new FormControl('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at, luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Idac bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet.'),
@@ -209,6 +212,8 @@ export class Template1Component implements OnInit {
     this.templateJson['section4Description'] = template.section4Description;
     this.templateJson['section5Title'] = template.section5Title;
     this.templateJson['section5Description'] = template.section5Description;
+    this.templateJson['showSection3'] = this.showSection3;
+    this.templateJson['showSection4'] = this.showSection4;
   }
 
 

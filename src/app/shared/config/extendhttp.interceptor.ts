@@ -292,6 +292,13 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     } else {
       req.headers.delete('tab');
     }
+    if(this.lStorageService.getitemfromLocalStorage('pre-header') && this.lStorageService.getitemfromLocalStorage('authToken')) {
+      let authToken = this.lStorageService.getitemfromLocalStorage('pre-header') + "-" + this.lStorageService.getitemfromLocalStorage('authToken');
+      req = req.clone({ headers: req.headers.append('Authorization', authToken), withCredentials: true });
+    } else if(this.lStorageService.getitemfromLocalStorage('authToken')) {
+      let authToken = this.lStorageService.getitemfromLocalStorage('authToken');
+      req = req.clone({ headers: req.headers.append('Authorization', authToken), withCredentials: true });
+    }
     req = req.clone({ url: url, responseType: 'json' });
  
     if(this.loggedUrls.length > 10) {
