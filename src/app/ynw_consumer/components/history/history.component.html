@@ -12,7 +12,7 @@
                         <div class="card title-gb">
                             <h5 class="mgn-up-10">
                                 <!-- Check-ins/Tokens -->
-                                History <a class="pull-left mgn-rt-20 back-btn" (click)="goback()"><i
+                                {{'History' | translate}} <a class="pull-left mgn-rt-20 back-btn" (click)="goback()"><i
                                         class="fa fa-arrow-left"></i></a></h5>
                         </div>
                         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
@@ -22,12 +22,13 @@
                                 <table class="table" *ngIf="entire_history && entire_history.length > 0">
                                     <thead>
                                         <tr>
-                                            <th class="th3">{{date_cap}} & Time</th>
+                                            <th class="th3">{{date_cap}} & {{'Time' | translate}}</th>
                                             <th class="th1">{{service_provider_cap}}</th>
                                             <th *ngIf="!showOrderHist" class="th2">{{location_cap}}</th>
-                                            <th> {{showOrderHist ? 'Order':'Service'}} for</th>
+                                            <th *ngIf="showOrderHist"> {{ 'Order for' | translate}}</th>
+                                            <th *ngIf="!showOrderHist">{{'Service for' | translate}} </th>
                                             <th *ngIf="!showOrderHist" class="th6">{{service_cap}}</th>
-                                            <th *ngIf="showOrderHist" class="th6">No of items</th>
+                                            <th *ngIf="showOrderHist" class="th6">{{'No of items' | translate}}</th>
                                             <th class="th4">{{status_cap}}</th>
                                             <th class="th5"></th>
                                         </tr>

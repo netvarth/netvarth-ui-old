@@ -7,6 +7,7 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { ConsumerServices } from '../../services/consumer-services.service';
 import { SpentListComponent } from './jaldee-cash/spent-list/spent-list.component';
 import { MatDialog } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-wallet',
@@ -22,12 +23,14 @@ export class WalletComponent implements OnInit {
     private dialog: MatDialog,
     public shared_functions: SharedFunctions,
     private snackbarService: SnackbarService,
-    private consumer_services: ConsumerServices,
+    private consumer_services: ConsumerServices,    public translate: TranslateService,
     public router: Router) { 
     
   }
 
   ngOnInit(): void {
+    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+    
     this.jaldeecashbalance();
   }
   jaldeecashbalance() {

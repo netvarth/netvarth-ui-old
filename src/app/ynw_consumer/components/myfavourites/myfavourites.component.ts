@@ -15,7 +15,7 @@ import { S3UrlProcessor } from '../../../shared/services/s3-url-processor.servic
 import { SubSink } from '../../../../../node_modules/subsink';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ManagePrivacyComponent } from '../manage-privacy/manage-privacy.component';
-
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-myfavourites',
   templateUrl: './myfavourites.component.html',
@@ -71,7 +71,7 @@ export class MyfavouritesComponent implements OnInit, OnDestroy {
     private shared_services: SharedServices,
     private consumer_services: ConsumerServices,
     private router: Router,
-    private dialog: MatDialog,
+    private dialog: MatDialog, public translate: TranslateService,
     private lStorageService: LocalStorageService,
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
@@ -80,6 +80,10 @@ export class MyfavouritesComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+    this.translate.stream('REMOVE_FAV').subscribe(v=> this.remove_fav_cap  = v);
+    this.translate.stream('MANAGE_PRIVACY').subscribe(v=> this.manage_privacy_cap  = v);
+    this.translate.stream('SEND_MSGS_CAP').subscribe(v=> this.send_msg_cap  = v);
     this.setSystemDate();
     this.getFavouriteProvider();
     // this.gets3curl();

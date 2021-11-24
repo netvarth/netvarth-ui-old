@@ -78,7 +78,7 @@
 </ng-container>
 <div class="sa-ps" *ngIf="includedfrom=='home'">
   <div class="col-md-12 no-padding" *ngIf="jsonlist">
-    <p class="text-center" >Popular Searches</p>
+    <p class="text-center" >{{'Popular Searches' | translate}}</p>
     <div class="mgn-up-10">
     <owl-carousel [options]="carouselOne"
           [carouselClasses]="['owl-carousel', 'owl-theme']">

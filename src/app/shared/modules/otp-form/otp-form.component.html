@@ -13,7 +13,7 @@
               [disabled]="buttonclicked || !otp_form.valid">{{ok_btn_cap}}</button>
           </mat-form-field>
           <app-field-error-display [displayError]="fed_service.isFieldValid(otp_form,'phone_otp')"
-            errorMsg="Please enter a valid OTP.">
+          errorMsg="{{'OTP_msg' | translate}}">
           </app-field-error-display>
         </div>
       </div>
@@ -21,9 +21,9 @@
     <mat-dialog-actions *ngIf="!consumerlogin">
       <div class="resendouter" *ngIf="resetCounterVal==0">
         <span (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}} <ng-container *ngIf="type=='change_email'">
-            Email</ng-container></span>
+          {{'Email' | translate}}</ng-container></span>
         <ul class="info-lst" *ngIf="type=='signup' && submitdata.userProfile.countryCode == '+91'">
-          <span class="black">Having a problem with your phone? &nbsp;<span (click)="setResendViaEmail()"
+          <span class="black">{{'mob_prob' | translate}} &nbsp;<span (click)="setResendViaEmail()"
               mat-button>{{resend_otp_email}}</span></span>
         </ul>
       </div>
@@ -43,7 +43,7 @@
       </div>
       <div class="mat-dialog-actions" style="padding: 0 !important;">
         <button type="submit" mat-button class="cust-logpg-submt no-margin verify-button"
-          [ngClass]="{'margin-bottom-20': type!='signup'}" [disabled]="buttonclicked || !otp_form.valid">verify</button>
+          [ngClass]="{'margin-bottom-20': type!='signup'}" [disabled]="buttonclicked || !otp_form.valid">{{'verify' | translate}}</button>
         <div class="mgn-bt-10 t-and-c" *ngIf="type=='signup'">
           <span class="exstschdlesze">By clicking Verify, you agree to the Jaldee <a rel="noopener"
               [routerLink]="['/terms']" target="_blank">{{terms_cond_cap}}</a></span>
@@ -51,8 +51,8 @@
         <div class="resendouter" style="text-align: center !important;">
           <span class="resend-main" (click)="resendOTPMobile()" mat-button *ngIf="resetCounterVal==0">
             {{resend_otp_to_cap}} <ng-container *ngIf="type=='change_email'">
-              Email</ng-container></span>
-          <span class="resend-to-email" (click)="setResendViaEmail()" mat-button>OTP via email</span>
+              {{'Email' | translate}}</ng-container></span>
+          <span class="resend-to-email" (click)="setResendViaEmail()" mat-button>{{'otp_email' | translate}}</span>
         </div>
         <div class="counter-outer resend-counter" style="font-size: 0.90em;" *ngIf="resetCounterVal>0">
           {{resend_otp_opt_active_cap}} <span class="counter">{{resetCounterVal}} {{seconds_cap}}</span>
@@ -69,20 +69,20 @@
       (ngSubmit)="email_form.valid && resendViaEmail(email_form.value)" (keyup)="doResetApiErrors()">
       <mat-dialog-content *ngIf="!consumerlogin">
         <div class="form-group">
-          <label>Enter Email</label>
+          <label>{{'Enter Email' | translate}}</label>
           <input type="email" class="form-control form-control-solid form-control-lg"
             [formControl]="email_form.controls['otp_email']" autocomplete="off" />
           <app-field-error-display [displayError]="fed_service.isFieldValid(email_form,'otp_email')"
-            errorMsg="Please enter a valid email.">
+            errorMsg="{{'email_valid' | translate}}">
           </app-field-error-display>
         </div>
       </mat-dialog-content>
       <mat-dialog-content *ngIf="consumerlogin" style="padding: 0 0 20px 0 !important;">
         <div class="form-group email-field">
-          <mat-label>Enter your e-mail id</mat-label>
+          <mat-label>{{'Enter Email msg' | translate}}</mat-label>
           <input type="email" [formControl]="email_form.controls['otp_email']" autocomplete="off" />
           <app-field-error-display [displayError]="fed_service.isFieldValid(email_form,'otp_email')"
-            errorMsg="Please enter a valid email.">
+            errorMsg="{{'email_valid' | translate}}">
           </app-field-error-display>
         </div>
       </mat-dialog-content>

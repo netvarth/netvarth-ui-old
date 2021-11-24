@@ -30,6 +30,7 @@ import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
 import { AttachmentPopupComponent } from '../../../shared/components/attachment-popup/attachment-popup.component';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-consumer-home',
   templateUrl: './consumer-home.component.html',
@@ -247,6 +248,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   showattachmentDialogRef: MatDialogRef<unknown, any>;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
+    public translate: TranslateService,
     public shared_functions: SharedFunctions,
     private dialog: MatDialog, private router: Router,
     @Inject(DOCUMENT) public document,
@@ -309,6 +311,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.translate.use(JSON.parse(localStorage.getItem('myData')))  
+
     // console.log(this.bookingStatusClasses);
     this.usr_details = this.groupService.getitemFromGroupStorage('ynw-user');
     this.login_details = this.lStorageService.getitemfromLocalStorage('ynw-credentials');

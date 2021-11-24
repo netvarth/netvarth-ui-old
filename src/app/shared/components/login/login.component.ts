@@ -15,6 +15,7 @@ import { SessionStorageService } from '../../services/session-storage.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { AuthService } from '../../services/auth-service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 
@@ -64,6 +65,7 @@ export class LoginComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     private authService: AuthService,
+    public translate: TranslateService,
     @Inject(DOCUMENT) public document
   ) {
     if (this.shared_functions.checkLogin()) {
@@ -73,6 +75,7 @@ export class LoginComponent implements OnInit {
     this.is_provider = data.is_provider || 'true';
   }
   ngOnInit() {
+    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
     this.moreParams = this.data.moreparams;
     this.createForm();
     this.api_loading = false;

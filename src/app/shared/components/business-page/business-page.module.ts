@@ -56,7 +56,7 @@ const routes: Routes = [
             },
             isolate: false,
             // extend: true
-        })
+        }),
         [RouterModule.forChild(routes)]
     ],
     declarations: [

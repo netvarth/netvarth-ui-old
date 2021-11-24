@@ -11,7 +11,9 @@
     
     
 }
-
+.row.text-xs-center {
+    min-height: 130px;
+}
 .bookingButton {
     width: 90%;
     border: 1px solid #073B4C;
@@ -22,14 +24,11 @@
     -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
     /* box-shadow: #00000029 -3pt 22pt 6pt !important; */
 }
+
 .imagesectionincards {
     width:110px !important;
     height: 110px !important;
-    /* margin-top: -10% !important; */
-    margin-left: -5% !important;
-    margin-bottom: 20% !important;
-    box-shadow: #00000029 -3pt 22pt 6pt !important;
-    border: 5px solid white !important;
+
   }
   .providerimagesection {
     box-shadow: #00000029 -3pt 22pt 6pt !important;
@@ -89,13 +88,8 @@
         justify-content: center;
     }
     .imagesectionincards {
-        width:110px !important;
-        height: 110px !important;
-        /* margin-top: -10% !important; */
-        /* margin-left: -10% !important; */
-        margin-bottom: 2% !important;
-        box-shadow: #00000029 -3pt 22pt 6pt !important;
-        border: 5px solid white !important;
+        width:100px !important;
+        height: 100px !important;
       }
 }
 @media(min-width: 700px) {
@@ -514,6 +508,20 @@ button.fxmenu1{
     color: white;
     font-weight: 600;
     font-style: Montserrat; 
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
 }
 .checkavailabilitybutton{
     width: 100%;
@@ -523,6 +531,20 @@ button.fxmenu1{
     color: white;
     font-weight: 600;
     font-style: Montserrat;
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
 }
 .booking-card.card.order.disabled .card-item-content , .booking-card.card.order.disabled .card-item-head {
     opacity: .4 !important;

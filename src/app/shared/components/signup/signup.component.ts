@@ -13,6 +13,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { GroupStorageService } from '../../services/group-storage.service';
 import { AuthService } from '../../services/auth-service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-signup',
@@ -104,11 +105,13 @@ export class SignUpComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private lStorageService: LocalStorageService,
     private groupService: GroupStorageService,
-    private authService: AuthService
+    private authService: AuthService,
+    public translate: TranslateService,
   ) {
     this.is_provider = data.is_provider || 'true';
   }
   ngOnInit() {
+    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
     if (this.countryCodes.length !== 0) {
       this.selectedCountryCode = this.countryCodes[0].value;
     }

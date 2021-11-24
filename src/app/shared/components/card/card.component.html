@@ -42,25 +42,25 @@
                     </div>
                     <div class="img-circle"
                         *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'donationService'">
-                                <img class="card-img img-responsive" src="assets/images/donation.png" alt="Donation Image" >
+                                <img class=" imagesectionincards img-responsive" src="assets/images/donation.png" alt="Donation Image" >
                     </div>
                     <div class="img-circle "
                         *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain != 'religiousPriests'"
                             >
-                                <img class="card-img img-responsive" src="assets/images/meeting_Artboard.png"
+                                <img class="img-responsive imagesectionincards" src="assets/images/meeting_Artboard.png"
                                     alt="Physical Service Image" >
                     </div>
                     <div class="img-circle "
                                 *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain == 'religiousPriests'"
                                    >
-                                                 <img class="card-img img-responsive" src="assets/images/hindu-temple-clipart.jpg"
+                                                 <img class="imagesectionincards img-responsive" src="assets/images/hindu-temple-clipart.jpg"
                                     alt="Physical Service Image">
                     </div>
                 <!-- <img class="img-circle text-xs-center" src="assets/images/donation.png">  -->
                 </div>
                 <div class="col-lg-6  col-sm-12 col-xs-12 col-md-12" style="margin-top: 2%;">
                         <h4 [ngClass]="{'no-padding':service.serviceType && service.serviceType == 'virtualService'}">{{service.name | capitalizeFirst}}</h4>
-                        <p style="padding-top:8px;" *ngIf="service.name=='Consultation'"></p>
+                        <!-- <p style="padding-top:8px;" *ngIf="service.name=='Consultation'"></p> -->
                         <p class="card-text donationAmount" *ngIf="item.type=='donation'">
                             <span class="rupee-font bold">Donate <i class="fa fa-inr"></i> {{service.minDonationAmount}}</span>
                             <span class="rupee-font bold" *ngIf="service.maxDonationAmount != service.minDonationAmount"> or more</span>
@@ -78,11 +78,11 @@
 
                 <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
 
-                <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event)"  class="btn getappointmentbutton">{{buttonCaption}}</button>
+                <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event)"  class="getappointmentbutton">{{buttonCaption}}</button>
                 </div>
                 <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
                     
-                    <button [disabled]="disablecheckavailabilitybutton" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)" class="btn checkavailabilitybutton"  >Check availability
+                    <button [disabled]="disablecheckavailabilitybutton" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)" class="checkavailabilitybutton"  >Check availability
                    </button>
                    
                 </div>
@@ -323,7 +323,7 @@
                         <div *ngIf="user.qualifications && user.qualifications.length > 1">{{user.qualifications[0]}}...</div>
                       
                         <div *ngIf="user.businessUserName"><b>{{user.businessUserName}}</b></div>
-                        <div *ngIf="!user.businessUserName" style="visibility: hidden;"><b>Nothing</b></div>
+                        <!-- <div *ngIf="!user.businessUserName" style="visibility: hidden;"><b>Nothing</b></div> -->
                         <!-- <label *ngIf="!user.businessUserName" style="padding: 2px 3px; margin:0 !important;"></label> -->
                         <!-- <p > -->
                             <ng-container *ngIf="user.apptTime && user.apptTime.caption && user.apptTime.availableSchedule.availableDate === todayDate">

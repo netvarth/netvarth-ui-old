@@ -65,20 +65,14 @@ export class CheckavailabilityComponent implements OnInit {
       
        
             this.sel_ser=this.actionObj['service']['id'];
-        // this.sel_loc=this.apptServicesjson
+
         this.sel_checkindate=this.hold_sel_checkindate=this.selectedDate=this.actionObj['service']['serviceAvailability']['nextAvailableDate'];
-        // this.subs.sink = this.shared_services.getAppointmentByConsumerUUID(this.rescheduleUserId, this.account_id).subscribe(
-        //     (appt: any) => {
-        //         this.appointment = appt;
-        // })
         this.getAvailableSlotByLocationandService(this.sel_loc,this.sel_ser,this.sel_checkindate, this.account_id,'init')
         this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc,this.sel_ser, this.account_id)
-    // console.log("locationid,serviceid,accountid",this.sel_loc,this.sel_ser,this.account_id);
-    // console.log("data.............",this.getAvailableSlotByLocationandService(this.sel_loc,this.sel_ser,this.sel_checkindate, this.account_id,'init'))
-    }
+     }
     timeSelected(slot) {
         this.apptTime = slot;
-        // this.waitlist_for[0].apptTime = this.apptTime['time'];
+     
     }
     isFuturedate = false;
     checkFutureorToday() {
@@ -99,6 +93,7 @@ export class CheckavailabilityComponent implements OnInit {
             this.selectedDate = this.sel_checkindate;
             this.checkFutureorToday();
             this.selectedApptTime = this.apptTime;
+            console.log("apptTime1",this.apptTime)
             console.log("action"+JSON.stringify(this.selectedApptTime));
             this.waitlist_for[0].apptTime = this.apptTime['time'];
             if(this.type == 'reschedule' && this.appointment.service && this.appointment.service.priceDynamic){
@@ -131,7 +126,6 @@ export class CheckavailabilityComponent implements OnInit {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
     getAvailableSlotByLocationandService(locid, servid, pdate, accountid, type?) {
-        // console.log(servid,locid,accountid,type,pdate,';;;;;;;;;;;;;;;;;servid')
         this.subs.sink = this.shared_services.getSlotsByLocationServiceandDate(locid, servid, pdate, accountid)
             .subscribe(data => {
                 this.slots = data;
@@ -147,24 +141,32 @@ export class CheckavailabilityComponent implements OnInit {
                         }
                     }
                 }
+               
                 if (this.freeSlots.length > 0) {
                     this.showApptTime = true;
                     if (this.appointment && this.appointment.appmtTime && this.sel_checkindate === this.selectedDate) {
+                        console.log("apptTime2")
                         const appttime = this.freeSlots.filter(slot => slot.time === this.appointment.appmtTime);
                         this.apptTime = appttime[0];
+                        console.log("apptTime2",this.apptTime)
                     } else {
+                        console.log("apptTime3")
                         this.apptTime = this.freeSlots[0];
+                        console.log("apptTime3",this.apptTime)
                     }
                     this.waitlist_for[0].apptTime = this.apptTime['time'];
                 } else {
                     this.showApptTime = false;
                 }
                 if (type) {
+                    console.log("apptTime4")
                     this.selectedApptTime = this.apptTime;
-                    // console.log("fdgfd"+JSON.stringify(this.selectedApptTime));
+                    console.log("apptTime4",this.apptTime)
                 }
                 this.api_loading1 = false;
+                
             });
+           
     }
     getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
@@ -268,6 +270,7 @@ calculateDate(days):any {
     const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
     const ddd = new Date(day);
     this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
+    
 }
     // account_id(sel_loc: any, sel_ser: any, sel_checkindate: any, account_id: any) {
     //     throw new Error('Method not implemented.');

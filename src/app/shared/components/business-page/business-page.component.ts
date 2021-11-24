@@ -326,7 +326,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     private domainConfigService: DomainConfigGenerator,
     private dateTimeProcessor: DateTimeProcessor,
     private s3Processor: S3UrlProcessor,
-    private authService: AuthService
+    private authService: AuthService,
     public translate: TranslateService,
     // private customAppSerice: CustomAppService
   ) {

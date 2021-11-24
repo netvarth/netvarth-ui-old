@@ -10,7 +10,7 @@ import { Location } from '@angular/common';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { SubSink } from 'subsink';
-
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
@@ -46,7 +46,8 @@ export class ChangePasswordComponent implements OnInit {
     private location: Location,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
-    private activated_route: ActivatedRoute
+    private activated_route: ActivatedRoute,
+    public translate: TranslateService,
   ) {
     this.isBusinessowner = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
@@ -63,7 +64,12 @@ export class ChangePasswordComponent implements OnInit {
     this.location.back();
   }
   ngOnInit() {
+    this.translate.use(JSON.parse(localStorage.getItem('myData')))  
 
+    this.translate.stream('FAMILY_MEMBERS').subscribe(v=>{this.family_members_cap = v});
+    this.translate.stream('RELATED_LINKS').subscribe(v => {this.related_links_cap = v});
+    this.translate.stream('CHANGE_MOB_CAP').subscribe(v=>{this.change_mobile_cap = v});
+    this.translate.stream('USER_PROF_CAP').subscribe(v=>this.user_profile_cap=v);
     if (this.curtype!=='consumer') {
       this.spForm = this.fb.group({
         old_password: ['', Validators.compose(
@@ -101,7 +107,7 @@ export class ChangePasswordComponent implements OnInit {
             this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
             // ynw.password = sub_data.new_password; // change the password to the new one in the local storage variable
             this.lStorageService.setitemonLocalStorage('ynw-credentials', ynw); // saving the updation to the local storage variable
-            this.snackbarService.openSnackBar(Messages.PASSWORD_CHANGED);
+            this.snackbarService.openSnackBar(this.translate.instant('PASSWORD_CHANGED'));
             this.spForm.reset();
           },
           error => {
@@ -114,7 +120,7 @@ export class ChangePasswordComponent implements OnInit {
         );
 
     } else {
-      this.snackbarService.openSnackBar(Messages.PASSWORD_MISMATCH, { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar(this.translate.instant('PASSWORD_MISMATCH'), { 'panelClass': 'snackbarerror' });
       // this.api_error = Messages.PASSWORD_MISMATCH;
     }
 

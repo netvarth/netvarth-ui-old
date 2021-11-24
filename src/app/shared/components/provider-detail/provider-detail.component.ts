@@ -28,6 +28,7 @@ import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
 import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
+import { CheckavailabilityComponent } from '../checkavailability/checkavailability.component';
 
 
 
@@ -294,6 +295,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   onlyVirtualItems=false;
   private subscriptions = new SubSink();
   consumerVirtualinfo: any;
+  checkavailabilitydialogref: any;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -1784,7 +1786,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           this.showAppointment(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'consumer');
           // }
 
-        } else if (passParam['callback'] === 'order') {
+        }else if (passParam['callback'] === 'checkavailability') {
+          this.opencheckavail(passParam['actionObjtype'])
+         }
+
+         else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
           } else {
@@ -2419,6 +2425,30 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
 
   }
+  opencheckavail(actionObj) {
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    const current_provider = {
+      'id': actionObj['location']['id'],
+      'place':actionObj['location']['place'],
+      'location': actionObj['location'],
+      'service': actionObj['service'],
+      'cdate': actionObj['service'].serviceAvailability.nextAvailableDate
+    };
+    if(this.userType === '') {
+      const passParam = { callback: 'checkavailability', current_provider: current_provider, serviceType:  actionObj['service'].serviceType,actionObjtype:actionObj };
+      this.doLogin('consumer', passParam);
+    }else {
+      this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
+        width: '90%',
+        height: 'auto',
+        data: {
+        alldetails:actionObj,
+        apptSettingsJson:this.apptSettingsJson,
+        }
+      });
+    }
+  
+  }
   cardClicked(actionObj) {
     if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
@@ -2427,10 +2457,17 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         this.checkinClicked(actionObj['location'], actionObj['service']);
       }
 
-    } else if (actionObj['type'] === 'appt') {
+    }
+    else if(actionObj['type']=='checkavailability') {
+     
+      this.opencheckavail(actionObj);
+    }
+    else if (actionObj['type'] === 'appt') {
       if (actionObj['action'] === 'view') {
+        
         this.showServiceDetail(actionObj['service'], this.businessjson.name);
       } else {
+       
         this.appointmentClicked(actionObj['location'], actionObj['service']);
       }
     } else if (actionObj['type'] === 'donation') {
@@ -2447,6 +2484,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       } else if (actionObj['action'] === 'remove') {
         this.decrement(actionObj['service']);
       }
+     
     } else {
       this.providerDetClicked(actionObj['userId']);
     }

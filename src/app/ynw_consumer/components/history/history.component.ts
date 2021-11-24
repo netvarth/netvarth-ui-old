@@ -16,6 +16,7 @@ import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-
 import { ConsumerWaitlistCheckInPaymentComponent } from '../../../shared/modules/consumer-checkin-history-list/components/checkin-payment/checkin-payment.component';
 import { ConsumerRateServicePopupComponent } from '../../../shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
 import { CheckInHistoryServices } from '../../../shared/modules/consumer-checkin-history-list/components/checkin-history-list/checkin-history-list.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-consumer-history',
@@ -66,7 +67,7 @@ export class ConsumerHistoryComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     public dialog: MatDialog, public activateroute: ActivatedRoute,
     private consumer_services: ConsumerServices,
-    public shared_services: SharedServices,
+    public shared_services: SharedServices, public translate: TranslateService,
     public shared_functions: SharedFunctions,
     private snackbarService: SnackbarService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -96,6 +97,15 @@ export class ConsumerHistoryComponent implements OnInit, OnDestroy {
     }
   }
   ngOnInit() {
+    this.translate.use(JSON.parse(localStorage.getItem('myData')))
+    this.translate.stream('SERV_PROVIDER_CAP').subscribe(v=>{this.service_provider_cap=v});
+    this.translate.stream('PRO_SERVICE_CAP').subscribe(v=>{this.service_cap=v});
+    this.translate.stream('LOCATION_CAP').subscribe(v=>this.location_cap=v);
+    this.translate.stream('DATE_COL_CAP').subscribe(v=>this.date_cap=v);
+    this.translate.stream('PRO_STATUS_CAP').subscribe(v=>this.status_cap=v);
+    this.translate.stream('SEND_MSG_CAP').subscribe(v=>this.send_message_cap=v);
+    this.translate.stream('RATE_YOU_VISIT').subscribe(v=>this.rate_your_visit=v);
+    this.translate.stream('BILL_CAPTION').subscribe(v=>this.bill_cap=v);
   }
   ngOnDestroy(): void {
     this.subs.unsubscribe();

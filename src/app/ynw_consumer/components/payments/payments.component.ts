@@ -8,7 +8,7 @@ import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pi
 import { Subscription } from 'rxjs';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { SubSink } from 'subsink';
-
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -35,7 +35,7 @@ export class ConsumerPaymentsComponent implements OnInit, OnDestroy {
         private router: Router,
         public dateformat: DateFormatPipe,
         private dateTimeProcessor: DateTimeProcessor,
-        private activated_route: ActivatedRoute,
+        private activated_route: ActivatedRoute,public translate: TranslateService,
         private shared_services: SharedServices) {
         this.subs.sink = this.activated_route.queryParams.subscribe(qparams => {
             if (qparams && qparams.accountId) {
@@ -47,6 +47,8 @@ export class ConsumerPaymentsComponent implements OnInit, OnDestroy {
         });
     }
     ngOnInit() {
+        this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+
         this.getPayments();
     }
     ngOnDestroy(): void {

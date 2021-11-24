@@ -4,7 +4,7 @@ import {version} from './shared/constants/version';
 import { LocalStorageService } from './shared/services/local-storage.service';
 import { TranslateService } from '@ngx-translate/core';
 export let projectConstants: any = {};
-import {I18nService} from '../app/shared/services/i18n-service';
+import {I18nService} from '../app/shared/services/i18n-sevice';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -46,6 +46,14 @@ export class AppComponent implements OnInit, AfterViewInit {
    * 
    */
   ngOnInit() {
+    this.translate.use('en'); 
+    this.i18nService.changeLocale('en');
+for(let i=0;i<this.languages.length;i++) {
+  if(this.languages[i].value==JSON.parse(localStorage.getItem('myData'))) {
+    this.langselected=this.languages[i].viewValue;
+    break;
+  }
+}
     projectConstants = this.globalService.getGlobalConstants();
     const cVersion = version.desktop;
     const pVersion = this.lStorageService.getitemfromLocalStorage('version');
@@ -58,13 +66,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit () {
     document.getElementById('globalLoading').remove();
-        this.translate.use('en'); 
-    for(let i=0;i<this.languages.length;i++) {
-      if(this.languages[i].value==JSON.parse(localStorage.getItem('myData'))) {
-        this.langselected=this.languages[i].viewValue;
-        break;
-      }
-    }
+
   }
   changeLocale(locale: string,languagename) {
     this.langselected=languagename;

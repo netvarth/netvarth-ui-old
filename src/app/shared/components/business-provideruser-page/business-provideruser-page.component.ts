@@ -31,6 +31,7 @@ import { SubSink } from '../../../../../node_modules/subsink';
 import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
 import { AuthService } from '../../services/auth-service';
 import { CheckavailabilityComponent } from '../checkavailability/checkavailability.component';
+// import { CheckavailabilityComponent } from '../checkavailability/checkavailability.component';
 
 @Component({
   selector: 'app-businessprovideruser-page',
@@ -2447,9 +2448,20 @@ console.log("fgf"+JSON.stringify(loc));
     // };
     this.routerobj.navigate([this.accountEncId, userId]);
   }
+  checkavailabilitydialogref;
+  opencheckavail(actionObj) {
 
+    this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
+      width: '90%',
+      height: '100%',
+      data: {
+      alldetails:actionObj,
+      apptSettingsJson:this.apptSettingsJson,
+      }
+    });
+  }
   cardClicked(actionObj) {
-
+    console.log("entered here")
     if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
@@ -2470,7 +2482,9 @@ console.log("fgf"+JSON.stringify(loc));
     } else if (actionObj['type'] === 'donation') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
-      } else {
+      } 
+      
+      else {
         this.payClicked(actionObj['location'].id, actionObj['location'].place, new Date(), actionObj['service']);
       }
     } else if (actionObj['type'] === 'item') {
