@@ -387,9 +387,10 @@
                                                                           </span></div>
                                                                       
                                                                       <div class="mgn-up-5"
-                                                                          *ngIf="user.bussLocations && user.bussLocations.length > 0  && domain === 'finance'"> <span
+                                                                          *ngIf="user.businessLocations && domain === 'finance'"> <span
                                                                               class="b2">
-                                                                              {{getBussLoc(user.bussLocations)}}
+                                                                              <!-- {{getBussLoc(user.bussLocations)}} -->
+                                                                              {{user.businessLocations}}
                                                                           </span></div>
                                                                       <div class="mgn-up-5"
                                                                           *ngIf="user.preferredLanguages"><span
@@ -434,8 +435,9 @@
                                                       </td>
 
                                                       <td class="display-min-none" *ngIf="domain === 'finance'">
-                                                        <span *ngIf="user.bussLocations && user.bussLocations.length > 0  && domain === 'finance'">
+                                                        <span *ngIf="user.businessLocations && domain === 'finance'">
                                                           <!-- {{getBussLoc(user.bussLocations)}} -->
+                                                          {{user.businessLocations}}
                                                         </span>
                                                     </td>
                                                       <td class="display-min-none">
@@ -635,10 +637,11 @@
                                                                         </span></div>
                                                                     
                                                                     <div class="mgn-up-5"
-                                                                        *ngIf="user.bussLocations && user.bussLocations.length > 0  && domain === 'finance'"> <span
+                                                                        *ngIf="user.businessLocations && domain === 'finance'"> <span
                                                                             class="b2">Business Locations &nbsp;
                                                                             <i class="fa fa-map-marker mgn-rt-5" style="color: blue;" aria-hidden="true"></i>
-                                                                            {{getBussLoc(user.bussLocations)}}
+                                                                            {{user.businessLocations}}
+                                                                            <!-- {{getBussLoc(user.bussLocations)}} -->
                                                                         </span></div>
 
 
@@ -686,8 +689,10 @@
                                                   </td>
 
                                                   <td class="display-min-none" *ngIf="domain === 'finance'">
-                                                    <span *ngIf="user.bussLocations && user.bussLocations.length > 0  && domain === 'finance'">
-                                                      {{getBussLoc(user.bussLocations)}}</span>
+                                                    <span *ngIf="user.businessLocations && domain === 'finance'">
+                                                      <!-- {{getBussLoc(user.bussLocations)}} -->
+                                                      {{user.businessLocations}}
+                                                    </span>
                                                   </td>
 
 
@@ -833,7 +838,7 @@
                           <div style="display: inline-block !important;">
                             <i class="fa fa-map-marker"></i>
                           </div>
-                          Location
+                          Residing Location
                         </div>
                         <i class="fa fa-angle-down"></i>
                       </button>
@@ -1043,7 +1048,7 @@
                         <div style="display: inline-block !important;">
                           <i class="fa fa-language"></i>
                         </div>
-                        Locations
+                        Business Locations
                       </div>
                       <i class="fa fa-angle-down"></i>
                     </button>
