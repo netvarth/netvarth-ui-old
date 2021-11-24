@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="10059" id="com.jaldeeinc.jaldeebusinessScale" version="1.9.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>JaldeeScale for Business</name>
+<widget android-versionCode="10059" id="com.jaldeeinc.jaldeebusiness" version="1.9.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Jaldee for Business</name>
     <description>Jaldee for Service Providers / Businesses</description>
     <author email="jaldeeincapps@gmail.com" href="https://www.jaldee.com/">Jaldee Team</author>
     <content src="index.html" />
