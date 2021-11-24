@@ -66,10 +66,112 @@
                                         </div>
 
                                     </div>
-
-
-
                                 </div>
+                                     <!-- QR code -->
+                                <div class="pubs card w-dta bprof no-shadow no-padding-up" *ngIf="bProfile && !showIncompleteButton">
+                                   
+                                    <div
+                                        [class.all_disabled]="!onlinepresence_status && !showIncompleteButton">
+                                        <div>
+                                            <h6 class="sub-heads">Here is your QR code and Link
+                                                <sup><span class="inactive"
+                                                        *ngIf="!onlinepresence_status">Inactive</span>
+                                                    <span class="active"
+                                                        *ngIf="onlinepresence_status">Active</span></sup>
+                                                <!-- <span class="edit-txt custId-cursor"
+                                                    (click)="reDirectToJaldeeOnline()">{{onlinepresence_status?
+                                                    'Manage' : 'Enable'}}</span> -->
+                                            </h6>
+                                            <div class="clearfix"></div>
+                                            <div class="bus-prof-qr-sec" >
+                                                <div class="mgn-up-10">
+                                                    <!-- If there is NO Custom ID -->
+                                                    <div *ngIf="!bProviderProfile.customId">
+                                                        <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding"
+                                                            #qrCodeOnlineId>
+                                                            <div
+                                                                class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
+                                                                <ngx-qrcode #accQR [elementType]="elementType"
+                                                                    [value]="qr_value"
+                                                                    (click)="qrCodegeneraterOnlineID(bProviderProfile.accEncUid)"
+                                                                    class="custId-cursor">
+                                                                </ngx-qrcode>
+                                                            </div>
+                                                            <div
+                                                                class="col-sm-9 col-md-9 col-lg-9 col-xs-12 no-padding-small">
+                                                                <div class="mgn-up-10 prof-url">
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{wndw_path}}{{bProviderProfile.accEncUid}}/{{userId}}
+                                                                </div>
+                                                                <div class="mgn-up-10">
+                                                                    <div class="disp-flex smal-device-wt">
+                                                                        <div class="bprof-icons share-ico">
+                                                                            <share-buttons [theme]="'circles-dark'"
+                                                                                [include]="['facebook','whatsapp','email','telegram','copy']"
+                                                                                [url]="shareLink" [image]="qrCodePath"
+                                                                                [showIcon]="true" [showText]="true"
+                                                                                [size]="-4">
+                                                                            </share-buttons>
+                                                                        </div>
+                                                                        <div class="dwnld-bdr custId-cursor">
+                                                                            <a class="ngx-qr-btn" [href]="qrCodePath"
+                                                                                download>
+                                                                                <i class="fa fa-cloud-download dwnld-icon"></i>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                        <!-- If there is Custom ID -->
+                                                    <div *ngIf="bProviderProfile.customId">
+                                                        <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding"
+                                                            #qrCodeOnlineId>
+                                                            <div
+                                                                class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
+                                                                <ngx-qrcode #custQR [elementType]="elementType"
+                                                                    [value]="qr_value"
+                                                                    (click)="qrCodegeneraterOnlineID(bProviderProfile.customId)"
+                                                                    class="custId-cursor">
+                                                                </ngx-qrcode>
+                                                            </div>
+                                                            <div
+                                                                class="col-sm-9 col-md-9 col-lg-9 col-xs-12 no-padding-small">
+                                                                <div class="mgn-up-10 prof-url">
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{wndw_path}}{{bProviderProfile.customId}}/{{userId}}
+                                                                </div>
+                                                                <div class="mgn-up-10">
+                                                                    <div class="disp-flex smal-device-wt">
+                                                                        <div class="bprof-icons share-ico">
+                                                                            <share-buttons [theme]="'circles-dark'"
+                                                                                [include]="['facebook','whatsapp','email','telegram','copy']"
+                                                                                [url]="shareLink" [image]="qrCodePath"
+                                                                                [showIcon]="true" [showText]="true"
+                                                                                [size]="-4">
+                                                                            </share-buttons>
+                                                                        </div>
+                                                                        <div class="dwnld-bdr custId-cursor">
+                                                                            <a class="ngx-qr-btn" [href]="qrCodePath"
+                                                                                download>
+                                                                                <i class="fa fa-cloud-download dwnld-icon"></i>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                  
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                               
                             </div>
 
 

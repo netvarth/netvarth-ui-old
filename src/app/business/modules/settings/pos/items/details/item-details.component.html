@@ -239,7 +239,35 @@
                                   'maxlength' : 'Item code can contain only ' + maxChars + ' characters'
                                 })">
                                     </app-field-error-display>
-                                </div>                                
+                                </div>    
+                                 <div class="form-group col-sm-6 ">
+                                    <div class="">
+                                    <label class="form-control-label" for="itemType" >Item Type</label>
+                                    <br />
+                                    <mat-radio-group formControlName="itemType" (change)="itemTypeChange($event)">
+                                    <mat-radio-button  value="PHYSICAL">
+                                       Physical </mat-radio-button>&nbsp;&nbsp;
+                                       <mat-radio-button  value="VIRTUAL">
+                                        Virtual </mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                    
+                                </div>   
+                    
+                                                      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-2 mgn-up-20" *ngIf="this.amForm.get('itemType').value=='VIRTUAL'">
+                                                        <div class="form-group normalpicker">
+                                                            <label for="Publish From">Expiry Date
+                                                                    <span style="color:red">*</span> </label>
+                                                            <div class="pickerouter">
+                                                                <mat-datepicker-toggle matSuffix [for]="expiryDate"></mat-datepicker-toggle>
+                                                                <mat-datepicker #expiryDate></mat-datepicker>
+                                                                <input class="form-control dtepicker" type="text" matInput
+                                                                    (click)="expiryDate.open()" [matDatepicker]="expiryDate" formControlName="expiryDate"
+                                                                    [min]="minDay" placeholder="DD/MM/YYYY" readonly >
+                                                            </div>
+                                                
+                                                        </div>
+                                                      </div>                            
                                 <div class="form-group col-sm-6">
                                     <!-- <mat-form-field>
                                         <input matInput type="text" class="form-control" id="shortDec"

@@ -207,10 +207,13 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
     addCatalogItems: any = [];
     editcataItemdialogRef: any;
     removeitemdialogRef: any;
-    addItems:any=[];
+    addItems: any = [];
     private subscriptions = new SubSink();
     today = new Date();
     minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate());
+    storePickUpDisabled = false;
+    homeDeliveryDisabled = false;
+    onlyVirtualItems=false;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private router: Router,
@@ -233,23 +236,23 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         this.subscriptions.sink = this.activated_route.params.subscribe(
             (params) => {
                 this.catalog_id = params.id;
-                    if (this.catalog_id === 'add') {
-                        this.action = 'add';
-                        this.api_loading=false;
-                        
-                    } else {
-                        this.subscriptions.sink = this.activated_route.queryParams.subscribe(
-                            (qParams) => {
-                                this.action = qParams.action;
-                                this.cataId = this.catalog_id;
-                            
-                       
-                    });
-                    
+                if (this.catalog_id === 'add') {
+                    this.action = 'add';
+                    this.api_loading = false;
+
+                } else {
+                    this.subscriptions.sink = this.activated_route.queryParams.subscribe(
+                        (qParams) => {
+                            this.action = qParams.action;
+                            this.cataId = this.catalog_id;
+
+
+                        });
+
                 }
                 this.getItems();
                 this.getProviderLocations();
-            
+
             });
         this.createForm();
     }
@@ -274,8 +277,18 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.subscriptions.unsubscribe();
     }
+    isExpired(item){
+    
+        if(new Date(item.expiryDate) < new Date()){
+            console.log('expired');
+            return true;
+        }else{
+            console.log('not expired');
+            return false;
+        }
+    }
     gotoNext() {
-        console.log(this.step);
+
         if (this.amForm.get('orderType').value === 'SHOPPINGLIST' && this.amForm.get('advancePaymentStatus').value === 'FULLAMOUNT' && this.step === 3) {
             this.snackbarService.openSnackBar('Shopping list not supported fullamount advance payment', { 'panelClass': 'snackbarerror' });
             return;
@@ -289,72 +302,65 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         if (this.step === 1 && this.amForm.get('orderType').value === 'SHOPPINGLIST') {
             this.step = 3;
             return;
-        } 
+        }
         if (this.step === 1 && this.amForm.get('catalogName').value === '') {
-            console.log('catalogName');
             this.snackbarService.openSnackBar('Please enter the catalog name', { 'panelClass': 'snackbarerror' });
             return;
-        } 
+        }
         if (this.step === 2) {
-            console.log(this.amForm.get('orderType').value);
-            if(this.cataId){
+            if (this.cataId) {
                 this.selectedaddItems();
             } else {
                 this.selectedItems();
             }
-            
-        }else {
+
+        } else {
             this.step = this.step + 1;
-            if(this.step===2){
-                console.log("step 2");
-               this.getUpdatedItems();
-               
+            if (this.step === 2) {
+                this.getUpdatedItems();
+
             }
         }
     }
     gotoPrev() {
-        console.log("prev"+this.step);
-        
-       
         if (this.step === 2 && this.amForm.get('orderType').value === 'SHOPPINGCART') {
             this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
-            if(this.cataId){
-                if (this.addCatalogItems && this.addCatalogItems.length > 0 ) {
+            if (this.cataId) {
+                if (this.addCatalogItems && this.addCatalogItems.length > 0) {
                     this.selecteditemCount = this.addCatalogItems.length;
                     for (const itm of this.itemsforadd) {
-                      for (const selitem of this.addCatalogItems) {
-                         if (itm.itemId === selitem.item.itemId) {
-                          itm.selected = true;
-                          itm.id = selitem.id;
-                          itm.minQuantity = selitem.minQuantity;
-                          itm.maxQuantity = selitem.maxQuantity;
-                         }
+                        for (const selitem of this.addCatalogItems) {
+                            if (itm.itemId === selitem.item.itemId) {
+                                itm.selected = true;
+                                itm.id = selitem.id;
+                                itm.minQuantity = selitem.minQuantity;
+                                itm.maxQuantity = selitem.maxQuantity;
+                            }
+                        }
                     }
-                  }
-            
-                   }
-        } else {
-            if (this.addCatalogItems && this.addCatalogItems.length > 0) {
-                this.selectedCount = this.addCatalogItems.length;
-                for (const itm of this.catalogItem) {
-                    for (const selitem of this.addCatalogItems) {
-                        if (itm.itemId === selitem.item.itemId) {
-                            itm.selected = true;
-                            itm.id = selitem.id;
-                            itm.minQuantity = selitem.minQuantity;
-                            itm.maxQuantity = selitem.maxQuantity;
+
+                }
+            } else {
+                if (this.addCatalogItems && this.addCatalogItems.length > 0) {
+                    this.selectedCount = this.addCatalogItems.length;
+                    for (const itm of this.catalogItem) {
+                        for (const selitem of this.addCatalogItems) {
+                            if (itm.itemId === selitem.item.itemId) {
+                                itm.selected = true;
+                                itm.id = selitem.id;
+                                itm.minQuantity = selitem.minQuantity;
+                                itm.maxQuantity = selitem.maxQuantity;
+                            }
                         }
                     }
                 }
             }
         }
-        }
         if (this.step === 3 && this.amForm.get('orderType').value === 'SHOPPINGLIST') {
             this.step = 1;
         } else {
             this.step = this.step - 1;
-            if (this.step === 1 &&this.catalog_id == 'add') {
-                console.log(this.amForm.get('orderType').value);
+            if (this.step === 1 && this.catalog_id == 'add') {
                 this.catalogItemsSelected = [];
                 for (let ia = 0; ia < this.catalogItem.length; ia++) {
                     this.seletedCatalogItems1 = {};
@@ -365,9 +371,8 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
                         this.catalogItemsSelected.push(this.seletedCatalogItems1);
                     }
                 }
-                console.log(this.catalogItemsSelected);
                 this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogItemsSelected);
-               
+
             }
         }
     }
@@ -379,6 +384,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             this.subscriptions.sink = this.provider_services.getProviderfilterItems(apiFilter)
                 .subscribe(
                     data => {
+                        console.log(JSON.stringify(data));
                         this.item_list = data;
                         this.item_count = this.item_list.length;
                         this.catalogItem = data;
@@ -407,13 +413,13 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         this.router.navigate(['provider', 'settings', 'pos', 'items'], navigatExtras);
     }
 
-   
 
-   
+
+
     getCatalog(cataId?) {
         const _this = this;
         return new Promise(function (resolve, reject) {
-            _this.subscriptions.sink =  _this.provider_services.getProviderCatalogs(cataId)
+            _this.subscriptions.sink = _this.provider_services.getProviderCatalogs(cataId)
                 .subscribe(
                     data => {
                         resolve(data);
@@ -430,58 +436,57 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         this.api_loading = false;
     }
     createForm() {
-            this.amForm = this.fb.group({
-                catalogName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-                catalogDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-                startdate: ['', Validators.compose([Validators.required])],
-                enddate: ['', Validators.compose([Validators.required])],
-                orderType: [],
-                orderStatuses: [''],
-                itemPriceInfo: [true],
-               autoconfirm: [true],
-                advancePaymentStatus: [],
-                advancePayment: ['', Validators.compose([Validators.maxLength(this.maxNumbers)])],
-               // cancelationPolicyStatus: [true],
-               // cancelationPolicy: [''],
-                storepickup: [false],
-                startdatestore: [''],
-                enddatestore: [''],
-                homedelivery: [false],
-                startdatehome: [''],
-                enddatehome: [''],
-                deliverykms: [''],
-                deliverycharge: ['']
-               
-            });
-            this.amForm.get('orderType').setValue('SHOPPINGCART');
-            const dt = new Date();
-            dt.setFullYear(dt.getFullYear() + 2);
-            this.amForm.get('startdate').setValue(new Date());
-            this.amForm.get('enddate').setValue(dt);
-            this.amForm.get('startdatestore').setValue(new Date());
-            this.amForm.get('startdatehome').setValue(new Date());
-            this.amForm.get('orderStatuses').setValue(['Order Received', 'Order Confirmed', 'Cancelled']);
-            this.amForm.get('advancePaymentStatus').setValue('NONE');
-            //this.amForm.get('cancelationPolicy').setValue('If cancellation is necessary, we require that you call at least 2 hour in advance.');
+        this.amForm = this.fb.group({
+            catalogName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+            catalogDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
+            startdate: ['', Validators.compose([Validators.required])],
+            enddate: ['', Validators.compose([Validators.required])],
+            orderType: [],
+            orderStatuses: [''],
+            itemPriceInfo: [true],
+            autoconfirm: [true],
+            advancePaymentStatus: [],
+            advancePayment: ['', Validators.compose([Validators.maxLength(this.maxNumbers)])],
+            // cancelationPolicyStatus: [true],
+            // cancelationPolicy: [''],
+            storepickup: [false],
+            startdatestore: [''],
+            enddatestore: [''],
+            homedelivery: [false],
+            startdatehome: [''],
+            enddatehome: [''],
+            deliverykms: [''],
+            deliverycharge: ['']
 
-            if (this.action === 'edit') {
-                this.getCatalog(this.catalog_id).then(
-                    (catalog) => {
-                        this.catalog = catalog;
-                        this.catalogcaption = this.catalog.catalogName;
-                        if (this.catalog.catalogItem) {
-                            this.catalogItems = this.catalog.catalogItem;
-                            console.log(this.catalogItems);
-                            this.updateForm();
-                            this.setItemFromCataDetails();
-                        }
-                            
-            });
-         
-    
+        });
+        this.amForm.get('orderType').setValue('SHOPPINGCART');
+        const dt = new Date();
+        dt.setFullYear(dt.getFullYear() + 2);
+        this.amForm.get('startdate').setValue(new Date());
+        this.amForm.get('enddate').setValue(dt);
+        this.amForm.get('startdatestore').setValue(new Date());
+        this.amForm.get('startdatehome').setValue(new Date());
+        this.amForm.get('orderStatuses').setValue(['Order Received', 'Order Confirmed', 'Cancelled']);
+        this.amForm.get('advancePaymentStatus').setValue('NONE');
+        //this.amForm.get('cancelationPolicy').setValue('If cancellation is necessary, we require that you call at least 2 hour in advance.');
+
+        if (this.action === 'edit') {
+            this.getCatalog(this.catalog_id).then(
+                (catalog) => {
+                    this.catalog = catalog;
+                    this.catalogcaption = this.catalog.catalogName;
+                    if (this.catalog.catalogItem) {
+                        this.catalogItems = this.catalog.catalogItem;
+                        this.updateForm();
+                        this.setItemFromCataDetails();
+                    }
+
+                });
+
+
+        }
+
     }
-  
-}
 
     setDescFocus() {
         this.isfocused = true;
@@ -588,13 +593,13 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
     }
 
     updateForm() {
-      this.api_loading=false;
+        this.api_loading = false;
 
         if (this.catalog.pickUp && this.catalog.pickUp.pickUpSchedule) {
             this.storetimewindow_list = this.catalog.pickUp.pickUpSchedule.timeSlots;
-            
+
         }
-        
+
         this.selday_arrstorepickup = [];
         // extracting the selected days
         if (this.catalog.pickUp && this.catalog.pickUp.pickUpSchedule) {
@@ -612,7 +617,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         //let sttimehome;
         if (this.catalog.homeDelivery && this.catalog.homeDelivery.deliverySchedule) {
             this.hometimewindow_list = this.catalog.homeDelivery.deliverySchedule.timeSlots;
-          
+
         }
         this.selday_arrhomedelivery = [];
         // extracting the selected days
@@ -692,8 +697,8 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             'autoconfirm': this.catalog.autoConfirm,
             'advancePaymentStatus': this.catalog.paymentType,
             'advancePayment': this.catalog.advanceAmount.toFixed(2) || '',
-          //  'cancelationPolicyStatus': true,
-           // 'cancelationPolicy': this.catalog.cancellationPolicy,
+            //  'cancelationPolicyStatus': true,
+            // 'cancelationPolicy': this.catalog.cancellationPolicy,
             'storepickup': orderpickUpstat,
             'startdatestore': orderpickUpstartdate,
             'enddatestore': orderpickUpenddate,
@@ -732,7 +737,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             }
         }
     }
-  
+
 
 
     showimg() {
@@ -925,8 +930,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
 
     }
     onSubmit(form_data) {
-console.log('hi submit' +form_data);
-        
+
         let endDate;
         const startDate = this.convertDate(form_data.startdate);
         if (form_data.enddate) {
@@ -934,7 +938,7 @@ console.log('hi submit' +form_data);
         } else {
             endDate = '';
         }
-       
+
 
         //store pickup
         const storedaystr: any = [];
@@ -959,7 +963,7 @@ console.log('hi submit' +form_data);
             storeendDate = '';
         }
 
-        
+
         //home delivery
         const homedaystr: any = [];
         for (const cday of this.selday_arrhomedelivery) {
@@ -982,7 +986,7 @@ console.log('hi submit' +form_data);
         } else {
             homeendDate = '';
         }
-        
+
         // if (form_data.orderType === 'SHOPPINGLIST' && form_data.advancePaymentStatus === 'FULLAMOUNT') {
         //     this.snackbarService.openSnackBar('Shopping list not supported fullamount advance payment', { 'panelClass': 'snackbarerror' });
         //     return;
@@ -1083,17 +1087,14 @@ console.log('hi submit' +form_data);
 
         };
         if (this.action === 'add') {
-           if(form_data.orderType==='SHOPPINGCART'){
-            postdata['catalogItem'] = this.catalogItemsSelected;
-           }
+            if (form_data.orderType === 'SHOPPINGCART') {
+                postdata['catalogItem'] = this.catalogItemsSelected;
+            }
             this.addCatalog(postdata);
         } else if (this.action === 'edit') {
-          console.log(form_data.orderType);
-          console.log(this.catalogItemsSelected);
-           if(form_data.orderType==='SHOPPINGCART'){
-            postdata['catalogItem'] = this.catalogSelectedItemsadd;
-           }
-            console.log(postdata);
+            if (form_data.orderType === 'SHOPPINGCART') {
+                postdata['catalogItem'] = this.catalogSelectedItemsadd;
+            }
             this.editCatalog(postdata);
         }
     }
@@ -1199,15 +1200,15 @@ console.log('hi submit' +form_data);
         this.api_success = null;
     }
     isNumeric(evt) {
-       
+
         return this.sharedfunctionObj.isNumeric(evt);
-       
+
     }
     isNumber(evt) {
         evt.stopPropagation();
         return this.sharedfunctionObj.isNumber(evt);
     }
-   
+
 
     isvalid(evt) {
         return this.sharedfunctionObj.isValid(evt);
@@ -1305,12 +1306,12 @@ console.log('hi submit' +form_data);
             this.snackbarService.openSnackBar('Image uploaded successfully');
         },
             error => {
-                 this.selectedMessage = {
-                            files: [],
-                            base64: [],
-                            caption: []
-                        };
-                        this.image_list_popup = [];
+                this.selectedMessage = {
+                    files: [],
+                    base64: [],
+                    caption: []
+                };
+                this.image_list_popup = [];
                 this.api_loading = false;
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             });
@@ -1523,7 +1524,7 @@ console.log('hi submit' +form_data);
             }
         });
     }
-    showCreateItemPopup (){
+    showCreateItemPopup() {
         this.createitemdialogRef = this.dialog.open(CreateItemPopupComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -1532,7 +1533,6 @@ console.log('hi submit' +form_data);
             }
         });
         this.subscriptions.sink = this.createitemdialogRef.afterClosed().subscribe(result => {
-            console.log("Refresh items")
             if (this.catalog_id === 'add') {
                 this.getItems();
             } else {
@@ -1553,8 +1553,8 @@ console.log('hi submit' +form_data);
             this.catalogItem[index].selected = true;
             this.selectedCount++;
         } else {
-            if(this.cataId){
-                this.catalogItem[index].selected = true; 
+            if (this.cataId) {
+                this.catalogItem[index].selected = true;
             } else {
                 this.catalogItem[index].selected = false;
             }
@@ -1603,16 +1603,33 @@ console.log('hi submit' +form_data);
                 this.catalogItemsSelected.push(this.seletedCatalogItems1);
             }
         }
-        console.log(this.catalogItemsSelected);
         this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogItemsSelected);
-        if(this.catalogItemsSelected.length==0){
+        if (this.catalogItemsSelected.length == 0) {
             this.snackbarService.openSnackBar('Please add items to catalog', { 'panelClass': 'snackbarerror' });
             return;
-        }else{
-            this.step=this.step +1; 
+        } else {
+            if (this.checkOnlyVirtualItems(this.catalogItemsSelected)) {
+                this.storepickupStat = false
+                this.homedeliveryStat = false;
+                this.storePickUpDisabled = true;
+                this.homeDeliveryDisabled = true;
+                this.onlyVirtualItems=true;
+                this.amForm.patchValue({ storepickup: false });
+                this.amForm.patchValue({ homedelivery: false });
+            }
+            this.step = this.step + 1;
             return;
         }
-       
+
+    }
+    checkOnlyVirtualItems(ItemSet) {
+        let onlyVirtual = false;
+        const itemObject = ItemSet.filter(item => item.item.itemType === 'VIRTUAL');
+        if (itemObject.length > 0 && itemObject.length === ItemSet.length) {
+            onlyVirtual = true;
+
+        }
+        return onlyVirtual;
     }
     selectedaddItems() {
         this.catalogSelectedItemsadd = [];
@@ -1634,20 +1651,33 @@ console.log('hi submit' +form_data);
                 this.catalogSelectedItemsadd.push(this.seletedCatalogItemsadd);
             }
         }
-      this.addItems = this.catalogItems.concat(this.catalogSelectedItemsadd);
-      if (this.catalogSelectedItemsadd.length > 0) {
-        this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogSelectedItemsadd);
-    }
-        console.log(this.addItems);
-        if(this.addItems.length == 0){
+        this.addItems = this.catalogItems.concat(this.catalogSelectedItemsadd);
+        if (this.catalogSelectedItemsadd.length > 0) {
+            this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogSelectedItemsadd);
+        }
+
+        if (this.addItems.length === 0) {
             this.snackbarService.openSnackBar('Please add items to catalog', { 'panelClass': 'snackbarerror' });
             return;
-        }else{
-            this.step=this.step +1;
+        }
+        else {
+
+            if (this.checkOnlyVirtualItems(this.addItems)) {
+                this.onlyVirtualItems=true;
+                this.storepickupStat = false
+                this.homedeliveryStat = false;
+                this.amForm.patchValue({ storepickup: false });
+                this.amForm.patchValue({ homedelivery: false });
+                this.storePickUpDisabled = true;
+                this.homeDeliveryDisabled = true;
+
+            }
+            this.step = this.step + 1;
             return;
         }
-       
+
     }
+
     createItem(form_data, isfrom?) {
         if (this.showPromotionalPrice && (!form_data.promotionalPrice || form_data.promotionalPrice == 0)) {
             // this.api_error = 'Please enter valid promotional value';
@@ -1685,7 +1715,7 @@ console.log('hi submit' +form_data);
         if (this.action === 'add') {
             const post_itemdata = {
                 'itemCode': form_data.itemCode,
-                'itemNameInLocal' : form_data.itemNameInLocal,
+                'itemNameInLocal': form_data.itemNameInLocal,
                 'itemName': form_data.itemName,
                 'displayName': form_data.displayName,
                 'shortDesc': form_data.shortDec,
@@ -1706,7 +1736,7 @@ console.log('hi submit' +form_data);
                 post_itemdata['promotionalPriceType'] = 'NONE';
                 post_itemdata['promotionLabelType'] = 'NONE';
             }
-            
+
             this.addItem(post_itemdata);
         }
     }
@@ -1792,82 +1822,81 @@ console.log('hi submit' +form_data);
     setItemFromCataDetails() {
         this.itemsforadd = [];
         this.itemsforadd = this.catalogItem.filter(o1 => this.catalog.catalogItem.filter(o2 => o2.item.itemId === o1.itemId).length === 0);
-       
+
     }
 
     editCatalogItem(item) {
         this.editcataItemdialogRef = this.dialog.open(EditcatalogitemPopupComponent, {
-          width: '50%',
-          panelClass: ['popup-class', 'commonpopupmainclass'],
-          disableClose: true,
-          data: {
-            id: item.itemId,
-            maxquantity: item.maxQuantity,
-            minquantity: item.minQuantity
-          }
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+                id: item.itemId,
+                maxquantity: item.maxQuantity,
+                minquantity: item.minQuantity
+            }
         });
         this.subscriptions.sink = this.editcataItemdialogRef.afterClosed().subscribe(result => {
-          if (result) {
-           this.api_loading = true;
-           this.updateItems(result, item.id);
-          }
+            if (result) {
+                this.api_loading = true;
+                this.updateItems(result, item.id);
+            }
         });
     }
 
     updateItems(updatelist, id) {
         const passlist: any = {};
-          passlist.id = id;
-          passlist.maxQuantity = updatelist.maxquantity;
-          passlist.minQuantity = updatelist.minquantity;
-          this.subscriptions.sink = this.provider_services.updateCatalogItem(passlist).subscribe(
-          (data) => {
-            // this.getCatalog();
-           // this.getItems();
-            this.getUpdatedItems();
-            this.api_loading = false;
-          }, error => {
-            this.api_loading = false;
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        passlist.id = id;
+        passlist.maxQuantity = updatelist.maxquantity;
+        passlist.minQuantity = updatelist.minquantity;
+        this.subscriptions.sink = this.provider_services.updateCatalogItem(passlist).subscribe(
+            (data) => {
+                // this.getCatalog();
+                // this.getItems();
+                this.getUpdatedItems();
+                this.api_loading = false;
+            }, error => {
+                this.api_loading = false;
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
-         );
+        );
     }
 
     deleteCatalogItem(itm) {
-        console.log(itm);
         this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
-          width: '50%',
-          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-          disableClose: true,
-          data: {
-            'message': 'Do you really want to remove this item from catalog?'
-          }
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': 'Do you really want to remove this item from catalog?'
+            }
         });
         this.subscriptions.sink = this.removeitemdialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-          if (result) {
-            this.api_loading = true;
-            this.subscriptions.sink = this.provider_services.deleteCatalogItem(this.cataId, itm.item.itemId).subscribe(
-              (data) => {
-               // this.getCatalog();
-               this.getUpdatedItems();
-                this.api_loading = false;
-              }, error => {
-                this.api_loading = false;
-                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                }
+
+            if (result) {
+                this.api_loading = true;
+                this.subscriptions.sink = this.provider_services.deleteCatalogItem(this.cataId, itm.item.itemId).subscribe(
+                    (data) => {
+                        // this.getCatalog();
+                        this.getUpdatedItems();
+                        this.api_loading = false;
+                    }, error => {
+                        this.api_loading = false;
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    }
                 );
-          }
+            }
         });
     }
     stopprop(event) {
         event.stopImmediatePropagation();
         event.stopPropagation();
-      }
+    }
 
     getUpdatedItems() {
         this.getItems().then(
             (data) => {
-                if(this.catalog_id == 'add'){
+                if (this.catalog_id == 'add') {
                     this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
                     if (this.addCatalogItems && this.addCatalogItems.length > 0) {
                         this.selectedCount = this.addCatalogItems.length;
@@ -1882,7 +1911,7 @@ console.log('hi submit' +form_data);
                             }
                         }
                     }
-                   }
+                }
                 this.getCatalog(this.catalog_id).then(
                     (catalog) => {
                         this.catalog = catalog;

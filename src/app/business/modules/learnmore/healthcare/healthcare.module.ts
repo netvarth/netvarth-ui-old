@@ -1,16 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../../../../shared/modules/common/shared.module';
-
-// import { SearchDataStorageService  } from '../../services/search-datastorage.services';
-
+import { MatExpansionModule } from '@angular/material/expansion';
 import { HealthCareComponent } from './healthcare.component';
 import { HealthcareRoutingModule } from './healthcare.routing.module';
-import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
-// import { HttpCommonService } from '../../services/http-common.service';
 @NgModule({
     imports: [
-      SharedModule,
-      BreadCrumbModule,
+      CommonModule,
+      MatExpansionModule,
       HealthcareRoutingModule
     ],
     declarations: [HealthCareComponent],

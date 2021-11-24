@@ -388,8 +388,10 @@
                 <div  class="bold grey-color"*ngIf="!order.orderFor.firstName && !order.orderFor.lastName">
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{order.orderFor.jaldeeId}}</div>
                 <div class="mgn-up-15 datetime bold grey-color">
-                  {{order.orderDate | date: display_dateFormat}},
+                  {{order.orderDate | date: display_dateFormat}}
+                  <ng-container *ngIf="order.orderTimeWindow && order.orderTimeWindow.timeSlots[0]">,
                   {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
+                </ng-container>
                 </div>
                 <div  [ngClass]="order.orderStatus === 'Cancelled'||order.orderStatus==='Order Received'?'darkred':'darkblue bold'">
                   {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending':order.orderStatus| capitalizeFirst}}
@@ -890,8 +892,10 @@
               <div class="main-sec">
                 <div class="bold grey-color"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
                 <div class="mgn-up-15 datetime bold grey-color">
-                  {{order.orderDate | date: display_dateFormat}},
-                  {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
+                  {{order.orderDate | date: display_dateFormat}}
+                  <ng-container *ngIf="order.orderTimeWindow && order.orderTimeWindow.timeSlots[0]">,
+                      {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
+                    </ng-container>
                 </div>
                 <div [ngClass]="order.orderStatus === 'Cancelled'||order.orderStatus==='Order Received'?'darkred':'darkblue bold'">
                   {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending':order.orderStatus| capitalizeFirst}}
@@ -1445,8 +1449,10 @@
               <div class="main-sec">
                 <div class="bold grey-color"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
                 <div class="mgn-up-15 datetime bold grey-color">
-                  {{order.orderDate | date: display_dateFormat}},
-                  {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
+                  {{order.orderDate | date: display_dateFormat}}
+                  <ng-container *ngIf="order.orderTimeWindow && order.orderTimeWindow.timeSlots[0]">,
+                      {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
+                    </ng-container>
                 </div>
                 <div [ngClass]="order.orderStatus === 'Cancelled'||order.orderStatus==='Order Received' ?'darkred':'darkblue bold'">
                   {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending':order.orderStatus| capitalizeFirst}}

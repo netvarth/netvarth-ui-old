@@ -14,7 +14,7 @@
                     <div class="input-group">
                         <div class="input-group-prepend"><span class="input-group-text1 mgn-up-10">+91</span></div>
                         <input type="text" class="form-control" (keypress)="isNumeric($event)" id="phone"
-                            placeholder="Mobile #" formControlName="phone" autocomplete="off" maxlength=10 />
+                            placeholder="Mobile #" formControlName="phone" autocomplete="off" [max]=10  [min]=10/>
                     </div>
                     <app-field-error-display [displayError]="fed_service.isFieldValid(contantInfo,'phone')" [errorMsgs]="fed_service.getErrorMessage(contantInfo,'phone',
 {
