@@ -2,7 +2,7 @@
 
 <div class="selecttag">
 
-        <div *ngFor="let lang of languages" [value]="lang.viewValue" (click)="changeLocale(lang.value,lang.viewValue)">
+        <div style="display: flex;" *ngFor="let lang of languages" [value]="lang.viewValue" (click)="changeLocale(lang.value,lang.viewValue)">
           {{lang.viewValue}} <span *ngIf="lang.viewValue != 'Tamil'">|</span> 
         </div>
 
