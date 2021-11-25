@@ -1,14 +1,11 @@
 
 
 <div class="selecttag">
-    <mat-form-field >
-      <!-- <mat-label>Choose language</mat-label> -->
-      <mat-select [(ngModel)] = "langselected" apperance="outline">
-        <mat-option *ngFor="let lang of languages" [value]="lang.viewValue" (click)="changeLocale(lang.value,lang.viewValue)">
+
+        <div *ngFor="let lang of languages" [value]="lang.viewValue" (click)="changeLocale(lang.value,lang.viewValue)">
           {{lang.viewValue}} <span *ngIf="lang.viewValue != 'Tamil'">|</span> 
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+        </div>
+
     </div>
   
 
