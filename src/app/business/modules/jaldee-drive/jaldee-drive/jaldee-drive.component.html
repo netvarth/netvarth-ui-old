@@ -52,6 +52,9 @@
               <!-- *ngIf="defaultFolder === 'yes'" -->
               <p>Choose folder to upload</p>
               <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)" >
+                <!-- <mat-radio-button [value]="'shared'" class="mx-2">
+                  Shared folder
+                </mat-radio-button> -->
                 <mat-radio-button [value]="'public'" >
                   <!-- [checked]='true' *ngIf="defaultFolder"-->
                   Public folder
@@ -264,6 +267,17 @@
                     <!-- <img src="../../../assets/images/Group 816.jpg" class=" fa fa-folderpull-left text-light "
                   style="width: 22px !important; margin-top: 2px !important;"> -->
                   </div>
+                  <div (click)="publicfolder('shared')"
+                  class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
+                  id="folder2">
+
+                  <i class="fa fa-folder" aria-hidden="true">
+
+                    <p (click)="publicfolder('shared')">Shared Files</p>
+                  </i>
+                  <!-- <img src="../../../assets/images/Group 816.jpg" class=" fa fa-folderpull-left text-light "
+                style="width: 22px !important; margin-top: 2px !important;"> -->
+                </div>
                 </div>
               </div>
               <!-- <div class="cust-name">

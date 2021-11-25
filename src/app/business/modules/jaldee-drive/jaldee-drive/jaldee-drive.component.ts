@@ -287,28 +287,79 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   actionCompleted() {
     console.log(this.action);
     if (this.action === 'attachment' && this.choose_type && this.selectedMessage) {
-      console.log("After Click of OK Button :",this.action,this.choose_type,this.selectedMessage);
+      console.log("After Click of OK Button :", this.action, this.choose_type, this.selectedMessage);
       const dataToSend: FormData = new FormData();
       const captions = {};
       let i = 0;
-      if (this.selectedMessage) {
-        for (const pic of this.selectedMessage.files) {
-          if (this.selectedMessage.files['name'] === pic['name']) {
-            //this.snackbarService.openSnackBar('Error', { 'panelClass': 'snackbarerror' });
-            alert("Already Existed...")
-          }
-          else {
-            dataToSend.append('attachments', pic, pic['name']);
-            captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
-            i++;
-          }
+
+      // for ( i = 0; i < this.selectedMessage.files.length; i++) 
+      // {
+      //     for (let j = i+1; j < this.selectedMessage.files.length; j++) 
+      //     {
+      //         if (i != j) 
+      //         {
+      //             if (this.selectedMessage.files[i]['name'] == this.selectedMessage.files[j]['name']) 
+      //             {
+      //               alert(`File ${this.selectedMessage.files[i]['name']} is Already Existed...`)
+
+      //                 //return true; // means there are duplicate values
+      //             }
+      //             else{
+      //               dataToSend.append('attachments',  j['name']);
+      //               captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
+      //               i++;
+      //              // return false; // means there are no duplicate values.
+
+      //             }
+      //         }
+      //     }
+
+      // }
+
+      // var valueArr = this.selectedMessage.files.map(function (item) { return item.name });
+      // var isDuplicate = valueArr.some(function (item, idx) {
+      //   return valueArr.indexOf(item) != idx
+      // });
+      // console.log(isDuplicate);
+      //   let array, j,item;
+      //   for(i=0; i<this.selectedMessage.files.length; ++i) {
+      //       array = this.selectedMessage.files[i];
+      //       for(j=0; j<array.length; ++j) {
+      //           if(array[j] === item) {
+      //             alert(`File ${item['name']} is Already Existed...`)
+      //               return true;
+      //           }
+      //           else{
+      //             return false;
+      //           }
+      //       }
+      //   }
+
+
+      for (const pic of this.selectedMessage.files) {
+        console.log("Selected File Is : ", this.selectedMessage.files, pic['name'], pic)
+        //   if(this.selectedMessage.files.indexOf(i) !== -1){
+        //     alert(`File ${pic['name']} is Already Existed...`)
+        // } 
+        //const value = 1;
+        //const isInArray = this.selectedMessage.files.includes(pic);
+        if (pic['name'] === this.selectedMessage.files['name']) {
+          alert(`File ${pic['name']} is Already Existed...`)
+          // this.snackbarService.openSnackBar(Error.apply('name'), { 'panelClass': 'snackbarerror' });
         }
-        this.selectedMessage = {
-          files: [],
-          base64: [],
-          caption: []
+        else {
+          dataToSend.append('attachments', pic, pic['name']);
+          captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
+          i++;
         }
+        console.log("Uploaded Image : ", this.imgCaptions[i]);
       }
+      this.selectedMessage = {
+        files: [],
+        base64: [],
+        caption: []
+      }
+
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
 
@@ -336,7 +387,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
       }
 
     }
-    else{
+    else {
       alert('Please attach atleast one file.');
 
     }
@@ -389,13 +440,8 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   changeType(event) {
 
 
-    if(event.value === 'private'){
       this.choose_type = event.value;
-    }
-    else{
-      this.choose_type = event.value;
-
-    }
+   
     // //this.choose_type = event.value;
     // if (event) {
     //    this.selectedFolder = event.value
@@ -407,7 +453,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     //   this.choose_type = event.value;
     // }
 
-    console.log("File Type : ",this.choose_type);
+    console.log("File Type : ", this.choose_type);
   }
   publicfolder(foldername) {
     const navigationExtras: NavigationExtras = {

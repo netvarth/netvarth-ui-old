@@ -283,10 +283,14 @@ export class FolderFilesComponent implements OnInit {
     if (this.foldertype === 'private') {
       filter['folderName-eq'] = 'private';
     }
-    else {
+    else if(this.foldertype === 'public')  {
       filter['folderName-eq'] = 'public';
 
     }
+    else{
+      filter['folderName-eq'] = 'shared';
+    }
+  
 
     console.log(filter);
     this.provider_servicesobj.getAllFilterAttachments(filter).subscribe(
