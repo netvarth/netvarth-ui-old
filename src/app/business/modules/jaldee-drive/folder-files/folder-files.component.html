@@ -65,14 +65,27 @@
       <img src="../../../assets/images/Group 820.jpg" class="pull-right text-light"
         style="width: 22px !important; margin-top: 2px !important;">
     </button>
-  </div> 
-  
-    <div class="form-group pull-right  my-3 mx-4 col-12 col-sm-12 col-xs-12">
+  </div>
+  <div class="col-12 col-sm-12 col-xs-12 col-md-12">
+    <div class="form-group pull-right   my-3 mx-4 ">
       <input type="text" class="mx-5 form-control inp  filter-text-input filterTextbox filter-textbox"
-        placeholder="Search" [(ngModel)]="searchTerm" style="width: 250px; border-bottom-left-radius: 100px 100px; border-top-left-radius: 100px 100px; border-bottom-right-radius: 100px 100px; border-top-right-radius: 100px 100px; ">
+        placeholder="Search" [(ngModel)]="searchTerm"
+        style="width: 250px; border-bottom-left-radius: 100px 100px; border-top-left-radius: 100px 100px; border-bottom-right-radius: 100px 100px; border-top-right-radius: 100px 100px; ">
+    </div>
+
 
 
   </div>
+  <!-- <div class="search-box pull-right">
+    <div class="sa-src ol-12 col-sm-12 col-xs-12">
+      <mat-form-field floatLabel="never" class="search_keyword_class">
+        <mat-label>Search</mat-label>
+        <input name="provider_box" id="suggestSearch"  aria-label="provs" aria-label="Search here"
+          [(ngModel)]="searchTerm" matInput  maxlength="50">
+
+      </mat-form-field>
+    </div>
+  </div> -->
 </div>
 <div class="mx-2 container">
 
@@ -293,7 +306,7 @@
               aria-expanded="false">
               <div>
                 <div style="display: inline-block !important;">
-                
+
                 </div>
                 <span>&nbsp;Booking ID</span>
               </div>
@@ -306,9 +319,8 @@
             <div class="filterTextinput filter-text-input">
               <li class="filterli filter-li">
                 <!-- contextId -->
-                <input type="text" id="txt_mobile" [(ngModel)]="filter.contextId"
-                  [ngModelOptions]="{standalone: true}" class="filterTextbox filter-textbox"
-                  placeholder="Enter Booking ID">
+                <input type="text" id="txt_mobile" [(ngModel)]="filter.contextId" [ngModelOptions]="{standalone: true}"
+                  class="filterTextbox filter-textbox" placeholder="Enter Booking ID">
                 <!-- <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId"
                   [ngModelOptions]="{standalone: true}" class="filterTextbox filter-textbox"
                   placeholder="Enter Booking ID"> -->
