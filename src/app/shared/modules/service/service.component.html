@@ -514,8 +514,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             <div class="col-md-5">
 
             <div class="card" >
-              <mat-radio-group formControlName="paymentProfileId">
-                <mat-radio-button value="profile.profileId" [checked]="i==0">{{profile.displayName}}  </mat-radio-button>
+              <mat-radio-group formControlName="paymentProfileId" name="paymentprofile">
+                <mat-radio-button [value]="profile.profileId"  >{{profile.displayName}}  </mat-radio-button>
                 <ng-container *ngIf="profile.indiaPay">
                   <div class="col-md-6">
                     <strong style="color:blue">RAZORPAY</strong>
