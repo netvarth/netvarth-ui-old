@@ -323,8 +323,9 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         </ng-container>
       </div>
       <div *ngIf="subdomainsettings.serviceBillable && !is_donation">
-      <mat-checkbox  [checked]="showServiceduration" [(ngModel)]="showServiceduration" [ngModelOptions]="{standalone: true}">
-       Show service duration
+        <mat-checkbox [checked]="showServiceduration" [(ngModel)]="showServiceduration"
+          [ngModelOptions]="{standalone: true}">
+          Show service duration
         </mat-checkbox>
       </div>
       <!-- <div class="col-md-6" >
@@ -358,12 +359,12 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
           <div class="settings_info">
             No. of resources that need to be used for this service.</div>
 
-            <div>
+          <div>
             <mat-form-field class="example-full-width">
               <input matInput type="text" class="form-control" id="resources" (keypress)="isNumeric($event)"
-              placeholder="Number of resources" formControlName="resoucesRequired" autocomplete="off">
+                placeholder="Number of resources" formControlName="resoucesRequired" autocomplete="off">
             </mat-form-field>
-         </div>
+          </div>
         </section>
       </div>
       <div class="row mgn-lt-5 mgn-up-20" *ngIf="!is_donation">
@@ -372,12 +373,12 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
           <div class="settings_info">
             Maximum no. of bookings allowed for a customer for the same service, same schedule and same day.</div>
 
-            <div>
+          <div>
             <mat-form-field class="example-full-width">
               <input matInput type="text" class="form-control" id="bookings" (keypress)="isNumeric($event)"
-              placeholder="Maximum bookings allowed" formControlName="maxBookingsAllowed" autocomplete="off">
+                placeholder="Maximum bookings allowed" formControlName="maxBookingsAllowed" autocomplete="off">
             </mat-form-field>
-         </div>
+          </div>
         </section>
       </div>
       <div class="form-group glbl-preview"
@@ -436,8 +437,9 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         </div>
       </div>
       <div *ngIf="bprofile.serviceSector.domain != 'finance'" class="mgn-bt-20">
-        <a class="no-padding underline pointer-cursor" (click)="billingInfoClicked()" *ngIf="!is_donation"
-          style="font-size: 1.1rem;">
+        <!-- <a class="no-padding underline pointer-cursor" (click)="billingInfoClicked()" *ngIf="!is_donation"
+          style="font-size: 1.1rem;"> -->
+        <a class="no-padding underline pointer-cursor" *ngIf="!is_donation" style="font-size: 1.1rem;">
           Payment Info</a>
         <div class="settings_info" *ngIf="!is_donation">
           Service price, advance amount and more</div>
@@ -506,6 +508,50 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             <mat-slide-toggle class="example-margin" formControlName="taxable" (change)="taxapplicableChange()">
             </mat-slide-toggle>
           </div>
+
+
+          <div class="row" *ngFor="let profile of paymentProfiles; let i=index">
+            <div class="col-md-5">
+
+            <div class="card" >
+              <mat-radio-group formControlName="paymentProfileId">
+                <mat-radio-button value="profile.profileId" [checked]="i==0">{{profile.displayName}}  </mat-radio-button>
+                <ng-container *ngIf="profile.indiaPay">
+                  <div class="col-md-6">
+                    <strong style="color:blue">RAZORPAY</strong>
+                    <ng-container *ngFor="let modes of getRazorModes(profile.indianPaymodes)">
+                      <div>
+
+                        <span>{{modes.mode}}</span>&nbsp;
+                      </div>
+                    </ng-container>
+                  </div>
+                  <div   class="col-md-6" style="float:left">
+                    <strong style="color:blue">PAYTM</strong>
+                    <ng-container *ngFor="let modes of getpaytmmodes(profile.indianPaymodes)">
+                      <div>
+
+                        <span>{{modes.mode}}</span>
+                      </div>
+                    </ng-container>
+
+                  </div>
+                </ng-container>
+
+                <ng-container *ngIf="profile.internationalPay">
+                  <div>
+                  <input type="checkbox" checked="true" readonly>International Payment
+                </div>
+
+                </ng-container>
+            
+
+              </mat-radio-group>
+              
+            </div>
+            </div>
+          </div>
+
         </section>
       </div>
 

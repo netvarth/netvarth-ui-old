@@ -2269,4 +2269,8 @@ export class ProviderServices {
     const url = 'provider/settings/waitlistMgr/personsAhead/' +status;
     return this.servicemeta.httpPut(url);
   }
+  getPaymentProfiles(){
+    const url='provider/payment/paymentProfiles'
+    return this.servicemeta.httpGet(url);
+  }
 } 
