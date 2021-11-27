@@ -283,6 +283,14 @@
                     </div>
                   </div>
                 </div>
+                 <div class="service-outer" *ngIf="selectedUser.id === 0">
+                  <ng-container>
+                    <div class="form-group">
+                      <mat-checkbox [(ngModel)]="selfAssign"> Assign myself</mat-checkbox>
+                  </div>
+            
+                  </ng-container>
+                </div> 
                 <div class="date-outer">
                   <div class="date-head" *ngIf="!settingsjson['showTokenId']">{{checkinLabel}} {{date_cap}}</div>
                   <div class="date-head" *ngIf="settingsjson['showTokenId']"> Token {{date_cap}}</div>

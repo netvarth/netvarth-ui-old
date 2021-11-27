@@ -243,6 +243,7 @@ export class ProviderCheckinComponent implements OnInit {
     preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
     phone;
     cuntryCode;
+    selfAssign;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -1220,6 +1221,9 @@ export class ProviderCheckinComponent implements OnInit {
         };
         if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
             post_Data['provider'] = { 'id': this.selectedUser.id };
+        }
+        if (this.selectedUser && this.selectedUser.firstName === Messages.NOUSERCAP) {
+            post_Data['selfAssign'] = this.selfAssign;
         }
         if (this.sel_ser_det.serviceType === 'virtualService') {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
