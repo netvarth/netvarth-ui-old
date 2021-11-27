@@ -337,6 +337,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="service-outer" *ngIf="selectedUser.id === 0">
+                                    <ng-container>
+                                      <div class="form-group">
+                                        <mat-checkbox [(ngModel)]="selfAssign"> &nbsp;&nbsp;Assign myself</mat-checkbox>
+                                    </div>
+                              
+                                    </ng-container>
+                                  </div> 
                                 <div class="date-outer">
                                     <div class="date-head">Appointment {{date_cap}}</div>
                                     <div class="date-body">
