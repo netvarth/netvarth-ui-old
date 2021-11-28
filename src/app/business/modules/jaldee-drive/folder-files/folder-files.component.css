@@ -581,12 +581,14 @@
     border-width: 0 0 1px 0;
     padding: 0.5rem 0.5rem !important;
 }
-@media screen and (min-width: 300px) {
-  .searchFilter {
-    margin: 1em 2em;
-    display: block;
+@media screen and (max-width: 385px) {
+  .customersList .row .card {
+    padding: 0 !important;
+    display: inline-block;
   }
-}
+} 
+
+
 
 /* @media
    (max-width: 960px){

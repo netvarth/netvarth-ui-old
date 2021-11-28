@@ -22,12 +22,17 @@ export class FolderFilesComponent implements OnInit {
   selectedTeam;
   addUser = false;
   tooltipcls = '';
-
+  apiloading = false;
   foldertype: any;
   foldername: any;
   fileviewdialogRef: any;
   filter_sidebar = false;
   filterapplied = false;
+  pagination: any = {
+    startpageval: 1,
+    totalCnt: this.customers.length,
+    perPage: 3
+  };
   filter = {
     fileSize: '',
     fileName: '',
@@ -90,7 +95,12 @@ export class FolderFilesComponent implements OnInit {
   pageChanged(event) {
     this.config.currentPage = event;
   }
-
+  handle_pageclick(pg) {
+    this.pagination.startpageval = pg;
+    // this.groupService.setitemToGroupStorage('customerPage', pg);
+    this.filter.page = pg;
+    // this.doSearch('pageclick');
+  }
   ngOnInit() {
     this.getfiles();
   }
