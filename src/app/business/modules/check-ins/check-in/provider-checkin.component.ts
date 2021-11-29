@@ -1886,8 +1886,6 @@ export class ProviderCheckinComponent implements OnInit {
                 }
             });
     }
-
-
     handleUserSelection(user) {
         this.selectedUser = user;
         this.queuejson = [];

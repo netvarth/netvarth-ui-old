@@ -121,13 +121,16 @@ export class ConfirmPaymentLinkComponent implements OnInit {
   onEmailChange(event) {
     this.emailId = event.target.value;
   }
+  // isNumeric(evt) {
+  //   if (evt === 'name') {
+  //     this.showNameError = false;
+  //   } else {
+  //     this.showError = false;
+  //     return this.shared_functions.isNumeric(evt);
+  //   }
+  // }
   isNumeric(evt) {
-    if (evt === 'name') {
-      this.showNameError = false;
-    } else {
-      this.showError = false;
-      return this.shared_functions.isNumeric(evt);
-    }
+    return this.shared_functions.isNumeric(evt);
   }
   onClick(data) {
     this.dialogRef.close(data);

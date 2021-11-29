@@ -202,6 +202,12 @@
                     </mat-form-field>
                   </ng-container>
                 </div>
+                <div class="" *ngIf="selectedUser && selectedUser.id === 0 && accountType === 'BRANCH'">
+                 
+                    <div class="date-head">
+                      <mat-checkbox [(ngModel)]="selfAssign"> Assign Myself</mat-checkbox>
+                  </div>
+                </div> 
                 <div class="service-outer" *ngIf="servicesjson.length > 0">
                   <ng-container>
                     <span *ngIf="servicesjson.length == 1">
@@ -283,14 +289,7 @@
                     </div>
                   </div>
                 </div>
-                 <div class="service-outer" *ngIf="selectedUser.id === 0">
-                  <ng-container>
-                    <div class="form-group">
-                      <mat-checkbox [(ngModel)]="selfAssign"> Assign myself</mat-checkbox>
-                  </div>
-            
-                  </ng-container>
-                </div> 
+                
                 <div class="date-outer">
                   <div class="date-head" *ngIf="!settingsjson['showTokenId']">{{checkinLabel}} {{date_cap}}</div>
                   <div class="date-head" *ngIf="settingsjson['showTokenId']"> Token {{date_cap}}</div>
