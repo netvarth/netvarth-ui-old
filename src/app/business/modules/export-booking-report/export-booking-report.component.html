@@ -1,0 +1,84 @@
+<!-- <app-common-innerloading-spinner *ngIf="api_loading1"> </app-common-innerloading-spinner> -->
+<mat-dialog-content>
+    <button class="btn btn-primary" (click)="exportToExcel()">Export to Excel</button> &nbsp;
+    <button class="btn btn-primary" (click)="closeDialog()">Go Back</button>
+    <div #source class="mgn-up-10">
+        <table class="table responsive" cellpadding=10>
+            <tr *ngIf="headerColumns">
+                <th>SL No.</th>
+                <th>Cluster</th>
+                <th>Sales Officer</th>
+                <th>Employee Code</th>
+                <th>Applicant Name</th>
+                <th>Product</th>
+                <th>Internal Status</th>
+                <th *ngFor="let bL of headerColumns | keyvalue">
+                    {{bL.value}}
+                </th>
+            </tr>
+            <ng-container *ngFor="let bl of bookingList; let i=index">
+                <tr>
+                    <td>{{i+1}}</td>
+                    <td *ngIf="bl.queue">{{bl.queue.location.place}}</td>
+                    <td *ngIf="bl.schedule && bl.location">{{bl.location.place}}</td>
+                    <td><span *ngIf="bl.provider">{{bl.provider.firstName + ' ' + bl.provider.lastName}}</span></td>
+                    <td *ngIf="bl.waitlistingFor">{{bl.waitlistingFor[0].memberJaldeeId}}</td>
+                    <td *ngIf="bl.waitlistingFor">{{bl.waitlistingFor[0].firstName + ' ' +bl.waitlistingFor[0].lastName}}</td>
+                    <td *ngIf="bl.appmtFor">{{bl.appmtFor[0].memberJaldeeId}}</td>
+                    <td  *ngIf="bl.appmtFor">{{bl.appmtFor[0].firstName + ' ' +bl.appmtFor[0].lastName}}</td>
+                    <td>{{bl.service.name}}</td>
+                    <td><span *ngIf="bl.internalStatus">{{bl.internalStatus}}</span></td>
+                    <td *ngFor="let header of headerColumns | keyvalue">
+                        <ng-container
+                            *ngIf="bl['questionList'] && bl['answerList'] && bl['answerList'][header.key] && bl['answerList'][header.key][0]['answer']">
+                            <ng-container *ngIf="bl['answerList'][header.key][0]['answer'].plainText">
+                                {{bl['answerList'][header.key][0]['answer'].plainText}}
+                            </ng-container>
+                            <ng-container
+                                *ngIf="bl['answerList'][header.key][0]['answer'].fileUpload && bl['answerList'][header.key][0]['answer'].fileUpload.length > 0">
+                                Yes
+                            </ng-container>
+                            <ng-container
+                                *ngIf="bl['answerList'][header.key][0]['answer'].fileUpload && bl['answerList'][header.key][0]['answer'].fileUpload.length == 0">
+                                No
+                            </ng-container>
+                            <ng-container
+                                *ngIf="bl['answerList'][header.key][0]['answer'].bool && bl['answerList'][header.key][0]['answer'].bool == 'true'">
+                                Yes
+                            </ng-container>
+                            <ng-container
+                                *ngIf="bl['answerList'][header.key][0]['answer'].bool && bl['answerList'][header.key][0]['answer'].bool == 'false'">
+                                No
+                            </ng-container>
+                            <ng-container
+                                *ngIf="bl['answerList'][header.key][0]['answer'].dataGrid && bl['answerList'][header.key][0]['answer'].dataGrid.length>0">
+                                <div
+                                    *ngFor="let rows of bl['answerList'][header.key][0]['answer'].dataGrid; let i=index">
+                                    <p *ngFor="let rowHeader of rows.dataGridColumn">
+                                        <ng-container *ngIf="rowHeader.column.plainText">
+                                            {{rowHeader.columnId}}: <strong>{{rowHeader.column.plainText}}</strong>
+                                        </ng-container>
+                                        <ng-container
+                                            *ngIf="rowHeader.column.fileUpload && rowHeader.column.fileUpload.length > 0">
+                                            {{rowHeader.columnId}}: Yes
+                                        </ng-container>
+                                        <ng-container
+                                            *ngIf="rowHeader.column.fileUpload && rowHeader.column.fileUpload.length == 0">
+                                            {{rowHeader.columnId}}: No
+                                        </ng-container>
+                                        <ng-container *ngIf="rowHeader.column.bool && rowHeader.column.bool == 'true'">
+                                            {{rowHeader.columnId}}: Yes
+                                        </ng-container>
+                                        <ng-container *ngIf="rowHeader.column.bool && rowHeader.column.bool == 'false'">
+                                            {{rowHeader.columnId}}: No
+                                        </ng-container>
+                                    </p>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </td>
+                </tr>
+            </ng-container>
+        </table>
+    </div>
+</mat-dialog-content>
