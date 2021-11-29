@@ -232,24 +232,21 @@
                                 </div>
                                 <div class="service-outer" *ngIf="users.length > 0 && accountType === 'BRANCH'">
                                     <ng-container>
-                                        <mat-form-field *ngIf="users.length == 1">
-                                            <input matInput *ngFor="let user of users" [readonly]="true"
-                                                placeholder="{{provider_label | capitalizeFirst}}"
-                                                value="{{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}">
-                                        </mat-form-field>
-                                        <mat-form-field *ngIf="users.length > 1">
-                                            <mat-select placeholder="Select {{provider_label | capitalizeFirst}}"
-                                                [ngModel]="selected_user" #usersel
-                                                (selectionChange)="handleUserSelection(usersel.value)">
-                                                <mat-option *ngFor="let user of users" [value]="user">
-                                                    <!-- {{user.firstName}} {{user.lastName}} -->
-                                                    {{(user.businessName) ? user.businessName : user.firstName + ' ' +
-                                                    user.lastName}}
-                                                </mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
+                                      <mat-form-field *ngIf="users.length == 1">
+                                        <input matInput *ngFor="let user of users" [readonly]="true"
+                                          placeholder="{{provider_label | capitalizeFirst}}"
+                                          value="{{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}">
+                                      </mat-form-field>
+                                      <mat-form-field *ngIf="users.length > 1">
+                                        <mat-select placeholder="Select {{provider_label | capitalizeFirst}}" [ngModel]="selected_user"
+                                          #usersel (selectionChange)="handleUserSelection(usersel.value)">
+                                          <mat-option *ngFor="let user of users" [value]="user">
+                                            {{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </mat-form-field>
                                     </ng-container>
-                                </div>
+                                  </div>
                                 <div class="" *ngIf="selectedUser && selectedUser.id === 0 && accountType === 'BRANCH'">
                  
                                     <div class="date-head">
