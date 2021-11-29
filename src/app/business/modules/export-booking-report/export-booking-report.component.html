@@ -10,11 +10,11 @@
                 <th>Sales Officer</th>
                 <th>Employee Code</th>
                 <th>Applicant Name</th>
-                <th>Product</th>
-                <th>Internal Status</th>
+                <th>Product</th>                
                 <th *ngFor="let bL of headerColumns | keyvalue">
                     {{bL.value}}
                 </th>
+                <th>Final Status</th>
             </tr>
             <ng-container *ngFor="let bl of bookingList; let i=index">
                 <tr>
@@ -22,12 +22,10 @@
                     <td *ngIf="bl.queue">{{bl.queue.location.place}}</td>
                     <td *ngIf="bl.schedule && bl.location">{{bl.location.place}}</td>
                     <td><span *ngIf="bl.provider">{{bl.provider.firstName + ' ' + bl.provider.lastName}}</span></td>
-                    <td *ngIf="bl.waitlistingFor">{{bl.waitlistingFor[0].memberJaldeeId}}</td>
+                    <td><span *ngIf="bl.provider && bl.provider.employeeId">{{bl.provider.employeeId}}</span></td>
                     <td *ngIf="bl.waitlistingFor">{{bl.waitlistingFor[0].firstName + ' ' +bl.waitlistingFor[0].lastName}}</td>
-                    <td *ngIf="bl.appmtFor">{{bl.appmtFor[0].memberJaldeeId}}</td>
                     <td  *ngIf="bl.appmtFor">{{bl.appmtFor[0].firstName + ' ' +bl.appmtFor[0].lastName}}</td>
-                    <td>{{bl.service.name}}</td>
-                    <td><span *ngIf="bl.internalStatus">{{bl.internalStatus}}</span></td>
+                    <td>{{bl.service.name}}</td>                   
                     <td *ngFor="let header of headerColumns | keyvalue">
                         <ng-container
                             *ngIf="bl['questionList'] && bl['answerList'] && bl['answerList'][header.key] && bl['answerList'][header.key][0]['answer']">
@@ -77,6 +75,7 @@
                             </ng-container>
                         </ng-container>
                     </td>
+                    <td><span *ngIf="bl.internalStatus">{{bl.internalStatus}}</span></td>
                 </tr>
             </ng-container>
         </table>

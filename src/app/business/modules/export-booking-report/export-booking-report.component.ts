@@ -50,23 +50,19 @@ export class ExportBookingReportComponent implements OnInit {
     this.headerColumns = {};
     let columnValues = [];
     this.bookingList.forEach(booking => {
-      console.log("Booking:");
-      console.log(booking);
+      // console.log("Booking:");
+      // console.log(booking);
       if (booking.questionList) {
         Object.keys(booking.questionList).forEach(key => {
-          console.log(booking.questionList[key][0].labelName);
           if (columnValues.indexOf(key) === -1) {
             columnValues[key] = key;
-            this.headerColumns[key] = booking.questionList[key][0].labelName;
+            this.headerColumns[key] = booking.questionList[key][0].label;
           }
         })
       }
-      console.log(this.headerColumns);
+      // console.log(this.headerColumns);
     });
-
-
-
-    console.log(this.bookingList);
+    // console.log(this.bookingList);
   }
   exportToExcel() {
     this.exportService.exportToExcelFromHTml(this.source.nativeElement, 'qReport');
