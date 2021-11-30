@@ -20,6 +20,7 @@ import { AddAddressModule } from "./add-address/add-address.module";
 import { CheckoutComponent } from "./checkout.component";
 import { JcCouponNoteModule } from "../../jc-coupon-note/jc-coupon-note.module";
 import { RouterModule, Routes } from "@angular/router";
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 const routes: Routes = [
     {path: '', component: CheckoutComponent}
 ]
@@ -32,6 +33,7 @@ const routes: Routes = [
         MatGridListModule,
         MatChipsModule,
         MatDatepickerModule,
+        MatMomentDateModule,
         MatButtonModule,
         MatTooltipModule,
         MatCheckboxModule,

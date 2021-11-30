@@ -180,7 +180,7 @@ getLanguages(languages) {
           return user
       })
       _this.users_list.map(function(user) {
-        const businessLocations = _this.locationsjson.filter(loc => user.userType==='PROVIDER' && !(user.bussLocations.indexOf(loc.id)<0));
+        const businessLocations = _this.locationsjson.filter(loc => user.userType==='PROVIDER' && user.bussLocations?!(user.bussLocations.indexOf(loc.id)<0):"");
         user.businessLocations = businessLocations.map(loc => loc.place);
         return user
       })
@@ -529,7 +529,7 @@ getLanguages(languages) {
       api_filter['preferredLanguages-eq'] = this.selectedLanguages.toString();
     }
     if (this.selectedSpecialization.length > 0) {
-      api_filter['specialization-eq'] = this.selectedSpecialization.toString();
+      api_filter['specialization-eq'] = 'name::' + this.selectedSpecialization.toString();
     }
     return api_filter;
   }
@@ -539,7 +539,6 @@ getLanguages(languages) {
       this.doSearch();
     }
   }
-
   getSpokenLanguages() {
     this.provider_services.getSpokenLanguages()
       .subscribe(data => {
@@ -666,7 +665,6 @@ getLanguages(languages) {
       }
     });
 }
-
 getApptDetails() {
   this.provider_services.getAppointmentById(this.uuid)
     .subscribe(

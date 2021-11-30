@@ -303,7 +303,7 @@ export class BranchUsersComponent implements OnInit {
                                 return user
                             })
                             _this.users_list.map(function(user) {
-                                const businessLocations = _this.locationsjson.filter(loc => user.userType==='PROVIDER' && !(user.bussLocations.indexOf(loc.id)<0));
+                                const businessLocations = _this.locationsjson.filter(loc => user.userType==='PROVIDER' && user.bussLocations?!(user.bussLocations.indexOf(loc.id)<0):"");
                                 user.businessLocations = businessLocations.map(loc => loc.place);
                                 return user
                               })
