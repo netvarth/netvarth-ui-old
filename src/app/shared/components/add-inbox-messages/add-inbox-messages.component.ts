@@ -784,6 +784,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         .subscribe(
           () => {
             this.api_success = Messages.CONSUMERTOPROVIDER_NOTE_ADD;
+            console.log("Consumer Messages :",this.api_success);
             setTimeout(() => {
               this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
