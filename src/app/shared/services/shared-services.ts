@@ -436,7 +436,7 @@ export class SharedServices {
     return this.servicemeta.httpGet(url);
   }
   addConsumertoProviderNote(message, filter) {
-    const url = 'consumer/communications/filterComm';
+    const url = 'consumer/communications';
     return this.servicemeta.httpPost(url, message, null, filter);
   }
   addProvidertoConsumerNote(consumerId, message, filter?) {
