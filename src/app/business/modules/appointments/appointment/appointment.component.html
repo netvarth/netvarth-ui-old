@@ -247,7 +247,7 @@
                                       </mat-form-field>
                                     </ng-container>
                                   </div>
-                                <div class="" *ngIf="selectedUser && selectedUser.id === 0 && accountType === 'BRANCH'">
+                                <div class="" *ngIf="selectedUser && selectedUser.id === 0 && accountType === 'BRANCH' && this.assignmyself">
                  
                                     <div class="date-head">
                                       <mat-checkbox [(ngModel)]="selfAssign"> Assign Myself</mat-checkbox>

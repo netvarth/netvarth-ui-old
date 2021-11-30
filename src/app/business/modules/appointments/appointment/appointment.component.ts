@@ -242,6 +242,7 @@ export class AppointmentComponent implements OnInit {
     phone;
     cuntryCode: any;
     selfAssign;
+    assignmyself;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -373,6 +374,12 @@ export class AppointmentComponent implements OnInit {
         };
         this.createForm();
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        if(user.userType == 1) {
+            this.assignmyself = true;
+        }
+        else{
+            this.assignmyself = false; 
+        }
         this.domain = user.sector;
         this.api_loading = false;
         this.get_token_cap = Messages.GET_TOKEN;

@@ -244,6 +244,7 @@ export class ProviderCheckinComponent implements OnInit {
     phone;
     cuntryCode;
     selfAssign;
+    assignmyself;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -350,6 +351,12 @@ export class ProviderCheckinComponent implements OnInit {
     }
     ngOnInit() {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        if(user.userType == 1) {
+            this.assignmyself = true;
+        }
+        else{
+            this.assignmyself = false; 
+        }
         this.domain = user.sector;
         this.carouselOne = {
             dots: false,
