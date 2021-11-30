@@ -114,6 +114,7 @@ export class ServiceViewComponent implements OnInit {
   servicesAndProviders: any[];
   donationServices: any[];
   serviceCount: number;
+  images:any;
   userCount: number;
   waitlisttime_arr: any;
   appttime_arr: any;
@@ -194,7 +195,9 @@ export class ServiceViewComponent implements OnInit {
     responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 2 }, 1200: { items: 3 } }
 }
   ngOnInit() {
-    console.log("Image List : ",this.image_list_popup)
+
+    console.log("Image Galley :",this.galleryenabledArr)
+
     const _this = this;
     _this.accountIdExists = false;
     if (_this.sharedFunctionobj.isBusinessOwner()) {
@@ -566,6 +569,7 @@ export class ServiceViewComponent implements OnInit {
                 _this.servicename = _this.apptServices[aptIndex]['name'];
                 _this.servicedetails = _this.apptServices[aptIndex];
                 console.log("details" + JSON.stringify(_this.servicedetails));
+
                 _this.getduration(_this.servicedetails);
                 if (_this.servicedetails.serviceAvailability['nextAvailable']) {
                   _this.timingCaptionapt = 'Next Available Time';
@@ -575,8 +579,12 @@ export class ServiceViewComponent implements OnInit {
                   _this.deptname = _this.apptServices[aptIndex]['deptName'];
                 }
               }
+              console.log("Service Images :",_this.apptServices[aptIndex]['servicegallery']);
+              this.images  = _this.apptServices[aptIndex]['servicegallery'];
+              console.log("List Images : ",this.images)
+
             }
-            console.log(_this.apptServices);
+            console.log("",_this.apptServices);
             _this.setServiceUserDetails();
             _this.loading = false;
           },
@@ -642,6 +650,7 @@ export class ServiceViewComponent implements OnInit {
     this.galleryenabledArr = []; // For showing gallery
     this.image_list_popup = [];
     this.tempgalleryjson = res;
+    console.log("Image Length : ",this.tempgalleryjson);
     if (this.tempgalleryjson.length > 5) {
       this.extra_img_count = this.tempgalleryjson.length - 5;
     }
