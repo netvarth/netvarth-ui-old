@@ -8,7 +8,7 @@ export class InboxServices {
     constructor(private servicemeta: ServiceMeta) { }
 
     getInbox(usertype) {
-        return this.servicemeta.httpGet(usertype + '/communications/filterComm');
+        return this.servicemeta.httpGet(usertype + '/communications');
     }
 
     getEnquiryInbox(usertype) {
