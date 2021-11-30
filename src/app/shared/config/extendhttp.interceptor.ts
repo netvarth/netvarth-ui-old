@@ -201,7 +201,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
           if (error instanceof HttpErrorResponse) {
             if (this._checkSessionExpiryErr(error)) {
               if (!this.sessionExpired) {
-                this.shared_services.callHealth(JSON.stringify(this.loggedUrls)).subscribe();
+                // this.shared_services.callHealth(JSON.stringify(this.loggedUrls)).subscribe();
                 this.sessionExpired = true;
               }             
               // const isprovider = this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true';
