@@ -12,8 +12,8 @@
                         </div>
                         <form [formGroup]="instantQForm" novalidate (ngSubmit)="instantQForm.valid &&
                                 onSubmit(instantQForm.value)">
-                                <app-common-innerloading-spinner *ngIf="!loading"></app-common-innerloading-spinner>
-                                <div class="timings" *ngIf="loading">
+                                <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                                <div class="timings" *ngIf="!loading">
                                         <div class="head">Make me available</div>
                                         <div class="form-timepicker-fields">
                                                 <div class="start">
@@ -67,7 +67,7 @@
                                         <button type="button" class="btn cancel-button"
                                                 (click)="close()">Cancel</button>
                                         <button class="btn confirm-button"
-                                                [disabled]="!instantQForm.valid || !loading">Confirm</button>
+                                                [disabled]="!instantQForm.valid || loading">Confirm</button>
                                 </div>
                         </form>
                 </div>

@@ -46,7 +46,7 @@ export class GlobalErrorHandler implements ErrorHandler {
         mailError['errorStack'] = error.stack;
         console.log('inside global error');
         const chunkFailedMessage = /Loading chunk [\d]+ failed/;
-        if (chunkFailedMessage.test(error.message) || error.message.contains('Loading chunk')) {
+        if (chunkFailedMessage.test(error.message)) {
             console.log("Active Url:" + router.url);
             if (router.url !== '/') {
                 this.router.navigateByUrl(router.url)

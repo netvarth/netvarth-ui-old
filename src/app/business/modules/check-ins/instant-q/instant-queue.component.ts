@@ -36,7 +36,7 @@ export class InstantQueueComponent implements OnInit {
     qId: any;
     instantQId;
     queue_list: any = {};
-    loading = false;
+    loading = true;
     constructor(
         public dialogRef: MatDialogRef<InstantQueueComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
@@ -98,7 +98,7 @@ export class InstantQueueComponent implements OnInit {
             dend_time: [{ hour: parseInt(moment(this.toDateCaption, ['hh:mm A']).format('HH'), 10), minute: parseInt(moment(this.toDateCaption, ['hh:mm A']).format('mm'), 10) }, Validators.compose([Validators.required])]
         });
         setTimeout(() => {
-            this.loading = true;
+            this.loading = false;
         }, 500);
     }
     editStartTime() {
