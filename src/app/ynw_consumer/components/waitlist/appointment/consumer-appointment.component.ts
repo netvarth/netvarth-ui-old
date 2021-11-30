@@ -443,7 +443,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.paytmEnabled = false;
         this.razorpayEnabled = false;
         this.interNatioanalPaid = false;
-        this.shared_services.getPaymentModesofProvider(this.account_id, 'prePayment')
+        this.shared_services.getPaymentModesofProvider(this.account_id,this.selectedService, 'prePayment')
             .subscribe(
                 data => {
                     this.paymentmodes = data;

@@ -2273,4 +2273,8 @@ export class ProviderServices {
     const url='provider/payment/paymentProfiles'
     return this.servicemeta.httpGet(url);
   }
+  getPaymentGateWay(data) {
+    const url='/consumer/payment'
+    return this.servicemeta.httpPost(url,data);  
+  }
 } 

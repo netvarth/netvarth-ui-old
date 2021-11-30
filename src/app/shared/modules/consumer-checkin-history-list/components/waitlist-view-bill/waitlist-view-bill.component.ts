@@ -226,7 +226,7 @@ ngOnDestroy() {
    */
   getPaymentModes() {
     this.paytmEnabled = false;
-    this.sharedServices.getPaymentModesofProvider(this.checkin.providerAccount.id)
+    this.sharedServices.getPaymentModesofProvider(this.checkin.providerAccount.id,this.checkin.service.id)
       .subscribe(
         data => {
           this.payment_options = data;

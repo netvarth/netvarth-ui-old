@@ -455,8 +455,8 @@ export class SharedServices {
     const url = 'consumer/waitlist/communicate/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpPost(url, body);
   }
-  getPaymentModesofProvider(provid,purpose?) {
-    const url = 'consumer/payment/modes/' + provid +'/'+ purpose;
+  getPaymentModesofProvider(provid,serviceId,purpose?) {
+    const url = 'consumer/payment/modes/' + provid +'/'+serviceId+ '/'+ purpose;
     return this.servicemeta.httpGet(url);
   }
   consumerPayment(data) {

@@ -1900,3 +1900,20 @@ body.modal-open {
   .changebt{
     color: #1572a8 !important;
   }
+  .content .card {
+    /* border:2px solid grey !important; */
+    box-shadow: 0 0 5px 5px grey!important
+
+  }
+  /* input[type="radio"]:checked {
+    border :2px solid blue !important;
+    font-weight:400px;
+  } */
+  .paymentmode{
+    font-size:16px!important;
+  }
+  .paymentmode > .mat-radio-button.mat-radio-checked { 
+    border-color: blue !important;
+    box-shadow: 0 0 5px 5px blue!important
+  }
+  

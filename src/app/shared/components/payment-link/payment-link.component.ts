@@ -129,6 +129,7 @@ export class PaymentLinkComponent implements OnInit {
   @ViewChild('consumer_paylink') paytmview;
   razorpayEnabled = false;
   interNatioanalPaid = false;
+  serviceId: any;
   constructor(
     public provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
@@ -174,6 +175,7 @@ export class PaymentLinkComponent implements OnInit {
             this.uuid = this.bill_data.uuid;
             this.accountId = this.bill_data.accountId;
             this.countryCode = this.bill_data.billFor.countryCode;
+            this.serviceId=this.bill_data.service.id;
 
           }
           if (this.bill_data && this.bill_data.accountId === 0) {
@@ -224,7 +226,7 @@ export class PaymentLinkComponent implements OnInit {
     this.paytmEnabled = false;
     this.razorpayEnabled = false;
     this.interNatioanalPaid = false;
-    this.sharedServices.getPaymentModesofProvider(this.accountId, 'billPayment')
+    this.sharedServices.getPaymentModesofProvider(this.accountId,this.serviceId, 'billPayment')
       .subscribe(
         data => {
           this.paymentmodes = data;

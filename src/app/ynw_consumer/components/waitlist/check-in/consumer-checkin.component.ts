@@ -236,6 +236,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     customer_countrycode: any;
     from: string;
     wt_personaahead;
+    selection_modes: any;
+    indian_payment_modes: any;
+    non_indian_modes: any;
+    selected_payment_mode: any;
+    isInternatonal: boolean;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -403,39 +408,45 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.paytmEnabled = false;
         this.razorpayEnabled = false;
         this.interNatioanalPaid = false;
-        this.shared_services.getPaymentModesofProvider(this.account_id, 'prePayment')
+        this.shared_services.getPaymentModesofProvider(this.account_id, this.selectedService, 'prePayment')
             .subscribe(
                 data => {
-                    this.paymentmodes = data;
-                    if (this.paymentmodes[0].isJaldeeBank) {
-
-                        if (this.customer_countrycode == '+91') {
-
-                            this.paytmEnabled = true;
-                            this.interNatioanalPaid = true;
-                        }
-                        else {
-
-                            this.razorpayEnabled = true;
-                        }
+                    this.paymentmodes = data[0];
+                    console.log('paymnet modes'+JSON.stringify(this.paymentmodes));
+                    if (this.paymentmodes.indiaPay) {
+                        this.indian_payment_modes=this.paymentmodes.indiaBankInfo;
                     }
-                    else {
-                        if (this.customer_countrycode == '+91') {
-                            for (let modes of this.paymentmodes) {
-                                for (let gateway of modes.payGateways) {
-                                    if (gateway == 'PAYTM') {
-                                        this.paytmEnabled = true;
-                                    }
-                                    if (gateway == 'RAZORPAY') {
-                                        this.razorpayEnabled = true;
-                                    }
-                                }
-                            }
-                        }
-                        else {
-                            this.razorpayEnabled = true;
-                        }
+                    else if(this.paymentmodes.internationalPay){
+                        this.non_indian_modes=this.paymentmodes.internationalBankInfo;
                     }
+
+                    //     if (this.customer_countrycode == '+91') {
+
+                    //         this.paytmEnabled = true;
+                    //         this.interNatioanalPaid = true;
+                    //     }
+                    //     else {
+
+                    //         this.razorpayEnabled = true;
+                    //     }
+                    // }
+                    // else {
+                    //     if (this.customer_countrycode == '+91') {
+                    //         for (let modes of this.paymentmodes) {
+                    //             for (let gateway of modes.payGateways) {
+                    //                 if (gateway == 'PAYTM') {
+                    //                     this.paytmEnabled = true;
+                    //                 }
+                    //                 if (gateway == 'RAZORPAY') {
+                    //                     this.razorpayEnabled = true;
+                    //                 }
+                    //             }
+                    //         }
+                    //     }
+                    //     else {
+                    //         this.razorpayEnabled = true;
+                    //     }
+                    // }
                     //   if(this.customer_countrycode == '+91'){
                     //     this.getPaymentModes();
                     // } else {
@@ -456,6 +467,17 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 },
 
             );
+    }
+    indian_payment_mode_onchange(event) {
+        this.selected_payment_mode=event.value;
+        this.isInternatonal=false;
+        // const paymentDTO={
+        //     'serviceId':this.selectedService,
+        //     'isInternational':false,
+        //      'paymentMode':event.value 
+        //     }
+
+
     }
     ngOnDestroy(): void {
         this.subs.unsubscribe();
@@ -958,10 +980,16 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         });
     }
     saveCheckin(type?, paymenttype?) {
-        // if(type==='checkin'){
-        //     this.isClickedOnce=true;
-        // }
+        const paymentDTO={
+            'serviceId':this.selectedService,
+            'isInternational':this.isInternatonal,
+             'paymentMode':this.selected_payment_mode
+            }
+            this.provider_services.getPaymentGateWay(paymentDTO)
+            .subscribe(result=>{
+                console.log(result);
 
+            })
         if (type === 'checkin') {
 
             if (this.interNatioanalPaid) {

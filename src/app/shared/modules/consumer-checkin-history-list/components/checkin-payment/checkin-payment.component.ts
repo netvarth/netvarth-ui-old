@@ -50,6 +50,7 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
     @Inject(DOCUMENT) public document
   ) {
     this.checkin = this.data.checkin || null;
+    alert('checkin'+this.checkin);
     this.bill_data = this.data.bill_data || null;
     this.getPaymentModes();
     if (!this.bill_data) {
@@ -63,7 +64,7 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
   ngOnInit() {
   }
   getPaymentModes() {
-    this.shared_services.getPaymentModesofProvider(this.checkin.provider.id)
+    this.shared_services.getPaymentModesofProvider(this.checkin.provider.id,this.checkin.service.id)
       .subscribe(
         data => {
           this.payment_options = data;
