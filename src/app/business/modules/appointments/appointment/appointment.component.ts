@@ -1795,7 +1795,7 @@ export class AppointmentComponent implements OnInit {
 
 
     getAvailableUsers() {
-        this.provider_services.getAvailableUsers().subscribe(
+        this.provider_services.getAvailableUsersAppt().subscribe(
             (users: any) => {
                 // const filteredUser = users.filter(user => user.status === 'ACTIVE');
                 this.users = users;

@@ -1875,7 +1875,7 @@ export class ProviderCheckinComponent implements OnInit {
 
 
     getAvailableUsers() {
-        this.provider_services.getAvailableUsers().subscribe(
+        this.provider_services.getAvailableUsersWaitlist().subscribe(
             (users: any) => {
                 // const filteredUser = users.filter(user => user.status === 'ACTIVE');
                 this.users = users;
