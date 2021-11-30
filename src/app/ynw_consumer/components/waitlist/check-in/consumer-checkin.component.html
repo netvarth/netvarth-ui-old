@@ -1351,7 +1351,7 @@
                                                     </div> -->
                                                     <div class="clearfix"></div>
                                                     <div *ngFor="let modes of indian_payment_modes">
-                                                        <div class="col-md-3  ">
+                                                        <div class="col-xs-12  col-sm-6 col-lg-3  ">
 
                                                                 <div class="paymentmode card text-primary" >
                                                                   <mat-radio-group name="paymentMode" (change)="indian_payment_mode_onchange($event)">
@@ -1389,16 +1389,20 @@
                                                         <button type="button"
                                                             class=" next-button btn btn-primary font-weight-bold text-uppercase "
                                                             [class.disabled]="paymentBtnDisabled"
-                                                            *ngIf=" paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
+                                                            *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
                                                             (click)="!isClickedOnce && saveCheckin('checkin')">
                                                            MaKe Payment
                                                         </button>
-                                                                  <!-- <button type="button"
-                                                            class="  next-button btn btn-primary font-weight-bold text-uppercase "
-                                                            [class.disabled]="isClickedOnce"
-                                                            *ngIf="paytmEnabled && !razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
-                                                            (click)="!isClickedOnce && saveCheckin('checkin','paytm')">
-                                                            Pay by CC/DC/UPI
+                                                        <!-- <button type="button" [class.disabled]="isClickedOnce"
+                                                        (click)="!isClickedOnce && saveCheckin('checkin')"
+                                                        id="stepThreeConfirmButton"
+                                                        class="next-button btn btn-primary font-weight-bold  px-12 py-4"
+                                                        [disabled]="!checkPolicy && heartfulnessAccount||paymentBtnDisabled">
+                                                        <ng-container
+                                                            *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
+                                                  ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
+                                                            Confirm {{settingsjson.showTokenId?'Token ':'Checkin'}}
+                                                        </ng-container>
                                                         </button> -->
                                                     </div>
                                                     <!-- <div class=""

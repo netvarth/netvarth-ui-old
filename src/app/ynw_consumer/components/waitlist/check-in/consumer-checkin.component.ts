@@ -241,6 +241,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     non_indian_modes: any;
     selected_payment_mode: any;
     isInternatonal: boolean;
+    gateway: any;
+    isPayment: boolean;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -412,6 +414,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.paymentmodes = data[0];
+                     this.isPayment=true;
                     console.log('paymnet modes'+JSON.stringify(this.paymentmodes));
                     if (this.paymentmodes.indiaPay) {
                         this.indian_payment_modes=this.paymentmodes.indiaBankInfo;
@@ -420,62 +423,20 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         this.non_indian_modes=this.paymentmodes.internationalBankInfo;
                     }
 
-                    //     if (this.customer_countrycode == '+91') {
-
-                    //         this.paytmEnabled = true;
-                    //         this.interNatioanalPaid = true;
-                    //     }
-                    //     else {
-
-                    //         this.razorpayEnabled = true;
-                    //     }
-                    // }
-                    // else {
-                    //     if (this.customer_countrycode == '+91') {
-                    //         for (let modes of this.paymentmodes) {
-                    //             for (let gateway of modes.payGateways) {
-                    //                 if (gateway == 'PAYTM') {
-                    //                     this.paytmEnabled = true;
-                    //                 }
-                    //                 if (gateway == 'RAZORPAY') {
-                    //                     this.razorpayEnabled = true;
-                    //                 }
-                    //             }
-                    //         }
-                    //     }
-                    //     else {
-                    //         this.razorpayEnabled = true;
-                    //     }
-                    // }
-                    //   if(this.customer_countrycode == '+91'){
-                    //     this.getPaymentModes();
-                    // } else {
-                    //     this.razorpayEnabled = true;
-                    // }
-                    // for(let modes of this.paymentmodes){
-                    //    for(let gateway of modes.payGateways){
-                    //        if(gateway == 'PAYTM'){
-                    //         this.paytmEnabled = true;
-                    //        }
-                    //        if(gateway == 'RAZORPAY'){
-                    //         this.razorpayEnabled = true;
-                    //        }
-                    //    }
-                    // }
-
-
                 },
+                error=>{
+                    console.log('inisdee')
+                   this.isPayment=false;
+                   console.log(this.isPayment);
+                }
+                
 
             );
     }
     indian_payment_mode_onchange(event) {
         this.selected_payment_mode=event.value;
         this.isInternatonal=false;
-        // const paymentDTO={
-        //     'serviceId':this.selectedService,
-        //     'isInternational':false,
-        //      'paymentMode':event.value 
-        //     }
+
 
 
     }
@@ -645,6 +606,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.selectedDeptParam = serv.department;
             this.getDepartmentById(this.selectedDeptParam);
         }
+        console.log(serv);
         this.sel_ser_det = {
             name: serv.name,
             duration: serv.serviceDuration,
@@ -667,6 +629,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             consumerNoteMandatory: serv.consumerNoteMandatory,
             consumerNoteTitle: serv.consumerNoteTitle
         };
+        console.log('isPrepayment'+this.sel_ser_det.isPrePayment)
+        console.log('minPrePaymentAmount'+this.sel_ser_det.minPrePaymentAmount)
         if (serv.provider) {
             this.sel_ser_det.provider = serv.provider;
         }
@@ -980,47 +944,55 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         });
     }
     saveCheckin(type?, paymenttype?) {
+        if (type === 'checkin') {
+                this.isClickedOnce = true
+                this.paymentBtnDisabled = false;
+
+
+        
         const paymentDTO={
             'serviceId':this.selectedService,
             'isInternational':this.isInternatonal,
              'paymentMode':this.selected_payment_mode
             }
+            if(this.selected_payment_mode==='WALLET'){
+                this.provider_services.getWalletPaymentGateWay(paymentDTO)
+                .subscribe((result:any)=>{
+                  this.gateway=result.gateway;
+                  this.setGatewayandConfirm(type,this.gateway);
+    
+                })  
+            }else{
             this.provider_services.getPaymentGateWay(paymentDTO)
-            .subscribe(result=>{
+            .subscribe((result:any)=>{
                 console.log(result);
+                this.gateway=result.gateway;
+                this.setGatewayandConfirm(type,this.gateway);
 
             })
-        if (type === 'checkin') {
-
-            if (this.interNatioanalPaid) {
-                this.isClickedOnce = true
-                this.paymentBtnDisabled = false;
-
-            }
-            if (this.razorpayEnabled && !this.paytmEnabled) {
-                this.isClickedOnce = true
-                this.paymentBtnDisabled = false;
-            }
-            
-
         }
-        if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
-            if (this.waitlist_for.length !== 0) {
-                for (const list of this.waitlist_for) {
-                    // const memberObject = this.familymembers.filter(member => member.userProfile.id === list['id']);
-                    if (list['id'] !== this.customer_data.id) {
-                        // this.confirmVirtualServiceinfo(memberObject, type);
-                        this.confirmcheckin(type, paymenttype);
-                    } else {
-                        this.confirmcheckin(type, paymenttype);
-                    }
+    }
+       
+       
+    }
+  setGatewayandConfirm(type,paymenttype){
+    if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
+        if (this.waitlist_for.length !== 0) {
+            for (const list of this.waitlist_for) {
+                // const memberObject = this.familymembers.filter(member => member.userProfile.id === list['id']);
+                if (list['id'] !== this.customer_data.id) {
+                    // this.confirmVirtualServiceinfo(memberObject, type);
+                    this.confirmcheckin(type, paymenttype);
+                } else {
+                    this.confirmcheckin(type, paymenttype);
                 }
             }
-        } else {
-            this.confirmcheckin(type, paymenttype);
         }
-
+    } else {
+        this.confirmcheckin(type, paymenttype);
     }
+
+  }
     virtualModal() {
         const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
             width: '40%',
