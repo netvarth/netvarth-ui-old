@@ -33,8 +33,47 @@
                                             <mat-radio-button [disabled]="disableMyAcc" [value]="'disable'">
                                             </mat-radio-button>
                                             <label for="">{{my_own_account_cap}}</label>
-                                            <div class="payment-smalldevice" *ngIf="optJaldeeAccount!='enable'">
-                                                <div class="outermost" *ngIf="jPay_Billing">
+                                          <div class="payment-smalldevice" *ngIf="optJaldeeAccount!='enable'">
+                                             <div *ngFor="let bank of paySettings;let i=index">
+                                                 <div class="col-md-6">
+                                                <div class="card">
+                                                 <div class="card-header">
+                                                        <div><label><b>Bank </b>:{{bank.bankName}}</label></div>
+                                                        <div><label><b>Branch/City </b>:{{bank.branchCity}}</label></div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="col-md-6">
+                                                       <div><label><b>A/c Type </b>:{{bank.accountType}}</label></div> 
+                                                    <div><label><b>A/c Number</b>:{{bank.bankAccountNumber}}</label></div> 
+                                                     <div><label><b>A/c Holder Name</b>:{{bank.accountHolderName}}</label></div>
+                                                     <div><label><b>IFSC Code</b>:{{bank.ifscCode}}</label></div>
+                                                     </div>
+                                                     <div class="col-md-6" style="float:right">
+                                                            <div class="ttle">
+                                                                    <i *ngIf="bank.payTmVerified"
+                                                                        class="fa fa-check" style="color: green"></i>
+                                                                    <i *ngIf="!bank.payTmVerified"
+                                                                        class="fa fa-times" style="color: red"></i>
+                                                                    Paytm Verified </div>
+                                                                    <div class="ttle">
+                                                                            <i *ngIf="bank.razorpayVerified"
+                                                                                class="fa fa-check" style="color: green"></i>
+                                                                            <i *ngIf="!bank.razorpayVerified"
+                                                                                class="fa fa-times" style="color: red"></i>
+                                                                           Razorpay Verified </div>
+                                                         
+                                                         
+                                                     </div>
+                                                    </div>
+
+
+                                             </div>
+                                            </div>
+
+
+                                             </div>
+
+                                                <!-- <div class="outermost" *ngIf="jPay_Billing">
                                                     <div class="no-dta"
                                                         *ngIf="!emailidVerified && profileQueryExecuted">
                                                         <p>{{pay_if_mail_verified_cap}}</p>
@@ -214,8 +253,8 @@
                                                 </div>
                                                 <div class="no-dta" *ngIf="!jPay_Billing">
                                                     {{upgrade_license}}
-                                                </div>
-                                            </div>
+                                                </div> -->
+                                            </div> 
                                         </div>
                                     </div>
                                 </div>
