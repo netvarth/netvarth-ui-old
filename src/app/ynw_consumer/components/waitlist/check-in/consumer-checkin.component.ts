@@ -295,7 +295,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 }
                 if (params.service_id) {
                     this.selectedService = parseInt(params.service_id);
-                    alert(this.selectedService);
+                   
                 }
                 if (params.type === 'waitlistreschedule') {
                     this.type = params.type;
@@ -415,28 +415,28 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.paymentmodes = data[0];
-                     this.isPayment=true;
-                    console.log('paymnet modes'+JSON.stringify(this.paymentmodes));
+                    this.isPayment = true;
+                    console.log('paymnet modes' + JSON.stringify(this.paymentmodes));
                     if (this.paymentmodes.indiaPay) {
-                        this.indian_payment_modes=this.paymentmodes.indiaBankInfo;
+                        this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
                     }
-                    else if(this.paymentmodes.internationalPay){
-                        this.non_indian_modes=this.paymentmodes.internationalBankInfo;
+                    else if (this.paymentmodes.internationalPay) {
+                        this.non_indian_modes = this.paymentmodes.internationalBankInfo;
                     }
 
                 },
-                error=>{
+                error => {
                     console.log('inisdee')
-                   this.isPayment=false;
-                   console.log(this.isPayment);
+                    this.isPayment = false;
+                    console.log(this.isPayment);
                 }
-                
+
 
             );
     }
     indian_payment_mode_onchange(event) {
-        this.selected_payment_mode=event.value;
-        this.isInternatonal=false;
+        this.selected_payment_mode = event.value;
+        this.isInternatonal = false;
 
 
 
@@ -607,7 +607,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.selectedDeptParam = serv.department;
             this.getDepartmentById(this.selectedDeptParam);
         }
-        console.log(serv);
+
         this.sel_ser_det = {
             name: serv.name,
             duration: serv.serviceDuration,
@@ -615,6 +615,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             price: serv.totalAmount,
             isPrePayment: serv.isPrePayment,
             minPrePaymentAmount: serv.minPrePaymentAmount,
+
             status: serv.status,
             taxable: serv.taxable,
             serviceType: serv.serviceType,
@@ -630,8 +631,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             consumerNoteMandatory: serv.consumerNoteMandatory,
             consumerNoteTitle: serv.consumerNoteTitle
         };
-        console.log('isPrepayment'+this.sel_ser_det.isPrePayment)
-        console.log('minPrePaymentAmount'+this.sel_ser_det.minPrePaymentAmount)
+        console.log('isPrepayment' + this.sel_ser_det.isPrePayment)
+        console.log('minPrePaymentAmount' + this.sel_ser_det.minPrePaymentAmount)
         if (serv.provider) {
             this.sel_ser_det.provider = serv.provider;
         }
@@ -788,6 +789,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             });
 
         } else {
+            console.log('inisdeeeeee');
             if (this.waitlist_for.length !== 0) {
                 for (const list of this.waitlist_for) {
                     if (list.id === this.customer_data.id) {
@@ -848,7 +850,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     } else if (i === 'VideoCall') {
                         post_Data['virtualService'] = { 'VideoCall': '' };
                     }
-                }                
+                }
                 if (this.virtualInfo) {
                     this.waitlist_for[0]['whatsAppNum'] = {
                         'countryCode': this.virtualInfo.countryCode_whtsap,
@@ -909,6 +911,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     if (this.jcashamount > 0 && this.checkJcash) {
                         this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.paymentDetails.amountRequiredNow)
                             .subscribe(data => {
+                                console.log('dfsdfdfs'+data)
                                 this.remainingadvanceamount = data;
                                 this.addCheckInConsumer(post_Data, paymenttype);
                             });
@@ -945,55 +948,74 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         });
     }
     saveCheckin(type?, paymenttype?) {
+        alert(type + paymenttype);
+
         if (type === 'checkin') {
-                this.isClickedOnce = true
-                this.paymentBtnDisabled = false;
+            this.isClickedOnce = true
+            this.paymentBtnDisabled = false;
 
+            if (this.sel_ser_det.isPrePayment) {
 
-        
-        const paymentDTO={
-            'serviceId':this.selectedService,
-            'isInternational':this.isInternatonal,
-             'paymentMode':this.selected_payment_mode
-            }
-            if(this.selected_payment_mode==='WALLET'){
-                this.provider_services.getWalletPaymentGateWay(paymentDTO)
-                .subscribe((result:any)=>{
-                  this.gateway=result.paymentGateway;
-                  this.setGatewayandConfirm(type,this.gateway);
-    
-                })  
-            }else{
-            this.provider_services.getPaymentGateWay(paymentDTO)
-            .subscribe((result:any)=>{
-                console.log(result);
-                this.gateway=result.paymentGateway;
-                this.setGatewayandConfirm(type,this.gateway);
+                const paymentDTO = {
+                    'serviceId': this.selectedService,
+                    'isInternational': this.isInternatonal,
+                    'paymentMode': this.selected_payment_mode,
+                    'accountId':this.account_id,
+                    'amount':this.paymentDetails.amountRequiredNow,
+                    'purpose':'prePayment',
+                    'uuid':this.trackUuid
+                }
+                   
+                if (this.selected_payment_mode === 'WALLET') {
+                    this.provider_services.getWalletPaymentGateWay(paymentDTO)
+                        .subscribe((result: any) => {
+                            this.gateway = result.paymentGateway;
+                            this.setGatewayandConfirm(type, this.gateway);
 
-            })
-        }
-    }
-       
-       
-    }
-  setGatewayandConfirm(type,paymenttype){
-    if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
-        if (this.waitlist_for.length !== 0) {
-            for (const list of this.waitlist_for) {
-                // const memberObject = this.familymembers.filter(member => member.userProfile.id === list['id']);
-                if (list['id'] !== this.customer_data.id) {
-                    // this.confirmVirtualServiceinfo(memberObject, type);
-                    this.confirmcheckin(type, paymenttype);
+                        })
                 } else {
-                    this.confirmcheckin(type, paymenttype);
+                    alert(this.selected_payment_mode);
+                    this.provider_services.getPaymentGateWay(paymentDTO)
+                        .subscribe((result: any) => {
+                            console.log(result);
+                            this.gateway = result.paymentGateway;
+                            this.setGatewayandConfirm(type, this.gateway);
+
+                        })
                 }
             }
-        }
-    } else {
-        this.confirmcheckin(type, paymenttype);
-    }
+            else {
+                this.setGatewayandConfirm(type, paymenttype)
+            }
 
-  }
+        }
+
+
+        else {
+            this.setGatewayandConfirm(type, paymenttype)
+        }
+
+
+    }
+    setGatewayandConfirm(type, paymenttype) {
+        if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
+            if (this.waitlist_for.length !== 0) {
+                for (const list of this.waitlist_for) {
+                    // const memberObject = this.familymembers.filter(member => member.userProfile.id === list['id']);
+                    if (list['id'] !== this.customer_data.id) {
+                        // this.confirmVirtualServiceinfo(memberObject, type);
+                        this.confirmcheckin(type, paymenttype);
+                    } else {
+                        this.confirmcheckin(type, paymenttype);
+                    }
+                }
+            }
+        } else {
+            alert('ok' +type+paymenttype);
+            this.confirmcheckin(type, paymenttype);
+        }
+
+    }
     virtualModal() {
         const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
             width: '40%',
@@ -1145,40 +1167,40 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
 
-    transactionCompleted(response,payload,accountId) {
+    transactionCompleted(response, payload, accountId) {
         if (response.STATUS == 'TXN_SUCCESS') {
-             this.paytmService.updatePaytmPay(payload, accountId)
-             .then((data) => {
-                 if(data){
-            this.isClickedOnce = false;
-            this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-            let multiple;
-            if (this.uuidList.length > 1) {
-                multiple = true;
-            } else {
-                multiple = false;
-            }
-            let queryParams = {
-                account_id: this.account_id,
-                uuid: this.uuidList,
-                multiple: multiple,
-                theme: this.theme
-            }
-            if (this.businessId) {
-                queryParams['customId'] = this.customId;
-            }
-            if (this.from) {
-                queryParams['isFrom'] = this.from;
-            }
-            let navigationExtras: NavigationExtras = {
-                queryParams: queryParams
-            };
-            this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras));
-        }
-        },
-        error =>{
-            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });   
-        });
+            this.paytmService.updatePaytmPay(payload, accountId)
+                .then((data) => {
+                    if (data) {
+                        this.isClickedOnce = false;
+                        this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+                        let multiple;
+                        if (this.uuidList.length > 1) {
+                            multiple = true;
+                        } else {
+                            multiple = false;
+                        }
+                        let queryParams = {
+                            account_id: this.account_id,
+                            uuid: this.uuidList,
+                            multiple: multiple,
+                            theme: this.theme
+                        }
+                        if (this.businessId) {
+                            queryParams['customId'] = this.customId;
+                        }
+                        if (this.from) {
+                            queryParams['isFrom'] = this.from;
+                        }
+                        let navigationExtras: NavigationExtras = {
+                            queryParams: queryParams
+                        };
+                        this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras));
+                    }
+                },
+                    error => {
+                        this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+                    });
         } else if (response.STATUS == 'TXN_FAILURE') {
             this.isClickedOnce = false;
             this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
@@ -1308,7 +1330,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     addMember() {
         this.action = 'addmember';
         this.disable = false;
-    } 
+    }
     handleReturnDetails(obj) {
         this.addmemberobj.fname = obj.fname || '';
         this.addmemberobj.lname = obj.lname || '';
@@ -1992,6 +2014,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.addWaitlistAdvancePayment(param, post_Data)
             .subscribe(data => {
                 this.paymentDetails = data;
+                alert(this.paymentDetails);
             },
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -2204,6 +2227,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     goToStep(type) {
+        console.log(this.bookStep);
         if (type === 'next') {
             if (this.queuejson.length !== 0 && !this.api_loading1 && this.waitlist_for.length !== 0) {
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
@@ -2238,6 +2262,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.addWaitlistAdvancePayment(param, post_Data)
             .subscribe(data => {
                 this.paymentDetails = data;
+                alert(this.paymentDetails);
                 this.paymentLength = Object.keys(this.paymentDetails).length;
                 this.checkJcash = true
                 this.jcashamount = this.paymentDetails.eligibleJcashAmt.jCashAmt;
@@ -2332,7 +2357,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 .subscribe((pData: any) => {
                     if (pData.isGateWayPaymentNeeded && pData.isJCashPaymentSucess) {
                         if (paymentMode == 'PPI') {
-                            this.payWithPayTM(pData.response,this.account_id);
+                            this.payWithPayTM(pData.response, this.account_id);
                         } else {
                             this.paywithRazorpay(pData.response);
                         }
@@ -2351,7 +2376,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         this.paywithRazorpay(pData);
                     } else {
                         if (pData['response']) {
-                            this.payWithPayTM(pData,this.account_id);                           
+                            this.payWithPayTM(pData, this.account_id);
                         } else {
                             this.isClickedOnce = false;
                             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
@@ -2378,9 +2403,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.isClickedOnce = false;
         this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'checkin_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList, this.customId, this.from);
     }
-    payWithPayTM(pData: any,accountId:any) {
+    payWithPayTM(pData: any, accountId: any) {
         this.loadingPaytm = true;
-        this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL,accountId, this);
+        this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
     }
     getImage(url, file) {
         if (file.type == 'application/pdf') {
