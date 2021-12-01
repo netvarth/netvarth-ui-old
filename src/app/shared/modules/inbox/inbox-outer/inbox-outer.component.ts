@@ -234,6 +234,8 @@ export class InboxOuterComponent implements OnInit {
         .subscribe(
           () => {
             this.message = '';
+            console.log("Consumer Messages :",dataToSend);
+
             this.scrollDone = false;
             this.replyMsg = null;
             this.getInboxMessages();

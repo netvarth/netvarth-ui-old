@@ -921,7 +921,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.doSearch();
   }
-  loadApiSwitch(source) {
+  loadApiSwitchs(source) {
     this.resetCheckList();
     let chkSrc = true;
     this.loading = true;
@@ -952,7 +952,43 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         break;
       case 2: this.getFutureAppointments();
         break;
-      case 3: this.getHistoryAppointments();
+      case 3: this.getHistoryAppmts();
+        break;
+    }
+    this.getCounts();
+  }
+
+  loadApiSwitch(source) {
+    this.resetCheckList();
+    let chkSrc = true;
+    this.loading = true;
+    if (source === 'changeLocation' && this.time_type === 3) {
+      const hisPage = this.groupService.getitemFromGroupStorage('hP');
+      const hFilter = this.groupService.getitemFromGroupStorage('hPFil');
+      if (hisPage) {
+        this.filter = hFilter;
+        this.pagination.startpageval = hisPage;
+        this.groupService.removeitemFromGroupStorage('hP');
+        this.groupService.removeitemFromGroupStorage('hPFil');
+        chkSrc = false;
+      }
+    } else {
+      this.groupService.removeitemFromGroupStorage('hP');
+      this.groupService.removeitemFromGroupStorage('hPFil');
+    }
+    if (chkSrc) {
+      if (source !== 'doSearch' && source !== 'reloadAPIs' && source !== 'changeWaitlistStatusApi') {
+        this.resetFilter();
+        this.resetFilterValues();
+        this.resetLabelFilter();
+      }
+    }
+    switch (this.time_type) {
+      case 1: this.getTodayAppointments();
+        break;
+      case 2: this.getFutureAppointments();
+        break;
+      case 3: this.getHistoryAppmts();
         break;
     }
     this.getCounts();
@@ -1265,7 +1301,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           });
     });
   }
-  resetCheckList() {
+  resetCheckLists() {
     this.availableSlotDetails = {};
     this.timeSlotAppts = {};
     this.slotsChecked = {};
@@ -1279,6 +1315,19 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.apptMultiSelection = false;
     this.chkAppointments = {};
     this.selAllSlots = false;
+    this.startedChkAppointments = {};
+    this.startedAppointmentsChecked = [];
+    this.apptStartedSingleSelection = false;
+    this.apptStartedMultiSelection = false;
+  }
+  resetCheckList() {
+    this.selectedAppt = [];
+    this.apptSingleSelection = false;
+    this.apptMultiSelection = false;
+    this.chkAppointments = {};
+    this.appointmentsChecked = [];
+    this.check_in_filtered_list = [];
+
     this.startedChkAppointments = {};
     this.startedAppointmentsChecked = [];
     this.apptStartedSingleSelection = false;
@@ -1444,7 +1493,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.loading = false;
     }
   }
-  getHistoryAppointments() {
+  getHistoryAppointmentes() {
     console.log("in history");
     let Mfilter = this.setFilterForApi();
     if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
@@ -1480,6 +1529,49 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
             });
       }
     );
+  }
+
+  getHistoryAppmts() {
+    this.loading = true;
+    let Mfilter = this.setFilterForApi();
+    if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
+      if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
+        Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.active_user.id;
+      } else {
+        Mfilter['provider-eq'] = this.active_user.id;
+      }
+    }
+    const promise = this.getHistoryAppointmentsCount(Mfilter);
+    promise.then(
+      result => {
+        this.pagination.totalCnt = result;
+        Mfilter = this.setPaginationFilter(Mfilter);
+        this.appointmentsChecked = {};
+        this.chkAppointments = {};
+        this.chkSelectAppointments = false;
+        this.setApptSelections();
+        this.provider_services.getHistoryAppointments(Mfilter)
+          .subscribe(
+            data => {
+              this.appt_list = this.check_in_filtered_list = data;
+              this.loading = false;
+              if (this.filterapplied === true) {
+                this.noFilter = false;
+              } else {
+                this.noFilter = true;
+              }
+              this.loading = false;
+            },
+            () => {
+              this.loading = false;
+            },
+            () => {
+              this.loading = false;
+            });
+      },
+      () => {
+        this.loading = false;
+      });
   }
   setApptSelections() {
 
@@ -1638,28 +1730,28 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     api_filter['count'] = this.filter.page_count;
     return api_filter;
   }
-  doSearchs() {
-    this.lStorageService.removeitemfromLocalStorage('filter');
-    this.endminday = this.filter.check_in_start_date;
-    if (this.filter.check_in_end_date) {
-      this.maxday = this.filter.check_in_end_date;
-    } else {
-      this.maxday = this.yesterdayDate;
-    }
-    this.labelSelection();
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
-      this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
-      || this.filter.check_in_end_date !== null || this.filter.check_in_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all'
-      || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
-      || this.allPayStatusSelected || this.allModeSelected || this.allLabelSelected || this.allScheduleSelected || this.allLocationSelected) {
-      this.filterapplied = true;
-    } else {
-      this.filterapplied = false;
-    }
-    this.loadApiSwitch('doSearch');
-   // this.shared_functions.setFilter();
+  // doSearchs() {
+  //   this.lStorageService.removeitemfromLocalStorage('filter');
+  //   this.endminday = this.filter.check_in_start_date;
+  //   if (this.filter.check_in_end_date) {
+  //     this.maxday = this.filter.check_in_end_date;
+  //   } else {
+  //     this.maxday = this.yesterdayDate;
+  //   }
+  //   this.labelSelection();
+  //   if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
+  //     this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
+  //     || this.filter.check_in_end_date !== null || this.filter.check_in_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelFilterData !== '' || this.filter.apptStatus !== 'all'
+  //     || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
+  //     || this.allPayStatusSelected || this.allModeSelected || this.allLabelSelected || this.allScheduleSelected || this.allLocationSelected) {
+  //     this.filterapplied = true;
+  //   } else {
+  //     this.filterapplied = false;
+  //   }
+  //   this.loadApiSwitch('doSearch');
+  //  // this.shared_functions.setFilter();
 
-  }
+  // }
 
   doSearch() {
     this.shared_functions.setFilter();

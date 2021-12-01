@@ -241,6 +241,8 @@ export class AppointmentComponent implements OnInit {
     preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
     phone;
     cuntryCode: any;
+    selfAssign;
+    assignmyself;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -372,6 +374,12 @@ export class AppointmentComponent implements OnInit {
         };
         this.createForm();
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        if(user.userType == 1) {
+            this.assignmyself = true;
+        }
+        else{
+            this.assignmyself = false; 
+        }
         this.domain = user.sector;
         this.api_loading = false;
         this.get_token_cap = Messages.GET_TOKEN;
@@ -1171,7 +1179,9 @@ export class AppointmentComponent implements OnInit {
         if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
             post_Data['provider'] = { 'id': this.selectedUser.id };
         }
-
+        if (this.selectedUser && this.selectedUser.firstName === Messages.NOUSERCAP) {
+            post_Data['selfAssign'] = this.selfAssign;
+        }
         if (this.sel_ser_det.serviceType === 'virtualService') {
             // post_Data['virtualService'] = this.virtualServiceArray;
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
@@ -1641,6 +1651,7 @@ export class AppointmentComponent implements OnInit {
     clearerrorParty() {
         this.partyapi_error = '';
     }
+    
     handleDeptSelction(obj) {
         this.users = [];
         this.queuejson = [];
@@ -1649,11 +1660,12 @@ export class AppointmentComponent implements OnInit {
         this.servicesjson = this.serviceslist;
         if (this.filterDepart) {
             const filter = {
-                'deptId-eq': obj
+                'deptId-eq': obj,
+                'status-eq': 'ACTIVE'
             };
             this.provider_services.getUsers(filter).subscribe(
                 (users: any) => {
-                    const filteredUser = users.filter(user => user.status === 'ACTIVE');
+                    const filteredUser = users.filter(user => user.queues && user.status === 'ACTIVE');
                     this.users = [];
                     this.users = filteredUser;
                     let found = false;
@@ -1675,7 +1687,7 @@ export class AppointmentComponent implements OnInit {
                         this.users.push(this.userN);
                     }
                     if (this.users.length !== 0) {
-                        if (this.selectUser !== undefined) {
+                        if (this.selectUser) {
                             const userDetails = this.users.filter(user => user.id === this.selectUser);
                             if (userDetails && userDetails[0]) {
                                 this.selected_user = userDetails[0];
@@ -1715,51 +1727,47 @@ export class AppointmentComponent implements OnInit {
                             }
                         }
                         if (this.servicesjson.length > 0) {
-                            if (this.serviceIdParam !== '') {
-                                const filterService = this.servicesjson.filter(service => service.id === this.serviceIdParam);
-                                if (filterService.length > 0) {
-                                    this.sel_ser = this.serviceIdParam;
-                                } else {
-                                    this.sel_ser = this.servicesjson[0].id;
-                                }
-                            } else {
-                                this.sel_ser = this.servicesjson[0].id;
-                            }
+                            this.sel_ser = this.servicesjson[0].id;
                             this.setServiceDetails(this.sel_ser);
                             this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
                             this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
                         } else {
-                            // if (this.filterDepart) {
                             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
-                            // } else {
-                            //     this.snackbarService.openSnackBar('The selected provider doesn\'t contain any active services for this location', { 'panelClass': 'snackbarerror' });
-                            // }
                         }
                     }
                 });
+            // }
         } else {
             // this.getAllUsers();
             this.getAvailableUsers();
         }
-    }
-    getAvailableUsers() {
-        this.provider_services.getAvailableUsers().subscribe(
-            (users: any) => {
-                // const filteredUser = users.filter(user => user.status === 'ACTIVE');
-                this.users = users;
-                // this.users = filteredUser;
-                this.users.push(this.userN);
-                if (this.selectUser !== undefined) {
-                    const userDetails = this.users.filter(user => user.id === this.selectUser);
-                    this.selected_user = userDetails[0];
-                    this.handleUserSelection(this.selected_user);
-                } else if (this.users.length !== 0) {
-                    this.selected_user = this.users[0];
-                    this.handleUserSelection(this.selected_user);
-                } else {
-                    this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
-                }
-            });
+        // if (obj === 'None') {
+        //     this.servicesjson = this.serviceslist;
+        // } else {
+        //     for (let i = 0; i < this.departmentlist['departments'].length; i++) {
+        //         if (obj === this.departmentlist['departments'][i].departmentId) {
+        //             this.services = this.departmentlist['departments'][i].serviceIds;
+        //         }
+        //     }
+        //     const newserviceArray = [];
+        //     if (this.services) {
+        //         for (let i = 0; i < this.serviceslist.length; i++) {
+        //             for (let j = 0; j < this.services.length; j++) {
+        //                 if (this.services[j] === this.serviceslist[i].id) {
+        //                     newserviceArray.push(this.serviceslist[i]);
+        //                 }
+        //             }
+        //         }
+        //         this.servicesjson = newserviceArray;
+        //     }
+        // }
+        // if (this.servicesjson.length > 0) {
+        //     this.sel_ser = this.servicesjson[0].id;
+        //     this.setServiceDetails(this.sel_ser);
+        //     this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+        // } else {
+        //     this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
+        // }
     }
     getAllUsers() {
         const filter = {
@@ -1772,7 +1780,28 @@ export class AppointmentComponent implements OnInit {
                 this.users = [];
                 this.users = filteredUser;
                 this.users.push(this.userN);
-                if (this.selectUser !== undefined) {
+                if (this.selectUser) {
+                    const userDetails = this.users.filter(user => user.id === this.selectUser);
+                    this.selected_user = userDetails[0];
+                    this.handleUserSelection(this.selected_user);
+                } else if (this.users.length !== 0) {
+                    this.selected_user = this.users[0];
+                    this.handleUserSelection(this.selected_user);
+                } else {
+                    this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                }
+            });
+    }
+
+
+    getAvailableUsers() {
+        this.provider_services.getAvailableUsersAppt().subscribe(
+            (users: any) => {
+                // const filteredUser = users.filter(user => user.status === 'ACTIVE');
+                this.users = users;
+                // this.users = filteredUser;
+                this.users.push(this.userN);
+                if (this.selectUser) {
                     const userDetails = this.users.filter(user => user.id === this.selectUser);
                     this.selected_user = userDetails[0];
                     this.handleUserSelection(this.selected_user);
@@ -2140,3 +2169,4 @@ export class AppointmentComponent implements OnInit {
         }
     }
 }
+

@@ -243,6 +243,8 @@ export class ProviderCheckinComponent implements OnInit {
     preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
     phone;
     cuntryCode;
+    selfAssign;
+    assignmyself;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -349,6 +351,12 @@ export class ProviderCheckinComponent implements OnInit {
     }
     ngOnInit() {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        if(user.userType == 1) {
+            this.assignmyself = true;
+        }
+        else{
+            this.assignmyself = false; 
+        }
         this.domain = user.sector;
         this.carouselOne = {
             dots: false,
@@ -1221,6 +1229,9 @@ export class ProviderCheckinComponent implements OnInit {
         if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
             post_Data['provider'] = { 'id': this.selectedUser.id };
         }
+        if (this.selectedUser && this.selectedUser.firstName === Messages.NOUSERCAP) {
+            post_Data['selfAssign'] = this.selfAssign;
+        }
         if (this.sel_ser_det.serviceType === 'virtualService') {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
                 if (!this.callingModes || !this.cuntryCode) {
@@ -1864,7 +1875,7 @@ export class ProviderCheckinComponent implements OnInit {
 
 
     getAvailableUsers() {
-        this.provider_services.getAvailableUsers().subscribe(
+        this.provider_services.getAvailableUsersWaitlist().subscribe(
             (users: any) => {
                 // const filteredUser = users.filter(user => user.status === 'ACTIVE');
                 this.users = users;
@@ -1882,8 +1893,6 @@ export class ProviderCheckinComponent implements OnInit {
                 }
             });
     }
-
-
     handleUserSelection(user) {
         this.selectedUser = user;
         this.queuejson = [];

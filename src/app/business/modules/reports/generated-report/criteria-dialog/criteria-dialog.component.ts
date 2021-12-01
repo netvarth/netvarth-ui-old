@@ -16,6 +16,7 @@ export class CriteriaDialogComponent implements OnInit {
   api_error_msg: string;
   criteria_name = '';
   report_criteria_ip: any;
+ reportData:any;
   for_view = false;
   api_success = false;
   api_error = false;
@@ -25,16 +26,27 @@ export class CriteriaDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<CriteriaDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private snackbarService: SnackbarService
-  ) { }
+  ) { 
+    if(data){
+    this.reportData = data.content
+    this.for_view = true;
+    }
+    else
+    {
+      this.for_view = false;
+    }
+
+  }
 
   ngOnInit() {
     this.time_period = projectConstantsLocal.REPORT_TIMEPERIOD;
     this.report_criteria_ip = this.report_data_service.getReportCriteriaInput();
-    if (this.data.content) {
-      this.for_view = true;
-    } else {
-      this.for_view = false;
-    }
+    // if (this.data.content) {
+    //   this.for_view = true;
+    // } else {
+    //   this.for_view = false;
+    // }
+   
   }
   saveCriteria() {
     this.api_success = false;
