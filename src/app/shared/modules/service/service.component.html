@@ -540,7 +540,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
 
                 <ng-container *ngIf="profile.internationalPay">
                   <div>
-                  <input type="checkbox" checked="true" readonly>International Payment
+                  <input type="checkbox" checked="true" readonly="true" onclick="return false;"> International Payment
                 </div>
 
                 </ng-container>

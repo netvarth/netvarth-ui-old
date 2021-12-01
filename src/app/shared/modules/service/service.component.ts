@@ -325,7 +325,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value
                                         });
                                     } else {
-                                        alert('haiiii'+this.service_data['paymentProfileId']);
+                                      
                                         this.serviceForm.setValue({
                                             'name': this.service_data['name'] || this.serviceForm.get('name').value,
                                             'description': this.service_data['description'] || this.serviceForm.get('description').value,

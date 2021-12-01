@@ -295,6 +295,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 }
                 if (params.service_id) {
                     this.selectedService = parseInt(params.service_id);
+                    alert(this.selectedService);
                 }
                 if (params.type === 'waitlistreschedule') {
                     this.type = params.type;
@@ -958,7 +959,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             if(this.selected_payment_mode==='WALLET'){
                 this.provider_services.getWalletPaymentGateWay(paymentDTO)
                 .subscribe((result:any)=>{
-                  this.gateway=result.gateway;
+                  this.gateway=result.paymentGateway;
                   this.setGatewayandConfirm(type,this.gateway);
     
                 })  
@@ -966,7 +967,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.provider_services.getPaymentGateWay(paymentDTO)
             .subscribe((result:any)=>{
                 console.log(result);
-                this.gateway=result.gateway;
+                this.gateway=result.paymentGateway;
                 this.setGatewayandConfirm(type,this.gateway);
 
             })
