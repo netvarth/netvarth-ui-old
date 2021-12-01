@@ -2,10 +2,10 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { GlobalService } from './shared/services/global-service';
 import { version } from './shared/constants/version';
 import { LocalStorageService } from './shared/services/local-storage.service';
-import { Device } from '@ionic-native/device/ngx';
-import { Platform } from '@ionic/angular';
-import { FirebaseX } from '@ionic-native/firebase-x/ngx';
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+// import { Device } from '@ionic-native/device/ngx';
+// import { Platform } from '@ionic/angular';
+// import { FirebaseX } from '@ionic-native/firebase-x/ngx';
+// import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { AuthService } from './shared/services/auth-service';
 export let projectConstants: any = {};
 @Component({
@@ -30,10 +30,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     private globalService: GlobalService,
     private lStorageService: LocalStorageService,
     private authService: AuthService,
-    private firebaseX: FirebaseX,
-    private device: Device,
-    private platform: Platform,
-    private localNotifications: LocalNotifications
+    // private firebaseX: FirebaseX,
+    // private device: Device,
+    // private platform: Platform,
+    // private localNotifications: LocalNotifications
   ) { }
 
   /**
@@ -44,11 +44,11 @@ export class AppComponent implements OnInit, AfterViewInit {
    * 
    */
   ngOnInit() {
-    this.platform.ready().then(() => {
+    // this.platform.ready().then(() => {
       // Okay, so the platform is ready.
       // Here you can do any higher level native things you might need.
-      console.log('here');
-      console.log('Device UUID is: ' + this.device.manufacturer);
+      // console.log('here');
+      // console.log('Device UUID is: ' + this.device.manufacturer);
       // this.localNotifications.isTriggered().then(
       //   (reason)=>{
       //     console.log(reason);
@@ -59,52 +59,52 @@ export class AppComponent implements OnInit, AfterViewInit {
       //     console.log("Local Notification Message");
       //     console.log(message);
       // });
-      this.firebaseX.grantPermission().then(hasPermission => {
-        console.log("Permission was " + (hasPermission ? "granted" : "denied"));
-      });
-      this.firebaseX.getToken()
-        .then(token => {
-          this.lStorageService.setitemonLocalStorage('mUniqueId', token);
-          console.log(`The token is ${token}`);
-        }) // save the token server-side and use it to push notifications to this device
-        .catch(error => console.error('Error getting token', error));
+      // this.firebaseX.grantPermission().then(hasPermission => {
+      //   console.log("Permission was " + (hasPermission ? "granted" : "denied"));
+      // });
+      // this.firebaseX.getToken()
+      //   .then(token => {
+      //     this.lStorageService.setitemonLocalStorage('mUniqueId', token);
+      //     console.log(`The token is ${token}`);
+      //   }) // save the token server-side and use it to push notifications to this device
+      //   .catch(error => console.error('Error getting token', error));
 
-      this.firebaseX.onMessageReceived().subscribe(message => {
-        console.log(message);
-        if (message.tap) {
-          // const dialogrefd = this.dialog.open(NotificationDialogComponent, {
-          //   width: '50%',
-          //   panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-          //   disableClose: true,
-          //   data: {
-          //     'message': message.body,
-          //     'title': "Jaldee for Business",
-          //     'btnOkTitle': 'OK'
-          //   }
-          // });
-          // dialogrefd.afterClosed().subscribe(result => {
-          //   console.log(result);
-          // });
-        } else {
-          // let actions = [{
-          //   identifier: 'PUSH_CLICK',
-          //   title: 'Jaldee for Business',
-          //   activationMode: 'background'
-          // }]
-          this.localNotifications.schedule({
-            text: message.body,
-            data: message
-            // ,
-            // actions: [actions[0]]
-          });
-        }
-      });
+      // this.firebaseX.onMessageReceived().subscribe(message => {
+      //   console.log(message);
+      //   if (message.tap) {
+      //     // const dialogrefd = this.dialog.open(NotificationDialogComponent, {
+      //     //   width: '50%',
+      //     //   panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      //     //   disableClose: true,
+      //     //   data: {
+      //     //     'message': message.body,
+      //     //     'title': "Jaldee for Business",
+      //     //     'btnOkTitle': 'OK'
+      //     //   }
+      //     // });
+      //     // dialogrefd.afterClosed().subscribe(result => {
+      //     //   console.log(result);
+      //     // });
+      //   } else {
+      //     // let actions = [{
+      //     //   identifier: 'PUSH_CLICK',
+      //     //   title: 'Jaldee for Business',
+      //     //   activationMode: 'background'
+      //     // }]
+      //     this.localNotifications.schedule({
+      //       text: message.body,
+      //       data: message
+      //       // ,
+      //       // actions: [actions[0]]
+      //     });
+      //   }
+      // });
 
-      this.firebaseX.onTokenRefresh()
-        .subscribe((token: string) => {
-          this.lStorageService.setitemonLocalStorage('mUniqueId', token);
-          console.log(`Got a new token ${token}`);
-        });
+      // this.firebaseX.onTokenRefresh()
+      //   .subscribe((token: string) => {
+      //     this.lStorageService.setitemonLocalStorage('mUniqueId', token);
+      //     console.log(`Got a new token ${token}`);
+      //   });
       projectConstants = this.globalService.getGlobalConstants();
       const cVersion = version.desktop;
       const pVersion = this.lStorageService.getitemfromLocalStorage('version');
@@ -135,7 +135,7 @@ export class AppComponent implements OnInit, AfterViewInit {
           this.lStorageService.setitemonLocalStorage('version', cVersion);
         }
       }
-    });
+    // });
   }
   ngAfterViewInit () {
     document.getElementById('globalLoading').remove();
