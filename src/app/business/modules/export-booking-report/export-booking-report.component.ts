@@ -2,6 +2,7 @@ import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ExportReportService } from '../reports/export-report.service';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-export-booking-report',
@@ -11,6 +12,7 @@ import { ExportReportService } from '../reports/export-report.service';
 export class ExportBookingReportComponent implements OnInit {
   bookingList: any;
   headerColumns;
+  dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   @ViewChild('source') source: ElementRef;
 
   constructor(public dialogRef: MatDialogRef<ExportBookingReportComponent>,
@@ -62,7 +64,7 @@ export class ExportBookingReportComponent implements OnInit {
       }
       // console.log(this.headerColumns);
     });
-    // console.log(this.bookingList);
+    console.log(this.bookingList);
   }
   exportToExcel() {
     this.exportService.exportToExcelFromHTml(this.source.nativeElement, 'qReport');

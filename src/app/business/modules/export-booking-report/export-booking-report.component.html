@@ -32,6 +32,9 @@
                             <ng-container *ngIf="bl['answerList'][header.key][0]['answer'].plainText">
                                 {{bl['answerList'][header.key][0]['answer'].plainText}}
                             </ng-container>
+                            <ng-container *ngIf="bl['answerList'][header.key][0]['answer'].date">
+                                {{bl['answerList'][header.key][0]['answer'].date | date: dateFormat}}
+                            </ng-container>
                             <ng-container
                                 *ngIf="bl['answerList'][header.key][0]['answer'].fileUpload && bl['answerList'][header.key][0]['answer'].fileUpload.length > 0">
                                 Yes
@@ -49,12 +52,22 @@
                                 No
                             </ng-container>
                             <ng-container
+                                *ngIf="bl['answerList'][header.key][0]['answer'].list && bl['answerList'][header.key][0]['answer'].list.length>0">
+                                <div
+                                    *ngFor="let rows of bl['answerList'][header.key][0]['answer'].list; let i=index">
+                                    {{rows}}
+                                </div>
+                            </ng-container>
+                            <ng-container
                                 *ngIf="bl['answerList'][header.key][0]['answer'].dataGrid && bl['answerList'][header.key][0]['answer'].dataGrid.length>0">
                                 <div
                                     *ngFor="let rows of bl['answerList'][header.key][0]['answer'].dataGrid; let i=index">
                                     <p *ngFor="let rowHeader of rows.dataGridColumn">
                                         <ng-container *ngIf="rowHeader.column.plainText">
                                             {{rowHeader.columnId}}: <strong>{{rowHeader.column.plainText}}</strong>
+                                        </ng-container>
+                                        <ng-container *ngIf="rowHeader.column.date">
+                                            {{rowHeader.columnId}}: {{rowHeader.column.date  | date: dateFormat}}
                                         </ng-container>
                                         <ng-container
                                             *ngIf="rowHeader.column.fileUpload && rowHeader.column.fileUpload.length > 0">
@@ -69,6 +82,13 @@
                                         </ng-container>
                                         <ng-container *ngIf="rowHeader.column.bool && rowHeader.column.bool == 'false'">
                                             {{rowHeader.columnId}}: No
+                                        </ng-container>                                        
+                                        <ng-container
+                                            *ngIf="rowHeader.column.list && rowHeader.column.list.length>0">
+                                            <div
+                                                *ngFor="let rows of rowHeader.column.list; let i=index">
+                                                {{rows}}
+                                            </div>
                                         </ng-container>
                                     </p>
                                 </div>
