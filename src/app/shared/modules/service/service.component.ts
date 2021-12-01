@@ -25,7 +25,6 @@ import { ServiceQRCodeGeneratordetailComponent } from './serviceqrcodegenerator/
     selector: 'app-jaldee-service',
     templateUrl: './service.component.html'
 })
-
 export class ServiceComponent implements OnInit, OnDestroy {
     @Input() serviceFrom;
     @Input() source;
