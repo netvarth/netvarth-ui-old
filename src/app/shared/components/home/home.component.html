@@ -1,3 +1,15 @@
+
+
+<div class="selecttag">
+
+	<div style="display: flex;" *ngFor="let lang of languages"  (click)="changeLocale(lang.value,lang.viewValue)">
+	  {{lang.viewValue}} <span *ngIf="lang.viewValue != 'Tamil'">|</span> 
+	</div>
+
+</div>
+
+
+<router-outlet></router-outlet>
 <section id="cons_home_n">
 	<div *ngIf="loading" class="loading">
 		<app-common-innerloading-spinner ></app-common-innerloading-spinner>

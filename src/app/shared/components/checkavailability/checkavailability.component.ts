@@ -72,6 +72,8 @@ export class CheckavailabilityComponent implements OnInit {
      }
     timeSelected(slot) {
         this.apptTime = slot;
+        console.log('clicked')
+        this.dialogRef.close(slot['displayTime']);
      
     }
     isFuturedate = false;
@@ -90,35 +92,7 @@ export class CheckavailabilityComponent implements OnInit {
     }
     pricelist:any;
     actionCompleted() {
-            this.selectedDate = this.sel_checkindate;
-            this.checkFutureorToday();
-            this.selectedApptTime = this.apptTime;
-            console.log("apptTime1",this.apptTime)
-            console.log("action"+JSON.stringify(this.selectedApptTime));
-            this.waitlist_for[0].apptTime = this.apptTime['time'];
-            if(this.type == 'reschedule' && this.appointment.service && this.appointment.service.priceDynamic){
-                this.subs.sink = this.shared_services.getAppointmentReschedulePricelist(this.appointment.service.id).subscribe(
-                    (list: any) => {
-                        this.pricelist = list;
-                        console.log("this.pricelist"+JSON.stringify(this.pricelist));
-                        let oldprice;
-                        let newprice;
-                        for(let list of this.pricelist){
-                            if(list.schedule.id == this.currentScheduleId){ // appointment scheduleid
-                                oldprice = list.price;
-                            }
-                            if(list.schedule.id == this.selectedApptTime['scheduleId']){ // rescheduledappointment scheduleid
-                                newprice = list.price;
-                            }
-                        } 
-                        console.log("oldprice"+oldprice);
-                        console.log("newprice"+newprice);
-                        this.changePrice = newprice - oldprice;
-                        console.log("changeprice"+this.changePrice);
-                        this.amountdifference = this.appointment.amountDue + this.changePrice;
-                        this.dialogRef.close('');
-                    });
-            }
+        this.dialogRef.close('');
         
     }
     dateClass(date: Date): MatCalendarCellCssClasses {
@@ -137,7 +111,8 @@ export class CheckavailabilityComponent implements OnInit {
                             freslot['scheduleId'] = scheduleSlots['scheduleId'];
                             freslot['displayTime'] = this.getSingleTime(freslot.time);
                             this.freeSlots.push(freslot);
-                            // console.log("********free slots ********",this.freeSlots)
+                            this.api_loading1 = false;
+                            console.log("********free slots ********",this.freeSlots)
                         }
                     }
                 }
@@ -145,25 +120,25 @@ export class CheckavailabilityComponent implements OnInit {
                 if (this.freeSlots.length > 0) {
                     this.showApptTime = true;
                     if (this.appointment && this.appointment.appmtTime && this.sel_checkindate === this.selectedDate) {
-                        console.log("apptTime2")
+                    
                         const appttime = this.freeSlots.filter(slot => slot.time === this.appointment.appmtTime);
                         this.apptTime = appttime[0];
-                        console.log("apptTime2",this.apptTime)
+                       
                     } else {
-                        console.log("apptTime3")
+                     
                         this.apptTime = this.freeSlots[0];
-                        console.log("apptTime3",this.apptTime)
+                        
                     }
                     this.waitlist_for[0].apptTime = this.apptTime['time'];
                 } else {
                     this.showApptTime = false;
                 }
                 if (type) {
-                    console.log("apptTime4")
+                    
                     this.selectedApptTime = this.apptTime;
-                    console.log("apptTime4",this.apptTime)
+                  
                 }
-                this.api_loading1 = false;
+              
                 
             });
            

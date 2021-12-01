@@ -1,8 +1,14 @@
 .green{
     color: #1EB000;
+    line-height: 1.5rem;
+    font-size: 15px;
+    /* font-weight: 600; */
+
 }
 .red{
     color: #FF5502;
+    line-height: 1.5rem;
+    font-size: 15px;
 }
 .skyblue{
     padding: 10px;
@@ -45,9 +51,11 @@
         padding: 0px !important;
     }
     .green {
-        font-size: 10px;
+        line-height: 0.5rem;
+        font-size: 6px !important;
     }
     .red {
-        font-size: 10px;
+        line-height: 0.5rem;
+        font-size: 6px !important;
     }
 }

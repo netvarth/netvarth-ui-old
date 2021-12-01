@@ -2453,7 +2453,7 @@ console.log("fgf"+JSON.stringify(loc));
 
     this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
       width: '90%',
-      height: '100%',
+      height: 'auto',
       data: {
       alldetails:actionObj,
       apptSettingsJson:this.apptSettingsJson,

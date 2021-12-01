@@ -1684,6 +1684,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
   }
   appointmentClicked(location, service: any) {
+    console.log('location..',location)
     this.futureAllowed = true;
     const current_provider = {
       'id': location.id,
@@ -2447,6 +2448,14 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         }
       });
     }
+
+    this.checkavailabilitydialogref.afterClosed().subscribe(result => {
+      console.log('action..........',actionObj);
+    
+      actionObj['location']['bSchedule']['timespec'][0]['timeSlots'][0]['sTime']=result
+      this.appointmentClicked(actionObj['location'], actionObj['service']);
+
+    });
   
   }
   cardClicked(actionObj) {

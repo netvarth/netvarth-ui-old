@@ -22,15 +22,7 @@ export class AppComponent implements OnInit, AfterViewInit {
    * @param globalService 
    * @param lStorageService 
    */
-   languages = [
-    {value: 'en', viewValue: 'English'},
-    {value: 'hd', viewValue: 'Hindi'},
-    {value: 'kan', viewValue: 'Kannada'},
-    {value: 'tel',viewValue:'Telugu'},
-    {value: 'mal',viewValue:'Malayalam'},
-    {value: 'tam',viewValue:'Tamil'}
-  ];
-   langselected='English';
+
   constructor(
     private globalService: GlobalService,
     private lStorageService: LocalStorageService,
@@ -48,12 +40,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.translate.use('en'); 
     this.i18nService.changeLocale('en');
-for(let i=0;i<this.languages.length;i++) {
-  if(this.languages[i].value==JSON.parse(localStorage.getItem('myData'))) {
-    this.langselected=this.languages[i].viewValue;
-    break;
-  }
-}
+
     projectConstants = this.globalService.getGlobalConstants();
     const cVersion = version.desktop;
     const pVersion = this.lStorageService.getitemfromLocalStorage('version');
@@ -68,14 +55,6 @@ for(let i=0;i<this.languages.length;i++) {
     document.getElementById('globalLoading').remove();
 
   }
-  changeLocale(locale: string,languagename) {
-    this.langselected=languagename;
-    console.log('lang',this.langselected)
- 
-     this.translate.use(locale); 
   
-      this.i18nService.changeLocale(locale);
-        
-   }
 }
 

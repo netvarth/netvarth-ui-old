@@ -4,6 +4,7 @@ import { CheckavailabilityComponent } from "./checkavailability.component";
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatDialogModule } from "@angular/material/dialog";
+import { LoadingSpinnerModule } from "../../modules/loading-spinner/loading-spinner.module";
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { MatDialogModule } from "@angular/material/dialog";
         CommonModule,
         Nl2BrPipeModule,
         MatDatepickerModule,
-        MatDialogModule
+        MatDialogModule,
+        LoadingSpinnerModule
     ],
     exports: [ CheckavailabilityComponent ],
     declarations: [
