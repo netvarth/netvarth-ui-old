@@ -10,7 +10,7 @@
                 <th>Sales Officer</th>
                 <th>Employee Code</th>
                 <th>Applicant Name</th>
-                <th>Product</th>                
+                <th>Product</th>
                 <th *ngFor="let bL of headerColumns | keyvalue">
                     {{bL.value}}
                 </th>
@@ -23,9 +23,13 @@
                     <td *ngIf="bl.schedule && bl.location">{{bl.location.place}}</td>
                     <td><span *ngIf="bl.provider">{{bl.provider.firstName + ' ' + bl.provider.lastName}}</span></td>
                     <td><span *ngIf="bl.provider && bl.provider.employeeId">{{bl.provider.employeeId}}</span></td>
-                    <td *ngIf="bl.waitlistingFor">{{bl.waitlistingFor[0].firstName + ' ' +bl.waitlistingFor[0].lastName}}</td>
-                    <td  *ngIf="bl.appmtFor">{{bl.appmtFor[0].firstName + ' ' +bl.appmtFor[0].lastName}}</td>
-                    <td>{{bl.service.name}}</td>                   
+                    <td *ngIf="bl.waitlistingFor">{{bl.waitlistingFor[0].firstName + ' '
+                        +bl.waitlistingFor[0].lastName}}</td>
+                    <td *ngIf="bl.appmtFor[0].firstName === undefined && bl.appmtFor[0].lastName === undefined ">NIL
+                    </td>
+                    <td *ngIf="bl.appmtFor">{{bl.appmtFor[0].firstName + ' ' +bl.appmtFor[0].lastName}}</td>
+
+                    <td>{{bl.service.name}}</td>
                     <td *ngFor="let header of headerColumns | keyvalue">
                         <ng-container
                             *ngIf="bl['questionList'] && bl['answerList'] && bl['answerList'][header.key] && bl['answerList'][header.key][0]['answer']">
@@ -53,8 +57,7 @@
                             </ng-container>
                             <ng-container
                                 *ngIf="bl['answerList'][header.key][0]['answer'].list && bl['answerList'][header.key][0]['answer'].list.length>0">
-                                <div
-                                    *ngFor="let rows of bl['answerList'][header.key][0]['answer'].list; let i=index">
+                                <div *ngFor="let rows of bl['answerList'][header.key][0]['answer'].list; let i=index">
                                     {{rows}}
                                 </div>
                             </ng-container>
@@ -67,7 +70,7 @@
                                             {{rowHeader.columnId}}: <strong>{{rowHeader.column.plainText}}</strong>
                                         </ng-container>
                                         <ng-container *ngIf="rowHeader.column.date">
-                                            {{rowHeader.columnId}}: {{rowHeader.column.date  | date: dateFormat}}
+                                            {{rowHeader.columnId}}: {{rowHeader.column.date | date: dateFormat}}
                                         </ng-container>
                                         <ng-container
                                             *ngIf="rowHeader.column.fileUpload && rowHeader.column.fileUpload.length > 0">
@@ -82,11 +85,9 @@
                                         </ng-container>
                                         <ng-container *ngIf="rowHeader.column.bool && rowHeader.column.bool == 'false'">
                                             {{rowHeader.columnId}}: No
-                                        </ng-container>                                        
-                                        <ng-container
-                                            *ngIf="rowHeader.column.list && rowHeader.column.list.length>0">
-                                            <div
-                                                *ngFor="let rows of rowHeader.column.list; let i=index">
+                                        </ng-container>
+                                        <ng-container *ngIf="rowHeader.column.list && rowHeader.column.list.length>0">
+                                            <div *ngFor="let rows of rowHeader.column.list; let i=index">
                                                 {{rows}}
                                             </div>
                                         </ng-container>
