@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ReportDataService } from '../../reports-data.service';
 import { ProviderServices } from '../../../../services/provider-services.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { ReportDataService } from '../../reports-data.service';
 
 @Component({
   selector: 'app-criteria-dialog',
@@ -27,20 +27,20 @@ export class CriteriaDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private snackbarService: SnackbarService
   ) { 
-    if(data){
-    this.reportData = data.content
-    this.for_view = true;
-    }
-    else
-    {
-      this.for_view = false;
-    }
+   
 
   }
 
   ngOnInit() {
     this.time_period = projectConstantsLocal.REPORT_TIMEPERIOD;
     this.report_criteria_ip = this.report_data_service.getReportCriteriaInput();
+    if(this.data.content){
+      this.for_view = true;
+      }
+      else
+      {
+        this.for_view = false;
+      }
     // if (this.data.content) {
     //   this.for_view = true;
     // } else {
