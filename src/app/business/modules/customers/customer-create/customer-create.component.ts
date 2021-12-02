@@ -179,6 +179,9 @@ export class CustomerCreateComponent implements OnInit {
       if(qparams.countryCode){
         this.contryCod = qparams.countryCode;
       }
+      else{
+        this.contryCod = '+91';
+      }
       if (qparams.phone) {
         this.phoneNo = qparams.phone;
         if (this.source === 'appt-block' || this.source === 'waitlist-block' || this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'clist' || this.source === 'order') {
@@ -425,6 +428,9 @@ export class CustomerCreateComponent implements OnInit {
       this.amForm.get('mobile_number').setValue(this.phoneNo);
     }
     if (this.contryCod) {
+      this.amForm.get('countryCode').setValue(this.contryCod);
+    }
+    else{
       this.amForm.get('countryCode').setValue(this.contryCod);
     }
     if (this.email) {
