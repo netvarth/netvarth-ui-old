@@ -181,8 +181,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     showmoreSpec = false;
     bookStep = 1;
     locationName;
-    waitlistDetails: { 'amount': number; 'paymentMode': any; 'uuid': any; 'accountId': any; 'purpose': string; };
-    pGateway: any;
+    waitlistDetails:any;
     razorModel: Razorpaymodel;
     uuidList: any = [];
     prepayAmount;
@@ -243,6 +242,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     isInternatonal: boolean;
     gateway: any;
     isPayment: boolean;
+    pGateway: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -948,56 +948,20 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         });
     }
     saveCheckin(type?, paymenttype?) {
-        alert(type + paymenttype);
-
         if (type === 'checkin') {
-            this.isClickedOnce = true
-            this.paymentBtnDisabled = false;
 
-            if (this.sel_ser_det.isPrePayment) {
+            if (this.interNatioanalPaid) {
+                this.isClickedOnce = true
+                this.paymentBtnDisabled = false;
 
-                const paymentDTO = {
-                    'serviceId': this.selectedService,
-                    'isInternational': this.isInternatonal,
-                    'paymentMode': this.selected_payment_mode,
-                    'accountId':this.account_id,
-                    'amount':this.paymentDetails.amountRequiredNow,
-                    'purpose':'prePayment',
-                    'uuid':this.trackUuid
-                }
-                   
-                if (this.selected_payment_mode === 'WALLET') {
-                    this.provider_services.getWalletPaymentGateWay(paymentDTO)
-                        .subscribe((result: any) => {
-                            this.gateway = result.paymentGateway;
-                            this.setGatewayandConfirm(type, this.gateway);
-
-                        })
-                } else {
-                    alert(this.selected_payment_mode);
-                    this.provider_services.getPaymentGateWay(paymentDTO)
-                        .subscribe((result: any) => {
-                            console.log(result);
-                            this.gateway = result.paymentGateway;
-                            this.setGatewayandConfirm(type, this.gateway);
-
-                        })
-                }
             }
-            else {
-                this.setGatewayandConfirm(type, paymenttype)
+            if (this.razorpayEnabled && !this.paytmEnabled) {
+                this.isClickedOnce = true
+                this.paymentBtnDisabled = false;
             }
+            
 
         }
-
-
-        else {
-            this.setGatewayandConfirm(type, paymenttype)
-        }
-
-
-    }
-    setGatewayandConfirm(type, paymenttype) {
         if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
             if (this.waitlist_for.length !== 0) {
                 for (const list of this.waitlist_for) {
@@ -1011,11 +975,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 }
             }
         } else {
-            alert('ok' +type+paymenttype);
             this.confirmcheckin(type, paymenttype);
         }
 
+
     }
+
     virtualModal() {
         const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
             width: '40%',
@@ -1034,7 +999,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         });
 
     }
-    addCheckInConsumer(postData, paymenttype?) {
+    addCheckInConsumer(postData, paymentmodetype?) {
+        let paymenttype=this.selected_payment_mode;
         this.subs.sink = this.shared_services.addCheckin(this.account_id, postData)
             .subscribe(data => {
                 this.lStorageService.removeitemfromLocalStorage('age');
@@ -1060,6 +1026,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     }
                     parentUid = retData['parent_uuid'];
                 });
+                
                 if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(this.uuidList, parentUid, paymenttype);
                 }
@@ -2279,13 +2246,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 });
     }
     payuPayment(paymenttype?) {
-        let paymentWay;
-        if (paymenttype == 'paytm') {
-            paymentWay = 'PPI';
-        } else {
-            paymentWay = 'DC';
-        }
-        this.makeFailedPayment(paymentWay);
+        // let paymentWay;
+        // if (paymenttype == 'paytm') {
+        //     paymentWay = 'PPI';
+        // } else {
+        //     paymentWay = 'DC';
+        // }
+        this.makeFailedPayment(paymenttype);
     }
     makeFailedPayment(paymentMode) {
         this.waitlistDetails = {
@@ -2293,9 +2260,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             'paymentMode': null,
             'uuid': this.trackUuid,
             'accountId': this.account_id,
-            'purpose': 'prePayment'
+            'purpose': 'prePayment',
         };
         this.waitlistDetails.paymentMode = paymentMode;
+        this.waitlistDetails.serviceId = this.sel_ser;
+        this.waitlistDetails.isInternational=this.isInternatonal;
         this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
         this.lStorageService.setitemonLocalStorage('acid', this.account_id);
         this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
@@ -2333,7 +2302,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     });
         }
         else if (this.remainingadvanceamount > 0 && this.checkJcash) {
-            const postData = {
+            const postData :any= {
                 'amountToPay': this.paymentDetails.amountRequiredNow,
                 'accountId': this.account_id,
                 'uuid': this.trackUuid,
@@ -2344,15 +2313,18 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 'isPayTmPayment': false,
                 'paymentMode': null
             };
-            if (paymentMode == 'PPI') {
-                postData.isPayTmPayment = true;
-                postData.isRazorPayPayment = false;
-                postData.paymentMode = "PPI";
-            } else {
-                postData.isPayTmPayment = false;
-                postData.isRazorPayPayment = true;
-                postData.paymentMode = "DC";
-            }
+            postData.paymentMode=paymentMode;
+            postData.isInternational=this.isInternatonal;
+            postData.serviceId=this.sel_ser;
+            // if (paymentMode == 'PPI') {
+            //     postData.isPayTmPayment = true;
+            //     postData.isRazorPayPayment = false;
+            //     postData.paymentMode = "PPI";
+            // } else {
+            //     postData.isPayTmPayment = false;
+            //     postData.isRazorPayPayment = true;
+            //     postData.paymentMode = "DC";
+            // }
             this.shared_services.PayByJaldeewallet(postData)
                 .subscribe((pData: any) => {
                     if (pData.isGateWayPaymentNeeded && pData.isJCashPaymentSucess) {

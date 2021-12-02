@@ -2278,12 +2278,12 @@ export class ProviderServices {
     const url='provider/payment/paymentProfiles'
     return this.servicemeta.httpGet(url);
   }
-  getPaymentGateWay(data) {
-    const url='consumer/payment'
-    return this.servicemeta.httpPost(url,data);  
-  }
-  getWalletPaymentGateWay(data){
-    const url='consumer/payment/wallet'
-    return this.servicemeta.httpPost(url,data);  
-  }
+  // getPaymentGateWay(data) {
+  //   const url='consumer/payment'
+  //   return this.servicemeta.httpPost(url,data);  
+  // }
+  // getWalletPaymentGateWay(data){
+  //   const url='consumer/payment/wallet'
+  //   return this.servicemeta.httpPost(url,data);  
+  // }
 } 
