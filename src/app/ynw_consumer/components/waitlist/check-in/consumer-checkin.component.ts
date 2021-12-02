@@ -41,6 +41,7 @@ import { JcCouponNoteComponent } from '../../../../shared/modules/jc-coupon-note
 export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     paymentBtnDisabled = false;
     isClickedOnce = false;
+    shownonIndianModes=false;
     tooltipcls = '';
     add_member_cap = Messages.ADD_MEMBER_CAP;
     cancel_btn = Messages.CANCEL_BTN;
@@ -422,6 +423,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     }
                     else if (this.paymentmodes.internationalPay) {
                         this.non_indian_modes = this.paymentmodes.internationalBankInfo;
+                        alert(this.non_indian_modes);
                     }
 
                 },
@@ -437,6 +439,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     indian_payment_mode_onchange(event) {
         this.selected_payment_mode = event.value;
         this.isInternatonal = false;
+
+
+
+    }
+    non_indian_modes_onchange(event) {
+        this.selected_payment_mode = event.value;
+        this.isInternatonal = true;
 
 
 
