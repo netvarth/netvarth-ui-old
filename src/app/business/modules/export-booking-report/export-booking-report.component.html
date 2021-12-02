@@ -23,11 +23,22 @@
                     <td *ngIf="bl.schedule && bl.location">{{bl.location.place}}</td>
                     <td><span *ngIf="bl.provider">{{bl.provider.firstName + ' ' + bl.provider.lastName}}</span></td>
                     <td><span *ngIf="bl.provider && bl.provider.employeeId">{{bl.provider.employeeId}}</span></td>
-                    <td *ngIf="bl.waitlistingFor">{{bl.waitlistingFor[0].firstName + ' '
-                        +bl.waitlistingFor[0].lastName}}</td>
-                    <td *ngIf="bl.appmtFor[0].firstName === undefined && bl.appmtFor[0].lastName === undefined ">NIL
+                    <!-- <td *ngIf="bl.waitlistingFor[0].firstName === undefined && bl.waitlistingFor[0].lastName === undefined ">NIL
+                    </td> -->
+                    <td *ngIf="bl.waitlistingFor">
+                        <span>{{bl.waitlistingFor[0].firstName + ' '
+                            +bl.waitlistingFor[0].lastName}}</span>
+                        <span
+                            *ngIf="bl.waitlistingFor[0].firstName === undefined && bl.waitlistingFor[0].lastName === undefined ">NIL</span>
+
                     </td>
-                    <td *ngIf="bl.appmtFor">{{bl.appmtFor[0].firstName + ' ' +bl.appmtFor[0].lastName}}</td>
+                    <!-- <td *ngIf="bl.appmtFor[0].firstName === undefined && bl.appmtFor[0].lastName === undefined ">NIL
+                    </td> -->
+                    <td *ngIf="bl.appmtFor">
+                        <span>{{bl.appmtFor[0].firstName + ' ' +bl.appmtFor[0].lastName}}</span>
+                        <span
+                            *ngIf="bl.appmtFor[0].firstName === undefined && bl.appmtFor[0].lastName === undefined ">NIL</span>
+                    </td>
 
                     <td>{{bl.service.name}}</td>
                     <td *ngFor="let header of headerColumns | keyvalue">
