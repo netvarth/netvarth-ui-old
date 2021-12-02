@@ -349,6 +349,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   selected_type = '';
   apptByTimeSlot: any = [];
   scheduleSlots: any = [];
+  slotbyId: any = [];
   qloading: boolean;
   firstTime = true;
   endminday;
@@ -364,6 +365,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('closebutton') closebutton;
   showattachmentDialogRef: any;
   unassignview = false;
+  todaybyId: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -2878,23 +2880,36 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.provider_services.getSlotsByScheduleandDate(scheduleid, date).subscribe(
       (data: any) => {
         this.scheduleSlots = [];
+        this.slotbyId = [];
         for (let i = 0; i < data.length; i++) {
           if (data[i].availableSlots) {
             for (let j = 0; j < data[i].availableSlots.length; j++) {
               if ((this.selected_type === 'all' && this.apptByTimeSlot[data[i].availableSlots[j].time] && this.apptByTimeSlot[data[i].availableSlots[j].time][0].schedule.id === data[i].scheduleId) || (data[i].availableSlots[j].active && data[i].availableSlots[j].noOfAvailbleSlots !== '0')) {
                 data[i].availableSlots[j]['scheduleId'] = data[i].scheduleId;
+                data[i].availableSlots[j]['scheduleName'] = data[i].scheduleName + '(' + data[i].timeSlot + ')';
                 if (this.scheduleSlots.indexOf(data[i].availableSlots[j]) === -1) {
                   this.scheduleSlots.push(data[i].availableSlots[j]);
+               
                 }
               }
             }
           }
         }
+        this.slotbyId = this.shared_functions.groupBySlot(this.scheduleSlots, 'scheduleName');
         setTimeout(() => {
           this.loading = false;
         }, 200);
       }
     );
+  }
+  isObject(slotbyId) {
+    if (typeof (slotbyId) === "object" && Object.keys(slotbyId).length > 0) {
+     
+      return true;
+    } else if (typeof (slotbyId) === "object" && Object.keys(slotbyId).length < 0) {
+      console.log('false');
+      return false;
+    }
   }
   handleApptSelectionType(type?) {
     if (type) {
