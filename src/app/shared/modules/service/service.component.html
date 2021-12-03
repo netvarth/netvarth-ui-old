@@ -511,51 +511,53 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </mat-slide-toggle>
           </div>
 
-          Choose Payment Profile for this Service.
-          <div class="row" *ngFor="let profile of paymentProfiles; let i=index">
-            <div class="col-md-5">
-
-            <div class="card" >
-              <mat-radio-group formControlName="paymentProfileId" name="paymentprofile">
-                <mat-radio-button [value]="profile.profileId"  >{{profile.displayName}}  </mat-radio-button>
-                <ng-container *ngIf="profile.indiaPay">
-                  <div class="col-md-6">
-                    <strong style="color:blue">RAZORPAY</strong>
-                    <ng-container *ngFor="let modes of getRazorModes(profile.indianPaymodes)">
-                      <div>
-
-                        <span>{{modes.mode}}</span>&nbsp;
-                      </div>
-                    </ng-container>
-                  </div>
-                  <div   class="col-md-6" style="float:left">
-                    <strong style="color:blue">PAYTM</strong>
-                    <ng-container *ngFor="let modes of getpaytmmodes(profile.indianPaymodes)">
-                      <div>
-
-                        <span>{{modes.mode}}</span>
-                      </div>
-                    </ng-container>
-
-                  </div>
-                </ng-container>
-
-                <ng-container *ngIf="profile.internationalPay">
-                  <div>
-                  <input type="checkbox" checked="true" readonly="true" onclick="return false;"> International Payment
-                </div>
-
-                </ng-container>
-            
-
-              </mat-radio-group>
-              
-            </div>
-            </div>
-          </div>
 
         </section>
       </div>
+      <ng-container *ngIf="paymentProfiles.length>0">
+        Choose Payment Profile for this Service.
+        <div class="row" *ngFor="let profile of paymentProfiles; let i=index">
+          <div class="col-md-5">
+
+          <div class="card" >
+            <mat-radio-group formControlName="paymentProfileId" name="paymentprofile">
+              <mat-radio-button [value]="profile.profileId"  >{{profile.displayName}}  </mat-radio-button>
+              <ng-container *ngIf="profile.indiaPay">
+                <div class="col-md-6">
+                  <strong style="color:blue">RAZORPAY</strong>
+                  <ng-container *ngFor="let modes of getRazorModes(profile.indianPaymodes)">
+                    <div>
+
+                      <span>{{modes.mode}}</span>&nbsp;
+                    </div>
+                  </ng-container>
+                </div>
+                <div   class="col-md-6" style="float:left">
+                  <strong style="color:blue">PAYTM</strong>
+                  <ng-container *ngFor="let modes of getpaytmmodes(profile.indianPaymodes)">
+                    <div>
+
+                      <span>{{modes.mode}}</span>
+                    </div>
+                  </ng-container>
+
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="profile.internationalPay">
+                <div>
+                <input type="checkbox" checked="true" readonly="true" onclick="return false;"> International Payment
+              </div>
+
+              </ng-container>
+          
+
+            </mat-radio-group>
+            
+          </div>
+          </div>
+        </div>
+      </ng-container>
 
       <div class="mgn-bt-20">
         <a class="no-padding underline pointer-cursor" (click)="advancedClick()" style="font-size: 1.1rem;">

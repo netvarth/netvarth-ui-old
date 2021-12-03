@@ -237,8 +237,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     from: string;
     wt_personaahead;
     selection_modes: any;
-    indian_payment_modes: any;
-    non_indian_modes: any;
+    indian_payment_modes: any=[];
+    non_indian_modes: any=[];
     selected_payment_mode: any;
     isInternatonal: boolean;
     gateway: any;
@@ -417,18 +417,21 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 data => {
                     this.paymentmodes = data[0];
                     this.isPayment = true;
-                    console.log('paymnet modes' + JSON.stringify(this.paymentmodes));
                     if (this.paymentmodes.indiaPay) {
                         this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
                     }
-                    else if (this.paymentmodes.internationalPay) {
+                     if (this.paymentmodes.internationalPay) {
                         this.non_indian_modes = this.paymentmodes.internationalBankInfo;
-                        alert(this.non_indian_modes);
+ 
+                    }
+                    if(!this.paymentmodes.indiaPay && this.paymentmodes.internationalPay){
+                        this.shownonIndianModes=true;
+                    }else{
+                        this.shownonIndianModes=false;  
                     }
 
                 },
                 error => {
-                    console.log('inisdee')
                     this.isPayment = false;
                     console.log(this.isPayment);
                 }
@@ -449,6 +452,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
 
 
+    }
+    togglepaymentMode(){
+        this.shownonIndianModes=!this.shownonIndianModes;
     }
     ngOnDestroy(): void {
         this.subs.unsubscribe();
@@ -1990,7 +1996,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.addWaitlistAdvancePayment(param, post_Data)
             .subscribe(data => {
                 this.paymentDetails = data;
-                alert(this.paymentDetails);
+         
             },
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -2238,7 +2244,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.addWaitlistAdvancePayment(param, post_Data)
             .subscribe(data => {
                 this.paymentDetails = data;
-                alert(this.paymentDetails);
                 this.paymentLength = Object.keys(this.paymentDetails).length;
                 this.checkJcash = true
                 this.jcashamount = this.paymentDetails.eligibleJcashAmt.jCashAmt;
