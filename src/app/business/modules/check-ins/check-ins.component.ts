@@ -1100,7 +1100,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQIdsFromView(view) {
     const qIds = [];
-    if (view && view.customViewConditions.queues && view.customViewConditions.queues.length > 0) {
+    if (view && view.customViewConditions && view.customViewConditions.queues && view.customViewConditions.queues.length > 0) {
       for (let i = 0; i < view.customViewConditions.queues.length; i++) {
         qIds.push(view.customViewConditions.queues[i]['id']);
       }
