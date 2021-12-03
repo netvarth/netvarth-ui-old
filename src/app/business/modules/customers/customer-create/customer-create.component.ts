@@ -511,7 +511,7 @@ export class CustomerCreateComponent implements OnInit {
           'address': form_data.address,
           //   }
         };
-        if (form_data.countryCode) {
+        if (form_data.countryCode && form_data.mobile_number) {
           post_data['countryCode'] = form_data.countryCode;
         }
         if (form_data.email_id && form_data.email_id !== '') {
@@ -565,7 +565,7 @@ export class CustomerCreateComponent implements OnInit {
           //   }
         };
 
-        if (form_data.countryCode) {
+        if (form_data.countryCode && form_data.mobile_number) {
           post_data['countryCode'] = form_data.countryCode;
         }
         if (form_data.email_id && form_data.email_id !== '') {
