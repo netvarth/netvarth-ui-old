@@ -195,7 +195,6 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     this.showService = true;
                     this.action = serviceParams.action;
                     this.service = serviceParams.service;
-                    console.log(this.service);
                     this.paymentsettings = serviceParams.paymentsettings;
                     this.taxsettings = serviceParams.taxsettings;
                     this.subdomainsettings = serviceParams.subdomainsettings;
@@ -361,10 +360,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         } else if (this.screenWidth < 375) {
             divider = divident / 1;
         }
-        console.log(divident);
-        console.log(divider);
         this.no_of_grids = Math.round(divident / divider);
-        console.log(this.no_of_grids);
     }
     @Input() donationservice;
     setDescFocus() {
@@ -591,7 +587,6 @@ export class ServiceComponent implements OnInit, OnDestroy {
             if (form_data.serviceType === 'virtualService') {
                 form_data['virtualCallingModes'] = [this.teleCallingModes];
             }
-            console.log(this.selectedUser);
             if (this.selectedUser && this.userspecific) {
                 this.provider = {
                     'id': this.selectedUser
@@ -619,7 +614,6 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 }
             } 
             else {
-                //console.log(serviceActionModel);
                 this.servicesService.actionPerformed(serviceActionModel);
             }
         }
@@ -939,7 +933,6 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.router.navigate(['provider', 'settings', 'general', 'questionnaire', id]);
     }
     getProviderName(users) {
-        console.log(users);
         let userlst = '';
         if (users[0] === 'All') {
             return 'All Users'
@@ -959,7 +952,6 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
     }
     getProviderNametruncate(users) {
-        console.log(users);
         let userlst = '';
         if (users[0] === 'All') {
             return 'All Users'
@@ -975,33 +967,31 @@ export class ServiceComponent implements OnInit, OnDestroy {
     }
     getOwnership(ownerShipData, isTruncate) {
         this.userNamelist = '';
-        if (ownerShipData.users && ownerShipData.users.length > 0) {
+        if (ownerShipData && ownerShipData.users && ownerShipData.users.length > 0) {
 
             ownerShipData.users.forEach(element => {
                 const userObject = this.users_list.filter(user => user.id === parseInt(element));
-                console.log(userObject);
                 this.userNamelist = this.userNamelist + userObject[0].firstName + ' ' + userObject[0].lastName + ','
             });
             if (isTruncate) {
                 this.truncateInst(this.userNamelist.replace(/,\s*$/, ''));
             } else {
                 this.userNamelist = this.userNamelist.replace(/,\s*$/, '')
-                console.log(this.userNamelist.length);
             }
 
         }
-        if (ownerShipData.teams && ownerShipData.teams.length > 0) {
-
+        if ( ownerShipData && ownerShipData.teams && ownerShipData.teams.length > 0) {
             ownerShipData.teams.forEach(element => {
                 const userObject = this.team.filter(team => team.id === parseInt(element));
-                console.log(userObject);
-                this.userNamelist = this.userNamelist + userObject[0].name + ','
+                if(userObject.length !==0){
+                    this.userNamelist = this.userNamelist + userObject[0].name + ','
+                }
+               
             });
             if (isTruncate) {
                 this.truncateInst(this.userNamelist.replace(/,\s*$/, ''));
             } else {
                 this.userNamelist = this.userNamelist.replace(/,\s*$/, '')
-                console.log(this.userNamelist.length);
             }
 
         }
