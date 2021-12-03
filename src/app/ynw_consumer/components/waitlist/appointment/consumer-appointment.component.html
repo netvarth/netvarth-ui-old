@@ -1237,7 +1237,7 @@
                                                             Confirm Appointment</ng-container>                                                       
                                                     </button>
                                                 </div>
-                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 "
+                                                <!-- <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 "
                                                     *ngIf="razorpayEnabled && paytmEnabled">
                                                     <div class="txt-align-center"
                                                         *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
@@ -1260,9 +1260,75 @@
                                                         </span>
 
                                                     </div>
+                                                </div> -->
+                                          
+                                                <div class="clearfix"></div>
+                                                <ng-container *ngIf="!shownonIndianModes">
+                                                <div *ngFor="let modes of indian_payment_modes">
+                                                    <div class="col-xs-12  col-sm-6 col-lg-3  ">
+
+                                                            <div class="paymentmode card text-primary" >
+                                                              <mat-radio-group name="paymentMode" (change)="indian_payment_mode_onchange($event)">
+                                                                <mat-radio-button [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
+
+                                                
+                                                              </mat-radio-group>
+                                                              
+                                                            </div>
+                                                            </div>
+
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="shownonIndianModes">
+                                            
+                                            <div *ngFor="let modes of non_indian_modes">
+                                                <div class="col-xs-12  col-sm-6 col-lg-3  ">
+
+                                                        <div class="paymentmode card text-primary" >
+                                                          <mat-radio-group name="paymentMode" (change)="non_indian_modes_onchange($event)">
+                                                            <mat-radio-button [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
+
+                                            
+                                                          </mat-radio-group>
+                                                          
+                                                        </div>
+                                                        </div>
+
+                                        </div>
+                                    </ng-container>
+                                                <div class="clearfix"></div>
+
+                                                <div class="txt-align-center pad_link"
+                                                    *ngIf="paymentmodes.internationalPay && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                    <span [class.disabled]="paymentBtnDisabled"
+                                                        (click)="togglepaymentMode()"
+                                                        class="pointer-cursor"><a
+                                                            class="refund_policy">
+                                                            <span *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non Indian Payment ? Click
+                                                            here</span>
+                                                            <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
+                                                                here</span>
+                                                        </a></span>
+
+
                                                 </div>
+                                                <div class="cancelpolicy  mgn-rt-5"
+                                                    *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                    <div class="pad_policy"
+                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                        <a data-toggle="modal" data-target="#exampleModal"
+                                                            class="refund_policy">Cancellation Policy</a>
+                                                    </div>
+                                                </div> 
                                                 <div class="txt-align-center">
-                                                    <button
+                                                    <button type="button"
+                                                            class=" next-button btn btn-primary font-weight-bold text-uppercase "
+                                                            [class.disabled]="paymentBtnDisabled"
+                                                            *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
+                                                            (click)="!isClickedOnce && saveCheckin('appt')">
+                                                           MaKe Payment
+                                                        </button>
+                                                    <!-- <button
                                                         class=" next-button btn btn-primary font-weight-bold text-uppercase "
                                                         *ngIf="razorpayEnabled && !paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
                                                         [class.disabled]="paymentBtnDisabled"
@@ -1274,26 +1340,8 @@
                                                         *ngIf="paytmEnabled && !razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
                                                         (click)="!isClickedOnce && saveCheckin('appt','paytm')">
                                                         Pay by CC/DC/UPI
-                                                    </button>
-                                                </div>
-                                                <div class="clearfix"></div>
-                                                <div class="txt-align-center pad_link"
-                                                    *ngIf="interNatioanalPaid && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                    <span [class.disabled]="paymentBtnDisabled"
-                                                        (click)="!isClickedOnce && saveCheckin('appt')"
-                                                        class="pointer-cursor"><a class="refund_policy">International
-                                                            Payment ? Click here</a></span>
-
-
-                                                </div>
-                                                <div class="cancelpolicy  mgn-rt-5"
-                                                    *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                    <div class="pad_policy"
-                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                        <a data-toggle="modal" data-target="#exampleModal"
-                                                            class="refund_policy">Cancellation Policy</a>
-                                                    </div>
-                                                </div>                                             
+                                                    </button> -->
+                                                </div>                                            
                                                 <!-- modalbox -->
                                                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                                     aria-labelledby="exampleModalLabel" aria-hidden="true">

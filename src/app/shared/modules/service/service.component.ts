@@ -22,6 +22,7 @@ import { ServiceQRCodeGeneratordetailComponent } from './serviceqrcodegenerator/
 
 
 
+
 @Component({
     selector: 'app-jaldee-service',
     templateUrl: './service.component.html',
@@ -206,17 +207,19 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     this.showService = true;
                     this.action = serviceParams.action;
                     this.service = serviceParams.service;
-                    console.log(this.service);
                     this.paymentsettings = serviceParams.paymentsettings;
                     this.taxsettings = serviceParams.taxsettings;
                     this.subdomainsettings = serviceParams.subdomainsettings;
                     this.showResources = this.subdomainsettings.serviceSharing;
                     this.userId = serviceParams.userId;
                     this.departmentId = serviceParams.deptId;
+              
+                    
                     if (this.action === 'add') {
                         this.service = null;
                         this.createForm();
                     } else {
+            
                         this.service_data = this.service;
                         if (this.action === 'show' && this.active_user.accountType === 'BRANCH') {
                             this.getDepartments(this.service.department);
@@ -228,11 +231,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                 this.servstatus = false;
                             }
                             if (this.action === 'edit') {
-
+                     
                                 this.createForm();
                                 if (this.service_data.serviceType === 'virtualService') {
                                     this.is_virtual_serv = true;
                                 }
+                                this.serviceForm.get('paymentProfileId').setValue('spDefaultBillProfile');
                                 this.showServiceduration = this.service_data.serviceDurationEnabled;
                                 this.preInfoEnabled = this.service_data.preInfoEnabled;
                                 this.postInfoEnabled = this.service_data.postInfoEnabled;
@@ -240,6 +244,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                 this.preInfoText = this.service_data.preInfoText || '';
                                 this.postInfoTitle = this.service_data.postInfoTitle || '';
                                 this.postInfoText = this.service_data.postInfoText || '';
+                             
                                 if(this.service_data.paymentProfileId){
                                     this.serviceForm.patchValue({
                                         'paymentProfileId':this.service_data['paymentProfileId']||''
@@ -251,7 +256,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                 }
                                 if (!this.subdomainsettings.serviceBillable) {
                                     if (this.service_data.serviceType === 'donationService') {
-                                        this.serviceForm.setValue({
+                                        this.serviceForm.patchValue({
                                             'name': this.service_data['name'] || this.serviceForm.get('name').value,
                                             'description': this.service_data['description'] || this.serviceForm.get('description').value,
                                             'department': this.service_data['department'] || this.serviceForm.get('department').value,
@@ -275,7 +280,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                         });
                                     } else {
                          
-                                        this.serviceForm.setValue({
+                                        this.serviceForm.patchValue({
                                             'name': this.service_data['name'] || this.serviceForm.get('name').value,
                                             'description': this.service_data['description'] || this.serviceForm.get('description').value,
                                             'resoucesRequired': this.service_data['resoucesRequired'] || this.serviceForm.get('resoucesRequired').value,
@@ -303,7 +308,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                 } else {
                                     if (this.service_data.serviceType === 'donationService') {
 
-                                        this.serviceForm.setValue({
+                                        this.serviceForm.patchValue({
                                             'name': this.service_data['name'] || this.serviceForm.get('name').value,
                                             'description': this.service_data['description'] || this.serviceForm.get('description').value,
                                             'department': this.service_data['department'] || this.serviceForm.get('department').value,
@@ -325,12 +330,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value
                                            
                                         });
-                                        if(this.service_data['paymentProfileId']){
-                                            this.serviceForm.patchValue({'paymentProfileId':this.service_data['paymentProfileId']});
-                                        }
+                                       
                                     } else {
                                       
-                                        this.serviceForm.setValue({
+                                        this.serviceForm.patchValue({
                                             'name': this.service_data['name'] || this.serviceForm.get('name').value,
                                             'description': this.service_data['description'] || this.serviceForm.get('description').value,
                                             'resoucesRequired': this.service_data['resoucesRequired'] || this.serviceForm.get('resoucesRequired').value,
@@ -351,9 +354,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'paymentDescription': this.service_data['paymentDescription'] || this.serviceForm.get('paymentDescription').value,
                                            
                                         });
-                                        if(this.service_data['paymentProfileId']){
-                                            this.serviceForm.patchValue({'paymentProfileId':this.service_data['paymentProfileId']});
-                                        }
+                                       
                                         console.log(this.serviceForm.controls.paymentProfileId.value);
                                         if (this.service_data.serviceType === 'virtualService') {
                                             this.tool_name = this.service_data.virtualCallingModes[0].callingMode;
@@ -567,8 +568,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
             );
     }
     onSubmit(form_data) {
-        console.log(form_data);
-        console.log('haaiiiiiiiii'+form_data.paymentProfileId);
+
        
         
         // if(form_data.priceDynamic === true){
@@ -752,9 +752,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     taxable: [false],
                     notification: [true],
                     livetrack: [false],
-                    paymentProfileId:['spDefaultBillProfile']
+                    paymentProfileId:[]
                 });
                 this.serviceForm.get('paymentProfileId').setValue('spDefaultBillProfile');
+                this.serviceForm.controls['paymentProfileId'].setValue('spDefaultBillProfile');
             } else {
                 this.serviceForm = this.fb.group({
                     name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
@@ -773,7 +774,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     taxable: [false],
                     notification: [true],
                     livetrack: [false],
-                    paymentProfileId:['spDefaultBillProfile']
+                    paymentProfileId:[]
                 });
                 this.serviceForm.get('resoucesRequired').setValue('1');
                 this.serviceForm.get('maxBookingsAllowed').setValue('1');
@@ -783,7 +784,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 }
             }
         } else {
-            this.serviceForm.get('paymentProfileId').setValue('spDefaultBillProfile');
+            this.serviceForm.controls['paymentProfileId'].setValue('spDefaultBillProfile');
+     
             if (this.is_donation === true) {
                 this.serviceForm = this.fb.group({
                     name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
@@ -803,6 +805,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     taxable: [false],
                     notification: [true],
                     livetrack: [false],
+                    paymentProfileId:[]
                 });
             } else {
                 this.serviceForm = this.fb.group({
@@ -815,6 +818,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     virtualServiceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
                     notification: [true],
                     livetrack: [false],
+                    paymentProfileId:[]
                 });
                 this.serviceForm.get('resoucesRequired').setValue('1');
                 this.serviceForm.get('maxBookingsAllowed').setValue('1');
