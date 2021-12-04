@@ -185,7 +185,66 @@
     font-weight: 500;
 }
 
+.form-group input[type="text"], .form-group input[type="email"], .form-group input[type="password"], .form-group input[type="file"], .form-group textarea, .form-group .form-control, .form-check input[type="text"], .form-check input[type="email"], .form-check input[type="password"], .form-check input[type="file"], .form-check textarea, .form-check .form-control {
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    background-clip: padding-box;
+    background: white;
+    border-bottom: 1px solid #b6cdd8;
+    font-weight: normal;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #222223;
+    text-overflow: ellipsis;
+    padding: 10px;
+}
 
+.form-group input[type="text"]:focus, .form-group input[type="email"]:focus, .form-group input[type="password"]:focus, .form-group input[type="file"]:focus, .form-group textarea:focus, .form-group .form-control:focus, .form-check input[type="text"]:focus, .form-check input[type="email"]:focus, .form-check input[type="password"]:focus, .form-check input[type="file"]:focus, .form-check textarea:focus, .form-check .form-control:focus {
+    background: #fff;
+}
+
+.form-group input[type="text"]:disabled, .form-group input[type="email"]:disabled, .form-group input[type="password"]:disabled, .form-group input[type="file"]:disabled, .form-group textarea:disabled, .form-group .form-control:disabled, .form-check input[type="text"]:disabled, .form-check input[type="email"]:disabled, .form-check input[type="password"]:disabled, .form-check input[type="file"]:disabled, .form-check textarea:disabled, .form-check .form-control:disabled {
+    background: #e6e6e6;
+    border-bottom: 1px solid transparent;
+}
+
+.form-group input[type="text"]::-moz-placeholder, .form-group input[type="email"]::-moz-placeholder, .form-group input[type="password"]::-moz-placeholder, .form-group input[type="file"]::-moz-placeholder, .form-group textarea::-moz-placeholder, .form-group .form-control::-moz-placeholder, .form-check input[type="text"]::-moz-placeholder, .form-check input[type="email"]::-moz-placeholder, .form-check input[type="password"]::-moz-placeholder, .form-check input[type="file"]::-moz-placeholder, .form-check textarea::-moz-placeholder, .form-check .form-control::-moz-placeholder {
+    color: #999999;
+    font-size: .75rem;
+    font-style: italic;
+}
+
+.form-group input[type="text"]:-ms-input-placeholder, .form-group input[type="email"]:-ms-input-placeholder, .form-group input[type="password"]:-ms-input-placeholder, .form-group input[type="file"]:-ms-input-placeholder, .form-group textarea:-ms-input-placeholder, .form-group .form-control:-ms-input-placeholder, .form-check input[type="text"]:-ms-input-placeholder, .form-check input[type="email"]:-ms-input-placeholder, .form-check input[type="password"]:-ms-input-placeholder, .form-check input[type="file"]:-ms-input-placeholder, .form-check textarea:-ms-input-placeholder, .form-check .form-control:-ms-input-placeholder {
+    color: #999999;
+    font-size: .75rem;
+    font-style: italic;
+}
+
+.form-group input[type="text"]:-moz-placeholder, .form-group input[type="email"]:-moz-placeholder, .form-group input[type="password"]:-moz-placeholder, .form-group input[type="file"]:-moz-placeholder, .form-group textarea:-moz-placeholder, .form-group .form-control:-moz-placeholder, .form-check input[type="text"]:-moz-placeholder, .form-check input[type="email"]:-moz-placeholder, .form-check input[type="password"]:-moz-placeholder, .form-check input[type="file"]:-moz-placeholder, .form-check textarea:-moz-placeholder, .form-check .form-control:-moz-placeholder {
+    color: #999999;
+    font-size: .75rem;
+    font-style: italic;
+}
+
+.form-group input[type="text"]::-webkit-input-placeholder, .form-group input[type="email"]::-webkit-input-placeholder, .form-group input[type="password"]::-webkit-input-placeholder, .form-group input[type="file"]::-webkit-input-placeholder, .form-group textarea::-webkit-input-placeholder, .form-group .form-control::-webkit-input-placeholder, .form-check input[type="text"]::-webkit-input-placeholder, .form-check input[type="email"]::-webkit-input-placeholder, .form-check input[type="password"]::-webkit-input-placeholder, .form-check input[type="file"]::-webkit-input-placeholder, .form-check textarea::-webkit-input-placeholder, .form-check .form-control::-webkit-input-placeholder {
+    color: #999999;
+    font-size: .75rem;
+    font-style: italic;
+}
+
+.form-group input[type="text"].nofocus, .form-group input[type="email"].nofocus, .form-group input[type="password"].nofocus, .form-group input[type="file"].nofocus, .form-group textarea.nofocus, .form-group .form-control.nofocus, .form-check input[type="text"].nofocus, .form-check input[type="email"].nofocus, .form-check input[type="password"].nofocus, .form-check input[type="file"].nofocus, .form-check textarea.nofocus, .form-check .form-control.nofocus {
+    pointer-events: none;
+    cursor: default;
+    background: #f2f2f2;
+}
+
+.form-group input[type="text"], .form-group input[type="email"], .form-group input[type="password"], .form-check input[type="text"], .form-check input[type="email"], .form-check input[type="password"] {
+    height: 40px;
+}
+
+.form-group textarea, .form-check textarea {
+    min-height: 100px;
+}
 
 .form-group .col-form-label, .form-check .col-form-label {
     font-weight: 600;
