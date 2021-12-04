@@ -588,7 +588,17 @@
   }
 } 
 
-
+.tble{
+  
+  overflow-x: auto !important;
+}
+.side{
+  overflow-y: auto !important;
+  display: block !important;
+  /* flex-basis: content !important; */
+  flex-direction: column !important;
+  
+}
 
 /* @media
    (max-width: 960px){

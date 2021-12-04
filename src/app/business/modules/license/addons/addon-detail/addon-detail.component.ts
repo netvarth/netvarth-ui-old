@@ -31,10 +31,11 @@ export class AddonDetailComponent implements OnInit {
   ) {
     this.activaterouterobj.queryParams.subscribe(qparams => {
       this.disp_name = qparams.disp_name;
+      console.log("Display Name : ",this.disp_name)
      });
      this.activaterouterobj.queryParams.subscribe(params => {
-     // this.drive = params.data;
-      this.disp_name = params.disp_name
+      this.drive = params.disp_name;
+     // this.disp_name = params.disp_name
     });
     this.onResize();
    }

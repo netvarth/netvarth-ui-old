@@ -656,11 +656,12 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     // });
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        data: 'jaldee-drive',
+        disp_name: 'Cloud Storage',
         //disp_name:'CloudStorage'
+        //addon-detail
       }
     };
-    this.router.navigate(['provider', 'license', 'addons'], navigationExtras);
+    this.router.navigate(['provider', 'license', 'addon-detail'], navigationExtras);
 
   }
   preview(file) {

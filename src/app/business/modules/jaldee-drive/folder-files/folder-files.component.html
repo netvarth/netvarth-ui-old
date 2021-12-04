@@ -34,7 +34,7 @@
       </div>
       <div class="row displayblock">
 
-        <div class="col-sm-6 col-lg-4 col-xs-12 col-md-6 filter">
+        <div class="col-sm-6 col-12 col-lg-4 col-xs-12 col-md-6 filter">
           <aside class="filterSidebar filter-sidebar user-filter" *ngIf="filter_sidebar">
             <section class="sidebar filter-container" id="filterContainer" style="overflow:auto"
               [ngStyle]="{'height.vh': 90, 'margin-top.px': filterapplied === true ? 95 : 44}">
@@ -43,8 +43,8 @@
                 <i class="icon-filter-one-op ng-star-inserted closeFilter" (click)="hideFilterSidebar()"
                   [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter sidebar'"></i>
               </div>
-              <ul class="sidebar-menu accordion" id="accordion1">
-                <div class="card">
+              <ul class="sidebar-menu side accordion" id="accordion1">
+                <div class="card side">
                   <div class="card-header">
                     <h2 class="mb-0">
                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseLocation1"
@@ -71,7 +71,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="card">
+                <div class="card side">
                   <div class="card-header">
                     <h2 class="mb-0">
                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePin1"
@@ -97,7 +97,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="card">
+                <div class="card side">
                   <div class="card-header">
                     <h2 class="mb-0">
                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName1"
@@ -136,7 +136,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="card">
+                <div class="card side">
                   <div class="card-header">
                     <h2 class="mb-0">
                       <button class="btn btn-link" type="button" data-toggle="collapse"
@@ -171,7 +171,7 @@
                   </div>
                 </div>
                 <!-- <i class="fa fa-bookmark"></i> -->
-                <div class="card">
+                <div class="card side">
                   <div class="card-header">
                     <h2 class="mb-0">
                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseBNo1"
@@ -217,11 +217,11 @@
         </div>
       </div>
       <div class="row p-3">
-        <div class="card-body pt-0 pb-3 col-12 col-sm-12 col-xs-12">
+        <div class="card-body tble pt-0 pb-3 col-12 col-sm-12 col-xs-12">
           <div class="tab-content">
             <div class="table-responsive1">
               <!-- <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner> -->
-              <table class="table table-hover table-head-custom table-head-bg table-borderless table-vertical-center">
+              <table class="table  table-responsive table-hover table-head-custom table-head-bg table-borderless table-vertical-center">
                 <thead>
                   <tr class="text-left text-uppercase mx-2 " style="background-color: #f3f6f9; height: 60px;">
                     <th style="min-width: 150px">
@@ -269,7 +269,7 @@
                     </td>
                     <td>
                       <span class="text-dark-75 d-block ">
-                        {{customer.uploadedDate}}
+                        {{customer.uploadedDate | date:"MM-dd-yy" }}
                       </span>
                     </td>
                     <td>

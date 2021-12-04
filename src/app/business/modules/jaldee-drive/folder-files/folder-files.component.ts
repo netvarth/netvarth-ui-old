@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PreviewuploadedfilesComponent } from '../previewuploadedfiles/previewuploadedfiles.component';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { ProviderServices } from '../../../../business/services/provider-services.service';
+//import { GroupStorageService } from 'src/app/shared/services/group-storage.service';
 export let projectConstants: any = {};
 
 
@@ -18,6 +19,16 @@ export let projectConstants: any = {};
 export class FolderFilesComponent implements OnInit {
   customers: any[] = [];
   loading = true;
+  blogo = '';
+  bname;
+  userDetails: any = [];
+  userData;
+  branchName = '';
+  bsubsector = '';
+  bsector = '';
+  bdetails: any;
+  cols: any[];
+  value: number = 0;
   api_loading: boolean;
   selectedTeam;
   addUser = false;
@@ -80,6 +91,7 @@ export class FolderFilesComponent implements OnInit {
     private activated_route: ActivatedRoute,
     public dialog: MatDialog,
     private lStorageService: LocalStorageService,
+   // private groupService: GroupStorageService,
 
   ) {
     this.activated_route.queryParams.subscribe(params => {
@@ -103,6 +115,8 @@ export class FolderFilesComponent implements OnInit {
   }
   ngOnInit() {
     this.getfiles();
+    //this.getBusinessdetFromLocalstorage()
+ 
   }
   doSearch() {
     this.lStorageService.removeitemfromLocalStorage('userfilter');
@@ -321,4 +335,31 @@ export class FolderFilesComponent implements OnInit {
 
   }
 
+  // getBusinessdetFromLocalstorage() {
+  //   this.bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
+  //   console.log(this.bdetails);
+  //   if (this.bdetails) {
+  //     this.bsector = this.bdetails.bs || '';
+  //     this.bsubsector = this.bdetails.bss || '';
+  //     if (this.userData.accountType === 'BRANCH' && this.userData.userType !== 2) {
+  //       this.branchName = this.bdetails.bn || 'User';
+  //       this.bname = this.userData.userName || 'User';
+  //       if (this.userDetails.profilePicture) {
+  //         this.blogo = this.userDetails.profilePicture;
+  //       } else if (this.bdetails.logo) {
+  //         this.blogo = this.bdetails.logo;
+  //       } else {
+  //         this.blogo = '../../../assets/images/img-null.svg';
+  //       }
+  //     } else {
+  //       this.bname = this.bdetails.bn || 'User';
+  //       this.blogo = this.bdetails.logo || '../../../assets/images/img-null.svg';
+  //     }
+  //   }
+  // }
+
 }
+
+
+
+
