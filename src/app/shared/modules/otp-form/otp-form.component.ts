@@ -63,7 +63,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
     ) { }
 
   ngOnInit() {
-    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable'))) 
 
     this.createForm();
     this.resetCounter(this.refreshTime);

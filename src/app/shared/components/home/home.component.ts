@@ -88,9 +88,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   ngAfterViewInit() {
-    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable'))) 
     for(let i=0;i<this.languages.length;i++) {
-      if(this.languages[i].value==JSON.parse(localStorage.getItem('myData'))) {
+      if(this.languages[i].value==JSON.parse(localStorage.getItem('translatevariable'))) {
         this.langselected=this.languages[i].viewValue;
         break;
       }

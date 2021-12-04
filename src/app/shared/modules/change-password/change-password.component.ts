@@ -64,7 +64,7 @@ export class ChangePasswordComponent implements OnInit {
     this.location.back();
   }
   ngOnInit() {
-    this.translate.use(JSON.parse(localStorage.getItem('myData')))  
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable')))  
 
     this.translate.stream('FAMILY_MEMBERS').subscribe(v=>{this.family_members_cap = v});
     this.translate.stream('RELATED_LINKS').subscribe(v => {this.related_links_cap = v});

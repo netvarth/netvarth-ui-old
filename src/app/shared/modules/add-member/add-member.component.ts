@@ -80,7 +80,7 @@ this.email=data.member.userProfile.email || '';
   }
 
   ngOnInit() {
-    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable'))) 
   }
   isNumericSign(evt) {
     return this.shared_functions.isNumericSign(evt);

@@ -97,6 +97,7 @@ export class EditProfileComponent implements OnInit {
     this.location.back();
   }
   ngOnInit() {
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable'))) 
     this.translate.stream('UPDATE_BTN').subscribe(v => {this.update_btn=v});
     this.translate.stream('RELATED_LINKS').subscribe(v => {this.related_links_cap = v});
     this.translate.stream('CHANGE_PASSWORD_CAP').subscribe(v=> {this.change_password_cap = v});

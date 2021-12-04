@@ -185,7 +185,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   }
 
   ngOnInit() {
-    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable'))) 
 
     this.onResize();
     this.selected_domain = 'All';

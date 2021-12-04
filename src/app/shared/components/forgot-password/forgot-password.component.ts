@@ -74,7 +74,7 @@ export class ForgotPasswordComponent {
   ) {
     this.createForm(1);
     this.is_provider = data.is_provider;
-    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable'))) 
 
   }
   // phonenumber: ['', Validators.compose(

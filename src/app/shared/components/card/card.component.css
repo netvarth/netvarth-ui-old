@@ -507,7 +507,7 @@ button.fxmenu1{
     background-color:#1E4079;
     color: white;
     font-weight: 600;
-    font-style: Montserrat; 
+    /* font-style: Montserrat;  */
     display: inline-block;
     margin-bottom: 0;
     font-weight: 400;
@@ -530,7 +530,7 @@ button.fxmenu1{
     background-color: #FFC107;
     color: white;
     font-weight: 600;
-    font-style: Montserrat;
+    /* font-style: Montserrat; */
     display: inline-block;
     margin-bottom: 0;
     font-weight: 400;

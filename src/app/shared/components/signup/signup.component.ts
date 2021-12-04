@@ -111,7 +111,7 @@ export class SignUpComponent implements OnInit {
     this.is_provider = data.is_provider || 'true';
   }
   ngOnInit() {
-    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable'))) 
     if (this.countryCodes.length !== 0) {
       this.selectedCountryCode = this.countryCodes[0].value;
     }

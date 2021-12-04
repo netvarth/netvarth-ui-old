@@ -1685,14 +1685,21 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   appointmentClicked(location, service: any) {
     console.log('location..',location)
+    // alert('helooooo')
     this.futureAllowed = true;
-    const current_provider = {
+    let current_provider = {
       'id': location.id,
       'place': location.place,
       'location': location,
       'service': service,
       'cdate': service.serviceAvailability.nextAvailableDate
+      
     };
+    console.log('cureent*******')
+    if(location.time) {
+      current_provider['ctime']=location.time
+    }
+    console.log('current provider...',current_provider)
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
@@ -1725,12 +1732,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       console.log(service.serviceType);
       if (service.serviceType === 'virtualService') {
         this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-          this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'appt', current_provider['service'], consumerdata);
+          this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'appt', current_provider['service'], consumerdata,current_provider['ctime']);
         });
 
       }
       else {
-        this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
+        console.log('entered here',current_provider)
+        this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer',current_provider['ctime']);
       }
     } else if (this.userType === '') {
       const passParam = { callback: 'appointment', current_provider: current_provider, serviceType: service.serviceType };
@@ -1784,7 +1792,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
           // }
           // else {
-          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'consumer');
+          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'consumer',current_provider['ctime']);
           // }
 
         }else if (passParam['callback'] === 'checkavailability') {
@@ -1814,7 +1822,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }
     });
   }
-  collectRequiredinfo(id, place, location, date, type, service?, consumerdata?) {
+  collectRequiredinfo(id, place, location, date, type, service?, consumerdata?,ctime?) {
     console.log('inisdee  collecte required ingo');
     const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
       width: '40%',
@@ -1829,7 +1837,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         console.log(result);
         this.consumerVirtualinfo = result;
         if (type === 'appt') {
-          this.showAppointment(id, place, location, date, service, 'consumer', result);
+          this.showAppointment(id, place, location, date, service, 'consumer', result,ctime);
         } else {
           this.showCheckin(id, place, location, date, service, 'consumer', result);
         }
@@ -1941,11 +1949,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
   }
-  showAppointment(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?) {
+  showAppointment(locid, locname, gMapUrl, curdate, service: any, origin?,ctime?,virtualinfo?) {
     // let deptId;
     // if (this.servicesjson[0] && this.servicesjson[0].department) {
     //   deptId = this.servicesjson[0].department;
     // }
+    console.log(locid, locname, gMapUrl, curdate, service, origin, virtualinfo,ctime,';;;;;;;;;;;;')
     const queryParam = {
       loc_id: locid,
       locname: locname,
@@ -1958,7 +1967,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       futureAppt: this.futureAllowed,
       service_id: service.id,
       sel_date: curdate,
-      virtual_info: JSON.stringify(virtualinfo)
+      virtual_info: JSON.stringify(virtualinfo),
+      ctime:ctime
     };
     if (service['department']) {
       queryParam['dept'] = service['department'];
@@ -2450,9 +2460,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
 
     this.checkavailabilitydialogref.afterClosed().subscribe(result => {
-      console.log('action..........',actionObj);
+     
     
-      actionObj['location']['bSchedule']['timespec'][0]['timeSlots'][0]['sTime']=result
+      actionObj['location']['time']=result;
+      console.log('action..........',actionObj);
       this.appointmentClicked(actionObj['location'], actionObj['service']);
 
     });

@@ -97,7 +97,7 @@ export class ConsumerHistoryComponent implements OnInit, OnDestroy {
     }
   }
   ngOnInit() {
-    this.translate.use(JSON.parse(localStorage.getItem('myData')))
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable')))
     this.translate.stream('SERV_PROVIDER_CAP').subscribe(v=>{this.service_provider_cap=v});
     this.translate.stream('PRO_SERVICE_CAP').subscribe(v=>{this.service_cap=v});
     this.translate.stream('LOCATION_CAP').subscribe(v=>this.location_cap=v);

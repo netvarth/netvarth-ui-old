@@ -29,7 +29,7 @@ export class WalletComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable'))) 
     
     this.jaldeecashbalance();
   }

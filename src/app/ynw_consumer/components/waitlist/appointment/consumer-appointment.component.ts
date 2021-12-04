@@ -267,6 +267,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     changePrice: number;
     amountdifference: any;
     from: string;
+    selectedTime: any;
 
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -293,6 +294,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         public dialog: MatDialog) {
         this.subs.sink = this.route.queryParams.subscribe(
             params => {
+                console.log('params>>.',params)
+                if(params.ctime) {
+                    console.log('****************************')
+                    this.selectedTime=params.ctime
+                }
                 this.sel_loc = params.loc_id;
                 this.locationName = params.locname;
                 this.googleMapUrl = params.googleMapUrl;
@@ -735,9 +741,19 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.showApptTime = true;
                     if (this.appointment && this.appointment.appmtTime && this.sel_checkindate === this.selectedDate) {
                         const appttime = this.freeSlots.filter(slot => slot.time === this.appointment.appmtTime);
+
                         this.apptTime = appttime[0];
                     } else {
-                        this.apptTime = this.freeSlots[0];
+                        console.log(this.selectedTime)
+                        if(this.selectedTime) {
+                            const appttime = this.freeSlots.filter(slot => slot.displayTime === this.selectedTime);
+                            this.apptTime = appttime[0];
+                            console.log("**********")
+                        } else {
+                            this.apptTime = this.freeSlots[0];
+                        }
+                      
+                        
                     }
                     this.waitlist_for[0].apptTime = this.apptTime['time'];
                 } else {
@@ -745,9 +761,12 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
                 if (type) {
                     this.selectedApptTime = this.apptTime;
+
                 }
                 this.api_loading1 = false;
+                console.log('selectedappttime.........',this.apptTime);
             });
+            
     }
     handleServiceSel(obj) {
         this.callingModes = [];

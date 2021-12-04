@@ -76,7 +76,7 @@ export class ChangeMobileComponent implements OnInit {
     this.location.back();
   }
   ngOnInit() {
-    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable'))) 
     this.translate.stream('CHANGE_MOB_CAP').subscribe(v=>{this.mobile_cap = v});
     this.translate.stream('RELATED_LINKS').subscribe(v => {this.related_links_cap = v});
     this.translate.stream('USER_PROF_CAP').subscribe(v=>this.user_profile_cap=v);

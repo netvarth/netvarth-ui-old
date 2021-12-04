@@ -42,7 +42,7 @@ export class SetPasswordFormComponent implements OnInit {
     public shared_services: SharedServices) { }
 
   ngOnInit() {
-    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable'))) 
     this.createForm();
     if (this.type !== 'forgot_password') {
       this.set_password_msg = Messages.SET_PASSWORD_MSG;

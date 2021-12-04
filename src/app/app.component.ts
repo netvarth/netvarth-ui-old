@@ -4,7 +4,6 @@ import {version} from './shared/constants/version';
 import { LocalStorageService } from './shared/services/local-storage.service';
 import { TranslateService } from '@ngx-translate/core';
 export let projectConstants: any = {};
-import {I18nService} from '../app/shared/services/i18n-sevice';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -27,7 +26,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     private globalService: GlobalService,
     private lStorageService: LocalStorageService,
     public translate: TranslateService,
-    private i18nService: I18nService, 
   ) { }
 
   /**
@@ -38,8 +36,7 @@ export class AppComponent implements OnInit, AfterViewInit {
    * 
    */
   ngOnInit() {
-    this.translate.use('en'); 
-    this.i18nService.changeLocale('en');
+    
 
     projectConstants = this.globalService.getGlobalConstants();
     const cVersion = version.desktop;
@@ -53,8 +50,26 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit () {
     document.getElementById('globalLoading').remove();
-
+    // alert('ddd');
   }
   
+  // languages = [
+  //   {value: 'en', viewValue: 'English'},
+  //   {value: 'hd', viewValue: 'Hindi'},
+  //   {value: 'kan', viewValue: 'Kannada'},
+  //   {value: 'tel',viewValue:'Telugu'},
+  //   {value: 'mal',viewValue:'Malayalam'},
+  //   {value: 'tam',viewValue:'Tamil'}
+  // ];
+  //  langselected='English';
+  //  changeLocale(locale: string,languagename) {
+  //   this.langselected=languagename;
+  //   console.log('lang',this.langselected)
+ 
+  //    this.translate.use(locale); 
+  
+  //     this.i18nService.changeLocale(locale);
+        
+  //  }
 }
 

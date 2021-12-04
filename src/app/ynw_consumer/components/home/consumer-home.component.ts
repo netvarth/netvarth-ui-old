@@ -311,7 +311,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.translate.use(JSON.parse(localStorage.getItem('myData')))  
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable')))  
 
     // console.log(this.bookingStatusClasses);
     this.usr_details = this.groupService.getitemFromGroupStorage('ynw-user');

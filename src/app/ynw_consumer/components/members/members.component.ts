@@ -64,7 +64,7 @@ export class MembersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.translate.use(JSON.parse(localStorage.getItem('myData')))  
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable')))  
     this.translate.stream('DASHBOARD_TITLE').subscribe(v => {this.dashboard_cap=v});
     this.translate.stream('FIRST_NAME_CAP').subscribe(v=> {this.first_name_cap=v});
     this.translate.stream('LAST_NAME_CAP').subscribe(lastname=>{ this.last_name_cap=lastname});

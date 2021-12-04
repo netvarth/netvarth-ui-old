@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
     this.is_provider = data.is_provider || 'true';
   }
   ngOnInit() {
-    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable'))) 
     this.moreParams = this.data.moreparams;
     this.createForm();
     this.api_loading = false;

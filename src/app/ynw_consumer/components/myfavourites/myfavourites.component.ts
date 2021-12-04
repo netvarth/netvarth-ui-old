@@ -80,7 +80,7 @@ export class MyfavouritesComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable'))) 
     this.translate.stream('REMOVE_FAV').subscribe(v=> this.remove_fav_cap  = v);
     this.translate.stream('MANAGE_PRIVACY').subscribe(v=> this.manage_privacy_cap  = v);
     this.translate.stream('SEND_MSGS_CAP').subscribe(v=> this.send_msg_cap  = v);

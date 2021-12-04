@@ -62,7 +62,7 @@ export class AddMembersHolderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable'))) 
     this.translate.stream('FAMILY_MEMBER').subscribe(v=>this.family_member_cap=v);
     this.translate.stream('CANCEL_BTN').subscribe(v=>this.cancel_btn_cap=v);
     this.translate.stream('SAVE_BTN').subscribe(v=>this.save_btn_cap=v);

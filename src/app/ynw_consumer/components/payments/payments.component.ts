@@ -47,7 +47,7 @@ export class ConsumerPaymentsComponent implements OnInit, OnDestroy {
         });
     }
     ngOnInit() {
-        this.translate.use(JSON.parse(localStorage.getItem('myData'))) 
+        this.translate.use(JSON.parse(localStorage.getItem('translatevariable'))) 
 
         this.getPayments();
     }
