@@ -31,7 +31,7 @@
                                                     data-wizard-type="step" *ngIf="serviceType === 'virtualService'">
                                                     <div class="wizard-label">
                                                         <div class="step-icon">1</div>
-                                                        <h3 class="wizard-title mgn-lt-15">Personal Information</h3>
+                                                        <h3 class="wizard-title mgn-lt-15 no-margin no-padding">Personal Information</h3>
                                                     </div>
                                                     <span class="svg-icon svg-icon-xl wizard-arrow">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
@@ -1547,7 +1547,7 @@
                                                                         <ul class="member-ul"
                                                                             *ngIf="sel_ser_det.serviceType !== 'virtualService'">
                                                                             <mat-radio-group>
-                                                                                <li *ngFor="let memb of familymembers"
+                                                                                <li *ngFor="let memb of familymember"
                                                                                     class="members">
                                                                                     <mat-radio-button
                                                                                         (change)="handleOneMemberSelect(memb.userProfile.id, memb.userProfile.firstName, memb.userProfile.lastName,memb.userProfile.email)"
@@ -1561,6 +1561,7 @@
                                                                                         capitalizeFirst}}
                                                                                     </mat-radio-button>
                                                                                 </li>
+                                                                                
                                                                             </mat-radio-group>
                                                                         </ul>
                                                                     </div>
@@ -1795,6 +1796,7 @@
                                                                     </div>
                                                                 </div>
                                                             </ng-container>
+                                                            
                                                         </div>
                                                     </div>
                                                 </ng-container>
