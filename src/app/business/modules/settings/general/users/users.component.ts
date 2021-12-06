@@ -913,9 +913,10 @@ export class BranchUsersComponent implements OnInit {
                     this.showcheckbox = false;
                     this.userIds = [];
                     this.addlocationcheck = false;
-                    this.locIds = [];
-                    this.getUsers();
+                    // this.locIds = [];
+                  
                     this.closelocDialog();
+                    this.getUsers();
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -943,7 +944,8 @@ export class BranchUsersComponent implements OnInit {
         this.apiError = '';
     }
     cancelLocationToUsers() {
-        this.apiError = '';
+        // this.apiError = '';
+        this.closelocDialog();
     }
     // getBussLoc(bussloc) {
     //     for (let i = 0; i < bussloc.length; i++) {
