@@ -328,7 +328,7 @@ togglepaymentMode(){
       'purpose': 'billPayment',
       'source': 'Desktop',
       'paymentMode': this.selected_payment_mode,
-      'international':this.isInternatonal,
+      'isInternational':this.isInternatonal,
       'serviceId':0
     };
 
