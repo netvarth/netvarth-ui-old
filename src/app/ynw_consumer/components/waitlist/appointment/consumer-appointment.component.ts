@@ -1035,7 +1035,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.apptdisable = false;
                 });
     }
-    addCheckInConsumer(post_Data, paymenttype?) {
+    addCheckInConsumer(post_Data, paymentmodetype?) {
+        let paymenttype=this.selected_payment_mode;
         this.subs.sink = this.shared_services.addCustomerAppointment(this.account_id, post_Data)
             .subscribe(data => {
                 const retData = data;
