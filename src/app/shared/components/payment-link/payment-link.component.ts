@@ -175,8 +175,9 @@ export class PaymentLinkComponent implements OnInit {
             this.uuid = this.bill_data.uuid;
             this.accountId = this.bill_data.accountId;
             this.countryCode = this.bill_data.billFor.countryCode;
-            this.serviceId=this.bill_data.service.id;
-
+            this.serviceId=this.bill_data.service[0].serviceId;
+           
+         
           }
           if (this.bill_data && this.bill_data.accountId === 0) {
             this.razorpayEnabled = true;
@@ -226,6 +227,7 @@ export class PaymentLinkComponent implements OnInit {
     this.paytmEnabled = false;
     this.razorpayEnabled = false;
     this.interNatioanalPaid = false;
+    this.serviceId=0;
     this.sharedServices.getPaymentModesofProvider(this.accountId,this.serviceId, 'billPayment')
       .subscribe(
         data => {
