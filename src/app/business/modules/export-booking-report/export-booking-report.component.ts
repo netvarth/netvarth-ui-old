@@ -35,6 +35,37 @@ export class ExportBookingReportComponent implements OnInit {
   ngOnInit(): void {
     const _this = this;
     this.bookingList = this.booking.bookingList.map(function (a) {
+      let customerName = '';
+      if (a.waitlistingFor) {
+        if (a.waitlistingFor[0].firstName) {
+          customerName = a.waitlistingFor[0].firstName;
+        }
+        if (a.waitlistingFor[0].lastName) {
+          customerName += " " + a.waitlistingFor[0].lastName;
+        }
+      }
+      if (a.appmtFor) {
+          if (a.appmtFor[0].firstName) {
+            customerName = a.appmtFor[0].firstName;
+          }
+          if (a.appmtFor[0].lastName) {
+            customerName += " " + a.appmtFor[0].lastName;
+          }
+      }
+      a['customerName'] = customerName;
+
+      if (a.provider) {
+        let providerName = '';
+        if (a.provider.firstName) {
+          providerName = a.provider.firstName;
+        }
+        if (a.provider.lastName) {
+          providerName += " " + a.provider.lastName;
+        }
+        a['providerName'] = providerName;
+      }
+      console.log(a);
+
       let questionAnswersList = _this.getQuestionAnswers(a);
       // console.log(questionAnswersList);
       if (questionAnswersList.length > 0) {
@@ -69,7 +100,7 @@ export class ExportBookingReportComponent implements OnInit {
   exportToExcel() {
     this.exportService.exportToExcelFromHTml(this.source.nativeElement, 'qReport');
   }
-  closeDialog () {
+  closeDialog() {
     this.dialogRef.close();
   }
 }
