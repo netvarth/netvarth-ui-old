@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { ActivatedRoute } from '@angular/router';
@@ -6,7 +6,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { PreviewuploadedfilesComponent } from '../previewuploadedfiles/previewuploadedfiles.component';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { ProviderServices } from '../../../../business/services/provider-services.service';
-//import { GroupStorageService } from 'src/app/shared/services/group-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { Messages } from '../../../../shared/constants/project-messages';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+
+
+
 export let projectConstants: any = {};
 
 
@@ -44,12 +49,26 @@ export class FolderFilesComponent implements OnInit {
     totalCnt: this.customers.length,
     perPage: 3
   };
+  choose_type = 'my';
+  active_user: any;
+  action: any = '';
+  apiError = '';
+  apiSuccess = '';
+  selectedMessage = {
+    files: [],
+    base64: [],
+    caption: []
+  };
+  @ViewChild('modal') modal;
+  imgCaptions: any = [];
+  @ViewChild('closebutton') closebutton;
+  @ViewChild('locclosebutton') locclosebutton;
   filter = {
     fileSize: '',
     fileName: '',
     fileType: '',
     // checkinEncId: '',
-    contextId : '',
+    contextId: '',
     folderName: '',
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1
@@ -91,12 +110,15 @@ export class FolderFilesComponent implements OnInit {
     private activated_route: ActivatedRoute,
     public dialog: MatDialog,
     private lStorageService: LocalStorageService,
-   // private groupService: GroupStorageService,
+    private snackbarService: SnackbarService,
+
+     private groupService: GroupStorageService,
 
   ) {
     this.activated_route.queryParams.subscribe(params => {
       this.foldertype = params.foldername;
-      this.foldername = this.foldertype + ' ' + 'folder';
+      // this.foldertype + ' ' + 'folder';
+      this.foldername = this.foldertype + ' ' + 'files';
     });
     this.config = {
       itemsPerPage: 5,
@@ -116,7 +138,9 @@ export class FolderFilesComponent implements OnInit {
   ngOnInit() {
     this.getfiles();
     //this.getBusinessdetFromLocalstorage()
- 
+    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
+    console.log(this.active_user);
+
   }
   doSearch() {
     this.lStorageService.removeitemfromLocalStorage('userfilter');
@@ -174,7 +198,7 @@ export class FolderFilesComponent implements OnInit {
     if (this.filter.folderName !== '') {
       api_filter['folderName-eq'] = this.filter.folderName;
     }
-    
+
     if (this.filter.contextId !== '') {
       api_filter['contextId-eq'] = this.filter.contextId;
     }
@@ -219,7 +243,7 @@ export class FolderFilesComponent implements OnInit {
   }
 
   showFilterSidebar() {
-    //this.getfiles();
+    this.getfiles();
     this.filter_sidebar = true;
     console.log(this.filter_sidebar);
   }
@@ -247,7 +271,7 @@ export class FolderFilesComponent implements OnInit {
       fileName: '',
       fileType: '',
       // checkinEncId: '',
-      contextId : '',
+      contextId: '',
       folderName: '',
       page_count: projectConstants.PERPAGING_LIMIT,
       page: 1
@@ -266,7 +290,7 @@ export class FolderFilesComponent implements OnInit {
       else {
         this.availabileSelected = false;
         this.notAvailabileSelected = true;
-        this.filter.folderName = 'private';
+        this.filter.folderName = 'my';
       }
     }
     if (type === 'fileSize') {
@@ -304,17 +328,17 @@ export class FolderFilesComponent implements OnInit {
   getfiles() {
     const filter = {};
     console.log(this.foldertype);
-    if (this.foldertype === 'private') {
-      filter['folderName-eq'] = 'private';
+    if (this.foldertype === 'my') {
+      filter['folderName-eq'] = 'my';
     }
-    else if(this.foldertype === 'public')  {
+    else if (this.foldertype === 'public') {
       filter['folderName-eq'] = 'public';
 
     }
-    else{
+    else {
       filter['folderName-eq'] = 'shared';
     }
-  
+
 
     console.log(filter);
     this.provider_servicesobj.getAllFilterAttachments(filter).subscribe(
@@ -322,17 +346,141 @@ export class FolderFilesComponent implements OnInit {
         console.log(data);
         // this.Allfiles = data;
         this.customers = data
-        console.log("Uploaded Files : ",this.customers);
+        console.log("Uploaded Files : ", this.customers);
       }
     );
 
 
   }
 
+  actionCompleted() {
+    console.log(this.action);
+    if (this.action === 'attachment' && this.foldertype && this.selectedMessage) {
+      console.log("After Click of OK Button :", this.foldertype, this.action, this.selectedMessage);
+      const dataToSend: FormData = new FormData();
+      const captions = {};
+      let i = 0;
+
+
+
+      for (const pic of this.selectedMessage.files) {
+        console.log("Selected File Is : ", this.selectedMessage.files, pic['name'], pic)
+        //   if(this.selectedMessage.files.indexOf(i) !== -1){
+        //     alert(`File ${pic['name']} is Already Existed...`)
+        // } 
+        //const value = 1;
+        //const isInArray = this.selectedMessage.files.includes(pic);
+        // if (pic['name'] === this.selectedMessage.files['name']) {
+        //   alert(`File ${pic['name']} is Already Existed...`)
+        //   // this.snackbarService.openSnackBar(Error.apply('name'), { 'panelClass': 'snackbarerror' });
+        // }
+        // else {
+          dataToSend.append('attachments', pic, pic['name']);
+          captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
+          i++;
+       // }
+        console.log("Uploaded Image : ", this.imgCaptions[i]);
+      }
+      // this.selectedMessage = {
+      //   files: [],
+      //   base64: [],
+      //   caption: []
+      // }
+
+      const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
+      dataToSend.append('captions', blobPropdata);
+
+      this.provider_servicesobj.uploadAttachments(this.foldertype,this.active_user.id, dataToSend)
+        .subscribe(
+          () => {
+            this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { 'panelClass': 'snackbarnormal' });
+            this.selectedMessage = {
+              files: [],
+              base64: [],
+              caption: []
+            }
+            this.getfiles();
+
+          },
+          error => {
+            this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+
+          }
+        );
+
+      this.selectedMessage = {
+        files: [],
+        base64: [],
+        caption: []
+      }
+
+    }
+    else {
+      alert('Please attach atleast one file.');
+
+    }
+
+     this.getfiles();
+    console.log("All Files : ",this.getfiles());
+  }
+  getFolderfiles() {
+    this.provider_servicesobj.getAllFileAttachments().subscribe(
+      (data: any) => {
+        console.log(data);
+        this.customers = data
+      }
+    );
+  }
+
+  filesSelected(event, type?) {
+    const input = event.target.files;
+    console.log("File Selected :",input);
+    if (input) {
+      for (const file of input) {
+        // if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+        //   this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+        //   return;
+        // } else if (file.size > projectConstants.FILE_MAX_SIZE) {
+        //   this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
+        //   return;
+        // } else {
+          this.selectedMessage.files.push(file);
+          // this.selectedMessage.files = '';
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            this.selectedMessage.base64.push(e.target['result']);
+          };
+          reader.readAsDataURL(file);
+          this.action = 'attachment';
+        
+      }
+      if (type && this.selectedMessage.files && this.selectedMessage.files.length > 0 && input.length > 0) {
+        this.modal.nativeElement.click();
+      }
+    }
+  }
+
+
+  getImage(url, file) {
+    if (file.type == 'application/pdf') {
+      return '../../../../../assets/images/pdf.png';
+    } else {
+      return url;
+    }
+  }
   onCancel() {
 
     this._location.back();
 
+  }
+  popupClosed() {
+  }
+
+  deleteTempImage(i) {
+    this.selectedMessage.files.splice(i, 1);
+    this.selectedMessage.base64.splice(i, 1);
+    this.selectedMessage.caption.splice(i, 1);
+    this.imgCaptions[i] = '';
   }
 
   // getBusinessdetFromLocalstorage() {

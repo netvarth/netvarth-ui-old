@@ -2277,6 +2277,10 @@ export class ProviderServices {
     const url = 'provider/fileShare/upload/'+ folder_name + '/' + account_id;
     return this.servicemeta.httpPost(url, body);
   }
+  // uploadAttachmentFiles(account_id ,body) {
+  //   const url = 'provider/fileShare/upload/'+ account_id;
+  //   return this.servicemeta.httpPost(url, body);
+  // }
   getFileStorage(){
     return this.servicemeta.httpGet('provider/fileShare/storage');
   }

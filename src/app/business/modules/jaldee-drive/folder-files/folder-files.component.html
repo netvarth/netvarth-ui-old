@@ -10,12 +10,103 @@
     </h5>
   </div>
 </section>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="close-btn">
+        <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <ng-container>
+        <div class="modal-body">
+          <div class="col-sm-12 col-xs-12 chk-btns-div col-md-12">
+            <mat-chip-list class="btns">
+              <mat-chip><a class="lnk action pointer-cursor" (click)="imagefile.click()"><input #imagefile type="file"
+                    accept="/*;capture=camera" style="display:none;" multiple (change)="filesSelected($event)"><i
+                    class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i>Upload
+                  File</a></mat-chip>
+            </mat-chip-list>
+          </div>
+          <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 bold pad-top-10 mgn-up-10 mgn-bt-10 border-tp"
+            *ngIf="(selectedMessage.files && selectedMessage.files.length > 0)">
+            Uploaded Files
+          </div>
+          <div class="img-section mgn-up-20" *ngIf="(selectedMessage.files && selectedMessage.files.length > 0)">
+            <ul class="galul">
+              <ng-container *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+                <li *ngFor="let file of selectedMessage.files;let i = index ">
+                  <div class="galimg_outer">
+                    <div class="gal_img">
+                      <img [src]="getImage(selectedMessage.base64[i], file)" *ngIf="selectedMessage.base64[i]">
+                    </div>
+                    <div class="gal-input">
+                      <input type="text" placeholder="Caption" [(ngModel)]="imgCaptions[i]">
+                    </div>
+                    <div class="gal_action" (click)="deleteTempImage(i)">
+                      <i class="fa fa-times-circle" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </li>
+              </ng-container>
+            </ul>
+          </div>
+          <!-- <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 bold pad-top-10 mgn-up-10 mgn-bt-10 border-tp">
+            <div >
+             
+              <p>Choose folder to upload</p>
+              <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)" >
+               
+                <mat-radio-button [value]="'public'" >
+                 
+                  Public folder
+                </mat-radio-button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <mat-radio-button [value]="'private'" checked>
+                  Private folder
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div> -->
+        </div>
+      </ng-container>
+      <div class="modal-footer">
+        <button type="button" class="disp-none btn btn-light-primary font-weight-bold" data-dismiss="modal"
+          #closebutton>Cancel</button>
+        <button type="button" class="btn btn-primary font-weight-bold hf-btn pull-right" data-dismiss="modal" #closebutton
+          (click)="actionCompleted()" >Ok</button>
+        <!-- [disabled]="!choose_type" -->
+      </div>
+      <div class="error-section" *ngIf="apiError !== ''">
+        {{apiError}}
+      </div>
+      <div class="error-section success-section" *ngIf="apiSuccess !== ''">
+        {{apiSuccess}}
+      </div>
+    </div>
+  </div>
+</div>
 <section class="customersList mt-2 p-3">
   <div class="row p-3">
 
 
     <div class="card card-custom card-stretch gutter-b no-padding col-md-12  col-sm-12  col-xs-12">
+     
+     <div class="">
+      <button type="button" class="pull-left p-button-rounded p-ripple p-button p-component mx-2 my-3 p-1">
+        <a style="color: white !important;" #modal data-toggle="modal" data-target="#exampleModalCenter">
+        </a>
+        <a style="color: white !important;" class="pointer-cursor" (click)="imagefile1.click();"><input
+            #imagefile1 type="file" accept="/*;capture=camera" style="display:none;" multiple
+            (change)="filesSelected($event, 'close')"><i style="color: white !important;"
+            class="fa fa-plus mgn-rt-5" aria-hidden="true"></i> Upload New File </a>
+        <!-- <i style="color: white !important;"
+            class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i> -->
+      </button>
+     </div>
       <div class="p-3">
+       
         <h3 class="align-items-start flex-column">
           <!-- <span class="fa fa-arrow-left pointer-cursor mgn-rt-10" *ngIf="hideGroups"
               (click)="hideGroups = false"></span>
@@ -136,14 +227,13 @@
                     </div>
                   </div>
                 </div>
-                <div class="card side">
+                <!-- <div class="card side">
                   <div class="card-header">
                     <h2 class="mb-0">
                       <button class="btn btn-link" type="button" data-toggle="collapse"
                         data-target="#collapseAvailable1" aria-expanded="false">
                         <div>
                           <div style="display: inline-block !important;">
-                            <!-- <i class="fa fa-clock-o"></i> -->
                           </div>
                           Folders
                         </div>
@@ -169,7 +259,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
                 <!-- <i class="fa fa-bookmark"></i> -->
                 <div class="card side">
                   <div class="card-header">

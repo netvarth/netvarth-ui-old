@@ -46,7 +46,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   };
   @ViewChild('modal') modal;
   imgCaptions: any = [];
-  choose_type = 'private';
+  choose_type = 'my';
   active_user: any;
   filter = {
     fileSize: '',

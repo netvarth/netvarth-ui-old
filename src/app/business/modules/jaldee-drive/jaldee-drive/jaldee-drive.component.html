@@ -10,7 +10,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="close-btn">
-        <button type="button" class="close" aria-label="Close" data-dismiss="modal" (click)="popupClosed()">
+        <button type="button" class="close" aria-label="Close" data-dismiss="modal">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -251,18 +251,18 @@
 
                     <i class="fa fa-folder" aria-hidden="true">
 
-                      <p (click)="publicfolder('public')"> Patient Files</p>
+                      <p (click)="publicfolder('public')"> Public Files</p>
                     </i>
                     <!-- <img src="../../../assets/images/Group 818.jpg" class=" fa fa-folder pull-left text-light "
                   style="width: 22px !important; margin-top: 2px !important;"> -->
                   </div>
-                  <div (click)="publicfolder('private')"
+                  <div (click)="publicfolder('my')"
                     class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
                     id="folder2">
 
                     <i class="fa fa-folder" aria-hidden="true">
 
-                      <p (click)="publicfolder('private')">My Files</p>
+                      <p (click)="publicfolder('my')">My Files</p>
                     </i>
                     <!-- <img src="../../../assets/images/Group 816.jpg" class=" fa fa-folderpull-left text-light "
                   style="width: 22px !important; margin-top: 2px !important;"> -->
@@ -399,9 +399,9 @@
                 <div class="prov-name-txt my-2" style="text-transform:none !important;">
                   Unlock More Space!
                 </div>
-                <div class="prov-loc my-2">
+                <!-- <div class="prov-loc my-2">
                   Upgrade to Jaldee Drive Plus
-                </div>
+                </div> -->
                 <button (click)="gotoSmsAddon()" class="btn btn-warning text-dark p-button-rounded"> Upgrade Now
                 </button>
 <!-- provider/license/addons -->
@@ -831,14 +831,14 @@
                       class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
                       id="folder2">
                       <i class="fa fa-folder" aria-hidden="true">
-                        <p (click)="publicfolder('public')"> Patient Files</p>
+                        <p (click)="publicfolder('public')"> Public Files</p>
                       </i>
                     </div>
-                    <div (click)="publicfolder('public')"
+                    <div (click)="publicfolder('my')"
                       class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
                       id="folder2">
                       <i class="fa fa-folder" aria-hidden="true">
-                        <p (click)="publicfolder('public')"> My Files</p>
+                        <p (click)="publicfolder('my')"> My Files</p>
                       </i>
                     </div>
                     <div (click)="publicfolder('shared')"
@@ -950,9 +950,9 @@
                 <div class="prov-name-txt" style="text-transform:none !important;">
                   Unlock More Space!
                 </div>
-                <div class="prov-loc">
+                <!-- <div class="prov-loc">
                   Upgrade to Jaldee Drive Plus
-                </div>
+                </div> -->
                 <button (click)="gotoSmsAddon()" class="btn btn-warning p-button-rounded text-dark"> Upgrade Now
                 </button>
 
