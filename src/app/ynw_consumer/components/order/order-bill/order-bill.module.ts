@@ -10,6 +10,7 @@ import { JcCouponNoteModule } from "../../../../shared/modules/jc-coupon-note/jc
 import { LoadingSpinnerModule } from "../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { OrderBillComponent } from "./order-bill.component";
 import { HeaderModule } from "../../../../shared/modules/header/header.module";
+import { MatRadioModule } from "@angular/material/radio";
 const routes: Routes= [
     {path: '', component: OrderBillComponent}
 ]
@@ -24,6 +25,7 @@ const routes: Routes= [
         JcCouponNoteModule,
         LoadingSpinnerModule,
         CapitalizeFirstPipeModule,
+        MatRadioModule,
         [RouterModule.forChild(routes)]
     ],
     exports: [OrderBillComponent],

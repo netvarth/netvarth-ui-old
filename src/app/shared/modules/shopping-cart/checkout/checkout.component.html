@@ -394,24 +394,58 @@
                         </div>
                       </div>
                       <div class="paymentdiv"
-                        *ngIf="razorpayEnabled && paytmEnabled && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))">
+                        *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))">
                         <p class="jaldeecredit">
                           To pay Rs {{checkJcash ? totalamountPay : cartDetails.advanceAmount}} please select any
                           payment options
                         </p>
-                        <span type="button" class="razorpay-icon paymenticons"
-                          *ngIf="razorpayEnabled && paytmEnabled && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
+                        <!-- <span type="button" class="razorpay-icon paymenticons"
+                          *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
                           [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm()"
                           id="stepThreeConfirmButton">
                         </span>&nbsp;&nbsp;
                         <span type="button" class="paytm-icon paymenticons"
-                          *ngIf="paytmEnabled && razorpayEnabled && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
+                          *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
                           [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm('paytm')"
                           id="stepThreeConfirmButton">
-                        </span>
-                      </div>
+                        </span> -->
+                   
+                      <ng-container *ngIf="!shownonIndianModes && ((checkJcash && jcashamount < cartDetails.advanceAmount))">
+                        <div *ngFor="let modes of indian_payment_modes">
+                            <div class="col-xs-12  col-sm-6  ">
+    
+                                    <div class="paymentmode card text-primary" >
+                                      <mat-radio-group name="paymentMode" (change)="indian_payment_mode_onchange($event)">
+                                        <mat-radio-button [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
+    
+                        
+                                      </mat-radio-group>
+                                      
+                                    </div>
+                                    </div>
+    
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="shownonIndianModes && ((checkJcash && jcashamount < cartDetails.advanceAmount))">
+                    
+                    <div *ngFor="let modes of non_indian_modes">
+                        <div class="col-xs-12  col-sm-6  ">
+    
+                                <div class="paymentmode card text-primary" >
+                                  <mat-radio-group name="paymentMode" (change)="non_indian_modes_onchange($event)">
+                                    <mat-radio-button [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
+    
+                    
+                                  </mat-radio-group>
+                                  
+                                </div>
+                                </div>
+    
+                </div>
+            </ng-container>
+            </div>
                       <div class="txt-align-center">
-                        <button type="button" class="nxt-btn btn btn-primary font-weight-bold text-uppercase "
+                        <!-- <button type="button" class="nxt-btn btn btn-primary font-weight-bold text-uppercase "
                           *ngIf="razorpayEnabled && !paytmEnabled && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
                           [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm()"
                           id="stepThreeConfirmButton">
@@ -422,7 +456,13 @@
                           [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm('paytm')"
                           id="stepThreeConfirmButton">
                           Pay by CC/DC/UPI
-                        </button>
+                        </button> -->
+                        <button type="button" class=" next-button btn btn-primary font-weight-bold text-uppercase "
+                        [class.disabled]="isClickedOnce"
+                        *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
+                        (click)="!isClickedOnce && confirm()">
+                        MaKe Payment
+                      </button>
                       </div>
                       <br>
                       <div class="txt-align-center"
@@ -503,24 +543,58 @@
                     Balance amount can be paid by other payment methods
                   </div>
                   <div class="paymentdiv"
-                    *ngIf="paytmEnabled && razorpayEnabled && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))">
+                    *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))">
                     <p class="jaldeecredit">
                       To pay Rs {{checkJcash ? totalamountPay : cartDetails.advanceAmount}} please select any payment
                       options
                     </p>
-                    <span type="button" class="razorpay-icon paymenticons"
-                      *ngIf="razorpayEnabled && paytmEnabled && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
+                    <!-- <span type="button" class="razorpay-icon paymenticons"
+                      *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
                       [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm()"
                       id="stepThreeConfirmButton">
                     </span>&nbsp;&nbsp;
                     <span type="button" class="paytm-icon paymenticons"
-                      *ngIf="paytmEnabled && razorpayEnabled && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
+                      *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
                       [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm('paytm')"
                       id="stepThreeConfirmButton">
-                    </span>
+                    </span> -->
                   </div>
+         
+                  <ng-container *ngIf="!shownonIndianModes && ((checkJcash && jcashamount < cartDetails.advanceAmount))">
+                    <div *ngFor="let modes of indian_payment_modes">
+                        <div class="col-xs-12  col-sm-6 col-lg-3  ">
+
+                                <div class="paymentmode card text-primary" >
+                                  <mat-radio-group name="paymentMode" (change)="indian_payment_mode_onchange($event)">
+                                    <mat-radio-button [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
+
+                    
+                                  </mat-radio-group>
+                                  
+                                </div>
+                                </div>
+
+                </div>
+            </ng-container>
+            <ng-container *ngIf="shownonIndianModes && ((checkJcash && jcashamount < cartDetails.advanceAmount))">
+                
+                <div *ngFor="let modes of non_indian_modes">
+                    <div class="col-xs-12  col-sm-6 col-lg-3  ">
+
+                            <div class="paymentmode card text-primary" >
+                              <mat-radio-group name="paymentMode" (change)="non_indian_modes_onchange($event)">
+                                <mat-radio-button [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
+
+                
+                              </mat-radio-group>
+                              
+                            </div>
+                            </div>
+
+            </div>
+        </ng-container>
                   <div class="txt-align-center">
-                    <button type="button" class="nxt-btn btn btn-primary font-weight-bold text-uppercase "
+                    <!-- <button type="button" class="nxt-btn btn btn-primary font-weight-bold text-uppercase "
                       *ngIf="razorpayEnabled && !paytmEnabled && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
                       [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm()"
                       id="stepThreeConfirmButton">
@@ -531,6 +605,12 @@
                       [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm('paytm')"
                       id="stepThreeConfirmButton">
                       Pay by CC/DC/UPI
+                    </button> -->
+                    <button type="button" class=" next-button btn btn-primary font-weight-bold text-uppercase "
+                      [class.disabled]="isClickedOnce"
+                      *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
+                      (click)="!isClickedOnce && confirm()">
+                      MaKe Payment
                     </button>
                   </div>
                   <br>

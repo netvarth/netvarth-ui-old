@@ -50,7 +50,6 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
     @Inject(DOCUMENT) public document
   ) {
     this.checkin = this.data.checkin || null;
-    alert('checkin'+this.checkin);
     this.bill_data = this.data.bill_data || null;
     this.getPaymentModes();
     if (!this.bill_data) {
