@@ -1798,6 +1798,9 @@ console.log("fgf"+JSON.stringify(loc));
       'cdate': service.serviceAvailability.nextAvailableDate,
       'service': service
     };
+    if(location.time) {
+      current_provider['ctime']=location.time
+    }
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
@@ -1835,12 +1838,12 @@ console.log("fgf"+JSON.stringify(loc));
 
             if (service.serviceType === 'virtualService') {
               _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-                _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.nextAvailableDate, 'appt', service, consumerdata);
+                _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.nextAvailableDate, 'appt', service, consumerdata,current_provider['ctime']);
               });
 
             }
             else {
-              _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
+              _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer',current_provider['ctime']);
             }
           }
         } else {
@@ -1849,7 +1852,7 @@ console.log("fgf"+JSON.stringify(loc));
         }
       });
   }
-  collectRequiredinfo(id, place, location, date, type, service?, consumerdata?) {
+  collectRequiredinfo(id, place, location, date, type, service?, consumerdata?,ctime?) {
   //  console.log("Collect Required Info");
     const _this = this;
     let virtualFields = {};
@@ -1883,7 +1886,7 @@ console.log("fgf"+JSON.stringify(loc));
         }
       }
       if (type === 'appt') {
-        _this.showAppointment(id, place, location, date, service, 'consumer', virtualFields);
+        _this.showAppointment(id, place, location, date, service, 'consumer', virtualFields,ctime);
       } else {
         _this.showCheckin(id, place, location, date, service, 'consumer', virtualFields);
       }
@@ -2129,7 +2132,7 @@ console.log("fgf"+JSON.stringify(loc));
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
   }
-  showAppointment(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?) {
+  showAppointment(locid, locname, gMapUrl, curdate, service: any, origin?, ctime?,virtualinfo?) {
     //console.log("Service Appt: ");
    // console.log(service);
     // let deptId;
@@ -2148,7 +2151,8 @@ console.log("fgf"+JSON.stringify(loc));
       futureAppt: this.futureAllowed,
       service_id: service.id,
       sel_date: curdate,
-      virtual_info: JSON.stringify(virtualinfo)
+      virtual_info: JSON.stringify(virtualinfo),
+      ctime:ctime
     };
     if (service['department']) {
       queryParam['dept'] = service['department'];
@@ -2450,14 +2454,35 @@ console.log("fgf"+JSON.stringify(loc));
   }
   checkavailabilitydialogref;
   opencheckavail(actionObj) {
-
-    this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
-      width: '90%',
-      height: 'auto',
-      data: {
-      alldetails:actionObj,
-      apptSettingsJson:this.apptSettingsJson,
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    const current_provider = {
+      'id': actionObj['location']['id'],
+      'place':actionObj['location']['place'],
+      'location': actionObj['location'],
+      'service': actionObj['service'],
+      'cdate': actionObj['service'].serviceAvailability.nextAvailableDate
+    };
+    if(this.userType === '') {
+      const passParam = { callback: 'checkavailability', current_provider: current_provider, serviceType:  actionObj['service'].serviceType,actionObjtype:actionObj };
+      this.doLogin('consumer', passParam);
+    }else {
+      this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
+        width: '90%',
+        height: 'auto',
+        data: {
+        alldetails:actionObj,
+        apptSettingsJson:this.apptSettingsJson,
+        }
+      });
+    }
+    this.checkavailabilitydialogref.afterClosed().subscribe(result => {
+     
+      if(result!='undefined') {
+        actionObj['location']['time']=result;
+        console.log('action..........',actionObj);
+        this.appointmentClicked(actionObj['location'], actionObj['service']);
       }
+
     });
   }
   cardClicked(actionObj) {

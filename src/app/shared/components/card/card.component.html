@@ -78,11 +78,11 @@
 
                 <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
 
-                <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event)"  class="getappointmentbutton">{{buttonCaption}}</button>
+                <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event)"  class="getappointmentbutton btn">{{buttonCaption}}</button>
                 </div>
                 <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
                     
-                    <button [disabled]="disablecheckavailabilitybutton" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)" class="checkavailabilitybutton"  >Check availability
+                    <button  [disabled]="disablecheckavailabilitybutton" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)" class="checkavailabilitybutton btn"  >Check availability
                    </button>
                    
                 </div>

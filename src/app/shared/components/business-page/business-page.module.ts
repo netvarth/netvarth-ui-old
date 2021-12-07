@@ -12,6 +12,8 @@ import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { projectConstantsLocal } from "../../constants/project-constants";
+import { MatDialogModule } from "@angular/material/dialog";
+import {MatDatepickerModule} from '@angular/material/datepicker';
 export function homeHttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http,projectConstantsLocal.PATH+ './assets/i18n/home/', '.json');
   }
@@ -23,6 +25,9 @@ import { ConsumerJoinModule } from "../../../ynw_consumer/components/consumer-jo
 import { ConfirmBoxModule } from "../confirm-box/confirm-box.module";
 import { QRCodeGeneratordetailModule } from "../qrcodegenerator/qrcodegeneratordetail.module";
 import { RouterModule, Routes } from "@angular/router";
+import { CheckavailabilityModule } from "../checkavailability/checkavaiablity.module";
+// import { Checkavailability } from "../checkavailability/checkavailability.component";
+
 const routes: Routes = [
     { path: '', component: BusinessPageComponent},
     { path: 'home', loadChildren: () => import('../business-page-home/business-page-home.module').then(m => m.BusinessPageHomeModule) },
@@ -40,6 +45,7 @@ const routes: Routes = [
         LoadingSpinnerModule,
         CardModule,
         HeaderModule,
+        MatDialogModule,
         AddInboxMessagesModule,
         JDNDetailModule,
         CouponsModule,
@@ -48,6 +54,8 @@ const routes: Routes = [
         ConfirmBoxModule,
         QRCodeGeneratordetailModule,
         HttpClientModule,
+        MatDatepickerModule,
+        CheckavailabilityModule,
         TranslateModule.forChild({
             loader: {
                 provide: TranslateLoader,

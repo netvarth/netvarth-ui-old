@@ -878,6 +878,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
           }
         }
       }
+      console.log("*******entered*******");
       this.routerobj.navigate(['/searchdetail', passparam]);
     }
   }

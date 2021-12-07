@@ -2461,10 +2461,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
     this.checkavailabilitydialogref.afterClosed().subscribe(result => {
      
-    
-      actionObj['location']['time']=result;
-      console.log('action..........',actionObj);
-      this.appointmentClicked(actionObj['location'], actionObj['service']);
+      if(result!='undefined') { 
+        actionObj['location']['time']=result;
+        console.log('action..........',actionObj);
+        this.appointmentClicked(actionObj['location'], actionObj['service']);
+      }
+   
 
     });
   

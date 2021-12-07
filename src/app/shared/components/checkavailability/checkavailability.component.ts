@@ -29,7 +29,7 @@ export class CheckavailabilityComponent implements OnInit {
     waitlist_for: any = [];
     selectedApptTime = '';
     apptTime = '';
-    showApptTime = false;
+    showApptTime = 'notdecided';
     slots;
     freeSlots: any = [];
     appointment: any = [];
@@ -67,6 +67,7 @@ export class CheckavailabilityComponent implements OnInit {
             this.sel_ser=this.actionObj['service']['id'];
 
         this.sel_checkindate=this.hold_sel_checkindate=this.selectedDate=this.actionObj['service']['serviceAvailability']['nextAvailableDate'];
+        console.log('sel_loc,',this.sel_loc,'sel_ser',this.sel_ser,'checkindate',this.sel_checkindate,'accountid',this.account_id)
         this.getAvailableSlotByLocationandService(this.sel_loc,this.sel_ser,this.sel_checkindate, this.account_id,'init')
         this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc,this.sel_ser, this.account_id)
      }
@@ -100,6 +101,7 @@ export class CheckavailabilityComponent implements OnInit {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
     getAvailableSlotByLocationandService(locid, servid, pdate, accountid, type?) {
+        console.log('(((((((((',locid, servid, pdate, accountid, type)
         this.subs.sink = this.shared_services.getSlotsByLocationServiceandDate(locid, servid, pdate, accountid)
             .subscribe(data => {
                 this.slots = data;
@@ -118,7 +120,7 @@ export class CheckavailabilityComponent implements OnInit {
                 }
                
                 if (this.freeSlots.length > 0) {
-                    this.showApptTime = true;
+                    this.showApptTime = 'decided';
                     if (this.appointment && this.appointment.appmtTime && this.sel_checkindate === this.selectedDate) {
                     
                         const appttime = this.freeSlots.filter(slot => slot.time === this.appointment.appmtTime);
@@ -131,7 +133,8 @@ export class CheckavailabilityComponent implements OnInit {
                     }
                     this.waitlist_for[0].apptTime = this.apptTime['time'];
                 } else {
-                    this.showApptTime = false;
+                    this.showApptTime = 'novalue';
+                    console.log('entered............')
                 }
                 if (type) {
                     
@@ -141,7 +144,7 @@ export class CheckavailabilityComponent implements OnInit {
               
                 
             });
-           
+        //    console.log("end of loop", this.freeSlots.length)
     }
     getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
@@ -160,7 +163,7 @@ export class CheckavailabilityComponent implements OnInit {
         }
     }
     dismissModal() {
-        this.dialogRef.close('');
+        this.dialogRef.close('undefined');
     }
 
 //    *** getting data *** 
