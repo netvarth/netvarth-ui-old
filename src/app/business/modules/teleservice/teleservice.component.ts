@@ -267,8 +267,15 @@ export class TeleServiceComponent implements OnInit {
                     this.meetlink_data = meetingdata;
                     if (this.callingModes === 'VideoCall') {
                         this.starting_url = this.meetlink_data.joiningUrl;
-                    } else {
-                        this.starting_url = this.meetlink_data.startingUl;
+                    } 
+                    else {
+                        if(this.callingModes === 'Phone'){
+                            this.starting_url = '+' + this.meetlink_data.startingUl;
+                        }
+                        else{
+                            this.starting_url = this.meetlink_data.startingUl;
+                        }
+                       
                     }
 
                 });
