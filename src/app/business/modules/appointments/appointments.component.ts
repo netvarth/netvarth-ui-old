@@ -1936,7 +1936,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (event.target.checked) {
       this.apptMultiSelection = true;
       for (let aIndex = 0; aIndex < this.check_in_filtered_list.length; aIndex++) {
-        if (this.check_in_filtered_list[aIndex].consumer) {
+        if (this.check_in_filtered_list[aIndex].consumer||this.check_in_filtered_list[aIndex].providerConsumer) {
           this.chkAptHistoryClicked(aIndex, this.check_in_filtered_list[aIndex]);
         }
       }
