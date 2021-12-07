@@ -72,21 +72,9 @@ export class PaymentComponent implements OnInit {
   }
   ngOnInit() {
   }
-  payuPayment() {
-    this.isClickedOnce = true;
-    let paymentWay;
-    paymentWay = 'DC';
-    this.makeFailedPayment(paymentWay);
-  }
-  paytmPayment() {
-    this.isClickedOnce = true;
-    let paymentWay;
-    paymentWay = 'PPI';
-    this.makeFailedPayment(paymentWay);
+ 
+  makeFailedPayment() {
 
-  }
-  makeFailedPayment(paymentMode) {
-    this.waitlistDetails.paymentMode = paymentMode;
     this.shared_services.providerPayment(this.waitlistDetails)
       .subscribe((pData: any) => {
         this.origin = 'provider';
@@ -99,11 +87,11 @@ export class PaymentComponent implements OnInit {
             this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
             setTimeout(() => {
-              if (paymentMode === 'DC') {
-                this.document.getElementById('payuform').submit();
-              } else {
+              // if (paymentMode === 'DC') {
+              //   this.document.getElementById('payuform').submit();
+              // } else {
                 this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this.accountId, this);
-              }
+             // }
             }, 2000);
           } else {
             this.isClickedOnce = false;
