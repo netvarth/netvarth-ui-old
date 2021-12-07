@@ -141,6 +141,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     ngOnInit() {
         this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.getBankSettings();
         this.getLicensemetrics();
         this.domain = user.sector;
         this.resetApi();
@@ -165,6 +166,18 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/payments->payment-settings']);
         }
+    }
+    getBankSettings(){
+        this.provider_services.getPaymentSettings()
+        .subscribe((data:any) =>{
+            if(data.isJaldeeBank){
+                this.optJaldeeAccount='enable';
+
+            }else{
+                this.optJaldeeAccount='disable';
+            }
+            
+        })
     }
 
     /**
@@ -286,6 +299,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.provider_services.getBankPaymentSettings()
             .subscribe(data => {
                 this.paySettings = data;
+          
                 this.initPaymentSettings(this.paySettings, 0);
             });
         if (showmsg === 1) {

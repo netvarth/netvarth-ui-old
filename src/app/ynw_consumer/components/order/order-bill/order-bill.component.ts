@@ -86,13 +86,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
     gateway_redirection = false;
     payModesExists = false;
     payModesQueried = false;
-    pay_data = {
-        'uuid': null,
-        'paymentMode': null,
-        'amount': 0,
-        'accountId': null,
-        'purpose': null
-    };
+    pay_data :any;
     payment_popup = null;
     showPaidlist = false;
     showJCouponSection = false;
@@ -440,9 +434,10 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                             'paymentPurpose': 'billPayment',
                             'isJcashUsed': true,
                             'isreditUsed': false,
-                            'isRazorPayPayment': false,
-                            'isPayTmPayment': false,
-                            'paymentMode': 'JCASH'
+                            'paymentMode': 'JCASH',
+                            'serviceId':0,
+                            'isinternational':this.isInternatonal,
+
                         };
                         this.sharedServices.PayByJaldeewallet(postData)
                             .subscribe(data => {
@@ -466,19 +461,11 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                             'paymentPurpose': 'billPayment',
                             'isJcashUsed': true,
                             'isreditUsed': false,
-                            'isRazorPayPayment': false,
-                            'isPayTmPayment': false,
-                            'paymentMode': null
+                            'serviceId':0,
+                            'isinternational':this.isInternatonal,
+                            'paymentMode':this.selected_payment_mode
                         };
-                        if (paymentType == 'paytm') {
-                            postData.isPayTmPayment = true;
-                            postData.isRazorPayPayment = false;
-                            postData.paymentMode = "PPI";
-                        } else {
-                            postData.isPayTmPayment = false;
-                            postData.isRazorPayPayment = true;
-                            postData.paymentMode = "DC";
-                        }
+                        
                         this.sharedServices.PayByJaldeewallet(postData)
                             .subscribe((pData: any) => {
                                 this.origin = 'consumer';
@@ -543,11 +530,10 @@ export class OrderBillComponent implements OnInit, OnDestroy {
             this.pay_data.paymentMode = null;
             this.pay_data.accountId = this.accountId;
             this.pay_data.purpose = 'billPayment';
-            if (paymentType == 'paytm') {
-                this.pay_data.paymentMode = "PPI";
-            } else {
-                this.pay_data.paymentMode = "DC";
-            }
+            this.pay_data.paymentMode = this.selected_payment_mode;
+            this.pay_data.isinternational = this.isInternatonal;
+            this.pay_data.serviceId = 0;
+        
             this.resetApiError();
             if (this.pay_data.uuid != null &&
                 this.pay_data.paymentMode != null &&
