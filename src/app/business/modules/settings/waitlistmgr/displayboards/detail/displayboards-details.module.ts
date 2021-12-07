@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatOptionModule } from "@angular/material/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
+import { MatRadioModule } from "@angular/material/radio";
 import { MatSelectModule } from "@angular/material/select";
 import { RouterModule, Routes } from "@angular/router";
 import { CapitalizeFirstPipeModule } from "../../../../../../shared/pipes/capitalize.module";
@@ -11,7 +12,6 @@ import { GlobalSettingsModule } from "../global-settings/global-settings.module"
 import { DisplayboardQSetDetailModule } from "../q-set/detail/displayboard-qset-detail.module";
 import { DisplayboardQSetModule } from "../q-set/displayboard-qset.module";
 import { DisplayboardDetailComponent } from "./displayboard-details.component";
-import { MatRadioButton } from '@angular/material/radio';
 const routes: Routes = [
     {path: '', component: DisplayboardDetailComponent}
 ]
@@ -26,7 +26,7 @@ const routes: Routes = [
         MatInputModule,
         MatSelectModule,
         MatOptionModule,
-        MatRadioButton,
+        MatRadioModule,
         DisplayboardQSetModule,
         DisplayboardQSetDetailModule,
         CapitalizeFirstPipeModule,
