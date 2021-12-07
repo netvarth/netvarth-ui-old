@@ -20,7 +20,7 @@ no_of_grids = 2;
     ) {
        
         this.users_list = data.userData;
-        console.log(this.users_list)
+        console.log("Contact List :",this.users_list)
     }
     ngOnInit() {
 

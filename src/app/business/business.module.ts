@@ -16,6 +16,7 @@ import { JoyrideModule } from 'ngx-joyride';
 import { UpdateEmailModule } from './modules/update-email/update-email.module';
 import { MenuModule } from './home/menu/menu.module';
 import { BusinessHeaderModule } from './home/header/header.module';
+import { ReportDataService } from './modules/reports/reports-data.service';
 const routes: Routes = [
     {
       path: '', component: BusinessComponent, resolve: { terminologies: ProviderResolver },
@@ -78,6 +79,7 @@ const routes: Routes = [
         MessageService,
         ProviderSharedFuctions,
         ProviderResolver,
+        ReportDataService,
         { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
         { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
         { provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS }

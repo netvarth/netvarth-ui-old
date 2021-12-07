@@ -179,6 +179,9 @@ export class CustomerCreateComponent implements OnInit {
       if(qparams.countryCode){
         this.contryCod = qparams.countryCode;
       }
+      else{
+        this.contryCod = '+91';
+      }
       if (qparams.phone) {
         this.phoneNo = qparams.phone;
         if (this.source === 'appt-block' || this.source === 'waitlist-block' || this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'clist' || this.source === 'order') {
@@ -427,6 +430,9 @@ export class CustomerCreateComponent implements OnInit {
     if (this.contryCod) {
       this.amForm.get('countryCode').setValue(this.contryCod);
     }
+    else{
+      this.amForm.get('countryCode').setValue(this.contryCod);
+    }
     if (this.email) {
       this.amForm.get('email_id').setValue(this.email);
     }
@@ -505,7 +511,7 @@ export class CustomerCreateComponent implements OnInit {
           'address': form_data.address,
           //   }
         };
-        if (form_data.countryCode) {
+        if (form_data.countryCode && form_data.mobile_number) {
           post_data['countryCode'] = form_data.countryCode;
         }
         if (form_data.email_id && form_data.email_id !== '') {
@@ -559,7 +565,7 @@ export class CustomerCreateComponent implements OnInit {
           //   }
         };
 
-        if (form_data.countryCode) {
+        if (form_data.countryCode && form_data.mobile_number) {
           post_data['countryCode'] = form_data.countryCode;
         }
         if (form_data.email_id && form_data.email_id !== '') {

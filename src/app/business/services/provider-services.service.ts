@@ -1077,6 +1077,14 @@ export class ProviderServices {
     const url = 'provider/user/available';
     return this.servicemeta.httpGet(url);
   }
+  getAvailableUsersWaitlist() {
+    const url = 'provider/user/waitlist/available';
+    return this.servicemeta.httpGet(url);
+  }
+  getAvailableUsersAppt() {
+    const url = 'provider/user/appt/available';
+    return this.servicemeta.httpGet(url);
+  }
   getUserProfiles(profileIds) {
     const url = 'provider/user/providerProfiles/' + profileIds;
     return this.servicemeta.httpGet(url);
@@ -2268,6 +2276,10 @@ export class ProviderServices {
    setpersonsWaitlistMgr(status) {
     const url = 'provider/settings/waitlistMgr/personsAhead/' +status;
     return this.servicemeta.httpPut(url);
+  }
+    changestatustoComplete(idlist,status){
+    const url = 'provider/appointment/multiStatusChange/' +status;
+    return this.servicemeta.httpPut(url,idlist);
   }
   getAllFilterAttachments(filter?) {
     const url = 'provider/fileShare';

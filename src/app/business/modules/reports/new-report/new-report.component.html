@@ -172,7 +172,7 @@
                 </div>
               </div>
             </div>
-            <div class="text-center">
+            <div class="text-center">              
               <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
                 (click)="generateReport('payment');"> Generate Report </button>
               <ng-container *ngIf="report_loading">
@@ -293,8 +293,11 @@
             </div>
             <div class="text-center">
               <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
-                (click)="generateReport('appointment');"> Generate Report </button>
-              <ng-container *ngIf="report_loading">
+                (click)="generateReport('appointment');"> Generate Report </button>&nbsp;
+              <button type="button" [class.disabled]="loading" [class.spinner]="loading"
+                [class.spinner-darker-success]="loading" [class.spinner-center]="loading"  class="btn  btn-primary btn-lg" (click)="generateSummary('appointment')">
+                  Generate Questionnaire Report</button>
+              <ng-container *ngIf="report_loading || loading">
                 <app-common-innerloading-spinner> </app-common-innerloading-spinner>
               </ng-container>
             </div>
@@ -409,8 +412,11 @@
             </div>
             <div class="text-center">
               <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
-                (click)="generateReport('token');"> Generate Report </button>
-              <ng-container *ngIf="report_loading">
+                (click)="generateReport('token');"> <span class=""></span>Generate Report </button>&nbsp;&nbsp;&nbsp;                
+                <button type="button" [class.disabled]="loading" [class.spinner]="loading"
+                [class.spinner-darker-success]="loading" [class.spinner-center]="loading"  class="btn  btn-primary btn-lg" (click)="generateSummary('token')">
+                  Generate Questionnaire Report</button>
+              <ng-container *ngIf="report_loading || loading">
                 <app-common-innerloading-spinner> </app-common-innerloading-spinner>
               </ng-container>
             </div>

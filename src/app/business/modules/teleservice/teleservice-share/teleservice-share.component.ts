@@ -77,6 +77,8 @@ export class TeleServiceShareComponent implements OnInit {
   IsTelegramDisable:any;
   cusmtor_countrycode;
   cusmtor_phone;
+  phone_number = '+91'
+
   cust_countryCode;
   IsTelegramCustomrDisable = true;
   constructor(public dialogRef: MatDialogRef<TeleServiceShareComponent>,

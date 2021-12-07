@@ -15,6 +15,7 @@ import { AddInboxMessagesModule } from "../../../../shared/components/add-inbox-
 import { MeetingDetailsModule } from "../../meeting-details/meeting-details.module";
 import { ActionPopupModule } from "../action-popup/action-popup.module";
 import { GalleryModule } from "../../../../shared/modules/gallery/gallery.module";
+import { InboxListModule } from "../../../../../../src/app/shared/modules/inbox/inbox-list/inbox-list.module";
 const routes: Routes = [
     { path: '', component: CheckinDetailComponent }
 ];
@@ -28,7 +29,7 @@ const routes: Routes = [
         CapitalizeFirstPipeModule,
         QuestionnaireModule,
         MatExpansionModule,
-        // InboxListModule,
+        InboxListModule,
         MatTabsModule,
         NgxQRCodeModule,
         AddInboxMessagesModule,
