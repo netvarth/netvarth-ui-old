@@ -519,7 +519,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         <div class="row" *ngFor="let profile of paymentProfiles; let i=index">
           <div class="col-md-5">
 
-          <div class="card" >
+          <div class=" payment_profile card" >
             <mat-radio-group formControlName="paymentProfileId" name="paymentprofile">
               <mat-radio-button [value]="profile.profileId"  >{{profile.displayName}}  </mat-radio-button>
               <ng-container *ngIf="profile.indiaPay">

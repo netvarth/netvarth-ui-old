@@ -1,0 +1,13 @@
+.payment_profile .card{
+    box-shadow: 0 0 5px 5px grey!important;
+    border: 5px solid black;
+}
+
+
+  .payment_profile{
+    font-size:12px!important;
+  }
+  .payment_profile > .mat-radio-button.mat-radio-checked { 
+    border-color: blue !important;
+    box-shadow: 0 0 5px 5px blue!important
+  }
