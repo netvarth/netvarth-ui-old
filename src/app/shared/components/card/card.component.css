@@ -500,52 +500,80 @@ button.fxmenu1{
     padding: 2px 5px 0px 5px;
     text-align: center;
 }
-.getappointmentbutton {
+.getappointmentbutton{
     width: 100%;
     margin-top: 1%;
+    border: 2px solid #1E4079;
     border-radius: 5px;
     background-color:#1E4079;
+    
     color: white;
-    font-weight: 600;
+    font-weight: 400;
+    font-family: "Poppins";
     /* font-style: Montserrat;  */
     display: inline-block;
     margin-bottom: 0;
-    font-weight: 400;
     text-align: center;
     white-space: nowrap;
     vertical-align: middle;
     touch-action: manipulation;
     cursor: pointer;
-    background-image: none;
-    border: 1px solid transparent;
+    /* background-image: none; */
+    /* border: 1px solid transparent; */
     padding: 6px 12px;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.42857143;
-    border-radius: 4px;
+    /* border-radius: 4px; */
+}
+.getappointmentbutton:hover{
+    
+
+    background-color:white;
+    
+    color: #1E4079;
+    
+}
+.checkavailabilitybutton:hover{
+
+
+    background-color:white;
+
+    color:#FFC107 ;
+   
+
 }
 .checkavailabilitybutton{
     width: 100%;
     margin-top: 1%;
     border-radius: 5px;
-    background-color: #FFC107;
-    color: white;
-    font-weight: 600;
+    background-color: #ffcc34;
+    border: 2px solid #fcd76a ;
+    color:white ;
+   
+    font-weight: 400;
+    font-family: "Poppins";
     /* font-style: Montserrat; */
     display: inline-block;
     margin-bottom: 0;
-    font-weight: 400;
     text-align: center;
     white-space: nowrap;
     vertical-align: middle;
     touch-action: manipulation;
     cursor: pointer;
-    background-image: none;
-    border: 1px solid transparent;
+    /* background-image: none; */
+    /* border: 1px solid transparent; */
     padding: 6px 12px;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.42857143;
-    border-radius: 4px;
+    /* border-radius: 4px; */
 }
+button:disabled,
+button[disabled]{
+  border: 2px solid #999999;
+  background-color: #f0f0f0;
+  color: #666666;
+}
+
 .booking-card.card.order.disabled .card-item-content , .booking-card.card.order.disabled .card-item-head {
     opacity: .4 !important;
     /* pointer-events: none !important; */
