@@ -446,8 +446,11 @@ non_indian_modes_onchange(event) {
 togglepaymentMode(){
     this.shownonIndianModes=!this.shownonIndianModes;
 }
+getImageSrc(mode){
+    
+  return '../../../../../assets/images/payment-modes/'+mode+'.png';
+}
 getPaymentModes() {
-  alert('sjadhjsjhsf')
     this.shared_services.getPaymentModesofProvider(this.account_id,0, 'billPayment')
         .subscribe(
             data => {

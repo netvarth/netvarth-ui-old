@@ -808,6 +808,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
 
         }
     }
+    getImageSrc(mode){
+    
+        return '../../../../../assets/images/payment-modes/'+mode+'.png';
+    }
     closeloading() {
         this.isClickedOnce = false;
         this.loadingPaytm = false;

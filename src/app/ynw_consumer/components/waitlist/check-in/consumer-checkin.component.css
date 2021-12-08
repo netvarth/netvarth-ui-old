@@ -1911,6 +1911,7 @@ body.modal-open {
   } */
   .paymentmode{
     font-size:16px!important;
+    padding:10px !important;
   }
   .paymentmode > .mat-radio-button.mat-radio-checked { 
     border-color: blue !important;

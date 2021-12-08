@@ -109,5 +109,20 @@ export class PaytmService {
 
 
     }
+    updatePaytmPayForProvider(payload, ) {
+        return new Promise((resolve, reject) => {
+
+            this.sharedServices.updatePaytmPayProvider(payload)
+                .subscribe(result => {
+                    console.log('result' + result);
+                    resolve(result);
+                }, error => {
+                    reject(false);
+                })
+
+        })
+
+
+    }
 
 }

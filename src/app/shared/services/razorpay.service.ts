@@ -88,7 +88,7 @@ export class RazorpayService {
         queryParams: queryParams
       };
 
-      this.updateRazorPay(razorpay_payload,account_id).then((data)=>{
+      this.updateRazorPay(razorpay_payload,account_id,usertype).then((data)=>{
      
         if(data){
         if (usertype === 'consumer') {
@@ -281,7 +281,8 @@ export class RazorpayService {
    window.location.reload();
 
 }
-updateRazorPay(payload,account_id){
+updateRazorPay(payload,account_id,usertype){
+  if(usertype==='consumer'){
   return new Promise((resolve,reject)=>{
 
     this.sharedServices.updateRazorPay(payload,account_id)
@@ -293,6 +294,19 @@ updateRazorPay(payload,account_id){
     })
 
   })
+}else{
+  return new Promise((resolve,reject)=>{
+
+    this.sharedServices.updateRazorPayForPtovider(payload)
+    .subscribe(result=>{
+      console.log('result'+result);
+      resolve(result);
+    },error=>{
+      reject(false);
+    })
+
+  })
+}
 
   
 }

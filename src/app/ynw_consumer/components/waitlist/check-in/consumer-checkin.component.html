@@ -1356,11 +1356,13 @@
                                                         <div class="col-xs-12  col-sm-6 col-lg-3  ">
 
                                                                 <div class="paymentmode card text-primary" >
-                                                                  <mat-radio-group name="paymentMode" (change)="indian_payment_mode_onchange($event)">
-                                                                    <mat-radio-button [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
+                                                                      
+                                                                  <mat-radio-group name="paymentMode" (change)="indian_payment_mode_onchange($event)" labelPosition="before">
+                                                                    <mat-radio-button style="float:right" [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
 
                                                     
                                                                   </mat-radio-group>
+                                                                  <img class="ordericon pickup" height="50px" width="100px"[src]="getImageSrc(modes.mode)">
                                                                   
                                                                 </div>
                                                                 </div>
@@ -1373,12 +1375,13 @@
                                                     <div class="col-xs-12  col-sm-6 col-lg-3  ">
 
                                                             <div class="paymentmode card text-primary" >
+                                                                   
                                                               <mat-radio-group name="paymentMode" (change)="non_indian_modes_onchange($event)">
                                                                 <mat-radio-button [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
-
+                                                               
                                                 
                                                               </mat-radio-group>
-                                                              
+                                                              <img class="ordericon pickup" height="50px" width="100px" [src]="getImageSrc(modes.mode)">
                                                             </div>
                                                             </div>
 

@@ -456,6 +456,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     togglepaymentMode(){
         this.shownonIndianModes=!this.shownonIndianModes;
     }
+    getImageSrc(mode){
+    
+        return '../../../../../assets/images/payment-modes/'+mode+'.png';
+    }
     ngOnDestroy(): void {
         this.subs.unsubscribe();
     }

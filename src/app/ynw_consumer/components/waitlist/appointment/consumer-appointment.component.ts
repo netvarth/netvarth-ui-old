@@ -446,6 +446,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
         );
     }
+    getImageSrc(mode){
+    
+        return '../../../../../assets/images/payment-modes/'+mode+'.png';
+    }
     // getPaymentModes() {
     //     this.paytmEnabled = false;
     //     this.razorpayEnabled = false;
