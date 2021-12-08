@@ -119,7 +119,7 @@ export class PaymentComponent implements OnInit {
   }
   transactionCompleted(response, payload, accountId) {
     if (response.STATUS == 'TXN_SUCCESS') {
-      this.paytmService.updatePaytmPay(payload, accountId)
+      this.paytmService.updatePaytmPayForProvider(payload)
         .then((data) => {
           if (data) {
             this.paidStatus = 'true';
