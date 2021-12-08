@@ -931,7 +931,7 @@
                   </tbody>
                   <ng-container *ngIf="slotbyId && isObject(slotbyId)">
                   <div *ngFor="let slot of slotbyId | keyvalue , let i = index">
-                  <h6 *ngIf="statusAction == 'new' && selected_type != 'booked'"><span style="text-align:center">
+                  <h6 *ngIf="statusAction == 'new' && selected_type != 'booked'"><span style="text-align:center; padding-left: 10px;">
                    {{slot.key && slot.key!=='undefined'?slot.key :' Schedule'}}
                     </span></h6>
                     <tbody *ngIf="statusAction == 'new' && selected_type != 'booked'">
