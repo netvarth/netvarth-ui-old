@@ -93,7 +93,7 @@
 
     <div class="card card-custom card-stretch gutter-b no-padding col-md-12  col-sm-12  col-xs-12">
      
-     <div class="">
+     <div class="" *ngIf="foldertype !== 'Shared'">
       <button type="button" class="pull-left p-button-rounded p-ripple p-button p-component mx-2 my-3 p-1">
         <a style="color: white !important;" #modal data-toggle="modal" data-target="#exampleModalCenter">
         </a>
@@ -314,7 +314,7 @@
               <table class="table  table-responsive table-hover table-head-custom table-head-bg table-borderless table-vertical-center">
                 <thead>
                   <tr class="text-left text-uppercase mx-2 " style="background-color: #f3f6f9; height: 60px;">
-                    <th style="min-width: 150px">
+                    <th style="min-width: 50px">
                       <span class="text-dark-75 mx-2 text-center">
                         <!--class="" [class.pad-bt-0]="selectedcustomersformsg.length > 0" <input type="checkbox" (change)="selectAllcustomers($event)"
                           [checked]="isAllCustomerSelected()"> -->
@@ -322,11 +322,16 @@
                       </span>
                       <!-- <div class="customer-selected" *ngIf="selectedcustomersformsg.length > 0">
                         {{selectedcustomersformsg.length}} {{(selectedcustomersformsg.length === 1) ? customer_label
-                        : customer_label + 's'}} selected </div> -->
+                        : customer_label + 's'}} selected </div>
+                       style="min-width: 150px"
+                      style="min-width: 50px"
+                      style="min-width: 100px"
+                      style="min-width: 100px"
+                    -->
                     </th>
                     <th style="min-width: 50px">Date</th>
-                    <th style="min-width: 100px">File Type</th>
-                    <th style="min-width: 100px">File Size</th>
+                    <th style="min-width: 50px">File Type</th>
+                    <th style="min-width: 50px">File Size</th>
 
                     <!-- <th style="min-width: 50px"></th> -->
                   </tr>

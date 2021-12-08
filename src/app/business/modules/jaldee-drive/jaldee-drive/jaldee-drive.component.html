@@ -55,12 +55,12 @@
                 <!-- <mat-radio-button [value]="'shared'" class="mx-2">
                   Shared folder
                 </mat-radio-button> -->
-                <mat-radio-button [value]="'public'" >
+                <mat-radio-button [value]="'Public'" >
                   <!-- [checked]='true' *ngIf="defaultFolder"-->
                   Public folder
                 </mat-radio-button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                <mat-radio-button [value]="'private'" checked>
+                <mat-radio-button [value]="'My'" checked>
                   Private folder
                 </mat-radio-button>
               </mat-radio-group>
@@ -94,9 +94,9 @@
           <div class="col-xs-12 col-sm-12 col-12 col-md-12  col-lg-12 no-padding bgcolor">
             <div class="card no-padding-small bgcolor">
               <div>
-                <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head mx-2">
+                <!-- <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head mx-2">
                   Jaldee Drive.
-                </div>
+                </div> -->
                 <button type="button" class="pull-left p-button-rounded p-ripple p-button p-component mx-2 my-3 p-1">
                   <a style="color: white !important;" #modal data-toggle="modal" data-target="#exampleModalCenter">
                   </a>
@@ -135,7 +135,7 @@
                 </div>
               </div> -->
               <div class="mx-2 mt-4">
-                <h4>Statistic</h4>
+                <h4>Statistics</h4>
               </div>
               <div class="mx-2">
                 <div class="row">
@@ -245,35 +245,35 @@
               <div class="mx-2">
                 <div class=" row cust-name">
                   <!-- <h4>Your folders</h4> -->
-                  <div (click)="publicfolder('public')"
+                  <div (click)="publicfolder('Public')"
                     class="mx-2 pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
                     id="folder2">
 
                     <i class="fa fa-folder" aria-hidden="true">
 
-                      <p (click)="publicfolder('public')"> Public Files</p>
+                      <p (click)="publicfolder('Public')"> Public Files</p>
                     </i>
                     <!-- <img src="../../../assets/images/Group 818.jpg" class=" fa fa-folder pull-left text-light "
                   style="width: 22px !important; margin-top: 2px !important;"> -->
                   </div>
-                  <div (click)="publicfolder('my')"
+                  <div (click)="publicfolder('My')"
                     class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
                     id="folder2">
 
                     <i class="fa fa-folder" aria-hidden="true">
 
-                      <p (click)="publicfolder('my')">My Files</p>
+                      <p (click)="publicfolder('My')">My Files</p>
                     </i>
                     <!-- <img src="../../../assets/images/Group 816.jpg" class=" fa fa-folderpull-left text-light "
                   style="width: 22px !important; margin-top: 2px !important;"> -->
                   </div>
-                  <div (click)="publicfolder('shared')"
+                  <div (click)="publicfolder('Shared')"
                   class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
                   id="folder2">
 
                   <i class="fa fa-folder" aria-hidden="true">
 
-                    <p (click)="publicfolder('shared')">Shared Files</p>
+                    <p (click)="publicfolder('Shared')">Shared Files</p>
                   </i>
                   <!-- <img src="../../../assets/images/Group 816.jpg" class=" fa fa-folderpull-left text-light "
                 style="width: 22px !important; margin-top: 2px !important;"> -->
@@ -645,6 +645,9 @@
                 </span>
               </span> -->
               <div>
+                <div class="mx-2 mt-4">
+                  <h4>Statistics</h4>
+                </div>
                 <div class="mx-2">
                   <div class="row">
 
@@ -827,27 +830,27 @@
                   <!-- <h4>Your folders</h4> -->
 
                   <div class="col-md-12 row" style="display: flex;">
-                    <div (click)="publicfolder('public')"
+                    <div (click)="publicfolder('Public')"
                       class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
                       id="folder2">
                       <i class="fa fa-folder" aria-hidden="true">
-                        <p (click)="publicfolder('public')"> Public Files</p>
+                        <p (click)="publicfolder('Public')"> Public Files</p>
                       </i>
                     </div>
-                    <div (click)="publicfolder('my')"
+                    <div (click)="publicfolder('My')"
                       class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
                       id="folder2">
                       <i class="fa fa-folder" aria-hidden="true">
-                        <p (click)="publicfolder('my')"> My Files</p>
+                        <p (click)="publicfolder('My')"> My Files</p>
                       </i>
                     </div>
-                    <div (click)="publicfolder('shared')"
+                    <div (click)="publicfolder('Shared')"
                     class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
                     id="folder2">
   
                     <i class="fa fa-folder" aria-hidden="true">
   
-                      <p (click)="publicfolder('shared')">Shared Files</p>
+                      <p (click)="publicfolder('Shared')">Shared Files</p>
                     </i>
                     <!-- <img src="../../../assets/images/Group 816.jpg" class=" fa fa-folderpull-left text-light "
                   style="width: 22px !important; margin-top: 2px !important;"> -->

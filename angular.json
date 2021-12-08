@@ -21,13 +21,13 @@
               "src/favicon.ico",
               "src/manifest.webmanifest"
             ],
-            "styles": [              
+            "styles": [
               "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/primeicons/primeicons.css",
-"node_modules/primeng/resources/themes/saga-blue/theme.css",
-"node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
               "src/assets/css/bootstrap4.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/owl.carousel/dist/assets/owl.carousel.min.css",
@@ -47,9 +47,7 @@
               "src/assets/css/home_new.css",
               "./node_modules/intl-tel-input/build/css/intlTelInput.css",
               "src/assets/third-party/Admin-LTE/css/_all-skins.css",
-              "src/assets/css/themes.css",
-              "./node_modules/primeicons/primeicons.css",
-              "./node_modules/primeng/resources/primeng.min.css"
+              "src/assets/css/themes.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -58,8 +56,18 @@
               "node_modules/crypto-js/crypto-js.js",
               "src/assets/third-party/Admin-LTE/js/app.js"
             ],
-            "allowedCommonJsDependencies": ["crypto-js","ngx-owl-carousel","@ks89/angular-modal-gallery","underscore","file-saver","twilio-video","xlsx","qrcode",
-              "@ckeditor/ckeditor5-build-decoupled-document","speak-tts"],
+            "allowedCommonJsDependencies": [
+              "crypto-js",
+              "ngx-owl-carousel",
+              "@ks89/angular-modal-gallery",
+              "underscore",
+              "file-saver",
+              "twilio-video",
+              "xlsx",
+              "qrcode",
+              "@ckeditor/ckeditor5-build-decoupled-document",
+              "speak-tts"
+            ],
             "vendorChunk": true,
             "extractLicenses": false,
             "buildOptimizer": false,

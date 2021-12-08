@@ -643,9 +643,14 @@ body.modal-open {
   padding-top: 15px;
 }
 .tble{
-  
   overflow-x: auto !important;
 }
+/* @media (min-width: 576px) {
+  .tble{
+    display:block;
+  }
+} */
+
 .side{
   overflow-y: auto !important;
   display: block !important;

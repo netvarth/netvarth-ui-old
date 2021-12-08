@@ -6,12 +6,10 @@
   </h1>
   <div class="pad-20 image-scroll" *ngIf="details.fileType && details.fileType != 'pdf'" >
     <img style="width:100%;margin-top: -20px;" [src]="details.filePath"
-      *ngIf="details.fileType && details.fileType == 'image/bmp'|| details.fileType =='image/png'|| details.fileType == 'image/gif' || details.fileType == 'image/jpg' ||details.fileType =='image/jpeg'||details.fileType == 'image/webp'"/>
+      *ngIf="details.fileType && details.fileType == 'image/bmp'|| details.fileType =='image/png' || details.fileType == 'image/gif' || details.fileType == 'image/jpg' ||details.fileType =='image/jpeg'||details.fileType == 'image/webp'"/>
  </div>
-  <div *ngIf="details.fileType && details.fileType == 'pdf'">
-    <!-- <span>  -->
-        <!-- <a [href]="details.filePath" target="_blank" download>         
-        </a> -->
+  <div *ngIf="details.fileType && details.fileType == 'application/pdf'">
+   
         <div class="mx-3 py-2 px-2"> 
             <i class="fa fa-file-pdf-o" aria-hidden="true" style="color:red;">&nbsp;
         <a [href]="details.filePath" target="_blank" download>
@@ -20,8 +18,11 @@
         </i>
         </div>
 
-    <!-- </span> -->
+ 
 </div>
+ <!-- <span>  -->
+        <!-- <a [href]="details.filePath" target="_blank" download>         
+        </a> -->
   <!-- <mat-dialog-actions>
       <button type="button" class="cs-btn bt1 small-btn" (click)="closeDialog()">Close</button>
     </mat-dialog-actions> -->

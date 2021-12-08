@@ -49,7 +49,7 @@ export class FolderFilesComponent implements OnInit {
     totalCnt: this.customers.length,
     perPage: 3
   };
-  choose_type = 'my';
+  choose_type = 'My';
   active_user: any;
   action: any = '';
   apiError = '';
@@ -118,7 +118,7 @@ export class FolderFilesComponent implements OnInit {
     this.activated_route.queryParams.subscribe(params => {
       this.foldertype = params.foldername;
       // this.foldertype + ' ' + 'folder';
-      this.foldername = this.foldertype + ' ' + 'files';
+      this.foldername = this.foldertype + ' ' + 'Files';
     });
     this.config = {
       itemsPerPage: 5,
@@ -285,24 +285,24 @@ export class FolderFilesComponent implements OnInit {
       if (value === 'true') {
         this.availabileSelected = true;
         this.notAvailabileSelected = false;
-        this.filter.folderName = 'public';
+        this.filter.folderName = 'Public';
       }
       else {
         this.availabileSelected = false;
         this.notAvailabileSelected = true;
-        this.filter.folderName = 'my';
+        this.filter.folderName = 'My';
       }
     }
     if (type === 'fileSize') {
       if (value === 'true') {
         this.lessMb = true;
         this.grateMB = false;
-        this.filter.fileSize = '1';
+        this.filter.fileSize = 'MB';
       }
       else {
         this.lessMb = false;
         this.grateMB = true;
-        this.filter.fileSize = '1';
+        this.filter.fileSize = 'MB';
       }
     }
     this.doSearch();
@@ -328,15 +328,15 @@ export class FolderFilesComponent implements OnInit {
   getfiles() {
     const filter = {};
     console.log(this.foldertype);
-    if (this.foldertype === 'my') {
-      filter['folderName-eq'] = 'my';
+    if (this.foldertype === 'My') {
+      filter['folderName-eq'] = 'My';
     }
-    else if (this.foldertype === 'public') {
-      filter['folderName-eq'] = 'public';
+    else if (this.foldertype === 'Public') {
+      filter['folderName-eq'] = 'Public';
 
     }
     else {
-      filter['folderName-eq'] = 'shared';
+      filter['folderName-eq'] = 'Shared';
     }
 
 
