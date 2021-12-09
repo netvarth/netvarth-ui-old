@@ -57,11 +57,11 @@
                 </mat-radio-button> -->
                 <mat-radio-button [value]="'Public'" >
                   <!-- [checked]='true' *ngIf="defaultFolder"-->
-                  Public folder
+                  Public Files
                 </mat-radio-button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                 <mat-radio-button [value]="'My'" checked>
-                  Private folder
+                  My Files
                 </mat-radio-button>
               </mat-radio-group>
             </div>
@@ -103,7 +103,7 @@
                   <a style="color: white !important;" class="pointer-cursor" (click)="imagefile1.click();"><input
                       #imagefile1 type="file" accept="/*;capture=camera" style="display:none;" multiple
                       (change)="filesSelected($event, 'close')"><i style="color: white !important;"
-                      class="fa fa-plus mgn-rt-5" aria-hidden="true"></i> Upload New File </a>
+                      class="fa fa-plus mgn-rt-5 mx-2" aria-hidden="true"></i> Upload New File </a>
                   <!-- <i style="color: white !important;"
                       class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i> -->
                 </button>
@@ -179,7 +179,7 @@
                     </div>
                   </div> -->
                   </div>
-                  <div class="col-sm-12 col-md-4 col-lg-4  col-xs-12 col-12 disp-flex">
+                  <!-- <div class="col-sm-12 col-md-4 col-lg-4  col-xs-12 col-12 disp-flex">
                     <div class="card color" style="word-wrap: normal !important;">
 
                       <div align="center" class="my-2">
@@ -201,21 +201,7 @@
                       </div>
 
                     </div>
-                    <!-- <div class="card color" style="word-wrap: normal !important;">
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
-                      <div class="col-md-4">Storage</div>
-                      <div>
-
-                        <div class="col-md-4">
-                          <span>{{storageleft.usedStorage}}</span>
-                        </div>
-                      </div>
-                      <div class="col-md-4">Used</div>
-                      <div class="progress">
-                        <div class="progress-bar bg-primary" style="width:50%"></div>
-                      </div>
-                    </div>
-                  </div> -->
+                   
                   </div>
                   <div class="col-sm-12 col-md-4 col-lg-4  col-xs-12 col-12 disp-flex">
                     <div class="card color" style="word-wrap: normal !important;">
@@ -239,7 +225,7 @@
                       </div>
 
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div class="mx-2">
@@ -689,7 +675,7 @@
                       </div>
                     </div> -->
                     </div>
-                    <div class="col-sm-12 col-md-4 col-lg-4  col-xs-12 col-12 disp-flex">
+                    <!-- <div class="col-sm-12 col-md-4 col-lg-4  col-xs-12 col-12 disp-flex">
                       <div class="card color" style="word-wrap: normal !important;">
 
                         <div align="center" class="my-2">
@@ -711,21 +697,7 @@
                         </div>
 
                       </div>
-                      <!-- <div class="card color" style="word-wrap: normal !important;">
-                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
-                        <div class="col-md-4">Storage</div>
-                        <div>
-  
-                          <div class="col-md-4">
-                            <span>{{storageleft.usedStorage}}</span>
-                          </div>
-                        </div>
-                        <div class="col-md-4">Used</div>
-                        <div class="progress">
-                          <div class="progress-bar bg-primary" style="width:50%"></div>
-                        </div>
-                      </div>
-                    </div> -->
+                     
                     </div>
                     <div class="col-sm-12 col-md-4 col-lg-4  col-xs-12 col-12 disp-flex">
                       <div class="card color" style="word-wrap: normal !important;">
@@ -749,11 +721,25 @@
                         </div>
 
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
-
+ <!-- <div class="card color" style="word-wrap: normal !important;">
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
+                        <div class="col-md-4">Storage</div>
+                        <div>
+  
+                          <div class="col-md-4">
+                            <span>{{storageleft.usedStorage}}</span>
+                          </div>
+                        </div>
+                        <div class="col-md-4">Used</div>
+                        <div class="progress">
+                          <div class="progress-bar bg-primary" style="width:50%"></div>
+                        </div>
+                      </div>
+                    </div> -->
 
               <!-- <div class="content w-manager settings comn-cls lic-page" style="width: 100%;"> -->
               <!-- <div class="col-md-12    "> -->
