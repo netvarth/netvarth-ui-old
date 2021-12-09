@@ -298,6 +298,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 if(params.ctime) {
                     console.log('****************************')
                     this.selectedTime=params.ctime
+                 
                 }
                 this.sel_loc = params.loc_id;
                 this.locationName = params.locname;
@@ -747,7 +748,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         console.log(this.selectedTime)
                         if(this.selectedTime) {
                             const appttime = this.freeSlots.filter(slot => slot.displayTime === this.selectedTime);
-                            this.apptTime = appttime[0];
+                            if(appttime) {
+                                this.apptTime = appttime[0];
+                            }
+                            
                             console.log("**********")
                         } else {
                             this.apptTime = this.freeSlots[0];

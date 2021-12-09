@@ -64,8 +64,8 @@
             
             <div class="col-lg-2 col-xs-4 col-sm-4"  *ngFor="let slot of freeSlots;let i = index" >
 
-                <h6   (click)="timeSelected(slot);" class="green mgn-up-5" *ngIf="slot.active" style="border:2px solid #b4f3a7;text-align: center;padding: 5px;cursor: pointer;">{{slot.displayTime}}</h6>
-                <h6 style="border:2px solid red;text-align: center;padding: 5px;"   (click)="timeSelected(slot);"  *ngIf="!slot.active"><del style="color: red;">{{slot.displayTime}}</del></h6>
+                <h6   (click)="timeSelected(slot,sel_checkindate);" class="green mgn-up-5" *ngIf="slot.active" style="border:2px solid #b4f3a7;text-align: center;padding: 5px;cursor: pointer;">{{slot.displayTime}}</h6>
+                <h6 style="border:2px solid red;text-align: center;padding: 5px;"    *ngIf="!slot.active"><del style="color: red;">{{slot.displayTime}}</del></h6>
     
     
             </div>

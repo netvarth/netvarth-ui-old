@@ -1829,6 +1829,10 @@ console.log("fgf"+JSON.stringify(loc));
     if(location.time) {
       current_provider['ctime']=location.time
     }
+    if(location.date) {
+      console.log('differnt dates....',service.serviceAvailability.nextAvailableDate,location.date)
+      service.serviceAvailability.nextAvailableDate=location.date
+    }
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
@@ -2006,8 +2010,11 @@ console.log("fgf"+JSON.stringify(loc));
   }
 
   doLogin(origin?, passParam?) {
-    // this.snackbarService.openSnackBar('You need to login to check in');
+
+    // this.snackbarService.openSnackBar('Youneed to login to check in');
+    console.log('login section')
     const current_provider = passParam['current_provider'];
+    console.log('current_ptovider',current_provider)
     // let is_test_account = null;
     // if (current_provider) {
     //   if (current_provider.test_account === '1') {
@@ -2044,6 +2051,7 @@ console.log("fgf"+JSON.stringify(loc));
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         }else if (passParam['callback'] === 'checkavailability') {
           this.opencheckavail(passParam['actionObjtype'])
+          console.log('end of login section')
          }
          else if (passParam['callback'] === 'appointment') {
           if (current_provider['service']['serviceType'] === 'virtualService') {
@@ -2483,6 +2491,7 @@ console.log("fgf"+JSON.stringify(loc));
   opencheckavail(actionObj) {
     console.log("checkbox in business page")
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    console.log('usertype...........',this.userType)
     const current_provider = {
       'id': actionObj['location']['id'],
       'place':actionObj['location']['place'],
@@ -2493,6 +2502,7 @@ console.log("fgf"+JSON.stringify(loc));
     if(this.userType === '') {
       const passParam = { callback: 'checkavailability', current_provider: current_provider, serviceType:  actionObj['service'].serviceType,actionObjtype:actionObj };
       this.doLogin('consumer', passParam);
+
     }else {
       this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
         width: '90%',
@@ -2505,9 +2515,11 @@ console.log("fgf"+JSON.stringify(loc));
     }
 
     this.checkavailabilitydialogref.afterClosed().subscribe(result => {
+      console.log('result.......',result)
      if(result!='undefined') {
-      actionObj['location']['time']=result;
-      console.log('action..........',actionObj);
+      actionObj['location']['time']=result[0];
+      actionObj['location']['date']=result[1];
+      // console.log('action..........',actionObj);
       this.appointmentClicked(actionObj['location'], actionObj['service']);
      }
     

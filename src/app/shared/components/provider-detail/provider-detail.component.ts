@@ -1684,8 +1684,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
   }
   appointmentClicked(location, service: any) {
-    console.log('location..',location)
-    // alert('helooooo')
+  
     this.futureAllowed = true;
     let current_provider = {
       'id': location.id,
@@ -1695,9 +1694,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       'cdate': service.serviceAvailability.nextAvailableDate
       
     };
-    console.log('cureent*******')
+
     if(location.time) {
       current_provider['ctime']=location.time
+    }    if(location.date) {
+      console.log('differnt dates....',service.serviceAvailability.nextAvailableDate,location.date)
+      service.serviceAvailability.nextAvailableDate=location.date
     }
     console.log('current provider...',current_provider)
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -2462,9 +2464,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.checkavailabilitydialogref.afterClosed().subscribe(result => {
      
       if(result!='undefined') { 
-        actionObj['location']['time']=result;
-        console.log('action..........',actionObj);
+        actionObj['location']['time']=result[0];
+        actionObj['location']['date']=result[1];
         this.appointmentClicked(actionObj['location'], actionObj['service']);
+
+
       }
    
 
