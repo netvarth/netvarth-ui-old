@@ -207,20 +207,20 @@
                     <div class="card-body">
                       <div class="filterTextinput filter-text-input">
                         <li class="filterli filter-li">
-                          <input type="text" id="fileSize" [(ngModel)]="filter.fileSize" #fileSize (keyup)="doSearch()"
+                          <input type="text" id="fileSize"  #fileSize (keyup)="doSearch()"
                             maxlength="20" class="filterTextbox filter-textbox" placeholder="Enter File size">
                         </li>
                       </div>
                       <div class="filter-checkbox-input">
                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                          <mat-checkbox class="filter-checkbox" [checked]="lessMb"
+                          <mat-checkbox class="filter-checkbox" [checked]="lessMb" 
                             (change)="setFilterDataCheckbox('fileSize', 'true')">
                             Less than 1MB</mat-checkbox>
                           <!--  (change)="setFilterDataCheckbox('fileSize', 'false')"  [checked]="grateMB" -->
                         </li>
                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                           <mat-checkbox class="filter-checkbox" (change)="setFilterDataCheckbox('fileSize', 'false')"
-                            [checked]="grateMB">
+                            [checked]="grateMB" >
                             Greater than 1MB</mat-checkbox>
                         </li>
                       </div>
@@ -314,7 +314,10 @@
               <table class="table  table-responsive table-hover table-head-custom table-head-bg table-borderless table-vertical-center">
                 <thead>
                   <tr class="text-left text-uppercase mx-2 " style="background-color: #f3f6f9; height: 60px;">
-                    <th style="min-width: 50px">
+                   <th *ngIf="foldertype === 'Shared'">
+                        Owner Name
+                   </th>
+                    <th >
                       <span class="text-dark-75 mx-2 text-center">
                         <!--class="" [class.pad-bt-0]="selectedcustomersformsg.length > 0" <input type="checkbox" (change)="selectAllcustomers($event)"
                           [checked]="isAllCustomerSelected()"> -->
@@ -329,8 +332,8 @@
                       style="min-width: 100px"
                     -->
                     </th>
-                    <th style="min-width: 50px">Date</th>
-                    <th style="min-width: 50px">File Type</th>
+                    <th>Date</th>
+                    <th>File Type</th>
                     <th style="min-width: 50px">File Size</th>
 
                     <!-- <th style="min-width: 50px"></th> -->
@@ -342,6 +345,16 @@
                   <tr style="cursor: pointer;"
                     *ngFor="let customer of customers | filter:searchTerm | paginate: config;   let i= index"
                     (click)="preview(customer)">
+                    <td *ngIf="foldertype === 'Shared' && customer.ownerName !==''">
+                      <span class="text-dark-75 d-block ">
+                        {{customer.ownerName}}
+                      </span>
+                    </td>
+                    <td *ngIf="foldertype === 'Shared' && customer.ownerName === ''">
+                      <span class="text-dark-75 d-block ">
+                        -
+                      </span>
+                    </td>
                     <td class="py-4">
                       <div class="d-flex align-items-center">
                         <!-- <div class="pr-3">

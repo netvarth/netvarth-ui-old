@@ -297,12 +297,12 @@ export class FolderFilesComponent implements OnInit {
       if (value === 'true') {
         this.lessMb = true;
         this.grateMB = false;
-        this.filter.fileSize = 'MB';
+        this.filter.fileSize = '1';
       }
       else {
         this.lessMb = false;
         this.grateMB = true;
-        this.filter.fileSize = 'MB';
+        this.filter.fileSize = '1';
       }
     }
     this.doSearch();
