@@ -1927,12 +1927,16 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       cur: this.changedate_req,
       unique_id: this.provider_id,
       account_id: this.provider_bussiness_id,
-      tel_serv_stat: this.businessjson.virtualServices,
       user: this.userId,
       service_type: service.serviceType,
       service_id: service.id,
       virtual_info: JSON.stringify(virtualinfo)
     };
+    if (service['serviceType']==='virtualService') {
+      queryParam['tel_serv_stat'] = true;
+    } else {
+      queryParam['tel_serv_stat'] = false;
+    }
     if (service['department']) {
       queryParam['dept'] = service['department'];
     }
@@ -1954,7 +1958,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       cur: this.changedate_req,
       unique_id: this.provider_id,
       account_id: this.provider_bussiness_id,
-      tel_serv_stat: this.businessjson.virtualServices,
       user: this.userId,
       futureAppt: this.futureAllowed,
       service_id: service.id,
@@ -1962,6 +1965,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       sel_date: curdate,
       virtual_info: JSON.stringify(virtualinfo)
     };
+    if (service['serviceType']==='virtualService') {
+      queryParam['tel_serv_stat'] = true;
+    } else {
+      queryParam['tel_serv_stat'] = false;
+    }
     if (service['department']) {
       queryParam['dept'] = service['department'];
     }

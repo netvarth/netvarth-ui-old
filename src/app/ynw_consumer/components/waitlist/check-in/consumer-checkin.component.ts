@@ -183,7 +183,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     bookingForm: FormGroup;
     whatsapperror = '';
     showmoreSpec = false;
-    bookStep = 0;
+    bookStep;
     locationName;
     waitlistDetails: { 'amount': number; 'paymentMode': any; 'uuid': any; 'accountId': any; 'purpose': string; };
     pGateway: any;
@@ -339,14 +339,19 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.sel_checkindate = this.selectedDate = params.sel_date;
                 this.hold_sel_checkindate = this.sel_checkindate;
                 this.tele_srv_stat = params.tel_serv_stat;
-                if (params.service_type) {
-                    this.serviceType = params.service_type;
-                    if (this.serviceType === 'virtualService') {
-                        this.bookStep = 0;
-                    } else {
-                        this.bookStep = 1;
-                    }
-                }
+                if (this.tele_srv_stat === 'true') {
+                    this.bookStep = 0;
+                } else {
+                    this.bookStep = 1;
+                }              
+                // if (params.service_type) {
+                //     this.serviceType = params.service_type;
+                //     if (this.serviceType === 'virtualService') {
+                //         this.bookStep = 0;
+                //     } else {
+                //         this.bookStep = 1;
+                //     }
+                // }
                 if (params.dept) {
                     this.selectedDeptParam = parseInt(params.dept);
                     this.filterDepart = true;
@@ -362,10 +367,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.rescheduleUserId = params.uuid;
                     this.getRescheduleWaitlistDet();
                 }
-                if (params.virtual_info) {
-                    this.virtualInfo = JSON.parse(params.virtual_info);
-
-                }
+                // if (params.virtual_info) {
+                //     this.virtualInfo = JSON.parse(params.virtual_info);
+                // }
                 if (params.theme) {
                     this.theme = params.theme;
                 }
@@ -390,7 +394,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
 
     OnNewMember(event) {
-
         // if (this.chosen_person = 'new_member') {
         this.hideEditButton = true;
         this.editable = true;
@@ -413,9 +416,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         } else {
             this.is_parent = false;
             this.chosen_person = 'new_member'
-
         }
-
     }
 
     goToEdit() {
@@ -503,19 +504,19 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
         this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
         this.minDate = this.todaydate;
-        if (this.change_date === 'true') {
-            const seldateChecker = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-            const seldate_checker = new Date(seldateChecker);
-            const todaydateChecker = new Date(this.todaydate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-            const todaydate_checker = new Date(todaydateChecker);
-            if (seldate_checker.getTime() === todaydate_checker.getTime()) { // if the next available date is today itself, then add 1 day to the date and use it
-                const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-                const serverdate = moment(server).format();
-                const servdate = new Date(serverdate);
-                const nextdate = new Date(seldate_checker.setDate(servdate.getDate() + 1));
-                this.sel_checkindate = this.selectedDate = nextdate.getFullYear() + '-' + (nextdate.getMonth() + 1) + '-' + nextdate.getDate();
-            }
-        }
+        // if (this.change_date === 'true') {
+        //     const seldateChecker = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        //     const seldate_checker = new Date(seldateChecker);
+        //     const todaydateChecker = new Date(this.todaydate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        //     const todaydate_checker = new Date(todaydateChecker);
+        //     if (seldate_checker.getTime() === todaydate_checker.getTime()) { // if the next available date is today itself, then add 1 day to the date and use it
+        //         const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        //         const serverdate = moment(server).format();
+        //         const servdate = new Date(serverdate);
+        //         const nextdate = new Date(seldate_checker.setDate(servdate.getDate() + 1));
+        //         this.sel_checkindate = this.selectedDate = nextdate.getFullYear() + '-' + (nextdate.getMonth() + 1) + '-' + nextdate.getDate();
+        //     }
+        // }
         const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const ddd = new Date(day);
         this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
@@ -532,7 +533,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     _this.isFuturedate = true;
                 }
                 _this.getQueuesbyLocationandServiceIdavailability(_this.sel_loc, _this.selectedService, _this.account_id);
-
             }
         );
     }
