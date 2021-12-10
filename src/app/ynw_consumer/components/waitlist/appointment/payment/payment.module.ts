@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { HeaderModule } from "../../../../../shared/modules/header/header.module";
 import { ConsumerAppointmentPaymentComponent } from "./payment.component";
+import { MatRadioModule } from '@angular/material/radio';
 const routes: Routes = [
     { path: '', component: ConsumerAppointmentPaymentComponent }
 ];
@@ -10,7 +11,8 @@ const routes: Routes = [
     imports:[
         [RouterModule.forChild(routes)],
         CommonModule,
-        HeaderModule
+        HeaderModule,
+        MatRadioModule
     ],
     exports:[
         ConsumerAppointmentPaymentComponent

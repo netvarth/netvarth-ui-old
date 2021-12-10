@@ -14,6 +14,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { projectConstantsLocal } from '../../../../../../src/app/shared/constants/project-constants';
 import { PaytmService } from '../../../../../../src/app/shared/services/paytm.service';
 import { Messages } from '../../../../../../src/app/shared/constants/project-messages';
+import { ProviderServices } from '../../../../../../src/app/business/services/provider-services.service';
 @Component({
   selector: 'app-payments',
   templateUrl: './licensepayment.component.html'
@@ -37,11 +38,19 @@ export class PaymentComponent implements OnInit {
   payment_id: any;
   @ViewChild('license_paylink') paytmview;
   accountId: any;
+  paymentmodes: any;
+  isPayment: boolean;
+  indian_payment_modes: any;
+  non_indian_modes: any;
+  shownonIndianModes: boolean;
+  selected_payment_mode: any;
+  isInternatonal: boolean;
   constructor(
     private activated_route: ActivatedRoute,
     private cdRef: ChangeDetectorRef,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
+    private provider_services:ProviderServices,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
@@ -71,8 +80,59 @@ export class PaymentComponent implements OnInit {
     });
   }
   ngOnInit() {
+    this.getPaymentModes();
   }
- 
+  getPaymentModes() {
+
+    this.provider_services.getPaymentModes()
+        .subscribe(
+            data => {
+                this.paymentmodes = data[0];
+                this.isPayment = true;
+                if (this.paymentmodes.indiaPay) {
+                    this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
+                }
+                 if (this.paymentmodes.internationalPay) {
+                    this.non_indian_modes = this.paymentmodes.internationalBankInfo;
+
+                }
+                if(!this.paymentmodes.indiaPay && this.paymentmodes.internationalPay){
+                    this.shownonIndianModes=true;
+                }else{
+                    this.shownonIndianModes=false;  
+                }
+
+            },
+            error => {
+                this.isPayment = false;
+                console.log(this.isPayment);
+            }
+
+
+        );
+}
+indian_payment_mode_onchange(event) {
+    this.selected_payment_mode = event.value;
+    this.isInternatonal = false;
+
+
+
+}
+non_indian_modes_onchange(event) {
+    this.selected_payment_mode = event.value;
+    this.isInternatonal = true;
+
+
+
+}
+getImageSrc(mode){
+    
+  return '../../../../../assets/images/payment-modes/'+mode+'.png';
+}
+togglepaymentMode(){
+    this.shownonIndianModes=!this.shownonIndianModes;
+}
+
   makeFailedPayment() {
 
     this.shared_services.providerPayment(this.waitlistDetails)
@@ -114,6 +174,7 @@ export class PaymentComponent implements OnInit {
     this.razorModel.order_id = pData.orderId;
     this.razorModel.description = pData.description;
     this.razorModel.name = pData.providerName;
+    this.razorModel.mode=this.selected_payment_mode;
     this.razorpayService.payWithRazor(this.razorModel, this.origin);
     this.isClickedOnce = false;
   }

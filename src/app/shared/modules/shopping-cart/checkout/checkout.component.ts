@@ -1826,6 +1826,7 @@ getPaymentModes() {
     this.razorModel.amount = pData.amount;
     this.razorModel.order_id = pData.orderId;
     this.razorModel.name = pData.providerName;
+    this.razorModel.mode=this.selected_payment_mode;
     this.isClickedOnce = false;
     this.razorModel.description = pData.description;
     this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'order_prepayment', this.trackUuid, this.livetrack, this.account_id, this.cartDetails.advanceAmount, this.customId);

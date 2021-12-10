@@ -761,6 +761,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
+        this.razorModel.mode=this.selected_payment_mode;
         this.isClickedOnce = false;
         this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uid, null, this.account_id, null, null, this.customId);
     }

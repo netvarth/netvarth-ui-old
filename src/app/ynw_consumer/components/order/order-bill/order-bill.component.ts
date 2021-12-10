@@ -255,6 +255,10 @@ export class OrderBillComponent implements OnInit, OnDestroy {
             }
         }
     }
+    getImageSrc(mode){
+    
+        return '../../../../../assets/images/payment-modes/'+mode+'.png';
+    }
     gets3curl() {
         this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id, null, 'terminologies,coupon,providerCoupon').subscribe(
             (accountS3s) => {
@@ -469,11 +473,13 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                         this.sharedServices.PayByJaldeewallet(postData)
                             .subscribe((pData: any) => {
                                 this.origin = 'consumer';
+                                this.pGateway = pData.paymentGateway;
                                 if (pData.isGateWayPaymentNeeded && pData.isJCashPaymentSucess) {
-                                    if (paymentType == 'paytm') {
-                                        this.payWithPayTM(pData.response, this.accountId);
-                                    } else {
+                                    if(this.pGateway == 'RAZORPAY'){
                                         this.paywithRazorpay(pData.response);
+                                       
+                                    }else{
+                                        this.payWithPayTM(pData.response,this.accountId);
                                     }
                                 }
                                 // if (pData.isGateWayPaymentNeeded == true && pData.isJCashPaymentSucess == true) {
@@ -567,6 +573,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
             }
         }
     }
+
     paywithRazorpay(data: any) {
         this.prefillmodel.name = data.consumerName;
         this.prefillmodel.email = data.ConsumerEmail;
@@ -577,6 +584,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
         this.razorModel.order_id = data.orderId;
         this.razorModel.name = data.providerName;
         this.razorModel.description = data.description;
+        this.razorModel.mode=this.selected_payment_mode;
         this.isClickedOnce = false;
         //    this.razorModel.image = data.jaldeeLogo;
         // this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type);

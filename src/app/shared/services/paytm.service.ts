@@ -28,7 +28,8 @@ export class PaytmService {
                     "orderId": pData.orderId, /* update order id */
                     "token": response.body.txnToken, /* update token value */
                     "tokenType": "TXN_TOKEN",
-                    "amount": pData.amount /* update amount */
+                    "amount": pData.amount, /* update amount */
+                    "paymentMode":pData.paymentMode
                 },
                 "merchant": {
                     "mid": pData.merchantId,

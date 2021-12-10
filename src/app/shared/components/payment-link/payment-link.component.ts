@@ -360,6 +360,7 @@ togglepaymentMode(){
     this.razorModel.order_id = data.orderId;
     this.razorModel.name = data.providerName;
     this.razorModel.description = data.description;
+    this.razorModel.mode=this.selected_payment_mode;
     this.isClickedOnce = false;
     this.razorpayService.payBillWithoutCredentials(this.razorModel).then(
       (response: any) => {

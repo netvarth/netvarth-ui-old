@@ -238,6 +238,10 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
             return this.wordProcessor.firstToUpper((term === term_only) ? term_only : term);
         }
     }
+    getImageSrc(mode){
+    
+        return '../../../../../assets/images/payment-modes/'+mode+'.png';
+    }
     goBack() {
         this.location.back();
     }
@@ -432,7 +436,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                             'isJcashUsed': true,
                             'isreditUsed': false,
                             'paymentMode': 'JCASH',
-                            'isInternational':this.isInternatonal,
+                            'isInternational':false,
                             'serviceId':0
                         };
                         this.sharedServices.PayByJaldeewallet(postData)
@@ -488,7 +492,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                     });
         }
         else {
-            alert('inisdeee');
+        
             this.pay_data.uuid = this.uuid;
             this.pay_data.amount = this.bill_data.amountDue;
             this.pay_data.paymentMode = this.selected_payment_mode;
@@ -535,6 +539,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
         this.razorModel.order_id = data.orderId;
         this.razorModel.name = data.providerName;
         this.razorModel.description = data.description;
+        this.razorModel.mode=this.selected_payment_mode;
         this.isClickedOnce = false;
         //    this.razorModel.image = data.jaldeeLogo;
         this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uuid, this.accountId);
