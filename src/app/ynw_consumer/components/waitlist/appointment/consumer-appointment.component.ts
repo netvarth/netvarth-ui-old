@@ -374,6 +374,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 this.sel_checkindate = this.selectedDate = params.sel_date;
                 this.hold_sel_checkindate = this.sel_checkindate;
                 this.tele_srv_stat = params.tel_serv_stat;
+                if (this.tele_srv_stat === 'true') {
+                    this.bookStep = 0;
+                } else {
+                    this.bookStep = 1;
+                }   
                 if (params.dept) {
                     this.selectedDeptParam = parseInt(params.dept);
                     this.filterDepart = true;
@@ -389,14 +394,14 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.rescheduleUserId = params.uuid;
                     this.getRescheduleApptDet();
                 }
-                if (params.service_type) {
-                    this.serviceType = params.service_type;
-                    if (this.serviceType === 'virtualService') {
-                        this.bookStep = 0;
-                    } else {
-                        this.bookStep = 1;
-                    }
-                }
+                // if (params.service_type) {
+                //     this.serviceType = params.service_type;
+                //     if (this.serviceType === 'virtualService') {
+                //         this.bookStep = 0;
+                //     } else {
+                //         this.bookStep = 1;
+                //     }
+                // }
                 if (params.theme) {
                     this.theme = params.theme;
 

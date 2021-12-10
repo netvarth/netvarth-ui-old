@@ -27,7 +27,7 @@ import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegenerat
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
-import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
+// import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
 
 
 
@@ -293,7 +293,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   apptServices;
   onlyVirtualItems=false;
   private subscriptions = new SubSink();
-  consumerVirtualinfo: any;
+  // consumerVirtualinfo: any;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -1664,22 +1664,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     console.log(this.userType);
-    if (this.userType === 'consumer') {
-      console.log(service.serviceType);
-      if (service.serviceType === 'virtualService') {
-        console.log('checkin');
-        // this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-        //   this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
-        // });
-
+    if (this.userType === 'consumer') {   
         this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer');
-
-
-      }
-      else {
-        this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer');
-      }
-
     } else if (this.userType === '') {
       const passParam = { callback: 'checkin', current_provider: current_provider, serviceType: service.serviceType };
       this.doLogin('consumer', passParam);
@@ -1723,17 +1709,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     console.log(this.userType);
     if (this.userType === 'consumer') {
-      console.log(service.serviceType);
-      if (service.serviceType === 'virtualService') {
-        // this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-        //   this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'appt', current_provider['service'], consumerdata);
-        // });
         this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
-
-      }
-      else {
-        this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
-      }
     } else if (this.userType === '') {
       const passParam = { callback: 'appointment', current_provider: current_provider, serviceType: service.serviceType };
       this.doLogin('consumer', passParam);
@@ -1778,17 +1754,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-          //  if (passParam['serviceType'] === 'virtualService') {
-          //   this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-
-          //     this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'],'appt',current_provider['service'] , consumerdata);
-          //   });
-
-          // }
-          // else {
           this.showAppointment(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'consumer');
-          // }
-
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
@@ -1797,65 +1763,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
         } else {
           this.getFavProviders();
-          if (passParam['serviceType'] === 'virtualService') {
-            this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-              this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
-            });
-
             this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'waitlist', current_provider['service']);
-
-          } else {
-            this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'waitlist', current_provider['service']);
-          }
-
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);
       }
     });
   }
-  collectRequiredinfo(id, place, location, date, type, service?, consumerdata?) {
-    console.log('inisdee  collecte required ingo');
-    const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
-      width: '40%',
-      height: 'auto',
-      panelClass: ['loginmainclass', 'popup-class'],
-      disableClose: true,
-      data: { 'consumer': consumerdata, 'type': '', 'service': service, 'businessDetails': this.businessjson }
-    });
-    virtualdialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log("Result:");
-        console.log(result);
-        this.consumerVirtualinfo = result;
-        if (type === 'appt') {
-          this.showAppointment(id, place, location, date, service, 'consumer', result);
-        } else {
-          this.showCheckin(id, place, location, date, service, 'consumer', result);
-        }
-
-      }
-    });
-  }
-
-  checkVirtualRequiredFieldsEntered() {
-    const _this = this;
-    return new Promise(function (resolve, reject) {
-      _this.shared_services.getProfile(_this.activeUser.id, 'consumer')
-        .subscribe(
-          data => {
-            console.log(data);
-            resolve(data);
-          },
-          () => {
-            reject();
-          }
-        );
-    });
-
-  }
-
-
   doSignup(passParam?) {
     console.log(passParam);
     const current_provider = passParam['current_provider'];
@@ -1884,17 +1798,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-          if (passParam['serviceType'] === 'virtualService') {
-            console.log('after signup');
-            this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-
-              this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'appt', current_provider['service'], consumerdata);
-            });
-
-          } else {
             this.showAppointment(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'consumer');
-          }
-
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
@@ -1902,17 +1806,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.checkout();
           }
         } else {
-          if (passParam['serviceType'] === 'virtualService') {
-            console.log('inisdee signup first line')
-            this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-              console.log(consumerdata);
-              this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'appt', current_provider['service'], consumerdata);
-            });
-
-          } else {
             this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'consumer');
-          }
-
         }
       }
     });

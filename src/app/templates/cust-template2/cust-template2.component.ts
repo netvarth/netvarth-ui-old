@@ -25,7 +25,6 @@ import { SharedServices } from '../../shared/services/shared-services';
 import { SnackbarService } from '../../shared/services/snackbar.service';
 import { WordProcessor } from '../../shared/services/word-processor.service';
 import { ConsumerJoinComponent } from '../../ynw_consumer/components/consumer-join/join.component';
-import { VirtualFieldsComponent } from '../../ynw_consumer/components/virtualfields/virtualfields.component';
 import { SubSink } from 'subsink';
 @Component({
   selector: 'app-cust-template2',
@@ -1574,15 +1573,7 @@ export class CustTemplate2Component implements OnInit {
           //console.log("logged In");
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
           if (_this.userType === 'consumer') {
-            if (service.serviceType === 'virtualService') {
-              //  console.log(service);
-              _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-                _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.availableDate, 'checkin', service, consumerdata);
-              });
-            }
-            else {
               _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, 'consumer');
-            }
           }
         } else {
           const passParam = { callback: '', current_provider: current_provider };
@@ -1634,16 +1625,7 @@ export class CustTemplate2Component implements OnInit {
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
           // console.log("User Type:" + _this.userType);
           if (_this.userType === 'consumer') {
-
-            if (service.serviceType === 'virtualService') {
-              _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-                _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.nextAvailableDate, 'appt', service, consumerdata);
-              });
-
-            }
-            else {
               _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
-            }
           }
         } else {
           const passParam = { callback: 'appointment', current_provider: current_provider };
@@ -1651,98 +1633,7 @@ export class CustTemplate2Component implements OnInit {
         }
       });
   }
-  collectRequiredinfo(id, place, location, date, type, service?, consumerdata?) {
-    //  console.log("Collect Required Info");
-    const _this = this;
-    let virtualFields = {};
-    if (this.checkallvirtualFilledByConsumer(consumerdata)) {
-      if (consumerdata.parent) {
-        virtualFields['dob'] = consumerdata.userProfile.dob;
-        virtualFields['gender'] = consumerdata.userProfile.gender;
-        let locationObj = {};
-        locationObj['Name'] = consumerdata.bookingLocation.city;
-        locationObj['State'] = consumerdata.bookingLocation.state;
-        locationObj['Pincode'] = consumerdata.bookingLocation.pincode;
-
-        virtualFields['location'] = locationObj;
-        virtualFields['preferredLanguage'] = this.s3Processor.getJson(consumerdata.preferredLanguages);
-        if (virtualFields['preferredLanguage'][0] === 'English') {
-          virtualFields['islanguage'] = 'yes';
-        }
-      } else {
-        virtualFields['dob'] = consumerdata.userProfile.dob;
-        virtualFields['gender'] = consumerdata.userProfile.gender;
-        let locationObj = {};
-        locationObj['Name'] = consumerdata.userProfile.city;
-        locationObj['State'] = consumerdata.userProfile.state;
-        locationObj['Pincode'] = consumerdata.userProfile.pinCode;
-
-        virtualFields['location'] = locationObj;
-        virtualFields['pincode'] = consumerdata.userProfile.pinCode;
-        virtualFields['preferredLanguage'] = this.s3Processor.getJson(consumerdata.userProfile.preferredLanguages);
-        if (virtualFields['preferredLanguage'][0] === 'English') {
-          virtualFields['islanguage'] = 'yes';
-        }
-      }
-      if (type === 'appt') {
-        _this.showAppointment(id, place, location, date, service, 'consumer', virtualFields);
-      } else {
-        _this.showCheckin(id, place, location, date, service, 'consumer', virtualFields);
-      }
-    } else {
-      const virtualdialogRef = _this.dialog.open(VirtualFieldsComponent, {
-        width: '40%',
-        panelClass: ['loginmainclass', 'popup-class', this.theme],
-        disableClose: true,
-        //data: consumerdata
-        data: { consumer: consumerdata, theme: this.theme, service: service, businessDetails: this.businessjson }
-      });
-      virtualdialogRef.afterClosed().subscribe(result => {
-        _this.loading_direct = true;
-        if (result) {
-          _this.consumerVirtualinfo = result;
-          if (type === 'appt') {
-            _this.showAppointment(id, place, location, date, service, 'consumer', result);
-          } else {
-            _this.showCheckin(id, place, location, date, service, 'consumer', result);
-          }
-        } else {
-          _this.loading_direct = false;
-        }
-      });
-
-    }
-  }
-  checkallvirtualFilledByConsumer(consumerdata) {
-    let allrequiredFieldsFilled = false;
-    if (consumerdata.parent) {
-      if (consumerdata.userProfile.dob && consumerdata.userProfile.dob !== '' && consumerdata.userProfile.gender && consumerdata.preferredLanguages && consumerdata.preferredLanguages !== null && consumerdata.bookingLocation && consumerdata.bookingLocation.pincode && consumerdata.bookingLocation.pincode.trim() !== '') {
-        allrequiredFieldsFilled = true;
-      }
-
-    } else if (consumerdata.userProfile.dob && consumerdata.userProfile.dob !== '' && consumerdata.userProfile.gender && consumerdata.userProfile.preferredLanguages && consumerdata.userProfile.preferredLanguages !== null && consumerdata.bookingLocation && consumerdata.userProfile.pinCode && consumerdata.userProfile.pinCode.trim() !== '') {
-      allrequiredFieldsFilled = true;
-    }
-    return allrequiredFieldsFilled;
-  }
-
-  checkVirtualRequiredFieldsEntered() {
-    const _this = this;
-    return new Promise(function (resolve, reject) {
-      _this.shared_services.getProfile(_this.activeUser.id, 'consumer')
-        .subscribe(
-          data => {
-            //console.log(data);
-            resolve(data);
-          },
-          () => {
-            reject();
-          }
-        );
-    });
-
-  }
-
+  
   doLogin(origin?, passParam?) {
     // this.snackbarService.openSnackBar('You need to login to check in');
     const current_provider = passParam['current_provider'];
@@ -1781,16 +1672,7 @@ export class CustTemplate2Component implements OnInit {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-          if (current_provider['service']['serviceType'] === 'virtualService') {
-            this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-              this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'appt', current_provider['service'], consumerdata);
-            });
-          } else {
             this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
-            // this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'],current_provider['service'],'consumer' );
-          }
-
-          // this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
@@ -1798,14 +1680,7 @@ export class CustTemplate2Component implements OnInit {
             this.checkout();
           }
         } else {
-          // console.log(passParam);
-          if (current_provider['service']['serviceType'] === 'virtualService') {
-            this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-              this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
-            });
-          } else {
             this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
-          }
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);
@@ -1838,15 +1713,7 @@ export class CustTemplate2Component implements OnInit {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-          if (current_provider['service']['serviceType'] === 'virtualService') {
-            this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-              this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'appt', current_provider['service']);
-            });
-          } else {
             this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
-            // this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'],current_provider['service'],'consumer' );
-          }
-          // this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
@@ -1854,14 +1721,7 @@ export class CustTemplate2Component implements OnInit {
             this.checkout();
           }
         } else {
-          if (current_provider['service']['serviceType'] === 'virtualService') {
-            this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-              this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
-            });
-          } else {
             this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
-          }
-          // this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
       } else {
         this.loading_direct = false;
