@@ -146,6 +146,7 @@ togglepaymentMode(){
             this.lStorageService.setitemonLocalStorage('p_src', 'p_lic');
             this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+            pData.paymentMode=this.selected_payment_mode;
             setTimeout(() => {
               // if (paymentMode === 'DC') {
               //   this.document.getElementById('payuform').submit();

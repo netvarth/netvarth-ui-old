@@ -547,6 +547,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
     payWithPayTM(pData: any, accountId: any) {
         this.isClickedOnce = true;
         this.loadingPaytm = true;
+        pData.paymentMode=this.selected_payment_mode;
         this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
     }
     transactionCompleted(response, payload, accountId) {
