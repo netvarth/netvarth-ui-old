@@ -2241,6 +2241,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     payWithPayTM(pData: any,accountId:any) {
         this.loadingPaytm = true;
+        pData.paymentMode=this.selected_payment_mode;
         this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
     }
     getImage(url, file) {
