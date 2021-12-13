@@ -134,7 +134,9 @@ togglepaymentMode(){
 }
 
   makeFailedPayment() {
-
+this.waitlistDetails.isInternational=this.isInternatonal;
+this.waitlistDetails.paymentMode=this.selected_payment_mode;
+this.waitlistDetails.serviceId=0;
     this.shared_services.providerPayment(this.waitlistDetails)
       .subscribe((pData: any) => {
         this.origin = 'provider';
