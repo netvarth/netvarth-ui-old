@@ -506,7 +506,6 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                 this.pay_data.amount !== 0) {
                 this.api_success = Messages.PAYMENT_REDIRECT;
                 this.gateway_redirection = true;
-                alert(this.pay_data);
                 this.subs.sink = this.sharedServices.consumerPayment(this.pay_data)
                     .subscribe(
                         (data: any) => {
