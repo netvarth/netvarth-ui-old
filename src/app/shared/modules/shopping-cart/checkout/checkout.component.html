@@ -409,7 +409,7 @@
                           [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm('paytm')"
                           id="stepThreeConfirmButton">
                         </span> -->
-                   
+                  
                       <ng-container *ngIf="!shownonIndianModes && ((checkJcash && jcashamount < cartDetails.advanceAmount))">
                           <div *ngFor="let modes of indian_payment_modes">
                               <div class="col-xs-12 col-sm-6   ">
@@ -447,6 +447,22 @@
                 </div>
             </ng-container>
             </div>
+            
+            <div class="clearfix"></div>
+            <div class="txt-align-center "
+            *ngIf="paymentmodes.internationalPay  && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))">
+            <span 
+                (click)="togglepaymentMode()"
+                class="pointer-cursor"><a
+                    class="refund_policy">
+                    <span *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non Indian Payment ? Click
+                    here</span>
+                    <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
+                        here</span>
+                </a></span>
+
+
+        </div>
                       <div class="txt-align-center">
                         <!-- <button type="button" class="nxt-btn btn btn-primary font-weight-bold text-uppercase "
                           *ngIf="razorpayEnabled && !paytmEnabled && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
@@ -468,11 +484,12 @@
                       </button>
                       </div>
                       <br>
-                      <div class="txt-align-center"
+                      <!-- <div class="txt-align-center"
                         *ngIf="interNatioanalPaid && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))">
                         <span [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm()"
                           class="pointer-cursor"><a class="paybt">International Payment ? Click here</a></span>
-                      </div>
+                      </div> -->
+                  
                       <div
                         *ngIf="cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount > cartDetails.advanceAmount) || (checkJcash && jcashamount == cartDetails.advanceAmount))">
                         <button mat-flat-button [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm()"
@@ -562,7 +579,6 @@
                       id="stepThreeConfirmButton">
                     </span> -->
                   </div>
-         
                   <ng-container *ngIf="!shownonIndianModes && ((checkJcash && jcashamount < cartDetails.advanceAmount))">
                     <div *ngFor="let modes of indian_payment_modes">
                         <div class="col-xs-12  col-sm-6 col-lg-3  ">
@@ -596,6 +612,21 @@
 
             </div>
         </ng-container>
+        <div class="clearfix"></div>
+        <div class="txt-align-center "
+        *ngIf="paymentmodes.internationalPay  && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))">
+        <span 
+            (click)="togglepaymentMode()"
+            class="pointer-cursor"><a
+                class="refund_policy">
+                <span *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non Indian Payment ? Click
+                here</span>
+                <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
+                    here</span>
+            </a></span>
+
+
+    </div>
                   <div class="txt-align-center">
                     <!-- <button type="button" class="nxt-btn btn btn-primary font-weight-bold text-uppercase "
                       *ngIf="razorpayEnabled && !paytmEnabled && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
@@ -614,14 +645,16 @@
                       *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
                       (click)="!isClickedOnce && confirm()">
                       MaKe Payment
+                      
                     </button>
                   </div>
                   <br>
-                  <div class="txt-align-center"
+                  <!-- <div class="txt-align-center"
                     *ngIf="interNatioanalPaid && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))">
                     <span [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm()"
                       class="pointer-cursor"><a class="paybt">International Payment ? Click here</a></span>
-                  </div>
+                  </div> -->
+            
                   <div
                     *ngIf="selectedImagelist.files.length > 0 && cartDetails.advanceAmount > 0 &&  ((checkJcash && jcashamount > cartDetails.advanceAmount) || (checkJcash && jcashamount == cartDetails.advanceAmount))">
                     <button mat-flat-button [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm()"
