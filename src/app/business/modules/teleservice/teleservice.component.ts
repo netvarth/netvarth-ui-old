@@ -200,6 +200,8 @@ export class TeleServiceComponent implements OnInit {
 
     // Asking to start the meeting
     asktoLaunch() {
+        console.log(this.starting_url)
+        console.log(this.callingModes)
         this.startTeledialogRef = this.dialog.open(TeleServiceConfirmBoxComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
@@ -250,7 +252,13 @@ export class TeleServiceComponent implements OnInit {
                     if (this.callingModes === 'VideoCall') {
                         this.starting_url = this.meetlink_data.joiningUrl;
                     } else {
-                        this.starting_url = this.meetlink_data.startingUl;
+                        if(this.callingModes === 'Phone'){
+                            this.starting_url = '+' + this.meetlink_data.startingUl;
+                        }
+                        else{
+                            this.starting_url = this.meetlink_data.startingUl;
+                        }
+                       
                     }
                 });
         } else {
@@ -259,8 +267,15 @@ export class TeleServiceComponent implements OnInit {
                     this.meetlink_data = meetingdata;
                     if (this.callingModes === 'VideoCall') {
                         this.starting_url = this.meetlink_data.joiningUrl;
-                    } else {
-                        this.starting_url = this.meetlink_data.startingUl;
+                    } 
+                    else {
+                        if(this.callingModes === 'Phone'){
+                            this.starting_url = '+' + this.meetlink_data.startingUl;
+                        }
+                        else{
+                            this.starting_url = this.meetlink_data.startingUl;
+                        }
+                       
                     }
 
                 });
@@ -386,6 +401,7 @@ export class TeleServiceComponent implements OnInit {
         } else {
             consumer = this.data.providerConsumer;
         }
+      
         this.startTeledialogRef = this.dialog.open(TeleServiceShareComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass', 'popup-class'],

@@ -756,7 +756,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.provider_services.rescheduleProviderAppointment(data)
             .subscribe(
                 () => {
-                    this.snackbarService.openSnackBar('Appointment rescheduled to ' + this.dateformat.transformToMonthlyDate(this.sel_checkindate));
+                    this.snackbarService.openSnackBar('Appointment rescheduled to ' + this.dateformat.transformToMonthlyDate(this.sel_checkindate) + ',' +  this.getSingleTime(this.apptTime['time']));
                     this.dialogRef.close('reload');
                     // this._location.back();
                 },

@@ -931,7 +931,7 @@
                   </tbody>
                   <ng-container *ngIf="slotbyId && isObject(slotbyId)">
                   <div *ngFor="let slot of slotbyId | keyvalue , let i = index">
-                  <h6 *ngIf="statusAction == 'new' && selected_type != 'booked'"><span style="text-align:center">
+                  <h6 *ngIf="statusAction == 'new' && selected_type != 'booked'"><span style="text-align:center; padding-left: 10px;">
                    {{slot.key && slot.key!=='undefined'?slot.key :' Schedule'}}
                     </span></h6>
                     <tbody *ngIf="statusAction == 'new' && selected_type != 'booked'">
@@ -2373,7 +2373,10 @@
                 <tbody *ngIf="check_in_filtered_list.length > 0 && !small_device_display">
                   <tr class="pointer-cursor" [class.user-tr-backclr]="appt.provider" (click)="goCheckinDetail(appt)"
                     *ngFor="let appt of check_in_filtered_list, let i=index">
-                   
+                    <td class="chkWth" *ngIf="showSelectAll()">
+                      <input [checked]="chkAppointments[i]" type="checkbox"
+                        class="ckbx pull-left" (click)="stopprop($event)" (change)="chkAptHistoryClicked(i, appt)" />
+                    </td>
                     <td class="parent-selection parent-title td-one">
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                         *ngIf="time_type!=1">

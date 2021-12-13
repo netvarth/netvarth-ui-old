@@ -730,6 +730,10 @@ export class BranchUsersComponent implements OnInit {
         },
             error => {
                 this.apiError = error.error;
+                setTimeout(() => {
+                    this.apiError ='';
+                  }, 1000);
+               
             });
     }
     updateGroup(data) {
@@ -739,9 +743,14 @@ export class BranchUsersComponent implements OnInit {
             this.closeGroupDialog();
             this.snackbarService.openSnackBar('Team updated successfully', { ' panelclass': 'snackbarerror' });
         },
-            error => {
-                this.apiError = error.error;
-            });
+            
+        error => {
+            this.apiError = error.error;
+            setTimeout(() => {
+                this.apiError ='';
+              }, 1000);
+           
+        });
     }
     resetGroupFields() {
         this.teamName = '';
