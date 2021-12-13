@@ -10,6 +10,7 @@ import { HeaderModule } from "../../../../../shared/modules/header/header.module
 import { LoadingSpinnerModule } from "../../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { CapitalizeFirstPipeModule } from "../../../../../shared/pipes/capitalize.module";
 import { ConsumerAppointmentBillComponent } from "./appointment-bill.component";
+import { MatRadioModule } from '@angular/material/radio';
 const routes: Routes = [
     { path: '', component: ConsumerAppointmentBillComponent }
 ];
@@ -24,7 +25,8 @@ const routes: Routes = [
         MatCheckboxModule,
         FormsModule,
         JcCouponNoteModule,
-        CapitalizeFirstPipeModule
+        CapitalizeFirstPipeModule,
+        MatRadioModule
     ],
     exports:[ConsumerAppointmentBillComponent],
     declarations:[ConsumerAppointmentBillComponent]

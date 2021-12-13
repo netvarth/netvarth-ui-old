@@ -239,6 +239,12 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     paymentmodes: any;
     customer_countrycode: any;
     from: string;
+    indian_payment_modes: any=[];
+    non_indian_modes: any =[];
+    shownonIndianModes: boolean;
+    selected_payment_mode: any;
+    isInternatonal: boolean;
+    isPayment: boolean;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -340,46 +346,95 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         // this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
         this.revealphonenumber = true;
     }
+    // getPaymentModes() {
+    //     this.paytmEnabled = false;
+    //     this.razorpayEnabled = false;
+    //     this.interNatioanalPaid = false;
+    //     this.shared_services.getPaymentModesofProvider(this.account_id,this.sel_ser, 'donation')
+    //         .subscribe(
+    //             data => {
+    //                 this.paymentmodes = data;
+    //                 if (this.paymentmodes[0].isJaldeeBank) {
+    //                     if (this.customer_countrycode == '+91') {
+    //                         this.paytmEnabled = true;
+    //                         this.interNatioanalPaid = true;
+    //                     }
+    //                     else {
+    //                         this.razorpayEnabled = true;
+    //                     }
+    //                 } else {
+    //                     if (this.customer_countrycode == '+91') {
+    //                         for (let modes of this.paymentmodes) {
+    //                             for (let gateway of modes.payGateways) {
+    //                                 if (gateway == 'PAYTM') {
+    //                                     this.paytmEnabled = true;
+    //                                 }
+    //                                 if (gateway == 'RAZORPAY') {
+    //                                     this.razorpayEnabled = true;
+    //                                 }
+    //                             }
+    //                         }
+    //                     }
+    //                     else {
+    //                         this.razorpayEnabled = true;
+    //                     }
+    //                 }
+    //                 console.log("paymode" + this.paymentmodes.payGateways);
+
+
+    //             },
+
+    //         );
+    // }
     getPaymentModes() {
         this.paytmEnabled = false;
         this.razorpayEnabled = false;
         this.interNatioanalPaid = false;
-        this.shared_services.getPaymentModesofProvider(this.account_id, 'donation')
+        this.shared_services.getPaymentModesofProvider(this.account_id, this.sel_ser, 'prePayment')
             .subscribe(
                 data => {
-                    this.paymentmodes = data;
-                    if (this.paymentmodes[0].isJaldeeBank) {
-                        if (this.customer_countrycode == '+91') {
-                            this.paytmEnabled = true;
-                            this.interNatioanalPaid = true;
-                        }
-                        else {
-                            this.razorpayEnabled = true;
-                        }
-                    } else {
-                        if (this.customer_countrycode == '+91') {
-                            for (let modes of this.paymentmodes) {
-                                for (let gateway of modes.payGateways) {
-                                    if (gateway == 'PAYTM') {
-                                        this.paytmEnabled = true;
-                                    }
-                                    if (gateway == 'RAZORPAY') {
-                                        this.razorpayEnabled = true;
-                                    }
-                                }
-                            }
-                        }
-                        else {
-                            this.razorpayEnabled = true;
-                        }
+                    this.paymentmodes = data[0];
+                    this.isPayment = true;
+                    if (this.paymentmodes.indiaPay) {
+                        this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
                     }
-                    console.log("paymode" + this.paymentmodes.payGateways);
-
+                     if (this.paymentmodes.internationalPay) {
+                        this.non_indian_modes = this.paymentmodes.internationalBankInfo;
+ 
+                    }
+                    if(!this.paymentmodes.indiaPay && this.paymentmodes.internationalPay){
+                        this.shownonIndianModes=true;
+                    }else{
+                        this.shownonIndianModes=false;  
+                    }
 
                 },
+                error => {
+                    this.isPayment = false;
+                    console.log(this.isPayment);
+                }
+
 
             );
     }
+    indian_payment_mode_onchange(event) {
+        this.selected_payment_mode = event.value;
+        this.isInternatonal = false;
+
+
+
+    }
+    non_indian_modes_onchange(event) {
+        this.selected_payment_mode = event.value;
+        this.isInternatonal = true;
+
+
+
+    }
+    togglepaymentMode(){
+        this.shownonIndianModes=!this.shownonIndianModes;
+    }
+    
     createForm() {
         this.searchForm = this.fb.group({
             mobile_number: ['', Validators.compose([Validators.required, Validators.maxLength(10),
@@ -551,7 +606,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     // donateClicked() {
 
     // }
-    payuPayment() {
+    goToGateway(){
         this.isClickedOnce = true;
         this.resetApi();
         if (this.sel_ser) {
@@ -560,24 +615,36 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             this.snackbarService.openSnackBar('Donation service is not found', { 'panelClass': 'snackbarerror' });
             return;
         }
-        let paymentWay;
-        paymentWay = 'DC';
-        this.donate(paymentWay);
+        let paymenttype=this.selected_payment_mode;
+        this.donate(paymenttype);  
     }
-    paytmPayment() {
-        this.isClickedOnce = true;
-        this.resetApi();
-        if (this.sel_ser) {
+    // payuPayment() {
+    //     this.isClickedOnce = true;
+    //     this.resetApi();
+    //     if (this.sel_ser) {
 
-        } else {
-            this.isClickedOnce = false;
-            this.snackbarService.openSnackBar('Donation service is not found', { 'panelClass': 'snackbarerror' });
-            return;
-        }
-        let paymentWay;
-        paymentWay = 'PPI';
-        this.donate(paymentWay);
-    }
+    //     } else {
+    //         this.snackbarService.openSnackBar('Donation service is not found', { 'panelClass': 'snackbarerror' });
+    //         return;
+    //     }
+    //     let paymentWay;
+    //     paymentWay = 'DC';
+    //     this.donate(paymentWay);
+    // }
+    // paytmPayment() {
+    //     this.isClickedOnce = true;
+    //     this.resetApi();
+    //     if (this.sel_ser) {
+
+    //     } else {
+    //         this.isClickedOnce = false;
+    //         this.snackbarService.openSnackBar('Donation service is not found', { 'panelClass': 'snackbarerror' });
+    //         return;
+    //     }
+    //     let paymentWay;
+    //     paymentWay = 'PPI';
+    //     this.donate(paymentWay);
+    // }
     donate(paymentWay) {
         this.showEditView = false;
         const post_Data = {
@@ -640,7 +707,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 });
     }
     consumerPayment(uid, post_Data, paymentWay) {
-        const payInfo = {
+        const payInfo:any = {
             'amount': post_Data.donationAmount,
             'custId': this.customer_data.id,
             'paymentMode': paymentWay,
@@ -649,6 +716,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             'source': 'Desktop',
             'purpose': 'donation'
         };
+       payInfo.isInternational=this.isInternatonal;
         this.lStorageService.setitemonLocalStorage('uuid', uid);
         this.lStorageService.setitemonLocalStorage('acid', this.account_id);
         this.lStorageService.setitemonLocalStorage('p_src', 'c_d');
@@ -693,11 +761,13 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
+        this.razorModel.mode=this.selected_payment_mode;
         this.isClickedOnce = false;
         this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uid, null, this.account_id, null, null, this.customId);
     }
     payWithPayTM(pData: any, accountId: any) {
         this.loadingPaytm = true;
+        pData.paymentMode=this.selected_payment_mode;
         this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
     }
     transactionCompleted(response, payload, accountId) {
@@ -739,6 +809,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
 
 
         }
+    }
+    getImageSrc(mode){
+    
+        return '../../../../../assets/images/payment-modes/'+mode+'.png';
     }
     closeloading() {
         this.isClickedOnce = false;

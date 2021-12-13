@@ -307,7 +307,12 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url);
   }
   getPaymentSettings() {
-    const url = 'provider/payment/settings/';
+    //const url = 'provider/payment/settings/';
+    const url='provider/account/settings';
+    return this.servicemeta.httpGet(url);
+  }
+  getBankPaymentSettings(){
+    const url='provider/payment/settings/bankInfo';
     return this.servicemeta.httpGet(url);
   }
   setPaymentSettings(data) {
@@ -2277,6 +2282,18 @@ export class ProviderServices {
     const url = 'provider/settings/waitlistMgr/personsAhead/' +status;
     return this.servicemeta.httpPut(url);
   }
+  getPaymentProfiles(){
+    const url='provider/payment/paymentProfiles'
+    return this.servicemeta.httpGet(url);
+  }
+  // getPaymentGateWay(data) {
+  //   const url='consumer/payment'
+  //   return this.servicemeta.httpPost(url,data);  
+  // }
+  // getWalletPaymentGateWay(data){
+  //   const url='consumer/payment/wallet'
+  //   return this.servicemeta.httpPost(url,data);  
+  // }
     changestatustoComplete(idlist,status){
     const url = 'provider/appointment/multiStatusChange/' +status;
     return this.servicemeta.httpPut(url,idlist);

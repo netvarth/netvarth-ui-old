@@ -33,6 +33,7 @@ import { PaytmService } from '../../../../shared/services/paytm.service';
 import { JcCouponNoteComponent } from '../../../../shared/modules/jc-coupon-note/jc-coupon-note.component';
 
 
+
 @Component({
     selector: 'app-consumer-appointment',
     templateUrl: './consumer-appointment.component.html',
@@ -215,7 +216,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     @ViewChild('imagefile') fileInput: ElementRef;
     bookStep = 1;
     locationName;
-    waitlistDetails: { 'amount': number; 'paymentMode': any; 'uuid': any; 'accountId': any; 'purpose': string; };
+    waitlistDetails: any;
     pGateway: any;
     razorModel: Razorpaymodel;
     uuidList: any = [];
@@ -269,6 +270,12 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     changePrice: number;
     amountdifference: any;
     from: string;
+    isPayment: boolean;
+    indian_payment_modes: any=[];
+    non_indian_modes: any =[];
+    shownonIndianModes: boolean;
+    selected_payment_mode: any;
+    isInternatonal: boolean;
     editable: boolean = false;
     // serviceType: any;
     lngknown = 'yes';
@@ -1295,47 +1302,51 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
         );
     }
-    getPaymentModes() {
-        this.paytmEnabled = false;
-        this.razorpayEnabled = false;
-        this.interNatioanalPaid = false;
-        this.shared_services.getPaymentModesofProvider(this.account_id, 'prePayment')
-            .subscribe(
-                data => {
-                    this.paymentmodes = data;
-                    if (this.paymentmodes[0].isJaldeeBank) {
-
-                        if (this.customer_countrycode == '+91') {
-
-                            this.paytmEnabled = true;
-                            this.interNatioanalPaid = true;
-                        }
-                        else {
-
-                            this.razorpayEnabled = true;
-                        }
-                    }
-                    else {
-                        if (this.customer_countrycode == '+91') {
-                            for (let modes of this.paymentmodes) {
-                                for (let gateway of modes.payGateways) {
-                                    if (gateway == 'PAYTM') {
-                                        this.paytmEnabled = true;
-                                    }
-                                    if (gateway == 'RAZORPAY') {
-                                        this.razorpayEnabled = true;
-                                    }
-                                }
-                            }
-                        }
-                        else {
-                            this.razorpayEnabled = true;
-                        }
-                    }
-                },
-
-            );
+    getImageSrc(mode){
+    
+        return '../../../../../assets/images/payment-modes/'+mode+'.png';
     }
+    // getPaymentModes() {
+    //     this.paytmEnabled = false;
+    //     this.razorpayEnabled = false;
+    //     this.interNatioanalPaid = false;
+    //     this.shared_services.getPaymentModesofProvider(this.account_id,this.selectedService, 'prePayment')
+    //         .subscribe(
+    //             data => {
+    //                 this.paymentmodes = data;
+    //                 if (this.paymentmodes[0].isJaldeeBank) {
+
+    //                     if (this.customer_countrycode == '+91') {
+
+    //                         this.paytmEnabled = true;
+    //                         this.interNatioanalPaid = true;
+    //                     }
+    //                     else {
+
+    //                         this.razorpayEnabled = true;
+    //                     }
+    //                 }
+    //                 else {
+    //                     if (this.customer_countrycode == '+91') {
+    //                         for (let modes of this.paymentmodes) {
+    //                             for (let gateway of modes.payGateways) {
+    //                                 if (gateway == 'PAYTM') {
+    //                                     this.paytmEnabled = true;
+    //                                 }
+    //                                 if (gateway == 'RAZORPAY') {
+    //                                     this.razorpayEnabled = true;
+    //                                 }
+    //                             }
+    //                         }
+    //                     }
+    //                     else {
+    //                         this.razorpayEnabled = true;
+    //                     }
+    //                 }
+    //             },
+
+    //         );
+    // }
     getRescheduleApptDet() {
         this.subs.sink = this.shared_services.getAppointmentByConsumerUUID(this.rescheduleUserId, this.account_id).subscribe(
             (appt: any) => {
@@ -1957,7 +1968,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.apptdisable = false;
                 });
     }
-    addCheckInConsumer(post_Data, paymenttype?) {
+    addCheckInConsumer(post_Data, paymentmodetype?) {
+        let paymenttype=this.selected_payment_mode;
         this.subs.sink = this.shared_services.addCustomerAppointment(this.account_id, post_Data)
             .subscribe(data => {
                 const retData = data;
@@ -3054,14 +3066,14 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 });
     }
     payuPayment(paymenttype?) {
-        let paymentWay;
-        if (paymenttype == 'paytm') {
-            paymentWay = 'PPI';
-        } else {
-            paymentWay = 'DC';
-        }
+        // let paymentWay;
+        // if (paymenttype == 'paytm') {
+        //     paymentWay = 'PPI';
+        // } else {
+        //     paymentWay = 'DC';
+        // }
 
-        this.makeFailedPayment(paymentWay);
+        this.makeFailedPayment(paymenttype);
     }
     makeFailedPayment(paymentMode) {
         this.waitlistDetails = {
@@ -3071,7 +3083,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             'accountId': this.account_id,
             'purpose': 'prePayment'
         };
+        
         this.waitlistDetails.paymentMode = paymentMode;
+        this.waitlistDetails.serviceId = this.sel_ser;
+        this.waitlistDetails.isInternational=this.isInternatonal;
         this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
         this.lStorageService.setitemonLocalStorage('acid', this.account_id);
         this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
@@ -3102,7 +3117,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     });
         }
         else if (this.remainingadvanceamount > 0 && this.checkJcash) {
-            const postData = {
+            const postData:any = {
                 'amountToPay': this.paymentDetails.amountRequiredNow,
                 'accountId': this.account_id,
                 'uuid': this.trackUuid,
@@ -3113,20 +3128,23 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 'isPayTmPayment': false,
                 'paymentMode': null
             };
-            if (paymentMode == 'PPI') {
-                postData.isPayTmPayment = true;
-                postData.isRazorPayPayment = false;
-                postData.paymentMode = "PPI";
-            } else {
-                postData.isPayTmPayment = false;
-                postData.isRazorPayPayment = true;
-                postData.paymentMode = "DC";
-            }
+            // if (paymentMode == 'PPI') {
+            //     postData.isPayTmPayment = true;
+            //     postData.isRazorPayPayment = false;
+            //     postData.paymentMode = "PPI";
+            // } else {
+            //     postData.isPayTmPayment = false;
+            //     postData.isRazorPayPayment = true;
+            //     postData.paymentMode = "DC";
+            // }
+            postData.paymentMode=paymentMode;
+            postData.isInternational=this.isInternatonal;
+            postData.serviceId=this.sel_ser;
             this.shared_services.PayByJaldeewallet(postData)
                 .subscribe((pData: any) => {
 
                     if (pData.isGateWayPaymentNeeded == true && pData.isJCashPaymentSucess == true) {
-                        if (paymentMode == 'PPI') {
+                        if (pData.paymentGateway == 'PAYTM') {
                             this.payWithPayTM(pData.response,this.account_id);
                         } else {
                             this.paywithRazorpay(pData.response);
@@ -3182,11 +3200,13 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
+        this.razorModel.mode=this.selected_payment_mode;
         this.isClickedOnce = false;
         this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'appt_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList, this.customId,this.from);
     }
     payWithPayTM(pData: any,accountId:any) {
         this.loadingPaytm = true;
+        pData.paymentMode=this.selected_payment_mode;
         this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
     }
     getImage(url, file) {
@@ -3547,5 +3567,53 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.readMore = !this.readMore;
     }
     log() {
+    }
+    getPaymentModes() {
+        this.paytmEnabled = false;
+        this.razorpayEnabled = false;
+        this.interNatioanalPaid = false;
+        this.shared_services.getPaymentModesofProvider(this.account_id, this.selectedService, 'prePayment')
+            .subscribe(
+                data => {
+                    this.paymentmodes = data[0];
+                    this.isPayment = true;
+                    if (this.paymentmodes.indiaPay) {
+                        this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
+                    }
+                     if (this.paymentmodes.internationalPay) {
+                        this.non_indian_modes = this.paymentmodes.internationalBankInfo;
+ 
+                    }
+                    if(!this.paymentmodes.indiaPay && this.paymentmodes.internationalPay){
+                        this.shownonIndianModes=true;
+                    }else{
+                        this.shownonIndianModes=false;  
+                    }
+
+                },
+                error => {
+                    this.isPayment = false;
+                    console.log(this.isPayment);
+                }
+
+
+            );
+    }
+    indian_payment_mode_onchange(event) {
+        this.selected_payment_mode = event.value;
+        this.isInternatonal = false;
+
+
+
+    }
+    non_indian_modes_onchange(event) {
+        this.selected_payment_mode = event.value;
+        this.isInternatonal = true;
+
+
+
+    }
+    togglepaymentMode(){
+        this.shownonIndianModes=!this.shownonIndianModes;
     }
 }

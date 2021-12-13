@@ -17,14 +17,62 @@
                                 <div style="padding-bottom: 10px; font-size: large;">Amount to pay : <b
                                         class="rupee-font">{{prepayAmount| currency:'&#8377;'}}</b></div>
                                 <div style="padding-bottom: 10px; font-size: large;">Payment Option
-                                    <!-- <div>
-                                        <p class="settings_info" style="display: inline;">Choose your payment options
-                                            from here</p>
-                                    </div> -->
+                                 
+                                    <ng-container *ngIf="!shownonIndianModes">
+                                        <div *ngFor="let modes of indian_payment_modes">
+                                            <div class="col-xs-12  col-sm-6 col-lg-3  ">
+
+                                                    <div class="paymentmode card text-primary" >
+                                                          
+                                                      <mat-radio-group name="paymentMode" (change)="indian_payment_mode_onchange($event)" labelPosition="before">
+                                                        <mat-radio-button style="float:right" [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
+
+                                        
+                                                      </mat-radio-group>
+                                                      <img class="ordericon pickup" height="50px" width="100px" [src]="getImageSrc(modes.mode)">
+                                                      
+                                                    </div>
+                                                    </div>
+
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="shownonIndianModes">
+                                    
+                                    <div *ngFor="let modes of non_indian_modes">
+                                        <div class="col-xs-12  col-sm-6 col-lg-3  ">
+
+                                                <div class="paymentmode card text-primary" >
+                                                      
+                                                  <mat-radio-group name="paymentMode" (change)="non_indian_modes_onchange($event)">
+                                                    <mat-radio-button [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
+                                                  
+                                                  </mat-radio-group>
+                                                  <img class="ordericon pickup" height="50px" width="100px" [src]="getImageSrc(modes.mode)">
+                                    
+                                                </div>
+                                                </div>
+
+                                </div>
+                            </ng-container>
+                                <div class="clearfix"></div>
+                                <div class="txt-align-center pad_link"
+                                    >
+                                    <span [class.disabled]="isClickedOnce"
+                                        (click)="togglepaymentMode()"
+                                        class="pointer-cursor"><a
+                                            class="refund_policy">
+                                            <span *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non Indian Payment ? Click
+                                            here</span>
+                                            <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
+                                                here</span>
+                                        </a></span>
+
+
+                                </div>
                                 </div>
                                 <div class="cc-dc-nb-change">
                                     <!-- <button class="cs-btn bt1" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()">CC/DC/Net Banking/UPI</button> -->
-                                    <button class="cs-btn bt1" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && paytmPayment()">CC/DC/UPI</button>
+                                    <button class="cs-btn bt1" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && makeFailedPayment()">Make payment</button>
                                     <!-- <button class="cs-btn bt1" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()">CC/DC/Net Banking/UPI</button> -->
                                     <!-- <button class="cs-btn bt1" (click)="paytmPayment()">Paytm</button> -->
                                 </div>

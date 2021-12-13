@@ -63,7 +63,7 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
   ngOnInit() {
   }
   getPaymentModes() {
-    this.shared_services.getPaymentModesofProvider(this.checkin.provider.id)
+    this.shared_services.getPaymentModesofProvider(this.checkin.provider.id,this.checkin.service.id)
       .subscribe(
         data => {
           this.payment_options = data;

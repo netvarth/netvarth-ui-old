@@ -141,6 +141,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     ngOnInit() {
         this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.getBankSettings();
         this.getLicensemetrics();
         this.domain = user.sector;
         this.resetApi();
@@ -165,6 +166,18 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/payments->payment-settings']);
         }
+    }
+    getBankSettings(){
+        this.provider_services.getPaymentSettings()
+        .subscribe((data:any) =>{
+            if(data.isJaldeeBank){
+                this.optJaldeeAccount='enable';
+
+            }else{
+                this.optJaldeeAccount='disable';
+            }
+            
+        })
     }
 
     /**
@@ -227,64 +240,66 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.initPaymentSettings(this.paySettings, 1, paymenttype);
     }
     initPaymentSettings(paySettings, type, mode?) {
-        if (mode !== undefined) {
-            if (mode === 'paytm') {
-                this.paystatus = paySettings.onlinePayment || false;
-                this.paytmmobile = paySettings.payTmLinkedPhoneNumber || '';
-                this.paytmMerchantKey = paySettings.paytmMerchantKey || '';
-                this.paytmWebsiteWeb = paySettings.paytmWebsiteWeb || '';
-                this.paytmWebsiteApp = paySettings.paytmWebsiteApp || '';
-                this.paytmIndustryType = paySettings.paytmIndustryType || '';
-                this.paytmMerchantId = paySettings.paytmMerchantId || '';
-            } else {
-                this.paystatus = paySettings.onlinePayment || false;
-                this.pannumber = paySettings.panCardNumber || '';
-                this.panname = paySettings.nameOnPanCard || '';
-                this.bankacname = paySettings.accountHolderName || '';
-                this.bankacnumber = paySettings.bankAccountNumber || '';
-                this.bankname = paySettings.bankName || '';
-                this.bankifsc = paySettings.ifscCode || '';
-                this.bankbranch = paySettings.branchCity || '';
-                this.bankfiling = paySettings.businessFilingStatus || '';
-                this.bankactype = paySettings.accountType || '';
-            }
-        } else {
-            this.paystatus = paySettings.onlinePayment || false;
-            this.paytmmobile = paySettings.payTmLinkedPhoneNumber || '';
-            this.paytmMerchantKey = paySettings.paytmMerchantKey || '';
-            this.paytmWebsiteWeb = paySettings.paytmWebsiteWeb || '';
-            this.paytmWebsiteApp = paySettings.paytmWebsiteApp || '';
-            this.paytmIndustryType = paySettings.paytmIndustryType || '';
-            this.paytmMerchantId = paySettings.paytmMerchantId || '';
-            this.pannumber = paySettings.panCardNumber || '';
-            this.panname = paySettings.nameOnPanCard || '';
-            this.bankacname = paySettings.accountHolderName || '';
-            this.bankacnumber = paySettings.bankAccountNumber || '';
-            this.bankname = paySettings.bankName || '';
-            this.bankifsc = paySettings.ifscCode || '';
-            this.bankbranch = paySettings.branchCity || '';
-            this.bankfiling = paySettings.businessFilingStatus || '';
-            this.bankactype = paySettings.accountType || '';
-            this.paytmverified = paySettings.payTmVerified || false;
-            this.payuverified = paySettings.payUVerified || false;
-            this.razorpayVerified = paySettings.razorpayVerified || false;
+        console.log('payment settings'+JSON.stringify(paySettings));
+        // if (mode !== undefined) {
+        //     if (mode === 'paytm') {
+        //         this.paystatus = paySettings.onlinePayment || false;
+        //         this.paytmmobile = paySettings.payTmLinkedPhoneNumber || '';
+        //         this.paytmMerchantKey = paySettings.paytmMerchantKey || '';
+        //         this.paytmWebsiteWeb = paySettings.paytmWebsiteWeb || '';
+        //         this.paytmWebsiteApp = paySettings.paytmWebsiteApp || '';
+        //         this.paytmIndustryType = paySettings.paytmIndustryType || '';
+        //         this.paytmMerchantId = paySettings.paytmMerchantId || '';
+        //     } else {
+        //         this.paystatus = paySettings.onlinePayment || false;
+        //         this.pannumber = paySettings.panCardNumber || '';
+        //         this.panname = paySettings.nameOnPanCard || '';
+        //         this.bankacname = paySettings.accountHolderName || '';
+        //         this.bankacnumber = paySettings.bankAccountNumber || '';
+        //         this.bankname = paySettings.bankName || '';
+        //         this.bankifsc = paySettings.ifscCode || '';
+        //         this.bankbranch = paySettings.branchCity || '';
+        //         this.bankfiling = paySettings.businessFilingStatus || '';
+        //         this.bankactype = paySettings.accountType || '';
+        //     }
+        // } else {
+        //     this.paystatus = paySettings.onlinePayment || false;
+        //     this.paytmmobile = paySettings.payTmLinkedPhoneNumber || '';
+        //     this.paytmMerchantKey = paySettings.paytmMerchantKey || '';
+        //     this.paytmWebsiteWeb = paySettings.paytmWebsiteWeb || '';
+        //     this.paytmWebsiteApp = paySettings.paytmWebsiteApp || '';
+        //     this.paytmIndustryType = paySettings.paytmIndustryType || '';
+        //     this.paytmMerchantId = paySettings.paytmMerchantId || '';
+        //     this.pannumber = paySettings.panCardNumber || '';
+        //     this.panname = paySettings.nameOnPanCard || '';
+        //     this.bankacname = paySettings.accountHolderName || '';
+        //     this.bankacnumber = paySettings.bankAccountNumber || '';
+        //     this.bankname = paySettings.bankName || '';
+        //     this.bankifsc = paySettings.ifscCode || '';
+        //     this.bankbranch = paySettings.branchCity || '';
+        //     this.bankfiling = paySettings.businessFilingStatus || '';
+        //     this.bankactype = paySettings.accountType || '';
+        //     this.paytmverified = paySettings.payTmVerified || false;
+        //     this.payuverified = paySettings.payUVerified || false;
+        //     this.razorpayVerified = paySettings.razorpayVerified || false;
 
-            if (type === 0) {
-                this.paytmenabled = paySettings.payTm || false;
-                this.ccenabled = paySettings.dcOrCcOrNb || false;
-                this.isJaldeeAccount = paySettings.isJaldeeAccount;
-                this.optJaldeeAccount = (this.isJaldeeAccount) ? 'enable' : 'disable';
-            }
-        }
+        //     if (type === 0) {
+        //         this.paytmenabled = paySettings.payTm || false;
+        //         this.ccenabled = paySettings.dcOrCcOrNb || false;
+        //         this.isJaldeeAccount = paySettings.isJaldeeAccount;
+        //         this.optJaldeeAccount = (this.isJaldeeAccount) ? 'enable' : 'disable';
+        //     }
+        // }
     }
     /**
      * Get Payment Settings
      * @param showmsg for handling success messgaes
      */
     getPaymentSettings(showmsg) {
-        this.provider_services.getPaymentSettings()
+        this.provider_services.getBankPaymentSettings()
             .subscribe(data => {
                 this.paySettings = data;
+          
                 this.initPaymentSettings(this.paySettings, 0);
             });
         if (showmsg === 1) {

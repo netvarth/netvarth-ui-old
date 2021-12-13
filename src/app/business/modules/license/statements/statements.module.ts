@@ -4,6 +4,7 @@ import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.m
 import { LoadingSpinnerModule } from "../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { StatementsComponent } from "./statements.component";
 import { RouterModule, Routes } from "@angular/router";
+import { MatRadioModule } from "@angular/material/radio";
 const routes: Routes = [
     {path: '', component: StatementsComponent}
 ]
@@ -14,6 +15,7 @@ const routes: Routes = [
         CommonModule,
         LoadingSpinnerModule,
         CapitalizeFirstPipeModule,
+        MatRadioModule,
         [RouterModule.forChild(routes)]
     ]
 })

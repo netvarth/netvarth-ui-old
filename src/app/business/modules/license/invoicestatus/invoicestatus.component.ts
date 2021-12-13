@@ -15,7 +15,7 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
 export class InvoiceStatusComponent {
   tooltipcls = '';
   api_loading;
-  statusDetail: any;
+  statusDetail: any=[];
   invoice_status = [];
   temp3;
   selected = 0;

@@ -129,6 +129,13 @@ export class PaymentLinkComponent implements OnInit {
   @ViewChild('consumer_paylink') paytmview;
   razorpayEnabled = false;
   interNatioanalPaid = false;
+  serviceId: any;
+  shownonIndianModes: boolean;
+  isInternatonal: boolean;
+  selected_payment_mode: any;
+  isPayment: boolean;
+  indian_payment_modes: any=[]
+  non_indian_modes: any=[];
   constructor(
     public provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
@@ -174,7 +181,9 @@ export class PaymentLinkComponent implements OnInit {
             this.uuid = this.bill_data.uuid;
             this.accountId = this.bill_data.accountId;
             this.countryCode = this.bill_data.billFor.countryCode;
-
+            this.serviceId=this.bill_data.service[0].serviceId;
+           
+         
           }
           if (this.bill_data && this.bill_data.accountId === 0) {
             this.razorpayEnabled = true;
@@ -221,15 +230,31 @@ export class PaymentLinkComponent implements OnInit {
       );
   }
   getPaymentModes() {
-    this.paytmEnabled = false;
-    this.razorpayEnabled = false;
-    this.interNatioanalPaid = false;
-    this.sharedServices.getPaymentModesofProvider(this.accountId, 'billPayment')
+    
+    this.serviceId=0;
+    this.sharedServices.getPaymentModesofProvider(this.accountId,this.serviceId, 'billPayment')
       .subscribe(
         data => {
-          this.paymentmodes = data;
-          this.razorpayEnabled = true;
-        },
+          this.paymentmodes = data[0];
+          this.isPayment = true;
+          if (this.paymentmodes.indiaPay) {
+              this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
+          }
+           if (this.paymentmodes.internationalPay) {
+              this.non_indian_modes = this.paymentmodes.internationalBankInfo;
+
+          }
+          if(!this.paymentmodes.indiaPay && this.paymentmodes.internationalPay){
+              this.shownonIndianModes=true;
+          }else{
+              this.shownonIndianModes=false;  
+          }
+
+      },
+      error => {
+          this.isPayment = false;
+          console.log(this.isPayment);
+      }
 
       );
   }
@@ -282,20 +307,30 @@ export class PaymentLinkComponent implements OnInit {
       this.showBillNotes = false;
     }
   }
-  pay(paytype?) {
+  indian_payment_mode_onchange(event) {
+    this.selected_payment_mode = event.value;
+    this.isInternatonal = false;
+}
+non_indian_modes_onchange(event) {
+    this.selected_payment_mode = event.value;
+    this.isInternatonal = true;
+
+}
+togglepaymentMode(){
+    this.shownonIndianModes=!this.shownonIndianModes;
+}
+  goToGateway(paytype?) {
     this.isClickedOnce = true;
-    let paymentWay;
-    if (paytype == 'paytm') {
-      paymentWay = 'PPI';
-    } else {
-      paymentWay = 'DC';
-    }
+  
     const postdata = {
       'uuid': this.genid,
       'amount': this.amountDue,
       'purpose': 'billPayment',
       'source': 'Desktop',
-      'paymentMode': paymentWay
+      'accountId':this.accountId,
+      'paymentMode': this.selected_payment_mode,
+      'isInternational':this.isInternatonal,
+      'serviceId':0
     };
 
     this.provider_services.linkPayment(postdata)
@@ -325,6 +360,7 @@ export class PaymentLinkComponent implements OnInit {
     this.razorModel.order_id = data.orderId;
     this.razorModel.name = data.providerName;
     this.razorModel.description = data.description;
+    this.razorModel.mode=this.selected_payment_mode;
     this.isClickedOnce = false;
     this.razorpayService.payBillWithoutCredentials(this.razorModel).then(
       (response: any) => {
@@ -342,6 +378,7 @@ export class PaymentLinkComponent implements OnInit {
   payWithPayTM(pData: any, accountId: any) {
     this.isClickedOnce = true;
     this.loadingPaytm = true;
+    pData.paymentMode=this.selected_payment_mode;
     this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
   }
   transactionCompleted(response, payload, accountId) {
