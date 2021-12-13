@@ -5,13 +5,15 @@
       {{heading}}
     </h5>
   </div>
-  <div class="card title-gb">
+  <div class="card title-gb mgn-up-20 mgn-rt-10 mgn-lt-5">
     <div class="no-dta">
       <h5> Create your own signature </h5>
       <div *ngIf="!small_device_display" class="digitalsignature-pad">
+ 
         <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()"></signature-pad>
       </div>
       <div *ngIf="small_device_display" class="digitalsignature-pad">
+  
         <signature-pad [options]="smallsignaturePadOptions" (onBeginEvent)="drawStart()"></signature-pad>
       </div>
       <div>

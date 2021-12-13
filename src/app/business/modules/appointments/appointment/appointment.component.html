@@ -442,30 +442,30 @@
                             *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
                             <a class="attachment pointer-cursor" (click)="toggleAttachment()">Uploaded Files</a>
                         </div>
-                        <ng-container class="attachment"
-                            *ngIf="selectedMessage.files && selectedMessage.files.length > 0 && attachments">
 
-                            <div class="row col-md-12" style="display: flex;"
-                                *ngFor="let item of selectedMessage.files; let i = index">
-                                <div class="col-md-7">
-                                    <span class="ln-hgt-40">{{item.name}}</span>
-                                </div>
-                                <div class="col-md-5">
-                                    <span class="mbt" style="top:0">
-                                        <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                                            <mat-icon>more_vert</mat-icon>
-                                        </button>
-                                        <mat-menu #menu="matMenu">
-                                            <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
-                                                <i class="icon-delete"></i>
-                                                <span>delete</span>
-                                            </button>
-                                        </mat-menu>
-                                    </span>
+                        <div class="mgn-up-5 mgn-lt-25" *ngIf="selectedMessage.files && selectedMessage.files.length > 0 && attachments">
+                            <div  class="row"  *ngFor="let item of selectedMessage.files; let i = index">
+                            
+                                <div   style="display: flex;align-items: center;justify-content:space-between;width: 100%;">
+                                    <div>
+                                       {{item.name}}
+                                     </div>
+                                     <div>
+                                          <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                    <mat-icon>more_vert</mat-icon>
+                                               </button>
+                                               <mat-menu #menu="matMenu">
+                                                     <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
+                                                           <i class="icon-delete"></i>
+                                                              <span>delete</span>
+                                                       </button>
+                                                </mat-menu>
+                                     </div>
+                            
                                 </div>
                             </div>
 
-                        </ng-container>
+                        </div>
                         <div class="col-md-12 btborder1 mgn-bt-20">&nbsp;</div>
 
                         <ng-container *ngIf="checkinLabel && queuejson.length > 0  && servicesjson.length > 0">

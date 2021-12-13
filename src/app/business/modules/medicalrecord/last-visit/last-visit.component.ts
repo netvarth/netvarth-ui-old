@@ -54,7 +54,7 @@ export class LastVisitComponent implements OnInit {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
     if (this.accountType !== 'BRANCH') {
-      this.lastVisit_displayedColumns = ['consultationDate', 'serviceName', 'mr', 'rx'];
+      this.lastVisit_displayedColumns = ['consultationDate', 'serviceName',  'mr', 'rx'];
     }
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     // tslint:disable-next-line: no-shadowed-variable
