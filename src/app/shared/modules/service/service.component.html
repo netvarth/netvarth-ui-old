@@ -522,8 +522,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
           <div class=" payment_profile card" >
             <mat-radio-group formControlName="paymentProfileId" name="paymentprofile">
               <mat-radio-button [value]="profile.profileId"  >{{profile.displayName}}  </mat-radio-button>
-              <ng-container *ngIf="profile.indiaPay">
-                <div class="col-md-6">
+              <ng-container >
+                <div class="col-md-6"  *ngIf="profile.internationalPay">
                   <strong style="color:blue">RAZORPAY</strong>
                   <ng-container *ngFor="let modes of getRazorModes(profile.indianPaymodes)">
                     <div>
@@ -532,7 +532,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     </div>
                   </ng-container>
                 </div>
-                <div   class="col-md-6" style="float:left">
+                <div   class="col-md-6" style="float:left" *ngIf="profile.indiaPay">
                   <strong style="color:blue">PAYTM</strong>
                   <ng-container *ngFor="let modes of getpaytmmodes(profile.indianPaymodes)">
                     <div>
