@@ -200,6 +200,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
              console.log('payment profile'+JSON.stringify(data));
                this.paymentProfiles=data;
                console.log(this.paymentProfiles);
+            }
+            , error=>{
+                this.paymentProfiles=[];
             });
         this.serviceSubscription = this.servicesService.initService.subscribe(
             (serviceParams: any) => {
@@ -236,7 +239,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                 if (this.service_data.serviceType === 'virtualService') {
                                     this.is_virtual_serv = true;
                                 }
+                                if(this.paymentProfiles.length!==0){
                                 this.serviceForm.get('paymentProfileId').setValue('spDefaultBillProfile');
+                                }
                                 this.showServiceduration = this.service_data.serviceDurationEnabled;
                                 this.preInfoEnabled = this.service_data.preInfoEnabled;
                                 this.postInfoEnabled = this.service_data.postInfoEnabled;
@@ -754,8 +759,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     livetrack: [false],
                     paymentProfileId:[]
                 });
+                if(this.paymentProfiles.length>0){
                 this.serviceForm.get('paymentProfileId').setValue('spDefaultBillProfile');
-                this.serviceForm.controls['paymentProfileId'].setValue('spDefaultBillProfile');
+                }
             } else {
                 this.serviceForm = this.fb.group({
                     name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
@@ -778,14 +784,17 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 });
                 this.serviceForm.get('resoucesRequired').setValue('1');
                 this.serviceForm.get('maxBookingsAllowed').setValue('1');
-                this.serviceForm.get('paymentProfileId').setValue('spDefaultBillProfile');
+                if(this.paymentProfiles.length!==0){
+                    this.serviceForm.get('paymentProfileId').setValue('spDefaultBillProfile');
+                    }
                 if (this.action === 'add') {
                     this.serviceForm.get('serviceType').setValue('physicalService');
                 }
             }
         } else {
+            if(this.paymentProfiles.length!==0){
             this.serviceForm.controls['paymentProfileId'].setValue('spDefaultBillProfile');
-     
+            }
             if (this.is_donation === true) {
                 this.serviceForm = this.fb.group({
                     name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],

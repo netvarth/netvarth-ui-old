@@ -56,6 +56,17 @@ export class RazorpayService {
   payBillWithoutCredentials(razorModel) {
     const self = this;
     razorModel.retry = false;
+    let selectedmode=razorModel.mode;
+    if(selectedmode==='DC'||selectedmode==='CC'){
+      selectedmode='CARD';
+    }
+    
+      const hiddenObject = this.paymentModes.filter((mode) => mode.method !== selectedmode.toLowerCase());
+      razorModel.config = {
+        display: {
+          hide: hiddenObject
+      }
+    }
     return new Promise(function (resolve) {
       const options = razorModel;
       options.handler = ((response, error) => {
