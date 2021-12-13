@@ -239,11 +239,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     paymentmodes: any;
     customer_countrycode: any;
     from: string;
-    serviceType: any;
+    // serviceType: any;
     editable: boolean = false;
-
-
-
     lngknown = 'yes';
     virtualForm: FormGroup;
     details: any;
@@ -1397,7 +1394,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     getBookStep() {
         let step: any = '';
-        if (this.serviceType === 'virtualService') {
+        if (this.tele_srv_stat === 'true') {
             step = 3;
             if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                 step = 4;
@@ -2974,7 +2971,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     goBack(type?) {
         if (type) {
-            if (this.bookStep === 1 && this.serviceType !== 'virtualService' || this.bookStep === 0) {
+            if ((this.tele_srv_stat !== 'true' && this.bookStep === 1) || (this.tele_srv_stat === 'true' && this.bookStep === 0)) {
                 this.location.back();
             } else {
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
@@ -3155,7 +3152,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
         this.virtualInfo = this.virtualForm.value;
         if (type === 'next') {
-            if (this.serviceType === 'virtualService' && this.bookStep == 0) {
+            if (this.tele_srv_stat === 'true' && this.bookStep == 0) {
                 if (this.validateFields() === true) {
                     this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
                 } else if (this.virtualInfo.countryCode_whtsap.trim().length === 0 && this.virtualInfo.whatsappnumber.trim().length > 0) {
@@ -3187,7 +3184,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
 
         } else if (type === 'prev') {
-            if (this.serviceType === 'virtualService' && this.bookStep == 1) {
+            if (this.tele_srv_stat === 'true' && this.bookStep == 1) {
                 this.bookStep--;
             } else {
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {

@@ -28,7 +28,7 @@
                                             <!-- <div >  -->
                                             <div class="wizard-steps p-8 p-lg-10">
                                                 <div class="wizard-step tab-selected wizard-mgn-30"
-                                                    data-wizard-type="step" *ngIf="serviceType === 'virtualService'">
+                                                    data-wizard-type="step" *ngIf="tele_srv_stat === 'true'">
                                                     <div class="wizard-label">
                                                         <div class="step-icon">1</div>
                                                         <h3 class="wizard-title mgn-lt-15 no-margin no-padding">Personal Information</h3>
@@ -55,8 +55,7 @@
                                                 <div class="wizard-step tab-selected wizard-mgn-30"
                                                     data-wizard-type="step" [class.tab-selected]="bookStep>=1">
                                                     <div class="wizard-label">
-                                                        <div class="step-icon"> {{serviceType ===
-                                                            'virtualService'?'2':'1'}}</div>
+                                                        <div class="step-icon"> {{tele_srv_stat === 'true'?'2':'1'}}</div>
                                                         <h3 class="wizard-title mgn-lt-15">Booking Window</h3>
                                                     </div>
                                                     <span class="svg-icon svg-icon-xl wizard-arrow">
@@ -81,8 +80,7 @@
                                                     data-wizard-type="step" [class.tab-selected]="bookStep>=2"
                                                     *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">
                                                     <div class="wizard-label">
-                                                        <div class="step-icon">{{serviceType ===
-                                                            'virtualService'?'3':'2'}}</div>
+                                                        <div class="step-icon">{{tele_srv_stat === 'true'?'3':'2'}}</div>
                                                         <h3 class="wizard-title mgn-lt-15">More Info</h3>
                                                     </div>
                                                     <span class="svg-icon svg-icon-xl wizard-arrow">
@@ -1239,7 +1237,7 @@
                                             </div>
                                             <div *ngIf="type != 'waitlistreschedule'"
                                                 class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container">
-                                                <button type="button" *ngIf="serviceType==='virtualService'"
+                                                <button type="button" *ngIf="tele_srv_stat === 'true'"
                                                     class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
                                                     (click)="goToStep('prev')">
                                                     Go Back
@@ -1269,7 +1267,7 @@
                                             </div> -->
                                             <div *ngIf="type != 'reschedule' && sel_ser_det.isPrePayment && questionnaireList.labels && questionnaireList.labels.length > 0"
                                                 class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 mgn-lt-10">
-                                                   <button type="button" *ngIf="serviceType==='virtualService'"
+                                                   <button type="button" *ngIf="tele_srv_stat === 'true'"
                                                     class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
                                                     (click)="goToStep('prev')">
                                                     Go Back
@@ -1284,7 +1282,7 @@
                                             </div>
                                             <div *ngIf="type != 'reschedule' && sel_ser_det.isPrePayment && !questionnaireList.labels"
                                                 class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 mgn-lt-10">
-                                                  <button type="button" *ngIf="serviceType==='virtualService'"
+                                                  <button type="button" *ngIf="tele_srv_stat === 'true'"
                                                     class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
                                                     (click)="goToStep('prev')">
                                                     Go Back

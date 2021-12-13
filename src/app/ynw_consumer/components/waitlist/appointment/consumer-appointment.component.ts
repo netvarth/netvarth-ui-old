@@ -269,14 +269,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     changePrice: number;
     amountdifference: any;
     from: string;
-
-
-
     editable: boolean = false;
-
-
-    serviceType: any;
-
+    // serviceType: any;
     lngknown = 'yes';
     virtualForm: FormGroup;
     details: any;
@@ -434,7 +428,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
     getBookStep() {
         let step: any = '';
-        if (this.serviceType === 'virtualService') {
+        // if (this.serviceType === 'virtualService') {
+        if (this.tele_srv_stat === 'true') {            
             step = 3;
             if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                 step = 4;
@@ -2716,7 +2711,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
     goBack(type?) {
         if (type) {
-            if (this.bookStep === 1 && this.serviceType !== 'virtualService' || this.bookStep === 0) {
+            if (this.bookStep === 1 && this.tele_srv_stat === 'true' || this.bookStep === 0) {
                 this.location.back();
             } else {
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
@@ -2993,12 +2988,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.showmoreSpec = true;
         }
     }
-
-
     goToStep(type) {
         this.virtualInfo = this.virtualForm.value;
         if (type === 'next') {
-            if (this.serviceType === 'virtualService' && this.bookStep == 0) {
+            if (this.tele_srv_stat === 'true' && this.bookStep == 0) {
                 if (this.validateFields() === true) {
                     this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
                 } else if (this.virtualInfo.countryCode_whtsap.trim().length === 0 && this.virtualInfo.whatsappnumber.trim().length > 0) {
@@ -3007,11 +3000,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.snackbarService.openSnackBar('Please fill telegram countrycode', { 'panelClass': 'snackbarerror' });
                 } else {
                     this.onSubmit(this.virtualInfo);
-
                 }
-            }
-
-            else if (!this.apptdisable && this.freeSlots.length > 0 && !this.api_loading1) {
+            } else if (!this.apptdisable && this.freeSlots.length > 0 && !this.api_loading1) {
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     if (this.bookStep === 2) {
                         this.validateQuestionnaire();
@@ -3028,7 +3018,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
         } else if (type === 'prev') {
 
-            if (this.serviceType === 'virtualService' && this.bookStep == 1) {
+            if (this.tele_srv_stat === 'true' && this.bookStep == 1) {
                 this.bookStep--;
             }
         } else {
