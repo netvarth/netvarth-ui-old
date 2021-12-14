@@ -244,58 +244,7 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <div class="clearfix"></div>
-                                <ng-container *ngIf="!shownonIndianModes ">
-                                        <div *ngFor="let modes of indian_payment_modes">
-                                                <div class="col-xs-12  col-sm-6 col-lg-3  ">
-
-                                                        <div class="paymentmode card text-primary" >
-                                                              
-                                                          <mat-radio-group name="paymentMode" (change)="indian_payment_mode_onchange($event)" labelPosition="before">
-                                                            <mat-radio-button style="float:right" [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
-
-                                            
-                                                          </mat-radio-group>
-                                                          <img class="ordericon pickup" height="50px" width="100px" [src]="getImageSrc(modes.mode)">
-                                                          
-                                                        </div>
-                                                        </div>
-                                        </div>
-                        </ng-container>
-                        <ng-container *ngIf="shownonIndianModes ">
-                            
-                                <div *ngFor="let modes of non_indian_modes">
-                                        <div class="col-xs-12  col-sm-6 col-lg-3  ">
-
-                                                <div class="paymentmode card text-primary" >
-                                                      
-                                                  <mat-radio-group name="paymentMode" (change)="non_indian_modes_onchange($event)">
-                                                    <mat-radio-button [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
-                                                  
-                                                  </mat-radio-group>
-                                                  <img class="ordericon pickup"  height="50px" width="100px" [src]="getImageSrc(modes.mode)">
-                                    
-                                                </div>
-                                                </div>
-
-                                </div>
-                    </ng-container>
-                    <br><br>
-
-                    <div class="txt-align-center pad_link"
-                    >
-                    <span [class.disabled]="isClickedOnce"
-                        (click)="togglepaymentMode()"
-                        class="pointer-cursor"><a
-                            class="refund_policy">
-                            <span *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non Indian Payment ? Click
-                            here</span>
-                            <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
-                                here</span>
-                        </a></span>
-
-
-                </div>
+                   
                                 <div *ngIf="source !== 'payment-history'">
                                     <button type="button" class="btn btn-primary font-weight-bold mk-pay"
                                         (click)="makePayment()" style="font-size: 1.1rem;">Make Payment</button>

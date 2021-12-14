@@ -366,9 +366,21 @@ togglepaymentMode(){
       (response: any) => {
         if (response !== 'failure') {
           this.paidStatus = 'true';
+
           this.order_id = response.razorpay_order_id;
           this.payment_id = response.razorpay_payment_id;
           // this.razorpay_signature = response.razorpay_signature;
+          const razorpay_payload={
+        
+            "paymentId":response.razorpay_payment_id,
+            "orderId":response.razorpay_order_id,
+            "signature":response.razorpay_signature
+          
+        };
+        this.razorpayService.updateRazorPay(razorpay_payload,this.accountId,'consumer').then((data)=>{
+          console.log('successs');
+
+          });
         } else {
           this.paidStatus = 'false';
         }

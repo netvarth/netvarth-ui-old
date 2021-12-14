@@ -16,11 +16,11 @@
                             <div *ngIf="paidStatus == 'false'">
                                 <div style="padding-bottom: 10px; font-size: large;">Amount to pay : <b
                                         class="rupee-font">{{prepayAmount| currency:'&#8377;'}}</b></div>
-                                <div style="padding-bottom: 10px; font-size: large;">Payment Option
+                                <div style="padding-bottom: 10px; font-size: large;">Choose the Payment Option
                                  
                                     <ng-container *ngIf="!shownonIndianModes">
                                         <div *ngFor="let modes of indian_payment_modes">
-                                            <div class="col-xs-12  col-sm-6 col-lg-3  ">
+                                            <div class="col-xs-12  col-sm-6 col-lg-2  ">
 
                                                     <div class="paymentmode card text-primary" >
                                                           
@@ -39,7 +39,7 @@
                                 <ng-container *ngIf="shownonIndianModes">
                                     
                                     <div *ngFor="let modes of non_indian_modes">
-                                        <div class="col-xs-12  col-sm-6 col-lg-3  ">
+                                        <div class="col-xs-12  col-sm-6 col-lg-2 ">
 
                                                 <div class="paymentmode card text-primary" >
                                                       
@@ -70,9 +70,9 @@
 
                                 </div>
                                 </div>
-                                <div class="cc-dc-nb-change">
+                                <div class="txt-align-center">
                                     <!-- <button class="cs-btn bt1" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()">CC/DC/Net Banking/UPI</button> -->
-                                    <button class="cs-btn bt1" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && makeFailedPayment()">Make payment</button>
+                                    <button class="btn btn-primary" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && makeFailedPayment()">Make Payment</button>
                                     <!-- <button class="cs-btn bt1" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()">CC/DC/Net Banking/UPI</button> -->
                                     <!-- <button class="cs-btn bt1" (click)="paytmPayment()">Paytm</button> -->
                                 </div>

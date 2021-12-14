@@ -148,9 +148,8 @@ export class StatementsComponent implements OnInit {
     this.invoiceDetail();
 
     if (this.payment_status === 'NotPaid' && this.source !== 'payment-history') {
-      console.log('inisdeer');
       this.payment_loading = true;
-      this.getPaymentModes();
+    
     } else if (this.payment_status === 'Paid') {
       this.getPaymentDetails();
     } else if (this.source === 'payment-history') {
@@ -243,71 +242,8 @@ export class StatementsComponent implements OnInit {
     }
 
   }
-  getPaymentModes() {
-
-    this.provider_services.getPaymentModes()
-      .subscribe(
-        data => {
-          this.paymentmodes = data[0];
-                              this.isPayment = true;
-                              if (this.paymentmodes.indiaPay) {
-                                  this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
-                              }
-                               if (this.paymentmodes.internationalPay) {
-                                  this.non_indian_modes = this.paymentmodes.internationalBankInfo;
-           
-                              }
-                              if(!this.paymentmodes.indiaPay && this.paymentmodes.internationalPay){
-                                  this.shownonIndianModes=true;
-                              }else{
-                                  this.shownonIndianModes=false;  
-                              }
-                      
-              },
-        
-        error => {
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
-      );
-   }
-      /**
-     * To Get Payment Modes
-     */
-       indian_payment_mode_onchange(event) {
-        this.selected_payment_mode = event.value;
-        this.isInternatonal = false;
-    }
-    non_indian_modes_onchange(event) {
-        this.selected_payment_mode = event.value;
-        this.isInternatonal = true;
-    }
-    togglepaymentMode(){
-        this.shownonIndianModes=!this.shownonIndianModes;
-    }
-//     getPaymentModes() {
-
-//         this.sharedServices.getPaymentModesofProvider(this.accountId,0, 'billPayment')
-//             .subscribe(
-//                 data => {
-                    
-//                     this.paymentmodes = data[0];
-//                     this.isPayment = true;
-//                     if (this.paymentmodes.indiaPay) {
-//                         this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
-//                     }
-//                      if (this.paymentmodes.internationalPay) {
-//                         this.non_indian_modes = this.paymentmodes.internationalBankInfo;
  
-//                     }
-//                     if(!this.paymentmodes.indiaPay && this.paymentmodes.internationalPay){
-//                         this.shownonIndianModes=true;
-//                     }else{
-//                         this.shownonIndianModes=false;  
-//                     }
-            
-//     }
-//             );
-// }
+ 
   getTaxpercentage() {
     this.provider_services.getTaxpercentage()
       .subscribe(data => {

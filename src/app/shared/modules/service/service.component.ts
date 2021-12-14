@@ -170,6 +170,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     showServiceduration = true;
     paymentSubscription: any;
     paymentProfiles:any=[];
+    selected=false;
     
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
@@ -200,6 +201,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
              console.log('payment profile'+JSON.stringify(data));
                this.paymentProfiles=data;
                console.log(this.paymentProfiles);
+            }
+            , error=>{
+                this.paymentProfiles=[];
             });
         this.serviceSubscription = this.servicesService.initService.subscribe(
             (serviceParams: any) => {
@@ -236,7 +240,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                 if (this.service_data.serviceType === 'virtualService') {
                                     this.is_virtual_serv = true;
                                 }
+                                if(this.paymentProfiles.length!==0){
                                 this.serviceForm.get('paymentProfileId').setValue('spDefaultBillProfile');
+                                }
                                 this.showServiceduration = this.service_data.serviceDurationEnabled;
                                 this.preInfoEnabled = this.service_data.preInfoEnabled;
                                 this.postInfoEnabled = this.service_data.postInfoEnabled;
@@ -429,6 +435,33 @@ export class ServiceComponent implements OnInit, OnDestroy {
         } else {
             this.advanced = false;
         }
+    }
+    getImageSrc(mode){
+    
+        return '../../../../../assets/images/payment-modes/'+mode+'.png';
+      }
+      radioChanage(event) {
+        this.selected = true;
+        }
+    getUniqueModes(modes){
+        let indian_modes=[];
+        let international_modes=[]
+        if(modes.indiaPay &&modes.indianPaymodes){
+           modes.indianPaymodes.forEach(element =>{
+            indian_modes.push(element.mode)
+           });
+
+           
+        }
+        if(modes.internationalPay){
+            modes.internationalPaymodes.forEach(element =>{
+                international_modes.push(element.mode)
+               });
+            
+        }
+        //return indian_modes.concat(international_modes).unique();
+        return new Set([...indian_modes ,...international_modes]);
+     //  return indian_modes.concat(international_modes.filter(x => indian_modes.every(y => y !== x)))
     }
     selectServiceHandler(event) {
         this.serv_type = event;
@@ -749,8 +782,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     livetrack: [false],
                     paymentProfileId:[]
                 });
+                if(this.paymentProfiles.length>0){
                 this.serviceForm.get('paymentProfileId').setValue('spDefaultBillProfile');
-                this.serviceForm.controls['paymentProfileId'].setValue('spDefaultBillProfile');
+                }
             } else {
                 this.serviceForm = this.fb.group({
                     name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
@@ -773,14 +807,17 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 });
                 this.serviceForm.get('resoucesRequired').setValue('1');
                 this.serviceForm.get('maxBookingsAllowed').setValue('1');
-                this.serviceForm.get('paymentProfileId').setValue('spDefaultBillProfile');
+                if(this.paymentProfiles.length!==0){
+                    this.serviceForm.get('paymentProfileId').setValue('spDefaultBillProfile');
+                    }
                 if (this.action === 'add') {
                     this.serviceForm.get('serviceType').setValue('physicalService');
                 }
             }
         } else {
+            if(this.paymentProfiles.length!==0){
             this.serviceForm.controls['paymentProfileId'].setValue('spDefaultBillProfile');
-     
+            }
             if (this.is_donation === true) {
                 this.serviceForm = this.fb.group({
                     name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
