@@ -998,7 +998,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             return false;
         }
         else {
-
             if (this.is_parent) {
                 this.updateParentInfo(formdata).then(
                     (result) => {
@@ -1007,7 +1006,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             this.submitbtndisabled = false;
                             this.setVirtualTeleserviceCustomer();
                             this.bookStep++;
-
                         }
                     },
                     (error) => {
@@ -2278,8 +2276,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.waitlist_for = [];
             //this.newMember = this.virtualInfo.newMemberId;
             this.virtualInfo.serviceFor = this.virtualInfo.newMemberId;
-            const current_member = this.familymembers.filter(member => member.id === this.virtualInfo.serviceFor);
-            this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member.firstName, lastName: current_member.lastName });
+            // const current_member = this.familymembers.filter(member => member.id === this.virtualInfo.serviceFor);
+            this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: this.virtualInfo.firstName, lastName: this.virtualInfo.lastName });
             if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
                 this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
                 this.newWhatsapp = this.virtualInfo.whatsappnumber
@@ -2292,10 +2290,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.userPhone = this.virtualInfo.whatsappnumber;
                 this.changePhno = true;
             }
-
-        }
-
-        if (this.virtualInfo && this.virtualInfo.serviceFor) {
+        } else if (this.virtualInfo && this.virtualInfo.serviceFor) {
             this.consumerType = 'member';
             this.waitlist_for = [];
             const current_member = this.familymembers.filter(member => member.userProfile.id === this.virtualInfo.serviceFor);
@@ -2325,15 +2320,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.callingModes = this.virtualInfo.countryCode_whtsap.split('+')[1] + '' + this.virtualInfo.whatsappnumber;
                 } else {
                     this.callingModes = this.virtualInfo.countryCode_whtsap + ' ' + this.virtualInfo.whatsappnumber;
-
                 }
                 this.currentPhone = this.virtualInfo.phoneno;
                 this.userPhone = this.virtualInfo.whatsappnumber;
                 this.changePhno = true;
             }
-
         }
-
     }
     // setVirtualTeleserviceCustomer(formdata) {
     //     this.virtualInfo = formdata;
@@ -3147,7 +3139,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     goToStep(type) {
-
         this.virtualInfo = this.virtualForm.value;
         if (type === 'next') {
             if (this.tele_srv_stat === 'true' && this.bookStep == 0) {
@@ -3159,10 +3150,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.snackbarService.openSnackBar('Please fill telegram countrycode', { 'panelClass': 'snackbarerror' });
                 } else {
                     this.onSubmit(this.virtualInfo);
-
                 }
-
-
             } else {
                 if (this.queuejson.length !== 0 && !this.api_loading1 && this.waitlist_for.length !== 0) {
                     if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {

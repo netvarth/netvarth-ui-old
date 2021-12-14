@@ -1445,12 +1445,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
 
         if (this.virtualInfo && this.virtualInfo.newMemberId) {
-
             this.waitlist_for = [];
             //this.newMember = this.virtualInfo.newMemberId;
             this.virtualInfo.serviceFor = this.virtualInfo.newMemberId;
-            const current_member = this.familymembers.filter(member => member.id === this.virtualInfo.serviceFor);
-            this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: current_member.firstName, lastName: current_member.lastName });
+            // const current_member = this.familymembers.filter(member => member.id === this.virtualInfo.serviceFor);
+            this.waitlist_for.push({ id: this.virtualInfo.serviceFor, firstName: this.virtualInfo.firstName, lastName: this.virtualInfo.lastName });
 
             if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
                 this.whatsappCountryCode = this.virtualInfo.countryCode_whtsap;
@@ -1468,9 +1467,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 this.changePhno = true;
             }
 
-        }
-
-        if (this.virtualInfo && this.virtualInfo.serviceFor) {
+        } else if (this.virtualInfo && this.virtualInfo.serviceFor) {
             this.consumerType = 'member';
             this.waitlist_for = [];
 
