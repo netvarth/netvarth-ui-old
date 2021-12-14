@@ -2,6 +2,8 @@
   <div class="card title-gb">
     <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
       Jaldee Drive
+      <p class="text-secondary">Can store files/attachments are uploaded by consumers or providers or you!</p>
+
     </div>
   </div>
 </section>
@@ -48,14 +50,14 @@
             </ul>
           </div>
           <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 bold pad-top-10 mgn-up-10 mgn-bt-10 border-tp">
-            <div >
+            <div>
               <!-- *ngIf="defaultFolder === 'yes'" -->
               <p>Choose folder to upload</p>
-              <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)" >
+              <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)">
                 <!-- <mat-radio-button [value]="'shared'" class="mx-2">
                   Shared folder
                 </mat-radio-button> -->
-                <mat-radio-button [value]="'Public'" >
+                <mat-radio-button [value]="'Public'">
                   <!-- [checked]='true' *ngIf="defaultFolder"-->
                   Public Files
                 </mat-radio-button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -72,7 +74,7 @@
         <button type="button" class="disp-none btn btn-light-primary font-weight-bold" data-dismiss="modal"
           #closebutton>Cancel</button>
         <button type="button" class="btn btn-primary font-weight-bold hf-btn" data-dismiss="modal" #closebutton
-          (click)="actionCompleted()" [disabled]="!choose_type" >Ok</button>
+          (click)="actionCompleted()" [disabled]="!choose_type">Ok</button>
         <!-- [disabled]="!choose_type" -->
       </div>
       <div class="error-section" *ngIf="apiError !== ''">
@@ -100,10 +102,11 @@
                 <button type="button" class="pull-left p-button-rounded p-ripple p-button p-component mx-2 my-3 p-1">
                   <a style="color: white !important;" #modal data-toggle="modal" data-target="#exampleModalCenter">
                   </a>
-                  <a style="color: white !important;" class="pointer-cursor mr-1" (click)="imagefile1.click();"><input
-                      #imagefile1 type="file" accept="/*;capture=camera" style="display:none;" multiple
-                      (change)="filesSelected($event, 'close')"><i style="color: white !important;"
-                      class="fa fa-plus mgn-rt-5" aria-hidden="true"></i> Upload New File </a>
+                  <a style="color: white !important;" class="pointer-cursor mr-1 p-2"
+                    (click)="imagefile1.click();"><input #imagefile1 type="file" accept="/*;capture=camera"
+                      style="display:none;" multiple (change)="filesSelected($event, 'close')"><i
+                      style="color: white !important;" class="fa fa-plus mgn-rt-5" aria-hidden="true"></i> Upload New
+                    File </a>
                   <!-- <i style="color: white !important;"
                       class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i> -->
                 </button>
@@ -134,6 +137,16 @@
                   </div>
                 </div>
               </div> -->
+              <!-- <div class="card">
+                <div class="card-header">
+                  Featured
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Special title treatment</h5>
+                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div> -->
               <div class="mx-2 mt-4">
                 <h4>Statistics</h4>
               </div>
@@ -141,7 +154,9 @@
                 <div class="row">
 
                   <div class="col-sm-12 col-md-4 col-lg-4  col-xs-12 col-12 disp-flex">
+                   
                     <div class="card color" style="word-wrap: normal !important;">
+                    
 
                       <div align="center" class="my-2">
 
@@ -151,7 +166,7 @@
                         </span>
 
 
-                        <span class="pull-right">{{storageleft.remainingStorage}} GB left</span>
+                        <span class="pull-right">{{remainingStorage}} GB left</span>
 
 
 
@@ -159,7 +174,7 @@
 
                       <div class="progress mb-1" style="height:6px">
                         <!-- style="width:'{{storageleft.remainingStorage}}' !important;" -->
-                        <div class="progress-bar bg-primary" style="width: 50%;" ></div>
+                        <div class="progress-bar bg-primary" style="width: 50%;"></div>
                       </div>
 
                     </div>
@@ -231,7 +246,7 @@
               <div class="mx-2">
                 <div class=" row cust-name">
                   <!-- <h4>Your folders</h4> -->
-                  <div (click)="publicfolder('Public')"
+                  <!-- <div (click)="publicfolder('Public')"
                     class="mx-2 pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
                     id="folder2">
 
@@ -239,12 +254,12 @@
 
                       <p (click)="publicfolder('Public')"> Public Files</p>
                     </i>
-                    <!-- <img src="../../../assets/images/Group 818.jpg" class=" fa fa-folder pull-left text-light "
+                   
+                  </div> -->
+                   <!-- <img src="../../../assets/images/Group 818.jpg" class=" fa fa-folder pull-left text-light "
                   style="width: 22px !important; margin-top: 2px !important;"> -->
-                  </div>
-                  <div (click)="publicfolder('My')"
-                    class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
-                    id="folder2">
+                  <div (click)="publicfolder('My')" class="pointer-cursor top-droppable folder tooltiper tooltiper-up"
+                    data-tooltip="0 file" id="folder2">
 
                     <i class="fa fa-folder" aria-hidden="true">
 
@@ -254,16 +269,16 @@
                   style="width: 22px !important; margin-top: 2px !important;"> -->
                   </div>
                   <div (click)="publicfolder('Shared')"
-                  class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
-                  id="folder2">
+                    class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
+                    id="folder2">
 
-                  <i class="fa fa-folder" aria-hidden="true">
+                    <i class="fa fa-folder" aria-hidden="true">
 
-                    <p (click)="publicfolder('Shared')">Shared Files</p>
-                  </i>
-                  <!-- <img src="../../../assets/images/Group 816.jpg" class=" fa fa-folderpull-left text-light "
+                      <p (click)="publicfolder('Shared')">Shared Files</p>
+                    </i>
+                    <!-- <img src="../../../assets/images/Group 816.jpg" class=" fa fa-folderpull-left text-light "
                 style="width: 22px !important; margin-top: 2px !important;"> -->
-                </div>
+                  </div>
                 </div>
               </div>
               <!-- <div class="cust-name">
@@ -390,7 +405,7 @@
                 </div> -->
                 <button (click)="gotoSmsAddon()" class="btn btn-warning text-dark p-button-rounded"> Upgrade Now
                 </button>
-<!-- provider/license/addons -->
+                <!-- provider/license/addons -->
 
 
 
@@ -592,8 +607,8 @@
       <button type="button" class="pull-right p-button-rounded p-ripple p-button p-component">
         <a style="color: white !important;" #modal data-toggle="modal" data-target="#exampleModalCenter">
         </a>
-        <a style="color: white !important;" class="pointer-cursor mr-1" (click)="imagefile1.click();"><input #imagefile1
-            type="file" accept="/*;capture=camera" style="display:none;" multiple
+        <a style="color: white !important;" class="pointer-cursor mr-1 p-2" (click)="imagefile1.click();"><input
+            #imagefile1 type="file" accept="/*;capture=camera" style="display:none;" multiple
             (change)="filesSelected($event, 'close')"><i style="color: white !important;"
             class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i>Upload
           File
@@ -601,7 +616,11 @@
       </button>
     </div>
   </div>
+ 
 </section>
+<div class="mx-3 my-3">
+  <p class="text-secondary ">Can store files/attachments are uploaded by consumers or providers or you!</p>
+</div>
 <section class="waitlist-box-check">
   <div class="content w-manager settings comn-cls lic-page" style="width: 100%;">
     <div class="col-md-12 no-padding-small">
@@ -630,14 +649,26 @@
                   </div>
                 </span>
               </span> -->
+
               <div>
+                <!-- <div class="card">
+                  <div class="card-header" style="background-color: darkgray;">
+                    Featured
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                  </div>
+                </div> -->
                 <div class="mx-2 mt-4">
                   <h4>Statistics</h4>
                 </div>
                 <div class="mx-2">
                   <div class="row">
-
+                   
                     <div class="col-sm-12 col-md-4 col-lg-4  col-xs-12 col-12 disp-flex">
+                     
                       <div class="card color" style="word-wrap: normal !important;">
 
                         <div align="center" class="my-2">
@@ -648,7 +679,7 @@
                           </span>
 
 
-                          <span class="pull-right">{{storageleft.remainingStorage}} GB left</span>
+                          <span class="pull-right">{{remainingStorage}} GB left</span>
 
 
 
@@ -725,7 +756,7 @@
                   </div>
                 </div>
               </div>
- <!-- <div class="card color" style="word-wrap: normal !important;">
+              <!-- <div class="card color" style="word-wrap: normal !important;">
                       <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
                         <div class="col-md-4">Storage</div>
                         <div>
@@ -816,35 +847,34 @@
                   <!-- <h4>Your folders</h4> -->
 
                   <div class="col-md-12 row" style="display: flex;">
-                    <div (click)="publicfolder('Public')"
+                    <!-- <div (click)="publicfolder('Public')"
                       class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
                       id="folder2">
                       <i class="fa fa-folder" aria-hidden="true">
                         <p (click)="publicfolder('Public')"> Public Files</p>
                       </i>
-                    </div>
-                    <div (click)="publicfolder('My')"
-                      class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
-                      id="folder2">
+                    </div> -->
+                    <div (click)="publicfolder('My')" class="pointer-cursor top-droppable folder tooltiper tooltiper-up"
+                      data-tooltip="0 file" id="folder2">
                       <i class="fa fa-folder" aria-hidden="true">
                         <p (click)="publicfolder('My')"> My Files</p>
                       </i>
                     </div>
                     <div (click)="publicfolder('Shared')"
-                    class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
-                    id="folder2">
-  
-                    <i class="fa fa-folder" aria-hidden="true">
-  
-                      <p (click)="publicfolder('Shared')">Shared Files</p>
-                    </i>
-                    <!-- <img src="../../../assets/images/Group 816.jpg" class=" fa fa-folderpull-left text-light "
+                      class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
+                      id="folder2">
+
+                      <i class="fa fa-folder" aria-hidden="true">
+
+                        <p (click)="publicfolder('Shared')">Shared Files</p>
+                      </i>
+                      <!-- <img src="../../../assets/images/Group 816.jpg" class=" fa fa-folderpull-left text-light "
                   style="width: 22px !important; margin-top: 2px !important;"> -->
-                  </div>
+                    </div>
                   </div>
                 </div>
               </div>
-                <!-- <h4>
+              <!-- <h4>
                   <span> Patients Files</span>
                   <span> <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-left">
                       <img src="../../../assets/images/provider-filter-icon.png"

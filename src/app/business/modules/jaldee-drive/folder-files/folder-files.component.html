@@ -6,8 +6,10 @@
 
       </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       {{foldername}}
-
+     
     </h5>
+    <p *ngIf="foldertype === 'Shared'" class="text-secondary mx-5 no-padding">Files/Attachments are uploaded by consumers or providers!</p>
+    <p *ngIf="foldertype === 'My'" class="text-secondary mx-5 no-padding">Files/Attachments are uploaded by you!</p>
   </div>
 </section>
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -93,11 +95,11 @@
 
     <div class="card card-custom card-stretch gutter-b no-padding col-md-12  col-sm-12  col-xs-12">
      
-     <div class="" *ngIf="foldertype !== 'Shared'">
+     <div class="mx-2" *ngIf="foldertype !== 'Shared'">
       <button type="button" class="pull-left p-button-rounded p-ripple p-button p-component mx-2 my-3 p-1">
         <a style="color: white !important;" #modal data-toggle="modal" data-target="#exampleModalCenter">
         </a>
-        <a style="color: white !important;" class="pointer-cursor mr-1" (click)="imagefile1.click();"><input
+        <a style="color: white !important;" class="pointer-cursor mr-1 p-2" (click)="imagefile1.click();"><input
             #imagefile1 type="file" accept="/*;capture=camera" style="display:none;" multiple
             (change)="filesSelected($event, 'close')"><i style="color: white !important;"
             class="fa fa-plus mgn-rt-5" aria-hidden="true"></i> Upload New File </a>
@@ -181,8 +183,9 @@
                     <div class="card-body">
                       <div class="filterTextinput filter-text-input">
                         <li class="filterli filter-li">
+                          <!-- maxlength="10" -->
                           <input type="text" id="fileType" [(ngModel)]="filter.fileType" #fileType (keyup)="doSearch()"
-                            maxlength="10" class="filterTextbox filter-textbox" placeholder="Enter file type">
+                             class="filterTextbox filter-textbox" placeholder="Enter file type">
                         </li>
                       </div>
                     </div>
@@ -342,7 +345,7 @@
 
                 <!-- [class.pointer-cursor]="!showCustomers"  (click)="selectedRow(customer)"-->
                 <tbody>
-                  <tr style="cursor: pointer;"
+                  <tr style="cursor: pointer;" class="py-4"
                     *ngFor="let customer of customers | filter:searchTerm | paginate: config;   let i= index"
                     (click)="preview(customer)">
                     <td *ngIf="foldertype === 'Shared' && customer.ownerName !==''">
@@ -355,7 +358,7 @@
                         -
                       </span>
                     </td>
-                    <td class="py-4">
+                    <td>
                       <div class="d-flex align-items-center">
                         <!-- <div class="pr-3">
                           <span class="symbol-label">
@@ -386,8 +389,11 @@
                       </span>
                     </td>
                     <td>
-                      <span class="text-dark-75 d-block">
-                        {{customer.fileSize}}
+                      <span class="text-dark-75 d-block" *ngIf="customer.fileSize >=1">
+                        {{customer.fileSize*1024}}MB
+                      </span>
+                      <span class="text-dark-75 d-block" *ngIf="customer.fileSize <1">
+                        {{customer.fileSize*1024}}KB
                       </span>
                     </td>
                     <!-- <td *ngIf="!showCustomers" class="text-right">

@@ -23,6 +23,7 @@ export let projectConstants: any = {};
 })
 export class FolderFilesComponent implements OnInit {
   customers: any[] = [];
+  fileSizeFilter:any;
   loading = true;
   blogo = '';
   bname;
@@ -346,6 +347,8 @@ export class FolderFilesComponent implements OnInit {
         console.log(data);
         // this.Allfiles = data;
         this.customers = data
+        this.fileSizeFilter = Math.floor(data['fileSize']);
+        console.log("File Size",this.fileSizeFilter)
         console.log("Uploaded Files : ", this.customers);
       }
     );
