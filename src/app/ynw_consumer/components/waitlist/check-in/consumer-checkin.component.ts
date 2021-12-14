@@ -458,7 +458,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     getImageSrc(mode){
     
-        return '../../../../../assets/images/payment-modes/'+mode+'.png';
+        return 'assets/images/payment-modes/'+mode+'.png';
     }
     ngOnDestroy(): void {
         this.subs.unsubscribe();
