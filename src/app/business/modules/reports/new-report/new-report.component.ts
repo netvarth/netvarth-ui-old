@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
@@ -11,6 +11,8 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { ExportBookingReportComponent } from '../../export-booking-report/export-booking-report.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
 
 @Component({
   selector: 'app-new-report',
@@ -134,7 +136,12 @@ export class NewReportComponent implements OnInit {
   user: string;
   user_id: any;
   loading = false;
-
+  @ViewChild('select') select: MatSelect;
+  @ViewChild('apptStatusSelect') apptStatusSelect: MatSelect;
+  allWlStatusSelected = false;
+  waitlistStatusFilter: any = [];
+  apptStatusFilter: any= [];
+  allApptStatusSelected = false;
   constructor(
     private router: Router,
     private activated_route: ActivatedRoute,
@@ -245,8 +252,14 @@ export class NewReportComponent implements OnInit {
           break;
         }
         case 'token': {
+          // console.log("Token: ...", res.waitlistStatus);
           this.waitlist_billpaymentstatus = res.billPaymentStatus || 0;
-          this.waitlist_status = res.waitlistStatus || 0;
+          // this.waitlist_status = res.waitlistStatus || 0;
+          // if (res.waitlistStatus) {
+          //   this.waitlistStatusFilter = res.waitlistStatus.split(',');
+          // }
+          // console.log("Token: ", this.waitlistStatusFilter.toString());
+          // this.waitlist_status = this.waitlistStatusFilter.toString();
           this.waitlist_mode = res.waitlistMode || 0;
           this.waitlist_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
           if (res.dateRange === 'DATE_RANGE') {
@@ -275,6 +288,62 @@ export class NewReportComponent implements OnInit {
         }
       }
     }
+  }
+  setApptStatusFilter() {
+    this.apptStatusFilter = [];
+    let newStatus = true;
+    this.apptStatusSelect.options.forEach((item: MatOption) => {
+      if (!item.selected) {
+        newStatus = false;
+      } else {
+        this.apptStatusFilter.push(item.value);
+      }
+    });
+    this.allApptStatusSelected = newStatus;
+    console.log(this.apptStatusFilter);
+  }
+  toggleAllApptSelection () {
+    const _this = this;
+    this.apptStatusFilter = [];
+    if (this.allApptStatusSelected) {
+      this.apptStatusSelect.options.forEach(function (item: MatOption) {
+        item.select();
+        _this.apptStatusFilter.push(item.value);
+      });
+    } else {
+      this.apptStatusSelect.options.forEach(function(item: MatOption) {
+        item.deselect();
+      });
+    }
+    console.log(this.apptStatusFilter);
+  }
+  setStatusFilter() {
+    this.waitlistStatusFilter = [];
+    let newStatus = true;
+    this.select.options.forEach((item: MatOption) => {
+      if (!item.selected) {
+        newStatus = false;
+      } else {
+        this.waitlistStatusFilter.push(item.value);
+      }
+    });
+    this.allWlStatusSelected = newStatus;
+    console.log(this.waitlistStatusFilter);
+  }
+  toggleAllSelection () {
+    const _this = this;
+    this.waitlistStatusFilter = [];
+    if (this.allWlStatusSelected) {
+      this.select.options.forEach(function (item: MatOption) {
+        item.select();
+        _this.waitlistStatusFilter.push(item.value);
+      });
+    } else {
+      this.select.options.forEach(function(item: MatOption) {
+        item.deselect();
+      });
+    }
+    console.log(this.waitlistStatusFilter);
   }
   isNumeric(evt) {
     return this.shared_functions.isNumeric(evt);
@@ -566,7 +635,7 @@ export class NewReportComponent implements OnInit {
           'paymentStatus': this.appointment_billpaymentstatus,
           'schedule': this.appointment_schedule_id,
           'service': this.appointment_service_id,
-          'apptStatus': this.appointment_status,
+          // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId
         };
@@ -582,9 +651,13 @@ export class NewReportComponent implements OnInit {
         if (this.appointment_service_id === 0) {
           delete this.filterparams.service;
         }
-        if (this.appointment_status === 0) {
-          delete this.filterparams.apptStatus;
-        }
+        if (this.apptStatusFilter.length > 0) {
+          // this.waitlist_status = this.waitlistStatusFilter.toString();
+          this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
+          }
+        // if (this.appointment_status === 0) {
+        //   delete this.filterparams.apptStatus;
+        // }
         if (this.appointment_mode === 0) {
           delete this.filterparams.appointmentMode;
         }
@@ -622,7 +695,7 @@ export class NewReportComponent implements OnInit {
           'billPaymentStatus': this.waitlist_billpaymentstatus,
           'queue': this.token_queue_id,
           'service': this.token_service_id,
-          'waitlistStatus': this.waitlist_status,
+          // 'waitlistStatus': this.waitlist_status,
           'waitlistMode': this.waitlist_mode,
           'waitlistingForId': this.waitlist_customerId
         };
@@ -638,9 +711,14 @@ export class NewReportComponent implements OnInit {
         if (this.token_queue_id === 0) {
           delete this.filterparams.queue;
         }
-        if (this.waitlist_status === 0) {
-          delete this.filterparams.waitlistStatus;
+        console.log("Token: ", this.waitlistStatusFilter.toString());
+        if (this.waitlistStatusFilter.length > 0) {
+        // this.waitlist_status = this.waitlistStatusFilter.toString();
+        this.filterparams['waitlistStatus'] = this.waitlistStatusFilter.toString();
         }
+        // if (this.waitlist_status === 0) {
+        //   delete this.filterparams.waitlistStatus;
+        // }
         if (this.waitlist_mode === 0) {
           delete this.filterparams.waitlistMode;
         }
@@ -932,7 +1010,7 @@ export class NewReportComponent implements OnInit {
       if (this.report_type === 'token') {
         selectedValues = {
           'billPaymentStatus': this.waitlist_billpaymentstatus,
-          'waitlistStatus': this.waitlist_status,
+          'waitlistStatus': this.waitlistStatusFilter.toString(),
           'waitlistMode': this.waitlist_mode,
           'dateRange': this.waitlist_timePeriod,
           'startDate': this.waitlist_startDate,
@@ -942,7 +1020,7 @@ export class NewReportComponent implements OnInit {
       if (this.report_type === 'appointment') {
         selectedValues = {
           'paymentStatus': this.appointment_billpaymentstatus,
-          'apptStatus': this.appointment_status,
+          'apptStatus': this.apptStatusFilter.toString(),
           'appointmentMode': this.appointment_mode,
           'dateRange': this.appointment_timePeriod,
           'startDate': this.appointment_startDate,
@@ -1005,7 +1083,7 @@ export class NewReportComponent implements OnInit {
           'billPaymentStatus': this.waitlist_billpaymentstatus,
           'queue': this.token_queue_id,
           'service': this.token_service_id,
-          'waitlistStatus': this.waitlist_status,
+          // 'waitlistStatus': this.waitlist_status,
           'waitlistMode': this.waitlist_mode,
           'waitlistingForId': this.waitlist_customerId
         };
@@ -1021,9 +1099,14 @@ export class NewReportComponent implements OnInit {
         if (this.token_queue_id === 0) {
           delete this.filterparams.queue;
         }
-        if (this.waitlist_status === 0) {
-          delete this.filterparams.waitlistStatus;
+        
+        if (this.waitlistStatusFilter.length > 0) {
+          this.filterparams ['waitlistStatus'] = this.waitlistStatusFilter.toString();
+          // delete this.filterparams.waitlistStatus;
         }
+        // if (this.waitlist_status === 0) {
+        //   delete this.filterparams.waitlistStatus;
+        // }
         if (this.waitlist_mode === 0) {
           delete this.filterparams.waitlistMode;
         }
@@ -1091,7 +1174,7 @@ export class NewReportComponent implements OnInit {
           'paymentStatus': this.appointment_billpaymentstatus,
           'schedule': this.appointment_schedule_id,
           'service': this.appointment_service_id,
-          'apptStatus': this.appointment_status,
+          // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           // 'apptForId': this.appointment_customerId
         };
@@ -1107,9 +1190,13 @@ export class NewReportComponent implements OnInit {
         if (this.appointment_service_id === 0) {
           delete this.filterparams.service;
         }
-        if (this.appointment_status === 0) {
-          delete this.filterparams.apptStatus;
+        if (this.apptStatusFilter.length > 0) {
+          this.filterparams ['apptStatus'] = this.apptStatusFilter.toString();
+          // delete this.filterparams.waitlistStatus;
         }
+        // if (this.appointment_status === 0) {
+        //   delete this.filterparams.apptStatus;
+        // }
         if (this.appointment_mode === 0) {
           delete this.filterparams.appointmentMode;
         }
