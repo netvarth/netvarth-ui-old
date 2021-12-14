@@ -118,7 +118,8 @@ export class ActionPopupComponent implements OnInit {
         uuid: this.bookingDetails.uid,
         type: 'reschedule',
         account_id: this.bookingDetails.providerAccount.id,
-        unique_id: this.bookingDetails.providerAccount.uniqueId
+        unique_id: this.bookingDetails.providerAccount.uniqueId,
+        service_id:this.bookingDetails.service.serviceId
       }
     };
     this.router.navigate(['consumer', 'appointment'], navigationExtras);
@@ -251,7 +252,8 @@ export class ActionPopupComponent implements OnInit {
         uuid: this.bookingDetails.ynwUuid,
         type: 'waitlistreschedule',
         account_id: this.bookingDetails.providerAccount.id,
-        unique_id: this.bookingDetails.providerAccount.uniqueId
+        unique_id: this.bookingDetails.providerAccount.uniqueId,
+        service_id:this.bookingDetails.service.id
       }
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
