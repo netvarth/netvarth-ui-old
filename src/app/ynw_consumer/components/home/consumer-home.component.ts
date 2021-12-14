@@ -1193,7 +1193,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       uuid: apptlist.uid,
       type: 'reschedule',
       account_id: apptlist.providerAccount.id,
-      unique_id: apptlist.providerAccount.uniqueId
+      unique_id: apptlist.providerAccount.uniqueId,
+      service_id:apptlist.service.id
     }
     if (this.customId) {
       queryParams['customId']=this.customId;
@@ -1208,7 +1209,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       uuid: waitlist.ynwUuid,
       type: 'waitlistreschedule',
       account_id: waitlist.providerAccount.id,
-      unique_id: waitlist.providerAccount.uniqueId
+      unique_id: waitlist.providerAccount.uniqueId,
+      service_id:waitlist.service.id
+    
     }
     if (this.customId) {
       queryParams['customId']=this.customId;
