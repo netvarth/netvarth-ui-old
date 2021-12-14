@@ -9,6 +9,7 @@ import { GroupStorageService } from '../../../shared/services/group-storage.serv
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
+
 @Component({
     selector: 'app-provider-paymentsettings',
     templateUrl: './provider-payment-settings.component.html',
@@ -367,7 +368,15 @@ export class ProviderPaymentSettingsComponent implements OnInit {
      * @param status enable/disable
      */
     saveAccountPaymentSettings(status) {
-        this.provider_services.setPaymentAccountSettings(status)
+        const data:any={};
+if(status==='disable'){
+    data.jaldeeBank=true
+}else {
+    data.jaldeeBank=false  
+}
+      
+        this.provider_services.setPaymentAccountSettingsForProvider(data)
+          
             .subscribe(() => {
                 this.getPaymentSettings(1);
                 this.saveEnabled = true;
@@ -463,6 +472,19 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     }
     isvalid(evt) {
         return this.shared_functions.isValid(evt);
+    }
+    checkAnyGateWayEnabled() {
+        let gatewayverified=false;
+        if(this.paySettings.length>0){
+            this.paySettings.forEach(element => {
+                if(element.payTmVerified){
+                    gatewayverified= true;
+                    return;
+                 
+                }
+            });
+        }
+        return gatewayverified;
     }
 
     /**

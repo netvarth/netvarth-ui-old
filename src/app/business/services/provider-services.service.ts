@@ -323,6 +323,10 @@ export class ProviderServices {
     const url = 'provider/payment/settings/jaldee/' + status;
     return this.servicemeta.httpPost(url);
   }
+  setPaymentAccountSettingsForProvider(data) {
+    const url = 'provider/account/settings/updateDestBank';
+    return this.servicemeta.httpPut(url,data);
+  }
   getProviderLocations() {
     return this.servicemeta.httpGet('provider/locations');
   }
