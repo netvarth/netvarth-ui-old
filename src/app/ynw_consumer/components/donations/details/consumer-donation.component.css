@@ -425,17 +425,18 @@ a, .fa-file-text-o {
     padding: 10px;
     background: white;
   }
-  .content .card {
-    /* border:2px solid grey !important; */
+  /* .content .card {
+
     box-shadow: 0 0 5px 5px grey!important
 
-  }
+  } */
   /* input[type="radio"]:checked {
     border :2px solid blue !important;
     font-weight:400px;
   } */
-  .paymentmode{
+  .paymentmode .card{
     font-size:16px!important;
+    box-shadow: 0 0 5px 5px grey!important
   }
   .paymentmode > .mat-radio-button.mat-radio-checked { 
     border-color: blue !important;
