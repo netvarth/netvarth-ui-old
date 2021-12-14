@@ -170,6 +170,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     showServiceduration = true;
     paymentSubscription: any;
     paymentProfiles:any=[];
+    selected=false;
     
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
@@ -437,6 +438,33 @@ export class ServiceComponent implements OnInit, OnDestroy {
         } else {
             this.advanced = false;
         }
+    }
+    getImageSrc(mode){
+    
+        return '../../../../../assets/images/payment-modes/'+mode+'.png';
+      }
+      radioChanage(event) {
+        this.selected = true;
+        }
+    getUniqueModes(modes){
+        let indian_modes=[];
+        let international_modes=[]
+        if(modes.indiaPay &&modes.indianPaymodes){
+           modes.indianPaymodes.forEach(element =>{
+            indian_modes.push(element.mode)
+           });
+
+           
+        }
+        if(modes.internationalPay){
+            modes.internationalPaymodes.forEach(element =>{
+                international_modes.push(element.mode)
+               });
+            
+        }
+        //return indian_modes.concat(international_modes).unique();
+        return new Set([...indian_modes ,...international_modes]);
+     //  return indian_modes.concat(international_modes.filter(x => indian_modes.every(y => y !== x)))
     }
     selectServiceHandler(event) {
         this.serv_type = event;

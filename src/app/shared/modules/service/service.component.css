@@ -2,7 +2,9 @@
     box-shadow: 0 0 5px 5px grey!important;
     border: 5px solid black;
 }
-
+.payment_profile .card-selected {
+  border: 2px solid #283593;
+}
 
   .payment_profile{
     font-size:12px!important;
@@ -11,3 +13,7 @@
     border-color: blue !important;
     box-shadow: 0 0 5px 5px blue!important
   }
+  div .container{
+    display:inline;
+  
+  } 
