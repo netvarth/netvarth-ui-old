@@ -700,6 +700,10 @@ export class SharedServices {
     const url = 'provider/donation/consumerMassCommunication';
     return this.servicemeta.httpPost(url, data);
   }
+  customerAllMassCommunication(data) {
+    const url = 'provider/customers/consumerMassCommunicationAll';
+    return this.servicemeta.httpPost(url, data);
+  }
   addProviderAppointment(postData) {
     return this.servicemeta.httpPost('provider/appointment', postData);
   }

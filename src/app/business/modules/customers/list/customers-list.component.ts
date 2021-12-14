@@ -16,6 +16,7 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { CommunicationService } from '../../../../business/services/communication-service';
+import { AddInboxMessagesComponent } from '../../../../../../src/app/shared/components/add-inbox-messages/add-inbox-messages.component';
 
 @Component({
   selector: 'app-customers-list',
@@ -119,6 +120,7 @@ export class CustomersListComponent implements OnInit {
     email1error = null;
     phoneerror = null;
   separateDialCode = true;
+  smsdialogRef;
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -379,7 +381,7 @@ export class CustomersListComponent implements OnInit {
       api_filter['firstName-eq'] = this.filter.first_name;
     }
     if (this.filter.jaldeeid !== '') {
-      api_filter['jaldeeId-eq'] = this.filter.jaldeeid;
+      api_filter['or=jaldeeId-eq'] = this.filter.jaldeeid + ',Mrid-eq=' + this.filter.jaldeeid;
     }
     if (this.filter.last_name !== '') {
       api_filter['lastName-eq'] = this.filter.last_name;
@@ -484,6 +486,21 @@ export class CustomersListComponent implements OnInit {
         () => { }
       );
   }
+  sendmsgToAll() {
+    this.smsdialogRef = this.dialog.open(AddInboxMessagesComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      autoFocus: true,
+      data: {
+        source: 'provider-sendAll',
+      } 
+    });
+    this.smsdialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+      }
+    });
+  }
   CreateVoiceCall() {
     this.customerlist = this.selectedcustomersforcall;
     for (let i in this.customerlist) {
@@ -519,7 +536,7 @@ export class CustomersListComponent implements OnInit {
   }
   lastvisits(customerDetail) {
     this.mrdialogRef = this.dialog.open(LastVisitComponent, {
-      width: '80%',
+      width: '90%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
