@@ -333,6 +333,7 @@ ul.bus-actions li a.lnk {
 }
 .cardwidth{
   padding: 40px !important;
+  width: 100%;
 }
 @media (max-width: 767px) {
 .cardwidth{

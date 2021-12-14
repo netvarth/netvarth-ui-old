@@ -12,8 +12,8 @@
                 </div>
             </div>
             <app-common-innerloading-spinner *ngIf="loadingPaytm"></app-common-innerloading-spinner>
-            <div class="pad-10 d-flex flex-column-fluid hf-panel-body">
-                <div class="card card-custom no-margin no-padding" class="cardwidth">
+            <div class="pad-10 d-flex flex-column-fluid">
+                <div class="card card-custom" class="cardwidth">
                     <div class="card-body p-0">
                         <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"
                             data-wizard-clickable="false">
@@ -1134,7 +1134,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div *ngIf="type != 'waitlistreschedule'"
+                                            <!-- <div *ngIf="type != 'waitlistreschedule'"
                                                 class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container">
                                                 <button type="button" *ngIf="tele_srv_stat === 'true'"
                                                     class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
@@ -1148,7 +1148,7 @@
                                                     Next
                                                 </button>
 
-                                            </div>
+                                            </div> -->
                                             <!-- <div *ngIf="type != 'waitlistreschedule' && !sel_ser_det.isPrePayment"
                                                 class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container">
                                                 <button type="button"
@@ -1158,7 +1158,37 @@
                                                     Next
                                                 </button>
                                             </div> -->
+
+                                            <div *ngIf="type != 'waitlistreschedule' && !sel_ser_det.isPrePayment"
+                                                class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container">
+                                                <button type="button"
+                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    (click)="goToStep('next')"
+                                                    [class.disabled]="(queuejson && queuejson.length == 0 && !api_loading1) || waitlist_for.length == 0">
+                                                    Next
+                                                </button>
+                                            </div>
                                             <div *ngIf="type != 'waitlistreschedule' && sel_ser_det.isPrePayment && questionnaireList.labels && questionnaireList.labels.length > 0"
+                                                class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container">
+                                                <button type="button"
+                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    (click)="goToStep('next')"
+                                                    [class.disabled]="(queuejson && queuejson.length == 0 && !api_loading1) || waitlist_for.length == 0">
+                                                    Next
+                                                </button>
+                                            </div>
+                                            <div *ngIf="type != 'waitlistreschedule' && sel_ser_det.isPrePayment && !questionnaireList.labels"
+                                                class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container">
+                                                <button type="button"
+                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    (click)="goToStep('next')"
+                                                    [class.disabled]="(queuejson && queuejson.length == 0 && !api_loading1) || waitlist_for.length == 0">
+                                                    Proceed to Payment
+                                                </button>
+                                            </div>
+
+
+                                            <!-- <div *ngIf="type != 'waitlistreschedule' && !sel_ser_det.isPrePayment && questionnaireList.labels && questionnaireList.labels.length > 0"
                                                 class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container">
                                                 <button type="button" *ngIf="tele_srv_stat === 'true'"
                                                     class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
@@ -1180,7 +1210,7 @@
                                                     [class.disabled]="(queuejson && queuejson.length == 0 && !api_loading1) || waitlist_for.length == 0">
                                                     Proceed to Payment
                                                 </button>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"

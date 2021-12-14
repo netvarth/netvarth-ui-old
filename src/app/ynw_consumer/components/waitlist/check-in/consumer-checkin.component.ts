@@ -43,7 +43,7 @@ import { JcCouponNoteComponent } from '../../../../shared/modules/jc-coupon-note
 export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     paymentBtnDisabled = false;
     isClickedOnce = false;
-    shownonIndianModes=false;
+    shownonIndianModes = false;
     tooltipcls = '';
     add_member_cap = Messages.ADD_MEMBER_CAP;
     cancel_btn = Messages.CANCEL_BTN;
@@ -186,7 +186,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     showmoreSpec = false;
     bookStep;
     locationName;
-    waitlistDetails:any;
+    waitlistDetails: any;
     razorModel: Razorpaymodel;
     uuidList: any = [];
     prepayAmount;
@@ -293,8 +293,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     hideNextButton = false;
     wt_personaahead;
     selection_modes: any;
-    indian_payment_modes: any=[];
-    non_indian_modes: any=[];
+    indian_payment_modes: any = [];
+    non_indian_modes: any = [];
     selected_payment_mode: any;
     isInternatonal: boolean;
     gateway: any;
@@ -348,7 +348,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.bookStep = 0;
                 } else {
                     this.bookStep = 1;
-                }              
+                }
                 // if (params.service_type) {
                 //     this.serviceType = params.service_type;
                 //     if (this.serviceType === 'virtualService') {
@@ -366,7 +366,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 }
                 if (params.service_id) {
                     this.selectedService = parseInt(params.service_id);
-                   
+
                 }
                 if (params.type === 'waitlistreschedule') {
                     this.type = params.type;
@@ -478,8 +478,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.api_loading1 = true;
         const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
         this.customer_countrycode = credentials.countryCode;
-        this.getPaymentModes();
-
+        if (this.selectedService) {
+            this.getPaymentModes();
+        }
         if (activeUser) {
             this.customer_data = activeUser;
         }
@@ -1279,14 +1280,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     if (this.paymentmodes.indiaPay) {
                         this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
                     }
-                     if (this.paymentmodes.internationalPay) {
+                    if (this.paymentmodes.internationalPay) {
                         this.non_indian_modes = this.paymentmodes.internationalBankInfo;
- 
+
                     }
-                    if(!this.paymentmodes.indiaPay && this.paymentmodes.internationalPay){
-                        this.shownonIndianModes=true;
-                    }else{
-                        this.shownonIndianModes=false;  
+                    if (!this.paymentmodes.indiaPay && this.paymentmodes.internationalPay) {
+                        this.shownonIndianModes = true;
+                    } else {
+                        this.shownonIndianModes = false;
                     }
 
                 },
@@ -1312,12 +1313,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
 
     }
-    togglepaymentMode(){
-        this.shownonIndianModes=!this.shownonIndianModes;
+    togglepaymentMode() {
+        this.shownonIndianModes = !this.shownonIndianModes;
     }
-    getImageSrc(mode){
-    
-        return '../../../../../assets/images/payment-modes/'+mode+'.png';
+    getImageSrc(mode) {
+
+        return '../../../../../assets/images/payment-modes/' + mode + '.png';
     }
     ngOnDestroy(): void {
         this.subs.unsubscribe();
@@ -1343,6 +1344,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.selectedService = this.waitlist.service.id;
                 this.sel_checkindate = this.selectedDate = this.hold_sel_checkindate = this.waitlist.date;
                 this.sel_ser = this.waitlist.service.id;
+                this.getPaymentModes();
                 this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
                 this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
             });
@@ -1804,7 +1806,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     if (this.jcashamount > 0 && this.checkJcash) {
                         this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.paymentDetails.amountRequiredNow)
                             .subscribe(data => {
-                                console.log('dfsdfdfs'+data)
+                                console.log('dfsdfdfs' + data)
                                 this.remainingadvanceamount = data;
                                 this.addCheckInConsumer(post_Data, paymenttype);
                             });
@@ -1852,7 +1854,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.isClickedOnce = true
                 this.paymentBtnDisabled = false;
             }
-            
+
 
         }
         if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
@@ -1896,7 +1898,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
     }
     addCheckInConsumer(postData, paymentmodetype?) {
-        let paymenttype=this.selected_payment_mode;
+        let paymenttype = this.selected_payment_mode;
         this.subs.sink = this.shared_services.addCheckin(this.account_id, postData)
             .subscribe(data => {
                 this.lStorageService.removeitemfromLocalStorage('age');
@@ -1922,7 +1924,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     }
                     parentUid = retData['parent_uuid'];
                 });
-                
+
                 if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(this.uuidList, parentUid, paymenttype);
                 }
@@ -2931,7 +2933,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.addWaitlistAdvancePayment(param, post_Data)
             .subscribe(data => {
                 this.paymentDetails = data;
-         
+
             },
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -2981,25 +2983,25 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.bookStep = 1;
                 }
             }
-            if (this.action !== 'addmember') {
-                this.closebutton.nativeElement.click();
-            }
-            setTimeout(() => {
-                if (this.action === 'note' || this.action === 'members' || (this.action === 'service' && !this.filterDepart)
-                    || this.action === 'attachment' || this.action === 'coupons' || this.action === 'departments' ||
-                    this.action === 'phone' || this.action === 'email') {
-                    this.action = '';
-                } else if (this.action === 'addmember') {
-                    this.action = 'members';
-                } else if (this.action === 'service' && this.filterDepart) {
-                    this.action = '';
-                } else if (this.action === 'preInfo') {
-                    this.action = '';
-                } else if (this.action === 'timeChange') {
-                    this.action = '';
-                }
-            }, 500);
         }
+        if (this.action !== 'addmember') {
+            this.closebutton.nativeElement.click();
+        }
+        setTimeout(() => {
+            if (this.action === 'note' || this.action === 'members' || (this.action === 'service' && !this.filterDepart)
+                || this.action === 'attachment' || this.action === 'coupons' || this.action === 'departments' ||
+                this.action === 'phone' || this.action === 'email') {
+                this.action = '';
+            } else if (this.action === 'addmember') {
+                this.action = 'members';
+            } else if (this.action === 'service' && this.filterDepart) {
+                this.action = '';
+            } else if (this.action === 'preInfo') {
+                this.action = '';
+            } else if (this.action === 'timeChange') {
+                this.action = '';
+            }
+        }, 500);
     }
     applyPromocode() {
         this.action = 'coupons';
@@ -3238,7 +3240,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         };
         this.waitlistDetails.paymentMode = paymentMode;
         this.waitlistDetails.serviceId = this.sel_ser;
-        this.waitlistDetails.isInternational=this.isInternatonal;
+        this.waitlistDetails.isInternational = this.isInternatonal;
         this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
         this.lStorageService.setitemonLocalStorage('acid', this.account_id);
         this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
@@ -3276,7 +3278,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     });
         }
         else if (this.remainingadvanceamount > 0 && this.checkJcash) {
-            const postData :any= {
+            const postData: any = {
                 'amountToPay': this.paymentDetails.amountRequiredNow,
                 'accountId': this.account_id,
                 'uuid': this.trackUuid,
@@ -3287,9 +3289,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 'isPayTmPayment': false,
                 'paymentMode': null
             };
-            postData.paymentMode=paymentMode;
-            postData.isInternational=this.isInternatonal;
-            postData.serviceId=this.sel_ser;
+            postData.paymentMode = paymentMode;
+            postData.isInternational = this.isInternatonal;
+            postData.serviceId = this.sel_ser;
             // if (paymentMode == 'PPI') {
             //     postData.isPayTmPayment = true;
             //     postData.isRazorPayPayment = false;
@@ -3346,13 +3348,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
-        this.razorModel.mode=this.selected_payment_mode;
+        this.razorModel.mode = this.selected_payment_mode;
         this.isClickedOnce = false;
         this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'checkin_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList, this.customId, this.from);
     }
     payWithPayTM(pData: any, accountId: any) {
         this.loadingPaytm = true;
-        pData.paymentMode=this.selected_payment_mode;
+        pData.paymentMode = this.selected_payment_mode;
         this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
     }
     getImage(url, file) {
