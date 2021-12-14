@@ -5,3 +5,10 @@
     margin-top: 2px;
     }
 }
+.wlstatus mat-select{
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+.wlstatus .select-all, .select-all {
+    padding: 5px 15px 5px 15px !important;
+}

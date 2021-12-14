@@ -33,7 +33,7 @@ export class QRCodeGeneratordetailComponent implements OnInit , OnDestroy {
 
   }
   private qrCodeParent: ElementRef;
-  @ViewChild('qrCodeOnlineId1', { read: ElementRef }) set content1(content1: ElementRef) {
+  @ViewChild('qrCodeOnlineId', { read: ElementRef }) set content1(content1: ElementRef) {
     if (content1) { // initially setter gets called with undefined
       this.qrCodeParent = content1;
     }

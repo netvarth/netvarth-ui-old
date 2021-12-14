@@ -53,19 +53,19 @@
                             </ng-container>
                             <ng-container
                                 *ngIf="bl['answerList'][header.key][0]['answer'].fileUpload && bl['answerList'][header.key][0]['answer'].fileUpload.length > 0">
-                                Yes
+                                <span style="color:green">Yes</span>
                             </ng-container>
                             <ng-container
                                 *ngIf="bl['answerList'][header.key][0]['answer'].fileUpload && bl['answerList'][header.key][0]['answer'].fileUpload.length == 0">
-                                No
+                                <span style="color:red">No</span>
                             </ng-container>
                             <ng-container
                                 *ngIf="bl['answerList'][header.key][0]['answer'].bool && bl['answerList'][header.key][0]['answer'].bool == 'true'">
-                                Yes
+                                <span style="color:green">Yes</span>
                             </ng-container>
                             <ng-container
                                 *ngIf="bl['answerList'][header.key][0]['answer'].bool && bl['answerList'][header.key][0]['answer'].bool == 'false'">
-                                No
+                                <span style="color:red">No</span>
                             </ng-container>
                             <ng-container
                                 *ngIf="bl['answerList'][header.key][0]['answer'].list && bl['answerList'][header.key][0]['answer'].list.length>0">
@@ -88,17 +88,17 @@
                                         </ng-container>
                                         <ng-container
                                             *ngIf="rowHeader.column.fileUpload && rowHeader.column.fileUpload.length > 0">
-                                            {{rowHeader.columnId}}: Yes
+                                            {{rowHeader.columnId}}: <span style="color:green">Yes</span>
                                         </ng-container>
                                         <ng-container
                                             *ngIf="rowHeader.column.fileUpload && rowHeader.column.fileUpload.length == 0">
-                                            {{rowHeader.columnId}}: No
+                                            {{rowHeader.columnId}}: <span style="color:red">No</span>
                                         </ng-container>
                                         <ng-container *ngIf="rowHeader.column.bool && rowHeader.column.bool == 'true'">
-                                            {{rowHeader.columnId}}: Yes
+                                            {{rowHeader.columnId}}: <span style="color:green">Yes</span>
                                         </ng-container>
                                         <ng-container *ngIf="rowHeader.column.bool && rowHeader.column.bool == 'false'">
-                                            {{rowHeader.columnId}}: No
+                                            {{rowHeader.columnId}}: <span style="color:red">No</span>
                                         </ng-container>
                                         <ng-container *ngIf="rowHeader.column.list && rowHeader.column.list.length>0">
                                             <div *ngFor="let rows of rowHeader.column.list; let i=index">
