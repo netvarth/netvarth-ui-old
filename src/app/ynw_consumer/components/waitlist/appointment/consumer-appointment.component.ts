@@ -261,7 +261,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     payment_options: any = [];
     paytmEnabled = false;
     razorpayEnabled = false;
-   interNatioanalPaid = false;
+    interNatioanalPaid = false;
     @ViewChild('consumer_appointment') paytmview;
     paymentmodes: any;
     customer_countrycode: any;
@@ -271,8 +271,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     amountdifference: any;
     from: string;
     isPayment: boolean;
-    indian_payment_modes: any=[];
-    non_indian_modes: any =[];
+    indian_payment_modes: any = [];
+    non_indian_modes: any = [];
     shownonIndianModes: boolean;
     selected_payment_mode: any;
     isInternatonal: boolean;
@@ -365,7 +365,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 if (params.qid) {
                     this.sel_queue_id = params.qid;
                 }
-                if(params.isFrom && params.isFrom =='providerdetail'){
+                if (params.isFrom && params.isFrom == 'providerdetail') {
                     this.from = 'providerdetail';
                 }
                 this.change_date = params.cur;
@@ -379,7 +379,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.bookStep = 0;
                 } else {
                     this.bookStep = 1;
-                }   
+                }
                 if (params.dept) {
                     this.selectedDeptParam = parseInt(params.dept);
                     this.filterDepart = true;
@@ -436,7 +436,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     getBookStep() {
         let step: any = '';
         // if (this.serviceType === 'virtualService') {
-        if (this.tele_srv_stat === 'true') {            
+        if (this.tele_srv_stat === 'true') {
             step = 3;
             if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                 step = 4;
@@ -508,11 +508,22 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     getFamilyMember() {
         this.api_loading1 = true;
         let fn;
+        let self_obj;
         fn = this.sharedServices.getConsumerFamilyMembers();
+        self_obj = {
+            'userProfile': {
+                'id': this.customer_data.id,
+                'firstName': this.customer_data.userProfile.firstName,
+                'lastName': this.customer_data.userProfile.lastName
+            }
+        };
         this.subs.sink = fn.subscribe(data => {
             this.familymember = [];
+            this.familymember.push(self_obj);
             for (const mem of data) {
-                this.familymember.push(mem);
+                if (mem.userProfile.id !== self_obj.userProfile.id) {
+                    this.familymember.push(mem);
+                }
             }
             if (this.dialogData.id) {
                 this.virtualForm.patchValue({ 'serviceFor': this.dialogData.id });
@@ -1289,7 +1300,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.hold_sel_checkindate = this.sel_checkindate;
         this.getProfile().then(
             () => {
-                this.getFamilyMembers();
+                // this.getFamilyMembers();
+                this.getFamilyMember();
                 this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
                 const dt1 = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
                 const date1 = new Date(dt1);
@@ -1302,9 +1314,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
         );
     }
-    getImageSrc(mode){
-    
-        return '../../../../../assets/images/payment-modes/'+mode+'.png';
+    getImageSrc(mode) {
+
+        return 'assets/images/payment-modes/' + mode + '.png';
     }
     // getPaymentModes() {
     //     this.paytmEnabled = false;
@@ -1400,32 +1412,32 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 );
         });
     }
-    getFamilyMembers() {
-        this.api_loading1 = true;
-        let fn;
-        let self_obj;
-        fn = this.shared_services.getConsumerFamilyMembers();
-        self_obj = {
-            'userProfile': {
-                'id': this.customer_data.id,
-                'firstName': this.customer_data.firstName,
-                'lastName': this.customer_data.lastName
-            }
-        };
-        this.subs.sink = fn.subscribe(data => {
-            this.familymembers = [];
-            this.familymembers.push(self_obj);
-            for (const mem of data) {
-                if (mem.userProfile.id !== self_obj.userProfile.id) {
-                    this.familymembers.push(mem);
-                }
-            }
-            this.api_loading1 = false;
-        },
-            () => {
-                this.api_loading1 = false;
-            });
-    }
+    // getFamilyMembers() {
+    //     this.api_loading1 = true;
+    //     let fn;
+    //     let self_obj;
+    //     fn = this.shared_services.getConsumerFamilyMembers();
+    //     self_obj = {
+    //         'userProfile': {
+    //             'id': this.customer_data.id,
+    //             'firstName': this.customer_data.firstName,
+    //             'lastName': this.customer_data.lastName
+    //         }
+    //     };
+    //     this.subs.sink = fn.subscribe(data => {
+    //         this.familymembers = [];
+    //         this.familymembers.push(self_obj);
+    //         for (const mem of data) {
+    //             if (mem.userProfile.id !== self_obj.userProfile.id) {
+    //                 this.familymembers.push(mem);
+    //             }
+    //         }
+    //         this.api_loading1 = false;
+    //     },
+    //         () => {
+    //             this.api_loading1 = false;
+    //         });
+    // }
     changeSlot() {
 
 
@@ -1748,8 +1760,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.payEmail = result;
                     this.confirmcheckin(type, paymenttype);
                 } else {
-                     this.isClickedOnce=false;
-                   
+                    this.isClickedOnce = false;
+
                 }
 
             });
@@ -1908,7 +1920,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 this.isClickedOnce = true
                 this.paymentBtnDisabled = false;
             }
-        
+
         }
         if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
             if (this.waitlist_for.length !== 0) {
@@ -1966,7 +1978,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 });
     }
     addCheckInConsumer(post_Data, paymentmodetype?) {
-        let paymenttype=this.selected_payment_mode;
+        let paymenttype = this.selected_payment_mode;
         this.subs.sink = this.shared_services.addCustomerAppointment(this.account_id, post_Data)
             .subscribe(data => {
                 const retData = data;
@@ -2013,7 +2025,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.apptdisable = false;
                     this.disablebutton = false;
-                   
+
                 });
     }
     handleOneMemberSelect(id, firstName, lastName, email) {
@@ -2128,7 +2140,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.subs.sink = fn.subscribe(() => {
                 this.apiSuccess = this.wordProcessor.getProjectMesssages('MEMBER_CREATED');
                 // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
-                this.getFamilyMembers();
+                // this.getFamilyMembers();
+                this.getFamilyMember();
                 setTimeout(() => {
                     this.goBack();
                 }, projectConstants.TIMEOUT_DELAY);
@@ -2720,22 +2733,19 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
     goBack(type?) {
         if (type) {
-            if (this.bookStep === 1 && this.tele_srv_stat === 'true' || this.bookStep === 0) {
+            if ((this.tele_srv_stat !== 'true' && this.bookStep === 1) || (this.tele_srv_stat === 'true' && this.bookStep === 0)) {
                 this.location.back();
             } else {
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.bookStep--;
                 }
-             if (this.bookStep === 1 ) {
+                if (this.bookStep === 1) {
                     this.bookStep--;
                 }
                 else {
                     this.bookStep = 1;
                 }
-
-
             }
-
             // else
             // {
             //     this.bookStep = 1;
@@ -3026,7 +3036,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
             }
         } else if (type === 'prev') {
-
             if (this.tele_srv_stat === 'true' && this.bookStep == 1) {
                 this.bookStep--;
             }
@@ -3080,10 +3089,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             'accountId': this.account_id,
             'purpose': 'prePayment'
         };
-        
+
         this.waitlistDetails.paymentMode = paymentMode;
         this.waitlistDetails.serviceId = this.sel_ser;
-        this.waitlistDetails.isInternational=this.isInternatonal;
+        this.waitlistDetails.isInternational = this.isInternatonal;
         this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
         this.lStorageService.setitemonLocalStorage('acid', this.account_id);
         this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
@@ -3114,7 +3123,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     });
         }
         else if (this.remainingadvanceamount > 0 && this.checkJcash) {
-            const postData:any = {
+            const postData: any = {
                 'amountToPay': this.paymentDetails.amountRequiredNow,
                 'accountId': this.account_id,
                 'uuid': this.trackUuid,
@@ -3134,15 +3143,15 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             //     postData.isRazorPayPayment = true;
             //     postData.paymentMode = "DC";
             // }
-            postData.paymentMode=paymentMode;
-            postData.isInternational=this.isInternatonal;
-            postData.serviceId=this.sel_ser;
+            postData.paymentMode = paymentMode;
+            postData.isInternational = this.isInternatonal;
+            postData.serviceId = this.sel_ser;
             this.shared_services.PayByJaldeewallet(postData)
                 .subscribe((pData: any) => {
 
                     if (pData.isGateWayPaymentNeeded == true && pData.isJCashPaymentSucess == true) {
                         if (pData.paymentGateway == 'PAYTM') {
-                            this.payWithPayTM(pData.response,this.account_id);
+                            this.payWithPayTM(pData.response, this.account_id);
                         } else {
                             this.paywithRazorpay(pData.response);
                         }
@@ -3155,7 +3164,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     });
         }
         else {
-            console.log('waitlistDetails'+JSON.stringify(this.waitlistDetails));
+            console.log('waitlistDetails' + JSON.stringify(this.waitlistDetails));
             this.subs.sink = this.shared_services.consumerPayment(this.waitlistDetails)
                 .subscribe((pData: any) => {
                     console.log(pData);
@@ -3164,7 +3173,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         this.paywithRazorpay(pData);
                     } else {
                         if (pData['response']) {
-                            this.payWithPayTM(pData,this.account_id);
+                            this.payWithPayTM(pData, this.account_id);
                             // this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
                             // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
                             // setTimeout(() => {
@@ -3197,13 +3206,13 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
-        this.razorModel.mode=this.selected_payment_mode;
+        this.razorModel.mode = this.selected_payment_mode;
         this.isClickedOnce = false;
-        this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'appt_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList, this.customId,this.from);
+        this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'appt_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList, this.customId, this.from);
     }
-    payWithPayTM(pData: any,accountId:any) {
+    payWithPayTM(pData: any, accountId: any) {
         this.loadingPaytm = true;
-        pData.paymentMode=this.selected_payment_mode;
+        pData.paymentMode = this.selected_payment_mode;
         this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
     }
     getImage(url, file) {
@@ -3211,7 +3220,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             return '../../../../../assets/images/pdf.png';
         } else {
             return url;
-        } 
+        }
     }
 
     viewAttachments() {
@@ -3240,20 +3249,20 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.checkFutureorToday();
             this.selectedApptTime = this.apptTime;
             this.waitlist_for[0].apptTime = this.apptTime['time'];
-            if(this.type == 'reschedule' && this.appointment.service && this.appointment.service.priceDynamic){
+            if (this.type == 'reschedule' && this.appointment.service && this.appointment.service.priceDynamic) {
                 this.subs.sink = this.shared_services.getAppointmentReschedulePricelist(this.appointment.service.id).subscribe(
                     (list: any) => {
                         this.pricelist = list;
                         let oldprice;
                         let newprice;
-                        for(let list of this.pricelist){
-                            if(list.schedule.id == this.currentScheduleId){ // appointment scheduleid
+                        for (let list of this.pricelist) {
+                            if (list.schedule.id == this.currentScheduleId) { // appointment scheduleid
                                 oldprice = list.price;
                             }
-                            if(list.schedule.id == this.selectedApptTime['scheduleId']){ // rescheduledappointment scheduleid
+                            if (list.schedule.id == this.selectedApptTime['scheduleId']) { // rescheduledappointment scheduleid
                                 newprice = list.price;
                             }
-                        } 
+                        }
                         this.changePrice = newprice - oldprice;
                         this.amountdifference = this.appointment.amountDue + this.changePrice;
                     });
@@ -3339,9 +3348,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 uuid: this.trackUuid,
                 theme: this.theme
             }
-            if(this.from){
-                queryParams['isFrom']= this.from;
-              }
+            if (this.from) {
+                queryParams['isFrom'] = this.from;
+            }
             if (this.businessId) {
                 queryParams['customId'] = this.customId;
             }
@@ -3351,39 +3360,39 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras);
         }
     }
-    transactionCompleted(response,payload,accountId) {
+    transactionCompleted(response, payload, accountId) {
         if (response.STATUS == 'TXN_SUCCESS') {
             this.paytmService.updatePaytmPay(payload, accountId)
-            .then((data) => {
-                if(data){
-            this.isClickedOnce = false;
-            this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-            let queryParams = {
-                account_id: this.account_id,
-                uuid: this.trackUuid,
-                theme: this.theme
-            }
-            if (this.businessId) {
-                queryParams['customId'] = this.customId;
-            }
-            if(this.from){
-                queryParams['isFrom']= this.from;
-              }
-            let navigationExtras: NavigationExtras = {
-                queryParams: queryParams
-            };
-            this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras));
-        }
-        },
-        error=>{
-            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });   
-        })
+                .then((data) => {
+                    if (data) {
+                        this.isClickedOnce = false;
+                        this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+                        let queryParams = {
+                            account_id: this.account_id,
+                            uuid: this.trackUuid,
+                            theme: this.theme
+                        }
+                        if (this.businessId) {
+                            queryParams['customId'] = this.customId;
+                        }
+                        if (this.from) {
+                            queryParams['isFrom'] = this.from;
+                        }
+                        let navigationExtras: NavigationExtras = {
+                            queryParams: queryParams
+                        };
+                        this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras));
+                    }
+                },
+                    error => {
+                        this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+                    })
         } else if (response.STATUS == 'TXN_FAILURE') {
             this.isClickedOnce = false;
             this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
-            if(this.from){
+            if (this.from) {
                 this.ngZone.run(() => this.router.navigate(['consumer']));
-              } else{
+            } else {
                 let queryParams = {
                     account_id: this.account_id,
                     uuid: this.trackUuid,
@@ -3392,22 +3401,22 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 if (this.businessId) {
                     queryParams['customId'] = this.customId;
                 }
-                
+
                 let navigationExtras: NavigationExtras = {
                     queryParams: queryParams
-                };  
-                this.ngZone.run(() => this.router.navigate(['consumer'],navigationExtras));
-              }
-           
+                };
+                this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+            }
+
         }
     }
     closeloading() {
         this.loadingPaytm = false;
         this.cdRef.detectChanges();
         this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
-        if(this.from){
+        if (this.from) {
             this.ngZone.run(() => this.router.navigate(['consumer']));
-          } else{
+        } else {
             let queryParams = {
                 account_id: this.account_id,
                 uuid: this.trackUuid,
@@ -3416,12 +3425,12 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             if (this.businessId) {
                 queryParams['customId'] = this.customId;
             }
-            
+
             let navigationExtras: NavigationExtras = {
                 queryParams: queryParams
-            };  
-            this.ngZone.run(() => this.router.navigate(['consumer'],navigationExtras));
-          }
+            };
+            this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+        }
     }
     getConsumerQuestionnaire() {
         const consumerid = (this.waitlist_for[0].id === this.customer_data.id) ? 0 : this.waitlist_for[0].id;
@@ -3577,14 +3586,14 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     if (this.paymentmodes.indiaPay) {
                         this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
                     }
-                     if (this.paymentmodes.internationalPay) {
+                    if (this.paymentmodes.internationalPay) {
                         this.non_indian_modes = this.paymentmodes.internationalBankInfo;
- 
+
                     }
-                    if(!this.paymentmodes.indiaPay && this.paymentmodes.internationalPay){
-                        this.shownonIndianModes=true;
-                    }else{
-                        this.shownonIndianModes=false;  
+                    if (!this.paymentmodes.indiaPay && this.paymentmodes.internationalPay) {
+                        this.shownonIndianModes = true;
+                    } else {
+                        this.shownonIndianModes = false;
                     }
 
                 },
@@ -3610,7 +3619,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
 
     }
-    togglepaymentMode(){
-        this.shownonIndianModes=!this.shownonIndianModes;
+    togglepaymentMode() {
+        this.shownonIndianModes = !this.shownonIndianModes;
     }
 }

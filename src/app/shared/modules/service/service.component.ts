@@ -438,7 +438,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     }
     getImageSrc(mode){
     
-        return '../../../../../assets/images/payment-modes/'+mode+'.png';
+        return 'assets/images/payment-modes/'+mode+'.png';
       }
       radioChanage(event) {
         this.selected = true;

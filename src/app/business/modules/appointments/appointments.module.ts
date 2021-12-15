@@ -24,6 +24,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatChipsModule } from '@angular/material/chips';
+import { FormsModule } from '@angular/forms';
 const routes: Routes = [
     { path: '', component: AppointmentsComponent },
     {
@@ -46,6 +47,7 @@ const routes: Routes = [
         CapitalizeFirstPipeModule,
         PagerModule,
         OwlModule,
+        FormsModule,
         LoadingSpinnerModule,
         ProviderWaitlistCheckInConsumerNoteModule,
         ProviderWaitlistCheckInCancelModule,

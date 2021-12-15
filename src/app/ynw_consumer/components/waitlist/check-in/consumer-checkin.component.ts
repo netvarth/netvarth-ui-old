@@ -530,7 +530,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.hold_sel_checkindate = this.sel_checkindate;
         this.getProfile().then(
             () => {
-                _this.getFamilyMembers();
+                // _this.getFamilyMembers();
+                _this.getFamilyMember();
                 _this.getServicebyLocationId(_this.sel_loc, _this.sel_checkindate);
                 const dt1 = new Date(_this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
                 const date1 = new Date(dt1);
@@ -574,11 +575,23 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     getFamilyMember() {
         this.api_loading1 = true;
         let fn;
+        let self_obj;
         fn = this.shared_services.getConsumerFamilyMembers();
+        console.log(this.customer_data);
+        self_obj = {
+            'userProfile': {
+                'id': this.customer_data.id,
+                'firstName': this.customer_data.userProfile.firstName,
+                'lastName': this.customer_data.userProfile.lastName
+            }
+        };
         this.subs.sink = fn.subscribe(data => {
             this.familymember = [];
+            this.familymember.push(self_obj);
             for (const mem of data) {
-                this.familymember.push(mem);
+                if (mem.userProfile.id !== self_obj.userProfile.id) {
+                    this.familymember.push(mem);
+                }
             }
             if (this.dialogData.id) {
                 this.virtualForm.patchValue({ 'serviceFor': this.dialogData.id });
@@ -1424,33 +1437,36 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 );
         });
     }
-    getFamilyMembers() {
-        this.api_loading1 = true;
-        let fn;
-        let self_obj;
-        fn = this.shared_services.getConsumerFamilyMembers();
-        self_obj = {
-            'userProfile': {
-                'id': this.customer_data.id,
-                'firstName': this.customer_data.firstName,
-                'lastName': this.customer_data.lastName
-            }
-        };
-        this.subs.sink = fn.subscribe(data => {
-            this.familymembers = [];
-            this.familymembers.push(self_obj);
-            for (const mem of data) {
-                if (mem.userProfile.id !== self_obj.userProfile.id) {
-                    this.familymembers.push(mem);
-                }
-            }
-            this.api_loading1 = false;
+    // getFamilyMembers() {
+    //     this.api_loading1 = true;
+    //     let fn;
+    //     let self_obj;
+    //     fn = this.shared_services.getConsumerFamilyMembers();
+    //     self_obj = {
+    //         'userProfile': {
+    //             'id': this.customer_data.id,
+    //             'firstName': this.customer_data.firstName,
+    //             'lastName': this.customer_data.lastName
+    //         }
+    //     };
+    //     this.subs.sink = fn.subscribe(data => {
+    //         this.familymembers = [];
+    //         this.familymember  = [];
+    //         this.familymember.push(self_obj);
+    //         this.familymembers.push(self_obj);
+    //         for (const mem of data) {
+    //             if (mem.userProfile.id !== self_obj.userProfile.id) {
+    //                 this.familymember.push(mem);
+    //                 this.familymembers.push(mem);
+    //             }
+    //         }
+    //         this.api_loading1 = false;
 
-        },
-            () => {
-                this.api_loading1 = false;
-            });
-    }
+    //     },
+    //         () => {
+    //             this.api_loading1 = false;
+    //         });
+    // }
     resetApiErrors() {
         this.emailerror = null;
     }
@@ -2246,7 +2262,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.subs.sink = fn.subscribe(() => {
                 this.apiSuccess = this.wordProcessor.getProjectMesssages('MEMBER_CREATED');
                 // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
-                this.getFamilyMembers();
+                // this.getFamilyMembers();
+                this.getFamilyMember();
                 setTimeout(() => {
                     this.goBack();
                 }, projectConstants.TIMEOUT_DELAY);
