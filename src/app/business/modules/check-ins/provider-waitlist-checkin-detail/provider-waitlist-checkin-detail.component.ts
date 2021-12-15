@@ -17,6 +17,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
 import { CommunicationService } from '../../../../business/services/communication-service';
+import { BookingHistoryComponent } from '../../appointments/booking-history/booking-history.component';
 
 @Component({
   selector: 'app-provider-waitlist-checkin-detail',
@@ -104,6 +105,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     { mode: 'PHONE_CHECKIN', value: 'Phone in ' },
     { mode: 'ONLINE_CHECKIN', value: 'Online ' },
   ];
+  bookinghistorydialogref: any;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -160,6 +162,20 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     return currentmode[0].value;
 
   }
+  openbookinghistory() {
+    this.bookinghistorydialogref = this.dialog.open(BookingHistoryComponent, {
+      width: '60%',
+      height: 'auto',
+      data: {
+        type:'Token History',
+        providername:this.spName,
+        appointmentby:this.waitlist_data.waitlistedBy,
+        bookingmode:this.getWaitListMode(this.waitlist_data.waitlistMode),
+        consumername:this.waitlist_data.consumer.firstName+" "+this.waitlist_data.consumer.lastName,
+        details:this.waitlist_history
+      }
+    })
+  }
   ngOnDestroy() {
     if (this.sendmsgdialogRef) {
       this.sendmsgdialogRef.close();
@@ -188,6 +204,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       .subscribe(
         data => {
           this.waitlist_data = data;
+          console.log('waitlist dtata',this.waitlist_data)
           if (this.waitlist_data.questionnaires && this.waitlist_data.questionnaires.length > 0) {
             this.questionnaires = this.waitlist_data.questionnaires;
           }
@@ -249,6 +266,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           }
           this.getCheckInHistory(this.waitlist_data.ynwUuid).then(data => {
             this.waitlist_history = data;
+            console.log('waitlisthistory',this.waitlist_history)
             this.getInternalStatusLog(this.waitlist_data.ynwUuid).then((status: any) => {
               this.internalStatuslog = status;
               // for(let stat of status){

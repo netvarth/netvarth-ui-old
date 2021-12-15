@@ -11,6 +11,7 @@ import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.m
 import { ProviderWaitlistCheckInDetailComponent } from "./provider-waitlist-checkin-detail.component";
 import { RouterModule, Routes } from "@angular/router";
 import { CommunicationService } from "../../../../business/services/communication-service";
+import { BookingHistoryModule } from "../../appointments/booking-history/booking-history.module";
 const routes: Routes = [
     {path: '', component: ProviderWaitlistCheckInDetailComponent}
 ]
@@ -27,6 +28,7 @@ const routes: Routes = [
         MatTabsModule,
         QuestionnaireModule,
         Nl2BrPipeModule,
+        BookingHistoryModule,
         InboxListModule,
         [RouterModule.forChild(routes)]
     ],

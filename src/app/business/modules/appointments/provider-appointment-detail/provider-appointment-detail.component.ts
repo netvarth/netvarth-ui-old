@@ -16,6 +16,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { CommunicationService } from '../../../../business/services/communication-service';
+import { BookingHistoryComponent } from '../booking-history/booking-history.component';
 
 @Component({
   selector: 'app-provider-appointment-detail',
@@ -106,6 +107,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     { mode: 'PHONE_IN_APPOINTMENT', value: 'Phone in ' },
     { mode: 'ONLINE_APPOINTMENT', value: 'Online ' },
   ];
+  bookinghistorydialogref: any;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -160,6 +162,20 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     if (this.notedialogRef) {
       this.notedialogRef.close();
     }
+  }
+  openbookinghistory() {
+    this.bookinghistorydialogref = this.dialog.open(BookingHistoryComponent, {
+      width: '60%',
+      height: 'auto',
+      data: {
+        type:'Appointment History',
+        providername:this.spName,
+        appointmentby:this.waitlist_data.apptBy,
+        bookingmode:this.getAppointmentMode(this.waitlist_data.appointmentMode),
+        consumername:this.waitlist_data.appmtFor[0].firstName + ' '+ this.waitlist_data.appmtFor[0].lastName,
+        details:this.waitlist_history
+      }
+    })
   }
   getProviderSettings() {
     this.api_loading = true;
@@ -233,6 +249,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
           }
           this.getCheckInHistory(this.waitlist_data.uid).then(data => {
             this.waitlist_history = data;
+            console.log('waitlist data..',this.waitlist_history,this.waitlist_data,this.check_in_statuses)
             this.getInternalStatusLog(this.waitlist_data.uid).then(status => {
               this.internalStatuslog = status;
               // this.statusLog.push(this.waitlist_history);
