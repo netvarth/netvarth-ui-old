@@ -1264,11 +1264,11 @@
                                           
                                                 <ng-container *ngIf="!shownonIndianModes">
                                                         <div *ngFor="let modes of indian_payment_modes">
-                                                            <div class="col-xs-12  col-sm-6 col-lg-3  ">
+                                                            <div class="col-xs-12 col-md-6 col-sm-12 col-lg-6">
     
                                                                     <div class="paymentmode card text-primary" >
                                                                           
-                                                                      <mat-radio-group name="paymentMode" (change)="indian_payment_mode_onchange($event)" labelPosition="before">
+                                                                      <mat-radio-group class="" name="paymentMode" (change)="indian_payment_mode_onchange($event)" labelPosition="before">
                                                                         <mat-radio-button style="float:right" [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
     
                                                         

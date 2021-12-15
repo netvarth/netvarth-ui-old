@@ -416,6 +416,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.paymentmodes = data[0];
+                    console.log(this.paymentmodes);
                     this.isPayment = true;
                     if (this.paymentmodes.indiaPay) {
                         this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
@@ -433,7 +434,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 },
                 error => {
                     this.isPayment = false;
-                    console.log(this.isPayment);
                 }
 
 
@@ -650,8 +650,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             consumerNoteMandatory: serv.consumerNoteMandatory,
             consumerNoteTitle: serv.consumerNoteTitle
         };
-        console.log('isPrepayment' + this.sel_ser_det.isPrePayment)
-        console.log('minPrePaymentAmount' + this.sel_ser_det.minPrePaymentAmount)
         if (serv.provider) {
             this.sel_ser_det.provider = serv.provider;
         }
@@ -808,7 +806,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             });
 
         } else {
-            console.log('inisdeeeeee');
             if (this.waitlist_for.length !== 0) {
                 for (const list of this.waitlist_for) {
                     if (list.id === this.customer_data.id) {
@@ -930,7 +927,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     if (this.jcashamount > 0 && this.checkJcash) {
                         this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.paymentDetails.amountRequiredNow)
                             .subscribe(data => {
-                                console.log('dfsdfdfs'+data)
                                 this.remainingadvanceamount = data;
                                 this.addCheckInConsumer(post_Data, paymenttype);
                             });
@@ -2213,7 +2209,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     goToStep(type) {
-        console.log(this.bookStep);
         if (type === 'next') {
             if (this.queuejson.length !== 0 && !this.api_loading1 && this.waitlist_for.length !== 0) {
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
