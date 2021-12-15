@@ -10,14 +10,14 @@
         <div class="form-group" *ngIf="!api_loading">
             <mat-form-field>
                 <textarea matInput class="form-control" id="message" placeholder="{{message_label}} * "
-                    formControlName="message" (keyup)="keyPressed($event.target.value)" maxlength="330">
+                    formControlName="message" (keypress)="keyPressed($event.target.value)" maxlength="330">
             </textarea>
            </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"
                 errorMsg="Please enter a message.">
             </app-field-error-display>
         </div>
-        <div class="mgtop40 form-group" *ngIf="!api_loading && (typeOfMsg === 'multiple' || source ==='provider-waitlist' || source === 'customer-list' || source === 'donation-list')">
+        <div class="mgtop40 form-group" *ngIf="!api_loading && (typeOfMsg === 'multiple' || source ==='provider-waitlist' || source === 'customer-list' || source === 'donation-list' || source === 'provider-sendAll')">
             Send message via
             <div class="coupon-outer">
                 <mat-checkbox [disabled]="((source === 'customer-list' || source === 'donation-list') && selectedMessage.files.length !== 0) || (typeOfMsg === 'single' && (selectedMessage.files.length !== 0 ||   (source ==='provider-waitlist' || source ==='customer-list') && ((!phone && !phone_history )|| phone === 'null' || phone === '' ) || is_noSMS || countryCode !='+91'))"   class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">

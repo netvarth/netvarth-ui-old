@@ -17,6 +17,7 @@ import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/c
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { CommunicationService } from '../../../../business/services/communication-service';
 import { AddInboxMessagesComponent } from '../../../../../../src/app/shared/components/add-inbox-messages/add-inbox-messages.component';
+import { CommonDataStorageService } from '../../../../../../src/app/shared/services/common-datastorage.service';
 
 @Component({
   selector: 'app-customers-list',
@@ -132,6 +133,7 @@ export class CustomersListComponent implements OnInit {
     private groupService: GroupStorageService,
     private activated_route: ActivatedRoute,
     private snackbarService: SnackbarService,
+    public common_datastorage: CommonDataStorageService,
     private dateTimeProcessor: DateTimeProcessor) {
     this.onResize();
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
@@ -487,6 +489,7 @@ export class CustomersListComponent implements OnInit {
       );
   }
   sendmsgToAll() {
+    const terminologies = this.common_datastorage.get('terminologies');
     this.smsdialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -494,6 +497,7 @@ export class CustomersListComponent implements OnInit {
       autoFocus: true,
       data: {
         source: 'provider-sendAll',
+        terminologies: terminologies,
       } 
     });
     this.smsdialogRef.afterClosed().subscribe(result => {
