@@ -644,7 +644,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
     }
     getImageSrc(mode){
     
-        return '../../../../../assets/images/payment-modes/'+mode+'.png';
+        return 'assets/images/payment-modes/'+mode+'.png';
     }
     payWithPayTM(pData:any,accountId:any) {
         this.isClickedOnce=true;

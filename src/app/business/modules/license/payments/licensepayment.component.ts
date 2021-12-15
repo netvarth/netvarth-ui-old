@@ -127,7 +127,7 @@ non_indian_modes_onchange(event) {
 }
 getImageSrc(mode){
     
-  return '../../../../../assets/images/payment-modes/'+mode+'.png';
+  return 'assets/images/payment-modes/'+mode+'.png';
 }
 togglepaymentMode(){
     this.shownonIndianModes=!this.shownonIndianModes;

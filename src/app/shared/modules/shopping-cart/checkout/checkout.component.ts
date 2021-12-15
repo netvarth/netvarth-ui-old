@@ -448,7 +448,7 @@ togglepaymentMode(){
 }
 getImageSrc(mode){
     
-  return '../../../../../assets/images/payment-modes/'+mode+'.png';
+  return 'assets/images/payment-modes/'+mode+'.png';
 }
 getPaymentModes() {
     this.shared_services.getPaymentModesofProvider(this.account_id,0, 'billPayment')
