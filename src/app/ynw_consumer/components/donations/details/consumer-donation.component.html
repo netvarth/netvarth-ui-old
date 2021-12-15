@@ -587,16 +587,20 @@
 
                                                 <ng-container *ngIf="!shownonIndianModes">
                                                         <div *ngFor="let modes of indian_payment_modes">
-                                                            <div class="col-xs-12  col-sm-6 col-lg-3  ">
+                                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
     
-                                                                    <div class="paymentmode card text-primary" >
+                                                                    <div class="text-primary" >
                                                                           
-                                                                      <mat-radio-group name="paymentMode" (change)="indian_payment_mode_onchange($event)" labelPosition="before">
-                                                                        <mat-radio-button style="float:right" [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
+                                                                      <mat-radio-group  class="paymentmode card shadow-lg" name="paymentMode" (change)="indian_payment_mode_onchange($event)" labelPosition="before">
+                                                                        <mat-radio-button style="float:right" [value]="modes.mode"  >
+                                                                            <div class="d-flex justify-content-sm-around">
+                                                                                <div class="col-sm-8 col-md-8 col-xs-6 col-lg-8 my-auto"><span class="mode-display-name text-uppercase">{{modes.modeDisplayName}}</span></div>
+                                                                                <div class="col-sm-4 col-md-4 col-xs-6 col-lg-4 my-auto ml-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>
+                                                                            </div>
+                                                                        </mat-radio-button>
     
                                                         
                                                                       </mat-radio-group>
-                                                                      <img class="ordericon pickup" height="50px" width="100px" [src]="getImageSrc(modes.mode)">
                                                                       
                                                                     </div>
                                                                     </div>
@@ -606,15 +610,19 @@
                                                 <ng-container *ngIf="shownonIndianModes">
                                                     
                                                     <div *ngFor="let modes of non_indian_modes">
-                                                        <div class="col-xs-12  col-sm-6 col-lg-3  ">
+                                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
     
-                                                                <div class="paymentmode card text-primary" >
+                                                                <div class="text-primary" >
                                                                       
-                                                                  <mat-radio-group name="paymentMode" (change)="non_indian_modes_onchange($event)">
-                                                                    <mat-radio-button [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
+                                                                  <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode" (change)="non_indian_modes_onchange($event)">
+                                                                    <mat-radio-button [value]="modes.mode"  >
+                                                                        <div class="d-flex justify-content-sm-around">
+                                                                            <div class="col-sm-8 col-md-8 col-xs-6 col-lg-8 my-auto"><span class="mode-display-name text-uppercase">{{modes.modeDisplayName}}</span></div>
+                                                                            <div class="col-sm-4 col-md-4 col-xs-6 col-lg-4 my-auto ml-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>
+                                                                        </div>
+                                                                    </mat-radio-button>
                                                                   
                                                                   </mat-radio-group>
-                                                                  <img class="ordericon pickup" height="50px" width="100px" [src]="getImageSrc(modes.mode)">
                                                     
                                                                 </div>
                                                                 </div>
