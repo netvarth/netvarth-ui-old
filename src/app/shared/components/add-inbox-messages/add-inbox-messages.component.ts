@@ -338,7 +338,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               uuid: this.uuid
             };
             if (this.type === 'appt') {
-              this.shared_services.consumerMassCommunicationAppt(post_data).
+              const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+              dataToSend.append('communication', blobpost_Data);
+              this.shared_services.consumerMassCommunicationAppt(dataToSend).
                 subscribe(() => {
                   this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
                   setTimeout(() => {
@@ -351,7 +353,25 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                   }
                 );
             } else if (this.type === 'order') {
-              this.shared_services.consumerOrderMassCommunicationAppt(post_data).
+              const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+              dataToSend.append('communication', blobpost_Data);
+              this.shared_services.consumerOrderMassCommunicationAppt(dataToSend).
+                subscribe(() => {
+                  this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                  setTimeout(() => {
+                    this.dialogRef.close('reloadlist');
+                  }, projectConstants.TIMEOUT_DELAY);
+                },
+                  error => {
+                    this.wordProcessor.apiErrorAutoHide(this, error);
+                    this.disableButton = false;
+                  }
+                );
+            } 
+            else if (this.type === 'wl') {
+              const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+              dataToSend.append('communication', blobpost_Data);
+              this.shared_services.consumerMassCommunication(dataToSend).
                 subscribe(() => {
                   this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
                   setTimeout(() => {
@@ -378,7 +398,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                     this.disableButton = false;
                   }
                 );
-            } else {
+            }
+             else {
               this.shared_services.consumerMassCommunication(post_data).
                 subscribe(() => {
                   this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
