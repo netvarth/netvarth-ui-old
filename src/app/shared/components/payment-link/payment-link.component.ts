@@ -175,7 +175,11 @@ export class PaymentLinkComponent implements OnInit {
             this.businessname = this.bill_data.accountProfile.businessName;
             this.firstname = this.bill_data.billFor.firstName;
             this.netRate = this.bill_data.netRate;
-            this.amountDue = this.bill_data.amountDue;
+            if(this.bill_data.amountDue){
+              this.amountDue = this.bill_data.amountDue;
+              this.getPaymentModes();
+            }
+        
             this.location = this.bill_data.accountProfile.location.place;
             this.billPaymentStatus = this.bill_data.billPaymentStatus;
             this.uuid = this.bill_data.uuid;
@@ -187,10 +191,7 @@ export class PaymentLinkComponent implements OnInit {
            
          
           }
-     if(this.bill_data && this.bill_data.amountDue){
-       alert('inisde');
-       this.getPaymentModes();
-     }
+    
           if (this.bill_data && this.bill_data.accountId === 0) {
             this.razorpayEnabled = true;
           }

@@ -11,7 +11,6 @@ export class PaytmService {
         private sharedServices: SharedServices
     ) { }
     initializePayment(pData: any, paytmUrl, accountId, referrer) {
-        console.log('resppDataonse' + JSON.stringify(pData));
         let response = JSON.parse(pData.response);
         if(pData.paymentMode==='CC'||pData.paymentMode==='DC'){
             pData.paymentMode='CARD';
