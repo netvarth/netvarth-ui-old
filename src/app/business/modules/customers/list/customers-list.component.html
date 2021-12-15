@@ -80,16 +80,17 @@
               {{customer_label | capitalizeFirst}}s</span>
             <span class="card-label font-1 font-weight-bolder text-dark"
               *ngIf="selectedGroup !== 'all'">{{selectedGroup.groupName}}</span>
-              <a (click)="sendmsgToAll()"  class="btn mb-2 action-button mgn-lt-5 pull-right">
-                <i
-                class="flaticon2-chat-1" aria-hidden="true"></i> Send Message
-            </a>
-            <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-right"
+              <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-right"
               *ngIf="filterapplied || (!showCustomers && customers.length > 0 && !filterapplied)">
               <img src="assets/images/provider-filter-icon.png"
                 style="width: 22px !important; margin-top: -4px !important;">
               Filter
             </a>
+              <a (click)="sendmsgToAll()"  class="btn mb-2 action-button mgn-lt-5 pull-right">
+                <i
+                class="flaticon2-chat-1" aria-hidden="true"></i> to all {{customer_label | capitalizeFirst}}s
+            </a>
+           
             <div class="sel-group-desc" [class.mgn-lt-28]="hideGroups">{{selectedGroup.description}}</div>
           </h3>
         </div>
