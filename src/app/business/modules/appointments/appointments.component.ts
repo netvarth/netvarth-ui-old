@@ -2806,10 +2806,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.router.navigate(['provider', 'appointments', 'appointment'], { queryParams: { source: 'appt-block', uid: appt.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: appt.service.id, apptMode: appt.appointmentMode } });
   }
-  selectAllStarted() {
+  selectAllStarted(event) {
     this.startedAppointmentsChecked = {};
     this.startedChkAppointments = {};
-    if (this.chkStartedSelectAppointments) {
+    if (event.target.checked) {
+      this.apptStartedMultiSelection = true;
       for (let aIndex = 0; aIndex < this.startedAppts.length; aIndex++) {
         this.chkStartedAptHistoryClicked(aIndex, this.startedAppts[aIndex]);
       }

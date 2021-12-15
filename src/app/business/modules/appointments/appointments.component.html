@@ -587,7 +587,7 @@
                     <tr>
                       <th class="chkWth check-table-head" *ngIf="startedAppts.length > 1" colspan="5">
                         <input type="checkbox" class="ckbx pull-left" [checked]="chkStartedSelectAppointments"
-                          (click)="stopprop($event)" (change)="selectAllStarted()" [(ngModel)]="!chkStartedSelectAppointments"
+                          (click)="stopprop($event)" (change)="selectAllStarted($event)" [(ngModel)]="chkStartedSelectAppointments"
                           [ngModelOptions]="{standalone: true}" />
                         <label class="selectall"> Select all</label>
                         <a *ngIf="apptStartedMultiSelection" class="statusText btn-play pointer-cursor act-btn"
