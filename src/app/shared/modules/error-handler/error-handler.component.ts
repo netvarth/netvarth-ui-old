@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
 export class GlobalErrorHandler implements ErrorHandler {
     userData: any;
     constructor(public shared_services: SharedServices,
-        private injector: Injector) {
+        private injector: Injector,
+        private router: Router) {
 
     }
 
@@ -36,6 +37,7 @@ export class GlobalErrorHandler implements ErrorHandler {
             } else {
                 userInfo.type = 'Consumer'
             }
+
             mailError['userInfo'] = userInfo;
         }
         mailError['url'] = router.url;

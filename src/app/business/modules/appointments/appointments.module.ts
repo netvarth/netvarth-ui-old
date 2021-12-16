@@ -68,6 +68,7 @@ const routes: Routes = [
         AttachmentPopupModule,
         VoicecallDetailsSendModule,
         AppointmentActionsModule,
+        FormsModule,
         [RouterModule.forChild(routes)]
     ],
     declarations: [
