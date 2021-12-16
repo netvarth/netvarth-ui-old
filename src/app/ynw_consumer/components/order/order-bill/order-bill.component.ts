@@ -458,6 +458,9 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                                 });
                     } else if (this.remainingadvanceamount > 0 && this.checkJcash) {
+                        if(this.selected_payment_mode==='cash'){
+                            this.cashPayment();
+                        }else{
                         const postData = {
                             'amountToPay': this.bill_data.amountDue,
                             'accountId': this.accountId,
@@ -523,6 +526,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                                 });
                     }
+                }
                 },
                     error => {
                         this.isClickedOnce = false;
@@ -531,6 +535,9 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                     });
         }
         else {
+            if(this.selected_payment_mode==='cash'){
+                this.cashPayment();
+            }else{
             this.pay_data.uuid = this.uuid;
             this.pay_data.amount = this.bill_data.amountDue;
             this.pay_data.paymentMode = null;
@@ -572,6 +579,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                     );
             }
         }
+    }
     }
 
     paywithRazorpay(data: any) {
@@ -952,6 +960,11 @@ export class OrderBillComponent implements OnInit, OnDestroy {
      */
     cashPayment() {
         this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CASH_PAYMENT'));
+        setTimeout(()=>{
+            this.ngZone.run(() => this.router.navigate(['consumer'] ));
+            console.log('redirect to consumer');
+    
+           },1000);
     }
     //   getCouponList() {
     //       const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();

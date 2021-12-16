@@ -23,6 +23,7 @@ import { LocalStorageService } from '../../../../../../app/shared/services/local
 import { CheckInHistoryServices } from '../../../../../shared/modules/consumer-checkin-history-list/components/checkin-history-list/checkin-history-list.service';
 import { JcCouponNoteComponent } from '../../../../../shared/modules/jc-coupon-note/jc-coupon-note.component';
 
+
 @Component({
     selector: 'app-consumer-checkin-bill',
     templateUrl: './checkin-bill.component.html',
@@ -454,6 +455,9 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                                 });
                     } else if (this.remainingadvanceamount > 0 && this.checkJcash) {
+                        if(this.selected_payment_mode==='cash'){
+                            this.cashPayment();
+                        }else{
                         const postData = {
                             'amountToPay': this.bill_data.amountDue,
                             'accountId': this.accountId,
@@ -482,6 +486,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                                     this.loadingPaytm = false;
                                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                                 });
+                            }
 
                     }
                 },
@@ -492,7 +497,9 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                     });
         }
         else {
-        
+            if(this.selected_payment_mode==='cash'){
+                this.cashPayment();
+            }else{
             this.pay_data.uuid = this.uuid;
             this.pay_data.amount = this.bill_data.amountDue;
             this.pay_data.paymentMode = this.selected_payment_mode;
@@ -526,6 +533,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                     );
 
             }
+        }
         }
     }
     paywithRazorpay(data: any) {
@@ -924,6 +932,12 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
      */
     cashPayment() {
         this.snackbarService.openSnackBar('Visit ' + this.getTerminologyTerm('provider') + ' to pay by cash');
+        setTimeout(()=>{
+            this.ngZone.run(() => this.router.navigate(['consumer'] ));
+            console.log('redirect to consumer');
+    
+           },1000);
+       
     }
     checkCouponValid(couponCode) {
         let found = false;

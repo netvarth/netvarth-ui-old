@@ -469,6 +469,21 @@
 
                                                                 <div class="clearfix"></div>
                                                                 <ng-container *ngIf="!shownonIndianModes && ((checkJcash && jcashamount < bill_data.amountDue))">
+                                                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            
+                                                                        <div class="text-primary" >
+                                                                          <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode" (change)="indian_payment_mode_onchange($event)">
+                                                                            <mat-radio-button value="cash"  >
+                                                                                <div class="d-flex justify-content-around">
+                                                                                    <div class="col-md-8 col-lg-7 my-auto "><span>Pay by Cash</span></div>
+                                                                                    <div class="col-md-4 col-lg-5 my-auto "><img class="ordericon pickup" height="75px" width="75px"src="assets/images/payment-modes/cash_pay.png"></div>
+                                                                                </div>
+                                                                            </mat-radio-button>
+                                                                          </mat-radio-group>
+                                                                          
+                                                                          
+                                                                        </div>
+                                                                        </div>
                                                                 <div *ngFor="let modes of indian_payment_modes">
                                                                     <div class="col-xs-12  col-sm-6 col-lg-2  ">
             
@@ -486,7 +501,21 @@
                                                             </div>
                                                         </ng-container>
                                                         <ng-container *ngIf="shownonIndianModes && ((checkJcash && jcashamount < bill_data.amountDue))">
-                                                            
+                                                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            
+                                                                <div class="text-primary" >
+                                                                  <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode" (change)="non_indian_modes_onchange($event)">
+                                                                    <mat-radio-button value="cash"  >
+                                                                        <div class="d-flex justify-content-around">
+                                                                            <div class="col-md-8 col-lg-7 my-auto "><span>Pay by Cash</span></div>
+                                                                            <div class="col-md-4 col-lg-5 my-auto "><img class="ordericon pickup" height="75px" width="75px"src="assets/images/payment-modes/cash_pay.png"></div>
+                                                                        </div>
+                                                                    </mat-radio-button>
+                                                                  </mat-radio-group>
+                                                                  
+                                                                  
+                                                                </div>
+                                                                </div>
                                                             <div *ngFor="let modes of non_indian_modes">
                                                                 <div class="col-xs-12  col-sm-6 col-lg-2  ">
             
@@ -541,8 +570,8 @@
                                                                     <button class="next-button btn btn-primary font-weight-bold text-uppercase" (click)="payuPayment()"
                                                                     *ngIf="((checkJcash && jcashamount > bill_data.amountDue) || ( checkJcash && jcashamount == bill_data.amountDue))">
                                                                     Confirm</button>
-                                                                    <button class=" next-button btn btn-primary font-weight-bold text-uppercase"
-                                                                        (click)="cashPayment()">Cash</button>
+                                                                    <!-- <button class=" next-button btn btn-primary font-weight-bold text-uppercase"
+                                                                        (click)="cashPayment()">Cash</button> -->
                                                                 <br> <br>
                                                                 <!-- <div
                                                                     *ngIf="interNatioanalPaid && ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))">
