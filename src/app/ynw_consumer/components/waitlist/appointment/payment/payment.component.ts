@@ -176,7 +176,7 @@ export class ConsumerAppointmentPaymentComponent implements OnInit,OnDestroy {
     }
     getImageSrc(mode){
     
-        return '../../../../../assets/images/payment-modes/'+mode+'.png';
+        return 'assets/images/payment-modes/'+mode+'.png';
     }
     getPaymentStatus(pid) {
         this.lStorageService.removeitemfromLocalStorage('acid');

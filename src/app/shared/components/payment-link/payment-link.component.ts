@@ -171,25 +171,32 @@ export class PaymentLinkComponent implements OnInit {
       .subscribe(
         data => {
           this.bill_data = data;
-          if (this.bill_data = data) {
+          if (this.bill_data) {
             this.businessname = this.bill_data.accountProfile.businessName;
             this.firstname = this.bill_data.billFor.firstName;
             this.netRate = this.bill_data.netRate;
-            this.amountDue = this.bill_data.amountDue;
+            if(this.bill_data.amountDue){
+              this.amountDue = this.bill_data.amountDue;
+              this.getPaymentModes();
+            }
+        
             this.location = this.bill_data.accountProfile.location.place;
             this.billPaymentStatus = this.bill_data.billPaymentStatus;
             this.uuid = this.bill_data.uuid;
             this.accountId = this.bill_data.accountId;
             this.countryCode = this.bill_data.billFor.countryCode;
+            if(this.bill_data.service&& this.bill_data.service.length>0){
             this.serviceId=this.bill_data.service[0].serviceId;
+            }
            
          
           }
+    
           if (this.bill_data && this.bill_data.accountId === 0) {
             this.razorpayEnabled = true;
           }
           else {
-            this.getPaymentModes();
+            
           }
           if (this.bill_data.accountProfile.providerBusinessName) {
             this.username = this.bill_data.accountProfile.providerBusinessName;

@@ -35,7 +35,7 @@
                                                     style="font-size: -webkit-xxx-large; font-weight: 400;">
                                                     {{this.amountDue | currency:'&#8377; '}}
                                                 </h2><br>                                                
-                                                <ng-container *ngIf="!shownonIndianModes">
+                                                <ng-container *ngIf="!shownonIndianModes&&paymentmodes.length>0">
                                                     <div  *ngFor="let modes of indian_payment_modes">
                                                         <div class="col-xs-12">
     
@@ -51,7 +51,7 @@
     
                                                 </div>
                                             </ng-container>
-                                            <ng-container *ngIf="shownonIndianModes">
+                                            <ng-container *ngIf="shownonIndianModes&&paymentmodes.length>0">
                                                 
                                                 <div  *ngFor="let modes of non_indian_modes">
                                                     <div class="col-xs-12 ">
@@ -59,7 +59,7 @@
                                                             <div class="paymentmode card text-primary" >
                                                               <mat-radio-group name="paymentMode" (change)="non_indian_modes_onchange($event)">
                                                                 <mat-radio-button [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
-    
+
                                                 
                                                               </mat-radio-group>
                                                               
@@ -84,14 +84,7 @@
     
     
                                                     </div>
-                                                    <div class="txt-align-center cancelpolicy  mgn-rt-5"
-                                                       >
-                                                        <div class="pad_policy"
-                                                           >
-                                                            <a data-toggle="modal" data-target="#exampleModal"
-                                                                class="refund_policy">Cancellation Policy</a>
-                                                        </div>
-                                                    </div> 
+                                              
                                                     <div class="txt-align-center">
                                                         <button type="button"
                                                                 class=" next-button btn btn-primary font-weight-bold text-uppercase "

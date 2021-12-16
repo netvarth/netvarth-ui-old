@@ -57,7 +57,6 @@ export class AddNoteComponent implements OnInit {
   }
   onSubmit(form_data) {
     this.disableButton = true;
-    console.log(form_data);
     if (form_data.message === '') {
       this.api_error = 'Please enter your note';
       setTimeout(() => {

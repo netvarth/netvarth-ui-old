@@ -302,7 +302,7 @@ export class StatementsComponent implements OnInit {
   }
   getImageSrc(mode){
     
-    return '../../../../../assets/images/payment-modes/'+mode+'.png';
+    return 'assets/images/payment-modes/'+mode+'.png';
 }
   redirecToLicenseInvoice() {
     if (this.data.data1 === 'invo-statement NotPaid') {

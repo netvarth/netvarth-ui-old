@@ -257,7 +257,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
     }
     getImageSrc(mode){
     
-        return '../../../../../assets/images/payment-modes/'+mode+'.png';
+        return 'assets/images/payment-modes/'+mode+'.png';
     }
     gets3curl() {
         this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id, null, 'terminologies,coupon,providerCoupon').subscribe(

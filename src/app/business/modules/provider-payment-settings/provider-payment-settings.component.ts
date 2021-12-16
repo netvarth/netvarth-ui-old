@@ -370,9 +370,9 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     saveAccountPaymentSettings(status) {
         const data:any={};
 if(status==='disable'){
-    data.jaldeeBank=true
+    data.jaldeeBank=false;
 }else {
-    data.jaldeeBank=false  
+    data.jaldeeBank=true; 
 }
       
         this.provider_services.setPaymentAccountSettingsForProvider(data)

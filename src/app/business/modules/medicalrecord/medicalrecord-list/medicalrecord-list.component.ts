@@ -46,7 +46,6 @@ export class MedicalrecordListComponent implements OnInit {
       .subscribe(
         res => {
           this.patientDetails = res;
-          console.log(this.patientDetails);
           this.loading = false;
         },
         error => {

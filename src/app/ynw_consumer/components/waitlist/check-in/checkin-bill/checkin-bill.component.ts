@@ -240,7 +240,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
     }
     getImageSrc(mode){
     
-        return '../../../../../assets/images/payment-modes/'+mode+'.png';
+        return 'assets/images/payment-modes/'+mode+'.png';
     }
     goBack() {
         this.location.back();

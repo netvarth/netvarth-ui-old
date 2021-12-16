@@ -1287,6 +1287,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.paymentmodes = data[0];
+                    console.log(this.paymentmodes);
                     this.isPayment = true;
                     if (this.paymentmodes.indiaPay) {
                         this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
@@ -1304,7 +1305,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 },
                 error => {
                     this.isPayment = false;
-                    console.log(this.isPayment);
                 }
 
 
@@ -1539,8 +1539,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             consumerNoteMandatory: serv.consumerNoteMandatory,
             consumerNoteTitle: serv.consumerNoteTitle
         };
-        console.log('isPrepayment' + this.sel_ser_det.isPrePayment)
-        console.log('minPrePaymentAmount' + this.sel_ser_det.minPrePaymentAmount)
         if (serv.provider) {
             this.sel_ser_det.provider = serv.provider;
         }
@@ -1697,7 +1695,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             });
 
         } else {
-            console.log('inisdeeeeee');
             if (this.waitlist_for.length !== 0) {
                 for (const list of this.waitlist_for) {
                     if (list.id === this.customer_data.id) {
@@ -1819,7 +1816,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     if (this.jcashamount > 0 && this.checkJcash) {
                         this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.paymentDetails.amountRequiredNow)
                             .subscribe(data => {
+<<<<<<< HEAD
                                 console.log('dfsdfdfs' + data)
+=======
+>>>>>>> refs/remotes/origin/jaldee-payment-profile-latest
                                 this.remainingadvanceamount = data;
                                 this.addCheckInConsumer(post_Data, paymenttype);
                             });
@@ -3156,7 +3156,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     goToStep(type) {
+<<<<<<< HEAD
         this.virtualInfo = this.virtualForm.value;
+=======
+>>>>>>> refs/remotes/origin/jaldee-payment-profile-latest
         if (type === 'next') {
             if (this.tele_srv_stat === 'true' && this.bookStep == 0) {
                 if (this.validateFields() === true) {
