@@ -12,6 +12,14 @@ import { AddInboxMessagesModule } from "../../../shared/components/add-inbox-mes
 const routes: Routes = [
     { path: '', component: MyfavouritesComponent }
 ];
+import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { projectConstantsLocal } from "../../../shared/constants/project-constants";
+
+export function homeHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, projectConstantsLocal.PATH+'./assets/i18n/home/', '.json');
+}
 @NgModule({
     imports: [
         HeaderModule,
@@ -22,7 +30,15 @@ const routes: Routes = [
         CommonModule,
         ManagePrivacyModule,
         AddInboxMessagesModule,
-        [RouterModule.forChild(routes)]
+        [RouterModule.forChild(routes)],
+        HttpClientModule,
+        TranslateModule.forChild({
+          loader: {
+              provide: TranslateLoader,
+              useFactory: homeHttpLoaderFactory,
+              deps: [HttpClient]
+          },
+      })
     ],
     exports: [
         MyfavouritesComponent

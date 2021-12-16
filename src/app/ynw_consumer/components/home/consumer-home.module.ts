@@ -26,6 +26,13 @@ import { ScrollToModule } from "@nicky-lenaers/ngx-scroll-to";
 const routes: Routes = [
     { path: '', component: ConsumerHomeComponent }
 ];
+import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { projectConstantsLocal } from  "../../../shared/constants/project-constants";
+export function homeHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, projectConstantsLocal.PATH+'./assets/i18n/home/', '.json');
+}
 @NgModule({
     imports: [
         CommonModule,
@@ -50,7 +57,15 @@ const routes: Routes = [
         CouponsModule,
         ScrollToModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
-        [RouterModule.forChild(routes)]
+        [RouterModule.forChild(routes)],
+        HttpClientModule,
+        TranslateModule.forChild({
+          loader: {
+              provide: TranslateLoader,
+              useFactory: homeHttpLoaderFactory,
+              deps: [HttpClient]
+          },
+      })
     ],
     exports: [ConsumerHomeComponent],
     declarations: [

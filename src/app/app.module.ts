@@ -1,7 +1,7 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, APP_INITIALIZER, ErrorHandler, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, Injector } from '@angular/core';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ServiceMeta } from './shared/services/service-meta';
 import { ExtendHttpInterceptor } from './shared/config/extendhttp.interceptor';
 import {  MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -59,6 +59,13 @@ import { ForceDialogModule } from './shared/components/force-dialog/force-dialog
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { projectConstantsLocal } from './shared/constants/project-constants';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, projectConstantsLocal.PATH + 'assets/i18n/home/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -76,6 +83,14 @@ export function init_app(globalService: GlobalService) {
     MatSnackBarModule,
     MaintenanceMsgModule,
     ForceDialogModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      },
+      // isolate: true,
+    }),
     ScrollToModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
@@ -90,6 +105,7 @@ export function init_app(globalService: GlobalService) {
     ServiceMeta,
     Razorpaymodel,
     RazorpayprefillModel,
+    
     WindowRefService,
     PaytmService,
     RazorpayService,

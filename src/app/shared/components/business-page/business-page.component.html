@@ -10,7 +10,7 @@
                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
                         <app-header *ngIf="accountIdExists && sharedFunctionobj.checkLogin()" [includedfrom]="'pdetails'" [accountId]="accountId" [customId]="customId" [showHeaderAction]="true"></app-header>
                         <div class="view-booking" *ngIf="accountIdExists && !sharedFunctionobj.checkLogin()" >
-                            <button class="pull-right btn btn-primary dashboard-btn" (click)="dashboardClicked()">My Bookings</button>
+                            <button class="pull-right btn btn-primary dashboard-btn" (click)="dashboardClicked()">{{'My Bookings' | translate}}</button>
                         </div>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                                     *ngIf="(bNameStart!='' || bNameEnd!='') && (!profileSettings || (profileSettings && profileSettings['showAbout']))">
                                     <div class="question-outer">
                                         <ng-container>
-                                            <div class="question-header">About Us
+                                            <div class="question-header">{{'About Us' | translate}}
                                             </div>
                                             <div class="question-value1 ">
                                                 <span *ngIf="bNameStart!=''"
@@ -95,11 +95,11 @@
                                 <div *ngIf="specializationslist.length == 1 && (!profileSettings || (profileSettings && profileSettings['showSpecialization']))"
                                     class="specialization-header question-header mgn-up-5"
                                     >
-                                    Specialization
+                                    {{'Specialization' | translate}}
                                 </div>
                                 <div *ngIf="specializationslist.length > 1 && (!profileSettings || (profileSettings && profileSettings['showSpecialization']))"
                                     class="specialization-header question-header mgn-up-5">
-                                    Specializations
+                                    {{'Specializations' | translate}}
                                 </div>
                                 <div class="specialization-value question-value1"
                                     *ngIf="!profileSettings || (profileSettings && profileSettings['showSpecialization'])">
@@ -151,7 +151,7 @@
                                             </div>
                                             <div class="question-main-outer"
                                             *ngIf="businessjson.languagesSpoken && businessjson.languagesSpoken.length > 0">
-                                            <div class="question-header">Languages Known</div>
+                                            <div class="question-header">{{'Languages Known' | translate}}</div>
                                             <div class="specialization-value question-value1">
                                                 <ul class="comma-list">
                                                     <li class="item" *ngFor="let languages of businessjson.languagesSpoken;let i=index">{{languages | capitalizeFirst}}</li>
@@ -173,7 +173,7 @@
                                                 </div>
                                             </div> !-->
                                             <div class="question-main-outer" *ngIf="socialMedialist.length>0">
-                                                <div class="question-header">Social Media Links and Listing Sites</div>
+                                                <div class="question-header">{{'Social Media Links and Listing Sites' | translate}}</div>
                                                 <div class="question-value1">
                                                     <ul class="details socialmedia m0 no-padding">
                                                         <li *ngFor="let soc of socialMedialist"><a rel="noopener"
@@ -192,7 +192,7 @@
                                                 selectedLocation?.locationVirtualFields?.hosemergencyservices=='true' ||
                                                 selectedLocation?.locationVirtualFields?.veterinaryemergencyservices=='true' || selectedLocation?.locationVirtualFields?.firstaid=='true'
                                                 || selectedLocation?.locationVirtualFields?.deliveryoptions=='true'">
-                                                <div class="question-header">Amenities</div>
+                                                <div class="question-header">{{'Amenities' | translate}}</div>
                                                 <div class="question-value1">
                                                     <ul class="details badges m0 no-padding">
                                                         <ng-container *ngIf="selectedLocation">
@@ -236,7 +236,7 @@
                                             <div class="clearfix"></div>
                                             <div class="question-main-outer"
                                                 *ngIf="phonelist.length > 0 || emaillist.length > 0">
-                                                <div class="question-header">Contact Details</div>
+                                                <div class="question-header">{{'Contact Details' | translate}}</div>
                                                 <div class="question-value1">
                                                     <ul class="details m0 no-padding">
                                                         <li class="m0" *ngIf="phonelist.length > 0">
@@ -408,7 +408,7 @@
                     <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20"
                         *ngIf="serviceCount==0 && userCount > 0 && businessjson.serviceSector.name === 'healthCare'"
                         [class.mgn-bt-10]="!showDepartments">
-                        <h5 class="mgn-bt-5 primary-color"> Doctors and Specializations
+                        <h5 class="mgn-bt-5 primary-color"> {{'Doctors and Specializations' | translate}}
                         </h5>
                         <h6 class="question-header">{{dotor_specialization_hint}}
                         </h6>
@@ -459,7 +459,7 @@
                             <div class="home-delivery mgn-rt-10 disp-flex align-items-center"
                                 *ngIf="activeCatalog.homeDelivery && activeCatalog.homeDelivery.homeDelivery && activeCatalog.nextAvailableDeliveryDetails">
                                 <img class="ordericon home" src="../../../../assets/images/Homedelivery.png" />
-                                <div class="mgn-lt-5">Home Delivery<div class="font-small "
+                                <div class="mgn-lt-5">{{'Home Delivery' | translate}}<div class="font-small "
                                         *ngIf="activeCatalog.homeDelivery.deliveryRadius">
                                         (in {{ activeCatalog.homeDelivery.deliveryRadius}} km radius)</div>
                                 </div>
@@ -468,7 +468,7 @@
                                 *ngIf="activeCatalog.pickUp && activeCatalog.pickUp.orderPickUp && activeCatalog.nextAvailablePickUpDetails">
                                 <img class="ordericon pickup" src="../../../../assets/images/Store-pick-up.png" />
 
-                                <div class="mgn-lt-5">Store Pickup</div>
+                                <div class="mgn-lt-5">{{'Store Pickup' | translate}}</div>
                             </div>
                         </div>
                     </div>
@@ -490,9 +490,9 @@
                             [loc]="selectedLocation" (actionPerformed)="cardClicked($event)"></app-card>
                     </div>
                     <div class="shopping-cart-footer" *ngIf="showOrderFooter()">
-                        <div>Your Order ({{ order_count }})
-                            <span class="rupee-font">SubTotal :&#8377;{{ price }}&nbsp;</span>
-                            <button mat-flat-button class="btn-chkout" (click)="checkout();">Checkout</button>
+                        <div>{{'Your Order' | translate}} ({{ order_count }})
+                            <span class="rupee-font">{{'SubTotal' | translate}} :&#8377;{{ price }}&nbsp;</span>
+                            <button mat-flat-button class="btn-chkout" (click)="checkout();">{{'Checkout' | translate}}</button>
                         </div>
                     </div>
                 </ng-container>
@@ -500,7 +500,7 @@
                     *ngIf="orderType === 'SHOPPINGLIST' && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
                     <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12">
                     <div class="bus-item-O">
-                        <a (click)="shoppinglistupload()" class="like-btn">Upload Shopping List</a>
+                        <a (click)="shoppinglistupload()" class="like-btn">{{'Upload Shopping List' | translate}}</a>
                     </div>
                 </div>
 
@@ -512,18 +512,18 @@
 <div id="popup" #popupforApp class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="text-center">Jaldee App can do so much more
+            <h5 class="text-center">{{'Jaldee App can do so much more' | translate}}
                 <span class="close" (click)="closeModal()">&times;</span>
             </h5>
         </div>
         <div class="modal-body">
             <div class="section-app text-center">
-                <h6 class="mgn-bt-20">Unlock the full Jaldee experience</h6>
+                <h6 class="mgn-bt-20">{{'Unlock the full Jaldee experience' | translate}}</h6>
                 <a class="button1" href="https://play.google.com/store/apps/details?id=com.jaldeeinc.jaldee"><img
                         src="assets/images/img-glplay.png"></a>
                 <a class="button2 mgn-lt-10" href="https://apps.apple.com/in/app/jaldee-com/id1478246665"><img
                         src="assets/images/img-aplstore.png"></a>
-                <h6 class="mgn-up-20">After installing app, search for <span *ngIf="businessjson.customId">"{{businessjson.customId}}"</span><span
+                <h6 class="mgn-up-20">{{'After installing app, search for ' | translate}}<span *ngIf="businessjson.customId">"{{businessjson.customId}}"</span><span
                         *ngIf="!businessjson.customId">"{{businessjson.accEncUid}}"</span></h6>
             </div>
         </div>
@@ -534,10 +534,10 @@
     <div class="modal-content">
         <div class="modal-body">
             <h5 style="line-height: 20px;" class="text-center">
-                <span>"{{this.businessName}}" App can do so much more.</span>
-                 <p class="mgn-up-10">Install this app on your Iphone/Ipad. Tap <img src="assets/images/home/iosshare.png" style="width:35px"/> and then "Add to homescreen"</p>
+                <span>"{{this.businessName}}" {{'App can do so much more.' | translate}}</span>
+                 <p class="mgn-up-10">{{'Install this app on your Iphone/Ipad. Tap' | translate}} <img src="assets/images/home/iosshare.png" style="width:35px"/> and then "Add to homescreen"</p>
                  <br/>
-                 <button class="btn" (click)="closeIOSAppModal()">Ok</button>
+                 <button class="btn" (click)="closeIOSAppModal()">{{'Ok' | translate}}</button>
             </h5>
         </div>
     </div>
@@ -547,9 +547,9 @@
     <div class="modal-content">
         <div class="modal-body" *ngIf="!pwaIOShint">
             <h5 class="text-center">
-                <span>"{{this.businessName}}" App can do so much more.</span><br/>
-                <button class="btn" (click)="closeCustomAppModal()">Close</button>
-                <button id="btnInstallCustomApp" class=" btn btn-primary">Install App</button>
+                <span>"{{this.businessName}}" {{'App can do so much more.' | translate}}</span><br/>
+                <button class="btn" (click)="closeCustomAppModal()">{{'Close' | translate}}</button>
+                <button id="btnInstallCustomApp" class=" btn btn-primary">{{'Install App' | translate}}</button>
             </h5>
         </div>
     </div>
@@ -560,12 +560,13 @@
             <div class="row align-items-center justify-content-between text-center">
                 <div class="footer-bottom--links col-md-auto mgn-bt-20">
                     <!-- <span>Follow Us: </span> -->
-                    <a class="footer-links bd-pd-right" (click)="footerClicked('privacy')">Privacy</a>
-                    <a class="footer-links bd-pd-left bd-pd-right" (click)="footerClicked('terms')">Terms & Conditions</a>
-                    <a class="footer-links bd-pd-left" (click)="footerClicked('contact')">Contact</a>
+                    <a class="footer-links bd-pd-right" (click)="footerClicked('privacy')">{{'Privacy' | translate}}</a>
+                    <a class="footer-links bd-pd-left bd-pd-right" (click)="footerClicked('terms')">{{'Terms & Conditions' | translate}}</a>
+                    <a class="footer-links bd-pd-left" (click)="footerClicked('contact')">{{'Contact' | translate}}</a>
                 </div>
             </div>
         </div>
     </div>
 </footer>
+
 <!-- <app-consumer-footer></app-consumer-footer> -->

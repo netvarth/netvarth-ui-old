@@ -10,6 +10,13 @@ import { MatButtonModule } from '@angular/material/button';
 const routes: Routes = [
     { path: '', component: ChangeMobileComponent }
 ];
+import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { projectConstantsLocal } from '../../constants/project-constants';
+export function homeHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, projectConstantsLocal.PATH+'./assets/i18n/home/', '.json');
+}
 @NgModule({
     imports: [
         CommonModule,
@@ -19,7 +26,15 @@ const routes: Routes = [
         OtpFormModule,
         HeaderModule,
         MatButtonModule,
-        [RouterModule.forChild(routes)]
+        [RouterModule.forChild(routes)],
+        HttpClientModule,
+        TranslateModule.forChild({
+          loader: {
+              provide: TranslateLoader,
+              useFactory: homeHttpLoaderFactory,
+              deps: [HttpClient]
+          },
+      })
     ],
     declarations: [
         ChangeMobileComponent

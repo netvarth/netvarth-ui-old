@@ -17,6 +17,14 @@ import { CheckInHistoryServices } from "../../../shared/modules/consumer-checkin
 const routes: Routes = [
     { path: '', component: ConsumerHistoryComponent }
 ];
+import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { projectConstantsLocal } from "../../../shared/constants/project-constants";
+export function homeHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, projectConstantsLocal.PATH+'./assets/i18n/home/', '.json');
+}
+
 @NgModule({
     imports:[
         CapitalizeFirstPipeModule,
@@ -31,7 +39,15 @@ const routes: Routes = [
         AddInboxMessagesModule,
         RateServiceModule,
         ViewRxModule,
-        [RouterModule.forChild(routes)]
+        [RouterModule.forChild(routes)],
+        HttpClientModule,
+        TranslateModule.forChild({
+          loader: {
+              provide: TranslateLoader,
+              useFactory: homeHttpLoaderFactory,
+              deps: [HttpClient]
+          },
+      })
     ],
     exports:[
         ConsumerHistoryComponent

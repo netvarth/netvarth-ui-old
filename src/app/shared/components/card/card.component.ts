@@ -1,4 +1,4 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
 import { LocalStorageService } from '../../services/local-storage.service';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
     'templateUrl': './card.component.html',
     'styleUrls': ['./card.component.css']
 })
-export class CardComponent implements OnInit, AfterViewChecked {
+export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     @Input() item;
     @Input() terminology;
     @Input() loc;
@@ -47,6 +47,7 @@ export class CardComponent implements OnInit, AfterViewChecked {
     selectedUser;
     selQIds: any = [];
     qualification;
+    disablecheckavailabilitybutton=false;
     constructor(
         private lStorageService: LocalStorageService,
         private wordProcessor: WordProcessor,
@@ -150,6 +151,11 @@ export class CardComponent implements OnInit, AfterViewChecked {
                 break;
         }
     }
+    ngOnChanges() {
+        // this.itemQty = this.quantity;
+        // this.cdref.detectChanges();
+        // console.log(this.extras);
+    }
     ngAfterViewChecked() {
         this.cdref.detectChanges();
     }
@@ -166,20 +172,53 @@ export class CardComponent implements OnInit, AfterViewChecked {
         event.stopPropagation();
     }
     cardActionPerformed(type, action, service, location, userId, event) {
-        event.stopPropagation();
-        const actionObj = {};
-        actionObj['type'] = type;
-        actionObj['action'] = action;
-        if (service) {
-            actionObj['service'] = service;
+        console.log('action...',action);
+        if(type=='checkavailability'){
+            if(service['serviceAvailability']['nextAvailableDate']) {
+                event.stopPropagation();
+                const actionObj = {};
+                actionObj['type'] = type;
+                actionObj['action'] = action;
+                if (service) {
+                    actionObj['service'] = service;
+                }
+              
+                if (location) {
+                    actionObj['location'] = location;
+                }
+               
+                if (userId) {
+                    actionObj['userId'] = userId;
+                }
+                
+                this.actionPerformed.emit(actionObj);
+            } 
+            else {
+                this.disablecheckavailabilitybutton = true
+            }
+        } 
+        else {
+            event.stopPropagation();
+        
+            const actionObj = {};
+            actionObj['type'] = type;
+            actionObj['action'] = action;
+            if (service) {
+                actionObj['service'] = service;
+            }
+          
+            if (location) {
+                actionObj['location'] = location;
+            }
+           
+            if (userId) {
+                actionObj['userId'] = userId;
+            }
+            
+            this.actionPerformed.emit(actionObj);
         }
-        if (location) {
-            actionObj['location'] = location;
-        }
-        if (userId) {
-            actionObj['userId'] = userId;
-        }
-        this.actionPerformed.emit(actionObj);
+
+    
     }
     showConsumerNote(item) {
         this.noteClicked.emit(item);
@@ -340,8 +379,12 @@ export class CardComponent implements OnInit, AfterViewChecked {
         age = age.split(',');
         return age[0];
     }
-    getUsersList(teamid) {
-        const userObject = this.teams.filter(user => parseInt(user.id) === teamid);
-        return userObject[0].name;
+    getScheduleIndex(id) {
+        // const filterSchedule = this.activeSchedules.filter(sch => sch.id === id);
+        // return this.activeSchedules.indexOf(filterSchedule[0]);
+    }
+    getUsersList(teamid){
+       const userObject =  this.teams.filter(user => parseInt(user.id) === teamid); 
+       return userObject[0].name;
     }
 }

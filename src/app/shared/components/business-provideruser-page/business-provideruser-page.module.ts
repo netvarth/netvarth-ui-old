@@ -16,6 +16,7 @@ import { ConsumerJoinModule } from "../../../ynw_consumer/components/consumer-jo
 import { ConfirmBoxModule } from "../confirm-box/confirm-box.module";
 import { QRCodeGeneratordetailModule } from "../qrcodegenerator/qrcodegeneratordetail.module";
 import { RouterModule, Routes } from "@angular/router";
+import { CheckavailabilityModule } from "../checkavailability/checkavaiablity.module";
 const routes: Routes = [
     { path: '', component: BusinessprovideruserPageComponent},
     { path: 'home', loadChildren: () => import('../business-page-home/business-page-home.module').then(m => m.BusinessPageHomeModule) },
@@ -37,6 +38,7 @@ const routes: Routes = [
         ServiceDetailModule,
         ConsumerJoinModule,
         ConfirmBoxModule,
+        CheckavailabilityModule,
         QRCodeGeneratordetailModule,
         [RouterModule.forChild(routes)]
     ],

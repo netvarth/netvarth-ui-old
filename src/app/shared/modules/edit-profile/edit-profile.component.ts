@@ -15,7 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TelegramInfoComponent } from '../../../ynw_consumer/components/telegram-info/telegram-info.component';
 import { SharedServices } from '../../services/shared-services';
 import { SubSink } from 'subsink';
-
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
@@ -81,7 +81,8 @@ export class EditProfileComponent implements OnInit {
     private _location: Location,
     public dialog: MatDialog,
     private snackbarService: SnackbarService,
-    private activated_route: ActivatedRoute
+    private activated_route: ActivatedRoute,
+    public translate: TranslateService,
   ) {
     this.subs.sink = this.activated_route.queryParams.subscribe(qparams => {
       if (qparams && qparams.accountId) {
@@ -96,6 +97,12 @@ export class EditProfileComponent implements OnInit {
     this.location.back();
   }
   ngOnInit() {
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable'))) 
+    this.translate.stream('UPDATE_BTN').subscribe(v => {this.update_btn=v});
+    this.translate.stream('RELATED_LINKS').subscribe(v => {this.related_links_cap = v});
+    this.translate.stream('CHANGE_PASSWORD_CAP').subscribe(v=> {this.change_password_cap = v});
+    this.translate.stream('CHANGE_MOB_CAP').subscribe(v=>{this.change_mobile_cap = v});
+    this.translate.stream('FAMILY_MEMBERS').subscribe(v=>{this.family_members_cap = v});
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.editProfileForm = this.fb.group({

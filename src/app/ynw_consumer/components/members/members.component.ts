@@ -13,6 +13,7 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { SubSink } from 'subsink';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-consumer-members',
   templateUrl: './members.component.html'
@@ -47,6 +48,7 @@ export class MembersComponent implements OnInit, OnDestroy {
     public shared_functions: SharedFunctions,
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
+    public translate: TranslateService,
     private location: Location,
     public router: Router,
     private activated_route: ActivatedRoute
@@ -62,6 +64,19 @@ export class MembersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable')))  
+    this.translate.stream('DASHBOARD_TITLE').subscribe(v => {this.dashboard_cap=v});
+    this.translate.stream('FIRST_NAME_CAP').subscribe(v=> {this.first_name_cap=v});
+    this.translate.stream('LAST_NAME_CAP').subscribe(lastname=>{ this.last_name_cap=lastname});
+    this.translate.stream('GENDER_CAP').subscribe(v=>{this.gender_cap=v});
+    this.translate.stream('RELATED_LINKS').subscribe(v => {this.related_links_cap = v});
+    this.translate.stream('CHANGE_PASSWORD_CAP').subscribe(v=> {this.change_password_cap = v});
+    this.translate.stream('CHANGE_MOB_CAP').subscribe(v=>{this.change_mob_no_cap = v});
+    this.translate.stream('DOB_CAP').subscribe(v=>{this.date_of_birth=v});
+    this.translate.stream('EDIT_BTN').subscribe(v=> {this.edit_btn_cap=v});
+    this.translate.stream('DELETE_BTN').subscribe(v=>{this.delete_btn_cap=v});
+    this.translate.stream('USER_PROF_CAP').subscribe(v=>this.user_profile_cap=v);
+
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
     this.getMembers();
   }

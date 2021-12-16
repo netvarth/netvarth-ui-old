@@ -1,0 +1,131 @@
+<div class="mat-dialog-title slotdiv" >
+    <!-- checkavailability dialog box -->
+    <div class="col-lg-12">
+        <div class="col-lg-11"></div>
+        <div class="col-lg-1">
+            
+        </div>
+    </div>
+    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12" style="display: flex;justify-content: flex-end;">
+            <img (click)="dismissModal()" src="../../../../assets/images/cross.png" style="width: 30px;height: 30px;">
+    
+    </div>
+    <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 padding-xs-small">
+        <div class="col-lg-8 col-sm-12 col-md-8 col-xs-12" > 
+            <h4 class="today">Today</h4>
+            <div>
+            <div class="col-lg-8 col-xs-12 col-sm-12 col-md-12 padding-xs-small" >
+                <div class="skyblue col-lg-1 col-md-1 col-sm-1 col-xs-1" style="cursor: pointer;"
+                    [class.disable]="disableMinus()"
+                    *ngIf="apptSettings.futureAppt"
+                    (click)="calculateDate(-1)" ><h4><</h4>
+                </div>
+                <!-- {{appointmentSettings.futureAppt}} -->
+                <div class="col-lg-5 col-md-5 col-xs-8 col-sm-8 skyblue"><h4>{{sel_checkindate | date: dateFormat}}</h4></div>
+                <div class="skyblue col-lg-1 col-md-1 col-sm-1 col-xs-1"
+                    *ngIf="apptSettings.futureAppt" style="cursor: pointer;"
+                    (click)="calculateDate(1)"><h4>></h4>
+                 </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 padding-xs-small"
+                    *ngIf="apptSettings.futureAppt">
+                    <!-- {{dateClass.bind(this)}} -->
+                    <mat-datepicker-toggle matSuffix [for]="picker">
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #picker
+                        [dateClass]="dateClass.bind(this)">
+                    </mat-datepicker>
+                    <input class="" style="visibility:hidden; width:1px"
+                        type="text" [matDatepicker]="picker" [min]="minDate"
+                        [max]="maxDate" [value]="ddate"
+                        (dateChange)="handleFutureDateChange($event)">
+                </div>
+            </div>
+          
+        </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">Service<br> 
+        <h4>{{actionObj.service.name}}</h4>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 mgn-up-10">
+        <div class="col-lg-8 col-sm-6 col-xs-6 col-md-8">
+            <b>Available Time</b>
+            
+        </div>
+        <h6 class="col-lg-2 col-sm-3 col-xs-6 col-md-2 green" >🟢AVAILABLE</h6>
+        <h6 class="col-lg-2 col-sm-3 col-xs-6  col-md-2 red">🔴BOOKED</h6>
+        <br>
+        <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12" style="border-radius: 5px; border: 2px solid lightskyblue;" >
+         
+            <app-common-innerloading-spinner *ngIf="freeSlots.length==0 && showApptTime!='novalue' "></app-common-innerloading-spinner>
+            <div *ngIf="showApptTime=='novalue' " style="color: red;text-align: center;">No Available Slots</div>
+        <div class="pad-lg-20" *ngIf="freeSlots.length>0">
+            
+            <div class="col-lg-2 col-xs-4 col-sm-4"  *ngFor="let slot of freeSlots;let i = index" >
+
+                <h6   (click)="timeSelected(slot,sel_checkindate);" class="green mgn-up-5" *ngIf="slot.active" style="border:2px solid #b4f3a7;text-align: center;padding: 5px;cursor: pointer;">{{slot.displayTime}}</h6>
+                <h6 style="border:2px solid red;text-align: center;padding: 5px;"    *ngIf="!slot.active"><del style="color: red;">{{slot.displayTime}}</del></h6>
+    
+    
+            </div>
+        </div>
+   
+
+        </div>
+       
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10" *ngIf="actionObj.service.description">
+            <h3>Price</h3>
+            <p class="col-lg-12" style="color: lightgrey;">{{actionObj.service.description}}</p>
+        </div>
+        <h6 class="col-lg-12" style="color:  #2653B7;" *ngIf="actionObj.service.totalAmount">Service Price:{{actionObj.service.totalAmount}}</h6>
+        <h6 class="col-lg-12" style="color:  #2653B7" *ngIf="actionObj.service.minPrePaymentAmount">Advance Payment: {{actionObj.service.minPrePaymentAmount}}</h6>
+        <div class="col-lg-12 mgn-up-10 mgn-bt-10" style="text-align: center;">
+        <button (click)="actionCompleted()" class="btn" style="width:30%;background-color:  #2653B7;color: white;">Okay</button>
+        <br>
+        </div>
+    </div>
+      <!-- ****Modal Code**** -->
+        <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10 lnk mgn-up-20">Choose Date </div>
+                   
+                <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10 lnk mgn-up-10">
+                    <div class="pull-left brd-round brd-light">
+                        <div class="icon-minus pull-left"
+                            [class.disable]="disableMinus()"
+                            *ngIf="appointmentSettings.futureAppt"
+                            (click)="calculateDate(-1)">
+                        </div>
+                        
+                        <div class="pull-left chkindt">{{sel_checkindate
+                            | date: dateFormat}}</div>
+                        <div class="icon-add pull-left"
+                            *ngIf="appointmentSettings.futureAppt"
+                            (click)="calculateDate(1)"></div>
+                    </div>
+                    here3 {{appointmentSettings.futureAppt}}
+                    <div class="pickerouter caldiv pull-left "
+                        *ngIf="appointmentSettings.futureAppt">
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker
+                            [dateClass]="dateClass.bind(this)">
+                        </mat-datepicker>
+                        <input class="" style="visibility:hidden; width:1px"
+                            type="text" [matDatepicker]="picker" [min]="minDate"
+                            [max]="maxDate" [value]="ddate"
+                            (dateChange)="handleFutureDateChange($event)">
+                    </div>
+                </div>
+                    <div class="modal-footer">
+                        footer
+                    </div>
+
+                </div>
+            </div>
+            </div>  -->
+            <!-- ****END OF MODAL CODE **** -->
+ </div>

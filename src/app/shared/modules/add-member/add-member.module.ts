@@ -8,7 +8,13 @@ import { AddMemberComponent } from './add-member.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-
+import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { projectConstantsLocal } from '../../constants/project-constants';
+export function homeHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http,projectConstantsLocal.PATH+ './assets/i18n/home/', '.json');
+}
 @NgModule({
     imports: [
         CommonModule,
@@ -18,7 +24,16 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
         ReactiveFormsModule,
         MatInputModule,
         MatRadioModule,
-        MatDatepickerModule
+        MatDatepickerModule,
+        HttpClientModule,
+        TranslateModule.forChild({
+          loader: {
+              provide: TranslateLoader,
+              useFactory: homeHttpLoaderFactory,
+              deps: [HttpClient]
+          },
+          
+      })
     ],
     entryComponents: [
         AddMemberComponent

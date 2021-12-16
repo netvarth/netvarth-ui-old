@@ -30,6 +30,9 @@ import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
 // import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
 import { AuthService } from '../../services/auth-service';
+import { CheckavailabilityComponent } from '../checkavailability/checkavailability.component';
+// import { CheckavailabilityComponent } from '../checkavailability/checkavailability.component';
+
 @Component({
   selector: 'app-businessprovideruser-page',
   templateUrl: './business-provideruser-page.component.html',
@@ -1787,6 +1790,13 @@ console.log("fgf"+JSON.stringify(loc));
       'cdate': service.serviceAvailability.nextAvailableDate,
       'service': service
     };
+    if(location.time) {
+      current_provider['ctime']=location.time
+    }
+    if(location.date) {
+      console.log('differnt dates....',service.serviceAvailability.nextAvailableDate,location.date)
+      service.serviceAvailability.nextAvailableDate=location.date
+    }
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
@@ -1821,7 +1831,7 @@ console.log("fgf"+JSON.stringify(loc));
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
          // console.log("User Type:" + _this.userType);
           if (_this.userType === 'consumer') {
-              _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
+              _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer',current_provider['ctime']);
           }
         } else {
           const passParam = { callback: 'appointment', current_provider: current_provider };
@@ -1957,7 +1967,7 @@ console.log("fgf"+JSON.stringify(loc));
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
   }
-  showAppointment(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?) {
+  showAppointment(locid, locname, gMapUrl, curdate, service: any, origin?, ctime?,virtualinfo?) {
     //console.log("Service Appt: ");
    // console.log(service);
     // let deptId;
@@ -1975,7 +1985,8 @@ console.log("fgf"+JSON.stringify(loc));
       futureAppt: this.futureAllowed,
       service_id: service.id,
       sel_date: curdate,
-      virtual_info: JSON.stringify(virtualinfo)
+      virtual_info: JSON.stringify(virtualinfo),
+      ctime:ctime
     };
     if (service['serviceType']==='virtualService') {
       queryParam['tel_serv_stat'] = true;
@@ -2280,9 +2291,41 @@ console.log("fgf"+JSON.stringify(loc));
     // };
     this.routerobj.navigate([this.accountEncId, userId]);
   }
+  checkavailabilitydialogref;
+  opencheckavail(actionObj) {
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    const current_provider = {
+      'id': actionObj['location']['id'],
+      'place':actionObj['location']['place'],
+      'location': actionObj['location'],
+      'service': actionObj['service'],
+      'cdate': actionObj['service'].serviceAvailability.nextAvailableDate
+    };
+    if(this.userType === '') {
+      const passParam = { callback: 'checkavailability', current_provider: current_provider, serviceType:  actionObj['service'].serviceType,actionObjtype:actionObj };
+      this.doLogin('consumer', passParam);
+    }else {
+      this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
+        width: '90%',
+        height: 'auto',
+        data: {
+        alldetails:actionObj,
+        apptSettingsJson:this.apptSettingsJson,
+        }
+      });
+    }
+    this.checkavailabilitydialogref.afterClosed().subscribe(result => {
+     
+      if(result!='undefined') {
+        actionObj['location']['time']=result[0];
+        actionObj['location']['date']=result[1];
+        this.appointmentClicked(actionObj['location'], actionObj['service']);
+      }
 
+    });
+  }
   cardClicked(actionObj) {
-
+    console.log("entered here")
     if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
@@ -2290,7 +2333,11 @@ console.log("fgf"+JSON.stringify(loc));
         this.checkinClicked(actionObj['location'], actionObj['service']);
       }
 
-    } else if (actionObj['type'] === 'appt') {
+    } 
+    else if(actionObj['type']=='checkavailability') {
+      this.opencheckavail(actionObj);
+    }
+    else if (actionObj['type'] === 'appt') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
       } else {
@@ -2299,7 +2346,9 @@ console.log("fgf"+JSON.stringify(loc));
     } else if (actionObj['type'] === 'donation') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
-      } else {
+      } 
+      
+      else {
         this.payClicked(actionObj['location'].id, actionObj['location'].place, new Date(), actionObj['service']);
       }
     } else if (actionObj['type'] === 'item') {

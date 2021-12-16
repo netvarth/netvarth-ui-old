@@ -1,0 +1,61 @@
+.green{
+    color: #1EB000;
+    line-height: 1.5rem;
+    font-size: 15px;
+    /* font-weight: 600; */
+
+}
+.red{
+    color: #FF5502;
+    line-height: 1.5rem;
+    font-size: 15px;
+}
+.skyblue{
+    padding: 10px;
+    border-radius:5px;
+   background-color: #F1EFFB;
+   color: #2653B7;
+    margin-right: 5px;
+    text-align: center;
+}
+.slotdiv {
+    max-height: 100vh !important;
+    overflow: auto;
+    margin-top: 0px !important;
+  
+  }
+.today {
+    color: #2653B7;
+    margin-left: 10px;
+}
+.pad-lg-20 {
+    padding: 20px;
+}
+@media (min-width:320px) and (max-width:760px) {
+    *{
+        font-size: 12px;
+    }
+    .skyblue {
+        padding: 10px;
+        border-radius:5px;
+       background-color: #F1EFFB;
+       color: #2653B7;
+        margin-right: 2px;
+        text-align: center;
+    }
+    .padding-xs-small {
+        padding: 0px !important;
+        margin: 0px !important;
+    }
+    .pad-lg-20 {
+        padding: 0px !important;
+    }
+    .green {
+        line-height: 0.5rem;
+        font-size: 6px !important;
+    }
+    .red {
+        line-height: 0.5rem;
+        font-size: 6px !important;
+    }
+}

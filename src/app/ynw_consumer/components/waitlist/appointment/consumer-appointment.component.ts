@@ -359,6 +359,12 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         public dialog: MatDialog) {
         this.subs.sink = this.route.queryParams.subscribe(
             params => {
+                console.log('params>>.',params)
+                if(params.ctime) {
+                    console.log('****************************')
+                    this.selectedTime=params.ctime
+                 
+                }
                 this.sel_loc = params.loc_id;
                 this.locationName = params.locname;
                 this.googleMapUrl = params.googleMapUrl;
@@ -1682,7 +1688,19 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         const appttime = this.freeSlots.filter(slot => slot.time === this.appointment.appmtTime);
                         this.apptTime = appttime[0];
                     } else {
-                        this.apptTime = this.freeSlots[0];
+                        console.log(this.selectedTime)
+                        if(this.selectedTime) {
+                            const appttime = this.freeSlots.filter(slot => slot.displayTime === this.selectedTime);
+                            if(appttime) {
+                                this.apptTime = appttime[0];
+                            }
+                            
+                            console.log("**********")
+                        } else {
+                            this.apptTime = this.freeSlots[0];
+                        }
+                      
+                        
                     }
                     this.waitlist_for[0].apptTime = this.apptTime['time'];
                 } else {

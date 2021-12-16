@@ -10,6 +10,13 @@ import { LoadingSpinnerModule } from "../../modules/loading-spinner/loading-spin
 import { SearchModule } from "../../modules/search/search.module";
 import { LoginModule } from "../login/login.module";
 import { HomeComponent } from "./home.component";
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { projectConstantsLocal } from "../../constants/project-constants";
+export function homeHttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http,projectConstantsLocal.PATH+ './assets/i18n/home/', '.json');
+  }
 const routes: Routes = [
     {path: '', component: HomeComponent}
   ];
@@ -24,7 +31,17 @@ const routes: Routes = [
         LoadingSpinnerModule,
         SearchModule,
         LoginModule,
-        LazyModule
+        LazyModule,
+        HttpClientModule ,
+        TranslateModule.forChild({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: homeHttpLoaderFactory,
+                deps: [HttpClient]
+            },
+            isolate: false,
+            // extend: true
+        })
     ],
     exports: [HomeComponent],
     declarations: [HomeComponent]
