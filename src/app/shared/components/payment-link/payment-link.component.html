@@ -35,7 +35,7 @@
                                                     style="font-size: -webkit-xxx-large; font-weight: 400;">
                                                     {{this.amountDue | currency:'&#8377; '}}
                                                 </h2><br>                                                
-                                                <ng-container *ngIf="!shownonIndianModes&&paymentmodes.length>0">
+                                                <ng-container *ngIf="!shownonIndianModes">
                                                     <div  *ngFor="let modes of indian_payment_modes">
                                                         <div class="col-xs-12">
     
@@ -51,7 +51,7 @@
     
                                                 </div>
                                             </ng-container>
-                                            <ng-container *ngIf="shownonIndianModes&&paymentmodes.length>0">
+                                            <ng-container *ngIf="shownonIndianModes">
                                                 
                                                 <div  *ngFor="let modes of non_indian_modes">
                                                     <div class="col-xs-12 ">
@@ -76,9 +76,9 @@
                                                             (click)="togglepaymentMode()"
                                                             class="pointer-cursor"><a
                                                                 class="refund_policy">
-                                                                <span *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non Indian Payment ? Click
+                                                                <span *ngIf="!shownonIndianModes&&paymentmodes&&paymentmodes.internationalPay">Non Indian Payment ? Click
                                                                 here</span>
-                                                                <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
+                                                                <span *ngIf="shownonIndianModes &&paymentmodes&& paymentmodes.indiaPay">Indian Payment ? Click
                                                                     here</span>
                                                             </a></span>
     

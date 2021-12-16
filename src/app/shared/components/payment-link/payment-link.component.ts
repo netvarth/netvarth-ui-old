@@ -171,7 +171,6 @@ export class PaymentLinkComponent implements OnInit {
       .subscribe(
         data => {
           this.bill_data = data;
-          alert(this.bill_data.accountId);
           if (this.bill_data) {
             this.accountId = this.bill_data.accountId;
             this.businessname = this.bill_data.accountProfile.businessName;
