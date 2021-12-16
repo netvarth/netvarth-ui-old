@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { ActivatedRoute } from '@angular/router';
+//import { Router, NavigationExtras } from '@angular/router';
+
 import { MatDialog } from '@angular/material/dialog';
 import { PreviewuploadedfilesComponent } from '../previewuploadedfiles/previewuploadedfiles.component';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
@@ -23,7 +25,7 @@ export let projectConstants: any = {};
 })
 export class FolderFilesComponent implements OnInit {
   customers: any[] = [];
-  fileSizeFilter:any;
+  fileSizeFilter: any;
   loading = true;
   blogo = '';
   bname;
@@ -39,6 +41,7 @@ export class FolderFilesComponent implements OnInit {
   selectedTeam;
   addUser = false;
   tooltipcls = '';
+  fileTypeDisplayName = projectConstants.FilE_TYPES;
   apiloading = false;
   foldertype: any;
   foldername: any;
@@ -55,6 +58,7 @@ export class FolderFilesComponent implements OnInit {
   action: any = '';
   apiError = '';
   apiSuccess = '';
+  fileTypeName: any;
   selectedMessage = {
     files: [],
     base64: [],
@@ -86,7 +90,8 @@ export class FolderFilesComponent implements OnInit {
     'userType': false,
     'folderName': false,
   };
-
+   
+  onClickedFolder=false;
   searchTerm: any;
   p: number = 1;
   // itemsPerPage:any;
@@ -112,8 +117,9 @@ export class FolderFilesComponent implements OnInit {
     public dialog: MatDialog,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
+   // private router: Router,
 
-     private groupService: GroupStorageService,
+    private groupService: GroupStorageService,
 
   ) {
     this.activated_route.queryParams.subscribe(params => {
@@ -138,6 +144,7 @@ export class FolderFilesComponent implements OnInit {
   }
   ngOnInit() {
     this.getfiles();
+
     //this.getBusinessdetFromLocalstorage()
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     console.log(this.active_user);
@@ -325,31 +332,107 @@ export class FolderFilesComponent implements OnInit {
       }
     });
   }
+  sharedfolder(foldername) {
+    console.log("Access!!!")
+    this.onClickedFolder= true;
+    this.foldertype = foldername
 
+    // const navigationExtras: NavigationExtras = {
+    //   queryParams: {
+    //     foldername: foldername,
+    //   }
+    // };
+    // this.router.navigate(['provider', 'drive', 'folderfiles'], navigationExtras);
+    this.getfiles();
+  }
   getfiles() {
     const filter = {};
     console.log(this.foldertype);
     if (this.foldertype === 'My') {
       filter['folderName-eq'] = 'My';
     }
-    else if (this.foldertype === 'Public') {
-      filter['folderName-eq'] = 'Public';
+    // else if (this.foldertype === 'Public') {
+    //   filter['folderName-eq'] = 'Public';
 
-    }
+    // }
     else {
       filter['folderName-eq'] = 'Shared';
     }
 
 
     console.log(filter);
+    console.log("Types :", this.fileTypeDisplayName)
     this.provider_servicesobj.getAllFilterAttachments(filter).subscribe(
       (data: any) => {
         console.log(data);
         // this.Allfiles = data;
         this.customers = data
-        this.fileSizeFilter = Math.floor(data['fileSize']);
-        console.log("File Size",this.fileSizeFilter)
+        // this.fileSizeFilter  = this.customers['fileType']
+        //this.fileSizeFilter = Math.floor(data[0]['fileSize']);
+        // console.log("File Size",this.fileSizeFilter)
         console.log("Uploaded Files : ", this.customers);
+
+        for (var i of data) {
+          // this.fileSizeFilter = Math.round(i.fileSize);
+          // if (i.fileType == 'image/png') {
+          //   this.fileTypeName = 'png'
+          // }
+          // else if (i.fileType == 'image/jpg') {
+          //   this.fileTypeName = 'jpg'
+          // }
+
+          // else if (i.fileType == 'image/jpeg') {
+          //   this.fileTypeName = 'jpeg'
+          // }
+          
+          // else if (i.fileType === 'image/gif') {
+          //   this.fileTypeName = 'gif'
+          // }
+          // else if (i.fileType === 'image/bmp') {
+          //   this.fileTypeName = 'bmp'
+          // }
+          // else if (i.fileType === 'image/webp') {
+          //   this.fileTypeName = 'webp'
+          // }
+          // else {
+
+          //   this.fileTypeName = 'pdf'
+
+          // }
+
+          
+            switch (i.fileType) {
+              case 'image/png': {
+                this.fileTypeName = 'png';
+                break;
+              }
+              case 'image/jpg': {
+                this.fileTypeName = 'jpg';
+                break;
+              }
+              case 'image/jpeg': {
+                this.fileTypeName = 'jpeg';
+                break;
+              }
+             
+              case 'image/bmp': {
+                this.fileTypeName = 'bmp';
+                break;
+              }
+              case 'application/pdf': {
+                this.fileTypeName = 'pdf';
+                break;
+              }
+              case 'image/webp': {
+                this.fileTypeName = 'webp';
+                break;
+              }
+
+            }
+          
+        }
+        console.log("File Size", this.fileSizeFilter)
+
       }
     );
 
@@ -378,10 +461,10 @@ export class FolderFilesComponent implements OnInit {
         //   // this.snackbarService.openSnackBar(Error.apply('name'), { 'panelClass': 'snackbarerror' });
         // }
         // else {
-          dataToSend.append('attachments', pic, pic['name']);
-          captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
-          i++;
-       // }
+        dataToSend.append('attachments', pic, pic['name']);
+        captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
+        i++;
+        // }
         console.log("Uploaded Image : ", this.imgCaptions[i]);
       }
       // this.selectedMessage = {
@@ -393,7 +476,7 @@ export class FolderFilesComponent implements OnInit {
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
 
-      this.provider_servicesobj.uploadAttachments(this.foldertype,this.active_user.id, dataToSend)
+      this.provider_servicesobj.uploadAttachments(this.foldertype, this.active_user.id, dataToSend)
         .subscribe(
           () => {
             this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { 'panelClass': 'snackbarnormal' });
@@ -423,21 +506,22 @@ export class FolderFilesComponent implements OnInit {
 
     }
 
-     this.getfiles();
-    console.log("All Files : ",this.getfiles());
+    this.getfiles();
+    console.log("All Files : ", this.getfiles());
   }
   getFolderfiles() {
     this.provider_servicesobj.getAllFileAttachments().subscribe(
       (data: any) => {
         console.log(data);
         this.customers = data
+        console.log("The Folder Files : ", this.customers)
       }
     );
   }
 
   filesSelected(event, type?) {
     const input = event.target.files;
-    console.log("File Selected :",input);
+    console.log("File Selected :", input);
     if (input) {
       for (const file of input) {
         // if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
@@ -447,15 +531,15 @@ export class FolderFilesComponent implements OnInit {
         //   this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
         //   return;
         // } else {
-          this.selectedMessage.files.push(file);
-          // this.selectedMessage.files = '';
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            this.selectedMessage.base64.push(e.target['result']);
-          };
-          reader.readAsDataURL(file);
-          this.action = 'attachment';
-        
+        this.selectedMessage.files.push(file);
+        // this.selectedMessage.files = '';
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.selectedMessage.base64.push(e.target['result']);
+        };
+        reader.readAsDataURL(file);
+        this.action = 'attachment';
+
       }
       if (type && this.selectedMessage.files && this.selectedMessage.files.length > 0 && input.length > 0) {
         this.modal.nativeElement.click();

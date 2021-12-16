@@ -25,7 +25,9 @@
 .inp{
   border-radius: 50%;
 }
-
+.fa {
+  font-family: 'FontAwesome' !important;
+}
 
 .folder i.fa-folder {
   height: 90px!important;

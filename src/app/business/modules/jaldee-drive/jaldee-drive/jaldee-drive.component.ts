@@ -74,6 +74,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   // breadcrumb_moreoptions: any = [];
   domain;
   open_filter = false;
+  onSharedClicked=false;
   // breadcrumbs = [
   //   {
   //     url: '/provider/settings',
@@ -119,7 +120,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   order = 'status';
   defaultFolder = 'private';
   selectedFolder: any;
-
+  sharedFolder:any;
   use_metric;
   usage_metric: any;
   adon_info: any;
@@ -188,6 +189,8 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     private router: Router,
     public location: Location,
     public dialog: MatDialog,
+    // private _location: Location,
+
   ) {
     this.config = {
       itemsPerPage: 5,
@@ -467,9 +470,18 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     };
     this.router.navigate(['provider', 'drive', 'folderfiles'], navigationExtras);
   }
+  onClicked(foldername){
+  this.onSharedClicked = true;
+  this.sharedFolder = foldername
+  console.log("Clicked :",foldername)
+  }
   getPatientFiles() {
     this.getfiles();
 
+  }
+  onCancel() {
+    
+    this.router.navigate(['provider', 'drive'])
   }
   getUsers(from_oninit = false) {
     this.loading = true;

@@ -645,6 +645,36 @@ body.modal-open {
 .tble{
   overflow-x: auto !important;
 }
+
+
+.folder, .item {
+  margin-right: 10px;
+  /* position: relative; */
+}
+#folder2 i.fa-folder, #folder2-content h2 .fa-folder {
+  /* color: #4bc97a; */
+  color: #152d56;
+}
+/* .bgcolor{
+  background-color: #4666a5;
+} */
+.inp{
+  border-radius: 50%;
+}
+
+
+.folder i.fa-folder {
+  height: 90px!important;
+  width: 100%!important;
+  line-height: 100px!important;
+  margin: 10px auto!important;
+  font-size: 90px!important;
+  transition: .2s all ease-out;
+}
+
+/* .colr{
+  border-bottom: rgb(15, 15, 102) solid 2px !important;
+} */
 /* @media (min-width: 576px) {
   .tble{
     display:block;

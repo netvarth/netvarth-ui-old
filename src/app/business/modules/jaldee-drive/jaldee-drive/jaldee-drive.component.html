@@ -94,10 +94,8 @@
         <div class="row bgcolor">
           <div class="col-xs-12 col-sm-12 col-12 col-md-12  col-lg-12 no-padding bgcolor">
             <div class="card no-padding-small bgcolor">
-              <div>
-                <!-- <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head mx-2">
-                  Jaldee Drive.
-                </div> -->
+              <!-- <div>
+              
                 <button type="button" class="pull-left p-button-rounded p-ripple p-button p-component mx-2 my-3 p-1">
                   <a style="color: white !important;" #modal data-toggle="modal" data-target="#exampleModalCenter">
                   </a>
@@ -106,10 +104,14 @@
                       style="display:none;" multiple (change)="filesSelected($event, 'close')"><i
                       style="color: white !important;" class="fa fa-plus mgn-rt-5" aria-hidden="true"></i> Upload New
                     File </a>
-                  <!-- <i style="color: white !important;"
-                      class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i> -->
+                
                 </button>
-              </div>
+              </div> -->
+              <!-- <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head mx-2">
+                  Jaldee Drive.
+                </div> -->
+              <!-- <i style="color: white !important;"
+                      class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i> -->
               <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 no-padding-small">
                 <div class="anual_side">
                 </div>
@@ -146,16 +148,16 @@
                   <a href="#" class="btn btn-primary">Go somewhere</a>
                 </div>
               </div> -->
-              <div class="mx-2 mt-4">
+              <div class="mx-2 mt-4" *ngIf="!sharedFolder">
                 <h4>Statistics</h4>
               </div>
-              <div class="mx-2">
+              <div class="mx-2" *ngIf="!sharedFolder">
                 <div class="row">
 
                   <div class="col-sm-12 col-md-4 col-lg-4  col-xs-12 col-12 disp-flex">
-                   
+
                     <div class="card color" style="word-wrap: normal !important;">
-                    
+
 
                       <div align="center" class="my-2">
 
@@ -242,6 +244,38 @@
                   </div> -->
                 </div>
               </div>
+              <!-- <div class="mx-2" *ngIf="onSharedClicked">
+                <h5 class="mgn-up-10">
+                  <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()">
+            
+                  </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  {{sharedFolder}} File
+            
+                </h5>
+                <div class=" row cust-name d-flex">
+
+                  <div (click)="publicfolder('Shared')"
+                    class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
+                    id="folder2">
+
+                    <i class="fa fa-folder" aria-hidden="true">
+
+                      <p (click)="publicfolder('Shared')">From Provider</p>
+                    </i>
+
+                  </div> &nbsp; &nbsp; &nbsp;
+                  <div (click)="publicfolder('Shared')"
+                    class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
+                    id="folder2">
+
+                    <i class="fa fa-folder" aria-hidden="true">
+
+                      <p (click)="publicfolder('Shared')">From Consumer</p>
+                    </i>
+
+                  </div>
+                </div>
+              </div> -->
               <div class="mx-2">
                 <div class=" row cust-name">
                   <!-- <h4>Your folders</h4> -->
@@ -255,9 +289,9 @@
                     </i>
                    
                   </div> -->
-                   <!-- <img src="../../../assets/images/Group 818.jpg" class=" fa fa-folder pull-left text-light "
+                  <!-- <img src="../../../assets/images/Group 818.jpg" class=" fa fa-folder pull-left text-light "
                   style="width: 22px !important; margin-top: 2px !important;"> -->
-                  <div (click)="publicfolder('My')" class="pointer-cursor top-droppable folder tooltiper tooltiper-up"
+                  <div (click)="publicfolder('My')" *ngIf="!sharedFolder" class="pointer-cursor top-droppable folder tooltiper tooltiper-up"
                     data-tooltip="0 file" id="folder2">
 
                     <i class="fa fa-folder" aria-hidden="true">
@@ -267,7 +301,7 @@
                     <!-- <img src="../../../assets/images/Group 816.jpg" class=" fa fa-folderpull-left text-light "
                   style="width: 22px !important; margin-top: 2px !important;"> -->
                   </div>
-                  <div (click)="publicfolder('Shared')"
+                  <div (click)="publicfolder('Shared')" *ngIf="!sharedFolder" 
                     class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
                     id="folder2">
 
@@ -603,7 +637,7 @@
       </button> -->
 
 
-      <button type="button" class="pull-right p-button-rounded p-ripple p-button p-component">
+      <!-- <button type="button" class="pull-right p-button-rounded p-ripple p-button p-component">
         <a style="color: white !important;" #modal data-toggle="modal" data-target="#exampleModalCenter">
         </a>
         <a style="color: white !important;" class="pointer-cursor mr-1 p-2" (click)="imagefile1.click();"><input
@@ -612,14 +646,14 @@
             class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i>Upload
           File
         </a>
-      </button>
+      </button> -->
     </div>
   </div>
- 
+  <div class="mx-3 my-3">
+    <p class="text-secondary">Can store files/attachments are uploaded by consumers or providers or you!</p>
+  </div>
 </section>
-<div class="mx-3 my-3">
-  <p class="text-secondary ">Can store files/attachments are uploaded by consumers or providers or you!</p>
-</div>
+
 <section class="waitlist-box-check">
   <div class="content w-manager settings comn-cls lic-page" style="width: 100%;">
     <div class="col-md-12 no-padding-small">
@@ -660,14 +694,14 @@
                     <a href="#" class="btn btn-primary">Go somewhere</a>
                   </div>
                 </div> -->
-                <div class="mx-2 mt-4">
+                <div class="mx-2 mt-4" *ngIf="!sharedFolder">
                   <h4>Statistics</h4>
                 </div>
-                <div class="mx-2">
+                <div class="mx-2" *ngIf="!sharedFolder">
                   <div class="row">
-                   
+
                     <div class="col-sm-12 col-md-4 col-lg-4  col-xs-12 col-12 disp-flex">
-                     
+
                       <div class="card color" style="word-wrap: normal !important;">
 
                         <div align="center" class="my-2">
@@ -841,6 +875,38 @@
       <div style="margin-top:5%;" class="col-md-4">GB left</div>
     </div>
   </div> -->
+              <!-- <div class="mx-2" *ngIf="onSharedClicked">
+                <h5 class="mgn-up-10">
+                  <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()">
+            
+                  </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  {{sharedFolder}} File
+            
+                </h5>
+                <div class=" row cust-name d-flex">
+
+                  <div (click)="publicfolder('Shared')"
+                    class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
+                    id="folder2">
+
+                    <i class="fa fa-folder" aria-hidden="true">
+
+                      <p (click)="publicfolder('Shared')">From Provider</p>
+                    </i>
+
+                  </div> &nbsp; &nbsp; &nbsp;
+                  <div (click)="publicfolder('Shared')"
+                    class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
+                    id="folder2">
+
+                    <i class="fa fa-folder" aria-hidden="true">
+
+                      <p (click)="publicfolder('Shared')">From Consumer</p>
+                    </i>
+
+                  </div>
+                </div>
+              </div> -->
               <div class="mx-2">
                 <div class="cust-name">
                   <!-- <h4>Your folders</h4> -->
@@ -853,14 +919,13 @@
                         <p (click)="publicfolder('Public')"> Public Files</p>
                       </i>
                     </div> -->
-                    <div (click)="publicfolder('My')" class="pointer-cursor top-droppable folder tooltiper tooltiper-up"
+                    <div (click)="publicfolder('My')"  class="pointer-cursor top-droppable folder tooltiper tooltiper-up"
                       data-tooltip="0 file" id="folder2">
                       <i class="fa fa-folder" aria-hidden="true">
                         <p (click)="publicfolder('My')"> My Files</p>
                       </i>
                     </div>
-                    <div (click)="publicfolder('Shared')"
-                      class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
+                    <div (click)="publicfolder('Shared')"  class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
                       id="folder2">
 
                       <i class="fa fa-folder" aria-hidden="true">
@@ -871,6 +936,7 @@
                   style="width: 22px !important; margin-top: 2px !important;"> -->
                     </div>
                   </div>
+
                 </div>
               </div>
               <!-- <h4>
