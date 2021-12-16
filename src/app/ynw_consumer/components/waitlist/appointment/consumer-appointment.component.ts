@@ -313,7 +313,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     //selectedDate: number;
     selectedMonth: number;
     selectedYear: number;
-
+selectedTime: any;
     allDates: any[] = [];
     dates: any[] = [];
     years: number[] = [];
