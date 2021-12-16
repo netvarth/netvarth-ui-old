@@ -454,11 +454,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
           }
         }
       }
-      
-      
-      
-      
-      
       else {
         if (this.data.source === 'customer-list') {
           if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
