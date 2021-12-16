@@ -1,0 +1,43 @@
+.folder {
+    float: left;
+    width: 150px;
+    height: 150px;
+    background: rgba(0,0,0,0);
+    transition: .2s background-color ease-out;
+    text-align: center;
+  }
+  .folder, .item {
+    margin-right: 10px;
+    /* position: relative; */
+  }
+  #folder2 i.fa-folder, #folder2-content h2 .fa-folder {
+    /* color: #4bc97a; */
+    color: #152d56;
+  }
+  /* .bgcolor{
+    background-color: #4666a5;
+  } */
+  .inp{
+    border-radius: 50%;
+  }
+  .fa {
+    font-family: 'FontAwesome' !important;
+  }
+  
+  .folder i.fa-folder {
+    height: 90px!important;
+    width: 100%!important;
+    line-height: 100px!important;
+    margin: 10px auto!important;
+    font-size: 90px!important;
+    transition: .2s all ease-out;
+  }
+  .fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    /* font-size: inherit; */
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    /* -moz-osx-font-smoothing: grayscale; */
+  }
+  
