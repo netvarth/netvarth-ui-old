@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { ActivatedRoute } from '@angular/router';
-//import { Router, NavigationExtras } from '@angular/router';
+//import { Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
 import { PreviewuploadedfilesComponent } from '../previewuploadedfiles/previewuploadedfiles.component';
@@ -54,6 +54,9 @@ export class FolderFilesComponent implements OnInit {
     perPage: 3
   };
   choose_type = 'My';
+  onClickedConsumer=false;
+  onClickedProvider=false;
+  sharedFolderName:any;
   active_user: any;
   action: any = '';
   apiError = '';
@@ -117,7 +120,7 @@ export class FolderFilesComponent implements OnInit {
     public dialog: MatDialog,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
-   // private router: Router,
+    //private router: Router,
 
     private groupService: GroupStorageService,
 
@@ -334,8 +337,22 @@ export class FolderFilesComponent implements OnInit {
   }
   sharedfolder(foldername) {
     console.log("Access!!!")
-    this.onClickedFolder= true;
-    this.foldertype = foldername
+    //this.onClickedFolder= true;
+    
+    if(foldername === 'Provider'){
+      this.onClickedProvider = true;
+      this.onClickedConsumer = false;
+      this.foldertype = 'Shared'
+      this.sharedFolderName = foldername;
+      this.getfiles();
+    }
+    if(foldername === 'Consumer'){
+      this.onClickedConsumer = true;
+      this.onClickedProvider = false;
+      this.foldertype = 'Shared'
+      this.sharedFolderName = foldername;
+      this.getfiles();
+    }
 
     // const navigationExtras: NavigationExtras = {
     //   queryParams: {
@@ -343,7 +360,7 @@ export class FolderFilesComponent implements OnInit {
     //   }
     // };
     // this.router.navigate(['provider', 'drive', 'folderfiles'], navigationExtras);
-    this.getfiles();
+    
   }
   getfiles() {
     const filter = {};
@@ -554,6 +571,15 @@ export class FolderFilesComponent implements OnInit {
     } else {
       return url;
     }
+  }
+
+  onBack(){
+  //  const navigationExtras: NavigationExtras = {
+  //     queryParams: {
+  //       foldername: foldername,
+  //     }
+  //   };
+   // this.router.navigate(['provider', 'drive', 'folderfiles']);
   }
   onCancel() {
 

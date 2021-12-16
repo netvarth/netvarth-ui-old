@@ -244,7 +244,7 @@
                   </div> -->
                 </div>
               </div>
-              <!-- <div class="mx-2" *ngIf="onSharedClicked">
+              <div class="mx-2" *ngIf="onSharedClicked">
                 <h5 class="mgn-up-10">
                   <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()">
             
@@ -256,7 +256,7 @@
 
                   <div (click)="publicfolder('Shared')"
                     class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
-                    id="folder2">
+                    id="folder2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="From Provider">
 
                     <i class="fa fa-folder" aria-hidden="true">
 
@@ -266,7 +266,7 @@
                   </div> &nbsp; &nbsp; &nbsp;
                   <div (click)="publicfolder('Shared')"
                     class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
-                    id="folder2">
+                    id="folder2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="From Consumer">
 
                     <i class="fa fa-folder" aria-hidden="true">
 
@@ -275,7 +275,7 @@
 
                   </div>
                 </div>
-              </div> -->
+              </div>
               <div class="mx-2">
                 <div class=" row cust-name">
                   <!-- <h4>Your folders</h4> -->
@@ -301,13 +301,13 @@
                     <!-- <img src="../../../assets/images/Group 816.jpg" class=" fa fa-folderpull-left text-light "
                   style="width: 22px !important; margin-top: 2px !important;"> -->
                   </div>
-                  <div (click)="publicfolder('Shared')" *ngIf="!sharedFolder" 
+                  <div (click)="onClicked('Shared')" *ngIf="!sharedFolder" 
                     class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
                     id="folder2">
 
                     <i class="fa fa-folder" aria-hidden="true">
 
-                      <p (click)="publicfolder('Shared')">Shared Files</p>
+                      <p (click)="onClicked('Shared')">Shared Files</p>
                     </i>
                     <!-- <img src="../../../assets/images/Group 816.jpg" class=" fa fa-folderpull-left text-light "
                 style="width: 22px !important; margin-top: 2px !important;"> -->
@@ -875,19 +875,19 @@
       <div style="margin-top:5%;" class="col-md-4">GB left</div>
     </div>
   </div> -->
-              <!-- <div class="mx-2" *ngIf="onSharedClicked">
+              <div class="mx-2" *ngIf="onSharedClicked">
                 <h5 class="mgn-up-10">
                   <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()">
             
                   </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  {{sharedFolder}} File
+                  {{sharedFolder}} Files
             
                 </h5>
                 <div class=" row cust-name d-flex">
 
                   <div (click)="publicfolder('Shared')"
                     class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
-                    id="folder2">
+                    id="folder2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="From Provider">
 
                     <i class="fa fa-folder" aria-hidden="true">
 
@@ -897,7 +897,7 @@
                   </div> &nbsp; &nbsp; &nbsp;
                   <div (click)="publicfolder('Shared')"
                     class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
-                    id="folder2">
+                    id="folder2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="From Consumer">
 
                     <i class="fa fa-folder" aria-hidden="true">
 
@@ -906,7 +906,7 @@
 
                   </div>
                 </div>
-              </div> -->
+              </div>
               <div class="mx-2">
                 <div class="cust-name">
                   <!-- <h4>Your folders</h4> -->
@@ -925,12 +925,12 @@
                         <p (click)="publicfolder('My')"> My Files</p>
                       </i>
                     </div>
-                    <div (click)="publicfolder('Shared')"  class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
+                    <div (click)="onClicked('Shared')"  class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
                       id="folder2">
 
                       <i class="fa fa-folder" aria-hidden="true">
 
-                        <p (click)="publicfolder('Shared')">Shared Files</p>
+                        <p (click)="onClicked('Shared')">Shared Files</p>
                       </i>
                       <!-- <img src="../../../assets/images/Group 816.jpg" class=" fa fa-folderpull-left text-light "
                   style="width: 22px !important; margin-top: 2px !important;"> -->

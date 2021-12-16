@@ -74,7 +74,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   // breadcrumb_moreoptions: any = [];
   domain;
   open_filter = false;
-  onSharedClicked=false;
+  onSharedClicked = false;
   // breadcrumbs = [
   //   {
   //     url: '/provider/settings',
@@ -120,7 +120,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   order = 'status';
   defaultFolder = 'private';
   selectedFolder: any;
-  sharedFolder:any;
+  sharedFolder: any;
   use_metric;
   usage_metric: any;
   adon_info: any;
@@ -171,7 +171,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   addUser = false;
   totalcount: any;
   storageleft: any;
-  remainingStorage:any;
+  remainingStorage: any;
   weightageValue = 0;
   addondialogRef: any;
   fileviewdialogRef: any;
@@ -189,7 +189,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     private router: Router,
     public location: Location,
     public dialog: MatDialog,
-    // private _location: Location,
+    private _location: Location,
 
   ) {
     this.config = {
@@ -232,9 +232,9 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
       (data: any) => {
         console.log(data);
         this.storageleft = data;
-        console.log("Space Left :",Math.round(this.storageleft.remainingStorage))
+        console.log("Space Left :", Math.round(this.storageleft.remainingStorage))
         this.remainingStorage = Math.round(this.storageleft.remainingStorage);
-        
+
         this.weightageValue = this.storageleft.usedStorage
       }
     );
@@ -447,8 +447,8 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   changeType(event) {
 
 
-      this.choose_type = event.value;
-   
+    this.choose_type = event.value;
+
     // //this.choose_type = event.value;
     // if (event) {
     //    this.selectedFolder = event.value
@@ -470,18 +470,24 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     };
     this.router.navigate(['provider', 'drive', 'folderfiles'], navigationExtras);
   }
-  onClicked(foldername){
-  this.onSharedClicked = true;
-  this.sharedFolder = foldername
-  console.log("Clicked :",foldername)
+  onClicked(foldername) {
+    this.onSharedClicked = true;
+    this.sharedFolder = foldername
+    console.log("Clicked :", foldername)
   }
   getPatientFiles() {
     this.getfiles();
 
   }
   onCancel() {
-    
-    this.router.navigate(['provider', 'drive'])
+    // const navigationExtras: NavigationExtras = {
+    //   // queryParams: {
+    //   //   foldername: foldername,
+    //   // }
+    // };
+    // this.router.navigate(['provider', 'drive'], navigationExtras)
+    this._location.back();
+
   }
   getUsers(from_oninit = false) {
     this.loading = true;

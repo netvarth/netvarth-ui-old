@@ -91,30 +91,39 @@
   </div>
 </div>
 <section class="customersList mt-2 p-3">
-  <div class="mx-4"  *ngIf="foldertype === 'Shared'" >
+  <!-- <div class="mx-4" *ngIf="foldertype === 'Shared'">
     <div class=" row cust-name d-flex">
 
-      <div (click)="sharedfolder('Shared')"  class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file" id="folder2">
+      <div (click)="sharedfolder('Provider')" *ngIf="!onClickedProvider"
+        class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file" id="folder2"
+        data-bs-toggle="tooltip" data-bs-placement="bottom" title="From Provider">
 
         <i class="fa fa-folder" aria-hidden="true">
 
-          <p (click)="sharedfolder('Shared')">From Provider</p>
+          <p (click)="sharedfolder('Provider')">From Provider</p>
         </i>
 
       </div> &nbsp; &nbsp; &nbsp;
-      <div (click)="sharedfolder('Shared')" class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file" id="folder2">
+      <div (click)="sharedfolder('Consumer')" *ngIf="!onClickedConsumer"
+        class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file" id="folder2"
+        data-bs-toggle="tooltip" data-bs-placement="bottom" title="From Consumer">
 
         <i class="fa fa-folder" aria-hidden="true">
 
-          <p (click)="sharedfolder('Shared')">From Consumer</p>
+          <p (click)="sharedfolder('Consumer')">From Consumer</p>
         </i>
 
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <div class="row p-3" *ngIf="foldertype === 'Shared' && onClickedFolder">
-
+  <div class="row p-3" *ngIf="foldertype === 'Shared'">
+    <h5 class="mx-2">
+      
+      <span class="text-bold">
+        {{sharedFolderName}} Files
+      </span>
+    </h5>
 
     <div class="card card-custom card-stretch gutter-b no-padding col-md-12  col-sm-12  col-xs-12">
 
@@ -148,9 +157,9 @@
           </a>
         </h3>
       </div>
-    
 
-      <div class="row p-3" >
+
+      <div class="row p-3">
         <div class="card-body tble pt-0 pb-3 col-12 col-sm-12 col-xs-12">
           <div class="tab-content">
             <div class="table-responsive1">
@@ -160,12 +169,12 @@
                 <thead>
                   <tr class="text-left text-uppercase mx-2 " style="background-color: #f3f6f9; height: 60px;">
 
-                    <th >
-                      
-                        <!--class="" [class.pad-bt-0]="selectedcustomersformsg.length > 0" <input type="checkbox" (change)="selectAllcustomers($event)"
+                    <th>
+
+                      <!--class="" [class.pad-bt-0]="selectedcustomersformsg.length > 0" <input type="checkbox" (change)="selectAllcustomers($event)"
                           [checked]="isAllCustomerSelected()"> -->
-                        Name
-                      
+                      Name
+
                       <!-- <div class="customer-selected" *ngIf="selectedcustomersformsg.length > 0">
                         {{selectedcustomersformsg.length}} {{(selectedcustomersformsg.length === 1) ? customer_label
                         : customer_label + 's'}} selected </div>
@@ -191,25 +200,25 @@
                   <tr style="cursor: pointer;" class="py-4"
                     *ngFor="let customer of customers | filter:searchTerm | paginate: config;   let i= index"
                     (click)="preview(customer)">
-                   
+
                     <td>
-                     
-                        <!-- <div class="pr-3">
+
+                      <!-- <div class="pr-3">
                           <span class="symbol-label">
                             <input type="checkbox" name="Checkboxes4" [checked]="checkSelection(customer)"
                               (click)="stopprop($event)" (change)="selectcustomers(customer)"
                               [disabled]="showText(customer)">
                           </span>
                         </div> {{getCustomer(customer)}}-->
-                       
-                          <span class="text-dark-75 text-hover-primary mb-1 cust-name">
-                            {{customer.fileName}} </span>
-                          <!-- <div>
+
+                      <span class="text-dark-75 text-hover-primary mb-1 cust-name">
+                        {{customer.fileName}} </span>
+                      <!-- <div>
                             <span *ngFor="let label of customer.label | keyvalue"
                               [class.appliedLabel]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
                           </div> -->
-                        
-                      
+
+
                       <!-- <div class="customer-added" *ngIf="showText(customer)">Already added to this group</div> -->
                     </td>
                     <td *ngIf="foldertype === 'Shared' && customer.ownerName !==''">
@@ -307,9 +316,9 @@
           </a>
         </h3>
       </div>
-    
 
-      <div class="row p-3" >
+
+      <div class="row p-3">
         <div class="card-body tble pt-0 pb-3 col-12 col-sm-12 col-xs-12">
           <div class="tab-content">
             <div class="table-responsive1">
