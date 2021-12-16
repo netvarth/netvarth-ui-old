@@ -590,6 +590,40 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               );
           }
         }
+        else if (this.type === 'orders') {
+          if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
+            this.api_error = 'share message via options are not selected';
+            setTimeout(() => {
+             this.api_error='';
+            }, projectConstants.TIMEOUT_DELAY);
+          
+          } else {
+            const post_data = {
+              medium: {
+                email: this.email,
+                sms: this.sms,
+                pushNotification: this.pushnotify,
+                telegram: this.telegram
+              },
+              communicationMessage: form_data.message,
+              uuid: [this.uuid]
+            };
+            const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+            dataToSend.append('communication', blobpost_Data);
+            this.shared_services.consumerOrderMassCommunicationAppt(dataToSend).
+              subscribe(() => {
+                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                setTimeout(() => {
+                  this.dialogRef.close('reloadlist');
+                }, projectConstants.TIMEOUT_DELAY);
+              },
+                error => {
+                  this.wordProcessor.apiErrorAutoHide(this, error);
+                  this.disableButton = false;
+                }
+              );
+          }
+        }
          else {
           // IsTelegramDisable && !this.telegram  && !this.telegram (IsTelegramDisable && !this.telegram)
           if (this.data.source === 'provider-waitlist') {
