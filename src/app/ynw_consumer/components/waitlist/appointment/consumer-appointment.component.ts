@@ -328,6 +328,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     languageSelected: any = [];
     iseditLanguage = false;
     bgColor: string;
+    selectedTime: any;
 
 
 
