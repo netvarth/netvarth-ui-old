@@ -714,7 +714,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             'uuid': uid,
             'accountId': this.account_id,
             'source': 'Desktop',
-            'purpose': 'donation'
+            'purpose': 'donation',
+            'serviceId':this.sel_ser
         };
        payInfo.isInternational=this.isInternatonal;
         this.lStorageService.setitemonLocalStorage('uuid', uid);
