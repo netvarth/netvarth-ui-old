@@ -250,26 +250,38 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="c-row two section-two"
-                                                                                    *ngIf="bill_data.taxableTotal">
+                                                                                *ngIf="bill_data.taxableTotal">
+                                                                                <div class="discount-row two-col">
+                                                                                    <div class="name">
+                                                                                        <span class="tax-top">Tax
+                                                                                            <span
+                                                                                                class="rupee-font">
+                                                                                                {{bill_data.taxPercentage}}%
+                                                                                                of
+                                                                                                {{bill_data.taxableTotal
+                                                                                                |
+                                                                                                currency:'&#8377;
+                                                                                                '}}</span>
+                                                                                        </span><br /><span
+                                                                                            class="txn">(CGST-{{bill_data.taxPercentage/2}}%,
+                                                                                            SGST-{{bill_data.taxPercentage/2}}%)</span>
+                                                                                    </div>
+                                                                                    <div class="price rupee-font">
+                                                                                        (+){{bill_data.totalTaxAmount
+                                                                                        |
+                                                                                        currency:'&#8377; '}}</div>
+                                                                                </div>
+                                                                            </div>
+                                                                                <div class="c-row two section-two"
+                                                                                    *ngIf="bill_data.customerPaidCharges>0">
                                                                                     <div class="discount-row two-col">
                                                                                         <div class="name">
-                                                                                            <span class="tax-top">Tax
-                                                                                                <span
-                                                                                                    class="rupee-font">
-                                                                                                    {{bill_data.taxPercentage}}%
-                                                                                                    of
-                                                                                                    {{bill_data.taxableTotal
-                                                                                                    |
-                                                                                                    currency:'&#8377;
-                                                                                                    '}}</span>
-                                                                                            </span><br /><span
-                                                                                                class="txn">(CGST-{{bill_data.taxPercentage/2}}%,
-                                                                                                SGST-{{bill_data.taxPercentage/2}}%)</span>
+                                                                                            Processing Fee
                                                                                         </div>
                                                                                         <div class="price rupee-font">
-                                                                                            (+){{bill_data.totalTaxAmount
+                                                                                            {{bill_data.customerPaidCharges
                                                                                             |
-                                                                                            currency:'&#8377; '}}</div>
+                                                                                            currency:'&#8377;'}} </div>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="c-row two section-two"
@@ -464,7 +476,7 @@
                                                                                     <mat-radio-button value="cash"  >
                                                                                         <div class="d-flex justify-content-around">
                                                                                             <div class="col-sm-8 col-md-8 col-xs-6 col-lg-8 my-auto"><span>Pay by Cash</span></div>
-                                                                                            <div class="col-sm-4 col-md-4 col-xs-6 col-lg-4 my-auto ml-auto"><img class="ordericon pickup" height="75px" width="75px"src="assets/images/payment-modes/cash_pay.png"></div>
+                                                                                            <div class="col-sm-4 col-md-4 col-xs-6 col-lg-4 my-auto ml-auto"><img class="ordericon pickup" height="75px" width="75px" [src]="getImageSrc('cash')"></div>
                                                                                         </div>
                                                                                     </mat-radio-button>
                                                                                   </mat-radio-group>
@@ -501,7 +513,7 @@
                                                                             <mat-radio-button value="cash">
                                                                                 <div class="d-flex justify-content-around">
                                                                                     <div class="col-md-8 col-lg-7 my-auto "><span>Pay by Cash</span></div>
-                                                                                    <div class="col-md-4 col-lg-5 my-auto "><img class="ordericon pickup" height="75px" width="75px"src="assets/images/payment-modes/cash_pay.png"></div>
+                                                                                    <div class="col-md-4 col-lg-5 my-auto "><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc('cash')"></div>
                                                                                 </div>
                                                                             </mat-radio-button>
                                                                           </mat-radio-group>
@@ -540,9 +552,9 @@
                                                                                 (click)="togglepaymentMode()"
                                                                                 class="pointer-cursor"><a
                                                                                     class="refund_policy">
-                                                                                    <span *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non Indian Payment ? Click
+                                                                                    <span *ngIf="!shownonIndianModes&&paymentmodes&&paymentmodes.internationalPay">Non Indian Payment ? Click
                                                                                     here</span>
-                                                                                    <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
+                                                                                    <span *ngIf="shownonIndianModes &&paymentmodes&&paymentmodes.indiaPay">Indian Payment ? Click
                                                                                         here</span>
                                                                                 </a></span>
                     
