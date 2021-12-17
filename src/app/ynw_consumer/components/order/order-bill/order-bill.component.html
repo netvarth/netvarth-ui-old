@@ -464,7 +464,7 @@
                                                                                     <mat-radio-button value="cash"  >
                                                                                         <div class="d-flex justify-content-around">
                                                                                             <div class="col-sm-8 col-md-8 col-xs-6 col-lg-8 my-auto"><span>Pay by Cash</span></div>
-                                                                                            <div class="col-sm-4 col-md-4 col-xs-6 col-lg-4 my-auto ml-auto"><img class="ordericon pickup" height="75px" width="75px"src="assets/images/payment-modes/cash_pay.png"></div>
+                                                                                            <div class="col-sm-4 col-md-4 col-xs-6 col-lg-4 my-auto ml-auto"><img class="ordericon pickup" height="75px" width="75px" [src]="getImageSrc('cash')"></div>
                                                                                         </div>
                                                                                     </mat-radio-button>
                                                                                   </mat-radio-group>
@@ -501,7 +501,7 @@
                                                                             <mat-radio-button value="cash">
                                                                                 <div class="d-flex justify-content-around">
                                                                                     <div class="col-md-8 col-lg-7 my-auto "><span>Pay by Cash</span></div>
-                                                                                    <div class="col-md-4 col-lg-5 my-auto "><img class="ordericon pickup" height="75px" width="75px"src="assets/images/payment-modes/cash_pay.png"></div>
+                                                                                    <div class="col-md-4 col-lg-5 my-auto "><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc('cash')"></div>
                                                                                 </div>
                                                                             </mat-radio-button>
                                                                           </mat-radio-group>
