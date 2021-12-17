@@ -474,6 +474,10 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     this.onSharedClicked = true;
     this.sharedFolder = foldername
     console.log("Clicked :", foldername)
+    const navigationExtras: NavigationExtras = {
+
+    };
+    this.router.navigate(['provider', 'drive', 'sharedfiles'], navigationExtras);
   }
   getPatientFiles() {
     this.getfiles();

@@ -12,7 +12,7 @@ import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { projectConstantsLocal } from "../../../shared/constants/project-constants";
 
 export function homeHttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, projectConstantsLocal.PATH+'./assets/i18n/home/', '.json');
+  return new TranslateHttpLoader(http, projectConstantsLocal.PATH+'assets/i18n/home/', '.json');
 }
 @NgModule({
     imports: [

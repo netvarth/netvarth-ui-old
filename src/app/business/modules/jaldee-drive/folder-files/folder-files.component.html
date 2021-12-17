@@ -117,13 +117,13 @@
     </div>
   </div> -->
 
-  <div class="row p-3" *ngIf="foldertype === 'Shared'">
-    <h5 class="mx-2">
+  <div class="row p-3" >
+    <!-- <h5 class="mx-2">
       
       <span class="text-bold">
         {{sharedFolderName}} Files
       </span>
-    </h5>
+    </h5> -->
 
     <div class="card card-custom card-stretch gutter-b no-padding col-md-12  col-sm-12  col-xs-12">
 
@@ -190,6 +190,9 @@
                     <th style="min-width: 65px">Date</th>
                     <th style="min-width: 53px">Type</th>
                     <th style="min-width: 73px">Size</th>
+                    <!-- <th *ngIf="foldertype === 'Shared'">
+                      Shared With
+                    </th> -->
 
                     <!-- <th style="min-width: 50px"></th> -->
                   </tr>
@@ -250,164 +253,16 @@
                         {{customer.fileSize*1024}}KB
                       </span>
                     </td>
-                    <!-- <td *ngIf="!showCustomers" class="text-right">
-                      <button mat-flat-button class="prof_btn"
-                        (click)="stopprop($event); showCustomerAction(customer)">Actions</button>
-                    </td> -->
-                  </tr>
-                  <tr *ngIf="customers.length === 0" class="my-2 py-2">
-                    <td class="text-center my-2 py-2" colspan="4">No files found.</td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <!-- <div *ngIf="!apiloading && customers.length === 0 && filterapplied">
-                No files found.
-              </div> -->
-              <div class="d-flex justify-content-between align-items-center flex-wrap pull-right mb-0"
-                *ngIf="!apiloading && customers.length > 0">
-
-
-                <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
-
-                <!-- <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
-                  (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager> -->
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-  </div>
-  <div class="row p-3" *ngIf="foldertype === 'My'">
-
-
-    <div class="card card-custom card-stretch gutter-b no-padding col-md-12  col-sm-12  col-xs-12">
-
-      <div class="mx-2" *ngIf="foldertype !== 'Shared'">
-        <button type="button" class="pull-left p-button-rounded p-ripple p-button p-component mx-2 my-3 p-1">
-          <a style="color: white !important;" #modal data-toggle="modal" data-target="#exampleModalCenter">
-          </a>
-          <a style="color: white !important;" class="pointer-cursor mr-1 p-2" (click)="imagefile1.click();"><input
-              #imagefile1 type="file" accept="/*;capture=camera" style="display:none;" multiple
-              (change)="filesSelected($event, 'close')"><i style="color: white !important;" class="fa fa-plus mgn-rt-5"
-              aria-hidden="true"></i> Upload File </a>
-          <!-- <i style="color: white !important;"
-            class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i> -->
-        </button>
-      </div>
-      <div class="p-3">
-
-        <h3 class="align-items-start flex-column">
-          <!-- <span class="fa fa-arrow-left pointer-cursor mgn-rt-10" *ngIf="hideGroups"
-              (click)="hideGroups = false"></span>
-            <span class="card-label font-1 font-weight-bolder text-dark"
-              *ngIf="selectedGroup == 'all' && groups.length > 0">All
-              {{customer_label | capitalizeFirst}}s</span>
-            <span class="card-label font-1 font-weight-bolder text-dark"
-              *ngIf="selectedGroup !== 'all'">{{selectedGroup.groupName}}</span> -->
-          <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-right"
-            *ngIf="filterapplied || (customers.length > 0 && !filterapplied)">
-            <img src="assets/images/provider-filter-icon.png"
-              style="width: 22px !important; margin-top: -4px !important;">
-            Filter
-          </a>
-        </h3>
-      </div>
-
-
-      <div class="row p-3">
-        <div class="card-body tble pt-0 pb-3 col-12 col-sm-12 col-xs-12">
-          <div class="tab-content">
-            <div class="table-responsive1">
-              <!-- <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner> -->
-              <table
-                class="table  table-responsive table-hover table-head-custom table-head-bg table-borderless table-vertical-center">
-                <thead>
-                  <tr class="text-left text-uppercase mx-2 " style="background-color: #f3f6f9; height: 60px;">
-
-                    <th>
-                      <span class="text-dark-75 mx-2 text-center">
-                        <!--class="" [class.pad-bt-0]="selectedcustomersformsg.length > 0" <input type="checkbox" (change)="selectAllcustomers($event)"
-                          [checked]="isAllCustomerSelected()"> -->
-                        Name
-                      </span>
-                      <!-- <div class="customer-selected" *ngIf="selectedcustomersformsg.length > 0">
-                        {{selectedcustomersformsg.length}} {{(selectedcustomersformsg.length === 1) ? customer_label
-                        : customer_label + 's'}} selected </div>
-                       style="min-width: 150px"
-                      style="min-width: 50px"
-                      style="min-width: 100px"
-                      style="min-width: 100px"
-                    -->
-                    </th>
-                    <th *ngIf="foldertype === 'Shared'">
-                      Owner
-                    </th>
-                    <th style="min-width: 65px">Date</th>
-                    <th style="min-width: 53px">Type</th>
-                    <th style="min-width: 73px">Size</th>
-
-                    <!-- <th style="min-width: 50px"></th> -->
-                  </tr>
-                </thead>
-
-                <!-- [class.pointer-cursor]="!showCustomers"  (click)="selectedRow(customer)"-->
-                <tbody>
-                  <tr style="cursor: pointer;" class="py-4"
-                    *ngFor="let customer of customers | filter:searchTerm | paginate: config;   let i= index"
-                    (click)="preview(customer)">
-                    <td *ngIf="foldertype === 'Shared' && customer.ownerName !==''">
+                    <!-- <td *ngIf="foldertype === 'Shared' && customer.providerConsumer !==''">
                       <span class="text-dark-75 d-block ">
-                        {{customer.ownerName}}
+                        {{customer.providerConsumer}}
                       </span>
                     </td>
-                    <td *ngIf="foldertype === 'Shared' && customer.ownerName === ''">
+                    <td *ngIf="foldertype === 'Shared' && customer.providerConsumer === ''">
                       <span class="text-dark-75 d-block ">
                         -
                       </span>
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <!-- <div class="pr-3">
-                          <span class="symbol-label">
-                            <input type="checkbox" name="Checkboxes4" [checked]="checkSelection(customer)"
-                              (click)="stopprop($event)" (change)="selectcustomers(customer)"
-                              [disabled]="showText(customer)">
-                          </span>
-                        </div> {{getCustomer(customer)}}-->
-                        <div>
-                          <span class="text-dark-75 text-hover-primary mb-1 cust-name">
-                            {{customer.fileName}} </span>
-                          <!-- <div>
-                            <span *ngFor="let label of customer.label | keyvalue"
-                              [class.appliedLabel]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
-                          </div> -->
-                        </div>
-                      </div>
-                      <!-- <div class="customer-added" *ngIf="showText(customer)">Already added to this group</div> -->
-                    </td>
-                    <td>
-                      <span class="text-dark-75 d-block ">
-                        {{customer.uploadedDate | date:"dd/MM/yy" }}
-                      </span>
-                    </td>
-                    <td>
-                      <span class="text-dark-75 d-block">
-                        <!-- {{fileTypeName}} -->
-                        {{customer.fileType}}
-                      </span>
-                    </td>
-                    <td>
-                      <span class="text-dark-75 d-block" *ngIf="customer.fileSize >=1">
-                        {{customer.fileSize*1024}}MB
-                      </span>
-                      <span class="text-dark-75 d-block" *ngIf="customer.fileSize <1">
-                        {{customer.fileSize*1024}}KB
-                      </span>
-                    </td>
+                    </td> -->
                     <!-- <td *ngIf="!showCustomers" class="text-right">
                       <button mat-flat-button class="prof_btn"
                         (click)="stopprop($event); showCustomerAction(customer)">Actions</button>
@@ -439,6 +294,7 @@
 
 
   </div>
+ 
   <div class="row displayblock">
 
     <div class="col-sm-6 col-12 col-lg-4 col-xs-12 col-md-6 filter">

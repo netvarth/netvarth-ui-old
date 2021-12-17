@@ -12,11 +12,14 @@ import { PreviewuploadedfilesComponent } from './previewuploadedfiles/previewupl
 import {NgxPaginationModule} from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter'; // import ng2search pipe module
 import { Routes, RouterModule } from '@angular/router';
+import { SharedfilesComponent } from './sharedfiles/sharedfiles.component';
 
 
 const routes: Routes = [
   { path: '', component: JaldeeDriveComponent },
-  { path: 'folderfiles', component: FolderFilesComponent }
+  { path: 'folderfiles', component: FolderFilesComponent },
+  { path: 'sharedfiles', component: SharedfilesComponent }
+
 
 ];
 
@@ -27,6 +30,7 @@ const routes: Routes = [
     JaldeeDriveComponent,
     FolderFilesComponent,
     PreviewuploadedfilesComponent,
+    SharedfilesComponent,
 
   ],
   imports: [
