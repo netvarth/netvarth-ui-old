@@ -4,6 +4,7 @@
 }
 .payment_profile .card-selected {
   border: 2px solid #283593;
+  padding: 20px;
 }
 
   .payment_profile{
@@ -14,7 +15,10 @@
     box-shadow: 0 0 5px 5px blue!important;
     padding: 20px;
   }
- 
+ .shadow{
+  box-shadow: 0 5px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  padding: 30px 0!important;
+ }
   /* .payment_profile .card {
     box-shadow: 0 0 5px 5px black!important;
     padding:5px!important;
@@ -35,7 +39,7 @@
     box-shadow: 0 0 3px 3px blue!important 
   }
 */
-  ::ng-deep .mat-radio-button .mat-radio-container {
+  /* ::ng-deep .mat-radio-button .mat-radio-container {
     display: none!important;
   }
   ::ng-deep .mat-radio-container .mat-radio-outer-circle,
@@ -45,4 +49,4 @@
   }
   ::ng-deep .mat-radio-container .mat-radio-label{
     display: inline;
-  } 
+  }  */
