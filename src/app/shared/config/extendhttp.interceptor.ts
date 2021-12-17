@@ -284,8 +284,11 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     req = req.clone({ headers: req.headers.append('Expires', '0'), withCredentials: true });
     // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.androidpro) });
     // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.iospro) });
-    if (this.lStorageService.getitemfromLocalStorage('BOOKING_CHANNEL')) {
-      req = req.clone({ headers: req.headers.append('BOOKING_CHANNEL', this.lStorageService.getitemfromLocalStorage('BOOKING_CHANNEL')), withCredentials: true });
+    const customId = this.lStorageService.getitemfromLocalStorage('customId');
+    if (customId) {
+      req = req.clone({ headers: req.headers.append('BOOKING_REQ_FROM', 'WEB_LINK'), withCredentials: true });
+    } else {
+      req = req.clone({ headers: req.headers.append('BOOKING_REQ_FROM', 'WEB_UI'), withCredentials: true });
     }
     if (this.sessionStorageService.getitemfromSessionStorage('tabId')) {
       req = req.clone({ headers: req.headers.append('tab', this.sessionStorageService.getitemfromSessionStorage('tabId')), withCredentials: true });
