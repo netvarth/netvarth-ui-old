@@ -47,6 +47,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   carouselPackages: any;
   evnt;
   loading = false;
+  appliedDate:string='31st December 2021.'
   constructor(
     private shared_service: SharedServices,
     public shared_functions: SharedFunctions,
