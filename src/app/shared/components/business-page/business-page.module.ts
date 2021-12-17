@@ -15,7 +15,7 @@ import { projectConstantsLocal } from "../../constants/project-constants";
 import { MatDialogModule } from "@angular/material/dialog";
 import {MatDatepickerModule} from '@angular/material/datepicker';
 export function homeHttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http,projectConstantsLocal.PATH+ './assets/i18n/home/', '.json');
+    return new TranslateHttpLoader(http,projectConstantsLocal.PATH+ 'assets/i18n/home/', '.json');
   }
 import { AddInboxMessagesModule } from "../add-inbox-messages/add-inbox-messages.module";
 import { JDNDetailModule } from "../jdn-detail/jdn-detail.module";

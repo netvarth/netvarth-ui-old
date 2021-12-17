@@ -6,8 +6,7 @@ import { Router } from '@angular/router';
 export class GlobalErrorHandler implements ErrorHandler {
     userData: any;
     constructor(public shared_services: SharedServices,
-        private injector: Injector,
-        private router: Router) {
+        private injector: Injector) {
 
     }
 
