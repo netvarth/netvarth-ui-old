@@ -250,26 +250,38 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="c-row two section-two"
-                                                                                    *ngIf="bill_data.taxableTotal">
+                                                                                *ngIf="bill_data.taxableTotal">
+                                                                                <div class="discount-row two-col">
+                                                                                    <div class="name">
+                                                                                        <span class="tax-top">Tax
+                                                                                            <span
+                                                                                                class="rupee-font">
+                                                                                                {{bill_data.taxPercentage}}%
+                                                                                                of
+                                                                                                {{bill_data.taxableTotal
+                                                                                                |
+                                                                                                currency:'&#8377;
+                                                                                                '}}</span>
+                                                                                        </span><br /><span
+                                                                                            class="txn">(CGST-{{bill_data.taxPercentage/2}}%,
+                                                                                            SGST-{{bill_data.taxPercentage/2}}%)</span>
+                                                                                    </div>
+                                                                                    <div class="price rupee-font">
+                                                                                        (+){{bill_data.totalTaxAmount
+                                                                                        |
+                                                                                        currency:'&#8377; '}}</div>
+                                                                                </div>
+                                                                            </div>
+                                                                                <div class="c-row two section-two"
+                                                                                    *ngIf="bill_data.customerPaidCharges>0">
                                                                                     <div class="discount-row two-col">
                                                                                         <div class="name">
-                                                                                            <span class="tax-top">Tax
-                                                                                                <span
-                                                                                                    class="rupee-font">
-                                                                                                    {{bill_data.taxPercentage}}%
-                                                                                                    of
-                                                                                                    {{bill_data.taxableTotal
-                                                                                                    |
-                                                                                                    currency:'&#8377;
-                                                                                                    '}}</span>
-                                                                                            </span><br /><span
-                                                                                                class="txn">(CGST-{{bill_data.taxPercentage/2}}%,
-                                                                                                SGST-{{bill_data.taxPercentage/2}}%)</span>
+                                                                                            Processing Fee
                                                                                         </div>
                                                                                         <div class="price rupee-font">
-                                                                                            (+){{bill_data.totalTaxAmount
+                                                                                            {{bill_data.customerPaidCharges
                                                                                             |
-                                                                                            currency:'&#8377; '}}</div>
+                                                                                            currency:'&#8377;'}} </div>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="c-row two section-two"
@@ -540,9 +552,9 @@
                                                                                 (click)="togglepaymentMode()"
                                                                                 class="pointer-cursor"><a
                                                                                     class="refund_policy">
-                                                                                    <span *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non Indian Payment ? Click
+                                                                                    <span *ngIf="!shownonIndianModes&&paymentmodes&&paymentmodes.internationalPay">Non Indian Payment ? Click
                                                                                     here</span>
-                                                                                    <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
+                                                                                    <span *ngIf="shownonIndianModes &&paymentmodes&&paymentmodes.indiaPay">Indian Payment ? Click
                                                                                         here</span>
                                                                                 </a></span>
                     
