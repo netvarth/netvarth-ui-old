@@ -188,8 +188,8 @@
                       Owner
                     </th>
                     <th style="min-width: 65px">Date</th>
-                    <th style="min-width: 53px">Type</th>
-                    <th style="min-width: 73px">Size</th>
+                    <th style="min-width: 50px">Type</th>
+                    <th style="min-width: 55px">Size</th>
                     <!-- <th *ngIf="foldertype === 'Shared'">
                       Shared With
                     </th> -->
@@ -215,7 +215,7 @@
                         </div> {{getCustomer(customer)}}-->
 
                       <span class="text-dark-75 text-hover-primary mb-1 cust-name">
-                        {{customer.fileName}} </span>
+                        {{getFileName(customer.fileName)}} </span>
                       <!-- <div>
                             <span *ngFor="let label of customer.label | keyvalue"
                               [class.appliedLabel]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
@@ -240,17 +240,18 @@
                       </span>
                     </td>
                     <td>
+                         <!-- {{fileTypeName}} -->
                       <span class="text-dark-75 d-block">
-                        <!-- {{fileTypeName}} -->
-                        {{customer.fileType}}
+                     
+                        {{getFileType(customer.fileType)}}
                       </span>
                     </td>
                     <td>
                       <span class="text-dark-75 d-block" *ngIf="customer.fileSize >=1">
-                        {{customer.fileSize*1024}}MB
+                        {{getFileSize(customer.fileSize)}}MB
                       </span>
                       <span class="text-dark-75 d-block" *ngIf="customer.fileSize <1">
-                        {{customer.fileSize*1024}}KB
+                        {{getFileSize(customer.fileSize*1024)}}KB
                       </span>
                     </td>
                     <!-- <td *ngIf="foldertype === 'Shared' && customer.providerConsumer !==''">
