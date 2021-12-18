@@ -171,6 +171,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     paymentSubscription: any;
     paymentProfiles:any=[];
     selected=false;
+    selectedPaymentProfile: any;
     
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
@@ -225,6 +226,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     } else {
             
                         this.service_data = this.service;
+                        if(this.service_data.paymentProfileId){
+                            this.getPaymentProfileDetails(this.service_data.paymentProfileId)
+                        }
                         if (this.action === 'show' && this.active_user.accountType === 'BRANCH') {
                             this.getDepartments(this.service.department);
                         }
@@ -438,6 +442,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
         } else {
             this.advanced = false;
         }
+    }
+    getPaymentProfileDetails(profileId){
+       this.selectedPaymentProfile= this.paymentProfiles.filter(profile=>profile.profileId===profileId);
+
     }
     getImageSrc(mode){
     
