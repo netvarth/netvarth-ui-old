@@ -468,7 +468,8 @@
                                                                     <button class="cs-btn bt1"
                                                                         (click)="cashPayment()">Cash</button> -->
                                                                         <div class="clearfix"></div>
-                                                                        <ng-container *ngIf="!shownonIndianModes && ((checkJcash && jcashamount < bill_data.amountDue))">
+                                                                        <div  *ngIf=" ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))">
+                                                                        <ng-container *ngIf="!shownonIndianModes">
                                                                             <div class="col-xs-12 col-sm-6 col-md-12 col-lg-12">
             
                                                                                 <div class="text-primary" >
@@ -504,7 +505,7 @@
                     
                                                                     </div>
                                                                 </ng-container>
-                                                                <ng-container *ngIf="shownonIndianModes && ((checkJcash && jcashamount < bill_data.amountDue))">
+                                                                <ng-container *ngIf="shownonIndianModes ">
                            
                                                                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
     
@@ -541,7 +542,8 @@
                     
                                                                 </div>
                                                             </ng-container>
-                                                            <br><br>
+                                                        </div>
+                                                      
 </div>
                                                             <div>
                                                                     <div class="clearfix"></div>
@@ -570,7 +572,7 @@
                                                                                 (click)="!isClickedOnce && payuPayment()">
                                                                                MaKe Payment
                                                                             </button>
-                                                                            <button class="cs-btn bt1" (click)="payuPayment()"
+                                                                            <button  class=" next-button btn btn-primary font-weight-bold text-uppercase mt-3" (click)="payuPayment()"
                                                                             *ngIf="((checkJcash && jcashamount > bill_data.amountDue) || ( checkJcash && jcashamount == bill_data.amountDue))">
                                                                             Confirm</button>
                                                                         <br> <br>
