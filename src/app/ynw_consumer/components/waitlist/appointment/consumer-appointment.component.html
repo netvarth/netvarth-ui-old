@@ -2028,7 +2028,7 @@
 
                                                     </div>
                                                 </div> -->
-                                          
+                                                <div *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
                                                 <ng-container *ngIf="!shownonIndianModes">
                                                         <div *ngFor="let modes of indian_payment_modes">
                                                             <div class="col-xs-12 col-md-6 col-sm-12 col-lg-6">
@@ -2073,6 +2073,7 @@
     
                                                 </div>
                                             </ng-container>
+                                            </div>
                                                 <div>
 
                                                 <div class="col-md-12 txt-align-center pad_link"

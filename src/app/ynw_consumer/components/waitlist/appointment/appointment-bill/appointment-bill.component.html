@@ -422,7 +422,8 @@
                                                                    <span class="">Choose any  Payment Option</span> 
                                                                 </div>
                                                                 <div class="clearfix"></div>
-                                                                <ng-container *ngIf="!shownonIndianModes && ((checkJcash && jcashamount < bill_data.amountDue))">
+                                                                <div  *ngIf=" ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))">
+                                                                <ng-container *ngIf="!shownonIndianModes ">
                                                                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mt-4">
             
                                                                         <div class="text-primary" >
@@ -457,7 +458,7 @@
             
                                                             </div>
                                                         </ng-container>
-                                                        <ng-container *ngIf="shownonIndianModes && ((checkJcash && jcashamount < bill_data.amountDue))">
+                                                        <ng-container *ngIf="shownonIndianModes ">
                                                             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mt-4">
             
                                                                 <div class="text-primary" >
@@ -486,7 +487,7 @@
                                                                             </mat-radio-button>
             
                                                             
-                                                                          </mat-radio-group>
+                                                                        </mat-radio-group> 
                                                                           
                                                                           
                                                                         </div>
@@ -494,6 +495,7 @@
             
                                                         </div>
                                                     </ng-container>
+                                                </div>
                                                     <br><br>
 </div>
                                                     <div>
