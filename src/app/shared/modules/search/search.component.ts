@@ -185,7 +185,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
 
   ngOnInit() {
     this.onResize();
-    this.selected_domain = 'All';
+    this.selected_domain = 'healthCare';
     if (this.passedDomain) {
       this.selected_domain = this.passedDomain;
     }
