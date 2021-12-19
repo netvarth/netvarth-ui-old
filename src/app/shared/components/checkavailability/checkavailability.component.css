@@ -2,8 +2,32 @@
     color: #1EB000;
     line-height: 1.5rem;
     font-size: 15px;
+   
     /* font-weight: 600; */
 
+}
+.service-image {
+    width: 30px;
+    height: 30px;
+    margin-right: 2px;
+}
+.service-image i.wtsapaud-icon,
+.service-image i.wtsapvid-icon,
+.service-image i.zoom-icon {
+   width: 100% !important;
+
+}
+.service-image i.phon-icon,
+.service-image i.meet-icon {
+   width: 60% !important;
+ 
+}
+.greenline {
+    border:2px solid #b4f3a7;text-align: center;padding: 5px;cursor: pointer;
+}
+.green:hover {
+  background-color: #1EB000;
+  color: white;
 }
 .red{
     color: #FF5502;
@@ -34,6 +58,9 @@
 @media (min-width:320px) and (max-width:760px) {
     *{
         font-size: 12px;
+    }
+    .greenline {
+        padding: 2px !important;
     }
     .skyblue {
         padding: 10px;

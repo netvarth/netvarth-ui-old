@@ -44,7 +44,23 @@
         </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">Service<br> 
-        <h4>{{actionObj.service.name}}</h4>
+            <div style="display: flex;align-items: center;">
+                <!-- <div class="img-circle "    *ngIf="actionObj.service.serviceType && actionObj.service.serviceType == 'virtualService'" > -->
+                    <i class="fa phon-icon service-image" *ngIf="actionObj.service.virtualCallingModes && actionObj.service.virtualCallingModes.length > 0 && actionObj.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                    <i class="fa meet-icon service-image"
+                    *ngIf="actionObj.service.virtualCallingModes && actionObj.service.virtualCallingModes.length > 0 && actionObj.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                    <i class="fa zoom-icon service-image"
+                    *ngIf="actionObj.service.virtualCallingModes && actionObj.service.virtualCallingModes.length > 0 && actionObj.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                    <i class="fa wtsapaud-icon service-image"
+                    *ngIf="actionObj.service.virtualCallingModes && actionObj.service.virtualCallingModes.length > 0 && actionObj.service.virtualCallingModes[0].callingMode === 'WhatsApp' && actionObj.service.virtualServiceType ==='audioService'"></i>
+                    <i class="fa wtsapvid-icon service-image"  *ngIf="actionObj.service.virtualCallingModes && actionObj.service.virtualCallingModes.length > 0 && actionObj.service.virtualCallingModes[0].callingMode === 'WhatsApp' && actionObj.service.virtualServiceType ==='videoService'"
+                   ></i>
+                    <i class="fa jaldeevideo-icon service-image"
+                    *ngIf="actionObj.service.virtualCallingModes && actionObj.service.virtualCallingModes.length > 0 && actionObj.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+                    <!-- </div> -->
+                   
+                <h4 class="mgn-up-10">{{actionObj.service.name}}</h4>
+            </div>
         </div>
     </div>
 
@@ -56,7 +72,7 @@
         <h6 class="col-lg-2 col-sm-3 col-xs-6 col-md-2 green" >🟢AVAILABLE</h6>
         <h6 class="col-lg-2 col-sm-3 col-xs-6  col-md-2 red">🔴BOOKED</h6>
         <br>
-        <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12" style="border-radius: 5px; border: 2px solid lightskyblue;" >
+        <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12  mgn-bt-10" style="border-radius: 5px; border: 2px solid lightskyblue;" >
          
             <app-common-innerloading-spinner *ngIf="freeSlots.length==0 && showApptTime!='novalue' "></app-common-innerloading-spinner>
             <div *ngIf="showApptTime=='novalue' " style="color: red;text-align: center;">No Available Slots</div>
@@ -64,7 +80,7 @@
             
             <div class="col-lg-2 col-xs-4 col-sm-4"  *ngFor="let slot of freeSlots;let i = index" >
 
-                <h6   (click)="timeSelected(slot,sel_checkindate);" class="green mgn-up-5" *ngIf="slot.active" style="border:2px solid #b4f3a7;text-align: center;padding: 5px;cursor: pointer;">{{slot.displayTime}}</h6>
+                <h6   (click)="timeSelected(slot,sel_checkindate);" class="green greenline mgn-up-5" *ngIf="slot.active">{{slot.displayTime}}</h6>
                 <h6 style="border:2px solid red;text-align: center;padding: 5px;"    *ngIf="!slot.active"><del style="color: red;">{{slot.displayTime}}</del></h6>
     
     
@@ -81,6 +97,7 @@
         <h6 class="col-lg-12" style="color:  #2653B7;" *ngIf="actionObj.service.totalAmount">Service Price:{{actionObj.service.totalAmount}}</h6>
         <h6 class="col-lg-12" style="color:  #2653B7" *ngIf="actionObj.service.minPrePaymentAmount">Advance Payment: {{actionObj.service.minPrePaymentAmount}}</h6>
         <div class="col-lg-12 mgn-up-10 mgn-bt-10" style="text-align: center;">
+        
         <button (click)="actionCompleted()" class="btn" style="width:30%;background-color:  #2653B7;color: white;">Okay</button>
         <br>
         </div>

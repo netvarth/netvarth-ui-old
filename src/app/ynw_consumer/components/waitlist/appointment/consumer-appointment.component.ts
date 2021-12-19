@@ -328,7 +328,7 @@ selectedTime: any;
     languageSelected: any = [];
     iseditLanguage = false;
     bgColor: string;
-    selectedTime: any;
+    // selectedTime: any;
 
 
 

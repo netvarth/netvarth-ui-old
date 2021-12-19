@@ -57,6 +57,7 @@ export class CheckavailabilityComponent implements OnInit {
     ) {
 
         this.actionObj=data.alldetails,
+        console.log('actionobj.............',this.actionObj)
         this.apptSettings=data.apptSettingsJson
   
             this.account_id=String(this.apptSettings['account']['id']);
@@ -65,8 +66,14 @@ export class CheckavailabilityComponent implements OnInit {
       
        
             this.sel_ser=this.actionObj['service']['id'];
+        if(this.actionObj['service']['serviceAvailability']['nextAvailableDate']) {
+            this.sel_checkindate=this.hold_sel_checkindate=this.selectedDate=this.actionObj['service']['serviceAvailability']['nextAvailableDate'];
 
-        this.sel_checkindate=this.hold_sel_checkindate=this.selectedDate=this.actionObj['service']['serviceAvailability']['nextAvailableDate'];
+        } else {
+        this.sel_checkindate=this.hold_sel_checkindate=this.selectedDate=this.actionObj['service']['serviceAvailability']['availableDate'];
+
+        }
+
         console.log('sel_loc,',this.sel_loc,'sel_ser',this.sel_ser,'checkindate',this.sel_checkindate,'accountid',this.account_id)
         this.getAvailableSlotByLocationandService(this.sel_loc,this.sel_ser,this.sel_checkindate, this.account_id,'init')
         this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc,this.sel_ser, this.account_id)
@@ -115,7 +122,7 @@ export class CheckavailabilityComponent implements OnInit {
                             freslot['displayTime'] = this.getSingleTime(freslot.time);
                             this.freeSlots.push(freslot);
                             this.api_loading1 = false;
-                            // console.log("********free slots ********",this.freeSlots)
+                            console.log("********free slots ********",this.freeSlots)
                         }
                     }
                 }

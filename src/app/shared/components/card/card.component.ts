@@ -173,31 +173,31 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     }
     cardActionPerformed(type, action, service, location, userId, event) {
         console.log('action...',action);
-        if(type=='checkavailability'){
-            if(service['serviceAvailability']['nextAvailableDate']) {
-                event.stopPropagation();
-                const actionObj = {};
-                actionObj['type'] = type;
-                actionObj['action'] = action;
-                if (service) {
-                    actionObj['service'] = service;
-                }
+        // if(type=='checkavailability'){
+        //     if(service['serviceAvailability']['nextAvailableDate']) {
+        //         event.stopPropagation();
+        //         const actionObj = {};
+        //         actionObj['type'] = type;
+        //         actionObj['action'] = action;
+        //         if (service) {
+        //             actionObj['service'] = service;
+        //         }
               
-                if (location) {
-                    actionObj['location'] = location;
-                }
+        //         if (location) {
+        //             actionObj['location'] = location;
+        //         }
                
-                if (userId) {
-                    actionObj['userId'] = userId;
-                }
+        //         if (userId) {
+        //             actionObj['userId'] = userId;
+        //         }
                 
-                this.actionPerformed.emit(actionObj);
-            } 
-            else {
-                this.disablecheckavailabilitybutton = true
-            }
-        } 
-        else {
+        //         this.actionPerformed.emit(actionObj);
+        //     } 
+        //     else {
+        //         this.disablecheckavailabilitybutton = true
+        //     }
+        // } 
+        // else {
             event.stopPropagation();
         
             const actionObj = {};
@@ -216,7 +216,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
             }
             
             this.actionPerformed.emit(actionObj);
-        }
+        // }
 
     
     }

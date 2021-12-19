@@ -82,7 +82,7 @@
                 </div>
                 <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
                     
-                    <button  [disabled]="disablecheckavailabilitybutton" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)" class="checkavailabilitybutton"  >Check availability
+                    <button  [disabled]="buttonCaption =='Donate'" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)" class="checkavailabilitybutton"  >Check availability
                    </button>
                    
                 </div>
