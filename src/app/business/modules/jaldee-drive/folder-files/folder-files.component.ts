@@ -54,9 +54,9 @@ export class FolderFilesComponent implements OnInit {
     perPage: 3
   };
   choose_type = 'My';
-  onClickedConsumer=false;
-  onClickedProvider=false;
-  sharedFolderName:any;
+  onClickedConsumer = false;
+  onClickedProvider = false;
+  sharedFolderName: any;
   active_user: any;
   action: any = '';
   apiError = '';
@@ -67,6 +67,7 @@ export class FolderFilesComponent implements OnInit {
     base64: [],
     caption: []
   };
+  filesType: any;
   @ViewChild('modal') modal;
   imgCaptions: any = [];
   @ViewChild('closebutton') closebutton;
@@ -93,8 +94,8 @@ export class FolderFilesComponent implements OnInit {
     'userType': false,
     'folderName': false,
   };
-   
-  onClickedFolder=false;
+
+  onClickedFolder = false;
   searchTerm: any;
   p: number = 1;
   // itemsPerPage:any;
@@ -338,15 +339,15 @@ export class FolderFilesComponent implements OnInit {
   sharedfolder(foldername) {
     console.log("Access!!!")
     //this.onClickedFolder= true;
-    
-    if(foldername === 'Provider'){
+
+    if (foldername === 'Provider') {
       this.onClickedProvider = true;
       this.onClickedConsumer = false;
       this.foldertype = 'Shared'
       this.sharedFolderName = foldername;
       this.getfiles();
     }
-    if(foldername === 'Consumer'){
+    if (foldername === 'Consumer') {
       this.onClickedConsumer = true;
       this.onClickedProvider = false;
       this.foldertype = 'Shared'
@@ -360,7 +361,7 @@ export class FolderFilesComponent implements OnInit {
     //   }
     // };
     // this.router.navigate(['provider', 'drive', 'folderfiles'], navigationExtras);
-    
+
   }
   getfiles() {
     const filter = {};
@@ -384,78 +385,48 @@ export class FolderFilesComponent implements OnInit {
         console.log(data);
         // this.Allfiles = data;
         this.customers = data
-        // this.fileSizeFilter  = this.customers['fileType']
-        //this.fileSizeFilter = Math.floor(data[0]['fileSize']);
-        // console.log("File Size",this.fileSizeFilter)
+        this.customers.map((x) => {
+          this.fileSizeFilter = Math.ceil(x.fileSize)
+          console.log("File Size", this.fileSizeFilter)
+        })
+
         console.log("Uploaded Files : ", this.customers);
-
-        for (var i of data) {
-          // this.fileSizeFilter = Math.round(i.fileSize);
-          // if (i.fileType == 'image/png') {
-          //   this.fileTypeName = 'png'
-          // }
-          // else if (i.fileType == 'image/jpg') {
-          //   this.fileTypeName = 'jpg'
-          // }
-
-          // else if (i.fileType == 'image/jpeg') {
-          //   this.fileTypeName = 'jpeg'
-          // }
-          
-          // else if (i.fileType === 'image/gif') {
-          //   this.fileTypeName = 'gif'
-          // }
-          // else if (i.fileType === 'image/bmp') {
-          //   this.fileTypeName = 'bmp'
-          // }
-          // else if (i.fileType === 'image/webp') {
-          //   this.fileTypeName = 'webp'
-          // }
-          // else {
-
-          //   this.fileTypeName = 'pdf'
-
-          // }
-
-          
-            switch (i.fileType) {
-              case 'image/png': {
-                this.fileTypeName = 'png';
-                break;
-              }
-              case 'image/jpg': {
-                this.fileTypeName = 'jpg';
-                break;
-              }
-              case 'image/jpeg': {
-                this.fileTypeName = 'jpeg';
-                break;
-              }
-             
-              case 'image/bmp': {
-                this.fileTypeName = 'bmp';
-                break;
-              }
-              case 'application/pdf': {
-                this.fileTypeName = 'pdf';
-                break;
-              }
-              case 'image/webp': {
-                this.fileTypeName = 'webp';
-                break;
-              }
-
-            }
-          
-        }
-        console.log("File Size", this.fileSizeFilter)
-
       }
     );
 
 
   }
+  getFileType(fileType) {
+    console.log("Type: ", fileType)
 
+    let fileTypeName = ''
+    if (fileType.indexOf('image')) {
+      fileTypeName = fileType.split('/')[1];
+    }
+    if (fileType.indexOf('pdf')) {
+      fileTypeName = fileType.split('/')[1];
+    }
+    console.log("Files Type  Name: ", fileTypeName)
+    return fileTypeName;
+  }
+  getFileName(fileName){
+    let filename = ''
+    console.log("Name :",fileName)
+    if(fileName.indexOf('fileName')){
+      filename = fileName.split(' ')[0];
+    }
+    return filename;
+  }
+  getFileSize(fileSize) {
+    console.log("Size : ", fileSize)
+
+    return Math.round(fileSize)
+    // console.log("Sizes greater ",this.fileSizeFilter)
+
+    // this.fileSizeFilter = Math.round(fileSize)
+    // console.log("Sizes less ",this.fileSizeFilter)
+
+  }
   actionCompleted() {
     console.log(this.action);
     if (this.action === 'attachment' && this.foldertype && this.selectedMessage) {
@@ -573,13 +544,13 @@ export class FolderFilesComponent implements OnInit {
     }
   }
 
-  onBack(){
-  //  const navigationExtras: NavigationExtras = {
-  //     queryParams: {
-  //       foldername: foldername,
-  //     }
-  //   };
-   // this.router.navigate(['provider', 'drive', 'folderfiles']);
+  onBack() {
+    //  const navigationExtras: NavigationExtras = {
+    //     queryParams: {
+    //       foldername: foldername,
+    //     }
+    //   };
+    // this.router.navigate(['provider', 'drive', 'folderfiles']);
   }
   onCancel() {
 

@@ -281,6 +281,18 @@
                                                                                         currency:'&#8377; '}}</div>
                                                                                 </div>
                                                                                 <div class="c-row two section-two"
+                                                                                *ngIf="bill_data.customerPaidCharges > 0">
+                                                                                <div class="discount-row two-col">
+                                                                                    <div class="name">
+                                                                                       Processing Fee
+                                                                                    </div>
+                                                                                    <div class="price rupee-font">
+                                                                                        {{bill_data.customerPaidCharges
+                                                                                        |
+                                                                                        currency:'&#8377; '}}</div>
+                                                                                </div>
+                                                                            </div>
+                                                                                <div class="c-row two section-two"
                                                                                     *ngIf="bill_data.totalAmountPaid > 0">
                                                                                     <div class="discount-row two-col">
                                                                                         <div class="name">
@@ -410,7 +422,8 @@
                                                                    <span class="">Choose any  Payment Option</span> 
                                                                 </div>
                                                                 <div class="clearfix"></div>
-                                                                <ng-container *ngIf="!shownonIndianModes && ((checkJcash && jcashamount < bill_data.amountDue))">
+                                                                <div  *ngIf=" ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))">
+                                                                <ng-container *ngIf="!shownonIndianModes ">
                                                                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mt-4">
             
                                                                         <div class="text-primary" >
@@ -418,7 +431,7 @@
                                                                             <mat-radio-button value="cash"  >
                                                                                 <div class="d-flex justify-content-around">
                                                                                     <div class="col-md-8 col-lg-7 my-auto "><span>Pay by Cash</span></div>
-                                                                                    <div class="col-md-4 col-lg-5 my-auto "><img class="ordericon pickup" height="75px" width="75px"src="assets/images/payment-modes/cash_pay.png"></div>
+                                                                                    <div class="col-md-4 col-lg-5 my-auto "><img class="ordericon pickup" height="75px" width="75px" [src]="getImageSrc('cash')"></div>
                                                                                 </div>
                                                                             </mat-radio-button>
                                                                           </mat-radio-group>
@@ -445,7 +458,7 @@
             
                                                             </div>
                                                         </ng-container>
-                                                        <ng-container *ngIf="shownonIndianModes && ((checkJcash && jcashamount < bill_data.amountDue))">
+                                                        <ng-container *ngIf="shownonIndianModes ">
                                                             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mt-4">
             
                                                                 <div class="text-primary" >
@@ -453,7 +466,7 @@
                                                                     <mat-radio-button value="cash"  >
                                                                         <div class="d-flex justify-content-around">
                                                                             <div class="col-md-8 col-lg-7 my-auto "><span>Pay by Cash</span></div>
-                                                                            <div class="col-md-4 col-lg-5 my-auto "><img class="ordericon pickup" height="75px" width="75px"src="/assets/images/payment-modes/cash_pay.png"></div>
+                                                                            <div class="col-md-4 col-lg-5 my-auto "><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc('cash')"></div>
                                                                         </div>
                                                                     </mat-radio-button>
                                                                   </mat-radio-group>
@@ -474,7 +487,7 @@
                                                                             </mat-radio-button>
             
                                                             
-                                                                          </mat-radio-group>
+                                                                        </mat-radio-group> 
                                                                           
                                                                           
                                                                         </div>
@@ -482,6 +495,7 @@
             
                                                         </div>
                                                     </ng-container>
+                                                </div>
                                                     <br><br>
 </div>
                                                     <div>

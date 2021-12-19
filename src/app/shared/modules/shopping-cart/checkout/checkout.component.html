@@ -409,8 +409,8 @@
                           [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm('paytm')"
                           id="stepThreeConfirmButton">
                         </span> -->
-                  
-                      <ng-container *ngIf="!shownonIndianModes && ((checkJcash && jcashamount < cartDetails.advanceAmount))">
+                  <div   *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))">
+                      <ng-container *ngIf="!shownonIndianModes ">
                           <div *ngFor="let modes of indian_payment_modes">
                               <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 
@@ -430,7 +430,7 @@
 
                       </div>
                 </ng-container>
-                <ng-container *ngIf="shownonIndianModes && ((checkJcash && jcashamount < cartDetails.advanceAmount))">
+                <ng-container *ngIf="shownonIndianModes">
                     
                     <div *ngFor="let modes of non_indian_modes">
                         <div class="col-xs-12 col-sm-6 col-md-12 col-lg-12">
@@ -452,6 +452,8 @@
 
                 </div>
             </ng-container>
+                  </div>
+
             </div>
             
             <div class="clearfix"></div>

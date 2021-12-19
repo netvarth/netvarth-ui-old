@@ -27,6 +27,6 @@
     
     display: none!important;
   }
-  ::ng-deep .mat-radio-container .mat-radio-label{
+  ::ng-deep .mat-radio-container .mat-radio-label{ 
     display: inline;
   }
