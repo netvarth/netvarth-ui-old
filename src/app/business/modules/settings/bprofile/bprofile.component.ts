@@ -1291,7 +1291,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   generateQR(id) {
-    this.qr_value = projectConstants.PATH + id;
+    this.qr_value = projectConstants.PATH + id + "/";
   }
 
   // Getting Provider Profile Pic
@@ -1413,7 +1413,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   // dwnld QR
   qrCodegenerateOnlineID(valuetogenerate) {
     this.imageUrl = this.wndw_path + 'assets/images/logo.png';
-    this.qr_value = projectConstants.PATH + valuetogenerate;
+    this.qr_value = projectConstants.PATH + valuetogenerate + "/";
     this.qr_code_oId = true;
     this.changeDetectorRef.detectChanges();
     setTimeout(() => {

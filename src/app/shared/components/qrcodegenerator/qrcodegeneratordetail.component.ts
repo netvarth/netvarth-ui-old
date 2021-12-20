@@ -75,9 +75,9 @@ export class QRCodeGeneratordetailComponent implements OnInit , OnDestroy {
   }
   qrCodegenerateOnlineID(valuetogenerate,userid?) {
     if(userid){
-      this.qr_value = projectConstants.PATH + valuetogenerate +'/'+ userid ;
+      this.qr_value = projectConstants.PATH + valuetogenerate +'/'+ userid + "/" ;
     } else{
-      this.qr_value = projectConstants.PATH + valuetogenerate;
+      this.qr_value = projectConstants.PATH + valuetogenerate + "/";
     }
     this.qr_code_oId = true;
     this.changeDetectorRef.detectChanges();

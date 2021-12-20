@@ -565,7 +565,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   }
   qrCodegenerateOnlineID(valuetogenerate,userid) {
     this.imageUrl = this.wndw_path + 'assets/images/logo.png';
-    this.qr_value = projectConstants.PATH + valuetogenerate +'/'+ userid;
+    this.qr_value = projectConstants.PATH + valuetogenerate +'/'+ userid + "/";
     this.qr_code_oId = true;
     this.cdref.detectChanges();
     setTimeout(() => {
@@ -583,7 +583,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     }, 50);
   }
   generateQR(id,userid) {
-    this.qr_value = projectConstants.PATH + id +'/'+ userid;
+    this.qr_value = projectConstants.PATH + id +'/'+ userid + "/";
   }
   createForm() {
 
