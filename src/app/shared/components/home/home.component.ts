@@ -325,4 +325,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   providerLinkClicked() {
     this.routerobj.navigate(['/business/healthcare']);
   }
+  openVivoCampPage(){
+    // console.log('Click')
+    window.open('https://vivocampaign.jaldee.com/')
+   
+  }
 }
