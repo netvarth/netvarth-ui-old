@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 
 import { ActivatedRoute } from '@angular/router';
 //import { Router } from '@angular/router';
+//import { MatPaginator } from '@angular/material/paginator';
 
 import { MatDialog } from '@angular/material/dialog';
 import { PreviewuploadedfilesComponent } from '../previewuploadedfiles/previewuploadedfiles.component';
@@ -11,6 +12,8 @@ import { ProviderServices } from '../../../../business/services/provider-service
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+// import { WordProcessor } from 'src/app/shared/services/word-processor.service';
+// import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 
 
@@ -72,6 +75,8 @@ export class FolderFilesComponent implements OnInit {
   imgCaptions: any = [];
   @ViewChild('closebutton') closebutton;
   @ViewChild('locclosebutton') locclosebutton;
+ // @ViewChild(MatPaginator) paginator: MatPaginator[];
+
   filter = {
     fileSize: '',
     fileName: '',
@@ -82,6 +87,8 @@ export class FolderFilesComponent implements OnInit {
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1
   };
+  filtericonTooltip='';
+
   filters: any = {
     'firstName': false,
     'lastName': '',
@@ -111,6 +118,7 @@ export class FolderFilesComponent implements OnInit {
   user_count_filterApplied: any;
   availabileSelected: boolean;
   notAvailabileSelected: boolean;
+  tooltipcl = projectConstants.TOOLTIP_CLS;
 
 
 
@@ -121,6 +129,8 @@ export class FolderFilesComponent implements OnInit {
     public dialog: MatDialog,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
+    // private wordProcessor: WordProcessor,
+
     //private router: Router,
 
     private groupService: GroupStorageService,
@@ -135,7 +145,10 @@ export class FolderFilesComponent implements OnInit {
       itemsPerPage: 5,
       currentPage: 1,
       totalItems: this.customers.length
+      
     };
+    //this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
+
   }
   pageChanged(event) {
     this.config.currentPage = event;
@@ -365,12 +378,12 @@ export class FolderFilesComponent implements OnInit {
   }
   getfiles() {
     const filter = {};
-    console.log(this.foldertype);
+    console.log("Folder Type :", this.foldertype);
     if (this.foldertype === 'My') {
       filter['folderName-eq'] = 'My';
     }
-    // else if (this.foldertype === 'Public') {
-    //   filter['folderName-eq'] = 'Public';
+    // else if (this.foldertype === 'Provider') {
+    //   filter['folderName-eq'] = 'Provider';
 
     // }
     else {
@@ -385,19 +398,20 @@ export class FolderFilesComponent implements OnInit {
         console.log(data);
         // this.Allfiles = data;
         this.customers = data
+        //this.paginator = this.customers
         this.customers.map((x) => {
           this.fileSizeFilter = Math.ceil(x.fileSize)
-          console.log("File Size", this.fileSizeFilter)
+          // console.log("File Size", this.fileSizeFilter)
         })
 
-        console.log("Uploaded Files : ", this.customers);
+        //console.log("Uploaded Files : ", this.customers);
       }
     );
 
 
   }
   getFileType(fileType) {
-    console.log("Type: ", fileType)
+    //console.log("Type: ", fileType)
 
     let fileTypeName = ''
     if (fileType.indexOf('image')) {
@@ -406,19 +420,26 @@ export class FolderFilesComponent implements OnInit {
     if (fileType.indexOf('pdf')) {
       fileTypeName = fileType.split('/')[1];
     }
-    console.log("Files Type  Name: ", fileTypeName)
+    // console.log("Files Type  Name: ", fileTypeName)
     return fileTypeName;
   }
-  getFileName(fileName){
+  getFileName(fileName) {
     let filename = ''
-    console.log("Name :",fileName)
-    if(fileName.indexOf('fileName')){
-      filename = fileName.split(' ')[0];
+    //  console.log("Name :",fileName)
+    if (fileName.indexOf('fileName')) {
+      if(fileName.length>10){
+      //  console.log("Length :",fileName.length)
+        filename = fileName.slice(0,10)+'...'
+      }
+      if(fileName.length<=3){
+        filename = fileName;
+      }
+      // split([' '])[0];
     }
     return filename;
   }
   getFileSize(fileSize) {
-    console.log("Size : ", fileSize)
+    // console.log("Size : ", fileSize)
 
     return Math.round(fileSize)
     // console.log("Sizes greater ",this.fileSizeFilter)

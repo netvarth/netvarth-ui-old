@@ -117,7 +117,7 @@
     </div>
   </div> -->
 
-  <div class="row p-3" >
+  <div class="row p-3">
     <!-- <h5 class="mx-2">
       
       <span class="text-bold">
@@ -149,12 +149,17 @@
               {{customer_label | capitalizeFirst}}s</span>
             <span class="card-label font-1 font-weight-bolder text-dark"
               *ngIf="selectedGroup !== 'all'">{{selectedGroup.groupName}}</span> -->
-          <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-right"
+          <a (click)="showFilterSidebar()" class=" mb-2 mgn-lt-5 pull-right" data-bs-toggle="tooltip" data-bs-placement="top" title="filter"
             *ngIf="filterapplied || (customers.length > 0 && !filterapplied)">
             <img src="assets/images/provider-filter-icon.png"
               style="width: 22px !important; margin-top: -4px !important;">
-            Filter
+            
           </a>
+          <!-- <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
+           
+            <img src="../../../assets/images/provider-filter-icon.png" (click)="showFilterSidebar()" 
+               style="width: 22px !important; margin-top: -6px !important;">
+          </a> -->
         </h3>
       </div>
 
@@ -164,7 +169,7 @@
           <div class="tab-content">
             <div class="table-responsive1">
               <!-- <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner> -->
-              <table
+              <table 
                 class="table  table-responsive table-hover table-head-custom table-head-bg table-borderless table-vertical-center">
                 <thead>
                   <tr class="text-left text-uppercase mx-2 " style="background-color: #f3f6f9; height: 60px;">
@@ -188,7 +193,7 @@
                       Owner
                     </th>
                     <th style="min-width: 65px">Date</th>
-                    <th style="min-width: 50px">Type</th>
+                    <th style="min-width: 45px">Type</th>
                     <th style="min-width: 55px">Size</th>
                     <!-- <th *ngIf="foldertype === 'Shared'">
                       Shared With
@@ -214,7 +219,14 @@
                           </span>
                         </div> {{getCustomer(customer)}}-->
 
-                      <span class="text-dark-75 text-hover-primary mb-1 cust-name">
+                      <span class="text-dark-75 text-hover-primary mb-1 cust-name"
+                        *ngIf="getFileType(customer.fileType) === 'pdf'">
+
+                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i> {{getFileName(customer.fileName)}} </span>
+                      <span class="text-dark-75 text-hover-primary mb-1 cust-name"
+                        *ngIf="getFileType(customer.fileType) === 'png' || getFileType(customer.fileType) === 'jpg' || getFileType(customer.fileType) === 'jpeg' || getFileType(customer.fileType) === 'bmp' || getFileType(customer.fileType) === 'webp'">
+
+                        <i class="fa fa-file-image-o" aria-hidden="true"></i>
                         {{getFileName(customer.fileName)}} </span>
                       <!-- <div>
                             <span *ngFor="let label of customer.label | keyvalue"
@@ -240,11 +252,17 @@
                       </span>
                     </td>
                     <td>
-                         <!-- {{fileTypeName}} -->
+                      <!-- {{fileTypeName}} -->
                       <span class="text-dark-75 d-block">
-                     
+
                         {{getFileType(customer.fileType)}}
                       </span>
+                      <!-- <span class="text-dark-75 d-block"
+                        *ngIf="getFileType(customer.fileType) === 'png' || getFileType(customer.fileType) === 'jpg' || getFileType(customer.fileType) === 'jpeg' || getFileType(customer.fileType) === 'bmp' || getFileType(customer.fileType) === 'webp'">
+
+                        <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                        {{getFileType(customer.fileType)}}
+                      </span> -->
                     </td>
                     <td>
                       <span class="text-dark-75 d-block" *ngIf="customer.fileSize >=1">
@@ -278,15 +296,44 @@
               <!-- <div *ngIf="!apiloading && customers.length === 0 && filterapplied">
                 No files found.
               </div> -->
-              <div class="d-flex justify-content-between align-items-center flex-wrap pull-right mb-0"
+              <!-- <ngb-pagination [collectionSize]="customers.length" (pageChange)="pageChanged($event)" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination> -->
+
+              <div class="d-flex justify-content-between align-items-center flex-wrap pull-right mb-0 pageControls"
                 *ngIf="!apiloading && customers.length > 0">
 
 
-                <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
-
-                <!-- <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
-                  (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager> -->
+                <!-- <pagination-controls  (pageChange)="pageChanged($event)" directionLinks="false" autoHide="true" previous-text="" next-text=""></pagination-controls> -->
+                <pagination-template #p="paginationApi"
+                [id]="config.id"
+                (pageChange)="config.currentPage = $event">
+                <div class="custom-pagination d-flex justify-content-between align-items-center flex-wrap pull-right mb-0">
+                    <div class="pagination-previous mx-2" [class.disabled]="p.isFirstPage()"  data-bs-toggle="tooltip" data-bs-placement="bottom" title="previous">
+                      <a *ngIf="!p.isFirstPage()" (click)="p.previous()"> < </a>
+                    </div>
+                    <div *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value" >
+                      <a (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">
+                      <span class="mx-2">{{ page.label }}</span>
+                      </a>
+                      <div *ngIf="p.getCurrent() === page.value">
+                        <span>{{ page.label }}</span>
+                      </div>
+                    </div>
+                  <div class="pagination-next mx-2" [class.disabled]="p.isLastPage()"  data-bs-toggle="tooltip" data-bs-placement="top" title="next">
+                      <a *ngIf="!p.isLastPage()" (click)="p.next()"> > </a>
+                  </div>
+                </div>
+                </pagination-template>
+               
               </div>
+              <!-- <div class="row">
+              
+              </div> -->
+              <!-- <div class="d-flex justify-content-between align-items-center flex-wrap pull-right mb-0 pageControls"
+                *ngIf="!apiloading && customers.length > 0">
+                <mat-paginator [length]="customers.length"  showFirstLastButtons   [pageSize]="5" [pageSizeOptions]="[10,50,100]"
+                  aria-label="Select page">
+                </mat-paginator>
+              </div> -->
             </div>
           </div>
         </div>
@@ -295,7 +342,7 @@
 
 
   </div>
- 
+
   <div class="row displayblock">
 
     <div class="col-sm-6 col-12 col-lg-4 col-xs-12 col-md-6 filter">
