@@ -522,7 +522,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               );
           }
         }
-        else if (this.type === 'appt') {
+        else if (this.data.source === 'provider-waitlist' && this.type === 'appt') {
           if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
             this.api_error = 'share message via options are not selected';
             setTimeout(() => {
@@ -556,7 +556,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               );
           }
         }
-        else if (this.type === 'wl') {
+        else if (this.data.source === 'provider-waitlist' && this.type === 'wl') {
           if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
             this.api_error = 'share message via options are not selected';
             setTimeout(() => {
@@ -590,7 +590,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               );
           }
         }
-        else if (this.type === 'orders') {
+        else if (this.data.source === 'provider-waitlist' && this.type === 'orders') {
           if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
             this.api_error = 'share message via options are not selected';
             setTimeout(() => {
