@@ -431,7 +431,7 @@ export class FolderFilesComponent implements OnInit {
       //  console.log("Length :",fileName.length)
         filename = fileName.slice(0,10)+'...'
       }
-      if(fileName.length<=3){
+      if(fileName.length<=10){
         filename = fileName;
       }
       // split([' '])[0];
