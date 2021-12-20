@@ -322,11 +322,11 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
           if (this.bProviderProfile.customId) {
             this.generateQR(this.bProviderProfile.customId,this.userId);
             this.qrCodegenerateOnlineID(this.bProviderProfile.customId,this.userId);
-            this.shareLink = this.wndw_path + this.bProviderProfile.customId +'/'+this.userId;
+            this.shareLink = this.wndw_path + this.bProviderProfile.customId +'/'+this.userId + '/';
           } else {
             this.generateQR(this.bProviderProfile.accEncUid,this.userId);
             this.qrCodegenerateOnlineID(this.bProviderProfile.accEncUid,this.userId);
-            this.shareLink = this.wndw_path + this.bProviderProfile.accEncUid+'/'+this.userId;
+            this.shareLink = this.wndw_path + this.bProviderProfile.accEncUid+'/'+this.userId + '/';
           }
         });
   }

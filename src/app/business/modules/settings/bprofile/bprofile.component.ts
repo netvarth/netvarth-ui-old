@@ -690,11 +690,11 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
           if (this.bProfile.customId) {
             this.generateQR(this.bProfile.customId);
             this.qrCodegenerateOnlineID(this.bProfile.customId);
-            this.shareLink = this.wndw_path + this.bProfile.customId;
+            this.shareLink = this.wndw_path + this.bProfile.customId + '/';
           } else {
             this.generateQR(this.bProfile.accEncUid);
             this.qrCodegenerateOnlineID(this.bProfile.accEncUid);
-            this.shareLink = this.wndw_path + this.bProfile.accEncUid;
+            this.shareLink = this.wndw_path + this.bProfile.accEncUid + '/';
           }
           if (this.bProfile.businessName && this.bProfile.businessDesc) {
             this.domainVirtualFieldFilledStatus = this.provider_datastorage.getWeightageObjectOfDomain();
