@@ -5,10 +5,10 @@
       <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()">
 
       </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      {{foldername}}
+      {{foldername}} Files
 
     </h5>
-    <p *ngIf="foldertype === 'Shared'" class="text-secondary mx-5 no-padding">Files/Attachments are uploaded by
+    <p *ngIf="foldertype === 'Shared' || foldertype === 'Public'" class="text-secondary mx-5 no-padding">Files/Attachments are uploaded by
       consumers or providers!</p>
     <p *ngIf="foldertype === 'My'" class="text-secondary mx-5 no-padding">Files/Attachments are uploaded by you!</p>
   </div>
@@ -127,7 +127,7 @@
 
     <div class="card card-custom card-stretch gutter-b no-padding col-md-12  col-sm-12  col-xs-12">
 
-      <div class="mx-2" *ngIf="foldertype !== 'Shared'">
+      <div class="mx-2" *ngIf="foldertype === 'Private'">
         <button type="button" class="pull-left p-button-rounded p-ripple p-button p-component mx-2 my-3 p-1">
           <a style="color: white !important;" #modal data-toggle="modal" data-target="#exampleModalCenter">
           </a>
@@ -174,7 +174,7 @@
                 <thead>
                   <tr class="text-left text-uppercase mx-2 " style="background-color: #f3f6f9; height: 60px;">
 
-                    <th>
+                    <th style="min-width: 140px">
 
                       <!--class="" [class.pad-bt-0]="selectedcustomersformsg.length > 0" <input type="checkbox" (change)="selectAllcustomers($event)"
                           [checked]="isAllCustomerSelected()"> -->
@@ -189,7 +189,7 @@
                       style="min-width: 100px"
                     -->
                     </th>
-                    <th *ngIf="foldertype === 'Shared'">
+                    <th style="min-width: 80px" *ngIf="foldertype !== 'Private'">
                       Owner
                     </th>
                     <th style="min-width: 65px">Date</th>
@@ -236,12 +236,12 @@
 
                       <!-- <div class="customer-added" *ngIf="showText(customer)">Already added to this group</div> -->
                     </td>
-                    <td *ngIf="foldertype === 'Shared' && customer.ownerName !==''">
+                    <td *ngIf="foldertype !== 'Private' && customer.ownerName !==''">
                       <span class="text-dark-75 d-block ">
                         {{customer.ownerName}}
                       </span>
                     </td>
-                    <td *ngIf="foldertype === 'Shared' && customer.ownerName === ''">
+                    <td *ngIf="foldertype !== 'Private' && customer.ownerName === ''">
                       <span class="text-dark-75 d-block ">
                         -
                       </span>
@@ -427,10 +427,10 @@
               <div id="collapseName1" class="collapse in" data-parent="#accordion1">
                 <div class="card-body">
                   <div class="filterTextinput filter-text-input">
-                    <!-- <li class="filterli filter-li">
+                    <li class="filterli filter-li">
                       <input type="text" id="fileSize" [(ngModel)]="filter.fileSize"  #fileSize (keyup)="doSearch()"
                         maxlength="20" class="filterTextbox filter-textbox" placeholder="Enter file size">
-                    </li> -->
+                    </li>
                   </div>
                   <div class="filter-checkbox-input">
                     <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">

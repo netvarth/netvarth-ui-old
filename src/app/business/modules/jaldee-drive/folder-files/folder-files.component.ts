@@ -139,7 +139,7 @@ export class FolderFilesComponent implements OnInit {
     this.activated_route.queryParams.subscribe(params => {
       this.foldertype = params.foldername;
       // this.foldertype + ' ' + 'folder';
-      this.foldername = this.foldertype + ' ' + 'Files';
+      this.foldername = this.foldertype;
     });
     this.config = {
       itemsPerPage: 5,
@@ -379,15 +379,19 @@ export class FolderFilesComponent implements OnInit {
   getfiles() {
     const filter = {};
     console.log("Folder Type :", this.foldertype);
-    if (this.foldertype === 'My') {
-      filter['folderName-eq'] = 'My';
+    if (this.foldertype === 'Private') {
+      filter['folderName-eq'] = 'Private';
+      this.foldername = 'My'
     }
-    // else if (this.foldertype === 'Provider') {
-    //   filter['folderName-eq'] = 'Provider';
+    else if (this.foldertype === 'Public') {
+      filter['folderName-eq'] = 'Public';
+      this.foldername = 'Provider'
+      
 
-    // }
+    }
     else {
       filter['folderName-eq'] = 'Shared';
+      this.foldername = 'Consumer'
     }
 
 
