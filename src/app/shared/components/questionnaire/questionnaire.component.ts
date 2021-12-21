@@ -665,15 +665,15 @@ export class QuestionnaireComponent implements OnInit {
   }
   submitQuestionnaire(passData) {
     const dataToSend: FormData = new FormData();
-    // if (passData.files && passData.files.length > 0) {
-    //   for (let pic of passData.files) {
-    //     let type = pic.type.split('/');
-    //     type = type[0];
-    //     if (type === 'application' || type === 'image') {
-    //       dataToSend.append('files', pic);
-    //     }
-    //   }
-    // }
+    if (passData.files && passData.files.length > 0) {
+      for (let pic of passData.files) {
+        let type = pic.type.split('/');
+        type = type[0];
+        if (type === 'application' || type === 'image') {
+          dataToSend.append('files', pic);
+        }
+      }
+    }
     const blobpost_Data = new Blob([JSON.stringify(passData.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
     this.buttonDisable = true;
