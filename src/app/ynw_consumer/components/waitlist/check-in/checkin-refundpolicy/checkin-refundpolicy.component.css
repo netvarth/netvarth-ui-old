@@ -1,0 +1,10 @@
+.refundpol .modal-footer{
+    padding: 0.5rem !important;
+  }
+  .refundpol .btn {
+    line-height: 0.8  !important;
+  }
+  .refundpol .refund_size {
+    font-size: 0.9rem !important;
+    text-align: left !important;
+  }

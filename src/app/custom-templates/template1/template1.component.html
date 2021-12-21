@@ -7,7 +7,6 @@
         <button class="btn btn-primary" (click)="edit()">Edit</button>
     </div>
 </div>
-<!-- {{templateForm.value | json}} -->
 <section *ngIf="!publishvarible && !loading">
     <form [formGroup]="templateForm" *ngIf="loader">
         <section>
@@ -86,7 +85,6 @@
                                 <ckeditor [editor]="Editor" [config]="editorConfig" formControlName="section2Title">
                                 </ckeditor>
                             </div>
-
                         </h5>
                         <div class="card-text">
                             <div>
@@ -111,33 +109,12 @@
             <div class="text-center">
                 <ckeditor [editor]="Editor" [config]="editorConfig" formControlName="section3Title"></ckeditor>
             </div>
-
             <div class="text-center">
                 <div class="text-center">
                     <ckeditor [editor]="Editor" [config]="editorConfig" formControlName="section3Description">
                     </ckeditor>
                 </div>
-
             </div>
-            <!-- <div class="row col-lg-12 col-md-12 col-sm-12 col-10 mx-auto allcards">
-                <div class="col-lg-6" style="padding:2%;" *ngFor="let img of data[0].Ourserviceimage">
-                    <div class="row cardbackground">
-                        <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12  imagesectiondoctors" >
-                            <img class="cardimage" src="{{img}}" style="width: 200px;height: 200px;">
-                        </div>
-                        <div class="col-lg-6 col-md-12  col-xs-12 col-sm-12 ">
-                            <h1 class="imagesectiondoctors">{{data[0].DoctorName}}</h1>
-                            <ckeditor  [editor]="Editor" [config]="editorConfig"  style="width:60%;"
-                                formControlName="doctortext1"></ckeditor>
-                            <div  [innerHtml]="templateForm.value.doctortext1"></div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="text-center">
-                <button class="btn btn-primary">{{data[0].Showmorebutton}}</button>
-            </div>
-            <br> -->
         </div>
         <div class="gapsection"></div>
         <div class="container-fluid card" id="section4">
@@ -156,7 +133,6 @@
                 </div>
             </div>
             <div class="filters">
-
             </div>
         </div>
         <div class="gapsection"></div>
@@ -175,11 +151,6 @@
         </div>
     </form>
 </section>
-
-
-
-
-
 <section *ngIf="publishvarible && !loading">
     <section>
         <section id="headerSection">
@@ -241,8 +212,7 @@
             <div [innerHTML]="templateJson.section4Description | safeHtml"></div>
         </div>
         <div class="gapsection"></div>
-        <div class="container-fluid card" id="recentNews">
-            
+        <div class="container-fluid card" id="recentNews">            
             <div [innerHTML]="templateJson.section5Title | safeHtml"></div>
             <div [innerHTML]="templateJson.section5Description | safeHtml"></div>
             <div class="feedsContainer mgn-up-50 mgn-bt-50">
@@ -258,16 +228,7 @@
                                 </div>
                                 <div>
                                     <div [innerHtml]="newsFeeds.description | safeHtml"></div>
-                                </div>
-                                <!-- <div class="row" style="background-color: aqua;">
-                                    <div class="col-lg-6 col-xs-12">
-                                        <img src="../../../assets/templateimages/language_black_24dp.svg" >
-                                        <p style="font-size: 8px;">Lang Name Here</p>
-                                    </div>
-                                    <div class="col-lg-6 col-xs-12">
-                                        <img src="../../../assets/templateimages/access_time_black_24dp.svg"><p style="font-size: 8px;">1 hr ago</p>
-                                    </div>
-                                </div> -->
+                                </div>                               
                             </div>
                         </div>
                     </div>

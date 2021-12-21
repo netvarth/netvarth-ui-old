@@ -95,22 +95,34 @@
                                 <i class="fa wtsapvid-icon"
                                     *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'WhatsApp' && servicedetails.virtualServiceType === 'videoService'"></i>
                             </div>
-                            <h3 class="mgn-lt-5" style="color: #ffff; padding: 10px 0 10px 0px;" *ngIf="servicename">{{servicename |
+                            <h3 class="mgn-lt-5" style="color: #ffff; padding: 10px 0 10px 0px;" *ngIf="servicename">
+                                {{servicename |
                                 capitalizeFirst}}</h3>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10">
                             <ul class="service-ul flex" *ngIf="servicedetails">
-                                <li *ngIf="servicedetails && servicedetails.serviceDuration && servicedetails.serviceDurationEnabled && !is_donation_serv"><span class="service-li-title">Duration</span><br/><span class="bold">{{HHMM}}</span></li>
-                                <li *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0"><span class="service-li-title">Service Fee</span><br /><span class="bold price rupee-font">{{servicedetails.totalAmount | currency:'&#8377;'}}</span></li>
-                                <li *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount"><span class="service-li-title">Amount Required Now <i class="fa fa-info-circle"
-                                    [matTooltip]="servicedetails.paymentDescription"></i></span><br/><span class="bold price rupee-font">{{servicedetails.minPrePaymentAmount  | currency:'&#8377;'}}</span></li>
-                               
+                                <li
+                                    *ngIf="servicedetails && servicedetails.serviceDuration && servicedetails.serviceDurationEnabled && !is_donation_serv">
+                                    <span class="service-li-title">Duration</span><br /><span
+                                        class="bold">{{HHMM}}</span></li>
+                                <li
+                                    *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0">
+                                    <span class="service-li-title">Service Fee</span><br /><span
+                                        class="bold price rupee-font">{{servicedetails.totalAmount |
+                                        currency:'&#8377;'}}</span></li>
+                                <li
+                                    *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount">
+                                    <span class="service-li-title">Amount Required Now <i class="fa fa-info-circle"
+                                            [matTooltip]="servicedetails.paymentDescription"></i></span><br /><span
+                                        class="bold price rupee-font">{{servicedetails.minPrePaymentAmount |
+                                        currency:'&#8377;'}}</span></li>
+
                             </ul>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 mgn-bt-10 marginalignment"
                             *ngIf="servicedetails && servicedetails.description">
                             <div class="description" *ngIf="servicedetails && servicedetails.description">
-                                {{servicedetails.description}}                                
+                                {{servicedetails.description}}
                             </div>
                         </div>
                     </div>
@@ -120,23 +132,22 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 marginalignmentincards"
                         *ngIf="servicesAndProviders && servicesAndProviders.length >0 && !loading && !loading_direct">
                         <div class="headofpanelbodyforbuttontoken mgn-bt-10" *ngFor="let sp of servicesAndProviders">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
-                                *ngIf="sp.type =='waitlist'">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="sp.type =='waitlist'">
                                 <div class="card-text availability">
                                     <p>{{personsAheadText}}&nbsp;</p>
-                                    <p ><span *ngIf="timings">{{timingCaption}}</span>
-                                       <br/>
+                                    <p><span *ngIf="timings">{{timingCaption}}</span>
+                                        <br />
                                         <span class="fontwaitlist">{{timings}}&nbsp;</span>
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12" *ngIf="timingsapt && sp.type =='appt'">                               
+                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12" *ngIf="timingsapt && sp.type =='appt'">
                                 <div class="card-text availability">
-                                        <p>{{timingCaptionapt}}</p>
-                                        <p class="fontwaitlist">
-                                            {{timingsapt}} <br/><span>&nbsp;</span> </p>
+                                    <p>{{timingCaptionapt}}</p>
+                                    <p class="fontwaitlist">
+                                        {{timingsapt}} <br /><span>&nbsp;</span> </p>
                                 </div>
-                            </div>                          
+                            </div>
                             <div class="service-buttons" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <button
                                     class="btn actionbtn btn-outline-warning col-lg-12 col-md-12 col-sm-12 col-xs-12"
@@ -144,237 +155,25 @@
                             </div>
                         </div>
                     </div>
-
-                   
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 marginalignmentincards" *ngIf="donationServices && donationServices.length >0 && !loading && !loading_direct">
-                    <div class="card donatechange" *ngFor="let sp of donationServices">
-                        <div class="card-body">
-                            <div class="textcentr cardtext ">
-                                <span class="rupee-font bold">Donate <i class="fa fa-inr"></i>
-                                    {{sp.item.minDonationAmount}}</span>
-                                <span class="rupee-font bold"
-                                    *ngIf="sp.item.maxDonationAmount != sp.item.minDonationAmount"> or
-                                    more</span>
-                            </div>
-                            <div class="textcentr cardtext fixhght"></div>
-                            <div class="textcentr"> <button class="btn actionbtn btn-outline-warning"
-                                    type="button" (click)="bttonClick(sp)">{{getButtontype(sp)}}</button>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 marginalignmentincards"
+                        *ngIf="donationServices && donationServices.length >0 && !loading && !loading_direct">
+                        <div class="card donatechange" *ngFor="let sp of donationServices">
+                            <div class="card-body">
+                                <div class="textcentr cardtext ">
+                                    <span class="rupee-font bold">Donate <i class="fa fa-inr"></i>
+                                        {{sp.item.minDonationAmount}}</span>
+                                    <span class="rupee-font bold"
+                                        *ngIf="sp.item.maxDonationAmount != sp.item.minDonationAmount"> or
+                                        more</span>
+                                </div>
+                                <div class="textcentr cardtext fixhght"></div>
+                                <div class="textcentr"> <button class="btn actionbtn btn-outline-warning" type="button"
+                                        (click)="bttonClick(sp)">{{getButtontype(sp)}}</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 serviceheading no-margin"
-                    style="background-color: #1e4079;">
-                    <div class="mgn-rt-5" >
-                        <i class="fa fa-bars fa-2x mx-1 my-1" ></i>
-                    </div>
-                    <div class="mgn-rt-5"
-                        *ngIf="servicedetails && servicedetails.serviceType == 'virtualService'">
-                        <i class="fa phon-icon"
-                            *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                        <i class="fa meet-icon fa-3x ml-2"
-                            *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                        <i class="fa zoom-icon "
-                            *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                        <i class="fa jvideo-icon jvideo-icon-m"
-                            *ngIf="servicedetails.virtualCallingModes  && servicedetails.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
-                        <i class="fa wtsapaud-icon"
-                            *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'WhatsApp' && servicedetails.virtualServiceType === 'audioService'"></i>
-                        <i class="fa wtsapvid-icon"
-                            *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'WhatsApp' && servicedetails.virtualServiceType === 'videoService'"></i>
-                    </div>
-                    <h3 class="mgn-lt-5" style="color: #ffff; padding: 10px 0 10px 0px;" *ngIf="servicename">{{servicename |
-                        capitalizeFirst}}</h3>
-                </div> -->
-                <!-- <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 no-margin" *ngIf="images && images.length !== 0">
-                <div class="row">
-                    <div class="col-2 col-md-2 col-lg-2"></div>
-                    <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12">
-                      <owl-carousel-o [options]="customOptions" >
-              
-                        <ng-template carouselSlide *ngFor="let image of images">
-                       
-                          <img src="{{image['url']}}" alt="Not Found"  class="d-block w-100">
-                        </ng-template> -->
-                        <!-- <span>
-                            {{image.keyName}}
-                        </span> -->
-                        <!-- <ng-template carouselSlide>
-              
-                          <img src="" alt="Not Found" class="d-block w-100">
-              
-                        </ng-template>
-                        <ng-template carouselSlide>
-              
-                          <img src="" alt="Not Found" 
-                            class="d-block w-100">
-              
-                        </ng-template>
-                        <ng-template carouselSlide>
-              
-                          <img src="" alt="Not Found"  class="d-block w-100">
-              
-                        </ng-template> -->
-              
-                      <!-- </owl-carousel-o>
-                     
-                    </div>
-                    <div class="col-2 col-md-2 col-lg-2"></div>
-
-              
-                  </div>
-
-
-                </div> -->
-
-
-
-
-                </div>
-
-
-                <!-- <div class="row info-bar locations" *ngIf="locationjson.length > 1 && !api_loading && !loading">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-top-20 pad-bt-10 bg-col">
-                        <div class="col-md-7 col-xs-9 module line-clamp-1 no-padding">
-                            <h4 *ngIf="!isPlaceisSame"><a [href]="selectedLocation.googleMapUrl" target="_blank"
-                                    *ngIf="selectedLocation.googleMapUrl!=''"><i
-                                        class="fa fa-map-marker"></i>&nbsp;{{selectedLocation.place | capitalizeFirst}}</a>
-                            </h4>
-                            <h4 *ngIf="isPlaceisSame"><a [href]="selectedLocation.googleMapUrl" target="_blank"
-                                    *ngIf="selectedLocation.googleMapUrl!=''"><i class="fa fa-map-marker"></i>
-                                    {{selectedLocation.address.substr(0, selectedLocation.address.split(',',
-                                    2).join(',').length)}}</a>
-                            </h4>
-                        </div>
-                        <div class="col-md-5 col-xs-3 no-padding">
-                            <div class="btn-group pull-right">
-                                <a class="dropdown-toggle d-block loc-chg-action" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                    Change
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item d-block pad-10"
-                                        [ngClass]="{'active': selectedLocation.id === loc.id}" (click)="changeLocation(loc)"
-                                        *ngFor="let loc of locationjson">{{loc.place}}</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-                <!-- <div class="row info-bar locations" *ngIf="locationjson.length > 0 && !api_loading && !loading">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-50 no-padding">
-                        <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12">
-                            <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20"
-                                *ngIf="serviceCount > 0 || (businessjson.serviceSector.name !== 'healthCare' && serviceCount==0 && userCount > 0)"
-                                [class.mgn-bt-10]="!showDepartments">
-                                <h5 class="mgn-bt-5 primary-color"> {{service_cap}}
-                                </h5>
-                            </div>
-                            <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20"
-                                *ngIf="serviceCount==0 && userCount > 0 && businessjson.serviceSector.name === 'healthCare'"
-                                [class.mgn-bt-10]="!showDepartments">
-                                <h5 class="mgn-bt-5 primary-color"> Doctors and Specializations
-                                </h5>
-                                <h6 class="question-header">{{dotor_specialization_hint}}
-                                </h6>
-                            </div>
-                            <div class="clearfix"></div>
-                            <ng-container *ngIf="showDepartments && !this.userId">
-                                <ng-container *ngFor="let sps of servicesAndProviders">
-                                    <h4 class="department-title p-2 d-block m0 sp-head mgn-bt-10 dept-title-h4"
-                                        *ngIf="sps['departmentItems'].length > 0">
-                                        {{sps.departmentName}}
-                                    </h4>
-                                    <div class="bus-item-N" *ngFor="let sp of sps['departmentItems']">
-                                        <app-card [item]="sp" [domain]="businessjson.serviceSector.domain"
-                                            [terminology]='terminologiesjson' [extras]="" [loc]="selectedLocation"
-                                            (actionPerformed)="cardClicked($event)"></app-card>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                    <hr class="my-4" *ngIf="sps['departmentItems'].length > 0" />
-                                </ng-container>
-                            </ng-container>
-                            <ng-container *ngIf="!showDepartments || (showDepartments && this.userId)">
-                                <div class="bus-item-N" *ngFor="let sp of servicesAndProviders">
-                                    <app-card [item]="sp" [domain]="businessjson.serviceSector.domain"
-                                        [terminology]='terminologiesjson' [extras]="" [loc]="selectedLocation"
-                                        (actionPerformed)="cardClicked($event)"></app-card>
-                                </div>
-                            </ng-container>
-                            <ng-container *ngIf="donationServices && donationServices.length >0">
-                                <div class="bus-item-N" *ngFor="let sp of donationServices">
-                                    <app-card [item]="sp" [terminology]='terminologiesjson' [extras]="" [loc]="selectedLocation"
-                                        (actionPerformed)="cardClicked($event)"></app-card>
-                                </div>
-                            </ng-container>
-                        </div>
-                       
-
-
-
-
-                        <div class="serv-head order-serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20"
-                            *ngIf="orderstatus && catalog_loading && activeCatalog">
-                            <div>
-                                <div class="no-padding">
-                                    <h5 class="catalog-title mgn-bt-5 primary-color">
-                                        <img (click)="openCatalogImageModalRow(catalogimage_list_popup[0])" [src]="catalogImage"
-                                            width="60" height="60" id="catalog-image1"
-                                            class="rounded pointer-cursor img-circle">
-                                        <div class="mgn-lt-10">{{activeCatalog.catalogName}}</div>
-                                    </h5>
-                                </div>
-                                <div class="catalog-icons no-padding-small disp-flex">
-                                    <div class="home-delivery mgn-rt-10 disp-flex align-items-center"
-                                        *ngIf="activeCatalog.homeDelivery && activeCatalog.homeDelivery.homeDelivery && activeCatalog.nextAvailableDeliveryDetails">
-                                        <img class="ordericon home" src="../../../../assets/images/Homedelivery.png" />
-                                        <div class="mgn-lt-5">Home Delivery<div class="font-small "
-                                                *ngIf="activeCatalog.homeDelivery.deliveryRadius">
-                                                (in {{ activeCatalog.homeDelivery.deliveryRadius}} km radius)</div>
-                                        </div>
-                                    </div>
-                                    <div class="store-pickup disp-flex align-items-center"
-                                        *ngIf="activeCatalog.pickUp && activeCatalog.pickUp.orderPickUp && activeCatalog.nextAvailablePickUpDetails">
-                                        <img class="ordericon pickup" src="../../../../assets/images/Store-pick-up.png" />
-                                        <div class="mgn-lt-5">Store Pickup</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <p class="catalog-desc module-nomargin line-clamp" *ngIf="!showmoreSpec" (click)="showSpec()">
-                                    {{activeCatalog.catalogDesc}}</p>
-                                <p class="catalog-desc" *ngIf="showmoreSpec" (click)="showSpec()">{{activeCatalog.catalogDesc}}
-                                </p>
-                            </div>
-                        </div>
-                        <ks-modal-gallery [id]="1" *ngIf="catalogimage_list_popup && catalogimage_list_popup.length>0"
-                            [modalImages]="catalogimage_list_popup" [plainGalleryConfig]="customPlainGallerycatalogRowConfig"
-                            [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
-                            (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
-                        <ng-container
-                            *ngIf="orderItems && catalog_loading && orderItems.length >0 && orderType === 'SHOPPINGCART' && checkVirtualOrPhysical()">
-                            <div class="bus-item-O" *ngFor="let item of orderItems">
-                                <app-card [item]="item" [terminology]='terminologiesjson' [extras]="orderList"
-                                    [loc]="selectedLocation" (actionPerformed)="cardClicked($event)"></app-card>
-                            </div>
-                            <div class="shopping-cart-footer" *ngIf="showOrderFooter()">
-                                <div>Your Order ({{ order_count }})
-                                    <span *ngIf="activeCatalog.showPrice" class="rupee-font">SubTotal : {{price |
-                                        currency:'&#8377;'}}&nbsp;</span>
-                                    <button mat-flat-button class="btn-chkout" (click)="checkout();">Checkout</button>
-                                </div>
-                            </div>
-                        </ng-container>
-                        <ng-container *ngIf="orderType === 'SHOPPINGLIST' && checkVirtualOrPhysical()">
-                            <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12">
-                                <div class="bus-item-O">
-                                    <a (click)="shoppinglistupload()" class="like-btn">Upload Shopping List</a>
-                                </div>
-                            </div>
-                        </ng-container>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>

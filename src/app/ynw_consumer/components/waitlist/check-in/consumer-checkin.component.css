@@ -860,9 +860,6 @@ ul.bus-actions li a.lnk {
 .service-icon .meet-icon, .service-icon .phon-icon {
   width: 25px !important;
 }
-/* .service-icon .phon-icon {
-  margin-bottom: 5px;
-} */
 .service-icon .zoom-icon {
   width: 30px !important; 
 }
@@ -1083,9 +1080,7 @@ ul.bus-actions li a.lnk {
 .service-icon .fa-phone{
   color: #7a7a7a !important
 }
-ul.member-ul {
-  list-style: none;
-}
+
 .servicesdiv {
   border: 1px solid #ddd!important;
   margin-bottom: 5px;
@@ -1365,18 +1360,7 @@ height: 150px !important;
 .mandatoryChip {
   border: 1px solid rgb(255, 0, 0) !important;
 }
-.countryCodeMob {
-  width: 130px;
-  margin-left: 5px;
-}
-@media screen and (max-width: 640px) {
-  .countryCodeMob {
-    width: 105px;
-  }
-}
-.width100 {
-  width: 100%;
-}
+
 .height40 {
   height: 32px;
   font-size: 12px !important;
@@ -1384,13 +1368,7 @@ height: 150px !important;
 .mgn-up-10-m {
   margin-top: -10px !important;
 }
-/* .consumer_appt i.wtsapaud-icon {
-  top: 8px !important;
-} */
-.serv-head {
-  background: rgba(0, 0, 0, 0.04) !important;
-  padding: 10px 0 3px 10px !important;
-}
+
 ngx-intl-tel-input input {
   font-size: 13px !important;
   height: 40px !important;
@@ -1580,9 +1558,7 @@ body.modal-open {
  .width-60 {
   width: 60% !important;
  }
- .email-border {
-  border: 1px solid #cccc;
- }
+
  .step-icon {
   border-radius: 50%;
   color: white;
@@ -1676,16 +1652,7 @@ body.modal-open {
 .pay_policy {
   font-size: 0.9rem !important;
 }
-.refundpol .modal-footer{
-  padding: 0.5rem !important;
-}
-.refundpol .btn {
-  line-height: 0.8  !important;
-}
-.refundpol .refund_size {
-  font-size: 0.9rem !important;
-  text-align: left !important;
-}
+
 .modal-footer {
   padding-top: 0px !important;
 }
@@ -1786,104 +1753,20 @@ body.modal-open {
   color: #747474 !important;
   opacity: 1 !important;
 }
-
+/* 
 .email-section {
   text-align: left !important;
   font: normal normal normal 14px/27px Roboto !important;
   letter-spacing: 0.21px !important;
   color: #747474 !important;
   opacity: 1 !important;
-}
+} */
  .mgn-lt-36 {
   margin-left: 38px !important;
 }
 
-.number-caption {
-  margin-right: 10px;
-  margin-top: auto;
-  margin-bottom: auto;
-  width: 40%;
-}
-.width-input {
-  width: 40% !important;
-}
-.input-field {
-  padding: 5px;
-}
-.email-field {
-  padding: 5px;
-}
-.code-field {
-  width: 40px !important;
-}
-.codenumber {
-  display: flex;
-  margin-left: auto;
-  width: 100%;
-}
-.codenumber #countryCode,
-.codenumber #whatsappCountryCode {
-  border-right: none;
-}
-.number-section {
-  border-top: 1px solid #eee;
-}
 .mat-dialog-content{
   height: 100vh !important;
-}
-
-#tcModal .modal-dialog {
-  margin: 0 !important;
-  transform: translate(0, 0) !important;
-  height: -webkit-fill-available !important;
-}
-
-#tcModal .modal-dialog .modal-content {
-  border-radius: 0 !important;
-  height: -webkit-fill-available !important;
-}
-
-#tcModal .modal-dialog .modal-content .modal-header {
-  padding: 15px 10px !important;
-}
-
-#tcModal .modal-dialog .modal-content .modal-header::before,
-#tcModal .modal-dialog .modal-content .modal-header::after {
-  content: none !important;
-}
-
-#tcModal .modal-dialog .modal-content .modal-header h4 {
-  font-weight: 700 !important;
-  text-decoration: underline !important;
-  text-underline-position: under !important;
-  text-transform: uppercase !important;
-}
-
-#tcModal .modal-dialog .modal-content .modal-header button i {
-  color: #522E5A !important;
-}
-
-#tcModal .modal-dialog .modal-content .modal-body h6 {
-  font-weight: 700 !important;
-  text-decoration: underline !important;
-  text-underline-position: under !important;
-  text-transform: uppercase !important;
-}
-
-#tcModal .modal-dialog .modal-content .modal-body p {
-  text-align: justify !important;
-}
-
-#tcModal .modal-dialog .modal-content .modal-footer button {
-  border: 0 !important;
-  border-radius: 30px !important;
-  height: 50px !important;
-  padding: 10px 30px !important;
-  background: transparent radial-gradient(closest-side at 6% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box !important;
-  /* box-shadow: 15px 15px 40px #dba8c4 !important; */
-  opacity: 1 !important;
-  color: white !important;
-  margin: 8px 10px !important;
 }
 
 .t-and-c .checkbox label {
@@ -2070,16 +1953,4 @@ body.modal-open {
   .paymentmode > .mat-radio-button.mat-radio-checked { 
     border-color: blue !important;
     box-shadow: 0 0 3px 3px blue!important 
-  }
-
-  ::ng-deep .mat-radio-button .mat-radio-container {
-    display: none!important;
-  }
-  ::ng-deep .mat-radio-container .mat-radio-outer-circle,
-  ::ng-deep .mat-radio-container .mat-radio-inner-circle{
-    
-    display: none!important;
-  }
-  ::ng-deep .mat-radio-container .mat-radio-label{
-    display: inline;
   }
