@@ -436,7 +436,7 @@ export class QuestionnaireComponent implements OnInit {
               let type = this.filestoUpload[key][key1].type.split('/');
               type = type[0];
               if (type === 'application' || type === 'image') {
-                this.answers[key].push({ index: indx, caption: key1, action: status, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1] });
+                this.answers[key].push({ index: indx, caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1] });
               } else {
                 this.answers[key].push({ caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1] });
               }
