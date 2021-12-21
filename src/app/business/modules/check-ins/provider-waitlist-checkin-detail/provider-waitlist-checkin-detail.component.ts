@@ -176,6 +176,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       }
     })
   }
+
   ngOnDestroy() {
     if (this.sendmsgdialogRef) {
       this.sendmsgdialogRef.close();
@@ -324,7 +325,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     });
 
   }
-
   // getWaitlistNotes() {
   //   this.provider_services.getProviderWaitlistNotes(this.waitlist_data.consumer.id)
   getWaitlistNotes(uuid) {

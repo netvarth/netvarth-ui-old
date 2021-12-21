@@ -43,8 +43,8 @@ export class GlobalErrorHandler implements ErrorHandler {
         mailError['errorName'] = error.name;
         mailError['errorMessage'] = error.message;
         mailError['errorStack'] = error.stack;
-        console.log('inside global error');
-        this.shared_services.callHealth(JSON.stringify(mailError)).subscribe();
+        console.log(error.message);
+        // this.shared_services.callHealth(JSON.stringify(mailError)).subscribe();
         const chunkFailedMessage = /Loading chunk [\d]+ failed/;
         if (chunkFailedMessage.test(error.message)) {
             window.location.reload();

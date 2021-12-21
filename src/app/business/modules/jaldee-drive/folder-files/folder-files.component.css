@@ -827,6 +827,12 @@ table{
     display: none;
   }
 }
+@media (min-width:360px) {
+  .pageControls{
+    display: flex !important;
+  }
+  
+}
 .table.table-vertical-center td {
   vertical-align: baseline !important;
 }

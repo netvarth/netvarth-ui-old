@@ -108,6 +108,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     { mode: 'ONLINE_APPOINTMENT', value: 'Online ' },
   ];
   bookinghistorydialogref: any;
+  statusList: any;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -163,20 +164,20 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       this.notedialogRef.close();
     }
   }
-  openbookinghistory() {
-    this.bookinghistorydialogref = this.dialog.open(BookingHistoryComponent, {
-      width: '60%',
-      height: 'auto',
-      data: {
-        type:'Appointment History',
-        providername:this.spName,
-        appointmentby:this.waitlist_data.apptBy,
-        bookingmode:this.getAppointmentMode(this.waitlist_data.appointmentMode),
-        consumername:this.waitlist_data.appmtFor[0].firstName + ' '+ this.waitlist_data.appmtFor[0].lastName,
-        details:this.waitlist_history
-      }
-    })
-  }
+ openbookinghistory() {
+  this.bookinghistorydialogref = this.dialog.open(BookingHistoryComponent, {
+    width: '60%',
+    height: 'auto',
+    data: {
+      type:'Appointment History',
+      providername:this.spName,
+      appointmentby:this.waitlist_data.apptBy,
+      bookingmode:this.getAppointmentMode(this.waitlist_data.appointmentMode),
+      consumername:this.waitlist_data.appmtFor[0].firstName + ' '+ this.waitlist_data.appmtFor[0].lastName,
+      details:this.waitlist_history, 
+    }
+  })
+}
   getProviderSettings() {
     this.api_loading = true;
     this.provider_services.getWaitlistMgr()

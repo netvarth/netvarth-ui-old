@@ -439,56 +439,52 @@ export class CustTemplate1Component implements OnInit {
     this.activaterouterobj.paramMap
       .subscribe(params => {
         this.accountEncId = params.get('id');
-        if (this.accountEncId && this.accountEncId.toLowerCase() === 'heartfulnesscovidcare') {
-          this.router.navigate(['heartfulnesshealthcare']);
+        if (params.get('userEncId')) {
+          this.userEncId = params.get('userEncId');
+          this.userId = this.userEncId;
         } else {
-          if (params.get('userEncId')) {
-            this.userEncId = params.get('userEncId');
-            this.userId = this.userEncId;
-          } else {
-            this.userId = null;
-          }
-          this.domainConfigService.getDomainList().then(
-            (domainConfig) => {
-              this.domainList = domainConfig;
-              this.getAccountIdFromEncId(this.accountEncId).then(
-                (id: any) => {
-                  _this.provider_id = id;
-                  _this.setNewsFeeds(this.provider_id);                  
-                  _this.customId = _this.accountEncId;
-                  _this.accEncUid = _this.accountEncId;
-                  _this.accountIdExists = true;
-                  _this.getproviderBprofileDetails();
-                  _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
-                    (uiconfig: any) => {
-                      if (uiconfig['terms']) {
-                        this.terms = true;
-                      }
-                      if (uiconfig['privacy']) {
-                        this.privacy = true;
-                      }
-                      _this.accountProperties = uiconfig;
-                      if (_this.small_device_display) {
-                        _this.profileSettings = _this.accountProperties['smallDevices'];
-                      } else {
-                        _this.profileSettings = _this.accountProperties['normalDevices'];
-                      }
-                      if (_this.accountProperties['theme']) {
-                        _this.theme = _this.accountProperties['theme'];
-                      }
-                      _this.gets3curl();
-                    }, (error: any) => {
-                      _this.gets3curl();
-                    }
-                  )
-                }, (error) => {
-                  console.log(error);
-                  // _this.gets3curl();
-                }
-              );
-            }
-          )
+          this.userId = null;
         }
+        this.domainConfigService.getDomainList().then(
+          (domainConfig) => {
+            this.domainList = domainConfig;
+            this.getAccountIdFromEncId(this.accountEncId).then(
+              (id: any) => {
+                _this.provider_id = id;
+                _this.setNewsFeeds(this.provider_id);
+                _this.customId = _this.accountEncId;
+                _this.accEncUid = _this.accountEncId;
+                _this.accountIdExists = true;
+                _this.getproviderBprofileDetails();
+                _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
+                  (uiconfig: any) => {
+                    if (uiconfig['terms']) {
+                      this.terms = true;
+                    }
+                    if (uiconfig['privacy']) {
+                      this.privacy = true;
+                    }
+                    _this.accountProperties = uiconfig;
+                    if (_this.small_device_display) {
+                      _this.profileSettings = _this.accountProperties['smallDevices'];
+                    } else {
+                      _this.profileSettings = _this.accountProperties['normalDevices'];
+                    }
+                    if (_this.accountProperties['theme']) {
+                      _this.theme = _this.accountProperties['theme'];
+                    }
+                    _this.gets3curl();
+                  }, (error: any) => {
+                    _this.gets3curl();
+                  }
+                )
+              }, (error) => {
+                console.log(error);
+                // _this.gets3curl();
+              }
+            );
+          }
+        )
       });
   }
   getproviderBprofileDetails() {
@@ -1543,7 +1539,7 @@ export class CustTemplate1Component implements OnInit {
     const _this = this;
     console.log("Entered to goThroughLogin Method");
     return new Promise((resolve) => {
-      if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')){
+      if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')) {
         resolve(true);
       } else {
         resolve(false);
@@ -1686,8 +1682,8 @@ export class CustTemplate1Component implements OnInit {
         if (status) {
           //console.log("logged In");
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
-          if (_this.userType === 'consumer') {   
-              _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, 'consumer');   
+          if (_this.userType === 'consumer') {
+            _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, 'consumer');
           }
         } else {
           const passParam = { callback: '', current_provider: current_provider };
@@ -1739,7 +1735,7 @@ export class CustTemplate1Component implements OnInit {
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
           // console.log("User Type:" + _this.userType);
           if (_this.userType === 'consumer') {
-              _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
+            _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
           }
         } else {
           const passParam = { callback: 'appointment', current_provider: current_provider };
@@ -1785,7 +1781,7 @@ export class CustTemplate1Component implements OnInit {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-            this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
@@ -1793,7 +1789,7 @@ export class CustTemplate1Component implements OnInit {
             this.checkout();
           }
         } else {
-            this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);
@@ -1826,7 +1822,7 @@ export class CustTemplate1Component implements OnInit {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-            this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
@@ -1834,7 +1830,7 @@ export class CustTemplate1Component implements OnInit {
             this.checkout();
           }
         } else {
-            this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
       } else {
         this.loading_direct = false;
@@ -1859,7 +1855,7 @@ export class CustTemplate1Component implements OnInit {
       service_id: service.id,
       virtual_info: JSON.stringify(virtualinfo)
     };
-    if (service['serviceType']==='virtualService') {
+    if (service['serviceType'] === 'virtualService') {
       queryParam['tel_serv_stat'] = true;
     } else {
       queryParam['tel_serv_stat'] = false;
@@ -1894,7 +1890,7 @@ export class CustTemplate1Component implements OnInit {
       sel_date: curdate,
       virtual_info: JSON.stringify(virtualinfo)
     };
-    if (service['serviceType']==='virtualService') {
+    if (service['serviceType'] === 'virtualService') {
       queryParam['tel_serv_stat'] = true;
     } else {
       queryParam['tel_serv_stat'] = false;
@@ -2357,7 +2353,7 @@ export class CustTemplate1Component implements OnInit {
       }
     }
     this.filteredServices = this.services;
-    this.users = [];    
+    this.users = [];
     this.branches = [];
     console.log(this.deptUsers);
     for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
@@ -2380,13 +2376,13 @@ export class CustTemplate1Component implements OnInit {
           this.userCount++;
         }
       } else {
-          const userWaitTime = this.waitlisttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex].id);
-          const userApptTime = this.appttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex].id);
-          this.deptUsers[dIndex]['waitingTime'] = userWaitTime[0];
-          this.deptUsers[dIndex]['apptTime'] = userApptTime[0];
-          // deptItem['departmentItems'].push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
-          this.users.push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
-          this.userCount++;
+        const userWaitTime = this.waitlisttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex].id);
+        const userApptTime = this.appttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex].id);
+        this.deptUsers[dIndex]['waitingTime'] = userWaitTime[0];
+        this.deptUsers[dIndex]['apptTime'] = userApptTime[0];
+        // deptItem['departmentItems'].push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
+        this.users.push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
+        this.userCount++;
       }
       this.filteredUsers = this.users;
     }
@@ -2748,7 +2744,7 @@ export class CustTemplate1Component implements OnInit {
     };
     this.routerobj.navigate(['consumer'], navigationExtras);
   }
-  changeBranch (selectedBranch, type) {
+  changeBranch(selectedBranch, type) {
     this.userLocation = '';
     if (selectedBranch === '') {
       if (type === 'services') {
@@ -2761,7 +2757,7 @@ export class CustTemplate1Component implements OnInit {
     } else {
       if (type === 'services') {
         this.selectedServicesBranch = selectedBranch;
-        this.filteredServices = this.services.filter(service=> service.item.department === selectedBranch.departmentId);
+        this.filteredServices = this.services.filter(service => service.item.department === selectedBranch.departmentId);
       } else if (type === 'user') {
         this.selectedUserBranch = selectedBranch;
         this.filteredUsers = this.users.filter(user => user.item.deptId === selectedBranch.departmentId);
@@ -2775,48 +2771,48 @@ export class CustTemplate1Component implements OnInit {
     if (this.selectedUserBranch) {
       filteredUsers = filteredUsers.filter(user => user.item.deptId === this.selectedUserBranch.departmentId)
     }
-    if (locationName && locationName.trim()!=='') {
-      filteredUsers = filteredUsers.filter(user=> user.item.locationName.includes(locationName));
+    if (locationName && locationName.trim() !== '') {
+      filteredUsers = filteredUsers.filter(user => user.item.locationName.includes(locationName));
     }
     console.log(filteredUsers);
     this.filteredUsers = filteredUsers;
-    
+
   }
   openNews(link) {
     window.open(link);
   }
   setNewsFeeds(uniqueid): void {
     const _this = this;
-    const url = projectConstantsLocal.UIS3PATH + uniqueid + "/news_feed.json?"+ new Date();
+    const url = projectConstantsLocal.UIS3PATH + uniqueid + "/news_feed.json?" + new Date();
     _this.shared_services.getNewsFeeds(url).subscribe(
-      (newsfeeds)=> {
+      (newsfeeds) => {
         _this.newsFeeds = newsfeeds;
-        _this.customOptions= {
-          loop:true,
-          margin:10,
+        _this.customOptions = {
+          loop: true,
+          margin: 10,
           mouseDrag: true,
           touchDrag: true,
           pullDrag: true,
-          autoplay:true,
+          autoplay: true,
           navSpeed: 200,
-          dots:true,
+          dots: true,
           center: true,
           // nav:true,
           // navText: [ '<i class="fa fa-caret-right"></i>', '<i class="fa fa-caret-left"></i>"' ],
-          responsiveClass:true,
-          responsive:{
-              0:{
-                items:2
-              },
-              400:{
-                items:2
-              },
-              740:{
-                items:3
-              },
-              940:{
-                items:3
-              }
+          responsiveClass: true,
+          responsive: {
+            0: {
+              items: 2
+            },
+            400: {
+              items: 2
+            },
+            740: {
+              items: 3
+            },
+            940: {
+              items: 3
+            }
           }
         };
       }

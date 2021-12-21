@@ -188,7 +188,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.translate.use(JSON.parse(localStorage.getItem('translatevariable'))) 
 
     this.onResize();
-    this.selected_domain = 'All';
+    this.selected_domain = 'healthCare';
     if (this.passedDomain) {
       this.selected_domain = this.passedDomain;
     }

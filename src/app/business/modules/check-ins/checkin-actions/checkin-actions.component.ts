@@ -120,6 +120,7 @@ export class CheckinActionsComponent implements OnInit {
     showAssign = false;
     users: any = [];
     location: any;
+    statusBooking: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -141,6 +142,7 @@ export class CheckinActionsComponent implements OnInit {
         this.setMinMaxDate();
         this.getLabel();
         this.checkin = this.data.checkinData;
+        this.statusBooking = this.data.statusBooking;
         if (!this.data.multiSelection) {
             this.ynwUuid = this.checkin.ynwUuid;
             this.location_id = this.checkin.queue.location.id;
@@ -1146,4 +1148,43 @@ export class CheckinActionsComponent implements OnInit {
                     this.location = data;
                 });
     }
+     changeStatusToCompleted() {
+        let msg = '';
+        msg = 'Do you want to change all booking Statuses to Completed.?'
+        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': msg,
+                'type': 'yes/no'
+            }
+        });
+        dialogrefd.afterClosed().subscribe(result => {
+            if (result) {
+                const waitList = []
+                this.checkin.forEach(element => {
+                    if(element.ynwUuid){
+                        waitList.push(element.ynwUuid);
+                    }
+                });
+                this.provider_services.changestatustowaitlistComplete(waitList, 'DONE')
+                    .subscribe((result:any )=> {
+                       console.log(result);
+                        this.dialogRef.close('reload');
+                        this.router.navigate(['provider', 'check-ins']);
+                    })
+            }
+        });
+    }
+    followUpClicked() {
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+              type: 'followup',
+              followup_uuid : this.checkin.ynwUuid,
+            }
+          };
+          this.dialogRef.close();
+          this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+      }
 }

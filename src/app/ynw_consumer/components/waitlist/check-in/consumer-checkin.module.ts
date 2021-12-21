@@ -13,8 +13,13 @@ import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner
 import { JcCouponNoteModule } from '../../../../shared/modules/jc-coupon-note/jc-coupon-note.module';
 import { MatChipsModule } from '@angular/material/chips';
 import { QuestionnaireModule } from '../../../../shared/components/questionnaire/questionnaire.module';
-import { MatRadioModule } from '@angular/material/radio';
 import { CheckinAddMemberModule } from '../../../../shared/modules/checkin-add-member/checkin-add-member.module';
+import { MatRadioModule } from '@angular/material/radio';
+import { RefundpolicyModule } from '../../../modules/refundpolicy/refundpolicy.module';
+import { PrivacyModule } from '../../../modules/privacy/privacy.module';
+import { CustomerService } from '../../../../shared/services/customer.service';
+import { MembersModule } from '../../../modules/members/members.module';
+import { CommunicationsModule } from '../../../modules/communications/communications.module';
 const routes: Routes = [
     { path: '', component: ConsumerCheckinComponent},
     // { path: 'payment/:id', loadChildren: ()=> import('./payment/payment.module').then(m=>m.ConsumerCheckinPaymentModule) },
@@ -33,12 +38,16 @@ const routes: Routes = [
         MatDatepickerModule,
         MatTooltipModule,
         MatCheckboxModule,
+        MatFormFieldModule,
+        MatChipsModule,
         MatRadioModule,
         ServiceDetailModule,
         JcCouponNoteModule,
-        CheckinAddMemberModule ,
-        MatFormFieldModule,
-        MatChipsModule,
+        CheckinAddMemberModule,
+        RefundpolicyModule,
+        PrivacyModule,
+        MembersModule,
+        CommunicationsModule,
         FormsModule,
         QuestionnaireModule,
         ReactiveFormsModule,
@@ -48,6 +57,9 @@ const routes: Routes = [
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
         NO_ERRORS_SCHEMA
+    ],
+    providers: [
+        CustomerService
     ],
     exports: [ConsumerCheckinComponent]
 })

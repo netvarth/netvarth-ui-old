@@ -81,8 +81,12 @@ export class RazorpayService {
     let razorInterval;
     razorModel.retry = false;
   let selectedmode=razorModel.mode;
+  console.log(selectedmode  );
   if(selectedmode==='DC'||selectedmode==='CC'){
     selectedmode='CARD';
+  }
+  if(selectedmode==='NB'){
+    selectedmode='NETBANKING';
   }
     //   theme: {
     //     color: '#F37254'

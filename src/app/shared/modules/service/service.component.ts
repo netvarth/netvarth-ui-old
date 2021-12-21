@@ -172,6 +172,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     paymentProfiles:any=[];
     selected=false;
     selectedPaymentProfile: any;
+    show_internationalmode=false;
     
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
@@ -439,6 +440,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
         } else {
             this.advanced = false;
         }
+    }
+    togglepaymentMode(){
+        this.show_internationalmode=!this.show_internationalmode;
     }
     getPaymentProfileDetails(profileId){
        this.selectedPaymentProfile= this.paymentProfiles.filter(profile=>profile.profileId===profileId);
@@ -721,6 +725,18 @@ export class ServiceComponent implements OnInit, OnDestroy {
     getpaytmmodes(indiamodes){
         return  indiamodes.filter(mode=>mode.gateway==='PAYTM');
     }
+    getPayTMmodesByGroup(indiamodes){
+        console.log(indiamodes)
+     
+       const groupedGateway  = indiamodes.reduce(function (r, a) {
+        r[a.gateway] = r[a.gateway] || [];
+        r[a.gateway].push(a);
+        return r;
+    },{});
+    
+      return groupedGateway;
+    }
+ 
     onCancel() {
         let source;
         if (this.action === 'add') {

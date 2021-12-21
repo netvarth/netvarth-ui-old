@@ -1,10 +1,3 @@
-.selecttag {
-    display: flex;
-    justify-content: flex-start;
-    cursor: pointer;
-    /* background-color: aqua; */
-}
-
 .book_telgrm_btn {
     transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease !important;
     outline: none !important;
@@ -53,4 +46,10 @@ div.loading {
     -ms-transform: translateX(-50%) translateY(-50%);
     -webkit-transform: translate(-50%,-50%);
     transform: translate(-50%,-50%);
+}
+.image{
+    align-items:baseline !important
+}
+.home-img{
+    margin-top: -20% !important;
 }

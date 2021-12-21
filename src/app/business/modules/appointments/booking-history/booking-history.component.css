@@ -27,3 +27,13 @@ table {
   tr:nth-child(even) {
     background-color: #dddddd;
   }
+  .slotdiv {
+    max-height: 100vh !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-top: 0px !important;
+  
+  }
+  .main-section {
+    overflow-x: auto;
+  }

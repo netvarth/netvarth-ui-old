@@ -942,11 +942,6 @@ ul.bus-actions li a.lnk {
 .color-grey {
   color: #bbb !important;
 }
-
-.border-tp {
-  /* border-top: 1px solid #EBEDF3 !important; */
-}
-
 .border-bt {
   border-bottom: 1px solid #EBEDF3 !important;
 }
@@ -1370,9 +1365,6 @@ height: 150px !important;
    .contact-section .wtsapaud-icon{
     width: 25px !important;
     top: 4px !important;
-   }
-   .changephemail {
-     /* width: 65px !important; */
    }
   .changephemail .wtsapaud-icon {
     top: 5px !important;
@@ -2043,16 +2035,5 @@ box-shadow: 4px 4px 5px gainsboro;
   }
   .paymentmode > .mat-radio-button.mat-radio-checked { 
     border-color: blue !important;
-    box-shadow: 0 0 5px 5px blue!important;
-  }
-  ::ng-deep .mat-radio-button .mat-radio-container {
-    display: none!important;
-  }
-  ::ng-deep .mat-radio-container .mat-radio-outer-circle,
-  ::ng-deep .mat-radio-container .mat-radio-inner-circle{
-    
-    display: none!important;
-  }
-  ::ng-deep .mat-radio-container .mat-radio-label{
-    display: inline;
+    padding: 10px !important;
   }

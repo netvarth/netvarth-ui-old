@@ -20,6 +20,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { PrivacyModule } from '../../../../ynw_consumer/modules/privacy/privacy.module';
+import { RefundpolicyModule } from '../../../../ynw_consumer/modules/refundpolicy/refundpolicy.module';
+import { MembersModule } from '../../../../ynw_consumer/modules/members/members.module';
+import { CustomerService } from '../../../../shared/services/customer.service';
+import { CommunicationsModule } from '../../../../ynw_consumer/modules/communications/communications.module';
 const routes: Routes = [
     { path: '', component: ConsumerAppointmentComponent},
     // { path: 'payment/:id',loadChildren: ()=>import('./payment/payment.module').then(m=>m.ConsumerApptPaymentModule) },
@@ -53,11 +58,18 @@ const routes: Routes = [
         MatRadioModule,
         MatCheckboxModule,
         MatFormFieldModule,
+        PrivacyModule,
+        RefundpolicyModule,
+        MembersModule,
+        CommunicationsModule,
         [RouterModule.forChild(routes)]
     ],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
         NO_ERRORS_SCHEMA
+    ],
+    providers: [
+        CustomerService
     ],
     exports: [ConsumerAppointmentComponent]
 })

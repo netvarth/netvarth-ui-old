@@ -5,165 +5,136 @@
     </div>
 </div>
 <form [formGroup]="templateForm">
-    <div class="container" >
+    <div class="container">
         <div class="row">
             <div class="col-lg-11"></div>
             <div class="col-lg-1">
-                <!-- <button href="#" class="btn btn-primary" style="border-radius: 5px;" (click)="preview()">Preview</button> -->
             </div>
         </div>
         <div style="box-shadow: #00000029 -3pt 22pt 6pt ">
-            <div class="row  "  style="background-color:lightgreen;">
+            <div class="row  " style="background-color:lightgreen;">
                 <div class="col-lg-3 col-xs-0"></div>
-                <div class="col-lg-6 col-xs-12 gallery-item" >
-                    <!-- <div class="dropdown ">
-                        <button class="btn btn-default dropdown-toggle gallery-button"  type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            <img src="../../../assets/templateimages/more_vert_black_24dp.svg">
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                          <li><a>Edit&nbsp;&nbsp;&nbsp;&nbsp;<img src="../../../assets/templateimages/mode_edit_black_24dp.svg"></a></li>
-                          <li><a>Delete&nbsp; <img src="../../../assets/templateimages/delete_black_24dp.svg"></a></li>
-                        </ul>
-                      </div> -->
-                    <img class=" headsection gallery-img"  src="{{templateForm.value.headerImage}}">
+                <div class="col-lg-6 col-xs-12 gallery-item">
+                    <img class=" headsection gallery-img" src="{{templateForm.value.headerImage}}">
                 </div>
                 <div class="col-lg-3 col-xs-0"></div>
-        
+
             </div>
             <div class=""></div>
             <div class="row" style="width: 100%;background-color: white;">
-                <div class="col-lg-4  text-xs-center"  >
-                    <img class="img-circle margintopimage" style="width: 200px;" src="../../../assets/templateimages/b5757a2eed2300820433e4083ae635c2.jpg">
+                <div class="col-lg-4  text-xs-center">
+                    <img class="img-circle margintopimage" style="width: 200px;"
+                        src="../../../assets/templateimages/b5757a2eed2300820433e4083ae635c2.jpg">
                 </div>
-                <div class="col-lg-8 col-xs-12 content" >
-                <h2  [innerHtml]="templateForm.value.headhospitalName"   class="col-lg-12 text-xs-center"></h2>
+                <div class="col-lg-8 col-xs-12 content">
+                    <h2 [innerHtml]="templateForm.value.headhospitalName" class="col-lg-12 text-xs-center"></h2>
+                    <h4 [innerHtml]="templateForm.value.headDoctorName" class="col-lg-12 col-xs-12 text-xs-center"></h4>
+                    <div [innerHtml]="templateForm.value.headlocation" class="col-lg-12 col-xs-0 text-xs-center"
+                        style="color: blue;"></div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-8 topsection">
+                            <h4 class="col-lg-12 col-xs-3" style="color: lightgray;">About us</h4>
+                            <div [innerHtml]="templateForm.value.headaboutusmessage" class="col-lg-12 col-xs-5"
+                                style="color: blue;">We care of you</div>
 
-                <h4 [innerHtml]="templateForm.value.headDoctorName"  class="col-lg-12 col-xs-12 text-xs-center"></h4>
-
-                <div  [innerHtml]="templateForm.value.headlocation"   class="col-lg-12 col-xs-0 text-xs-center" style="color: blue;"></div>
-
-                <br>
-                <div class="row">
-                    <div class="col-lg-8 topsection">
-                        <h4  class="col-lg-12 col-xs-3" style="color: lightgray;">About us</h4>
-                        <div [innerHtml]="templateForm.value.headaboutusmessage"   class="col-lg-12 col-xs-5" style="color: blue;">We care of you</div>
-
-                        <h4 class="col-lg-12 col-xs-4" style="color: lightgray;">Specializations</h4>
+                            <h4 class="col-lg-12 col-xs-4" style="color: lightgray;">Specializations</h4>
+                        </div>
                     </div>
+                    <div [innerHtml]="templateForm.value.headerDescription" class="col-lg-8   text-xs-center"
+                        style="color: blue;"></div>
                 </div>
-                <div  [innerHtml]="templateForm.value.headerDescription"  class="col-lg-8   text-xs-center" style="color: blue;"></div>
-                </div>
-                <div class="row  display"  >
+                <div class="row  display">
                     <div class="col-lg-8"></div>
                     <div class="col-lg-4">
                         <img src="../../../assets/templateimages/Group_195-removebg-preview.png" style="width: 100px;">
                         <img src="../../../assets/templateimages/Untitled-1 (3).png" style="width: 60px;">
                         <img src="../../../assets/templateimages/Untitled-1.png" style="width: 60px;">
                         <img src="../../../assets/templateimages/Untitled-1 (2).png" style="width: 60px;">
-    
                     </div>
-    
                 </div>
             </div>
         </div>
         <br>
         <div class="ourdoctors row" style="background-color: lightskyblue;padding: 2%;">
-            <div class="col-lg-4 col-xs-12 col-md-4" >
-                <h1 [innerHtml]="templateForm.value.section1Title"  style="font-size: 30px;">Our Services</h1>
+            <div class="col-lg-4 col-xs-12 col-md-4">
+                <h1 [innerHtml]="templateForm.value.section1Title" style="font-size: 30px;">Our Services</h1>
 
             </div>
-            <div class="col-lg-4 col-xs-12 col-md-4" >
+            <div class="col-lg-4 col-xs-12 col-md-4">
                 <p>
-                    <select class="arrows" >
-                        <option  *ngFor="let dep of departments" value="{{dep}}">{{dep}}</option>
-                     </select>
-                  </p>
-            </div>
-            <div class="col-lg-4 col-xs-12 col-md-4" >
-                <!-- searchbylocatin -->
-                <p>
-                    <select class="arrows" >
-                        <option  *ngFor="let dep of departments" value="{{dep}}">{{dep}}</option>
-                     </select>
-                  </p>
-    
-            </div>
-        </div>
-    
-          <div class="row" >
-                <div class="col-lg-6" *ngFor="let img of array">
-                    <div class="card" style="margin:2%">
-                        <div class="row" >
-                            <div class="col-lg-8 col-xs-10 col-md-8" style="background-color: lightgrey;padding: 2%;border-radius: 5%;font-size: 12px;">
-                                <div class="row">
-                                    <div class="col-lg-2 col-xs-0"></div>
-                                    <div class="col-lg-10 col-xs-12 col-md-8">Service Duration by 10 Mins</div>
-                                </div>
-                                
-                            </div>
-                            <div class="col-lg-2 col-sm-0 col-md-0" style="padding: 2%;"></div>
-                            <div class="col-lg-2  col-xs-2 col-md-2">
-                                <img src="../../../assets/templateimages/more_horiz_black_24dp.svg">
-                            </div>
-                        </div>
-        
-                        <div class="row" >
-                            <!-- <div class="col-xs- col-md-0 col-lg-0"></div> -->
-                            <div class="col-lg-4 col-xs-1 col-md-4">
-                                                 <!-- <div class="dropdown ">
-                                                        <button class="btn btn-default dropdown-toggle gallery-button"  type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                            <img src="../../../assets/templateimages/more_vert_black_24dp.svg">
-                                                        </button>
-                                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                                 <li><a>Edit&nbsp;&nbsp;&nbsp;&nbsp;<img src="../../../assets/templateimages/mode_edit_black_24dp.svg"></a></li>
-                                                                <li><a>Delete&nbsp; <img src="../../../assets/templateimages/delete_black_24dp.svg"></a></li>
-                                                        </ul>
-                                                </div> -->
-                            <img class="img-circle border imagesectionincards text-xs-center" src="../../../assets/templateimages/bruno-rodrigues-279xIHymPYY-unsplash.png" > 
-                            </div>
-                            <div class="col-lg-6 col-xs-12 col-md-6" style="margin-top: 2%;">
-                                <!-- <div class="row"> -->
-                                    <h2>Consultation</h2>
-                                    <h4 style="color: lightblue;">Next Avaliable Time</h4>
-                                    <h4 style="color: lightblue;"> Today 1:40pm</h4>
-                                <!-- </div> -->
-        
-                            </div>
-    
-        
-                        </div>
-                        <button href="#" class="btn btn-primary" style="width: 100%;border-radius: 5px;">Get Appointment</button>
-    
-                    </div>
-    
-                </div>
-          </div>
-          <div class="ourdoctors row" style="background-color: lightskyblue;padding: 2%;">
-            <div class="col-lg-4 col-xs-12 col-md-4" >
-                <h1 style="font-size: 30px;">Our Services</h1>
-            </div>
-            <div class="col-lg-4 col-xs-12 col-md-4" >
-                <!-- searchbydepartment -->
-                <p>
-                    <select class="arrows" >
-                        <option  *ngFor="let dep of departments" value="{{dep}}">{{dep}}</option>
-                     </select>
-                  </p>
-    
+                    <select class="arrows">
+                        <option *ngFor="let dep of departments" value="{{dep}}">{{dep}}</option>
+                    </select>
+                </p>
             </div>
             <div class="col-lg-4 col-xs-12 col-md-4">
-                <!-- searchbylocatin -->
                 <p>
-                    <select class="arrows" >
-                        <option  *ngFor="let dep of departments" value="{{dep}}">{{dep}}</option>
-                     </select>
-                  </p>
-    
+                    <select class="arrows">
+                        <option *ngFor="let dep of departments" value="{{dep}}">{{dep}}</option>
+                    </select>
+                </p>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6" *ngFor="let img of array">
+                <div class="card" style="margin:2%">
+                    <div class="row">
+                        <div class="col-lg-8 col-xs-10 col-md-8"
+                            style="background-color: lightgrey;padding: 2%;border-radius: 5%;font-size: 12px;">
+                            <div class="row">
+                                <div class="col-lg-2 col-xs-0"></div>
+                                <div class="col-lg-10 col-xs-12 col-md-8">Service Duration by 10 Mins</div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-2 col-sm-0 col-md-0" style="padding: 2%;"></div>
+                        <div class="col-lg-2  col-xs-2 col-md-2">
+                            <img src="../../../assets/templateimages/more_horiz_black_24dp.svg">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- <div class="col-xs- col-md-0 col-lg-0"></div> -->
+                        <div class="col-lg-4 col-xs-1 col-md-4">
+                            <img class="img-circle border imagesectionincards text-xs-center"
+                                src="../../../assets/templateimages/bruno-rodrigues-279xIHymPYY-unsplash.png">
+                        </div>
+                        <div class="col-lg-6 col-xs-12 col-md-6" style="margin-top: 2%;">
+                            <!-- <div class="row"> -->
+                            <h2>Consultation</h2>
+                            <h4 style="color: lightblue;">Next Avaliable Time</h4>
+                            <h4 style="color: lightblue;"> Today 1:40pm</h4>
+                        </div>
+                    </div>
+                    <button href="#" class="btn btn-primary" style="width: 100%;border-radius: 5px;">Get
+                        Appointment</button>
+                </div>
+            </div>
+        </div>
+        <div class="ourdoctors row" style="background-color: lightskyblue;padding: 2%;">
+            <div class="col-lg-4 col-xs-12 col-md-4">
+                <h1 style="font-size: 30px;">Our Services</h1>
+            </div>
+            <div class="col-lg-4 col-xs-12 col-md-4">
+                <p>
+                    <select class="arrows">
+                        <option *ngFor="let dep of departments" value="{{dep}}">{{dep}}</option>
+                    </select>
+                </p>
+            </div>
+            <div class="col-lg-4 col-xs-12 col-md-4">
+                <p>
+                    <select class="arrows">
+                        <option *ngFor="let dep of departments" value="{{dep}}">{{dep}}</option>
+                    </select>
+                </p>
             </div>
         </div>
         <div class="card row" *ngFor="let image of array" style="margin: 1%;">
             <div class="row ">
-                <div class="col-lg-2" ></div>
+                <div class="col-lg-2"></div>
                 <div class="col-lg-10 " style="background-color: lightgrey;padding: 1%;border-radius: 5px;">
                     <div class="row">
                         <div class="col-lg-1"></div>
@@ -174,32 +145,31 @@
                 </div>
             </div>
             <div class="row">
-                <div class="row" >
+                <div class="row">
                     <div class="col-lg-12 col-xs-0" style="margin: 1%;"></div>
                 </div>
                 <div class="col-lg-3 col-xs-12">
-                    <img src="../../../assets/templateimages/b5757a2eed2300820433e4083ae635c2.jpg" class="img-circle text-xs-center border-xs-small " style="width: 200px;"> 
+                    <img src="../../../assets/templateimages/b5757a2eed2300820433e4083ae635c2.jpg"
+                        class="img-circle text-xs-center border-xs-small " style="width: 200px;">
                 </div>
-                <div class="col-lg-4 col-xs-12 margin-xs-1" >
+                <div class="col-lg-4 col-xs-12 margin-xs-1">
                     <div class="row">
                         <div class="col-lg-2 col-xs-2">
                             <img src="../../../assets/templateimages/videocam_black_24dp.svg">
-                             <p><b>Online</b></p>
+                            <p><b>Online</b></p>
                         </div>
                         <div class="col-lg-6 col-xs-6">
                             <h2 style="color: darkblue;">Dr.Bharath</h2>
                         </div>
-    
                         <div class="col-lg-12 col-xs-12">
                             <h2 style="color: lightblue;">CARDIOLOGY | 15 YRS</h2>
-    
+
                         </div>
                     </div>
-                    
-                    <div class="row" >
+                    <div class="row">
                         <div class="col-lg-2 col-xs-2">
                             <img src="../../../assets/templateimages/videocam_black_24dp.svg">
-                             <p><b>Online</b></p>
+                            <p><b>Online</b></p>
                         </div>
                         <div class="col-lg-6 col-xs-6">
                             <h4 style="color: lightblue;">DM,MD,FACC</h4>
@@ -208,25 +178,21 @@
                     <p>Mims Hospitals,Kodakara center</p>
                 </div>
                 <div class="col-lg-5 col-xs-12" style="background-color: lightblue;border-radius: 5px;padding: 2%;">
-                <div class="row">
-                    <div class="col-lg-5 col-xs-4">
-                        <h4 style="color: darkblue;">Service Price</h4>
-                        <h4>$1000</h4>
-    
+                    <div class="row">
+                        <div class="col-lg-5 col-xs-4">
+                            <h4 style="color: darkblue;">Service Price</h4>
+                            <h4>$1000</h4>
+                        </div>
+                        <div class="vl col-lg-1 col-xs-1"></div>
+                        <div class="col-lg-6 col-xs-6">
+                            <h4 style="color: orange;">Payment required now</h4>
+                            <h4>$1000</h4>
+                        </div>
+                        <button class="btn btn-warning" style="width: 100%;border-radius: 5px;">Book Now</button>
                     </div>
-                    <div class="vl col-lg-1 col-xs-1"></div>
-    
-                    <div class="col-lg-6 col-xs-6">
-                        <h4 style="color: orange;">Payment required now</h4>
-                        <h4>$1000</h4>
-                    </div>
-                    <button  class="btn btn-warning" style="width: 100%;border-radius: 5px;">Book Now</button>
-                </div>
-                
                 </div>
             </div>
         </div>
-      
         <div class="RecentNewssection">
             <div class="text-center">
                 <h1 style="text-align: center;">RecentNews</h1>
@@ -237,15 +203,10 @@
                         <img class="imagesectioninrecentnews" src="{{imagearray1[i]}}" alt="Card image cap">
                     </div>
                     <div class="card-body">
-    
-                       <div style="font-size: 12px;"> Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
-                        Rem, dolor cum, fugit dolore atque sit omnis doloribus reiciendis 
-                        odit minima, porro vero. At dicta illum atque numquam, 
-                        harum aut vel.</div>
-    
-    
-    
-    
+                        <div style="font-size: 12px;"> Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                            Rem, dolor cum, fugit dolore atque sit omnis doloribus reiciendis
+                            odit minima, porro vero. At dicta illum atque numquam,
+                            harum aut vel.</div>
                         <br>
                         <br>
                         <div class="row">
@@ -257,47 +218,11 @@
                             </div>
                         </div>
                     </div>
-    
                 </div>
-    
             </div>
             <div class="text-center">
                 <button class="btn btn-primary ">seemorenews</button>
-    
             </div>
-    
-    
         </div>
-    
     </div>
 </form>
-
-
-
-<!-- <owl-carousel  [options]="carouselOne" [carouselClasses]="['owl-carousel', 'owl-theme']">
-    <div class="item  review-card text-center">
-
-        <div class="customer-info">
-            <h4 class="name">Jaldee Telehealth</h4>
-            <p class="position">&nbsp;</p>
-        </div>
-        <div class="review-text">
-            <p>Consult your doctor from anywhere. Visit <a
-                >telehealth.jaldee.com</a> to view
-                our doctors
-                and book a video consultation.</p>
-        </div>
-    </div>
-    <div class="item review-card text-center">
-        <div class="customer-info">
-            <h4 class="name">Jaldee Blog</h4>
-            <p class="position">&nbsp;</p>
-        </div>
-        <div class="review-text">
-            <p>Jaldee is proud to announce the launch of our new blog. Check it out! Visit
-                <a href="https://blog.jaldee.com/">blog.jaldee.com</a>.
-            </p>
-        </div>
-    </div>
-
-</owl-carousel> -->

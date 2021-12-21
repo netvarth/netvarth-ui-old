@@ -1981,6 +1981,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['token-eq'] = this.token;
       }
     }
+    console.log(this.filter)
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;
     }
@@ -3066,7 +3067,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         multiSelection: multiSelection,
         status: status,
         labelFilterData: this.labelFilterData,
-        labelsCount: this.labelsCount
+        labelsCount: this.labelsCount,
+        statusBooking :this.statusAction
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
