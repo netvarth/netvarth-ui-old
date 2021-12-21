@@ -436,7 +436,7 @@ export class QuestionnaireComponent implements OnInit {
               let type = this.filestoUpload[key][key1].type.split('/');
               type = type[0];
               if (type === 'application' || type === 'image') {
-                this.answers[key].push({ index: indx, caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1] });
+                this.answers[key].push({caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1] });
               } else {
                 this.answers[key].push({ caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1] });
               }
@@ -665,15 +665,15 @@ export class QuestionnaireComponent implements OnInit {
   }
   submitQuestionnaire(passData) {
     const dataToSend: FormData = new FormData();
-    if (passData.files && passData.files.length > 0) {
-      for (let pic of passData.files) {
-        let type = pic.type.split('/');
-        type = type[0];
-        if (type === 'application' || type === 'image') {
-          dataToSend.append('files', pic['name']);
-        }
-      }
-    }
+    // if (passData.files && passData.files.length > 0) {
+    //   for (let pic of passData.files) {
+    //     let type = pic.type.split('/');
+    //     type = type[0];
+    //     if (type === 'application' || type === 'image') {
+    //       dataToSend.append('files', pic['name']);
+    //     }
+    //   }
+    // }
     const blobpost_Data = new Blob([JSON.stringify(passData.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
     this.buttonDisable = true;

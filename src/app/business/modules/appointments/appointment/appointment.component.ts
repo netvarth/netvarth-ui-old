@@ -1286,11 +1286,11 @@ export class AppointmentComponent implements OnInit {
     }
     submitQuestionnaire(uuid) {
         const dataToSend: FormData = new FormData();
-        if (this.questionAnswers.files) {
-            for (const pic of this.questionAnswers.files) {
-                dataToSend.append('files', pic['name']);
-            }
-        }
+        // if (this.questionAnswers.files) {
+        //     for (const pic of this.questionAnswers.files) {
+        //         dataToSend.append('files', pic['name']);
+        //     }
+        // }
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
         this.providerService.submitProviderApptQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
