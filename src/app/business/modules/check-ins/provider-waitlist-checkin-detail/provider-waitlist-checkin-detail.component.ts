@@ -176,6 +176,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       }
     })
   }
+
   ngOnDestroy() {
     if (this.sendmsgdialogRef) {
       this.sendmsgdialogRef.close();
@@ -323,20 +324,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         );
     });
 
-  }
-  openbookinghistory() {
-    this.bookinghistorydialogref = this.dialog.open(BookingHistoryComponent, {
-      width: '60%',
-      height: 'auto',
-      data: {
-        type:'Token History',
-        providername:this.spName,
-        appointmentby:this.waitlist_data.waitlistedBy,
-        bookingmode:this.getWaitListMode(this.waitlist_data.waitlistMode),
-        consumername:this.waitlist_data.consumer.firstName+" "+this.waitlist_data.consumer.lastName,
-        details:this.waitlist_history
-      }
-    })
   }
   // getWaitlistNotes() {
   //   this.provider_services.getProviderWaitlistNotes(this.waitlist_data.consumer.id)

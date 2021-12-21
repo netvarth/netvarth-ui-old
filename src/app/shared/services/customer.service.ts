@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ServiceMeta } from '../../../../shared/services/service-meta';
+import { ServiceMeta } from './service-meta';
 
 @Injectable()
 export class CustomerService {
@@ -13,7 +13,7 @@ export class CustomerService {
    * @returns 
    */
   getProfile(id, origin?) {
-    let path= origin + '/' + id;
+    let path = origin + '/' + id;
     return this.servicemeta.httpGet(path);
   }
 
@@ -32,5 +32,24 @@ export class CustomerService {
   addMember(data) {
     return this.servicemeta.httpPost('consumer/familyMember', data);
   }
-  
+
+  /**
+     * Return customer details as promise
+     * @param id id of the customer
+     * @returns customer details
+     */
+  getCustomerInfo(id) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.getProfile(id, 'consumer')
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
+  }
 }

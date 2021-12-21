@@ -15,15 +15,14 @@ import { MatChipsModule } from '@angular/material/chips';
 import { QuestionnaireModule } from '../../../../shared/components/questionnaire/questionnaire.module';
 import { CheckinAddMemberModule } from '../../../../shared/modules/checkin-add-member/checkin-add-member.module';
 import { MatRadioModule } from '@angular/material/radio';
-import { ConsumerCheckinService } from './consumer-checkin.service';
-import { CheckinRefundpolicyModule } from './checkin-refundpolicy/checkin-refundpolicy.module';
-import { CheckinPrivacyModule } from './checkin-privacy/checkin-privacy.module';
-import { CustomerService } from './customer.service';
-import { CheckinMembersModule } from './checkin-members/checkin-members.module';
-import { CheckinCommunicationsModule } from './checkin-communications/checkin-communications.module';
+import { RefundpolicyModule } from '../../../modules/refundpolicy/refundpolicy.module';
+import { PrivacyModule } from '../../../modules/privacy/privacy.module';
+import { CustomerService } from '../../../../shared/services/customer.service';
+import { MembersModule } from '../../../modules/members/members.module';
+import { CommunicationsModule } from '../../../modules/communications/communications.module';
 const routes: Routes = [
     { path: '', component: ConsumerCheckinComponent},
-    { path: 'payment/:id', loadChildren: ()=> import('./payment/payment.module').then(m=>m.ConsumerCheckinPaymentModule) },
+    // { path: 'payment/:id', loadChildren: ()=> import('./payment/payment.module').then(m=>m.ConsumerCheckinPaymentModule) },
     { path: 'track/:id', loadChildren: ()=> import('./livetrack/livetrack.module').then(m=>m.ConsumerLiveTrackModule) },
     { path: 'bill', loadChildren: ()=> import('./checkin-bill/checkin-bill.module').then(m=>m.ConsumerCheckinBillModule) },
     { path: 'confirm', loadChildren: ()=> import('./confirm-page/confirm-page.module').then(m=>m.ConsumerCheckinConfirmModule)}
@@ -45,10 +44,10 @@ const routes: Routes = [
         ServiceDetailModule,
         JcCouponNoteModule,
         CheckinAddMemberModule,
-        CheckinRefundpolicyModule,
-        CheckinPrivacyModule,
-        CheckinMembersModule,
-        CheckinCommunicationsModule,
+        RefundpolicyModule,
+        PrivacyModule,
+        MembersModule,
+        CommunicationsModule,
         FormsModule,
         QuestionnaireModule,
         ReactiveFormsModule,
@@ -60,7 +59,6 @@ const routes: Routes = [
         NO_ERRORS_SCHEMA
     ],
     providers: [
-        ConsumerCheckinService,
         CustomerService
     ],
     exports: [ConsumerCheckinComponent]

@@ -497,21 +497,24 @@
                                                             </div>
                                                             <fieldset>
                                                                 <ng-container *ngIf="hideLanguages">
-                                                                    <label class="col-form-label" for="name">Contact Information </label>
+                                                                    <label class="col-form-label" for="name">Contact
+                                                                        Information </label>
                                                                     <div class="form-level-settings smallfont">
                                                                         Provide your contact info for alerts,status
                                                                         updates and for any other booking related
                                                                         communications
                                                                     </div>
                                                                     <div class="mgn-up-10 mgn-bt-10">
-                                                                        <label class="col-form-label" for="phone">Phone # </label>
+                                                                        <label class="col-form-label" for="phone">Phone
+                                                                            # </label>
                                                                         <br />
                                                                         {{parentCustomer.userProfile.countryCode}}
                                                                         {{parentCustomer.userProfile.primaryMobileNo}}
                                                                     </div>
                                                                     <div class="col-xs-12 no-padding optional">
                                                                         <label><i class="fa fa-whatsapp"
-                                                                                style="color:green"></i> Whatsapp #</label>
+                                                                                style="color:green"></i> Whatsapp
+                                                                            #</label>
                                                                         <div class="disp-flex">
                                                                             <div class="form-group no-margin">
                                                                                 <input type="text"
@@ -992,19 +995,19 @@
                                                                 (click)="addMember()"><i class="fa fa-user-plus"></i>
                                                                 {{add_member_cap}}</a>
                                                         </div>
-                                                        <app-checkin-members (memberSelected)="memberSelected($event)"
+                                                        <app-members (memberSelected)="memberSelected($event)"
                                                             [maxSelection]="maxsize" [selectedMember]="waitlist_for"
                                                             [familyMembers]="familyMembers"
                                                             [multiple]="multipleMembers_allowed"
                                                             [allowSelection]="selectedService.serviceType !== 'virtualService'?true:false"
-                                                            [parentCustomer]="parentCustomer"></app-checkin-members>
+                                                            [parentCustomer]="parentCustomer"></app-members>
 
-                                                        <app-checkin-communications
+                                                        <app-communications
                                                             (setCommunications)="setCommunications" [commObj]="commObj"
                                                             [selectedMember]="waitlist_for"
                                                             [selectedService]="selectedService"
                                                             [parentCustomer]="parentCustomer">
-                                                        </app-checkin-communications>
+                                                        </app-communications>
                                                     </div>
                                                 </ng-container>
                                                 <ng-container *ngIf="action=='attachment'">
@@ -1406,14 +1409,15 @@
                                                     <span class="billing-head">Contact #</span>
                                                     <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
                                                     <span
-                                                        class="billing-value">{{this.commObj['communicationPhCountryCode']}}
-                                                        {{this.commObj['communicationPhNo']}} </span>
+                                                        class="billing-value">{{commObj['communicationPhCountryCode']}}
+                                                        {{commObj['communicationPhNo']}} </span>
                                                 </div>
                                                 <div class="disp-flex"
                                                     *ngIf="selectedService && selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                     <span class="billing-head">WhatsApp #</span>
                                                     <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
-                                                    <span class="billing-value">{{this.commObj['comWhatsappCountryCode']}}
+                                                    <span
+                                                        class="billing-value">{{this.commObj['comWhatsappCountryCode']}}
                                                         {{this.commObj['comWhatsappNo']}} </span>
                                                 </div>
                                                 <div class="disp-flex">
@@ -1523,17 +1527,9 @@
                                                         *ngIf="jcashamount>0  && (checkJcash && jcashamount < paymentDetails.amountRequiredNow)">
                                                         Balance amount can be paid by other payment methods
                                                     </div>
-                                                    <!-- <div class="prepayment"> -->
                                                     <div class="prepayment"
                                                         *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
                                                       ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
-                                                        <!-- Payment required now : &nbsp;
-                                                <span *ngIf="!checkJcash"class="rupee-font">{{paymentDetails.amountRequiredNow |
-                                                    currency:'&#8377;'}}
-                                                </span>
-                                                <span *ngIf="checkJcash" class="rupee-font">{{payAmount |
-                                                    currency:'&#8377;'}}
-                                                </span> -->
                                                         <button type="button" [class.disabled]="isClickedOnce"
                                                             (click)="!isClickedOnce && saveCheckin('checkin')"
                                                             id="stepThreeConfirmButton"
@@ -1544,174 +1540,101 @@
                                                       ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
                                                                 Confirm {{settingsjson.showTokenId?'Token ':'Checkin'}}
                                                             </ng-container>
-                                                            <!-- <ng-container
-                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                     Proceed to pay <span >Rs {{checkJcash ? payAmount : paymentDetails.amountRequiredNow}}</span></ng-container> -->
                                                         </button>
-                                                        <!-- <button type="button" appPreventDoubleClick (click)="saveCheckin('checkin')" id="stepThreeConfirmButton" [disabled]="paymentBtnDisabled" class="next-button btn btn-primary font-weight-bold  px-12 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
-                                                <ng-container
-                                                 *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                 Proceed to pay <span >Rs {{checkJcash ? payAmount : paymentDetails.amountRequiredNow}}</span></ng-container>
-                                            </button>
-                                            <button type="button" appPreventDoubleClick (click)="saveCheckin('checkin','paytm')" id="stepThreeConfirmButton" [disabled]="paymentBtnDisabled" class="next-button btn btn-primary font-weight-bold  px-12 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
-                                                <ng-container
-                                                 *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                 Proceed to pay <span >Rs {{checkJcash ? payAmount : paymentDetails.amountRequiredNow}}</span>(payTm)</ng-container>
-                                            </button> -->
-
-
                                                     </div>
-                                                    <!-- <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12"
-                                                        *ngIf="razorpayEnabled && paytmEnabled">
-                                                        <div class="txt-align-center"
-                                                            *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                            <p class="jaldeecredit">
-                                                                To pay Rs {{checkJcash ? payAmount :
-                                                                paymentDetails.amountRequiredNow}} please select any
-                                                                payment options
-                                                            </p>
-                                                            <span type="button" class="razorpay-icon paymenticons"
-                                                                [class.disabled]="isClickedOnce"
-                                                                *ngIf="razorpayEnabled  && paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
-                                                                [class.disabled]="isClickedOnce"
-                                                                (click)="!isClickedOnce && saveCheckin('checkin')">
-                                                            </span>&nbsp;&nbsp;
-                                                            <span type="button" class="paytm-icon paymenticons"
-                                                                [class.disabled]="isClickedOnce"
-                                                                *ngIf="paytmEnabled && razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
-                                                                (click)="!isClickedOnce && saveCheckin('checkin','paytm')">
-
-                                                            </span>
-                                                        </div>
-                                                    </div> -->
-                                                    <!-- <div class="txt-align-center">
-                                                        <button type="button"
-                                                            class=" next-button btn btn-primary font-weight-bold text-uppercase "
-                                                            [class.disabled]="paymentBtnDisabled"
-                                                            *ngIf="razorpayEnabled  && !paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
-                                                            (click)="!isClickedOnce && saveCheckin('checkin')">
-                                                            Pay by CC/DC/UPI
-                                                        </button>
-                                                                  <button type="button"
-                                                            class="  next-button btn btn-primary font-weight-bold text-uppercase "
-                                                            [class.disabled]="isClickedOnce"
-                                                            *ngIf="paytmEnabled && !razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
-                                                            (click)="!isClickedOnce && saveCheckin('checkin','paytm')">
-                                                            Pay by CC/DC/UPI
-                                                        </button>
-                                                    </div> -->
-                                                    <!-- <div class="clearfix"></div> -->
-                                                    <div *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                    <ng-container *ngIf="!shownonIndianModes">
-                                                        <div *ngFor="let modes of indian_payment_modes">
-                                                            <div class="col-xs-12 col-md-6 col-sm-12 col-lg-6">
-
-                                                                    <div class="text-primary" >
-                                                                        
-                                                                    <mat-radio-group class="paymentmode card shadow" name="paymentMode" (change)="indian_payment_mode_onchange($event)" labelPosition="before">
-                                                                        <mat-radio-button disableRipple="true" [value]="modes.mode">
-                                                                            <div class="d-flex justify-content-around">
-                                                                                <div class="col-md-8  my-auto mt-5"><span class="m-5">{{modes.modeDisplayName}}</span></div>
-                                                                                <div class="col-md-4  my-auto ml-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>
-                                                                            </div>
-                                                                        </mat-radio-button>
-                                                                    </mat-radio-group>
-                                                                    <!-- <img class="ordericon pickup" height="50px" width="100px"[src]="getImageSrc(modes.mode)"> -->
-                                                                    
+                                                    <div
+                                                        *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                        <ng-container *ngIf="!shownonIndianModes">
+                                                            <div *ngFor="let modes of indian_payment_modes">
+                                                                <div class="col-xs-12 col-md-6 col-sm-12 col-lg-6">
+                                                                    <div class="text-primary">
+                                                                        <mat-radio-group class="paymentmode card shadow"
+                                                                            name="paymentMode"
+                                                                            (change)="indian_payment_mode_onchange($event)"
+                                                                            labelPosition="before">
+                                                                            <mat-radio-button disableRipple="true"
+                                                                                [value]="modes.mode">
+                                                                                <div
+                                                                                    class="d-flex justify-content-around">
+                                                                                    <div class="col-md-8  my-auto mt-5">
+                                                                                        <span
+                                                                                            class="m-5">{{modes.modeDisplayName}}</span>
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="col-md-4  my-auto ml-auto">
+                                                                                        <img class="ordericon pickup"
+                                                                                            height="75px" width="75px"
+                                                                                            [src]="getImageSrc(modes.mode)">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </mat-radio-button>
+                                                                        </mat-radio-group>
                                                                     </div>
+                                                                </div>
                                                             </div>
-
-                                                        </div>
-                                                    </ng-container>
-                                            <ng-container *ngIf="shownonIndianModes">
-                                                
-                                                <div *ngFor="let modes of non_indian_modes">
-                                                    <div class="col-xs-12 col-md-6 col-sm-12 col-lg-6">
-
-                                                            <div class="text-primary" >
-                                                                   
-                                                              <mat-radio-group class="paymentmode card shadow" name="paymentMode" (change)="non_indian_modes_onchange($event)">
-                                                                <mat-radio-button [value]="modes.mode">
-                                                                    <div class="d-flex justify-content-around">
-                                                                        <div class="col-md-8  my-auto"><span class="m-5">{{modes.modeDisplayName}}</span></div>
-                                                                        <div class="col-md-4  my-auto ml-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>
-                                                                    </div>
-                                                                    </mat-radio-button>
-                                                               
-                                                
-                                                              </mat-radio-group>
-                                                              <!-- <img class="ordericon pickup" height="50px" width="100px" [src]="getImageSrc(modes.mode)"> -->
-                                                            </div>
-                                                            </div>
-
-                                            </div>
-                                        </ng-container>
-                                    </div>
-                                        <div class="card-payment-button">
-                                                <div class="col-md-12">
-
-                                                    <div class="txt-align-center pad_link"
-                                                        *ngIf="paymentmodes.internationalPay && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                        <span [class.disabled]="paymentBtnDisabled"
-                                                            (click)="togglepaymentMode()"
-                                                            class="pointer-cursor"><a
-                                                                class="refund_policy">
-                                                                <span *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non Indian Payment ? Click
-                                                                here</span>
-                                                                <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
-                                                                    here</span>
-                                                            </a></span>
-
-                                                    </div>
-                               
-                                               
-                                                    <div class="cancelpolicy mgn-rt-5"
-                                                        *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                        <div class="pad_policy"
-                                                            *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                            <a data-toggle="modal" data-target="#exampleModal"
-                                                                class="refund_policy">Cancellation Policy</a>
-                                                        </div>
-                                                    </div>
-                                                       <div class="txt-align-center">
-                                                        <button type="button"
-                                                            class=" next-button btn btn-primary font-weight-bold text-uppercase "
-                                                            [class.disabled]="paymentBtnDisabled"
-                                                            *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
-                                                            (click)="!isClickedOnce && saveCheckin('checkin')">
-                                                           MaKe Payment
-                                                        </button>
-                 <!-- <button type="button" [class.disabled]="isClickedOnce"
-                                                        (click)="!isClickedOnce && saveCheckin('checkin')"
-                                                        id="stepThreeConfirmButton"
-                                                        class="next-button btn btn-primary font-weight-bold  px-12 py-4"
-                                                        [disabled]="!checkPolicy && heartfulnessAccount||paymentBtnDisabled">
-                                                        <ng-container
-                                                            *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
-                                                  ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
-                                                            Confirm {{settingsjson.showTokenId?'Token ':'Checkin'}}
                                                         </ng-container>
-                                                        </button>  -->
+                                                        <ng-container *ngIf="shownonIndianModes">
+                                                            <div *ngFor="let modes of non_indian_modes">
+                                                                <div class="col-xs-12 col-md-6 col-sm-12 col-lg-6">
+                                                                    <div class="text-primary">
+                                                                        <mat-radio-group class="paymentmode card shadow"
+                                                                            name="paymentMode"
+                                                                            (change)="non_indian_modes_onchange($event)">
+                                                                            <mat-radio-button [value]="modes.mode">
+                                                                                <div
+                                                                                    class="d-flex justify-content-around">
+                                                                                    <div class="col-md-8  my-auto"><span
+                                                                                            class="m-5">{{modes.modeDisplayName}}</span>
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="col-md-4  my-auto ml-auto">
+                                                                                        <img class="ordericon pickup"
+                                                                                            height="75px" width="75px"
+                                                                                            [src]="getImageSrc(modes.mode)">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </mat-radio-button>
+                                                                        </mat-radio-group>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </ng-container>
                                                     </div>
-                                                </div>
-                                                    <!-- <div class=""
-                                                *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                <div class="select-pay"> Payment option</div>
-                                                <div class="">
-                                                    <span class="razorpay-icon selected-payment"></span>
-                                                    <span class="paytm-icon"></span>
-                                                </div>
-                                                <div
-                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                    <a data-toggle="modal" data-target="#exampleModal"
-                                                        class="refund_policy">Cancellation Policy</a>
-                                                </div>
-                                            </div> -->
-                                                        <!-- modalbox -->
-                                                        <div class="modal fade" id="exampleModal" tabindex="-1"
-                                                            role="dialog" aria-labelledby="exampleModalLabel"
-                                                            aria-hidden="true">
-                                                            <app-checkin-refundpolicy></app-checkin-refundpolicy>
+                                                    <div class="card-payment-button">
+                                                        <div class="col-md-12">
+                                                            <div class="txt-align-center pad_link"
+                                                                *ngIf="paymentmodes.internationalPay && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                                <span [class.disabled]="paymentBtnDisabled"
+                                                                    (click)="togglepaymentMode()"
+                                                                    class="pointer-cursor"><a class="refund_policy">
+                                                                        <span
+                                                                            *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non
+                                                                            Indian Payment ? Click
+                                                                            here</span>
+                                                                        <span
+                                                                            *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian
+                                                                            Payment ? Click
+                                                                            here</span>
+                                                                    </a>
+                                                                </span>
+                                                            </div>
+                                                            <div class="cancelpolicy mgn-rt-5"
+                                                                *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                                <div class="pad_policy"
+                                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                                    <a data-toggle="modal" data-target="#exampleModal"
+                                                                        class="refund_policy">Cancellation Policy</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="txt-align-center">
+                                                                <button type="button"
+                                                                    class=" next-button btn btn-primary font-weight-bold text-uppercase "
+                                                                    [class.disabled]="paymentBtnDisabled"
+                                                                    *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
+                                                                    (click)="!isClickedOnce && saveCheckin('checkin')">
+                                                                    MaKe Payment
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1731,28 +1654,12 @@
                                                 <!-- modalbox -->
                                                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <app-checkin-refundpolicy></app-checkin-refundpolicy>
+                                                    <app-refundpolicy></app-refundpolicy>
                                                 </div>
                                             </div>
-                                            <div class="pad-10" *ngIf="heartfulnessAccount">
-                                                <div class="t-and-c">
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox" [ngModel]="checkPolicy"
-                                                                [checked]="checkPolicy" (change)="changePolicy($event)">
-                                                            <span>I accept the&nbsp;
-                                                                <a data-toggle="modal" data-target="#tcModal">Terms and
-                                                                    Conditions</a></span>
-                                                        </label>
-                                                    </div>
-                                                    <div class="sts-msg error" *ngIf="!checkPolicy">"Agreement to Terms
-                                                        and Conditions is required"</div>
-                                                </div>
-                                                <div class="modal fade" id="tcModal" tabindex="-1" role="dialog"
-                                                    aria-labelledby="tcModalLabel" aria-hidden="true">
-                                                    <app-checkin-privacy></app-checkin-privacy>
-                                                </div>
-                                            </div>
+                                            <ng-container *ngIf="heartfulnessAccount">
+                                                <app-privacy (approvePolicy)="policyApproved($event)"></app-privacy>
+                                            </ng-container>
                                         </div>
                                     </div>
                                 </div>

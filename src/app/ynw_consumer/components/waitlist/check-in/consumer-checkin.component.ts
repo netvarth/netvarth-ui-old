@@ -30,8 +30,7 @@ import { SubSink } from '../../../../../../node_modules/subsink';
 import { ConsumerEmailComponent } from '../../../shared/component/consumer-email/consumer-email.component';
 import { PaytmService } from '../../../../../app/shared/services/paytm.service';
 import { JcCouponNoteComponent } from '../../../../shared/modules/jc-coupon-note/jc-coupon-note.component';
-import { ConsumerCheckinService } from './consumer-checkin.service';
-import { CustomerService } from './customer.service';
+import { CustomerService } from '../../../../shared/services/customer.service';
 
 
 @Component({
@@ -168,7 +167,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     phoneError: string;
     dialCode;
     editBookingFields: boolean;
-    bookingForm: FormGroup; // used for Collecting Contact Information
     whatsapperror = '';
     showmoreSpec = false;
     bookStep;
@@ -301,7 +299,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         private ngZone: NgZone,
         private paytmService: PaytmService,
         private cdRef: ChangeDetectorRef,
-        private checkinService: ConsumerCheckinService,
         private customerService: CustomerService,
         @Inject(DOCUMENT) public document
     ) {
@@ -391,43 +388,24 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
             _this.isFuturedate = true;
         }
-
-        // this.bookingForm = this.fb.group({
-        //     newEmail: ['', Validators.pattern(new RegExp(projectConstantsLocal.VALIDATOR_MOBILE_AND_EMAIL))],
-        //     newWhatsapp: new FormControl(undefined),
-        //     newPhone: new FormControl(undefined)
-        // });
-
         if (this.selectedServiceId) {
             this.getPaymentModes();
         }
         this.gets3curl(); // Collecting informations from s3 businessProfile, settings etc.
-
         this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
         this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
-
-        this.checkinService.getCustomerInfo(this.activeUser.id).then(data => {
+        this.customerService.getCustomerInfo(this.activeUser.id).then(data => {
             _this.parentCustomer = data;
-
             if (_this.tele_srv_stat === 'true') {
                 _this.createVirtualForm();
             }
             _this.waitlist_for.push({ id: _this.parentCustomer.id, firstName: _this.parentCustomer.userProfile.firstName, lastName: _this.parentCustomer.userProfile.lastName });
-            // this.mandatoryEmail = this.parentCustomer.userProfile.email;
-
             _this.setConsumerFamilyMembers(_this.parentCustomer.id); // Load Family Members
-
             if (_this.tele_srv_stat === 'true') {
                 _this.onServiceForChange(_this.parentCustomer.id);
             }
-
             _this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
             _this.getQueuesbyLocationandServiceIdavailability(_this.sel_loc, _this.selectedServiceId, _this.account_id);
-
-            // if (!this.rescheduleUserId) {
-            // Initializing communication settings
-
-            // }
             _this.initCommunications(this.parentCustomer);
         });
     }
@@ -692,7 +670,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         this.changePhno = false;
                     } else {
                         this.changePhno = true;
-                        // this.currentPhone = this.waitlist.waitlistPhoneNumber;
                     }
                 } else {
                     // const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
@@ -991,7 +968,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (this.selectedService.serviceType === 'virtualService' && type === 'next') {
             if (this.waitlist_for.length !== 0) {
                 for (const list of this.waitlist_for) {
-                    // const memberObject = this.familymember.filter(member => member.userProfile.id === list['id']);
                     if (list['id'] !== this.parentCustomer.id) {
                         this.confirmcheckin(type, paymenttype);
                     } else {
@@ -1223,50 +1199,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         return caption;
     }
-
-    // handleMemberSelect(id, firstName, lastName, obj) {
-    //     if (this.payEmail !== '' && this.waitlist_for[0]) {
-    //         this.waitlist_for[0]['email'] = this.payEmail;
-    //     }
-    //     if (this.waitlist_for.length === 0) {
-    //         this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName });
-    //     } else {
-    //         let exists = false;
-    //         let existindx = -1;
-    //         for (let i = 0; i < this.waitlist_for.length; i++) {
-    //             if (this.waitlist_for[i].id === id) {
-    //                 exists = true;
-    //                 existindx = i;
-    //             }
-    //         }
-    //         if (exists) {
-    //             this.waitlist_for.splice(existindx, 1);
-    //         } else {
-    //             if (this.ismoreMembersAllowedtopush()) {
-    //                 this.waitlist_for.push({ id: id, lastName: lastName, firstName: firstName });
-    //             } else {
-    //                 obj.source.checked = false; // preventing the current checkbox from being checked
-    //                 if (this.maxsize > 1) {
-    //                     this.snackbarService.openSnackBar('Only ' + this.maxsize + ' member(s) can be selected', { 'panelClass': 'snackbarerror' });
-    //                 } else if (this.maxsize === 1) {
-    //                     this.snackbarService.openSnackBar('Only ' + this.maxsize + ' member can be selected', { 'panelClass': 'snackbarerror' });
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     if (this.selectedService && this.selectedService.minPrePaymentAmount) {
-    //         this.prepaymentAmount = this.waitlist_for.length * this.selectedService.minPrePaymentAmount || 0;
-    //     }
-    //     this.serviceCost = this.waitlist_for.length * this.selectedService.price;
-    // }
-    // ismoreMembersAllowedtopush() {
-    //     if (this.maxsize > this.waitlist_for.length) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
     addMember() {
         this.action = 'addmember';
         this.disable = false;
@@ -1321,7 +1253,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
             let fn;
             post_data['parent'] = this.parentCustomer.id;
-            fn = this.shared_services.addMembers(post_data);
+            fn = this.customerService.addMember(post_data);
             this.subs.sink = fn.subscribe(() => {
                 this.apiSuccess = this.wordProcessor.getProjectMesssages('MEMBER_CREATED');
                 this.setConsumerFamilyMembers(this.parentCustomer);
@@ -1777,12 +1709,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 }
             }
         }
-        // let phNumber;
-        // if (this.currentPhone && this.changePhno) {
-        //     phNumber = this.currentPhone;
-        // } else {
-        //     phNumber = this.userPhone;
-        // }
         const post_Data = {
             'queue': {
                 'id': this.queueId
@@ -1968,10 +1894,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         const _this = this;
         const passtyp = 'consumer';
         return new Promise(function (resolve, reject) {
-            _this.subs.sink = _this.shared_services.updateProfile(post_data, passtyp)
+            _this.subs.sink = _this.customerService.updateProfile(post_data, passtyp)
                 .subscribe(
                     () => {
-                        // _this.getProfile();
                         resolve(true);
                     },
                     error => {
@@ -2222,7 +2147,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.waitlistForPrev = this.waitlist_for;
     }
     popupClosed() {
-        this.waitlist_for = this.waitlistForPrev; 
+        if (this.waitlistForPrev && this.waitlistForPrev.length > 0) {
+            this.waitlist_for = this.waitlistForPrev;
+        }
         this.sel_checkindate = this.selectedDate;
         this.checkFutureorToday();
         this.sel_queue_personaahead = this.personsAhead;
@@ -2285,9 +2212,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             });
         }
-    }
-    changePolicy(event) {
-        this.checkPolicy = event.target.checked;
     }
     isNumeric(evt) {
         return this.sharedFunctionobj.isNumeric(evt);
@@ -2903,6 +2827,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.commObj = commObj;
     }
 
+    /**
+     * Set communication parameters
+     * @param parentCustomer logged in customer
+     */
     initCommunications(parentCustomer) {
         console.log("initCommunications", parentCustomer);
         const _this = this;
@@ -2920,5 +2848,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         _this.commObj['communicationPhNo'] = _this.parentCustomer.userProfile.primaryMobileNo;
         _this.commObj['communicationPhCountryCode'] = _this.parentCustomer.userProfile.countryCode;
+    }
+    
+    /**
+     * Method to check privacy policy
+     * @param status true/false
+     */
+    policyApproved(status) {
+        this.checkPolicy = status;
     }
 }

@@ -133,17 +133,7 @@ margin-bottom:none!important;
   font-size:10px;
   color:grey;
   font-style:italic;
-
 }
-
-
-
-
-
-
-
-
-
 .content {
   padding-top: 0px !important
 }
@@ -1769,16 +1759,6 @@ body.modal-open {
   height: 100vh !important;
 }
 
-.t-and-c .checkbox label {
-  display: inline-flex !important;
-  align-items: center !important;
-  font-size: 15px !important;
-}
-
-.t-and-c .checkbox label a {
-  color: #A986AC !important;
-  font-weight: 700 !important;
-}
 .sts-msg.error {
   padding-left: 0 !important;
   font-weight: 500 !important;
@@ -1937,15 +1917,6 @@ body.modal-open {
   .changebt{
     color: #1572a8 !important;
   }
-  /* .content .card {
-    border:2px solid grey !important; 
-    box-shadow: 0 0 5px 5px grey!important
-
-  } */
-  /* input[type="radio"]:checked {
-    border :2px solid blue !important;
-    font-weight:400px;
-  } */
   .paymentmode{
     font-size:16px!important;
     padding:0px !important;

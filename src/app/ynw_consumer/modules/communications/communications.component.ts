@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-checkin-communications',
-  templateUrl: './checkin-communications.component.html',
-  styleUrls: ['./checkin-communications.component.css']
+  selector: 'app-communications',
+  templateUrl: './communications.component.html',
+  styleUrls: ['./communications.component.css']
 })
-export class CheckinCommunicationsComponent implements OnInit {
+export class CommunicationsComponent implements OnInit {
 
   @Input() selectedService;
   @Input() parentCustomer;

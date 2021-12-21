@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
-  selector: 'app-checkin-members',
-  templateUrl: './checkin-members.component.html',
-  styleUrls: ['./checkin-members.component.css']
+  selector: 'app-members',
+  templateUrl: './members.component.html',
+  styleUrls: ['./members.component.css']
 })
-export class CheckinMembersComponent implements OnInit {
+export class MembersComponent implements OnInit {
 
   @Input() familyMembers;
   @Input() allowSelection;
