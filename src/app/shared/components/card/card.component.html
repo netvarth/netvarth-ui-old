@@ -76,13 +76,13 @@
             <div class="row">
             <!-- <div  *ngIf="service.serviceType && service.serviceType == 'virtualService'" style="margin-bottom: 18px;"></div> -->
 
-                <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
+                <div class="{{buttonCaption !='Donate' ? 'col-lg-6 col-md-12 col-xs-12 col-sm-12' : 'col-lg-12 col-md-12 col-xs-12 col-sm-12'}}">
 
                 <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event)"  class="getappointmentbutton">{{buttonCaption}}</button>
                 </div>
                 <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
                     
-                    <button  [disabled]="buttonCaption =='Donate'" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)" class="checkavailabilitybutton"  >Check availability
+                    <button  *ngIf="buttonCaption !='Donate'" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)" class="checkavailabilitybutton"  >Check availability
                    </button>
                    
                 </div>
