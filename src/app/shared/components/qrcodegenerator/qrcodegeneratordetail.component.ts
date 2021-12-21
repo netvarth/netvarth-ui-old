@@ -61,9 +61,9 @@ export class QRCodeGeneratordetailComponent implements OnInit , OnDestroy {
     // console.log(this.wpath + this.accuid);
     this.userId = this.data.userId;
     if(this.userId){
-      this.shareLink = this.wpath + this.accuid+'/'+ this.userId ;
+      this.shareLink = this.wpath + this.accuid+'/'+ this.userId + '/' ;
     } else {
-      this.shareLink = this.wpath + this.accuid;
+      this.shareLink = this.wpath + this.accuid + '/';
     }
     // this.description = 'You can book my services by just clicking this link';
     this.description = 'For bookings use this link';
@@ -75,9 +75,9 @@ export class QRCodeGeneratordetailComponent implements OnInit , OnDestroy {
   }
   qrCodegenerateOnlineID(valuetogenerate,userid?) {
     if(userid){
-      this.qr_value = projectConstants.PATH + valuetogenerate +'/'+ userid ;
+      this.qr_value = projectConstants.PATH + valuetogenerate +'/'+ userid + "/" ;
     } else{
-      this.qr_value = projectConstants.PATH + valuetogenerate;
+      this.qr_value = projectConstants.PATH + valuetogenerate + "/";
     }
     this.qr_code_oId = true;
     this.changeDetectorRef.detectChanges();

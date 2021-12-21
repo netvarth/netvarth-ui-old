@@ -2753,7 +2753,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         timetype: this.time_type,
         multiSelection: multiSelection,
         labelFilterData: this.labelFilterData,
-        labelsCount: this.labelsCount
+        labelsCount: this.labelsCount,
+        status:this.statusAction
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
