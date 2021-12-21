@@ -1341,7 +1341,7 @@ export class ProviderCheckinComponent implements OnInit {
         const dataToSend: FormData = new FormData();
         if (this.questionAnswers.files) {
             for (const pic of this.questionAnswers.files) {
-                dataToSend.append('files', pic, pic['name']);
+                dataToSend.append('files', pic['name']);
             }
         }
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });

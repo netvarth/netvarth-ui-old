@@ -670,7 +670,7 @@ export class QuestionnaireComponent implements OnInit {
         let type = pic.type.split('/');
         type = type[0];
         if (type === 'application' || type === 'image') {
-          dataToSend.append('files', pic);
+          dataToSend.append('files', pic['name']);
         }
       }
     }
