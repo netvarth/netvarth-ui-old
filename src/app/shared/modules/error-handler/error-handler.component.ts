@@ -6,8 +6,7 @@ import { Router } from '@angular/router';
 export class GlobalErrorHandler implements ErrorHandler {
     userData: any;
     constructor(public shared_services: SharedServices,
-        private injector: Injector,
-        private router: Router) {
+        private injector: Injector) {
 
     }
 
@@ -45,19 +44,10 @@ export class GlobalErrorHandler implements ErrorHandler {
         mailError['errorMessage'] = error.message;
         mailError['errorStack'] = error.stack;
         console.log('inside global error');
+        this.shared_services.callHealth(JSON.stringify(mailError)).subscribe();
         const chunkFailedMessage = /Loading chunk [\d]+ failed/;
         if (chunkFailedMessage.test(error.message)) {
-            console.log("Active Url:" + router.url);
-            if (router.url !== '/') {
-                this.router.navigateByUrl(router.url)
-                    .then(() => {
-                        window.location.reload();
-                    });
-            }
-            // window.location.reload();
-        } else {
-            console.log(JSON.stringify(mailError));
-            this.shared_services.callHealth(JSON.stringify(mailError)).subscribe();
+            window.location.reload();
         }
     }
 }

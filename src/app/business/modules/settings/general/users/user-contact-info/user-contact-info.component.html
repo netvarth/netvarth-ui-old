@@ -35,29 +35,29 @@
             <a *ngIf="screenWidth > 768"><i class="fa fa-phone-square pop-phone" aria-hidden="true"></i></a>
           </div>&nbsp;
           <div class="phone">
-            {{users_list.countryCode}} {{users_list.mobileNo}}
+            +{{users_list.countryCode}} {{users_list.mobileNo}}
           </div>
         </div>
       </mat-grid-tile>
-      <mat-grid-tile *ngIf="(users_list.whatsAppNum | json) && (users_list.whatsAppNum | json) != '{}'">
+      <mat-grid-tile *ngIf="(users_list.whatsAppNum.countryCode !=='')&& (users_list.whatsAppNum.number !=='')">
         <div class="disp-flex">
           <div class="flx_8">
             <a href="https://wa.me/{{users_list.whatsAppNum.countryCode}}{{users_list.whatsAppNum.number}}"
               target="_blank"><i class="fa contact-wtsap-icon"></i></a>
           </div>&nbsp;
           <div class="whatsp">
-            {{users_list.whatsAppNum.countryCode}} {{users_list.whatsAppNum.number}}
+            +{{users_list.whatsAppNum.countryCode}} {{users_list.whatsAppNum.number}}
           </div>
         </div>
       </mat-grid-tile>
-      <mat-grid-tile *ngIf="(users_list.telegramNum | json) && (users_list.telegramNum | json) != '{}'">
+      <mat-grid-tile *ngIf="(users_list.telegramNum.countryCode !=='')&& (users_list.telegramNum.number !=='')">
         <div class="disp-flex">
           <div class="flx_8">
             <a href="https://web.telegram.org/#/login" target="blank"><i class="fa fa-telegram"
                 aria-hidden="true"></i></a>
           </div>&nbsp;
           <div class="telegrm">
-            {{users_list.telegramNum.countryCode}} {{users_list.telegramNum.number}}
+            +{{users_list.telegramNum.countryCode}} {{users_list.telegramNum.number}}
           </div>
         </div>
       </mat-grid-tile>
@@ -69,7 +69,10 @@
         <img [src]="getUserImg(users_list)" />
       </div>
       <div class="itemVal mgn-up-5">
-        <h5>{{users_list.firstName | capitalizeFirst}} {{users_list.lastName | capitalizeFirst}}</h5>
+        
+        <h5>{{(users_list.businessName) ? users_list.businessName
+          : users_list.firstName + ' ' +
+          users_list.lastName}}</h5>
       </div>
       <div class="itemVal" *ngIf="users_list.city && users_list.state"><i class="fa fa-map-marker mgn-rt-5"
           aria-hidden="true"></i>{{users_list.city}},&nbsp;{{users_list.state}}
@@ -83,34 +86,34 @@
       <mat-grid-tile *ngIf="users_list.mobileNo">
         <div class="disp-flex">
           <div class="flx_8">
-            <a *ngIf="screenWidth <= 768" href="tel:{{users_list.countryCode}} {{users_list.mobileNo}}"
+            <a *ngIf="screenWidth <= 768" href="tel:+{{users_list.countryCode}} {{users_list.mobileNo}}"
               target="blank"><i class="fa fa-phone-square pop-phone" aria-hidden="true"></i></a>
             <a *ngIf="screenWidth > 768"><i class="fa fa-phone-square pop-phone" aria-hidden="true"></i></a>
           </div>&nbsp;
           <div class="phone">
-            {{users_list.countryCode}} {{users_list.mobileNo}}
+            +{{users_list.countryCode}} {{users_list.mobileNo}}
           </div>
         </div>
       </mat-grid-tile>
-      <mat-grid-tile *ngIf="(users_list.whatsAppNum | json) && (users_list.whatsAppNum | json) != '{}'">
+      <mat-grid-tile *ngIf="(users_list.whatsAppNum.countryCode !=='')&& (users_list.whatsAppNum.number !=='')">
         <div class="disp-flex">
           <div class="flx_8">
             <a href="https://wa.me/{{users_list.whatsAppNum.countryCode}}{{users_list.whatsAppNum.number}}"
               target="_blank"><i class="fa contact-wtsap-icon"></i></a>
           </div>&nbsp;
           <div class="whatsp">
-            {{users_list.whatsAppNum.countryCode}} {{users_list.whatsAppNum.number}}
+            +{{users_list.whatsAppNum.countryCode}} {{users_list.whatsAppNum.number}}
           </div>
         </div>
       </mat-grid-tile>
-      <mat-grid-tile *ngIf="(users_list.telegramNum | json) && (users_list.telegramNum | json) != '{}'">
+      <mat-grid-tile *ngIf="(users_list.telegramNum.countryCode !=='')&& (users_list.telegramNum.number !=='')">
         <div class="disp-flex">
           <div class="flx_8">
             <a href="https://web.telegram.org/#/login" target="blank"><i class="fa fa-telegram"
                 aria-hidden="true"></i></a>
           </div>&nbsp;
           <div class="telegrm">
-            {{users_list.telegramNum.countryCode}} {{users_list.telegramNum.number}}
+            +{{users_list.telegramNum.countryCode}} {{users_list.telegramNum.number}}
           </div>
         </div>
       </mat-grid-tile>

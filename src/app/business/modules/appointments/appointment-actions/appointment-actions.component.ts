@@ -109,6 +109,7 @@ export class AppointmentActionsComponent implements OnInit {
     showAssign = false;
     users: any = [];
     location: any;
+    status_booking: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -130,6 +131,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.getLabel();
         this.apiloading = true;
         this.appt = this.data.checkinData;
+          this.status_booking=this.data.status
         if (!this.data.multiSelection) {
             this.getPos();
             this.setData();
@@ -387,6 +389,35 @@ export class AppointmentActionsComponent implements OnInit {
     assignteam() {
         this.dialogRef.close();
         this.router.navigate(['provider', 'check-ins', this.appt.uid, 'team'], { queryParams: { source: 'appt' } });
+    }
+    changeStatusToCompleted() {
+        let msg = '';
+        msg = 'Do you want to change all booking Statuses to Completed.?'
+        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': msg,
+                'type': 'yes/no'
+            }
+        });
+        dialogrefd.afterClosed().subscribe(result => {
+            if (result) {
+                const apptList = []
+                this.appt.forEach(element => {
+                    if(element.uid){
+                    apptList.push(element.uid);
+                    }
+                });
+                this.provider_services.changestatustoComplete(apptList, 'Completed')
+                    .subscribe((result:any )=> {
+                       console.log(result);
+                        this.dialogRef.close('reload');
+                        this.router.navigate(['provider', 'appointments']);
+                    })
+            }
+        });
     }
     chnageLocation(){
         this.dialogRef.close();
@@ -756,7 +787,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.provider_services.rescheduleProviderAppointment(data)
             .subscribe(
                 () => {
-                    this.snackbarService.openSnackBar('Appointment rescheduled to ' + this.dateformat.transformToMonthlyDate(this.sel_checkindate));
+                    this.snackbarService.openSnackBar('Appointment rescheduled to ' + this.dateformat.transformToMonthlyDate(this.sel_checkindate) + ',' +  this.getSingleTime(this.apptTime['time']));
                     this.dialogRef.close('reload');
                     // this._location.back();
                 },
@@ -1115,5 +1146,16 @@ export class AppointmentActionsComponent implements OnInit {
             (data: any) => {
               this.location = data;
             });
+      }
+      followUpClicked() {
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+              type: 'followup',
+              followup_uuid : this.appt.uid,
+              date : moment(this.sel_checkindate).format('YYYY-MM-DD'),
+            }
+          };
+          this.dialogRef.close();
+          this.router.navigate(['provider', 'appointments', 'appointment'], navigationExtras);
       }
 }

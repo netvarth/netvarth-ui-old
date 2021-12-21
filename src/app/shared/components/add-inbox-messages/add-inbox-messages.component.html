@@ -10,14 +10,14 @@
         <div class="form-group" *ngIf="!api_loading">
             <mat-form-field>
                 <textarea matInput class="form-control" id="message" placeholder="{{message_label}} * "
-                    formControlName="message" (keyup)="keyPressed($event.target.value)" maxlength="330">
+                    formControlName="message" (keypress)="keyPressed($event.target.value)" maxlength="330">
             </textarea>
            </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"
                 errorMsg="Please enter a message.">
             </app-field-error-display>
         </div>
-        <div class="mgtop40 form-group" *ngIf="!api_loading && (typeOfMsg === 'multiple' || source ==='provider-waitlist' || source === 'customer-list' || source === 'donation-list')">
+        <div class="mgtop40 form-group" *ngIf="!api_loading && (typeOfMsg === 'multiple' || source ==='provider-waitlist' || source === 'customer-list' || source === 'donation-list' || source === 'provider-sendAll')">
             Send message via
             <div class="coupon-outer">
                 <mat-checkbox [disabled]="((source === 'customer-list' || source === 'donation-list') && selectedMessage.files.length !== 0) || (typeOfMsg === 'single' && (selectedMessage.files.length !== 0 ||   (source ==='provider-waitlist' || source ==='customer-list') && ((!phone && !phone_history )|| phone === 'null' || phone === '' ) || is_noSMS || countryCode !='+91'))"   class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
@@ -85,7 +85,7 @@
             <button type="submit" mat-button [disabled]="amForm.get('message').value.trim() === '' || !amForm.valid || disableButton || typeOfMsg === 'single' && source ==='provider-waitlist' && !email_id && (!phone || phone === 'null')"
                 class="cs-btn bt1 mr10">{{send_btn_cap}}</button>
             <button type="button"
-                *ngIf="source === 'customer-list' || source === 'donation-list' || (typeOfMsg === 'single' && (source=='consumer-waitlist' || source=='provider-waitlist' || source == 'provider-waitlist-inbox' || source === 'consumer-common' || source === 'provider-common'))"
+                *ngIf="source === 'customer-list' || source === 'donation-list' || source=='provider-waitlist' || source === 'provider-sendAll' ||(typeOfMsg === 'single' && (source=='consumer-waitlist' || source == 'provider-waitlist-inbox' || source === 'consumer-common' || source === 'provider-common'))"
                 class="cs-btn btn-attach bt_attach" (click)="logofile.click()" [matTooltip]="'Upload files'">
                 <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
                     (change)="filesSelected($event)">
