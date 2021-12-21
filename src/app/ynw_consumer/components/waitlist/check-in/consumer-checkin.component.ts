@@ -2308,8 +2308,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
 
-
-
     /**
      * Create Form Fields for Consumer Virtual Fields 
      */
@@ -2354,7 +2352,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.virtualForm.controls['state'].setValue('');
         this.virtualForm.controls['firstName'].setValue('');
         this.virtualForm.controls['lastName'].setValue('');
-        // this.virtualForm.controls['countryCode_whtsap'].setValue('');
         this.lngknown = 'yes';
         if (customer.userProfile.email) {
             this.virtualForm.patchValue({ email: customer.userProfile.email });
@@ -2363,9 +2360,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         this.virtualForm.patchValue({ countryCode_whtsap: customer.userProfile.countryCode });
         this.virtualForm.patchValue({ countryCode_telegram: customer.userProfile.countryCode });
-        // this.virtualForm.patchValue({ telegramnumber: customer.userProfile.primaryMobileNo });
-        // this.virtualForm.patchValue({ whatsappnumber: customer.userProfile.primaryMobileNo });
-
     }
 
     /**
