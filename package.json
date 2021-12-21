@@ -1,6 +1,6 @@
 {
   "name": "jaldee.com",
-  "version": "1.2.0",
+  "version": "1.2.3",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -12,9 +12,10 @@
     "build:stats": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng --configuration production --stats-json",
     "analyze": "webpack-bundle-analyzer dist/stats.json",
     "compodoc": "compodoc -p tsconfig.json",
+    "prebuild": "npm --no-git-tag-version version patch",
     "dev-build": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng",
     "local-serve": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng serve -c=local --port 4201",
-    "build-prod": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng build --configuration production"
+    "build-prod": "npm --no-git-tag-version version patch & node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng build --configuration production"
   },
   "private": true,
   "dependencies": {
@@ -136,6 +137,7 @@
     "lodash": "^4.17.13",
     "open": "^7.0.3",
     "protractor": "~7.0.0",
+    "replace-in-file": "^6.3.2",
     "resolve-url-loader": "^3.1.0",
     "rxjs-tslint": "^0.1.7",
     "sass": "^1.35.1",
