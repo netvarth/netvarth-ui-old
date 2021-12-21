@@ -14,7 +14,7 @@
     "compodoc": "compodoc -p tsconfig.json",
     "dev-build": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng",
     "local-serve": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng serve -c=local --ssl true",
-    "build-prod": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng build --configuration production --verbose"
+    "build-prod": "npm --no-git-tag-version version patch & node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng build --configuration production --verbose"
   },
   "private": true,
   "dependencies": {
