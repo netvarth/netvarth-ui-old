@@ -14,12 +14,14 @@ export class BookingHistoryComponent implements OnInit {
   how: any;
   type:any;
   appointmentbyname: any;
+  booking_history_uuid;
   constructor(
       public dialogRef: MatDialogRef<BookingHistoryComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
     ) {
 
       this.bookinghistorydetails=data.details;
+      this.booking_history_uuid = data.uuid
       this.appointmentby=data.appointmentby;
       this.how=data.bookingmode;
       this.type=data.type;
@@ -33,4 +35,5 @@ export class BookingHistoryComponent implements OnInit {
     dismissModal() {
       this.dialogRef.close();
   }
+  
 }

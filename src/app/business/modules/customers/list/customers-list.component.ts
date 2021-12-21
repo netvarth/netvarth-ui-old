@@ -497,6 +497,7 @@ export class CustomersListComponent implements OnInit {
       autoFocus: true,
       data: {
         source: 'provider-sendAll',
+        typeOfMsg: 'multiple',
         terminologies: terminologies,
       } 
     });

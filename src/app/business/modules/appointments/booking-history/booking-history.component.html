@@ -1,34 +1,35 @@
 <div class="mat-dialog-title slotdiv">
-<div class="row head-section">
-    <div class="mgn-up-10 col-lg-10 col-md-10 col-sm-10 col-xs-10"><h4>History</h4></div>
-    <div class="cross-img col-lg-2 col-md-2 col-sm-2 col-xs-2">
-        <img  (click)="dismissModal()" src="../../../../assets/images/cross.png" style="width: 30px;height: 30px;">
-    </div>
-</div>
-<div class="main-section">
-    <!-- <mat-tab-group> -->
-        <!-- <mat-tab label="Appointment History"> -->
-            <div style="padding: 10px;"><h6>{{type}}</h6></div>
-            <div class="table section">
-              <table class="mgn-lt-10 "> 
-                <tr>
-                  <th>Action</th>
-                  <th>Who did it</th>
-                  <th>How</th>
-                  <th>Date & time</th>
-                </tr>
-                <tr *ngFor="let data of bookinghistorydetails">
-                  <td *ngIf="type != 'Token History' ">{{data.appointmentStatus}}</td>
-                  <td *ngIf="type == 'Token History' ">{{data.waitlistStatus}}</td>
-                  <td>{{appointmentby}} <span *ngIf="appointmentbyname">({{appointmentbyname}})</span> </td>
-                  <td>{{how}}</td>
-                  <td>{{data.date}} {{data.time}}</td>
-                </tr>
-            </table>
-            </div>
-        <!-- </mat-tab> -->
-
-      <!-- </mat-tab-group> -->
-      
-</div>
-</div>
+  <div class="row head-section">
+      <div class="mgn-up-10 col-lg-10 col-md-10 col-sm-10 col-xs-10"><h4>History</h4></div>
+      <div class="cross-img col-lg-2 col-md-2 col-sm-2 col-xs-2">
+          <img  (click)="dismissModal()" src="../../../../assets/images/cross.jpg" style="width: 30px;height: 30px;">
+      </div>
+  </div>
+  <div style="padding: 10px;"><h6>{{type}}</h6></div>
+  <div class="main-section">
+      <!-- <mat-tab-group> -->
+          <!-- <mat-tab label="Appointment History"> -->
+              
+              <div class="table section">
+                <table class="mgn-lt-10 "> 
+                  <tr>
+                    <th>Action</th>
+                    <th>Who did it</th>
+                    <th>How</th>
+                    <th>Date & time</th>
+                  </tr>
+                  <tr *ngFor="let data of bookinghistorydetails">
+                    <td *ngIf="type != 'Token History' ">{{data.appointmentStatus}}</td>
+                    <td *ngIf="type == 'Token History' ">{{data.waitlistStatus}}</td>
+                    <td>{{appointmentby}} <span *ngIf="appointmentbyname">({{appointmentbyname}})</span> </td>
+                    <td>{{how}}</td>
+                    <td>{{data.date}} {{data.time}}</td>
+                  </tr>
+              </table>
+              </div>
+          <!-- </mat-tab> -->
+  
+        <!-- </mat-tab-group> -->
+        
+  </div>
+  </div>

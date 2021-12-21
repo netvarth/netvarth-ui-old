@@ -40,9 +40,9 @@ export class ServiceQRCodeGeneratordetailComponent implements OnInit, OnDestroy 
     this.customId = this.data.customId;
     this.userId = this.data.userid;
     if (this.userId) {
-      this.shareLink = this.wpath + this.accuid + '/' + this.userId + '/service/' + this.serviceId;
+      this.shareLink = this.wpath + this.accuid + '/' + this.userId + '/service/' + this.serviceId + '/';
     } else {
-      this.shareLink = this.wpath + this.accuid + '/service/' + this.serviceId;
+      this.shareLink = this.wpath + this.accuid + '/service/' + this.serviceId + '/';
     }
     this.description = 'You can book my services by just clicking this link';
     this.imageUrl = this.wpath + 'assets/images/logo.png';
