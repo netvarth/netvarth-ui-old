@@ -1913,3 +1913,41 @@ box-shadow: 4px 4px 5px gainsboro;
   ::ng-deep .mat-radio-container .mat-radio-label{
     display: inline;
   }
+
+  @media (min-width:320px)  {
+    /* smartphones, iPhone, portrait 480x320 phones */ 
+    .pad-10.d-flex.flex-column-fluid {
+     padding-bottom: 130px!important;
+ }
+   }
+ @media (min-width:481px)  { 
+   /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ 
+   .pad-10.d-flex.flex-column-fluid {
+     padding-bottom: 0px!important;
+ }
+ }
+ @media (min-width:641px)  { 
+   /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+   .pad-10.d-flex.flex-column-fluid {
+     padding-bottom: 0px!important;
+ }
+  }
+ @media (min-width:961px)  { 
+   /* tablet, landscape iPad, lo-res laptops ands desktops */
+   .pad-10.d-flex.flex-column-fluid {
+     padding-bottom: 0px!important;
+ }
+ 
+  }
+ @media (min-width:1025px) { 
+   /* big landscape tablets, laptops, and desktops */
+   .pad-10.d-flex.flex-column-fluid {
+     padding-bottom: 0px!important;
+ }
+  }
+ @media (min-width:1281px) { 
+   /* hi-res laptops and desktops */
+   .pad-10.d-flex.flex-column-fluid {
+     padding-bottom: 0px!important;
+ }
+  }
