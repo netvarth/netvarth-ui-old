@@ -37,7 +37,7 @@
                   </div>
                   <br>
                   <div class="col-md-12 mgn-up-10">
-                    <button type="submit" mat-button
+                    <button type="submit" mat-button class="my-2"
                       [disabled]="(spForm.controls['phonenumber'].value === prev_phonenumber) || !spForm.valid">{{save_btn_cap}}</button>
                   </div>
                 </form>
@@ -97,7 +97,7 @@
                   name="newPhone" formControlName="phonenumber" autocomplete="off" (keypress)="isNumeric($event)"
                   maxlength="10" formc>
               </div>
-              <button type="submit" mat-button
+              <button type="submit" mat-button class="my-2"
                 [disabled]="(spForm.controls['phonenumber'].value === prev_phonenumber) || !spForm.valid">{{save_btn_cap}}</button>
             </form>
           </div>

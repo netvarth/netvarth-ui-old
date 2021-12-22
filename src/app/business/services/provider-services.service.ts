@@ -5,6 +5,7 @@ import { ServiceMeta } from '../../shared/services/service-meta';
 
 @Injectable()
 export class ProviderServices {
+    
   catalogPrefilledInput: any = [];
   constructor(private servicemeta: ServiceMeta) { }
   getProviderConfig() {
@@ -1072,6 +1073,22 @@ export class ProviderServices {
     const url = 'provider/user';
     return this.servicemeta.httpGet(url, null, filter);
   }
+  getAvailableUsers() {
+    const url = 'provider/user/available';
+    return this.servicemeta.httpGet(url);
+  }
+  getAvailableUsersWaitlist() {
+    const url = 'provider/user/waitlist/available';
+    return this.servicemeta.httpGet(url);
+  }
+  getAvailableUsersAppt() {
+    const url = 'provider/user/appt/available';
+    return this.servicemeta.httpGet(url);
+  }
+  getUserProfiles(profileIds) {
+    const url = 'provider/user/providerProfiles/' + profileIds;
+    return this.servicemeta.httpGet(url);
+}
   updateUserWaitlist(post_data) {
     const url = 'provider/waitlist/update';
     return this.servicemeta.httpPut(url, post_data);
@@ -2143,6 +2160,9 @@ export class ProviderServices {
   videoaudioS3Upload(file, url) {
     return this.servicemeta.httpPut(url, file);
   }
+  imageFileS3Upload(file, url) {
+    return this.servicemeta.httpPut(url, file);
+  }
   videoaudioUploadconfirm(id, data) {
     const url = 'provider/mr/upload/url/' + id;
     return this.servicemeta.httpPut(url, data);
@@ -2259,5 +2279,23 @@ export class ProviderServices {
    setpersonsWaitlistMgr(status) {
     const url = 'provider/settings/waitlistMgr/personsAhead/' +status;
     return this.servicemeta.httpPut(url);
+  }
+  changestatustoComplete(idlist,status){
+    const url = 'provider/appointment/multiStatusChange/' +status;
+    return this.servicemeta.httpPut(url,idlist);
+  }
+  changestatustowaitlistComplete(idlist,status){
+    const url = 'provider/waitlist/multiStatusChange/' +status;
+    return this.servicemeta.httpPut(url,idlist);
+  }
+  getFollowUpWaitlist(uid)
+  {
+    const url = 'provider/waitlist/followUp/' + uid;
+    return this.servicemeta.httpGet(url);
+  }
+  getFollowUpAppt(uid)
+  {
+    const url = 'provider/appointment/followUp/' + uid;
+    return this.servicemeta.httpGet(url);
   }
 } 

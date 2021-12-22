@@ -9,7 +9,7 @@
                     </div>
                     <mat-form-field>
                         <div>
-                            <input matInput type="text" class="form-control" id="mobile_number"
+                            <input matInput type="text" class="form-control" id="mobile_number" (keypress)="isNumeric($event)"
                                 (change)="onMbnmberChange($event)" placeholder="{{mob_cap}}" formControlName="mobile_number"
                                 autocomplete="off" maxlength=10>
                         </div>

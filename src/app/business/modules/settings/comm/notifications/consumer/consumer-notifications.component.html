@@ -154,8 +154,10 @@
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                 <div class="font1" *ngIf="showToken">Add token Notifications</div>
                 <div class="font1" *ngIf="!showToken"> Add checkin Notifications</div>
-                <div class="form-level-settings">Notify a {{customer_label}} via
+                <div class="form-level-settings" *ngIf="!showToken">Notify a {{customer_label}} via
                   SMS/Email/Notifications when a Check-in happens.</div>
+                  <div class="form-level-settings" *ngIf="showToken">Notify a {{customer_label}} via
+                    SMS/Email/Notifications when a Token happens.</div>
               </div>
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
                 <mat-checkbox [checked]="wlAddNotificationSettings.sms"

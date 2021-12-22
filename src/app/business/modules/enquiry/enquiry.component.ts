@@ -51,15 +51,17 @@ export class EnquiryComponent implements OnInit {
   }
   getInboxMessages() {
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
-    this.inbox_services.getInbox(usertype)
+    this.inbox_services.getEnquiryInbox(usertype)
       .subscribe(
         data => {
+          console.log("Enquiry Data : ", data);
           this.messages = data;
           this.sortMessages();
           const inbox = this.generateCustomInbox(this.messages);
           this.enquiries = inbox.filter(msg => msg.msgType === 'ENQUIRY' && msg.messagestatus === 'in');
           const enq = this.enquiries.filter(msg => !msg.read);
           this.enquiryUnreadCount = (enq) ? enq.length : 0;
+          console.log("Enquiry Data : ", this.enquiryUnreadCount);
           this.loading = false;
         });
   }

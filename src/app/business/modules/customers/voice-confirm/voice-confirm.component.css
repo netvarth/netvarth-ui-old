@@ -23,16 +23,18 @@
   font-size: 15px !important;
   }
 }
-/* @media (max-width: 767px) {
+@media (max-width: 767px) {
   .modal-dialog-bt {
     float: right;
+    margin-bottom: 2px;
   }
-} */
+}
 .image{
   height: 230px !important;
-    width: 230px !important;
+    width: 180px !important;
     padding-top: 10px !important;
     padding-right: 20px;
+    /* padding-left: 2px !important; */
 }
 
 @media (max-width: 750px) {
@@ -47,17 +49,18 @@
 .bt{
   padding-top: 40px !important;
   padding-left: 10px !important;
+ 
 }
 }
 .bt{
   padding-top: 40px !important;
   padding-left: 40px;
 }
-@media  (max-width: 750px)  {
+/* @media  (max-width: 750px)  {
   .mobile_disply  {
       display: none !important;
   }
-}
+} */
 @media (min-width: 450px) {
   .disply  {
       display: none !important;

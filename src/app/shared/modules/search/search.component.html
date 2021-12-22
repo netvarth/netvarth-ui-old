@@ -27,8 +27,8 @@
       <mat-form-field class="search_domain">
         <div>
           <mat-select panelClass="search_domaindropdown_class" [(ngModel)]="selected_domain" [formControl]="myControl_domain" #seldomain (selectionChange)="handledomainchange($event.value)">
-            <mat-option value="All">{{all_cap}}</mat-option>
-            <mat-option *ngFor="let domain of domainlist_data" [value]="domain.domain">
+            <!-- <mat-option value="All">{{all_cap}}</mat-option> -->
+            <mat-option *ngFor="let domain of domainlist_data"  [value]="domain.domain">
               {{ domain.displayName }}
             </mat-option>
           </mat-select>
@@ -65,6 +65,15 @@
       <span class="icon icon-filter" id="morefiltericon" (click)="showMoreOptions()"
         *ngIf="includedfrom=='consumer_header'" [matTooltipClass]="tooltipcls" [matTooltip]="moreoptionsTooltip"></span>
     </div>
+    <!-- <ng-container>
+      <div class="more-opt" [class.show]="showmoreoptionsSec">
+        <span class="closebtn" (click)="closeMoreoptions()"></span>
+        <div class="mo-content">
+          <app-search-moreoptions *ngIf="showmoreoptionsSec" (searchmoreclick)="handleSearchmoreSearchClick($event)"
+            [passedRefine]="passedRefine"></app-search-moreoptions>
+        </div>
+      </div>
+    </ng-container> -->
     <ng-container>
       <div class="more-opt" [class.show]="showmoreoptionsSec">
         <span class="closebtn" (click)="closeMoreoptions()"></span>
@@ -188,6 +197,15 @@
         More Filters
       </div>
       </div>
+      <!-- <ng-container>
+        <div class="more-opt" [class.show]="showmoreoptionsSec">
+          <span class="closebtn" (click)="closeMoreoptions()"></span>
+          <div class="mo-content">
+            <app-search-moreoptions *ngIf="showmoreoptionsSec" (searchmoreclick)="handleSearchmoreSearchClick($event)"
+              [passedRefine]="passedRefine"></app-search-moreoptions>
+          </div>
+        </div>
+      </ng-container> -->
       <ng-container>
         <div class="more-opt" [class.show]="showmoreoptionsSec">
           <span class="closebtn" (click)="closeMoreoptions()"></span>

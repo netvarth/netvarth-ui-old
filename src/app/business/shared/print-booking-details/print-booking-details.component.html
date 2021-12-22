@@ -62,6 +62,8 @@
 
                                 </tr>
                                 <tr *ngIf="!isJaldeeId">
+                                    <td colspan="2" align="center"  *ngIf="customer.firstName === 'null' && customer.firstName === 'null' ">{{customer_label| capitalizeFirst}}  #: NIL</td>
+
                                     <td colspan="2" align="center"> {{customer_label| capitalizeFirst}}:
                                         {{customerName}} </td>
 
@@ -79,7 +81,22 @@
                                 </tr>
                            
                                 <tr>
-                                    <td colspan="2" align="center"> Service : {{bookingDetails.service.name}} </td>
+                                    <td class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item" colspan="2" align="center">
+                                        Service : <i class="fa meet-icon"
+                                            *ngIf="bookingDetails.service.serviceType === 'virtualService' && bookingDetails.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                        <i class="fa zoom-icon"
+                                            *ngIf="bookingDetails.service.serviceType === 'virtualService' && bookingDetails.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                        <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                                            *ngIf="bookingDetails.service.serviceType === 'virtualService' && bookingDetails.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+                                        <i class="fa phon-icon"
+                                            *ngIf="bookingDetails.service.serviceType === 'virtualService' && bookingDetails.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                        <i class="fa wtsapaud-icon"
+                                            *ngIf="bookingDetails.service.serviceType === 'virtualService' && bookingDetails.service.virtualCallingModes[0].callingMode === 'WhatsApp' && bookingDetails.service.virtualServiceType === 'audioService'"></i>
+                                        <i class="fa wtsapvid-icon"
+                                            *ngIf="bookingDetails.service.serviceType === 'virtualService' && bookingDetails.service.virtualCallingModes[0].callingMode === 'WhatsApp' && bookingDetails.service.virtualServiceType === 'videoService'"></i>
+                                       {{bookingDetails.service.name}}
+                                    </td>
+                                    <!-- <td colspan="2" align="center"> Service : {{bookingDetails.service.name}} </td> -->
 
                                 </tr>
                                 <tr *ngIf="bookingDetails.service.deptName">
@@ -150,10 +167,10 @@
                                                         *ngFor="let data of question.answerLine.answer.dataGrid ">
                                                         <table style="width:100%" border="1" border-color='#eee'>
                                                             <tr *ngFor="let value of data.dataGridColumn ">
-                                                                <td style="width:60%"> {{value.columnId}}</td>
+                                                                <td style="width:60%"> {{value.columnId | capitalizeFirst}}</td>
 
                                                                 <td style="width:40%">
-                                                                    {{getinnerTableData(value.column)}}</td>
+                                                                    {{getinnerTableData(value.column) | capitalizeFirst}}</td>
 
 
                                                             </tr>
@@ -163,7 +180,7 @@
                                                 </td>
 
                                                 <td *ngIf="!isDatagrid(question)" style="width:40%">
-                                                    <i>{{getAnswer(question)}}</i>
+                                                    <i>{{getAnswer(question) | capitalizeFirst}}</i>
                                                 </td>
 
                                             </tr>
@@ -187,16 +204,16 @@
                                 <tbody *ngFor="let question of questionanswers">
                                     <tr>
                                         <td colspan="2">
-                                            {{question.question.label|capitalizeFirst}}
+                                            {{question.question.label | capitalizeFirst}}
                                         </td>
                                         <td
                                             *ngIf="isDatagrid(question) && question.answerLine.answer.dataGrid.length>0">
                                             <ng-container *ngFor="let data of question.answerLine.answer.dataGrid ">
                                                 <table style="width:100%" border="1" border-color='#eee'>
                                                     <tr *ngFor="let value of data.dataGridColumn ">
-                                                        <td style="width:60%"> {{value.columnId}}</td>
+                                                        <td style="width:60%"> {{value.columnId | capitalizeFirst}}</td>
 
-                                                        <td style="width:40%"> {{getinnerTableData(value.column)}}</td>
+                                                        <td style="width:40%"> {{getinnerTableData(value.column) | capitalizeFirst}}</td>
 
 
                                                     </tr>
@@ -206,7 +223,7 @@
                                         </td>
 
                                         <td *ngIf="!isDatagrid(question)" style="width:40%">
-                                            <i>{{getAnswer(question)}}</i>
+                                            <i>{{getAnswer(question) | capitalizeFirst}}</i>
                                         </td>
 
                                     </tr>

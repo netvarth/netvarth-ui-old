@@ -64,6 +64,9 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
   storeChecked = true;
   showfuturediv: boolean;
   ddate;
+  emptyFielderror = false;
+  create_new = false;
+  consumerPhoneNo;
   isFuturedate: boolean;
   todaydate;
   hold_sel_checkindate;
@@ -149,7 +152,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
   };
   @ViewChild('closeModal') private closeModal: ElementRef;
   @ViewChild('closeDatepickerModal') private datepickerModal: ElementRef;
-  onlyVirtualItems=false;
+  onlyVirtualItems = false;
   customer_label: any;
   private onDestroy$: Subject<void> = new Subject<void>();
   api_error = false;
@@ -280,13 +283,13 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
   }
   isPhysicalItemsPresent() {
     let physical_item_present = true;
-    if(this.orderType!=='SHOPPINGLIST'){
-    const virtualItems = this.orders.filter(catalogitem => catalogitem.item.itemType === 'VIRTUAL')
-    if (virtualItems.length > 0 && this.orders.length === virtualItems.length) {
-      physical_item_present = false;
-      this.onlyVirtualItems=true;
+    if (this.orderType !== 'SHOPPINGLIST') {
+      const virtualItems = this.orders.filter(catalogitem => catalogitem.item.itemType === 'VIRTUAL')
+      if (virtualItems.length > 0 && this.orders.length === virtualItems.length) {
+        physical_item_present = false;
+        this.onlyVirtualItems = true;
+      }
     }
-  }
     return physical_item_present;
   }
   toggleterms(i) {
@@ -328,6 +331,14 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
       this.updateForm();
     }
   }
+  findCustomer(form_data, event) {
+    // this.showBlockHint = false;
+    if (event.key === 'Enter') {
+      this.searchCustomer(form_data);
+    }
+  }
+
+
 
 
   searchCustomer(form_data) {
@@ -337,100 +348,114 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
       base64: [],
       caption: []
     };
-    this.qParams = {};
-    let mode = 'id';
-    this.form_data = null;
-    let post_data = {};
-    const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
-    const isEmail = emailPattern.test(form_data.search_input);
-    if (isEmail) {
-      mode = 'email';
-      this.prefillnewCustomerwithfield = 'email';
-    } else {
-      const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
-      const isNumber = phonepattern.test(form_data.search_input);
-      const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
-      const isCount10 = phonecntpattern.test(form_data.search_input);
-      if (isNumber && isCount10) {
-        mode = 'phone';
-        this.prefillnewCustomerwithfield = 'phone';
-      } else if(isNumber || !isCount10){
-        mode = 'phone';
-        this.prefillnewCustomerwithfield = 'phone';
-      }
-      else {
-        mode = 'id';
-        this.prefillnewCustomerwithfield = 'id';
-      }
+    this.emptyFielderror = false;
+    if (form_data && form_data.search_input === '') {
+      this.emptyFielderror = true;
     }
 
-    switch (mode) {
-      case 'phone':
-        post_data = {
-          'phoneNo-eq': form_data.search_input
-        };
-        this.qParams['phone'] = form_data.search_input;
-        break;
-      case 'email':
-        post_data = {
-          'email-eq': form_data.search_input
-        };
-        this.qParams['email'] = form_data.search_input;
-        break;
-      case 'id':
-          post_data['or=jaldeeId-eq'] =  form_data.search_input + ',firstName-eq=' + form_data.search_input;
-        // post_data = {
-        //   'jaldeeId-eq': form_data.search_input
-        // };
-        break;
-    }
-
-    this.provider_services.getCustomer(post_data)
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe(
-        (data: any) => {
-          this.customer_data = [];
-          if (data.length === 0) {
-            this.show_customer = false;
-            this.create_customer = true;
-
-            this.createNew();
-          } else {
-            if (data.length > 1) {
-              const customer = data.filter(member => !member.parent);
-              this.customer_data = customer[0];
-
-            } else {
-              this.customer_data = data[0];
-            }
-            this.disabledNextbtn = false;
-            this.jaldeeId = this.customer_data.jaldeeId;
-            this.show_customer = true;
-            this.create_customer = false;
-            this.getDeliveryAddress();
-            this.formMode = data.type;
-            if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
-              this.countryCode = this.customer_data.countryCode;
-            } else {
-              this.countryCode = '+91';
-            }
-            if (this.customer_data.email && this.customer_data.email !== 'null') {
-              this.customer_email = this.customer_data.email;
-            }
-
-            if (!this.catalogExpired) {
-              this.step = 2;
-            } else {
-              this.snackbarService.openSnackBar('Your Catalog is not valid. Update the status or validity of the catalog/virtual items if any in catalog to proceed', { 'panelClass': 'snackbarerror' });
-            }
-
-          }
-
-        },
-        error => {
-          this.wordProcessor.apiErrorAutoHide(this, error);
+    else {
+      this.qParams = {};
+      let mode = 'id';
+      this.form_data = null;
+      let post_data = {};
+      const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
+      const isEmail = emailPattern.test(form_data.search_input);
+      if (isEmail) {
+        mode = 'email';
+        this.prefillnewCustomerwithfield = 'email';
+      } else {
+        const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+        const isNumber = phonepattern.test(form_data.search_input);
+        const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+        const isCount10 = phonecntpattern.test(form_data.search_input);
+        if (isNumber && isCount10) {
+          mode = 'phone';
+          this.prefillnewCustomerwithfield = 'phone';
+        } 
+        else if (isNumber && form_data.search_input.length >7) {
+          mode = 'phone';
+          this.prefillnewCustomerwithfield = 'phone';
+        } else if (isNumber && form_data.search_input.length <7 ) {
+          mode = 'id';
+          this.prefillnewCustomerwithfield = 'id';
         }
-      );
+      }
+      this.qParams['source'] = 'order';
+
+      switch (mode) {
+        case 'phone':
+          post_data = {
+            'phoneNo-eq': form_data.search_input
+          };
+          this.qParams['phone'] = form_data.search_input;
+          break;
+        case 'email':
+          post_data = {
+            'email-eq': form_data.search_input
+          };
+          this.qParams['email'] = form_data.search_input;
+          break;
+        case 'id':
+          post_data['or=jaldeeId-eq'] = form_data.search_input + ',firstName-eq=' + form_data.search_input;
+          // post_data = {
+          //   'jaldeeId-eq': form_data.search_input
+          // };
+          break;
+      }
+
+      this.provider_services.getCustomer(post_data)
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe(
+          (data: any) => {
+            this.customer_data = [];
+            if (data.length === 0) {
+              this.show_customer = false;
+              this.create_customer = true;
+
+              this.createNew();
+            } else {
+              if (data.length > 1) {
+                const customer = data.filter(member => !member.parent);
+                this.customer_data = customer[0];
+
+              } else {
+                this.customer_data = data[0];
+              }
+              this.disabledNextbtn = false;
+              this.jaldeeId = this.customer_data.jaldeeId;
+              this.show_customer = true;
+              this.create_customer = false;
+              this.getDeliveryAddress();
+              this.formMode = data.type;
+              if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+                this.countryCode = this.customer_data.countryCode;
+              } else {
+                this.countryCode = '+91';
+              }
+              if (this.customer_data.email && this.customer_data.email !== 'null') {
+                this.customer_email = this.customer_data.email;
+              }
+
+              if (this.customer_data.jaldeeId && this.customer_data.jaldeeId !== 'null') {
+                this.jaldeeId = this.customer_data.jaldeeId;
+              }
+              if (this.customer_data.firstName && this.customer_data.firstName !== 'null') {
+                this.jaldeeId = this.customer_data.firstName;
+              }
+              if (!this.catalogExpired) {
+                this.step = 2;
+              } else {
+                this.snackbarService.openSnackBar('Your Catalog is not valid. Update the status or validity of the catalog/virtual items if any in catalog to proceed', { 'panelClass': 'snackbarerror' });
+              }
+
+            }
+
+          },
+          error => {
+            this.wordProcessor.apiErrorAutoHide(this, error);
+          }
+        );
+    }
   }
   updateCustomer(id) {
     this.qParams = {};
@@ -484,8 +509,8 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
         this.orderType = this.catalog_details.orderType;
         if (this.orderType !== 'SHOPPINGLIST') {
           this.orderItems = [];
-          if(this.catalog_details.catalogItem.length===0){
-            this.catalogExpired=true;
+          if (this.catalog_details.catalogItem.length === 0) {
+            this.catalogExpired = true;
           }
           for (let itemIndex = 0; itemIndex < this.catalog_details.catalogItem.length; itemIndex++) {
             const catalogItemId = this.catalog_details.catalogItem[itemIndex].id;
@@ -855,17 +880,17 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
       }
       else if ((storeIntervals.includes(currentday)) && (date < thirty_date)) {
         const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
-        if(this.store_availables){
-        const availability = this.store_availables.filter(obj => obj.date === sel_check_date);
-        if (availability.length > 0) {
-          this.isfutureAvailableTime = true;
-          this.nextAvailableTimeQueue = availability[0].timeSlots;
-          this.queue = availability[0].timeSlots[0];
-          this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' + availability[0].timeSlots[0]['eTime'];
-        } else {
-          this.isfutureAvailableTime = false;
+        if (this.store_availables) {
+          const availability = this.store_availables.filter(obj => obj.date === sel_check_date);
+          if (availability.length > 0) {
+            this.isfutureAvailableTime = true;
+            this.nextAvailableTimeQueue = availability[0].timeSlots;
+            this.queue = availability[0].timeSlots[0];
+            this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' + availability[0].timeSlots[0]['eTime'];
+          } else {
+            this.isfutureAvailableTime = false;
+          }
         }
-      }
       }
       else {
         this.isfutureAvailableTime = false;
@@ -1013,20 +1038,20 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
 
   }
   confirm() {
-    let post_Data={};
-    let timeslot:any;
+    let post_Data = {};
+    let timeslot: any;
     if (!this.iscustomerEmailPhone && (!this.customer_data.email || !this.customer_data.phoneNo || this.customer_data.phoneNo.includes('*'))) {
       this.collectContactInfo();
     } else {
       this.iscustomerEmailPhone = true;
       this.placeOrderDisabled = true;
-    
-      if (this.orderType !== 'SHOPPINGLIST' && this.getOrderItems().length===0) {
-          this.snackbarService.openSnackBar('Please add items', { 'panelClass': 'snackbarerror' });
-          this.placeOrderDisabled = false;
-          return;
+
+      if (this.orderType !== 'SHOPPINGLIST' && this.getOrderItems().length === 0) {
+        this.snackbarService.openSnackBar('Please add items', { 'panelClass': 'snackbarerror' });
+        this.placeOrderDisabled = false;
+        return;
       }
-       post_Data={
+      post_Data = {
         'catalog': {
           'id': this.catalog_details.id
         },
@@ -1044,42 +1069,42 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
         'orderNote': this.orderNote,
         'coupons': this.selected_coupons
       };
-      if(!this.onlyVirtualItems){
+      if (!this.onlyVirtualItems) {
         timeslot = this.nextAvailableTime.split(' - ');
-        let timeSlot= {
-         'sTime': timeslot[0],
-         'eTime': timeslot[1]
- 
-       }
-       post_Data['timeSlot']=timeSlot;
-       post_Data['orderDate']=this.sel_checkindate;
-       }
+        let timeSlot = {
+          'sTime': timeslot[0],
+          'eTime': timeslot[1]
+
+        }
+        post_Data['timeSlot'] = timeSlot;
+        post_Data['orderDate'] = this.sel_checkindate;
+      }
       if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
         this.emailId = this.customer_data.email;
       }
-      post_Data['email']=this.emailId;
+      post_Data['email'] = this.emailId;
       if (this.orderType !== 'SHOPPINGLIST') {
         post_Data['orderItem'] = this.getOrderItems()
       }
-      if (this.choose_type === 'home'&&!this.onlyVirtualItems) {
+      if (this.choose_type === 'home' && !this.onlyVirtualItems) {
         if (this.added_address === null || this.added_address.length === 0) {
           this.placeOrderDisabled = false;
           this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
           this.placeOrderDisabled = false;
           return;
-        } 
-         post_Data['homeDelivery']=true,
-         post_Data['homeDeliveryAddress']= this.selectedAddress
-          
-      }
-      if (this.choose_type === 'store'&& !this.onlyVirtualItems) {
-          post_Data['storePickup'] = true
         }
-    
-        
-        
-       this.confirmOrder(post_Data);
-     
+        post_Data['homeDelivery'] = true,
+          post_Data['homeDeliveryAddress'] = this.selectedAddress
+
+      }
+      if (this.choose_type === 'store' && !this.onlyVirtualItems) {
+        post_Data['storePickup'] = true
+      }
+
+
+
+      this.confirmOrder(post_Data);
+
     }
   }
   getOrderItems() {

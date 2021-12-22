@@ -16,7 +16,7 @@
                                     <div class="box-footer no-padding">
                                         <ul class="nav nav-stacked">
                                             <span class="lnk setings">
-                                                <p style="text-align:left;"> Dear {{(firstname.trim()!=="" && firstname.trim()!=="null null" ) ? firstname : customer}},</p>
+                                                <p style="text-align:left;"> Dear {{(firstname!=="" && firstname!==null && firstname!== undefined ) ? firstname : customer}},</p>
                                             </span>
                                             <span class="lnk setings">
                                                 <p style="text-align:left;">Welcome to Jaldee PAY. <br> Your contactless

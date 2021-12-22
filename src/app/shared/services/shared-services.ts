@@ -700,6 +700,10 @@ export class SharedServices {
     const url = 'provider/donation/consumerMassCommunication';
     return this.servicemeta.httpPost(url, data);
   }
+  customerAllMassCommunication(data) {
+    const url = 'provider/customers/consumerMassCommunicationAll';
+    return this.servicemeta.httpPost(url, data);
+  }
   addProviderAppointment(postData) {
     return this.servicemeta.httpPost('provider/appointment', postData);
   }
@@ -1113,5 +1117,13 @@ export class SharedServices {
   getAppointmentReschedulePricelist(serviceid) { 
     const url = 'consumer/appointment/schedule/' + serviceid + '/pricelist';
     return this.servicemeta.httpGet(url);
+  }
+  updateRazorPay(data,id){
+    const url = 'provider/payment/razorpay/update?account='+id;
+    return this.servicemeta.httpPost(url,data);
+  }
+  updatePaytmPay(data,id) {
+    const url = 'provider/payment/paytm/update?account='+id;
+    return this.servicemeta.httpPost(url,data);
   }
 }

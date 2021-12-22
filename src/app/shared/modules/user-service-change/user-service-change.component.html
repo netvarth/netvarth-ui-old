@@ -99,7 +99,7 @@
                 <div style="display: inline-block !important;">
                   <i class="fa fa-map-marker"></i>
                 </div>
-                Location
+                Residing Location
               </div>
               <i class="fa fa-angle-down"></i>
             </button>
@@ -296,6 +296,36 @@
           </div>
         </div>
       </div>
+      <div class="card">
+        <div class="card-header">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseLocation2" aria-expanded="false">
+              <div>
+                <div style="display: inline-block !important;">
+                  <i class="fa fa-language"></i>
+                </div>
+                Business Locations
+              </div>
+              <i class="fa fa-angle-down"></i>
+            </button>
+          </h2>
+        </div>
+        <div id="collapseLocation2" class="collapse" data-parent="#accordion1">
+          <div class="card-body">
+            <div class="filterTextinput filter-checkbox-input">
+                <!-- <label class="filterHeaders">Languages</label> -->
+                <li class="filterli">
+                    <mat-checkbox *ngFor="let loc of loc_list" class="filter-checkbox"
+                        [checked]="selectedLocations.indexOf(loc.id) !== -1"
+                        (change)="setFilterDataCheckbox('location', loc.id)">
+                        <!-- {{language.displayName}} -->
+                        {{loc.place | capitalizeFirst}} 
+                    </mat-checkbox>
+                </li>
+            </div>
+          </div>
+        </div>
+     </div>
     </ul>
   </section>
   <div class="filter-footer" *ngIf="filterapplied === true">
@@ -326,7 +356,7 @@
 
 
                     <th class="display-min-none">Languages</th>
-                    <th class="display-min-none">Booking count</th>
+                    <!-- <th class="display-min-none">Booking count</th> -->
                   </tr>
                 </thead>
                 <tbody *ngIf="!loading">
@@ -364,20 +394,21 @@
                               <span class="b2">{{service.specialization}} </span>
                             </div>
                             <div class="mgn-up-5"
-                            *ngIf="service.bussloc.length > 0  && domain === 'finance'"> <span
+                            *ngIf="service.businessLocations && domain === 'finance'"> <span
                                 class="b2">Business Locations &nbsp;&nbsp;
                                 <br>
                                 <i class="fa fa-map-marker mgn-rt-5" style="color: blue;" aria-hidden="true"></i>
-                                {{getBussLoc(service.bussloc)}}
+                                <!-- {{getBussLoc(service.bussLocations)}} -->
+                                {{service.businessLocations}}
                             </span></div>
 
 
-                            <div class="mgn-up-5" *ngIf="service.languages">
-                              <span class="b2">{{service.languages}} </span>
+                            <div class="mgn-up-5" *ngIf="service.preferredLanguages">
+                              <span class="b2">{{service.preferredLanguages}} </span>
                             </div>
-                            <div class="mgn-up-5" *ngIf="service.userType === 'PROVIDER'"> <span class="b1">Booking
+                            <!-- <div class="mgn-up-5" *ngIf="service.userType === 'PROVIDER'"> <span class="b1">Booking
                                 Count:
-                              </span><span class="b2">{{service.currentWlCount}} </span></div>
+                              </span><span class="b2">{{service.currentWlCount}} </span></div> -->
                           </div>
                         </div>
                       </div>
@@ -392,21 +423,24 @@
                       {{service.specialization}}
                     </td>
 
-                    <td class="display-min-none" *ngIf="domain === 'finance' && service.bussloc.length > 0">
-                      {{getBussLoc(service.bussloc)}}
+                    <td class="display-min-none" *ngIf="domain === 'finance'">
+                        <span *ngIf="service.businessLocations">
+                          <!-- {{getBussLoc(service.bussLocations)}} -->
+                          {{service.businessLocations}}
+                        </span>
                     </td>
 
 
                     <td class="display-min-none">
-                      {{service.languages}}
+                      {{service.preferredLanguages}}
                     </td>
-                    <td class="display-min-none">
+                    <!-- <td class="display-min-none">
                       <span *ngIf="service.userType === 'PROVIDER'">
                         {{service.currentWlCount}}
                       </span>
-                    </td>
+                    </td> -->
                   </tr>
-                  <tr *ngIf="service_dataSource.data.length == 0 && !loading">
+                  <tr *ngIf="service_dataSource.data && service_dataSource.data.length == 0 && !loading">
                     No {{provider_label}} found
                   </tr>
                 </tbody>

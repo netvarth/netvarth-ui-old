@@ -22,6 +22,7 @@ import { FormMessageDisplayModule } from "../../../../shared/modules/form-messag
 import { LoadingSpinnerModule } from "../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { ConfirmBoxModule } from "../../../shared/confirm-box/confirm-box.module";
 import { AppointmentComponent } from "./appointment.component";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 const routes: Routes= [
     { path: '', component: AppointmentComponent }
 ]
@@ -51,7 +52,9 @@ const routes: Routes= [
         LoadingSpinnerModule,
         QuestionnaireModule,
         ConfirmBoxModule,
+        MatCheckboxModule,
         [RouterModule.forChild(routes)]
     ]
 })
 export class AppointmentModule{}
+

@@ -407,7 +407,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                         else {
                             this.razorpayEnabled = true;
                         }
-                        
+
                     }
                     if (this.razorpayEnabled || this.paytmEnabled) {
                         this.paymode = true;
@@ -478,7 +478,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                                 this.origin = 'consumer';
                                 if (pData.isGateWayPaymentNeeded && pData.isJCashPaymentSucess) {
                                     if (paymentType == 'paytm') {
-                                        this.payWithPayTM(pData.response);
+                                        this.payWithPayTM(pData.response, this.accountId);
                                     } else {
                                         this.paywithRazorpay(pData.response);
                                     }
@@ -523,7 +523,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                             if (this.pGateway === 'RAZORPAY') {
                                 this.paywithRazorpay(data);
                             } else {
-                                this.payWithPayTM(data);
+                                this.payWithPayTM(data, this.accountId);
                             }
                         },
                         error => {
@@ -551,44 +551,49 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
         //    this.razorModel.image = data.jaldeeLogo;
         this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uuid, this.accountId);
     }
-    payWithPayTM(pData: any) {
+    payWithPayTM(pData: any, accountId: any) {
         this.isClickedOnce = true;
         this.loadingPaytm = true;
-        this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this);
+        this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
     }
-    transactionCompleted(response) {
+    transactionCompleted(response, payload, accountId) {
         if (response.STATUS == 'TXN_FAILURE') {
-            this.isClickedOnce = false;
-            this.loadingPaytm = false;
-            this.cdRef.detectChanges();
-            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
-            if (this.checkIn_type === 'checkin_historybill') {
-                const navigationExtras: NavigationExtras = {
-                    queryParams: {
-                        uuid: this.uuid,
-                        accountId: this.accountId,
-                        source: 'history'
-                    }
-                };
-                this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras));
-            } else {
-                const navigationExtras: NavigationExtras = {
-                    queryParams: {
-                        uuid: this.uuid,
-                        accountId: this.accountId,
-                        type: 'waitlist',
-                        'paidStatus': false
-                    }
-                };
-                this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras));
-            }
+          
+                        this.isClickedOnce = false;
+                        this.loadingPaytm = false;
+                        this.cdRef.detectChanges();
+                        this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+                        if (this.checkIn_type === 'checkin_historybill') {
+                            const navigationExtras: NavigationExtras = {
+                                queryParams: {
+                                    uuid: this.uuid,
+                                    accountId: this.accountId,
+                                    source: 'history'
+                                }
+                            };
+                            this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras));
+                        } else {
+                            const navigationExtras: NavigationExtras = {
+                                queryParams: {
+                                    uuid: this.uuid,
+                                    accountId: this.accountId,
+                                    type: 'waitlist',
+                                    'paidStatus': false
+                                }
+                            };
+                            this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras));
+                        }
+                
 
         } else if (response.STATUS == 'TXN_SUCCESS') {
+            this.paytmService.updatePaytmPay(payload, accountId)
+            .then((data) => {
+                if (data) {
             this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
             const navigationExtras: NavigationExtras = {
                 queryParams: {
                     uuid: this.uuid,
-                  //  accountId: this.accountId,
+                    //  accountId: this.accountId,
                     type: 'waitlist',
                     'paidStatus': true
                 }
@@ -599,6 +604,12 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                 this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
             }
         }
+    },
+    error =>{
+        this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });  
+    });
+        }
+   
 
 
         //  this.ngZone.run(() => this.router.navigate(['consumer'] ,navigationExtras));

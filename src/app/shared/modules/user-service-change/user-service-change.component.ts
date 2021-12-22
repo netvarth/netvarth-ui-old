@@ -84,6 +84,8 @@ export class UserServiceChnageComponent implements OnInit {
   locationsjson: any = [];
   subdomain: any;
   users_list: any = [];
+  loc_list: any = [];
+  selectedLocations: any = [];
   
 
   constructor(
@@ -121,25 +123,73 @@ export class UserServiceChnageComponent implements OnInit {
     this.service_dataSource.filter = filterValue;
   }
   ngOnInit() {
-  this.getProviders()
+    this.getProviderLocations().then(
+      () => {
+        this.getProviders(true);
+      }
+    )
     this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
     this.getSpokenLanguages();
-    this.getSpecializations();
-    this.getProviderLocations();
+    // this.getSpecializations();
+   
   }
-   getProviders() {
+  setSpecializationFilter(users_list: any) {
+    const _this = this;
+    const specialiationList = [];
+    users_list.map(function (user) {
+        if (user.specialization) {
+            specialiationList.push(...user.specialization);
+        }        
+    })
+    _this.specialization_arr = getUniqueListBy(specialiationList, 'name');
+      function getUniqueListBy(arr, key) {
+          return [...new Map(arr.map(item => [item[key], item])).values()]
+      }
+}
+getLanguages(languages) {
+  if (!languages) {
+      return;
+  }
+  languages = JSON.parse(languages);
+  for (let i = 0; i < languages.length; i++) {
+      languages[i] = languages[i].charAt(0).toUpperCase() + languages[i].slice(1).toLowerCase();
+  }
+  languages = languages.toString();
+  if (languages.length > 1) {
+      languages = languages.replace(/,/g, ", ");
+  }
+  return languages;
+}
+   getProviders(from_init?) {
+     const _this = this;
     let apiFilter = {};
-    apiFilter = this.setFilterForApi();
+    apiFilter = _this.setFilterForApi();
     apiFilter['userType-eq'] = 'PROVIDER';
     apiFilter['status-eq'] = 'ACTIVE';
-    this.provider_services.getUsers(apiFilter).subscribe(data => {
-      this.users_list = data;
-      for(let user of this.users_list){
-          if(user.userType == 'PROVIDER'){
-              this.subdomain=user.subdomainName;
-          }
+    _this.provider_services.getUsers(apiFilter).subscribe(data => {
+      _this.users_list = data;
+      if (from_init) {
+        _this.setSpecializationFilter(_this.users_list);
       }
-      this.service_dataSource.data = this.setServiceDataSource(data);
+      _this.users_list.map(function (user) {
+        user.preferredLanguages = user.preferredLanguages ? _this.getLanguages(user.preferredLanguages) : '';
+        return user
+      })
+      _this.users_list.map(function (user) {
+          user.specialization = user.specialization ? user.specialization.map(spec => spec.displayName) : '';
+          return user
+      })
+      _this.users_list.map(function(user) {
+        const businessLocations = _this.locationsjson.filter(loc => user.userType==='PROVIDER' && user.bussLocations?!(user.bussLocations.indexOf(loc.id)<0):"");
+        user.businessLocations = businessLocations.map(loc => loc.place);
+        return user
+      })
+      // for(let user of this.users_list){
+      //     if(user.userType == 'PROVIDER'){
+      //         this.subdomain=user.subdomainName;
+      //     }
+      // }
+      this.service_dataSource.data = this.users_list;
       this.filterApplied_count = this.service_dataSource.data.length;
     });
     setTimeout(() => {
@@ -157,69 +207,66 @@ export class UserServiceChnageComponent implements OnInit {
       this.selection.clear() :
       this.service_dataSource.data.forEach(row => this.selection.select(row));
   }
-  setServiceDataSource(result) {
-    const service_list: any = [];
-    result.forEach(serviceObj => {
-      let businessName = '';
-      let languages;
-      let specialization;
-      businessName = (serviceObj.businessName) ? serviceObj.businessName : serviceObj.firstName + ' ' + serviceObj.lastName;
-      if (serviceObj.preferredLanguages) {
-        languages = JSON.parse(serviceObj.preferredLanguages);
-        for (var i = 0; i < languages.length; i++) {
-          languages[i] = languages[i].charAt(0).toUpperCase() + languages[i].slice(1).toLowerCase();
-        }
-      }
-      if (serviceObj.specialization) {
-        for (let i = 0; i < serviceObj.specialization.length; i++) {
-          const special = this.specialization_arr.filter(speciall => speciall.name === serviceObj.specialization[i]);
-          if (special[0]) {
-            serviceObj.specialization[i] = special[0].displayName;
-          }
-        }
-        specialization = serviceObj.specialization.toString();
-        if (serviceObj.specialization.length > 1) {
-          specialization = specialization.replace(/,/g, ", ");
-        }
-      }
-      service_list.push(
-        {
-          'id': serviceObj.id,
-          'businessName': businessName,
-          'gender': serviceObj.gender,
-          'userType': serviceObj.userType,
-          'status': serviceObj.status,
-          'mobileNo': serviceObj.mobileNo,
-          'isAvailable': serviceObj.isAvailable,
-          'specialization': specialization,
-          'languages': languages,
-          'locationName': serviceObj.locationName,
-          'profilePicture': serviceObj.profilePicture,
-          'city': serviceObj.city,
-          'employeeId': serviceObj.employeeId,
-          'state': serviceObj.state,
-          'currentWlCount': serviceObj.currentWlCount+serviceObj.currentApptCount,
-          'whatsAppNum': (serviceObj.whatsAppNum) ? serviceObj.whatsAppNum  : '', 
-          'telegramNum': (serviceObj.telegramNum) ? serviceObj.telegramNum  : '', 
-          'countryCode':  serviceObj.countryCode || '',
-          'firstName': serviceObj.firstName,
-          'lastName': serviceObj.lastName,
-          'email': serviceObj.email || '',
-          'bussloc': serviceObj.bussLocations || ''
- 
-          // serviceObj.firstName + ' ' + serviceObj.lastName;
-
-
-        });
-    });
-    return service_list;
-  }
+  // setServiceDataSource(result) {
+  //   const usersList: any = [];
+  //   result.forEach(userObj => {
+  //     let businessName = '';
+  //     // let languages;
+  //     // let specialization;
+  //     businessName = (userObj.businessName) ? userObj.businessName : userObj.firstName + ' ' + userObj.lastName;
+  //     // if (userObj.preferredLanguages) {
+  //     //   languages = JSON.parse(userObj.preferredLanguages);
+  //     //   for (var i = 0; i < languages.length; i++) {
+  //     //     languages[i] = languages[i].charAt(0).toUpperCase() + languages[i].slice(1).toLowerCase();
+  //     //   }
+  //     // }
+  //     // if (userObj.specialization) {
+  //     //   for (let i = 0; i < userObj.specialization.length; i++) {
+  //     //     const special = this.specialization_arr.filter(speciall => speciall.name === userObj.specialization[i]);
+  //     //     if (special[0]) {
+  //     //       userObj.specialization[i] = special[0].displayName;
+  //     //     }
+  //     //   }
+  //     //   specialization = userObj.specialization.toString();
+  //       // if (userObj.specialization.length > 1) {
+  //       //   specialization = specialization.replace(/,/g, ", ");
+  //       // }
+  //     // }
+  //     usersList.push(
+  //       {
+  //         'id': userObj.id,
+  //         'businessName': businessName,
+  //         'gender': userObj.gender,
+  //         'userType': userObj.userType,
+  //         'status': userObj.status,
+  //         'mobileNo': userObj.mobileNo,
+  //         'isAvailable': userObj.isAvailable,
+  //         'specialization':userObj.specialization,
+  //         'languages': userObj.preferredLanguages,
+  //         'locationName': userObj.locationName,
+  //         'profilePicture': userObj.profilePicture,
+  //         'city': userObj.city,
+  //         'employeeId': userObj.employeeId,
+  //         'state': userObj.state,
+  //         'currentWlCount': userObj.currentWlCount+userObj.currentApptCount,
+  //         'whatsAppNum': (userObj.whatsAppNum) ? userObj.whatsAppNum  : '', 
+  //         'telegramNum': (userObj.telegramNum) ? userObj.telegramNum  : '', 
+  //         'countryCode':  userObj.countryCode || '',
+  //         'firstName': userObj.firstName,
+  //         'lastName': userObj.lastName,
+  //         'email': userObj.email || '',
+  //         'bussloc': userObj.bussLocations || ''
+  //       });
+  //   });
+  //   return usersList;
+  // }
   updateUser() {
+    const businessName = this.selectedUser.businessName?this.selectedUser.businessName:(this.selectedUser.firstName + ' ' + this.selectedUser.lastName);
     let msg = '';
-    if (!this.selectedUser.isAvailable && (this.user.id === 136239 || this.user.id === 9341)) {
+    if (!this.selectedUser.isAvailable && (this.selectedUser.id === 136239 || this.selectedUser.id === 9341)) {
       msg = this.selectedUser.businessName + ' seems to be unavailable now. Assign anyway ? ';
     } else {
-      msg = 'Do you want to assign this ' + this.customer_label + ' to ' + this.selectedUser.businessName + '?';
+      msg = 'Do you want to assign this ' + this.customer_label + ' to ' + businessName + '?';
     }
     const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
@@ -281,7 +328,7 @@ export class UserServiceChnageComponent implements OnInit {
     this.selectrow = true;
     this.selectedUser = user;
     if (this.selectrow === true && user.id) {
-      if(user.bussloc.length > 1){
+      if(user.bussLocations.length > 1){
         this.updateUserWithLocation(user)
       }
       else{
@@ -298,7 +345,6 @@ export class UserServiceChnageComponent implements OnInit {
     }
   }
   updateUserWithLocation(user) {
-    console.log(user);
     let msg = '';
     if (!this.selectedUser.isAvailable && (this.user.id === 136239 || this.user.id === 9341)) {
       msg = this.selectedUser.businessName + ' seems to be unavailable now. Assign anyway ? ';
@@ -317,7 +363,6 @@ export class UserServiceChnageComponent implements OnInit {
       }
     });
     dialogrefd.afterClosed().subscribe(result => {
-      console.log(result);
       if (result) {
         if (this.source == 'checkin') {
           const post_data = {
@@ -432,10 +477,11 @@ export class UserServiceChnageComponent implements OnInit {
     };
     this.selectedSpecialization = [];
     this.selectedLanguages = [];
+    this.selectedLocations = [];
   }
   doSearch() {
     // this.getProviders();
-    if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pincode || this.filter.email || this.filter.primaryMobileNo || this.filter.employeeId || this.filter.available || this.selectedLanguages.length > 0 || this.selectedSpecialization.length > 0) {
+    if (this.filter.firstName || this.filter.lastName || this.filter.city || this.filter.state || this.filter.pincode || this.filter.email || this.filter.primaryMobileNo || this.filter.employeeId || this.filter.available || this.selectedLanguages.length > 0 || this.selectedLocations.length > 0 || this.selectedSpecialization.length > 0) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -476,11 +522,14 @@ export class UserServiceChnageComponent implements OnInit {
         this.filter.primaryMobileNo = '';
       }
     }
+    if (this.selectedLocations.length > 0) {
+      api_filter['businessLocs-eq'] = this.selectedLocations.toString();
+    }
     if (this.selectedLanguages.length > 0) {
-      api_filter['spokenlangs-eq'] = this.selectedLanguages.toString();
+      api_filter['preferredLanguages-eq'] = this.selectedLanguages.toString();
     }
     if (this.selectedSpecialization.length > 0) {
-      api_filter['specialization-eq'] = this.selectedSpecialization.toString();
+      api_filter['specialization-eq'] = 'name::' + this.selectedSpecialization.toString();
     }
     return api_filter;
   }
@@ -490,7 +539,6 @@ export class UserServiceChnageComponent implements OnInit {
       this.doSearch();
     }
   }
-
   getSpokenLanguages() {
     this.provider_services.getSpokenLanguages()
       .subscribe(data => {
@@ -499,8 +547,6 @@ export class UserServiceChnageComponent implements OnInit {
   }
   getSpecializations() {
     // let subDomain;
-    // console.log(this.user.sector);
-    // console.log(this.user.subSector);
     // if (this.user.sector === 'healthCare') {
     //   if (this.user.subSector === 'hospital') {
     //     subDomain = 'physiciansSurgeons';
@@ -556,11 +602,11 @@ export class UserServiceChnageComponent implements OnInit {
     //       subDomain = 'entertainment';
     //    }  
     // }
-    this.provider_services.getSpecializations(this.user.sector, this.subdomain)
-      .subscribe(data => {
-        this.specialization_arr = data;
-        this.getProviders();
-      });
+    // this.provider_services.getSpecializations(this.user.sector, this.subdomain)
+    //   .subscribe(data => {
+    //     this.specialization_arr = data;
+    //     this.getProviders();
+    //   });
   }
   setFilterDataCheckbox(type, value) {
     if (type === 'languages') {
@@ -569,6 +615,14 @@ export class UserServiceChnageComponent implements OnInit {
         this.selectedLanguages.push(value);
       } else {
         this.selectedLanguages.splice(indx, 1);
+      }
+    }
+    if (type === 'location') {
+      const indx = this.selectedLocations.indexOf(value);
+      if (indx === -1) {
+          this.selectedLocations.push(value);
+      } else {
+          this.selectedLocations.splice(indx, 1);
       }
     }
     if (type === 'specializations') {
@@ -611,13 +665,11 @@ export class UserServiceChnageComponent implements OnInit {
       }
     });
 }
-
 getApptDetails() {
   this.provider_services.getAppointmentById(this.uuid)
     .subscribe(
       data => {
         this.checkin = data;
-        console.log(this.checkin);
         if(this.checkin.appmtFor){
         if (this.checkin.appmtFor[0].firstName && this.checkin.appmtFor[0].firstName !== null && this.checkin.appmtFor[0].firstName !== undefined && this.checkin.appmtFor[0].firstName !== '') {
           this.userDetails = this.checkin.appmtFor[0].firstName + ' ' + this.checkin.appmtFor[0].lastName;
@@ -630,8 +682,6 @@ getApptDetails() {
           }
         }
       }
-        console.log(this.userDetails);
-      
       }, error => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
@@ -642,7 +692,6 @@ getApptDetails() {
     .subscribe(
       data => {
         this.checkin = data;
-        console.log(this.checkin);
         if(this.checkin.waitlistingFor){
           if (this.checkin.waitlistingFor[0].firstName && this.checkin.waitlistingFor[0].firstName !== null && this.checkin.waitlistingFor[0].firstName !== undefined && this.checkin.waitlistingFor[0].firstName !== '') {
             this.userDetails = this.checkin.waitlistingFor[0].firstName + ' ' + this.checkin.waitlistingFor[0].lastName;
@@ -655,31 +704,41 @@ getApptDetails() {
             }
           }
         }
-        console.log(this.userDetails);
       }, error => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
     );
   }
   getProviderLocations() {
-    this.provider_services.getProviderLocations()
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.provider_services.getProviderLocations()
         .subscribe(data => {
-         this.locationsjson = data;
-        });
-  }
-  getBussLoc(bussloc){
-    for (let i = 0; i < bussloc.length; i++) {
-        const locations = this.locationsjson.filter(loc =>loc.id === bussloc[i]);
-        if (locations[0]) {
-            bussloc[i] = locations[0].place;
+          _this.locationsjson = data;
+          for (const loc of _this.locationsjson) {
+            if (loc.status === 'ACTIVE') {
+                _this.loc_list.push(loc);
+            }
         }
-    }
-    if (bussloc.length > 1) {
-        bussloc = bussloc.toString();
-        return bussloc.replace(/,/g, ", ");
-    }
-    return bussloc;
-}
+         resolve(true);
+        }, ()=> {
+          resolve(false);
+        });
+      })
+  }
+//   getBussLoc(bussloc){
+//     for (let i = 0; i < bussloc.length; i++) {
+//         const locations = this.locationsjson.filter(loc =>loc.id === bussloc[i]);
+//         if (locations[0]) {
+//             bussloc[i] = locations[0].place;
+//         }
+//     }
+//     if (bussloc.length > 1) {
+//         bussloc = bussloc.toString();
+//         return bussloc.replace(/,/g, ", ");
+//     }
+//     return bussloc;
+// }
 
 }
 

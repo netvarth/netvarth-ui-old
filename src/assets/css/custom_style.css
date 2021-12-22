@@ -13713,7 +13713,12 @@ padding-left: 15px !important;
   height: 100% !important;
   background: white !important;
 }
-
+.export-class.popup-class {
+  max-width: 100% !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: white !important;
+}
 .loginmainclass.popup-class mat-dialog-container.mat-dialog-container,
 .commonpopupmainclass.popup-class.specialclass mat-dialog-container.mat-dialog-container {
   margin: auto !important;

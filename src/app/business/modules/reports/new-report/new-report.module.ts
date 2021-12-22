@@ -10,6 +10,9 @@ import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.m
 import { LoadingSpinnerModule } from "../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { NewReportComponent } from "./new-report.component";
 import { RouterModule, Routes } from '@angular/router';
+import { ExportBookingReportModule } from "../../export-booking-report/export-booking-report.module";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 const routes: Routes = [
     {path: '', component: NewReportComponent}
 ]
@@ -23,9 +26,12 @@ const routes: Routes = [
         MatOptionModule,
         MatFormFieldModule,
         MatInputModule,
+        MatDialogModule,
         MatDatepickerModule,
         LoadingSpinnerModule,
         CapitalizeFirstPipeModule,
+        ExportBookingReportModule,
+        MatCheckboxModule,
         [RouterModule.forChild(routes)]
     ]
 })

@@ -17,6 +17,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
 import { CommunicationService } from '../../../../business/services/communication-service';
+import { BookingHistoryComponent } from '../../appointments/booking-history/booking-history.component';
 
 @Component({
   selector: 'app-provider-waitlist-checkin-detail',
@@ -104,6 +105,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     { mode: 'PHONE_CHECKIN', value: 'Phone in ' },
     { mode: 'ONLINE_CHECKIN', value: 'Online ' },
   ];
+  bookinghistorydialogref: any;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -306,7 +308,20 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     });
 
   }
-
+  openbookinghistory() {
+    this.bookinghistorydialogref = this.dialog.open(BookingHistoryComponent, {
+      width: '60%',
+      height: 'auto',
+      data: {
+        type:'Token History',
+        providername:this.spName,
+        appointmentby:this.waitlist_data.waitlistedBy,
+        bookingmode:this.getWaitListMode(this.waitlist_data.waitlistMode),
+        consumername:this.waitlist_data.consumer.firstName+" "+this.waitlist_data.consumer.lastName,
+        details:this.waitlist_history
+      }
+    })
+  }
   // getWaitlistNotes() {
   //   this.provider_services.getProviderWaitlistNotes(this.waitlist_data.consumer.id)
   getWaitlistNotes(uuid) {

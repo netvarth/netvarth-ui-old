@@ -142,8 +142,10 @@
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                 <div class="font1" *ngIf="showToken">Add token Notifications</div>
                 <div class="font1" *ngIf="!showToken"> Add checkin Notifications</div>
-                <div class="form-level-settings">Notify a {{customer_label}} via
+                <div class="form-level-settings" *ngIf="!showToken">Notify a {{customer_label}} via
                   SMS/Email/Notifications when a Check-in happens.</div>
+                  <div class="form-level-settings" *ngIf="showToken">Notify a {{customer_label}} via
+                    SMS/Email/Notifications when a token happens.</div>
               </div>
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
                 <mat-checkbox [checked]="wlAddNotificationSettings.sms"
@@ -256,7 +258,7 @@
                         </mat-form-field>
                       </div>
                     </div>
-                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding mgn-up-15">
+                    <!-- <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding mgn-up-15">
                       <mat-checkbox [checked]="firstAPPTNotificationSettings.sms"
                         (change)="showSubmit('FIRST_APPT', 'sms', $event)" class="mgn-rt-20">
                         Via SMS</mat-checkbox>
@@ -269,6 +271,22 @@
                       <span *ngIf="!small_device_display" (click)="changeNotificationSettings('FIRST_APPT')"
                         class="notify-ok-btn">OK</span>
                       <div class="mgn-up-10" *ngIf="small_device_display">
+                        <span (click)="changeNotificationSettings('FIRST_APPT')" class="notify-ok-btn">OK</span>
+                      </div>
+                    </div> -->
+                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding mgn-up-15">
+                      <mat-checkbox [checked]="firstAPPTNotificationSettings.sms"
+                        (change)="showSubmit('FIRST_APPT', 'sms', $event)" class="mgn-rt-20">
+                        Via SMS</mat-checkbox>
+                      <mat-checkbox [checked]="firstAPPTNotificationSettings.email"
+                        (change)="showSubmit('FIRST_APPT', 'email', $event)" class="mgn-rt-20">
+                        Via Email</mat-checkbox>
+                      <mat-checkbox [checked]="firstAPPTNotificationSettings.pushNotification"
+                        (change)="showSubmit('FIRST_APPT', 'pushNotification', $event)" class="mgn-rt-20">
+                        Via App</mat-checkbox>
+                      <span *ngIf="showButton['FIRST_APPT'] && !small_device_display"
+                        (click)="changeNotificationSettings('FIRST_APPT')" class="notify-ok-btn">OK</span>
+                      <div class="mgn-up-10" *ngIf="showButton['FIRST_APPT'] && small_device_display">
                         <span (click)="changeNotificationSettings('FIRST_APPT')" class="notify-ok-btn">OK</span>
                       </div>
                     </div>
@@ -303,7 +321,7 @@
                         </mat-form-field>
                       </div>
                     </div>
-                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding mgn-up-15">
+                    <!-- <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding mgn-up-15">
                       <mat-checkbox [checked]="secondAPPTNotificationSettings.sms"
                         (change)="showSubmit('SECOND_APPT', 'sms', $event)" class="mgn-rt-20">
                         Via SMS</mat-checkbox>
@@ -316,6 +334,23 @@
                       <span *ngIf="!small_device_display" (click)="changeNotificationSettings('SECOND_APPT')"
                         class="notify-ok-btn">OK</span>
                       <div class="mgn-up-10" *ngIf="small_device_display">
+                        <span (click)="changeNotificationSettings('SECOND_APPT')" class="notify-ok-btn">OK</span>
+                      </div>
+                    </div> -->
+
+                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding mgn-up-15">
+                      <mat-checkbox [checked]="secondAPPTNotificationSettings.sms"
+                        (change)="showSubmit('SECOND_APPT', 'sms', $event)" class="mgn-rt-20">
+                        Via SMS</mat-checkbox>
+                      <mat-checkbox [checked]="secondAPPTNotificationSettings.email"
+                        (change)="showSubmit('SECOND_APPT', 'email', $event)" class="mgn-rt-20">
+                        Via Email</mat-checkbox>
+                      <mat-checkbox [checked]="secondAPPTNotificationSettings.pushNotification"
+                        (change)="showSubmit('SECOND_APPT', 'pushNotification', $event)" class="mgn-rt-20">
+                        Via App</mat-checkbox>
+                      <span *ngIf="showButton['SECOND_APPT'] && !small_device_display"
+                        (click)="changeNotificationSettings('SECOND_APPT')" class="notify-ok-btn">OK</span>
+                      <div class="mgn-up-10" *ngIf="showButton['SECOND_APPT'] && small_device_display">
                         <span (click)="changeNotificationSettings('SECOND_APPT')" class="notify-ok-btn">OK</span>
                       </div>
                     </div>
@@ -350,7 +385,7 @@
                         </mat-form-field>
                       </div>
                     </div>
-                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding mgn-up-15">
+                    <!-- <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding mgn-up-15">
                       <mat-checkbox [checked]="thirdAPPTNotificationSettings.sms"
                         (change)="showSubmit('THIRD_APPT', 'sms', $event)" class="mgn-rt-20">
                         Via SMS</mat-checkbox>
@@ -363,6 +398,22 @@
                       <span *ngIf="!small_device_display" (click)="changeNotificationSettings('THIRD_APPT')"
                         class="notify-ok-btn">OK</span>
                       <div class="mgn-up-10" *ngIf="small_device_display">
+                        <span (click)="changeNotificationSettings('THIRD_APPT')" class="notify-ok-btn">OK</span>
+                      </div>
+                    </div> -->
+                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding mgn-up-15">
+                      <mat-checkbox [checked]="thirdAPPTNotificationSettings.sms"
+                        (change)="showSubmit('THIRD_APPT', 'sms', $event)" class="mgn-rt-20">
+                        Via SMS</mat-checkbox>
+                      <mat-checkbox [checked]="thirdAPPTNotificationSettings.email"
+                        (change)="showSubmit('THIRD_APPT', 'email', $event)" class="mgn-rt-20">
+                        Via Email</mat-checkbox>
+                      <mat-checkbox [checked]="thirdAPPTNotificationSettings.pushNotification"
+                        (change)="showSubmit('THIRD_APPT', 'pushNotification', $event)" class="mgn-rt-20">
+                        Via App</mat-checkbox>
+                      <span *ngIf="showButton['THIRD_APPT'] && !small_device_display"
+                        (click)="changeNotificationSettings('THIRD_APPT')" class="notify-ok-btn">OK</span>
+                      <div class="mgn-up-10" *ngIf="showButton['THIRD_APPT'] && small_device_display">
                         <span (click)="changeNotificationSettings('THIRD_APPT')" class="notify-ok-btn">OK</span>
                       </div>
                     </div>
@@ -397,7 +448,7 @@
                         </mat-form-field>
                       </div>
                     </div>
-                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding mgn-up-15">
+                    <!-- <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding mgn-up-15">
                       <mat-checkbox [checked]="fourthAPPTNotificationSettings.sms"
                         (change)="showSubmit('FOURTH_APPT', 'sms', $event)" class="mgn-rt-20">
                         Via SMS</mat-checkbox>
@@ -410,6 +461,23 @@
                       <span *ngIf="!small_device_display" (click)="changeNotificationSettings('FOURTH_APPT')"
                         class="notify-ok-btn">OK</span>
                       <div class="mgn-up-10" *ngIf="small_device_display">
+                        <span (click)="changeNotificationSettings('FOURTH_APPT')" class="notify-ok-btn">OK</span>
+                      </div>
+                    </div> -->
+
+                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding mgn-up-15">
+                      <mat-checkbox [checked]="fourthAPPTNotificationSettings.sms"
+                        (change)="showSubmit('FOURTH_APPT', 'sms', $event)" class="mgn-rt-20">
+                        Via SMS</mat-checkbox>
+                      <mat-checkbox [checked]="fourthAPPTNotificationSettings.email"
+                        (change)="showSubmit('FOURTH_APPT', 'email', $event)" class="mgn-rt-20">
+                        Via Email</mat-checkbox>
+                      <mat-checkbox [checked]="fourthAPPTNotificationSettings.pushNotification"
+                        (change)="showSubmit('FOURTH_APPT', 'pushNotification', $event)" class="mgn-rt-20">
+                        Via App</mat-checkbox>
+                      <span *ngIf="showButton['FOURTH_APPT'] && !small_device_display"
+                        (click)="changeNotificationSettings('FOURTH_APPT')" class="notify-ok-btn">OK</span>
+                      <div class="mgn-up-10" *ngIf="showButton['FOURTH_APPT'] && small_device_display">
                         <span (click)="changeNotificationSettings('FOURTH_APPT')" class="notify-ok-btn">OK</span>
                       </div>
                     </div>

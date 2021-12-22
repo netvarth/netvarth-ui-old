@@ -458,6 +458,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.windowScrolled = false;
     }
   }
+  images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
   ngOnInit() {
     this.getProviderSettings();
     this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
@@ -1099,7 +1100,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQIdsFromView(view) {
     const qIds = [];
-    if (view && view.customViewConditions.queues && view.customViewConditions.queues.length > 0) {
+    if (view && view.customViewConditions && view.customViewConditions.queues && view.customViewConditions.queues.length > 0) {
       for (let i = 0; i < view.customViewConditions.queues.length; i++) {
         qIds.push(view.customViewConditions.queues[i]['id']);
       }
@@ -1980,6 +1981,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['token-eq'] = this.token;
       }
     }
+    console.log(this.filter)
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;
     }
@@ -2581,10 +2583,18 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               for (let i = 0; i < this.historyCheckins.length; i++) {
                 const fname = (this.historyCheckins[i].waitlistingFor[0].firstName) ? this.historyCheckins[i].waitlistingFor[0].firstName : '';
                 const lname = (this.historyCheckins[i].waitlistingFor[0].lastName) ? this.historyCheckins[i].waitlistingFor[0].lastName : '';
+                let name='';
+                if(fname!== '' && lname!==''){
+                name=fname+''+ lname;
+                }
+                else{
+                name='Nil';
+                }
+                
                 checkin_html += '<tr style="line-height:20px;padding:10px">';
                 checkin_html += '<td style="padding:10px">' + (this.historyCheckins.indexOf(this.historyCheckins[i]) + 1) + '</td>';
                 checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].date).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].checkInTime + '</td>';
-                checkin_html += '<td style="padding:10px">' + fname + ' ' + lname + '</td>';
+                checkin_html += '<td style="padding:10px">' + name + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
                 if (this.historyCheckins[i].label && Object.keys(this.historyCheckins[i].label).length > 0) {
                   const labels = [];
@@ -3057,7 +3067,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         multiSelection: multiSelection,
         status: status,
         labelFilterData: this.labelFilterData,
-        labelsCount: this.labelsCount
+        labelsCount: this.labelsCount,
+        statusBooking :this.statusAction
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {

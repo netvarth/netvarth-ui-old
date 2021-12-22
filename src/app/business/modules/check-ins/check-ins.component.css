@@ -9,6 +9,9 @@
     width: 100px !important;
     text-align: center !important;
 }
+.overLap{
+display: inline-flex;    
+}
 
 .dropdown.notifications-menu a i {
     display: block !important;

@@ -143,7 +143,9 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
         .subscribe((data: any) => {
           this.loading = false;
           this.digitalSign = true;
-          this.selectedMessage.files.push(data);
+          if(data && data !== null){
+            this.selectedMessage.files.push(data);
+          }
         },
           error => {
             this.digitalSign = false;
