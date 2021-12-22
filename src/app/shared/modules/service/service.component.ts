@@ -200,9 +200,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
             });
             this.paymentSubscription=this.provider_services.getPaymentProfiles()
             .subscribe( (data:any)=>{
-             console.log('payment profile'+JSON.stringify(data));
                this.paymentProfiles=data;
-               console.log(this.paymentProfiles);
             }
             , error=>{
                 this.paymentProfiles=[];
@@ -304,7 +302,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             
 
                                         });
-                                    console.log(this.service_data['paymentProfileId']);
+                   
                                       
                                     }
                                     if (this.service_data.serviceType === 'virtualService') {
@@ -366,7 +364,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                            
                                         });
                                        
-                                        console.log(this.serviceForm.controls.paymentProfileId.value);
+                               
                                         if (this.service_data.serviceType === 'virtualService') {
                                             this.tool_name = this.service_data.virtualCallingModes[0].callingMode;
                                             this.tool_id = this.service_data.virtualCallingModes[0].value;
@@ -403,10 +401,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
         } else if (this.screenWidth < 375) {
             divider = divident / 1;
         }
-        console.log(divident);
-        console.log(divider);
+        
         this.no_of_grids = Math.round(divident / divider);
-        console.log(this.no_of_grids);
+     
     }
     @Input() donationservice;
     setDescFocus() {
@@ -571,7 +568,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
    
     }
     isDefaultProfile(profile){
-        console.log(profile.profileId);
+        
         if(profile.profileId=='spDefaultBillProfile'){
 
             return true;
@@ -690,7 +687,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
             if (form_data.serviceType === 'virtualService') {
                 form_data['virtualCallingModes'] = [this.teleCallingModes];
             }
-            console.log(this.selectedUser);
+           
             if (this.selectedUser && this.userspecific) {
                 this.provider = {
                     'id': this.selectedUser
@@ -718,7 +715,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 }
             } 
             else {
-                //console.log(serviceActionModel);
+       
                 this.servicesService.actionPerformed(serviceActionModel);
             }
         }
@@ -1070,7 +1067,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.router.navigate(['provider', 'settings', 'general', 'questionnaire', id]);
     }
     getProviderName(users) {
-        console.log(users);
+   
         let userlst = '';
         if (users[0] === 'All') {
             return 'All Users'
@@ -1132,7 +1129,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 this.truncateInst(this.userNamelist.replace(/,\s*$/, ''));
             } else {
                 this.userNamelist = this.userNamelist.replace(/,\s*$/, '')
-                console.log(this.userNamelist.length);
+               
             }
 
         }
