@@ -25,6 +25,7 @@ export class SetPasswordFormComponent implements OnInit {
   spForm;
   disableButton = false;
   @Input() type;
+  @Input() theme;
   @Input() checkConsumerOrProvider;
   @Input() consumerlogin;
   @Output() retonPasswordSubmit: EventEmitter<any> = new EventEmitter();

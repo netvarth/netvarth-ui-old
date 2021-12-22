@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConsumerServices } from '../../services/consumer-services.service';
+import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { projectConstants } from '../../../app.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { SharedServices } from '../../../shared/services/shared-services';
@@ -37,15 +38,12 @@ export class WaitlistComponent implements OnInit, OnDestroy {
   remove_fav_cap = Messages.REMOVE_FAV;
   cancel_checkin_cap = Messages.CANCEL_CHECKIN;
   comm_history_cap = Messages.COMMU_HISTORY_CAP;
-
-
   estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
   nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
-
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   canceldialogRef;
   remfavdialogRef;
-
+  public searchfields: SearchFields = new SearchFields();
   private subs = new SubSink();
   constructor(private consumer_services: ConsumerServices,
     private shared_functions: SharedFunctions,
@@ -89,9 +87,7 @@ export class WaitlistComponent implements OnInit, OnDestroy {
           const today = new Date();
           today.setHours(0, 0, 0, 0);
           waitlist_date.setHours(0, 0, 0, 0);
-
           this.waitlist_detail.history = false;
-
           if (today.valueOf() > waitlist_date.valueOf()) {
             this.waitlist_detail.history = true;
           }
@@ -109,16 +105,12 @@ export class WaitlistComponent implements OnInit, OnDestroy {
     pass_ob['user_id'] = waitlist.providerAccount.id;
     pass_ob['name'] = waitlist.providerAccount.businessName;
     this.addNote(pass_ob);
-
   }
 
   addNote(pass_ob) {
-
     const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
-      minHeight: '100vh',
-      minWidth: '100vw',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0'],
+      panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       autoFocus: true,
       data: pass_ob
@@ -126,16 +118,13 @@ export class WaitlistComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
-
       }
     });
   }
-
   doCancelWaitlist(waitlist) {
     if (!waitlist.ynwUuid || !waitlist.providerAccount.id) {
       return false;
     }
-
     this.shared_functions.doCancelWaitlist(waitlist, this)
       .then(
         data => {
@@ -150,16 +139,13 @@ export class WaitlistComponent implements OnInit, OnDestroy {
   }
 
   doDeleteFavProvider(fav) {
-
     if (!fav.id) {
       return false;
     }
-
     this.shared_functions.doDeleteFavProvider(fav, this)
       .then(
         data => {
           if (data === 'reloadlist') {
-
           }
         },
         error => {
@@ -171,26 +157,21 @@ export class WaitlistComponent implements OnInit, OnDestroy {
     if (!id) {
       return false;
     }
-
     this.subs.sink = this.shared_services.addProvidertoFavourite(id)
       .subscribe(
         () => {
-
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
-
-
   getCommunicationHistory() {
     this.subs.sink = this.consumer_services.getConsumerCommunications(this.waitlist_detail.providerAccount.id)
       .subscribe(
         data => {
           const history: any = data;
           this.communication_history = [];
-
           for (const his of history) {
             if (his.waitlistId === this.waitlist_detail.ynwUuid) {
               this.communication_history.push(his);
@@ -203,7 +184,6 @@ export class WaitlistComponent implements OnInit, OnDestroy {
         }
       );
   }
-
   sortMessages() {
     this.communication_history.sort(function (message1, message2) {
       if (message1.timeStamp < message2.timeStamp) {

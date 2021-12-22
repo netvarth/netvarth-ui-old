@@ -2303,3 +2303,72 @@ img.ordericon.home {
 ::ng-deep .commonpopupmainclass.popup-class.specialclass.service-detail-bor-rad-0 mat-dialog-container {
   border-radius: 0 !important;
 }
+.covid-coming .card {
+  padding: 20px 10px !important;
+  margin: 10px;
+  width: 95%;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  color: #00cc96;
+  box-shadow: 0 0 10px 5px rgb(0 0 0 / 5%) !important;
+}
+.more-info-sec {
+  width: 160px !important;
+}
+@media(max-width: 991px) {
+  .bus-actions-small-devices {
+    display: flex !important;
+  }
+}
+.footer {
+  position: fixed !important;
+  height: 60px!important;
+  -webkit-box-shadow: 0px 0px 28px 0px rgba(82, 63, 105, 0.13)!important;
+  box-shadow: 0px 0px 28px 0px rgba(82, 63, 105, 0.13)!important;
+  bottom: 0!important;
+  right: 0!important;
+  left: 265px!important;
+}
+.dashboard-btn {
+  background: none !important;
+  border: none !important;
+  margin-top: 10px !important;
+  color: #1E4079 !important;
+}
+
+footer.bus-page-footer.site-footer {
+  background-color: #1E4079;
+  border-bottom: 10px solid #f1b51c;
+}
+
+footer.bus-page-footer.site-footer .footer-bottom {
+  border: none;
+}
+
+footer.bus-page-footer.site-footer .footer-bottom .footer-links {
+  color: #f1b51c;
+  margin: 0;
+}
+
+footer.bus-page-footer.site-footer .footer-bottom .footer-links.bd-pd-right {
+    padding-right: 10px;
+    border-right: 1px solid #f1b51c;
+}
+
+footer.bus-page-footer.site-footer .footer-bottom .footer-links.bd-pd-left {
+    border-left: 1px solid #f1b51c;
+    padding-left: 10px;
+}
+#customAppPopup h5 {
+  padding:15px !important;
+}
+#customAppPopup button{
+  margin:15px !important;
+}
+#customAppIOSPopup {
+  display: none;
+}
+.morebt{
+  cursor: pointer;
+color: #1572a8;
+}

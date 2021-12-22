@@ -1,0 +1,139 @@
+<style>  
+.paymentmode{
+    font-size:16px!important;
+    padding:0px !important;
+    box-shadow: 0px 0px 8px 8px rgb(231, 226, 226) !important;
+  }
+  .paymentmode > .mat-radio-button.mat-radio-checked { 
+    border-color: blue !important;
+    box-shadow: 0 0 3px 3px blue!important 
+  }
+
+  ::ng-deep .payment-mode-card-styles .mat-radio-button .mat-radio-container {
+    display: none!important;
+  }
+ ::ng-deep .payment-mode-card-styles .mat-radio-container .mat-radio-outer-circle,
+ ::ng-deep .payment-mode-card-styles .mat-radio-container .mat-radio-inner-circle{
+    
+    display: none!important;
+  }
+  ::ng-deep .payment-mode-card-styles .mat-radio-container .mat-radio-label{
+    display: inline;
+  }
+</style>
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Payments
+        </h5>
+    </div>
+</section>
+<section #license_paylink> 
+    <div class="content w-manager settings comn-cls lic-page" style="width: 100%;">
+        <div class="col-md-12 no-padding-small">
+            <div class="w-dta">
+                <div class="row">
+                    <div class="copy one col-xs-12 col-sm-12 no-padding">
+                        <div class="pay-section card">
+                            <div *ngIf="paidStatus == 'false'">
+                                <div style="padding-bottom: 10px; font-size: large;">Amount to pay : <b
+                                        class="rupee-font">{{prepayAmount| currency:'&#8377;'}}</b></div>
+                                <div style="padding-bottom: 10px; font-size: large;">Choose the Payment Option
+                                 
+                                    <ng-container *ngIf="!shownonIndianModes">
+                                        <div *ngFor="let modes of indian_payment_modes" class="mt-4 payment-mode-card-styles">
+                                            <div class="col-xs-12 col-sm-6 col-lg-3">
+
+                                                    <div class="text-primary" >
+                                                          
+                                                      <mat-radio-group  class="paymentmode card shadow-lg" name="paymentMode" (change)="indian_payment_mode_onchange($event)" labelPosition="before">
+                                                        <mat-radio-button [value]="modes.mode"  >
+                                                            <div class="d-flex justify-content-around">
+                                                                <div class="col-md-8 col-lg-7 my-auto"><span>{{modes.modeDisplayName}}</span></div>
+                                                                <div class="col-md-4 col-lg-5 my-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>
+                                                            </div>  
+                                                        </mat-radio-button>
+
+                                        
+                                                      </mat-radio-group>
+                                                     
+                                                      
+                                                    </div>
+                                                    </div>
+
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="shownonIndianModes">
+                                    
+                                    <div *ngFor="let modes of non_indian_modes" class="mt-4 payment-mode-card-styles" >
+                                        <div class="col-xs-12 col-sm-6 col-lg-3">
+
+                                                <div class="text-primary" >
+                                                      
+                                                  <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode" (change)="non_indian_modes_onchange($event)">
+                                                    <mat-radio-button [value]="modes.mode"  >
+                                                        <div class="d-flex justify-content-around">
+                                                            <div class="col-md-8 col-lg-7 my-auto"><span>{{modes.modeDisplayName}}</span></div>
+                                                            <div class="col-md-4 col-lg-5 my-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>
+                                                        </div>    
+                                                    </mat-radio-button>
+                                                  
+                                                  </mat-radio-group>
+                                                 
+                                    
+                                                </div>
+                                                </div>
+
+                                </div>
+                            </ng-container>
+                                <div class="clearfix"></div>
+                                <div class="txt-align-center pad_link"
+                                    >
+                                    <span [class.disabled]="isClickedOnce"
+                                        (click)="togglepaymentMode()"
+                                        class="pointer-cursor"><a
+                                            class="refund_policy">
+                                            <span *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non Indian Payment ? Click
+                                            here</span>
+                                            <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
+                                                here</span>
+                                        </a></span>
+
+
+                                </div>
+                                </div>
+                                <div class="txt-align-center">
+                                    <!-- <button class="cs-btn bt1" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()">CC/DC/Net Banking/UPI</button> -->
+                                    <button class="btn btn-primary" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && makeFailedPayment()">Make Payment</button>
+                                    <!-- <button class="cs-btn bt1" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()">CC/DC/Net Banking/UPI</button> -->
+                                    <!-- <button class="cs-btn bt1" (click)="paytmPayment()">Paytm</button> -->
+                                </div>
+                            </div>
+
+                            <div *ngIf="paidStatus == 'true'">
+                                <div style="padding-bottom: 10px"><b class="rupee-font">&#8377; {{prepayAmount}}</b>
+                                </div>
+                                <i class="fa fa-check-circle" style="color: green;"><span style="font-size: large;">Paid
+                                        Successfully</span> </i><br><br>
+                                <div class="ivc">
+                                    <div class="pay-det-row">
+                                        <span><b>Payment Gateway:</b>&nbsp;<span>Paytm</span></span>
+                                    </div>
+                                    <div class="pay-det-row">
+                                        <span><b> Payment Ref Id:</b>&nbsp;<span>{{order_id}}</span></span>
+                                    </div>
+                                    <div class="pay-det-row">
+                                        <span><b> Transaction Id:</b>&nbsp; <span>{{payment_id}}</span></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>
+</section>

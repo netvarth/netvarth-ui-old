@@ -3,7 +3,7 @@
         <div class="panel panel-default">
             <div class="panel-heading top-row ">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                    <app-header *ngIf="shared_functions.checkLogin()"></app-header>
+                    <app-header *ngIf="shared_functions.checkLogin()" [showHeaderAction]="true"></app-header>
                 </div>
             </div>
             <div class="panel-body no-padding">
@@ -13,12 +13,12 @@
                             <h5 class="mgn-up-10">
                                 <!-- Check-ins/Tokens -->
                                 History <a class="pull-left mgn-rt-20 back-btn" (click)="goback()"><i
-                                        class="fa fa-arrow-left"></i></a></h5>
+                                        class="fa fa-arrow-left"></i></a>
+                            </h5>
                         </div>
                         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                         <div class="card history one" *ngIf="!loading">
-                            <div class="table-outer history-tbl no-padding"
-                                >
+                            <div class="table-outer history-tbl no-padding">
                                 <table class="table" *ngIf="entire_history && entire_history.length > 0">
                                     <thead>
                                         <tr>
@@ -45,14 +45,6 @@
                                                             {{his_wait.timeSlot.eTime}}</span>
                                                     </div>
                                                 </td>
-                                                <!-- <td data-title="Service Provider" 
-                                                    (click)="providerDetail(his_wait.providerAccount)"
-                                                    class="td1 provider-name pointer-cursor">
-                                                    <span
-                                                        class="name">{{his_wait.providerAccount.businessName || '' | capitalizeFirst}}</span>
-                                                </td>
-                                                <td data-title="Location" class="td2">
-                                                    {{his_wait.providerAccount.location.place || '' | capitalizeFirst}}</td> -->
                                                 <td data-title="Order for">
                                                     {{his_wait.orderFor.firstName || '' | capitalizeFirst}}
                                                     {{his_wait.orderFor.lastName || '' | capitalizeFirst}}</td>
@@ -75,8 +67,7 @@
                                                             (click)="getOrderBill(his_wait)">
                                                             <i class="bill-icon-history"></i>
                                                             Bill</button>
-                                                        <button mat-menu-item 
-                                                            [class.rated]="isRated(his_wait)"
+                                                        <button mat-menu-item [class.rated]="isRated(his_wait)"
                                                             (click)="rateOrderService(his_wait)">
                                                             Rate Order Service</button>
                                                     </mat-menu>

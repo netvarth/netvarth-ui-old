@@ -41,20 +41,26 @@ export class WlCardComponent implements OnInit, OnChanges {
   showReceiptBtn = false;
   showPaidInfo = false;
   videoBtnCaption;
-
+  customId: any;
+  showQnrBtn = false;
   constructor(private wordProcessor: WordProcessor, private dateTimeProcessor: DateTimeProcessor) { }
 
   ngOnInit(): void {
   }
   ngOnChanges() {
+    if (this.booking.releasedQnr && this.booking.releasedQnr.length > 0 && this.booking.waitlistStatus !== 'cancelled') {
+      const releasedQnrs = this.booking.releasedQnr.filter(qnr => qnr.status === 'released');
+      if (releasedQnrs.length > 0) {
+        this.showQnrBtn = true;
+      }
+    }
     if (this.booking.waitlistStatus == 'checkedIn' || this.booking.waitlistStatus === 'arrived') {
       this.showRescheduleBtn = true;
     }
     if (this.booking.waitlistStatus == 'checkedIn' || this.booking.waitlistStatus == 'arrived' || this.booking.waitlistStatus == 'prepaymentPending') {
       this.showCancelBtn = true;
     }
-    if ((this.booking.waitlistStatus == 'checkedIn' || this.booking.waitlistStatus == 'arrived') &&
-      this.booking.questionnaire && this.booking.questionnaire.questionAnswers && this.booking.questionnaire.questionAnswers.length > 0) {
+    if (this.booking.questionnaire && this.booking.questionnaire.questionAnswers && this.booking.questionnaire.questionAnswers.length > 0) {
       this.showMoreInfoBtn = true;
     }
     if (this.booking.prescShared) {
@@ -74,7 +80,10 @@ export class WlCardComponent implements OnInit, OnChanges {
     if (this.booking.waitlistStatus == 'done') {
       this.showRateBtn = true;
     }
-    if (this.extras && this.extras['favourites']) {
+    if (this.extras  && this.extras['customId']) {
+      this.customId = this.extras['customId'];
+    }
+    if (this.extras && this.extras['favourites'] && !this.extras['customId']) {
       if (!this.checkIfFav(this.booking.providerAccount.id)) {
         this.showFavouritesBtn = true;
         this.showRemFavouritesBtn = false;
@@ -141,6 +150,7 @@ export class WlCardComponent implements OnInit, OnChanges {
     actionObj['action'] = action;
     actionObj['booking'] = booking;
     actionObj['event'] = event;
+    actionObj['timetype'] = this.type;
     this.actionPerformed.emit(actionObj);
   }
   getBookingStatusClass(status) {
@@ -153,7 +163,11 @@ export class WlCardComponent implements OnInit, OnChanges {
     }
   }
   getTimeToDisplay(min) {
-    return this.dateTimeProcessor.convertMinutesToHourMinute(min);
+    if (this.dateTimeProcessor.convertMinutesToHourMinute(min) === '0 minutes') {
+      return 'Now';
+    } else {
+      return this.dateTimeProcessor.convertMinutesToHourMinute(min);
+    }
   }
   getSingleTime(slot) {
     const slots = slot.split('-');

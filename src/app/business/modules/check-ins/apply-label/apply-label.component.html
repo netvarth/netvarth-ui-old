@@ -1,0 +1,18 @@
+<h1 class="mat-dialog-title">{{caption}} <button mat-dialog-close class="modal_close" tabindex="-1"><i
+            class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<mat-dialog-content class="ynw-common-form apply-label">
+    <div class="form-group col-md-12" *ngIf="source === 'newlabel'">
+        <mat-form-field>
+            <input matInput type="text" class="form-control" id="displayName" placeholder="Label"
+                [(ngModel)]="labelname" [ngModelOptions]="{standalone: true}" autocomplete="off">
+            <app-field-error-display [displayError]="true" *ngIf="api_error['label']" errorMsg="{{api_error['label']}}">
+            </app-field-error-display>
+        </mat-form-field>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+    <button (click)="createLabel()" type="button" mat-button class="cs-btn bt1">Create</button>
+</mat-dialog-actions>
+<app-field-error-display [displayError]="true" *ngIf="api_error['error']" errorMsg="{{api_error['error']}}">
+</app-field-error-display>

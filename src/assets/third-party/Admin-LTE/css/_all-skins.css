@@ -1,7 +1,3 @@
-/*
- * Skin: Jaldee
- * ----------
- */
  .skin-jaldee .main-header .navbar {
   background-color: #f39c12;
 }
@@ -111,18 +107,11 @@
   border-left: 3px solid transparent;
   font-weight: 600
 }
-/* .skin-jaldee .sidebar-menu > li:hover > a,
-.skin-jaldee .sidebar-menu > li.active > a,
-.skin-jaldee .sidebar-menu > li.menu-open > a {
-  color: #ffffff;
-  background: #1e282c;
-} */
 .skin-jaldee .sidebar-menu > li.active > a {
   border-left-color: #f39c12;
 }
 .skin-jaldee .sidebar-menu > li > .treeview-menu {
   margin: 0 1px;
-  /* background: #2c3b41; */
 }
 .skin-jaldee .sidebar a {
   color: #444444;
@@ -184,12 +173,6 @@
      color:#444444 !important;
 }
 }
-
-
-/*
- * Skin: Blue
- * ----------
- */
 .skin-blue .main-header .navbar {
   background-color: #3c8dbc;
 }
@@ -203,9 +186,6 @@
 .skin-blue .available .text-success { color: #3c763d !important }
 .skin-blue .available .disabled { color: #dddd !important }
 .skin-blue .q-time.queuelist label.tstat {color: #999999 !important; font-weight: normal}
-/* .skin-blue .dashboard .card.w-dta .dash-list .table thead {
-  background-color: #3c8dbc !important;
-} */
 .skin-blue .req-flds-cap {color: red; font-size: 9px;margin-left: 5px;margin-bottom: 0px;}
 
 .skin-blue .bus-name {color: white}
@@ -213,7 +193,6 @@
   margin-left: 0px !important;
   padding-left:0px;
   padding-right:0px;
-  /* background-color:transparent !important; */
   border-bottom: 1px solid #ddd !important;
 }
 .skin-blue .main-header.dash .navbar .navbar-item-color {
@@ -370,10 +349,6 @@
      color:#444444 !important;
 }
 }
-/*
- * Skin: Blue
- * ----------
- */
 .skin-blue-light .main-header .navbar {
   background-color: #3c8dbc;
 }
@@ -536,11 +511,6 @@
 .skin-blue.layout-top-nav .main-header > .logo:hover {
   background-color: #3b8ab8;
 }
-/*
- * Skin: Black
- * -----------
- */
-/* skin-black navbar */
 .skin-black .main-header {
   -webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
@@ -697,11 +667,6 @@
   border-top-color: #222;
   border-left-color: #222;
 }
-/*
- * Skin: Black
- * -----------
- */
-/* skin-black navbar */
 .skin-black-light .main-header {
   -webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
@@ -869,10 +834,6 @@
     border-left: 1px solid #d2d6de;
   }
 }
-/*
- * Skin: Green
- * -----------
- */
 .skin-green .main-header .navbar {
   background-color: #00a65a;
 }
@@ -1003,10 +964,6 @@
   border-bottom-right-radius: 2px;
   border-bottom-left-radius: 0;
 }
-/*
- * Skin: Green
- * -----------
- */
 .skin-green-light .main-header .navbar {
   background-color: #00a65a;
 }
@@ -1155,10 +1112,6 @@
     border-left: 1px solid #d2d6de;
   }
 }
-/*
- * Skin: Red
- * ---------
- */
 .skin-red .main-header .navbar {
   background-color: #dd4b39;
 }
@@ -1289,10 +1242,6 @@
   border-bottom-right-radius: 2px;
   border-bottom-left-radius: 0;
 }
-/*
- * Skin: Red
- * ---------
- */
 .skin-red-light .main-header .navbar {
   background-color: #dd4b39;
 }
@@ -1444,10 +1393,7 @@
     border-left: 1px solid #d2d6de;
   }
 }
-/*
- * Skin: Yellow
- * ------------
- */
+
 .skin-yellow .main-header .navbar {
   background-color: #f39c12;
 }
@@ -1578,10 +1524,6 @@
   border-bottom-right-radius: 2px;
   border-bottom-left-radius: 0;
 }
-/*
- * Skin: Yellow
- * ------------
- */
 .skin-yellow-light .main-header .navbar {
   background-color: #f39c12;
 }
@@ -1730,10 +1672,6 @@
     border-left: 1px solid #d2d6de;
   }
 }
-/*
- * Skin: Purple
- * ------------
- */
 .skin-purple .main-header .navbar {
   background-color: #605ca8;
 }
@@ -1864,10 +1802,6 @@
   border-bottom-right-radius: 2px;
   border-bottom-left-radius: 0;
 }
-/*
- * Skin: Purple
- * ------------
- */
 .skin-purple-light .main-header .navbar {
   background-color: #605ca8;
 }

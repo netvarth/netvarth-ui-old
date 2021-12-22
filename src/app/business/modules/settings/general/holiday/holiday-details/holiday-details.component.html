@@ -1,0 +1,98 @@
+<section class="">
+  <div class="card title-gb">
+    <h5 class="mgn-up-10">
+      <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToGeneral()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Non Working Day/Hour
+    </h5>
+  </div>
+</section>
+&nbsp;&nbsp;
+<section>
+  <div class="content loc-list">
+    <div class="col-md-12 no-padding-small">
+      <div class="row">
+        <div class="card">
+          {{frm_non_wrkg_cap}}
+          <div class="card" *ngIf="api_loading">
+            <app-common-innerloading-spinner></app-common-innerloading-spinner>
+          </div>
+          <div class="card" *ngIf="!api_loading">
+            <div *ngIf="amForm">
+              <form *ngIf="action=='add' || action === 'edit'" [formGroup]="amForm" novalidate
+                (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()"
+                class="ynw-common-form-nm">
+                <div style="padding:5px"></div>
+                <div class="adddatetime-box">Choose unavailable date</div> <br><br>
+                <div class="col-md-8">
+                  <span class="col-md-4">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Start Date</mat-label>
+                      <input matInput [matDatepicker]="picker" formControlName="selectdate" [min]="minDate"
+                        [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="start date *"
+                        (keypress)="isNumeric($event)" readonly (click)="picker.open()">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                  </span>
+                  <span class="col-md-4">
+                    <mat-form-field appearance="fill">
+                      <mat-label>End Date</mat-label>
+                      <input matInput [matDatepicker]="picker1" formControlName="enddate" [min]="minDate"
+                        [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="End date *"
+                        (keypress)="isNumeric($event)" readonly (click)="picker1.open()">
+                      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                      <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                  </span>
+                </div><br>
+                <div style="padding:5px"></div>
+                <div class="margn-time"><span class="adddatetime-box">Choose unavailable time</span> </div><br>
+                <div class="col-md-8">
+                  <span class="col-md-4">
+                    <label for="changeHourStep">{{start_time_cap}}</label>
+                    <ngb-timepicker formControlName="starttime" meridian="true"></ngb-timepicker>
+                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'starttime')"
+                      errorMsg="Please enter the start time">
+                    </app-field-error-display>
+                  </span>
+                  <span class="col-md-4">
+                    <label for="changeHourStep">{{end_time_cap}}</label>
+                    <ngb-timepicker formControlName="endtime" meridian="true"></ngb-timepicker>
+                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'endtime')"
+                      errorMsg="Please enter the Closing time">
+                    </app-field-error-display>
+                  </span>
+                </div>
+                <br>
+                <div class="margn-reason">
+                  <span class="adddatetime-box">Reason</span> <br>
+                </div>
+                <mat-form-field>
+                  <span>
+                    <mat-label>Mention the reason *</mat-label>
+                  </span><br>
+                  <input class="in" style="border-style: solid" type="text" matInput id="reason"
+                    formControlName="reason" autocomplete="off">
+                </mat-form-field>
+                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'reason')" [errorMsgs]="fed_service.getErrorMessage(amForm,'reason',
+                            {
+                              'required' : 'Please enter reason',
+                              'maxlength' : 'Maximum limit is ' + maxcharDesc + ' characters'
+                            })">
+                </app-field-error-display>
+
+                <div>
+                  <button (click)="onCancel()" type="button" class="cs-btn bt2">{{cancel_btn_cap}}</button>
+                  &nbsp;
+                  <button type="submit" mat-button [disabled]="!amForm.valid || disableButton"
+                    class="cs-btn bt1">{{save_btn_cap}}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

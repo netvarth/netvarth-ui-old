@@ -18,7 +18,6 @@ export class MeetingDetailsComponent implements OnInit,OnDestroy {
   meetingDetails: any = [];
   private subs=new SubSink();
   ngOnInit() {
-  console.log(this.data);
     if (this.data.details.service.serviceType === 'virtualService') {
       switch (this.data.details.service.virtualCallingModes[0].callingMode) {
         case 'Zoom': {

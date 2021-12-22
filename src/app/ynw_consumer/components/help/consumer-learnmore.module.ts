@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../../../shared/modules/common/material.module';
 import { ConsumerLearnmoreComponent } from './consumer-learnmore.component';
-import { ConsumerLearnmoreRoutingModule } from './consumer-learnmore-routing.module';
 import { HeaderModule } from '../../../shared/modules/header/header.module';
-
+import { RouterModule, Routes } from '@angular/router';
+import { MatExpansionModule } from '@angular/material/expansion';
+const routes: Routes = [
+    { path: '', component: ConsumerLearnmoreComponent}
+];
 @NgModule({
     imports: [
-        ConsumerLearnmoreRoutingModule,
         CommonModule,
-        SharedModule,
-        MaterialModule,
-        HeaderModule
+        HeaderModule,
+        MatExpansionModule,
+        [RouterModule.forChild(routes)]
     ],
     declarations: [
         ConsumerLearnmoreComponent

@@ -5,21 +5,20 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ConsumerServices } from '../../services/consumer-services.service';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { AddMembersHolderComponent } from '../../components/add-members-holder/add-members-holder.component';
-// import { AddMemberComponent } from '../add-member/add-member.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
 import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { SubSink } from 'subsink';
-
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-consumer-members',
   templateUrl: './members.component.html'
 })
-export class MembersComponent implements OnInit,OnDestroy {
-  
+export class MembersComponent implements OnInit, OnDestroy {
+
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   dashboard_cap = Messages.DASHBOARD_TITLE;
@@ -36,54 +35,59 @@ export class MembersComponent implements OnInit,OnDestroy {
   change_password_cap = Messages.CHANGE_PASSWORD_CAP;
   change_mob_no_cap = Messages.CHANGE_MOB_CAP;
   add_change_email_cap = Messages.ADD_CHANGE_EMAIL;
+<<<<<<< HEAD
+=======
+  curtype;
+>>>>>>> refs/remotes/origin/jaldee-payment-profile-latest
   member_list: any = [];
   query_executed = false;
-  breadcrumbs_init = [
-    {
-      title: 'Family Members',
-      // url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/members'
-    }
-  ];
-  breadcrumbs = this.breadcrumbs_init;
   emptyMsg = 'No Family members added yet';
- private subs=new SubSink();
+  private subs = new SubSink();
+  customId: any;
+  accountId: any;
   constructor(private consumer_services: ConsumerServices,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
-    private location: Location) { }
+    private location: Location,
+    public router: Router,
+    private activated_route: ActivatedRoute
+  ) {
+    this.subs.sink = this.activated_route.queryParams.subscribe(qparams => {
+      if (qparams && qparams.accountId) {
+        this.accountId = qparams.accountId;
+      }
+      if (qparams && qparams.customId) {
+        this.customId = qparams.customId;
+      }
+    });
+  }
 
   ngOnInit() {
     this.getMembers();
   }
   ngOnDestroy(): void {
-   this.subs.unsubscribe();
+    this.subs.unsubscribe();
   }
-
   getMembers() {
-
-    this.subs.sink=this.consumer_services.getMembers()
+    this.subs.sink = this.consumer_services.getMembers()
       .subscribe(
         data => {
           this.member_list = data;
           this.query_executed = true;
         },
         () => {
-
         }
       );
-
   }
-goBack() {
-  this.location.back();
-}
+  goBack() {
+    this.location.back();
+  }
   doRemoveMember(member) {
-
     if (!member.user) {
       return false;
     }
-
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
@@ -92,19 +96,14 @@ goBack() {
         'message': 'Do you really want to delete this Member?'
       }
     });
-
     dialogRef.afterClosed().subscribe(result => {
-
       if (result) {
         this.removeMember(member.user);
       }
-
     });
-
   }
-
   removeMember(id) {
-    this.subs.sink=this.consumer_services.deleteMember(id)
+    this.subs.sink = this.consumer_services.deleteMember(id)
       .subscribe(
         () => {
           this.getMembers();
@@ -114,7 +113,6 @@ goBack() {
         }
       );
   }
-
   addMember() {
     const dialogRef = this.dialog.open(AddMembersHolderComponent, {
       width: '50%',
@@ -125,14 +123,12 @@ goBack() {
         moreparams: { source: 'memberadd' }
       }
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
         this.getMembers();
       }
     });
   }
-
   editMember(member) {
     const dialogRef = this.dialog.open(AddMembersHolderComponent, {
       width: '50%',
@@ -143,13 +139,36 @@ goBack() {
         type: 'edit'
       }
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
         this.getMembers();
       }
     });
   }
-
-
+  redirectto(mod, usertype) {
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['customId'] = this.customId;
+    }
+    if (this.accountId) {
+      queryParams['accountId'] = this.accountId;
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParams
+    };
+    switch (mod) {
+      case 'profile':
+        this.router.navigate([usertype, 'profile'], navigationExtras);
+        break;
+      case 'change-password':
+        this.router.navigate([usertype, 'change-password'], navigationExtras);
+        break;
+      case 'change-mobile':
+        this.router.navigate([usertype, 'change-mobile'], navigationExtras);
+        break;
+      case 'dashboard':
+        this.router.navigate([usertype], navigationExtras);
+        break;
+    }
+  }
 }

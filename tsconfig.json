@@ -9,7 +9,11 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+<<<<<<< HEAD
     "target": "es5",
+=======
+    "target": "es2020",
+>>>>>>> refs/remotes/origin/jaldee-payment-profile-latest
     "typeRoots": [
       "node_modules/@types"
     ],

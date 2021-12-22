@@ -213,6 +213,10 @@ export const projectConstantsLocal = {
     veterinaryPetcare: { helphint: 'In-person consultation, Video consultation, Pet training' },
     retailStores: { helphint: 'Pickup, Home delivery' },
     otherMiscellaneous: { helphint: 'Add your services here' },
+    educationalInstitution: { helphint: 'Add your services here' },
+    sportsAndEntertainement: { helphint: 'Add your services here' },
+    communitySocietyAssociation:{helphint:'Add your services here'}
+
   },
   SUBDOMAIN_ICONS: {
     physiciansSurgeons: { help: 'single doctor facility', iconClass: 'allopathy_doc' },
@@ -250,7 +254,10 @@ export const projectConstantsLocal = {
     poojari: { help: '', iconClass: 'veterinarydoctor_doc' },
     bank: { help: '', iconClass: 'veterinarydoctor_doc' },
     nbfc: { help: '', iconClass: 'veterinarydoctor_doc' },
-    insurance: { help: '', iconClass: 'veterinarydoctor_doc' }
+    insurance: { help: '', iconClass: 'veterinarydoctor_doc' },
+    educationalTrainingInstitute: { help: '', iconClass: 'veterinarydoctor_doc' },
+    schools: { help: '', iconClass: 'veterinarydoctor_doc' },
+    colleges: { help: '', iconClass: 'veterinarydoctor_doc' }
   },
   SOCIAL_MEDIA: [
     { key: 'facebook', iconClass: 'socicon-facebook text-danger', iconImg: 'facebook.png', displayName: 'Facebook' },
@@ -296,6 +303,7 @@ export const projectConstantsLocal = {
   VALIDATOR_URL: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)[a-z0-9]+([\-\.\_]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/,
   VALIDATOR_NUMBERONLY: /^\d+$/,
   VALIDATOR_ONLYNUMBER: /^[0-9]+$/,
+    VALIDATOR_COUNTRYCODE: /^[+]?[0-9]+$/,
   VALIDATOR_PHONENUMBERONLY: /^[1-9]\d{9}$/,
   VALIDATOR_FLOAT: /^[+-]?([0-9]*[.])?[0-9]+$/,
   VALIDATOR_PHONENUMBERCOUNT10: /^\d{10}$/,
@@ -318,6 +326,7 @@ export const projectConstantsLocal = {
   VALIDATOR_MAX500: 500, // max char count
   VALIDATOR_MAX_LAKH: 100,
   VALIDATOR_MOBILE_AND_EMAIL: /^(?:\d{10}|[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,4})$/,
+  VALIDATOR_SPACE_NOT_ALLOWED: /^\S*$/,
   QTY_MAX_VALUE: 100000,
   PRICE_MAX_VALUE: 100000,
   TIME_MAX_VALUE: 3600,
@@ -484,9 +493,9 @@ export const projectConstantsLocal = {
     { displayName: 'Arrived', value: 'Arrived' },
     { displayName: 'Started', value: 'Started' },
     { displayName: 'Completed', value: 'Completed' },
-    { displayName: 'Cancelled', value: 'Cancelled,Rejected' },
-    { displayName: 'Prepayment Pending', value: 'prepaymentPending' },
-    { displayName: 'Failed', value: 'failed' }
+    { displayName: 'Cancelled', value: 'Cancelled,Rejected' }
+    // { displayName: 'Prepayment Pending', value: 'prepaymentPending' },
+    // { displayName: 'Failed', value: 'failed' }
   ],
   FUTURE_APPT_STATUSES_FILTER: [
     { displayName: 'Checked in', value: 'Confirmed' },
@@ -577,6 +586,21 @@ export const projectConstantsLocal = {
     19: 'Jaldee_Messaging'
 
   },
+  MONTH: [
+    { value: '01', name: 'Jan' },
+    { value: '02', name: 'Feb' },
+    { value: '03', name: 'Mar' },
+    { value: '04', name: 'Apr' },
+    { value: '05', name: 'May' },
+    { value: '06', name: 'Jun' },
+    { value: '07', name: 'Jul' },
+    { value: '08', name: 'Aug' },
+    { value: '09', name: 'Sep' },
+    { value: '10', name: 'Oct' },
+    { value: '11', name: 'Nov' },
+    { value: '12', name: 'Dec' }
+
+  ],
   REGION_LANGUAGE: 'en-US',
   TIME_ZONE_REGION: 'Asia/Kolkata',
   KEY: 'JALDEESOFT',
@@ -961,6 +985,17 @@ export const projectConstantsLocal = {
     { value: 'Completed', class: 'dark-green' },
     { value: 'Rejected', class: 'red' },
     { value: 'Confirmed', class: 'greenc' }
+  ],
+
+  ADDON_ICON_CLASS: [
+    { value: 'Cloud Storage', class: 'fa ico_cloud' },
+    { value: 'Jaldee Search Keywords', class: 'fa ico_searchky' },
+    { value: 'QBoards', class: 'fa ico_qbods' },
+    { value: 'Jaldee Messaging', class: 'fa ico_sms' },
+    { value: 'Queues/Schedules/Services', class: 'fa ico_que' },
+    { value: 'Multi User', class: 'fa ico_usr' },
+    { value: 'Jaldee Video Calling', class: 'fa ico-video' },
+    {value: 'Jaldee Voice Calling', class: 'fa ico-voice'}
   ],
   videoModes: {
     WhatsApp: { displayName: 'WhatsApp', placeHolder: 'Update WhatsApp ID', title: 'Configure WhatsApp' },

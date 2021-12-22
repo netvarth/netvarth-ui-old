@@ -1,0 +1,25 @@
+<h1 class="mat-dialog-title">Team Members
+  <button mat-dialog-close class="modal_close" tabindex="-1">
+    <i class="fa fa-window-close" aria-hidden="true"></i>
+  </button>
+</h1>
+<mat-dialog-content class="pop-content">
+  <div class="col-md-12 mobile_disply p0" *ngIf="users_list.length > 0">
+    <div class="mgn-up-10 stats-item action_style" *ngFor="let user of users_list">
+      <div>
+        <span class='user-img'>
+          <img [src]="getUserImg(user)" />
+        </span>
+        <div class="itemVal mgn-up-5">
+          <h6 class="name">{{user.firstName + ' ' + user.lastName}}
+          </h6>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 mobile_disply p0" *ngIf="users_list.length == 0">
+    <div>
+      <p>No team Members in this location</p>
+    </div>
+  </div>
+</mat-dialog-content>

@@ -3,22 +3,26 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { GalleryComponent } from './gallery.component';
-import { GalleryImportComponent } from './import/gallery-import.component';
 import { GalleryService } from './galery-service';
 import { FormMessageDisplayModule } from '../form-message-display/form-message-display.module';
-import { MaterialModule } from '../common/material.module';
+import { GalleryImportModule } from './import/gallery-import.module';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
     imports: [
         FormsModule,
         CommonModule,
-        MaterialModule,
         ModalGalleryModule,
-        FormMessageDisplayModule
+        MatIconModule,
+        MatMenuModule,
+        MatButtonModule,
+        FormMessageDisplayModule,
+        GalleryImportModule
     ],
-    entryComponents: [GalleryImportComponent],
-    declarations: [GalleryComponent, GalleryImportComponent],
-    exports: [GalleryComponent, GalleryImportComponent],
+    declarations: [GalleryComponent],
+    exports: [GalleryComponent],
     providers: [GalleryService]
 })
 

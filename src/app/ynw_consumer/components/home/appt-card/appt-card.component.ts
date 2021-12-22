@@ -45,6 +45,8 @@ export class ApptCardComponent implements OnInit, OnChanges {
   showPaidInfo = false;
   
   virtualMode;
+  customId: any;
+  showQnrBtn = false;
   constructor(
     private wordProcessor: WordProcessor, 
     private dateTimeProcessor: DateTimeProcessor, 
@@ -57,6 +59,12 @@ export class ApptCardComponent implements OnInit, OnChanges {
   }
   ngOnChanges() {
     // this.cdref.detectChanges();
+    if (this.booking.releasedQnr && this.booking.releasedQnr.length > 0 && this.booking.apptStatus !== 'Cancelled') {
+      const releasedQnrs = this.booking.releasedQnr.filter(qnr => qnr.status === 'released');
+      if (releasedQnrs.length > 0) {
+        this.showQnrBtn = true;
+      }
+    }
     if (this.booking.apptStatus == 'Confirmed' || this.booking.apptStatus == 'Arrived') {
       this.showRescheduleBtn = true;
     }
@@ -73,8 +81,7 @@ export class ApptCardComponent implements OnInit, OnChanges {
       && this.booking.apptStatus !== 'Cancelled') {
       this.showMeetingDetailsBtn = true;
     }
-    if ((this.booking.apptStatus == 'Confirmed' || this.booking.apptStatus == 'Arrived')
-      && this.booking.questionnaire && this.booking.questionnaire.questionAnswers &&
+    if (this.booking.questionnaire && this.booking.questionnaire.questionAnswers &&
       this.booking.questionnaire.questionAnswers.length > 0) {
       this.showMoreInfoBtn = true;
     }
@@ -120,7 +127,10 @@ export class ApptCardComponent implements OnInit, OnChanges {
     if(this.booking.amountPaid){
       this.showPaidInfo = true;
     }
-    if (this.extras && this.extras['favourites']) {
+    if (this.extras  && this.extras['customId']) {
+      this.customId = this.extras['customId'];
+    }
+    if (this.extras && this.extras['favourites'] && !this.extras['customId']) {
       if (!this.checkIfFav(this.booking.providerAccount.id)) {
         this.showFavouritesBtn = true;
         this.showRemFavouritesBtn = false;
@@ -149,6 +159,7 @@ export class ApptCardComponent implements OnInit, OnChanges {
     actionObj['action'] = action;
     actionObj['booking'] = booking;
     actionObj['event'] = event;
+    actionObj['timetype'] = this.type;
     this.actionPerformed.emit(actionObj);
   }
   getBookingStatusClass(status) {

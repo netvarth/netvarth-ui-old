@@ -6,7 +6,10 @@ import { MaterialModule } from './material.module';
 import { RouterModule } from '@angular/router';
 // import { HeaderModule } from '../../../shared/modules/header/header.module';
 import { FooterModule } from '../../../shared/modules/footer/footer.module';
+<<<<<<< HEAD
 import { EditProfileModule } from '../../../shared/modules/edit-profile/edit-profile.module';
+=======
+>>>>>>> refs/remotes/origin/jaldee-payment-profile-latest
 import { OtpFormModule } from '../../../shared/modules/otp-form/otp-form.module';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
@@ -21,8 +24,11 @@ import { NgBootstrapModule } from './ngbootstrap.module';
         FormsModule,
         ReactiveFormsModule,
         RouterModule,
+<<<<<<< HEAD
         // HeaderModule,
         EditProfileModule,
+=======
+>>>>>>> refs/remotes/origin/jaldee-payment-profile-latest
         OtpFormModule,
         FooterModule,
         FormMessageDisplayModule,
@@ -37,7 +43,13 @@ import { NgBootstrapModule } from './ngbootstrap.module';
         RouterModule,
         // HeaderModule,
         OtpFormModule,
+<<<<<<< HEAD
         EditProfileModule,
+=======
+        // EditProfileModule,
+        // ChangePasswordModule,
+        // ChangeMobileModule,
+>>>>>>> refs/remotes/origin/jaldee-payment-profile-latest
         FooterModule,
         FormMessageDisplayModule,
         NgBootstrapModule

@@ -1,10 +1,9 @@
 <section [ngClass]="{'container no-padding no-padding-small': true}">
     <div class="content p0 see-pages cons-members">
-
         <div class="panel panel-default">
             <div class="panel-heading top-row ">                
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                    <app-header *ngIf="shared_functions.checkLogin()"></app-header>
+                    <app-header *ngIf="shared_functions.checkLogin()"  [customId]="customId" [accountId]="accountId" [showHeaderAction]="true"></app-header>
                 </div>
             </div>
             <div class="panel-body no-padding">
@@ -71,15 +70,15 @@
                         <div class="right-menu">
                             <div class="right-menu-header">{{related_links_cap}}</div>
                             <ul class="related-link">
-                                <li (click)="shared_functions.redirectto('dashboard')" class="icon-dashboard">
+                                <li (click)="redirectto('dashboard', curtype)" class="icon-dashboard">
                                     {{dashboard_cap}}
                                 </li>
-                                <li (click)="shared_functions.redirectto('profile')" class="icon-profile">
+                                <li (click)="redirectto('profile', curtype)" class="icon-profile">
                                     {{user_profile_cap}}
                                 </li>
-                                <li (click)="shared_functions.redirectto('change-password')" class="icon-password">
+                                <li (click)="redirectto('change-password', curtype)" class="icon-password">
                                     {{change_password_cap}}</li>
-                                <li (click)="shared_functions.redirectto('change-mobile')" class="icon-mobile">
+                                <li (click)="redirectto('change-mobile', curtype)" class="icon-mobile">
                                     {{change_mob_no_cap}}</li>
                             </ul>
                         </div>

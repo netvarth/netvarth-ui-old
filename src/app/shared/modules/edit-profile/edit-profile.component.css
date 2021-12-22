@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .myaccount .panel {
     border: none !important;
     box-shadow: none !important;
@@ -14,3 +15,125 @@
     padding: 0px 0px 0px 10px !important;
     height: 35px;
 }
+=======
+.mobPrefix {
+    display: flex;
+    align-items: center;
+    padding: 0.55rem 1rem;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #3F4254;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #F3F6F9;
+    border: 1px solid #E4E6EF;
+    border-radius: 0.42rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.mobclass {
+    width:80%!important;
+    height:38px!important;
+}
+.consumer-profile .form-control {
+    display: block !important;
+    width: 100% ;
+    height: 34px;
+    padding: 6px 12px !important;
+    font-size: 14px !important;
+    line-height: 1.42857143 !important;
+    color: #555 !important;
+    background-color: #fff !important;
+    background-image: none !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%) !important;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s !important;
+}
+.component-card_1 {
+    border: 1px solid #e0e6ed;
+    border-radius: 6px;
+    width: 60% !important;
+    box-shadow: 4px 6px 10px -3px #bfc9d4;
+    background-image: linear-gradient(to right,#2980B9, #2980B9 , #6DD5FA);
+    /* background-image: linear-gradient(to right,rgb(115, 180, 237), rgb(115, 180, 237) , rgb(115, 180, 237)); */
+}
+/* .component-card_1 .card-body {
+  
+} */
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+}
+@media (max-width: 575px){
+.component-card_1 {
+    width: 100%!important;
+} 
+}
+span.badge {
+    font-size: large;
+    padding: 6px 10px;
+    color: #4361ee;
+    background-color: #eaf1ff;
+}
+.notistyle{
+font-size: 18px !important;
+font-weight: bold;
+padding: 20px !important;
+}
+.notistyles{
+font-size: 15px !important;
+font-weight: bold;
+}
+.text-right {
+    text-align: right!important;
+}
+.pl-0, .px-0 {
+    padding-left: 0!important;
+}
+.image{
+    height: 100px !important;
+      width: 140px !important;
+  }
+  @media (max-width: 750px) {
+    .image{
+        height: 60px !important;
+          width: 90px !important;
+      }
+  }
+  @media (min-width: 450px) {
+    .disply  {
+        display: none !important;
+    }
+  }
+  @media  (max-width: 750px)  {
+    .web{
+        display: none !important;
+    }
+  }
+  @media (max-width: 750px) {
+    .notistyle{
+        font-size: 11px !important;
+        font-weight: bold;
+        padding: 20px !important;
+        }
+    
+  }
+  @media (max-width: 750px) {
+    .notistyles{
+        font-size: 10px !important;
+        font-weight: bold;
+        }
+    
+  }
+  ::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-bar{
+    background-color: rgba(0, 0, 0, 0.38) !important;
+  }
+  ::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb{
+    background-color: #fafafa !important;
+  }
+  
+>>>>>>> refs/remotes/origin/jaldee-payment-profile-latest

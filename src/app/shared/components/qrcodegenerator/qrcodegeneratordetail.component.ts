@@ -6,11 +6,14 @@ import {  Meta, Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-qrcodegenerator',
   templateUrl: './qrcodegeneratordetail.component.html',
-  styleUrls: ['./qrcodegeneratordetail.component.css']
+ // styleUrls: ['./qrcodegeneratordetail.component.css']
 })
 export class QRCodeGeneratordetailComponent implements OnInit , OnDestroy {
   elementType = 'url';
   accuid: any;
+  bname: any;
+  busername: any;
+  about: any;
   qr_code_cId = false;
   qr_code_oId = false;
   qr_value;
@@ -21,6 +24,7 @@ export class QRCodeGeneratordetailComponent implements OnInit , OnDestroy {
   shareLink: any;
   window_path: any;
   customId: any;
+  userId: any;
   constructor(private changeDetectorRef: ChangeDetectorRef,
     public dialogRef: MatDialogRef<QRCodeGeneratordetailComponent>,
     private angular_meta: Meta,
@@ -29,7 +33,7 @@ export class QRCodeGeneratordetailComponent implements OnInit , OnDestroy {
 
   }
   private qrCodeParent: ElementRef;
-  @ViewChild('qrCodeOnlineId1', { read: ElementRef }) set content1(content1: ElementRef) {
+  @ViewChild('qrCodeOnlineId', { read: ElementRef }) set content1(content1: ElementRef) {
     if (content1) { // initially setter gets called with undefined
       this.qrCodeParent = content1;
     }
@@ -47,20 +51,34 @@ export class QRCodeGeneratordetailComponent implements OnInit , OnDestroy {
   ngOnInit() {
     this.accuid = this.data.accencUid;
     this.wpath = this.data.path;
+    this.bname = this.data.businessName;
+    this.about = this.data.businessDesc;
+    this.busername = this.data.businessUserName;
+
 
     this.customId = this.data.customId;
     // this.window_path = this.data.pathUrl;
     // console.log(this.wpath + this.accuid);
-    this.shareLink = this.wpath + this.accuid;
-    this.description = 'You can book my services by just clicking this link';
+    this.userId = this.data.userId;
+    if(this.userId){
+      this.shareLink = this.wpath + this.accuid+'/'+ this.userId + '/' ;
+    } else {
+      this.shareLink = this.wpath + this.accuid + '/';
+    }
+    // this.description = 'You can book my services by just clicking this link';
+    this.description = 'For bookings use this link';
     this.imageUrl = this.wpath + 'assets/images/logo.png';
-    this.qrCodegenerateOnlineID(this.accuid);
+    this.qrCodegenerateOnlineID(this.accuid,this.userId);
   }
   ngOnDestroy() {
     this.titleService.setTitle('Jaldee');
   }
-  qrCodegenerateOnlineID(valuetogenerate) {
-    this.qr_value = projectConstants.PATH + valuetogenerate;
+  qrCodegenerateOnlineID(valuetogenerate,userid?) {
+    if(userid){
+      this.qr_value = projectConstants.PATH + valuetogenerate +'/'+ userid + "/" ;
+    } else{
+      this.qr_value = projectConstants.PATH + valuetogenerate + "/";
+    }
     this.qr_code_oId = true;
     this.changeDetectorRef.detectChanges();
     setTimeout(() => {

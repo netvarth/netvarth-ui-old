@@ -12,7 +12,6 @@ export class TeleBookingService {
     constructor(private servicemeta: ServiceMeta, private dateTimeProcessor: DateTimeProcessor) { }
 
     getAvailableBookings(countrycode, phonenumber) {
-        console.log("getAvailableBookings");
         let bookings = [];
         return new Promise((resolve, reject) => {
             this.getAvailableBookingAppointments(countrycode, phonenumber).then(
@@ -25,6 +24,9 @@ export class TeleBookingService {
                         if (appointments[i].provider) {
                             userName = appointments[i].provider.firstName + ' ' + appointments[i].provider.lastName;
                             userId = appointments[i].provider.id;
+                            if(appointments[i].providerAccount && appointments[i].providerAccount.id){
+                                busId = appointments[i].providerAccount.id;
+                            }
                         } else {
                             busName = appointments[i].providerAccount.businessName;
                             busId = appointments[i].providerAccount.id;
@@ -67,11 +69,9 @@ export class TeleBookingService {
                     }
                     this.getAvaiableBookingCheckins(countrycode, phonenumber).then(
                         (checkins: any) => {
-                            console.log(checkins);
                             for (let i = 0; i < checkins.length; i++) {
                                 let token = '';
                                 if (checkins[i].showToken) {
-                                    console.log(checkins[i].token);
                                     if (checkins[i].token) {
                                         token = checkins[i].token;
                                     } else {
@@ -90,6 +90,9 @@ export class TeleBookingService {
                                 if (checkins[i].provider) {
                                     userName = checkins[i].provider.firstName + ' ' + checkins[i].provider.lastName;
                                     userId = checkins[i].provider.id;
+                                    if(checkins[i].providerAccount && checkins[i].providerAccount.id){
+                                        busId = checkins[i].providerAccount.id;
+                                    }
                                 } else {
                                     busName = checkins[i].providerAccount.businessName;
                                     busId = checkins[i].providerAccount.id;
@@ -215,6 +218,9 @@ export class TeleBookingService {
                     if (bookingObj.provider) {
                         userName = bookingObj.provider.firstName + ' ' + bookingObj.provider.lastName;
                         userId = bookingObj.provider.id;
+                        if(bookingObj.providerAccount && bookingObj.providerAccount.id){
+                            busId = bookingObj.providerAccount.id;
+                        }
                     } else {
                         busName = bookingObj.providerAccount.businessName;
                         busId = bookingObj.providerAccount.id;
@@ -270,6 +276,9 @@ export class TeleBookingService {
                     if (bookingObj.provider) {
                         userName = bookingObj.provider.firstName + ' ' + bookingObj.provider.lastName;
                         userId = bookingObj.provider.id;
+                        if(bookingObj.providerAccount && bookingObj.providerAccount.id){
+                            busId = bookingObj.providerAccount.id;
+                        }
                     } else {
                         busName = bookingObj.providerAccount.businessName;
                         busId = bookingObj.providerAccount.id;
@@ -316,3 +325,4 @@ export class TeleBookingService {
         });
     }
 }
+

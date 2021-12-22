@@ -3,7 +3,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Location } from '@angular/common';
 import { AccessibilityConfig, Image, ImageEvent } from '@ks89/angular-modal-gallery';
 import { SharedServices } from '../../../../shared/services/shared-services';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { SubSink } from 'subsink';
 
@@ -13,7 +13,6 @@ import { SubSink } from 'subsink';
   styleUrls: ['./item-details.component.css']
 })
 export class ItemDetailsComponent implements OnInit,OnDestroy {
- 
 
   itemImages: any;
   customOptions: any;
@@ -71,21 +70,27 @@ export class ItemDetailsComponent implements OnInit,OnDestroy {
     carouselPreviewScrollNextTitle: 'Scroll next previews'
   };
 private subs=new SubSink();
+  from: string;
   constructor(   public sharedFunctionobj: SharedFunctions,
     private sharedServices: SharedServices,
     private location: Location,
     private lStorageService: LocalStorageService,
-    private router: Router ) { }
+    private router: Router ,
+    public route: ActivatedRoute) { }
 
   ngOnInit() {
     const orderList = JSON.parse(this.lStorageService.getitemfromLocalStorage('order'));
     if (orderList) {
       this.orderList = orderList;
     }
-    console.log(this.orderList);
+    this.route.queryParams.subscribe(qparams => {
+      if(qparams.isFrom && qparams.isFrom =='providerdetail'){
+        this.from = 'providerdetail';
+    };
+
+      });
     this.subs.sink=this.sharedServices.getItemDetails(1).subscribe(
       (item: any) => {
-        console.log(item);
         this.currentItem = item;
         this.itemImages = this.currentItem.itemImages;
         for (let imgIndex = 0; imgIndex < this.itemImages.length; imgIndex++) {
@@ -93,7 +98,7 @@ private subs=new SubSink();
               {img: this.itemImages[imgIndex].url,
               description: this.itemImages[imgIndex].title},
               {img: this.itemImages[imgIndex].url,
-                title: this.itemImages[imgIndex].title},
+                title: this.itemImages[imgIndex].title}, 
           );
           this.imagesRect = [... this.imagesRect, imgobj]
         }
@@ -105,8 +110,13 @@ private subs=new SubSink();
     this.subs.unsubscribe();
   }
   checkout() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        isFrom : this.from ? this.from : ''
+      }
+    };
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
-    this.router.navigate(['order/shoppingcart']);
+    this.router.navigate(['order/shoppingcart'],navigationExtras);
   }
   getItemQty() {
     const orderList = this.orderList;
@@ -116,10 +126,6 @@ private subs=new SubSink();
     }
     return qty;
   }
-  // getItemQty() {
-  //   const qty = this.orderList.filter(i => i.itemId === this.currentItem.itemId).length;
-  //   return qty;
-  // }
   increment() {
     this.addToCart();
   }
@@ -138,7 +144,6 @@ private subs=new SubSink();
 
   }
   removeFromCart() {
-    console.log(this.orderList);
     for (const i in this.orderList) {
       if (this.orderList[i].itemId === this.currentItem.itemId) {
         this.orderList.splice(i, 1);
@@ -146,40 +151,16 @@ private subs=new SubSink();
         break;
       }
     }
-
     this.getItemQty();
   }
-
-
-  // addRandomImage() {
-  //   const imageToCopy: Image = this.imagesRect[Math.floor(Math.random() * this.imagesRect.length)];
-  //   const newImage: Image = new Image(this.imagesRect.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
-  //   this.imagesRect = [...this.imagesRect, newImage];
-  // }
-
-  // onChangeAutoPlay() {
-  //   this.autoPlay = !this.autoPlay;
-  // }
-
-  // onChangeShowArrows() {
-  //   this.showArrows = !this.showArrows;
-  // }
-
-  // onChangeShowDots() {
-  //   this.showDots = !this.showDots;
-  // }
-
   // output evets
   onShow(event: ImageEvent) {
-    console.log('show', event);
   }
 
   onFirstImage(event: ImageEvent) {
-    console.log('firstImage', event);
   }
 
   onLastImage(event: ImageEvent) {
-    console.log('lastImage', event);
   }
 
 }

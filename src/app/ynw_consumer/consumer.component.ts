@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UpdateProfilePopupComponent } from '../shared/components/update-profile-popup/update-profile-popup.component';
 import { SharedServices } from '../shared/services/shared-services';
 import { GroupStorageService } from '../shared/services/group-storage.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-consumer',
@@ -14,11 +15,13 @@ export class ConsumerComponent implements OnInit {
   constructor(public shared_functions: SharedFunctions,
     private dialog: MatDialog,
     private groupService: GroupStorageService,
-    public shared_services: SharedServices) {
+    public shared_services: SharedServices,
+    private titleService: Title) {
     this.shared_functions.sendMessage({ ttype: 'main_loading', action: false });
   }
   userProfile: any = [];
   ngOnInit() {
+    this.titleService.setTitle('Jaldee-Avoid Waiting in Queues');
     this.getProfile();
   }
   getProfile() {

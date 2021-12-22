@@ -12,6 +12,7 @@ import { WordProcessor } from '../../services/word-processor.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { GroupStorageService } from '../../services/group-storage.service';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-header',
@@ -23,6 +24,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @Input() includedfrom;
   @Output() scrollhideclass = new EventEmitter<any>();
   @Input() source;
+  @Input() accountId;
+  @Input() customId;
+  @Input() showHeaderAction;
   sign_in_cap = Messages.SIGN_IN_CAP;
   join_cap = Messages.JOIN_CAP;
   are_you_ser_pro = Messages.ARE_YOU_SER_PRO_CAP;
@@ -39,6 +43,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   membership_cap = Messages.MEMBERSHIP_CAP;
   close_btn = Messages.CLOSE_BTN;
   dashboard_cap = Messages.DASHBOARD_TITLE;
+  wallet_cap = Messages.WALLET_TITLE;
   create_pro_accnt = Messages.CREATE_PRO_ACCNT;
   family_members = Messages.FAMILY_MEMBERS;
   cronHandle: Subscription;

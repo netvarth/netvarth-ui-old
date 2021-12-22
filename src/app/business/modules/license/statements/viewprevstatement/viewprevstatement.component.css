@@ -1,0 +1,29 @@
+.bg-grad {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+    background: #1e4079;
+}
+.jld-title {
+    color: white;
+    font-size: 2rem;
+}
+.clr-wht {
+    color: white;
+}
+.opacity-30 {
+    opacity: 0.3 !important;
+}
+.mk-pay {
+    float: right;
+    margin-right: 10px;
+    background: #1e4079;
+    border: none;
+    border-radius: 0;
+}
+.pt-0 {
+    padding-top: 0 !important;
+}
+.bil-head {
+    color: #7E8299 !important;
+    font-size: 1.08rem;
+}

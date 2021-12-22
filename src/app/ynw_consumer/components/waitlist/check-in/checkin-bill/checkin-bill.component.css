@@ -1,0 +1,32 @@
+.paymentmode .card {
+    /* border:2px solid grey !important; */
+    box-shadow: 0 0 5px 5px grey!important;
+    padding:5px!important;
+    max-width:50%!important;
+
+  }
+  /* input[type="radio"]:checked {
+    border :2px solid blue !important;
+    font-weight:400px;
+  } */
+
+  .paymentmode{
+    font-size:16px!important;
+    padding:0px !important;
+  }
+  .paymentmode > .mat-radio-button.mat-radio-checked { 
+    border-color: blue !important;
+    box-shadow: 0 0 3px 3px blue!important 
+  }
+
+  ::ng-deep .payment-mode-card-styles .mat-radio-button .mat-radio-container {
+    display: none!important;
+  }
+ ::ng-deep .payment-mode-card-styles .mat-radio-container .mat-radio-outer-circle,
+ ::ng-deep .payment-mode-card-styles .mat-radio-container .mat-radio-inner-circle{
+    
+    display: none!important;
+  }
+  ::ng-deep .payment-mode-card-styles .mat-radio-container .mat-radio-label{
+    display: inline;
+  }

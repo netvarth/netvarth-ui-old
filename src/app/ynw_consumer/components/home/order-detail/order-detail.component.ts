@@ -151,10 +151,7 @@ buttons: [
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
     this.getStoreContact();
-
-
-
-   // this.getFavouriteProvider();
+    this.getFavouriteProvider();
   }
 
   gets3curl() {
@@ -243,18 +240,22 @@ buttons: [
   }
   checkIfFav(id) {
     let fav = false;
-    this.fav_providers_id_list.map((e) => {
-      if (e === id) {
-        fav = true;
-      }
-    });
-    return fav;
+    console.log(this.fav_providers_id_list);
+    if (this.fav_providers_id_list) {
+      this.fav_providers_id_list.map((e) => {
+        if (e === id) {
+          fav = true;
+        }
+      });
+      return fav;
+    }
   }
   getFavouriteProvider() {
    this.subs.sink= this.sharedServices.getFavProvider()
       .subscribe(
         data => {
           this.fav_providers = data;
+          console.log('favorite proividerasa'+ this.fav_providers);
           this.fav_providers_id_list = [];
           this.setWaitlistTimeDetails();
         },
@@ -360,7 +361,8 @@ buttons: [
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      if (result === 'reloadlist') {
+      if (result && result === 'reloadlist') {
+        console.log('iisde');
         this.getCommunicationHistory();
       }
     });

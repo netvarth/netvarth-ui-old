@@ -6,13 +6,10 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { HeaderModule } from '../../modules/header/header.module';
 import { LoadingSpinnerModule } from '../../modules/loading-spinner/loading-spinner.module';
 import { QuestionnaireComponent } from './questionnaire.component';
-import { QuestionnaireRoutingModule } from './questionnaire.routing.module';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
-
 @NgModule({
     declarations: [
         QuestionnaireComponent
@@ -20,17 +17,15 @@ import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
     imports: [
         CommonModule,
         FormsModule,
+        ReactiveFormsModule,
+        LoadingSpinnerModule,
+        CapitalizeFirstPipeModule,
+        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
         MatDatepickerModule,
         MatCheckboxModule,
         MatSlideToggleModule,
-        QuestionnaireRoutingModule,
-        HeaderModule,
-        LoadingSpinnerModule,
         MatOptionModule,
-        MatSelectModule,
-        ReactiveFormsModule,
-        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
-        CapitalizeFirstPipeModule
+        MatSelectModule
     ],
     exports: [QuestionnaireComponent]
 })

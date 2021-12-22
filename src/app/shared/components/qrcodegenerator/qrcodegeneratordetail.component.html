@@ -1,74 +1,29 @@
-<h1 class="mat-dialog-title qrcodegeneratordetail-title">Jaldee QR Code
-  <button  mat-dialog-close class="modal_close" tabindex="-1">
-      <i class="fa fa-window-close" aria-hidden="true"></i>
-  </button>
-</h1>
-<mat-dialog-content class="qrcodegeneratordetail-content">
-  <div class="coupon-outer textcenter" *ngIf="qr_code_oId" #qrCodeOnlineId1>
-              <!-- <div>
-                  <i (click)="closeOnlineQR()" class="fa fa-window-close fa-lg ngx-qr-close custId-cursor" aria-hidden="true"></i>
-              </div> -->
-      <div class="jaldee-provider-id">
-          <div>Jaldee Provider ID</div>
-          <div>{{accuid}}</div>
-      </div>
-      <div class="jaldee-link">
-          <div>Jaldee Link</div>
-          <div>{{wpath}}{{accuid}}</div>
-      </div>      
-      <div>
-          <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value">
-          </ngx-qrcode>
-      </div>
-      <div class="coupon-outer" style="padding: 25px 0px !important;">
-          <button class="download-btn btn btn-info jld-lnk-btn">
-              <a class="ngx-qr-btn" [href]="qrCodePath" download>
-              <i class="fa fa-download" aria-hidden="true" style="padding-right: 5px;"></i>Download</a>
-          </button>
-                  <!-- <a [href]="href" (click)="downloadQR()" download><i class="fa fa-download" aria-hidden="true"></i></a>
-                  &nbsp;&nbsp;&nbsp;
-                  <button (click)="closeOnlineQR()">close</button> -->
-      </div>
-      <div class="jld-link-pad">
-       <!-- <div>Jaldee Link - <span class="jld-lnk-font" ><span>{{wpath}}{{accuid}}</span></span></div>
-       <br>
-       <div style="padding-right: 20%;">
-           Jaldee Provider ID - <span class="jld-lnk-font" >{{accuid}}</span>
-       </div> -->
-       <div class="share-links" >
-        <!-- <label>Share Jaldee Link</label> -->
-        <label>Or Share Using</label>
-        <!-- <div style="display:flex;padding-left: 150px;">
-        <i class="fa fa-copy custId-cursor  font-lrge " style="font-size:40px;"
-        (click)="copyInputMessage(accuid)" [matTooltip]="'Copy link'"></i> -->
-        <!-- <share-buttons [theme]="'circles-dark'" 
-        [include]="['facebook','whatsapp','email','telegram','copy']"
-        [url]="shareLink"
-        [autoSetMeta]="true"
-        [image]="qrCodePath"
-        [showIcon]="true"
-        [showText]="true"
-       ></share-buttons> -->
-       <share-buttons class="display-less-than-350"
-        [theme]="'circles-light'" 
-        [include]="['facebook','whatsapp','email','telegram','copy']"
-        [url]="shareLink"
-        [autoSetMeta]="true"
-        [image]="qrCodePath"
-        [showIcon]="true"
-        [showText]="true"
-       ></share-buttons>
-       <share-buttons class="display-more-than-350"
-        [theme]="'circles-light'" 
-        [include]="['facebook','whatsapp','email','telegram','copy']"
-        [url]="shareLink"
-        [autoSetMeta]="true"
-        [image]="qrCodePath"
-        [showIcon]="true"
-        [showText]="true"
-       ></share-buttons>
+<span class="mat-dialog-title"> <button mat-dialog-close class="modal_close" tabindex="-1">
+        <i class="fa fa-window-close" aria-hidden="true" style="margin-top: 50px"></i>
+    </button>
+</span>
+<h1 class="mat-dialog-title">
+    <div class="qrpage"><label style="color:dodgerblue; font-size: 30px;">{{bname}}</label><br>
+        {{ about | slice:0:64 }} </div>
+</h1><label class="txt-qr1">Scan QR Code</label>
+<mat-dialog-content>
+    <div class="coupon-outer textcenter" *ngIf="qr_code_oId" #qrCodeOnlineId style="margin-top: -40px">
+        <div>
+            <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value">
+            </ngx-qrcode>
+            <span><span>{{wpath}}{{accuid}}<span *ngIf="userId">/{{userId}}</span></span></span>
         </div>
-       </div>
-      </div>
-      <!-- </div> -->
+        <div class="coupon-outer">
+            <button class="btn-download"><a [href]="qrCodePath" download><i class="fa fa-download" aria-hidden="true"
+                        style="padding-right: 2px;"></i></a> Download</button>
+        </div>
+        <div class="jld-link-pad">
+            <div class="mgn-up-20">
+                <label>Share Via</label>
+                <share-buttons style="font-size: 10px !important" [theme]="'circles-dark'"
+                    [include]="['facebook','whatsapp','email','telegram','copy']" [url]="shareLink" [autoSetMeta]="true"
+                    [image]="qrCodePath" [showIcon]="true" [showText]="true"></share-buttons>
+            </div>
+        </div>
+    </div>
 </mat-dialog-content>

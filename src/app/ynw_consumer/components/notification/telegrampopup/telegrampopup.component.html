@@ -1,0 +1,13 @@
+<form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()"
+    class="ynw-common-form">
+    <h1 class="mat-dialog-title">
+        Instructions to the telegram activation
+        <button #queue mat-dialog-close class="modal_close" tabindex="-1">
+            <i class="fa fa-window-close" aria-hidden="true"></i>
+        </button>
+    </h1>
+    <mat-dialog-content>
+        click here&nbsp; <a href="{{url}}" target="_blank" (click)="close()">{{url}}</a>
+    </mat-dialog-content>
+    
+</form> 

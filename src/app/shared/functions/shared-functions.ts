@@ -7,12 +7,12 @@ import { ConfirmBoxComponent } from '../components/confirm-box/confirm-box.compo
 import { Observable, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { DateFormatPipe } from '../pipes/date-format/date-format.pipe';
-import { ProviderServices } from '../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../business/services/provider-services.service';
 import { GroupStorageService } from '../services/group-storage.service';
 import { LocalStorageService } from '../services/local-storage.service';
-import { SessionStorageService } from '../services/session-storage.service';
 import { FileService } from '../services/file-service';
 import { projectConstants } from '../../../app/app.component';
+import { AuthService } from '../services/auth-service';
 @Injectable()
 
 export class SharedFunctions {
@@ -27,8 +27,8 @@ export class SharedFunctions {
     public dateformat: DateFormatPipe,
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
-    private sessionStorageService: SessionStorageService,
-    private fileService: FileService
+    private fileService: FileService,
+    private authService: AuthService
   ) { }
 
   logout() {

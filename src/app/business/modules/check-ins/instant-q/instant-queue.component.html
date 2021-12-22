@@ -1,0 +1,79 @@
+<h1 class="mat-dialog-title">Set your availability
+        <button #queue mat-dialog-close class="modal_close" tabindex="-1">
+                <i class="fa fa-window-close" aria-hidden="true"></i>
+        </button>
+</h1>
+<mat-dialog-content>
+        <div class="row m0 instantQueue-component-modal-content">
+                <div class="col-md-12 p0">
+                        <div class="text-message">
+                                This enables you to instantly make yourself available today for consultation within the
+                                time range you choose.
+                        </div>
+                        <form [formGroup]="instantQForm" novalidate (ngSubmit)="instantQForm.valid &&
+                                onSubmit(instantQForm.value)">
+                                <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                                <div class="timings" *ngIf="!loading">
+                                        <div class="head">Make me available</div>
+                                        <div class="form-timepicker-fields">
+                                                <div class="start">
+                                                        <label class="start-time-label" for="start-time-label">
+                                                                From
+                                                                <span
+                                                                        style="color: red !important; font-weight: 700 !important;">*</span>
+                                                        </label>
+                                                        <span class="editable-text" (click)="editStartTime()"
+                                                                *ngIf="!sTimeEditable">
+                                                                {{fromDateCaption}}
+                                                                <i class="fa fa-pencil-square-o"></i>
+                                                        </span>
+                                                        <div class="form-group" *ngIf="sTimeEditable">
+                                                                <div class="startendtime">
+                                                                        <div class="starttimediv">
+                                                                                <ngb-timepicker
+                                                                                        formControlName="dstart_time"
+                                                                                        meridian="true">
+                                                                                </ngb-timepicker>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                                <div class="end">
+                                                        <label class="end-time-label" for="end-time-label">
+                                                                Through
+                                                                <span
+                                                                        style="color: red !important; font-weight: 700 !important;">*</span>
+                                                        </label>
+                                                        <span class="editable-text" (click)="editEndTime()"
+                                                                *ngIf="!eTimeEditable">
+                                                                {{toDateCaption}}
+                                                                <i class="fa fa-pencil-square-o"></i>
+                                                        </span>
+                                                        <div class="form-group" *ngIf="eTimeEditable">
+                                                                <div class="startendtime">
+                                                                        <div class="endtimediv">
+                                                                                <ngb-timepicker
+                                                                                        formControlName="dend_time"
+                                                                                        meridian="true">
+                                                                                </ngb-timepicker>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="actiondiv mgn-up-10" style="display: flex; margin-bottom: 0 !important;">
+                                        <button type="button" class="btn cancel-button"
+                                                (click)="close()">Cancel</button>
+                                        <button class="btn confirm-button"
+                                                [disabled]="!instantQForm.valid || loading">Confirm</button>
+                                </div>
+                        </form>
+                </div>
+        </div>
+        <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
+        </app-field-error-display>
+        <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+        </app-form-success-display>
+</mat-dialog-content>

@@ -3,8 +3,13 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { FormMessageDisplayModule } from "../../../shared/modules/form-message-display/form-message-display.module";
 import { LoadingSpinnerModule } from "../../../shared/modules/loading-spinner/loading-spinner.module";
-import { MaterialModule } from "../../../shared/modules/common/material.module";
 import { VirtualFieldsComponent } from "./virtualfields.component";
+import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatRadioModule } from "@angular/material/radio";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatButtonModule } from "@angular/material/button";
+import { MatInputModule } from "@angular/material/input";
 
 @NgModule({
     imports: [
@@ -13,7 +18,12 @@ import { VirtualFieldsComponent } from "./virtualfields.component";
         CommonModule,
         FormMessageDisplayModule,
         LoadingSpinnerModule,
-        MaterialModule
+        CapitalizeFirstPipeModule,
+        MatDialogModule,
+        MatRadioModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        MatInputModule
     ],
     declarations: [
         VirtualFieldsComponent

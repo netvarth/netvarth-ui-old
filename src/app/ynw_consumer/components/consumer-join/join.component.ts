@@ -3,7 +3,6 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../shared/services/shared-services';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -11,13 +10,17 @@ import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { SessionStorageService } from '../../../shared/services/session-storage.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { SubSink } from 'subsink';
+import { AuthService } from '../../../shared/services/auth-service';
+// import './join.component.ts'
+
 
 @Component({
   selector: 'app-consumer-join',
   templateUrl: './join.component.html',
-  styleUrls: ['./join.component.css']
+  styleUrls: ['./join.component.scss'] 
 })
 export class ConsumerJoinComponent implements OnInit, OnDestroy {
   mobile_no_cap = Messages.MOBILE_NUMBER_CAP;
@@ -53,6 +56,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
   close_message: any;
   fname: any;
   lname: any;
+  theme:any;
   phoneExists = false;
   isPhoneValid = false;
   resendViaEmail: boolean;
@@ -72,28 +76,29 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
-    public shared_functions: SharedFunctions,
     private wordProcessor: WordProcessor,
+    private sessionStorageService: SessionStorageService,
     private lStorageService: LocalStorageService,
     public dialog: MatDialog,
     private router: Router,
+    private authService: AuthService,
     @Inject(DOCUMENT) public document
   ) {
 
     this.test_provider = data.test_account;
   }
   ngOnInit() {
-    console.log("Begin ngOninit");
     this.joinStep = true;
     this.selectedCountryCode = this.countryCodes[0].value;
     this.moreParams = this.data.moreparams;
+    this.theme = this.data.theme;
+    console.log(this.theme);
     this.createForm();
     this.api_loading = false;
     if (this.data.type === 'consumer') {
       this.heading = 'Please enter your phone number';
       this.phOrem_error = 'Invalid mobile number';
     }
-    console.log("End ngOninit");
   }
   ngOnDestroy() {
     this.subs.unsubscribe();
@@ -138,20 +143,21 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
     this.phoneExists = false;
   }
   onSubmit(data) {
-    console.log("OnSubmit Join Component Start");
-    const _this = this;
     const dialCode = data.phone.dialCode;
     const pN = data.phone.e164Number.trim();
+
+
+    // const pN = this.mobile_num.trim();
     const pW = data.password.trim();
     if (pN === '') {
-      if (_this.mobile_num) {
-        _this.mobile_num.focus();
+      if (this.mobile_num) {
+        this.mobile_num.focus();
         return;
       }
     }
     if (pW === '') {
-      if (_this.document.getElementById('password')) {
-        _this.document.getElementById('password').focus();
+      if (this.document.getElementById('password')) {
+        this.document.getElementById('password').focus();
         return;
       }
     }
@@ -159,41 +165,77 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
     if (pN.startsWith(dialCode)) {
       loginId = pN.split(dialCode)[1];
     }
-    let post_data = {
+    const ob = this;
+    const post_data = {
       'countryCode': dialCode,
+      // 'countryCode': '+91',
       'loginId': loginId,
       'password': data.password,
-      'mUniqueId': _this.lStorageService.getitemfromLocalStorage('mUniqueId')
+      'mUniqueId': null
     };
-    _this.api_loading = true;
-    if (post_data.loginId.startsWith('55') && _this.test_provider === false) {
-      setTimeout(() => {
-        _this.api_error = this.wordProcessor.getProjectMesssages('TESTACC_LOGIN_NA');
-        _this.api_loading = false;
-      }, projectConstants.TIMEOUT_DELAY_SMALL);
-    } else {
-      console.log("Before Checking authToken");
-      console.log("Token: " + _this.lStorageService.getitemfromLocalStorage('authToken'));
-      if (_this.lStorageService.getitemfromLocalStorage('authToken')) {
-        post_data['token'] = this.lStorageService.getitemfromLocalStorage('authToken');
-      }
-      console.log("Post Data");
-      console.log(post_data);
-      _this.shared_functions.consumerLogin(post_data, _this.moreParams).then(
-        () => {
-          let pre_header = dialCode.split('+')[1] + "-" + loginId;
-          if (this.lStorageService.getitemfromLocalStorage('authToken')) {
-            _this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
+    this.sessionStorageService.removeitemfromSessionStorage('tabId');
+    this.api_loading = true;
+    if (this.data.type === 'provider') {
+      post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
+      this.sessionStorageService.clearSessionStorage();
+      this.authService.providerLogin(post_data)
+        .then(
+          () => {
+            const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
+            this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+            // this.dialogRef.close();
+            setTimeout(() => {
+              this.dialogRef.close();
+            }, projectConstants.TIMEOUT_DELAY_SMALL);
+          },
+          error => {
+            ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+            this.api_loading = false;
           }
-          _this.dialogRef.close('success');
-        },
-        error => {
-          console.log("Login Error :");
-          console.log(error);
-          _this.api_error = _this.wordProcessor.getProjectErrorMesssages(error);
-          _this.api_loading = false;
-        }
-      );
+        );
+    } else if (this.data.type === 'consumer') {
+      if (post_data.loginId.startsWith('55') && this.test_provider === false) {
+        setTimeout(() => {
+          ob.api_error = this.wordProcessor.getProjectMesssages('TESTACC_LOGIN_NA');
+          this.api_loading = false;
+        }, projectConstants.TIMEOUT_DELAY_SMALL);
+      } else {
+        post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
+        this.authService.consumerLogin(post_data, this.moreParams)
+          .then(
+            () => {
+              const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
+              this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+              this.lStorageService.setitemonLocalStorage('qrp', data.password);
+              this.dialogRef.close('success');
+            },
+            error => {
+              if (error.status === 401 && error.error === 'Session already exists.') {
+
+                const activeUser = this.lStorageService.getitemfromLocalStorage('ynw-user');
+                if (!activeUser) {
+                  this.shared_services.ConsumerLogout().subscribe(
+                    ()=> {
+                      this.authService.consumerLogin(post_data, this.moreParams).then(
+                        () => {
+                          const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
+                          this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+                          this.lStorageService.setitemonLocalStorage('qrp', data.password);
+                          this.dialogRef.close('success');
+                        });
+                    }
+                  )              
+                } else {
+                  this.lStorageService.setitemonLocalStorage('qrp', data.password);
+                  this.dialogRef.close('success');
+                }
+              } else {
+                ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+                this.api_loading = false;
+              }
+            }
+          );
+      }
     }
   }
 
@@ -226,6 +268,12 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
     if (this.loginForm.get('emailId').value) {
       userProfile['email'] = this.loginForm.get('emailId').value.trim();
     }
+    // if (userProfile.firstName === null) {
+    //   userProfile.firstName = 'undefined';
+    // }
+    // if (userProfile.lastName === null) {
+    //   userProfile.lastName = 'undefined';
+    // }
     this.user_details = {
       userProfile: userProfile
     };
@@ -247,11 +295,21 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
   }
   signUpApiConsumer(user_details) {
     this.resendemailotpsuccess = false;
+    if (this.lStorageService.getitemfromLocalStorage('customId') && this.lStorageService.getitemfromLocalStorage('accountId')) {
+      user_details['accountId'] = this.lStorageService.getitemfromLocalStorage('accountId');
+  }
     this.subs.sink = this.shared_services.signUpConsumer(user_details)
       .subscribe(
         () => {
           this.actionstarted = false;
+          // this.createForm(2);
           this.resendemailotpsuccess = true;
+          // if (user_details.userProfile &&
+          //   user_details.userProfile.email) {
+          //   this.setMessage('email', user_details.userProfile.email);
+          // } else {
+          //   this.setMessage('mobile', user_details.userProfile.primaryMobileNo);
+          // }
           this.step = 4;
         },
         error => {
@@ -280,6 +338,8 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
         () => {
           this.actionstarted = false;
           this.otp = submit_data.phone_otp;
+          // this.createForm(4);
+
           this.step = 6;
         },
         error => {
@@ -305,33 +365,30 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
       .subscribe(
         () => {
           this.actionstarted = false;
-          let login_data = {
+          const login_data = {
+            // 'countryCode': '+91',
             'countryCode': dialCode,
             'loginId': this.user_details.userProfile.primaryMobileNo,
-            'password': post_data.password,
-            'mUniqueId': this.lStorageService.getitemfromLocalStorage('mUniqueId')
+            'password': post_data.password
           };
-          if (this.lStorageService.getitemfromLocalStorage('authToken')) {
-            login_data['token'] = this.lStorageService.getitemfromLocalStorage('authToken');
-          }
-          this.shared_functions.consumerLogin(login_data, this.moreParams)
+          // this.dialogRef.close();
+          this.authService.consumerLogin(login_data, this.moreParams)
             .then(
               (login_info: any) => {
                 this.user_details.userProfile['firstName'] = this.loginForm.get('first_name').value;
                 this.user_details.userProfile['lastName'] = this.loginForm.get('last_name').value;
                 this.user_details.userProfile['id'] = login_info.id;
-                let pre_header = dialCode.split('+')[1] + "-" + this.user_details.userProfile.primaryMobileNo;
-                if (this.lStorageService.getitemfromLocalStorage('authToken')) {
-                  this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
-                }
                 this.shared_services.updateProfile(this.user_details.userProfile, 'consumer').subscribe(
                   () => {
                     login_info['firstName'] = this.user_details.userProfile['firstName'];
                     login_info['lastName'] = this.user_details.userProfile['lastName'];
                     login_info['userName'] = login_info['firstName'] + ' ' + login_info['lastName'];
-                    this.shared_functions.setLoginData(login_info, login_data, 'consumer');
+                    this.authService.setLoginData(login_info, login_data, 'consumer');
                     const pdata = { 'ttype': 'updateuserdetails' };
-                    this.shared_functions.sendMessage(pdata);
+                    this.authService.sendMessage(pdata);
+                    const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
+                    this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+                    this.lStorageService.setitemonLocalStorage('qrp', post_data.password);
                     this.dialogRef.close('success');
                   },
                   error => {
@@ -341,6 +398,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
               },
               error => {
                 ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+                // this.api_loading = false;
               }
             );
         },
@@ -387,6 +445,19 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
     } else {
       this.dialogRef.close('showsignupfromlogin'); // closing the signin window
     }
+    if (this.data.moreparams && (this.data.moreparams.source === 'businesshome_page')) {
+      this.doSignup();
+    }
+  }
+  doSignup() {
+    // const dialogReflog = this.dialog.open(SignUpComponent, {
+    //   width: '50%',
+    //   panelClass: ['signupmainclass', 'popup-class'],
+    //   disableClose: true,
+    //   data: { is_provider: this.is_provider }
+    // });
+    // dialogReflog.afterClosed().subscribe(() => {
+    // });
   }
   handlekeyup(ev) {
     if (ev.keyCode !== 13) {
@@ -411,7 +482,6 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
     if (this.mobile_num) {
       this.phoneDialCode = this.loginForm.get('phone').value.dialCode;
       this.subs.sink = this.shared_services.consumerMobilenumCheck(this.mobile_num, this.phoneDialCode).subscribe((accountExists) => {
-        console.log("Hey I found this number in Jaldee");
         if (accountExists) {
           this.phoneExists = true;
           this.isPhoneValid = true;
@@ -421,8 +491,6 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
           this.step = 3;
           // this.otpSend();
         }
-      }, (error) => {
-        console.log(error);
       }
       );
     } else {
@@ -433,11 +501,11 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
   toastNext(str) {
     console.log('toast');
     this.joinStep = !this.joinStep;
-    if (str === 'sUp') {
+    if(str === 'sUp') {
       this.step = 3;
     } else {
       this.step = 1;
     }
   }
-
-}
+  
+ }

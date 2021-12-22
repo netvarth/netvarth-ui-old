@@ -1,32 +1,54 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth-service';
 import { GroupStorageService } from '../services/group-storage.service';
 import { LocalStorageService } from '../services/local-storage.service';
 
 @Injectable()
 export class AuthGuardConsumer implements CanActivate {
 
-  constructor(private router: Router, private lStorageService: LocalStorageService) { }
+  constructor(
+    private authService: AuthService,
+    private lStorageService: LocalStorageService) { }
 
   canActivate() {
+<<<<<<< HEAD
     if (this.lStorageService.getitemfromLocalStorage('ynw-credentials')) {
+=======
+    if (this.lStorageService.getitemfromLocalStorage('ynw-credentials')
+      && this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'false') {
       return true;
     }
+    this.authService.logoutFromJaldee().then();
+    return false;
+  }
+}
 
-    this.router.navigate(['/logout']);
+@Injectable()
+export class AuthGuardProvider implements CanActivate {
+
+  constructor(private authService: AuthService, private lStorageService: LocalStorageService) { }
+
+  canActivate() {
+    if (this.lStorageService.getitemfromLocalStorage('ynw-credentials')
+      && this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true') {
+>>>>>>> refs/remotes/origin/jaldee-payment-profile-latest
+      return true;
+    }
+    this.authService.logoutFromJaldee().then();
     return false;
   }
 }
 
 @Injectable()
 export class AuthGuardLogin implements CanActivate {
-  constructor(private router: Router, private lStorageService: LocalStorageService) { }
+  constructor(private authService: AuthService, private lStorageService: LocalStorageService) { }
   canActivate() {
     if (this.lStorageService.getitemfromLocalStorage('ynw-credentials')) {
       return true;
     }
-    this.router.navigate(['/logout']);
+    this.authService.logoutFromJaldee().then();
     return false;
   }
 }
@@ -34,12 +56,14 @@ export class AuthGuardLogin implements CanActivate {
 
 @Injectable()
 export class AuthGuardHome implements CanActivate {
-  constructor(private router: Router, private groupService: GroupStorageService, 
-    private lStorageService: LocalStorageService) {}
+  constructor(private router: Router, private groupService: GroupStorageService,
+    private lStorageService: LocalStorageService) { }
   canActivate() {
     let credentials = null;
     let userType = null;
-    if (this.lStorageService.getitemfromLocalStorage('ynw-credentials') && this.groupService.getitemFromGroupStorage('ynw-user') ) {
+    this.lStorageService.removeitemfromLocalStorage('accountId');
+    this.lStorageService.removeitemfromLocalStorage('customId');
+    if (this.lStorageService.getitemfromLocalStorage('ynw-credentials') && this.groupService.getitemFromGroupStorage('ynw-user')) {
       credentials = this.groupService.getitemFromGroupStorage('ynw-user');
       userType = credentials['userType'];
       if (this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true' || userType === 3) {
@@ -56,7 +80,8 @@ export class AuthGuardHome implements CanActivate {
 
 @Injectable()
 export class AuthGuardProviderHome implements CanActivate {
-  constructor(private router: Router, private groupService: GroupStorageService, private lStorageService: LocalStorageService) { }
+  constructor(private router: Router,
+    private authService: AuthService, private groupService: GroupStorageService, private lStorageService: LocalStorageService) { }
   canActivate() {
     if (this.lStorageService.getitemfromLocalStorage('ynw-credentials')
       && this.groupService.getitemFromGroupStorage('ynw-user')) {
@@ -74,18 +99,7 @@ export class AuthGuardProviderHome implements CanActivate {
         return false;
       }
     }
-    this.router.navigate(['/logout']);
+    this.authService.logoutFromJaldee().then();
     return false;
-  }
-}
-@Injectable()
-export class AuthGuardNewProviderHome implements CanActivate {
-  constructor(private lStorageService: LocalStorageService) { }
-  canActivate() {
-    if (this.lStorageService.getitemfromLocalStorage('new_provider')) {
-      return true;
-    } else {
-      return false;
-    }
   }
 }

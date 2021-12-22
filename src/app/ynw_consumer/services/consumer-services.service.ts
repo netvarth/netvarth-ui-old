@@ -187,8 +187,8 @@ export class ConsumerServices {
   }
    getOrderHistory(params?) {
     const url = 'consumer/orders/history';
-    return this.servicemeta.httpGet(url);
-    // return this.servicemeta.httpGet('consumer/orders/history', null, params);
+    // return this.servicemeta.httpGet(url);
+    return this.servicemeta.httpGet(url, null, params);
   }
   CreateConsumerOrder(accountid, postData) {
     return this.servicemeta.httpPost('consumer/orders?account=' + accountid, postData);
@@ -209,5 +209,27 @@ export class ConsumerServices {
     const url = 'consumer/orders/future';
     return this.servicemeta.httpGet(url);
   }
-
+  getConsumerCashbalance() {
+    const url = 'consumer/wallet/cash/available';
+    return this.servicemeta.httpGet(url);
+  }
+  getConsumerCashbalanceDetails() {
+    const url = 'consumer/wallet/cash/info';
+     return this.servicemeta.httpGet(url);
+    // const url = 'consumer/wallet/cash/1';
+    // return this.servicemeta.httpGet(url);
+    
+  }
+  getConsumerCashbalanceExpiredDetails(){
+    const url = 'consumer/wallet/cash/expired';
+     return this.servicemeta.httpGet(url);
+  }
+  getConsumerCashspentWithIdDetails(id){
+    const url = 'consumer/wallet/cash/'+ id +'/txn/log';
+     return this.servicemeta.httpGet(url);
+  }
+  getConsumerTotalCashspent(){
+    const url = 'consumer/wallet/cash/spent';
+     return this.servicemeta.httpGet(url);
+  }
 }

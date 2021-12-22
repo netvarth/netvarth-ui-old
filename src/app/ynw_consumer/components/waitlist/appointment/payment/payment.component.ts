@@ -24,16 +24,6 @@ export class ConsumerAppointmentPaymentComponent implements OnInit,OnDestroy {
     uuid: any;
     accountId: any;
     prepayment_amnt_cap = Messages.PREPAYMENT_AMOUNT_CAP;
-    breadcrumbs = [
-        {
-            title: 'My Jaldee',
-            url: '/consumer'
-        },
-        {
-            title: 'Payment'
-        }
-    ];
-    breadcrumb_moreoptions: any = [];
     activeWt: any;
     prepaymentAmount: number;
     waitlistDetails: { 'amount': number; 'paymentMode': any; 'uuid': any; 'accountId': any; 'purpose': string; };
@@ -49,6 +39,14 @@ export class ConsumerAppointmentPaymentComponent implements OnInit,OnDestroy {
     iconClass: string;
     prepayment;
     private subs=new SubSink();
+    paymentmodes: any;
+    isPayment: boolean;
+    indian_payment_modes: any;
+    non_indian_modes: any;
+    shownonIndianModes: boolean;
+    selected_payment_mode: any;
+    isInternatonal: boolean;
+    isClickedOnce: boolean;
     constructor(public router: Router,
         public route: ActivatedRoute,
         public shared_functions: SharedFunctions,
@@ -78,6 +76,7 @@ export class ConsumerAppointmentPaymentComponent implements OnInit,OnDestroy {
         this.router.navigate(['/consumer']);
     }
     ngOnInit() {
+        this.getPaymentModes();
         this.subs.sink=this.shared_services.getAppointmentByConsumerUUID(this.uuid, this.accountId).subscribe(
             (wailist: any) => {
                 this.activeWt = wailist;
@@ -131,6 +130,54 @@ export class ConsumerAppointmentPaymentComponent implements OnInit,OnDestroy {
     ngOnDestroy(): void {
         this.subs.unsubscribe();
     }
+    getPaymentModes() {
+ 
+        this.shared_services.getPaymentModesofProvider(this.accountId, this.sel_ser, 'prePayment')
+            .subscribe(
+                data => {
+                    this.paymentmodes = data[0];
+                    this.isPayment = true;
+                    if (this.paymentmodes.indiaPay) {
+                        this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
+                    }
+                     if (this.paymentmodes.internationalPay) {
+                        this.non_indian_modes = this.paymentmodes.internationalBankInfo;
+ 
+                    }
+                    if(!this.paymentmodes.indiaPay && this.paymentmodes.internationalPay){
+                        this.shownonIndianModes=true;
+                    }else{
+                        this.shownonIndianModes=false;  
+                    }
+
+                },
+                error => {
+                    this.isPayment = false;
+                    console.log(this.isPayment);
+                }
+
+
+            );
+    }
+    sel_ser(accountId: any, sel_ser: any, arg2: string) {
+        throw new Error("Method not implemented.");
+    }
+    indian_payment_mode_onchange(event) {
+        this.selected_payment_mode = event.value;
+        this.isInternatonal = false;
+    }
+    non_indian_modes_onchange(event) {
+        this.selected_payment_mode = event.value;
+        this.isInternatonal = true;
+
+    }
+    togglepaymentMode(){
+        this.shownonIndianModes=!this.shownonIndianModes;
+    }
+    getImageSrc(mode){
+    
+        return 'assets/images/payment-modes/'+mode+'.png';
+    }
     getPaymentStatus(pid) {
         this.lStorageService.removeitemfromLocalStorage('acid');
         this.lStorageService.removeitemfromLocalStorage('uuid');
@@ -161,17 +208,13 @@ export class ConsumerAppointmentPaymentComponent implements OnInit,OnDestroy {
         this.status = this.status.toLowerCase();*/
     }
     payuPayment() {
-        let paymentWay;
-        paymentWay = 'DC';
-        this.makeFailedPayment(paymentWay);
+      
+        this.makeFailedPayment();
     }
-    paytmPayment() {
-        let paymentWay;
-        paymentWay = 'PPI';
-        this.makeFailedPayment(paymentWay);
-    }
-    makeFailedPayment(paymentMode) {
-        this.waitlistDetails.paymentMode = paymentMode;
+  
+    makeFailedPayment() {
+        this.isClickedOnce=true;
+        this.waitlistDetails.paymentMode = this.selected_payment_mode;
         this.lStorageService.setitemonLocalStorage('uuid', this.uuid);
         this.lStorageService.setitemonLocalStorage('acid', this.accountId);
         this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
@@ -187,11 +230,9 @@ export class ConsumerAppointmentPaymentComponent implements OnInit,OnDestroy {
                         this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
                         this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
                         setTimeout(() => {
-                            if (paymentMode === 'DC') {
-                                this.document.getElementById('payuform').submit();
-                            } else {
+                           
                                 this.document.getElementById('paytmform').submit();
-                            }
+                            
                         }, 2000);
                     } else {
                         this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
@@ -212,6 +253,7 @@ export class ConsumerAppointmentPaymentComponent implements OnInit,OnDestroy {
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
+        this.razorModel.mode=this.selected_payment_mode;
         this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uuid, this.livetrack, this.accountId, this.prepayment);
     }
 

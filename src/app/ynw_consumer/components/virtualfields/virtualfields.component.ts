@@ -10,9 +10,11 @@ import { SubSink } from 'subsink';
 import * as moment from 'moment';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { projectConstantsLocal } from '../../../shared/constants/project-constants';
-import { LocalStorageService } from '../../../shared/services/local-storage.service';
+import { projectConstantsLocal } from '../../../../app/shared/constants/project-constants';
+import { SharedFunctions } from '../../../../app/shared/functions/shared-functions';
+import { LocalStorageService } from '../../../../app/shared/services/local-storage.service';
+
+
 
 
 
@@ -72,7 +74,7 @@ export class VirtualFieldsComponent implements OnInit {
   provider: any;
   languageSelected: any = [];
   iseditLanguage=false;
-  submitData;
+
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
@@ -85,21 +87,21 @@ export class VirtualFieldsComponent implements OnInit {
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
   ) {
-    // this.months = projectConstantsLocal.MONTH;
-    // for (let i = 1; i <= 31; i++) {
-    //   if (i < 10) {
-    //     this.allDates.push('0' + i);
-    //   } else {
-    //     this.allDates.push(i);
-    //   }
+    this.months = projectConstantsLocal.MONTH;
+    for (let i = 1; i <= 31; i++) {
+      if (i < 10) {
+        this.allDates.push('0' + i);
+      } else {
+        this.allDates.push(i);
+      }
+    }
+    // for (let i = 1; i <= 12; i++) {
+    //   this.months.push(i);
     // }
-    // // for (let i = 1; i <= 12; i++) {
-    // //   this.months.push(i);
-    // // }
-    // for (let i = 1900; i <= 2021; i++) {
-    //   this.years.push(i);
-    // }
-    // this.dates = this.allDates;
+    for (let i = 1900; i <= 2021; i++) {
+      this.years.push(i);
+    }
+    this.dates = this.allDates;
     if (dialogData) {
       if (dialogData.consumer) {
         this.dialogData = this.s3Processor.getJson(dialogData.consumer);
@@ -111,7 +113,6 @@ export class VirtualFieldsComponent implements OnInit {
       }
       if (dialogData.service) {
         this.serviceDetails = dialogData.service;
-        console.log(this.serviceDetails);
       }
       if (dialogData.businessDetails) {
         if (dialogData.businessDetails.businessName) {
@@ -126,7 +127,6 @@ export class VirtualFieldsComponent implements OnInit {
     this.userId = this.lStorageService.getitemfromLocalStorage('userId');
     this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
-    console.log(this.consumer_label);
     this.getActiveUserInfo().then(data => {
       this.customer_data = data;
       this.countryCode = this.customer_data.userProfile.countryCode;
@@ -552,7 +552,8 @@ export class VirtualFieldsComponent implements OnInit {
           resolve(locations);
         },
         error => {
-          resolve([]);
+          _this.loading=false;
+          reject(error);
         }
       );
     });
@@ -565,15 +566,21 @@ export class VirtualFieldsComponent implements OnInit {
       this.fetchLocationByPincode(pincode).then(
         (locations: any) => {
           if (locations.length > 0) {
+            this.loading=false;
             this.locations = locations[0];
             this.virtualForm.patchValue({ location: locations[0]['PostOffice'][0] });
           } else {
             this.locations = [];
+          
           }
+        
+        },error=>{
           this.loading = false;
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       )
     } else {
+      this.loading=false;
       this.locations = [];
     }
   }
@@ -790,7 +797,7 @@ export class VirtualFieldsComponent implements OnInit {
       } else {
         whatsup["countryCode"] = '+' + formdata.countryCode_whtsap
       }
-      whatsup["number"] = formdata.whatsappumber
+      whatsup["number"] = formdata.whatsappnumber
       memberInfo['userProfile']['whatsAppNum'] = whatsup;
     }
     if (formdata.telegramnumber !== undefined && formdata.telegramnumber.trim().length>0 &&  formdata.countryCode_telegram !== undefined&&formdata.countryCode_telegram.trim().length>0) {
@@ -807,7 +814,6 @@ export class VirtualFieldsComponent implements OnInit {
     if (formdata.email !== '' && formdata.updateEmail) {
       memberInfo['userProfile']['email'] = formdata.email
     }
-
 
     memberInfo['bookingLocation'] = {}
     memberInfo['userProfile']['gender'] = formdata.gender;

@@ -1,6 +1,6 @@
 
 import { interval as observableInterval, Subscription } from 'rxjs';
-import { Component, OnInit, OnDestroy, Inject, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -10,9 +10,9 @@ import { ConsumerServices } from '../../services/consumer-services.service';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { NotificationListBoxComponent } from '../../shared/component/notification-list-box/notification-list-box.component';
+import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { ConsumerRateServicePopupComponent } from '../../../shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
-import { AddManagePrivacyComponent } from '../add-manage-privacy/add-manage-privacy.component';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { CouponsComponent } from '../../../shared/components/coupons/coupons.component';
@@ -29,8 +29,7 @@ import { GalleryService } from '../../../shared/modules/gallery/galery-service';
 import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
-import { AttachmentPopupComponent } from '../../../../../src/app/shared/components/attachment-popup/attachment-popup.component';
-
+import { AttachmentPopupComponent } from '../../../shared/components/attachment-popup/attachment-popup.component';
 @Component({
   selector: 'app-consumer-home',
   templateUrl: './consumer-home.component.html',
@@ -105,6 +104,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   settings_exists = false;
   futuredate_allowed = false;
   waitlistestimatetimetooltip = Messages.SEARCH_ESTIMATE_TOOPTIP;
+  public searchfields: SearchFields = new SearchFields();
   reload_history_api = { status: true };
   subscription: Subscription;
   cronHandle: Subscription;
@@ -164,14 +164,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   pollingSet: any = [];
   pollingApptSet: any = [];
   callingModesDisplayName = projectConstants.CALLING_MODES;
-  breadcrumbs;
   donations: any = [];
-  rupee_symbol = 'â‚¹';
+  rupee_symbol = 'Ã¢â€šÂ¹';
   appttime_arr: any = [];
   api_error: any;
   api_loading = false;
   futureAllowed = true;
   usr_details: any;
+  login_details: any;
   future_appointments: any = [];
   future_waitlists: any = [];
   todayDate = new Date();
@@ -232,8 +232,19 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   imageAllowed = ['JPEG', 'JPG', 'PNG'];
 
   extras: any;
-  showattachmentDialogRef: MatDialogRef<unknown, any>;
+
   private subs = new SubSink();
+  accountId: any;
+  customAppid: any;
+  customId: any;
+  orderstatus = false;
+  countryCode: any;
+  chatId: any;
+  showTeleBt = false;
+  tele_popUp;
+  onlyVirtualItemsPresent=false;
+  @ViewChild('popupforApp') popUp:ElementRef;
+  showattachmentDialogRef: MatDialogRef<unknown, any>;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -257,6 +268,17 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
       if (qparams && qparams.source) {
         this.showOrder = true;
+      }
+      if (qparams && qparams.accountId) {
+        this.accountId = qparams.accountId;
+        this.shared_services.getOrderSettings(this.accountId).subscribe(
+          (settings: any) => {
+            this.orderstatus = settings.enableOrder;
+          }
+        );
+      }
+      if (qparams && qparams.customId) {
+        this.customId = qparams.customId;
       }
     });
   }
@@ -282,13 +304,36 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       divider = divident / 1;
     }
     this.no_of_grids = Math.round(divident / divider);
-    console.log(this.screenWidth);
-    console.log(this.no_of_grids);
+    // console.log(this.screenWidth);
+    // console.log(this.no_of_grids);
   }
 
   ngOnInit() {
-    console.log(this.bookingStatusClasses);
+    // console.log(this.bookingStatusClasses);
     this.usr_details = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.login_details = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+    this.tele_popUp = this.lStorageService.getitemfromLocalStorage('showTelePop');
+    let login = JSON.parse(this.login_details);
+    if(login.countryCode.startsWith('+')){
+      this.countryCode = login.countryCode.substring(1);
+    }
+    this.shared_services.consumertelegramChat(this.countryCode,login.loginId)
+     .subscribe(
+         data => { 
+           this.chatId = data; 
+           if(this.chatId === null){
+            this.showTeleBt = true;
+            if(this.tele_popUp){
+              this.popUp.nativeElement.style.display = 'block';
+              this.lStorageService.removeitemfromLocalStorage('showTelePop');
+            }
+
+           }
+         },
+         (error) => {
+            
+         }
+     );
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.locationholder = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
     let stat;
@@ -296,14 +341,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (stat === true) {
       this.showOrder = true;
     }
-    //  else {
-    //   this.showOrder = false;
-    // }
-    this.breadcrumbs = [
-      {
-        title: 'My Jaldee'
-      }
-    ];
     this.setSystemDate();
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     this.carouselOne = {
@@ -355,7 +392,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.favTooltip = this.wordProcessor.getProjectMesssages('FAVORITE_TOOLTIP');
     this.historyTooltip = this.wordProcessor.getProjectMesssages('HISTORY_TOOLTIP');
     // this.gets3curl();
-    // this.getFavouriteProvider();
+    this.getFavouriteProvider();
     this.getAppointmentToday();
     // this.getAppointmentFuture();
     // this.getTdyOrder();
@@ -382,9 +419,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
 
     this.subs.sink = this.galleryService.getMessage().subscribe(input => {
-      console.log(input);
+      // console.log(input);
       if (input && input.accountId && input.uuid && input.type === 'appt') {
-        console.log(input);
+        // console.log(input);
         this.shared_services.addConsumerAppointmentAttachment(input.accountId, input.uuid, input.value)
           .subscribe(
             () => {
@@ -397,7 +434,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             }
           );
       } else {
-        console.log(input);
+        // console.log(input);
         if (input && input.accountId && input.uuid && input.type === 'checkin') {
           this.shared_services.addConsumerWaitlistAttachment(input.accountId, input.uuid, input.value)
             .subscribe(
@@ -414,57 +451,107 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     });
   }
+  getOrderPaidBill(orderBill){
+    if(orderBill.bill && orderBill.bill.amountPaid){
+      return orderBill.amountPaid;
+    }else{
+      return orderBill.advanceAmountPaid;
+    }
+
+  }
+  redirectto(mod) {
+    const usertype = this.shared_functions.isBusinessOwner('returntyp');
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['accountId'] = this.accountId;
+      queryParams['customId'] = this.customId;
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParams
+    };
+    switch (mod) {
+      case 'profile':
+        this.router.navigate([usertype, 'profile'], navigationExtras);
+        break;
+    }
+  }
   paymentsClicked() {
-    this.router.navigate(['consumer', 'payments']);
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['accountId'] = this.accountId;
+      queryParams['customId'] = this.customId;
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParams
+    };
+    this.router.navigate(['consumer', 'payments'], navigationExtras);
   }
   orderpaymentsClicked() {
-    this.router.navigate(['consumer', 'order', 'order-payments']);
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['accountId'] = this.accountId;
+      queryParams['customId'] = this.customId;
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParams
+    };
+    this.router.navigate(['consumer', 'order', 'order-payments'], navigationExtras);
   }
   showcheckindetails(waitlist) {
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['accountId'] = this.accountId;
+      queryParams['customId'] = this.customId;
+    }
+    queryParams['uuid']=waitlist.ynwUuid;
+    queryParams['providerId']=waitlist.providerAccount.id;
     const navigationExtras: NavigationExtras = {
-      queryParams: {
-        uuid: waitlist.ynwUuid,
-        providerId: waitlist.providerAccount.id
-      }
+      queryParams: queryParams
     };
     this.router.navigate(['consumer', 'checkindetails'], navigationExtras);
   }
   showApptdetails(apptlist) {
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['accountId'] = this.accountId;
+      queryParams['customId'] = this.customId;
+    }
+    queryParams['uuid']=apptlist.uid;
+    queryParams['providerId']=apptlist.providerAccount.id;
     const navigationExtras: NavigationExtras = {
-      queryParams: {
-        uuid: apptlist.uid,
-        providerId: apptlist.providerAccount.id
-      }
+      queryParams: queryParams
     };
     this.router.navigate(['consumer', 'apptdetails'], navigationExtras);
   }
   showBookingDetails(booking, type?) {
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['accountId'] = this.accountId;
+      queryParams['customId'] = this.customId;
+    }
     if (booking.apptStatus) {
+      queryParams['uuid'] = booking.uid;
+      queryParams['providerId'] = booking.providerAccount.id;
+      queryParams['type'] = type;
       const navigationExtras: NavigationExtras = {
-        queryParams: {
-          uuid: booking.uid,
-          providerId: booking.providerAccount.id,
-          type: type
-        }
+        queryParams: queryParams
       };
       this.router.navigate(['consumer', 'apptdetails'], navigationExtras);
     } else if (booking.waitlistStatus) {
+      queryParams['uuid'] = booking.ynwUuid;
+      queryParams['providerId'] = booking.providerAccount.id;
+      queryParams['type'] = type;
       const navigationExtras: NavigationExtras = {
-        queryParams: {
-          uuid: booking.ynwUuid,
-          providerId: booking.providerAccount.id,
-          type: type
-        }
+        queryParams: queryParams
       };
       this.router.navigate(['consumer', 'checkindetails'], navigationExtras);
     } else {
       console.log('this is order');
       console.log(booking);
+      queryParams['uuid'] = booking.uid;
+      queryParams['providerId'] = booking.providerAccount.id;
       const navigationExtras: NavigationExtras = {
-        queryParams: {
-          uuid: booking.uid,
-          providerId: booking.providerAccount.id
-        }
+        queryParams: queryParams
       };
       this.router.navigate(['consumer', 'orderdetails'], navigationExtras);
     }
@@ -531,9 +618,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.pollingSet = [];
     this.loadcomplete.waitlist = false;
     this.tDate = this.dateTimeProcessor.transformToYMDFormat(this.todayDate);
-    const params = {
-      'waitlistStatus-neq': 'failed,prepaymentPending', 'date-eq': this.tDate, 'account-eq': projectConstantsLocal.PROVIDER_ACCOUNT_ID
+    let params = {
+      'waitlistStatus-neq': 'failed,prepaymentPending', 'date-eq': this.tDate
     };
+    if (this.accountId) {
+      params['account-eq'] = this.accountId;
+    }
     this.subs.sink = this.consumer_services.getWaitlist(params)
       .subscribe(
         data => {
@@ -802,33 +892,39 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     mom_date.set('minute', sMinutes);
     return mom_date;
   }
-  // getFavouriteProvider() {
-  //   // console.log('In Get Favourites');
-  //   const _this = this;
-  //   // return new Promise(function (resolve, reject) {
-  //     _this.loadcomplete.fav_provider = false;
-  //     _this.subs.sink = _this.shared_services.getFavProvider()
-  //       .subscribe(
-  //         data => {
-  //           _this.loadcomplete.fav_provider = true;
-  //           _this.fav_providers = data;
-  //           _this.fav_providers_id_list = [];
-  //           _this.setWaitlistTimeDetails();
-  //           this.extras = {
-  //             'favourites': _this.fav_providers_id_list
-  //           }
-  //           // resolve(_this.fav_providers_id_list);
-  //         },
-  //         error => {
-  //           _this.loadcomplete.fav_provider = true;
-  //           this.extras = {
-  //             'favourites': []
-  //           }
-  //           // resolve([]);
-  //         }
-  //       );
-  //   // });
-  // }
+  getFavouriteProvider() {
+    // console.log('In Get Favourites');
+    const _this = this;
+    // return new Promise(function (resolve, reject) {
+    _this.loadcomplete.fav_provider = false;
+    _this.subs.sink = _this.shared_services.getFavProvider()
+      .subscribe(
+        data => {
+          _this.loadcomplete.fav_provider = true;
+          _this.fav_providers = data;
+          _this.fav_providers_id_list = [];
+          _this.setWaitlistTimeDetails();
+          this.extras = {
+            'favourites': _this.fav_providers_id_list
+          }
+          if (this.customId) {
+            this.extras['customId'] = this.customId;
+          }
+          // resolve(_this.fav_providers_id_list);
+        },
+        error => {
+          _this.loadcomplete.fav_provider = true;
+          this.extras = {
+            'favourites': []
+          }
+          if (this.customId) {
+            this.extras['customId'] = this.customId;
+          }
+          // resolve([]);
+        }
+      );
+    // });
+  }
 
   setWaitlistTimeDetails() {
     // let k = 0;
@@ -1041,6 +1137,15 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             this.getAppointmentFuture();
             //  this.getWaitlist();
             // this.getWaitlistFuture();
+          } else if (data === 'reloadlist' && type === 'order') {
+            this.total_tdy_order = [];
+            this.todayOrderslst = [];
+            this.todayOrderslst_more = [];
+            this.total_future_order = [];
+            this.futureOrderslst = [];
+            this.futureOrderslst_more = [];
+            this.getTdyOrder();
+            this.getFutureOrder();
           }
 
         },
@@ -1050,58 +1155,69 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       );
   }
 
-  // doDeleteFavProvider(fav) {
-  //   if (!fav.id) {
-  //     return false;
-  //   }
-  //   this.shared_functions.doDeleteFavProvider(fav, this)
-  //     .then(
-  //       data => {
-  //         if (data === 'reloadlist') {
-  //           this.getFavouriteProvider();
-  //         }
-  //       },
-  //       error => {
-  //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //       });
-  // }
+  doDeleteFavProvider(fav) {
+    if (!fav.id) {
+      return false;
+    }
+    this.shared_functions.doDeleteFavProvider(fav, this)
+      .then(
+        data => {
+          if (data === 'reloadlist') {
+            this.getFavouriteProvider();
+          }
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
+  }
 
-  // addFavProvider(id) {
-  //   if (!id) {
-  //     return false;
-  //   }
-  //   this.subs.sink = this.shared_services.addProvidertoFavourite(id)
-  //     .subscribe(
-  //       data => {
-  //         this.getFavouriteProvider();
-  //       },
-  //       error => {
-  //       }
-  //     );
-  // }
+  addFavProvider(id) {
+    if (!id) {
+      return false;
+    }
+    this.subs.sink = this.shared_services.addProvidertoFavourite(id)
+      .subscribe(
+        data => {
+          this.getFavouriteProvider();
+        },
+        error => {
+        }
+      );
+  }
 
   goWaitlistDetail(waitlist) {
     this.router.navigate(['consumer/waitlist', waitlist.providerAccount.id, waitlist.ynwUuid]);
   }
   gotoAptmtReschedule(apptlist) {
+    let queryParams = {
+      uuid: apptlist.uid,
+      type: 'reschedule',
+      account_id: apptlist.providerAccount.id,
+      unique_id: apptlist.providerAccount.uniqueId,
+      service_id:apptlist.service.id
+    }
+    if (this.customId) {
+      queryParams['customId']=this.customId;
+    }
     const navigationExtras: NavigationExtras = {
-      queryParams: {
-        uuid: apptlist.uid,
-        type: 'reschedule',
-        account_id: apptlist.providerAccount.id,
-        unique_id: apptlist.providerAccount.uniqueId
-      }
+      queryParams: queryParams
     };
     this.router.navigate(['consumer', 'appointment'], navigationExtras);
   }
   gotoWaitlistReschedule(waitlist) {
+    let queryParams = {
+      uuid: waitlist.ynwUuid,
+      type: 'waitlistreschedule',
+      account_id: waitlist.providerAccount.id,
+      unique_id: waitlist.providerAccount.uniqueId,
+      service_id:waitlist.service.id
+    
+    }
+    if (this.customId) {
+      queryParams['customId']=this.customId;
+    }
     const navigationExtras: NavigationExtras = {
-      queryParams: {
-        uuid: waitlist.ynwUuid,
-        type: 'waitlistreschedule',
-        account_id: waitlist.providerAccount.id,
-        unique_id: waitlist.providerAccount.uniqueId
-      }
+      queryParams: queryParams
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
   }
@@ -1135,6 +1251,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const pass_ob = {};
     pass_ob['source'] = 'consumer-waitlist';
     pass_ob['user_id'] = waitlist.providerAccount.id;
+    pass_ob['userId'] = waitlist.providerAccount.uniqueId;
     pass_ob['name'] = waitlist.providerAccount.businessName;
     pass_ob['typeOfMsg'] = 'single';
     if (type === 'appt') {
@@ -1160,9 +1277,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   addNote(pass_ob) {
     this.addnotedialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
-      minHeight: '100vh',
-      minWidth: '100vw',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0'],
+      panelClass: ['commonpopupmainclass', 'popup-class'],
       disableClose: true,
       autoFocus: true,
       data: pass_ob
@@ -1189,7 +1304,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     console.log('In ProviderDetail');
     // console.log('order');
     // event.stopPropagation();
-    this.router.navigate([provider.uniqueId]);
+    if (this.customId) {
+      this.gotoDetails();
+    } else {
+      this.router.navigate(['searchdetail', provider.uniqueId]);
+    }
+
   }
 
   goCheckin(data, location, type) {
@@ -1220,15 +1340,19 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   //   this.routerobj.navigate(['consumer', 'checkin'], navigationExtras);
   // }
   setCheckinData(provider, location, currdate, chdatereq = false) {
+    let queryParams = {
+      loc_id: location.id,
+      sel_date: currdate,
+      cur: chdatereq,
+      unique_id: provider.uniqueId,
+      account_id: provider.id,
+      tel_serv_stat: provider.virtulServiceStatus
+    }
+    if (this.customId) {
+      queryParams['customId']=this.customId;
+    }
     const navigationExtras: NavigationExtras = {
-      queryParams: {
-        loc_id: location.id,
-        sel_date: currdate,
-        cur: chdatereq,
-        unique_id: provider.uniqueId,
-        account_id: provider.id,
-        tel_serv_stat: provider.virtulServiceStatus
-      }
+      queryParams: queryParams
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
     // const post_data = {
@@ -1348,6 +1472,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return this.mins;
   }
   recheckwaitlistCounters() {
+    if (this.waitlists && this.waitlists.length > 0) {
     for (let i = 0; i < this.waitlists.length; i++) {
       if (this.waitlists[i].estimated_autocounter) {
         if (this.waitlists[i].estimated_timeinmins > 0) {
@@ -1360,6 +1485,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       }
     }
+  }
   }
   btnJoinVideoClicked(checkin, event) {
     event.stopPropagation();
@@ -1401,6 +1527,17 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       };
       this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras);
+    } else {
+
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          uuid: checkin.uid,
+          accountId: checkin.providerAccount.id,
+          type: 'order',
+          'paidStatus': false
+        }
+      };
+      this.router.navigate(['consumer', 'order', 'order-bill'], navigationExtras);
     }
   }
   getMapUrl(latitude, longitude) {
@@ -1423,6 +1560,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         this.getWaitlist();
       } else if (result === 'reloadlist' && type === 'appointment') {
         this.getApptlist();
+      } else if (result === 'reloadlist' && type === 'order') {
+        this.getTdyOrder();
       }
     });
   }
@@ -1446,19 +1585,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.open_fav_div = open_fav_div;
     }, 500);
-  }
-  providerManagePrivacy(provider, i) {
-    this.privacydialogRef = this.dialog.open(AddManagePrivacyComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class'],
-      disableClose: true,
-      data: { 'provider': provider }
-    });
-    this.privacydialogRef.afterClosed().subscribe(result => {
-      if (result.message === 'reloadlist') {
-        this.fav_providers[i]['revealPhoneNumber'] = result.data.revealPhoneNumber;
-      }
-    });
   }
   openCoupons() {
     this.coupondialogRef = this.dialog.open(CouponsComponent, {
@@ -1778,22 +1904,40 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   gotoHistory() {
     console.log(this.showOrder);
+    let queryParams = {
+      is_orderShow: this.showOrder
+    }
+    if (this.customId) {
+      queryParams['customId'] = this.customId;
+      queryParams['accountId'] = this.accountId;
+    }
     const navigationExtras: NavigationExtras = {
-      queryParams: {
-        is_orderShow: this.showOrder
-      }
-    };
-    this.router.navigate(['consumer', 'checkin', 'history'], navigationExtras);
+      queryParams: queryParams
+    }
+    this.router.navigate(['consumer', 'history'], navigationExtras);
   }
   gotoApptmentHistory() {
-    this.router.navigate(['consumer', 'appointment', 'history']);
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['customId'] = this.customId;
+      queryParams['accountId'] = this.accountId;
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParams
+    }
+    this.router.navigate(['consumer', 'appointment', 'history'], navigationExtras);
   }
   gotoOrderHistory() {
     this.router.navigate(['consumer', 'order', 'order-history']);
   }
 
   getAppointmentToday() {
-    const params = { 'apptStatus-neq': 'failed,prepaymentPending', 'account-eq': projectConstantsLocal.PROVIDER_ACCOUNT_ID };
+    let params = { 'apptStatus-neq': 'failed,prepaymentPending' };
+
+    if (this.accountId) {
+      params['account-eq'] = this.accountId;
+    }
+
     this.subs.sink = this.consumer_services.getAppointmentToday(params)
       .subscribe(
         data => {
@@ -1807,7 +1951,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       );
   }
   getAppointmentFuture() {
-    const params = { 'apptStatus-neq': 'failed,prepaymentPending', 'account-eq': projectConstantsLocal.PROVIDER_ACCOUNT_ID };
+    let params = { 'apptStatus-neq': 'failed,prepaymentPending' };
+    if (this.accountId) {
+      params['account-eq'] = this.accountId;
+    }
     this.subs.sink = this.consumer_services.getAppointmentFuture(params)
       .subscribe(
         data => {
@@ -1818,14 +1965,30 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       );
   }
+
+  // getWaitlistToday() {
+  //   this.consumer_services.getWaitlistToday()
+  //     .subscribe(
+  //       data => {
+  //         this.waitlists = data;
+  //       },
+  //       error => {
+  //       }
+  //     );
+  // }
+
   getWaitlistFuture() {
-    const params = { 'waitlistStatus-neq': 'failed,prepaymentPending', 'account-eq': projectConstantsLocal.PROVIDER_ACCOUNT_ID };
+    let params = { 'waitlistStatus-neq': 'failed,prepaymentPending' };
+    if (this.accountId) {
+      params['account-eq'] = this.accountId;
+    }
     this.subs.sink = this.consumer_services.getWaitlistFuture(params)
       .subscribe(
         data => {
           this.future_waitlists = data;
           this.future_totalbookings = this.future_waitlists.concat(this.future_appointments);
           this.loading = false;
+          this.getTdyOrder();
           this.futureBookings = [];
           this.futureBookings_more = [];
           for (let i = 0; i < this.future_totalbookings.length; i++) {
@@ -1885,14 +2048,17 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   do_search() {
-    const passparam = {
-      do: 'All',
-      la: this.locationholder.lat || '',
-      lo: this.locationholder.lon || '',
-      lon: this.locationholder.name || '',
-      lontyp: this.locationholder.typ || '',
-      lonauto: this.locationholder.autoname || ''
-    };
+    let passparam = {};
+    if (this.locationholder) {
+      passparam = {
+        do: 'All',
+        la: this.locationholder.lat || '',
+        lo: this.locationholder.lon || '',
+        lon: this.locationholder.name || '',
+        lontyp: this.locationholder.typ || '',
+        lonauto: this.locationholder.autoname || ''
+      };
+    }
     this.router.navigate(['/searchdetail', passparam]);
   }
   showMoreTdyBookings() {
@@ -1940,11 +2106,98 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       panelClass: ['commonpopupmainclass', 'popup-class'],
       disableClose: true,
       data: {
-        accencUid: checkin.prescUrl
+        accencUid: checkin.prescShortUrl?checkin.prescShortUrl:checkin.prescUrl
+      }
+    });
+  }
+  // Order Functions
+  isPhysicalItemsPresent(orderItems){
+    let physical_item_present = true;
+    const virtualItems = orderItems.filter(orderitem => orderitem.itemType === 'VIRTUAL')
+    if (virtualItems.length > 0 && orderItems.length === virtualItems.length) {
+      physical_item_present = false;
+      this.onlyVirtualItemsPresent=true;
+      console.log('virtual only');
+    }
+    return physical_item_present; 
+
+  }
+  getTdyOrder() {
+    this.orders = '';
+    this.total_tdy_order = [];
+    this.todayOrderslst = [];
+    this.todayOrderslst_more = [];
+    this.tDate = this.dateTimeProcessor.transformToYMDFormat(this.todayDate);
+    const params = {
+      'orderDate-eq': this.tDate
+    };
+    this.subs.sink = this.consumer_services.getConsumerOrders(params).subscribe(data => {
+      this.orders = data; // saving todays orders
+      console.log('orders'+JSON.stringify(this.orders));
+      this.total_tdy_order = this.orders;
+      if (data) {
+        this.getFutureOrder();
+      }
+      // show more
+      this.todayOrderslst = [];
+      this.todayOrderslst_more = [];
+      for (let i = 0; i < this.total_tdy_order.length; i++) {
+        if (i <= 2) {
+          this.todayOrderslst.push(this.total_tdy_order[i]);
+        } else {
+          this.todayOrderslst_more.push(this.total_tdy_order[i]);
+        }
+      }
+    });
+  }
+  getFutureOrder() {
+    this.future_orders = '';
+    this.total_future_order = [];
+    this.futureOrderslst = [];
+    this.futureOrderslst_more = [];
+    // const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    // const serverdate = moment(server).format();
+    // const servdate = new Date(serverdate);
+    // this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
+    //  this.tDate = this.shared_functions.transformToYMDFormat(this.todayDate);
+    //   const params = {
+    //     'orderDate-gt': this.tDate
+    //   };
+    this.subs.sink = this.consumer_services.getConsumerFutOrders().subscribe(data => {
+      this.future_orders = data; // saving future orders
+      this.total_future_order = this.future_orders;
+      if ((this.today_totalbookings.length === 0 && this.future_totalbookings.length === 0) && (this.total_future_order.length > 0 || this.total_tdy_order.length > 0)) {
+        this.showOrder = true;
+      }
+      // show more
+      this.futureOrderslst = [];
+      this.futureOrderslst_more = [];
+      for (let i = 0; i < this.total_future_order.length; i++) {
+        if (i <= 2) {
+          this.futureOrderslst.push(this.total_future_order[i]);
+        } else {
+          this.futureOrderslst_more.push(this.total_future_order[i]);
+        }
       }
     });
   }
 
+  showMoreTdyOrders() {
+    this.more_tdyOrdersShow = true;
+  }
+  showlessTdyOrders() {
+    this.more_tdyOrdersShow = false;
+  }
+  showMoreFutOrders() {
+    this.more_futrOrdersShow = true;
+  }
+  showlessFutOrders() {
+    this.more_futrOrdersShow = false;
+  }
+  showOrders() {
+    this.showOrder = true;
+    this.lStorageService.setitemonLocalStorage('orderStat', true);
+  }
   showBookings() {
     this.showOrder = false;
     this.lStorageService.setitemonLocalStorage('orderStat', false);
@@ -1980,9 +2233,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     console.log(pass_ob);
     this.galleryDialog = this.dialog.open(GalleryImportComponent, {
       width: '50%',
-      minHeight: '100vh',
-      minWidth: '100vw',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-border-radius-0'],
+      panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
         source_id: 'consumerimages',
@@ -1995,6 +2246,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       this.reloadAPIs();
     });
   }
+
   viewAttachment(booking, type) {
     if (type === 'appt') {
       console.log(type);
@@ -2100,78 +2352,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       );
     }
   }
-  // viewAttachment(booking, type) {
-  //   if (type === 'appt') {
-  //     console.log(type);
-  //     this.subs.sink = this.shared_services.getConsumerAppointmentAttachmentsByUuid(booking.uid, booking.providerAccount.id).subscribe(
-  //       (communications: any) => {
-  //         this.image_list_popup_temp = [];
-  //         this.image_list_popup = [];
-  //         let count = 0;
-  //         for (let comIndex = 0; comIndex < communications.length; comIndex++) {
-  //           const thumbPath = communications[comIndex].thumbPath;
-  //           let imagePath = thumbPath;
-  //           const description = communications[comIndex].s3path;
-  //           const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-  //           // if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
-  //             if (new RegExp(this.imageAllowed.join("|")).test(thumbPathExt.toUpperCase())) {
-  //             imagePath = communications[comIndex].s3path;
-  //           }
-  //           const imgobj = new Image(
-  //             count,
-  //             {
-  //               img: imagePath,
-  //               description: communications[comIndex].caption
-  //             },
-  //           );
-  //           this.image_list_popup_temp.push(imgobj);
-  //           count++;
-  //         }
-  //         if (count > 0) {
-  //           this.image_list_popup = this.image_list_popup_temp;
-  //           setTimeout(() => {
-  //             this.openImageModalRow(this.image_list_popup[0]);
-  //           }, 500);
-  //         }
-  //       },
-  //       error => { }
-  //     );
-  //   } else if (type === 'checkin') {
-  //     this.subs.sink = this.shared_services.getConsumerWaitlistAttachmentsByUuid(booking.ynwUuid, booking.providerAccount.id).subscribe(
-  //       (communications: any) => {
-  //         this.image_list_popup_temp = [];
-  //         this.image_list_popup = [];
-  //         let count = 0;
-  //         for (let comIndex = 0; comIndex < communications.length; comIndex++) {
-  //           const thumbPath = communications[comIndex].thumbPath;
-  //           let imagePath = thumbPath;
-  //           const description = communications[comIndex].s3path;
-  //           const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-  //           // if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
-  //             if (new RegExp(this.imageAllowed.join("|")).test(thumbPathExt.toUpperCase())) {
-  //             imagePath = communications[comIndex].s3path;
-  //           }
-  //           const imgobj = new Image(
-  //             count,
-  //             {
-  //               img: imagePath,
-  //              description: communications[comIndex].caption
-  //             },
-  //           );
-  //           this.image_list_popup_temp.push(imgobj);
-  //           count++;
-  //         }
-  //         if (count > 0) {
-  //           this.image_list_popup = this.image_list_popup_temp;
-  //           setTimeout(() => {
-  //             this.openImageModalRow(this.image_list_popup[0]);
-  //           }, 500);
-  //         }
-  //       },
-  //       error => { }
-  //     );
-  //   }
-  // }
   openImageModalRow(image: Image) {
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
@@ -2206,15 +2386,18 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     console.log(actionObj);
     switch (actionObj['type']) {
       case 'appt':
-        this.performApptActions(actionObj['action'], actionObj['booking'], actionObj['event']);
+        this.performApptActions(actionObj['action'], actionObj['booking'], actionObj['event'], actionObj['timetype']);
         break;
       case 'wl':
-        this.performWLActions(actionObj['action'], actionObj['booking'], actionObj['event']);
+        this.performWLActions(actionObj['action'], actionObj['booking'], actionObj['event'], actionObj['timetype']);
         break;
     }
   }
-  performWLActions(actionString, booking, event) {
+  performWLActions(actionString, booking, event, timetype) {
     switch (actionString) {
+      case 'details':
+        this.showBookingDetails(booking, timetype);
+        break;
       case 'reschedule':
         this.gotoWaitlistReschedule(booking);
         break;
@@ -2236,12 +2419,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       case 'meetingDetails':
         this.getMeetingDetails(booking, 'waitlist');
         break;
-      // case 'removeFavourite':
-      //   this.doDeleteFavProvider(booking.providerAccount);
-      //   break;
-      // case 'addToFavourites':
-      //   this.addFavProvider(booking.providerAccount.id);
-      //   break;
+      case 'removeFavourite':
+        this.doDeleteFavProvider(booking.providerAccount);
+        break;
+      case 'addToFavourites':
+        this.addFavProvider(booking.providerAccount.id);
+        break;
       case 'moreInfo':
         this.gotoQuestionnaire(booking);
         break;
@@ -2265,8 +2448,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         break;
     }
   }
-  performApptActions(actionString, booking, event) {
+  performApptActions(actionString, booking, event, timetype) {
     switch (actionString) {
+      case 'details':
+        this.showBookingDetails(booking, timetype);
+        break;
       case 'reschedule':
         this.gotoAptmtReschedule(booking);
         break;
@@ -2288,12 +2474,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       case 'meetingDetails':
         this.getMeetingDetails(booking, 'appt');
         break;
-      // case 'removeFavourite':
-      //   this.doDeleteFavProvider(booking.providerAccount);
-      //   break;
-      // case 'addToFavourites':
-      //   this.addFavProvider(booking.providerAccount.id);
-      //   break;
+      case 'removeFavourite':
+        this.doDeleteFavProvider(booking.providerAccount);
+        break;
+      case 'addToFavourites':
+        this.addFavProvider(booking.providerAccount.id);
+        break;
       case 'moreInfo':
         this.gotoQuestionnaire(booking);
         break;
@@ -2318,6 +2504,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
   }
   gotoDetails() {
-    this.router.navigate([projectConstantsLocal.ACCOUNTENC_ID]);
+    this.router.navigate([this.customId]);
   }
+  closeModal(){
+    this.popUp.nativeElement.style.display = 'none';
+  }
+
 }

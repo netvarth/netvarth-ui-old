@@ -3,12 +3,10 @@
         <div class="panel panel-default">
             <div class="panel-heading top-row ">                
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <app-header *ngIf="shared_functions.checkLogin()"></app-header>
+                    <app-header *ngIf="shared_functions.checkLogin()" [showHeaderAction]="true"></app-header>
                 </div>
             </div>
             <div class="panel-body no-padding">
-                <!-- <app-search-form (searchclick)="handlesearchClick()" [passedDomain]="domain" [passedkwdet]="kwdet">
-                </app-search-form> -->
                 <div class="row m0 p0">
                     <div class="c-outer m0">
                         <div class="c-body">

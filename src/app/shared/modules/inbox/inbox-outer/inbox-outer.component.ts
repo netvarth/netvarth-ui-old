@@ -11,6 +11,7 @@ import { AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, Plai
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { Subscription } from 'rxjs';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-inbox-outer',
@@ -26,6 +27,7 @@ export class InboxOuterComponent implements OnInit {
   loading = false;
   message = '';
   selectedProvider = '';
+  accId = '';
   selectedProviderName = '';
   selectedMessage = {
     files: [],

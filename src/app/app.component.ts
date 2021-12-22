@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Device } from '@ionic-native/device/ngx';
 import { Platform } from '@ionic/angular';
 import { LocalStorageService } from './shared/services/local-storage.service';
@@ -18,7 +18,7 @@ export let projectConstants: any = {};
 /**
  * Root class of Jaldee Application
  */
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
 
   // not used
   title = 'app';
@@ -153,5 +153,8 @@ export class AppComponent implements OnInit {
 
       }
     });
+  }
+  ngAfterViewInit () {
+    document.getElementById('globalLoading').remove();
   }
 }

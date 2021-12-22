@@ -37,8 +37,8 @@
                 <i class="fa fa-times fl-right"></i>Sharing location</button>
             <button class="custId-cursor" mat-menu-item *ngIf="showViewPrescritionBtn" (click)="cardActionPerformed('appt', 'viewPrescription', booking, $event)">
                 <i class="mr-rx-icon-customer"></i>View Prescription</button>
-            <button class="custId-cursor" *ngIf="showMoreInfoBtn" mat-menu-item (click)="cardActionPerformed('appt', 'moreInfo', booking, $event)">
-                <i class="mr-rx-icon-customer"></i>More info</button>
+            <!-- <button class="custId-cursor" *ngIf="showMoreInfoBtn" mat-menu-item (click)="cardActionPerformed('appt', 'moreInfo', booking, $event)">
+                <i class="mr-rx-icon-customer"></i>More info</button> -->
         </mat-menu>
     </div>
     <!-- Basic info -->
@@ -126,6 +126,13 @@
     <!-- Actions and status -->
     <mat-grid-tile-footer>
         <div class="">
+
+            <span *ngIf="showQnrBtn" class="mgn-rt-5">
+                <button  mat-flat-button
+                    class="btns" (click)="cardActionPerformed('wl', 'details', booking, $event)">More Info</button>
+            </span>
+
+            
             <span *ngIf="showJoinOtherVideoBtn" class="mgn-rt-5" (click)="stopprop($event)">
                 <a [href]="booking.service.virtualCallingModes[0].value" target="_blank">
                     <button mat-flat-button class="btns">{{videoBtnCaption}}</button>

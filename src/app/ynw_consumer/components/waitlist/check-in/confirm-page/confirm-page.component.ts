@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { projectConstants } from '../../../../../app.component';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
@@ -15,15 +15,6 @@ import { LocalStorageService } from '../../../../../shared/services/local-storag
   styleUrls: ['./confirm-page.component.css']
 })
 export class ConfirmPageComponent implements OnInit ,OnDestroy{
-  breadcrumbs = [
-    {
-      title: 'My Jaldee',
-      url: '/consumer'
-    },
-    {
-      title: 'Payment'
-    }
-  ];
   infoParams;
   waitlist: any = [];
   private subs=new SubSink();
@@ -36,6 +27,10 @@ export class ConfirmPageComponent implements OnInit ,OnDestroy{
   provider_label;
   type;
   uuids: any = [];
+  theme: any;
+  accountId: any; // Business Landing Page
+  customId: any;
+  from: any;
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public shared_functions: SharedFunctions,
@@ -46,9 +41,16 @@ export class ConfirmPageComponent implements OnInit ,OnDestroy{
     this.subs.sink=this.route.queryParams.subscribe(
       params => {
         // this.lStorageService.setitemonLocalStorage('inPostInfo', true);
+        if (params.customId) {
+          this.customId = params.customId;
+          this.accountId = params.account_id;
+        }
         this.infoParams = params;
         if (this.infoParams.type === 'waitlistreschedule') {
           this.type = this.infoParams.type;
+        }
+        if(params.isFrom){
+          this.from = params.isFrom;
         }
         if (params.uuid && params.account_id) {
           this.uuids = params.uuid;
@@ -68,6 +70,9 @@ export class ConfirmPageComponent implements OnInit ,OnDestroy{
               });
           }
         }
+        if(params.theme){
+          this.theme=params.theme;
+        }
       });
   }
 
@@ -78,15 +83,41 @@ export class ConfirmPageComponent implements OnInit ,OnDestroy{
    }
   okClick(waitlist) {
     if (waitlist.service.livetrack) {
-      this.router.navigate(['consumer', 'checkin', 'track', waitlist.ynwUuid], { queryParams: { account_id: this.infoParams.account_id } });
+      let queryParams= {
+        account_id: this.infoParams.account_id,
+        theme:this.theme 
+    }
+    if (this.customId) {
+      queryParams['customId'] = this.customId;
+    }
+    if(this.from){
+      queryParams['isFrom'] = this.from;
+    }
+    let navigationExtras: NavigationExtras = {
+        queryParams: queryParams
+    };
+    this.router.navigate(['consumer', 'checkin', 'track', waitlist.ynwUuid], navigationExtras);
     } else {
-      this.router.navigate(['consumer']);
+      let queryParams= {
+        theme:this.theme,
+        accountId: this.accountId
+      }
+      if (this.customId) {
+          queryParams['customId'] = this.customId;
+      }
+      let navigationExtras: NavigationExtras = {
+          queryParams: queryParams
+      };
+      if(this.from){
+        this.router.navigate(['consumer']);
+      }else{
+        this.router.navigate(['consumer'], navigationExtras);
+      }
     }
     this.lStorageService.setitemonLocalStorage('orderStat', false);
     // this.lStorageService.removeitemfromLocalStorage('inPostInfo');
   }
   updateEmail() {
-    console.log(this.email);
   }
   getWaitTime(waitlist) {
     if (waitlist.calculationMode !== 'NoCalc') {

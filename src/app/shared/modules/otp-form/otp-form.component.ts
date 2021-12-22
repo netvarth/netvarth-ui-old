@@ -46,6 +46,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   @Input() submitdata;
   @Input() country_code;
   @Input() consumerlogin;
+  @Input() theme;
   @Input() type;
   @Input() resendemailotpsuccess;
   @Output() retonOtpSubmit: EventEmitter<any> = new EventEmitter();
@@ -161,11 +162,13 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
     if (this.type === 'change_email') {
       this.setMessage('email', this.submitdata.email);
     } else {
+      console.log(this.submitdata);
       if (this.submitdata.userProfile && this.submitdata.userProfile.countryCode && this.submitdata.userProfile.countryCode !== '+91') {
         this.setMessage('email', this.submitdata.userProfile.email);
-      } else {
+      } else if(this.submitdata.userProfile &&this.submitdata.userProfile.primaryMobileNo) {
         this.setMessage('mobile', this.submitdata.userProfile.primaryMobileNo);
       }
+      
     }
   }
 

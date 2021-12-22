@@ -1,0 +1,274 @@
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="gotoPrev()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <!-- <span *ngIf="showToken">Token</span>
+        <span *ngIf="!showToken">Check-in</span> -->
+        </h5>
+    </div>
+</section>
+<section>
+
+    <div class="content comn-cls checkin-details">
+        <div class="col-md-12 no-padding-small">
+            <div class="row">
+                <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small">
+                    <button class="btn btn-primary float-right m2" (click)="printDetails();"> Print </button>
+                    <div class="card" id="print-section">
+                        <table class="table" *ngIf="bookingDetails" align="center">
+                            <thead>
+                                <!-- <tr>
+                                    <td colspan="2"
+                                        style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">
+                                        {{this.dateFormat.transformToDIsplayFormat(this.bookingDetails.date)}}
+                                    </td>
+                                </tr> -->
+                                <tr *ngIf="bookingType==='checkin'&& bookingDetails.token">
+                                    <td colspan="2" align="center"><strong>Token #
+                                            :</strong>{{bookingDetails.token}}</td>
+                                </tr>
+                                <tr *ngIf="bookingType==='appt'&& bookingDetails.appmtDate">
+                                    <td colspan="2" align="center"><strong>Appointment On
+                                            :</strong>
+                                        <!-- <span *ngIf="bookingDetails.appmtDate">{{bookingDetails.appmtDate}}</span> &nbsp; -->
+                                        <span
+                                            *ngIf="bookingDetails.appmtTime">{{getSingleTime(bookingDetails.appmtTime)}}</span>
+                                    </td>
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="2" align="center">{{bname}} </td>
+                                </tr>
+                                <tr *ngIf="bookingDetails.provider&& bookingDetails.provider.firstName">
+                                    <td colspan="2" align="center"> {{provider_label| capitalizeFirst}}:
+                                      <span >{{spName}}</span>
+                                      <!--   <span>{{bookingDetails.countryCode}}</span> -->
+                                      <!-- <span>{{bookingDetails.provider.firstName}} {{bookingDetails.provider.lastName}}</span> -->
+                                     </td>
+
+                                </tr>
+                                <tr *ngIf="bookingType==='checkin'">
+                                    <td align="center" colspan="2">
+                                        Location : {{this.bookingDetails.queue.location.place}}
+                                    </td>
+
+                                </tr>
+                                <tr *ngIf="bookingType==='appt'">
+                                    <td align="center" colspan="2">
+                                        Location : {{this.bookingDetails.location.place}}
+                                    </td>
+
+                                </tr>
+                                <tr *ngIf="!isJaldeeId">
+                                    <td colspan="2" align="center"  *ngIf="customer.firstName === 'null' && customer.firstName === 'null' ">{{customer_label| capitalizeFirst}}  #: NIL</td>
+
+                                    <td colspan="2" align="center"> {{customer_label| capitalizeFirst}}:
+                                        {{customerName}} </td>
+
+                                </tr>
+                                <tr *ngIf="isJaldeeId">
+                                    <td colspan="2" align="center"> {{ customer_label|capitalizeFirst }} Id #:
+                                        {{customerName}} </td>
+
+                                </tr>
+                                <tr *ngIf="customer.phoneNo">
+                                    <td colspan="2" align="center"  *ngIf="customer.phoneNo === 'null'">{{customer_label| capitalizeFirst}} Ph #: NIL</td>
+                                    <td colspan="2" align="center" *ngIf="customer.phoneNo !== 'null'"> {{customer_label| capitalizeFirst}} Ph #:
+                                      {{bookingDetails.countryCode}} {{customer.phoneNo}} </td>
+
+                                </tr>
+                           
+                                <tr>
+                                    <td class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item" colspan="2" align="center">
+                                        Service : <i class="fa meet-icon"
+                                            *ngIf="bookingDetails.service.serviceType === 'virtualService' && bookingDetails.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                        <i class="fa zoom-icon"
+                                            *ngIf="bookingDetails.service.serviceType === 'virtualService' && bookingDetails.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                        <i class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
+                                            *ngIf="bookingDetails.service.serviceType === 'virtualService' && bookingDetails.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+                                        <i class="fa phon-icon"
+                                            *ngIf="bookingDetails.service.serviceType === 'virtualService' && bookingDetails.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                        <i class="fa wtsapaud-icon"
+                                            *ngIf="bookingDetails.service.serviceType === 'virtualService' && bookingDetails.service.virtualCallingModes[0].callingMode === 'WhatsApp' && bookingDetails.service.virtualServiceType === 'audioService'"></i>
+                                        <i class="fa wtsapvid-icon"
+                                            *ngIf="bookingDetails.service.serviceType === 'virtualService' && bookingDetails.service.virtualCallingModes[0].callingMode === 'WhatsApp' && bookingDetails.service.virtualServiceType === 'videoService'"></i>
+                                       {{bookingDetails.service.name}}
+                                    </td>
+                                    <!-- <td colspan="2" align="center"> Service : {{bookingDetails.service.name}} </td> -->
+
+                                </tr>
+                                <tr *ngIf="bookingDetails.service.deptName">
+                                    <td colspan="2" align="center"> Department :
+                                        {{this.bookingDetails.service.deptName}} </td>
+
+                                </tr>
+                                <tr *ngIf="bookingDetails.schedule">
+                                    <td colspan="2" align="center"> Schedule : {{this.bookingDetails.schedule.name}} [
+                                        {{ this.bookingDetails.schedule.apptSchedule.timeSlots[0].sTime }} -
+                                        {{this.bookingDetails.schedule.apptSchedule.timeSlots[0].eTime}}] </td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    <div class="text-center " *ngIf="showQR" align="center">
+                            <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value"
+                                style="width: 200px; margin:50px;">
+                            </ngx-qrcode>
+                        </div> 
+                       <!-- <ng-container *ngIf="customerDetails && questionanswers && questionanswers.length>0">
+                                <strong><u>Customer  Details</u></strong>
+                            <table style="width:100%" border="1" border-color='#eee'>
+                                <thead>
+                                    <tr>
+                                        <td><b>Name</b></td>
+                                        <td><b>Phone #</b></td>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="customerDetails">
+                                        <td> {{ customerDetails.firstName }}&nbsp;{{ customerDetails.lastName }}</td>
+                                        <td> {{ customerDetails.phoneNo }}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </ng-container> -->
+                     
+
+      
+                        <ng-container *ngIf="groupedQnr && isObject(groupedQnr)">
+                   
+                            <div class="qnrsec" *ngFor="let qnr of groupedQnr | keyvalue"
+                                [class.section-shadow]="getSectionCount() > 0">
+                                <ng-container *ngIf="getSectionCount() > 0">
+
+                                    <table style="width:100%" border="1" border-color='#eee'>
+                                        <thead style="background-color:grey">
+                                            <tr style="text-align:center">
+                                                <td colspan="2"> {{qnr.key && qnr.key!=='undefined'?qnr.key :'Details'}} </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let question of qnr.value">
+                                            <tr>
+                                                <td style="width:60%">
+                                                    {{question.question.label|capitalizeFirst}}
+                                                </td>
+                                                <!-- <td style="width:40%">
+                                                    <i>{{getAnswer(question)}}</i>
+                                                </td> -->
+
+                                                <td
+                                                    *ngIf="isDatagrid(question) && question.answerLine.answer.dataGrid.length>0">
+                                                    <ng-container
+                                                        *ngFor="let data of question.answerLine.answer.dataGrid ">
+                                                        <table style="width:100%" border="1" border-color='#eee'>
+                                                            <tr *ngFor="let value of data.dataGridColumn ">
+                                                                <td style="width:60%"> {{value.columnId | capitalizeFirst}}</td>
+
+                                                                <td style="width:40%">
+                                                                    {{getinnerTableData(value.column) | capitalizeFirst}}</td>
+
+
+                                                            </tr>
+                                                        </table>
+
+                                                    </ng-container>
+                                                </td>
+
+                                                <td *ngIf="!isDatagrid(question)" style="width:40%">
+                                                    <i>{{getAnswer(question) | capitalizeFirst}}</i>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+
+                                </ng-container>
+                            </div>
+                        </ng-container>
+                        <!-- {{}} -->
+           
+                        <ng-container *ngIf="!isObject(groupedQnr) &&questionanswers && questionanswers.length>0">
+
+                            <table class="table table-bordered " style="width:100%">
+                                <thead style="background-color:grey">
+                                    <tr class="text-center">
+                                        <td colspan="3"> Details </td>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let question of questionanswers">
+                                    <tr>
+                                        <td colspan="2">
+                                            {{question.question.label | capitalizeFirst}}
+                                        </td>
+                                        <td
+                                            *ngIf="isDatagrid(question) && question.answerLine.answer.dataGrid.length>0">
+                                            <ng-container *ngFor="let data of question.answerLine.answer.dataGrid ">
+                                                <table style="width:100%" border="1" border-color='#eee'>
+                                                    <tr *ngFor="let value of data.dataGridColumn ">
+                                                        <td style="width:60%"> {{value.columnId | capitalizeFirst}}</td>
+
+                                                        <td style="width:40%"> {{getinnerTableData(value.column) | capitalizeFirst}}</td>
+
+
+                                                    </tr>
+                                                </table>
+
+                                            </ng-container>
+                                        </td>
+
+                                        <td *ngIf="!isDatagrid(question)" style="width:40%">
+                                            <i>{{getAnswer(question) | capitalizeFirst}}</i>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+
+                            </table>
+
+                        </ng-container>
+
+                        <ng-container *ngIf="internalStatusLog && internalStatusLog.length>0">
+                            <strong><u>Review Details</u></strong>
+                            <table style="width:100%" border="1" border-color='#eee'>
+                                <thead>
+                                    <tr>
+                                        <td><b>Reviewer</b> </td>
+                                        <td><b>Status</b> </td>
+                                        <td><b>Updated Date</b></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let status of internalStatusLog">
+                                        <td>{{status.User}}</td>
+                                        <td>{{status.InternalStatus}}</td>
+                                        <td>{{status.DateTime}}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </ng-container>
+
+
+
+                        <!-- <div class="card" *ngFor="let question of questionanswers">
+            <div>{{question.question.label|capitalizeFirst}}</div>
+            <div><i>{{getAnswer(question)}}</i></div>
+        </div> -->
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</section>

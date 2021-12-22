@@ -1,0 +1,114 @@
+<h1 class="mat-dialog-title head" *ngIf="mode==='b-cam'">
+    Your camera is blocked
+</h1>
+<h1 class="mat-dialog-title" *ngIf="mode==='b-both'">
+    Camera and microphone are blocked
+</h1>
+<h1 class="mat-dialog-title" *ngIf="mode==='b-mic'">
+    Your microphone are blocked
+</h1>
+<h1 class="mat-dialog-title" *ngIf="mode==='sys-mic'">
+    No audio devices found
+</h1>
+<h1 class="mat-dialog-title" *ngIf="mode==='sys-cam'">
+    No video devices found
+</h1>
+<h1 class="mat-dialog-title" *ngIf="mode==='sys-both'">
+    No audio/video devices found
+</h1>
+<div mat-dialog-content class="text-container">
+    <div class="col-md-12 no-padding text-content" *ngIf="mode==='b-both'">
+        <div class="col-md-12 mgn-bt-20 no-padding text-content-text">
+            Jaldee Videocall requires access to your camera and microphone so that other participants can see and hear
+            you. Jaldee Videocall will ask you to confirm this decision on each browser and computer you use.
+            To use Jaldee Videocall
+            <ul>
+                <li>
+                    Check if any applications using camera or microphone, if yes release it.
+                </li>
+                <li style="list-style: none !important; margin-top: 10px;margin-bottom: 10px;">or</li>
+                <li>
+                    Click the camera blocked icon in your browser's address bar
+                </li>
+                <li>
+                    Allow access and refresh the page
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-12 no-padding">
+            <a class="pull-right dismiss-action" (click)="dismissModal()">Dismiss</a>
+        </div>
+    </div>
+    <div class="col-md-12 no-padding text-content" *ngIf="mode==='sys-both'">
+        <div class="col-md-12 mgn-bt-20 no-padding text-content-text">
+            Jaldee Videocall requires access to your camera and microphone so that other participants can see and hear
+            you, but no audio/video devices found.
+        </div>
+        <div class="col-md-12 no-padding">
+            <a class="pull-right dismiss-action" (click)="dismissModal()">Dismiss</a>
+        </div>
+    </div>
+    <div class="col-md-12 no-padding text-content" *ngIf="mode==='b-cam'">
+        <div class="col-md-12 mgn-bt-20 no-padding text-content-text">
+            Jaldee Videocall requires access to your camera so that other participants can see
+            you. Jaldee Videocall will ask you to confirm this decision on each browser and computer you use.
+            To use Jaldee Videocall
+            <ul>
+                <li>
+                    Check if any applications using camera, if yes release it.
+                </li>
+                <li  style="list-style: none !important; margin-top: 10px;margin-bottom: 10px;">or</li>
+                <li>
+                    Click the camera blocked icon in your browser's address bar
+                </li>
+                <li>
+                    Allow access and refresh the page
+                </li>
+            </ul>
+
+        </div>
+        <div class="col-md-12 no-padding">
+            <a class="pull-right dismiss-action" (click)="dismissModal()">Dismiss</a>
+        </div>
+    </div>
+    <div class="col-md-12 no-padding text-content" *ngIf="mode==='b-mic'">
+        <div class="col-md-12 mgn-bt-20 no-padding text-content-text">
+            Jaldee Videocall requires access to your microphone so that other participants can hear
+            you. Jaldee Videocall will ask you to confirm this decision on each browser and computer you use.
+            To use Jaldee Videocall
+            <ul>
+                <li>
+                    Check if any applications using microphone, if yes release it.
+                </li>
+                <li  style="list-style: none !important; margin-top: 10px;margin-bottom: 10px;">or</li>
+                <li>
+                    Click the camera blocked icon in your browser's address bar
+                </li>
+                <li>
+                    Allow access and refresh the page
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-12 no-padding">
+            <a class="pull-right dismiss-action" (click)="dismissModal()">Dismiss</a>
+        </div>
+    </div>
+    <div class="col-md-12 no-padding text-content" *ngIf="mode==='sys-cam'">
+        <div class="col-md-12 mgn-bt-20 no-padding text-content-text">
+            Jaldee Videocall requires access to your camera so that other participants can hear
+            you, but no video devices found.
+        </div>
+        <div class="col-md-12 no-padding">
+            <a class="pull-right dismiss-action" (click)="dismissModal()">Dismiss</a>
+        </div>
+    </div>
+    <div class="col-md-12 no-padding text-content" *ngIf="mode==='sys-mic'">
+        <div class="col-md-12 mgn-bt-20 no-padding text-content-text">
+            Jaldee Videocall requires access to your microphone so that other participants can hear
+            you but no audio devices found.
+        </div>
+        <div class="col-md-12 no-padding">
+            <a class="pull-right dismiss-action" (click)="dismissModal()">Dismiss</a>
+        </div>
+    </div>
+</div>

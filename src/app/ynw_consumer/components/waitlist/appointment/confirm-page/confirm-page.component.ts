@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { projectConstants } from '../../../../../app.component';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
@@ -15,16 +15,6 @@ import { LocalStorageService } from '../../../../../shared/services/local-storag
   styleUrls: ['./confirm-page.component.css']
 })
 export class ConfirmPageComponent implements OnInit,OnDestroy {
-
-  breadcrumbs = [
-    {
-      title: 'My Jaldee',
-      url: '/consumer'
-    },
-    {
-      title: 'Payment'
-    }
-  ];
   infoParams;
   appointment: any = [];
   path = projectConstants.PATH;
@@ -35,6 +25,10 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
   provider_label;
   type = 'appt';
   private subs=new SubSink();
+  theme: any;
+  accountId;
+  customId;
+  from: any;
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public sharedFunctionobj: SharedFunctions,
@@ -51,8 +45,20 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
               this.apiloading = false;
             });
         }
+        if(params.isFrom){
+          this.from = params.isFrom;
+        }
         if (params.type) {
           this.type = params.type;
+        }
+        if (params.customId) {
+          this.customId = params.customId;
+        }
+        if(params.account_id){
+          this.accountId = params.account_id;
+        }
+        if(params.theme){
+          this.theme=params.theme;
         }
       });
   }
@@ -62,13 +68,41 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
-  okClick() {
-    this.lStorageService.setitemonLocalStorage('orderStat', false);
-    if (this.appointment.service.livetrack && this.type !== 'reschedule') {
-      this.router.navigate(['consumer', 'appointment', 'track', this.infoParams.uuid], { queryParams: { account_id: this.infoParams.account_id } });
-    } else {
-      this.router.navigate(['consumer']);
+  okClick(appt) {
+    if (appt.service.livetrack && this.type !== 'reschedule') {
+      let queryParams= {
+        account_id: this.infoParams.account_id,
+        theme:this.theme 
     }
+    if (this.customId) {
+      queryParams['customId'] = this.customId;
+    }
+    if(this.from){
+      queryParams['isFrom'] = this.from;
+    }
+    let navigationExtras: NavigationExtras = {
+        queryParams: queryParams
+    };
+    this.router.navigate(['consumer', 'appointment', 'track', this.infoParams.uuid], navigationExtras);
+    } else {
+      let queryParams= {
+        theme:this.theme,
+        accountId: this.accountId
+      }
+      if (this.customId) {
+          queryParams['customId'] = this.customId;
+      }
+      let navigationExtras: NavigationExtras = {
+          queryParams: queryParams
+      };
+      if(this.from){
+        this.router.navigate(['consumer']);
+      }else{
+        this.router.navigate(['consumer'], navigationExtras);
+      }
+      
+    }
+    this.lStorageService.setitemonLocalStorage('orderStat', false);
   }
   getSingleTime(slot) {
     if (slot) {
@@ -77,6 +111,5 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
     }
   }
   updateEmail() {
-    console.log(this.email);
   }
 }

@@ -1,0 +1,24 @@
+<div mat-dialog-content *ngIf="!apiloading">
+    <p class="rupee-font"> {{data.message}} </p><br>
+    <p> 
+    <span>Choose location: </span>
+    <select  class="form-control loc select-height" [(ngModel)]="selelocId"> 
+      <option value="" disabled selected hidden>Select location</option>
+      <option *ngFor="let loca of user_loc; let i = index" [value]="loca">
+        {{getlocname(loca)}}
+      </option>
+    </select>
+  </p>
+  </div>
+  <div mat-dialog-actions class="nppadding">
+  <button tabindex="-1" class="cs-btn bt2" (click)="close()">{{cancel_btn_cap}}</button>
+    <button tabindex="2" class="cs-btn bt1 reddelete" (click)="onClick()">{{ok_btn_cap}}</button>
+    <!-- <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error_msg}}"></app-field-error-display> -->
+  </div>
+  <div *ngIf="api_error" style="color:red" class="nopadding text-center">
+{{api_error_msg}}
+  </div>
+ 
+
+
+  

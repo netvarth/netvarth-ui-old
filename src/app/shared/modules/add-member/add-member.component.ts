@@ -9,9 +9,11 @@ import { SharedFunctions } from '../../functions/shared-functions';
 
 @Component({
   selector: 'app-consumer-add-member',
-  templateUrl: './add-member.component.html'
+  templateUrl: './add-member.component.html',
+   styleUrls: ['./add-member.component.css']
 })
 export class AddMemberComponent implements OnInit {
+
 
   fill_foll_details_cap = Messages.FILL_FOLL_DETAILS_CAP;
   first_name_cap = Messages.F_NAME_CAP;
@@ -38,6 +40,11 @@ export class AddMemberComponent implements OnInit {
 
   @Input() calledFrom: any;
   @Output() returnDetails = new EventEmitter<any>();
+  countryCode_whtsap: any;
+  whatsappnumber: any;
+  telegramnumber: any;
+  countryCode_telegram: any;
+  email: any;
 
   constructor(
     public dialogRef: MatDialogRef<AddMemberComponent>,
@@ -47,16 +54,34 @@ export class AddMemberComponent implements OnInit {
     public shared_functions: SharedFunctions
   ) {
     if (data.type === 'edit') {
+      console.log(data);
       this.firstname = data.member.userProfile.firstName || '';
       this.lastname = data.member.userProfile.lastName || '';
       this.mobile = data.member.userProfile.primaryMobileNo || '';
       this.gender = data.member.userProfile.gender || '';
       this.dob = data.member.userProfile.dob || '';
       this.dobholder = data.member.userProfile.dob || '';
+this.email=data.member.userProfile.email || '';
+      if(data.member.userProfile.whatsAppNum){
+        this.countryCode_whtsap=data.member.userProfile.whatsAppNum.countryCode;
+        this.whatsappnumber=data.member.userProfile.whatsAppNum.number;
+      }
+      console.log(data.member.userProfile.telegramNum);
+      if(data.member.userProfile.telegramNum){
+        this.countryCode_telegram=data.member.userProfile.telegramNum.countryCode;
+        this.telegramnumber=data.member.userProfile.telegramNum.number;
+      }
+      if(data.member.userProfile.email){
+        this.email=data.member.userProfile.email;
+        
+      }
     }
   }
 
   ngOnInit() {
+  }
+  isNumericSign(evt) {
+    return this.shared_functions.isNumericSign(evt);
   }
   valuechange() {
     const retobj = {
@@ -64,16 +89,22 @@ export class AddMemberComponent implements OnInit {
       'lname': this.lastname || '',
       'mobile': this.mobile || '',
       'gender': this.gender || '',
-      'dob': this.dobholder || ''
+      'dob': this.dobholder || '',
+      'countryCode_whtsap':this.countryCode_whtsap,
+      'whatsappnumber':this.whatsappnumber,
+      'countryCode_telegram':this.countryCode_telegram,
+      'telegramnumber':this.telegramnumber,
+      'email':this.email
     };
+    console.log(retobj);
     this.returnDetails.emit(retobj);
   }
   dateChanged(e) {
     if (e) {
-      if (e._i) {
-        let cday = e._i.date;
-        let cmon = (e._i.month + 1);
-        const cyear = e._i.year;
+      if (e.value._i) {
+        let cday = e.value._i.date;
+        let cmon = (e.value._i.month + 1);
+        const cyear = e.value._i.year;
         if (cday < 10) {
           cday = '0' + cday;
         }

@@ -1,0 +1,21 @@
+/*.schedule_outer {
+    border: 1px solid #000;
+    margin:4px;
+    padding:6px;
+}*/
+.sch_sel_head {
+    font-size:14px;
+    font-weight: bold;
+}
+.chk-margin {
+    margin: 0 10px;
+  }
+.chk-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+}
+.beingedited {
+    color: #FF0000;
+}

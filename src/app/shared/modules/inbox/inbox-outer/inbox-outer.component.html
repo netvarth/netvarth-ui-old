@@ -3,7 +3,7 @@
     <div class="panel panel-default" style="height: -webkit-fill-available; display: flex; flex-direction: column;">
       <div class="panel-heading top-row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-          <app-header *ngIf="shared_functions.checkLogin()"></app-header>
+          <app-header *ngIf="shared_functions.checkLogin()" [accountId]="accId" [customId]="customId" [showHeaderAction]="true"></app-header>
         </div>
       </div>
       <div class="panel-body no-padding" style="flex: 1;">
@@ -91,15 +91,15 @@
                                     <div class="text-dark-50 replymsg"
                                       [innerHTML]="getReplyMsgbyId(msg.replyMessageId).msg | nl2br"></div>
                                   </div>
-                                  <div [innerHTML]="msg.msg | nl2br" #outmsgId class="selmsg text-dark-75">
+                                  <div *ngIf="msg.msg" [innerHTML]="msg.msg | nl2br" #outmsgId class="selmsg text-dark-75">
                                   </div>
-                                  <div class="thumbnails mt10 mb10" *ngIf="msg.attachements">
+                                  <div class="thumbnails mt10 mb10" *ngIf="msg.attachements && msg.attachements.length > 0">
                                     <ng-container *ngFor="let attachment of msg.attachements;let i=index">
                                       <a (click)="openImage(msg.attachements, i)"
-                                        *ngIf="attachment.s3path.indexOf('.pdf') === -1"><img
+                                        *ngIf="attachment.s3path && checkImgType(attachment.s3path) === 'img'"><img
                                           [src]="getThumbUrl(attachment)" /></a>
                                       <a [href]="attachment.s3path"
-                                        *ngIf="attachment.s3path.indexOf('.pdf') !== -1"><img
+                                        *ngIf="attachment.s3path && checkImgType(attachment.s3path) === 'pdf'"><img
                                           [src]="getThumbUrl(attachment)" /></a>
                                     </ng-container>
                                   </div>
@@ -124,15 +124,15 @@
                                     <div class="text-dark-50 replymsg"
                                       [innerHTML]="getReplyMsgbyId(msg.replyMessageId).msg | nl2br"></div>
                                   </div>
-                                  <div [innerHTML]="msg.msg | nl2br" #inmsgId class="selmsg text-left text-dark-75">
+                                  <div *ngIf="msg.msg" [innerHTML]="msg.msg | nl2br" #inmsgId class="selmsg text-left text-dark-75">
                                   </div>
-                                  <div class="thumbnails mt10 mb10" *ngIf="msg.attachements">
+                                  <div class="thumbnails mt10 mb10" *ngIf="msg.attachements && msg.attachements.length > 0">
                                     <ng-container *ngFor="let attachment of msg.attachements;let i=index">
                                       <a (click)="openImage(msg.attachements, i)"
-                                        *ngIf="attachment.s3path.indexOf('.pdf') === -1"><img
+                                        *ngIf="attachment.s3path && checkImgType(attachment.s3path) === 'img'"><img
                                           [src]="getThumbUrl(attachment)" /></a>
                                       <a [href]="attachment.s3path"
-                                        *ngIf="attachment.s3path.indexOf('.pdf') !== -1"><img
+                                        *ngIf="attachment.s3path && checkImgType(attachment.s3path) === 'pdf'"><img
                                           [src]="getThumbUrl(attachment)" /></a>
                                     </ng-container>
                                   </div>
@@ -172,11 +172,11 @@
                             </div>
                             <div>
                               <button type="button" (click)="sendMessageCompleted && sendMessage()"
-                                *ngIf="!small_device_display"
+                                *ngIf="!small_device_display" [class.disabled]="!sendMessageCompleted || message==''"
                                 class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6 disp-flex">Send
                               </button>
                               <i *ngIf="small_device_display" (click)="sendMessageCompleted && sendMessage()"
-                                class="fa fa-paper-plane" aria-hidden="true" [class.grey]="message==''"></i>
+                                class="fa fa-paper-plane" aria-hidden="true" [class.grey]="!sendMessageCompleted || message==''"></i>
                             </div>
                           </div>
                           <div class="img-section" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">

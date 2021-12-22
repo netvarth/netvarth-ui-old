@@ -1,0 +1,63 @@
+.search_autocompletehighlight {
+    font-weight: bold;
+  }
+ .mat-optgroup-label {
+   background-color: #000;
+   color: #FFF !important;
+   font-weight: bold;
+ }
+ .width-100 {
+   width: 100%;
+ }
+
+ #pac-input{
+    margin: 10px 14px;
+    height: 30px;
+ }
+
+ .pac-container{
+    z-index: 9999 !important;
+    position: fixed !important;
+  }
+
+  .pointer-cursor {
+    cursor: pointer !important;
+  }
+
+ .cst-acc .mat-expansion-panel-header {
+    padding-left: 0px;
+  }
+
+  .cst-acc .mat-expansion-panel-body
+  {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .cst-acc .mat-expansion-panel-content {
+    font-family: inherit;
+  }
+   
+  .select-wrapper {
+    background: url(assets/images/add_image_icon.svg) no-repeat;
+    background-size: cover;
+    display: block;
+    position: relative;
+    width: 33px;
+    height: 26px;
+  }
+  #image_src {
+    width: 26px;
+    height: 26px;
+    margin-right: 100px;
+    opacity: 0;
+    cursor: pointer;
+    filter: alpha(opacity=0); 
+  }
+
+  .commonpopupmainclass.width-100 {
+    width: 100% ;
+  }
+.mat-title-font{
+  color:#337ab7;
+}

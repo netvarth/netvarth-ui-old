@@ -1,0 +1,10 @@
+.upgrde_licens .mat-grid-tile {
+    box-shadow: 5px 5px 5px 5px #cccccc60 !important;
+}
+.upgrde_licens .mat-grid-tile:hover {
+    cursor: pointer !important;
+}   
+.upgrde_licens .lic_selectd {
+    border: 1px dashed grey;
+    background: #80808036;
+}

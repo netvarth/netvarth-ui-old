@@ -1,0 +1,93 @@
+.mob-container {
+    max-width: 320px !important;
+}
+/* .pcheckin-owl .carouselList{
+  max-width: 550px;
+  
+} */
+/* @media(max-width: 600px) {
+  mat-chip-list .carouselList{
+  max-width: 600px;
+  }
+} */
+.carouselList{
+  /* width: auto; */
+  /* overflow-x: auto; */
+  
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  overflow-x: auto;
+}
+
+
+
+/* .mob-container input {
+    height:35px !important;
+    border-left: 1px solid #ccc !important;
+} */
+.modal-body {
+    max-height: 70vh;
+    overflow: auto;
+  }
+.modal-body {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+  }
+  #tcModal .modal-dialog .modal-content .modal-body h6 {
+    font-weight: 700 !important;
+    text-decoration: underline !important;
+    text-underline-position: under !important;
+    text-transform: uppercase !important;
+  }
+  
+  #tcModal .modal-dialog .modal-content .modal-body p {
+    text-align: justify !important;
+  }
+  .highlight{
+    background: #9e9e9e6e !important;
+    cursor: not-allowed !important;
+    opacity: 0.2;
+    pointer-events: none !important;
+  }
+  .incomplete-msg {
+    position: absolute !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    z-index: 4 !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-top: 60px !important;
+    color: green !important;
+    right: 0px !important;
+  }
+  .internumbox{
+    width: 270px;
+    float: left;
+  }
+  .findcolor{
+    background-color: #1e4079;
+    border-radius: 5px;
+    width: 50px;
+  }
+  .coloroflabels{
+    color: #0F52BA !important;
+  }
+  .change::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    color: rgba(202, 195, 202, 0.61);
+}
+.change:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color:  rgba(202, 195, 202, 0.61);
+    opacity: 1;
+}
+.change::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color:  rgba(202, 195, 202, 0.61);
+    opacity: 1;
+}
+.change:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: rgba(202, 195, 202, 0.61);
+}

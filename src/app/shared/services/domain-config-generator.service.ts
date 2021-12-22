@@ -69,6 +69,7 @@ export class DomainConfigGenerator {
     /**
      * 
      */
+<<<<<<< HEAD
      getUIAccountConfig(account) {
         const path = projectConstantsLocal.UIS3PATH + account + '/account_config.json';
         return this.servicemeta.httpGet(path);
@@ -79,6 +80,10 @@ export class DomainConfigGenerator {
      */
      getCustomAppVersion(account) {
         const path = projectConstantsLocal.UIS3PATH + account + '/version.json?t=' + new Date();
+=======
+    getUIAccountConfig(account) {
+        const path = projectConstantsLocal.UIS3PATH + account + '/account_config.json';
+>>>>>>> refs/remotes/origin/jaldee-payment-profile-latest
         return this.servicemeta.httpGet(path);
     }
 }

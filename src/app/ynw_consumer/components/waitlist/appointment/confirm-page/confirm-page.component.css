@@ -65,7 +65,11 @@
 }
 .update-email input{
   padding: 0px 12px 0px 24px;
+<<<<<<< HEAD
  border-radius: 20px 0 0 20px;
+=======
+  border-radius: 20px 0 0 20px;
+>>>>>>> refs/remotes/origin/jaldee-payment-profile-latest
   width: 100%;
   border-right-style: none;
 }

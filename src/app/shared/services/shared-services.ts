@@ -3,13 +3,21 @@ import * as CryptoJS from 'crypto-js';
 import { LocalStorageService } from './local-storage.service';
 // Import RxJs required methods
 import { ServiceMeta } from './service-meta';
+import { GroupStorageService } from './group-storage.service';
 @Injectable()
 export class SharedServices {
 
   accountId: any;
   orderdata: any;
   licenseMetrics: any = [];
-  constructor(private servicemeta: ServiceMeta, private lStorageService: LocalStorageService) {
+  userData: any;
+  constructor(private servicemeta: ServiceMeta,
+     private lStorageService: LocalStorageService,
+     private groupService:GroupStorageService) {
+       this.userData=this.groupService.getitemFromGroupStorage('ynw-user');
+  }
+  getUserData(){
+    return this.userData;
   }
   getSystemDate() {
     return this.servicemeta.httpGet('provider/server/date');
@@ -236,6 +244,9 @@ export class SharedServices {
     }
     return this.servicemeta.httpGet(gurl);
   }
+  getReimburseReport(gurl) {
+    return this.servicemeta.httpGet(gurl);
+  }
   getAllSearchlabels() {
     const path = 'ynwConf/searchLabels';
     return this.servicemeta.httpGet(path);
@@ -444,8 +455,8 @@ export class SharedServices {
     const url = 'consumer/waitlist/communicate/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpPost(url, body);
   }
-  getPaymentModesofProvider(provid) {
-    const url = 'consumer/payment/modes/' + provid;
+  getPaymentModesofProvider(provid,serviceId,purpose?) {
+    const url = 'consumer/payment/modes/' + provid +'/'+serviceId+ '/'+ purpose;
     return this.servicemeta.httpGet(url);
   }
   consumerPayment(data) {
@@ -456,6 +467,10 @@ export class SharedServices {
     const url = 'consumer/payment/status';
     return this.servicemeta.httpPost(url, data);
   }
+  // getConsumerPayments() {
+  //   const url = 'consumer/payment';
+  //   return this.servicemeta.httpGet(url);
+  // }
   getConsumerPayments(filter?) {
     const url = 'consumer/payment';
     return this.servicemeta.httpGet(url, null, filter);
@@ -586,6 +601,10 @@ export class SharedServices {
     const url = 'provider/waitlist/queues/isAvailableNow/today';
     return this.servicemeta.httpGet(url);
   }
+  isuserAvailableNow(id) {
+    const url = 'provider/waitlist/queues/isAvailableNow/today/' + id;
+    return this.servicemeta.httpGet(url);
+  }
   getLicenseDetails() {
     // return this.servicemeta.httpGet('accounts/license');
     return this.servicemeta.httpGet('provider/license');
@@ -669,12 +688,20 @@ export class SharedServices {
     const url = 'provider/waitlist/consumerMassCommunication';
     return this.servicemeta.httpPost(url, data);
   }
+  shareMeetingdetails(data) {
+    const url = 'provider/waitlist/shareMeetingDetails';
+    return this.servicemeta.httpPost(url, data);
+  }
   consumerMassCommunicationWithId(data) {
     const url = 'provider/waitlist/consumerMassCommunicationWithId';
     return this.servicemeta.httpPost(url, data);
   }
   donationMassCommunication(data) {
     const url = 'provider/donation/consumerMassCommunication';
+    return this.servicemeta.httpPost(url, data);
+  }
+  customerAllMassCommunication(data) {
+    const url = 'provider/customers/consumerMassCommunicationAll';
     return this.servicemeta.httpPost(url, data);
   }
   addProviderAppointment(postData) {
@@ -737,6 +764,10 @@ export class SharedServices {
   }
   consumerMassCommunicationAppt(data) {
     const url = 'provider/appointment/consumerMassCommunication';
+    return this.servicemeta.httpPost(url, data);
+  }
+  shareMeetingDetailsAppt(data) {
+    const url = 'provider/appointment/shareMeetingDetails';
     return this.servicemeta.httpPost(url, data);
   }
   consumerOrderMassCommunicationAppt(data) {
@@ -988,7 +1019,7 @@ export class SharedServices {
     return this.servicemeta.httpGet(url);
   }
   getCartdetails(accountid, data) {
-    const url = 'consumer/orders/amount' + '?account=' + accountid;
+    const url = 'consumer/orders/amount?account=' + accountid;
     return this.servicemeta.httpPut(url, data);
   }
   addWaitlistAdvancePayment(param, body) {
@@ -1031,5 +1062,76 @@ export class SharedServices {
   getLocationsByPincode(pinCode) {
     const url = 'provider/account/settings/locations/' + pinCode;
     return this.servicemeta.httpGet(url);
+  }
+  enableTelegramNoti(status) {
+    const url = 'consumer/telegram/settings/' + status;
+    return this.servicemeta.httpPut(url);
+  }
+  getTelegramstat() {
+    const url = 'consumer/telegram/settings';
+    return this.servicemeta.httpGet(url);
+  }
+  getDonationQuestionnaire(serviceId, account_id) {
+    const url = 'consumer/questionnaire/donation/' + serviceId + '?account=' + account_id;
+    return this.servicemeta.httpGet(url);
+  }
+  submitDonationQuestionnaire(uuid, body, account_id) {
+    const url = 'consumer/donation/questionnaire/submit/' + uuid + '?account=' + account_id;
+    return this.servicemeta.httpPost(url, body);
+  }
+  resubmitProviderDonationQuestionnaire(uuid, body) {
+    const url = 'provider/donation/questionnaire/resubmit/' + uuid;
+    return this.servicemeta.httpPost(url, body);
+  }
+  consumerWaitlistQnrUploadStatusUpdate(uid, account, data) {
+    const url = 'consumer/waitlist/questionnaire/upload/status/' + uid + '?account=' + account;
+    return this.servicemeta.httpPut(url, data);
+  }
+  consumerApptQnrUploadStatusUpdate(uid, account, data) {
+    const url = 'consumer/appointment/questionnaire/upload/status/' + uid + '?account=' + account;
+    return this.servicemeta.httpPut(url, data);
+  }
+  consumertelegramChat(countryCode, loginId) {
+    const url = 'chatbot/telegram/consumer/chatId/' + countryCode + '/' + loginId;
+    return this.servicemeta.httpGet(url);
+  }
+  getJaldeeCashandJcredit() {
+    const url = 'consumer/wallet/redeem/eligible/amt';
+    return this.servicemeta.httpGet(url);
+  }
+  getRemainingPrepaymentAmount(jcash?, jcredit?, advanceamount?) {
+    const url = 'consumer/wallet/redeem/remaining/amt' + '?useJcash=' + jcash + '&useJcredit=' + jcredit + '&advancePayAmount=' + advanceamount;
+    return this.servicemeta.httpGet(url);
+  }
+  PayByJaldeewallet(postData) {
+    return this.servicemeta.httpPost('consumer/payment/wallet', postData);
+  }
+  getWaitlistQuestionnaireByUid(uid, accountId) {
+    const url = 'consumer/waitlist/questionnaire/' + uid + '?account=' + accountId;
+    return this.servicemeta.httpGet(url);
+  }
+  getApptQuestionnaireByUid(uid, accountId) {
+    const url = 'consumer/appointment/questionnaire/' + uid + '?account=' + accountId;
+    return this.servicemeta.httpGet(url);
+  }
+  getAppointmentReschedulePricelist(serviceid) { 
+    const url = 'consumer/appointment/schedule/' + serviceid + '/pricelist';
+    return this.servicemeta.httpGet(url);
+  }
+  updateRazorPay(data,id){
+    const url = 'provider/payment/razorpay/update?account='+id;
+    return this.servicemeta.httpPost(url,data);
+  }
+  updateRazorPayForPtovider(data){
+    const url = 'provider/payment/razorpay/update';
+    return this.servicemeta.httpPost(url,data);
+  }
+  updatePaytmPay(data,id) {
+    const url = 'provider/payment/paytm/update?account='+id;
+    return this.servicemeta.httpPost(url,data);
+  }
+  updatePaytmPayProvider(data) {
+    const url = 'provider/payment/paytm/update';
+    return this.servicemeta.httpPost(url,data);
   }
 }

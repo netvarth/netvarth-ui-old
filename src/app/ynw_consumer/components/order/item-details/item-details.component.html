@@ -20,23 +20,14 @@
             </div>
             <div class="container">
               <div class="row">
-                <div class="col-md-6 col-sm-7 pad-25 no-padding-small mgn-bt-10" *ngIf="imagesRect.length> 0">
+                <div class="col-xs-12 col-md-6 col-sm-7 pad-25 no-padding-small mgn-bt-10" *ngIf="imagesRect.length> 0">
                     <ks-carousel [id]="1" [images]="imagesRect"
                       [carouselConfig]="{maxHeight: '400px',minHeight: '400px', showArrows: false, objectFit: 'scale-down', keyboardEnable: false, modalGalleryEnable: false, legacyIE11Mode: false}"
                       [previewConfig]="{visible: true, breakpoints: {xSmall: 50, small: 60, medium: 70, large: 80, xLarge: 100}}"
                       [dotsConfig]="{visible: false}" [playConfig]="{autoPlay:false}">
                     </ks-carousel>
-                  <!--
-                  <owl-carousel [options]="{items: 1, dots: true, navigation: false}" [items]="itemImages"
-                    [carouselClasses]="['owl-theme', 'row', 'sliding']">
-                    <div class="item" *ngFor="let image of itemImages;let i = index">
-                      <div class="thumbnail-image">
-                        <img [src]="image.url" />
-                      </div>
-                    </div>
-                  </owl-carousel> -->
                 </div>
-                <div class="col-md-6 col-sm-5 no-padding">
+                <div class="col-xs-12 col-md-6 col-sm-5 no-padding">
                   <div class="col-md-12 no-padding">
                     <div class="col-md-6 no-padding mgn-up-10">
                       <p class="mgn-rt-10 m0" ><img class="ordericon home"
@@ -60,16 +51,9 @@
                   <div class="col-md-12  mr-area">
                     <p class="m0 question-header">Description</p>
                     <p>{{currentItem.itemDesc}}</p>
-                    <!-- <textarea name="paragraph_text" maxlength="500" cols="10" rows="2"></textarea> -->
                   </div>
                   <div class="col-md-12">
                     <p class="question-header m0">Quantity:</p>
-                    <!-- <button class="m2" (click)="decrement()">-</button>
-                    <span>{{getItemQty()}}</span>
-                    <button class="m2" (click)="increment()">+</button> &nbsp; -->
-                    <!-- <button class="pay">
-                      <h6 style="padding-top: 10px;">ADD TO CART</h6>
-                    </button> -->
                   </div>
                   <div class="col-md-12 pad-lt-25 mgn-bt-50">
                     <div class="btn-lt pull-left">

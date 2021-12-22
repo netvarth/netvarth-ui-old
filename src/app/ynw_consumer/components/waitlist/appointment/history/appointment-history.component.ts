@@ -5,15 +5,15 @@ import { ConsumerServices } from '../../../../services/consumer-services.service
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../../../app.component';
-import { CheckInHistoryServices } from '../../../../../shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.service';
 import { EventEmitter } from '@angular/core';
 // import { ViewConsumerWaitlistCheckInBillComponent } from '../../../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
-import { ConsumerWaitlistCheckInPaymentComponent } from '../../../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-checkin-payment/consumer-waitlist-checkin-payment.component';
+import { ConsumerWaitlistCheckInPaymentComponent } from '../../../../../shared/modules/consumer-checkin-history-list/components/checkin-payment/checkin-payment.component';
 import { ConsumerRateServicePopupComponent } from '../../../../../shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
 import { AddInboxMessagesComponent } from '../../../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { SubSink } from 'subsink';
+import { CheckInHistoryServices } from '../../../../../shared/modules/consumer-checkin-history-list/components/checkin-history-list/checkin-history-list.service';
 // import * as moment from 'moment';
 
 

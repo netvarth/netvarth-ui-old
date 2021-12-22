@@ -1,0 +1,109 @@
+.adddatetime-box {
+    display: inline-block; 
+    width: 700px;
+    height: 40px;
+    padding: 5px;
+    border: 1px ; 
+    background-color :#1e4079 ;
+    box-sizing: border-box;
+    border-radius: 25px;
+    text-align: left;
+    color:white
+    
+  }
+  .start-box {
+    display: inline-block; 
+    width: 100px;
+    height: 40px;
+    padding: 5px;
+    border: 1px ; 
+    background-color:grey ;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  .col{
+    display: inline-flex !important;
+  }
+  .selctDte1 {
+    cursor: pointer !important;
+    margin-right: 990px;
+  }
+  .margn-time{
+    margin-top: 50px
+  }
+  .margn-reason{
+    margin-top: 150px;
+  }
+  .inn{
+  border-radius: 0;
+  display: block;
+  width: 700px;
+    background:white;
+    border-bottom: 4px solid #8842d5  ;
+    border-top-width: 50px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #222223;
+    text-overflow: ellipsis;
+    padding: 10px;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    border: 4px solid #8842d5;
+    border-style: solid;
+    border-radius: 5px;
+}
+.in{
+  display: block !important;
+    width: 700px !important;
+    
+    height: calc(1.5em + 1.3rem + 2px) !important;
+    padding: 0.65rem 1rem !important;
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+    color: #3F4254 !important;
+    background-color: #ffffff !important;
+    background-clip: padding-box !important;
+    border: 4px solid gray !important;
+    border-radius: 0.42rem !important;
+    box-shadow: none !important;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+    }
+  @media (max-width: 992px) {
+    .adddatetime-box {
+      display: inline-block; 
+      width: 220px;
+      height: 40px;
+      padding: 5px;
+      border: 1px ; 
+      background-color:#1e4079 ;
+      box-sizing: border-box;
+      border-radius: 25px;
+      text-align: left;
+      color:white
+      
+    }
+    .start-box {
+      display: inline-block; 
+      width: 100px;
+      height: 40px;
+      padding: 5px;
+      border: 1px ; 
+      background-color:grey ;
+      box-sizing: border-box;
+      text-align: center;
+     
+    }
+    .col{
+      display: inline-flex !important;
+    }
+    .selctDte1 {
+      cursor: pointer !important;
+      margin-right: 990px;
+    }
+    .margn-time{
+      margin-top: -1px;
+    }
+    .margn-reason{
+      margin-top: -1px;
+    }
+  }

@@ -89,6 +89,7 @@ export class GalleryComponent implements OnInit, OnChanges {
         this.loadImages(this.image_list);
     }
     ngOnInit() {
+        console.log("Image Gallery list : ",this.image_list)
     }
     loadImages(imagelist) {
         this.image_list_popup = [];

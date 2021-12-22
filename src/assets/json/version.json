@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
     "name": "Jaldee Custom App",
+=======
+    "name": "Jaldee",
+>>>>>>> refs/remotes/origin/jaldee-payment-profile-latest
     "version": "1.0.0",
     "license": "Jaldee Inc",
     "warning":"This apk is only for temporary",

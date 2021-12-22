@@ -1,0 +1,118 @@
+.mt-80 {
+    margin-top: 80px;
+}
+.svg-align {
+    overflow: hidden;
+    vertical-align: middle;
+}
+.ansr {
+    color: #7E8299 !important;
+    padding-left: 30px;
+    margin-bottom: 20px;
+}
+.svg-icon.svg-icon-success svg g [fill] {
+    -webkit-transition: fill 0.3s ease;
+    transition: fill 0.3s ease;
+    fill: #1BC5BD !important;
+  }
+  .fa-mobile {
+    font-size: 1.1rem !important;
+  }
+  .content.comn-cls .lbr .card .internal-history li :before {
+    background: #0edcb8;
+  }
+  .content.comn-cls .lbr .card .internal-history li div.time{
+    color: #999999;
+    font-size: .75rem;
+  }
+  .content.comn-cls .lbr .card .internal-history li .time {
+    color: #999999;
+    font-size: .75rem;
+}
+.content.comn-cls .lbr .card .internal-history li .action {
+    font-weight: 600;
+}
+.content.comn-cls .lbr .card .internal-history li .user {
+    font-weight: 200;
+    color:brown;
+}
+.content.comn-cls .lbr .card .internal-history li:before {
+    position: absolute;
+    content: "";
+    width: 15px;
+    height: 15px;
+    border: 3px solid #fff;
+    border-radius: 20px;
+    background-clip: padding-box;
+    left: -6px;
+    top: 2px;
+}
+.content.comn-cls .lbr .card .internal-history:before {
+    position: absolute;
+    content: "";
+    border-left: 2px dashed #f2f2f2;
+    height: 100%;
+    top: 5px;
+}
+.content.comn-cls .lbr .card .internal-history {
+    margin: 0 0 0 10px;
+    padding: 0;
+    position: relative;
+    font-weight: 500;
+}
+.content.comn-cls .lbr .card .internal-history li {
+    list-style: none;
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+.content.comn-cls .lbr .card .internal-history li.internal-status:before {
+    background: #79e688;
+}
+.qnr-accord .mat-expansion-panel-header {
+    margin: 10px !important;
+    padding: 0 !important;
+}
+.qnrstatus {
+    margin-left: auto;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+.pvtnote{
+    color: #3c8dbc !important;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding-left: 15px;
+}
+.note{
+    padding-top: 25px;
+    padding-left: 10px; 
+    padding-bottom: 5px;
+    font-size: 14px;
+}
+.note_date{
+    float: right; 
+    padding-right: 5px; 
+    padding-top: 5px; 
+}
+.note_name{
+    float: left; 
+    padding-left: 10px; 
+    padding-top: 5px;
+}
+.no_note{
+    padding-left: 14px;
+    font-size: 14px;
+}
+.note_view{
+    background: whitesmoke; 
+    margin: 3px; 
+}
+@media (max-width: 750px) {
+    .note_view{
+        background: whitesmoke; 
+    margin: 3px; 
+        width: 100% !important;
+        height: 100% !important;
+    }
+  }

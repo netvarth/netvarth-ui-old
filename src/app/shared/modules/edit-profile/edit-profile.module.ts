@@ -1,24 +1,39 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { MaterialModule } from '../common/material.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
 import { EditProfileComponent } from './edit-profile.component';
-import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
 import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
 import { HeaderModule } from '../header/header.module';
-
+import { TelegramInfoModule } from '../../../ynw_consumer/components/telegram-info/telegram-info.module';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDialogModule } from '@angular/material/dialog';
+const routes: Routes = [
+    { path: '', component: EditProfileComponent }
+];
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule,
-        MaterialModule,
+        [RouterModule.forChild(routes)],
         ReactiveFormsModule,
         FormMessageDisplayModule,
-        BreadCrumbModule,
         LoadingSpinnerModule,
-        HeaderModule
+        HeaderModule,
+        FormsModule,
+        TelegramInfoModule,
+        MatRadioModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatButtonModule,
+        MatSlideToggleModule,
+        MatDialogModule
     ],
     declarations: [
         EditProfileComponent
