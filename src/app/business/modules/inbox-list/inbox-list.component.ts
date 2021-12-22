@@ -227,6 +227,8 @@ export class BusinessInboxListComponent implements OnInit, OnDestroy {
     this.inbox_services.getInbox(usertype)
       .subscribe(
         data => {
+          console.log("Messages : ",data);
+          
           this.messages = data;
           if (this.isCustomer) {
             this.messages = this.messages.filter(msg => msg.messageType === 'ENQUIRY');

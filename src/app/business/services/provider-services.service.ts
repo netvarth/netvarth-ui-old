@@ -1086,6 +1086,14 @@ export class ProviderServices {
     const url = 'provider/user/available';
     return this.servicemeta.httpGet(url);
   }
+  getAvailableUsersWaitlist() {
+    const url = 'provider/user/waitlist/available';
+    return this.servicemeta.httpGet(url);
+  }
+  getAvailableUsersAppt() {
+    const url = 'provider/user/appt/available';
+    return this.servicemeta.httpGet(url);
+  }
   getUserProfiles(profileIds) {
     const url = 'provider/user/providerProfiles/' + profileIds;
     return this.servicemeta.httpGet(url);
@@ -2161,6 +2169,9 @@ export class ProviderServices {
   videoaudioS3Upload(file, url) {
     return this.servicemeta.httpPut(url, file);
   }
+  imageFileS3Upload(file, url) {
+    return this.servicemeta.httpPut(url, file);
+  }
   videoaudioUploadconfirm(id, data) {
     const url = 'provider/mr/upload/url/' + id;
     return this.servicemeta.httpPut(url, data);
@@ -2290,4 +2301,22 @@ export class ProviderServices {
   //   const url='consumer/payment/wallet'
   //   return this.servicemeta.httpPost(url,data);  
   // }
+    changestatustoComplete(idlist,status){
+    const url = 'provider/appointment/multiStatusChange/' +status;
+    return this.servicemeta.httpPut(url,idlist);
+  }
+  changestatustowaitlistComplete(idlist,status){
+    const url = 'provider/waitlist/multiStatusChange/' +status;
+    return this.servicemeta.httpPut(url,idlist);
+  }
+  getFollowUpWaitlist(uid)
+  {
+    const url = 'provider/waitlist/followUp/' + uid;
+    return this.servicemeta.httpGet(url);
+  }
+  getFollowUpAppt(uid)
+  {
+    const url = 'provider/appointment/followUp/' + uid;
+    return this.servicemeta.httpGet(url);
+  }
 } 

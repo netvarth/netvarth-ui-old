@@ -172,7 +172,7 @@
                 </div>
               </div>
             </div>
-            <div class="text-center">
+            <div class="text-center">              
               <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
                 (click)="generateReport('payment');"> Generate Report </button>
               <ng-container *ngIf="report_loading">
@@ -197,12 +197,23 @@
               <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
                 <label for="appointmentStatus" class="col-lg-5 col-md-5 col-sm-5 col-xs-6 col-form-label">Appointment
                   Status</label>
-                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3">
-                  <mat-select class="form-control" [(ngModel)]="appointment_status">
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
+                  <mat-select #apptStatusSelect multiple>
+                    <div class="select-all">
+                        <mat-checkbox [(ngModel)]="allApptStatusSelected"
+                        [ngModelOptions]="{standalone: true}"
+                        (change)="toggleAllApptSelection()">Select All</mat-checkbox>
+                  </div>
+                    <mat-option *ngFor="let status of appointment_status_list" [value]="status.value"
+                        (click)="setApptStatusFilter()">
+                        {{status.displayName}}
+                    </mat-option>
+                </mat-select>
+                  <!-- <mat-select class="form-control" [(ngModel)]="appointment_status">
                     <mat-option [value]="0">Any</mat-option>
                     <mat-option *ngFor="let status of appointment_status_list" [value]="status.value">
                       {{ status.displayName }}</mat-option>
-                  </mat-select>
+                  </mat-select> -->
                 </div>
               </div>
             </div>
@@ -293,8 +304,11 @@
             </div>
             <div class="text-center">
               <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
-                (click)="generateReport('appointment');"> Generate Report </button>
-              <ng-container *ngIf="report_loading">
+                (click)="generateReport('appointment');"> Generate Report </button>&nbsp;
+              <button type="button" [class.disabled]="loading" [class.spinner]="loading"
+                [class.spinner-darker-success]="loading" [class.spinner-center]="loading"  class="btn  btn-primary btn-lg" (click)="generateSummary('appointment')">
+                  Generate Questionnaire Report</button>
+              <ng-container *ngIf="report_loading || loading">
                 <app-common-innerloading-spinner> </app-common-innerloading-spinner>
               </ng-container>
             </div>
@@ -314,12 +328,29 @@
               </div>
               <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
                 <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Status</label>
-                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3">
-                  <mat-select class="form-control" [(ngModel)]="waitlist_status">
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
+
+                  <mat-select #select multiple>
+                    <div class="select-all">
+                        <mat-checkbox [(ngModel)]="allWlStatusSelected"
+                        [ngModelOptions]="{standalone: true}"
+                        (change)="toggleAllSelection()">Select All</mat-checkbox>
+                  </div>
+                    <mat-option *ngFor="let status of waitlist_status_list" [value]="status.value"
+                        (click)="setStatusFilter()">
+                        {{status.displayName}}
+                    </mat-option>
+                </mat-select>
+
+                  <!-- <mat-checkbox class="filter-checkbox" *ngFor="let status of waitlist_status_list"
+                        [checked]="waitlistStatusFilter.indexOf(status.value) !== -1"
+                        (change)="setStatusFilter('waitlist', status.value, $event)">{{status.displayName}}
+                  </mat-checkbox> -->
+                  <!-- <mat-select class="form-control" [(ngModel)]="waitlist_status">
                     <mat-option [value]="0">Any</mat-option>
                     <mat-option *ngFor="let status of waitlist_status_list" [value]="status.value">
                       {{ status.displayName }}</mat-option>
-                  </mat-select>
+                  </mat-select> -->
                 </div>
               </div>
             </div>
@@ -409,8 +440,11 @@
             </div>
             <div class="text-center">
               <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
-                (click)="generateReport('token');"> Generate Report </button>
-              <ng-container *ngIf="report_loading">
+                (click)="generateReport('token');"> <span class=""></span>Generate Report </button>&nbsp;&nbsp;&nbsp;                
+                <button type="button" [class.disabled]="loading" [class.spinner]="loading"
+                [class.spinner-darker-success]="loading" [class.spinner-center]="loading"  class="btn  btn-primary btn-lg" (click)="generateSummary('token')">
+                  Generate Questionnaire Report</button>
+              <ng-container *ngIf="report_loading || loading">
                 <app-common-innerloading-spinner> </app-common-innerloading-spinner>
               </ng-container>
             </div>

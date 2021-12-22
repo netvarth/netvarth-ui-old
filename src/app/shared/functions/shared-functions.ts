@@ -953,6 +953,12 @@ export class SharedFunctions {
       return rv;
     }, {});
   }
+  groupBySlot(xs, key) {
+    return xs.reduce(function (rv, x) {
+      (rv[x[key]] = rv[x[key]] || []).push(x);
+      return rv;
+    },{} );
+  }
   removeDuplicates(array, key) {
     const lookup = new Set();
     return array.filter(obj => !lookup.has(obj[key]) && lookup.add(obj[key]));

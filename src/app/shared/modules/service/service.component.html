@@ -116,10 +116,19 @@
 
       <span class="setings" *ngIf="service.status=='ACTIVE'">Share link</span>
       <p *ngIf="service.status=='ACTIVE'">
+        <span *ngIf="service && service.provider && service.provider.id">
+          <span class='assured'
+          *ngIf="bprofile.accEncUid">{{wndw_path}}{{bprofile.accEncUid}}/{{service.provider.id}}/service/{{service.id}}</span>
         <span class='assured'
-          *ngIf="service && service.provider && service.provider.id">{{wndw_path}}{{bprofile.accEncUid}}/{{service.provider.id}}/service/{{service.id}}</span>
+          *ngIf="bprofile.customId">{{wndw_path}}{{bprofile.customId}}/{{service.provider.id}}/service/{{service.id}}</span>
+        </span>
+      
+        <span *ngIf="service && !service.provider">
+          <span class='assured'
+          *ngIf="bprofile.accEncUid && bprofile.customId">{{wndw_path}}{{bprofile.customId}}/service/{{service.id}}</span>
         <span class='assured'
-          *ngIf="service && !service.provider">{{wndw_path}}{{bprofile.accEncUid}}/service/{{service.id}}</span>
+          *ngIf="bprofile.accEncUid && !bprofile.customId">{{wndw_path}}{{bprofile.accEncUid}}/service/{{service.id}}</span>
+        </span>
       </p>
       <p>
         <span class="custid">
@@ -463,8 +472,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         </div>
       </div> -->
 
-      <div class="row mgn-lt-5 mgn-up-20" *ngIf="!is_donation">
-        <section class="mgn-bt-30">
+      <div class="row mgn-lt-5 mgn-up-20" *ngIf="showResources">
+        <section class="mgn-bt-30" *ngIf="!is_donation">
           <label style="margin-bottom: 0 !important" class="col-form-label">Number of resources</label>
           <div class="settings_info">
             No. of resources that need to be used for this service.</div>

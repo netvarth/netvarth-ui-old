@@ -127,17 +127,44 @@ export class ReportsComponent implements OnInit {
   }
   viewCriteria(details) {
     this.reprtdialogRef = this.dialog.open(CriteriaDialogComponent, {
-      width: '400px',
-      // panelClass: ['popup-class', 'commonpopupmainclass'],
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        purpose : 'view',
-        content : details
+        content: details,
+        
       }
     });
     this.reprtdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      }
     });
+    console.log("View Details :",details.reportName,details.reportType);
+  
+  //   this.reprtdialogRef = this.dialog.open(CriteriaDialogComponent, {
+  //     width: '50%',
+     
+  //     panelClass: ['popup-class', 'commonpopupmainclass'],
+  //     disableClose: true,
+  //     data: {
+  //       purpose : 'view',
+  //       content : details
+        
+  //     }
+  //   });
+  //  this.reprtdialogRef.afterClosed().subscribe(
+  //     result => {
+  //       if (result) {
+  //         // this.getCriteriaList();
+  //         // console.log("Criteria List : ",result, this.getCriteriaList())
+  //       }
+  //     }
+  //   );
+    // this.reprtdialogRef.afterClosed().subscribe(result => {
+      
+    // });
   }
+
   recreateReport(data) {
     const request_payload: any = {};
     request_payload.reportType = data.reportType;

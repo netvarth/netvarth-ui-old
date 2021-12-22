@@ -280,6 +280,7 @@
               </ul>
               <p class="no-result" *ngIf="waitlist_history && waitlist_history.length == 0">{{no_history_found}}</p>
             </div>
+            <button class="mgn-bt-10" (click)="openbookinghistory()">Booking History</button>
           </div>
           <div class="card" *ngIf="internalStatuslog && internalStatuslog.length>0">
             <h2>Internal Status History</h2>

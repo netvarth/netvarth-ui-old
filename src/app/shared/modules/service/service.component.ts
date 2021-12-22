@@ -401,9 +401,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         } else if (this.screenWidth < 375) {
             divider = divident / 1;
         }
-        
-        this.no_of_grids = Math.round(divident / divider);
-     
+        this.no_of_grids = Math.round(divident / divider);     
     }
     @Input() donationservice;
     setDescFocus() {
@@ -1103,27 +1101,26 @@ export class ServiceComponent implements OnInit, OnDestroy {
     }
     getOwnership(ownerShipData, isTruncate) {
         this.userNamelist = '';
-        if (ownerShipData.users && ownerShipData.users.length > 0) {
+        if (ownerShipData && ownerShipData.users && ownerShipData.users.length > 0) {
 
             ownerShipData.users.forEach(element => {
                 const userObject = this.users_list.filter(user => user.id === parseInt(element));
-                console.log(userObject);
                 this.userNamelist = this.userNamelist + userObject[0].firstName + ' ' + userObject[0].lastName + ','
             });
             if (isTruncate) {
                 this.truncateInst(this.userNamelist.replace(/,\s*$/, ''));
             } else {
                 this.userNamelist = this.userNamelist.replace(/,\s*$/, '')
-                console.log(this.userNamelist.length);
             }
 
         }
-        if (ownerShipData.teams && ownerShipData.teams.length > 0) {
-
+        if ( ownerShipData && ownerShipData.teams && ownerShipData.teams.length > 0) {
             ownerShipData.teams.forEach(element => {
                 const userObject = this.team.filter(team => team.id === parseInt(element));
-                console.log(userObject);
-                this.userNamelist = this.userNamelist + userObject[0].name + ','
+                if(userObject.length !==0){
+                    this.userNamelist = this.userNamelist + userObject[0].name + ','
+                }
+               
             });
             if (isTruncate) {
                 this.truncateInst(this.userNamelist.replace(/,\s*$/, ''));

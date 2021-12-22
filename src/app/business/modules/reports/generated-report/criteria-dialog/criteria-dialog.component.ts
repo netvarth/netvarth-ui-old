@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ReportDataService } from '../../reports-data.service';
 import { ProviderServices } from '../../../../services/provider-services.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { ReportDataService } from '../../reports-data.service';
 
 @Component({
   selector: 'app-criteria-dialog',
@@ -16,6 +16,7 @@ export class CriteriaDialogComponent implements OnInit {
   api_error_msg: string;
   criteria_name = '';
   report_criteria_ip: any;
+ reportData:any;
   for_view = false;
   api_success = false;
   api_error = false;
@@ -25,16 +26,27 @@ export class CriteriaDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<CriteriaDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private snackbarService: SnackbarService
-  ) { }
+  ) { 
+   
+
+  }
 
   ngOnInit() {
     this.time_period = projectConstantsLocal.REPORT_TIMEPERIOD;
     this.report_criteria_ip = this.report_data_service.getReportCriteriaInput();
-    if (this.data.content) {
+    if(this.data.content){
       this.for_view = true;
-    } else {
-      this.for_view = false;
-    }
+      }
+      else
+      {
+        this.for_view = false;
+      }
+    // if (this.data.content) {
+    //   this.for_view = true;
+    // } else {
+    //   this.for_view = false;
+    // }
+   
   }
   saveCriteria() {
     this.api_success = false;
