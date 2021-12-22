@@ -445,14 +445,14 @@ a, .fa-file-text-o {
     box-shadow: 0 0 3px 3px blue!important 
   }
 
-::ng-deep .mat-radio-button .mat-radio-container {
+  ::ng-deep .payment-mode-card-styles .mat-radio-button .mat-radio-container {
     display: none!important;
   }
-  ::ng-deep .mat-radio-container .mat-radio-outer-circle,
-  ::ng-deep .mat-radio-container .mat-radio-inner-circle{
+ ::ng-deep .payment-mode-card-styles .mat-radio-container .mat-radio-outer-circle,
+ ::ng-deep .payment-mode-card-styles .mat-radio-container .mat-radio-inner-circle{
     
     display: none!important;
   }
-  ::ng-deep .mat-radio-container .mat-radio-label{
+  ::ng-deep .payment-mode-card-styles .mat-radio-container .mat-radio-label{
     display: inline;
   }

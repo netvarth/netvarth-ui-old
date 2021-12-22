@@ -1261,12 +1261,12 @@
 
                                                     </div>
                                                 </div> -->
-                                                <div *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                <div *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"  class="payment-mode-card-styles">
                                                 <ng-container *ngIf="!shownonIndianModes">
                                                         <div *ngFor="let modes of indian_payment_modes">
                                                             <div class="col-xs-12 col-md-6 col-sm-12 col-lg-6">
     
-                                                                    <div class="text-primary" >
+                                                                    <div class="text-primary payment-mode-card-styles" >
                                                                           
                                                                       <mat-radio-group class="paymentmode card shadow" name="paymentMode" (change)="indian_payment_mode_onchange($event)" labelPosition="before">
                                                                         <mat-radio-button [value]="modes.mode"  >
@@ -1286,7 +1286,7 @@
                                                 </ng-container>
                                                 <ng-container *ngIf="shownonIndianModes">
                                                     
-                                                    <div *ngFor="let modes of non_indian_modes">
+                                                    <div *ngFor="let modes of non_indian_modes" class="payment-mode-card-styles">
                                                         <div class="col-xs-12 col-md-6 col-sm-12 col-lg-6">
     
                                                                 <div class="text-primary">
