@@ -943,11 +943,11 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                       this.search_data.hits.hit[i].fields.allServices = this.search_data.hits.hit[i].fields.allServices.concat(this.search_data.hits.hit[i].fields.donationServices);
                     }
                   }
-                  function getUniqueListBy(arr, key) {
-                    return [...new Map(arr.map(item => [item[key], item])).values()];
-                  }
+                  // function getUniqueListBy(arr, key) {
+                  //   return [...new Map(arr.map(item => [item[key], item])).values()];
+                  // }
                   if (this.search_data.hits.hit[i].fields.allServices && this.search_data.hits.hit[i].fields.allServices.length > 0) {
-                    this.search_data.hits.hit[i].fields.allServices = getUniqueListBy(this.search_data.hits.hit[i].fields.allServices, 'id');
+                    // this.search_data.hits.hit[i].fields.allServices = getUniqueListBy(this.search_data.hits.hit[i].fields.allServices, 'id');
                   }
                 } catch (e) {
                 }

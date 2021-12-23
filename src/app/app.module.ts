@@ -56,6 +56,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { MaintenanceMsgModule } from './shared/components/maintenance-msg/maintenance-msg.module';
 import { ForceDialogModule } from './shared/components/force-dialog/force-dialog.module';
+import { ChunkErrorHandler } from './shared/modules/error-handler/chunk-error-handler';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
