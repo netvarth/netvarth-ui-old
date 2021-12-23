@@ -62,6 +62,7 @@ export function init_app(globalService: GlobalService) {
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { projectConstantsLocal } from './shared/constants/project-constants';
+import { ChunkErrorHandler } from './shared/modules/error-handler/chunk-error-handler';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, projectConstantsLocal.PATH + 'assets/i18n/home/', '.json');
@@ -95,6 +96,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
+    ChunkErrorHandler,
     ProviderServices,
     DatePipe,
     BsModalService,

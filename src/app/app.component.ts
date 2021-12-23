@@ -50,7 +50,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit () {
     document.getElementById('globalLoading').remove();
-    // alert('ddd');
   }
   
   // languages = [

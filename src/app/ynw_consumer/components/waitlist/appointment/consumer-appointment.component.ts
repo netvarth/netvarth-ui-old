@@ -2774,7 +2774,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
      * Processing the Virtual Form including validation and Submit
      */
      processVirtualForm() {
-        alert("processVirtualForm");
         if (this.validateVirtualForm() === true) {
             this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
         } else if (this.virtualInfo.countryCode_whtsap.trim().length === 0 && this.virtualInfo.whatsappnumber.trim().length > 0) {
