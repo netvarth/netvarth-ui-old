@@ -419,8 +419,8 @@
                                         <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode" (change)="indian_payment_mode_onchange($event)" labelPosition="before">
                                           <mat-radio-button [value]="modes.mode"  >
                                             <div class="d-flex justify-content-sm-around">
-                                              <div class="col-sm-8 col-md-8 col-xs-1 col-lg-3 my-auto"><span class="mode-display-name text-uppercase">{{modes.modeDisplayName}}</span></div>
-                                              <div class="col-sm-4 col-md-4 col-xs-11 col-lg-9 my-auto ml-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>
+                                              <div class="col-md-4 col-lg-5 my-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>    
+                                              <div class="col-md-8 col-lg-7 my-auto"><span>{{modes.modeDisplayName}}</span></div>
                                           </div>
                                           </mat-radio-button>
                                         </mat-radio-group>
@@ -440,8 +440,8 @@
                                   <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode" (change)="non_indian_modes_onchange($event)">
                                     <mat-radio-button [value]="modes.mode"  >
                                       <div class="d-flex justify-content-around">
-                                        <div class="col-md-8 col-lg-8 my-auto mt-5"><span class="m-5">{{modes.modeDisplayName}}</span></div>
-                                        <div class="col-md-4 col-lg-4 my-auto ml-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>
+                                        <div class="col-md-4 col-lg-5 my-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>    
+                                        <div class="col-md-8 col-lg-7 my-auto"><span>{{modes.modeDisplayName}}</span></div>
                                     </div>
                                     </mat-radio-button>
                                   
