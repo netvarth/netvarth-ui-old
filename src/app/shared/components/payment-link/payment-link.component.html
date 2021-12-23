@@ -34,7 +34,8 @@
                                                 <h2 class="textcenter rupee-font"
                                                     style="font-size: -webkit-xxx-large; font-weight: 400;">
                                                     {{this.amountDue | currency:'&#8377; '}}
-                                                </h2><br>                                                
+                                                </h2><br>   
+                                                <div class="clearfix"></div>                                              
                                                 <ng-container *ngIf="!shownonIndianModes">
                                                     <div  *ngFor="let modes of indian_payment_modes">
                                                         <div class="col-xs-12">
