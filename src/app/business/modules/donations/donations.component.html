@@ -130,7 +130,7 @@
                       <div class="th two">Cause</div>
                       <div class="th one">Donor</div>
                       <div class="th three">{{amount_cap}}</div>
-                      <div class="th three">{{customer_label|capitalizeFirst}} Paid Charges </div>
+                      <!-- <div class="th three">{{customer_label|capitalizeFirst}} Paid Charges </div> -->
                     </div>
                     <div class="listing" *ngFor="let donation of donations; let i = index">
                       <div class="wrap pointer-cursor" (click)="gotoDonation(donation)">
@@ -167,10 +167,10 @@
                           </span>
                         </div>
                       
-                        <div class="td onerupee-font"> <span class="amt"></span> {{donation.customerPaidCharges |
+                        <!-- <div class="td onerupee-font"> <span class="amt"></span> {{donation.customerPaidCharges |
                           currency:'&#8377;' }}
                           
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                   </div>
