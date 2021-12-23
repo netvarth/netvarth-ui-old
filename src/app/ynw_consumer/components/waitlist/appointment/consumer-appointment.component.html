@@ -1261,6 +1261,7 @@
 
                                                     </div>
                                                 </div> -->
+                                                <div class="clearfix"></div> 
                                                 <div *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"  class="payment-mode-card-styles">
                                                 <ng-container *ngIf="!shownonIndianModes">
                                                         <div *ngFor="let modes of indian_payment_modes">
@@ -1307,6 +1308,7 @@
                                                 </div>
                                             </ng-container>
                                             </div>
+                                            <div class="clearfix"></div> 
                                                 <div>
 
                                                 <div class="col-md-12 txt-align-center pad_link"
