@@ -2021,7 +2021,7 @@ box-shadow: 4px 4px 5px gainsboro;
   .changebt{
     color: #1572a8 !important;
   }
-  .paymentmode .card {
+ .paymentmode .card {
     /* border:2px solid grey !important; */
     box-shadow: 0 0 5px 5px grey!important
 
@@ -2035,5 +2035,54 @@ box-shadow: 4px 4px 5px gainsboro;
   }
   .paymentmode > .mat-radio-button.mat-radio-checked { 
     border-color: blue !important;
-    padding: 10px !important;
+    box-shadow: 0 0 5px 5px blue!important;
+  }
+ ::ng-deep .payment-mode-card-styles .mat-radio-button .mat-radio-container {
+    display: none!important;
+  }
+ ::ng-deep .payment-mode-card-styles .mat-radio-container .mat-radio-outer-circle,
+ ::ng-deep .payment-mode-card-styles .mat-radio-container .mat-radio-inner-circle{
+    
+    display: none!important;
+  }
+  ::ng-deep .payment-mode-card-styles .mat-radio-container .mat-radio-label{
+    display: inline;
+  }
+
+  @media (min-width:320px)  {
+    /* smartphones, iPhone, portrait 480x320 phones */ 
+    .pad-10.d-flex.flex-column-fluid {
+     padding-bottom: 130px!important;
+ }
+   }
+ @media (min-width:481px)  { 
+   /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ 
+   .pad-10.d-flex.flex-column-fluid {
+     padding-bottom: 0px!important;
+ }
+ }
+ @media (min-width:641px)  { 
+   /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+   .pad-10.d-flex.flex-column-fluid {
+     padding-bottom: 0px!important;
+ }
+  }
+ @media (min-width:961px)  { 
+   /* tablet, landscape iPad, lo-res laptops ands desktops */
+   .pad-10.d-flex.flex-column-fluid {
+     padding-bottom: 0px!important;
+ }
+ 
+  }
+ @media (min-width:1025px) { 
+   /* big landscape tablets, laptops, and desktops */
+   .pad-10.d-flex.flex-column-fluid {
+     padding-bottom: 0px!important;
+ }
+  }
+ @media (min-width:1281px) { 
+   /* hi-res laptops and desktops */
+   .pad-10.d-flex.flex-column-fluid {
+     padding-bottom: 0px!important;
+ }
   }

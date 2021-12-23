@@ -589,7 +589,7 @@
                                                         <div *ngFor="let modes of indian_payment_modes">
                                                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
     
-                                                                    <div class="text-primary" >
+                                                                    <div class="text-primary payment-mode-card-styles" >
                                                                           
                                                                       <mat-radio-group  class="paymentmode card shadow-lg" name="paymentMode" (change)="indian_payment_mode_onchange($event)" labelPosition="before">
                                                                         <mat-radio-button style="float:right" [value]="modes.mode"  >
@@ -612,7 +612,7 @@
                                                     <div *ngFor="let modes of non_indian_modes">
                                                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
     
-                                                                <div class="text-primary" >
+                                                                <div class="text-primary payment-mode-card-styles" >
                                                                       
                                                                   <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode" (change)="non_indian_modes_onchange($event)">
                                                                     <mat-radio-button [value]="modes.mode"  >
