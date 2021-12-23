@@ -6,9 +6,9 @@
   </h1>
   <div class="pad-20 image-scroll" *ngIf="details.fileType && details.fileType != 'pdf'" >
     <img style="width:100%;margin-top: -20px;" [src]="details.filePath"
-      *ngIf="details.fileType && details.fileType == 'image/bmp'|| details.fileType =='image/png' || details.fileType == 'image/gif' || details.fileType == 'image/jpg' ||details.fileType =='image/jpeg'||details.fileType == 'image/webp'"/>
+      *ngIf="details.fileType && details.fileType == 'bmp'|| details.fileType =='png' || details.fileType == 'gif' || details.fileType == 'jpg' ||details.fileType =='jpeg'||details.fileType == 'webp'"/>
  </div>
-  <div *ngIf="details.fileType && details.fileType == 'application/pdf'">
+  <div *ngIf="details.fileType && details.fileType == 'pdf'">
    
         <div class="mx-3 py-2 px-2"> 
             <i class="fa fa-file-pdf-o" aria-hidden="true" style="color:red;">&nbsp;
