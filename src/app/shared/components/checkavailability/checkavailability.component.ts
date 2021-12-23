@@ -191,7 +191,7 @@ handleFutureDateChange(e) {
     this.sel_checkindate = seldate;
 }
     disableMinus() {
-        // console.log("entered disable")
+
         const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         
         const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
@@ -216,21 +216,6 @@ handleFutureDateChange(e) {
             return false;
         }
     }
-// disableMinus() {
-//     const seldate= this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-//     const seldate = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
-//     const seldate = new Date(seldate2);
-//     const selecttdate = new Date(seldate.getFullYear() + '-' + this.dateTimeProcessor.addZero(seldate.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(seldate.getDate()));
-//     const strtDt= this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-//     const strtDt = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
-//     const strtDt = new Date(strtDt2);
-//     const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
-//     if (startdate >= selecttdate) {
-//         return true;
-//     } else {
-//         return false;
-//     }
-// }
 calculateDate(days):any {
     // console.log("entered calculate")
 
