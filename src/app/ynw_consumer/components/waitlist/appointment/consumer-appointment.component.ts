@@ -785,7 +785,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     if (this.selectedService.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.selectedService.virtualCallingModes[0].callingMode === 'Zoom') {
                         this.virtualServiceArray[this.selectedService.virtualCallingModes[0].callingMode] = this.selectedService.virtualCallingModes[0].value;
                     } else {
-                        this.virtualServiceArray[this.selectedService.virtualCallingModes[0].callingMode] = this.callingModes;
+                        this.virtualServiceArray[this.selectedService.virtualCallingModes[0].callingMode] = this.commObj['comWhatsappCountryCode'] + this.commObj['comWhatsappNo'];;
                     }
                 }
             } else if (this.callingModes === '' || this.callingModes.length < 10) {
@@ -2123,7 +2123,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 if (this.selectedService.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.selectedService.virtualCallingModes[0].callingMode === 'Zoom') {
                     this.virtualServiceArray[this.selectedService.virtualCallingModes[0].callingMode] = this.selectedService.virtualCallingModes[0].value;
                 } else {
-                    this.virtualServiceArray[this.selectedService.virtualCallingModes[0].callingMode] = this.callingModes;
+                    this.virtualServiceArray[this.selectedService.virtualCallingModes[0].callingMode] = this.commObj['comWhatsappCountryCode'] + this.commObj['comWhatsappNo'];;
                 }
             }
         } else if (this.callingModes === '' || this.callingModes.length < 10) {
