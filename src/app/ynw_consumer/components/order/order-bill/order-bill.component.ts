@@ -256,7 +256,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
         }
     }
     getImageSrc(mode){
-    
+       
         return 'assets/images/payment-modes/'+mode+'.png';
     }
     gets3curl() {
@@ -425,6 +425,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
      * Perform PayU Payment
      */
     payuPayment(paymentType?) {
+        alert(this.selected_payment_mode);
         this.isClickedOnce = true;
         if (this.jcashamount > 0 && this.checkJcash) {
             this.sharedServices.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.bill_data.amountDue)
