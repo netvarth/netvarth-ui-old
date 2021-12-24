@@ -86,7 +86,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
     gateway_redirection = false;
     payModesExists = false;
     payModesQueried = false;
-    pay_data :any;
+    pay_data :any={};
     payment_popup = null;
     showPaidlist = false;
     showJCouponSection = false;
@@ -425,7 +425,6 @@ export class OrderBillComponent implements OnInit, OnDestroy {
      * Perform PayU Payment
      */
     payuPayment(paymentType?) {
-        alert(this.selected_payment_mode);
         this.isClickedOnce = true;
         if (this.jcashamount > 0 && this.checkJcash) {
             this.sharedServices.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.bill_data.amountDue)
@@ -459,7 +458,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                                 });
                     } else if (this.remainingadvanceamount > 0 && this.checkJcash) {
-                        if(this.selected_payment_mode==='cash'){
+                        if(this.selected_payment_mode.toLowerCase()==='cash'){
                             this.cashPayment();
                         }else{
                         const postData = {
@@ -536,19 +535,18 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                     });
         }
         else {
-            if(this.selected_payment_mode==='cash'){
+            if(this.selected_payment_mode.toLowerCase()==='cash'){
                 this.cashPayment();
             }else{
             this.pay_data.uuid = this.uuid;
             this.pay_data.amount = this.bill_data.amountDue;
-            this.pay_data.paymentMode = null;
+            this.pay_data.paymentMode = this.selected_payment_mode;;
             this.pay_data.accountId = this.accountId;
             this.pay_data.purpose = 'billPayment';
-            this.pay_data.paymentMode = this.selected_payment_mode;
             this.pay_data.isinternational = this.isInternatonal;
             this.pay_data.serviceId = 0;
-        
             this.resetApiError();
+          
             if (this.pay_data.uuid != null &&
                 this.pay_data.paymentMode != null &&
                 this.pay_data.amount !== 0) {
