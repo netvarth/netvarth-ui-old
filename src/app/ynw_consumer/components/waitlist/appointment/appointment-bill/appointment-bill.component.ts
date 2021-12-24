@@ -520,7 +520,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                                 });
                     } else if (this.remainingadvanceamount > 0 && this.checkJcash) {
-                        if(this.selected_payment_mode==='cash'){
+                        if(this.selected_payment_mode.toLowerCase()==='cash'){
                             this.cashPayment();
                         }else{
                         const postData = {
@@ -606,7 +606,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                 });
         }
         else {
-            if(this.selected_payment_mode==='cash'){
+            if(this.selected_payment_mode.toLowerCase()==='cash'){
                 this.cashPayment();
             }else{
             this.pay_data.uuid = this.uuid;
