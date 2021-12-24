@@ -394,6 +394,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.paymentmodes = data[0];
+                    console.log('payment details..',this.paymentmodes)
                     this.isPayment = true;
                     if (this.paymentmodes.indiaPay) {
                         this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
@@ -572,6 +573,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         }
         this.sel_ser_det = [];
         this.sel_ser_det = serv;
+        console.log('donation details.......',this.sel_ser_det)
     }
     handleServiceSel(obj) {
         // this.sel_ser = obj.id;
@@ -1085,6 +1087,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 this.servicesjson = data;
                 this.serviceslist = data;
                 this.sel_ser_det = [];
+                console.log('donation details.......',this.sel_ser_det)
                 if (this.servicesjson.length > 0) {
                     // this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
                     this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable

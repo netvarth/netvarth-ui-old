@@ -102,47 +102,5 @@
         <br>
         </div>
     </div>
-      <!-- ****Modal Code**** -->
-        <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10 lnk mgn-up-20">Choose Date </div>
-                   
-                <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10 lnk mgn-up-10">
-                    <div class="pull-left brd-round brd-light">
-                        <div class="icon-minus pull-left"
-                            [class.disable]="disableMinus()"
-                            *ngIf="appointmentSettings.futureAppt"
-                            (click)="calculateDate(-1)">
-                        </div>
-                        
-                        <div class="pull-left chkindt">{{sel_checkindate
-                            | date: dateFormat}}</div>
-                        <div class="icon-add pull-left"
-                            *ngIf="appointmentSettings.futureAppt"
-                            (click)="calculateDate(1)"></div>
-                    </div>
-                    here3 {{appointmentSettings.futureAppt}}
-                    <div class="pickerouter caldiv pull-left "
-                        *ngIf="appointmentSettings.futureAppt">
-                        <mat-datepicker-toggle matSuffix [for]="picker">
-                        </mat-datepicker-toggle>
-                        <mat-datepicker #picker
-                            [dateClass]="dateClass.bind(this)">
-                        </mat-datepicker>
-                        <input class="" style="visibility:hidden; width:1px"
-                            type="text" [matDatepicker]="picker" [min]="minDate"
-                            [max]="maxDate" [value]="ddate"
-                            (dateChange)="handleFutureDateChange($event)">
-                    </div>
-                </div>
-                    <div class="modal-footer">
-                        footer
-                    </div>
 
-                </div>
-            </div>
-            </div>  -->
-            <!-- ****END OF MODAL CODE **** -->
  </div>

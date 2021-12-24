@@ -112,12 +112,17 @@
                                                                 <div
                                                                     class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding check-new-group border-tp border-rt">
                                                                     <div
-                                                                        class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                                                        class="col-md-12 col-xs-12 col-sm-12 no-padding mobile-donation-for-styling">
                                                                         <div
-                                                                            class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5 donation_label">
-                                                                            Donation For
+                                                                            class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5 card-title service">
+                                                                            Donation For<span *ngIf="sel_ser">
+                                                                            {{sel_ser_det.name |
+                                                                            capitalizeFirst}}
+                                                                            <p>{{sel_ser_det.description}}
+                                                                            </p></span>
                                                                         </div>
-                                                                        <div
+
+                                                                        <!-- <div
                                                                             class="col-sm-12 col-xs-12 col-md-12 c-checkin-new">
                                                                             <h6 class="card-title service"
                                                                                 *ngIf="sel_ser">
@@ -142,8 +147,14 @@
                                                                                         'more'}}</a>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
+                                                                        </div> -->
                                                                     </div>
+                                                                    <div style="font-size: 0.8rem !important;margin-top:10px !important"
+                                                                    class="col-md-12 col-xs-12 col-sm-12 lnk  donation_label">
+                                                                    Provide donor details for
+                                                                    sending donation acknowledgement
+                                                                    and related communications.<br>
+                                                                </div>
                                                                 </div>
                                                                 <div
                                                                     class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp check-new-group">
@@ -151,7 +162,7 @@
                                                                         class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                                         <div
                                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 no-padding c-checkin-new">
-                                                                            <div
+                                                                            <!-- <div
                                                                                 class="col-md-12 col-xs-12 col-sm-12 mgn-bt-5 mgn-up-5 donation_label no-padding">
                                                                                 Donor name <a
                                                                                     class="lnk pointer-cursor action mgn-lt-5 mgn-rt-20"
@@ -159,43 +170,117 @@
                                                                                     data-toggle="modal"
                                                                                     data-target="#exampleModalCenter">Change
                                                                                 </a>
-                                                                            </div>
+                                                                            </div> -->
                                                                             <div class="clearfix"></div>
                                                                             <div
                                                                                 class="col-sm-12 col-xs-12 col-md-12 no-padding">
-                                                                                <h6 class="card-title service"
+                                                                                <!-- <h6 class="card-title service"
                                                                                     *ngFor="let member of waitlist_for">
                                                                                     {{donorName}}
-                                                                                </h6>
-                                                                                <div class="">
-                                                                                    <div style="font-size: 1rem !important;"
-                                                                                        class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5 no-padding donation_label">
-                                                                                        Provide donor details for
-                                                                                        sending donation acknowledgement
-                                                                                        and related communications.
+                                                                                </h6> -->
+                                                 
+                                                                                    <div
+                                                                                    class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 mgn-up-20 amount-section-mobile">
+                                                                                    <div
+                                                                                        >
+                                                                                        <div
+                                                                                           >
+                                                                                            <!-- <div -->
+                                                                                                <!-- > -->
+                                                                                                <div
+                                                                                                    class="col-md-12 col-xs-12 col-sm-12 no-padding amount mgn-bt-10">
+                                                                                                    Amount (<i class="fa fa-inr"></i>)
+                                                                                                </div>
+                                                                                                <div
+                                                                                                    class="col-md-12 col-xs-12 col-sm-12 no-padding mobile-input">
+                                                                                                    <label>
+                                                                                                        <input type="text" min="0"
+                                                                                                            class="form-control  rupee-font"
+                                                                                                            placeholder="&#8377; Enter Amount"
+                                                                                                            [(ngModel)]="donationAmount"
+                                                                                                            (keypress)=isNumeric($event)>
+                                                                                                    </label>
+                                                                                                </div>
+                                                                                            <!-- </div> -->
+                                                                                        </div>
+                                                                                        <div class="prepay-amt mgn-bt-20">
+                                                                                            <div *ngIf="sel_ser_det"
+                                                                                                class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding red">
+                                                                                                <p class="form-level-settings applybill"
+                                                                                                    *ngIf="sel_ser_det.minDonationAmount != sel_ser_det.maxDonationAmount">
+                                                                                                    Minimum <span class="bold rupee-font">
+                                                                                                        <!-- <i class="fa fa-inr"></i> -->
+                                                                                                        {{sel_ser_det.minDonationAmount |
+                                                                                                        currency:'&#8377;'}}
+                                                                                                    </span>
+                                                                                                    Maximum <span class="bold rupee-font">
+                                                                                                        <!-- <i class="fa fa-inr"></i> -->
+                                                                                                        {{sel_ser_det.maxDonationAmount |
+                                                                                                        currency:'&#8377;'}}
+                                                                                                    </span>
+                                                                                                </p>
+                                                                                                <p class="form-level-settings applybill"
+                                                                                                    *ngIf="sel_ser_det.minDonationAmount == sel_ser_det.maxDonationAmount">
+                                                                                                    Donation Amount <span class="bold"><i
+                                                                                                            class="fa fa-inr"></i>
+                                                                                                        {{sel_ser_det.minDonationAmount}}</span>
+                                                                                                </p>
+                                                                                            </div>
+                                                                                        </div>
                                                                                     </div>
-                                                                                    <i class="fa fa-mobile "></i>
-                                                                                    <span
-                                                                                        class="mgn-lt-10 phonevallabel"
-                                                                                        *ngIf="userPhone">{{dialCode}}
-                                                                                        {{userPhone}}</span>
-                                                                                    <a
-                                                                                        class="mgn-lt-5 lnk pointer-cursor"><i
-                                                                                            class="fa fa-pencil"
-                                                                                            (click)="editPhone()"
-                                                                                            data-toggle="modal"
-                                                                                            data-target="#exampleModalCenter"></i></a>
                                                                                 </div>
-                                                                                <div class="" *ngIf="userEmail">
-                                                                                    <i class="fa fa-envelope-o "></i>
-                                                                                    <span
-                                                                                        class="mgn-lt-5 emailvallabel">{{userEmail}}</span>
+                                                                                <div class="clearfix"></div>
+                                                                                <!-- <div class="clearfix"></div> -->
+
+                                                                                <div class="mobile-donor-details">
+                                                                                    <div class="">
+                                                                                        <div style="color:#7a7a7a;font-size: 1rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name</div>
+                                                                                        <div class="mobile-edit-icon">
+                                                                                            
+                                                                                            <span
+                                                                                            class="mgn-lt-10 phonevallabel boldmobiletext"
+                                                                                            *ngFor="let member of waitlist_for ">
+                                                                                            <i class="fa fa-user"></i>&nbsp; {{donorName}}</span>
+                                                                                            <a
+                                                                                            class="mgn-lt-5  lnk pointer-cursor"><i
+                                                                                                class="fa fa-pencil"
+                                                                                                (click)="editDonor()"
+                                                                                                data-toggle="modal"
+                                                                                                data-target="#exampleModalCenter"></i></a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="">
+                                                                                        <div style="color:#7a7a7a;font-size: 1rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phone</div>
+                                                                                        
+                                                                                        <div class="mobile-edit-icon">
+                                                                                            <span
+                                                                                            class="mgn-lt-10 phonevallabel boldmobiletext"
+                                                                                            *ngIf="userPhone"><i class="fa fa-mobile "></i>&nbsp;{{dialCode}}
+                                                                                            {{userPhone}}</span>
+                                                                                        <a
+                                                                                            class="mgn-lt-5 lnk pointer-cursor"><i
+                                                                                                class="fa fa-pencil"
+                                                                                                (click)="editPhone()"
+                                                                                                data-toggle="modal"
+                                                                                                data-target="#exampleModalCenter"></i></a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="" *ngIf="userEmail">
+                                                                                        <div style="color:#7a7a7a;font-size: 1rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email</div>
+
+                                                                                        <div class="mobile-edit-icon">
+                                                                                                                                                                                   
+                                                                                        <span
+                                                                                        class="mgn-lt-5 emailvallabel boldmobiletext"> <i class="fa fa-envelope-o "></i>&nbsp;{{userEmail}}</span>
                                                                                     <a
                                                                                         class="mgn-lt-5 lnk pointer-cursor"><i
                                                                                             class="fa fa-pencil"
                                                                                             (click)="handleEmail(userEmail)"
                                                                                             data-toggle="modal"
                                                                                             data-target="#exampleModalCenter"></i></a>
+                                                                                        </div>
+                                                                                    </div>
+
                                                                                 </div>
                                                                                 <div class="" *ngIf="!userEmail">
                                                                                     <i class="fa fa-envelope-o mr-2"></i>
@@ -231,56 +316,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div
-                                                                class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 mgn-up-20">
-                                                                <div
-                                                                    class="col-md-6 col-xs-12 col-sm-12 no-padding-small">
-                                                                    <div
-                                                                        class="col-md-12 col-xs-12 col-sm-12 no-padding ">
-                                                                        <div
-                                                                            class="mgn-up-5 input-group mobile-error c-checkin-new">
-                                                                            <div
-                                                                                class="col-md-12 col-xs-12 col-sm-12 no-padding amount mgn-bt-10">
-                                                                                Amount (<i class="fa fa-inr"></i>)
-                                                                            </div>
-                                                                            <div
-                                                                                class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                                                                <label>
-                                                                                    <input type="text" min="0"
-                                                                                        class="form-control rupee-font"
-                                                                                        placeholder="&#8377; Enter Amount"
-                                                                                        [(ngModel)]="donationAmount"
-                                                                                        (keypress)=isNumeric($event)>
-                                                                                </label>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="prepay-amt mgn-bt-20">
-                                                                        <div *ngIf="sel_ser_det"
-                                                                            class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding red">
-                                                                            <p class="form-level-settings applybill"
-                                                                                *ngIf="sel_ser_det.minDonationAmount != sel_ser_det.maxDonationAmount">
-                                                                                Minimum <span class="bold rupee-font">
-                                                                                    <!-- <i class="fa fa-inr"></i> -->
-                                                                                    {{sel_ser_det.minDonationAmount |
-                                                                                    currency:'&#8377;'}}
-                                                                                </span>
-                                                                                Maximum <span class="bold rupee-font">
-                                                                                    <!-- <i class="fa fa-inr"></i> -->
-                                                                                    {{sel_ser_det.maxDonationAmount |
-                                                                                    currency:'&#8377;'}}
-                                                                                </span>
-                                                                            </p>
-                                                                            <p class="form-level-settings applybill"
-                                                                                *ngIf="sel_ser_det.minDonationAmount == sel_ser_det.maxDonationAmount">
-                                                                                Donation Amount <span class="bold"><i
-                                                                                        class="fa fa-inr"></i>
-                                                                                    {{sel_ser_det.minDonationAmount}}</span>
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                         
                                                         </div>
                                                         <div class="modal fade" id="exampleModalCenter" tabindex="-1"
                                                             role="dialog" aria-labelledby="exampleModalLabel"
@@ -635,10 +671,10 @@
                                                     <span [class.disabled]="isClickedOnce"
                                                         (click)="togglepaymentMode()"
                                                         class="pointer-cursor"><a
-                                                            class="refund_policy">
-                                                            <span *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non Indian Payment ? Click
+                                                            class="refund_policy" *ngIf="paymentmodes">
+                                                            <span *ngIf="!shownonIndianModes && paymentmodes.internationalPay">Non Indian Payment ? Click
                                                             here</span>
-                                                            <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
+                                                            <span *ngIf="shownonIndianModes && paymentmodes.indiaPay">Indian Payment ? Click
                                                                 here</span>
                                                         </a></span>
 
@@ -654,7 +690,7 @@
                                                 </div>  -->
                                                 <div class="txt-align-center">
                                                     <button type="button"
-                                                            class=" next-button btn btn-primary font-weight-bold text-uppercase "
+                                                            class=" next-button btn btn-primary mobile-button-color font-weight-bold text-uppercase "
                                                             [class.disabled]="isClickedOnce"
                                                     
                                                             (click)="!isClickedOnce && goToGateway()">

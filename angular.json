@@ -19,6 +19,7 @@
             "assets": [
               "src/assets",
               "src/favicon.ico",
+              "src/assets/i18n/home/",
               "src/manifest.webmanifest"
             ],
             "styles": [

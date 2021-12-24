@@ -75,8 +75,9 @@ export class CheckavailabilityComponent implements OnInit {
         }
 
         console.log('sel_loc,',this.sel_loc,'sel_ser',this.sel_ser,'checkindate',this.sel_checkindate,'accountid',this.account_id)
-        this.getAvailableSlotByLocationandService(this.sel_loc,this.sel_ser,this.sel_checkindate, this.account_id,'init')
-        this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc,this.sel_ser, this.account_id)
+        this.getAvailableSlotByLocationandService(this.sel_loc,this.sel_ser,this.sel_checkindate, this.account_id)
+        this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc,this.sel_ser,this.account_id);
+        
      }
     timeSelected(slot,date) {
         // this.apptTime = slot;
@@ -108,14 +109,30 @@ export class CheckavailabilityComponent implements OnInit {
         // console.log("*********************************",this.availableDates)
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
+    getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
+        const _this = this;
+        if (locid && servid && accountid) {
+            _this.subs.sink = _this.shared_services.getAvailableDatessByLocationService(locid, servid, accountid)
+                .subscribe((data: any) => {
+                    const availables = data.filter(obj => obj.availableSlots);
+                    const availDates = availables.map(function (a) { return a.date; });
+                    _this.availableDates = availDates.filter(function (elem, index, self) {
+                        return index === self.indexOf(elem);
+                    });
+                });
+        }
+    }
     getAvailableSlotByLocationandService(locid, servid, pdate, accountid, type?) {
-        // console.log('(((((((((',locid, servid, pdate, accountid, type)
+        console.log('(((((((((',locid, servid, pdate, accountid, type)
         this.subs.sink = this.shared_services.getSlotsByLocationServiceandDate(locid, servid, pdate, accountid)
             .subscribe(data => {
+                console.log('entered')
                 this.slots = data;
+                console.log('slots..',this.slots)
                 this.freeSlots = [];
                 for (const scheduleSlots of this.slots) {
                     this.availableSlots = scheduleSlots.availableSlots;
+                    console.log('available',this.availableSlots)
                     for (const freslot of this.availableSlots) {
                         if ((freslot.noOfAvailbleSlots !== '0' && freslot.active) || (freslot.time === this.appointment.appmtTime && scheduleSlots['date'] === this.sel_checkindate)) {
                             freslot['scheduleId'] = scheduleSlots['scheduleId'];
@@ -154,22 +171,7 @@ export class CheckavailabilityComponent implements OnInit {
             });
         //    console.log("end of loop", this.freeSlots.length)
     }
-    getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
-        const _this = this;
-        if (locid && servid && accountid) {
-            // console.log("if loop")
-            _this.subs.sink = _this.shared_services.getAvailableDatessByLocationService(locid, servid, accountid)
-                .subscribe((data: any) => {
-                    const availables = data.filter(obj => obj.availableSlots);
-                    const availDates = availables.map(function (a) { return a.date; });
-                    // console.log("**************",availables,availDates);
-                    _this.availableDates = availDates.filter(function (elem, index, self) {
-
-                        return index === self.indexOf(elem);
-                    });
-                });
-        }
-    }
+  
     dismissModal() {
         this.dialogRef.close('undefined');
     }
@@ -189,6 +191,8 @@ handleFutureDateChange(e) {
     }
     const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
     this.sel_checkindate = seldate;
+   
+    this.getAvailableSlotByLocationandService( this.sel_loc,this.sel_ser,this.sel_checkindate, this.account_id)   
 }
     disableMinus() {
         // console.log("entered disable")

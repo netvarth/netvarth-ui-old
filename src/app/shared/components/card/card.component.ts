@@ -172,7 +172,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         event.stopPropagation();
     }
     cardActionPerformed(type, action, service, location, userId, event) {
-        console.log('action...',action);
+        // console.log('action...',action);
         // if(type=='checkavailability'){
         //     if(service['serviceAvailability']['nextAvailableDate']) {
         //         event.stopPropagation();

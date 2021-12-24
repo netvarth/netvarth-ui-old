@@ -41,10 +41,11 @@ const routes: Routes = [
         ConsumerJoinModule,
         ConfirmBoxModule,
         QRCodeGeneratordetailModule,
-        CheckavailabilityModule,
+        
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     ],
     exports: [ ProviderDetailComponent ],
+    entryComponents:[CheckavailabilityModule,],
     declarations: [
         ProviderDetailComponent,
         // CheckavailabilityComponent

@@ -724,6 +724,7 @@ export class SharedServices {
   }
   getSlotsByLocationServiceandDate(locid, servid, pdate?, accountid?) {
     const url = 'consumer/appointment/schedule/date/' + pdate + '/location/' + locid + '/service/' + servid + '?account=' + accountid;
+    
     return this.servicemeta.httpGet(url);
   }
   getAvailableDatessByLocationService(locid, servid, accountid?) {
