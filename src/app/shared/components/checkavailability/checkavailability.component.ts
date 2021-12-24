@@ -123,23 +123,18 @@ export class CheckavailabilityComponent implements OnInit {
         }
     }
     getAvailableSlotByLocationandService(locid, servid, pdate, accountid, type?) {
-        console.log('(((((((((',locid, servid, pdate, accountid, type)
         this.subs.sink = this.shared_services.getSlotsByLocationServiceandDate(locid, servid, pdate, accountid)
             .subscribe(data => {
-                console.log('entered')
                 this.slots = data;
-                console.log('slots..',this.slots)
                 this.freeSlots = [];
                 for (const scheduleSlots of this.slots) {
                     this.availableSlots = scheduleSlots.availableSlots;
-                    console.log('available',this.availableSlots)
                     for (const freslot of this.availableSlots) {
                         if ((freslot.noOfAvailbleSlots !== '0' && freslot.active) || (freslot.time === this.appointment.appmtTime && scheduleSlots['date'] === this.sel_checkindate)) {
                             freslot['scheduleId'] = scheduleSlots['scheduleId'];
                             freslot['displayTime'] = this.getSingleTime(freslot.time);
                             this.freeSlots.push(freslot);
                             this.api_loading1 = false;
-                            console.log("********free slots ********",this.freeSlots)
                         }
                     }
                 }
@@ -159,7 +154,6 @@ export class CheckavailabilityComponent implements OnInit {
                     // this.waitlist_for[0].apptTime = this.apptTime['time'];
                 } else {
                     this.showApptTime = 'novalue';
-                    console.log('entered............')
                 }
                 if (type) {
                     
@@ -195,7 +189,7 @@ handleFutureDateChange(e) {
     this.getAvailableSlotByLocationandService( this.sel_loc,this.sel_ser,this.sel_checkindate, this.account_id)   
 }
     disableMinus() {
-        // console.log("entered disable")
+
         const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         
         const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
@@ -220,24 +214,7 @@ handleFutureDateChange(e) {
             return false;
         }
     }
-// disableMinus() {
-//     const seldate= this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-//     const seldate = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
-//     const seldate = new Date(seldate2);
-//     const selecttdate = new Date(seldate.getFullYear() + '-' + this.dateTimeProcessor.addZero(seldate.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(seldate.getDate()));
-//     const strtDt= this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-//     const strtDt = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
-//     const strtDt = new Date(strtDt2);
-//     const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
-//     if (startdate >= selecttdate) {
-//         return true;
-//     } else {
-//         return false;
-//     }
-// }
 calculateDate(days):any {
-    // console.log("entered calculate")
-
     const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
     const newdate = new Date(date);
@@ -247,11 +224,9 @@ calculateDate(days):any {
     const y = newdate.getFullYear();
     const ndate1 = y + '-' + mm + '-' + dd;
     const ndate = moment(ndate1, 'YYYY-MM-DD HH:mm').format();
-    // console.log("today date......",this.todaydate)
     const strtDt1 = this.todaydate + ' 00:00:00';
     const strtDt = moment(strtDt1, 'YYYY-MM-DD HH:mm').toDate();
     const nDt = new Date(ndate);
-    // console.log(nDt.getTime(),strtDt.getTime())
     if (nDt.getTime() >= strtDt.getTime()) {
         this.sel_checkindate = ndate;
         this.getAvailableSlotByLocationandService(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
@@ -262,9 +237,7 @@ calculateDate(days):any {
     this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
     
 }
-    // account_id(sel_loc: any, sel_ser: any, sel_checkindate: any, account_id: any) {
-    //     throw new Error('Method not implemented.');
-    // }
+    
 
 getSingleTime(slot) {
     const slots = slot.split('-');

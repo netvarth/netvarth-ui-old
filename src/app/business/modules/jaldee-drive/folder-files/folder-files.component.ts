@@ -14,10 +14,11 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 // import { WordProcessor } from 'src/app/shared/services/word-processor.service';
 // import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { projectConstants } from '../../../../app.component';
 
 
 
-export let projectConstants: any = {};
+//export let projectConstants: any = {};
 
 
 
@@ -28,6 +29,9 @@ export let projectConstants: any = {};
 })
 export class FolderFilesComponent implements OnInit {
   customers: any[] = [];
+  allFileTypesSelected = false;
+  fileTypes: any[] = ['png', 'jpg', 'jpeg', 'pdf']
+  filterFileType: any;
   fileSizeFilter: any;
   loading = true;
   blogo = '';
@@ -75,7 +79,7 @@ export class FolderFilesComponent implements OnInit {
   imgCaptions: any = [];
   @ViewChild('closebutton') closebutton;
   @ViewChild('locclosebutton') locclosebutton;
- // @ViewChild(MatPaginator) paginator: MatPaginator[];
+  // @ViewChild(MatPaginator) paginator: MatPaginator[];
 
   filter = {
     fileSize: '',
@@ -85,9 +89,12 @@ export class FolderFilesComponent implements OnInit {
     contextId: '',
     folderName: '',
     page_count: projectConstants.PERPAGING_LIMIT,
-    page: 1
+    page: 1,
+    providerconsumer: 'providerconsumer',
+    jaldeeconsumer: 'jaldeeconsumer'
+
   };
-  filtericonTooltip='';
+  filtericonTooltip = '';
 
   filters: any = {
     'firstName': false,
@@ -114,6 +121,10 @@ export class FolderFilesComponent implements OnInit {
   selectedSpecialization: any = [];
   lessMb: boolean;
   grateMB: boolean;
+  pdf: boolean;
+  png: boolean;
+  jpeg: boolean;
+  jpg: boolean;
   selectrow = false;
   user_count_filterApplied: any;
   availabileSelected: boolean;
@@ -145,7 +156,7 @@ export class FolderFilesComponent implements OnInit {
       itemsPerPage: 5,
       currentPage: 1,
       totalItems: this.customers.length
-      
+
     };
     //this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
 
@@ -206,26 +217,67 @@ export class FolderFilesComponent implements OnInit {
       api_filter = filter;
       this.initFilters(filter);
     }
+    // if (this.filter.fileSize !== '') {
+    //   if (this.grateMB) {
+    //     api_filter['fileSize-gt'] = this.filter.fileSize;
+    //   } else {
+    //     api_filter['fileSize-lt'] = this.filter.fileSize;
+    //   }
+    // }
+
+
     if (this.filter.fileSize !== '') {
+
       if (this.grateMB) {
         api_filter['fileSize-gt'] = this.filter.fileSize;
+        api_filter['folderName-eq'] = this.foldertype;
+        // api_filter['ownerType-eq'] = 'jaldeeconsumer' || api_filter['ownerType-eq'] == 'providerconsumer'
+        // console.log("Consumer Filter :",this.filter.jaldeeconsumer || this.filter.providerconsumer)
+
       } else {
         api_filter['fileSize-lt'] = this.filter.fileSize;
+        api_filter['folderName-eq'] = this.foldertype;
+        // api_filter['ownerType-eq'] = this.filter.jaldeeconsumer || this.filter.providerconsumer;
+
       }
+
+
     }
+    //  else{
+    //   if (this.grateMB) {
+    //     api_filter['fileSize-gt'] = this.filter.fileSize;
+    //     // api_filter['ownerType-eq'] = this.filter.jaldeeconsumer || this.filter.providerconsumer;
+    //     // console.log("Consumer Filter :",this.filter.jaldeeconsumer || this.filter.providerconsumer)
+
+    //   } else {
+    //     api_filter['fileSize-lt'] = this.filter.fileSize;
+    //     // api_filter['ownerType-eq'] = this.filter.jaldeeconsumer || this.filter.providerconsumer;
+
+    //   }
+    // }
+
+
+
     if (this.filter.fileName !== '') {
       api_filter['fileName-like'] = this.filter.fileName;
+      api_filter['folderName-eq'] = this.foldertype;
+
     }
     if (this.filter.fileType !== '') {
       api_filter['fileType-eq'] = this.filter.fileType;
+      api_filter['folderName-eq'] = this.foldertype;
+
     }
 
     if (this.filter.folderName !== '') {
       api_filter['folderName-eq'] = this.filter.folderName;
+
     }
 
     if (this.filter.contextId !== '') {
       api_filter['contextId-eq'] = this.filter.contextId;
+      api_filter['folderName-eq'] = this.foldertype;
+
     }
     // if (this.filter.contextId !== '') {
     //   api_filter['bookingId-eq'] = this.filter.contextId;
@@ -299,35 +351,105 @@ export class FolderFilesComponent implements OnInit {
       contextId: '',
       folderName: '',
       page_count: projectConstants.PERPAGING_LIMIT,
-      page: 1
+      page: 1,
+      providerconsumer: 'providerconsumer',
+      jaldeeconsumer: 'jaldeeconsumer'
+
     };
     this.selectedSpecialization = [];
     this.selectedLanguages = [];
     this.selectedLocations = [];
+  }
+  setFilterFileTypeCheckbox(type, value, event){
+    if (type === 'fileType') {
+      if (value === 'all') {
+        this.filterFileType = [];
+        this.allFileTypesSelected = false;
+        if (event.checked) {
+          for (const service of this.fileTypes) {
+            if (this.filterFileType.indexOf(service.id) === -1) {
+              this.filterFileType.push(service.id);
+            }
+          }
+          this.allFileTypesSelected = true;
+        }
+      } else {
+        this.allFileTypesSelected = false;
+        const indx = this.filterFileType.indexOf(value);
+        if (indx === -1) {
+          this.filterFileType.push(value);
+        } else {
+          this.filterFileType.splice(indx, 1);
+        }
+      }
+      if (this.filterFileType.length === this.fileTypes.length) {
+        this.filter['fileType'] = 'all';
+        this.allFileTypesSelected = true;
+      }
+    }
+    this.doSearch();
   }
   setFilterDataCheckbox(type, value) {
     if (type === 'folder') {
       if (value === 'true') {
         this.availabileSelected = true;
         this.notAvailabileSelected = false;
-        this.filter.folderName = 'Public';
+        this.filter.folderName = 'public';
       }
       else {
         this.availabileSelected = false;
         this.notAvailabileSelected = true;
-        this.filter.folderName = 'My';
+        this.filter.folderName = 'Private';
       }
     }
+    if(type === 'fileType'){
+      if(value === 'png'){
+        this.png = true;
+        this.jpeg = false;
+        this.jpg = false;
+        this.pdf = false;
+        this.filter.fileType = 'png';
+
+      }
+      if(value === 'jpeg'){
+        this.png = false;
+        this.jpeg = true;
+        this.jpg = false;
+        this.pdf = false;
+        this.filter.fileType = 'jpeg';
+
+      }
+      if(value === 'jpg'){
+        this.png = false;
+        this.jpeg = false;
+        this.jpg = true;
+        this.pdf = false;
+        this.filter.fileType = 'jpg';
+
+      }
+      if(value === 'pdf'){
+        this.png = false;
+        this.jpeg = false;
+        this.jpg = false;
+        this.pdf = true;
+        this.filter.fileType = 'pdf';
+
+      }
+    }
+    
     if (type === 'fileSize') {
       if (value === 'true') {
         this.lessMb = true;
         this.grateMB = false;
         this.filter.fileSize = '1';
+        // this.filter.ownerType = 'jaldeeconsumer'
       }
       else {
         this.lessMb = false;
         this.grateMB = true;
         this.filter.fileSize = '1';
+        // this.filter.ownerType = 'jaldeeconsumer'
+
       }
     }
     this.doSearch();
@@ -383,15 +505,20 @@ export class FolderFilesComponent implements OnInit {
       filter['folderName-eq'] = 'Private';
       this.foldername = 'My'
     }
-    else if (this.foldertype === 'Public') {
-      filter['folderName-eq'] = 'Public';
+    else if (this.foldertype === 'public') {
+      filter['folderName-eq'] = 'public';
       this.foldername = 'Provider'
-      
+
 
     }
     else {
-      filter['folderName-eq'] = 'Shared';
+      filter['folderName-eq'] = 'shared';
       this.foldername = 'Consumer'
+      // filter['ownerType-eq'] = 'JaldeeConsumer,ProviderConsumer' 
+      // , filter['ownerType-eq'] == 'ProviderConsumer'
+
+
+
     }
 
 
@@ -403,10 +530,10 @@ export class FolderFilesComponent implements OnInit {
         // this.Allfiles = data;
         this.customers = data
         //this.paginator = this.customers
-        this.customers.map((x) => {
-          this.fileSizeFilter = Math.ceil(x.fileSize)
-          // console.log("File Size", this.fileSizeFilter)
-        })
+        // this.customers.map((x) => {
+        //   this.fileSizeFilter = Math.ceil(x.fileSize)
+        //   // console.log("File Size", this.fileSizeFilter)
+        // })
 
         //console.log("Uploaded Files : ", this.customers);
       }
@@ -431,11 +558,11 @@ export class FolderFilesComponent implements OnInit {
     let filename = ''
     //  console.log("Name :",fileName)
     if (fileName.indexOf('fileName')) {
-      if(fileName.length>10){
-      //  console.log("Length :",fileName.length)
-        filename = fileName.slice(0,10)+'...'
+      if (fileName.length > 10) {
+        //  console.log("Length :",fileName.length)
+        filename = fileName.slice(0, 10) + '...'
       }
-      if(fileName.length<=10){
+      if (fileName.length <= 10) {
         filename = fileName;
       }
       // split([' '])[0];
@@ -507,11 +634,11 @@ export class FolderFilesComponent implements OnInit {
           }
         );
 
-      this.selectedMessage = {
-        files: [],
-        base64: [],
-        caption: []
-      }
+      // this.selectedMessage = {
+      //   files: [],
+      //   base64: [],
+      //   caption: []
+      // }
 
     }
     else {
@@ -537,22 +664,22 @@ export class FolderFilesComponent implements OnInit {
     console.log("File Selected :", input);
     if (input) {
       for (const file of input) {
-        // if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-        //   this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-        //   return;
-        // } else if (file.size > projectConstants.FILE_MAX_SIZE) {
-        //   this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
-        //   return;
-        // } else {
-        this.selectedMessage.files.push(file);
-        // this.selectedMessage.files = '';
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          this.selectedMessage.base64.push(e.target['result']);
-        };
-        reader.readAsDataURL(file);
-        this.action = 'attachment';
-
+        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+          this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+          return;
+        } else if (file.size > projectConstants.FILE_MAX_SIZE) {
+          this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
+          return;
+        } else {
+          this.selectedMessage.files.push(file);
+          // this.selectedMessage.files = '';
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            this.selectedMessage.base64.push(e.target['result']);
+          };
+          reader.readAsDataURL(file);
+          this.action = 'attachment';
+        }
       }
       if (type && this.selectedMessage.files && this.selectedMessage.files.length > 0 && input.length > 0) {
         this.modal.nativeElement.click();

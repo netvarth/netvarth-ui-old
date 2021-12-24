@@ -520,7 +520,7 @@
                                                         <ng-container *ngIf="shownonIndianModes">
                                                             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
             
-                                                                <div class="text-primary" >
+                                                                <div class="text-primary payment-mode-card-styles" >
                                                                   <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode" (change)="non_indian_modes_onchange($event)">
                                                                     <mat-radio-button value="cash"  >
                                                                         <div class="d-flex justify-content-around">
@@ -536,7 +536,7 @@
                                                             <div *ngFor="let modes of non_indian_modes">
                                                                 <div class="col-xs-12 col-md-4 col-sm-6 col-lg-4">
             
-                                                                        <div class="text-primary" >
+                                                                        <div class="text-primary payment-mode-card-styles" >
                                                                           <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode" (change)="non_indian_modes_onchange($event)">
                                                                             <mat-radio-button [value]="modes.mode"  >
                                                                                 <div class="d-flex justify-content-around">

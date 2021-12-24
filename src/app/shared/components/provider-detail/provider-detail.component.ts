@@ -2346,18 +2346,18 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
   }
   opencheckavail(actionObj) {
-    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-    const current_provider = {
-      'id': actionObj['location']['id'],
-      'place':actionObj['location']['place'],
-      'location': actionObj['location'],
-      'service': actionObj['service'],
-      'cdate': actionObj['service'].serviceAvailability.nextAvailableDate
-    };
-    if(this.userType === '') {
-      const passParam = { callback: 'checkavailability', current_provider: current_provider, serviceType:  actionObj['service'].serviceType,actionObjtype:actionObj };
-      this.doLogin('consumer', passParam);
-    }else {
+    // this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    // const current_provider = {
+    //   'id': actionObj['location']['id'],
+    //   'place':actionObj['location']['place'],
+    //   'location': actionObj['location'],
+    //   'service': actionObj['service'],
+    //   'cdate': actionObj['service'].serviceAvailability.nextAvailableDate
+    // };
+    // if(this.userType === '') {
+    //   const passParam = { callback: 'checkavailability', current_provider: current_provider, serviceType:  actionObj['service'].serviceType,actionObjtype:actionObj };
+    //   this.doLogin('consumer', passParam);
+    // }else {
       this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
         width: '90%',
         height: 'auto',
@@ -2366,7 +2366,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         apptSettingsJson:this.apptSettingsJson,
         }
       });
-    }
+    // }
 
     this.checkavailabilitydialogref.afterClosed().subscribe(result => {
      

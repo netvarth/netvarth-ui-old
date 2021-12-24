@@ -44,10 +44,15 @@ export class GlobalErrorHandler implements ErrorHandler {
         mailError['errorMessage'] = error.message;
         mailError['errorStack'] = error.stack;
         console.log(error.message);
-        // this.shared_services.callHealth(JSON.stringify(mailError)).subscribe();
-        const chunkFailedMessage = /Loading chunk [\d]+ failed/;
-        if (chunkFailedMessage.test(error.message)) {
-            window.location.reload();
-        }
+        this.shared_services.callHealth(JSON.stringify(mailError)).subscribe();
+        // const chunkFailedMessage = /Loading chunk [\d]+ failed/;
+        // if(chunkFailedMessage.test(error.message)) {
+        //     if(confirm("New version available. Load New Version?")) {
+        //         window.location.reload();
+        //       }
+        //  }
+        // if (chunkFailedMessage.test(error.message)) {
+        //     window.location.reload();
+        // }
     }
 }

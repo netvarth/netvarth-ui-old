@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { PreviewuploadedfilesComponent } from '../previewuploadedfiles/previewuploadedfiles.component';
 import { ProviderServices } from '../../../../business/services/provider-services.service';
+// import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 
 @Component({
@@ -180,6 +181,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   // currentPage:any;
   config: any;
   count: number = 0;
+  customer_label='';
 
   constructor(
     private groupService: GroupStorageService,
@@ -190,8 +192,11 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     public location: Location,
     public dialog: MatDialog,
     private _location: Location,
+   // private wordProcessor:WordProcessor
 
   ) {
+   // this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+
     this.config = {
       itemsPerPage: 5,
       currentPage: 1,
@@ -205,6 +210,12 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.getPatientFiles();
     this.getfiles();
+    // console.log(this.provider_servicesobj.getTotalFileShareCounts().subscribe(
+    //   (data: any) => {
+    //    console.log("Files Count",data);
+    //     this.totalcount = data
+    //   }
+    // ));
     this.userData = this.groupService.getitemFromGroupStorage('ynw-user');
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     console.log(this.active_user);
@@ -416,7 +427,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   }
   filesSelected(event, type?) {
     const input = event.target.files;
-    console.log(input);
+    console.log("Selected File :",input);
     if (input) {
       for (const file of input) {
         if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {

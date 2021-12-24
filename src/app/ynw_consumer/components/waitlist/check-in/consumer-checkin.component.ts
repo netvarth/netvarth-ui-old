@@ -988,7 +988,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.shared_services.addProvidertoFavourite(accountid)
                         .subscribe(() => {
                         });
-
                 }
                 const retData = data;
                 this.uuidList = [];
@@ -1695,7 +1694,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 if (this.selectedService.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.selectedService.virtualCallingModes[0].callingMode === 'Zoom') {
                     this.virtualServiceArray[this.selectedService.virtualCallingModes[0].callingMode] = this.selectedService.virtualCallingModes[0].value;
                 } else {
-                    this.virtualServiceArray[this.selectedService.virtualCallingModes[0].callingMode] = this.callingModes;
+                    this.virtualServiceArray[this.selectedService.virtualCallingModes[0].callingMode] = this.commObj['comWhatsappCountryCode'] + this.commObj['comWhatsappNo'];;
                 }
             }
         } else if (this.callingModes === '' || this.callingModes.length < 10) {
@@ -2480,7 +2479,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
      * Processing the Virtual Form including validation and Submit
      */
     processVirtualForm() {
-        alert("processVirtualForm");
         if (this.validateVirtualForm() === true) {
             this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
         } else if (this.virtualInfo.countryCode_whtsap.trim().length === 0 && this.virtualInfo.whatsappnumber.trim().length > 0) {

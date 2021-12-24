@@ -2,7 +2,8 @@
   <div class="card title-gb">
     <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
       Jaldee Drive
-      <p class="text-secondary">Can store files/attachments are uploaded by consumers or providers or you!</p>
+      <p class="text-secondary">Manage the files uploaded by the providers or consumers or you!</p>
+      <!-- {{customer_label | capitalizeFirst}} -->
 
     </div>
   </div>
@@ -467,7 +468,6 @@
               aria-expanded="false">
               <div>
                 <div style="display: inline-block !important;">
-                  <!-- <i class="fa fa-map-marker"></i> -->
                 </div>
                 File name
               </div>
@@ -494,7 +494,6 @@
               aria-expanded="false">
               <div>
                 <div style="display: inline-block !important;">
-                  <!-- <i class="fa fa-location-arrow"></i> -->
                 </div>
                 file type
               </div>
@@ -520,7 +519,6 @@
               aria-expanded="false">
               <div>
                 <div style="display: inline-block !important;">
-                  <!-- <i class="fa fa-user"></i> -->
                 </div>
                 File size
               </div>
@@ -530,12 +528,12 @@
         </div>
         <div id="collapseName1" class="collapse in" data-parent="#accordion1">
           <div class="card-body">
-            <!-- <div class="filterTextinput filter-text-input">
+            <div class="filterTextinput filter-text-input">
               <li class="filterli filter-li">
                 <input type="text" id="fileSize" [(ngModel)]="filter.fileSize" #fileSize (keyup)="doSearch()"
                   maxlength="20" class="filterTextbox filter-textbox" placeholder="Enter File size">
               </li>
-            </div> -->
+            </div>
             <div class="filter-checkbox-input">
               <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                 <mat-checkbox class="filter-checkbox" [checked]="lessMb"
@@ -558,7 +556,6 @@
               aria-expanded="false">
               <div>
                 <div style="display: inline-block !important;">
-                  <!-- <i class="fa fa-clock-o"></i> -->
                 </div>
                 Folders
               </div>
@@ -585,38 +582,10 @@
           </div>
         </div>
       </div>
-      <!-- <i class="fa fa-bookmark"></i> -->
-      <!-- <div class="card">
-        <div class="card-header">
-          <h2 class="mb-0">
-            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseBNo1"
-              aria-expanded="false">
-              <div>
-                <div style="display: inline-block !important;">
-                
-                </div>
-                <span>&nbsp;Booking ID</span>
-              </div>
-              <i class="fa fa-angle-down"></i>
-            </button>
-          </h2>
-        </div>
-        <div id="collapseBNo1" class="collapse in" data-parent="#accordion1">
-          <div class="card-body">
-            <div class="filterTextinput filter-text-input">
-              <li class="filterli filter-li">
-                <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId"
-                  [ngModelOptions]="{standalone: true}" class="filterTextbox filter-textbox"
-                  placeholder="Enter Booking ID">
-              </li>
-            </div>
-          </div>
-        </div>
-      </div> -->
+     
     </ul>
   </section>
   <div class="filter-footer" *ngIf="filterapplied === true">
-    <!-- *ngIf="filterapplied === true" -->
     <button class="btn reset-btn" (click)="clearFilter()">
       <i class="fa fa-undo"></i>Reset
     </button>

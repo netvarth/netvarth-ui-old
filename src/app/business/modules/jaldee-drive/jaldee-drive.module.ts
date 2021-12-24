@@ -13,6 +13,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter'; // import ng2search pipe module
 import { Routes, RouterModule } from '@angular/router';
 import { SharedfilesComponent } from './sharedfiles/sharedfiles.component';
+//import { CapitalizeFirstPipeModule } from 'src/app/shared/pipes/capitalize.module';
+
 
 
 
@@ -39,6 +41,8 @@ const routes: Routes = [
     NgxIntlTelInputModule,
     NgxPaginationModule,
     Ng2SearchPipeModule,
+    
+    
     NgCircleProgressModule.forRoot({
       "radius": 60,
       "space": -10,
@@ -65,6 +69,10 @@ const routes: Routes = [
     FormsModule,
     [RouterModule.forChild(routes)],
   ],
-  exports: [JaldeeDriveComponent]
+  exports: [JaldeeDriveComponent],
+  // schemas: [
+  //   CUSTOM_ELEMENTS_SCHEMA,
+  //   NO_ERRORS_SCHEMA
+  // ]
 })
 export class JaldeeDriveModule { }

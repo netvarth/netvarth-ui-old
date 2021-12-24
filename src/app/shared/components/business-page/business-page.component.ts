@@ -306,7 +306,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   pwaIOShint: boolean;
   iosConfig = false;
   accountIdExists = false;
-  onlyVirtualItems=false;
+  onlyVirtualItems = false;
   providercustomId: any;
   provideraccEncUid: any;
   checkavailabilitydialogref: any;
@@ -367,7 +367,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.popupforCustomApp.nativeElement.style.display = 'block';
 
       this.btnInstallApp.addEventListener('click', (e: any) => {
-       // console.log('binding');
+        // console.log('binding');
         // hide our user interface that shows our A2HS button
         this.popupforCustomApp.nativeElement.style.display = 'none';
         // Show the prompt
@@ -386,7 +386,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.translate.use(JSON.parse(localStorage.getItem('translatevariable'))) 
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable')))
 
     this.api_loading = true;
     this.accountIdExists = false;
@@ -419,13 +419,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
       }
     };
-  //  console.log("Mobile:");
-   // console.log(isMobile);
+    //  console.log("Mobile:");
+    // console.log(isMobile);
     if (isMobile.Android()) {
       this.playstore = true;
       this.appstore = false;
     } else if (isMobile.iOS()) {
-    //  console.log("IOS:");
+      //  console.log("IOS:");
       this.playstore = false;
       this.appstore = true;
     } else {
@@ -496,39 +496,39 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                       }
                       if (uiconfig['iosApp']) {
                         this.iosConfig = true;
-                        if ( uiconfig['iosApp']['icon-180']) {
+                        if (uiconfig['iosApp']['icon-180']) {
                           document.getElementById('apple_touch_icon').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['icon-180']['src']);
                         }
                         if (uiconfig['iosApp']['screen-1242x2208']) {
                           document.getElementById('screen_1242x2208').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-1242x2208']['src']);
-                        }  
+                        }
                         if (uiconfig['iosApp']['screen-1242x2688']) {
                           document.getElementById('screen_1242x2688').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-1242x2688']['src']);
-                        }  
+                        }
                         if (uiconfig['iosApp']['screen-828x1792']) {
                           document.getElementById('screen_828x1792').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-828x1792']['src']);
-                        }  
+                        }
                         if (uiconfig['iosApp']['screen-1125x2436']) {
                           document.getElementById('screen_1125x2436').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-1125x2436']['src']);
-                        }  
+                        }
                         if (uiconfig['iosApp']['screen-750x1334']) {
                           document.getElementById('screen_750x1334').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-750x1334']['src']);
-                        }  
-                         if (uiconfig['iosApp']['screen-640x1136']) {
+                        }
+                        if (uiconfig['iosApp']['screen-640x1136']) {
                           document.getElementById('screen_640x1136').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-640x1136']['src']);
-                        }  
-                         if (uiconfig['iosApp']['screen-1668x2388']) {
+                        }
+                        if (uiconfig['iosApp']['screen-1668x2388']) {
                           document.getElementById('screen_1668x2388').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-1668x2388']['src']);
-                        }  
+                        }
                         if (uiconfig['iosApp']['screen-2048x2732']) {
                           document.getElementById('screen_2048x2732').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-2048x2732']['src']);
-                        }  
+                        }
                         if (uiconfig['iosApp']['screen-1668x2224']) {
                           document.getElementById('screen_1668x2224').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-1668x2224']['src']);
-                        }  
+                        }
                         if (uiconfig['iosApp']['screen-1536x2048']) {
                           document.getElementById('screen_1536x2048').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-1536x2048']['src']);
-                        }                 
+                        }
                       }
                       if (uiconfig['terms']) {
                         this.terms = true;
@@ -568,17 +568,17 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       });
   }
-  getproviderBprofileDetails(){
+  getproviderBprofileDetails() {
     let accountS3List = 'businessProfile';
-  this.subscriptions.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
-    null, accountS3List).subscribe(
-      (accountS3s:any) => {
-        if(accountS3s.businessProfile.customId){
-          this.providercustomId = accountS3s.businessProfile.customId;
-        }
-        this.provideraccEncUid = accountS3s.businessProfile.accEncUid;
-      });
-}
+    this.subscriptions.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
+      null, accountS3List).subscribe(
+        (accountS3s: any) => {
+          if (accountS3s.businessProfile.customId) {
+            this.providercustomId = accountS3s.businessProfile.customId;
+          }
+          this.provideraccEncUid = accountS3s.businessProfile.accEncUid;
+        });
+  }
   /**
    * 
    * @param encId encId/customId which represents the Account
@@ -600,25 +600,25 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       );
     });
   }
-  isPhysicalItemsPresent(){
+  isPhysicalItemsPresent() {
     let physical_item_present = true;
-    const virtualItems=this.activeCatalog.catalogItem.filter(catalogItem => catalogItem.item.itemType==='VIRTUAL')
-    if(virtualItems.length>0 && this.activeCatalog.catalogItem.length===virtualItems.length){
-      physical_item_present=false;
-      this.onlyVirtualItems=true;
+    const virtualItems = this.activeCatalog.catalogItem.filter(catalogItem => catalogItem.item.itemType === 'VIRTUAL')
+    if (virtualItems.length > 0 && this.activeCatalog.catalogItem.length === virtualItems.length) {
+      physical_item_present = false;
+      this.onlyVirtualItems = true;
     }
     return physical_item_present;
   }
-  checkVirtualOrPhysical(){
+  checkVirtualOrPhysical() {
     console.log('checkvirtualorphysical');
-    let  showCatalogItems=false;
-    if(this.activeCatalog.nextAvailableDeliveryDetails||this.activeCatalog.nextAvailablePickUpDetails){
-      showCatalogItems=true;
+    let showCatalogItems = false;
+    if (this.activeCatalog.nextAvailableDeliveryDetails || this.activeCatalog.nextAvailablePickUpDetails) {
+      showCatalogItems = true;
     }
-  
-    if(!this.isPhysicalItemsPresent()){
-       showCatalogItems=true;
-     }
+
+    if (!this.isPhysicalItemsPresent()) {
+      showCatalogItems = true;
+    }
     return showCatalogItems
   }
   ngAfterViewInit() {
@@ -883,9 +883,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   setBusinesssProfile(res) {
     this.onlinePresence = res['onlinePresence'];
-    console.log("response"+res);
+    console.log("response" + res);
     console.log(res['customId']);
-    const custID = res['customId'] ? res['customId']:res['accEncUid'];
+    const custID = res['customId'] ? res['customId'] : res['accEncUid'];
     this.customId = custID;
     this.lStorageService.setitemonLocalStorage('customId', custID);
     this.lStorageService.setitemonLocalStorage('accountId', res['id']);
@@ -1082,9 +1082,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       } else {
         this.locationjson['isPlaceisSame'] = false;
       }
-      if(this.locationjson[i].baseLocation){
-        console.log("gf"+JSON.stringify(this.locationjson[i]));
-         location = this.locationjson[i];
+      if (this.locationjson[i].baseLocation) {
+        console.log("gf" + JSON.stringify(this.locationjson[i]));
+        location = this.locationjson[i];
       }
       if (this.locationjson[i].parkingType) {
         this.locationjson[i].parkingType = this.locationjson[i].parkingType.charAt(0).toUpperCase() + this.locationjson[i].parkingType.substring(1);
@@ -1300,7 +1300,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.checkinProviderList && this.checkinProviderList.length > 0) {
         if (this.checkinProviderList.includes(this.provider_bussiness_id)) {
           firstCheckin = false;
-         // console.log('already taken');
+          // console.log('already taken');
         } else {
           firstCheckin = true;
 
@@ -1423,7 +1423,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   changeLocation(loc) {
-console.log("fgf"+JSON.stringify(loc));
+    console.log("fgf" + JSON.stringify(loc));
     this.selectedLocation = loc;
     this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
 
@@ -1662,11 +1662,11 @@ console.log("fgf"+JSON.stringify(loc));
 
 
   goThroughLogin() {
-    if(this.lStorageService.getitemfromLocalStorage('reqFrom')) {
+    if (this.lStorageService.getitemfromLocalStorage('reqFrom')) {
       const _this = this;
       console.log("Entered to goThroughLogin Method");
       return new Promise((resolve) => {
-        if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')){
+        if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')) {
           resolve(true);
         } else {
           resolve(false);
@@ -1685,7 +1685,7 @@ console.log("fgf"+JSON.stringify(loc));
             'mUniqueId': null
           };
           this.shared_services.ConsumerLogin(data).subscribe(
-            (loginInfo: any) => {            
+            (loginInfo: any) => {
               this.authService.setLoginData(loginInfo, data, 'consumer');
               this.lStorageService.setitemonLocalStorage('qrp', data.password);
               resolve(true);
@@ -1812,7 +1812,7 @@ console.log("fgf"+JSON.stringify(loc));
           //console.log("logged In");
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
           if (_this.userType === 'consumer') {
-              _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service,null, 'consumer');
+            _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer');
           }
         } else {
           const passParam = { callback: '', current_provider: current_provider };
@@ -1830,12 +1830,12 @@ console.log("fgf"+JSON.stringify(loc));
       'cdate': service.serviceAvailability.nextAvailableDate,
       'service': service
     };
-    if(location.time) {
-      current_provider['ctime']=location.time
+    if (location.time) {
+      current_provider['ctime'] = location.time
     }
-    if(location.date) {
-      console.log('differnt dates....',service.serviceAvailability.nextAvailableDate,location.date)
-      service.serviceAvailability.nextAvailableDate=location.date
+    if (location.date) {
+      console.log('differnt dates....', service.serviceAvailability.nextAvailableDate, location.date)
+      service.serviceAvailability.nextAvailableDate = location.date
     }
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const today = new Date(todaydt);
@@ -1866,12 +1866,12 @@ console.log("fgf"+JSON.stringify(loc));
     _this.loading_direct = true;
     _this.goThroughLogin().then(
       (status) => {
-      //  console.log("Login Status:" + status);
+        //  console.log("Login Status:" + status);
         if (status) {
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
-         // console.log("User Type:" + _this.userType);
+          // console.log("User Type:" + _this.userType);
           if (_this.userType === 'consumer') {
-              _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer',current_provider['ctime']);
+            _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer', current_provider['ctime']);
           }
         } else {
           const passParam = { callback: 'appointment', current_provider: current_provider };
@@ -1917,11 +1917,11 @@ console.log("fgf"+JSON.stringify(loc));
           this.viewDashboard();
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
-        }else if (passParam['callback'] === 'checkavailability') {
+        } else if (passParam['callback'] === 'checkavailability') {
           this.opencheckavail(passParam['actionObjtype'])
           console.log('end of login section')
-         }
-         else if (passParam['callback'] === 'appointment') {
+        }
+        else if (passParam['callback'] === 'appointment') {
           this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
@@ -1930,7 +1930,7 @@ console.log("fgf"+JSON.stringify(loc));
             this.checkout();
           }
         } else {
-            this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);
@@ -1963,7 +1963,7 @@ console.log("fgf"+JSON.stringify(loc));
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-            this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
@@ -1971,7 +1971,7 @@ console.log("fgf"+JSON.stringify(loc));
             this.checkout();
           }
         } else {
-            this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
       } else {
         this.loading_direct = false;
@@ -1991,7 +1991,7 @@ console.log("fgf"+JSON.stringify(loc));
       service_id: service.id,
       virtual_info: JSON.stringify(virtualinfo)
     };
-    if (service['serviceType']==='virtualService') {
+    if (service['serviceType'] === 'virtualService') {
       queryParam['tel_serv_stat'] = true;
     } else {
       queryParam['tel_serv_stat'] = false;
@@ -2006,9 +2006,9 @@ console.log("fgf"+JSON.stringify(loc));
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
   }
-  showAppointment(locid, locname, gMapUrl, curdate, service: any, origin?,ctime?, virtualinfo?) {
+  showAppointment(locid, locname, gMapUrl, curdate, service: any, origin?, ctime?, virtualinfo?) {
     //console.log("Service Appt: ");
-   // console.log(service);
+    // console.log(service);
     // let deptId;
     // if (this.servicesjson[0] && this.servicesjson[0].department) {
     //   deptId = this.servicesjson[0].department;
@@ -2025,9 +2025,9 @@ console.log("fgf"+JSON.stringify(loc));
       service_id: service.id,
       sel_date: curdate,
       virtual_info: JSON.stringify(virtualinfo),
-      ctime:ctime
+      ctime: ctime
     };
-    if (service['serviceType']==='virtualService') {
+    if (service['serviceType'] === 'virtualService') {
       queryParam['tel_serv_stat'] = true;
     } else {
       queryParam['tel_serv_stat'] = false;
@@ -2052,7 +2052,7 @@ console.log("fgf"+JSON.stringify(loc));
   onButtonBeforeHook() {
   }
   onButtonAfterHook() { }
- showServiceDetail(serv, busname) {
+  showServiceDetail(serv, busname) {
     let servData;
     if (serv.serviceType && serv.serviceType === 'donationService') {
       servData = {
@@ -2303,44 +2303,44 @@ console.log("fgf"+JSON.stringify(loc));
     this.routerobj.navigate([this.accountEncId, userId]);
   }
   opencheckavail(actionObj) {
-    console.log("checkbox in business page")
-    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-    console.log('usertype...........',this.userType)
-    const current_provider = {
-      'id': actionObj['location']['id'],
-      'place':actionObj['location']['place'],
-      'location': actionObj['location'],
-      'service': actionObj['service'],
-      'cdate': actionObj['service'].serviceAvailability.nextAvailableDate
-    };
-    if(this.userType === '') {
-      const passParam = { callback: 'checkavailability', current_provider: current_provider, serviceType:  actionObj['service'].serviceType,actionObjtype:actionObj };
-      this.doLogin('consumer', passParam);
+    // console.log("checkbox in business page")
+    // this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    // console.log('usertype...........', this.userType)
+    // const current_provider = {
+    //   'id': actionObj['location']['id'],
+    //   'place': actionObj['location']['place'],
+    //   'location': actionObj['location'],
+    //   'service': actionObj['service'],
+    //   'cdate': actionObj['service'].serviceAvailability.nextAvailableDate
+    // };
+    // if(this.userType === '') {
+    //   const passParam = { callback: 'checkavailability', current_provider: current_provider, serviceType:  actionObj['service'].serviceType,actionObjtype:actionObj };
+    //   this.doLogin('consumer', passParam);
 
-    }else {
-      this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
-        width: '90%',
-        height: 'auto',
-        data: {
-        alldetails:actionObj,
-        apptSettingsJson:this.apptSettingsJson,
-        }
-      });
-    }
+    // }else {
+    this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
+      width: '90%',
+      height: 'auto',
+      data: {
+        alldetails: actionObj,
+        apptSettingsJson: this.apptSettingsJson,
+      }
+    });
+    // }
 
     this.checkavailabilitydialogref.afterClosed().subscribe(result => {
-      console.log('result.......',result)
-     if(result!='undefined') {
-      actionObj['location']['time']=result[0];
-      actionObj['location']['date']=result[1];
-      // console.log('action..........',actionObj);
-      this.appointmentClicked(actionObj['location'], actionObj['service']);
-     }
-    
- 
+      console.log('result.......', result)
+      if (result != 'undefined') {
+        actionObj['location']['time'] = result[0];
+        actionObj['location']['date'] = result[1];
+        // console.log('action..........',actionObj);
+        this.appointmentClicked(actionObj['location'], actionObj['service']);
+      }
+
+
 
     });
-  
+
   }
   cardClicked(actionObj) {
     console.log('entering into business page');
@@ -2352,8 +2352,8 @@ console.log("fgf"+JSON.stringify(loc));
         this.checkinClicked(actionObj['location'], actionObj['service']);
       }
 
-    }   else if(actionObj['type']=='checkavailability') {
-     
+    } else if (actionObj['type'] == 'checkavailability') {
+
       this.opencheckavail(actionObj);
     } else if (actionObj['type'] === 'appt') {
       if (actionObj['action'] === 'view') {
@@ -2553,7 +2553,7 @@ console.log("fgf"+JSON.stringify(loc));
         }
       }
       this.servicesAndProviders = servicesAndProviders;
-     // console.log("tyuhjhj"+this.servicesAndProviders);
+      // console.log("tyuhjhj"+this.servicesAndProviders);
       // });
     } else {
       // tslint:disable-next-line:no-shadowed-variable
@@ -2604,7 +2604,7 @@ console.log("fgf"+JSON.stringify(loc));
         }
       }
       this.servicesAndProviders = servicesAndProviders;
-     // console.log("hjhj"+this.servicesAndProviders);
+      // console.log("hjhj"+this.servicesAndProviders);
     }
     if (this.businessjson.donationFundRaising && this.onlinePresence && this.donationServicesjson.length >= 1) {
       for (let dIndex = 0; dIndex < this.donationServicesjson.length; dIndex++) {
@@ -2928,7 +2928,7 @@ console.log("fgf"+JSON.stringify(loc));
         businessName: this.businessjson.businessName,
         businessDesc: this.businessjson.businessDesc,
         businessUserName: this.businessjson.businessUserName
-        
+
       }
     });
 

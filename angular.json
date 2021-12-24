@@ -19,8 +19,8 @@
             "assets": [
               "src/assets",
               "src/favicon.ico",
-              "src/assets/i18n/home/",
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest",
+              "src/assets/i18n/home/"
             ],
             "styles": [
               "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
@@ -150,6 +150,7 @@
             ],
             "assets": [
               "src/assets",
+              "src/assets/i18n/home/",
               "src/favicon.ico",
               "src/manifest.webmanifest"
             ]
