@@ -576,6 +576,9 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         }
                     );
+            }else if(!this.selected_payment_mode && this.bill_data.amountDue>0){
+                this.snackbarService.openSnackBar('Please Choose Payment Option', { 'panelClass': 'snackbarerror' });  
+                this.isClickedOnce=false;
             }
         }
     }

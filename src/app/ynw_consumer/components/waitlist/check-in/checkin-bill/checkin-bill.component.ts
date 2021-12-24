@@ -532,6 +532,9 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                         }
                     );
 
+            }else if(!this.selected_payment_mode && this.bill_data.amountDue>0){
+                this.snackbarService.openSnackBar('Please Choose Payment Option', { 'panelClass': 'snackbarerror' });  
+                this.isClickedOnce=false;
             }
         }
         }
