@@ -93,7 +93,7 @@ export class ManualSignatureComponent implements OnInit {
   }
 
   ngOnInit() {
-   
+    this.onResize()
   }
 
   ngAfterViewInit() {
