@@ -524,7 +524,7 @@
                                                                   <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode" (change)="non_indian_modes_onchange($event)">
                                                                     <mat-radio-button value="cash"  >
                                                                         <div class="d-flex justify-content-around">
-                                                                            <div class="col-md-4 col-lg-5 my-auto "><img class="ordericon pickup" height="75px" width="75px"src="assets/images/payment-modes/cash_pay.png"></div>
+                                                                            <div class="col-md-4 col-lg-5 my-auto "><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc('CASH')"></div>
                                                                         
                                                                             <div class="col-md-8 col-lg-7 my-auto "><span class="text-uppercase">Pay by Cash</span></div>
                                                                             </div>
