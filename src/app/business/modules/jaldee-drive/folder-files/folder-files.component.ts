@@ -50,6 +50,7 @@ export class FolderFilesComponent implements OnInit {
   tooltipcls = '';
   fileTypeDisplayName = projectConstants.FilE_TYPES;
   apiloading = false;
+  dataLoading=false
   foldertype: any;
   foldername: any;
   fileviewdialogRef: any;
@@ -360,7 +361,7 @@ export class FolderFilesComponent implements OnInit {
     this.selectedLanguages = [];
     this.selectedLocations = [];
   }
-  setFilterFileTypeCheckbox(type, value, event){
+  setFilterFileTypeCheckbox(type, value, event) {
     if (type === 'fileType') {
       if (value === 'all') {
         this.filterFileType = [];
@@ -402,8 +403,8 @@ export class FolderFilesComponent implements OnInit {
         this.filter.folderName = 'Private';
       }
     }
-    if(type === 'fileType'){
-      if(value === 'png'){
+    if (type === 'fileType') {
+      if (value === 'png') {
         this.png = true;
         this.jpeg = false;
         this.jpg = false;
@@ -411,7 +412,7 @@ export class FolderFilesComponent implements OnInit {
         this.filter.fileType = 'png';
 
       }
-      if(value === 'jpeg'){
+      if (value === 'jpeg') {
         this.png = false;
         this.jpeg = true;
         this.jpg = false;
@@ -419,7 +420,7 @@ export class FolderFilesComponent implements OnInit {
         this.filter.fileType = 'jpeg';
 
       }
-      if(value === 'jpg'){
+      if (value === 'jpg') {
         this.png = false;
         this.jpeg = false;
         this.jpg = true;
@@ -427,7 +428,7 @@ export class FolderFilesComponent implements OnInit {
         this.filter.fileType = 'jpg';
 
       }
-      if(value === 'pdf'){
+      if (value === 'pdf') {
         this.png = false;
         this.jpeg = false;
         this.jpg = false;
@@ -436,7 +437,7 @@ export class FolderFilesComponent implements OnInit {
 
       }
     }
-    
+
     if (type === 'fileSize') {
       if (value === 'true') {
         this.lessMb = true;
@@ -499,6 +500,7 @@ export class FolderFilesComponent implements OnInit {
 
   }
   getfiles() {
+    this.dataLoading = true;
     const filter = {};
     console.log("Folder Type :", this.foldertype);
     if (this.foldertype === 'Private') {
@@ -529,6 +531,7 @@ export class FolderFilesComponent implements OnInit {
         console.log(data);
         // this.Allfiles = data;
         this.customers = data
+        this.dataLoading=false;
         //this.paginator = this.customers
         // this.customers.map((x) => {
         //   this.fileSizeFilter = Math.ceil(x.fileSize)
@@ -581,6 +584,7 @@ export class FolderFilesComponent implements OnInit {
   }
   actionCompleted() {
     console.log(this.action);
+    this.apiloading = true;
     if (this.action === 'attachment' && this.foldertype && this.selectedMessage) {
       console.log("After Click of OK Button :", this.foldertype, this.action, this.selectedMessage);
       const dataToSend: FormData = new FormData();
@@ -626,11 +630,11 @@ export class FolderFilesComponent implements OnInit {
               caption: []
             }
             this.getfiles();
-
+            this.apiloading = false;
           },
           error => {
             this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-
+            this.apiloading= false;
           }
         );
 
