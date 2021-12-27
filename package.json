@@ -1,6 +1,6 @@
 {
   "name": "jaldee.com",
-  "version": "1.2.3",
+  "version": "1.2.8",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -12,7 +12,6 @@
     "build:stats": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng --configuration production --stats-json",
     "analyze": "webpack-bundle-analyzer dist/stats.json",
     "compodoc": "compodoc -p tsconfig.json",
-    "prebuild": "npm --no-git-tag-version version patch",
     "dev-build": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng",
     "local-serve": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng serve -c=local --port 4201",
     "build-prod": "npm --no-git-tag-version version patch & node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng build --configuration production"

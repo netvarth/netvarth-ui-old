@@ -17,7 +17,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
 import { CommunicationService } from '../../../../business/services/communication-service';
-import { BookingHistoryComponent } from '../../appointments/booking-history/booking-history.component';
+import { BookingHistoryComponent } from '../../../../../../src/app/business/shared/booking-history/booking-history.component';
 
 @Component({
   selector: 'app-provider-waitlist-checkin-detail',
@@ -106,6 +106,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     { mode: 'ONLINE_CHECKIN', value: 'Online ' },
   ];
   bookinghistorydialogref: any;
+  booking_stat;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -318,7 +319,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         appointmentby:this.waitlist_data.waitlistedBy,
         bookingmode:this.getWaitListMode(this.waitlist_data.waitlistMode),
         consumername:this.waitlist_data.consumer.firstName+" "+this.waitlist_data.consumer.lastName,
-        details:this.waitlist_history
+        details:this.waitlist_history,
+        booking_stat : this.booking_stat
       }
     })
   }
@@ -712,5 +714,4 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       return userObject[0].name;
     }
   }
-
 }

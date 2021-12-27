@@ -16,7 +16,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { CommunicationService } from '../../../../business/services/communication-service';
-import { BookingHistoryComponent } from '../booking-history/booking-history.component';
+import { BookingHistoryComponent } from '../../../shared/booking-history/booking-history.component';
 
 @Component({
   selector: 'app-provider-appointment-detail',
@@ -137,7 +137,6 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.getPos();
-    // this.getbookingHistory();
     this.api_loading = true;
     this.pdtype = this.groupService.getitemFromGroupStorage('pdtyp');
     if (!this.pdtype) {
@@ -614,17 +613,6 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     currentmode=this.appointmentModes.filter(obj=>obj.mode===mode);
     return currentmode[0].value;
   }
-// getbookingHistory() {
-//   this.provider_services.getbookingHistory(this.waitlist_data.uid)
-//     .subscribe(
-//       data => {
-//         this.statusList = data;
-//         console.log(this.statusList)
-//       },
-//       () => {
-//       }
-//     );
-// }
 openbookinghistory() {
   this.bookinghistorydialogref = this.dialog.open(BookingHistoryComponent, {
     width: '60%',
