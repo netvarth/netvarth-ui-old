@@ -14,6 +14,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter'; // import ng2search pip
 import { Routes, RouterModule } from '@angular/router';
 import { SharedfilesComponent } from './sharedfiles/sharedfiles.component';
 //import { CapitalizeFirstPipeModule } from 'src/app/shared/pipes/capitalize.module';
+//import {} from '../'
 
 
 

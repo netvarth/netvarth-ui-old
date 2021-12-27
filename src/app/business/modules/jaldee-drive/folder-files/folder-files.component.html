@@ -14,6 +14,7 @@
     </p>
   </div>
 </section>
+
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -169,6 +170,9 @@
         <div class="card-body tble pt-0 pb-3 col-12 col-sm-12 col-xs-12">
           <div class="tab-content">
             <div class="table-responsive1">
+              <div class="align-items-center">
+                <mat-spinner *ngIf="apiloading" class="align-items-center" style="font-size: 20px;"></mat-spinner>
+              </div>
               <!-- <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner> -->
               <table
                 class="table  table-responsive table-hover table-head-custom table-head-bg table-borderless table-vertical-center">
@@ -219,9 +223,9 @@
                               [disabled]="showText(customer)">
                           </span>
                         </div> {{getCustomer(customer)}}-->
-                      <span class="text-dark-75 text-hover-primary mb-1 cust-name">
+                      <span class="text-dark-75 text-hover-primary mb-1 cust-name" >
 
-                        {{customer.fileName.length>10 ? customer.fileName.slice(0, 10)+'...' : customer.fileName}}
+                        <i class="fa fa-file-pdf-o" aria-hidden="true" *ngIf="customer.fileType === 'pdf'" style="color:red;"></i> <i class="fa fa-file-image-o" aria-hidden="true" *ngIf="customer.fileType === 'png' || customer.fileType === 'jpg' || customer.fileType === 'jpeg' || customer.fileType === 'bmp' || customer.fileType === 'webp' "></i> {{customer.fileName.length>10 ? customer.fileName.slice(0, 10)+'...' : customer.fileName}}
                       </span>
                       <!-- <span class="text-dark-75 text-hover-primary mb-1 cust-name"
                         *ngIf="getFileType(customer.fileType) === 'pdf'">
@@ -294,6 +298,11 @@
                   <tr *ngIf="customers.length === 0" class="my-2 py-2">
                     <td class="text-center my-2 py-2" colspan="4">No files found.</td>
                   </tr>
+                  <tr *ngIf="dataLoading" >
+                    <td class="text-center" colspan="4">
+                      <mat-spinner *ngIf="dataLoading" ></mat-spinner>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
 
@@ -344,10 +353,15 @@
           </div>
         </div>
       </div>
+
     </div>
 
 
   </div>
+  <!-- <div class="align-items-center">
+  <mat-spinner *ngIf="apiloading"></mat-spinner>
+</div> -->
+
 
   <div class="row displayblock">
 
