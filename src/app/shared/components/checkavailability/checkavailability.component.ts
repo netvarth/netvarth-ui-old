@@ -4,6 +4,8 @@ import { projectConstants } from '../../../app.component';
 import * as moment from 'moment';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 // import { SharedServices } from '../../services/shared-services';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+
 import { SubSink } from 'subsink';
 import { SharedServices } from '../../services/shared-services';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
@@ -42,6 +44,7 @@ export class CheckavailabilityComponent implements OnInit {
     account_id: any;
     availableDates: any;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
+    newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
     api_loading1: boolean;
     server_date: any;
     amountdifference: any;
@@ -91,13 +94,13 @@ export class CheckavailabilityComponent implements OnInit {
         const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
         const date2 = new Date(dt2);
-        const dte0 = this.selectedDate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dte0 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
         const datee2 = new Date(dte2);
         if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-            this.isFuturedate = true;
+            return true;
         } else {
-            this.isFuturedate = false;
+            return false;
         }
     }
     pricelist:any;

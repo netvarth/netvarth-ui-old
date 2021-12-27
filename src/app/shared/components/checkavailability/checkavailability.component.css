@@ -78,11 +78,11 @@
         padding: 0px !important;
     }
     .green {
-        line-height: 0.5rem;
-        font-size: 6px !important;
+        line-height: 1.5rem;
+        font-size: 10px !important;
     }
     .red {
-        line-height: 0.5rem;
-        font-size: 6px !important;
+        line-height: 1.5rem;
+        font-size: 10px !important;
     }
 }

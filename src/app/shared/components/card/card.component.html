@@ -42,18 +42,18 @@
                     </div>
                     <div class="img-circle"
                         *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'donationService'">
-                                <img class=" imagesectionincards img-responsive" src="assets/images/donation.png" alt="Donation Image" >
+                                <img class=" img-responsive" src="assets/images/donation.png" alt="Donation Image" >
                     </div>
                     <div class="img-circle "
                         *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain != 'religiousPriests'"
                             >
-                                <img class="img-responsive imagesectionincards" src="assets/images/meeting_Artboard.png"
+                                <img class="img-responsive" src="assets/images/meeting_Artboard.png"
                                     alt="Physical Service Image" >
                     </div>
                     <div class="img-circle "
                                 *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain == 'religiousPriests'"
                                    >
-                                                 <img class="imagesectionincards img-responsive" src="assets/images/hindu-temple-clipart.jpg"
+                                                 <img class=" img-responsive" src="assets/images/hindu-temple-clipart.jpg"
                                     alt="Physical Service Image">
                     </div>
                 <!-- <img class="img-circle text-xs-center" src="assets/images/donation.png">  -->
@@ -67,7 +67,7 @@
                         </p>
                         <div  style="font-size: 10px;" *ngIf="personsAheadText">{{personsAheadText}}</div>
                        
-                        <h6 style="color:#FFC107;font-size: 8px;" *ngIf="timings">{{timingCaption}}</h6>
+                        <h6 style="color:#FFC107;font-size: 12px;" *ngIf="timings">{{timingCaption}}</h6>
                         <h6 style="color: #1E4079;" *ngIf="timings">{{timings}}</h6>
 
                 </div>
